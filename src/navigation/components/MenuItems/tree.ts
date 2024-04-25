@@ -12,28 +12,21 @@ export interface TreeOperation {
   simulatedMove?: boolean;
 }
 
-export function getDiff(
-  originalTree: MenuTreeItem[],
-  newTree: MenuTreeItem[],
-): TreeOperation[] {
+export function getDiff(originalTree: MenuTreeItem[], newTree: MenuTreeItem[]): TreeOperation[] {
   const originalMap = treeToMap(originalTree, "root");
   const newMap = treeToMap(newTree, "root");
-
   const diff: TreeOperation[] = Object.keys(newMap).flatMap(key => {
     const originalNode = originalMap[key];
     const newNode = newMap[key];
-
     const patch = getPatch(originalNode, newNode);
 
     if (patch.length > 0) {
       const addedNode = patch.find(operation => operation.type === "add");
       const removedNode = patch.find(operation => operation.type === "remove");
 
-      if (!!addedNode) {
+      if (addedNode) {
         const changedParent = originalNode.length !== newNode.length;
-        const sortOrder = removedNode
-          ? addedNode.newPos - removedNode.oldPos
-          : addedNode.newPos;
+        const sortOrder = removedNode ? addedNode.newPos - removedNode.oldPos : addedNode.newPos;
 
         // This exists because backend doesn't recongize the position of the new node
         // when it's moved from child to parent and/or up
@@ -69,16 +62,14 @@ export function getDiff(
         };
       }
     }
+
     return undefined;
   });
 
   return diff.filter(d => !!d);
 }
 
-function treeToMap(
-  tree: MenuTreeItem[],
-  parent: string,
-): Record<string, string[]> {
+function treeToMap(tree: MenuTreeItem[], parent: string): Record<string, string[]> {
   const childrenList = tree.map(node => node.id);
   const childrenMaps = tree.map(node => ({
     id: node.id,

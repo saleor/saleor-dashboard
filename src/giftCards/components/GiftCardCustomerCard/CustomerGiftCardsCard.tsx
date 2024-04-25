@@ -29,7 +29,6 @@ const CustomerGiftCardsCard: React.FC = () => {
   const customerDetails = useCustomerDetails();
   const customer = customerDetails?.customer?.user;
   const id = customer?.id;
-
   const { data, loading } = useCustomerGiftCardListQuery({
     variables: {
       first: 5,
@@ -39,19 +38,14 @@ const CustomerGiftCardsCard: React.FC = () => {
     },
     skip: !id,
   });
-
   const closeCreateDialog = () => setOpenCreateDialog(false);
-
   const giftCards = mapEdgesToItems(data?.giftCards);
-
   const classes = useCardActionsStyles({
     buttonPosition: giftCards?.length > 0 ? "right" : "left",
   });
-
   const viewAllGiftCardsUrl = giftCardListUrl({
     usedBy: [id],
   });
-
   const handleCreateNewCardButton = () => {
     setOpenCreateDialog(true);
   };
@@ -64,14 +58,8 @@ const CustomerGiftCardsCard: React.FC = () => {
           toolbar={
             <>
               {!!giftCards?.length && (
-                <Button
-                  variant="tertiary"
-                  href={viewAllGiftCardsUrl}
-                  component={Link}
-                >
-                  <FormattedMessage
-                    {...messages.customerGiftCardsViewAllButton}
-                  />
+                <Button variant="tertiary" href={viewAllGiftCardsUrl} component={Link}>
+                  <FormattedMessage {...messages.customerGiftCardsViewAllButton} />
                 </Button>
               )}
               <PreviewPill className={classes.previewPill} />
@@ -79,7 +67,7 @@ const CustomerGiftCardsCard: React.FC = () => {
           }
         >
           <FormattedMessage
-            {...(!!giftCards?.length
+            {...(giftCards?.length
               ? messages.customerGiftCardsPresentSubtitle
               : messages.customerGiftCardsAbsentSubtitle)}
           />
@@ -89,9 +77,7 @@ const CustomerGiftCardsCard: React.FC = () => {
           <CollectionWithDividers
             collection={giftCards}
             renderItem={giftCard => (
-              <CustomerGiftCardsCardListItem
-                giftCard={getExtendedGiftCard(giftCard)}
-              />
+              <CustomerGiftCardsCardListItem giftCard={getExtendedGiftCard(giftCard)} />
             )}
             withOuterDividers
           />
@@ -100,9 +86,7 @@ const CustomerGiftCardsCard: React.FC = () => {
         )}
         <CardActions className={classes.cardActions}>
           <Button variant="tertiary" onClick={handleCreateNewCardButton}>
-            <FormattedMessage
-              {...messages.customerGiftCardsIssueNewCardButton}
-            />
+            <FormattedMessage {...messages.customerGiftCardsIssueNewCardButton} />
           </Button>
         </CardActions>
       </Card>

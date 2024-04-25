@@ -31,10 +31,7 @@ export class ConditionSelected {
     );
   }
 
-  public static fromConditionItemAndValue(
-    conditionItem: ConditionItem,
-    value: ConditionValue,
-  ) {
+  public static fromConditionItemAndValue(conditionItem: ConditionItem, value: ConditionValue) {
     return new ConditionSelected(value, conditionItem, [], false);
   }
 

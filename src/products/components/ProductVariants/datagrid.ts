@@ -41,18 +41,15 @@ export const useChannelAdapter = ({
 }): ColumnCategory => {
   const [channelQuery, setChannelQuery] = React.useState("");
   const { paginate, currentPage, changeCurrentPage } = useClientPagination();
-
   const paginatedChannels = paginate(
     (listings ?? [])?.filter(channel =>
       channel.name.toLowerCase().includes(channelQuery.toLowerCase()),
     ),
   );
-
   const selectedChannels = selectedColumns
-    ? listings?.filter(channel =>
-        selectedColumns.includes(`channel:${channel.id}`),
-      )
+    ? listings?.filter(channel => selectedColumns.includes(`channel:${channel.id}`))
     : undefined;
+
   return {
     name: intl.formatMessage(messages.channel),
     prefix: "channel",
@@ -79,17 +76,13 @@ export const useChannelAvailabilityAdapter = ({
 }): ColumnCategory => {
   const [channelQuery, setChannelQuery] = React.useState("");
   const { paginate, currentPage, changeCurrentPage } = useClientPagination();
-
   const paginatedChannels = paginate(
     (listings ?? []).filter(channel =>
       channel.name.toLowerCase().includes(channelQuery.toLowerCase()),
     ),
   );
-
   const selectedChannels = selectedColumns
-    ? listings?.filter(channel =>
-        selectedColumns.includes(`channel:${channel.id}`),
-      )
+    ? listings?.filter(channel => selectedColumns.includes(`channel:${channel.id}`))
     : undefined;
 
   return {
@@ -107,17 +100,13 @@ export const useChannelAvailabilityAdapter = ({
   };
 };
 
-const parseAvailabilityColumns = (
-  channels: ChannelData[] | undefined,
-  intl: IntlShape,
-) =>
+const parseAvailabilityColumns = (channels: ChannelData[] | undefined, intl: IntlShape) =>
   channels?.map(channel => ({
     id: `availableInChannel:${channel.id}`,
     group: channel.name,
     title: intl.formatMessage(messages.available),
     width: 80,
   }));
-
 const parseChannelColumns = (
   channels: ChannelData[] | undefined,
   intl: IntlShape,
@@ -144,25 +133,20 @@ export const useAttributesAdapter = ({
     if (!attribute.inputType) {
       return false;
     }
-    return [
-      AttributeInputTypeEnum.DROPDOWN,
-      AttributeInputTypeEnum.PLAIN_TEXT,
-    ].includes(attribute.inputType);
-  });
 
+    return [AttributeInputTypeEnum.DROPDOWN, AttributeInputTypeEnum.PLAIN_TEXT].includes(
+      attribute.inputType,
+    );
+  });
   const [attributeQuery, setAttributeQuery] = React.useState("");
   const { paginate, currentPage, changeCurrentPage } = useClientPagination();
-
   const paginatedAttributes = paginate(
     (supportedAttributes ?? []).filter(attribute =>
       attribute.name?.toLowerCase().includes(attributeQuery.toLowerCase()),
     ),
   );
-
   const selectedAttributes = selectedColumns
-    ? attributes?.filter(attribute =>
-        selectedColumns.includes(`attribute:${attribute.id}`),
-      )
+    ? attributes?.filter(attribute => selectedColumns.includes(`attribute:${attribute.id}`))
     : undefined;
 
   return {
@@ -202,17 +186,13 @@ export const useWarehouseAdapter = ({
 }) => {
   const [warehouseQuery, setWarehouseQuery] = React.useState("");
   const { paginate, currentPage, changeCurrentPage } = useClientPagination();
-
   const paginatedWarehouses = paginate(
     (warehouses ?? []).filter(warehouse =>
       warehouse.name?.toLowerCase().includes(warehouseQuery.toLowerCase()),
     ),
   );
-
   const filteredWarehouses = selectedColumns
-    ? warehouses?.filter(warehouse =>
-        selectedColumns.includes(`warehouse:${warehouse.id}`),
-      )
+    ? warehouses?.filter(warehouse => selectedColumns.includes(`warehouse:${warehouse.id}`))
     : undefined;
 
   return {
@@ -241,10 +221,7 @@ export const getAvailableWarehousesData = ({
     ? undefined
     : mapEdgesToItems(initialWarehouses.data?.availableWarehouses) ?? []);
 
-const parseWarehousesColumns = (
-  data: WarehouseFragment[] | undefined,
-  intl: IntlShape,
-) => {
+const parseWarehousesColumns = (data: WarehouseFragment[] | undefined, intl: IntlShape) => {
   return data?.map(warehouse => ({
     id: `warehouse:${warehouse.id}`,
     group: intl.formatMessage(messages.warehouses),
@@ -290,14 +267,13 @@ export const getWarehousesFetchMoreProps = ({
         after: null,
       },
     });
-
   const hasNextPage =
     availableWarehousesData.data?.warehouses?.pageInfo?.hasNextPage ??
     gridWarehousesData.data?.availableWarehouses?.pageInfo?.hasNextPage ??
     false;
   const hasPreviousPage =
-    availableWarehousesData.data?.warehouses?.pageInfo?.hasPreviousPage ??
-    false;
+    availableWarehousesData.data?.warehouses?.pageInfo?.hasPreviousPage ?? false;
+
   return {
     hasNextPage,
     hasPreviousPage,

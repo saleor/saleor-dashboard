@@ -1,9 +1,6 @@
 import { AppstoreApi } from "@dashboard/apps/appstore.types";
 import { AppInstallation, InstalledApp } from "@dashboard/apps/types";
-import {
-  AppInstallationFragment,
-  AppListItemFragment,
-} from "@dashboard/graphql";
+import { AppInstallationFragment, AppListItemFragment } from "@dashboard/graphql";
 
 import { AppListPageSections } from "./types";
 
@@ -23,9 +20,7 @@ const findAppInMarketplace = (
     return undefined;
   }
 
-  return installableMarketplaceApps?.find(
-    app => app.manifestUrl === manifestUrl,
-  );
+  return installableMarketplaceApps?.find(app => app.manifestUrl === manifestUrl);
 };
 
 export const getVerifiedInstalledApps = (
@@ -33,10 +28,7 @@ export const getVerifiedInstalledApps = (
   installableMarketplaceApps?: AppstoreApi.ReleasedSaleorApp[],
 ): InstalledApp[] | undefined =>
   installedApps?.map(app => {
-    const marketplaceApp = findAppInMarketplace(
-      app.manifestUrl,
-      installableMarketplaceApps,
-    );
+    const marketplaceApp = findAppInMarketplace(app.manifestUrl, installableMarketplaceApps);
 
     return {
       app,
@@ -65,15 +57,11 @@ export const getVerifiedAppsInstallations = (
  * Installed app list is paginated, it needs to be replace in the future with proper solution,
  * not relying on one page of installed apps list.
  */
-const isAppNotInstalled = (
-  manifestUrl: string | null,
-  installedApps?: AppListItemFragment[],
-) => installedApps?.every(app => app.manifestUrl !== manifestUrl);
+const isAppNotInstalled = (manifestUrl: string | null, installedApps?: AppListItemFragment[]) =>
+  installedApps?.every(app => app.manifestUrl !== manifestUrl);
 
 export const getVerifiedInstallableMarketplaceApps = (
   installedApps?: AppListItemFragment[],
   installableMarketplaceApps?: AppstoreApi.ReleasedSaleorApp[],
 ): AppstoreApi.ReleasedSaleorApp[] | undefined =>
-  installableMarketplaceApps?.filter(app =>
-    isAppNotInstalled(app.manifestUrl, installedApps),
-  );
+  installableMarketplaceApps?.filter(app => isAppNotInstalled(app.manifestUrl, installedApps));

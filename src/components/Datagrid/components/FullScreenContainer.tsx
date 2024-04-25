@@ -5,9 +5,7 @@ import ReactDOM from "react-dom";
 
 import { useDelayedState } from "../hooks/useDelayedState";
 
-const modalRoot =
-  document.getElementById("modal-root") || document.createElement("div");
-
+const modalRoot = document.getElementById("modal-root") || document.createElement("div");
 const useEase = (duration: number) => {
   const { transitions } = useTheme();
   const { easeIn, easeOut } = transitions.easing;
@@ -23,23 +21,19 @@ const useEase = (duration: number) => {
 
   return { transitionIn, transitionOut };
 };
-
 const useAnimationStyles = (isOpen: boolean, duration: number) => {
   const { transitionIn, transitionOut } = useEase(duration);
-
   const initialStyles: CSSProperties = {
     opacity: 0,
     position: "fixed",
     inset: 0,
     zIndex: -1,
   };
-
   const openStyles = {
     transition: transitionIn,
     opacity: 1,
     zIndex: 1,
   };
-
   const closedStyles = {
     transition: transitionOut,
     opacity: 0,
@@ -70,10 +64,7 @@ const Portal: FullScreenContainerProps = ({ className, children, open }) => {
   );
 };
 
-export const FullScreenContainer: FullScreenContainerProps = ({
-  children,
-  ...rest
-}) => (
+export const FullScreenContainer: FullScreenContainerProps = ({ children, ...rest }) => (
   <>
     <Portal {...rest}>{children}</Portal>
     {children}

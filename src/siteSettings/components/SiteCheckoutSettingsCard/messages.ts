@@ -34,8 +34,7 @@ export const messages = defineMessages({
   },
   stockWillNotBeReserved: {
     id: "YEv+6G",
-    defaultMessage:
-      "Leaving this setting empty will mean that stock won’t be reserved",
+    defaultMessage: "Leaving this setting empty will mean that stock won’t be reserved",
     description: "input helper text",
   },
   checkoutLimitsDescription: {

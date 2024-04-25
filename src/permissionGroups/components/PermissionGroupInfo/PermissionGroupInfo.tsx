@@ -25,14 +25,11 @@ const PermissionGroupInfo: React.FC<PermissionGroupInfoProps> = ({
   errors,
 }) => {
   const intl = useIntl();
-
   const formErrors = getFormErrors(["name"], errors);
 
   return (
     <Card>
-      <CardTitle
-        title={intl.formatMessage(commonMessages.generalInformations)}
-      ></CardTitle>
+      <CardTitle title={intl.formatMessage(commonMessages.generalInformations)}></CardTitle>
       <CardContent>
         <TextField
           data-test-id="permission-group-name-input"

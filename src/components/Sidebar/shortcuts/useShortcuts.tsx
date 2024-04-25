@@ -20,19 +20,15 @@ export const useShortcuts = (): Shortcut[] => {
   const intl = useIntl();
   const devContext = useDevModeContext();
   const { setNavigatorVisibility } = useNavigatorSearchContext();
-
   const controlKey = getShortcutLeadingKey();
-
   const handleOpenPlayground = useCallback(() => {
     devContext.setDevModeContent("");
     devContext.setVariables("");
     devContext.setDevModeVisibility(true);
   }, []);
-
   const handleOpenSearch = useCallback(() => {
     setNavigatorVisibility(true);
   }, []);
-
   const shortcuts = useMemo(
     () => [
       {

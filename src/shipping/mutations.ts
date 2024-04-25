@@ -136,10 +136,7 @@ export const shippingMethodChannelListingUpdate = gql`
 `;
 
 export const shippingPriceExcludeProducts = gql`
-  mutation ShippingPriceExcludeProduct(
-    $id: ID!
-    $input: ShippingPriceExcludeProductsInput!
-  ) {
+  mutation ShippingPriceExcludeProduct($id: ID!, $input: ShippingPriceExcludeProductsInput!) {
     shippingPriceExcludeProducts(id: $id, input: $input) {
       errors {
         ...ShippingError

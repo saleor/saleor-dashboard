@@ -35,22 +35,14 @@ const DryRunItemsList: React.FC<DryRunItemsListProps> = ({
   const classes = useStyles({});
   const { checkbox } = useListWidths();
   const objectDocument = DocumentMap[object];
-  const objectCollection =
-    objectDocument.collection ?? camelCase(`${object.toLowerCase()}s`);
-
-  const { data, loading } = useQuery<TData, TVariables>(
-    objectDocument.document,
-    {
-      displayLoader: true,
-      variables: objectDocument.variables,
-    },
-  );
+  const objectCollection = objectDocument.collection ?? camelCase(`${object.toLowerCase()}s`);
+  const { data, loading } = useQuery<TData, TVariables>(objectDocument.document, {
+    displayLoader: true,
+    variables: objectDocument.variables,
+  });
 
   return (
-    <List
-      gridTemplate={["1fr", checkbox, checkbox]}
-      data-test-id="dry-run-items-list"
-    >
+    <List gridTemplate={["1fr", checkbox, checkbox]} data-test-id="dry-run-items-list">
       <ListHeader>
         <ListItem className={classes.listHeader}>
           <ListItemCell className={classes.listItemCell}>
@@ -79,28 +71,19 @@ const DryRunItemsList: React.FC<DryRunItemsListProps> = ({
             </ListItemCell>
           </ListItem>
         ) : (
-          (mapEdgesToItems<any>(data[objectCollection]) || []).map(
-            (item, idx) => (
-              <ListItem
-                className={classes.listItem}
-                key={idx}
-                onClick={() => setObjectId(item.id)}
-              >
-                <ListItemCell className={classes.listItemCell}>
-                  {item.name ||
-                    item[objectDocument.displayedAttribute] ||
-                    item.id ||
-                    item.__typename}
-                </ListItemCell>
-                <ListItemCell>
-                  {item.thumbnail && <Avatar thumbnail={item.thumbnail?.url} />}
-                </ListItemCell>
-                <ListItemCell>
-                  <Radio checked={item.id === objectId} />
-                </ListItemCell>
-              </ListItem>
-            ),
-          )
+          (mapEdgesToItems<any>(data[objectCollection]) || []).map((item, idx) => (
+            <ListItem className={classes.listItem} key={idx} onClick={() => setObjectId(item.id)}>
+              <ListItemCell className={classes.listItemCell}>
+                {item.name || item[objectDocument.displayedAttribute] || item.id || item.__typename}
+              </ListItemCell>
+              <ListItemCell>
+                {item.thumbnail && <Avatar thumbnail={item.thumbnail?.url} />}
+              </ListItemCell>
+              <ListItemCell>
+                <Radio checked={item.id === objectId} />
+              </ListItemCell>
+            </ListItem>
+          ))
         )}
       </ListBody>
     </List>

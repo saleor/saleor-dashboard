@@ -11,15 +11,10 @@ import { FormattedMessage } from "react-intl";
 import { CategoryListDatagrid } from "../CategoryListDatagrid";
 
 interface CategorySubcategoriesProps
-  extends Pick<
-    ListProps<ListViews.CATEGORY_LIST>,
-    "onUpdateListSettings" | "settings"
-  > {
+  extends Pick<ListProps<ListViews.CATEGORY_LIST>, "onUpdateListSettings" | "settings"> {
   categoryId: string;
   disabled: boolean;
-  subcategories: RelayToFlat<
-    NonNullable<CategoryDetailsQuery["category"]>["children"]
-  >;
+  subcategories: RelayToFlat<NonNullable<CategoryDetailsQuery["category"]>["children"]>;
   onCategoriesDelete: () => void;
   onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
 }
@@ -63,10 +58,7 @@ export const CategorySubcategories = ({
         selectionActionButton={
           <Box paddingRight={5}>
             <BulkDeleteButton onClick={onCategoriesDelete}>
-              <FormattedMessage
-                defaultMessage="Delete categories"
-                id="FiO/W/"
-              />
+              <FormattedMessage defaultMessage="Delete categories" id="FiO/W/" />
             </BulkDeleteButton>
           </Box>
         }

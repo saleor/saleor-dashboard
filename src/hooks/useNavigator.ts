@@ -15,13 +15,9 @@ function useNavigator(): UseNavigatorResult {
     location: { search },
     history,
   } = useRouter();
-
   const { shouldBlockNavigation } = useContext(ExitFormDialogContext);
 
-  return (
-    url: string,
-    { replace = false, preserveQs = false, resetScroll = false } = {},
-  ) => {
+  return (url: string, { replace = false, preserveQs = false, resetScroll = false } = {}) => {
     if (shouldBlockNavigation()) {
       return;
     }
@@ -33,6 +29,7 @@ function useNavigator(): UseNavigatorResult {
     } else {
       history.push(targetUrl);
     }
+
     if (resetScroll) {
       window.scrollTo({ behavior: "smooth", top: 0 });
     }

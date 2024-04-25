@@ -3,7 +3,6 @@ import useShop from "@dashboard/hooks/useShop";
 
 export const useGetAvailableAppPermissions = () => {
   const shopData = useShop();
-
   /**
    * App can't have MANAGE_APPS so filter it out
    */
@@ -13,7 +12,6 @@ export const useGetAvailableAppPermissions = () => {
       code: p.code,
       name: p.name,
     }));
-
   const mapCodesToNames = (codes: PermissionEnum[]) => {
     const permissions = shopData?.permissions;
 

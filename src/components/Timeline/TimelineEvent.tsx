@@ -13,20 +13,11 @@ export interface TimelineEventProps {
 }
 
 export const TimelineEvent: React.FC<TimelineEventProps> = props => {
-  const { children, date, secondaryTitle, title, titleElements, hasPlainDate } =
-    props;
-
-  const hasChildren =
-    children && React.Children.toArray(children).filter(Boolean).length > 0;
+  const { children, date, secondaryTitle, title, titleElements, hasPlainDate } = props;
+  const hasChildren = children && React.Children.toArray(children).filter(Boolean).length > 0;
 
   return (
-    <Box
-      display="flex"
-      alignItems="center"
-      marginBottom={5}
-      position="relative"
-      width="100%"
-    >
+    <Box display="flex" alignItems="center" marginBottom={5} position="relative" width="100%">
       <Box
         as="span"
         position="absolute"

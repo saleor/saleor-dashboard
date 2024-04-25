@@ -10,24 +10,15 @@ import useGiftCardActivateToggle from "./hooks/useGiftCardActivateToggle";
 
 const GiftCardEnableDisableSection: React.FC = () => {
   const intl = useIntl();
-
   const {
     giftCard: { id, isActive, isExpired },
   } = useGiftCardDetails();
-
-  const { giftCardActivate, giftCardDeactivate, currentOpts } =
-    useGiftCardActivateToggle({
-      isActive,
-    });
-
+  const { giftCardActivate, giftCardDeactivate, currentOpts } = useGiftCardActivateToggle({
+    isActive,
+  });
   const handleClick = () =>
-    isActive
-      ? giftCardDeactivate({ variables: { id } })
-      : giftCardActivate({ variables: { id } });
-
-  const buttonLabel = isActive
-    ? buttonMessages.disableLabel
-    : buttonMessages.enableLabel;
+    isActive ? giftCardDeactivate({ variables: { id } }) : giftCardActivate({ variables: { id } });
+  const buttonLabel = isActive ? buttonMessages.disableLabel : buttonMessages.enableLabel;
 
   if (isExpired) {
     return null;

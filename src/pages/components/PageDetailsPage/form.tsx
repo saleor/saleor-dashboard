@@ -81,9 +81,7 @@ export interface PageUpdateHandlers {
   selectAttribute: FormsetChange<string>;
   selectAttributeMulti: FormsetChange<string>;
   selectAttributeReference: FormsetChange<string[]>;
-  selectAttributeReferenceMetadata: FormsetMetadataChange<
-    AttributeValuesMetadata[]
-  >;
+  selectAttributeReferenceMetadata: FormsetMetadataChange<AttributeValuesMetadata[]>;
   selectAttributeFile: FormsetChange<File>;
   reorderAttributeValue: FormsetChange<ReorderEvent>;
   fetchReferences: (value: string) => void;
@@ -97,10 +95,7 @@ export interface UsePageUpdateFormOutput
   validationErrors: PageErrorWithAttributesFragment[];
 }
 
-export type UsePageUpdateFormRenderProps = Omit<
-  UsePageUpdateFormOutput,
-  "richText"
->;
+export type UsePageUpdateFormRenderProps = Omit<UsePageUpdateFormOutput, "richText">;
 
 export interface UsePageFormOpts {
   pageTypes?: RelayToFlat<SearchPageTypesQuery["search"]>;
@@ -122,10 +117,7 @@ export interface PageFormProps extends UsePageFormOpts {
   disabled: boolean;
 }
 
-const getInitialFormData = (
-  pageExists: boolean,
-  page?: PageDetailsFragment,
-): PageFormData => ({
+const getInitialFormData = (pageExists: boolean, page?: PageDetailsFragment): PageFormData => ({
   isPublished: pageExists ? page?.isPublished : true,
   metadata: page?.metadata?.map(mapMetadataItemToInput) || [],
   pageType: null,
@@ -144,7 +136,6 @@ function usePageForm(
   opts: UsePageFormOpts,
 ): UsePageUpdateFormOutput {
   const pageExists = page !== null;
-
   const {
     handleChange,
     triggerChange,
@@ -153,53 +144,36 @@ function usePageForm(
   } = useForm(getInitialFormData(pageExists, page), undefined, {
     confirmLeave: true,
   });
-  const [validationErrors, setValidationErrors] = useState<
-    PageErrorWithAttributesFragment[]
-  >([]);
-
+  const [validationErrors, setValidationErrors] = useState<PageErrorWithAttributesFragment[]>([]);
   const attributes = useFormset(
     pageExists
       ? getAttributeInputFromPage(page)
       : opts.selectedPageType
-      ? getAttributeInputFromPageType(opts.selectedPageType)
-      : [],
+        ? getAttributeInputFromPageType(opts.selectedPageType)
+        : [],
   );
-
-  const {
-    getters: attributeRichTextGetters,
-    getValues: getAttributeRichTextValues,
-  } = useMultipleRichText({
-    initial: getRichTextDataFromAttributes(attributes.data),
-    triggerChange,
-  });
-  const attributesWithNewFileValue = useFormset<null, File>([]);
-
-  const { setExitDialogSubmitRef, setIsSubmitDisabled, setIsDirty } =
-    useExitFormDialog({
-      formId,
+  const { getters: attributeRichTextGetters, getValues: getAttributeRichTextValues } =
+    useMultipleRichText({
+      initial: getRichTextDataFromAttributes(attributes.data),
+      triggerChange,
     });
-
+  const attributesWithNewFileValue = useFormset<null, File>([]);
+  const { setExitDialogSubmitRef, setIsSubmitDisabled, setIsDirty } = useExitFormDialog({
+    formId,
+  });
   const richText = useRichText({
     initial: pageExists ? page?.content : null,
     loading: pageExists ? !page : false,
     triggerChange,
   });
-
   const {
     isMetadataModified,
     isPrivateMetadataModified,
     makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
-
   const changeMetadata = makeMetadataChangeHandler(handleChange);
-  const handlePageTypeSelect = createPageTypeSelectHandler(
-    opts.onSelectPageType,
-    triggerChange,
-  );
-  const handleAttributeChange = createAttributeChangeHandler(
-    attributes.change,
-    triggerChange,
-  );
+  const handlePageTypeSelect = createPageTypeSelectHandler(opts.onSelectPageType, triggerChange);
+  const handleAttributeChange = createAttributeChangeHandler(attributes.change, triggerChange);
   const handleAttributeMultiChange = createAttributeMultiChangeHandler(
     attributes.change,
     attributes.data,
@@ -237,7 +211,6 @@ function usePageForm(
     attributes.data,
     triggerChange,
   );
-
   const data: PageData = {
     ...formData,
     attributes: getAttributesDisplayData(
@@ -249,7 +222,6 @@ function usePageForm(
     content: null,
     pageType: pageExists ? page?.pageType : opts.selectedPageType,
   };
-
   const getSubmitData = async (): Promise<PageSubmitData> => ({
     ...data,
     ...getMetadata(formData, isMetadataModified, isPrivateMetadataModified),
@@ -257,14 +229,10 @@ function usePageForm(
     content: await richText.getValue(),
     attributes: mergeAttributes(
       attributes.data,
-      getRichTextAttributesFromMap(
-        attributes.data,
-        await getAttributeRichTextValues(),
-      ),
+      getRichTextAttributesFromMap(attributes.data, await getAttributeRichTextValues()),
     ),
     attributesWithNewFileValue: attributesWithNewFileValue.data,
   });
-
   const handleSubmit = async (data: PageData) => {
     let errors = validatePageCreateData(data);
 
@@ -282,12 +250,10 @@ function usePageForm(
 
     return errors;
   };
-
   const handleFormSubmit = useHandleFormSubmit({
     formId,
     onSubmit: handleSubmit,
   });
-
   const submit = async () => {
     const errors = await handleFormSubmit(await getSubmitData());
 
@@ -302,11 +268,11 @@ function usePageForm(
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   const valid = pageExists || !!opts.selectedPageType;
-
   const isSaveDisabled = disabled || !valid;
 
   useEffect(() => {
     setIsSubmitDisabled(isSaveDisabled);
+
     if (!pageExists) {
       setIsDirty(true);
     }
@@ -336,20 +302,12 @@ function usePageForm(
   };
 }
 
-const PageForm: React.FC<PageFormProps> = ({
-  children,
-  page,
-  onSubmit,
-  disabled,
-  ...rest
-}) => {
+const PageForm: React.FC<PageFormProps> = ({ children, page, onSubmit, disabled, ...rest }) => {
   const { richText, ...props } = usePageForm(page, onSubmit, disabled, rest);
 
   return (
     <form onSubmit={props.submit}>
-      <RichTextContext.Provider value={richText}>
-        {children(props)}
-      </RichTextContext.Provider>
+      <RichTextContext.Provider value={richText}>{children(props)}</RichTextContext.Provider>
     </form>
   );
 };

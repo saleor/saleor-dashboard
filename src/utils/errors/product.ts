@@ -16,8 +16,7 @@ const messages = defineMessages({
   },
   attributeAlreadyAssigned: {
     id: "aggaJg",
-    defaultMessage:
-      "This attribute has already been assigned to this product type",
+    defaultMessage: "This attribute has already been assigned to this product type",
   },
   attributeCannotBeAssigned: {
     id: "u24Ppd",
@@ -76,9 +75,7 @@ const messages = defineMessages({
 function getProductErrorMessage(
   err:
     | Omit<
-        | ProductErrorFragment
-        | CollectionErrorFragment
-        | ProductChannelListingErrorFragment,
+        ProductErrorFragment | CollectionErrorFragment | ProductChannelListingErrorFragment,
         "__typename"
       >
     | undefined,
@@ -106,6 +103,7 @@ function getProductErrorMessage(
         if (err.field === "price") {
           return intl.formatMessage(messages.priceInvalid);
         }
+
         return intl.formatMessage(commonErrorMessages.invalid);
       case ProductErrorCode.UNIQUE:
         if (err.field === "sku") {
@@ -113,6 +111,7 @@ function getProductErrorMessage(
         }
     }
   }
+
   return getCommonFormFieldErrorMessage(err, intl);
 }
 
@@ -139,6 +138,7 @@ export function getBulkProductErrorMessage(
   if (err?.code === ProductErrorCode.UNIQUE && err.field === "sku") {
     return intl.formatMessage(messages.skuUnique);
   }
+
   return getProductErrorMessage(err, intl);
 }
 

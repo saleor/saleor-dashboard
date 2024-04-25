@@ -37,15 +37,14 @@ export interface CustomerOrdersProps {
 const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
   const { orders, viewAllHref } = props;
   const classes = useStyles(props);
-
   const intl = useIntl();
-
   const orderList = orders
     ? orders.map(order => ({
         ...order,
         paymentStatus: transformPaymentStatus(order.paymentStatus, intl),
       }))
     : undefined;
+
   return (
     <Card>
       <CardTitle
@@ -56,11 +55,7 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
         })}
         toolbar={
           <Button variant="tertiary" href={viewAllHref}>
-            <FormattedMessage
-              id="3+990c"
-              defaultMessage="View all orders"
-              description="button"
-            />
+            <FormattedMessage id="3+990c" defaultMessage="View all orders" description="button" />
           </Button>
         }
       />
@@ -82,11 +77,7 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
               />
             </TableCell>
             <TableCell>
-              <FormattedMessage
-                id="pURrk1"
-                defaultMessage="Status"
-                description="order status"
-              />
+              <FormattedMessage id="pURrk1" defaultMessage="Status" description="order status" />
             </TableCell>
             <TableCell className={classes.textRight}>
               <FormattedMessage
@@ -103,16 +94,12 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
             order => (
               <TableRowLink
                 hover={!!order}
-                className={!!order ? classes.link : undefined}
+                className={order ? classes.link : undefined}
                 href={order && orderUrl(order.id)}
                 key={order ? order.id : "skeleton"}
               >
                 <TableCell>
-                  {maybe(() => order.number) ? (
-                    "#" + order.number
-                  ) : (
-                    <Skeleton />
-                  )}
+                  {maybe(() => order.number) ? "#" + order.number : <Skeleton />}
                 </TableCell>
                 <TableCell>
                   {maybe(() => order.created) ? (
@@ -145,10 +132,7 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
             () => (
               <TableRowLink>
                 <TableCell colSpan={6}>
-                  <FormattedMessage
-                    id="RlfqSV"
-                    defaultMessage="No orders found"
-                  />
+                  <FormattedMessage id="RlfqSV" defaultMessage="No orders found" />
                 </TableCell>
               </TableRowLink>
             ),

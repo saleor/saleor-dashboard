@@ -22,8 +22,7 @@ import SingleAutocompleteSelectFieldContent, {
 } from "./SingleAutocompleteSelectFieldContent";
 import { useStyles } from "./styles";
 
-export interface SingleAutocompleteSelectFieldProps
-  extends Partial<FetchMoreProps> {
+export interface SingleAutocompleteSelectFieldProps extends Partial<FetchMoreProps> {
   add?: SingleAutocompleteActionType;
   className?: string;
   error?: boolean;
@@ -49,9 +48,7 @@ export interface SingleAutocompleteSelectFieldProps
   id?: string;
 }
 
-const DebounceAutocomplete: React.ComponentType<DebounceProps<string>> =
-  Debounce;
-
+const DebounceAutocomplete: React.ComponentType<DebounceProps<string>> = Debounce;
 const SingleAutocompleteSelectFieldComponent: React.FC<
   SingleAutocompleteSelectFieldProps
 > = props => {
@@ -87,7 +84,6 @@ const SingleAutocompleteSelectFieldComponent: React.FC<
   const classes = useStyles(props);
   const anchor = React.useRef<HTMLDivElement | null>(null);
   const input = React.useRef<HTMLInputElement | null>(null);
-
   const handleChange = (item: string) => {
     onChange({
       target: {
@@ -112,6 +108,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<
             if (changes.isOpen === false) {
               delete changes.inputValue;
             }
+
             return changes;
           }}
         >
@@ -130,45 +127,39 @@ const SingleAutocompleteSelectFieldComponent: React.FC<
               choices && selectedItem
                 ? choices.filter(c => c.value === selectedItem).length === 0
                 : false;
-
             const choiceFromInputValue = choices.find(
               ({ value: choiceId }) => choiceId === inputValue,
             );
-
             const isValueInValues = !!choiceFromInputValue;
-
-            const isValueInLabels = !!choices.find(
-              choice => choice.label === inputValue,
-            );
-
-            const ensureProperValues = (alwaysCheck: boolean = false) => {
+            const isValueInLabels = !!choices.find(choice => choice.label === inputValue);
+            const ensureProperValues = (alwaysCheck = false) => {
               if ((allowCustomValues || isValueInLabels) && !alwaysCheck) {
                 return;
               }
 
               if (isValueInValues && !isValueInLabels) {
                 reset({ inputValue: choiceFromInputValue.value });
+
                 return;
               }
 
               reset({ inputValue: displayValue });
             };
-
             const displayCustomValue = !!(
               inputValue &&
               inputValue.length > 0 &&
               allowCustomValues &&
               !isValueInLabels
             );
-
             const handleBlur = () => {
               ensureProperValues(true);
+
               if (onBlur) {
                 onBlur();
               }
+
               closeMenu();
             };
-
             const handleFocus = () => {
               if (fetchOnFocus) {
                 fetchChoices(inputValue);
@@ -178,16 +169,14 @@ const SingleAutocompleteSelectFieldComponent: React.FC<
                 input.current.select();
               }
             };
-
             const handleToggleMenu = () => {
               if (disabled) {
                 return;
               }
+
               toggleMenu();
             };
-
             const TextFieldComponent = nakedInput ? InputBase : TextField;
-
             const commonInputProps = {
               ...InputProps,
               endAdornment: (
@@ -208,7 +197,6 @@ const SingleAutocompleteSelectFieldComponent: React.FC<
               onFocus: handleFocus,
               ref: anchor,
             };
-
             const nakedInputProps = nakedInput
               ? {
                   "aria-label": "naked",
@@ -220,14 +208,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<
               : {};
 
             return (
-              <div
-                className={clsx(
-                  classes.container,
-                  "click-outside-ignore",
-                  className,
-                )}
-                {...rest}
-              >
+              <div className={clsx(classes.container, "click-outside-ignore", className)} {...rest}>
                 <TextFieldComponent
                   {...nakedInputProps}
                   InputProps={commonInputProps}
@@ -289,10 +270,11 @@ const SingleAutocompleteSelectFieldComponent: React.FC<
     </DebounceAutocomplete>
   );
 };
-
-const SingleAutocompleteSelectField: React.FC<
-  SingleAutocompleteSelectFieldProps
-> = ({ choices, fetchChoices, ...rest }) => {
+const SingleAutocompleteSelectField: React.FC<SingleAutocompleteSelectFieldProps> = ({
+  choices,
+  fetchChoices,
+  ...rest
+}) => {
   const [query, setQuery] = React.useState("");
 
   if (fetchChoices) {

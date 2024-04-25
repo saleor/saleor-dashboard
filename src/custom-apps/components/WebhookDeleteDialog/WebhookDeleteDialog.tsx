@@ -55,5 +55,6 @@ const WebhookDeleteDialog: React.FC<WebhookDeleteDialogProps> = ({
     </ActionDialog>
   );
 };
+
 WebhookDeleteDialog.displayName = "WebhookDeleteDialog";
 export default WebhookDeleteDialog;

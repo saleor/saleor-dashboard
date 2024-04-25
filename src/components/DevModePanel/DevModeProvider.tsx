@@ -15,12 +15,11 @@ export function DevModeProvider({ children }) {
   // dashboard to be passed to the dev mode panel
   const [devModeContent, setDevModeContent] = useState("");
   const [isDevModeVisible, setDevModeVisibility] = useState(false);
-
   const params = extractQueryParams(useLocation().search);
-
   const triggerHandler = ({ shift }: { shift: boolean }) => {
     if (shift) {
       setDevModeContent(DevModeQuery);
+
       const variables = JSON.stringify(
         {
           filter: getFilterVariables(params),
@@ -28,11 +27,13 @@ export function DevModeProvider({ children }) {
         null,
         2,
       );
+
       setVariables(variables);
     } else {
       setDevModeContent("");
       setVariables("");
     }
+
     setDevModeVisibility(!isDevModeVisible);
   };
 

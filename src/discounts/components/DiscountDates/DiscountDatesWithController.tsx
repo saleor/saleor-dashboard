@@ -18,9 +18,7 @@ export const DiscountDatesWithController = <ErrorCode,>({
   const { field } = useController<DiscoutFormData, "dates">({
     name: "dates",
   });
-
   const startDateError = formState.errors?.dates?.startDate;
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     field.onChange({
       ...field.value,

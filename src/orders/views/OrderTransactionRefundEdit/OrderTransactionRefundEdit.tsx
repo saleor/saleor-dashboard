@@ -20,16 +20,11 @@ interface OrderTransactionRefundProps {
   refundId: string;
 }
 
-const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({
-  orderId,
-  refundId,
-}) => {
+const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({ orderId, refundId }) => {
   const notify = useNotifier();
   const navigate = useNavigator();
 
-  const [linesErrors, setLinesErrors] = useState<OrderTransactionRefundError[]>(
-    [],
-  );
+  const [linesErrors, setLinesErrors] = useState<OrderTransactionRefundError[]>([]);
 
   const { data, loading } = useOrderDetailsGrantRefundQuery({
     displayLoader: true,
@@ -59,14 +54,12 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({
     },
   });
 
-  const handleUpdateRefund = async (
-    submitData: OrderTransactionRefundPageFormData,
-  ) => {
+  const handleUpdateRefund = async (submitData: OrderTransactionRefundPageFormData) => {
     if (!data?.order || !draftRefund) {
       return;
     }
-    const { amount, reason, linesToRefund, includeShipping, transactionId } =
-      submitData;
+
+    const { amount, reason, linesToRefund, includeShipping, transactionId } = submitData;
 
     const dirtyLinesToRefund = linesToRefund.filter(item => item.isDirty);
 
@@ -80,10 +73,12 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({
       draftRefund.lines?.reduce<string[]>((acc, line) => {
         dirtyLinesToRefund.forEach(qty => {
           const orderLine = data.order!.lines[qty.row];
+
           if (line.orderLine.id === orderLine.id && !acc.includes(line.id)) {
             acc.push(line.id);
           }
         });
+
         return acc;
       }, []) ?? [];
 
@@ -113,32 +108,26 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({
     }
   };
 
-  const draftRefund:
-    | OrderDetailsGrantRefundFragment["grantedRefunds"][0]
-    | undefined = data?.order?.grantedRefunds.find(
-    refund => refund.id === refundId,
-  );
+  const draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0] | undefined =
+    data?.order?.grantedRefunds.find(refund => refund.id === refundId);
 
-  const [transferFunds, transferFundsOpts] =
-    useOrderSendRefundForGrantedRefundMutation({
-      onCompleted: submitData => {
-        if (
-          submitData.transactionRequestRefundForGrantedRefund?.errors.length ===
-          0
-        ) {
-          notify({
-            status: "success",
-            text: "Refund has been sent",
-          });
-          navigate(orderUrl(orderId));
-        }
-      },
-    });
+  const [transferFunds, transferFundsOpts] = useOrderSendRefundForGrantedRefundMutation({
+    onCompleted: submitData => {
+      if (submitData.transactionRequestRefundForGrantedRefund?.errors.length === 0) {
+        notify({
+          status: "success",
+          text: "Refund has been sent",
+        });
+        navigate(orderUrl(orderId));
+      }
+    },
+  });
 
   const handleTransferFunds = async () => {
     if (!draftRefund?.transaction) {
       return;
     }
+
     extractMutationErrors(
       transferFunds({
         variables: {

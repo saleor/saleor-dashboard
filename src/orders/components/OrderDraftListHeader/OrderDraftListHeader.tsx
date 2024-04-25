@@ -44,12 +44,7 @@ export const OrderDraftListHeader = ({
       withoutBorder
       isAlignToRight={false}
     >
-      <Box
-        __flex={1}
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-      >
+      <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
         <Box display="flex">
           <Box marginX={3} display="flex" alignItems="center">
             <ChevronRightIcon />
@@ -82,11 +77,7 @@ export const OrderDraftListHeader = ({
                 onClick={onAdd}
                 data-test-id="create-draft-order-button"
               >
-                <FormattedMessage
-                  id="LshEVn"
-                  defaultMessage="Create order"
-                  description="button"
-                />
+                <FormattedMessage id="LshEVn" defaultMessage="Create order" description="button" />
               </Button>
             </Tooltip.Trigger>
             <Tooltip.Content>

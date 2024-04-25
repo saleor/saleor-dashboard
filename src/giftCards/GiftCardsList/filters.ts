@@ -1,10 +1,6 @@
 // @ts-strict-ignore
 import { FilterElement, IFilter } from "@dashboard/components/Filter";
-import {
-  GiftCardFilterInput,
-  SearchCustomersQuery,
-  SearchProductsQuery,
-} from "@dashboard/graphql";
+import { GiftCardFilterInput, SearchCustomersQuery, SearchProductsQuery } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 import {
   createFilterTabUtils,
@@ -131,16 +127,8 @@ export function getFilterQueryParam(
   filter: FilterElement<GiftCardListFilterKeys>,
 ): GiftCardListUrlFilters {
   const { name } = filter;
-
-  const {
-    initialBalanceAmount,
-    currentBalanceAmount,
-    tag,
-    currency,
-    usedBy,
-    product,
-    status,
-  } = GiftCardListFilterKeys;
+  const { initialBalanceAmount, currentBalanceAmount, tag, currency, usedBy, product, status } =
+    GiftCardListFilterKeys;
 
   switch (name) {
     case currency:
@@ -232,9 +220,7 @@ export function createFilterStructure(
         intl.formatMessage(messages.initialBalanceLabel),
         opts.initialBalanceAmount.value,
       ),
-      multiple:
-        opts?.initialBalanceAmount?.value?.min !==
-        opts?.initialBalanceAmount?.value?.max,
+      multiple: opts?.initialBalanceAmount?.value?.min !== opts?.initialBalanceAmount?.value?.max,
       active: opts.initialBalanceAmount.active,
       dependencies: [GiftCardListFilterKeys.currency],
     },
@@ -245,9 +231,7 @@ export function createFilterStructure(
         intl.formatMessage(messages.currentBalanceLabel),
         opts.currentBalanceAmount.value,
       ),
-      multiple:
-        opts?.currentBalanceAmount?.value?.min !==
-        opts?.currentBalanceAmount?.value?.max,
+      multiple: opts?.currentBalanceAmount?.value?.min !== opts?.currentBalanceAmount?.value?.max,
       active: opts.currentBalanceAmount.active,
       dependencies: [GiftCardListFilterKeys.currency],
     },
@@ -339,10 +323,10 @@ export function createFilterStructure(
 
 export const storageUtils = createFilterTabUtils<string>(GIFT_CARD_FILTERS_KEY);
 
-export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
-  createFilterUtils<GiftCardListUrlQueryParams, GiftCardListUrlFilters>(
-    GiftCardListUrlFiltersEnum,
-  );
+export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
+  GiftCardListUrlQueryParams,
+  GiftCardListUrlFilters
+>(GiftCardListUrlFiltersEnum);
 
 export function getFilterVariables({
   status,
@@ -377,7 +361,7 @@ export function getFilterVariables({
 
   return {
     code: query,
-    isActive: !!status ? status === "enabled" : undefined,
+    isActive: status ? status === "enabled" : undefined,
     tags: tag,
     usedBy,
     products: product,

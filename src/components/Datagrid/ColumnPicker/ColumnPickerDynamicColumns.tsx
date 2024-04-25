@@ -17,12 +17,7 @@ export const ColumnPickerDynamicColumns = ({
   onToggle,
 }: ColumnPickerDynamicColumnsProps) => (
   <Box data-test-id="dynamic-col-container">
-    <Box
-      display="flex"
-      justifyContent="space-between"
-      alignItems="center"
-      marginTop={3}
-    >
+    <Box display="flex" justifyContent="space-between" alignItems="center" marginTop={3}>
       <Text size={1} color="default2">
         <FormattedMessage {...messages.custom} />
       </Text>
@@ -37,13 +32,7 @@ export const ColumnPickerDynamicColumns = ({
     {dynamicColumns
       ?.filter(column => !!column.metaGroup)
       .map(column => (
-        <Box
-          display="flex"
-          alignItems="center"
-          gap={2}
-          padding={1}
-          key={column.id}
-        >
+        <Box display="flex" alignItems="center" gap={2} padding={1} key={column.id}>
           <Button
             onClick={() => onToggle(column.id)}
             data-test-id={`remove-dynamic-col-button-${column.title}`}
@@ -56,12 +45,7 @@ export const ColumnPickerDynamicColumns = ({
           <Text size={3} color="default2" whiteSpace="nowrap">
             {`${column.metaGroup} /`}
           </Text>
-          <Text
-            size={3}
-            color="default1"
-            ellipsis
-            data-test-id={`column-name-${column.title}`}
-          >
+          <Text size={3} color="default1" ellipsis data-test-id={`column-name-${column.title}`}>
             {column.pickerTitle ?? column.title}
           </Text>
         </Box>

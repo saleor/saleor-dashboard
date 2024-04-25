@@ -3,12 +3,7 @@ import FormSpacer from "@dashboard/components/FormSpacer";
 import { ProductFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from "@material-ui/core";
+import { Dialog, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
 import { Button, Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
@@ -31,7 +26,6 @@ const messages = defineMessages({
     description: "modal button",
   },
 });
-
 const ProductExternalMediaDialog: React.FC<ProductExternalMediaDialogProps> = ({
   open,
   onClose,
@@ -41,7 +35,6 @@ const ProductExternalMediaDialog: React.FC<ProductExternalMediaDialogProps> = ({
   const initialValues: FormValues = {
     mediaUrl: "",
   };
-
   const handleOnSubmit = (values: FormValues) => {
     onSubmit(values.mediaUrl);
     onClose();
@@ -81,9 +74,7 @@ const ProductExternalMediaDialog: React.FC<ProductExternalMediaDialogProps> = ({
               <Button variant="secondary" onClick={onClose}>
                 <FormattedMessage {...buttonMessages.back} />
               </Button>
-              <Button onClick={submit}>
-                {intl.formatMessage(messages.buttonMessage)}
-              </Button>
+              <Button onClick={submit}>{intl.formatMessage(messages.buttonMessage)}</Button>
             </DialogActions>
           </>
         )}

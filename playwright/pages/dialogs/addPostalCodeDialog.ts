@@ -9,9 +9,7 @@ export class AddPostalCodeDialog {
     readonly zipCodeStartsWithInput = page
       .getByTestId("zip-code-starts-with-input")
       .locator("input"),
-    readonly zipCodeEndsWithInput = page
-      .getByTestId("zip-code-ends-with-input")
-      .locator("input"),
+    readonly zipCodeEndsWithInput = page.getByTestId("zip-code-ends-with-input").locator("input"),
     readonly backButton = page.getByTestId("back"),
     readonly addButton = page.getByTestId("submit"),
   ) {

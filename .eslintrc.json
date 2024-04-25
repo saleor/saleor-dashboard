@@ -4,9 +4,11 @@
     "es2021": true
   },
   "extends": [
-    "standard-with-typescript",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended",
     "plugin:react/recommended",
-    "prettier"
+    "plugin:prettier/recommended"
   ],
   "parserOptions": {
     "ecmaVersion": "latest",
@@ -18,17 +20,17 @@
       "version": "detect"
     }
   },
-  "plugins": [
-    "react",
-    "import",
-    "local-rules",
-    "cypress",
-    "formatjs",
-    "react-refresh",
-    "react-hooks",
-    "simple-import-sort"
-  ],
+  "plugins": ["import", "local-rules", "formatjs", "react-refresh", "simple-import-sort"],
   "overrides": [
+    {
+      "files": ["playwright/**/*.ts"],
+      "parserOptions": {
+        "project": "./playwright/tsconfig.json"
+      },
+      "rules": {
+        "no-console": "off"
+      }
+    },
     {
       "files": ["src/**/*.test.*", "src/**/*.stories.*"],
       "rules": {
@@ -37,7 +39,6 @@
     }
   ],
   "rules": {
-    // Custom rules:
     "import/no-duplicates": "error",
     "import/no-extraneous-dependencies": "off", // imports are handled by simple-import-sort/sort
     "import/no-internal-modules": "off", // imports are handled by simple-import-sort/sort
@@ -45,7 +46,30 @@
     "sort-imports": "off", // imports are handled by simple-import-sort/sort
     "simple-import-sort/imports": "warn",
     "simple-import-sort/exports": "warn",
-    "react-hooks/rules-of-hooks": "error",
+    "react-refresh/only-export-components": "warn",
+    "lines-between-class-members": ["error", "always"],
+    "padding-line-between-statements": [
+      "error",
+      // After directives (like 'use-strict'), except between directives
+      { "blankLine": "always", "prev": "directive", "next": "*" },
+      { "blankLine": "any", "prev": "directive", "next": "directive" },
+
+      // After imports, except between imports
+      { "blankLine": "always", "prev": "import", "next": "*" },
+      { "blankLine": "any", "prev": "import", "next": "import" },
+
+      // Before and after every sequence of variable declarations
+      { "blankLine": "always", "prev": "*", "next": ["const", "let", "var"] },
+      { "blankLine": "always", "prev": ["const", "let", "var"], "next": "*" },
+      { "blankLine": "any", "prev": ["const", "let", "var"], "next": ["const", "let", "var"] },
+
+      // Before and after class declaration, if, while, switch, try
+      { "blankLine": "always", "prev": "*", "next": ["class", "if", "while", "switch", "try"] },
+      { "blankLine": "always", "prev": ["class", "if", "while", "switch", "try"], "next": "*" },
+
+      // Before return statements
+      { "blankLine": "always", "prev": "*", "next": "return" }
+    ],
     "formatjs/enforce-id": [
       "error",
       {
@@ -75,29 +99,11 @@
     "@typescript-eslint/no-confusing-void-expression": "off",
     // Migration in progress:
     // Tracked in https://github.com/saleor/saleor-dashboard/issues/3813
-    "@typescript-eslint/no-unnecessary-type-assertion": "off",
-    "@typescript-eslint/prefer-reduce-type-parameter": "off",
-    "@typescript-eslint/promise-function-async": "off",
-    "@typescript-eslint/return-await": "off",
-    "@typescript-eslint/space-before-function-paren": "off",
-    "@typescript-eslint/strict-boolean-expressions": "off",
-    "multiline-ternary": "off",
-    "no-extra-boolean-cast": "off",
-    "@typescript-eslint/await-thenable": "off",
-    "@typescript-eslint/ban-ts-comment": "off",
-    "@typescript-eslint/ban-types": "off",
-    "@typescript-eslint/consistent-type-assertions": "off",
-    "@typescript-eslint/naming-convention": "off",
-    "@typescript-eslint/no-base-to-string": "off",
-    "@typescript-eslint/no-dynamic-delete": "off",
-    "@typescript-eslint/no-invalid-void-type": "off",
-    "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
-    "@typescript-eslint/no-redeclare": "off",
-    "@typescript-eslint/prefer-optional-chain": "off",
-    "@typescript-eslint/restrict-plus-operands": "off",
-    "@typescript-eslint/restrict-template-expressions": "off",
-    "react-refresh/only-export-components": "warn"
+    "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": "off"
   },
   "ignorePatterns": ["node_modules/", "**/types/**/*", "type-policies.ts"]
 }

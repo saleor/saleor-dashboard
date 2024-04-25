@@ -6,23 +6,12 @@ import { DatagridChangeStateContext } from "@dashboard/components/Datagrid/hooks
 import { OrderDetailsFragment } from "@dashboard/graphql";
 import { orderTransactionRefundEditUrl } from "@dashboard/orders/urls";
 import { ListViews } from "@dashboard/types";
-import {
-  Box,
-  Button,
-  EditIcon,
-  PlusIcon,
-  Text,
-  Tooltip,
-} from "@saleor/macaw-ui-next";
+import { Box, Button, EditIcon, PlusIcon, Text, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
-import {
-  createGetCellContent,
-  useDatagridOpts,
-  useOrderRefundStaticColumns,
-} from "./datagrid";
+import { createGetCellContent, useDatagridOpts, useOrderRefundStaticColumns } from "./datagrid";
 import { refundGridMessages } from "./messages";
 import { manualRefundsExtractor, mergeRefunds } from "./refunds";
 import { getNotEditabledRefundMessage, isRefundEditable } from "./utils";
@@ -39,27 +28,19 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
   onRefundAdd,
 }) => {
   const intl = useIntl();
-  const { datagrid, currentTheme, settings, handleColumnChange } =
-    useDatagridOpts(ListViews.ORDER_REFUNDS);
-
+  const { datagrid, currentTheme, settings, handleColumnChange } = useDatagridOpts(
+    ListViews.ORDER_REFUNDS,
+  );
   const orderDraftDetailsStaticColumns = useOrderRefundStaticColumns();
 
-  const {
-    handlers,
-    visibleColumns,
-    staticColumns,
-    selectedColumns,
-    recentlyAddedColumn,
-  } = useColumns({
-    staticColumns: orderDraftDetailsStaticColumns,
-    selectedColumns: settings?.columns ?? [],
-    onSave: handleColumnChange,
-  });
+  const { handlers, visibleColumns, staticColumns, selectedColumns, recentlyAddedColumn } =
+    useColumns({
+      staticColumns: orderDraftDetailsStaticColumns,
+      selectedColumns: settings?.columns ?? [],
+      onSave: handleColumnChange,
+    });
 
-  const mergedRefunds = mergeRefunds(
-    order?.grantedRefunds,
-    manualRefundsExtractor(order, intl),
-  );
+  const mergedRefunds = mergeRefunds(order?.grantedRefunds, manualRefundsExtractor(order, intl));
 
   const getCellContent = createGetCellContent({
     columns: visibleColumns,
@@ -76,12 +57,7 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
       {
         label: "",
         Icon: isEditable ? (
-          <Link
-            to={orderTransactionRefundEditUrl(
-              orderId,
-              (mergedRefunds ?? [])[index]?.id,
-            )}
-          >
+          <Link to={orderTransactionRefundEditUrl(orderId, (mergedRefunds ?? [])[index]?.id)}>
             <EditIcon />
           </Link>
         ) : (
@@ -102,12 +78,7 @@ export const OrderRefundDatagrid: React.FC<OrderRefundDatagridProps> = ({
 
   return (
     <DashboardCard>
-      <Box
-        paddingX={6}
-        paddingTop={6}
-        display="flex"
-        justifyContent="space-between"
-      >
+      <Box paddingX={6} paddingTop={6} display="flex" justifyContent="space-between">
         <Text size={5} fontWeight="bold">
           <FormattedMessage {...refundGridMessages.refundSection} />
         </Text>

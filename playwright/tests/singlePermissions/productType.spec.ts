@@ -5,7 +5,6 @@ import { ProductTypePage } from "@pages/productTypePage";
 import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "playwright/.auth/productTypeAndAttribute.json" });
-
 test("TC: SALEOR_17 User should be able to navigate to product type list as a staff member using PRODUCT TYPE permission @e2e", async ({
   page,
 }) => {

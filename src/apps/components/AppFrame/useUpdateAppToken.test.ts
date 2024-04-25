@@ -7,7 +7,6 @@ describe("useUpdateAppToken", function () {
   beforeEach(() => {
     jest.resetAllMocks();
   });
-
   it("Doesnt do anything if disabled", () => {
     const { waitFor } = renderHook(props => useUpdateAppToken(props), {
       initialProps: {
@@ -21,20 +20,15 @@ describe("useUpdateAppToken", function () {
       expect(postMessage).not.toHaveBeenCalled();
     });
   });
-
   it("Doesnt do anything if re-rendered, but token stays the same between renders", () => {
     const localPostMessage = jest.fn();
-
-    const { rerender, waitFor } = renderHook(
-      props => useUpdateAppToken(props),
-      {
-        initialProps: {
-          enabled: true,
-          appToken: "initialToken",
-          postToExtension: postMessage,
-        },
+    const { rerender, waitFor } = renderHook(props => useUpdateAppToken(props), {
+      initialProps: {
+        enabled: true,
+        appToken: "initialToken",
+        postToExtension: postMessage,
       },
-    );
+    });
 
     rerender({
       enabled: true,
@@ -48,18 +42,14 @@ describe("useUpdateAppToken", function () {
       expect(localPostMessage).not.toHaveBeenCalled();
     });
   });
-
   it("Calls postMessage if token changes in props and enabled", async () => {
-    const { rerender, waitFor } = renderHook(
-      props => useUpdateAppToken(props),
-      {
-        initialProps: {
-          enabled: true,
-          appToken: "initialToken",
-          postToExtension: postMessage,
-        },
+    const { rerender, waitFor } = renderHook(props => useUpdateAppToken(props), {
+      initialProps: {
+        enabled: true,
+        appToken: "initialToken",
+        postToExtension: postMessage,
       },
-    );
+    });
 
     rerender({
       enabled: true,

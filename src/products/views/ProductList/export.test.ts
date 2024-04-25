@@ -1,8 +1,4 @@
-import {
-  ExportScope,
-  FileTypesEnum,
-  ProductFieldEnum,
-} from "@dashboard/graphql";
+import { ExportScope, FileTypesEnum, ProductFieldEnum } from "@dashboard/graphql";
 import { ExportInfoInput } from "@saleor/sdk/dist/apollo/types";
 
 import { ProductsExportParameters } from "./export";
@@ -49,8 +45,6 @@ describe("Passing input to product export", () => {
     const productExportParams = new ProductsExportParameters(mockWithOverflow);
 
     expect(productExportParams.asExportProductsInput()).toStrictEqual(mock);
-    expect(productExportParams.asExportProductsInput()).not.toHaveProperty(
-      "where",
-    );
+    expect(productExportParams.asExportProductsInput()).not.toHaveProperty("where");
   });
 });

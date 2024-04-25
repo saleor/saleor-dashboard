@@ -9,12 +9,8 @@ type ShorterEditorContent = Record<
   string
 >;
 
-export function removeEmptyValues<T extends object>(
-  editorContent: T,
-): Partial<T> {
-  return Object.fromEntries(
-    Object.entries(editorContent).filter(([, val]) => !!val),
-  ) as Partial<T>;
+export function removeEmptyValues<T extends object>(editorContent: T): Partial<T> {
+  return Object.fromEntries(Object.entries(editorContent).filter(([, val]) => !!val)) as Partial<T>;
 }
 
 const longKeysToShortKeys = {
@@ -32,11 +28,8 @@ export const encodeGraphQLStatement = (editorContent: EditorContent) => {
     v: editorContent.variables,
   };
   const stringifiedContent = JSON.stringify(removeEmptyValues(shorterContent));
-
   const editorContentToSaveInUrl =
-    stringifiedContent === "{}"
-      ? ""
-      : LzString.compressToEncodedURIComponent(stringifiedContent);
+    stringifiedContent === "{}" ? "" : LzString.compressToEncodedURIComponent(stringifiedContent);
 
   return `saleor/${editorContentToSaveInUrl}`;
 };
@@ -54,6 +47,7 @@ export const playgroundOpenHandler =
   ({ query, headers, operationName, variables }: PlaygroundOpenHandlerInput) =>
   () => {
     const playgroundURL = new URL(thisURL);
+
     playgroundURL.hash = encodeGraphQLStatement({
       query,
       headers,

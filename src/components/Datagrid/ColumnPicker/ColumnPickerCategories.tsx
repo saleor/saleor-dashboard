@@ -24,8 +24,7 @@ export const ColumnPickerCategories = ({
   onToggle,
   selectedColumns,
 }: ColumnPickerCategoriesProps) => {
-  const { currentCategory, setCurrentCategory } =
-    useCategorySelection(columnCategories);
+  const { currentCategory, setCurrentCategory } = useCategorySelection(columnCategories);
   const { query, setQuery } = useAvailableColumnsQuery(currentCategory);
 
   return (
@@ -38,13 +37,7 @@ export const ColumnPickerCategories = ({
       __width="320px"
     >
       <Box display="flex" flexDirection="column" height="100%">
-        <Box
-          display="flex"
-          paddingX={4}
-          paddingY={2}
-          gap={2}
-          alignItems="center"
-        >
+        <Box display="flex" paddingX={4} paddingY={2} gap={2} alignItems="center">
           <Button
             variant="tertiary"
             size="small"
@@ -58,9 +51,7 @@ export const ColumnPickerCategories = ({
             data-test-id="close-search"
           />
           <Text size={3}>
-            {currentCategory?.name ?? (
-              <FormattedMessage {...messages.categories} />
-            )}
+            {currentCategory?.name ?? <FormattedMessage {...messages.categories} />}
           </Text>
         </Box>
         {currentCategory ? (

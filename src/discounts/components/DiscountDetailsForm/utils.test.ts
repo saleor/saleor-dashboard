@@ -6,23 +6,14 @@ describe("getCurrentConditionsValuesLabels", () => {
   it("should return empty object if no rules", () => {
     expect(getCurrentConditionsValuesLabels([])).toEqual({});
   });
-
   it("should return empty object if no conditions", () => {
-    expect(
-      getCurrentConditionsValuesLabels([
-        { conditions: [] },
-      ] as unknown as Rule[]),
-    ).toEqual({});
+    expect(getCurrentConditionsValuesLabels([{ conditions: [] }] as unknown as Rule[])).toEqual({});
   });
-
   it("should return empty object if no values", () => {
     expect(
-      getCurrentConditionsValuesLabels([
-        { conditions: [{ value: [] }] },
-      ] as unknown as Rule[]),
+      getCurrentConditionsValuesLabels([{ conditions: [{ value: [] }] }] as unknown as Rule[]),
     ).toEqual({});
   });
-
   it("should return object with value as key and label as value", () => {
     expect(
       getCurrentConditionsValuesLabels([

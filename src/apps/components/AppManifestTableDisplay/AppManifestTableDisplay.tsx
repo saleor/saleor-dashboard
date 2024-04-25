@@ -14,9 +14,7 @@ interface AppManifestTableDisplayProps {
 
 const getAppDomainFromManifest = (manifest: string) => new URL(manifest).host;
 
-export const AppManifestTableDisplay = ({
-  manifestUrl,
-}: AppManifestTableDisplayProps) => {
+export const AppManifestTableDisplay = ({ manifestUrl }: AppManifestTableDisplayProps) => {
   const styles = useStyles();
   const intl = useIntl();
   const [copied, setCopied] = useState(false);
@@ -31,7 +29,6 @@ export const AppManifestTableDisplay = ({
             try {
               e.stopPropagation();
               e.preventDefault();
-
               navigator.clipboard.writeText(manifestUrl);
               setCopied(true);
             } catch (e) {

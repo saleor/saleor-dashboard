@@ -11,13 +11,8 @@ interface TaxInputProps {
   change: FormChange;
 }
 
-export const TaxInput: React.FC<TaxInputProps> = ({
-  placeholder,
-  value,
-  change,
-}) => {
+export const TaxInput: React.FC<TaxInputProps> = ({ placeholder, value, change }) => {
   const classes = useStyles();
-
   const handleChange: FormChange = e => {
     let value = e.target.value;
     const splitCharacter = findPriceSeparator(value);
@@ -25,6 +20,7 @@ export const TaxInput: React.FC<TaxInputProps> = ({
 
     if (decimalPart?.length > 3) {
       const shortenedDecimalPart = decimalPart.slice(0, 3);
+
       value = `${integerPart}${splitCharacter}${shortenedDecimalPart}`;
     }
 

@@ -1,13 +1,14 @@
-import type { Page } from "@playwright/test";
 import { URL_LIST } from "@data/url";
 import { BasePage } from "@pages/basePage";
+import type { Page } from "@playwright/test";
 
 export class TranslationsPage extends BasePage {
   readonly page: Page;
+
   readonly basePage: BasePage;
 
-
-  constructor(page: Page,
+  constructor(
+    page: Page,
     readonly translationPl_PL = page.getByTestId("PL_PL"),
     readonly editTranslationNameButton = page.getByTestId("edit-name"),
     readonly translationInput = page.getByTestId("translation-field").locator("input"),
@@ -25,9 +26,19 @@ export class TranslationsPage extends BasePage {
     await this.page.goto(URL_LIST.translations);
   }
 
-  async goToDirectTranslationPage(translationCode: string, translatedObjectType: string, translatedObjectId: string,) {
-    const translationUrl = URL_LIST.translations + translationCode + "/" + translatedObjectType + "/" + translatedObjectId;
-    await this.page.goto(translationUrl)
-  }
+  async goToDirectTranslationPage(
+    translationCode: string,
+    translatedObjectType: string,
+    translatedObjectId: string,
+  ) {
+    const translationUrl =
+      URL_LIST.translations +
+      translationCode +
+      "/" +
+      translatedObjectType +
+      "/" +
+      translatedObjectId;
 
+    await this.page.goto(translationUrl);
+  }
 }

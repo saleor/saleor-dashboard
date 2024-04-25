@@ -43,13 +43,11 @@ export const refundGridMessages = defineMessages({
   },
   notEditableSuccessfully: {
     id: "4i7ED7",
-    defaultMessage:
-      "This refund has been successfully processed and cannot be edited",
+    defaultMessage: "This refund has been successfully processed and cannot be edited",
   },
   notEditablePending: {
     id: "x0n6YG",
-    defaultMessage:
-      "This refund is currently being processed and cannot be edited",
+    defaultMessage: "This refund is currently being processed and cannot be edited",
   },
   notEditableManual: {
     id: "2eHzVW",

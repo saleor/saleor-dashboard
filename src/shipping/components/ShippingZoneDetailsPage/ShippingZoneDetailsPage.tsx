@@ -42,8 +42,7 @@ const messages = defineMessages({
   },
   noCountriesAssigned: {
     id: "y7mfbl",
-    defaultMessage:
-      "Currently, there are no countries assigned to this shipping zone",
+    defaultMessage: "Currently, there are no countries assigned to this shipping zone",
   },
   shipping: {
     id: "G0+gAp",
@@ -52,10 +51,7 @@ const messages = defineMessages({
   },
 });
 
-export interface ShippingZoneDetailsPageProps
-  extends FetchMoreProps,
-    SearchProps,
-    ChannelProps {
+export interface ShippingZoneDetailsPageProps extends FetchMoreProps, SearchProps, ChannelProps {
   disabled: boolean;
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -74,9 +70,7 @@ export interface ShippingZoneDetailsPageProps
   allChannels?: ChannelFragment[];
 }
 
-function warehouseToChoice(
-  warehouse: Record<"id" | "name", string>,
-): SingleAutocompleteChoiceType {
+function warehouseToChoice(warehouse: Record<"id" | "name", string>): SingleAutocompleteChoiceType {
   return {
     label: warehouse.name,
     value: warehouse.id,
@@ -108,31 +102,19 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-
   const initialForm = getInitialFormData(shippingZone);
-
   const [warehouseDisplayValues, setWarehouseDisplayValues] = useStateFromProps<
     MultiAutocompleteChoiceType[]
   >(mapNodeToChoice(shippingZone?.warehouses));
-
   const warehouseChoices = warehouses.map(warehouseToChoice);
-
   const channelChoices = mapNodeToChoice(allChannels);
-
   const [channelsDisplayValues, setChannelDisplayValues] = useStateFromProps<
     MultiAutocompleteChoiceType[]
   >(mapNodeToChoice(shippingZone?.channels));
-
-  const { makeChangeHandler: makeMetadataChangeHandler } =
-    useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
 
   return (
-    <Form
-      initial={initialForm}
-      onSubmit={onSubmit}
-      confirmLeave
-      disabled={disabled}
-    >
+    <Form initial={initialForm} onSubmit={onSubmit} confirmLeave disabled={disabled}>
       {({ change, data, isSaveDisabled, submit, toggleValue }) => {
         const handleWarehouseChange = createMultiAutocompleteSelectHandler(
           toggleValue,
@@ -140,33 +122,25 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
           warehouseDisplayValues,
           warehouseChoices,
         );
-
         const handleChannelChange = createMultiAutocompleteSelectHandler(
           toggleValue,
           setChannelDisplayValues,
           channelsDisplayValues,
           channelChoices,
         );
-
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
           <DetailPageLayout>
             <TopNav href={shippingZonesListUrl()} title={shippingZone?.name} />
             <DetailPageLayout.Content>
-              <ShippingZoneInfo
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
+              <ShippingZoneInfo data={data} disabled={disabled} errors={errors} onChange={change} />
               <CardSpacer />
               <CountryList
                 countries={shippingZone?.countries}
                 disabled={disabled}
                 emptyText={getStringOrPlaceholder(
-                  shippingZone &&
-                    intl.formatMessage(messages.noCountriesAssigned),
+                  shippingZone && intl.formatMessage(messages.noCountriesAssigned),
                 )}
                 onCountryAssign={onCountryAdd}
                 onCountryUnassign={onCountryRemove}
@@ -230,5 +204,6 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
     </Form>
   );
 };
+
 ShippingZoneDetailsPage.displayName = "ShippingZoneDetailsPage";
 export default ShippingZoneDetailsPage;

@@ -5,9 +5,7 @@ export class AddNavigationMenuDialog {
 
   constructor(
     page: Page,
-    readonly menuNameInput = page
-      .getByTestId("menu-name-input")
-      .locator("input"),
+    readonly menuNameInput = page.getByTestId("menu-name-input").locator("input"),
     readonly saveButton = page.getByTestId("submit"),
     readonly backButton = page.getByTestId("back"),
   ) {
@@ -17,6 +15,7 @@ export class AddNavigationMenuDialog {
   async typeNewMenuName(name: string) {
     await this.menuNameInput.fill(name);
   }
+
   async clickSaveButton() {
     await this.saveButton.click();
   }

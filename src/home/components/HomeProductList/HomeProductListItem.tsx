@@ -20,12 +20,7 @@ export const HomeProductListItem = ({
     data-test-id={dataTestId}
   >
     <Link className={sprinkles({ width: "100%", padding: 3 })} to={linkUrl}>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        width="100%"
-      >
+      <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">
         {children}
       </Box>
     </Link>

@@ -7,8 +7,9 @@ describe("useEnvLink", () => {
     // Arrange
     const cloudHref =
       "https://cloud.saleor.io/env/test.com?utm_source=dashboard&utm_content=sidebar_button";
+
     delete (window as { location?: unknown }).location;
-    // @ts-expect-error
+    // @ts-expect-error error
     window.location = { hostname: "test.com" };
 
     // Act
@@ -17,13 +18,13 @@ describe("useEnvLink", () => {
     // Assert
     expect(result.current).toBe(cloudHref);
   });
-
   it("should return link to the cloud environment on staging", () => {
     // Arrange
     const stagingHref =
       "https://staging-cloud.saleor.io/env/test.staging.com?utm_source=dashboard&utm_content=sidebar_button";
+
     delete (window as { location?: unknown }).location;
-    // @ts-expect-error
+    // @ts-expect-error error
     window.location = { hostname: "test.staging.com" };
 
     // Act

@@ -45,18 +45,13 @@ export interface CreatorStepsProps<T> {
 }
 
 function makeCreatorSteps<T extends string | number>() {
-  const CreatorSteps: React.FC<CreatorStepsProps<T>> = ({
-    currentStep,
-    steps,
-    onStepClick,
-  }) => {
+  const CreatorSteps: React.FC<CreatorStepsProps<T>> = ({ currentStep, steps, onStepClick }) => {
     const classes = useStyles({});
 
     return (
       <div className={classes.root}>
         {steps.map((step, stepIndex) => {
-          const visitedStep =
-            steps.findIndex(step => step.value === currentStep) >= stepIndex;
+          const visitedStep = steps.findIndex(step => step.value === currentStep) >= stepIndex;
 
           return (
             <div
@@ -76,6 +71,7 @@ function makeCreatorSteps<T extends string | number>() {
       </div>
     );
   };
+
   CreatorSteps.displayName = "CreatorSteps";
 
   return CreatorSteps;

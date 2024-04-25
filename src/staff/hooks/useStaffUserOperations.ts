@@ -1,7 +1,4 @@
-import {
-  useStaffMemberDeleteMutation,
-  useStaffMemberUpdateMutation,
-} from "@dashboard/graphql";
+import { useStaffMemberDeleteMutation, useStaffMemberUpdateMutation } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
@@ -13,19 +10,16 @@ export const useStaffUserOperations = () => {
   const notify = useNotifier();
   const intl = useIntl();
   const navigate = useNavigator();
-
-  const [updateStaffMember, updateStaffMemberOpts] =
-    useStaffMemberUpdateMutation({
-      onCompleted: data => {
-        if (!data.staffUpdate?.errors.length) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-        }
-      },
-    });
-
+  const [updateStaffMember, updateStaffMemberOpts] = useStaffMemberUpdateMutation({
+    onCompleted: data => {
+      if (!data.staffUpdate?.errors.length) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+      }
+    },
+  });
   const [deleteStaffMember, deleteResult] = useStaffMemberDeleteMutation({
     onCompleted: data => {
       if (!data.staffDelete?.errors.length) {

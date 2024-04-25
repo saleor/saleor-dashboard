@@ -24,10 +24,7 @@ interface TranslationsEntitiesProps {
   params: LanguageEntitiesUrlQueryParams;
 }
 
-const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
-  language,
-  params,
-}) => {
+const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({ language, params }) => {
   const navigate = useNavigator();
   const shop = useShop();
 
@@ -117,6 +114,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
     }),
     [params],
   );
+
   return (
     <TranslationsEntitiesListPage
       filters={{
@@ -130,10 +128,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
       ) : params.tab === "products" ? (
         <TranslationsProductList params={params} variables={queryVariables} />
       ) : params.tab === "collections" ? (
-        <TranslationsCollectionList
-          params={params}
-          variables={queryVariables}
-        />
+        <TranslationsCollectionList params={params} variables={queryVariables} />
       ) : params.tab === "sales" ? (
         <TranslationsSaleList params={params} variables={queryVariables} />
       ) : params.tab === "vouchers" ? (
@@ -143,15 +138,13 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
       ) : params.tab === "attributes" ? (
         <TranslationsAttributeList params={params} variables={queryVariables} />
       ) : params.tab === "shippingMethods" ? (
-        <TranslationsShippingMethodList
-          params={params}
-          variables={queryVariables}
-        />
+        <TranslationsShippingMethodList params={params} variables={queryVariables} />
       ) : params.tab === "menuItems" ? (
         <TranslationsMenuItemList params={params} variables={queryVariables} />
       ) : null}
     </TranslationsEntitiesListPage>
   );
 };
+
 TranslationsEntities.displayName = "TranslationsEntities";
 export default TranslationsEntities;

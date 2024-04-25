@@ -31,14 +31,8 @@ const statusesToMergeLines = [
   FulfillmentStatus.RETURNED,
   FulfillmentStatus.REPLACED,
 ];
-const cancelableStatuses = [
-  FulfillmentStatus.FULFILLED,
-  FulfillmentStatus.WAITING_FOR_APPROVAL,
-];
-
-const OrderFulfilledProductsCard: React.FC<
-  OrderFulfilledProductsCardProps
-> = props => {
+const cancelableStatuses = [FulfillmentStatus.FULFILLED, FulfillmentStatus.WAITING_FOR_APPROVAL];
+const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = props => {
   const {
     fulfillment,
     fulfillmentAllowUnpaid,
@@ -57,9 +51,7 @@ const OrderFulfilledProductsCard: React.FC<
 
   const getLines = () => {
     if (statusesToMergeLines.includes(fulfillment?.status)) {
-      return mergeRepeatedOrderLines(fulfillment.lines).map(
-        order => order.orderLine,
-      );
+      return mergeRepeatedOrderLines(fulfillment.lines).map(order => order.orderLine);
     }
 
     return fulfillment?.lines.map(order => order.orderLine) || [];
@@ -99,11 +91,7 @@ const OrderFulfilledProductsCard: React.FC<
         }
       />
       <CardContent>
-        <OrderDetailsDatagrid
-          lines={getLines()}
-          loading={false}
-          onShowMetadata={onShowMetadata}
-        />
+        <OrderDetailsDatagrid lines={getLines()} loading={false} onShowMetadata={onShowMetadata} />
         <ExtraInfoLines fulfillment={fulfillment} />
       </CardContent>
       {props.children}

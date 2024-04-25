@@ -31,5 +31,6 @@ const FilterCard: React.FC<FilterCardProps> = ({ children, handleClear }) => {
     </Card>
   );
 };
+
 FilterCard.displayName = "FilterCard";
 export default FilterCard;

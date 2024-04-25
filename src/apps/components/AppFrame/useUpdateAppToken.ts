@@ -26,11 +26,7 @@ const debug = createAppsDebug("useUpdateAppToken");
 /**
  * Listens on appToken changes and pushes it to the App if changed.
  */
-export const useUpdateAppToken = ({
-  enabled,
-  appToken,
-  postToExtension,
-}: Args) => {
+export const useUpdateAppToken = ({ enabled, appToken, postToExtension }: Args) => {
   const cachedToken = usePreviousValue(appToken);
 
   useEffect(() => {

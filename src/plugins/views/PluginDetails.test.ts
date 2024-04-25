@@ -12,7 +12,6 @@ const baseConfig: Omit<ConfigurationItemFragment, "name" | "type" | "value"> = {
   helpText: "",
   label: "",
 };
-
 const config: ConfigurationItemFragment[] = [
   {
     ...baseConfig,
@@ -39,7 +38,6 @@ const config: ConfigurationItemFragment[] = [
     value: "val4",
   },
 ];
-
 const input: ConfigurationItemInput[] = [
   {
     name: "field-1",
@@ -78,7 +76,6 @@ test("Ensure that no secret is sent in input", () => {
     ),
   ).toBeFalsy();
 });
-
 test("Handles null input", () => {
   const output = getConfigurationInput(null, null);
 

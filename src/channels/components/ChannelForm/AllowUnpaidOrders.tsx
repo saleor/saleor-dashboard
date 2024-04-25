@@ -25,9 +25,7 @@ export const AllowUnpaidOrders = ({
       data-test-id="allow-unpaid-orders-checkbox"
       checked={isChecked}
       error={hasError}
-      onCheckedChange={value =>
-        onChange({ target: { name: "allowUnpaidOrders", value } })
-      }
+      onCheckedChange={value => onChange({ target: { name: "allowUnpaidOrders", value } })}
       disabled={disabled}
     >
       <Text>

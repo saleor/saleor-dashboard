@@ -1,7 +1,5 @@
 import Hr from "@dashboard/components/Hr";
-import RadioGroupField, {
-  RadioGroupFieldChoice,
-} from "@dashboard/components/RadioGroupField";
+import RadioGroupField, { RadioGroupFieldChoice } from "@dashboard/components/RadioGroupField";
 import {
   ExportErrorFragment,
   ExportProductsInput,
@@ -47,7 +45,6 @@ export interface ExportDialogSettingsProps {
 }
 
 const formFields: Array<keyof ExportSettingsInput> = ["fileType", "scope"];
-
 const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
   data,
   errors,
@@ -59,29 +56,25 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
-
   const formErrors = getFormErrors(formFields, errors);
-
-  const productExportTypeChoices: Array<RadioGroupFieldChoice<FileTypesEnum>> =
-    [
-      {
-        label: intl.formatMessage({
-          id: "9Tl/bT",
-          defaultMessage: "Spreadsheet for Excel, Numbers etc.",
-          description: "export items as spreadsheet",
-        }),
-        value: FileTypesEnum.XLSX,
-      },
-      {
-        label: intl.formatMessage({
-          id: "li1BBk",
-          defaultMessage: "Plain CSV file",
-          description: "export items as csv file",
-        }),
-        value: FileTypesEnum.CSV,
-      },
-    ];
-
+  const productExportTypeChoices: Array<RadioGroupFieldChoice<FileTypesEnum>> = [
+    {
+      label: intl.formatMessage({
+        id: "9Tl/bT",
+        defaultMessage: "Spreadsheet for Excel, Numbers etc.",
+        description: "export items as spreadsheet",
+      }),
+      value: FileTypesEnum.XLSX,
+    },
+    {
+      label: intl.formatMessage({
+        id: "li1BBk",
+        defaultMessage: "Plain CSV file",
+        description: "export items as csv file",
+      }),
+      value: FileTypesEnum.CSV,
+    },
+  ];
   const exportScopeChoices = [
     {
       label: exportScopeLabels.allItems,

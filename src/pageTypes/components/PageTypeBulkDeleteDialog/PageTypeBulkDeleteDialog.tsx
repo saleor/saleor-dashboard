@@ -62,5 +62,6 @@ const PageTypeBulkDeleteDialog: React.FC<PageTypeBulkDeleteDialogProps> = ({
     </ActionDialog>
   );
 };
+
 PageTypeBulkDeleteDialog.displayName = "PageTypeBulkDeleteDialog";
 export default PageTypeBulkDeleteDialog;

@@ -6,9 +6,7 @@ export interface AppListContextValues {
   retryAppInstallation: (installationId: string) => void;
 }
 
-export const AppListContext = React.createContext<
-  AppListContextValues | undefined
->(undefined);
+export const AppListContext = React.createContext<AppListContextValues | undefined>(undefined);
 
 export const useAppListContext = () => {
   const context = React.useContext(AppListContext);

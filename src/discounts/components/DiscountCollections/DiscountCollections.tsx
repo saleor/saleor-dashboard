@@ -9,10 +9,7 @@ import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/Tab
 import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import {
-  SaleDetailsFragment,
-  VoucherDetailsFragment,
-} from "@dashboard/graphql";
+import { SaleDetailsFragment, VoucherDetailsFragment } from "@dashboard/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Card, TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
@@ -31,7 +28,6 @@ export interface DiscountCollectionsProps extends ListProps, ListActions {
 }
 
 const numberOfColumns = 4;
-
 const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
   const {
     discount: sale,
@@ -45,7 +41,6 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
     toolbar,
   } = props;
   const classes = useStyles(props);
-
   const intl = useIntl();
 
   return (
@@ -53,10 +48,7 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
       <CardTitle
         title={intl.formatMessage(messages.discountCollectionsHeader)}
         toolbar={
-          <Button
-            onClick={onCollectionAssign}
-            data-test-id="assign-collection-button"
-          >
+          <Button onClick={onCollectionAssign} data-test-id="assign-collection-button">
             <FormattedMessage {...messages.discountCollectionsButton} />
           </Button>
         }
@@ -77,14 +69,10 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
           toolbar={toolbar}
         >
           <TableCell className={classes.colName}>
-            <FormattedMessage
-              {...messages.discountCollectionsTableProductHeader}
-            />
+            <FormattedMessage {...messages.discountCollectionsTableProductHeader} />
           </TableCell>
           <TableCell className={classes.colProducts}>
-            <FormattedMessage
-              {...messages.discountCollectionsTableProductNumber}
-            />
+            <FormattedMessage {...messages.discountCollectionsTableProductNumber} />
           </TableCell>
           <TableCell />
         </TableHead>
@@ -98,6 +86,7 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
             mapEdgesToItems(sale?.collections),
             collection => {
               const isSelected = collection ? isChecked(collection.id) : false;
+
               return (
                 <TableRowLink
                   data-test-id="assigned-specific-product"
@@ -116,16 +105,10 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
                     />
                   </TableCell>
                   <TableCell className={classes.colName}>
-                    {maybe<React.ReactNode>(
-                      () => collection.name,
-                      <Skeleton />,
-                    )}
+                    {maybe<React.ReactNode>(() => collection.name, <Skeleton />)}
                   </TableCell>
                   <TableCell className={classes.colProducts}>
-                    {maybe<React.ReactNode>(
-                      () => collection.products.totalCount,
-                      <Skeleton />,
-                    )}
+                    {maybe<React.ReactNode>(() => collection.products.totalCount, <Skeleton />)}
                   </TableCell>
                   <TableCell className={classes.colActions}>
                     <TableButtonWrapper>
@@ -157,5 +140,6 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
     </Card>
   );
 };
+
 DiscountCollections.displayName = "DiscountCollections";
 export default DiscountCollections;

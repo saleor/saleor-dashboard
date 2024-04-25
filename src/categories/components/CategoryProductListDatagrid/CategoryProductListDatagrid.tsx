@@ -16,9 +16,7 @@ import { useIntl } from "react-intl";
 import { createGetCellContent, getColumns } from "./datagrid";
 
 interface CategoryListDatagridProps extends PageListProps {
-  products?: RelayToFlat<
-    NonNullable<CategoryDetailsQuery["category"]>["products"]
-  >;
+  products?: RelayToFlat<NonNullable<CategoryDetailsQuery["category"]>["products"]>;
   disabled: boolean;
   selectionActionButton?: ReactNode | null;
   onSelectProductsIds: (ids: number[], clearSelection: () => void) => void;
@@ -36,21 +34,16 @@ export const CategoryProductListDatagrid = ({
   const intl = useIntl();
   const availableColumns = useMemo(() => getColumns(intl), [intl]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getCellContent = useCallback(
-    createGetCellContent(products!, availableColumns),
-    [products, availableColumns],
-  );
-
+  const getCellContent = useCallback(createGetCellContent(products!, availableColumns), [
+    products,
+    availableColumns,
+  ]);
   const { visibleColumns, handlers } = useColumns({
     staticColumns: availableColumns,
     selectedColumns: ["name"],
     onSave: () => null,
   });
-
-  const handleRowAnchor = useCallback(
-    ([, row]: Item) => productUrl(products![row].id),
-    [products],
-  );
+  const handleRowAnchor = useCallback(([, row]: Item) => productUrl(products![row].id), [products]);
 
   return (
     <DatagridChangeStateContext.Provider value={datagridState}>

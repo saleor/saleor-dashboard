@@ -34,17 +34,10 @@ function displayLoader(prevState: IAppState, value: boolean): IAppState {
   };
 }
 
-function reduceAppState(
-  prevState: IAppState,
-  action: AppStateReducerAction,
-): IAppState {
+function reduceAppState(prevState: IAppState, action: AppStateReducerAction): IAppState {
   switch (action.type) {
     case "displayError":
-      return displayError(
-        prevState,
-        action.payload.error,
-        action.payload.errorId,
-      );
+      return displayError(prevState, action.payload.error, action.payload.errorId);
     case "displayLoader":
       return displayLoader(prevState, action.payload.value);
     default:

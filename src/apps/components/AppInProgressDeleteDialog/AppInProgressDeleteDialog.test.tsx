@@ -9,6 +9,7 @@ describe("Apps AppInProgressDeleteDialog", () => {
   it("displays action text with app name when app name passed", () => {
     // Arrange
     const name = "Test App";
+
     render(
       <Wrapper>
         <AppInProgressDeleteDialog
@@ -20,16 +21,13 @@ describe("Apps AppInProgressDeleteDialog", () => {
         />
       </Wrapper>,
     );
-    const dialogContent = screen.getByTestId("dialog-content");
 
+    const dialogContent = screen.getByTestId("dialog-content");
     // Assert
-    const expectedText = msgs.deleteNamedApp.defaultMessage.replace(
-      "{name}",
-      name,
-    );
+    const expectedText = msgs.deleteNamedApp.defaultMessage.replace("{name}", name);
+
     expect(dialogContent).toHaveTextContent(expectedText);
   });
-
   it("displays action text without app name when app name is empty", () => {
     // Arrange
     render(
@@ -43,13 +41,13 @@ describe("Apps AppInProgressDeleteDialog", () => {
         />
       </Wrapper>,
     );
-    const dialogContent = screen.getByTestId("dialog-content");
 
+    const dialogContent = screen.getByTestId("dialog-content");
     // Assert
     const expectedText = msgs.deleteApp.defaultMessage;
+
     expect(dialogContent).toHaveTextContent(expectedText);
   });
-
   it("displays action text without app name when app name is null", () => {
     // Arrange
     render(
@@ -63,10 +61,11 @@ describe("Apps AppInProgressDeleteDialog", () => {
         />
       </Wrapper>,
     );
-    const dialogContent = screen.getByTestId("dialog-content");
 
+    const dialogContent = screen.getByTestId("dialog-content");
     // Assert
     const expectedText = msgs.deleteApp.defaultMessage;
+
     expect(dialogContent).toHaveTextContent(expectedText);
   });
 });

@@ -36,13 +36,7 @@ export const ListFilters = <TFilterKeys extends string = string>({
   return (
     <>
       {filtersEnabled && <LegacyFiltersPresetsAlert />}
-      <Box
-        display="grid"
-        __gridTemplateColumns="auto 1fr"
-        gap={4}
-        paddingBottom={2}
-        paddingX={6}
-      >
+      <Box display="grid" __gridTemplateColumns="auto 1fr" gap={4} paddingBottom={2} paddingX={6}>
         <Box display="flex" alignItems="center" gap={4}>
           {filtersEnabled ? (
             <ExpressionFilters data-test-id="filters-button" />

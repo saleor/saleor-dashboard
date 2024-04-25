@@ -1,7 +1,4 @@
-import {
-  SearchCatalogQueryHookResult,
-  useSearchCatalogQuery,
-} from "@dashboard/graphql";
+import { SearchCatalogQueryHookResult, useSearchCatalogQuery } from "@dashboard/graphql";
 import useDebounce from "@dashboard/hooks/useDebounce";
 import { useState } from "react";
 

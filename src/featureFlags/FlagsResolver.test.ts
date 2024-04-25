@@ -4,7 +4,6 @@ import { Strategy } from "./Strategy";
 jest.mock("./availableFlags", () => ({
   isSupported: () => true,
 }));
-
 describe("featureFlags/FlagsResolver", () => {
   it("fetches flags data in given order", async () => {
     // Arrange
@@ -13,21 +12,17 @@ describe("featureFlags/FlagsResolver", () => {
         flag1: { enabled: true, payload: "test1" },
       }),
     } as unknown as Strategy;
-
     const strategy2 = {
       fetchAll: () => ({
         flag1: { enabled: true, payload: "test2" },
       }),
     } as unknown as Strategy;
-
     const defaultStrategy = {
       fetchAll: () => ({
         flag1: { enabled: true, payload: "default" },
       }),
     } as unknown as Strategy;
-
     const resolver = new FlagsResolver([strategy1, strategy2], defaultStrategy);
-
     // Act
     const results = await resolver.fetchAll().getResult();
 
@@ -38,7 +33,6 @@ describe("featureFlags/FlagsResolver", () => {
       { flag1: { enabled: true, payload: "default" } },
     ]);
   });
-
   // Arrange
   it.each([
     {
@@ -80,23 +74,18 @@ describe("featureFlags/FlagsResolver", () => {
         flagD: { enabled: true, payload: "some default" },
       },
     },
-  ])(
-    "combines flags acorrding to the order",
-    async ({ strategies, expected }) => {
-      const defaultStrategy = {
-        fetchAll: () => ({
-          flag1: { enabled: true, payload: "default" },
-          flagD: { enabled: true, payload: "some default" },
-        }),
-      } as unknown as Strategy;
+  ])("combines flags acorrding to the order", async ({ strategies, expected }) => {
+    const defaultStrategy = {
+      fetchAll: () => ({
+        flag1: { enabled: true, payload: "default" },
+        flagD: { enabled: true, payload: "some default" },
+      }),
+    } as unknown as Strategy;
+    const resolver = new FlagsResolver(strategies, defaultStrategy);
+    // Act
+    const results = await resolver.fetchAll().combineWithPriorities();
 
-      const resolver = new FlagsResolver(strategies, defaultStrategy);
-
-      // Act
-      const results = await resolver.fetchAll().combineWithPriorities();
-
-      // Assert
-      expect(results).toEqual(expected);
-    },
-  );
+    // Assert
+    expect(results).toEqual(expected);
+  });
 });

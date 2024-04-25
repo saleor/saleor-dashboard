@@ -25,10 +25,10 @@ export const DiscountSavebar = ({
   const intl = useIntl();
   const notify = useNotifier();
   const { isDirty } = formState;
-
   const handleSubmit = () => {
     if (isDirty) {
       onSubmit();
+
       return;
     }
 

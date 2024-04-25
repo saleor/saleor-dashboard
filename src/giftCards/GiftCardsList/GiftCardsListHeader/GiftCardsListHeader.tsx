@@ -15,7 +15,6 @@ import GiftCardsListHeaderAlert from "./GiftCardsListHeaderAlert";
 const GiftCardsListHeader: React.FC = () => {
   const intl = useIntl();
   const navigate = useNavigator();
-
   const {
     openCreateDialog,
     openBulkCreateDialog,
@@ -23,7 +22,6 @@ const GiftCardsListHeader: React.FC = () => {
     openSearchDeleteDialog,
     openSearchSaveDialog,
   } = useGiftCardListDialogs();
-
   const {
     hasPresetsChanged,
     selectedPreset,
@@ -35,7 +33,6 @@ const GiftCardsListHeader: React.FC = () => {
     isFilterPresetOpen,
     setFilterPresetOpen,
   } = useGiftCardList();
-
   const openSettings = () => navigate(giftCardSettingsUrl);
 
   return (
@@ -45,12 +42,7 @@ const GiftCardsListHeader: React.FC = () => {
         isAlignToRight={false}
         title={intl.formatMessage(sectionNames.giftCards)}
       >
-        <Box
-          __flex={1}
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-        >
+        <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <Box marginX={3} display="flex" alignItems="center">
               <ChevronRightIcon />
@@ -99,11 +91,7 @@ const GiftCardsListHeader: React.FC = () => {
               ]}
               data-test-id="menu"
             />
-            <Button
-              variant="primary"
-              onClick={openCreateDialog}
-              data-test-id="issue-card-button"
-            >
+            <Button variant="primary" onClick={openCreateDialog} data-test-id="issue-card-button">
               {intl.formatMessage(messages.issueButtonLabel)}
             </Button>
           </Box>

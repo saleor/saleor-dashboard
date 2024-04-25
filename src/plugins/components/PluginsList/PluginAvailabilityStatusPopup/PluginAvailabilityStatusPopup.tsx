@@ -25,20 +25,16 @@ interface PluginAvailabilityStatusPopupProps {
   anchor: React.RefObject<HTMLTableCellElement>;
 }
 
-const PluginAvailabilityStatusPopup: React.FC<
-  PluginAvailabilityStatusPopupProps
-> = ({ plugin, isOpen, anchor }) => {
+const PluginAvailabilityStatusPopup: React.FC<PluginAvailabilityStatusPopupProps> = ({
+  plugin,
+  isOpen,
+  anchor,
+}) => {
   const classes = useStyles({});
-
   const isGlobalPlugin = isPluginGlobal(plugin.globalConfiguration);
 
   return (
-    <Popper
-      placement="left"
-      open={isOpen}
-      className={classes.container}
-      anchorEl={anchor.current}
-    >
+    <Popper placement="left" open={isOpen} className={classes.container} anchorEl={anchor.current}>
       <Card elevation={8}>
         {isGlobalPlugin ? (
           <GlobalConfigPluginPopupBody plugin={plugin} />

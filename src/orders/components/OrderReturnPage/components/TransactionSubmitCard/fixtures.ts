@@ -1,7 +1,4 @@
-import {
-  TransactionActionEnum,
-  TransactionEventTypeEnum,
-} from "@dashboard/graphql";
+import { TransactionActionEnum, TransactionEventTypeEnum } from "@dashboard/graphql";
 
 export const singleRefundableTransaction = [
   {

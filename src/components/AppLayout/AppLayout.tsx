@@ -25,9 +25,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       <NavigatorSearch />
 
       <Box display="grid" __gridTemplateColumns="auto 1fr">
-        {appState.loading && (
-          <LinearProgress className={classes.appLoader} color="primary" />
-        )}
+        {appState.loading && <LinearProgress className={classes.appLoader} color="primary" />}
         <Box
           height="100vh"
           borderColor="default1"

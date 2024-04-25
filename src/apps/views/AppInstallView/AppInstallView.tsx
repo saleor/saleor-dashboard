@@ -1,10 +1,6 @@
 import { AppInstallErrorPage } from "@dashboard/apps/components/AppInstallErrorPage";
 import AppInstallPage from "@dashboard/apps/components/AppInstallPage";
-import {
-  AppInstallUrlQueryParams,
-  AppUrls,
-  MANIFEST_ATTR,
-} from "@dashboard/apps/urls";
+import { AppInstallUrlQueryParams, AppUrls, MANIFEST_ATTR } from "@dashboard/apps/urls";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { useAppFetchMutation, useAppInstallMutation } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
@@ -23,14 +19,14 @@ interface Props extends RouteComponentProps {
 }
 
 export const AppInstallView: React.FC<Props> = ({ params }) => {
-  const [, setActiveInstallations] = useLocalStorage<
-    Array<Record<"id" | "name", string>>
-  >("activeInstallations", []);
+  const [, setActiveInstallations] = useLocalStorage<Array<Record<"id" | "name", string>>>(
+    "activeInstallations",
+    [],
+  );
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
   const manifestUrl = params[MANIFEST_ATTR];
-
   const [fetchManifest, fetchManifestOpts] = useAppFetchMutation({
     onCompleted: data => {
       if (data?.appFetchManifest?.errors.length) {
@@ -46,6 +42,7 @@ export const AppInstallView: React.FC<Props> = ({ params }) => {
   const [installApp] = useAppInstallMutation({
     onCompleted: data => {
       const installationData = data?.appInstall?.appInstallation;
+
       if (data.appInstall?.errors.length === 0) {
         if (installationData) {
           setActiveInstallations(activeInstallations => [
@@ -56,6 +53,7 @@ export const AppInstallView: React.FC<Props> = ({ params }) => {
             },
           ]);
         }
+
         navigateToAppsList();
       } else {
         (data?.appInstall?.errors ?? []).forEach(error => {
@@ -67,20 +65,17 @@ export const AppInstallView: React.FC<Props> = ({ params }) => {
       }
     },
   });
-
   const navigateToAppsList = () => navigate(AppUrls.resolveAppListUrl());
-
   const handleSubmit = () => {
     const manifest = fetchManifestOpts?.data?.appFetchManifest?.manifest;
+
     return extractMutationErrors(
       installApp({
         variables: {
           input: {
             appName: manifest?.name,
             manifestUrl,
-            permissions: manifest?.permissions?.map(
-              permission => permission.code,
-            ),
+            permissions: manifest?.permissions?.map(permission => permission.code),
           },
         },
       }),
@@ -98,8 +93,7 @@ export const AppInstallView: React.FC<Props> = ({ params }) => {
   return (
     <>
       <WindowTitle title={intl.formatMessage(messages.installApp)} />
-      {!!fetchManifestOpts.data?.appFetchManifest?.errors?.length ||
-      !!fetchManifestOpts.error ? (
+      {!!fetchManifestOpts.data?.appFetchManifest?.errors?.length || !!fetchManifestOpts.error ? (
         <AppInstallErrorPage onBack={navigateToAppsList} />
       ) : (
         <AppInstallPage

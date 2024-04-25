@@ -23,6 +23,7 @@ function getHelpModeActions(
       label: intl.formatMessage(messages.helpDefaultMode),
       onClick: () => {
         setMode("default");
+
         return true;
       },
       symbol: "...",
@@ -32,6 +33,7 @@ function getHelpModeActions(
       label: intl.formatMessage(messages.helpCommandsMode),
       onClick: () => {
         setMode("commands");
+
         return true;
       },
       symbol: ">",
@@ -41,6 +43,7 @@ function getHelpModeActions(
       label: intl.formatMessage(messages.helpOrdersMode),
       onClick: () => {
         setMode("orders");
+
         return true;
       },
       symbol: "#",
@@ -50,6 +53,7 @@ function getHelpModeActions(
       label: intl.formatMessage(messages.helpCustomersMode),
       onClick: () => {
         setMode("customers");
+
         return true;
       },
       symbol: "@",
@@ -59,6 +63,7 @@ function getHelpModeActions(
       label: intl.formatMessage(messages.helpCatalogMode),
       onClick: () => {
         setMode("catalog");
+
         return true;
       },
       symbol: "$",
@@ -68,6 +73,7 @@ function getHelpModeActions(
       label: intl.formatMessage(messages.helpMode),
       onClick: () => {
         setMode("help");
+
         return true;
       },
       symbol: "?",

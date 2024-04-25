@@ -22,7 +22,6 @@ export function usePaginationReset<T extends Pagination>(
       ),
     [rowNumber],
   );
-
   useEffect(
     () =>
       navigate(

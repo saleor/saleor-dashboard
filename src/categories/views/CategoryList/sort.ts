@@ -2,9 +2,7 @@ import { CategoryListUrlSortField } from "@dashboard/categories/urls";
 import { CategorySortField } from "@dashboard/graphql";
 import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 
-export function getSortQueryField(
-  sort: CategoryListUrlSortField,
-): CategorySortField | undefined {
+export function getSortQueryField(sort: CategoryListUrlSortField): CategorySortField | undefined {
   switch (sort) {
     case CategoryListUrlSortField.name:
       return CategorySortField.NAME;
@@ -17,5 +15,4 @@ export function getSortQueryField(
   }
 }
 
-export const getSortQueryVariables =
-  createGetSortQueryVariables(getSortQueryField);
+export const getSortQueryVariables = createGetSortQueryVariables(getSortQueryField);

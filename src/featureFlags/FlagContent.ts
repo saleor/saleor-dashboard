@@ -1,5 +1,8 @@
 export class FlagValue {
-  constructor(public enabled: boolean, public payload?: string) {}
+  constructor(
+    public enabled: boolean,
+    public payload?: string,
+  ) {}
 
   public static fromString(value: string) {
     try {

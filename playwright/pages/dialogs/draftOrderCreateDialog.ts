@@ -7,9 +7,7 @@ export class DraftOrderCreateDialog {
     page: Page,
     readonly channelNameInput = page.getByTestId("channel-autocomplete"),
     readonly confirmButton = page.getByTestId("submit"),
-    readonly channelOption = page.locator(
-      "[data-test-id*='select-field-option']",
-    ),
+    readonly channelOption = page.locator("[data-test-id*='select-field-option']"),
   ) {
     this.page = page;
   }
@@ -17,6 +15,7 @@ export class DraftOrderCreateDialog {
   async expandChannelsSearchList() {
     await this.channelNameInput.click();
   }
+
   async clickConfirmButton() {
     await this.confirmButton.click();
   }

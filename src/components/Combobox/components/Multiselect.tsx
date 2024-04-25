@@ -1,18 +1,8 @@
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { FetchMoreProps } from "@dashboard/types";
-import {
-  DynamicMultiselect,
-  DynamicMultiselectProps,
-  Option,
-} from "@saleor/macaw-ui-next";
-import React, {
-  forwardRef,
-  ReactNode,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { DynamicMultiselect, DynamicMultiselectProps, Option } from "@saleor/macaw-ui-next";
+import React, { forwardRef, ReactNode, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { useCombbobxCustomOption } from "../hooks/useCombbobxCustomOption";
@@ -49,30 +39,24 @@ const MultiselectRoot = forwardRef<HTMLInputElement, MultiselectProps>(
   ) => {
     const intl = useIntl();
     const inputValue = useRef("");
-
     const [selectedValues, setSelectedValues] = useState(value);
 
     useEffect(() => {
       setSelectedValues(value);
     }, [value]);
 
-    const { handleFetchMore, handleFocus, handleInputChange } =
-      useComboboxHandlers({
-        fetchOptions,
-        alwaysFetchOnFocus,
-        fetchMore,
-      });
-
+    const { handleFetchMore, handleFocus, handleInputChange } = useComboboxHandlers({
+      fetchOptions,
+      alwaysFetchOnFocus,
+      fetchMore,
+    });
     const { customValueLabel, customValueOption } = useCombbobxCustomOption({
       query: inputValue.current,
       allowCustomValues,
       selectedValue: selectedValues,
     });
-
     const handleOnChange = (values: Option[]) => {
-      const hasCustomValue = values.find(value =>
-        value.label.includes(customValueLabel),
-      );
+      const hasCustomValue = values.find(value => value.label.includes(customValueLabel));
       const valuesWithCustom = values.map(toWithCustomValues(customValueLabel));
 
       onChange({
@@ -81,7 +65,6 @@ const MultiselectRoot = forwardRef<HTMLInputElement, MultiselectProps>(
           name: rest.name ?? "",
         },
       });
-
       inputValue.current = "";
 
       if (hasCustomValue) {

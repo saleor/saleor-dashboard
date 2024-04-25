@@ -1,10 +1,7 @@
 // @ts-strict-ignore
 import Grid from "@dashboard/components/Grid";
 import { useStyles } from "@dashboard/custom-apps/components/WebhookEvents/styles";
-import {
-  useTriggerWebhookDryRunMutation,
-  WebhookEventTypeSyncEnum,
-} from "@dashboard/graphql";
+import { useTriggerWebhookDryRunMutation, WebhookEventTypeSyncEnum } from "@dashboard/graphql";
 import {
   capitalize,
   Dialog,
@@ -55,15 +52,14 @@ const DryRun: React.FC<DryRunProps> = ({
   );
   const unavailableObjects = getUnavailableObjects(query);
   const [object, setObject] = useState<string | null>(null);
-
   const dryRun = async () => {
     const { data } = await triggerWebhookDryRun({
       variables: { objectId, query },
     });
+
     setResult(JSON.stringify(JSON.parse(data.webhookDryRun.payload), null, 2));
     closeDialog();
   };
-
   const closeDialog = () => {
     setShowDialog(false);
     setObjectId(null);
@@ -78,14 +74,10 @@ const DryRun: React.FC<DryRunProps> = ({
   if (syncEvents.length > 0) {
     return (
       <Dialog open={showDialog} fullWidth maxWidth="md" data-test-id="dry-run">
-        <DialogHeader onClose={closeDialog}>
-          {intl.formatMessage(messages.header)}
-        </DialogHeader>
+        <DialogHeader onClose={closeDialog}>{intl.formatMessage(messages.header)}</DialogHeader>
         <DialogContent style={{ overflow: "scroll" }}>
           <Alert variant="error" close={false}>
-            <Typography>
-              {intl.formatMessage(messages.unavailableSyncEvents)}
-            </Typography>
+            <Typography>{intl.formatMessage(messages.unavailableSyncEvents)}</Typography>
           </Alert>
         </DialogContent>
       </Dialog>
@@ -94,20 +86,12 @@ const DryRun: React.FC<DryRunProps> = ({
 
   return (
     <Dialog open={showDialog} fullWidth maxWidth="md" data-test-id="dry-run">
-      <DialogHeader onClose={closeDialog}>
-        {intl.formatMessage(messages.header)}
-      </DialogHeader>
+      <DialogHeader onClose={closeDialog}>{intl.formatMessage(messages.header)}</DialogHeader>
       <DialogContent style={{ overflow: "scroll" }}>
-        <DialogContentText>
-          {intl.formatMessage(messages.selectObject)}
-        </DialogContentText>
+        <DialogContentText>{intl.formatMessage(messages.selectObject)}</DialogContentText>
 
         {!!unavailableObjects.length && (
-          <Alert
-            variant="warning"
-            close={false}
-            className="remove-icon-background"
-          >
+          <Alert variant="warning" close={false} className="remove-icon-background">
             <Typography>
               {intl.formatMessage(messages.unavailableEvents)}
               <br />
@@ -129,22 +113,16 @@ const DryRun: React.FC<DryRunProps> = ({
               </ListHeader>
               <ListBody className={classes.listBody}>
                 {!availableObjects.length && (
-                  <Typography>
-                    {intl.formatMessage(messages.noObjects)}
-                  </Typography>
+                  <Typography>{intl.formatMessage(messages.noObjects)}</Typography>
                 )}
                 {availableObjects.map((object, idx) => (
                   <ListItem
                     key={idx}
                     className={classes.listItem}
-                    onClick={() =>
-                      setObject(object.split(" ").join("_").toUpperCase())
-                    }
+                    onClick={() => setObject(object.split(" ").join("_").toUpperCase())}
                   >
                     <ListItemCell className={classes.listItemCell}>
-                      <strong>
-                        {capitalize(object.replaceAll("_", " ").toLowerCase())}
-                      </strong>
+                      <strong>{capitalize(object.replaceAll("_", " ").toLowerCase())}</strong>
                     </ListItemCell>
                     <ListItemCell></ListItemCell>
                   </ListItem>
@@ -154,11 +132,7 @@ const DryRun: React.FC<DryRunProps> = ({
           </div>
           <div className={classes.eventsWrapper}>
             {object ? (
-              <DryRunItemsList
-                setObjectId={setObjectId}
-                objectId={objectId}
-                object={object}
-              />
+              <DryRunItemsList setObjectId={setObjectId} objectId={objectId} object={object} />
             ) : (
               <>
                 <ListHeader>
@@ -169,9 +143,7 @@ const DryRun: React.FC<DryRunProps> = ({
                   </ListItem>
                 </ListHeader>
                 <ListBody className={classes.listBody}>
-                  <Typography>
-                    {intl.formatMessage(messages.itemsDefaultMessage)}
-                  </Typography>
+                  <Typography>{intl.formatMessage(messages.itemsDefaultMessage)}</Typography>
                 </ListBody>
               </>
             )}
@@ -179,12 +151,7 @@ const DryRun: React.FC<DryRunProps> = ({
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button
-          color="primary"
-          variant="primary"
-          onClick={dryRun}
-          disabled={!object}
-        >
+        <Button color="primary" variant="primary" onClick={dryRun} disabled={!object}>
           {intl.formatMessage(messages.run)}
         </Button>
       </DialogActions>

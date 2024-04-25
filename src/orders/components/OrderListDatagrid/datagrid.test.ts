@@ -12,7 +12,6 @@ describe("getCustomerCellContent", () => {
         lastName: "Doe",
       },
     } as RelayToFlat<NonNullable<OrderListQuery["orders"]>>[number];
-
     // Act
     const result = getCustomerCellContent(data);
 
@@ -20,7 +19,6 @@ describe("getCustomerCellContent", () => {
     expect(result.data).toEqual("John Doe");
     expect(result.displayData).toEqual("John Doe");
   });
-
   it("should return user email when exists", () => {
     // Arrange
     const data = {
@@ -29,7 +27,6 @@ describe("getCustomerCellContent", () => {
       },
       userEmail: "john@doe.com",
     } as RelayToFlat<NonNullable<OrderListQuery["orders"]>>[number];
-
     // Act
     const result = getCustomerCellContent(data);
 
@@ -37,13 +34,9 @@ describe("getCustomerCellContent", () => {
     expect(result.data).toEqual("john@doe.com");
     expect(result.displayData).toEqual("john@doe.com");
   });
-
   it("should return - when no user email and billing address", () => {
     // Arrange
-    const data = {} as RelayToFlat<
-      NonNullable<OrderListQuery["orders"]>
-    >[number];
-
+    const data = {} as RelayToFlat<NonNullable<OrderListQuery["orders"]>>[number];
     // Act
     const result = getCustomerCellContent(data);
 

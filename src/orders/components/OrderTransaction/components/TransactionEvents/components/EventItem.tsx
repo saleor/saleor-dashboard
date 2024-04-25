@@ -1,8 +1,5 @@
 import Money from "@dashboard/components/Money";
-import {
-  TransactionEventFragment,
-  TransactionEventTypeEnum,
-} from "@dashboard/graphql";
+import { TransactionEventFragment, TransactionEventTypeEnum } from "@dashboard/graphql";
 import { TransactionFakeEvent } from "@dashboard/orders/types";
 import { TableCell, TableRow } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -89,16 +86,12 @@ const useStyles = makeStyles(
   }),
   { name: "OrderTransactionEvents-EventItem" },
 );
-
 const eventsWithoutAmount = new Set([
   TransactionEventTypeEnum.CANCEL_SUCCESS,
   TransactionEventTypeEnum.CANCEL_REQUEST,
   TransactionEventTypeEnum.CANCEL_FAILURE,
 ]);
-
-const shouldShowAmount = (
-  event: TransactionEventFragment | TransactionFakeEvent,
-) => {
+const shouldShowAmount = (event: TransactionEventFragment | TransactionFakeEvent) => {
   if (!event || !event.amount?.currency) {
     return false;
   }
@@ -122,9 +115,7 @@ export const EventItem: React.FC<EventItemProps> = ({
 }) => {
   const classes = useStyles();
   const { type, status } = mapTransactionEvent(event);
-
-  const isHovered =
-    event.pspReference && event.pspReference === hoveredPspReference;
+  const isHovered = event.pspReference && event.pspReference === hoveredPspReference;
 
   return (
     <TableRow
@@ -135,25 +126,18 @@ export const EventItem: React.FC<EventItemProps> = ({
       <TableCell className={clsx(classes.colSmall, classes.colStatus)}>
         <EventStatus status={status} />
       </TableCell>
-      <TableCell>
-        {shouldShowAmount(event) && <Money money={event.amount} />}
-      </TableCell>
+      <TableCell>{shouldShowAmount(event) && <Money money={event.amount} />}</TableCell>
       <TableCell className={clsx(classes.colSmall, classes.colMessage)}>
         <EventType type={type} message={event.message} />
       </TableCell>
       <TableCell className={clsx(classes.colSmall, classes.colPspReference)}>
         {event.pspReference ? (
-          <PspReference
-            reference={event.pspReference}
-            url={event.externalUrl}
-          />
+          <PspReference reference={event.pspReference} url={event.externalUrl} />
         ) : (
           <div className={classes.spacer} />
         )}
       </TableCell>
-      <TableCell
-        className={clsx(classes.colDate, !hasCreatedBy && classes.colLast)}
-      >
+      <TableCell className={clsx(classes.colDate, !hasCreatedBy && classes.colLast)}>
         <EventTime date={event.createdAt} />
       </TableCell>
       {hasCreatedBy && (

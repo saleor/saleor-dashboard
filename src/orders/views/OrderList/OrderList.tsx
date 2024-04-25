@@ -5,10 +5,7 @@ import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
-import {
-  useOrderDraftCreateMutation,
-  useOrderListQuery,
-} from "@dashboard/graphql";
+import { useOrderDraftCreateMutation, useOrderListQuery } from "@dashboard/graphql";
 import { useFilterHandlers } from "@dashboard/hooks/useFilterHandlers";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
@@ -35,12 +32,7 @@ import {
   orderSettingsPath,
   orderUrl,
 } from "../../urls";
-import {
-  getFilterOpts,
-  getFilterQueryParam,
-  getFilterVariables,
-  storageUtils,
-} from "./filters";
+import { getFilterOpts, getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
 import { DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 
 interface OrderListProps {
@@ -50,10 +42,7 @@ interface OrderListProps {
 export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const { updateListSettings, settings } = useListSettings(
-    ListViews.ORDER_LIST,
-  );
-
+  const { updateListSettings, settings } = useListSettings(ListViews.ORDER_LIST);
   const {
     hasPresetsChanged,
     onPresetChange,
@@ -77,7 +66,6 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const { channel, availableChannels } = useAppChannel(false);
   const user = useUser();
   const channels = user?.user?.accessibleChannels ?? [];
-
   const [createOrder] = useOrderDraftCreateMutation({
     onCompleted: data => {
       notify({
@@ -90,16 +78,13 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
       navigate(orderUrl(data.draftOrderCreate.order.id));
     },
   });
-
   const limitOpts = useShopLimitsQuery({
     variables: {
       orders: true,
     },
   });
-
   const noChannel = !channel && typeof channel !== "undefined";
   const channelOpts = availableChannels ? mapNodeToChoice(channels) : null;
-
   const [changeFilters, resetFilters, handleSearchChange] = useFilterHandlers({
     createUrl: orderListUrl,
     getFilterQueryParam,
@@ -108,14 +93,11 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     hasSortWithRank: true,
     keepActiveTab: true,
   });
-
   const [openModal, closeModal] = createDialogActionHandlers<
     OrderListUrlDialog,
     OrderListUrlQueryParams
   >(navigate, orderListUrl, params);
-
   const paginationState = createPaginationState(settings.rowNumber, params);
-
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
@@ -128,13 +110,11 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     displayLoader: true,
     variables: queryVariables,
   });
-
   const paginationValues = usePaginator({
     pageInfo: data?.orders?.pageInfo,
     paginationState,
     queryString: params,
   });
-
   const handleSort = createSortHandler(navigate, orderListUrl, params);
 
   return (

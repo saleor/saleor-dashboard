@@ -23,8 +23,7 @@ interface OrderManualTransactionCombinedComponent {
   PspReferenceField: typeof PspReferenceField;
 }
 
-export const OrderManualTransactionForm =
-  MainComponent as OrderManualTransactionCombinedComponent;
+export const OrderManualTransactionForm = MainComponent as OrderManualTransactionCombinedComponent;
 OrderManualTransactionForm.DescriptionField = DescriptionField;
 OrderManualTransactionForm.ErrorText = ErrorText;
 OrderManualTransactionForm.Form = Form;

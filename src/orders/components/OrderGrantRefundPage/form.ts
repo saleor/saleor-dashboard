@@ -40,24 +40,16 @@ export const useGrantRefundForm = ({
     amount: false,
     reason: false,
   });
-
-  const { set, change, data, formId } = useForm(
-    grantedRefund ?? defaultInitialData,
-    undefined,
-    {
-      confirmLeave: true,
-    },
-  );
-
+  const { set, change, data, formId } = useForm(grantedRefund ?? defaultInitialData, undefined, {
+    confirmLeave: true,
+  });
   const { setExitDialogSubmitRef, setIsDirty } = useExitFormDialog({
     formId,
   });
-
   const handleFormSubmit = useHandleFormSubmit({
     formId,
     onSubmit,
   });
-
   const getAmountValue = () => {
     // When editing always return the amount value
     if (grantedRefund) {
@@ -72,7 +64,6 @@ export const useGrantRefundForm = ({
     // When creating and user provide value, return the provided value
     return data.amount;
   };
-
   const submit = () =>
     handleFormSubmit({
       ...data,
@@ -84,10 +75,9 @@ export const useGrantRefundForm = ({
   React.useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   const handleChange: FormChange = e => {
-    if (e.target.name === "amount")
-      setIsFormDirty({ ...isFormDirty, amount: true });
-    if (e.target.name === "reason")
-      setIsFormDirty({ ...isFormDirty, reason: true });
+    if (e.target.name === "amount") setIsFormDirty({ ...isFormDirty, amount: true });
+
+    if (e.target.name === "reason") setIsFormDirty({ ...isFormDirty, reason: true });
 
     change(e);
   };

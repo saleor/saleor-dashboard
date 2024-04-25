@@ -18,16 +18,8 @@ import useSearchCatalog from "./queries/useCatalogSearch";
 import useCheckIfOrderExists from "./queries/useCheckIfOrderExists";
 import { QuickSearchAction, QuickSearchMode } from "./types";
 
-type UseQuickSearch = [
-  string,
-  QuickSearchMode,
-  FormChange,
-  QuickSearchAction[],
-];
-function useQuickSearch(
-  open: boolean,
-  input: RefObject<HTMLInputElement>,
-): UseQuickSearch {
+type UseQuickSearch = [string, QuickSearchMode, FormChange, QuickSearchAction[]];
+function useQuickSearch(open: boolean, input: RefObject<HTMLInputElement>): UseQuickSearch {
   const [query, setQuery] = useState("");
   const [mode, setMode] = useState<QuickSearchMode>("default");
   const intl = useIntl();
@@ -86,16 +78,20 @@ function useQuickSearch(
 
     if (mode === "default" || mode === "help") {
       const newMode = getMode(value);
+
       if (newMode) {
         setMode(newMode);
       }
     }
+
     if (mode === "orders" && isQueryValidOrderNumber(value)) {
       getOrderData(getGqlOrderId(value));
     }
+
     if (mode === "catalog") {
       searchCatalog(value);
     }
+
     if (mode === "customers") {
       searchCustomers(value);
     }

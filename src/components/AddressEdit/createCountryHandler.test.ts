@@ -12,7 +12,6 @@ describe("createCountryHandler", () => {
 
     // Act
     newHandler(exampleEvent);
-
     // Assert
     expect(originalCountryHandler).toBeCalledWith(exampleEvent);
     expect(setFn).toBeCalledWith({ countryArea: "" });

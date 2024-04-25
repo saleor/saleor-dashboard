@@ -30,22 +30,16 @@ const useStyles = makeStyles(
   },
   { name: "PageInfo" },
 );
-
 const PageInfo: React.FC<PageInfoProps> = props => {
   const { data, disabled, errors, onChange } = props;
-
   const classes = useStyles(props);
   const intl = useIntl();
-
-  const { defaultValue, editorRef, isReadyForMount, handleChange } =
-    useRichTextContext();
+  const { defaultValue, editorRef, isReadyForMount, handleChange } = useRichTextContext();
   const formErrors = getFormErrors(["title", "content"], errors);
 
   return (
     <Card className={classes.root}>
-      <CardTitle
-        title={intl.formatMessage(commonMessages.generalInformations)}
-      />
+      <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
       <CardContent>
         <TextField
           disabled={disabled}
@@ -91,5 +85,6 @@ const PageInfo: React.FC<PageInfoProps> = props => {
     </Card>
   );
 };
+
 PageInfo.displayName = "PageInfo";
 export default PageInfo;

@@ -17,27 +17,20 @@ export const useAppActions = (
   },
 ) => {
   const postToExtension = usePostToExtension(frameEl, appOrigin);
-
-  const { handle: handleNotification } =
-    AppActionsHandler.useHandleNotificationAction();
-  const { handle: handleUpdateRouting } =
-    AppActionsHandler.useHandleUpdateRoutingAction(appId);
-  const { handle: handleRedirect } =
-    AppActionsHandler.useHandleRedirectAction(appId);
+  const { handle: handleNotification } = AppActionsHandler.useHandleNotificationAction();
+  const { handle: handleUpdateRouting } = AppActionsHandler.useHandleUpdateRoutingAction(appId);
+  const { handle: handleRedirect } = AppActionsHandler.useHandleRedirectAction(appId);
   const { handle: handleNotifyReady } = AppActionsHandler.useNotifyReadyAction(
     frameEl,
     appOrigin,
     appToken,
     versions,
   );
-  const { handle: handlePermissionRequest } =
-    AppActionsHandler.useHandlePermissionRequest(appId);
-
+  const { handle: handlePermissionRequest } = AppActionsHandler.useHandlePermissionRequest(appId);
   /**
    * Store if app has performed a handshake with Dashboard, to avoid sending events before that
    */
   const [handshakeDone, setHandshakeDone] = useState(false);
-
   const handleAction = (action: Actions | undefined): DispatchResponseEvent => {
     switch (action?.type) {
       case "notification": {

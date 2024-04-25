@@ -6,11 +6,7 @@ interface CollectionWithDividersProps<T> {
   renderEmpty?: (collection: T[]) => any;
   withOuterDividers?: boolean;
   collection: T[];
-  renderItem: (
-    item: T | undefined,
-    index: number | undefined,
-    collection: T[],
-  ) => any;
+  renderItem: (item: T | undefined, index: number | undefined, collection: T[]) => any;
 }
 
 const Wrapper: React.FC<{
@@ -44,16 +40,13 @@ function CollectionWithDividers<T>({
   }
 
   if (!collection.length) {
-    return !!renderEmpty ? renderEmpty(collection) : null;
+    return renderEmpty ? renderEmpty(collection) : null;
   }
 
   const SelectedDividerComponent = DividerComponent || Divider;
 
   return (
-    <Wrapper
-      withOuterDividers={withOuterDividers}
-      SelectedDivider={SelectedDividerComponent}
-    >
+    <Wrapper withOuterDividers={withOuterDividers} SelectedDivider={SelectedDividerComponent}>
       <>
         {collection.map((item, index) => (
           <>

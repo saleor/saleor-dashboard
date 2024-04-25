@@ -63,5 +63,6 @@ const TranslationFieldsLong: React.FC<TranslationFieldsLongProps> = ({
     <Typography>{initial}</Typography>
   );
 };
+
 TranslationFieldsLong.displayName = "TranslationFieldsLong";
 export default TranslationFieldsLong;

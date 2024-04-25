@@ -2,14 +2,8 @@ import {
   createAttributeMultiChangeHandler,
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
-import {
-  AttributeInput,
-  AttributeInputData,
-} from "@dashboard/components/Attributes";
-import {
-  AttributeInputTypeEnum,
-  AttributeValueDetailsFragment,
-} from "@dashboard/graphql";
+import { AttributeInput, AttributeInputData } from "@dashboard/components/Attributes";
+import { AttributeInputTypeEnum, AttributeValueDetailsFragment } from "@dashboard/graphql";
 import { FormsetData } from "@dashboard/hooks/useFormset";
 
 const multipleValueAttributes: FormsetData<AttributeInputData, string[]> = [
@@ -121,7 +115,6 @@ const multipleValueAttributes: FormsetData<AttributeInputData, string[]> = [
     value: [],
   },
 ];
-
 const ATTR_ID = "123" as const;
 
 interface CreateAttribute {
@@ -131,10 +124,7 @@ interface CreateAttribute {
   value?: string;
 }
 
-const createAttribute = ({
-  inputType,
-  value,
-}: CreateAttribute): AttributeInput => ({
+const createAttribute = ({ inputType, value }: CreateAttribute): AttributeInput => ({
   data: {
     entityType: undefined,
     inputType,
@@ -148,43 +138,33 @@ const createAttribute = ({
   label: "MyAttribute",
   value: value !== null && value !== undefined ? [value] : [],
 });
-
 const createSelectAttribute = (value: string) =>
   createAttribute({
     inputType: AttributeInputTypeEnum.DROPDOWN,
     value,
   });
-
 const createReferenceAttribute = (value: string) =>
   createAttribute({
     inputType: AttributeInputTypeEnum.REFERENCE,
     value,
   });
-
 const createBooleanAttribute = (value: string) =>
   createAttribute({
     inputType: AttributeInputTypeEnum.BOOLEAN,
     value,
   });
-
 const createPlainTextAttribute = (value: string) =>
   createAttribute({ inputType: AttributeInputTypeEnum.PLAIN_TEXT, value });
-
 const createRichTextAttribute = (value: string) =>
   createAttribute({ inputType: AttributeInputTypeEnum.RICH_TEXT, value });
-
 const createDateAttribute = (value: string) =>
   createAttribute({ inputType: AttributeInputTypeEnum.DATE, value });
-
 const createDateTimeAttribute = (value: string) =>
   createAttribute({ inputType: AttributeInputTypeEnum.DATE_TIME, value });
-
 const createSwatchAttribute = (value: string) =>
   createAttribute({ inputType: AttributeInputTypeEnum.SWATCH, value });
-
 const createNumericAttribute = (value: string) =>
   createAttribute({ inputType: AttributeInputTypeEnum.NUMERIC, value });
-
 const createFileAttribute = (value: string) =>
   createAttribute({ inputType: AttributeInputTypeEnum.FILE, value });
 
@@ -192,14 +172,9 @@ describe("Multiple select change handler", () => {
   it("is able to select value", () => {
     const change = jest.fn();
     const trigger = jest.fn();
-    const handler = createAttributeMultiChangeHandler(
-      change,
-      multipleValueAttributes,
-      trigger,
-    );
+    const handler = createAttributeMultiChangeHandler(change, multipleValueAttributes, trigger);
 
     handler("attr-2", "attr-2-v-1");
-
     expect(change).toHaveBeenCalledTimes(1);
     expect(change.mock.calls[0][0]).toBe("attr-2");
     expect(change.mock.calls[0][1]).toHaveLength(2);
@@ -207,35 +182,23 @@ describe("Multiple select change handler", () => {
     expect(change.mock.calls[0][1][1]).toBe("attr-2-v-1");
     expect(trigger).toHaveBeenCalledTimes(1);
   });
-
   it("is able to deselect value", () => {
     const change = jest.fn();
     const trigger = jest.fn();
-    const handler = createAttributeMultiChangeHandler(
-      change,
-      multipleValueAttributes,
-      trigger,
-    );
+    const handler = createAttributeMultiChangeHandler(change, multipleValueAttributes, trigger);
 
     handler("attr-2", "attr-2-v-3");
-
     expect(change).toHaveBeenCalledTimes(1);
     expect(change.mock.calls[0][0]).toBe("attr-2");
     expect(change.mock.calls[0][1]).toHaveLength(0);
     expect(trigger).toHaveBeenCalledTimes(1);
   });
-
   it("is able to add custom value", () => {
     const change = jest.fn();
     const trigger = jest.fn();
-    const handler = createAttributeMultiChangeHandler(
-      change,
-      multipleValueAttributes,
-      trigger,
-    );
+    const handler = createAttributeMultiChangeHandler(change, multipleValueAttributes, trigger);
 
     handler("attr-2", "A Value");
-
     expect(change).toHaveBeenCalledTimes(1);
     expect(change.mock.calls[0][0]).toBe("attr-2");
     expect(change.mock.calls[0][1]).toHaveLength(2);
@@ -244,7 +207,6 @@ describe("Multiple select change handler", () => {
     expect(trigger).toHaveBeenCalledTimes(1);
   });
 });
-
 describe("Sending only changed attributes", () => {
   // null in expected = attribute not present in output
   describe("works with reference attributes", () => {
@@ -254,23 +216,18 @@ describe("Sending only changed attributes", () => {
       ${"my value"} | ${"my value"} | ${null}
       ${"my value"} | ${null}       | ${["my value"]}
       ${null}       | ${"my value"} | ${[]}
-    `(
-      "$oldAttr -> $newAttr returns $expected",
-      ({ newAttr, oldAttr, expected }) => {
-        const attribute = createReferenceAttribute(newAttr);
-        const prevAttribute = createReferenceAttribute(oldAttr);
+    `("$oldAttr -> $newAttr returns $expected", ({ newAttr, oldAttr, expected }) => {
+      const attribute = createReferenceAttribute(newAttr);
+      const prevAttribute = createReferenceAttribute(oldAttr);
+      const result = prepareAttributesInput({
+        attributes: [attribute],
+        prevAttributes: [prevAttribute],
+        updatedFileAttributes: [],
+      });
+      const expectedResult = expected !== null ? [{ id: ATTR_ID, references: expected }] : [];
 
-        const result = prepareAttributesInput({
-          attributes: [attribute],
-          prevAttributes: [prevAttribute],
-          updatedFileAttributes: [],
-        });
-
-        const expectedResult =
-          expected !== null ? [{ id: ATTR_ID, references: expected }] : [];
-        expect(result).toEqual(expectedResult);
-      },
-    );
+      expect(result).toEqual(expectedResult);
+    });
   });
   describe("works with select attributes", () => {
     test.each`
@@ -279,23 +236,18 @@ describe("Sending only changed attributes", () => {
       ${"my value"} | ${"my value"} | ${null}
       ${"my value"} | ${null}       | ${["my value"]}
       ${null}       | ${"my value"} | ${[]}
-    `(
-      "$oldAttr -> $newAttr returns $expected",
-      ({ newAttr, oldAttr, expected }) => {
-        const attribute = createSelectAttribute(newAttr);
-        const prevAttribute = createSelectAttribute(oldAttr);
+    `("$oldAttr -> $newAttr returns $expected", ({ newAttr, oldAttr, expected }) => {
+      const attribute = createSelectAttribute(newAttr);
+      const prevAttribute = createSelectAttribute(oldAttr);
+      const result = prepareAttributesInput({
+        attributes: [attribute],
+        prevAttributes: [prevAttribute],
+        updatedFileAttributes: [],
+      });
+      const expectedResult = expected !== null ? [{ id: ATTR_ID, values: expected }] : [];
 
-        const result = prepareAttributesInput({
-          attributes: [attribute],
-          prevAttributes: [prevAttribute],
-          updatedFileAttributes: [],
-        });
-
-        const expectedResult =
-          expected !== null ? [{ id: ATTR_ID, values: expected }] : [];
-        expect(result).toEqual(expectedResult);
-      },
-    );
+      expect(result).toEqual(expectedResult);
+    });
   });
   describe("works with boolean attributes", () => {
     test.each`
@@ -307,23 +259,18 @@ describe("Sending only changed attributes", () => {
       ${"false"} | ${false} | ${null}
       ${"false"} | ${true}  | ${false}
       ${"false"} | ${null}  | ${false}
-    `(
-      "$oldAttr -> $newAttr returns $expected",
-      ({ newAttr, oldAttr, expected }) => {
-        const attribute = createBooleanAttribute(newAttr);
-        const prevAttribute = createBooleanAttribute(oldAttr);
+    `("$oldAttr -> $newAttr returns $expected", ({ newAttr, oldAttr, expected }) => {
+      const attribute = createBooleanAttribute(newAttr);
+      const prevAttribute = createBooleanAttribute(oldAttr);
+      const result = prepareAttributesInput({
+        attributes: [attribute],
+        prevAttributes: [prevAttribute],
+        updatedFileAttributes: [],
+      });
+      const expectedResult = expected !== null ? [{ id: ATTR_ID, boolean: expected }] : [];
 
-        const result = prepareAttributesInput({
-          attributes: [attribute],
-          prevAttributes: [prevAttribute],
-          updatedFileAttributes: [],
-        });
-
-        const expectedResult =
-          expected !== null ? [{ id: ATTR_ID, boolean: expected }] : [];
-        expect(result).toEqual(expectedResult);
-      },
-    );
+      expect(result).toEqual(expectedResult);
+    });
   });
   describe("works with plain text attributes", () => {
     test.each`
@@ -332,23 +279,18 @@ describe("Sending only changed attributes", () => {
       ${"my value"} | ${"my value"} | ${null}
       ${"my value"} | ${null}       | ${"my value"}
       ${null}       | ${"my value"} | ${undefined}
-    `(
-      "$oldAttr -> $newAttr returns $expected",
-      ({ newAttr, oldAttr, expected }) => {
-        const attribute = createPlainTextAttribute(newAttr);
-        const prevAttribute = createPlainTextAttribute(oldAttr);
+    `("$oldAttr -> $newAttr returns $expected", ({ newAttr, oldAttr, expected }) => {
+      const attribute = createPlainTextAttribute(newAttr);
+      const prevAttribute = createPlainTextAttribute(oldAttr);
+      const result = prepareAttributesInput({
+        attributes: [attribute],
+        prevAttributes: [prevAttribute],
+        updatedFileAttributes: [],
+      });
+      const expectedResult = expected !== null ? [{ id: ATTR_ID, plainText: expected }] : [];
 
-        const result = prepareAttributesInput({
-          attributes: [attribute],
-          prevAttributes: [prevAttribute],
-          updatedFileAttributes: [],
-        });
-
-        const expectedResult =
-          expected !== null ? [{ id: ATTR_ID, plainText: expected }] : [];
-        expect(result).toEqual(expectedResult);
-      },
-    );
+      expect(result).toEqual(expectedResult);
+    });
   });
   describe("works with rich text attributes", () => {
     test.each`
@@ -357,23 +299,18 @@ describe("Sending only changed attributes", () => {
       ${"my value"} | ${"my value"} | ${null}
       ${"my value"} | ${null}       | ${"my value"}
       ${null}       | ${"my value"} | ${undefined}
-    `(
-      "$oldAttr -> $newAttr returns $expected",
-      ({ newAttr, oldAttr, expected }) => {
-        const attribute = createRichTextAttribute(newAttr);
-        const prevAttribute = createRichTextAttribute(oldAttr);
+    `("$oldAttr -> $newAttr returns $expected", ({ newAttr, oldAttr, expected }) => {
+      const attribute = createRichTextAttribute(newAttr);
+      const prevAttribute = createRichTextAttribute(oldAttr);
+      const result = prepareAttributesInput({
+        attributes: [attribute],
+        prevAttributes: [prevAttribute],
+        updatedFileAttributes: [],
+      });
+      const expectedResult = expected !== null ? [{ id: ATTR_ID, richText: expected }] : [];
 
-        const result = prepareAttributesInput({
-          attributes: [attribute],
-          prevAttributes: [prevAttribute],
-          updatedFileAttributes: [],
-        });
-
-        const expectedResult =
-          expected !== null ? [{ id: ATTR_ID, richText: expected }] : [];
-        expect(result).toEqual(expectedResult);
-      },
-    );
+      expect(result).toEqual(expectedResult);
+    });
   });
   describe("works with date attributes", () => {
     test.each`
@@ -382,49 +319,40 @@ describe("Sending only changed attributes", () => {
       ${"2021-01-01"} | ${"2021-01-01"} | ${null}
       ${"2021-01-01"} | ${null}         | ${"2021-01-01"}
       ${null}         | ${"2021-01-01"} | ${undefined}
-    `(
-      "$oldAttr -> $newAttr returns $expected",
-      ({ newAttr, oldAttr, expected }) => {
-        const attribute = createDateAttribute(newAttr);
-        const prevAttribute = createDateAttribute(oldAttr);
+    `("$oldAttr -> $newAttr returns $expected", ({ newAttr, oldAttr, expected }) => {
+      const attribute = createDateAttribute(newAttr);
+      const prevAttribute = createDateAttribute(oldAttr);
+      const result = prepareAttributesInput({
+        attributes: [attribute],
+        prevAttributes: [prevAttribute],
+        updatedFileAttributes: [],
+      });
+      const expectedResult = expected !== null ? [{ id: ATTR_ID, date: expected }] : [];
 
-        const result = prepareAttributesInput({
-          attributes: [attribute],
-          prevAttributes: [prevAttribute],
-          updatedFileAttributes: [],
-        });
-
-        const expectedResult =
-          expected !== null ? [{ id: ATTR_ID, date: expected }] : [];
-        expect(result).toEqual(expectedResult);
-      },
-    );
+      expect(result).toEqual(expectedResult);
+    });
   });
   describe("works with date time attributes", () => {
     const dateTime = "2021-01-01T11:00:00+01:00";
+
     test.each`
       newAttr     | oldAttr     | expected
       ${null}     | ${null}     | ${null}
       ${dateTime} | ${dateTime} | ${null}
       ${dateTime} | ${null}     | ${dateTime}
       ${null}     | ${dateTime} | ${undefined}
-    `(
-      "$oldAttr -> $newAttr returns $expected",
-      ({ newAttr, oldAttr, expected }) => {
-        const attribute = createDateTimeAttribute(newAttr);
-        const prevAttribute = createDateTimeAttribute(oldAttr);
+    `("$oldAttr -> $newAttr returns $expected", ({ newAttr, oldAttr, expected }) => {
+      const attribute = createDateTimeAttribute(newAttr);
+      const prevAttribute = createDateTimeAttribute(oldAttr);
+      const result = prepareAttributesInput({
+        attributes: [attribute],
+        prevAttributes: [prevAttribute],
+        updatedFileAttributes: [],
+      });
+      const expectedResult = expected !== null ? [{ id: ATTR_ID, dateTime: expected }] : [];
 
-        const result = prepareAttributesInput({
-          attributes: [attribute],
-          prevAttributes: [prevAttribute],
-          updatedFileAttributes: [],
-        });
-
-        const expectedResult =
-          expected !== null ? [{ id: ATTR_ID, dateTime: expected }] : [];
-        expect(result).toEqual(expectedResult);
-      },
-    );
+      expect(result).toEqual(expectedResult);
+    });
   });
   describe("works with swatch attributes", () => {
     test.each`
@@ -433,25 +361,19 @@ describe("Sending only changed attributes", () => {
       ${"my value"} | ${"my value"} | ${null}
       ${"my value"} | ${null}       | ${"my value"}
       ${null}       | ${"my value"} | ${""}
-    `(
-      "$oldAttr -> $newAttr returns $expected",
-      ({ newAttr, oldAttr, expected }) => {
-        const attribute = createSwatchAttribute(newAttr);
-        const prevAttribute = createSwatchAttribute(oldAttr);
+    `("$oldAttr -> $newAttr returns $expected", ({ newAttr, oldAttr, expected }) => {
+      const attribute = createSwatchAttribute(newAttr);
+      const prevAttribute = createSwatchAttribute(oldAttr);
+      const result = prepareAttributesInput({
+        attributes: [attribute],
+        prevAttributes: [prevAttribute],
+        updatedFileAttributes: [],
+      });
+      const expectedResult =
+        expected !== null ? [{ id: ATTR_ID, swatch: { value: expected } }] : [];
 
-        const result = prepareAttributesInput({
-          attributes: [attribute],
-          prevAttributes: [prevAttribute],
-          updatedFileAttributes: [],
-        });
-
-        const expectedResult =
-          expected !== null
-            ? [{ id: ATTR_ID, swatch: { value: expected } }]
-            : [];
-        expect(result).toEqual(expectedResult);
-      },
-    );
+      expect(result).toEqual(expectedResult);
+    });
   });
   describe("works with numeric attributes", () => {
     test.each`
@@ -460,29 +382,23 @@ describe("Sending only changed attributes", () => {
       ${"1"}  | ${"1"}  | ${null}
       ${"1"}  | ${null} | ${["1"]}
       ${null} | ${"1"}  | ${[]}
-    `(
-      "$oldAttr -> $newAttr returns $expected",
-      ({ newAttr, oldAttr, expected }) => {
-        const attribute = createNumericAttribute(newAttr);
-        const prevAttribute = createNumericAttribute(oldAttr);
+    `("$oldAttr -> $newAttr returns $expected", ({ newAttr, oldAttr, expected }) => {
+      const attribute = createNumericAttribute(newAttr);
+      const prevAttribute = createNumericAttribute(oldAttr);
+      const result = prepareAttributesInput({
+        attributes: [attribute],
+        prevAttributes: [prevAttribute],
+        updatedFileAttributes: [],
+      });
+      const expectedResult = expected !== null ? [{ id: ATTR_ID, values: expected }] : [];
 
-        const result = prepareAttributesInput({
-          attributes: [attribute],
-          prevAttributes: [prevAttribute],
-          updatedFileAttributes: [],
-        });
-
-        const expectedResult =
-          expected !== null ? [{ id: ATTR_ID, values: expected }] : [];
-        expect(result).toEqual(expectedResult);
-      },
-    );
+      expect(result).toEqual(expectedResult);
+    });
   });
   describe("works with file attributes", () => {
     it("removes existing image (img -> null)", () => {
       const attribute = createFileAttribute("");
       const prevAttribute = createNumericAttribute("bob.jpg");
-
       const result = prepareAttributesInput({
         attributes: [attribute],
         prevAttributes: [prevAttribute],
@@ -497,7 +413,6 @@ describe("Sending only changed attributes", () => {
     it("adds new image (null -> img)", () => {
       const attribute = createFileAttribute("bob.jpg");
       const prevAttribute = createNumericAttribute("");
-
       const uploadUrl = "http://some-url.com/media/file_upload/bob.jpg";
       const result = prepareAttributesInput({
         attributes: [attribute],
@@ -523,7 +438,6 @@ describe("Sending only changed attributes", () => {
     it("replaces existing image (bob.jpg -> juice.png)", () => {
       const attribute = createFileAttribute("bob.jpg");
       const prevAttribute = createNumericAttribute("juice.png");
-
       const uploadUrl = "http://some-url.com/media/file_upload/juice.jpg";
       const result = prepareAttributesInput({
         attributes: [attribute],

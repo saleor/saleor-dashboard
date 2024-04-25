@@ -17,7 +17,5 @@ export const useFilteredChannelListing = ({
 
   const listingIds = allAvailableListings.map(lst => lst.id);
 
-  return channelListing.filter(channel =>
-    listingIds.includes(channel.channel.id),
-  );
+  return channelListing.filter(channel => listingIds.includes(channel.channel.id));
 };

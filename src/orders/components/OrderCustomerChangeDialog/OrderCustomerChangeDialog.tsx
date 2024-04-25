@@ -15,10 +15,7 @@ import {
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import OrderCustomerChangeForm, {
-  CustomerChangeActionEnum,
-  OrderCustomerChangeData,
-} from "./form";
+import OrderCustomerChangeForm, { CustomerChangeActionEnum, OrderCustomerChangeData } from "./form";
 import messages from "./messages";
 import { useStyles } from "./styles";
 
@@ -28,11 +25,8 @@ export interface OrderCustomerChangeDialogProps {
   onClose: () => any;
 }
 
-const OrderCustomerChangeDialog: React.FC<
-  OrderCustomerChangeDialogProps
-> = props => {
+const OrderCustomerChangeDialog: React.FC<OrderCustomerChangeDialogProps> = props => {
   const { open, onClose, onConfirm } = props;
-
   const classes = useStyles(props);
   const intl = useIntl();
 

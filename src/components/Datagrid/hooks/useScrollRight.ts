@@ -5,8 +5,7 @@ import { useEffect, useState } from "react";
 export const useScrollRight = () => {
   const [scrolledToRight, setScrolledToRight] = useState(false);
   const scroller: HTMLDivElement = document.querySelector(".dvn-scroller");
-  const scrollerInner: HTMLDivElement =
-    document.querySelector(".dvn-scroll-inner");
+  const scrollerInner: HTMLDivElement = document.querySelector(".dvn-scroll-inner");
 
   useEffect(() => {
     if (!(scroller && scrollerInner)) {
@@ -16,6 +15,7 @@ export const useScrollRight = () => {
     const handler = throttle(() => {
       const isScrolledToRight =
         scroller.scrollWidth - scroller.clientWidth - scroller.scrollLeft < 2;
+
       setScrolledToRight(isScrolledToRight);
     }, 100);
 

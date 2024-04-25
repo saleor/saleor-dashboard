@@ -54,14 +54,10 @@ export const createGetCellContent =
           allowOverlay: true,
         });
       case "usage":
-        return readonlyTextCell(
-          rowData?.used?.toString() ?? PLACEHOLDER,
-          false,
-        );
+        return readonlyTextCell(rowData?.used?.toString() ?? PLACEHOLDER, false);
       case "status": {
         const status = getStatus(rowData?.isActive);
         const color = getStatusColor({ status, currentTheme });
-
         const statusMessage = getStatusMessage(rowData?.isActive, intl);
 
         return tagsCell(
@@ -87,6 +83,7 @@ function getStatus(isActive: boolean | undefined): DotStatus {
   if (isActive === undefined) {
     return "warning";
   }
+
   return isActive ? "success" : "error";
 }
 
@@ -95,7 +92,5 @@ function getStatusMessage(isActive: boolean | undefined, intl: IntlShape) {
     return intl.formatMessage(messages.draft);
   }
 
-  return isActive
-    ? intl.formatMessage(messages.active)
-    : intl.formatMessage(messages.inactive);
+  return isActive ? intl.formatMessage(messages.active) : intl.formatMessage(messages.inactive);
 }

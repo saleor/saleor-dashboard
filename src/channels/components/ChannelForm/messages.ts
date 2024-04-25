@@ -53,8 +53,7 @@ export const messages = defineMessages({
   },
   allowUnpaidOrdersDescription: {
     id: "8iUzOU",
-    defaultMessage:
-      "Enables completing checkout with order before a successful payment.",
+    defaultMessage: "Enables completing checkout with order before a successful payment.",
     description: "allow unpaid orders checbkox description",
   },
   defaultTransactionFlowStrategyLabel: {
@@ -66,7 +65,6 @@ export const messages = defineMessages({
     id: "nwcJVT",
     defaultMessage:
       "When enabled, all transactions would require an additional step to be charged. ({link})",
-    description:
-      "When enabled, all transactions would require an additional step to be charged.",
+    description: "When enabled, all transactions would require an additional step to be charged.",
   },
 });

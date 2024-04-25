@@ -25,8 +25,7 @@ export const TranslationFieldType = {
   RICH: "rich",
 } as const;
 
-export type TranslationFieldType =
-  (typeof TranslationFieldType)[keyof typeof TranslationFieldType];
+export type TranslationFieldType = (typeof TranslationFieldType)[keyof typeof TranslationFieldType];
 
 export interface TranslationField<T extends string = string> {
   id?: string;
@@ -46,8 +45,5 @@ export interface TranslationsEntitiesPageProps {
   saveButtonState: ConfirmButtonTransitionState;
   onEdit: (field: string) => void;
   onDiscard: () => void;
-  onSubmit: (
-    field: TranslationField,
-    data: string | OutputData,
-  ) => SubmitPromise<any[]>;
+  onSubmit: (field: TranslationField, data: string | OutputData) => SubmitPromise<any[]>;
 }

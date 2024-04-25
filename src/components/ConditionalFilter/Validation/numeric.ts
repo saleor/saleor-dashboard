@@ -20,6 +20,7 @@ export const numeric = (element: FilterElement, row: number) => {
     const errorsGte = isTooLong(sLte, row);
 
     if (errorsLte) return errorsGte;
+
     if (errorsGte) return errorsGte;
 
     const lte = parseFloat(sLte);

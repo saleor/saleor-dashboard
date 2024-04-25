@@ -1,15 +1,16 @@
-import type { Page } from "@playwright/test";
 import { URL_LIST } from "@data/url";
 import { DeleteDiscountDialog } from "@dialogs/deleteDiscountDialog";
 import { DeleteRuleDialog } from "@dialogs/deleteRuleDialog";
-import { PromotionRuleDialog } from "@pages/dialogs/promotionRuleDialog";
-
 import { BasePage } from "@pages/basePage";
+import { PromotionRuleDialog } from "@pages/dialogs/promotionRuleDialog";
+import type { Page } from "@playwright/test";
 import { date } from "faker";
 
 export class DiscountsPage extends BasePage {
   deleteDiscountDialog: DeleteDiscountDialog;
+
   promotionRuleDialog: PromotionRuleDialog;
+
   deleteRuleDialog: DeleteRuleDialog;
 
   constructor(
@@ -37,19 +38,22 @@ export class DiscountsPage extends BasePage {
     readonly ruleValueChip = page.getByTestId("rule-value-chip"),
     readonly deleteRuleModal = page.getByTestId("delete-rule-dialog"),
   ) {
-    super(page)
+    super(page);
     this.deleteDiscountDialog = new DeleteDiscountDialog(page);
     this.promotionRuleDialog = new PromotionRuleDialog(page);
     this.deleteRuleDialog = new DeleteRuleDialog(page);
   }
+
   async clickCreateDiscountButton() {
     await this.createDiscountButton.click();
   }
 
-  async typeDiscountName(name: string) { await this.discountNameInput.fill(name) }
+  async typeDiscountName(name: string) {
+    await this.discountNameInput.fill(name);
+  }
 
   async selectDiscountType(type: string) {
-    await this.discountTypeSelect.click()
+    await this.discountTypeSelect.click();
     await this.page.getByRole("listbox").waitFor({
       state: "visible",
       timeout: 10000,
@@ -62,7 +66,7 @@ export class DiscountsPage extends BasePage {
   }
 
   async typeStartDate() {
-    await this.startDateInput.fill(date.recent().toISOString().split("T")[0])
+    await this.startDateInput.fill(date.recent().toISOString().split("T")[0]);
   }
 
   async typeStartHour() {
@@ -76,9 +80,11 @@ export class DiscountsPage extends BasePage {
   async typeEndDate() {
     await this.endDateInput.fill(date.future().toISOString().split("T")[0]);
   }
+
   async typeEndHour() {
-    await this.endHourInput.fill("12:00")
+    await this.endHourInput.fill("12:00");
   }
+
   async gotoListView() {
     await this.page.goto(URL_LIST.discounts);
     await this.createDiscountButton.waitFor({
@@ -86,13 +92,12 @@ export class DiscountsPage extends BasePage {
       timeout: 10000,
     });
   }
+
   async gotoExistingDiscount(promotionId: string) {
     const existingDiscountUrl = `${URL_LIST.discounts}${promotionId}`;
-    await console.log(
-      `Navigates to existing discount page: ${existingDiscountUrl}`,
-    );
-    await this.page.goto(existingDiscountUrl);
 
+    await console.log(`Navigates to existing discount page: ${existingDiscountUrl}`);
+    await this.page.goto(existingDiscountUrl);
     await this.discountForm.waitFor({
       state: "visible",
       timeout: 30000,
@@ -100,15 +105,23 @@ export class DiscountsPage extends BasePage {
   }
 
   async clickAddRuleButton() {
-    await this.page.getByTestId('add-rule').click();
+    await this.page.getByTestId("add-rule").click();
   }
 
   async clickEditRuleButton(rule: string) {
-    await this.existingRule.locator(this.ruleLabelWithActions).filter({ hasText: rule }).locator(this.editRuleButton).click();
+    await this.existingRule
+      .locator(this.ruleLabelWithActions)
+      .filter({ hasText: rule })
+      .locator(this.editRuleButton)
+      .click();
   }
 
   async clickDeleteRuleButton(rule: string) {
-    await this.existingRule.locator(this.ruleLabelWithActions).filter({ hasText: rule }).locator(this.deleteRuleButton).click();
+    await this.existingRule
+      .locator(this.ruleLabelWithActions)
+      .filter({ hasText: rule })
+      .locator(this.deleteRuleButton)
+      .click();
   }
 
   async openPromotionRuleModal() {

@@ -6,11 +6,7 @@ import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata, MetadataFormData } from "@dashboard/components/Metadata";
 import Savebar from "@dashboard/components/Savebar";
-import {
-  ProductTypeKindEnum,
-  TaxClassBaseFragment,
-  WeightUnitsEnum,
-} from "@dashboard/graphql";
+import { ProductTypeKindEnum, TaxClassBaseFragment, WeightUnitsEnum } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
@@ -57,7 +53,6 @@ const formInitialData: ProductTypeForm = {
   taxClassId: "",
   weight: 0,
 };
-
 const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
   defaultWeightUnit,
   disabled,
@@ -71,30 +66,18 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
   onFetchMoreTaxClasses,
 }: ProductTypeCreatePageProps) => {
   const navigate = useNavigator();
-
   const [taxClassDisplayName, setTaxClassDisplayName] = useStateFromProps("");
-  const { makeChangeHandler: makeMetadataChangeHandler } =
-    useMetadataChangeTrigger();
-
+  const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const initialData = {
     ...formInitialData,
     kind: kind || formInitialData.kind,
   };
 
   return (
-    <Form
-      confirmLeave
-      initial={initialData}
-      onSubmit={onSubmit}
-      disabled={disabled}
-    >
+    <Form confirmLeave initial={initialData} onSubmit={onSubmit} disabled={disabled}>
       {({ change, data, isSaveDisabled, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
-
-        const changeKind = makeProductTypeKindChangeHandler(
-          change,
-          onChangeKind,
-        );
+        const changeKind = makeProductTypeKindChangeHandler(change, onChangeKind);
 
         return (
           <DetailPageLayout>
@@ -114,12 +97,7 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
                 taxClasses={taxClasses}
                 taxClassDisplayName={taxClassDisplayName}
                 onChange={event =>
-                  handleTaxClassChange(
-                    event,
-                    taxClasses,
-                    change,
-                    setTaxClassDisplayName,
-                  )
+                  handleTaxClassChange(event, taxClasses, change, setTaxClassDisplayName)
                 }
                 onFetchMore={onFetchMoreTaxClasses}
               />
@@ -146,5 +124,6 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
     </Form>
   );
 };
+
 ProductTypeCreatePage.displayName = "ProductTypeCreatePage";
 export default ProductTypeCreatePage;

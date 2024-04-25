@@ -19,11 +19,7 @@ const ButtonFullScreen: FC<PropsWithChildren<ButtonFullScreenProps>> = ({
   children,
 }) => {
   return (
-    <Button
-      data-test-id="button-exit-fullscreen"
-      variant="secondary"
-      onClick={onToggle}
-    >
+    <Button data-test-id="button-exit-fullscreen" variant="secondary" onClick={onToggle}>
       <Box as="span" display="flex">
         {isOpen ? <FullscreenOffIcon /> : <FullscreenOnIcon />}
       </Box>
@@ -36,16 +32,9 @@ interface ButtonAddRowProps {
   onAddRow: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const ButtonAddRow: FC<PropsWithChildren<ButtonAddRowProps>> = ({
-  onAddRow,
-  children,
-}) => {
+const ButtonAddRow: FC<PropsWithChildren<ButtonAddRowProps>> = ({ onAddRow, children }) => {
   return (
-    <Button
-      data-test-id="button-add-variant"
-      variant="secondary"
-      onClick={onAddRow}
-    >
+    <Button data-test-id="button-add-variant" variant="secondary" onClick={onAddRow}>
       <PlusIcon />
       {children}
     </Button>

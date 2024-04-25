@@ -1,7 +1,4 @@
-import {
-  TaxCalculationStrategy,
-  useTaxStrategyChoicesQuery,
-} from "@dashboard/graphql";
+import { TaxCalculationStrategy, useTaxStrategyChoicesQuery } from "@dashboard/graphql";
 import React from "react";
 
 import { FlatTaxRateLabel, PluginLabel, TaxAppLabel } from "../../components";
@@ -10,7 +7,6 @@ const flatTaxRateChoice = {
   label: <FlatTaxRateLabel />,
   value: TaxCalculationStrategy.FLAT_RATES,
 };
-
 const legacyPluginTaxChoice = {
   label: <PluginLabel />,
   value: "plugin:mirumee.taxes.avalara",
@@ -34,11 +30,7 @@ export const useTaxStrategyChoices = () => {
     })) ?? [];
 
   return {
-    taxStrategyChoices: [
-      ...taxAppsChoices,
-      flatTaxRateChoice,
-      legacyPluginTaxChoice,
-    ],
+    taxStrategyChoices: [...taxAppsChoices, flatTaxRateChoice, legacyPluginTaxChoice],
     loading,
   };
 };

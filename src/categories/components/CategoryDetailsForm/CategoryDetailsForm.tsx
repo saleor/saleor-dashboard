@@ -28,16 +28,12 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
   errors,
 }) => {
   const intl = useIntl();
-  const { defaultValue, editorRef, isReadyForMount, handleChange } =
-    useRichTextContext();
-
+  const { defaultValue, editorRef, isReadyForMount, handleChange } = useRichTextContext();
   const formErrors = getFormErrors(["name", "description"], errors);
 
   return (
     <Card>
-      <CardTitle
-        title={intl.formatMessage(commonMessages.generalInformations)}
-      />
+      <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
       <CardContent>
         <div>
           <TextField

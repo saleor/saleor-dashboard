@@ -16,5 +16,4 @@ export interface ShippingZoneRateCommonFormData {
   taxClassId: string;
 }
 
-export type ShippingZoneRateUpdateFormData = ShippingZoneRateCommonFormData &
-  MetadataFormData;
+export type ShippingZoneRateUpdateFormData = ShippingZoneRateCommonFormData & MetadataFormData;

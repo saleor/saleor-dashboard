@@ -49,5 +49,6 @@ const DeleteFilterTabDialog: React.FC<DeleteFilterTabDialogProps> = ({
     </ActionDialog>
   );
 };
+
 DeleteFilterTabDialog.displayName = "DeleteFilterTabDialog";
 export default DeleteFilterTabDialog;

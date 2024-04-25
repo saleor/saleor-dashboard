@@ -52,9 +52,7 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
   const anchor = React.useRef<HTMLInputElement>(null);
-
   const { data, onImageUpload, image, onChange, onImageDelete } = props;
-
   const handleImageUploadButtonClick = () => anchor.current?.click();
 
   return (
@@ -73,9 +71,7 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
             <input
               className={classes.fileField}
               id="fileUpload"
-              onChange={({ target: { files } }) =>
-                onImageUpload(files && files[0])
-              }
+              onChange={({ target: { files } }) => onImageUpload(files && files[0])}
               type="file"
               ref={anchor}
               accept="image/*"
@@ -122,5 +118,6 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
     </Card>
   );
 };
+
 CategoryBackground.displayName = "CategoryBackground";
 export default CategoryBackground;

@@ -12,12 +12,15 @@ export class AddVoucherCodeDialog {
   async typeCodesQuantity(quantity = "10") {
     await this.quantityInput.fill(quantity);
   }
+
   async typeCodesPrefix(prefix = "automation") {
     await this.prefixInput.fill(prefix);
   }
+
   async typeCode(code = "123456789") {
     await this.enterCodeInput.fill(code);
   }
+
   async clickConfirmButton() {
     await this.confirmButton.click();
   }

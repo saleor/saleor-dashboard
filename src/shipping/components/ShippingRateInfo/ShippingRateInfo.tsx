@@ -36,7 +36,6 @@ const messages = defineMessages({
     description: "label",
   },
 });
-
 const useStyles = makeStyles(
   theme => ({
     deliveryTimeFields: {
@@ -69,23 +68,14 @@ export interface ShippingRateInfoProps {
 
 const ShippingRateInfo: React.FC<ShippingRateInfoProps> = props => {
   const { data, disabled, errors, onChange } = props;
-
   const intl = useIntl();
   const classes = useStyles(props);
-
-  const { defaultValue, editorRef, isReadyForMount, handleChange } =
-    useRichTextContext();
-
-  const formErrors = getFormErrors(
-    ["name", "description", "minDays", "maxDays"],
-    errors,
-  );
+  const { defaultValue, editorRef, isReadyForMount, handleChange } = useRichTextContext();
+  const formErrors = getFormErrors(["name", "description", "minDays", "maxDays"], errors);
 
   return (
     <Card>
-      <CardTitle
-        title={intl.formatMessage(commonMessages.generalInformations)}
-      />
+      <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
       <CardContent>
         <TextField
           disabled={disabled}
@@ -157,5 +147,6 @@ const ShippingRateInfo: React.FC<ShippingRateInfoProps> = props => {
     </Card>
   );
 };
+
 ShippingRateInfo.displayName = "ShippingRateInfo";
 export default ShippingRateInfo;
