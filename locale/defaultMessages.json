@@ -4028,6 +4028,9 @@
     "context": "numeric attribute unit",
     "string": "Unit"
   },
+  "OtMtzH": {
+    "string": "Product unavailable in collection channels"
+  },
   "OwG/0z": {
     "string": "Deleted menu"
   },
@@ -4946,6 +4949,9 @@
   "UvD+xp": {
     "context": "attribute values",
     "string": "Value {number}"
+  },
+  "Uwo+ai": {
+    "string": "Product unavailable in discount channels"
   },
   "UxOcKE": {
     "context": "order history message",

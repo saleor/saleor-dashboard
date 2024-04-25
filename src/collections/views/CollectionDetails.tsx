@@ -330,6 +330,10 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({ id, params
       />
       <AssignProductDialog
         selectedChannels={currentChannels}
+        productUnavailableText={intl.formatMessage({
+          id: "OtMtzH",
+          defaultMessage: "Product unavailable in collection channels",
+        })}
         selectedIds={assignedProductDict}
         confirmButtonState={assignProductOpts.status}
         hasMore={result.data?.search?.pageInfo.hasNextPage}

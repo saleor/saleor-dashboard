@@ -40,6 +40,7 @@ export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   products: Products;
   selectedChannels?: SelectedChannel[];
+  productUnavailableText?: string;
   selectedIds?: Record<string, boolean>;
   loading: boolean;
   onFetch: (value: string) => void;
@@ -51,6 +52,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
   const {
     confirmButtonState,
     selectedChannels,
+    productUnavailableText,
     hasMore,
     open,
     loading,
@@ -166,9 +168,9 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
                       />
                       <TableCell className={classes.colName}>
                         {product.name}
-                        {!isProductAvailable && (
+                        {!isProductAvailable && productUnavailableText && (
                           <Text display="block" size={1} color="default2">
-                            <FormattedMessage {...messages.productUnavailable} />
+                            {productUnavailableText}
                           </Text>
                         )}
                       </TableCell>

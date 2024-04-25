@@ -388,6 +388,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
       />
       <AssignProductDialog
         selectedChannels={currentChannels}
+        productUnavailableText={intl.formatMessage(messages.productUnavailable)}
         confirmButtonState={saleCataloguesAddOpts.status}
         hasMore={searchProductsOpts.data?.search.pageInfo.hasNextPage}
         open={params.action === "assign-product"}

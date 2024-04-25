@@ -462,6 +462,10 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
       />
       <AssignProductDialog
         selectedChannels={currentChannels}
+        productUnavailableText={intl.formatMessage({
+          id: "XOkUxQ",
+          defaultMessage: "Product unavailable in voucher channels",
+        })}
         confirmButtonState={voucherCataloguesAddOpts.status}
         hasMore={searchProductsOpts.data?.search.pageInfo.hasNextPage}
         open={params.action === "assign-product"}
