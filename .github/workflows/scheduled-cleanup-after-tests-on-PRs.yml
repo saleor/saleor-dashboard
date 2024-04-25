@@ -20,10 +20,10 @@ jobs:
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
-        OPEN_PRS=${{ toJson$((gh pr list --json headRefName,number --jq '.[] | ["pr-"+.headRefName , "pr-"+ (.number|tostring)]') | jq -s 'add')}}
+        OPEN_PRS=$((gh pr list --json headRefName,number --jq '.[] | ["pr-"+.headRefName , "pr-"+ (.number|tostring)]') | jq -s 'add')
         ENVIRONMENTS_FOR_PR_TESTING=$(npx saleor environment list --json | jq ' . | map(select(.project.slug == "project-for-pr-testing") | {"key": .key, "name": .name})')
-        echo "OPEN_PRS=$OPEN_PRS" >> "$GITHUB_OUTPUT"
-        echo "ENVIRONMENTS_FOR_PR_TESTING=$ENVIRONMENTS_FOR_PR_TESTING" >> "$GITHUB_OUTPUT"
+        echo "OPEN_PRS=${{ fromJson($OPEN_PRS) }}" >> "$GITHUB_OUTPUT"
+        echo "ENVIRONMENTS_FOR_PR_TESTING='$ENVIRONMENTS_FOR_PR_TESTING'" >> "$GITHUB_OUTPUT"
 
     - id: get-environments-for-deletion
       uses: actions/github-script@v6
