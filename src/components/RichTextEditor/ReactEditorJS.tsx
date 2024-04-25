@@ -37,7 +37,10 @@ class ClientEditorCore implements EditorCore {
 
   public async destroy() {
     try {
-      await this._editorJS.destroy();
+      if (this._editorJS) {
+        await this._editorJS.isReady;
+        this._editorJS.destroy();
+      }
     } catch (e) {
       /*
         Dismiss that error.
