@@ -5,16 +5,13 @@ import { CSSProperties } from "react";
 
 import { DataTypePlaceholder, TreeItemComponentProps } from "./types";
 
-interface SortableTreeItemProps<T extends DataTypePlaceholder>
-  extends TreeItemComponentProps<T> {
+interface SortableTreeItemProps<T extends DataTypePlaceholder> extends TreeItemComponentProps<T> {
   id: UniqueIdentifier;
   renderTreeItem: (props: TreeItemComponentProps<T>) => JSX.Element;
 }
 
-const animateLayoutChanges: AnimateLayoutChanges = ({
-  isSorting,
-  wasDragging,
-}) => !(isSorting || wasDragging);
+const animateLayoutChanges: AnimateLayoutChanges = ({ isSorting, wasDragging }) =>
+  !(isSorting || wasDragging);
 
 export function SortableTreeItem<T extends DataTypePlaceholder>({
   id,

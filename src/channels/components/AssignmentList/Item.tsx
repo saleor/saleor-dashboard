@@ -13,29 +13,24 @@ interface ItemProps extends SortableElementProps {
   onDelete: (id: string) => void;
 }
 
-const Item = SortableElement(
-  ({ item, sortable = false, onDelete }: ItemProps) => {
-    const { id, name } = item;
-    const classes = useStyles();
+const Item = SortableElement(({ item, sortable = false, onDelete }: ItemProps) => {
+  const { id, name } = item;
+  const classes = useStyles();
 
-    return (
-      <>
-        <div className={classes.container}>
-          <div className={classes.containerContent}>
-            {sortable && (
-              <SortableHandle
-                className={classes.sortableHandle}
-                data-test-id="button-drag-handle"
-              />
-            )}
-            <Text size={3}>{name}</Text>
-          </div>
-          <DeletableItem id={id} onDelete={onDelete} />
+  return (
+    <>
+      <div className={classes.container}>
+        <div className={classes.containerContent}>
+          {sortable && (
+            <SortableHandle className={classes.sortableHandle} data-test-id="button-drag-handle" />
+          )}
+          <Text size={3}>{name}</Text>
         </div>
-        <Divider />
-      </>
-    );
-  },
-);
+        <DeletableItem id={id} onDelete={onDelete} />
+      </div>
+      <Divider />
+    </>
+  );
+});
 
 export default Item;

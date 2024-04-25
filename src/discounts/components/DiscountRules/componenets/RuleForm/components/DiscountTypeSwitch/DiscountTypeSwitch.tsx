@@ -36,13 +36,7 @@ export const DiscountTypeSwitch = ({
           marginLeft={0.5}
           data-test-id="fixed-reward-value-type"
         >
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            width={9}
-            height="100%"
-          >
+          <Box display="flex" justifyContent="center" alignItems="center" width={9} height="100%">
             <Text>{currencySymbol}</Text>
           </Box>
         </Switch.Item>
@@ -55,13 +49,7 @@ export const DiscountTypeSwitch = ({
         marginRight={0.5}
         data-test-id="percentage-reward-value-type"
       >
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          width={9}
-          height="100%"
-        >
+        <Box display="flex" justifyContent="center" alignItems="center" width={9} height="100%">
           <Text>{PERCENT_SYMBOL}</Text>
         </Box>
       </Switch.Item>

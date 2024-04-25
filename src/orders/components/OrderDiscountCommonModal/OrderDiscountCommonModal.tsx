@@ -1,9 +1,6 @@
 import DialogButtons from "@dashboard/components/ActionDialog/DialogButtons";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import PriceField from "@dashboard/components/PriceField";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
 import { DiscountValueTypeEnum, MoneyFragment } from "@dashboard/graphql";
@@ -16,15 +13,11 @@ import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import ModalTitle from "./ModalTitle";
-import {
-  ORDER_LINE_DISCOUNT,
-  OrderDiscountCommonInput,
-  OrderDiscountType,
-} from "./types";
+import { ORDER_LINE_DISCOUNT, OrderDiscountCommonInput, OrderDiscountType } from "./types";
 
 type GetErrorMessageReturn = string | null;
-const numbersRegex = /([0-9]+\.?[0-9]*)$/;
 
+const numbersRegex = /([0-9]+\.?[0-9]*)$/;
 const useStyles = makeStyles(
   theme => ({
     removeButton: {
@@ -52,7 +45,6 @@ const useStyles = makeStyles(
   }),
   { name: "OrderLineDiscountModal" },
 );
-
 const messages = defineMessages({
   buttonLabel: {
     id: "QSnh4Y",
@@ -128,7 +120,6 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
   removeStatus,
 }) => {
   const { currency, amount: maxAmount } = maxPrice;
-
   const getInitialDiscountValue = (calculationMode: DiscountValueTypeEnum) => {
     if (!existingDiscount?.value) {
       return "";
@@ -142,10 +133,8 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
 
     return stringifiedValue;
   };
-
   const getInitialData = () => {
-    const calculationMode =
-      existingDiscount?.calculationMode || DiscountValueTypeEnum.PERCENTAGE;
+    const calculationMode = existingDiscount?.calculationMode || DiscountValueTypeEnum.PERCENTAGE;
 
     return {
       calculationMode,
@@ -153,9 +142,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
       value: getInitialDiscountValue(calculationMode),
     };
   };
-
   const initialData = getInitialData();
-
   const [valueErrorMsg, setValueErrorMsg] = useState<string | null>(null);
   const [reason, setReason] = useState<string>(initialData.reason);
   const [value, setValue] = useState<string>(initialData.value);
@@ -163,10 +150,8 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
     initialData.calculationMode,
   );
   const previousCalculationMode = useRef(calculationMode);
-
   const classes = useStyles({});
   const intl = useIntl();
-
   const discountTypeChoices = [
     {
       label: intl.formatMessage(messages.percentageOption),
@@ -177,21 +162,14 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
       value: DiscountValueTypeEnum.FIXED,
     },
   ];
-
-  const isDiscountTypePercentage =
-    calculationMode === DiscountValueTypeEnum.PERCENTAGE;
-
-  const handleSetDiscountValue = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const isDiscountTypePercentage = calculationMode === DiscountValueTypeEnum.PERCENTAGE;
+  const handleSetDiscountValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
 
     setValueErrorMsg(getErrorMessage(value));
     setValue(value);
   };
-
   const getParsedDiscountValue = () => parseFloat(value) || 0;
-
   const isAmountTooLarge = (value?: string) => {
     const topAmount = isDiscountTypePercentage ? 100 : maxAmount;
 
@@ -201,7 +179,6 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
 
     return getParsedDiscountValue() > topAmount;
   };
-
   const getErrorMessage = (value: string): GetErrorMessageReturn => {
     if (isAmountTooLarge(value)) {
       if (calculationMode === DiscountValueTypeEnum.PERCENTAGE) {
@@ -217,7 +194,6 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
 
     return null;
   };
-
   const handleConfirm = () => {
     onConfirm({
       calculationMode,
@@ -225,7 +201,6 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
       value: getParsedDiscountValue(),
     });
   };
-
   const setDefaultValues = () => {
     setReason(initialData.reason);
     setValue(initialData.value);
@@ -233,10 +208,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
     setValueErrorMsg(null);
   };
 
-  useEffect(setDefaultValues, [
-    existingDiscount?.value,
-    existingDiscount?.reason,
-  ]);
+  useEffect(setDefaultValues, [existingDiscount?.value, existingDiscount?.reason]);
 
   const handleValueConversion = () => {
     if (getParsedDiscountValue() === 0) {
@@ -246,17 +218,14 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
     const changedFromPercentageToFixed =
       previousCalculationMode.current === DiscountValueTypeEnum.PERCENTAGE &&
       calculationMode === DiscountValueTypeEnum.FIXED;
-
     const recalculatedValueFromPercentageToFixed = (
       (getParsedDiscountValue() * maxPrice.amount) /
       100
     ).toString();
-
     const recalculatedValueFromFixedToPercentage = (
       (getParsedDiscountValue() / maxPrice.amount) *
       100
     ).toString();
-
     const recalculatedValue = changedFromPercentageToFixed
       ? recalculatedValueFromPercentageToFixed
       : recalculatedValueFromFixedToPercentage;
@@ -269,15 +238,9 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
   useUpdateEffect(handleValueConversion, [calculationMode]);
 
   const dialogTitle =
-    modalType === ORDER_LINE_DISCOUNT
-      ? messages.itemDiscountTitle
-      : messages.orderDiscountTitle;
-
-  const valueFieldSymbol =
-    calculationMode === DiscountValueTypeEnum.FIXED ? currency : "%";
-
-  const isSubmitDisabled =
-    !getParsedDiscountValue() || !!valueErrorMsg || isAmountTooLarge();
+    modalType === ORDER_LINE_DISCOUNT ? messages.itemDiscountTitle : messages.orderDiscountTitle;
+  const valueFieldSymbol = calculationMode === DiscountValueTypeEnum.FIXED ? currency : "%";
+  const isSubmitDisabled = !getParsedDiscountValue() || !!valueErrorMsg || isAmountTooLarge();
 
   return (
     <Card>
@@ -301,17 +264,13 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
           currencySymbol={valueFieldSymbol}
         />
         <CardSpacer />
-        <Typography>
-          {intl.formatMessage(messages.discountReasonLabel)}
-        </Typography>
+        <Typography>{intl.formatMessage(messages.discountReasonLabel)}</Typography>
         <TextField
           className={classes.reasonInput}
           label={intl.formatMessage(messages.discountReasonLabel)}
           value={reason}
           data-test-id="discount-reason"
-          onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            setReason(event.target.value)
-          }
+          onChange={(event: ChangeEvent<HTMLInputElement>) => setReason(event.target.value)}
         />
       </CardContent>
       <DialogButtons

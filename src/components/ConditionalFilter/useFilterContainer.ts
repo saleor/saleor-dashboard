@@ -13,28 +13,16 @@ export const useFilterContainer = (
   leftOperandsProvider: LeftOperandsProvider,
 ) => {
   const {
-    containerState: {
-      value,
-      updateAt,
-      getAt,
-      removeAt,
-      createEmpty,
-      create,
-      exist,
-      updateBySlug,
-    },
+    containerState: { value, updateAt, getAt, removeAt, createEmpty, create, exist, updateBySlug },
   } = useConditionalFilterContext();
-
   const addEmpty = () => {
     createEmpty();
   };
-
   const updateLeftOperator = (position: string, leftOperator: LeftOperand) => {
     const current = getAt(position);
     const dependency = Constraint.getDependency(leftOperator.value);
     const currentDependency =
-      FilterElement.isCompatible(current) &&
-      Constraint.getDependency(current.value.value);
+      FilterElement.isCompatible(current) && Constraint.getDependency(current.value.value);
 
     updateAt(position, el => el.updateLeftOperator(leftOperator));
 
@@ -50,58 +38,48 @@ export const useFilterContainer = (
 
     if (!exist(dependency)) {
       create(FilterElement.createStaticBySlug(dependency));
+
       return;
     }
 
     updateBySlug(dependency, el => {
       const newConstraint = Constraint.fromSlug(dependency);
+
       if (newConstraint) el.setConstraint(newConstraint);
     });
   };
-
   const updateLeftLoadingState = (position: string, loading: boolean) => {
     updateAt(position, el => el.updateLeftLoadingState(loading));
   };
-
-  const updateRightOperator = (
-    position: string,
-    rightOperator: ConditionValue,
-  ) => {
+  const updateRightOperator = (position: string, rightOperator: ConditionValue) => {
     updateAt(position, el => el.updateRightOperator(rightOperator));
   };
-
   const _updateRightOptions = (position: string, options: ItemOption[]) => {
     updateAt(position, el => el.updateRightOptions(options));
   };
-
   const updateRightLoadingState = (position: string, loading: boolean) => {
     updateAt(position, el => el.updateRightLoadingState(loading));
   };
-
   const updateCondition = (position: string, conditionValue: any) => {
     updateAt(position, el => el.updateCondition(conditionValue));
   };
-
   const _fetchRightOptions = async (position: string, inputValue: string) => {
     updateRightLoadingState(position, true);
-    const options = await apiProvider.fetchRightOptions(
-      position,
-      value,
-      inputValue,
-    );
+
+    const options = await apiProvider.fetchRightOptions(position, value, inputValue);
+
     updateRightLoadingState(position, false);
     _updateRightOptions(position, options);
   };
-
   const updateRightOptions = useDebounce(_fetchRightOptions, 500);
-
   const _fetchLeftOptions = async (position: string, inputValue: string) => {
     updateLeftLoadingState(position, true);
+
     const options = await apiProvider.fetchLeftOptions(inputValue);
+
     updateLeftLoadingState(position, false);
     leftOperandsProvider.setOperands(options);
   };
-
   const updateLeftOptions = useDebounce(_fetchLeftOptions, 500);
 
   return {

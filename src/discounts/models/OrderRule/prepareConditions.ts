@@ -18,9 +18,7 @@ export const prepareOrderConditions = (
   return Object.entries(orderPredicate)
     .flatMap(([id, value]) => {
       if (["OR", "AND"].includes(id)) {
-        return prepareOrderConditions(
-          value as OrderPredicateAPI["discountedObjectPredicate"],
-        );
+        return prepareOrderConditions(value as OrderPredicateAPI["discountedObjectPredicate"]);
       }
 
       return {

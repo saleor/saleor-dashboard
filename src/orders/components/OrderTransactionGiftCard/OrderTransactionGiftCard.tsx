@@ -19,10 +19,7 @@ interface OrderTransactionGiftCardProps {
   giftCard: OrderGiftCardFragment;
 }
 
-const OrderTransactionGiftCard: React.FC<OrderTransactionGiftCardProps> = ({
-  order,
-  giftCard,
-}) => {
+const OrderTransactionGiftCard: React.FC<OrderTransactionGiftCardProps> = ({ order, giftCard }) => {
   const intl = useIntl();
 
   if (!giftCard || !order) {
@@ -37,7 +34,6 @@ const OrderTransactionGiftCard: React.FC<OrderTransactionGiftCardProps> = ({
   }
 
   const currency = usedInOrderEvents[0].balance.currentBalance.currency;
-
   const fakeEvents = usedInOrderEvents.map<TransactionFakeEvent>(event => ({
     message: intl.formatMessage(transactionGiftCardMessages.usedInOrder),
     id: event.id,
@@ -45,9 +41,7 @@ const OrderTransactionGiftCard: React.FC<OrderTransactionGiftCardProps> = ({
     type: TransactionEventTypeEnum.CHARGE_SUCCESS,
     createdAt: event.date,
     amount: {
-      amount:
-        event.balance.oldCurrentBalance.amount -
-        event.balance.currentBalance.amount,
+      amount: event.balance.oldCurrentBalance.amount - event.balance.currentBalance.amount,
       currency: event.balance.currentBalance.currency,
       __typename: "Money",
     },
@@ -59,7 +53,6 @@ const OrderTransactionGiftCard: React.FC<OrderTransactionGiftCardProps> = ({
     externalUrl: null,
     __typename: "TransactionFakeEvent",
   }));
-
   const fakeTransaction: FakeTransaction = {
     id: giftCard.id,
     name: intl.formatMessage(transactionGiftCardMessages.giftCard, {

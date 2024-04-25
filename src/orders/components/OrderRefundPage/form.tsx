@@ -1,14 +1,8 @@
 // @ts-strict-ignore
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { OrderRefundDataQuery } from "@dashboard/graphql";
-import useForm, {
-  CommonUseFormResultWithHandlers,
-  SubmitPromise,
-} from "@dashboard/hooks/useForm";
-import useFormset, {
-  FormsetChange,
-  FormsetData,
-} from "@dashboard/hooks/useFormset";
+import useForm, { CommonUseFormResultWithHandlers, SubmitPromise } from "@dashboard/hooks/useForm";
+import useFormset, { FormsetChange, FormsetData } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import React, { useEffect } from "react";
 
@@ -46,10 +40,7 @@ export interface OrderRefundFormData extends OrderRefundData {
 export type OrderRefundSubmitData = OrderRefundFormData;
 
 export interface UseOrderRefundFormResult
-  extends CommonUseFormResultWithHandlers<
-    OrderRefundFormData,
-    OrderRefundHandlers
-  > {
+  extends CommonUseFormResultWithHandlers<OrderRefundFormData, OrderRefundHandlers> {
   disabled: boolean;
 }
 
@@ -61,9 +52,7 @@ interface OrderRefundFormProps {
   disabled: boolean;
 }
 
-function getOrderRefundPageFormData(
-  defaultType: OrderRefundType,
-): OrderRefundData {
+function getOrderRefundPageFormData(defaultType: OrderRefundType): OrderRefundData {
   return {
     amount: undefined,
     amountCalculationMode: OrderRefundAmountCalculationMode.AUTOMATIC,
@@ -87,11 +76,9 @@ function useOrderRefundForm(
   } = useForm(getOrderRefundPageFormData(defaultType), undefined, {
     confirmLeave: true,
   });
-
   const { setExitDialogSubmitRef } = useExitFormDialog({
     formId,
   });
-
   const refundedProductQuantities = useFormset<null, string>(
     order?.lines
       .filter(line => line.quantityToFulfill > 0)
@@ -118,24 +105,17 @@ function useOrderRefundForm(
         [],
       ),
   );
-
-  const handleRefundedProductQuantityChange: FormsetChange<string> = (
-    id,
-    value,
-  ) => {
+  const handleRefundedProductQuantityChange: FormsetChange<string> = (id, value) => {
     triggerChange();
     refundedProductQuantities.change(id, value);
   };
-  const handleRefundedFulFilledProductQuantityChange = (
-    id: string,
-    value: string,
-  ) => {
+  const handleRefundedFulFilledProductQuantityChange = (id: string, value: string) => {
     triggerChange();
     refundedFulfilledProductQuantities.change(id, value);
   };
   const handleMaximalRefundedProductQuantitiesSet = () => {
-    const newQuantities: FormsetData<null, string> =
-      refundedProductQuantities.data.map(selectedLine => {
+    const newQuantities: FormsetData<null, string> = refundedProductQuantities.data.map(
+      selectedLine => {
         const line = order.lines.find(line => line.id === selectedLine.id);
 
         return {
@@ -144,21 +124,17 @@ function useOrderRefundForm(
           label: null,
           value: line.quantityToFulfill.toString(),
         };
-      });
+      },
+    );
+
     refundedProductQuantities.set(newQuantities);
     triggerChange();
   };
-  const handleMaximalRefundedFulfilledProductQuantitiesSet = (
-    fulfillmentId: string,
-  ) => {
-    const fulfillment = order.fulfillments.find(
-      fulfillment => fulfillment.id === fulfillmentId,
-    );
-    const newQuantities: FormsetData<null, string> =
-      refundedFulfilledProductQuantities.data.map(selectedLine => {
-        const line = fulfillment.lines.find(
-          line => line.id === selectedLine.id,
-        );
+  const handleMaximalRefundedFulfilledProductQuantitiesSet = (fulfillmentId: string) => {
+    const fulfillment = order.fulfillments.find(fulfillment => fulfillment.id === fulfillmentId);
+    const newQuantities: FormsetData<null, string> = refundedFulfilledProductQuantities.data.map(
+      selectedLine => {
+        const line = fulfillment.lines.find(line => line.id === selectedLine.id);
 
         if (line) {
           return {
@@ -168,28 +144,29 @@ function useOrderRefundForm(
             value: line.quantity.toString(),
           };
         }
+
         return selectedLine;
-      });
+      },
+    );
+
     refundedFulfilledProductQuantities.set(newQuantities);
     triggerChange();
   };
-
   const data: OrderRefundFormData = {
     ...formData,
     refundedFulfilledProductQuantities: refundedFulfilledProductQuantities.data,
     refundedProductQuantities: refundedProductQuantities.data,
   };
-
   const handleFormSubmit = useHandleFormSubmit({
     formId,
     onSubmit,
   });
-
   const submit = () => handleFormSubmit(data);
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   const isSaveDisabled = disabled || !order;
+
   setIsSubmitDisabled(isSaveDisabled);
 
   return {
@@ -197,13 +174,11 @@ function useOrderRefundForm(
     data,
     disabled,
     handlers: {
-      changeRefundedFulfilledProductQuantity:
-        handleRefundedFulFilledProductQuantityChange,
+      changeRefundedFulfilledProductQuantity: handleRefundedFulFilledProductQuantityChange,
       changeRefundedProductQuantity: handleRefundedProductQuantityChange,
       setMaximalRefundedFulfilledProductQuantities:
         handleMaximalRefundedFulfilledProductQuantitiesSet,
-      setMaximalRefundedProductQuantities:
-        handleMaximalRefundedProductQuantitiesSet,
+      setMaximalRefundedProductQuantities: handleMaximalRefundedProductQuantitiesSet,
     },
     submit,
     isSaveDisabled,

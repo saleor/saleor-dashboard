@@ -17,9 +17,7 @@ import { useIntl } from "react-intl";
 import { createGetCellContent, pageListStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
 
-interface PageListDatagridProps
-  extends ListProps,
-    SortPage<PageListUrlSortField> {
+interface PageListDatagridProps extends ListProps, SortPage<PageListUrlSortField> {
   pages: Pages | undefined;
   loading: boolean;
   hasRowHover?: boolean;
@@ -42,12 +40,10 @@ export const PageListDatagrid = ({
 }: PageListDatagridProps) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
-
   const pageListStaticColumns = useMemo(
     () => pageListStaticColumnsAdapter(intl, sort),
     [intl, sort],
   );
-
   const onColumnChange = useCallback(
     (picked: string[]) => {
       if (onUpdateListSettings) {
@@ -56,19 +52,12 @@ export const PageListDatagrid = ({
     },
     [onUpdateListSettings],
   );
-
-  const {
-    handlers,
-    visibleColumns,
-    staticColumns,
-    selectedColumns,
-    recentlyAddedColumn,
-  } = useColumns({
-    staticColumns: pageListStaticColumns,
-    selectedColumns: settings?.columns ?? [],
-    onSave: onColumnChange,
-  });
-
+  const { handlers, visibleColumns, staticColumns, selectedColumns, recentlyAddedColumn } =
+    useColumns({
+      staticColumns: pageListStaticColumns,
+      selectedColumns: settings?.columns ?? [],
+      onSave: onColumnChange,
+    });
   const { theme: currentTheme } = useTheme();
   const getCellContent = useCallback(
     createGetCellContent({
@@ -79,29 +68,30 @@ export const PageListDatagrid = ({
     }),
     [pages, visibleColumns],
   );
-
   const handleRowClick = useCallback(
     ([_, row]: Item) => {
       if (!onRowClick || !pages) {
         return;
       }
+
       const rowData: Page = pages[row];
+
       onRowClick(rowData.id);
     },
     [onRowClick, pages],
   );
-
   const handleRowAnchor = useCallback(
     ([, row]: Item) => {
       if (!rowAnchor || !pages) {
         return "";
       }
+
       const rowData: Page = pages[row];
+
       return rowAnchor(rowData.id);
     },
     [rowAnchor, pages],
   );
-
   const handleHeaderClick = useCallback(
     (col: number) => {
       const columnName = visibleColumns[col].id as PageListUrlSortField;

@@ -24,9 +24,7 @@ export interface ChannelsAvailabilityDialogProps {
   toggleAll?: (items: Channel[], selected: number) => void;
 }
 
-export const ChannelsAvailabilityDialog: React.FC<
-  ChannelsAvailabilityDialogProps
-> = ({
+export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProps> = ({
   isSelected,
   channels,
   confirmButtonState,
@@ -40,12 +38,9 @@ export const ChannelsAvailabilityDialog: React.FC<
   title,
   toggleAll,
 }) => {
-  const { query, onQueryChange, filteredChannels } =
-    useChannelsSearch(channels);
+  const { query, onQueryChange, filteredChannels } = useChannelsSearch(channels);
   const hasChannels = channels.length > 0;
-
   const handleToggleAll = () => toggleAll(channels, selected);
-
   const hasAllSelected = selected === channels.length;
 
   return (

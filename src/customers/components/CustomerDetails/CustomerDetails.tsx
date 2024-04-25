@@ -43,10 +43,8 @@ export interface CustomerDetailsProps {
 
 const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
   const { customer, data, disabled, errors, onChange } = props;
-
   const classes = useStyles(props);
   const intl = useIntl();
-
   const formErrors = getFormErrors(["note"], errors);
 
   return (
@@ -57,11 +55,7 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
           <>
             {maybe<React.ReactNode>(() => customer.email, <Skeleton />)}
             {customer && customer.dateJoined ? (
-              <Typography
-                className={classes.subtitle}
-                variant="caption"
-                component="div"
-              >
+              <Typography className={classes.subtitle} variant="caption" component="div">
                 <FormattedMessage
                   id="MjUyhA"
                   defaultMessage="Active member since {date}"
@@ -109,5 +103,6 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
     </Card>
   );
 };
+
 CustomerDetails.displayName = "CustomerDetails";
 export default CustomerDetails;

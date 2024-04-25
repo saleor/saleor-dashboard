@@ -7,7 +7,7 @@ export const useStyles = makeStyles(
         "& svg": {
           color: theme.palette.primary.main,
         },
-        textAlign: "right" as "right",
+        textAlign: "right" as const,
       },
       colName: {
         "&&": {

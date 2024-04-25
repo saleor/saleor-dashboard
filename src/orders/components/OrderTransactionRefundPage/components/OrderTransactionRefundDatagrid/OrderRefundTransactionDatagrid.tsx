@@ -14,10 +14,7 @@ import React from "react";
 import { Control, Controller } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
-import {
-  LineToRefund,
-  OrderTransactionRefundPageFormData,
-} from "../../OrderTransactionRefundPage";
+import { LineToRefund, OrderTransactionRefundPageFormData } from "../../OrderTransactionRefundPage";
 import {
   createGetCellContent,
   useDatagridOpts,
@@ -40,9 +37,7 @@ interface OrderTransactionRefundDatagridProps {
   linesToRefund: LineToRefund[];
 }
 
-export const OrderTransactionRefundDatagrid: React.FC<
-  OrderTransactionRefundDatagridProps
-> = ({
+export const OrderTransactionRefundDatagrid: React.FC<OrderTransactionRefundDatagridProps> = ({
   order,
   draftRefund,
   control,
@@ -55,20 +50,14 @@ export const OrderTransactionRefundDatagrid: React.FC<
     ListViews.ORDER_TRANSACTION_REFUNDS,
   );
 
-  const orderDraftDetailsStaticColumns =
-    useOrderTransactionRefundStaticColumns();
+  const orderDraftDetailsStaticColumns = useOrderTransactionRefundStaticColumns();
 
-  const {
-    handlers,
-    visibleColumns,
-    staticColumns,
-    selectedColumns,
-    recentlyAddedColumn,
-  } = useColumns({
-    staticColumns: orderDraftDetailsStaticColumns,
-    selectedColumns: settings?.columns ?? [],
-    onSave: handleColumnChange,
-  });
+  const { handlers, visibleColumns, staticColumns, selectedColumns, recentlyAddedColumn } =
+    useColumns({
+      staticColumns: orderDraftDetailsStaticColumns,
+      selectedColumns: settings?.columns ?? [],
+      onSave: handleColumnChange,
+    });
 
   const getCellContent = createGetCellContent({
     columns: visibleColumns,
@@ -117,13 +106,8 @@ export const OrderTransactionRefundDatagrid: React.FC<
                 rows={order?.lines.length ?? 0}
                 selectionActions={values => (
                   <>
-                    <Button
-                      variant="secondary"
-                      onClick={() => onMaxQtySet(values)}
-                    >
-                      <FormattedMessage
-                        {...transactionRefundGridMessages.selectAll}
-                      />
+                    <Button variant="secondary" onClick={() => onMaxQtySet(values)}>
+                      <FormattedMessage {...transactionRefundGridMessages.selectAll} />
                     </Button>
                   </>
                 )}

@@ -1,7 +1,4 @@
-import {
-  GiftCardSettingsExpiryTypeEnum,
-  GiftCardSettingsUpdateInput,
-} from "@dashboard/graphql";
+import { GiftCardSettingsExpiryTypeEnum, GiftCardSettingsUpdateInput } from "@dashboard/graphql";
 
 import { GiftCardSettingsFormData } from "./types";
 
@@ -16,7 +13,6 @@ export const getGiftCardSettingsInputData = ({
   const expiryType = expiryPeriodActive
     ? GiftCardSettingsExpiryTypeEnum.EXPIRY_PERIOD
     : GiftCardSettingsExpiryTypeEnum.NEVER_EXPIRE;
-
   const expiryPeriod =
     expiryPeriodActive && expiryPeriodType && expiryPeriodAmount
       ? {

@@ -2,10 +2,7 @@
 import BackButton from "@dashboard/components/BackButton";
 import { Button } from "@dashboard/components/Button";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { getApiUrl } from "@dashboard/config";
@@ -40,12 +37,8 @@ function handleCopy(token: string) {
   navigator.clipboard.writeText(token);
 }
 
-const Mono = ({ children, className }) => (
-  <span className={className}>{children}</span>
-);
-const createHeadersString = (token: string) =>
-  `{\n  "authorization": "Bearer ${token}"\n}`;
-
+const Mono = ({ children, className }) => <span className={className}>{children}</span>;
+const createHeadersString = (token: string) => `{\n  "authorization": "Bearer ${token}"\n}`;
 const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
   const { confirmButtonState, open, token, onClose, onCreate } = props;
   const [step, setStep] = React.useState<TokenCreateStep>("form");
@@ -58,7 +51,6 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
       setStep("summary");
     }
   }, [token]);
-
   useModalDialogOpen(open, {
     onClose: () => setStep("form"),
   });
@@ -73,11 +65,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
         {({ change, data, submit }) => (
           <>
             <DialogTitle disableTypography>
-              <FormattedMessage
-                id="T5nU7u"
-                defaultMessage="Create Token"
-                description="header"
-              />
+              <FormattedMessage id="T5nU7u" defaultMessage="Create Token" description="header" />
             </DialogTitle>
             <DialogContent>
               {step === "form" ? (
@@ -116,10 +104,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                     <Typography data-test-id="generated-token">
                       <Mono className={classes.mono}>{token}</Mono>
                     </Typography>
-                    <Button
-                      className={classes.copy}
-                      onClick={() => handleCopy(token)}
-                    >
+                    <Button className={classes.copy} onClick={() => handleCopy(token)}>
                       <FormattedMessage
                         id="HVFq//"
                         defaultMessage="Copy token"
@@ -135,10 +120,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                     <Typography data-test-id="generated-headers">
                       <Mono className={classes.mono}>{headers}</Mono>
                     </Typography>
-                    <Button
-                      className={classes.copy}
-                      onClick={() => handleCopy(headers)}
-                    >
+                    <Button className={classes.copy} onClick={() => handleCopy(headers)}>
                       <FormattedMessage
                         id="ZhqH8J"
                         defaultMessage="Copy headers"

@@ -30,7 +30,6 @@ const AssignmentListFooter: React.FC<AssignmentListFooterProps> = ({
 }) => {
   const intl = useIntl();
   const classes = useStyles();
-
   const [isChoicesSelectShown, setIsChoicesSelectShown] = useState(false);
   const itemsRef = useRef<AssignItem[]>(items);
 
@@ -48,7 +47,6 @@ const AssignmentListFooter: React.FC<AssignmentListFooterProps> = ({
     setIsChoicesSelectShown(false);
     addItem(target.value);
   };
-
   const handleFooterClickAway = () => {
     setIsChoicesSelectShown(false);
     searchItems("");

@@ -13,25 +13,18 @@ export interface FetchOptions {
   options: Option[];
 }
 
-export const useCondtionValues = (
-  channel: string | null,
-  conditionId: string | null,
-) => {
+export const useCondtionValues = (channel: string | null, conditionId: string | null) => {
   const productSearch = useProductOptions(channel, conditionId);
   const collectionSearch = useCollectionOptions(channel, conditionId);
   const categorySearch = useCategorieOptions(channel, conditionId);
   const variantSearch = useVariantOptions(channel, conditionId);
-
   const typeToFetchMap: Record<CatalogConditions, FetchOptions> = {
     product: productSearch,
     collection: collectionSearch,
     category: categorySearch,
     variant: variantSearch,
   };
-
-  const getConditionValuesFetchProps = (
-    type: string,
-  ): FetchOptions | undefined => {
+  const getConditionValuesFetchProps = (type: string): FetchOptions | undefined => {
     return typeToFetchMap[type as CatalogConditions];
   };
 

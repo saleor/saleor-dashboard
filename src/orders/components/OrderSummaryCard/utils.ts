@@ -17,12 +17,10 @@ export const extractOrderGiftCardUsedAmount = (
   }
 
   const { id, giftCards } = order;
-
   const usedInOrderEvents = compact(
     giftCards.map(({ events }) =>
       events.find(
-        ({ orderId, type }) =>
-          type === GiftCardEventsEnum.USED_IN_ORDER && orderId === id,
+        ({ orderId, type }) => type === GiftCardEventsEnum.USED_IN_ORDER && orderId === id,
       ),
     ),
   );
@@ -33,24 +31,18 @@ export const extractOrderGiftCardUsedAmount = (
 
   return usedInOrderEvents.reduce((resultAmount, { balance }) => {
     const { currentBalance, oldCurrentBalance } = balance;
-
     const amountToAdd = oldCurrentBalance.amount - currentBalance.amount;
 
     return resultAmount + amountToAdd;
   }, 0);
 };
 
-export const extractOutstandingBalance = (
-  order: OrderDetailsFragment,
-): IMoney =>
+export const extractOutstandingBalance = (order: OrderDetailsFragment): IMoney =>
   getOrderCharged(order) &&
   order?.total?.gross &&
   subtractMoney(order.total.gross, getOrderCharged(order));
 
-export const getDeliveryMethodName = (
-  order: OrderDetailsFragment,
-  intl: IntlShape,
-) => {
+export const getDeliveryMethodName = (order: OrderDetailsFragment, intl: IntlShape) => {
   if (
     order?.shippingMethodName === undefined &&
     order?.shippingPrice === undefined &&
@@ -68,15 +60,14 @@ export const getDeliveryMethodName = (
   return order.shippingMethodName;
 };
 
-export const getTaxTypeText = (
-  order: OrderDetailsFragment,
-  intl: IntlShape,
-) => {
+export const getTaxTypeText = (order: OrderDetailsFragment, intl: IntlShape) => {
   if (order?.total?.tax === undefined) {
     return "";
   }
+
   if (order.total.tax.amount > 0) {
     return intl.formatMessage(orderSummaryMessages.vatIncluded);
   }
+
   return intl.formatMessage(orderSummaryMessages.vatNotIncluded);
 };

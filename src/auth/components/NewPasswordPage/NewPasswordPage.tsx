@@ -24,18 +24,15 @@ const initialForm: NewPasswordPageFormData = {
   confirmPassword: "",
   password: "",
 };
-
 const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
   const { loading, errors, onSubmit } = props;
-
   const classes = useStyles(props);
   const intl = useIntl();
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
       {({ change: handleChange, data, submit: handleSubmit }) => {
-        const passwordError =
-          data.password !== data.confirmPassword && data.password.length > 0;
+        const passwordError = data.password !== data.confirmPassword && data.password.length > 0;
 
         return (
           <>
@@ -47,10 +44,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               />
             </Typography>
             {errors.map(error => (
-              <div
-                className={classes.panel}
-                key={`${error.code}-${error.field}`}
-              >
+              <div className={classes.panel} key={`${error.code}-${error.field}`}>
                 {getAccountErrorMessage(error, intl)}
               </div>
             ))}

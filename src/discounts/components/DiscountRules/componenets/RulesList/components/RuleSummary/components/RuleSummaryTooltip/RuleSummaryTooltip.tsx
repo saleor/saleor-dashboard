@@ -9,9 +9,7 @@ interface RuleSummaryTooltipProps {
   conditionsValues: Option[];
 }
 
-export const RuleSummaryTooltip = ({
-  conditionsValues,
-}: RuleSummaryTooltipProps) => {
+export const RuleSummaryTooltip = ({ conditionsValues }: RuleSummaryTooltipProps) => {
   return (
     <Tooltip>
       <Tooltip.Trigger>

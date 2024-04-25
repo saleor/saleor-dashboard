@@ -17,7 +17,6 @@ const giftCardHistoryMessages = defineMessages({
     description: "section header title",
   },
 });
-
 const giftCardHistoryTimelineMessages = defineMessages({
   activated: {
     id: "fExm0/",
@@ -91,14 +90,12 @@ const giftCardHistoryTimelineMessages = defineMessages({
   },
   usedInOrder: {
     id: "Uu2B2G",
-    defaultMessage:
-      "Gift card was used as a payment method on order {orderLink} <buyer>by</buyer>",
+    defaultMessage: "Gift card was used as a payment method on order {orderLink} <buyer>by</buyer>",
     description: "gift card history message",
   },
   usedInOrderAnonymous: {
     id: "408KSO",
-    defaultMessage:
-      "Gift card was used as a payment method on order {orderLink}",
+    defaultMessage: "Gift card was used as a payment method on order {orderLink}",
     description: "gift card history message",
   },
 });

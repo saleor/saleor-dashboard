@@ -9,16 +9,8 @@ import { renderCollection, stopPropagation } from "@dashboard/misc";
 import { ListProps, SortPage } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getArrowDirection } from "@dashboard/utils/sort";
-import {
-  WarehouseListUrlSortField,
-  warehouseUrl,
-} from "@dashboard/warehouses/urls";
-import {
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableHead,
-} from "@material-ui/core";
+import { WarehouseListUrlSortField, warehouseUrl } from "@dashboard/warehouses/urls";
+import { TableBody, TableCell, TableFooter, TableHead } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -61,26 +53,14 @@ const useStyles = makeStyles(
   { name: "WarehouseList" },
 );
 
-interface WarehouseListProps
-  extends ListProps,
-    SortPage<WarehouseListUrlSortField> {
+interface WarehouseListProps extends ListProps, SortPage<WarehouseListUrlSortField> {
   warehouses: WarehouseWithShippingFragment[] | undefined;
   onRemove: (id: string | undefined) => void;
 }
 
 const numberOfColumns = 3;
-
 const WarehouseList: React.FC<WarehouseListProps> = props => {
-  const {
-    warehouses,
-    disabled,
-    settings,
-    sort,
-    onUpdateListSettings,
-    onRemove,
-    onSort,
-  } = props;
-
+  const { warehouses, disabled, settings, sort, onUpdateListSettings, onRemove, onSort } = props;
   const classes = useStyles(props);
 
   return (
@@ -97,11 +77,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
             className={classes.colName}
             onClick={() => onSort(WarehouseListUrlSortField.name)}
           >
-            <FormattedMessage
-              id="aCJwVq"
-              defaultMessage="Name"
-              description="warehouse"
-            />
+            <FormattedMessage id="aCJwVq" defaultMessage="Name" description="warehouse" />
           </TableCellHeader>
           <TableCell className={classes.colZones}>
             <FormattedMessage id="PFXGaR" defaultMessage="Shipping Zones" />
@@ -130,10 +106,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
               className={classes.tableRow}
               hover={!!warehouse}
               key={warehouse ? warehouse.id : "skeleton"}
-              data-test-id={
-                "warehouse-entry-" +
-                warehouse?.name.toLowerCase().replace(" ", "")
-              }
+              data-test-id={"warehouse-entry-" + warehouse?.name.toLowerCase().replace(" ", "")}
             >
               <TableCell className={classes.colName} data-test-id="name">
                 {warehouse?.name ?? <Skeleton />}
@@ -149,11 +122,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
               </TableCell>
               <TableCell className={classes.colActions}>
                 <div className={classes.actions}>
-                  <IconButton
-                    variant="secondary"
-                    color="primary"
-                    data-test-id="edit-button"
-                  >
+                  <IconButton variant="secondary" color="primary" data-test-id="edit-button">
                     <EditIcon />
                   </IconButton>
                   <TableButtonWrapper>
@@ -173,10 +142,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
           () => (
             <TableRowLink data-test-id="empty-list-message">
               <TableCell colSpan={numberOfColumns}>
-                <FormattedMessage
-                  id="2gsiR1"
-                  defaultMessage="No warehouses found"
-                />
+                <FormattedMessage id="2gsiR1" defaultMessage="No warehouses found" />
               </TableCell>
             </TableRowLink>
           ),

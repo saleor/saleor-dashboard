@@ -31,12 +31,7 @@ export const Root: React.FC<PropsWithChildren<TopNavProps>> = ({
       <Box __flex={isAlignToRight ? 1 : 0} __minWidth="max-content">
         <Text size={6}>{title}</Text>
       </Box>
-      <Box
-        display="flex"
-        flexWrap="nowrap"
-        height="100%"
-        __flex={isAlignToRight ? "initial" : 1}
-      >
+      <Box display="flex" flexWrap="nowrap" height="100%" __flex={isAlignToRight ? "initial" : 1}>
         {isPickerActive && channels.length > 0 && (
           <AppChannelSelect
             channels={channels}

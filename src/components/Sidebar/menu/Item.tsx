@@ -11,6 +11,7 @@ interface Props {
 
 export const MenuItem: React.FC<Props> = props => {
   const { menuItem } = props;
+
   switch (menuItem.type) {
     case "item":
       return <SingleItem {...props} />;

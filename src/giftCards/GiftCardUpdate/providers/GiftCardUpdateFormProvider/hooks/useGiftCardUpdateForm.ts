@@ -8,8 +8,7 @@ import {
   GiftCardUpdateFormErrors,
 } from "../GiftCardUpdateFormProvider";
 
-type UseGiftCardUpdateFormProps = UseFormResult<GiftCardUpdateFormData> &
-  GiftCardUpdateFormErrors;
+type UseGiftCardUpdateFormProps = UseFormResult<GiftCardUpdateFormData> & GiftCardUpdateFormErrors;
 
 const useGiftCardUpdate = (): UseGiftCardUpdateFormProps => {
   const giftCardUpdateFormProviderProps = useContext(GiftCardUpdateFormContext);

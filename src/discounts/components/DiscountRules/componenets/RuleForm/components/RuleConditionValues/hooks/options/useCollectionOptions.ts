@@ -4,10 +4,7 @@ import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/uti
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
-export const useCollectionOptions = (
-  channel: string | null,
-  conditionId: string | null,
-) => {
+export const useCollectionOptions = (channel: string | null, conditionId: string | null) => {
   const {
     loadMore: loadMoreCollections,
     search: searchCollections,
@@ -19,7 +16,6 @@ export const useCollectionOptions = (
     },
     skip: !channel || !conditionId || conditionId !== "collection",
   });
-
   const fetchMoreCollections = getSearchFetchMoreProps(
     searchCollectionsOpts as CommonSearchOpts,
     loadMoreCollections,
@@ -28,11 +24,9 @@ export const useCollectionOptions = (
   return {
     fetch: searchCollections,
     fetchMoreProps: fetchMoreCollections,
-    options: (mapEdgesToItems(searchCollectionsOpts?.data?.search) ?? []).map(
-      ({ name, id }) => ({
-        label: name,
-        value: id,
-      }),
-    ),
+    options: (mapEdgesToItems(searchCollectionsOpts?.data?.search) ?? []).map(({ name, id }) => ({
+      label: name,
+      value: id,
+    })),
   };
 };

@@ -24,14 +24,12 @@ const OrderGrantRefund: React.FC<OrderGrantRefundProps> = ({ orderId }) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const notify = useNotifier();
-
   const { data, loading } = useOrderDetailsGrantRefundQuery({
     displayLoader: true,
     variables: {
       id: orderId,
     },
   });
-
   const [grantRefund, grantRefundOptions] = useOrderGrantRefundAddMutation({
     onCompleted: submitData => {
       if (submitData.orderGrantRefundCreate.errors.length === 0) {
@@ -45,7 +43,6 @@ const OrderGrantRefund: React.FC<OrderGrantRefundProps> = ({ orderId }) => {
       }
     },
   });
-
   const handleSubmit = async ({
     amount,
     reason,

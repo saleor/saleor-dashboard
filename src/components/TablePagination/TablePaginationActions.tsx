@@ -62,9 +62,7 @@ export interface TablePaginationActionsProps {
   onPreviousPage: (event) => any;
 }
 
-export const TablePaginationActions: React.FC<
-  TablePaginationActionsProps
-> = props => {
+export const TablePaginationActions: React.FC<TablePaginationActionsProps> = props => {
   const {
     backIconButtonProps,
     className,
@@ -76,9 +74,7 @@ export const TablePaginationActions: React.FC<
     ...other
   } = props;
   const classes = useStyles(props);
-
   const { direction, themeType } = useTheme();
-
   const isDark = isDarkTheme(themeType);
 
   return (

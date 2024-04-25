@@ -1,15 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-# Maximum allowed branch name length (deployment instance name limit)
-MAX_LENGTH=37
-
-# Check if the branch name length exceeds the maximum allowed length
-branch_name=$(git symbolic-ref --short HEAD)
-if [ ${#branch_name} -gt $MAX_LENGTH ]; then
-    echo "⚠️  Warning: Branch name '$branch_name' exceeds the maximum allowed length of $MAX_LENGTH characters."
-    echo "⚠️  The deployment instance will not be created."
-fi
-
 npm run check-types
 npm run test

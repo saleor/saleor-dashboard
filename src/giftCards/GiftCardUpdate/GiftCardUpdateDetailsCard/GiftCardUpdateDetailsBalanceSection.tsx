@@ -14,7 +14,6 @@ import { useGiftCardDetailsBalanceStyles as useStyles } from "./styles";
 const GiftCardUpdateDetailsBalanceSection: React.FC = () => {
   const classes = useStyles({});
   const intl = useIntl();
-
   const {
     giftCard: { currentBalance, initialBalance },
   } = useGiftCardDetails();

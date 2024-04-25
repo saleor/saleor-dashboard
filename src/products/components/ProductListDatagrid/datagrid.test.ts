@@ -8,13 +8,9 @@ describe("getDescriptionValue", () => {
       ),
     ).toBe("description");
   });
-
   it("should return empty string when no description data", () => {
-    expect(
-      getDescriptionValue('{"blocks": [{"data": {}, "type": "paragraph"}]}'),
-    ).toBe("");
+    expect(getDescriptionValue('{"blocks": [{"data": {}, "type": "paragraph"}]}')).toBe("");
   });
-
   it("should return empty string when description contains &nbsp", () => {
     expect(
       getDescriptionValue(

@@ -22,10 +22,7 @@ import { findInEnum, getById } from "@dashboard/misc";
 import { IMoney } from "@dashboard/utils/intl";
 import { IntlShape } from "react-intl";
 
-import {
-  LineItemData,
-  OrderReturnFormData,
-} from "../components/OrderReturnPage/form";
+import { LineItemData, OrderReturnFormData } from "../components/OrderReturnPage/form";
 import {
   getAllOrderFulfilledLines,
   getAllOrderWaitingLines,
@@ -48,6 +45,7 @@ export function getOrderCharged(order: OrderDetailsFragment) {
   if (order?.totalCharged) {
     return order.totalCharged;
   }
+
   return order?.totalCaptured;
 }
 
@@ -55,9 +53,7 @@ export function getToFulfillOrderLines(lines?: OrderLineStockDataFragment[]) {
   return lines?.filter(line => line.quantityToFulfill > 0) || [];
 }
 
-export function getWarehousesFromOrderLines<
-  T extends OrderLineWithStockWarehouses,
->(lines?: T[]) {
+export function getWarehousesFromOrderLines<T extends OrderLineWithStockWarehouses>(lines?: T[]) {
   return lines?.reduce(
     (warehouses, line) =>
       line.variant?.stocks?.reduce(
@@ -71,16 +67,11 @@ export function getWarehousesFromOrderLines<
   );
 }
 
-export function getPreviouslyRefundedPrice(
-  order: OrderRefundSharedType,
-): IMoney {
+export function getPreviouslyRefundedPrice(order: OrderRefundSharedType): IMoney {
   return (
     getOrderCharged(order as OrderDetailsFragment) &&
     order?.total?.gross &&
-    subtractMoney(
-      getOrderCharged(order as OrderDetailsFragment),
-      order?.total?.gross,
-    )
+    subtractMoney(getOrderCharged(order as OrderDetailsFragment), order?.total?.gross)
   );
 }
 
@@ -96,6 +87,7 @@ export const getItemPriceAndQuantity = ({
   if (orderLines.length === 0) {
     return {};
   }
+
   const selectedOrderLine = orderLines.find(getById(id));
   const selectedQuantity = itemsQuantities.find(getById(id))?.value;
 
@@ -109,7 +101,6 @@ const getFulfillmentByFulfillmentLineId = (order, fulfillmentLineId) => {
     }
   }
 };
-
 const selectItemPriceAndQuantity = (
   order: OrderDetailsFragment,
   {
@@ -121,6 +112,7 @@ const selectItemPriceAndQuantity = (
   isFulfillment: boolean,
 ) => {
   const fulfillment = getFulfillmentByFulfillmentLineId(order, id);
+
   if (fulfillment?.status === FulfillmentStatus.WAITING_FOR_APPROVAL) {
     return getItemPriceAndQuantity({
       id,
@@ -128,6 +120,7 @@ const selectItemPriceAndQuantity = (
       orderLines: getAllOrderWaitingLines(order),
     });
   }
+
   return isFulfillment
     ? getItemPriceAndQuantity({
         id,
@@ -198,13 +191,11 @@ export const getReturnSelectedProductsAmount = (
     itemsToBeReplaced,
     orderLines: order.lines,
   });
-
   const fulfiledItemsValue = getPartialProductsValue({
     itemsQuantities: fulfilledItemsQuantities,
     itemsToBeReplaced,
     orderLines: getAllOrderFulfilledLines(order),
   });
-
   const waitingItemsValue = getPartialProductsValue({
     itemsQuantities: waitingItemsQuantities,
     itemsToBeReplaced,
@@ -223,28 +214,25 @@ const getPartialProductsValue = ({
   itemsQuantities: FormsetData<LineItemData, number>;
   orderLines: OrderLineFragment[];
 }) => {
-  return itemsQuantities.reduce(
-    (resultAmount, { id, value: quantity, data: { isRefunded } }) => {
-      const { value: isItemToBeReplaced } = itemsToBeReplaced.find(getById(id));
+  return itemsQuantities.reduce((resultAmount, { id, value: quantity, data: { isRefunded } }) => {
+    const { value: isItemToBeReplaced } = itemsToBeReplaced.find(getById(id));
 
-      if (quantity < 1 || isItemToBeReplaced || isRefunded) {
-        return resultAmount;
-      }
+    if (quantity < 1 || isItemToBeReplaced || isRefunded) {
+      return resultAmount;
+    }
 
-      const partialProductsValue = getItemPriceAndQuantity({
-        id,
-        itemsQuantities,
-        orderLines,
-      });
+    const partialProductsValue = getItemPriceAndQuantity({
+      id,
+      itemsQuantities,
+      orderLines,
+    });
 
-      return (
-        resultAmount +
-        (partialProductsValue?.unitPrice?.gross.amount ?? 0) *
-          (partialProductsValue?.selectedQuantity ?? 0)
-      );
-    },
-    0,
-  );
+    return (
+      resultAmount +
+      (partialProductsValue?.unitPrice?.gross.amount ?? 0) *
+        (partialProductsValue?.selectedQuantity ?? 0)
+    );
+  }, 0);
 };
 
 export function getRefundedLinesPriceSum(
@@ -255,6 +243,7 @@ export function getRefundedLinesPriceSum(
     const refundedLine = refundedProductQuantities.find(
       refundedLine => refundedLine.id === line.id,
     );
+
     return sum + line.unitPrice.gross.amount * Number(refundedLine?.value || 0);
   }, 0);
 }
@@ -268,11 +257,10 @@ export function getAllFulfillmentLinesPriceSum(
       const refundedLine = refundedFulfilledProductQuantities.find(
         refundedLine => refundedLine.id === line.id,
       );
-      return (
-        sum +
-        line.orderLine.unitPrice.gross.amount * Number(refundedLine?.value || 0)
-      );
+
+      return sum + line.orderLine.unitPrice.gross.amount * Number(refundedLine?.value || 0);
     }, 0);
+
     return sum + fulfilmentLinesSum;
   }, 0);
 }
@@ -300,20 +288,17 @@ export function mergeRepeatedOrderLines(
   }, Array<OrderDetailsFragment["fulfillments"][0]["lines"][0]>());
 }
 
-export function addressToAddressInput<T>(
-  address: T & AddressFragment,
-): AddressInput {
+export function addressToAddressInput<T>(address: T & AddressFragment): AddressInput {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { id, __typename, ...rest } = address;
+
   return {
     ...rest,
     country: findInEnum(address.country.code, CountryCode),
   };
 }
 
-export const getVariantSearchAddress = (
-  order: OrderDetailsFragment,
-): AddressInput => {
+export const getVariantSearchAddress = (order: OrderDetailsFragment): AddressInput => {
   if (order.shippingAddress) {
     return addressToAddressInput(order.shippingAddress);
   }
@@ -332,6 +317,7 @@ export const getAllocatedQuantityForLine = (
   const warehouseAllocation = line.allocations.find(
     allocation => allocation.warehouse.id === warehouseId,
   );
+
   return warehouseAllocation?.quantity || 0;
 };
 
@@ -342,13 +328,9 @@ export const getOrderLineAvailableQuantity = (
   if (!stock) {
     return 0;
   }
-  const allocatedQuantityForLine = getAllocatedQuantityForLine(
-    line,
-    stock.warehouse.id,
-  );
 
-  const availableQuantity =
-    stock.quantity - stock.quantityAllocated + allocatedQuantityForLine;
+  const allocatedQuantityForLine = getAllocatedQuantityForLine(line, stock.warehouse.id);
+  const availableQuantity = stock.quantity - stock.quantityAllocated + allocatedQuantityForLine;
 
   return availableQuantity;
 };
@@ -367,10 +349,8 @@ export const getFulfillmentFormsetQuantity = (
   line: OrderLineStockDataFragment,
 ) => formsetData?.find(getById(line.id))?.value?.[0]?.quantity;
 
-export const getWarehouseStock = (
-  stocks: StockFragment[],
-  warehouseId: string,
-) => stocks?.find(stock => stock.warehouse.id === warehouseId);
+export const getWarehouseStock = (stocks: StockFragment[], warehouseId: string) =>
+  stocks?.find(stock => stock.warehouse.id === warehouseId);
 
 export const isLineAvailableInWarehouse = (
   line: OrderFulfillLineFragment | OrderLineStockDataFragment,
@@ -379,10 +359,13 @@ export const isLineAvailableInWarehouse = (
   if (!line?.variant?.stocks) {
     return false;
   }
+
   const stock = getWarehouseStock(line.variant.stocks, warehouse.id);
+
   if (stock) {
     return line.quantityToFulfill <= getOrderLineAvailableQuantity(line, stock);
   }
+
   return false;
 };
 
@@ -393,10 +376,13 @@ export const getLineAvailableQuantityInWarehouse = (
   if (!line?.variant?.stocks) {
     return 0;
   }
+
   const stock = getWarehouseStock(line.variant.stocks, warehouse.id);
+
   if (stock) {
     return getOrderLineAvailableQuantity(line, stock);
   }
+
   return 0;
 };
 
@@ -407,6 +393,7 @@ export const getLineAllocationWithHighestQuantity = (
     if (!prevAllocation || prevAllocation.quantity < allocation.quantity) {
       return allocation;
     }
+
     return prevAllocation;
   }, null);
 
@@ -420,8 +407,10 @@ export const getWarehouseWithHighestAvailableQuantity = (
       line.allocations.reduce((warehouse, allocation) => {
         if (allocation.quantity > highestAvailableQuantity) {
           highestAvailableQuantity = allocation.quantity;
+
           return allocation.warehouse;
         }
+
         return warehouse;
       }, selectedWarehouse),
     null as WarehouseFragment,
@@ -447,9 +436,7 @@ export const getAttributesCaption = (
   attributes: OrderFulfillLineFragment["variant"]["attributes"] | undefined,
 ): string | undefined =>
   attributes
-    ?.map(attribute =>
-      attribute.values.map(attributeValue => attributeValue.name).join(", "),
-    )
+    ?.map(attribute => attribute.values.map(attributeValue => attributeValue.name).join(", "))
     .join(" / ");
 
 export const prepareMoney = (
@@ -462,11 +449,7 @@ export const prepareMoney = (
 });
 
 export const isAnyAddressEditModalOpen = (uri: string | undefined): boolean =>
-  [
-    "edit-customer-addresses",
-    "edit-shipping-address",
-    "edit-billing-address",
-  ].includes(uri);
+  ["edit-customer-addresses", "edit-shipping-address", "edit-billing-address"].includes(uri);
 
 const NAME_SEPARATOR = ":";
 const getDiscountNameLabel = (name: string) => {
@@ -479,10 +462,7 @@ const getDiscountNameLabel = (name: string) => {
   return name;
 };
 
-export const getDiscountTypeLabel = (
-  discount: OrderDiscountFragment,
-  intl: IntlShape,
-) => {
+export const getDiscountTypeLabel = (discount: OrderDiscountFragment, intl: IntlShape) => {
   switch (discount.type) {
     case OrderDiscountType.MANUAL:
       return intl.formatMessage(orderDiscountTypeLabelMessages.staffAdded);

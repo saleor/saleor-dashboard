@@ -40,14 +40,12 @@ export const messages = defineMessages({
     id: "icb1fc",
   },
   allocaationMayOccurWithTrackInventory: {
-    defaultMessage:
-      'Order contains products that have "Track inventory" enabled.',
+    defaultMessage: 'Order contains products that have "Track inventory" enabled.',
     description: "tooltip",
     id: "q5Lfp4",
   },
   allocaationMayOccurWithReservationTime: {
-    defaultMessage:
-      "Checkout reservation time threshold is enabled in settings.",
+    defaultMessage: "Checkout reservation time threshold is enabled in settings.",
     description: "tooltip",
     id: "G5NKx6",
   },

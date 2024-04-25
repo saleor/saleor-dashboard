@@ -3,8 +3,7 @@ import { defineMessages } from "react-intl";
 export const giftCardDeleteDialogMessages = defineMessages({
   title: {
     id: "a+iRI1",
-    defaultMessage:
-      "{selectedItemsCount,plural,one{Delete Gift Card} other{Delete Gift Cards}}",
+    defaultMessage: "{selectedItemsCount,plural,one{Delete Gift Card} other{Delete Gift Cards}}",
     description: "single gift card title",
   },
   defaultDescription: {

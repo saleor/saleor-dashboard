@@ -1,5 +1,6 @@
 import type { Page } from "@playwright/test";
 import { expect } from "@playwright/test";
+
 import { BasePage } from "./basePage";
 
 export class MainMenuPage extends BasePage {
@@ -26,7 +27,7 @@ export class MainMenuPage extends BasePage {
     readonly products = page.getByTestId("menu-item-label-products"),
     readonly menuItem = page.locator("[data-test-id*='menu-item-label-']"),
   ) {
-    super(page)
+    super(page);
   }
 
   async gotoAccountSettings() {
@@ -37,43 +38,55 @@ export class MainMenuPage extends BasePage {
   async openDiscounts() {
     await this.discounts.click();
   }
+
   async openProducts() {
     await this.products.click();
   }
+
   async openCategories() {
     await this.products.click();
     await this.categories.click();
   }
+
   async openCollections() {
     await this.products.click();
     await this.collections.click();
   }
+
   async openTranslations() {
     await this.translations.click();
   }
+
   async openContent() {
     await this.content.click();
   }
+
   async openCustomers() {
     await this.customers.click();
   }
+
   async openConfiguration() {
     await this.configuration.click();
   }
+
   async openApps() {
     await this.app.click();
   }
+
   async openOrders() {
     await this.orders.click();
   }
+
   async openDrafts() {
     await this.orders.click();
     await this.drafts.click();
   }
+
   async openVouchers() {
     await this.discounts.click();
     await this.vouchers.click();
   }
+
   async expectMenuItemsCount(liItemsCount: number) {
     // expect li items count in menu
     await expect(this.list.locator("li")).toHaveCount(liItemsCount);

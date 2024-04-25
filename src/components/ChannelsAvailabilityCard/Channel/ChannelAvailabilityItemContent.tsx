@@ -37,31 +37,22 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
   } = data;
   const formData = {
     ...(availableForPurchase !== undefined ? { availableForPurchase } : {}),
-    ...(isAvailable !== undefined
-      ? { isAvailableForPurchase: isAvailable }
-      : {}),
+    ...(isAvailable !== undefined ? { isAvailableForPurchase: isAvailable } : {}),
     isPublished,
     publicationDate,
     ...(visibleInListings !== undefined ? { visibleInListings } : {}),
   };
   const dateNow = useCurrentDate();
   const localizeDate = useDateLocalize();
-  const hasAvailableProps =
-    isAvailable !== undefined && availableForPurchase !== undefined;
-  const [isPublicationDate, setPublicationDate] = useState(
-    publicationDate === null,
-  );
+  const hasAvailableProps = isAvailable !== undefined && availableForPurchase !== undefined;
+  const [isPublicationDate, setPublicationDate] = useState(publicationDate === null);
   const [isAvailableDate, setAvailableDate] = useState(false);
   const intl = useIntl();
-
   const visibleMessage = (date: string) =>
     intl.formatMessage(availabilityItemMessages.sinceDate, {
       date: localizeDate(date),
     });
-  const formErrors = getFormErrors(
-    ["availableForPurchaseDate", "publicationDate"],
-    errors,
-  );
+  const formErrors = getFormErrors(["availableForPurchaseDate", "publicationDate"], errors);
 
   return (
     <Box display="flex" gap={3} paddingTop={3} flexDirection="column">
@@ -79,37 +70,24 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
         flexDirection="column"
         gap={3}
       >
-        <RadioGroup.Item
-          id={`${id}-isPublished-true`}
-          value="true"
-          name="isPublished"
-        >
+        <RadioGroup.Item id={`${id}-isPublished-true`} value="true" name="isPublished">
           <Box display="flex" alignItems="baseline" gap={2}>
             <Text>{messages.visibleLabel}</Text>
-            {isPublished &&
-              publicationDate &&
-              Date.parse(publicationDate) < dateNow && (
-                <Text size={2} color="default2">
-                  {messages.visibleSecondLabel ||
-                    visibleMessage(publicationDate)}
-                </Text>
-              )}
+            {isPublished && publicationDate && Date.parse(publicationDate) < dateNow && (
+              <Text size={2} color="default2">
+                {messages.visibleSecondLabel || visibleMessage(publicationDate)}
+              </Text>
+            )}
           </Box>
         </RadioGroup.Item>
-        <RadioGroup.Item
-          id={`${id}-isPublished-false`}
-          value="false"
-          name="isPublished"
-        >
+        <RadioGroup.Item id={`${id}-isPublished-false`} value="false" name="isPublished">
           <Box display="flex" alignItems="baseline" gap={2}>
             <Text>{messages.hiddenLabel}</Text>
-            {publicationDate &&
-              !isPublished &&
-              Date.parse(publicationDate) >= dateNow && (
-                <Text size={2} color="default2">
-                  {messages.hiddenSecondLabel}
-                </Text>
-              )}
+            {publicationDate && !isPublished && Date.parse(publicationDate) >= dateNow && (
+              <Text size={2} color="default2">
+                {messages.hiddenSecondLabel}
+              </Text>
+            )}
           </Box>
         </RadioGroup.Item>
       </RadioGroup>
@@ -158,8 +136,7 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
             onValueChange={value =>
               onChange(id, {
                 ...formData,
-                availableForPurchase:
-                  value === "false" ? null : availableForPurchase,
+                availableForPurchase: value === "false" ? null : availableForPurchase,
                 isAvailableForPurchase: value === "true",
               })
             }
@@ -167,10 +144,7 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
             flexDirection="column"
             gap={3}
           >
-            <RadioGroup.Item
-              id={`channel:isAvailableForPurchase:${id}-true`}
-              value="true"
-            >
+            <RadioGroup.Item id={`channel:isAvailableForPurchase:${id}-true`} value="true">
               <Box display="flex" __alignItems="baseline" gap={2}>
                 <Text>{messages.availableLabel}</Text>
                 {isAvailable &&
@@ -182,10 +156,7 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
                   )}
               </Box>
             </RadioGroup.Item>
-            <RadioGroup.Item
-              id={`channel:isAvailableForPurchase:${id}-false`}
-              value="false"
-            >
+            <RadioGroup.Item id={`channel:isAvailableForPurchase:${id}-false`} value="false">
               <Box display="flex" __alignItems="baseline" gap={2}>
                 <Text>{messages.unavailableLabel}</Text>
                 {availableForPurchase && !isAvailable && (
@@ -197,16 +168,9 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
             </RadioGroup.Item>
           </RadioGroup>
           {!isAvailable && (
-            <Box
-              display="flex"
-              gap={1}
-              flexDirection="column"
-              alignItems="start"
-            >
+            <Box display="flex" gap={1} flexDirection="column" alignItems="start">
               <Checkbox
-                onCheckedChange={(checked: boolean) =>
-                  setAvailableDate(checked)
-                }
+                onCheckedChange={(checked: boolean) => setAvailableDate(checked)}
                 checked={isAvailableDate}
               >
                 {messages.setAvailabilityDateLabel}
@@ -215,18 +179,13 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
                 <TextField
                   error={!!formErrors.availableForPurchaseDate}
                   disabled={disabled}
-                  label={intl.formatMessage(
-                    availabilityItemMessages.setAvailableOn,
-                  )}
+                  label={intl.formatMessage(availabilityItemMessages.setAvailableOn)}
                   name={`channel:availableForPurchase:${id}`}
                   type="date"
                   fullWidth={true}
                   helperText={
                     formErrors.availableForPurchaseDate
-                      ? getProductErrorMessage(
-                          formErrors.availableForPurchaseDate,
-                          intl,
-                        )
+                      ? getProductErrorMessage(formErrors.availableForPurchaseDate, intl)
                       : ""
                   }
                   value={availableForPurchase || ""}
@@ -265,9 +224,7 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
             </Text>
           </Checkbox>
           <Text size={2} color="default2">
-            {intl.formatMessage(
-              availabilityItemMessages.hideInListingsDescription,
-            )}
+            {intl.formatMessage(availabilityItemMessages.hideInListingsDescription)}
           </Text>
         </>
       )}

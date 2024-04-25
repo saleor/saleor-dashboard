@@ -14,7 +14,6 @@ export const useAppDashboardUpdates = (
   appId: string,
 ) => {
   const postToExtension = usePostToExtension(frameEl, appOrigin);
-
   const { locale } = useLocale();
   const { themeType } = useTheme();
 
@@ -30,7 +29,6 @@ export const useAppDashboardUpdates = (
       },
     });
   }, [enabled, locale, postToExtension]);
-
   useEffect(() => {
     if (!enabled) {
       return;
@@ -43,18 +41,15 @@ export const useAppDashboardUpdates = (
       },
     });
   }, [themeType, postToExtension, enabled]);
-
   useEffect(() => {
     if (!enabled) {
       return;
     }
+
     postToExtension({
       type: "redirect",
       payload: {
-        path: AppUrls.resolveAppDeepPathFromDashboardUrl(
-          location.pathname,
-          appId,
-        ),
+        path: AppUrls.resolveAppDeepPathFromDashboardUrl(location.pathname, appId),
       },
     });
   }, [appId, enabled, postToExtension]);

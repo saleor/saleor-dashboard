@@ -2,18 +2,12 @@
 import { FetchResult } from "@apollo/client";
 import BackButton from "@dashboard/components/BackButton";
 import Checkbox from "@dashboard/components/Checkbox";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import {
-  SearchProductsQuery,
-  ShippingPriceExcludeProductMutation,
-} from "@dashboard/graphql";
+import { SearchProductsQuery, ShippingPriceExcludeProductMutation } from "@dashboard/graphql";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { renderCollection } from "@dashboard/misc";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
@@ -70,33 +64,24 @@ export interface ShippingMethodProductsAddDialogProps extends FetchMoreProps {
   products: RelayToFlat<SearchProductsQuery["search"]>;
   onClose: () => void;
   onFetch: (query: string) => void;
-  onSubmit: (
-    ids: string[],
-  ) => Promise<FetchResult<ShippingPriceExcludeProductMutation>>;
+  onSubmit: (ids: string[]) => Promise<FetchResult<ShippingPriceExcludeProductMutation>>;
 }
 
 const handleProductAssign = (
   product: RelayToFlat<SearchProductsQuery["search"]>[0],
   isSelected: boolean,
   selectedProducts: RelayToFlat<SearchProductsQuery["search"]>,
-  setSelectedProducts: (
-    data: RelayToFlat<SearchProductsQuery["search"]>,
-  ) => void,
+  setSelectedProducts: (data: RelayToFlat<SearchProductsQuery["search"]>) => void,
 ) => {
   if (isSelected) {
     setSelectedProducts(
-      selectedProducts.filter(
-        selectedProduct => selectedProduct.id !== product.id,
-      ),
+      selectedProducts.filter(selectedProduct => selectedProduct.id !== product.id),
     );
   } else {
     setSelectedProducts([...selectedProducts, product]);
   }
 };
-
-const ShippingMethodProductsAddDialog: React.FC<
-  ShippingMethodProductsAddDialogProps
-> = props => {
+const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogProps> = props => {
   const {
     confirmButtonState,
     open,
@@ -108,21 +93,18 @@ const ShippingMethodProductsAddDialog: React.FC<
     onClose,
     onSubmit,
   } = props;
-
   const classes = useStyles(props);
   const intl = useIntl();
   const [query, onQueryChange, resetQuery] = useSearchQuery(onFetch);
   const [selectedProducts, setSelectedProducts] = React.useState<
     RelayToFlat<SearchProductsQuery["search"]>
   >([]);
-
   const handleSubmit = () => {
     onSubmit(selectedProducts.map(product => product.id)).then(() => {
       setSelectedProducts([]);
       resetQuery();
     });
   };
-
   const handleClose = () => {
     onClose();
     setSelectedProducts([]);
@@ -139,10 +121,7 @@ const ShippingMethodProductsAddDialog: React.FC<
         />
       </DialogTitle>
       <DialogContent>
-        <div
-          data-test-id="assign-products-dialog-content"
-          className={classes.searchBar}
-        >
+        <div data-test-id="assign-products-dialog-content" className={classes.searchBar}>
           <TextField
             data-test-id="search-bar"
             name="query"
@@ -184,15 +163,11 @@ const ShippingMethodProductsAddDialog: React.FC<
                     const isSelected = selectedProducts.some(
                       selectedProduct => selectedProduct.id === product.id,
                     );
+
                     return (
-                      <React.Fragment
-                        key={product ? product.id : `skeleton-${productIndex}`}
-                      >
+                      <React.Fragment key={product ? product.id : `skeleton-${productIndex}`}>
                         <TableRowLink data-test-id="product-row">
-                          <TableCell
-                            padding="checkbox"
-                            className={classes.productCheckboxCell}
-                          >
+                          <TableCell padding="checkbox" className={classes.productCheckboxCell}>
                             {product && (
                               <Checkbox
                                 checked={isSelected}
@@ -254,5 +229,6 @@ const ShippingMethodProductsAddDialog: React.FC<
     </Dialog>
   );
 };
+
 ShippingMethodProductsAddDialog.displayName = "ShippingMethodProductsAddDialog";
 export default ShippingMethodProductsAddDialog;

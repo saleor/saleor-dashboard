@@ -21,7 +21,6 @@ const initialData: GenerateMultipleVoucherCodeFormData = {
   quantity: "",
   prefix: "",
 };
-
 const MAX_VOUCHER_CODES = 50;
 
 export const VoucherCodesGenerateDialog = ({
@@ -30,18 +29,13 @@ export const VoucherCodesGenerateDialog = ({
   onSubmit,
 }: VoucherCodesGenerateDialogProps) => {
   const intl = useIntl();
-  const [data, setData] =
-    useState<GenerateMultipleVoucherCodeFormData>(initialData);
-
+  const [data, setData] = useState<GenerateMultipleVoucherCodeFormData>(initialData);
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
 
-    if (
-      Number.isNaN(Number(value)) ||
-      Number(value) > MAX_VOUCHER_CODES ||
-      value.includes(".")
-    ) {
+    if (Number.isNaN(Number(value)) || Number(value) > MAX_VOUCHER_CODES || value.includes(".")) {
       e.preventDefault();
+
       return;
     }
 
@@ -50,12 +44,10 @@ export const VoucherCodesGenerateDialog = ({
       [e.target.name]: e.target.value,
     }));
   };
-
   const handleModalClose = () => {
     onClose();
     setData(initialData);
   };
-
   const handleSubmit = async () => {
     await onSubmit(data);
     onClose();
@@ -65,9 +57,7 @@ export const VoucherCodesGenerateDialog = ({
   return (
     <DashboardModal open={open} onChange={handleModalClose}>
       <DashboardModal.Content>
-        <DashboardModal.Title>
-          {intl.formatMessage(messages.title)}
-        </DashboardModal.Title>
+        <DashboardModal.Title>{intl.formatMessage(messages.title)}</DashboardModal.Title>
         <Box display="grid" gap={3} __width={390}>
           <Input
             name="quantity"

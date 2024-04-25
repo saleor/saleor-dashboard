@@ -1,7 +1,4 @@
-import {
-  CategoryListUrlSortField,
-  categoryUrl,
-} from "@dashboard/categories/urls";
+import { CategoryListUrlSortField, categoryUrl } from "@dashboard/categories/urls";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
@@ -17,10 +14,7 @@ import { Box } from "@saleor/macaw-ui-next";
 import React, { ReactNode, useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import {
-  categoryListStaticColumnsAdapter,
-  createGetCellContent,
-} from "./datagrid";
+import { categoryListStaticColumnsAdapter, createGetCellContent } from "./datagrid";
 import { messages } from "./messages";
 
 interface CategoryListDatagridProps
@@ -45,12 +39,10 @@ export const CategoryListDatagrid = ({
 }: CategoryListDatagridProps) => {
   const datagridState = useDatagridChangeState();
   const intl = useIntl();
-
   const memoizedStaticColumns = useMemo(
     () => categoryListStaticColumnsAdapter(intl, sort),
     [intl, sort],
   );
-
   const handleColumnChange = useCallback(
     picked => {
       if (onUpdateListSettings) {
@@ -59,19 +51,15 @@ export const CategoryListDatagrid = ({
     },
     [onUpdateListSettings],
   );
-
-  const { handlers, selectedColumns, staticColumns, visibleColumns } =
-    useColumns({
-      staticColumns: memoizedStaticColumns,
-      selectedColumns: settings?.columns ?? [],
-      onSave: handleColumnChange,
-    });
-
-  const getCellContent = useCallback(
-    createGetCellContent(categories, visibleColumns),
-    [categories, visibleColumns],
-  );
-
+  const { handlers, selectedColumns, staticColumns, visibleColumns } = useColumns({
+    staticColumns: memoizedStaticColumns,
+    selectedColumns: settings?.columns ?? [],
+    onSave: handleColumnChange,
+  });
+  const getCellContent = useCallback(createGetCellContent(categories, visibleColumns), [
+    categories,
+    visibleColumns,
+  ]);
   const handleHeaderClick = useCallback(
     (col: number) => {
       if (sort !== undefined && onSort) {
@@ -80,7 +68,6 @@ export const CategoryListDatagrid = ({
     },
     [visibleColumns, onSort, sort],
   );
-
   const handleRowAnchor = useCallback(
     ([, row]: Item) => categoryUrl(categories[row].id),
     [categories],

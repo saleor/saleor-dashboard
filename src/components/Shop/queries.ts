@@ -67,10 +67,7 @@ export const limitInfo = gql`
   }
 `;
 export const useShopLimitsQuery = (
-  opts: QueryHookOptions<
-    RefreshLimitsQuery,
-    Partial<RefreshLimitsQueryVariables>
-  >,
+  opts: QueryHookOptions<RefreshLimitsQuery, Partial<RefreshLimitsQueryVariables>>,
 ) =>
   useRefreshLimitsQuery({
     ...opts,

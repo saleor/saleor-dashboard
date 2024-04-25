@@ -15,18 +15,17 @@ interface ShippingWeightUnitDialogProps {
   disabled: boolean;
 }
 
-export const ShippingWeightUnitDialog: React.FC<
-  ShippingWeightUnitDialogProps
-> = ({ open, onSubmit, onClose, defaultWeightUnit, disabled }) => {
+export const ShippingWeightUnitDialog: React.FC<ShippingWeightUnitDialogProps> = ({
+  open,
+  onSubmit,
+  onClose,
+  defaultWeightUnit,
+  disabled,
+}) => {
   return (
     <DashboardModal open={open} onChange={onClose}>
       <DashboardModal.Content>
-        <Box
-          alignItems="center"
-          display="flex"
-          gap={3}
-          justifyContent="space-between"
-        >
+        <Box alignItems="center" display="flex" gap={3} justifyContent="space-between">
           <DashboardModal.Title>
             <FormattedMessage
               description="weight config modal title"

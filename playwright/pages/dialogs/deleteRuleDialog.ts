@@ -12,8 +12,9 @@ export class DeleteRuleDialog {
   }
 
   async clickConfirmDeleteButton() {
-    await this.deleteRuleButton.click()
+    await this.deleteRuleButton.click();
   }
+
   async cancelDeletion() {
     await this.cancelButton.click();
   }

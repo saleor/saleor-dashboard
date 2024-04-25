@@ -11,16 +11,13 @@ export interface TreeItem<T extends DataTypePlaceholder> {
 
 export type TreeItems<T extends DataTypePlaceholder> = Array<TreeItem<T>>;
 
-export interface FlattenedItem<T extends DataTypePlaceholder>
-  extends TreeItem<T> {
+export interface FlattenedItem<T extends DataTypePlaceholder> extends TreeItem<T> {
   parentId: UniqueIdentifier | null;
   depth: number;
   index: number;
 }
 
-export type FlattenedItems<T extends DataTypePlaceholder> = Array<
-  FlattenedItem<T>
->;
+export type FlattenedItems<T extends DataTypePlaceholder> = Array<FlattenedItem<T>>;
 
 export type SensorContext<T extends DataTypePlaceholder> = MutableRefObject<{
   items: FlattenedItems<T>;

@@ -12,13 +12,14 @@ interface DeleteWarningDialogConsentContentProps {
   onConsentChange: (value: boolean) => void;
 }
 
-const DeleteWarningDialogConsentContent: React.FC<
-  DeleteWarningDialogConsentContentProps
-> = ({ description, consentLabel, isConsentChecked, onConsentChange }) => {
+const DeleteWarningDialogConsentContent: React.FC<DeleteWarningDialogConsentContentProps> = ({
+  description,
+  consentLabel,
+  isConsentChecked,
+  onConsentChange,
+}) => {
   const classes = useStyles();
-
-  const handleConsentChange = ({ target }: ChangeEvent<any>) =>
-    onConsentChange(target.value);
+  const handleConsentChange = ({ target }: ChangeEvent<any>) => onConsentChange(target.value);
 
   return (
     <>
@@ -29,11 +30,7 @@ const DeleteWarningDialogConsentContent: React.FC<
           name="delete-assigned-items-consent"
           checked={isConsentChecked}
           onChange={handleConsentChange}
-          label={
-            <Typography className={classes.consentLabel}>
-              {consentLabel}
-            </Typography>
-          }
+          label={<Typography className={classes.consentLabel}>{consentLabel}</Typography>}
         />
       )}
     </>

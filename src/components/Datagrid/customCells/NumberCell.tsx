@@ -35,9 +35,7 @@ const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
         ...cell,
         data: {
           ...cell.data,
-          value: event.target.value
-            ? parseFloat(event.target.value)
-            : numberCellEmptyValue,
+          value: event.target.value ? parseFloat(event.target.value) : numberCellEmptyValue,
         },
       })
     }
@@ -46,19 +44,18 @@ const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
   />
 );
 
-export const numberCellRenderer = (
-  locale: Locale,
-): CustomRenderer<NumberCell> => ({
+export const numberCellRenderer = (locale: Locale): CustomRenderer<NumberCell> => ({
   kind: GridCellKind.Custom,
   isMatch: (c): c is NumberCell => (c.data as any).kind === "number-cell",
   draw: (args, cell) => {
     const { ctx, theme, rect } = args;
     const { value, options } = cell.data;
-    let formatted =
-      value === numberCellEmptyValue ? "-" : value.toLocaleString(locale);
+    let formatted = value === numberCellEmptyValue ? "-" : value.toLocaleString(locale);
+
     if (options?.format === "percent") {
       formatted += "%";
     }
+
     ctx.fillStyle = theme.textDark;
     ctx.textAlign = "right";
     ctx.fillText(

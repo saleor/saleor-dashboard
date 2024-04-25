@@ -28,9 +28,7 @@ const Header: React.FC<HeaderProps> = ({
 
     const isAppActive = data.isActive;
 
-    return isAppActive
-      ? AppUrls.resolveAppUrl(data.id)
-      : AppUrls.resolveAppListUrl();
+    return isAppActive ? AppUrls.resolveAppUrl(data.id) : AppUrls.resolveAppListUrl();
   };
 
   if (!data) {
@@ -59,4 +57,5 @@ const Header: React.FC<HeaderProps> = ({
     </>
   );
 };
+
 export default Header;

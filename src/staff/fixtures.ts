@@ -11,7 +11,7 @@ import { RelayToFlat } from "@dashboard/types";
 export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
   {
     avatar: {
-      __typename: "Image" as "Image",
+      __typename: "Image" as const,
       url: avatarImage,
     },
     email: "admin@example.com",
@@ -22,7 +22,7 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
   },
   {
     avatar: {
-      __typename: "Image" as "Image",
+      __typename: "Image" as const,
       url: avatarImage,
     },
     email: "admin@example.com",
@@ -33,7 +33,7 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
   },
   {
     avatar: {
-      __typename: "Image" as "Image",
+      __typename: "Image" as const,
       url: avatarImage,
     },
     email: "admin@example.com",
@@ -44,7 +44,7 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
   },
   {
     avatar: {
-      __typename: "Image" as "Image",
+      __typename: "Image" as const,
       url: avatarImage,
     },
     email: "admin@example.com",
@@ -55,7 +55,7 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
   },
   {
     avatar: {
-      __typename: "Image" as "Image",
+      __typename: "Image" as const,
       url: avatarImage,
     },
     email: "admin@example.com",
@@ -66,7 +66,7 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
   },
   {
     avatar: {
-      __typename: "Image" as "Image",
+      __typename: "Image" as const,
       url: avatarImage,
     },
     email: "admin@example.com",
@@ -77,7 +77,7 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
   },
   {
     avatar: {
-      __typename: "Image" as "Image",
+      __typename: "Image" as const,
       url: avatarImage,
     },
     email: "admin@example.com",
@@ -88,7 +88,7 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
   },
   {
     avatar: {
-      __typename: "Image" as "Image",
+      __typename: "Image" as const,
       url: avatarImage,
     },
     email: "admin@example.com",
@@ -99,7 +99,7 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
   },
   {
     avatar: {
-      __typename: "Image" as "Image",
+      __typename: "Image" as const,
       url: avatarImage,
     },
     email: "admin@example.com",
@@ -110,7 +110,7 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
   },
   {
     avatar: {
-      __typename: "Image" as "Image",
+      __typename: "Image" as const,
       url: avatarImage,
     },
     email: "admin@example.com",
@@ -121,7 +121,7 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
   },
   {
     avatar: {
-      __typename: "Image" as "Image",
+      __typename: "Image" as const,
       url: avatarImage,
     },
     email: "admin@example.com",
@@ -132,7 +132,7 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
   },
   {
     avatar: {
-      __typename: "Image" as "Image",
+      __typename: "Image" as const,
       url: avatarImage,
     },
     email: "admin@example.com",
@@ -141,10 +141,10 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
     isActive: true,
     lastName: "Smith",
   },
-].map(staffMember => ({ __typename: "User" as "User", ...staffMember }));
+].map(staffMember => ({ __typename: "User" as const, ...staffMember }));
 export const staffMember: StaffMemberDetailsFragment = {
   __typename: "User",
-  avatar: { __typename: "Image" as "Image", url: avatarImage },
+  avatar: { __typename: "Image" as const, url: avatarImage },
   email: "admin@example.com",
   firstName: "Jacob",
   id: "VXNlcjoyMQ==",
@@ -159,7 +159,7 @@ export const staffMember: StaffMemberDetailsFragment = {
 };
 
 export const staffMemberAvatar: StaffMemberAvatarFragment = {
-  avatar: { __typename: "Image" as "Image", url: avatarImage },
+  avatar: { __typename: "Image" as const, url: avatarImage },
   email: "admin@example.com",
   firstName: "Jacob",
   id: "VXNlcjoyMQ==",

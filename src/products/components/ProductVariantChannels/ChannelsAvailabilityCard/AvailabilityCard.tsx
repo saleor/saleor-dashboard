@@ -12,10 +12,7 @@ import { useFilteredChannelListing } from "./useFilteredChannelListing";
 import CardContainer from "./VariantDetailsChannelsAvailabilityCardContainer";
 
 interface AvailabilityCardProps {
-  allAvailableListings: FormsetData<
-    ChannelPriceAndPreorderData,
-    IChannelPriceAndPreorderArgs
-  >;
+  allAvailableListings: FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>;
   productChannelListings: ProductChannelListing | undefined;
 }
 

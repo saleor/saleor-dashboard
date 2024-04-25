@@ -4,9 +4,7 @@ import { useEffect, useReducer } from "react";
 import reduceFilter, { FilterReducerAction } from "./reducer";
 import { FieldType, FilterElement, IFilter } from "./types";
 
-export type FilterDispatchFunction<K extends string = string> = <
-  T extends FieldType,
->(
+export type FilterDispatchFunction<K extends string = string> = <T extends FieldType>(
   value: FilterReducerAction<K, T>,
 ) => void;
 
@@ -16,14 +14,10 @@ export type UseFilter<K extends string> = [
   () => void,
 ];
 
-function getParsedInitialFilter<T extends string>(
-  initialFilter: IFilter<T>,
-): IFilter<T> {
+function getParsedInitialFilter<T extends string>(initialFilter: IFilter<T>): IFilter<T> {
   return initialFilter.reduce((resultFilter, filterField) => {
     if (filterField.multipleFields) {
-      return resultFilter
-        .concat(filterField.multipleFields)
-        .concat([filterField]);
+      return resultFilter.concat(filterField.multipleFields).concat([filterField]);
     }
 
     return resultFilter.concat(filterField);
@@ -32,11 +26,9 @@ function getParsedInitialFilter<T extends string>(
 
 function useFilter<K extends string>(initialFilter: IFilter<K>): UseFilter<K> {
   const parsedInitialFilter = getParsedInitialFilter(initialFilter);
-
   const [data, dispatchFilterAction] = useReducer<
     React.Reducer<IFilter<K>, FilterReducerAction<K, FieldType>>
   >(reduceFilter, parsedInitialFilter);
-
   const reset = () =>
     dispatchFilterAction({
       payload: {
@@ -48,7 +40,6 @@ function useFilter<K extends string>(initialFilter: IFilter<K>): UseFilter<K> {
       },
       type: "reset",
     });
-
   const refresh = () =>
     dispatchFilterAction({
       payload: {

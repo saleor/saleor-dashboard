@@ -26,7 +26,6 @@ describe("filteredConditionalItems", () => {
 
     expect(filteredConditionalItems(items)).toEqual([]);
   });
-
   it("should return only items that has shouldExist set to true", () => {
     const items = [
       {
@@ -43,13 +42,9 @@ describe("filteredConditionalItems", () => {
       },
     ];
 
-    expect(filteredConditionalItems(items)).toEqual([
-      { id: "#2" },
-      { id: "#3" },
-    ]);
+    expect(filteredConditionalItems(items)).toEqual([{ id: "#2" }, { id: "#3" }]);
   });
 });
-
 describe("createOrderMetadataIdSchema", () => {
   it("returns order and fulfilment metadata", () => {
     // Arrange
@@ -70,7 +65,6 @@ describe("createOrderMetadataIdSchema", () => {
         },
       ],
     };
-
     // Act
     const metadata = createOrderMetadataIdSchema(order as OrderDetailsFragment);
 
@@ -107,7 +101,6 @@ describe("createOrderMetadataIdSchema", () => {
     });
   });
 });
-
 describe("createMetadataHandler", () => {
   it("handles order metadata change", () => {
     // Arrange
@@ -135,7 +128,6 @@ describe("createMetadataHandler", () => {
       } as ChangeEvent,
       "some-order-id",
     );
-
     // Assert
     expect(set).toHaveBeenCalledWith({
       "some-order-id": {

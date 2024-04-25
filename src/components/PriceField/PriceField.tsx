@@ -3,6 +3,7 @@ import { Input, InputProps, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { usePriceField } from "./usePriceField";
+
 export interface PriceFieldProps extends InputProps {
   className?: string;
   currencySymbol?: string;
@@ -31,11 +32,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
     value,
     ...inputProps
   } = props;
-
-  const { onChange, onKeyDown, minValue, step } = usePriceField(
-    currencySymbol,
-    onChangeBase,
-  );
+  const { onChange, onKeyDown, minValue, step } = usePriceField(currencySymbol, onChangeBase);
 
   return (
     <Input
@@ -66,6 +63,5 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
 PriceField.defaultProps = {
   name: "price",
 };
-
 PriceField.displayName = "PriceField";
 export default PriceField;

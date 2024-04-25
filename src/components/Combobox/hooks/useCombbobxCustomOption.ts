@@ -13,11 +13,9 @@ export const useCombbobxCustomOption = ({
   allowCustomValues?: boolean;
 }) => {
   const intl = useIntl();
-
   const customValueLabel = intl.formatMessage(messages.addNewValue, {
     value: query,
   });
-
   const customValueOption = showCustomValue({
     query,
     selectedValue,
@@ -51,9 +49,7 @@ function showCustomValue({
   }
 
   if (Array.isArray(selectedValue)) {
-    return !selectedValue.find(
-      option => option.label.toLowerCase() === query.toLowerCase(),
-    );
+    return !selectedValue.find(option => option.label.toLowerCase() === query.toLowerCase());
   }
 
   return selectedValue?.label.toLocaleLowerCase() !== query.toLocaleLowerCase();

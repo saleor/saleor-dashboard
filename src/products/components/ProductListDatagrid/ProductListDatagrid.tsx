@@ -19,23 +19,14 @@ import {
 import useLocale from "@dashboard/hooks/useLocale";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { canBeSorted } from "@dashboard/products/views/ProductList/sort";
-import {
-  ChannelProps,
-  ListProps,
-  PageListProps,
-  RelayToFlat,
-  SortPage,
-} from "@dashboard/types";
+import { ChannelProps, ListProps, PageListProps, RelayToFlat, SortPage } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box, useTheme } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import {
-  getAttributeIdFromColumnValue,
-  isAttributeColumnValue,
-} from "../ProductListPage/utils";
+import { getAttributeIdFromColumnValue, isAttributeColumnValue } from "../ProductListPage/utils";
 import {
   createGetCellContent,
   getAttributesFetchMoreProps,
@@ -63,9 +54,7 @@ interface ProductListDatagridProps
   products: RelayToFlat<ProductListQuery["products"]>;
   onRowClick: (id: string) => void;
   rowAnchor?: (id: string) => string;
-  availableColumnsAttributesOpts: ReturnType<
-    typeof useAvailableColumnAttributesLazyQuery
-  >;
+  availableColumnsAttributesOpts: ReturnType<typeof useAvailableColumnAttributesLazyQuery>;
   onSelectProductIds: (rowsIndex: number[], clearSelection: () => void) => void;
   hasRowHover?: boolean;
   loading: boolean;
@@ -94,22 +83,18 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   const datagrid = useDatagridChangeState();
   const { locale } = useLocale();
   const productsLength = getProductRowsLength(disabled, products, disabled);
-
   const handleColumnChange = useCallback(
     (picked: ProductListColumns[]) => {
       onUpdateListSettings("columns", picked.filter(Boolean));
     },
     [onUpdateListSettings],
   );
-
   const memoizedStaticColumns = useMemo(
     () => productListStaticColumnAdapter(intl, sort),
     [intl, sort],
   );
-
   const [queryAvailableColumnsAttributes, availableColumnsAttributesData] =
     availableColumnsAttributesOpts;
-
   const {
     handlers,
     visibleColumns,
@@ -125,9 +110,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         availableColumnsAttributesData,
         gridAttributesOpts,
       }),
-      selectedAttributesData: mapEdgesToItems(
-        gridAttributesOpts.data?.selectedAttributes,
-      ),
+      selectedAttributesData: mapEdgesToItems(gridAttributesOpts.data?.selectedAttributes),
       activeAttributeSortId,
       sort,
       onSearch: (query: string) =>
@@ -153,22 +136,19 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     handlers.onCustomUpdateVisible(prevColumns =>
       prevColumns?.map(column => {
         if (isAttributeColumnValue(column.id)) {
-          if (
-            getAttributeIdFromColumnValue(column.id) === activeAttributeSortId
-          ) {
+          if (getAttributeIdFromColumnValue(column.id) === activeAttributeSortId) {
             return {
               ...column,
-              icon: getColumnSortIconName(
-                sort,
-                ProductListUrlSortField.attribute,
-              ),
+              icon: getColumnSortIconName(sort, ProductListUrlSortField.attribute),
             };
           }
+
           return {
             ...column,
             icon: undefined,
           };
         }
+
         return column;
       }),
     );
@@ -176,9 +156,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
 
   const handleHeaderClicked = useCallback(
     (col: number) => {
-      const { columnName, columnId } = getColumnMetadata(
-        visibleColumns[col].id,
-      );
+      const { columnName, columnId } = getColumnMetadata(visibleColumns[col].id);
 
       if (canBeSorted(columnName, !!selectedChannelId)) {
         onSort(columnName, columnId);
@@ -186,39 +164,39 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     },
     [visibleColumns, onSort, selectedChannelId],
   );
-
   const handleRowClick = useCallback(
     ([_, row]: Item) => {
       if (!onRowClick) {
         return;
       }
+
       const rowData = products[row];
+
       onRowClick(rowData.id);
     },
     [onRowClick, products],
   );
-
   const handleRowAnchor = useCallback(
     ([, row]: Item) => {
       if (!rowAnchor) {
         return;
       }
+
       const rowData = products[row];
+
       return rowAnchor(rowData.id);
     },
     [rowAnchor, products],
   );
-
   const handleGetColumnTooltipContent = useCallback(
     (colIndex: number): string => {
       const { columnName } = getColumnMetadata(visibleColumns[colIndex].id);
+
       // Sortable column or empty
-      if (
-        canBeSorted(columnName, !!selectedChannelId) ||
-        visibleColumns[colIndex].id === "empty"
-      ) {
+      if (canBeSorted(columnName, !!selectedChannelId) || visibleColumns[colIndex].id === "empty") {
         return "";
       }
+
       // No sortable column
       if (!Object.keys(ProductListUrlSortField).includes(columnName)) {
         return intl.formatMessage(commonTooltipMessages.noSortable);
@@ -231,7 +209,6 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     },
     [visibleColumns, filterDependency.label, intl, selectedChannelId],
   );
-
   const getCellContent = useMemo(
     () =>
       createGetCellContent({

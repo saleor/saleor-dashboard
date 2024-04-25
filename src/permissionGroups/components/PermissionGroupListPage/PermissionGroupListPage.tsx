@@ -10,10 +10,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { PageListProps, SortPage } from "../../../types";
-import {
-  permissionGroupAddUrl,
-  PermissionGroupListUrlSortField,
-} from "../../urls";
+import { permissionGroupAddUrl, PermissionGroupListUrlSortField } from "../../urls";
 import { PermissionGroupListDatagrid } from "../PermissionGroupListDatagrid";
 
 export interface PermissionGroupListPageProps
@@ -22,9 +19,7 @@ export interface PermissionGroupListPageProps
   permissionGroups: PermissionGroupFragment[];
 }
 
-const PermissionGroupListPage: React.FC<
-  PermissionGroupListPageProps
-> = listProps => {
+const PermissionGroupListPage: React.FC<PermissionGroupListPageProps> = listProps => {
   const intl = useIntl();
   const navigate = useNavigator();
 
@@ -53,5 +48,6 @@ const PermissionGroupListPage: React.FC<
     </ListPageLayout>
   );
 };
+
 PermissionGroupListPage.displayName = "PermissionGroupListPage";
 export default PermissionGroupListPage;

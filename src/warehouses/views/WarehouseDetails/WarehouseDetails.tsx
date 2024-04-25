@@ -54,7 +54,6 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
     },
   });
   const updateWarehouseTransitionState = getMutationStatus(updateWarehouseOpts);
-
   const [deleteWarehouse, deleteWarehouseOpts] = useWarehouseDeleteMutation({
     onCompleted: data => {
       if (data?.deleteWarehouse?.errors.length === 0) {
@@ -67,7 +66,6 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
     },
   });
   const deleteWarehouseTransitionState = getMutationStatus(deleteWarehouseOpts);
-
   const [openModal, closeModal] = createDialogActionHandlers(
     navigate,
     params => warehouseUrl(id, params),

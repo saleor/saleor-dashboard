@@ -13,9 +13,7 @@ const GiftCardsListOrderInfoCard: React.FC = () => (
       <FormattedMessage
         {...messages.giftCardOrderInfoMessage}
         values={{
-          link: content => (
-            <Link href={orderGiftCardBoughtPath()}>{content}</Link>
-          ),
+          link: content => <Link href={orderGiftCardBoughtPath()}>{content}</Link>,
         }}
       />
     </Text>

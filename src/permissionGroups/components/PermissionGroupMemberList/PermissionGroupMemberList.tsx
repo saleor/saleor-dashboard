@@ -10,23 +10,12 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { PermissionGroupMemberFragment } from "@dashboard/graphql";
 import { commonStatusMessages } from "@dashboard/intl";
-import {
-  getUserInitials,
-  getUserName,
-  renderCollection,
-  stopPropagation,
-} from "@dashboard/misc";
+import { getUserInitials, getUserName, renderCollection, stopPropagation } from "@dashboard/misc";
 import { sortMembers } from "@dashboard/permissionGroups/sort";
 import { MembersListUrlSortField } from "@dashboard/permissionGroups/urls";
 import { ListActions, SortPage } from "@dashboard/types";
 import { getArrowDirection } from "@dashboard/utils/sort";
-import {
-  Card,
-  CardContent,
-  TableBody,
-  TableCell,
-  Typography,
-} from "@material-ui/core";
+import { Card, CardContent, TableBody, TableCell, Typography } from "@material-ui/core";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Box, Text, vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
@@ -74,9 +63,7 @@ const useStyles = makeStyles(
 );
 const numberOfColumns = 4;
 
-interface PermissionGroupProps
-  extends ListActions,
-    SortPage<MembersListUrlSortField> {
+interface PermissionGroupProps extends ListActions, SortPage<MembersListUrlSortField> {
   users: PermissionGroupMemberFragment[];
   disabled: boolean;
   onUnassign: (ida: string[]) => void;
@@ -97,10 +84,8 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
     toggleAll,
     sort,
   } = props;
-
   const classes = useStyles(props);
   const intl = useIntl();
-
   const members = [...users].sort(sortMembers(sort?.sort, sort?.asc));
 
   return (
@@ -118,19 +103,12 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
             onClick={onAssign}
             disabled={disabled}
           >
-            <FormattedMessage
-              id="OhFGpX"
-              defaultMessage="Assign members"
-              description="button"
-            />
+            <FormattedMessage id="OhFGpX" defaultMessage="Assign members" description="button" />
           </Button>
         }
       />
       {members?.length === 0 ? (
-        <CardContent
-          className={classes.helperText}
-          data-test-id="no-members-text"
-        >
+        <CardContent className={classes.helperText} data-test-id="no-members-text">
           <Typography color="textSecondary">
             <FormattedMessage
               id="gVD1os"
@@ -213,14 +191,9 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
                       />
                     </TableCell>
                     <TableCell className={classes.colName}>
-                      <UserAvatar
-                        initials={getUserInitials(user)}
-                        url={user?.avatar?.url}
-                      />
+                      <UserAvatar initials={getUserInitials(user)} url={user?.avatar?.url} />
                       <Box display="flex" flexDirection="column">
-                        <Text data-test-id="member-name">
-                          {getUserName(user) || <Skeleton />}
-                        </Text>
+                        <Text data-test-id="member-name">{getUserName(user) || <Skeleton />}</Text>
                         <Text size={2} color="default2">
                           {!user ? (
                             <Skeleton />
@@ -243,9 +216,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
                             data-test-id="remove-user"
                             disabled={disabled}
                             color="primary"
-                            onClick={stopPropagation(() =>
-                              onUnassign([user.id]),
-                            )}
+                            onClick={stopPropagation(() => onUnassign([user.id]))}
                           >
                             <DeleteIcon />
                           </IconButton>
@@ -260,10 +231,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
               () => (
                 <TableRowLink>
                   <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage
-                      id="qrWOxx"
-                      defaultMessage="No members found"
-                    />
+                    <FormattedMessage id="qrWOxx" defaultMessage="No members found" />
                   </TableCell>
                 </TableRowLink>
               ),
@@ -274,5 +242,6 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
     </Card>
   );
 };
+
 PermissionGroupMemberList.displayName = "PermissionGroupMemberList";
 export default PermissionGroupMemberList;

@@ -7,7 +7,6 @@ interface AppToken {
 }
 
 const TIME_BEFORE_REFRESH = 30 * 1000; // 30 seconds
-
 const useTokenRefresh = (token?: string, refetch?: () => void) => {
   let decoded: AppToken = {
     exp: 0,
@@ -26,23 +25,19 @@ const useTokenRefresh = (token?: string, refetch?: () => void) => {
   }
 
   const decodedSuccesfully = !!decoded?.iat && !!decoded?.exp;
-
   const refreshTimeout = useRef<null | ReturnType<typeof setTimeout>>(null);
-
   const tokenLife = ((decoded?.exp || 0) - (decoded?.iat || 0)) * 1000; // in ms
   const refreshTime = tokenLife - TIME_BEFORE_REFRESH;
-
   const setUpTimeout = () => {
     if (refetch) {
       refetch();
     }
+
     createTimeout();
   };
-
   const createTimeout = () => {
     refreshTimeout.current = setTimeout(setUpTimeout, refreshTime);
   };
-
   const deleteTimeout = () => {
     if (refreshTimeout?.current) {
       clearTimeout(refreshTimeout.current);

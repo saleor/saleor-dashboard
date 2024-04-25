@@ -21,11 +21,7 @@ import { useIntl } from "react-intl";
 
 import CustomAppListPage from "../components/CustomAppListPage";
 import { messages } from "../messages";
-import {
-  CustomAppListUrlDialog,
-  CustomAppListUrlQueryParams,
-  CustomAppUrls,
-} from "../urls";
+import { CustomAppListUrlDialog, CustomAppListUrlQueryParams, CustomAppUrls } from "../urls";
 
 interface CustomAppListProps {
   params: CustomAppListUrlQueryParams;
@@ -36,45 +32,37 @@ export const CustomAppList: React.FC<CustomAppListProps> = ({ params }) => {
   const notify = useNotifier();
   const intl = useIntl();
   const client = useApolloClient();
-
   const [openModal, closeModal] = createDialogActionHandlers<
     CustomAppListUrlDialog,
     CustomAppListUrlQueryParams
   >(navigate, CustomAppUrls.resolveAppListUrl, params);
-
   const removeAppNotify = () => {
     notify({
       status: "success",
       text: intl.formatMessage(messages.appRemoved),
     });
   };
-
   const refetchExtensionList = () => {
     client.refetchQueries({
       include: [EXTENSION_LIST_QUERY],
     });
   };
-
   const queryVariables = {
     sort: {
       direction: OrderDirection.DESC,
       field: AppSortField.CREATION_DATE,
     },
   };
-
-  const { data: customAppsData, refetch: customAppsRefetch } = useAppsListQuery(
-    {
-      displayLoader: true,
-      variables: {
-        first: 100,
-        ...queryVariables,
-        filter: {
-          type: AppTypeEnum.LOCAL,
-        },
+  const { data: customAppsData, refetch: customAppsRefetch } = useAppsListQuery({
+    displayLoader: true,
+    variables: {
+      first: 100,
+      ...queryVariables,
+      filter: {
+        type: AppTypeEnum.LOCAL,
       },
     },
-  );
-
+  });
   const [deleteApp, deleteAppOpts] = useAppDeleteMutation({
     onCompleted: data => {
       if (!data?.appDelete?.errors?.length) {
@@ -85,14 +73,12 @@ export const CustomAppList: React.FC<CustomAppListProps> = ({ params }) => {
       }
     },
   });
-
   const handleRemoveConfirm = () =>
     deleteApp({
       variables: {
         id: params.id,
       },
     });
-
   const customApps = mapEdgesToItems(customAppsData?.apps);
   const currentAppName = findById(params.id, customApps)?.name;
 

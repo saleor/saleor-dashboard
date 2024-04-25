@@ -21,18 +21,17 @@ import { ThemeSwitcher } from "./ThemeSwitcher";
 export const useLegacyThemeHandler = () => {
   const { theme, setTheme } = useTheme();
   const { setTheme: setLegacyTheme } = useLegacyTheme();
-
   const changeTheme = () => {
     setLegacyTheme(theme === "defaultLight" ? "dark" : "light");
     setTheme(theme === "defaultLight" ? "defaultDark" : "defaultLight");
   };
-
   const handleStorage = (event: StorageEvent) => {
     if (!["macaw-ui-theme", "activeMacawUITheme"].includes(event.key || "")) {
       return;
     }
 
     const isDark = event.newValue?.toLowerCase().includes("dark");
+
     setLegacyTheme(isDark ? "dark" : "light");
     setTheme(isDark ? "defaultDark" : "defaultLight");
   };
@@ -92,19 +91,13 @@ export const UserControls = () => {
                     })}
                   >
                     <Text>
-                      <FormattedMessage
-                        id="NQgbYA"
-                        defaultMessage="Account Settings"
-                      />
+                      <FormattedMessage id="NQgbYA" defaultMessage="Account Settings" />
                     </Text>
                   </Link>
                 </List.Item>
               </Dropdown.Item>
               <Dropdown.Item>
-                <List.Item
-                  {...listItemStyles}
-                  onClick={() => setFlagsModalOpen(true)}
-                >
+                <List.Item {...listItemStyles} onClick={() => setFlagsModalOpen(true)}>
                   <Text>
                     <FormattedMessage
                       id="38dc43"
@@ -115,17 +108,9 @@ export const UserControls = () => {
                 </List.Item>
               </Dropdown.Item>
               <Dropdown.Item>
-                <List.Item
-                  onClick={logout}
-                  {...listItemStyles}
-                  data-test-id="log-out-button"
-                >
+                <List.Item onClick={logout} {...listItemStyles} data-test-id="log-out-button">
                   <Text>
-                    <FormattedMessage
-                      id="qLbse5"
-                      defaultMessage="Log out"
-                      description="button"
-                    />
+                    <FormattedMessage id="qLbse5" defaultMessage="Log out" description="button" />
                   </Text>
                 </List.Item>
               </Dropdown.Item>

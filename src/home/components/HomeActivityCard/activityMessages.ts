@@ -35,7 +35,7 @@ export const getActivityMessage = (
         orderId: activity.orderNumber,
       });
     case OrderEventsEnum.PLACED_FROM_DRAFT:
-      if (!!activity.user?.email) {
+      if (activity.user?.email) {
         return intl.formatMessage(messages.draft, {
           orderId: activity.orderNumber,
           userEmail: activity.user?.email,

@@ -8,25 +8,17 @@ import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyCol
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { StaffMember, StaffMembers } from "@dashboard/staff/types";
-import {
-  StaffListUrlSortField,
-  staffMemberDetailsUrl,
-} from "@dashboard/staff/urls";
+import { StaffListUrlSortField, staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { ListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box, useTheme } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import {
-  createGetCellContent,
-  staffMembersListStaticColumnsAdapter,
-} from "./datagrid";
+import { createGetCellContent, staffMembersListStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
 
-interface StaffListDatagridProps
-  extends ListProps,
-    SortPage<StaffListUrlSortField> {
+interface StaffListDatagridProps extends ListProps, SortPage<StaffListUrlSortField> {
   staffMembers: StaffMembers;
 }
 
@@ -42,13 +34,11 @@ export const StaffListDatagrid = ({
   const navigate = useNavigator();
   const intl = useIntl();
   const { theme: currentTheme } = useTheme();
-
   const emptyColumn = useEmptyColumn();
   const staffMembersListStaticColumns = useMemo(
     () => staffMembersListStaticColumnsAdapter(intl, sort, emptyColumn),
     [intl, sort, emptyColumn],
   );
-
   const onColumnChange = useCallback(
     (picked: string[]) => {
       if (onUpdateListSettings) {
@@ -57,13 +47,11 @@ export const StaffListDatagrid = ({
     },
     [onUpdateListSettings],
   );
-
   const { handlers, visibleColumns, recentlyAddedColumn } = useColumns({
     selectedColumns: settings?.columns ?? [],
     staticColumns: staffMembersListStaticColumns,
     onSave: onColumnChange,
   });
-
   const getCellContent = useCallback(
     createGetCellContent({
       staffMembers,
@@ -73,7 +61,6 @@ export const StaffListDatagrid = ({
     }),
     [staffMembers, intl, visibleColumns],
   );
-
   const handleRowClick = useCallback(
     ([_, row]: Item) => {
       const rowData: StaffMember = staffMembers[row];
@@ -84,7 +71,6 @@ export const StaffListDatagrid = ({
     },
     [staffMembers],
   );
-
   const handleRowAnchor = useCallback(
     ([, row]: Item) => staffMemberDetailsUrl(staffMembers[row]?.id),
     [staffMembers],

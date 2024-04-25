@@ -9,21 +9,11 @@ import {
 
 import { FilterContainer } from "./FilterElement";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
-import {
-  isItemOption,
-  isItemOptionArray,
-  isTuple,
-} from "./FilterElement/ConditionValue";
+import { isItemOption, isItemOptionArray, isTuple } from "./FilterElement/ConditionValue";
 
-type StaticQueryPart =
-  | string
-  | GlobalIdFilterInput
-  | boolean
-  | DecimalFilterInput;
+type StaticQueryPart = string | GlobalIdFilterInput | boolean | DecimalFilterInput;
 
-const createStaticQueryPart = (
-  selected: ConditionSelected,
-): StaticQueryPart => {
+const createStaticQueryPart = (selected: ConditionSelected): StaticQueryPart => {
   if (!selected.conditionValue) return "";
 
   const { label } = selected.conditionValue;
@@ -32,12 +22,14 @@ const createStaticQueryPart = (
   if (label === "lower") {
     return { range: { lte: value } };
   }
+
   if (label === "greater") {
     return { range: { gte: value } };
   }
 
   if (isTuple(value) && label === "between") {
     const [gte, lte] = value;
+
     return { range: { lte, gte } };
   }
 
@@ -63,7 +55,6 @@ const createStaticQueryPart = (
 
   return value;
 };
-
 const getRangeQueryPartByType = (value: [string, string], type: string) => {
   const [gte, lte] = value;
 
@@ -77,12 +68,7 @@ const getRangeQueryPartByType = (value: [string, string], type: string) => {
       return { valuesRange: { lte: parseFloat(lte), gte: parseFloat(gte) } };
   }
 };
-
-const getQueryPartByType = (
-  value: string,
-  type: string,
-  what: "lte" | "gte",
-) => {
+const getQueryPartByType = (value: string, type: string, what: "lte" | "gte") => {
   switch (type) {
     case "datetime":
       return { dateTime: { [what]: value } };
@@ -92,7 +78,6 @@ const getQueryPartByType = (
       return { valuesRange: { [what]: parseFloat(value) } };
   }
 };
-
 const createAttributeQueryPart = (
   attributeSlug: string,
   selected: ConditionSelected,
@@ -145,32 +130,24 @@ const createAttributeQueryPart = (
 
 type ProductQueryVars = ProductWhereInput & { channel?: { eq: string } };
 
-export const createProductQueryVariables = (
-  value: FilterContainer,
-): ProductQueryVars => {
+export const createProductQueryVariables = (value: FilterContainer): ProductQueryVars => {
   return value.reduce((p, c) => {
     if (typeof c === "string" || Array.isArray(c)) return p;
 
     if (c.isStatic()) {
-      p[c.value.value as keyof ProductWhereInput] = createStaticQueryPart(
-        c.condition.selected,
-      );
+      p[c.value.value as keyof ProductWhereInput] = createStaticQueryPart(c.condition.selected);
     }
 
     if (c.isAttribute()) {
       p.attributes = p.attributes || [];
-      p.attributes!.push(
-        createAttributeQueryPart(c.value.value, c.condition.selected),
-      );
+      p.attributes!.push(createAttributeQueryPart(c.value.value, c.condition.selected));
     }
 
     return p;
   }, {} as ProductWhereInput);
 };
 
-export const creatDiscountsQueryVariables = (
-  value: FilterContainer,
-): PromotionWhereInput => {
+export const creatDiscountsQueryVariables = (value: FilterContainer): PromotionWhereInput => {
   return value.reduce((p, c) => {
     if (typeof c === "string" || Array.isArray(c)) return p;
 

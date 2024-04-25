@@ -15,8 +15,7 @@ export const giftCardResendCodeDialogMessages = defineMessages({
   consentCheckboxLabel: {
     id: "v01/tY",
     defaultMessage: "Yes, I want to send gift card to different address",
-    description:
-      "consent to send gift card to different address checkbox label",
+    description: "consent to send gift card to different address checkbox label",
   },
   submitButtonLabel: {
     id: "s1IQuN",

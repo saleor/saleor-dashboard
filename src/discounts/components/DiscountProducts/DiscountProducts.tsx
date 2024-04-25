@@ -10,10 +10,7 @@ import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import {
-  SaleDetailsFragment,
-  VoucherDetailsFragment,
-} from "@dashboard/graphql";
+import { SaleDetailsFragment, VoucherDetailsFragment } from "@dashboard/graphql";
 import { productUrl } from "@dashboard/products/urls";
 import { Card, TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
@@ -34,7 +31,6 @@ export interface SaleProductsProps extends ListProps, ListActions {
 }
 
 const numberOfColumns = 5;
-
 const DiscountProducts: React.FC<SaleProductsProps> = props => {
   const {
     products,
@@ -48,7 +44,6 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
     toolbar,
   } = props;
   const classes = useStyles(props);
-
   const intl = useIntl();
 
   return (
@@ -79,18 +74,14 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
         >
           <TableCell className={classes.colName}>
             <span className={products?.length > 0 && classes.colNameLabel}>
-              <FormattedMessage
-                {...messages.discountProductsTableProductHeader}
-              />
+              <FormattedMessage {...messages.discountProductsTableProductHeader} />
             </span>
           </TableCell>
           <TableCell className={classes.colType}>
             <FormattedMessage {...messages.discountProductsTableTypeHeader} />
           </TableCell>
           <TableCell className={classes.colPublished}>
-            <FormattedMessage
-              {...messages.discountProductsTableAvailabilityHeader}
-            />
+            <FormattedMessage {...messages.discountProductsTableAvailabilityHeader} />
           </TableCell>
           <TableCell className={classes.colActions} />
         </TableHead>
@@ -129,18 +120,13 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
                     {maybe<React.ReactNode>(() => product.name, <Skeleton />)}
                   </TableCellAvatar>
                   <TableCell className={classes.colType}>
-                    {maybe<React.ReactNode>(
-                      () => product.productType.name,
-                      <Skeleton />,
-                    )}
+                    {maybe<React.ReactNode>(() => product.productType.name, <Skeleton />)}
                   </TableCell>
                   <TableCell className={classes.colType}>
                     {product && !product?.channelListings?.length ? (
                       "-"
                     ) : product?.channelListings !== undefined ? (
-                      <ChannelsAvailabilityDropdown
-                        channels={product?.channelListings}
-                      />
+                      <ChannelsAvailabilityDropdown channels={product?.channelListings} />
                     ) : (
                       <Skeleton />
                     )}
@@ -175,5 +161,6 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
     </Card>
   );
 };
+
 DiscountProducts.displayName = "DiscountProducts";
 export default DiscountProducts;

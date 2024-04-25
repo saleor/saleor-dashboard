@@ -11,7 +11,6 @@ import styles from "./styles";
 
 export const DemoBanner: React.FC = () => {
   const classes = styles();
-
   const [isHidden, setIsHidden] = useState(false);
 
   return (
@@ -27,22 +26,14 @@ export const DemoBanner: React.FC = () => {
         </span>
       </div>
       <div>
-        <ExternalLink
-          className={classes.link}
-          target={"_blank"}
-          href={SALEOR_STOREFRONT_URL}
-        >
+        <ExternalLink className={classes.link} target={"_blank"} href={SALEOR_STOREFRONT_URL}>
           <div className={classes.icon}>
             <OrdersIcon />
           </div>
           <FormattedMessage id="LmKz3g" defaultMessage="Storefront" />
         </ExternalLink>
 
-        <ExternalLink
-          className={classes.link}
-          target={"_blank"}
-          href={SALEOR_GRAPHQL_URL}
-        >
+        <ExternalLink className={classes.link} target={"_blank"} href={SALEOR_GRAPHQL_URL}>
           <SVG src={graphQl} className={classes.icon} />
           <FormattedMessage id="0VkxrS" defaultMessage="GraphQL Playground" />
         </ExternalLink>

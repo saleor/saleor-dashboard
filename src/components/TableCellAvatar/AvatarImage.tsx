@@ -11,11 +11,7 @@ interface AvatarImageProps {
   avatarProps?: string;
 }
 
-const AvatarImage: React.FC<AvatarImageProps> = ({
-  initials,
-  thumbnail,
-  avatarProps,
-}) => {
+const AvatarImage: React.FC<AvatarImageProps> = ({ initials, thumbnail, avatarProps }) => {
   const classes = useAvatarImageStyles();
 
   if (!thumbnail && initials) {
@@ -34,9 +30,7 @@ const AvatarImage: React.FC<AvatarImageProps> = ({
     );
   }
 
-  return (
-    <MuiAvatar className={clsx(classes.avatar, avatarProps)} src={thumbnail} />
-  );
+  return <MuiAvatar className={clsx(classes.avatar, avatarProps)} src={thumbnail} />;
 };
 
 export default AvatarImage;

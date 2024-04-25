@@ -24,6 +24,7 @@ export function searchInCustomers(
         : customer.email,
     onClick: () => {
       navigate(customerUrl(customer.id));
+
       return false;
     },
     score: 1,

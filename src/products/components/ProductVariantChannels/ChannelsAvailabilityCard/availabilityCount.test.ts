@@ -2,10 +2,7 @@ import {
   ChannelPriceAndPreorderData,
   IChannelPriceAndPreorderArgs,
 } from "@dashboard/channels/utils";
-import {
-  ProductVariantCreateDataQuery,
-  ProductVariantFragment,
-} from "@dashboard/graphql";
+import { ProductVariantCreateDataQuery, ProductVariantFragment } from "@dashboard/graphql";
 import { FormsetData } from "@dashboard/hooks/useFormset";
 
 import {
@@ -22,11 +19,7 @@ const mockedListings = [
     id: "2",
     label: "Channel-USD",
   },
-] as unknown as FormsetData<
-  ChannelPriceAndPreorderData,
-  IChannelPriceAndPreorderArgs
->;
-
+] as unknown as FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>;
 const mockedVariant = {
   product: {
     channelListings: [
@@ -41,7 +34,6 @@ const mockedVariant = {
     ],
   },
 } as unknown as ProductVariantFragment;
-
 const mockedProduct = {
   channelListings: [
     {
@@ -60,7 +52,6 @@ describe("getAvailabilityCountForVariant", () => {
     // Arrange
     const item = mockedVariant;
     const listings = mockedListings;
-
     // Act
     const result = getAvailabilityCountForVariant(item, listings);
 
@@ -70,12 +61,10 @@ describe("getAvailabilityCountForVariant", () => {
       availableChannelsCount: 2,
     });
   });
-
   it("should return correct counts when some channels are selected", () => {
     // Arrange
     const item = mockedVariant;
     const listings = mockedListings.slice(0, 1);
-
     // Act
     const result = getAvailabilityCountForVariant(item, listings);
 
@@ -85,15 +74,10 @@ describe("getAvailabilityCountForVariant", () => {
       availableChannelsCount: 2,
     });
   });
-
   it("should return correct counts when no channels are available", () => {
     // Arrange
     const item = mockedVariant;
-    const listings = [] as FormsetData<
-      ChannelPriceAndPreorderData,
-      IChannelPriceAndPreorderArgs
-    >;
-
+    const listings = [] as FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>;
     // Act
     const result = getAvailabilityCountForVariant(item, listings);
 
@@ -104,13 +88,11 @@ describe("getAvailabilityCountForVariant", () => {
     });
   });
 });
-
 describe("getAvailabilityCountForProduct", () => {
   it("should return correct counts when all channels are selected", () => {
     // Arrange
     const item = mockedProduct;
     const listings = mockedListings;
-
     // Act
     const result = getAvailabilityCountForProduct(item, listings);
 
@@ -120,12 +102,10 @@ describe("getAvailabilityCountForProduct", () => {
       availableChannelsCount: 2,
     });
   });
-
   it("should return correct counts when some channels are selected", () => {
     // Arrange
     const item = mockedProduct;
     const listings = mockedListings.slice(0, 1);
-
     // Act
     const result = getAvailabilityCountForProduct(item, listings);
 
@@ -135,15 +115,10 @@ describe("getAvailabilityCountForProduct", () => {
       availableChannelsCount: 2,
     });
   });
-
   it("should return correct counts when no channels are available", () => {
     // Arrange
     const item = mockedProduct;
-    const listings = [] as FormsetData<
-      ChannelPriceAndPreorderData,
-      IChannelPriceAndPreorderArgs
-    >;
-
+    const listings = [] as FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>;
     // Act
     const result = getAvailabilityCountForProduct(item, listings);
 

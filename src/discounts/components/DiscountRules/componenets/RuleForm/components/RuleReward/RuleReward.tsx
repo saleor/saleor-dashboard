@@ -10,6 +10,7 @@ import { messages } from "../../../../messages";
 import { RuleRewardGifts } from "../RuleRewardGifts";
 import { RuleRewardTypeSelect } from "../RuleRewardTypeSelect/RuleRewardTypeSelect";
 import { RuleRewardValue } from "../RuleRewardValue";
+
 interface RuleRewardProps {
   currencySymbol: string | null;
   error: string | undefined;
@@ -41,10 +42,7 @@ export const RuleReward = ({ currencySymbol, error }: RuleRewardProps) => {
   );
 };
 
-function RuleRewardWrapper({
-  children,
-  ...props
-}: { children: React.ReactNode } & BoxProps) {
+function RuleRewardWrapper({ children, ...props }: { children: React.ReactNode } & BoxProps) {
   const intl = useIntl();
 
   return (

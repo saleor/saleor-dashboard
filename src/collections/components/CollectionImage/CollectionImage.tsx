@@ -62,11 +62,9 @@ export interface CollectionImageProps {
 
 export const CollectionImage: React.FC<CollectionImageProps> = props => {
   const { data, onImageUpload, image, onChange, onImageDelete } = props;
-
   const anchor = React.useRef<HTMLInputElement>();
   const classes = useStyles(props);
   const intl = useIntl();
-
   const handleImageUploadButtonClick = () => anchor.current.click();
 
   return (

@@ -3,13 +3,7 @@ import React from "react";
 
 import { conditionTypeToHue } from "../../utils";
 
-export const RuleSummaryChips = ({
-  value,
-  label,
-}: {
-  value: string;
-  label: string;
-}) => {
+export const RuleSummaryChips = ({ value, label }: { value: string; label: string }) => {
   const { theme } = useTheme();
   const color = conditionTypeToHue(label, theme);
 

@@ -7,8 +7,7 @@ export const submitCardMessages = defineMessages({
     description: "card title",
   },
   descrption: {
-    defaultMessage:
-      "Draft order will be automatically created for replaced products",
+    defaultMessage: "Draft order will be automatically created for replaced products",
     id: "ZTG+Dv",
   },
   autoGrantRefund: {
@@ -37,20 +36,17 @@ export const submitCardMessages = defineMessages({
     description: "tooltip, submit form",
   },
   cantSendRefundNoTransactions: {
-    defaultMessage:
-      "Order has no transactions. You have to send refund manually.",
+    defaultMessage: "Order has no transactions. You have to send refund manually.",
     id: "UR2wY+",
     description: "tooltip, submit form",
   },
   cantSendRefundMultipleTransactions: {
-    defaultMessage:
-      "Client has made more than one transaction. You have to send refund manually.",
+    defaultMessage: "Client has made more than one transaction. You have to send refund manually.",
     id: "ygxco/",
     description: "tooltip, submit form",
   },
   cantSendRefundNonRefundable: {
-    defaultMessage:
-      "Transaction is non-refundable. You have to send refund manually.",
+    defaultMessage: "Transaction is non-refundable. You have to send refund manually.",
     id: "6heBHt",
     description: "tooltip, submit form",
   },

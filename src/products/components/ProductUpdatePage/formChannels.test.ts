@@ -31,7 +31,6 @@ describe("ProductUpdatePage - fromChannels", () => {
         publicationDate: "2020-01-01",
         visibleInListings: true,
       };
-
       const result = updateChannelsInput(input, data, channel.channelId);
 
       expect(result).toEqual({
@@ -46,7 +45,6 @@ describe("ProductUpdatePage - fromChannels", () => {
         ],
       });
     });
-
     it("should update availableForPurchaseDate if isAvailableForPurchase is set to false", () => {
       const oldData = {
         removeChannels: [],
@@ -59,7 +57,6 @@ describe("ProductUpdatePage - fromChannels", () => {
         publicationDate: "2020-01-01",
         visibleInListings: true,
       };
-
       const result = updateChannelsInput(oldData, newData, channel.channelId);
 
       expect(result).toEqual({
@@ -73,7 +70,6 @@ describe("ProductUpdatePage - fromChannels", () => {
         ],
       });
     });
-
     it("should not update listing if channel id do not match", () => {
       const input = {
         removeChannels: [],
@@ -86,7 +82,6 @@ describe("ProductUpdatePage - fromChannels", () => {
         publicationDate: "2020-01-01",
         visibleInListings: true,
       };
-
       const result = updateChannelsInput(input, data, "42");
 
       expect(result).toEqual({

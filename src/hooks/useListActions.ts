@@ -15,9 +15,7 @@ function useListActions<TData>(
   }
 
   function remove(data: TData) {
-    setListElements(
-      listElements.filter(listElement => !compareFunc(listElement, data)),
-    );
+    setListElements(listElements.filter(listElement => !compareFunc(listElement, data)));
   }
 
   function reset() {

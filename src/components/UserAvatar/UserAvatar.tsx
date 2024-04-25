@@ -7,11 +7,7 @@ interface UserAvatarProps {
   className?: string;
 }
 
-export const UserAvatar: React.FC<UserAvatarProps> = ({
-  url,
-  initials,
-  ...rest
-}) =>
+export const UserAvatar: React.FC<UserAvatarProps> = ({ url, initials, ...rest }) =>
   url ? (
     <Avatar.User scheme="accent1" src={url} {...rest} />
   ) : (

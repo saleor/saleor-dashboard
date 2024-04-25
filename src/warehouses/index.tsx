@@ -20,26 +20,15 @@ import WarehouseListComponent from "./views/WarehouseList";
 
 const WarehouseList: React.FC<RouteComponentProps> = ({ location }) => {
   const qs = parseQs(location.search.substr(1)) as any;
-  const params: WarehouseListUrlQueryParams = asSortParams(
-    qs,
-    WarehouseListUrlSortField,
-  );
+  const params: WarehouseListUrlQueryParams = asSortParams(qs, WarehouseListUrlSortField);
 
   return <WarehouseListComponent params={params} />;
 };
-
-const WarehouseDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
-  location,
-  match,
-}) => {
+const WarehouseDetails: React.FC<RouteComponentProps<{ id: string }>> = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: WarehouseUrlQueryParams = qs;
-  return (
-    <WarehouseDetailsComponent
-      id={decodeURIComponent(match.params.id)}
-      params={params}
-    />
-  );
+
+  return <WarehouseDetailsComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
 
 export const WarehouseSection: React.FC = () => {

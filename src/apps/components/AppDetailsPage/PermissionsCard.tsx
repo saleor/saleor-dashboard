@@ -25,17 +25,13 @@ export const PermissionsCard: React.FC<PermissionsCardProps> = ({
   appId,
   ...boxProps
 }) => {
-  const [editPermissionDialogOpen, setEditPermissionDialogOpen] =
-    useState(false);
+  const [editPermissionDialogOpen, setEditPermissionDialogOpen] = useState(false);
   const intl = useIntl();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
-
   const editPermissionsButton = (
     <ButtonWithTooltip
       tooltip={
-        !hasManagedAppsPermission
-          ? intl.formatMessage(buttonMessages.noPermission)
-          : undefined
+        !hasManagedAppsPermission ? intl.formatMessage(buttonMessages.noPermission) : undefined
       }
       variant="secondary"
       data-test-id="app-edit-permissions-button"
@@ -45,7 +41,6 @@ export const PermissionsCard: React.FC<PermissionsCardProps> = ({
       {intl.formatMessage(messages.editPermissionsButton)}
     </ButtonWithTooltip>
   );
-
   const renderContent = () => {
     if (loading) {
       return <Skeleton />;

@@ -29,7 +29,6 @@ const ShortcutItemWrapper = ({ children, onClick }: ShortcutItemProps) => {
     </List.Item>
   );
 };
-
 const Icon = ({ children }: ChildrenProps) => {
   return (
     <Box __width={20} __height={20} color="default2">
@@ -37,7 +36,6 @@ const Icon = ({ children }: ChildrenProps) => {
     </Box>
   );
 };
-
 const KeyboardShortcut = ({ children }: ChildrenProps) => {
   return (
     <Box

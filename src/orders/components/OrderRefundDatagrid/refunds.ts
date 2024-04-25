@@ -37,9 +37,7 @@ export const manualRefundsExtractor = (
   const events = order?.transactions.flatMap(transaction => transaction.events);
 
   // Filter for supported refund events
-  const refundEvents = events?.filter(
-    event => event.type && SUPPORTED_REFUNDS.has(event.type),
-  );
+  const refundEvents = events?.filter(event => event.type && SUPPORTED_REFUNDS.has(event.type));
 
   // Collect IDs of events associated with granted refunds
   const idsOfEventsAssociatedToGrantedRefunds = new Set(
@@ -74,6 +72,7 @@ function determineCreatorDisplay(creator: RefundCreator | null): string {
   if (creator?.__typename === "User") {
     return creator.email;
   }
+
   return "";
 }
 
@@ -84,12 +83,12 @@ export const mergeRefunds = (
   if (!grantedRefunds || !manualRefunds) {
     return undefined;
   }
-  return [...prepareGrantedRefunds(grantedRefunds), ...manualRefunds].sort(
-    (a, b) => a.createdAt.localeCompare(b.createdAt),
+
+  return [...prepareGrantedRefunds(grantedRefunds), ...manualRefunds].sort((a, b) =>
+    a.createdAt.localeCompare(b.createdAt),
   );
 };
 
 const prepareGrantedRefunds = (
   grantedRefunds: OrderDetailsFragment["grantedRefunds"],
-): DatagridRefund[] =>
-  grantedRefunds.map(refund => ({ ...refund, type: "standard" }));
+): DatagridRefund[] => grantedRefunds.map(refund => ({ ...refund, type: "standard" }));

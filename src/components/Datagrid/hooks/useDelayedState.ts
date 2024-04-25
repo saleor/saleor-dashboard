@@ -12,6 +12,7 @@ export const useDelayedState = (state: boolean) => {
     const timeout = setTimeout(() => {
       setDelayedState(state);
     }, delay);
+
     return () => {
       clearTimeout(timeout);
     };

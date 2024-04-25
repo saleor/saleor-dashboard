@@ -1,9 +1,6 @@
 import { inputTypeMessages } from "@dashboard/attributes/components/AttributeDetails/messages";
 import { AttributeValueEditDialogFormData } from "@dashboard/attributes/utils/data";
-import {
-  ColorPicker,
-  ColorPickerProps,
-} from "@dashboard/components/ColorPicker";
+import { ColorPicker, ColorPickerProps } from "@dashboard/components/ColorPicker";
 import FileUploadField from "@dashboard/components/FileUploadField";
 import { RadioGroupField } from "@dashboard/components/RadioGroupField";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
@@ -34,13 +31,9 @@ const AttributeSwatchField: React.FC<
   const classes = useStyles();
   const [processing, setProcessing] = useState(false);
   const [uploadFile] = useFileUploadMutation({});
-  const [type, setType] = useState<SwatchType>(
-    data.fileUrl ? "image" : "picker",
-  );
-
+  const [type, setType] = useState<SwatchType>(data.fileUrl ? "image" : "picker");
   const handleColorChange = (hex: string) =>
     set({ value: hex, fileUrl: undefined, contentType: undefined });
-
   const handleFileUpload = async (file: File) => {
     setProcessing(true);
 
@@ -62,7 +55,6 @@ const AttributeSwatchField: React.FC<
 
     setProcessing(false);
   };
-
   const handleFileDelete = () =>
     set({
       fileUrl: undefined,
@@ -112,10 +104,7 @@ const AttributeSwatchField: React.FC<
           )}
         </>
       ) : (
-        <ColorPicker
-          {...(props as ColorPickerProps)}
-          onColorChange={handleColorChange}
-        />
+        <ColorPicker {...(props as ColorPickerProps)} onColorChange={handleColorChange} />
       )}
     </>
   );

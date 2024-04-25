@@ -26,9 +26,7 @@ export interface CompanyAddressFormProps {
   countries: SingleAutocompleteChoiceType[];
   data: AddressTypeInput;
   displayCountry: string;
-  errors: Array<
-    AccountErrorFragment | ShopErrorFragment | WarehouseErrorFragment
-  >;
+  errors: Array<AccountErrorFragment | ShopErrorFragment | WarehouseErrorFragment>;
   disabled: boolean;
   onChange: (event: ChangeEvent) => void;
   onCountryChange: (event: ChangeEvent) => void;
@@ -56,21 +54,10 @@ function getErrorMessage(
 }
 
 const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
-  const {
-    countries,
-    data,
-    disabled,
-    displayCountry,
-    errors,
-    onChange,
-    onCountryChange,
-  } = props;
-  const { areas, isFieldAllowed, getDisplayValue } = useAddressValidation(
-    data.country,
-  );
+  const { countries, data, disabled, displayCountry, errors, onChange, onCountryChange } = props;
+  const { areas, isFieldAllowed, getDisplayValue } = useAddressValidation(data.country);
   const classes = useStyles(props);
   const intl = useIntl();
-
   const formFields = [
     "companyName",
     "streetAddress1",
@@ -247,5 +234,6 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
     </div>
   );
 };
+
 CompanyAddressForm.displayName = "CompanyAddressForm";
 export default CompanyAddressForm;

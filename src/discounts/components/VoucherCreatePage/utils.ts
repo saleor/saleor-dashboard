@@ -9,9 +9,6 @@ export const generateMultipleIds = (quantity: string, prefix?: string) => {
   }));
 };
 
-export const voucherCodeExists = (
-  code: string,
-  voucherCodes: VoucherCode[],
-) => {
+export const voucherCodeExists = (code: string, voucherCodes: VoucherCode[]) => {
   return voucherCodes.some(voucherCode => voucherCode.code === code);
 };

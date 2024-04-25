@@ -49,26 +49,13 @@ const PossibleFormFields = {
   STREET_ADDRESS_1: "streetAddress1",
   STREET_ADDRESS_2: "streetAddress2",
 } as const;
-
-const formFields: Array<keyof AddressTypeInput> =
-  Object.values(PossibleFormFields);
-
+const formFields: Array<keyof AddressTypeInput> = Object.values(PossibleFormFields);
 const AddressEdit: React.FC<AddressEditProps> = props => {
-  const {
-    countries,
-    countryDisplayValue,
-    data,
-    disabled,
-    errors,
-    onChange,
-    onCountryChange,
-  } = props;
+  const { countries, countryDisplayValue, data, disabled, errors, onChange, onCountryChange } =
+    props;
   const classes = useStyles(props);
   const intl = useIntl();
-  const { areas, isFieldAllowed, getDisplayValue } = useAddressValidation(
-    data.country,
-  );
-
+  const { areas, isFieldAllowed, getDisplayValue } = useAddressValidation(data.country);
   const formErrors = getFormErrors<
     keyof AddressTypeInput,
     AccountErrorFragment | OrderErrorFragment
@@ -288,5 +275,6 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
     </>
   );
 };
+
 AddressEdit.displayName = "AddressEdit";
 export default AddressEdit;

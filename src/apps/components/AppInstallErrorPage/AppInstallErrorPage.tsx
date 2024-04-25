@@ -12,9 +12,7 @@ interface AppInstallErrorPageProps {
   onBack: () => void;
 }
 
-export const AppInstallErrorPage: React.FC<AppInstallErrorPageProps> = ({
-  onBack,
-}) => {
+export const AppInstallErrorPage: React.FC<AppInstallErrorPageProps> = ({ onBack }) => {
   const classes = useStyles();
 
   return (

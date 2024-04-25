@@ -29,16 +29,12 @@ export const getShouldDisplayAmounts = (
 
   const authorized = order.totalAuthorized?.amount ?? 0;
   const authorizePending = order.totalAuthorizePending?.amount ?? 0;
-
   const charged = order.totalCharged?.amount ?? 0;
   const chargePending = order.totalChargePending?.amount ?? 0;
-
   const cancelled = order.totalCanceled?.amount ?? 0;
   const cancelPending = order.totalCancelPending?.amount ?? 0;
-
   const total = order.total.gross?.amount ?? 0;
-  const anyPending =
-    authorizePending > 0 || chargePending > 0 || cancelPending > 0;
+  const anyPending = authorizePending > 0 || chargePending > 0 || cancelPending > 0;
 
   if (anyPending) {
     return {

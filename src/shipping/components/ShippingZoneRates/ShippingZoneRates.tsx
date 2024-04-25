@@ -13,12 +13,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { ChannelProps } from "@dashboard/types";
 import { Card, TableBody, TableCell, TableHead } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
-import {
-  Button,
-  DeleteIcon,
-  ICONBUTTON_SIZE,
-  makeStyles,
-} from "@saleor/macaw-ui";
+import { Button, DeleteIcon, ICONBUTTON_SIZE, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -64,17 +59,12 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
     variant,
     testId,
   } = props;
-
   const classes = useStyles(props);
   const navigate = useNavigator();
   const intl = useIntl();
 
   return (
-    <Card
-      data-test-id={
-        variant === "price" ? "price-based-rates" : "weight-based-rates"
-      }
-    >
+    <Card data-test-id={variant === "price" ? "price-based-rates" : "weight-based-rates"}>
       <CardTitle
         title={
           variant === "price"
@@ -91,11 +81,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
         }
         toolbar={
           <Button disabled={disabled} onClick={onRateAdd} data-test-id={testId}>
-            <FormattedMessage
-              id="WR8rir"
-              defaultMessage="Create rate"
-              description="button"
-            />
+            <FormattedMessage id="WR8rir" defaultMessage="Create rate" description="button" />
           </Button>
         }
       />
@@ -140,6 +126,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
               const channel = rate?.channelListings?.find(
                 listing => listing.channel.id === selectedChannelId,
               );
+
               return (
                 <TableRowLink
                   hover={!!rate}
@@ -171,12 +158,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                   </TableCell>
                   <TableCell data-test-id="shipping-rate-price">
                     {maybe<React.ReactNode>(
-                      () =>
-                        rate && !channel ? (
-                          "-"
-                        ) : (
-                          <Money money={channel.price} />
-                        ),
+                      () => (rate && !channel ? "-" : <Money money={channel.price} />),
                       <Skeleton />,
                     )}
                   </TableCell>
@@ -204,10 +186,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
             () => (
               <TableRowLink>
                 <TableCell colSpan={5}>
-                  <FormattedMessage
-                    id="RUzdUH"
-                    defaultMessage="No shipping rates found"
-                  />
+                  <FormattedMessage id="RUzdUH" defaultMessage="No shipping rates found" />
                 </TableCell>
               </TableRowLink>
             ),
@@ -217,5 +196,6 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
     </Card>
   );
 };
+
 ShippingZoneRates.displayName = "ShippingZoneRates";
 export default ShippingZoneRates;

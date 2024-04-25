@@ -1,11 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const saleUpdate = gql`
-  mutation SaleUpdate(
-    $input: SaleInput!
-    $id: ID!
-    $channelInput: SaleChannelListingInput!
-  ) {
+  mutation SaleUpdate($input: SaleInput!, $id: ID!, $channelInput: SaleChannelListingInput!) {
     saleUpdate(id: $id, input: $input) {
       errors {
         ...DiscountError
@@ -104,10 +100,7 @@ export const saleBulkDelete = gql`
 `;
 
 export const saleChannelListingUpdate = gql`
-  mutation SaleChannelListingUpdate(
-    $id: ID!
-    $input: SaleChannelListingInput!
-  ) {
+  mutation SaleChannelListingUpdate($id: ID!, $input: SaleChannelListingInput!) {
     saleChannelListingUpdate(id: $id, input: $input) {
       errors {
         ...DiscountError
@@ -120,10 +113,7 @@ export const saleChannelListingUpdate = gql`
 `;
 
 export const voucherChannelListingUpdate = gql`
-  mutation VoucherChannelListingUpdate(
-    $id: ID!
-    $input: VoucherChannelListingInput!
-  ) {
+  mutation VoucherChannelListingUpdate($id: ID!, $input: VoucherChannelListingInput!) {
     voucherChannelListingUpdate(id: $id, input: $input) {
       errors {
         ...DiscountError

@@ -28,8 +28,7 @@ export const grantRefundPageMessages = defineMessages({
     description: "grant refund, refund card title",
   },
   refundSubtitle: {
-    defaultMessage:
-      "How much money do you want to return to the customer for the order?",
+    defaultMessage: "How much money do you want to return to the customer for the order?",
     id: "iFM716",
     description: "grant refund, refund card subtitle",
   },
@@ -120,17 +119,12 @@ export const fulfilmentStatusMessages = defineMessages({
   },
 });
 
-export const getTitle = (
-  fulfillmentStatus: FulfillmentStatus,
-  intl: IntlShape,
-) => {
+export const getTitle = (fulfillmentStatus: FulfillmentStatus, intl: IntlShape) => {
   switch (fulfillmentStatus) {
     case FulfillmentStatus.RETURNED:
       return intl.formatMessage(fulfilmentStatusMessages.fulfillmentReturned);
     case FulfillmentStatus.WAITING_FOR_APPROVAL:
-      return intl.formatMessage(
-        fulfilmentStatusMessages.fulfillmentWaitingForApproval,
-      );
+      return intl.formatMessage(fulfilmentStatusMessages.fulfillmentWaitingForApproval);
     default:
       return intl.formatMessage(fulfilmentStatusMessages.fulfillment);
   }

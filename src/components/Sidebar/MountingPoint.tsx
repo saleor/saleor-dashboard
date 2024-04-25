@@ -6,8 +6,7 @@ import React from "react";
 
 export const MountingPoint = () => {
   const { theme } = useLegacyThemeHandler();
-  const logo =
-    theme === "defaultLight" ? sideBarDefaultLogo : sideBarDefaultLogoDarkMode;
+  const logo = theme === "defaultLight" ? sideBarDefaultLogo : sideBarDefaultLogoDarkMode;
 
   return (
     <Box display="flex" gap={3} paddingX={4} paddingY={5} alignItems="center">

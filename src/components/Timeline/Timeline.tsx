@@ -73,7 +73,6 @@ interface TimelineAddNoteProps {
 
 export const Timeline: React.FC<TimelineProps> = props => {
   const { children } = props;
-
   const classes = useStyles(props);
 
   return <div className={classes.root}>{children}</div>;
@@ -83,9 +82,7 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
   const { message, onChange, onSubmit, reset, disabled } = props;
   const classes = useStyles(props);
   const { user } = useUser();
-
   const intl = useIntl();
-
   const submit = e => {
     reset();
     onSubmit(e);
@@ -113,11 +110,7 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
           multiline
           InputProps={{
             endAdornment: (
-              <Button
-                className={classes.button}
-                disabled={disabled}
-                onClick={e => submit(e)}
-              >
+              <Button className={classes.button} disabled={disabled} onClick={e => submit(e)}>
                 <FormattedMessage
                   id="v/1VA6"
                   defaultMessage="Send"

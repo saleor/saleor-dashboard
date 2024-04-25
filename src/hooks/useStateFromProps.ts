@@ -16,19 +16,17 @@ function useStateFromProps<T>(
 ): [T, Dispatch<SetStateAction<T>>] {
   const [state, setState] = useState(data);
   const [prevData, setPrevData] = useState(data);
-
   const { mergeFunc, onRefresh } = opts;
 
   useEffect(() => {
     const shouldUpdate = !isEqual(prevData, data);
+
     if (shouldUpdate) {
-      const newData =
-        typeof mergeFunc === "function"
-          ? mergeFunc(prevData, state, data)
-          : data;
+      const newData = typeof mergeFunc === "function" ? mergeFunc(prevData, state, data) : data;
 
       setState(newData);
       setPrevData(data);
+
       if (typeof onRefresh === "function") {
         onRefresh(data, newData);
       }

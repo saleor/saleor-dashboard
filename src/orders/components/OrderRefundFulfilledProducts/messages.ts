@@ -19,10 +19,7 @@ export const messages = defineMessages({
   },
 });
 
-export const getTitle = (
-  fulfillmentStatus: FulfillmentStatus,
-  intl: IntlShape,
-) => {
+export const getTitle = (fulfillmentStatus: FulfillmentStatus, intl: IntlShape) => {
   switch (fulfillmentStatus) {
     case FulfillmentStatus.RETURNED:
       return intl.formatMessage(messages.fulfillmentReturned);

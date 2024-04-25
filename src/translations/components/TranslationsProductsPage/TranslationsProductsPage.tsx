@@ -3,10 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import {
-  LanguageCodeEnum,
-  ProductTranslationFragment,
-} from "@dashboard/graphql";
+import { LanguageCodeEnum, ProductTranslationFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import {
@@ -25,8 +22,7 @@ import { useIntl } from "react-intl";
 import ProductContextSwitcher from "../ProductContextSwitcher";
 import TranslationFields from "../TranslationFields";
 
-export interface TranslationsProductsPageProps
-  extends TranslationsEntitiesPageProps {
+export interface TranslationsProductsPageProps extends TranslationsEntitiesPageProps {
   data: ProductTranslationFragment;
   productId: string;
   onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];
@@ -57,8 +53,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
         title={intl.formatMessage(
           {
             id: "22x9tu",
-            defaultMessage:
-              'Translation Product "{productName}" - {languageCode}',
+            defaultMessage: 'Translation Product "{productName}" - {languageCode}',
             description: "header",
           },
           {
@@ -76,11 +71,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
           getLanguageUrl={lang =>
-            languageEntityUrl(
-              lang,
-              TranslatableEntities.products,
-              translationId,
-            )
+            languageEntityUrl(lang, TranslatableEntities.products, translationId)
           }
         />
       </TopNav>
@@ -163,10 +154,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
               disabled={disabled}
               initialState={true}
               title={intl.formatMessage(commonMessages.translationAttributes)}
-              fields={mapAttributeValuesToTranslationFields(
-                data.attributeValues,
-                intl,
-              )}
+              fields={mapAttributeValuesToTranslationFields(data.attributeValues, intl)}
               saveButtonState={saveButtonState}
               richTextResetKey={languageCode}
               onEdit={onEdit}
@@ -180,5 +168,6 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
     </DetailPageLayout>
   );
 };
+
 TranslationsProductsPage.displayName = "TranslationsProductsPage";
 export default TranslationsProductsPage;

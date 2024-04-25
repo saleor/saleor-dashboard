@@ -1,10 +1,7 @@
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DiscountCreatePage } from "@dashboard/discounts/components/DiscountCreatePage";
-import {
-  discountListUrl,
-  discountUrl,
-} from "@dashboard/discounts/discountsUrls";
+import { discountListUrl, discountUrl } from "@dashboard/discounts/discountsUrls";
 import { usePromotionCreateMutation } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -21,7 +18,6 @@ export const DiscountCreate = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-
   const [promotionCreate, promotionCreateOpts] = usePromotionCreateMutation({
     onCompleted(data) {
       if (data?.promotionCreate?.errors?.length === 0) {
@@ -38,10 +34,7 @@ export const DiscountCreate = () => {
       }
     },
   });
-
-  const handlePromotionCreate = useDiscountCreate(variables =>
-    promotionCreate({ variables }),
-  );
+  const handlePromotionCreate = useDiscountCreate(variables => promotionCreate({ variables }));
 
   return (
     <>

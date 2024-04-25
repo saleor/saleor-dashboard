@@ -1,10 +1,7 @@
 import React from "react";
 
 export interface TabsProps {
-  children: (props: {
-    changeTab: (index: number) => void;
-    currentTab: number;
-  }) => React.ReactNode;
+  children: (props: { changeTab: (index: number) => void; currentTab: number }) => React.ReactNode;
 }
 
 interface TabsState {

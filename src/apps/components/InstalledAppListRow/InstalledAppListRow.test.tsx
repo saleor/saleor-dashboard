@@ -9,13 +9,7 @@ import { MemoryRouter as Router } from "react-router-dom";
 
 import InstalledAppListRow from "./InstalledAppListRow";
 
-const Component = ({
-  data,
-  context,
-}: {
-  data: InstalledApp;
-  context: AppListContextValues;
-}) => (
+const Component = ({ data, context }: { data: InstalledApp; context: AppListContextValues }) => (
   <Wrapper>
     <Router>
       <AppListContext.Provider value={context}>
@@ -30,6 +24,7 @@ describe("Apps InstalledAppListRow", () => {
     // Arrange
     const removeAppInstallation = jest.fn();
     const retryAppInstallation = jest.fn();
+
     render(
       <Component
         data={{
@@ -42,6 +37,7 @@ describe("Apps InstalledAppListRow", () => {
         }}
       />,
     );
+
     const name = screen.queryByText(activeApp.name as string);
     // TODO: Uncomment this when manifests are added back in the UI
     // const manifestDomain = screen.queryByText(
@@ -57,7 +53,6 @@ describe("Apps InstalledAppListRow", () => {
     expect(externalLabel).toBeFalsy();
     expect(tunnelLabel).toBeFalsy();
   });
-
   it("displays external label when app is external", () => {
     // Arrange
     const removeAppInstallation = jest.fn();
@@ -75,12 +70,12 @@ describe("Apps InstalledAppListRow", () => {
         }}
       />,
     );
+
     const externalLabel = screen.queryByTestId("app-external-label");
 
     // Assert
     expect(externalLabel).toBeTruthy();
   });
-
   it("displays tunnnel label when app is served via tunnnel", () => {
     // Arrange
     const removeAppInstallation = jest.fn();
@@ -103,6 +98,7 @@ describe("Apps InstalledAppListRow", () => {
         }}
       />,
     );
+
     const tunnelLabel = screen.queryByTestId("app-tunnel-label");
 
     // Assert

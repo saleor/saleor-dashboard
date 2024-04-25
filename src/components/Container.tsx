@@ -28,7 +28,6 @@ interface ContainerProps {
 
 export const Container: React.FC<ContainerProps> = props => {
   const { className, ...rest } = props;
-
   const classes = useStyles(props);
 
   return <div className={clsx(classes.root, className)} {...rest} />;

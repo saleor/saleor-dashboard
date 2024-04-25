@@ -4,9 +4,7 @@ import { RelayToFlat } from "@dashboard/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import AssignContainerDialog, {
-  AssignContainerDialogProps,
-} from "../AssignContainerDialog";
+import AssignContainerDialog, { AssignContainerDialogProps } from "../AssignContainerDialog";
 import { messages } from "./messages";
 
 interface AssignCollectionDialogProps
@@ -26,9 +24,7 @@ const AssignCollectionDialog: React.FC<AssignCollectionDialogProps> = ({
       labels={{
         title: intl.formatMessage(messages.assignCollectionDialogHeader),
         label: intl.formatMessage(messages.assignCollectionDialogLabel),
-        placeholder: intl.formatMessage(
-          messages.assignCollectionDialogPlaceholder,
-        ),
+        placeholder: intl.formatMessage(messages.assignCollectionDialogPlaceholder),
         confirmBtn: intl.formatMessage(messages.confirmBtn),
       }}
       {...rest}

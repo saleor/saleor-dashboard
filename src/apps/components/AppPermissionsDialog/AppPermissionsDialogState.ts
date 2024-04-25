@@ -23,9 +23,7 @@ type State =
       error: string;
     };
 
-export const useAppPermissionsDialogState = (
-  initialPermissions: PermissionEnum[],
-) => {
+export const useAppPermissionsDialogState = (initialPermissions: PermissionEnum[]) => {
   const [state, setState] = useState<State>({
     type: "pick-permissions",
     selected: initialPermissions,

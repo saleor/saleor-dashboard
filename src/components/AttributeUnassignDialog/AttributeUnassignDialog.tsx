@@ -48,5 +48,6 @@ const AttributeUnassignDialog: React.FC<AttributeUnassignDialogProps> = ({
     </ActionDialog>
   );
 };
+
 AttributeUnassignDialog.displayName = "AttributeUnassignDialog";
 export default AttributeUnassignDialog;

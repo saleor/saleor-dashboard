@@ -11,6 +11,7 @@ import { EventItem } from "./EventItem";
 describe("EventItem", () => {
   it("displays correct event data", () => {
     const onHover = jest.fn();
+
     render(
       <MemoryRouter>
         <Wrapper>
@@ -23,6 +24,7 @@ describe("EventItem", () => {
         </Wrapper>
       </MemoryRouter>,
     );
+
     const row = screen.getByRole("row");
 
     expect(row).toHaveTextContent("Success"); // Transaction event
@@ -34,7 +36,6 @@ describe("EventItem", () => {
     expect(row).toHaveTextContent(transactionEvent.createdBy.name);
     expect(onHover).not.toHaveBeenCalled();
   });
-
   it("hides created by cell if prop is passed", () => {
     render(
       <Wrapper>
@@ -48,11 +49,12 @@ describe("EventItem", () => {
     );
 
     const row = screen.getByRole("row");
+
     expect(row).not.toHaveTextContent(transactionEvent.createdBy.name);
   });
-
   it("calls onHover function when hovered", async () => {
     const onHover = jest.fn();
+
     render(
       <Wrapper>
         <EventItem
@@ -65,10 +67,10 @@ describe("EventItem", () => {
     );
 
     const row = screen.getByRole("row");
+
     await userEvent.hover(row);
     expect(onHover).toHaveBeenCalledWith(transactionEvent.pspReference);
   });
-
   it("applies hover styles if passed pspReference matches event's pspReference", () => {
     render(
       <Wrapper>
@@ -82,6 +84,7 @@ describe("EventItem", () => {
     );
 
     const row = screen.getByRole("row");
+
     expect(row).toHaveAttribute("data-ishovered", "true");
   });
 });

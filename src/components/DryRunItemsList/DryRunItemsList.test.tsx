@@ -15,7 +15,6 @@ jest.mock("react-intl", () => ({
   })),
   defineMessages: jest.fn(x => x),
 }));
-
 describe("DryRunItemsList", () => {
   it("is available on the webhook page", async () => {
     // Arrange
@@ -33,7 +32,6 @@ describe("DryRunItemsList", () => {
         </ThemeProvider>
       </MockedProvider>,
     );
-
     // Assert
     expect(screen.queryByTestId("dry-run-items-list")).toBeInTheDocument();
   });

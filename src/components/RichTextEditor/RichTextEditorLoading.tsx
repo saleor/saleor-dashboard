@@ -6,12 +6,7 @@ import RichTextEditor, { RichTextEditorProps } from "./RichTextEditor";
 interface RichTextEditorLoadingProps
   extends Omit<
     RichTextEditorProps,
-    | "disabled"
-    | "editorRef"
-    | "onChange"
-    | "defaultValue"
-    | "error"
-    | "helperText"
+    "disabled" | "editorRef" | "onChange" | "defaultValue" | "error" | "helperText"
   > {
   helperText?: RichTextEditorProps["helperText"];
 }

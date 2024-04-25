@@ -7,7 +7,9 @@ function useBulkActions(initial: string[] = []) {
 
   function toggleAll(items: Node[], selected: number) {
     const allItems = items.map(item => item.id);
+
     reset();
+
     if (selected !== allItems.length) {
       set(allItems);
     }

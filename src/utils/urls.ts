@@ -10,9 +10,7 @@ export function stringifyQs(
   });
 }
 
-export function getArrayQueryParam(
-  param: string | string[],
-): string[] | undefined {
+export function getArrayQueryParam(param: string | string[]): string[] | undefined {
   if (!param) {
     return undefined;
   }

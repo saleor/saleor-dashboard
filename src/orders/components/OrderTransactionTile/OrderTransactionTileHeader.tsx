@@ -5,16 +5,9 @@ interface OrderTrasactionTileHeaderProps {
   children: ReactNode;
 }
 
-export const OrderTransactionTileHeader = ({
-  children,
-}: OrderTrasactionTileHeaderProps) => {
+export const OrderTransactionTileHeader = ({ children }: OrderTrasactionTileHeaderProps) => {
   return (
-    <Box
-      display="flex"
-      justifyContent="space-between"
-      alignItems="center"
-      paddingRight={4}
-    >
+    <Box display="flex" justifyContent="space-between" alignItems="center" paddingRight={4}>
       {children}
     </Box>
   );

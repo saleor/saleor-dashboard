@@ -20,26 +20,13 @@ export const RuleConditionDynamicSelect = ({
 }: RuleConditionDynamicSelectProps) => {
   const { watch } = useFormContext<Rule>();
   const { channels } = useDiscountRulesContext();
-
   const channel = watch("channel");
-
-  const ruleConditionValuesFieldName =
-    `conditions.${conditionIndex}.value` as const;
-  const { field: valuesField } = useController<
-    Rule,
-    typeof ruleConditionValuesFieldName
-  >({
+  const ruleConditionValuesFieldName = `conditions.${conditionIndex}.value` as const;
+  const { field: valuesField } = useController<Rule, typeof ruleConditionValuesFieldName>({
     name: ruleConditionValuesFieldName,
   });
-
-  const channelSlug =
-    channels?.find(chan => chan.id === channel?.value)?.slug ?? "";
-
-  const { getConditionValuesFetchProps } = useCondtionValues(
-    channelSlug,
-    condition.id,
-  );
-
+  const channelSlug = channels?.find(chan => chan.id === channel?.value)?.slug ?? "";
+  const { getConditionValuesFetchProps } = useCondtionValues(channelSlug, condition.id);
   const fetchProps = getConditionValuesFetchProps(condition.id ?? "");
 
   if (fetchProps) {

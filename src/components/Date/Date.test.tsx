@@ -22,7 +22,6 @@ describe("Date", () => {
     // Assert
     expect(screen.queryByText(expectedDate)).toBeInTheDocument();
   });
-
   it("Render plain date with timezone GMT+13", () => {
     // Arrange & Act
     render(
@@ -35,7 +34,6 @@ describe("Date", () => {
     // Assert
     expect(screen.queryByText(expectedDate)).toBeInTheDocument();
   });
-
   it("Render humanized date with timezone GMT-11", () => {
     // Arrange & Act
     render(
@@ -46,11 +44,8 @@ describe("Date", () => {
       </ThemeProvider>,
     );
     // Assert
-    expect(screen.queryByTestId<HTMLTimeElement>("dateTime").dateTime).toEqual(
-      testDate,
-    );
+    expect(screen.queryByTestId<HTMLTimeElement>("dateTime").dateTime).toEqual(testDate);
   });
-
   it("Render humanized date with timezone GMT+13", () => {
     // Arrange & Act
     render(
@@ -61,8 +56,6 @@ describe("Date", () => {
       </ThemeProvider>,
     );
     // Assert
-    expect(screen.queryByTestId<HTMLTimeElement>("dateTime").dateTime).toEqual(
-      testDate,
-    );
+    expect(screen.queryByTestId<HTMLTimeElement>("dateTime").dateTime).toEqual(testDate);
   });
 });

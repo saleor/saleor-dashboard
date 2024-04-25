@@ -20,7 +20,6 @@ describe("RadioTile", () => {
         <RadioTile {...props} />
       </RadixRadioGroup.Root>,
     );
-
     // Assert
     expect(screen.getByText(props.title)).toBeInTheDocument();
     expect(screen.getByText(props.description)).toBeInTheDocument();

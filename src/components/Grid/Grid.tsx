@@ -41,7 +41,6 @@ const useStyles = makeStyles(
 
 export const Grid: React.FC<GridProps> = props => {
   const { className, children, variant, richText } = props;
-
   const classes = useStyles(props);
 
   return (

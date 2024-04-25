@@ -19,14 +19,11 @@ export interface ResetPasswordPageFormData {
 export interface ResetPasswordPageProps {
   disabled: boolean;
   error: string;
-  onSubmit: (
-    data: ResetPasswordPageFormData,
-  ) => SubmitPromise<AccountErrorCode[]>;
+  onSubmit: (data: ResetPasswordPageFormData) => SubmitPromise<AccountErrorCode[]>;
 }
 
 const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
   const { disabled, error, onSubmit } = props;
-
   const classes = useStyles(props);
   const intl = useIntl();
 
@@ -34,11 +31,7 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
     <Form initial={{ email: "" }} onSubmit={onSubmit}>
       {({ change: handleChange, data, submit: handleSubmit }) => (
         <>
-          <IconButton
-            className={classes.backBtn}
-            href={getAppMountUri()}
-            variant="secondary"
-          >
+          <IconButton className={classes.backBtn} href={getAppMountUri()} variant="secondary">
             <ArrowRightIcon className={classes.arrow} />
           </IconButton>
           <Typography variant="h3" className={classes.header}>
