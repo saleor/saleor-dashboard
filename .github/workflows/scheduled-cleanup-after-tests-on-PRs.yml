@@ -25,6 +25,8 @@ jobs:
         OPEN_PRS=$(echo $OPEN_PRS | jq -R)
         echo $OPEN_PRS
         echo "OPEN_PRS=$OPEN_PRS" >> "$GITHUB_OUTPUT"
+        ENVIRONMENTS_FOR_PR_TESTING=$(echo $ENVIRONMENTS_FOR_PR_TESTING | jq -R)
+        echo $ENVIRONMENTS_FOR_PR_TESTING
         echo "ENVIRONMENTS_FOR_PR_TESTING='$ENVIRONMENTS_FOR_PR_TESTING'" >> "$GITHUB_OUTPUT"
 
     - id: get-environments-for-deletion
