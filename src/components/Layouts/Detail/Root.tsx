@@ -1,7 +1,4 @@
-import {
-  borderHeight,
-  savebarHeight,
-} from "@dashboard/components/AppLayout/consts";
+import { borderHeight, savebarHeight } from "@dashboard/components/AppLayout/consts";
 import { Box, Sprinkles } from "@saleor/macaw-ui-next";
 import React, { useMemo } from "react";
 
@@ -19,21 +16,19 @@ export const RootLayout: React.FC<DetailPageLayoutProps> = ({
   gridTemplateColumns = 12,
   withSavebar = true,
 }) => {
-  const gridTemplateColumnsValue =
-    useMemo((): Sprinkles["gridTemplateColumns"] => {
-      if (gridTemplateColumns instanceof Object) {
-        return {
-          mobile: gridTemplateColumns.mobile ?? 1,
-          ...gridTemplateColumns,
-        };
-      }
-
+  const gridTemplateColumnsValue = useMemo((): Sprinkles["gridTemplateColumns"] => {
+    if (gridTemplateColumns instanceof Object) {
       return {
-        mobile: 1,
-        desktop: gridTemplateColumns,
+        mobile: gridTemplateColumns.mobile ?? 1,
+        ...gridTemplateColumns,
       };
-    }, [gridTemplateColumns]);
+    }
 
+    return {
+      mobile: 1,
+      desktop: gridTemplateColumns,
+    };
+  }, [gridTemplateColumns]);
   const heightValue = useMemo(() => {
     return withSavebar ? contentWithSidebarHeight : contentWithoutSidebarHeight;
   }, [withSavebar]);

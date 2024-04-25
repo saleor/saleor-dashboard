@@ -1,10 +1,4 @@
-import {
-  Box,
-  Button,
-  DynamicCombobox,
-  RemoveIcon,
-  Select,
-} from "@saleor/macaw-ui-next";
+import { Box, Button, DynamicCombobox, RemoveIcon, Select } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { getItemConstraint } from "./constrains";
@@ -22,13 +16,7 @@ interface RowProps {
   error: ErrorLookup[number];
 }
 
-export const RowComponent = ({
-  item,
-  index,
-  leftOptions,
-  emitter,
-  error,
-}: RowProps) => {
+export const RowComponent = ({ item, index, leftOptions, emitter, error }: RowProps) => {
   const constrain = getItemConstraint(item.constraint);
 
   return (

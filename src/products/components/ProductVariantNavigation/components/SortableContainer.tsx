@@ -9,6 +9,6 @@ export const SortableContainer = SortableContainerHOC<BoxProps>(
   ({ children, ...props }: BoxProps) => <Box {...props}>{children}</Box>,
 );
 
-export const SortableElement = SortableElementHOC<BoxProps>(
-  ({ children, ...props }: BoxProps) => <Box {...props}>{children}</Box>,
-);
+export const SortableElement = SortableElementHOC<BoxProps>(({ children, ...props }: BoxProps) => (
+  <Box {...props}>{children}</Box>
+));

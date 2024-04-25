@@ -1,9 +1,7 @@
 import CardTitle from "@dashboard/components/CardTitle";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Grid from "@dashboard/components/Grid";
-import SingleSelectField, {
-  Choice,
-} from "@dashboard/components/SingleSelectField";
+import SingleSelectField, { Choice } from "@dashboard/components/SingleSelectField";
 import { TaxConfigurationUpdateInput } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { LegacyFlowWarning } from "@dashboard/taxes/components";
@@ -54,16 +52,11 @@ export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = ({
             onChange={onChange}
             label={intl.formatMessage(taxesMessages.chargeTaxes)}
           />
-          <div
-            className={classes.singleSelectWrapper}
-            data-test-id="app-flat-select"
-          >
+          <div className={classes.singleSelectWrapper} data-test-id="app-flat-select">
             <span className={classes.hint}>
               <FormattedMessage {...taxesMessages.taxStrategyHint} />
               {!strategyChoicesLoading && (
-                <LegacyFlowWarning
-                  taxCalculationStrategy={values.taxCalculationStrategy}
-                />
+                <LegacyFlowWarning taxCalculationStrategy={values.taxCalculationStrategy} />
               )}
             </span>
             <SingleSelectField
@@ -71,9 +64,7 @@ export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = ({
               choices={strategyChoices}
               disabled={strategyChoicesLoading || !values.chargeTaxes}
               value={values.taxCalculationStrategy}
-              name={
-                "taxCalculationStrategy" as keyof TaxConfigurationUpdateInput
-              }
+              name={"taxCalculationStrategy" as keyof TaxConfigurationUpdateInput}
               onChange={onChange}
             />
           </div>

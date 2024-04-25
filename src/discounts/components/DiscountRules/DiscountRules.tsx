@@ -17,9 +17,7 @@ import { DiscountRulesContextProvider } from "./context";
 import { useGraphQLPlayground } from "./hooks/useGraphQLPlayground";
 import { messages } from "./messages";
 
-export type DiscountRulesErrors<ErrorCode> = Array<
-  CommonError<ErrorCode> & { index?: number }
->;
+export type DiscountRulesErrors<ErrorCode> = Array<CommonError<ErrorCode> & { index?: number }>;
 
 interface DiscountRulesProps<ErrorCode> {
   disabled: boolean;
@@ -29,9 +27,7 @@ interface DiscountRulesProps<ErrorCode> {
   promotionId: string | null;
   errors: Array<CommonError<ErrorCode>>;
   deleteButtonState: ConfirmButtonTransitionState;
-  getRuleConfirmButtonState: (
-    ruleEditIndex: number | null,
-  ) => ConfirmButtonTransitionState;
+  getRuleConfirmButtonState: (ruleEditIndex: number | null) => ConfirmButtonTransitionState;
   onRuleSubmit: (data: Rule, ruleIndex: number | null) => void;
   onRuleDelete: (ruleIndex: number) => void;
 }
@@ -49,14 +45,11 @@ export const DiscountRules = <ErrorCode,>({
   promotionId,
 }: DiscountRulesProps<ErrorCode>) => {
   const intl = useIntl();
-
   const { ruleConditionsValues } = useLabelMapsContext();
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ruleEditIndex, setRuleEditIndex] = useState<number | null>(null);
   const [ruleDeleteIndex, setRuleDeleteIndex] = useState<number | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
-
   const { opepnGrapQLPlayground } = useGraphQLPlayground();
 
   useEffect(() => {
@@ -68,31 +61,25 @@ export const DiscountRules = <ErrorCode,>({
   const ruleInitialValues = useMemo(() => {
     return ruleEditIndex !== null ? rules[ruleEditIndex] : null;
   }, [ruleEditIndex]);
-
   const handleRuleEdit = (editIndex: number) => {
     setRuleEditIndex(editIndex);
     setIsModalOpen(true);
   };
-
   const handleOpenRuleDeleteModal = (index: number) => {
     setRuleDeleteIndex(index);
   };
-
   const handleRuleModalClose = () => {
     setIsModalOpen(false);
     setRuleEditIndex(null);
   };
-
   const handleRuleModalSubmit = async (data: Rule) => {
     await onRuleSubmit(data, ruleEditIndex);
     handleRuleModalClose();
   };
-
   const handleRuleDelete = async () => {
     await onRuleDelete(ruleDeleteIndex!);
     setRuleDeleteIndex(null);
   };
-
   const handleOpenPlayground = () => {
     setIsModalOpen(false);
     opepnGrapQLPlayground(promotionId);
@@ -106,11 +93,7 @@ export const DiscountRules = <ErrorCode,>({
     >
       <DashboardCard marginBottom={20}>
         <DashboardCard.Title>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-          >
+          <Box display="flex" justifyContent="space-between" alignItems="center">
             {intl.formatMessage(messages.title)}
             <AddButton onClick={() => setIsModalOpen(true)} />
           </Box>

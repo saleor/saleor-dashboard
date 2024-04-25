@@ -17,16 +17,10 @@ import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { canBeSorted } from "../../views/SaleList/sort";
-import {
-  createGetCellContent,
-  salesListStaticColumnsAdapter,
-} from "./datagrid";
+import { createGetCellContent, salesListStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
 
-interface SaleListDatagridProps
-  extends ListProps,
-    SortPage<SaleListUrlSortField>,
-    ChannelProps {
+interface SaleListDatagridProps extends ListProps, SortPage<SaleListUrlSortField>, ChannelProps {
   sales: SaleFragment[];
   onSelectSaleIds: (ids: number[], clearSelection: () => void) => void;
   onRowClick: (id: string) => void;
@@ -49,12 +43,10 @@ export const SaleListDatagrid = ({
   const intl = useIntl();
   const { locale } = useLocale();
   const datagrid = useDatagridChangeState();
-
   const collectionListStaticColumns = useMemo(
     () => salesListStaticColumnsAdapter(intl, sort),
     [intl, sort],
   );
-
   const onColumnChange = useCallback(
     (picked: string[]) => {
       if (onUpdateListSettings) {
@@ -63,19 +55,12 @@ export const SaleListDatagrid = ({
     },
     [onUpdateListSettings],
   );
-
-  const {
-    handlers,
-    visibleColumns,
-    staticColumns,
-    selectedColumns,
-    recentlyAddedColumn,
-  } = useColumns({
-    staticColumns: collectionListStaticColumns,
-    selectedColumns: settings?.columns ?? [],
-    onSave: onColumnChange,
-  });
-
+  const { handlers, visibleColumns, staticColumns, selectedColumns, recentlyAddedColumn } =
+    useColumns({
+      staticColumns: collectionListStaticColumns,
+      selectedColumns: settings?.columns ?? [],
+      onSave: onColumnChange,
+    });
   const getCellContent = useCallback(
     createGetCellContent({
       sales,
@@ -85,23 +70,19 @@ export const SaleListDatagrid = ({
     }),
     [sales, selectedChannelId, locale, visibleColumns],
   );
-
   const handleRowClick = useCallback(
     ([_, row]: Item) => {
       if (!onRowClick) {
         return;
       }
+
       const rowData: SaleFragment = sales[row];
+
       onRowClick(rowData.id);
     },
     [onRowClick, sales],
   );
-
-  const handleRowAnchor = useCallback(
-    ([, row]: Item) => saleUrl(sales[row].id),
-    [sales],
-  );
-
+  const handleRowAnchor = useCallback(([, row]: Item) => saleUrl(sales[row].id), [sales]);
   const handleGetColumnTooltipContent = useCallback(
     (col: number): string => {
       const columnName = visibleColumns[col].id as SaleListUrlSortField;
@@ -117,7 +98,6 @@ export const SaleListDatagrid = ({
     },
     [filterDependency, intl, selectedChannelId, visibleColumns],
   );
-
   const handleHeaderClick = useCallback(
     (col: number) => {
       const columnName = visibleColumns[col].id as SaleListUrlSortField;

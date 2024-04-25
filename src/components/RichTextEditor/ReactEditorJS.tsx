@@ -1,8 +1,4 @@
-import EditorJS, {
-  EditorConfig,
-  OutputData,
-  ToolConstructable,
-} from "@editorjs/editorjs";
+import EditorJS, { EditorConfig, OutputData, ToolConstructable } from "@editorjs/editorjs";
 import Paragraph from "@editorjs/paragraph";
 import {
   EditorCore,
@@ -59,10 +55,7 @@ class ClientEditorCore implements EditorCore {
 export type Props = Omit<ReactEditorJSProps, "factory">;
 
 function ReactEditorJSClient(props: Props) {
-  const factory = React.useCallback(
-    (config: EditorConfig) => new ClientEditorCore(config),
-    [],
-  );
+  const factory = React.useCallback((config: EditorConfig) => new ClientEditorCore(config), []);
 
   return <BaseReactEditorJS factory={factory} {...props} />;
 }

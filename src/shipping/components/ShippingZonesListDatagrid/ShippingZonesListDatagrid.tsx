@@ -15,20 +15,14 @@ import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import {
-  createGetCellContent,
-  shippingZonesListStaticColumnsAdapter,
-} from "./datagrid";
+import { createGetCellContent, shippingZonesListStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
 
 type RowData = ShippingZoneFragment | undefined;
 
 interface ShippingZoneListDatagridProps extends ListProps {
   shippingZones: ShippingZoneFragment[] | undefined;
-  onSelectShippingZones: (
-    rowsIndex: number[],
-    clearSelection: () => void,
-  ) => void;
+  onSelectShippingZones: (rowsIndex: number[], clearSelection: () => void) => void;
 }
 
 export const ShippingZoneListDatagrid = ({
@@ -42,12 +36,10 @@ export const ShippingZoneListDatagrid = ({
   const { locale } = useLocale();
   const datagridState = useDatagridChangeState();
   const navigate = useNavigator();
-
   const shippingZonesListStaticColumns = useMemo(
     () => shippingZonesListStaticColumnsAdapter(intl),
     [intl],
   );
-
   const onColumnChange = useCallback(
     (picked: string[]) => {
       if (onUpdateListSettings) {
@@ -56,13 +48,11 @@ export const ShippingZoneListDatagrid = ({
     },
     [onUpdateListSettings],
   );
-
   const { handlers, visibleColumns, recentlyAddedColumn } = useColumns({
     selectedColumns: settings?.columns ?? [],
     staticColumns: shippingZonesListStaticColumns,
     onSave: onColumnChange,
   });
-
   const getCellContent = useCallback(
     createGetCellContent({
       shippingZones,
@@ -72,7 +62,6 @@ export const ShippingZoneListDatagrid = ({
     }),
     [shippingZones, intl, visibleColumns],
   );
-
   const handleRowClick = useCallback(
     ([_, row]: Item) => {
       const rowData: RowData = shippingZones?.[row];
@@ -83,7 +72,6 @@ export const ShippingZoneListDatagrid = ({
     },
     [shippingZones],
   );
-
   const handleRowAnchor = useCallback(
     ([, row]: Item) => shippingZoneUrl(shippingZones?.[row].id ?? ""),
     [shippingZones],

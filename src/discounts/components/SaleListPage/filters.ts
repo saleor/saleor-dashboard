@@ -2,10 +2,7 @@ import { IFilter } from "@dashboard/components/Filter";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import { DiscountStatusEnum, DiscountValueTypeEnum } from "@dashboard/graphql";
 import { FilterOpts, MinMax } from "@dashboard/types";
-import {
-  createDateField,
-  createOptionsField,
-} from "@dashboard/utils/filters/fields";
+import { createDateField, createOptionsField } from "@dashboard/utils/filters/fields";
 import { defineMessages, IntlShape } from "react-intl";
 
 export enum SaleFilterKeys {

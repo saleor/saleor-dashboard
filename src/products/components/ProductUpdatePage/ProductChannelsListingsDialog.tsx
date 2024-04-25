@@ -19,25 +19,23 @@ export interface ProductChannelsListingsDialogProps extends DialogProps {
   onConfirm: ProductChannelsListingDialogSubmit;
 }
 
-const ProductChannelsListingsDialog: React.FC<
-  ProductChannelsListingsDialogProps
-> = ({ channels, data, open, onClose, onConfirm }) => {
+const ProductChannelsListingsDialog: React.FC<ProductChannelsListingsDialogProps> = ({
+  channels,
+  data,
+  open,
+  onClose,
+  onConfirm,
+}) => {
   const intl = useIntl();
-
   const [selected, setSelected] = useStateFromProps(
     data.channels.updateChannels?.map(listing => listing.channelId) ?? [],
   );
-
   const handleConfirm = () => {
     onConfirm(
-      arrayDiff(
-        data.channels.updateChannels?.map(({ channelId }) => channelId) ?? [],
-        selected,
-      ),
+      arrayDiff(data.channels.updateChannels?.map(({ channelId }) => channelId) ?? [], selected),
     );
     onClose();
   };
-
   const handleToggleAll = () =>
     selected.length !== channels.length
       ? setSelected(channels.map(({ id }) => id))
@@ -48,9 +46,7 @@ const ProductChannelsListingsDialog: React.FC<
       toggleAll={handleToggleAll}
       isSelected={({ id }) => selected.includes(id)}
       channels={channels}
-      onChange={({ id }) =>
-        setSelected(toggle(id, selected, (a, b) => a === b))
-      }
+      onChange={({ id }) => setSelected(toggle(id, selected, (a, b) => a === b))}
       onClose={onClose}
       open={open}
       title={intl.formatMessage({

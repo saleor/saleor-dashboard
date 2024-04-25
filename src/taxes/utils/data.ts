@@ -11,9 +11,7 @@ import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 
 import { TaxClassesPageFormData } from "../types";
 
-export const getTaxClassInitialFormData = (
-  taxClass?: TaxClassFragment,
-): TaxClassesPageFormData => {
+export const getTaxClassInitialFormData = (taxClass?: TaxClassFragment): TaxClassesPageFormData => {
   const initialCountries = taxClass?.countries
     .map(item => ({
       id: item.country.code,
@@ -32,29 +30,23 @@ export const getTaxClassInitialFormData = (
   };
 };
 
-const createCountryRateInput = ({
-  id,
-  value,
-}: FormsetAtomicData): CountryRateInput => ({
+const createCountryRateInput = ({ id, value }: FormsetAtomicData): CountryRateInput => ({
   countryCode: id as CountryCode,
   rate: parseFloat(value),
 });
 
-export const createTaxClassCreateInput = (
-  data: TaxClassesPageFormData,
-): TaxClassCreateInput => ({
+export const createTaxClassCreateInput = (data: TaxClassesPageFormData): TaxClassCreateInput => ({
   name: data.name,
   createCountryRates: data.updateTaxClassRates.flatMap(item => {
     if (!item.value) {
       return [];
     }
+
     return createCountryRateInput(item);
   }),
 });
 
-export const createTaxClassUpdateInput = (
-  data: TaxClassesPageFormData,
-): TaxClassUpdateInput => ({
+export const createTaxClassUpdateInput = (data: TaxClassesPageFormData): TaxClassUpdateInput => ({
   name: data.name,
   updateCountryRates: data.updateTaxClassRates.flatMap(createCountryRateInput),
 });

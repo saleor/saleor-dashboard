@@ -6,10 +6,7 @@ import {
 } from "@dashboard/attributes/utils/handlers";
 import { AttributeInput } from "@dashboard/components/Attributes";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import {
-  DEFAULT_INITIAL_SEARCH_DATA,
-  VALUES_PAGINATE_BY,
-} from "@dashboard/config";
+import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
   PageErrorWithAttributesFragment,
   useFileUploadMutation,
@@ -46,9 +43,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
   const intl = useIntl();
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
-
   const selectedPageTypeId = params["page-type-id"];
-
   const handleSelectPageTypeId = (pageTypeId: string) =>
     navigate(
       pageCreateUrl({
@@ -56,7 +51,6 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
         "page-type-id": pageTypeId,
       }),
     );
-
   const {
     loadMore: loadMorePageTypes,
     search: searchPageTypes,
@@ -84,7 +78,6 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
     result: searchAttributeValuesOpts,
     reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
-
   const { data: selectedPageType } = usePageTypeQuery({
     variables: {
       id: selectedPageTypeId,
@@ -92,12 +85,8 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
     },
     skip: !selectedPageTypeId,
   });
-
-  const attributeValues =
-    mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
-
+  const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
-
   const [pageCreate, pageCreateOpts] = usePageCreateMutation({
     onCompleted: data => {
       if (data.pageCreate.errors.length === 0) {
@@ -112,18 +101,15 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
       }
     },
   });
-
   const handleCreate = async (formData: PageSubmitData) => {
     const uploadFilesResult = await handleUploadMultipleFiles(
       formData.attributesWithNewFileValue,
       variables => uploadFile({ variables }),
     );
-
     const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
       formData.attributesWithNewFileValue,
       uploadFilesResult,
     );
-
     const result = await pageCreate({
       variables: {
         input: {
@@ -151,13 +137,11 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
       errors: getMutationErrors(result),
     };
   };
-
   const handleSubmit = createMetadataCreateHandler(
     handleCreate,
     updateMetadata,
     updatePrivateMetadata,
   );
-
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       pageCreateUrl({
@@ -166,7 +150,6 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
         id: attribute.id,
       }),
     );
-
   const fetchMorePageTypes = {
     hasMore: searchPageTypesOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchPageTypesOpts.loading,
@@ -183,16 +166,11 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
     onFetchMore: loadMoreProducts,
   };
   const fetchMoreAttributeValues = {
-    hasMore:
-      !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo
-        ?.hasNextPage,
+    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
     loading: !!searchAttributeValuesOpts.loading,
     onFetchMore: loadMoreAttributeValues,
   };
-
-  const errors = getMutationErrors(
-    pageCreateOpts,
-  ) as PageErrorWithAttributesFragment[];
+  const errors = getMutationErrors(pageCreateOpts) as PageErrorWithAttributesFragment[];
 
   return (
     <>
@@ -214,23 +192,17 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
         onSubmit={handleSubmit}
         fetchPageTypes={searchPageTypes}
         fetchMorePageTypes={fetchMorePageTypes}
-        assignReferencesAttributeId={
-          params.action === "assign-attribute-value" && params.id
-        }
+        assignReferencesAttributeId={params.action === "assign-attribute-value" && params.id}
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
-        referenceProducts={
-          mapEdgesToItems(searchProductsOpts?.data?.search) || []
-        }
+        referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search) || []}
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
         fetchAttributeValues={searchAttributeValues}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
-        onCloseDialog={() =>
-          navigate(pageCreateUrl({ ...params, action: undefined }))
-        }
+        onCloseDialog={() => navigate(pageCreateUrl({ ...params, action: undefined }))}
         selectedPageType={selectedPageType?.pageType}
         onSelectPageType={handleSelectPageTypeId}
         onAttributeSelectBlur={searchAttributeReset}

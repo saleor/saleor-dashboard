@@ -9,8 +9,7 @@ import { MetadataCard, MetadataCardProps } from "./MetadataCard";
 import { EventDataAction, EventDataField } from "./types";
 import { getDataKey, parseEventData } from "./utils";
 
-export interface MetadataProps
-  extends Omit<MetadataCardProps, "data" | "isPrivate"> {
+export interface MetadataProps extends Omit<MetadataCardProps, "data" | "isPrivate"> {
   data: Record<"metadata" | "privateMetadata", MetadataInput[]>;
   isLoading?: boolean;
   readonly?: boolean;
@@ -30,34 +29,27 @@ const propsCompare = (_, newProps: MetadataProps) => {
   return false;
 };
 
-export const Metadata: React.FC<MetadataProps> = memo(
-  ({ data, onChange, readonly = false }) => {
-    const change = (event: ChangeEvent, isPrivate: boolean) => {
-      const { action, field, fieldIndex, value } = parseEventData(event);
-      const key = getDataKey(isPrivate);
-      const dataToUpdate = data[key];
+export const Metadata: React.FC<MetadataProps> = memo(({ data, onChange, readonly = false }) => {
+  const change = (event: ChangeEvent, isPrivate: boolean) => {
+    const { action, field, fieldIndex, value } = parseEventData(event);
+    const key = getDataKey(isPrivate);
+    const dataToUpdate = data[key];
 
-      onChange({
-        target: {
-          name: key,
-          value:
-            action === EventDataAction.update
-              ? updateAtIndex(
-                  {
-                    ...dataToUpdate[fieldIndex],
-                    key:
-                      field === EventDataField.name
-                        ? value
-                        : dataToUpdate[fieldIndex].key,
-                    value:
-                      field === EventDataField.value
-                        ? value
-                        : dataToUpdate[fieldIndex].value,
-                  },
-                  dataToUpdate,
-                  fieldIndex,
-                )
-              : action === EventDataAction.add
+    onChange({
+      target: {
+        name: key,
+        value:
+          action === EventDataAction.update
+            ? updateAtIndex(
+                {
+                  ...dataToUpdate[fieldIndex],
+                  key: field === EventDataField.name ? value : dataToUpdate[fieldIndex].key,
+                  value: field === EventDataField.value ? value : dataToUpdate[fieldIndex].value,
+                },
+                dataToUpdate,
+                fieldIndex,
+              )
+            : action === EventDataAction.add
               ? [
                   ...dataToUpdate,
                   {
@@ -66,28 +58,26 @@ export const Metadata: React.FC<MetadataProps> = memo(
                   },
                 ]
               : removeAtIndex(dataToUpdate, fieldIndex),
-        },
-      });
-    };
+      },
+    });
+  };
 
-    return (
-      <Box display="grid" gap={2} paddingBottom={6}>
-        <MetadataCard
-          data={data?.metadata}
-          isPrivate={false}
-          readonly={readonly}
-          onChange={event => change(event, false)}
-        />
-        <MetadataCard
-          data={data?.privateMetadata}
-          isPrivate={true}
-          readonly={readonly}
-          onChange={event => change(event, true)}
-        />
-      </Box>
-    );
-  },
-  propsCompare,
-);
+  return (
+    <Box display="grid" gap={2} paddingBottom={6}>
+      <MetadataCard
+        data={data?.metadata}
+        isPrivate={false}
+        readonly={readonly}
+        onChange={event => change(event, false)}
+      />
+      <MetadataCard
+        data={data?.privateMetadata}
+        isPrivate={true}
+        readonly={readonly}
+        onChange={event => change(event, true)}
+      />
+    </Box>
+  );
+}, propsCompare);
 
 Metadata.displayName = "Metadata";

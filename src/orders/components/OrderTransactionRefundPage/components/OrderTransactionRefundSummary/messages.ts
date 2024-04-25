@@ -25,8 +25,7 @@ export const orderTransactionRefundSummaryMessages = defineMessages({
   cannotRefundShipping: {
     defaultMessage: "Shipping has already been refunded.",
     id: "6ScZk5",
-    description:
-      "order transaction refund summary disabled shipping tooltip content",
+    description: "order transaction refund summary disabled shipping tooltip content",
   },
   totalAmount: {
     defaultMessage: "Total amount:",

@@ -42,18 +42,11 @@ import { ProductListUrlSortField, productUrl } from "../../urls";
 import { ProductListDatagrid } from "../ProductListDatagrid";
 import { ProductListTiles } from "../ProductListTiles/ProductListTiles";
 import { ProductListViewSwitch } from "../ProductListViewSwitch";
-import {
-  createFilterStructure,
-  ProductFilterKeys,
-  ProductListFilterOpts,
-} from "./filters";
+import { createFilterStructure, ProductFilterKeys, ProductListFilterOpts } from "./filters";
 
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
-    Omit<
-      FilterPageProps<ProductFilterKeys, ProductListFilterOpts>,
-      "onTabDelete"
-    >,
+    Omit<FilterPageProps<ProductFilterKeys, ProductListFilterOpts>, "onTabDelete">,
     SortPage<ProductListUrlSortField>,
     ChannelProps {
   activeAttributeSortId: string;
@@ -72,15 +65,14 @@ export interface ProductListPageProps
   onExport: () => void;
   onTabUpdate: (tabName: string) => void;
   onTabDelete: (tabIndex: number) => void;
-  availableColumnsAttributesOpts: ReturnType<
-    typeof useAvailableColumnAttributesLazyQuery
-  >;
+  availableColumnsAttributesOpts: ReturnType<typeof useAvailableColumnAttributesLazyQuery>;
   onProductsDelete: () => void;
   onSelectProductIds: (ids: number[], clearSelection: () => void) => void;
   clearRowSelection: () => void;
 }
 
 export type ProductListViewType = "datagrid" | "tile";
+
 const DEFAULT_PRODUCT_LIST_VIEW_TYPE: ProductListViewType = "datagrid";
 
 export const ProductListPage: React.FC<ProductListPageProps> = props => {
@@ -118,25 +110,20 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const navigate = useNavigator();
   const filterStructure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
-
   const filterDependency = filterStructure.find(getByName("channel"));
-
   const limitReached = isLimitReached(limits, "productVariants");
-  const { PRODUCT_OVERVIEW_CREATE, PRODUCT_OVERVIEW_MORE_ACTIONS } =
-    useExtensions(extensionMountPoints.PRODUCT_LIST);
-
+  const { PRODUCT_OVERVIEW_CREATE, PRODUCT_OVERVIEW_MORE_ACTIONS } = useExtensions(
+    extensionMountPoints.PRODUCT_LIST,
+  );
   const extensionMenuItems = mapToMenuItemsForProductOverviewActions(
     PRODUCT_OVERVIEW_MORE_ACTIONS,
     selectedProductIds,
   );
   const extensionCreateButtonItems = mapToMenuItems(PRODUCT_OVERVIEW_CREATE);
-
-  const [storedProductListViewType, setProductListViewType] =
-    useLocalStorage<ProductListViewType>(
-      "productListViewType",
-      DEFAULT_PRODUCT_LIST_VIEW_TYPE,
-    );
-
+  const [storedProductListViewType, setProductListViewType] = useLocalStorage<ProductListViewType>(
+    "productListViewType",
+    DEFAULT_PRODUCT_LIST_VIEW_TYPE,
+  );
   const isDatagridView = storedProductListViewType === "datagrid";
 
   return (
@@ -146,12 +133,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
         isAlignToRight={false}
         title={intl.formatMessage(sectionNames.products)}
       >
-        <Box
-          __flex={1}
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-        >
+        <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <Box marginX={3} display="flex" alignItems="center">
               <ChevronRightIcon />
@@ -267,10 +249,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               <Box display="flex" gap={4}>
                 {selectedProductIds.length > 0 && (
                   <BulkDeleteButton onClick={onProductsDelete}>
-                    <FormattedMessage
-                      defaultMessage="Delete products"
-                      id="uwk5e9"
-                    />
+                    <FormattedMessage defaultMessage="Delete products" id="uwk5e9" />
                   </BulkDeleteButton>
                 )}
                 <ProductListViewSwitch

@@ -28,8 +28,7 @@ const messages = defineMessages({
   },
   warehouseSettingsDisabledDescription: {
     id: "M8z5WZ",
-    defaultMessage:
-      "If selected customer won't be able to choose this warehouse as pickup point",
+    defaultMessage: "If selected customer won't be able to choose this warehouse as pickup point",
     description: "WarehouseSettings disabled warehouse description",
   },
   warehouseSettingsLocal: {

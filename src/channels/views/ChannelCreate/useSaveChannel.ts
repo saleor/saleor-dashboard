@@ -13,10 +13,7 @@ import { extractMutationErrors } from "@dashboard/misc";
 import { calculateItemsOrderMoves } from "../ChannelDetails/handlers";
 
 interface SaveChannelConfig {
-  createChannel: MutationFunction<
-    ChannelCreateMutation,
-    Exact<{ input: ChannelCreateInput }>
-  >;
+  createChannel: MutationFunction<ChannelCreateMutation, Exact<{ input: ChannelCreateInput }>>;
   reorderChannelWarehouses: MutationFunction<
     ChannelReorderWarehousesMutation,
     Exact<{
@@ -26,22 +23,15 @@ interface SaveChannelConfig {
   >;
 }
 
-export const useSaveChannel = ({
-  createChannel,
-  reorderChannelWarehouses,
-}: SaveChannelConfig) => {
+export const useSaveChannel = ({ createChannel, reorderChannelWarehouses }: SaveChannelConfig) => {
   const { refetchUser } = useUser();
 
-  return async (
-    input: ChannelCreateInput,
-    warehousesToDisplay: ChannelWarehouses,
-  ) => {
+  return async (input: ChannelCreateInput, warehousesToDisplay: ChannelWarehouses) => {
     const createChannelMutation = createChannel({
       variables: {
         input,
       },
     });
-
     const result = await createChannelMutation;
     const errors = await extractMutationErrors(createChannelMutation);
 
@@ -50,8 +40,8 @@ export const useSaveChannel = ({
         result.data?.channelCreate?.channel?.warehouses || [],
         warehousesToDisplay,
       );
-
       const channelId = result.data?.channelCreate?.channel?.id;
+
       if (channelId) {
         await reorderChannelWarehouses({
           variables: { channelId, moves },

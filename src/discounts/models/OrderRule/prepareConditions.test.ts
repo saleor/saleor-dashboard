@@ -5,12 +5,10 @@ import { prepareOrderConditions } from "./prepareConditions";
 describe("prepareOrderConditions", () => {
   it("should return empty array when orderPredicate is empty", () => {
     const orderPredicate = {} as OrderPredicateAPI;
-
     const result = prepareOrderConditions(orderPredicate);
 
     expect(result).toEqual([]);
   });
-
   it("should return array of conditions when orderPredicate is not empty", () => {
     const orderPredicate = {
       discountedObjectPredicate: {
@@ -42,10 +40,7 @@ describe("prepareOrderConditions", () => {
         ],
       },
     } as OrderPredicateAPI;
-
-    const result = prepareOrderConditions(
-      orderPredicate.discountedObjectPredicate,
-    );
+    const result = prepareOrderConditions(orderPredicate.discountedObjectPredicate);
 
     expect(result).toEqual([
       {

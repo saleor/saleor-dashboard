@@ -7,9 +7,7 @@ interface AppListCardIntegrationsProps {
   integrations: AppstoreApi.SaleorApp["integrations"];
 }
 
-const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({
-  integrations,
-}) => {
+const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({ integrations }) => {
   const { themeType } = useTheme();
 
   if (!integrations) {
@@ -27,13 +25,7 @@ const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({
       alignItems="start"
     >
       {integrations.map(integration => (
-        <Box
-          as="li"
-          display="flex"
-          alignItems="center"
-          gap={1.5}
-          key={integration.name}
-        >
+        <Box as="li" display="flex" alignItems="center" gap={1.5} key={integration.name}>
           <Box
             height={10}
             width={10}
@@ -48,9 +40,7 @@ const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({
             <img
               title={integration.name}
               src={
-                themeType === "dark"
-                  ? integration.logo.dark.source
-                  : integration.logo.light.source
+                themeType === "dark" ? integration.logo.dark.source : integration.logo.light.source
               }
               alt={integration.name}
             />
@@ -63,5 +53,6 @@ const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({
     </Box>
   );
 };
+
 AppListCardIntegrations.displayName = "AppListCardIntegrations";
 export default AppListCardIntegrations;

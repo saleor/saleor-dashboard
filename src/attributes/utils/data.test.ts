@@ -10,9 +10,7 @@ describe("attributes utils", () => {
       inputType: AttributeInputTypeEnum.SWATCH,
       storefrontSearchPosition: "10",
     } as AttributePageFormData;
-
     const values = [{ name: "11", value: "v11" }];
-
     // Act
     const attributeData = getAttributeData(attribute, values);
 
@@ -30,7 +28,6 @@ describe("attributes utils", () => {
       ],
     });
   });
-
   // Arrange
   it.each([
     {
@@ -80,14 +77,11 @@ describe("attributes utils", () => {
         ],
       },
     },
-  ])(
-    "returns attributes data with deticated values",
-    ({ attribute, values, expected }) => {
-      // Act
-      const attributeData = getAttributeData(attribute, values);
+  ])("returns attributes data with deticated values", ({ attribute, values, expected }) => {
+    // Act
+    const attributeData = getAttributeData(attribute, values);
 
-      // Assert
-      expect(attributeData).toEqual(expected);
-    },
-  );
+    // Assert
+    expect(attributeData).toEqual(expected);
+  });
 });

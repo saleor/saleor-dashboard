@@ -1,8 +1,5 @@
 // @ts-strict-ignore
-import {
-  order as orderFixture,
-  prepareMoney,
-} from "@dashboard/orders/fixtures";
+import { order as orderFixture, prepareMoney } from "@dashboard/orders/fixtures";
 
 import { getShouldDisplayAmounts } from "./utils";
 
@@ -19,7 +16,6 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
       }),
     );
   });
-
   it("displays everything, but authorized if there's a pending value", () => {
     expect(
       getShouldDisplayAmounts({
@@ -38,7 +34,6 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
       }),
     );
   });
-
   it("displays everything with authorized if there's a pending value", () => {
     const result1 = getShouldDisplayAmounts({
       ...order,
@@ -46,13 +41,11 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
       totalAuthorizePending: prepareMoney(0),
       totalChargePending: prepareMoney(1),
     });
-
     const result2 = getShouldDisplayAmounts({
       ...order,
       totalAuthorized: prepareMoney(12),
       totalAuthorizePending: prepareMoney(12),
     });
-
     const expectedResult = {
       authorized: true,
       charged: true,
@@ -63,7 +56,6 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
     expect(result1).toStrictEqual(expect.objectContaining(expectedResult));
     expect(result2).toStrictEqual(expect.objectContaining(expectedResult));
   });
-
   it("displays capture and authorize amount when they are different", () => {
     expect(
       getShouldDisplayAmounts({
@@ -80,7 +72,6 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
       }),
     );
   });
-
   it("displays capoture amount when it's not equal to total amount", () => {
     expect(
       getShouldDisplayAmounts({
@@ -103,7 +94,6 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
       }),
     );
   });
-
   it("displays authorized if there is authorized amount", () => {
     expect(
       getShouldDisplayAmounts({
@@ -120,9 +110,7 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
       }),
     );
   });
-
   it.skip("displays cancelled if there is cancelled amount", () => undefined);
-
   it("hides everything if order is fully settled", () => {
     expect(
       getShouldDisplayAmounts({

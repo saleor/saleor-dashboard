@@ -14,9 +14,7 @@ export interface ProductVariantEndPreorderDialogProps {
   variantGlobalSoldUnits?: number;
 }
 
-const ProductVariantEndPreorderDialog: React.FC<
-  ProductVariantEndPreorderDialogProps
-> = ({
+const ProductVariantEndPreorderDialog: React.FC<ProductVariantEndPreorderDialogProps> = ({
   confirmButtonState,
   open,
   onClose,
@@ -34,21 +32,17 @@ const ProductVariantEndPreorderDialog: React.FC<
       open={open}
       onClose={onClose}
       onConfirm={onConfirm}
-      title={intl.formatMessage(
-        productVariantEndPreorderDialogMessages.dialogTitle,
-      )}
+      title={intl.formatMessage(productVariantEndPreorderDialogMessages.dialogTitle)}
       variant="default"
     >
       <DialogContentText>
-        {intl.formatMessage(
-          productVariantEndPreorderDialogMessages.dialogMessage,
-          {
-            variantGlobalSoldUnits,
-          },
-        )}
+        {intl.formatMessage(productVariantEndPreorderDialogMessages.dialogMessage, {
+          variantGlobalSoldUnits,
+        })}
       </DialogContentText>
     </ActionDialog>
   );
 };
+
 ProductVariantEndPreorderDialog.displayName = "ProductVariantEndPreorderDialog";
 export default ProductVariantEndPreorderDialog;

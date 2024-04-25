@@ -10,12 +10,7 @@ import { commonMessages } from "@dashboard/intl";
 import { IntlShape } from "react-intl";
 
 import messages from "./messages";
-import {
-  InvoiceGenerateParams,
-  QueuedTask,
-  TaskData,
-  TaskStatus,
-} from "./types";
+import { InvoiceGenerateParams, QueuedTask, TaskData, TaskStatus } from "./types";
 
 function getTaskStatus(jobStatus: JobStatusEnum): TaskStatus {
   switch (jobStatus) {
@@ -30,8 +25,10 @@ function getTaskStatus(jobStatus: JobStatusEnum): TaskStatus {
 
 export async function handleTask(task: QueuedTask): Promise<TaskStatus> {
   let status = TaskStatus.PENDING;
+
   try {
     status = await task.handle();
+
     if (status !== TaskStatus.PENDING) {
       task.onCompleted({
         status,
@@ -85,6 +82,7 @@ export function queueInvoiceGenerate(
   if (!generateInvoice) {
     throw new Error("generateInvoice is required when creating custom task");
   }
+
   tasks.current = [
     ...tasks.current,
     {

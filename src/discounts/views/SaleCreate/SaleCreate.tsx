@@ -38,18 +38,14 @@ export const SaleCreateView: React.FC<SaleCreateProps> = ({ params }) => {
   const navigate = useNavigator();
   const pushMessage = useNotifier();
   const intl = useIntl();
-
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [openModal, closeModal] = createDialogActionHandlers<
     ChannelsAction,
     SaleCreateUrlQueryParams
   >(navigate, params => saleAddUrl(params), params);
-
   const { availableChannels } = useAppChannel(false);
-  const allChannels: ChannelSaleFormData[] =
-    createSortedSaleData(availableChannels);
-
+  const allChannels: ChannelSaleFormData[] = createSortedSaleData(availableChannels);
   const {
     channelListElements,
     channelsToggle,
@@ -67,10 +63,7 @@ export const SaleCreateView: React.FC<SaleCreateProps> = ({ params }) => {
     { closeModal, openModal },
     { formId: SALE_CREATE_FORM_ID },
   );
-
-  const [updateChannels, updateChannelsOpts] =
-    useSaleChannelListingUpdateMutation({});
-
+  const [updateChannels, updateChannelsOpts] = useSaleChannelListingUpdateMutation({});
   const [saleCreate, saleCreateOpts] = useSaleCreateMutation({
     onCompleted: data => {
       if (data.saleCreate.errors.length === 0) {
@@ -85,11 +78,7 @@ export const SaleCreateView: React.FC<SaleCreateProps> = ({ params }) => {
       }
     },
   });
-
-  const handleCreate = createHandler(
-    variables => saleCreate({ variables }),
-    updateChannels,
-  );
+  const handleCreate = createHandler(variables => saleCreate({ variables }), updateChannels);
   const handleSubmit = createMetadataCreateHandler(
     handleCreate,
     updateMetadata,

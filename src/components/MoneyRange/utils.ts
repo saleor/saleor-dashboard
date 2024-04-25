@@ -15,6 +15,7 @@ export const getMoneyRange = (
       ? formatMoney(from, locale)
       : formatMoneyRange(from, to, locale);
   }
+
   if (from && !to) {
     return intl.formatMessage(
       {
@@ -27,6 +28,7 @@ export const getMoneyRange = (
       },
     );
   }
+
   if (!from && to) {
     return intl.formatMessage(
       {
@@ -39,5 +41,6 @@ export const getMoneyRange = (
       },
     );
   }
+
   return "-";
 };

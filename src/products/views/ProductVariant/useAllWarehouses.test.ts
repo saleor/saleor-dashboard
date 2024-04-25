@@ -4,14 +4,12 @@ import { useFetchAllWarehouses } from "@dashboard/hooks/useFetchAllWarehouse";
 import { useAllWarehouses } from "./useAllWarehouses";
 
 jest.mock("@dashboard/hooks/useFetchAllWarehouse");
-
 describe("useAllWarehouses", () => {
   it("should skip query when no channels and return empty array", () => {
     // Arrange
     const mockedUseFetchAllWarehouses = jest.fn();
-    (useFetchAllWarehouses as jest.Mock).mockImplementation(
-      mockedUseFetchAllWarehouses,
-    );
+
+    (useFetchAllWarehouses as jest.Mock).mockImplementation(mockedUseFetchAllWarehouses);
 
     // Act
     const result = useAllWarehouses([]);
@@ -29,7 +27,6 @@ describe("useAllWarehouses", () => {
       },
     });
   });
-
   it("should run query when channels provided", () => {
     // Arrange
     const mockedUseFetchAllWarehouses = jest.fn(() => ({
@@ -45,9 +42,8 @@ describe("useAllWarehouses", () => {
         },
       },
     }));
-    (useFetchAllWarehouses as jest.Mock).mockImplementation(
-      mockedUseFetchAllWarehouses,
-    );
+
+    (useFetchAllWarehouses as jest.Mock).mockImplementation(mockedUseFetchAllWarehouses);
 
     // Act
     const result = useAllWarehouses([

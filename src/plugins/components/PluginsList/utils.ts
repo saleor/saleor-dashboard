@@ -16,12 +16,9 @@ export const getActiveChannelConfigsCount = (
 export const getPluginStatusLabel = (
   channelData: PluginConfigurationBaseFragment,
 ): MessageDescriptor =>
-  channelData.active
-    ? pluginStatusMessages.active
-    : pluginStatusMessages.deactivated;
-export const getPluginStatusColor = (
-  channelData: PluginConfigurationBaseFragment,
-): PillColor => (channelData.active ? "success" : "error");
+  channelData.active ? pluginStatusMessages.active : pluginStatusMessages.deactivated;
+export const getPluginStatusColor = (channelData: PluginConfigurationBaseFragment): PillColor =>
+  channelData.active ? "success" : "error";
 
 export const mapPluginsToPills = (
   channelConfigurations: PluginConfigurationBaseFragment[],

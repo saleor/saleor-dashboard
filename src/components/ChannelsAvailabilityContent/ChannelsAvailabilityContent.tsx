@@ -19,9 +19,7 @@ export interface ChannelsAvailabilityContentProps {
   toggleAll?: (items: Channel[], selected: number) => void;
 }
 
-export const ChannelsAvailabilityContent: React.FC<
-  ChannelsAvailabilityContentProps
-> = ({
+export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentProps> = ({
   isSelected,
   channels,
   contentType = "",
@@ -68,10 +66,7 @@ export const ChannelsAvailabilityContent: React.FC<
               label={
                 toggleAllText || (
                   <Typography className={classes.label}>
-                    <FormattedMessage
-                      id="2/L4zZ"
-                      defaultMessage="Select all channels"
-                    />
+                    <FormattedMessage id="2/L4zZ" defaultMessage="Select all channels" />
                   </Typography>
                 )
               }
@@ -89,19 +84,11 @@ export const ChannelsAvailabilityContent: React.FC<
         >
           {filteredChannels?.length ? (
             filteredChannels.map(option => (
-              <div
-                key={option.id}
-                className={classes.option}
-                data-test-id="channel-row"
-              >
+              <div key={option.id} className={classes.option} data-test-id="channel-row">
                 <ControlledCheckbox
                   checked={isSelected(option)}
                   name={option.name}
-                  label={
-                    <Typography className={classes.label}>
-                      {option.name}
-                    </Typography>
-                  }
+                  label={<Typography className={classes.label}>{option.name}</Typography>}
                   onChange={() => onChange(option)}
                 />
                 <Hr />
@@ -109,10 +96,7 @@ export const ChannelsAvailabilityContent: React.FC<
             ))
           ) : (
             <div className={classes.notFound}>
-              <FormattedMessage
-                id="B9yrkK"
-                defaultMessage="No Channels found"
-              />
+              <FormattedMessage id="B9yrkK" defaultMessage="No Channels found" />
             </div>
           )}
         </div>

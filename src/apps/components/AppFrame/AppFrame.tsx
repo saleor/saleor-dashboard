@@ -41,7 +41,6 @@ export const AppFrame: React.FC<Props> = ({
   const classes = useStyles();
   const appOrigin = getOrigin(src);
   const flags = useAllFlags();
-
   /**
    * React on messages from App
    */
@@ -60,7 +59,6 @@ export const AppFrame: React.FC<Props> = ({
    * Listen to Dashboard context like theme or locale and inform app about it
    */
   useAppDashboardUpdates(frameRef.current, appOrigin, handshakeDone, appId);
-
   useTokenRefresh(appToken, refetch);
 
   const handleLoad = useCallback(() => {
@@ -76,7 +74,6 @@ export const AppFrame: React.FC<Props> = ({
         dashboard: dashboardVersion,
       }),
     );
-
     setHandshakeDone(true);
   }, [appToken, postToExtension, setHandshakeDone]);
 

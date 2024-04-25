@@ -10,10 +10,7 @@ interface DiscountedPriceProps {
   discountedPrice: IMoney;
 }
 
-const DiscountedPrice: React.FC<DiscountedPriceProps> = ({
-  regularPrice,
-  discountedPrice,
-}) => {
+const DiscountedPrice: React.FC<DiscountedPriceProps> = ({ regularPrice, discountedPrice }) => {
   const classes = useStyles();
 
   return (

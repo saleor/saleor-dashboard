@@ -48,40 +48,24 @@ interface MultiSelectFieldProps {
 }
 
 export const MultiSelectField: React.FC<MultiSelectFieldProps> = props => {
-  const {
-    disabled,
-    error,
-    label,
-    choices,
-    value,
-    onChange,
-    name,
-    hint,
-    selectProps,
-  } = props;
+  const { disabled, error, label, choices, value, onChange, name, hint, selectProps } = props;
   const classes = useStyles(props);
-
   const choicesByKey = disabled
     ? {}
     : choices.reduce((prev, curr) => {
         prev[curr.value] = curr.label;
+
         return prev;
       }, {});
 
   return (
-    <FormControl
-      className={classes.formControl}
-      error={error}
-      disabled={disabled}
-    >
+    <FormControl className={classes.formControl} error={error} disabled={disabled}>
       {label && <InputLabel>{label}</InputLabel>}
       <Select
         multiple
         fullWidth
         renderValue={choiceValues =>
-          (choiceValues as string[])
-            .map(choiceValue => choicesByKey[choiceValue])
-            .join(", ")
+          (choiceValues as string[]).map(choiceValue => choicesByKey[choiceValue]).join(", ")
         }
         value={value}
         name={name}
@@ -91,9 +75,7 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = props => {
       >
         {choices.length > 0 ? (
           choices.map(choice => {
-            const isSelected = !!value.find(
-              selectedChoice => selectedChoice === choice.value,
-            );
+            const isSelected = !!value.find(selectedChoice => selectedChoice === choice.value);
 
             return (
               <MenuItem value={choice.value} key={choice.value}>
@@ -122,6 +104,5 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = props => {
 MultiSelectField.defaultProps = {
   value: [],
 };
-
 MultiSelectField.displayName = "MultiSelectField";
 export default MultiSelectField;

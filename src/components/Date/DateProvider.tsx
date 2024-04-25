@@ -17,10 +17,7 @@ export class DateProvider extends React.Component<{}, DateProviderState> {
   };
 
   componentDidMount() {
-    this.intervalId = window.setInterval(
-      () => this.setState({ date: Date.now() }),
-      10000,
-    );
+    this.intervalId = window.setInterval(() => this.setState({ date: Date.now() }), 10000);
   }
 
   componentWillUnmount() {
@@ -30,6 +27,7 @@ export class DateProvider extends React.Component<{}, DateProviderState> {
   render() {
     const { children } = this.props;
     const { date } = this.state;
+
     return <Provider value={date}>{children}</Provider>;
   }
 }

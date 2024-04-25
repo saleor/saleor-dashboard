@@ -5,10 +5,7 @@ import { SidebarContent } from "./Content";
 
 export const Sidebar = () => (
   <>
-    <Box
-      display={{ mobile: "none", tablet: "none", desktop: "block" }}
-      height="100%"
-    >
+    <Box display={{ mobile: "none", tablet: "none", desktop: "block" }} height="100%">
       <SidebarContent />
     </Box>
     <Box display={{ mobile: "block", tablet: "block", desktop: "none" }}>

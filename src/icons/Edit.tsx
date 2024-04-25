@@ -1,13 +1,7 @@
 import React from "react";
 
 const EditIcon = () => (
-  <svg
-    width="15"
-    height="14"
-    viewBox="0 0 15 14"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M13.1791 0.678585C12.5282 0.0277112 11.4729 0.0277113 10.822 0.678585L10.0897 1.41088L13.036 4.35716L13.7683 3.62486C14.4192 2.97399 14.4192 1.91871 13.7683 1.26784L13.1791 0.678585Z"
       fill="currentColor"

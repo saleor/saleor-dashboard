@@ -28,24 +28,15 @@ export const useEnrichConditions = (
   const conditionNames = useConditionNames(discountType);
 
   return conditions.map(condition => {
-    const conditionInputType = getConditionTypeByLabel(
-      condition.id ?? "",
-      condition.type,
-    );
-    const conditionLabel = conditionNames.find(
-      option => option.value === condition.id ?? "",
-    );
-
+    const conditionInputType = getConditionTypeByLabel(condition.id ?? "", condition.type);
+    const conditionLabel = conditionNames.find(option => option.value === condition.id ?? "");
     const enrichedCondition = {
       ...condition,
       inputType: conditionInputType,
       label: conditionLabel?.label,
     };
 
-    if (
-      conditionInputType &&
-      ["price", "price.range"].includes(conditionInputType)
-    ) {
+    if (conditionInputType && ["price", "price.range"].includes(conditionInputType)) {
       return {
         ...enrichedCondition,
         value: formatPrice(enrichedCondition, currencySymbol, locale, intl),

@@ -16,7 +16,6 @@ export function useCustomCellRenderers() {
   const { locale } = useLocale();
   const { customRenderers } = useExtraCells();
   const { themeValues } = useTheme();
-
   const renderers = useMemo(
     () => [
       pillCellRenderer(),

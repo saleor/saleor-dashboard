@@ -27,9 +27,7 @@ interface SeoFormProps {
   description?: string | null;
   descriptionPlaceholder: string;
   disabled?: boolean;
-  errors?: Array<
-    PageErrorFragment | ProductErrorFragment | CollectionErrorFragment
-  >;
+  errors?: Array<PageErrorFragment | ProductErrorFragment | CollectionErrorFragment>;
   loading?: boolean;
   helperText?: string;
   allowEmptySlug?: boolean;
@@ -55,13 +53,11 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
     onChange,
   } = props;
   const intl = useIntl();
-
   const getSlugHelperMessage = () => {
     const error = !!getError(SeoField.slug);
 
     return error ? getSlugErrorMessage() : "";
   };
-
   const getSlugErrorMessage = () => {
     const error = getError(SeoField.slug);
     const { __typename: type } = error;
@@ -70,7 +66,6 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
       ? getProductErrorMessage(error as ProductErrorFragment, intl)
       : getPageErrorMessage(error as PageErrorFragment, intl);
   };
-
   const handleSlugChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
 
@@ -78,10 +73,7 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
       onChange(event);
     }
   };
-
-  const completed =
-    slug?.length > 0 && title?.length > 0 && description?.length > 0;
-
+  const completed = slug?.length > 0 && title?.length > 0 && description?.length > 0;
   const getError = (fieldName: SeoField) => getFieldError(errors, fieldName);
 
   return (
@@ -92,10 +84,7 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
             <Accordion.Trigger>
               <Box display="grid" gap={2}>
                 <Text size={5} fontWeight="bold">
-                  <FormattedMessage
-                    defaultMessage="Search Engine Preview"
-                    id="TGX4T1"
-                  />
+                  <FormattedMessage defaultMessage="Search Engine Preview" id="TGX4T1" />
                 </Text>
                 <Text size={2} color="default2">
                   {completed ? (
@@ -119,9 +108,7 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
               <Box display="grid" gap={2} marginTop={4}>
                 <Box>
                   <Input
-                    error={
-                      !!getError(SeoField.slug) || slug.length > maxSlugLength
-                    }
+                    error={!!getError(SeoField.slug) || slug.length > maxSlugLength}
                     name={SeoField.slug}
                     label={
                       <Box display="flex" gap={1}>
@@ -163,10 +150,7 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
                   label={
                     <Box display="flex" gap={1}>
                       <Box as="span">
-                        <FormattedMessage
-                          defaultMessage="Search engine title"
-                          id="w2Cewo"
-                        />
+                        <FormattedMessage defaultMessage="Search engine title" id="w2Cewo" />
                       </Box>
                       {title?.length > 0 && (
                         <Box as="span">
@@ -195,10 +179,7 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
                   label={
                     <Box display="flex" gap={1}>
                       <span>
-                        <FormattedMessage
-                          id="CXTIq8"
-                          defaultMessage="Search engine description"
-                        />
+                        <FormattedMessage id="CXTIq8" defaultMessage="Search engine description" />
                       </span>
                       {description?.length > 0 && (
                         <span>

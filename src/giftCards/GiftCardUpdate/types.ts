@@ -6,7 +6,6 @@ export enum GiftCardUpdatePageActionParamsEnum {
   RESEND_CODE = "resend-code",
 }
 
-export type GiftCardUpdatePageUrlQueryParams =
-  Dialog<GiftCardUpdatePageActionParamsEnum>;
+export type GiftCardUpdatePageUrlQueryParams = Dialog<GiftCardUpdatePageActionParamsEnum>;
 
 export const PLACEHOLDER = "-";

@@ -13,11 +13,9 @@ export const useAuthRedirection = () => {
   const router = useRouter();
   const params = new URLSearchParams(router.location.search);
   const shouldRedirect = params.has(PLUGIN_ID_PARAM);
-  const { authenticated, authenticating, requestLoginByExternalPlugin } =
-    useUser();
+  const { authenticated, authenticating, requestLoginByExternalPlugin } = useUser();
   const { setRequestedExternalPluginId } = useAuthParameters();
   const pluginId = params.get(PLUGIN_ID_PARAM);
-
   const handleAuthentication = async () => {
     setRequestedExternalPluginId(pluginId);
 
@@ -26,7 +24,6 @@ export const useAuthRedirection = () => {
       getAppMountUriForRedirect(),
       loginCallbackPath,
     );
-
     const response = await requestLoginByExternalPlugin!(pluginId!, {
       redirectUri,
     });

@@ -29,12 +29,8 @@ export function useRefundWithinReturn({
   orderId,
   transactionId,
 }: UseReturnWithinReturnOpts): UseReturnWithinReturnResult {
-  const [grantRefund, grantRefundOpts] =
-    useOrderGrantRefundAddWithOrderMutation();
-
-  const [sendRefund, sendRefundOpts] =
-    useOrderSendRefundForGrantedRefundMutation();
-
+  const [grantRefund, grantRefundOpts] = useOrderGrantRefundAddWithOrderMutation();
+  const [sendRefund, sendRefundOpts] = useOrderSendRefundForGrantedRefundMutation();
   const sendMutations = async (formData: OrderReturnFormData) => {
     const grantRefundData = formData.autoGrantRefund
       ? await grantRefund({
@@ -56,13 +52,9 @@ export function useRefundWithinReturn({
           },
         })
       : null;
-
-    const grantRefundErrors =
-      grantRefundData?.data?.orderGrantRefundCreate?.errors ?? [];
-    const grantedRefundId =
-      grantRefundData?.data?.orderGrantRefundCreate?.grantedRefund?.id;
+    const grantRefundErrors = grantRefundData?.data?.orderGrantRefundCreate?.errors ?? [];
+    const grantedRefundId = grantRefundData?.data?.orderGrantRefundCreate?.grantedRefund?.id;
     const isSendRefund = grantedRefundId && formData.autoSendRefund;
-
     const sendRefundErrors =
       isSendRefund && transactionId
         ? await extractMutationErrors(
@@ -77,24 +69,17 @@ export function useRefundWithinReturn({
 
     return { grantRefundErrors, sendRefundErrors };
   };
-
-  const grantRefundResponseOrderData =
-    grantRefundOpts.data?.orderGrantRefundCreate?.order;
+  const grantRefundResponseOrderData = grantRefundOpts.data?.orderGrantRefundCreate?.order;
 
   return {
     sendMutations,
-    grantRefundErrors:
-      grantRefundOpts.data?.orderGrantRefundCreate?.errors ?? [],
-    sendRefundErrors:
-      sendRefundOpts.data?.transactionRequestRefundForGrantedRefund?.errors ??
-      [],
+    grantRefundErrors: grantRefundOpts.data?.orderGrantRefundCreate?.errors ?? [],
+    sendRefundErrors: sendRefundOpts.data?.transactionRequestRefundForGrantedRefund?.errors ?? [],
     grantRefundResponseOrderData,
   };
 }
 
-export const squashLines = (
-  items: GrantRefundInputLine[],
-): GrantRefundInputLine[] =>
+export const squashLines = (items: GrantRefundInputLine[]): GrantRefundInputLine[] =>
   Object.values(
     items.reduce<Record<string, GrantRefundInputLine>>(
       (acc, item) => ({

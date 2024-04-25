@@ -9,19 +9,16 @@ describe("Multiple file upload handler", () => {
     const cbs = {
       onAfterUpload: jest.fn(),
       onBeforeUpload: jest.fn(),
-      onCompleted: jest.fn(files =>
-        expect(files.length).toBe(testFiles.length),
-      ),
+      onCompleted: jest.fn(files => expect(files.length).toBe(testFiles.length)),
       onError: jest.fn(),
       onStart: jest.fn(),
     };
     const handle = createMultiFileUploadHandler(() => {
       const promise = new Promise<void>(resolve => {
-        expect(cbs.onBeforeUpload).toBeCalledTimes(
-          cbs.onAfterUpload.mock.calls.length + 1,
-        );
+        expect(cbs.onBeforeUpload).toBeCalledTimes(cbs.onAfterUpload.mock.calls.length + 1);
         resolve();
       });
+
       return promise;
     }, cbs);
 
@@ -34,14 +31,11 @@ describe("Multiple file upload handler", () => {
       done();
     });
   });
-
   it("properly handles error", done => {
     const cbs = {
       onAfterUpload: jest.fn(),
       onBeforeUpload: jest.fn(),
-      onCompleted: jest.fn(files =>
-        expect(files.length).toBe(testFiles.length),
-      ),
+      onCompleted: jest.fn(files => expect(files.length).toBe(testFiles.length)),
       onError: jest.fn(),
       onStart: jest.fn(),
     };
@@ -53,6 +47,7 @@ describe("Multiple file upload handler", () => {
           resolve();
         }
       });
+
       return promise;
     }, cbs);
 

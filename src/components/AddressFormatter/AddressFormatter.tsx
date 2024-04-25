@@ -12,6 +12,7 @@ const AddressFormatter: React.FC<AddressFormatterProps> = ({ address }) => {
   if (!address) {
     return <Skeleton />;
   }
+
   return (
     <address
       style={{
@@ -22,9 +23,7 @@ const AddressFormatter: React.FC<AddressFormatterProps> = ({ address }) => {
         {address.firstName} {address.lastName}
       </Typography>
       <Typography component="p">{address.phone}</Typography>
-      {address.companyName && (
-        <Typography component="p">{address.companyName}</Typography>
-      )}
+      {address.companyName && <Typography component="p">{address.companyName}</Typography>}
       <Typography component="p">
         {address.streetAddress1}
         <br />
@@ -43,5 +42,6 @@ const AddressFormatter: React.FC<AddressFormatterProps> = ({ address }) => {
     </address>
   );
 };
+
 AddressFormatter.displayName = "AddressFormatter";
 export default AddressFormatter;

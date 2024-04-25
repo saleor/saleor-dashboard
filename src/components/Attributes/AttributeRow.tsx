@@ -149,13 +149,9 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
         </BasicAttributeRow>
       );
     case AttributeInputTypeEnum.RICH_TEXT: {
-      const {
-        getShouldMount,
-        getDefaultValue,
-        getMountEditor,
-        getHandleChange,
-      } = richTextGetters;
+      const { getShouldMount, getDefaultValue, getMountEditor, getHandleChange } = richTextGetters;
       const defaultValue = getDefaultValue(attribute.id);
+
       return (
         <BasicAttributeRow
           label={attribute.label}
@@ -201,12 +197,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
         <BasicAttributeRow label={attribute.label}>
           <Box as="li" display="flex" gap={2} alignItems="center" padding={1}>
             <Box data-test-id="attribute-value">
-              <Box
-                display="flex"
-                gap={0.5}
-                flexDirection="column"
-                alignItems="flex-end"
-              >
+              <Box display="flex" gap={0.5} flexDirection="column" alignItems="flex-end">
                 <Toggle
                   name={`attribute:${attribute.label}`}
                   onPressedChange={checked => onChange(attribute.id, checked)}
@@ -278,5 +269,6 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       );
   }
 };
+
 AttributeRow.displayName = "AttributeRow";
 export default AttributeRow;

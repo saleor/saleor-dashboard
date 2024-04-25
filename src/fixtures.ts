@@ -22,6 +22,7 @@ const pageInfo = {
   hasNextPage: true,
   hasPreviousPage: false,
 };
+
 export const pageListProps = {
   default: {
     disabled: false,
@@ -447,7 +448,7 @@ export const permissions: ShopInfoQuery["shop"]["permissions"] = [
     name: "Manage webhooks.",
   },
 ].map(perm => ({
-  __typename: "Permission" as "Permission",
+  __typename: "Permission" as const,
   ...perm,
 }));
 
@@ -557,12 +558,12 @@ export const adminUserPermissions: NonNullable<
 ];
 
 export const address = {
-  __typename: "Address" as "Address",
+  __typename: "Address" as const,
   city: "Port Danielshire",
   cityArea: "",
   companyName: "",
   country: {
-    __typename: "CountryDisplay" as "CountryDisplay",
+    __typename: "CountryDisplay" as const,
     code: "UA",
     country: "United Arab Emirates",
   },

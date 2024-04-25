@@ -1,10 +1,7 @@
 import { Events } from "@saleor/app-sdk/app-bridge";
 import { useCallback } from "react";
 
-export const usePostToExtension = (
-  iframeElement: HTMLIFrameElement | null,
-  appOrigin: string,
-) => {
+export const usePostToExtension = (iframeElement: HTMLIFrameElement | null, appOrigin: string) => {
   const postToExtension = useCallback(
     (event: Events) => {
       if (iframeElement?.contentWindow) {

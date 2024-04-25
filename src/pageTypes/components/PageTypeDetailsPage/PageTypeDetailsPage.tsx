@@ -9,11 +9,7 @@ import { Metadata } from "@dashboard/components/Metadata";
 import { MetadataFormData } from "@dashboard/components/Metadata/types";
 import Savebar from "@dashboard/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
-import {
-  AttributeTypeEnum,
-  PageErrorFragment,
-  PageTypeDetailsFragment,
-} from "@dashboard/graphql";
+import { AttributeTypeEnum, PageErrorFragment, PageTypeDetailsFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { pageTypeListUrl } from "@dashboard/pageTypes/urls";
@@ -59,7 +55,6 @@ const useStyles = makeStyles(
     name: "PageTypeDetailsPage",
   },
 );
-
 const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
   const {
     disabled,
@@ -77,13 +72,11 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
   const navigate = useNavigator();
-
   const {
     isMetadataModified,
     isPrivateMetadataModified,
     makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
-
   const formInitialData: PageTypeForm = {
     attributes:
       pageType?.attributes?.map(attribute => ({
@@ -94,12 +87,9 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
     name: pageType?.name || "",
     privateMetadata: pageType?.privateMetadata?.map(mapMetadataItemToInput),
   };
-
   const handleSubmit = (data: PageTypeForm) => {
     const metadata = isMetadataModified ? data.metadata : undefined;
-    const privateMetadata = isPrivateMetadataModified
-      ? data.privateMetadata
-      : undefined;
+    const privateMetadata = isPrivateMetadataModified ? data.privateMetadata : undefined;
 
     onSubmit({
       ...data,
@@ -109,12 +99,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
   };
 
   return (
-    <Form
-      confirmLeave
-      initial={formInitialData}
-      onSubmit={handleSubmit}
-      disabled={disabled}
-    >
+    <Form confirmLeave initial={formInitialData} onSubmit={handleSubmit} disabled={disabled}>
       {({ change, data, isSaveDisabled, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
@@ -131,9 +116,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
                 })}
               >
                 <Box paddingTop={6}>
-                  <Typography>
-                    {intl.formatMessage(commonMessages.generalInformations)}
-                  </Typography>
+                  <Typography>{intl.formatMessage(commonMessages.generalInformations)}</Typography>
                   <Typography variant="body2">
                     <FormattedMessage
                       id="kZfIl/"
@@ -200,5 +183,6 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
     </Form>
   );
 };
+
 PageTypeDetailsPage.displayName = "PageTypeDetailsPage";
 export default PageTypeDetailsPage;

@@ -4,11 +4,11 @@ import React from "react";
 
 import { useManualTransactionContext } from "../context";
 
-export const DescriptionField: React.FC<
-  Omit<TextFieldProps, "onChange" | "value">
-> = ({ disabled, ...props }) => {
-  const { submitState, handleChangeDescription, description } =
-    useManualTransactionContext();
+export const DescriptionField: React.FC<Omit<TextFieldProps, "onChange" | "value">> = ({
+  disabled,
+  ...props
+}) => {
+  const { submitState, handleChangeDescription, description } = useManualTransactionContext();
 
   return (
     <TextField

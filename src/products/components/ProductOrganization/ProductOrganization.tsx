@@ -48,9 +48,7 @@ interface ProductOrganizationProps {
   onProductTypeChange?: (event: ChangeEvent) => void;
 }
 
-export const ProductOrganization: React.FC<
-  ProductOrganizationProps
-> = props => {
+export const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
   const {
     canChangeType,
     categories,
@@ -73,9 +71,7 @@ export const ProductOrganization: React.FC<
     onCollectionChange,
     onProductTypeChange,
   } = props;
-
   const intl = useIntl();
-
   const formErrors = getFormErrors(
     ["productType", "category", "collections", "isPublished"],
     errors,
@@ -151,10 +147,7 @@ export const ProductOrganization: React.FC<
                 : null
             }
             error={!!(formErrors.category || noCategoryError)}
-            helperText={getProductErrorMessage(
-              formErrors.category || noCategoryError,
-              intl,
-            )}
+            helperText={getProductErrorMessage(formErrors.category || noCategoryError, intl)}
             onChange={onCategoryChange}
             fetchOptions={fetchCategories}
             fetchMore={fetchMoreCategories}

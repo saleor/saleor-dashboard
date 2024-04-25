@@ -8,10 +8,7 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import {
-  SortableContext,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -43,12 +40,10 @@ export function SortableTree<T extends DataTypePlaceholder>({
   indentationWidth = 50,
 }: SortableTreeProps<T>) {
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
-
   const { items, flattenedItems, setItems } = useItems({
     defaultItems,
     activeId,
   });
-
   const {
     offsetLeft,
     currentPosition,
@@ -68,37 +63,27 @@ export function SortableTree<T extends DataTypePlaceholder>({
     indentationWidth,
     activeId,
   });
-
   const announcements = useAnnouncement({
     projected,
     items,
     currentPosition,
     setCurrentPosition,
   });
-
   const sensorContext: SensorContext<T> = useRef({
     items: flattenedItems,
     offset: offsetLeft,
   });
-
   const [coordinateGetter] = useState(() =>
     sortableTreeKeyboardCoordinates(sensorContext, indentationWidth),
   );
-
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter,
     }),
   );
-
-  const sortedIds = useMemo(
-    () => flattenedItems.map(({ id }) => id),
-    [flattenedItems],
-  );
-  const activeItem = activeId
-    ? flattenedItems.find(({ id }) => id === activeId)
-    : null;
+  const sortedIds = useMemo(() => flattenedItems.map(({ id }) => id), [flattenedItems]);
+  const activeItem = activeId ? flattenedItems.find(({ id }) => id === activeId) : null;
 
   useEffect(() => {
     sensorContext.current = {
@@ -135,10 +120,7 @@ export function SortableTree<T extends DataTypePlaceholder>({
             {activeId && activeItem ? (
               <SortableTreeItem
                 clone
-                data={
-                  flattenedItems.find(({ id }) => id === activeId)?.data ??
-                  (null as T)
-                }
+                data={flattenedItems.find(({ id }) => id === activeId)?.data ?? (null as T)}
                 id={activeId}
                 depth={activeItem.depth}
                 renderTreeItem={renderTreeItem}

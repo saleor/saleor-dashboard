@@ -13,9 +13,7 @@ import { FormattedMessage } from "react-intl";
 
 import { useStyles } from "./styles";
 
-export interface RadioGroupFieldChoice<
-  T extends string | number = string | number,
-> {
+export interface RadioGroupFieldChoice<T extends string | number = string | number> {
   disabled?: boolean;
   value: T;
   label: React.ReactNode;

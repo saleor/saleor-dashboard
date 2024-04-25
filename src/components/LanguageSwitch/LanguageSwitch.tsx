@@ -56,20 +56,15 @@ const useStyles = makeStyles(
   }),
   { name: "LanguageSwitch" },
 );
-
 const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
   const { currentLanguage, languages, getLanguageUrl } = props;
   const classes = useStyles(props);
-
   const [isExpanded, setExpandedState] = React.useState(false);
   const anchor = React.useRef();
 
   return (
     <div className={classes.container} ref={anchor}>
-      <Card
-        className={classes.menuContainer}
-        onClick={() => setExpandedState(!isExpanded)}
-      >
+      <Card className={classes.menuContainer} onClick={() => setExpandedState(!isExpanded)}>
         <Typography>{currentLanguage}</Typography>
         <ArrowDropDown
           className={clsx(classes.arrow, {
@@ -88,15 +83,11 @@ const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
           <Grow
             {...TransitionProps}
             style={{
-              transformOrigin:
-                placement === "bottom" ? "right top" : "right bottom",
+              transformOrigin: placement === "bottom" ? "right top" : "right bottom",
             }}
           >
             <Paper className={classes.menuPaper} elevation={8}>
-              <ClickAwayListener
-                onClickAway={() => setExpandedState(false)}
-                mouseEvent="onClick"
-              >
+              <ClickAwayListener onClickAway={() => setExpandedState(false)} mouseEvent="onClick">
                 <Menu>
                   {languages.map(lang => (
                     <MenuItem
@@ -128,5 +119,6 @@ const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
     </div>
   );
 };
+
 LanguageSwitch.displayName = "LanguageSwitch";
 export default LanguageSwitch;

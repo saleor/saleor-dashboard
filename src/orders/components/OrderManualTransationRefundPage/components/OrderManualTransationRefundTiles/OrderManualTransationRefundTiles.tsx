@@ -35,16 +35,8 @@ export const OrderManualTransationRefundTiles = ({
 
       <Controller
         name="transationId"
-        render={({
-          field: { onChange, value, ...field },
-          fieldState: { error },
-        }) => (
-          <RadioGroup
-            value={value}
-            onValueChange={onChange}
-            display="grid"
-            gap={3}
-          >
+        render={({ field: { onChange, value, ...field }, fieldState: { error } }) => (
+          <RadioGroup value={value} onValueChange={onChange} display="grid" gap={3}>
             {transactions.map(transaction => {
               const isRefundable = isTransactionRefundable(transaction);
 
@@ -65,9 +57,7 @@ export const OrderManualTransationRefundTiles = ({
                             size={5}
                             fontWeight="medium"
                             padding={4}
-                            color={
-                              isRefundable ? "default1" : "defaultDisabled"
-                            }
+                            color={isRefundable ? "default1" : "defaultDisabled"}
                           >
                             {transaction?.name || "Transaction"}
                           </Text>
@@ -85,10 +75,7 @@ export const OrderManualTransationRefundTiles = ({
                   </OrderTransactionTile.Header>
                   <OrderTransactionTile.Events>
                     {transaction.events.map(event => (
-                      <OrderTransactionTile.Event
-                        event={event}
-                        key={event.id}
-                      />
+                      <OrderTransactionTile.Event event={event} key={event.id} />
                     ))}
                   </OrderTransactionTile.Events>
                 </OrderTransactionTile>

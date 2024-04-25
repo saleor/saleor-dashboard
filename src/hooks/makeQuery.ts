@@ -10,10 +10,7 @@ import {
 } from "@apollo/client";
 import { handleQueryAuthError, useUser } from "@dashboard/auth";
 import { PrefixedPermissions } from "@dashboard/graphql/extendedTypes";
-import {
-  PermissionEnum,
-  UserPermissionFragment,
-} from "@dashboard/graphql/types.generated";
+import { PermissionEnum, UserPermissionFragment } from "@dashboard/graphql/types.generated";
 import { RequireAtLeastOne } from "@dashboard/misc";
 import { DocumentNode } from "graphql";
 import { useEffect } from "react";
@@ -21,10 +18,10 @@ import { useIntl } from "react-intl";
 
 import useAppState from "./useAppState";
 import useNotifier from "./useNotifier";
+
 export { useLazyQuery } from "@apollo/client";
 
-const getPermissionKey = (permission: string) =>
-  `PERMISSION_${permission}` as PrefixedPermissions;
+const getPermissionKey = (permission: string) => `PERMISSION_${permission}` as PrefixedPermissions;
 
 export const allPermissions: Record<PrefixedPermissions, boolean> = Object.keys(
   PermissionEnum,
@@ -89,13 +86,11 @@ export function useQuery<TData, TVariables>(
   const [, dispatchAppState] = useAppState();
   const user = useUser();
   const userPermissions = getUserPermissions(user.user?.userPermissions || []);
-
   const variablesWithPermissions = {
     ...variables,
     ...allPermissions,
     ...userPermissions,
   } as TVariables & Record<PrefixedPermissions, boolean>;
-
   const queryData = useBaseQuery(query, {
     ...opts,
     context: {
@@ -104,7 +99,7 @@ export function useQuery<TData, TVariables>(
     errorPolicy: "all",
     fetchPolicy: fetchPolicy ?? "cache-and-network",
     onError: error => {
-      if (!!handleError) {
+      if (handleError) {
         handleError(error);
       } else {
         handleQueryAuthError(error, notify, user.logout, intl);
@@ -135,6 +130,7 @@ export function useQuery<TData, TVariables>(
         if (!fetchMoreResult) {
           return previousResults;
         }
+
         return mergeFunc(previousResults, fetchMoreResult);
       },
       variables: { ...variablesWithPermissions, ...extraVariables },
@@ -146,11 +142,8 @@ export function useQuery<TData, TVariables>(
   };
 }
 
-function makeQuery<TData, TVariables>(
-  query: DocumentNode,
-): UseQueryHook<TData, TVariables> {
-  return (opts: QueryHookOptions<TData, TVariables>) =>
-    useQuery<TData, TVariables>(query, opts);
+function makeQuery<TData, TVariables>(query: DocumentNode): UseQueryHook<TData, TVariables> {
+  return (opts: QueryHookOptions<TData, TVariables>) => useQuery<TData, TVariables>(query, opts);
 }
 
 export default makeQuery;

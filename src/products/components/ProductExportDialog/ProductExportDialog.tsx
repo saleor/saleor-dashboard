@@ -1,9 +1,6 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import makeCreatorSteps, { Step } from "@dashboard/components/CreatorSteps";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import {
@@ -22,19 +19,11 @@ import { DialogProps, FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import getExportErrorMessage from "@dashboard/utils/errors/export";
 import { toggle } from "@dashboard/utils/lists";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Typography,
-} from "@material-ui/core";
+import { Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import ExportDialogSettings, {
-  ExportItemsQuantity,
-} from "./ExportDialogSettings";
+import ExportDialogSettings, { ExportItemsQuantity } from "./ExportDialogSettings";
 import { productExportDialogMessages as messages } from "./messages";
 import ProductExportDialogInfo, {
   attributeNamePrefix,
@@ -79,7 +68,6 @@ const initialForm: ExportProductsInput = {
   },
   ...exportSettingsInitialFormData,
 };
-
 const ProductExportSteps = makeCreatorSteps<ProductExportStep>();
 
 export interface ProductExportDialogProps extends DialogProps, FetchMoreProps {
@@ -107,17 +95,17 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
   warehouses,
   ...fetchMoreProps
 }) => {
-  const [step, { next, prev, set: setStep }] = useWizard(
+  const [step, { next, prev, set: setStep }] = useWizard(ProductExportStep.INFO, [
     ProductExportStep.INFO,
-    [ProductExportStep.INFO, ProductExportStep.SETTINGS],
-  );
+    ProductExportStep.SETTINGS,
+  ]);
   const steps = useSteps();
   const dialogErrors = useModalDialogErrors(errors, open);
   const notFormErrors = dialogErrors.filter(err => !err.field);
   const intl = useIntl();
-  const [selectedAttributes, setSelectedAttributes] = React.useState<
-    MultiAutocompleteChoiceType[]
-  >([]);
+  const [selectedAttributes, setSelectedAttributes] = React.useState<MultiAutocompleteChoiceType[]>(
+    [],
+  );
   const [selectedChannels, setSelectedChannels] = React.useState([]);
   const { change, data, reset, submit } = useForm(initialForm, onSubmit);
 
@@ -130,7 +118,6 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
 
   const attributeChoices = mapNodeToChoice(attributes);
   const warehouseChoices = mapNodeToChoice(warehouses);
-
   const handleAttributeSelect: FormChange = event => {
     const id = event.target.name.substr(attributeNamePrefix.length);
 
@@ -146,52 +133,35 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
 
     const choice = attributeChoices.find(choice => choice.value === id);
 
-    setSelectedAttributes(
-      toggle(choice, selectedAttributes, (a, b) => a.value === b.value),
-    );
+    setSelectedAttributes(toggle(choice, selectedAttributes, (a, b) => a.value === b.value));
   };
-
   const handleChannelSelect = (option: ChannelFragment) => {
     change({
       target: {
         name: "exportInfo",
         value: {
           ...data.exportInfo,
-          channels: toggle(
-            option.id,
-            data.exportInfo.channels,
-            (a, b) => a === b,
-          ),
+          channels: toggle(option.id, data.exportInfo.channels, (a, b) => a === b),
         },
       },
     });
+
     const choice = channels.find(choice => choice.id === option.id);
 
-    setSelectedChannels(
-      toggle(choice, selectedChannels, (a, b) => a.id === b.id),
-    );
+    setSelectedChannels(toggle(choice, selectedChannels, (a, b) => a.id === b.id));
   };
-
-  const handleToggleAllChannels = (
-    items: ChannelFragment[],
-    selected: number,
-  ) => {
+  const handleToggleAllChannels = (items: ChannelFragment[], selected: number) => {
     setSelectedChannels(selected === items.length ? [] : channels);
-
     change({
       target: {
         name: "exportInfo",
         value: {
           ...data.exportInfo,
-          channels:
-            selected === items.length
-              ? []
-              : channels.map(channel => channel.id),
+          channels: selected === items.length ? [] : channels.map(channel => channel.id),
         },
       },
     });
   };
-
   const handleWarehouseSelect: FormChange = event =>
     change({
       target: {
@@ -206,7 +176,6 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
         },
       },
     });
-
   const handleToggleAllWarehouses: FormChange = () =>
     change({
       target: {
@@ -220,7 +189,6 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
         },
       },
     });
-
   const exportScopeLabels = {
     allItems: intl.formatMessage(
       {
@@ -251,11 +219,7 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
           <FormattedMessage {...messages.title} />
         </DialogTitle>
         <DialogContent>
-          <ProductExportSteps
-            currentStep={step}
-            steps={steps}
-            onStepClick={setStep}
-          />
+          <ProductExportSteps currentStep={step} steps={steps} onStepClick={setStep} />
           {step === ProductExportStep.INFO && (
             <ProductExportDialogInfo
               attributes={attributeChoices}
@@ -297,22 +261,12 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
 
         <DialogActions>
           {step === ProductExportStep.INFO && (
-            <Button
-              variant="secondary"
-              color="text"
-              onClick={onClose}
-              data-test-id="cancel"
-            >
+            <Button variant="secondary" color="text" onClick={onClose} data-test-id="cancel">
               <FormattedMessage {...buttonMessages.cancel} />
             </Button>
           )}
           {step === ProductExportStep.SETTINGS && (
-            <Button
-              variant="secondary"
-              color="text"
-              onClick={prev}
-              data-test-id="back"
-            >
+            <Button variant="secondary" color="text" onClick={prev} data-test-id="back">
               <FormattedMessage {...buttonMessages.back} />
             </Button>
           )}

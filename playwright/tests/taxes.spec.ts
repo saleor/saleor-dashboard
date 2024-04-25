@@ -12,7 +12,6 @@ test.beforeEach(({ page }) => {
   configurationPage = new ConfigurationPage(page);
   taxesPage = new TaxesPage(page);
 });
-
 test("TC: SALEOR_115 Change taxes in channel to use tax app  @taxes @e2e", async () => {
   await configurationPage.gotoConfigurationView();
   await configurationPage.openTaxes();
@@ -21,11 +20,9 @@ test("TC: SALEOR_115 Change taxes in channel to use tax app  @taxes @e2e", async
   await taxesPage.clickSaveButton();
   await taxesPage.expectSuccessBanner();
 });
-
 test("TC: SALEOR_116 Change taxes in channel: enter prices without tax, do not show gross price, add country exception @taxes @e2e", async () => {
   await taxesPage.gotoChannelsTabUrl();
   await taxesPage.selectChannel(CHANNELS.channelForTaxEdition.name);
-
   await taxesPage.selectPricesWithoutTaxes();
   await taxesPage.clickShowGrossPricesInStorefront();
   await taxesPage.clickAddCountryButton();
@@ -40,15 +37,11 @@ test("TC: SALEOR_116 Change taxes in channel: enter prices without tax, do not s
   await taxesPage.clickSaveButton();
   await taxesPage.expectSuccessBanner();
 });
-
 test("TC: SALEOR_117 Add new country and tax rates to it @taxes @e2e", async () => {
   await taxesPage.gotoChannelsTabUrl();
   await taxesPage.clickCountriesTab();
   await taxesPage.clickAddCountryButton();
-  await taxesPage.addCountriesDialog.typeSearchedCountry(
-    COUNTRIES.countryToBeAddedInTaxes.name,
-  );
-
+  await taxesPage.addCountriesDialog.typeSearchedCountry(COUNTRIES.countryToBeAddedInTaxes.name);
   await taxesPage.addCountriesDialog.checkAndSaveSingleCountry(
     COUNTRIES.countryToBeAddedInTaxes.name,
   );
@@ -59,19 +52,14 @@ test("TC: SALEOR_117 Add new country and tax rates to it @taxes @e2e", async () 
   await taxesPage.clickSaveButton();
   await taxesPage.expectSuccessBanner();
 });
-
 test("TC: SALEOR_118 Add new class with metadata and set tax rate for single country @taxes @e2e", async () => {
   await taxesPage.gotoChannelsTabUrl();
   await taxesPage.clickTaxClassTab();
   await taxesPage.clickCreateClassButton();
   expect(await taxesPage.taxClassNameInput).toHaveValue("New tax class");
-
   await taxesPage.typeTaxClassName("Automation test tax class");
   await taxesPage.typeSearchedTaxCountryName("United States of America");
-  await taxesPage.typeTaxRateInSearchedCountryRow(
-    "United States of America",
-    "20",
-  );
+  await taxesPage.typeTaxRateInSearchedCountryRow("United States of America", "20");
   await taxesPage.metadataSeoPage.expandAndAddAllMetadata();
   await taxesPage.clickSaveButton();
   await taxesPage.expectSuccessBanner();

@@ -7,7 +7,6 @@ import { getErrorMessage } from "./getErrorMessage";
 
 jest.mock("@dashboard/utils/errors/account", () => jest.fn());
 jest.mock("@dashboard/utils/errors/order", () => jest.fn());
-
 describe("getErrorMessage", () => {
   it("returns original message when it exist", () => {
     // Arrange
@@ -17,14 +16,12 @@ describe("getErrorMessage", () => {
       code: "INVALID",
     } as AccountErrorFragment;
     const intlShape = {} as IntlShape;
-
     // Act
     const message = getErrorMessage(error, intlShape);
 
     // Assert
     expect(message).toBe("test message");
   });
-
   it("returns account error message", () => {
     // Arrange
     const error = {
@@ -33,9 +30,8 @@ describe("getErrorMessage", () => {
       code: "INVALID",
     } as AccountErrorFragment;
     const intlShape = {} as IntlShape;
-    (getAccountErrorMessage as jest.Mock).mockReturnValue(
-      "account error message",
-    );
+
+    (getAccountErrorMessage as jest.Mock).mockReturnValue("account error message");
 
     // Act
     const message = getErrorMessage(error, intlShape);
@@ -43,7 +39,6 @@ describe("getErrorMessage", () => {
     // Assert
     expect(message).toBe("account error message");
   });
-
   it("returns account error message", () => {
     // Arrange
     const error = {
@@ -52,6 +47,7 @@ describe("getErrorMessage", () => {
       code: "INVALID",
     } as unknown as OrderErrorFragment;
     const intlShape = {} as IntlShape;
+
     (getOrderErrorMessage as jest.Mock).mockReturnValue("order error message");
 
     // Act

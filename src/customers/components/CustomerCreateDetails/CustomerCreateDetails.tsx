@@ -32,14 +32,9 @@ export interface CustomerCreateDetailsProps {
 
 const CustomerCreateDetails: React.FC<CustomerCreateDetailsProps> = props => {
   const { data, disabled, errors, onChange } = props;
-
   const classes = useStyles(props);
   const intl = useIntl();
-
-  const formErrors = getFormErrors(
-    ["customerFirstName", "customerLastName", "email"],
-    errors,
-  );
+  const formErrors = getFormErrors(["customerFirstName", "customerLastName", "email"], errors);
 
   return (
     <Card>
@@ -58,10 +53,7 @@ const CustomerCreateDetails: React.FC<CustomerCreateDetailsProps> = props => {
             fullWidth
             name="customerFirstName"
             label={intl.formatMessage(commonMessages.firstName)}
-            helperText={getAccountErrorMessage(
-              formErrors.customerFirstName,
-              intl,
-            )}
+            helperText={getAccountErrorMessage(formErrors.customerFirstName, intl)}
             type="text"
             value={data.customerFirstName}
             onChange={onChange}
@@ -75,10 +67,7 @@ const CustomerCreateDetails: React.FC<CustomerCreateDetailsProps> = props => {
             fullWidth
             name="customerLastName"
             label={intl.formatMessage(commonMessages.lastName)}
-            helperText={getAccountErrorMessage(
-              formErrors.customerLastName,
-              intl,
-            )}
+            helperText={getAccountErrorMessage(formErrors.customerLastName, intl)}
             type="text"
             value={data.customerLastName}
             onChange={onChange}

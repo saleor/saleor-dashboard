@@ -33,6 +33,7 @@ export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
 
   useEffect(() => {
     const newDate = joinDateTime(value.date, value.time);
+
     onChange(newDate);
   }, [value]);
 
@@ -49,6 +50,7 @@ export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
           name={`${name}:date`}
           onChange={event => {
             const date = event.target.value;
+
             setValue(value => ({ ...value, date }));
           }}
           type="date"
@@ -64,18 +66,14 @@ export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
           name={`${name}:time`}
           onChange={event => {
             const time = event.target.value;
+
             setValue(value => ({ ...value, time }));
           }}
           type="time"
           value={value.time}
         />
       </Box>
-      {error && (
-        <ErrorNoticeBar
-          className={sprinkles({ marginTop: 3 })}
-          message={error}
-        />
-      )}
+      {error && <ErrorNoticeBar className={sprinkles({ marginTop: 3 })} message={error} />}
     </>
   );
 };

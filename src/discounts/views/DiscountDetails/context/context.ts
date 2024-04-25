@@ -14,9 +14,7 @@ export const useLabelMapsContext = () => {
   const context = useContext(labelsMapsContext);
 
   if (!context) {
-    throw new Error(
-      "useLabelMapContext must be used within a LabelsMapProvider",
-    );
+    throw new Error("useLabelMapContext must be used within a LabelsMapProvider");
   }
 
   return context;

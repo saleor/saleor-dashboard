@@ -47,9 +47,7 @@ export interface CustomAppDetailsPageProps {
   onTokenDelete: (id: string) => void;
   onTokenClose: () => void;
   onTokenCreate: () => void;
-  onSubmit: (
-    data: CustomAppDetailsPageFormData,
-  ) => SubmitPromise<AppErrorFragment[]>;
+  onSubmit: (data: CustomAppDetailsPageFormData) => SubmitPromise<AppErrorFragment[]>;
   webhookCreateHref: string;
   onWebhookRemove: (id: string) => void;
   onAppActivateOpen: () => void;
@@ -78,18 +76,13 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
   const intl = useIntl();
   const classes = useStyles();
   const navigate = useNavigator();
-
   const webhooks = app?.webhooks;
-
   const formErrors = getFormErrors(["permissions"], errors || []);
   const permissionsError = getAppErrorMessage(formErrors.permissions, intl);
-
   const initialForm: CustomAppDetailsPageFormData = {
     hasFullAccess:
       permissions?.filter(
-        perm =>
-          app?.permissions?.filter(userPerm => userPerm.code === perm.code)
-            .length === 0,
+        perm => app?.permissions?.filter(userPerm => userPerm.code === perm.code).length === 0,
       ).length === 0 || false,
     isActive: !!app?.isActive,
     name: app?.name || "",
@@ -97,12 +90,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
   };
 
   return (
-    <Form
-      confirmLeave
-      initial={initialForm}
-      onSubmit={onSubmit}
-      disabled={disabled}
-    >
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit} disabled={disabled}>
       {({ data, change, submit, isSaveDisabled }) => (
         <DetailPageLayout>
           <TopNav href={CustomAppUrls.resolveAppListUrl()} title={app?.name}>
@@ -114,17 +102,9 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
             >
               <SVG src={activateIcon} />
               {data?.isActive ? (
-                <FormattedMessage
-                  id="whTEcF"
-                  defaultMessage="Deactivate"
-                  description="link"
-                />
+                <FormattedMessage id="whTEcF" defaultMessage="Deactivate" description="link" />
               ) : (
-                <FormattedMessage
-                  id="P5twxk"
-                  defaultMessage="Activate"
-                  description="link"
-                />
+                <FormattedMessage id="P5twxk" defaultMessage="Activate" description="link" />
               )}
             </Button>
           </TopNav>

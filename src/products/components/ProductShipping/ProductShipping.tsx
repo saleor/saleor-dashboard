@@ -19,9 +19,7 @@ interface ProductShippingProps {
 
 export const ProductShipping: React.FC<ProductShippingProps> = props => {
   const { data, disabled, errors, weightUnit, onChange } = props;
-
   const intl = useIntl();
-
   const formErrors = getFormErrors(["weight"], errors);
   const handleChange = createNonNegativeValueChangeHandler(onChange);
 

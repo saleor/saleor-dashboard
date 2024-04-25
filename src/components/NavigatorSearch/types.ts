@@ -15,10 +15,4 @@ export interface QuickSearchActionInput extends QuickSearchAction {
   text: string;
 }
 
-export type QuickSearchMode =
-  | "default"
-  | "catalog"
-  | "commands"
-  | "customers"
-  | "help"
-  | "orders";
+export type QuickSearchMode = "default" | "catalog" | "commands" | "customers" | "help" | "orders";

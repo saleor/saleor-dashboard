@@ -33,6 +33,7 @@ function getOrdersModeActions(
         }),
         onClick: () => {
           navigate(orderUrl(gqlId));
+
           return false;
         },
         type: "action",

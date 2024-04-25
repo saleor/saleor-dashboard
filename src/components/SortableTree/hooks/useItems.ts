@@ -21,6 +21,7 @@ export const useItems = <T extends DataTypePlaceholder>({
 
   const flattenedItems = useMemo(() => {
     const flattenedTree = flattenTree(items);
+
     return removeChildrenOf(flattenedTree, activeId ? [activeId] : []);
   }, [activeId, items]);
 

@@ -10,11 +10,8 @@ import { useEffect, useState } from "react";
 export const useFetchConditionsOptionsDetails = (
   promotionData: PromotionDetailsQuery | undefined,
 ) => {
-  const conditionsOptionsIdsToFetch =
-    getAllConditionsOptionsIdsToFetch(promotionData);
-
+  const conditionsOptionsIdsToFetch = getAllConditionsOptionsIdsToFetch(promotionData);
   const [hasBeenLoaded, setHasBeenLoaded] = useState(false);
-
   const { data: ruleConditionsOptionsDetails, loading } =
     useRuleConditionsSelectedOptionsDetailsQuery({
       variables: conditionsOptionsIdsToFetch,
@@ -56,6 +53,7 @@ export function getAllConditionsOptionsIdsToFetch(
 
   const allConditionsIds = data.promotion.rules.reduce((acc, rule) => {
     reduceConditionsLabels(rule.cataloguePredicate, acc);
+
     return acc;
   }, initAllConditionsIds);
 
@@ -75,17 +73,21 @@ function reduceConditionsLabels(
     if (Array.isArray(predicate)) {
       predicate.forEach(item => reduceConditionsLabels(item, allConditionsIds));
     }
+
     const ids = predicate?.ids ?? [];
 
     if (key === "productPredicate") {
       allConditionsIds.productsIds.push(...ids);
     }
+
     if (key === "categoryPredicate") {
       allConditionsIds.categoriesIds.push(...ids);
     }
+
     if (key === "collectionPredicate") {
       allConditionsIds.collectionsIds.push(...ids);
     }
+
     if (key === "variantPredicate") {
       allConditionsIds.variantsIds.push(...ids);
     }
@@ -103,9 +105,8 @@ export function getRuleConditionsOptionsDetailsMap(
 
   return Object.values(data).reduce<Record<string, string>>((acc, value) => {
     const items =
-      mapEdgesToItems(
-        value as RuleConditionsSelectedOptionsDetailsQuery["productVariants"],
-      ) ?? [];
+      mapEdgesToItems(value as RuleConditionsSelectedOptionsDetailsQuery["productVariants"]) ?? [];
+
     items.forEach(item => {
       if (item.product) {
         acc[item.id] = `${item.product.name} - ${item.name}`;
@@ -119,7 +120,5 @@ export function getRuleConditionsOptionsDetailsMap(
 }
 
 function whenNoCondtionsIds(conditionsOptionsIdsToFetch: AllConditionsIds) {
-  return Object.values(conditionsOptionsIdsToFetch).every(
-    ids => ids.length === 0,
-  );
+  return Object.values(conditionsOptionsIdsToFetch).every(ids => ids.length === 0);
 }

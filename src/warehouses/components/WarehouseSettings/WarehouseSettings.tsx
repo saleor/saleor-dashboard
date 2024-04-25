@@ -43,7 +43,6 @@ const useStyles = makeStyles(
     name: "WarehouseInfoProps",
   },
 );
-
 const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
   zones,
   disabled,
@@ -52,10 +51,7 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
   setData,
 }) => {
   React.useEffect(() => {
-    if (
-      data.isPrivate &&
-      data.clickAndCollectOption === WarehouseClickAndCollectOptionEnum.LOCAL
-    ) {
+    if (data.isPrivate && data.clickAndCollectOption === WarehouseClickAndCollectOptionEnum.LOCAL) {
       setData({
         clickAndCollectOption: WarehouseClickAndCollectOptionEnum.DISABLED,
       });
@@ -63,22 +59,18 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
   }, [data.isPrivate]);
 
   const classes = useStyles({});
-
   const booleanRadioHandler = ({
     target: { name, value },
   }: React.ChangeEvent<HTMLInputElement>) => {
     setData({ [name]: value === "true" });
   };
-
   const isPrivateChoices = [
     {
       label: (
         <>
           <FormattedMessage {...messages.warehouseSettingsPrivateStock} />
           <Typography variant="caption" color="textSecondary">
-            <FormattedMessage
-              {...messages.warehouseSettingsPrivateStockDescription}
-            />
+            <FormattedMessage {...messages.warehouseSettingsPrivateStockDescription} />
           </Typography>
           <FormSpacer />
         </>
@@ -90,25 +82,20 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
         <>
           <FormattedMessage {...messages.warehouseSettingsPublicStock} />
           <Typography variant="caption" color="textSecondary">
-            <FormattedMessage
-              {...messages.warehouseSettingsPublicStockDescription}
-            />
+            <FormattedMessage {...messages.warehouseSettingsPublicStockDescription} />
           </Typography>
         </>
       ),
       value: "false",
     },
   ];
-
   const clickAndCollectChoicesPublic = [
     {
       label: (
         <>
           <FormattedMessage {...messages.warehouseSettingsDisabled} />
           <Typography variant="caption" color="textSecondary">
-            <FormattedMessage
-              {...messages.warehouseSettingsDisabledDescription}
-            />
+            <FormattedMessage {...messages.warehouseSettingsDisabledDescription} />
           </Typography>
           <FormSpacer />
         </>
@@ -132,16 +119,13 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
         <>
           <FormattedMessage {...messages.warehouseSettingsAllWarehouses} />
           <Typography variant="caption" color="textSecondary">
-            <FormattedMessage
-              {...messages.warehouseSettingsAllWarehousesDescription}
-            />
+            <FormattedMessage {...messages.warehouseSettingsAllWarehousesDescription} />
           </Typography>
         </>
       ),
       value: WarehouseClickAndCollectOptionEnum.ALL,
     },
   ];
-
   const clickAndCollectChoices = clickAndCollectChoicesPublic.filter(
     choice => choice.value !== WarehouseClickAndCollectOptionEnum.LOCAL,
   );
@@ -164,17 +148,13 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
             ),
           () => (
             <Typography color="textSecondary">
-              <FormattedMessage
-                {...messages.warehouseSettingsNoShippingZonesAssigned}
-              />
+              <FormattedMessage {...messages.warehouseSettingsNoShippingZonesAssigned} />
             </Typography>
           ),
         )}
       </CardContent>
       <Divider />
-      <CardTitle
-        title={<FormattedMessage {...messages.warehouseSettingsStockTitle} />}
-      />
+      <CardTitle title={<FormattedMessage {...messages.warehouseSettingsStockTitle} />} />
       <CardContent data-test-id="stock-settings-section">
         <RadioGroupField
           disabled={disabled}
@@ -197,11 +177,7 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
       <CardContent>
         <RadioGroupField
           disabled={disabled}
-          choices={
-            data.isPrivate
-              ? clickAndCollectChoices
-              : clickAndCollectChoicesPublic
-          }
+          choices={data.isPrivate ? clickAndCollectChoices : clickAndCollectChoicesPublic}
           onChange={onChange}
           value={data.clickAndCollectOption}
           name="clickAndCollectOption"

@@ -3,15 +3,8 @@ import AppListPage from "@dashboard/apps/components/AppListPage/AppListPage";
 import { AppListContext, AppListContextValues } from "@dashboard/apps/context";
 import useActiveAppsInstallations from "@dashboard/apps/hooks/useActiveAppsInstallations";
 import useAppstoreApps from "@dashboard/apps/hooks/useAppstoreApps";
-import {
-  AppListUrlDialog,
-  AppListUrlQueryParams,
-  AppUrls,
-} from "@dashboard/apps/urls";
-import {
-  getAppInProgressName,
-  getAppstoreAppsLists,
-} from "@dashboard/apps/utils";
+import { AppListUrlDialog, AppListUrlQueryParams, AppUrls } from "@dashboard/apps/urls";
+import { getAppInProgressName, getAppstoreAppsLists } from "@dashboard/apps/utils";
 import { getAppsConfig } from "@dashboard/config";
 import {
   AppInstallationFragment,
@@ -23,9 +16,7 @@ import {
 } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useListSettings from "@dashboard/hooks/useListSettings";
-import useLocalPaginator, {
-  useLocalPaginationState,
-} from "@dashboard/hooks/useLocalPaginator";
+import useLocalPaginator, { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
@@ -46,13 +37,11 @@ export const AppListView: React.FC<Props> = ({ params }) => {
   const notify = useNotifier();
   const intl = useIntl();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
-
   const [openModal, closeModal] = createDialogActionHandlers<
     AppListUrlDialog,
     AppListUrlQueryParams
   >(navigate, AppUrls.resolveAppListUrl, params);
   const AppsConfig = getAppsConfig();
-
   const { updateListSettings, settings } = useListSettings(ListViews.APPS_LIST);
   const queryVariables = {
     sort: {
@@ -60,12 +49,8 @@ export const AppListView: React.FC<Props> = ({ params }) => {
       field: AppSortField.CREATION_DATE,
     },
   };
-
-  const [paginationState, setPaginationState] = useLocalPaginationState(
-    settings?.rowNumber,
-  );
+  const [paginationState, setPaginationState] = useLocalPaginationState(settings?.rowNumber);
   const paginate = useLocalPaginator(setPaginationState);
-
   const {
     data: installedAppsData,
     loading,
@@ -84,13 +69,10 @@ export const AppListView: React.FC<Props> = ({ params }) => {
     installedAppsData?.apps?.pageInfo,
     paginationState,
   );
-
-  const { data: appsInProgressData, refetch: appsInProgressRefetch } =
-    useAppsInstallationsQuery({
-      displayLoader: false,
-      skip: !hasManagedAppsPermission,
-    });
-
+  const { data: appsInProgressData, refetch: appsInProgressRefetch } = useAppsInstallationsQuery({
+    displayLoader: false,
+    skip: !hasManagedAppsPermission,
+  });
   const installedAppNotify = (name: string) => {
     notify({
       status: "success",
@@ -98,14 +80,12 @@ export const AppListView: React.FC<Props> = ({ params }) => {
       title: intl.formatMessage(messages.appInstalled),
     });
   };
-
   const removeInProgressAppNotify = () => {
     notify({
       status: "success",
       text: intl.formatMessage(messages.appRemoved),
     });
   };
-
   const onAppInstallError = (item: AppInstallationFragment) => {
     notify({
       status: "error",
@@ -115,25 +95,20 @@ export const AppListView: React.FC<Props> = ({ params }) => {
       }),
     });
   };
-
-  const {
-    handleAppInstallRetry,
-    handleRemoveInProgress,
-    deleteInProgressAppOpts,
-  } = useActiveAppsInstallations({
-    appsInProgressData,
-    appsInProgressRefetch,
-    appsRefetch,
-    installedAppNotify,
-    removeInProgressAppNotify,
-    onInstallSuccess: () => {
-      appsRefetch();
-      appsInProgressRefetch();
-    },
-    onInstallError: onAppInstallError,
-    onRemoveInProgressAppSuccess: closeModal,
-  });
-
+  const { handleAppInstallRetry, handleRemoveInProgress, deleteInProgressAppOpts } =
+    useActiveAppsInstallations({
+      appsInProgressData,
+      appsInProgressRefetch,
+      appsRefetch,
+      installedAppNotify,
+      removeInProgressAppNotify,
+      onInstallSuccess: () => {
+        appsRefetch();
+        appsInProgressRefetch();
+      },
+      onInstallError: onAppInstallError,
+      onRemoveInProgressAppSuccess: closeModal,
+    });
   const context: AppListContextValues = React.useMemo(
     () => ({
       retryAppInstallation: handleAppInstallRetry,
@@ -141,13 +116,11 @@ export const AppListView: React.FC<Props> = ({ params }) => {
     }),
     [navigate, openModal],
   );
-
-  const { data: marketplaceAppList, error } = useAppstoreApps(
-    AppsConfig.marketplaceApiUri,
+  const { data: marketplaceAppList, error } = useAppstoreApps(AppsConfig.marketplaceApiUri);
+  const { installableMarketplaceApps, comingSoonMarketplaceApps } = getAppstoreAppsLists(
+    !!AppsConfig.marketplaceApiUri,
+    marketplaceAppList,
   );
-
-  const { installableMarketplaceApps, comingSoonMarketplaceApps } =
-    getAppstoreAppsLists(!!AppsConfig.marketplaceApiUri, marketplaceAppList);
   const appsInstallations = appsInProgressData?.appsInstallations;
   const installedApps = mapEdgesToItems(installedAppsData?.apps);
 
@@ -156,10 +129,7 @@ export const AppListView: React.FC<Props> = ({ params }) => {
       <PaginatorContext.Provider value={{ ...pageInfo, ...paginationValues }}>
         <AppInProgressDeleteDialog
           confirmButtonState={deleteInProgressAppOpts.status}
-          name={getAppInProgressName(
-            params.id || "",
-            appsInProgressData?.appsInstallations,
-          )}
+          name={getAppInProgressName(params.id || "", appsInProgressData?.appsInstallations)}
           onClose={closeModal}
           onConfirm={() => handleRemoveInProgress(params?.id || "")}
           open={params.action === "app-installation-remove"}

@@ -32,13 +32,7 @@ export const Pill = React.forwardRef<HTMLDivElement, PillProps>(
       color,
     });
 
-    return (
-      <MacawuiPill
-        {...props}
-        ref={ref}
-        className={clsx(classes.pill, props.className)}
-      />
-    );
+    return <MacawuiPill {...props} ref={ref} className={clsx(classes.pill, props.className)} />;
   },
 );
 

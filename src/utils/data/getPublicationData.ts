@@ -3,10 +3,7 @@ interface PublicationData {
   isPublished: boolean;
 }
 
-function getPublicationData({
-  publicationDate,
-  isPublished,
-}: PublicationData): PublicationData {
+function getPublicationData({ publicationDate, isPublished }: PublicationData): PublicationData {
   return {
     isPublished,
     publicationDate: publicationDate || null,

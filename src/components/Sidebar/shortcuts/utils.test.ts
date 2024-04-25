@@ -15,7 +15,6 @@ describe("getShortcutLeadingKey", () => {
     // Assert
     expect(result).toBe("⌘");
   });
-
   it('should return "Ctrl" if navigator.appVersion does not include "mac"', () => {
     // Arrange
     Object.defineProperty(navigator, "appVersion", {

@@ -17,13 +17,7 @@ export interface ChannelsAvailabilityWrapperProps {
 export const ChannelsAvailabilityCardWrapper: React.FC<
   ChannelsAvailabilityWrapperProps
 > = props => {
-  const {
-    selectedChannelsCount,
-    allChannelsCount,
-    children,
-    managePermissions,
-    openModal,
-  } = props;
+  const { selectedChannelsCount, allChannelsCount, children, managePermissions, openModal } = props;
   const intl = useIntl();
   const channelsAvailabilityText = intl.formatMessage(
     {
@@ -51,11 +45,7 @@ export const ChannelsAvailabilityCardWrapper: React.FC<
               })}
             </div>
             {!!channelsAvailabilityText && (
-              <Text
-                size={2}
-                color="default2"
-                data-test-id="product-available-in-channels-text"
-              >
+              <Text size={2} color="default2" data-test-id="product-available-in-channels-text">
                 {channelsAvailabilityText}
               </Text>
             )}

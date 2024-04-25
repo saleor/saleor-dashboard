@@ -13,12 +13,8 @@ interface FeatureFlagsModalProps {
   onChange: (open: boolean) => void;
 }
 
-export const FeatureFlagsModal = ({
-  open,
-  onChange,
-}: FeatureFlagsModalProps) => {
+export const FeatureFlagsModal = ({ open, onChange }: FeatureFlagsModalProps) => {
   const { selectedFlag, hasNoFlags, changeTab } = useFlagsState();
-
   const handleTabClick = (tabName: Name) => {
     changeTab(tabName);
   };
@@ -48,10 +44,7 @@ export const FeatureFlagsModal = ({
               <NoFlags />
             ) : (
               <>
-                <FlagList
-                  selectedName={selectedFlag.name}
-                  onItemClick={handleTabClick}
-                />
+                <FlagList selectedName={selectedFlag.name} onItemClick={handleTabClick} />
                 <Content
                   flagName={selectedFlag.displayName}
                   flagSlug={selectedFlag.name as Name}

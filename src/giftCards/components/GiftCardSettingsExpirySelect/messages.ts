@@ -8,8 +8,7 @@ export const giftCardSettingsExpirySelectMessages = defineMessages({
   },
   setExpirationPeriodDescription: {
     id: "ps+h1G",
-    defaultMessage:
-      "Expiration date will be automatically set, once gift card is issued",
+    defaultMessage: "Expiration date will be automatically set, once gift card is issued",
     description: "checkbox label description",
   },
 });

@@ -7,8 +7,7 @@ export const messages = defineMessages({
     id: "4XhJY+",
   },
   subtitle: {
-    defaultMessage:
-      "You can only add products available for the order's channel",
+    defaultMessage: "You can only add products available for the order's channel",
     id: "Taa5V7",
     description: "dialog subtitle",
   },
@@ -29,8 +28,7 @@ export const messages = defineMessages({
   },
   noProductsInChannel: {
     id: "shmSDX",
-    defaultMessage:
-      "No products are available in the channel assigned to this order.",
+    defaultMessage: "No products are available in the channel assigned to this order.",
     description: "no products placeholder",
   },
   noProductsInQuery: {

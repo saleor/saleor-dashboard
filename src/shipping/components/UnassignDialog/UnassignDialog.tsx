@@ -20,6 +20,7 @@ export const UnassignDialog: React.FC<UnassignDialogProps> = ({
   open,
 }) => {
   const intl = useIntl();
+
   return (
     <ActionDialog
       open={open}

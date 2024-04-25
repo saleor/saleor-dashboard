@@ -36,7 +36,6 @@ export const searchShippingZones = gql`
   }
 `;
 
-export default makeTopLevelSearch<
-  SearchShippingZonesQuery,
-  SearchShippingZonesQueryVariables
->(SearchShippingZonesDocument);
+export default makeTopLevelSearch<SearchShippingZonesQuery, SearchShippingZonesQueryVariables>(
+  SearchShippingZonesDocument,
+);

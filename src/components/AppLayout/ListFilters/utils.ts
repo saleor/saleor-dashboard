@@ -5,9 +5,7 @@ export const getSelectedFilterAmount = <TFilterKeys extends string = string>(
   data: Array<FilterElement<TFilterKeys>>,
 ) =>
   menu.reduce((acc, filterElement) => {
-    const dataFilterElement = data.find(
-      ({ name }) => name === filterElement.name,
-    );
+    const dataFilterElement = data.find(({ name }) => name === filterElement.name);
 
     if (!dataFilterElement) {
       return acc;

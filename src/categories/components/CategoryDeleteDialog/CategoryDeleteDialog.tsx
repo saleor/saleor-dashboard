@@ -36,17 +36,12 @@ export interface CategoryDeleteDialogProps {
 
 const CategoryDeleteDialog: React.FC<CategoryDeleteDialogProps> = props => {
   const { name, open, onConfirm, onClose } = props;
-
   const classes = useStyles(props);
 
   return (
     <Dialog onClose={onClose} open={open}>
       <DialogTitle disableTypography>
-        <FormattedMessage
-          id="xo5UIb"
-          defaultMessage="Delete category"
-          description="dialog title"
-        />
+        <FormattedMessage id="xo5UIb" defaultMessage="Delete category" description="dialog title" />
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
@@ -62,11 +57,7 @@ const CategoryDeleteDialog: React.FC<CategoryDeleteDialogProps> = props => {
       </DialogContent>
       <DialogActions>
         <BackButton onClick={onClose} />
-        <Button
-          className={classes.deleteButton}
-          variant="primary"
-          onClick={onConfirm}
-        >
+        <Button className={classes.deleteButton} variant="primary" onClick={onConfirm}>
           <FormattedMessage {...buttonMessages.save} />
         </Button>
       </DialogActions>

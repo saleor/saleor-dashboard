@@ -63,11 +63,8 @@ const Link: React.FC<LinkProps> = props => {
     state,
     ...linkProps
   } = props;
-
   const classes = useStyles(props);
-
   const opensNewTab = target === "_blank";
-
   const commonLinkProps = {
     className: clsx(
       {
@@ -88,11 +85,9 @@ const Link: React.FC<LinkProps> = props => {
       onClick(event);
     },
     target,
-    rel:
-      rel ?? (opensNewTab && isExternalURL(href)) ? "noopener noreferer" : "",
+    rel: rel ?? (opensNewTab && isExternalURL(href)) ? "noopener noreferer" : "",
     ...linkProps,
   };
-
   const urlObject = new URL(href, window.location.origin);
 
   return (
@@ -114,16 +109,13 @@ const Link: React.FC<LinkProps> = props => {
           {children}
         </RouterLink>
       ) : (
-        <Typography
-          component="a"
-          href={disabled ? undefined : href}
-          {...commonLinkProps}
-        >
+        <Typography component="a" href={disabled ? undefined : href} {...commonLinkProps}>
           {children}
         </Typography>
       )}
     </>
   );
 };
+
 Link.displayName = "Link";
 export default Link;

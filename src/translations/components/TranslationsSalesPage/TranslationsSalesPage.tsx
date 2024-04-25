@@ -16,8 +16,7 @@ import { useIntl } from "react-intl";
 
 import TranslationFields from "../TranslationFields";
 
-export interface TranslationsSalesPageProps
-  extends TranslationsEntitiesPageProps {
+export interface TranslationsSalesPageProps extends TranslationsEntitiesPageProps {
   data: SaleTranslationFragment;
 }
 
@@ -79,7 +78,7 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
               }),
               name: fieldNames.name,
               translation: data?.translation?.name || null,
-              type: "short" as "short",
+              type: "short" as const,
               value: data?.sale?.name,
             },
           ]}
@@ -93,5 +92,6 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
     </DetailPageLayout>
   );
 };
+
 TranslationsSalesPage.displayName = "TranslationsSalesPage";
 export default TranslationsSalesPage;

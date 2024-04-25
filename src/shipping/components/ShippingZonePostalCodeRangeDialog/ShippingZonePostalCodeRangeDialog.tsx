@@ -1,8 +1,5 @@
 import BackButton from "@dashboard/components/BackButton";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
 import { commonMessages } from "@dashboard/intl";
@@ -34,13 +31,14 @@ const useStyles = makeStyles(
     name: "ShippingZonePostalCodeRangeDialog",
   },
 );
-
-const ShippingZonePostalCodeRangeDialog: React.FC<
-  ShippingZonePostalCodeRangeDialogProps
-> = ({ confirmButtonState, open, onClose, onSubmit }) => {
+const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDialogProps> = ({
+  confirmButtonState,
+  open,
+  onClose,
+  onSubmit,
+}) => {
   const classes = useStyles({});
   const intl = useIntl();
-
   const initial: MinMax = {
     max: "",
     min: "",
@@ -113,6 +111,5 @@ const ShippingZonePostalCodeRangeDialog: React.FC<
   );
 };
 
-ShippingZonePostalCodeRangeDialog.displayName =
-  "ShippingZonePostalCodeRangeDialog";
+ShippingZonePostalCodeRangeDialog.displayName = "ShippingZonePostalCodeRangeDialog";
 export default ShippingZonePostalCodeRangeDialog;

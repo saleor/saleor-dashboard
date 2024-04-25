@@ -12,18 +12,12 @@ interface Props {
 }
 
 export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
-  const hasSubmenuActive = menuItem?.children.some(item =>
-    isMenuActive(location.pathname, item),
-  );
-  const isActive =
-    isMenuActive(location.pathname, menuItem) && !hasSubmenuActive;
+  const hasSubmenuActive = menuItem?.children.some(item => isMenuActive(location.pathname, item));
+  const isActive = isMenuActive(location.pathname, menuItem) && !hasSubmenuActive;
   const isExpanded = isActive || hasSubmenuActive;
 
   return (
-    <List.ItemGroup
-      defaultExpanded={isExpanded}
-      data-test-id={`menu-list-item`}
-    >
+    <List.ItemGroup defaultExpanded={isExpanded} data-test-id={`menu-list-item`}>
       <List.ItemGroup.Trigger
         paddingX={2}
         paddingRight={1}
@@ -41,13 +35,7 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
             display: "block",
           })}
         >
-          <Box
-            display="flex"
-            alignItems="center"
-            gap={3}
-            paddingY={1.5}
-            borderRadius={3}
-          >
+          <Box display="flex" alignItems="center" gap={3} paddingY={1.5} borderRadius={3}>
             {menuItem.icon}
             <Text size={3} fontWeight="medium">
               {menuItem.label}
@@ -68,9 +56,7 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
           marginTop={1}
           gap="px"
         >
-          {menuItem.children?.map(child => (
-            <MenuItem menuItem={child} key={child.id} />
-          ))}
+          {menuItem.children?.map(child => <MenuItem menuItem={child} key={child.id} />)}
         </Box>
       </List.ItemGroup.Content>
     </List.ItemGroup>

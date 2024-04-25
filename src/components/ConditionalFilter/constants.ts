@@ -107,10 +107,7 @@ export const STATIC_DISCOUNT_OPTIONS: LeftOperand[] = [
   },
 ];
 
-export const STATIC_OPTIONS = [
-  ...STATIC_PRODUCT_OPTIONS,
-  ...STATIC_DISCOUNT_OPTIONS,
-];
+export const STATIC_OPTIONS = [...STATIC_PRODUCT_OPTIONS, ...STATIC_DISCOUNT_OPTIONS];
 
 export const ATTRIBUTE_INPUT_TYPE_CONDITIONS = {
   DROPDOWN: [{ type: "multiselect", label: "in", value: "input-2" }],
@@ -136,11 +133,8 @@ export const ATTRIBUTE_INPUT_TYPE_CONDITIONS = {
 };
 
 export const getAttributeInputType = (item: ConditionItem | null) => {
-  const result = Object.entries(ATTRIBUTE_INPUT_TYPE_CONDITIONS).find(
-    ([_, value]) =>
-      value.find(
-        entry => entry.type === item?.type && entry.label === item.label,
-      ),
+  const result = Object.entries(ATTRIBUTE_INPUT_TYPE_CONDITIONS).find(([_, value]) =>
+    value.find(entry => entry.type === item?.type && entry.label === item.label),
   );
 
   return result && result[0];
@@ -167,10 +161,7 @@ export const createBooleanOptions = (type?: string): ItemOption[] => [
   booleanOptionFalse(type),
 ];
 
-export const createBooleanOption = (
-  flag: boolean,
-  type?: string,
-): ItemOption => {
+export const createBooleanOption = (flag: boolean, type?: string): ItemOption => {
   if (flag) return booleanOptionTrue(type);
 
   return booleanOptionFalse(type);

@@ -5,17 +5,10 @@ import {
   SearchVariantsWithProductDataDocument,
   SearchVariantsWithProductDataQueryVariables,
 } from "@dashboard/graphql";
-import makeTopLevelSearch, {
-  SearchData,
-} from "@dashboard/hooks/makeTopLevelSearch";
+import makeTopLevelSearch, { SearchData } from "@dashboard/hooks/makeTopLevelSearch";
 
 export const searchVariants = gql`
-  query SearchVariants(
-    $after: String
-    $first: Int!
-    $query: String!
-    $channel: String
-  ) {
+  query SearchVariants($after: String, $first: Int!, $query: String!, $channel: String) {
     search: productVariants(
       after: $after
       first: $first
@@ -64,9 +57,7 @@ export const searchVariantsWithProductData = gql`
   }
 `;
 
-export default makeTopLevelSearch<SearchData, SearchVariantsQueryVariables>(
-  SearchVariantsDocument,
-);
+export default makeTopLevelSearch<SearchData, SearchVariantsQueryVariables>(SearchVariantsDocument);
 
 export const useVariantWithProductDataSearch = makeTopLevelSearch<
   SearchData,

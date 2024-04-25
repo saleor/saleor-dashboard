@@ -8,8 +8,7 @@ export const messages = defineMessages({
   },
   assignCountriesDescription: {
     id: "AjInNW",
-    defaultMessage:
-      "Choose countries you want to add to shipping zone from list below",
+    defaultMessage: "Choose countries you want to add to shipping zone from list below",
     description: "dialog description",
   },
   searchCountriesLabel: {

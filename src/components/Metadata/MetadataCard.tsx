@@ -22,10 +22,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
   readonly = false,
 }) => {
   const intl = useIntl();
-  const [expanded, setExpanded] = useState(
-    readonly ? "metadata-accordion" : undefined,
-  );
-
+  const [expanded, setExpanded] = useState(readonly ? "metadata-accordion" : undefined);
   const title = isPrivate
     ? {
         id: "ETHnjq",
@@ -39,17 +36,10 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
       };
 
   return (
-    <DashboardCard
-      paddingTop={6}
-      data-test-id="metadata-editor"
-      data-test-is-private={isPrivate}
-    >
+    <DashboardCard paddingTop={6} data-test-id="metadata-editor" data-test-is-private={isPrivate}>
       <DashboardCard.Content>
         <Accordion value={expanded} onValueChange={setExpanded}>
-          <Accordion.Item
-            data-test-id="metadata-item"
-            value="metadata-accordion"
-          >
+          <Accordion.Item data-test-id="metadata-item" value="metadata-accordion">
             <Accordion.Trigger>
               <Box display="flex" flexDirection="column" gap={2}>
                 <Text size={5} fontWeight="bold">
@@ -87,11 +77,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                 <Skeleton />
               ) : (
                 <>
-                  <MetadataCardTable
-                    readonly={readonly}
-                    data={data}
-                    onChange={onChange}
-                  />
+                  <MetadataCardTable readonly={readonly} data={data} onChange={onChange} />
 
                   {!readonly && (
                     <Button

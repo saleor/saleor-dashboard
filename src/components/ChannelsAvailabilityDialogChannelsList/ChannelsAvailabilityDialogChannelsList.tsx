@@ -28,25 +28,21 @@ export interface ChannelsAvailabilityContentProps {
   onChange: (option: Channel) => void;
 }
 
-const ChannelsAvailabilityContent: React.FC<
-  ChannelsAvailabilityContentProps
-> = ({ isChannelSelected, channels, onChange }) => {
+const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentProps> = ({
+  isChannelSelected,
+  channels,
+  onChange,
+}) => {
   const classes = useStyles({});
 
   return (
     <>
       {channels.map(option => (
-        <div
-          key={option.id}
-          className={classes.option}
-          data-test-id="channel-row"
-        >
+        <div key={option.id} className={classes.option} data-test-id="channel-row">
           <ControlledCheckbox
             checked={isChannelSelected(option)}
             name={option.name}
-            label={
-              <Typography className={classes.label}>{option.name}</Typography>
-            }
+            label={<Typography className={classes.label}>{option.name}</Typography>}
             onChange={() => onChange(option)}
           />
           <Hr />

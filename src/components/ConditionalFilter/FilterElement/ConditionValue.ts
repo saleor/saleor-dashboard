@@ -6,12 +6,7 @@ export interface ItemOption {
   originalSlug?: string | null;
 }
 
-export type ConditionValue =
-  | ItemOption
-  | ItemOption[]
-  | string
-  | string[]
-  | [string, string];
+export type ConditionValue = ItemOption | ItemOption[] | string | string[] | [string, string];
 
 export const isItemOption = (x: ConditionValue): x is ItemOption =>
   typeof x === "object" && "value" in x;
@@ -20,13 +15,9 @@ export const isItemOptionArray = (x: ConditionValue): x is ItemOption[] =>
   Array.isArray(x) && (x as ItemOption[]).every(isItemOption);
 
 export const isTuple = (x: ConditionValue): x is [string, string] =>
-  Array.isArray(x) &&
-  x.length === 2 &&
-  (x as string[]).every(y => typeof y === "string");
+  Array.isArray(x) && x.length === 2 && (x as string[]).every(y => typeof y === "string");
 
-export const slugFromConditionValue = (
-  rawEntry: ConditionValue,
-): string | string[] => {
+export const slugFromConditionValue = (rawEntry: ConditionValue): string | string[] => {
   if (typeof rawEntry === "string") {
     return rawEntry;
   }

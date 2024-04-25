@@ -6,10 +6,7 @@ import { FormattedMessage } from "react-intl";
 
 import { filterTestingContext, useCommonStyles } from "./utils";
 
-type FilterNumericFieldProps = FilterFieldBaseProps<
-  string,
-  FieldType.number | FieldType.price
-> & {
+type FilterNumericFieldProps = FilterFieldBaseProps<string, FieldType.number | FieldType.price> & {
   currencySymbol: string | undefined;
 };
 
@@ -20,7 +17,6 @@ export const FilterNumericField: React.FC<FilterNumericFieldProps> = ({
 }) => {
   const classes = useCommonStyles({});
   const isMultiple = filter.multiple;
-
   const handleChange = (value: string[]) =>
     onFilterPropertyChange({
       payload: {
@@ -83,9 +79,7 @@ export const FilterNumericField: React.FC<FilterNumericFieldProps> = ({
                 endAdornment: filter.type === FieldType.price && currencySymbol,
               }}
               value={filter.value[1]}
-              onChange={event =>
-                handleChange([filter.value[0], event.target.value])
-              }
+              onChange={event => handleChange([filter.value[0], event.target.value])}
             />
           </div>
         </>

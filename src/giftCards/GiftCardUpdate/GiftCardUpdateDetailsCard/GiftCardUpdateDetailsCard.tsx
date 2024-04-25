@@ -17,7 +17,6 @@ import { giftCardUpdateDetailsCardMessages as messages } from "./messages";
 
 const GiftCardUpdateDetailsCard: React.FC = () => {
   const intl = useIntl();
-
   const { loading, giftCard } = useGiftCardDetails();
   const { openSetBalanceDialog } = useGiftCardUpdateDialogs();
   const {
@@ -33,10 +32,7 @@ const GiftCardUpdateDetailsCard: React.FC = () => {
         toolbar={
           !loading &&
           !giftCard?.isExpired && (
-            <Button
-              data-test-id="set-balance-button"
-              onClick={openSetBalanceDialog}
-            >
+            <Button data-test-id="set-balance-button" onClick={openSetBalanceDialog}>
               {intl.formatMessage(messages.setBalanceButtonLabel)}
             </Button>
           )

@@ -50,13 +50,9 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
     onSubmit,
     submitStatus,
   } = props;
-
-  const canRefundShipping = calculateCanRefundShipping(
-    null,
-    order?.grantedRefunds,
-  );
-
+  const canRefundShipping = calculateCanRefundShipping(null, order?.grantedRefunds);
   const intl = useIntl();
+
   return (
     <OrderRefundForm order={order} onSubmit={onSubmit}>
       {({ data, handlers, change, submit, isSaveDisabled, isAmountDirty }) => (
@@ -77,9 +73,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                   itemsQuantities={data.unfulfilledItemsQuantities}
                   itemsSelections={data.itemsToBeReplaced}
                   onChangeQuantity={handlers.changeUnfulfiledItemsQuantity}
-                  onSetMaxQuantity={
-                    handlers.handleSetMaximalUnfulfiledItemsQuantities
-                  }
+                  onSetMaxQuantity={handlers.handleSetMaximalUnfulfiledItemsQuantities}
                   onChangeSelected={handlers.changeItemsToBeReplaced}
                 />
                 <CardSpacer />
@@ -97,9 +91,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                     itemsQuantities={data.waitingItemsQuantities}
                     itemsSelections={data.itemsToBeReplaced}
                     onChangeQuantity={handlers.changeWaitingItemsQuantity}
-                    onSetMaxQuantity={handlers.handleSetMaximalItemsQuantities(
-                      id,
-                    )}
+                    onSetMaxQuantity={handlers.handleSetMaximalItemsQuantities(id)}
                     onChangeSelected={handlers.changeItemsToBeReplaced}
                   />
                   <CardSpacer />
@@ -118,9 +110,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                     itemsQuantities={data.fulfilledItemsQuantities}
                     itemsSelections={data.itemsToBeReplaced}
                     onChangeQuantity={handlers.changeFulfiledItemsQuantity}
-                    onSetMaxQuantity={handlers.handleSetMaximalItemsQuantities(
-                      id,
-                    )}
+                    onSetMaxQuantity={handlers.handleSetMaximalItemsQuantities(id)}
                     onChangeSelected={handlers.changeItemsToBeReplaced}
                   />
                   <CardSpacer />

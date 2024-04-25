@@ -3,11 +3,7 @@ import { AppPermissionsDialogPermissionPicker } from "@dashboard/apps/components
 import { useAppPermissionsDialogState } from "@dashboard/apps/components/AppPermissionsDialog/AppPermissionsDialogState";
 import { AppPermissionsDialogMessages } from "@dashboard/apps/components/AppPermissionsDialog/messages";
 import { useGetAvailableAppPermissions } from "@dashboard/apps/hooks/useGetAvailableAppPermissions";
-import {
-  PermissionEnum,
-  useAppQuery,
-  useAppUpdatePermissionsMutation,
-} from "@dashboard/graphql";
+import { PermissionEnum, useAppQuery, useAppUpdatePermissionsMutation } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
@@ -39,14 +35,11 @@ export const AppPermissionsDialog = ({
     onMutationError,
     onApprove,
   } = useAppPermissionsDialogState(assignedPermissions);
-
   const { refetch } = useAppQuery({
     variables: { id: appId, hasManagedAppsPermission: true },
     skip: true,
   });
-
   const notify = useNotifier();
-
   const [mutate] = useAppUpdatePermissionsMutation({
     onError(err) {
       onMutationError(err.message);
@@ -54,15 +47,13 @@ export const AppPermissionsDialog = ({
     onCompleted(data) {
       if (data.appUpdate?.errors.length) {
         onMutationError(
-          data.appUpdate?.errors[0].message ??
-            formatMessage(messages.fallbackErrorText),
+          data.appUpdate?.errors[0].message ?? formatMessage(messages.fallbackErrorText),
         );
 
         return;
       }
 
       refetch().then(onClose);
-
       notify({
         status: "success",
         title: formatMessage(messages.successNotificationTitle),
@@ -120,9 +111,7 @@ export const AppPermissionsDialog = ({
 
   return (
     <Dialog open={true} onClose={onClose} fullWidth maxWidth={"sm"}>
-      <DialogTitle disableTypography>
-        {formatMessage(messages.heading)}
-      </DialogTitle>
+      <DialogTitle disableTypography>{formatMessage(messages.heading)}</DialogTitle>
       <DialogContent>
         <Box display={"grid"} gridAutoFlow={"row"}>
           <Text as={"p"}>{formatMessage(messages.info)}</Text>
@@ -133,13 +122,7 @@ export const AppPermissionsDialog = ({
             padding={4}
             backgroundColor="critical1"
           >
-            <Text
-              marginBottom={2}
-              as={"p"}
-              color="critical1"
-              size={4}
-              fontWeight="bold"
-            >
+            <Text marginBottom={2} as={"p"} color="critical1" size={4} fontWeight="bold">
               {formatMessage(messages.warningHeading)}
             </Text>
             <Text as={"p"}>{formatMessage(messages.warningParagraph1)}</Text>

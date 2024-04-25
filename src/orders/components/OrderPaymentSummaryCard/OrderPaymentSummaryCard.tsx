@@ -6,10 +6,7 @@ import Skeleton from "@dashboard/components/Skeleton";
 import { useFlag } from "@dashboard/featureFlags";
 import { OrderAction, OrderDetailsFragment } from "@dashboard/graphql";
 import { transformPaymentStatus } from "@dashboard/misc";
-import {
-  orderGrantRefundUrl,
-  orderSendRefundUrl,
-} from "@dashboard/orders/urls";
+import { orderGrantRefundUrl, orderSendRefundUrl } from "@dashboard/orders/urls";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { Divider } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -19,10 +16,7 @@ import { extractOrderGiftCardUsedAmount } from "../OrderSummaryCard/utils";
 import { RefundsSummary } from "./components";
 import { PaymentsSummary } from "./components/PaymentsSummary";
 import { getShouldDisplayAmounts } from "./components/PaymentsSummary/utils";
-import {
-  orderPaymentActionButtonMessages,
-  orderPaymentMessages,
-} from "./messages";
+import { orderPaymentActionButtonMessages, orderPaymentMessages } from "./messages";
 import { useStyles } from "./styles";
 
 interface OrderPaymementProps {
@@ -30,10 +24,7 @@ interface OrderPaymementProps {
   onMarkAsPaid: () => void;
 }
 
-const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({
-  order,
-  onMarkAsPaid,
-}) => {
+const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkAsPaid }) => {
   const classes = useStyles();
   const intl = useIntl();
 
@@ -41,13 +32,10 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({
 
   const payment = transformPaymentStatus(order?.paymentStatus, intl);
   const giftCardAmount = extractOrderGiftCardUsedAmount(order);
-
-  const canGrantRefund =
-    order?.transactions?.length > 0 || order?.payments?.length > 0;
+  const canGrantRefund = order?.transactions?.length > 0 || order?.payments?.length > 0;
   const canSendRefund = order?.grantedRefunds?.length > 0;
   const canAnyRefund = canGrantRefund || canSendRefund;
   const hasGiftCards = giftCardAmount > 0;
-
   const canMarkAsPaid = order?.actions?.includes(OrderAction.MARK_AS_PAID);
   const shouldDisplay = getShouldDisplayAmounts(order);
 
@@ -79,30 +67,22 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({
         }
         title={<FormattedMessage {...orderPaymentMessages.paymentTitle} />}
       />
-      {!canAnyRefund &&
-        !shouldDisplay.charged &&
-        !shouldDisplay.authorized &&
-        !hasGiftCards && (
-          <CardContent
-            className={classes.noPaymentContent}
-            data-test-id="payment-section"
-          >
-            <Typography variant="h5" className={classes.noPaymentTitle}>
-              <FormattedMessage {...orderPaymentMessages.noPayments} />
-            </Typography>
-            {canMarkAsPaid && (
-              <Button
-                variant="tertiary"
-                onClick={() => onMarkAsPaid()}
-                data-test-id="markAsPaidButton"
-              >
-                <FormattedMessage
-                  {...orderPaymentActionButtonMessages.markAsPaid}
-                />
-              </Button>
-            )}
-          </CardContent>
-        )}
+      {!canAnyRefund && !shouldDisplay.charged && !shouldDisplay.authorized && !hasGiftCards && (
+        <CardContent className={classes.noPaymentContent} data-test-id="payment-section">
+          <Typography variant="h5" className={classes.noPaymentTitle}>
+            <FormattedMessage {...orderPaymentMessages.noPayments} />
+          </Typography>
+          {canMarkAsPaid && (
+            <Button
+              variant="tertiary"
+              onClick={() => onMarkAsPaid()}
+              data-test-id="markAsPaidButton"
+            >
+              <FormattedMessage {...orderPaymentActionButtonMessages.markAsPaid} />
+            </Button>
+          )}
+        </CardContent>
+      )}
       <PaymentsSummary order={order} />
       {canAnyRefund && !enabled && (
         <>
@@ -116,9 +96,7 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({
                     variant="secondary"
                     data-test-id="grantRefundButton"
                   >
-                    <FormattedMessage
-                      {...orderPaymentActionButtonMessages.grantRefund}
-                    />
+                    <FormattedMessage {...orderPaymentActionButtonMessages.grantRefund} />
                   </Button>
                 )}
                 {canSendRefund && (
@@ -127,9 +105,7 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({
                     href={orderSendRefundUrl(order.id)}
                     data-test-id="refund-button"
                   >
-                    <FormattedMessage
-                      {...orderPaymentActionButtonMessages.sendRefund}
-                    />
+                    <FormattedMessage {...orderPaymentActionButtonMessages.sendRefund} />
                   </Button>
                 )}
               </div>

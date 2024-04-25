@@ -9,7 +9,5 @@ interface WindowTitleProps {
 export const WindowTitle: React.FC<WindowTitleProps> = ({ title }) => {
   const shop = useShop();
 
-  return shop === undefined || !title ? null : (
-    <Helmet title={`${title} | ${shop.name}`} />
-  );
+  return shop === undefined || !title ? null : <Helmet title={`${title} | ${shop.name}`} />;
 };

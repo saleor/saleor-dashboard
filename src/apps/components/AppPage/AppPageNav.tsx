@@ -42,11 +42,9 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
 }) => {
   const navigate = useNavigator();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
-
   const navigateToManageAppScreen = () => {
     navigate(AppUrls.resolveAppDetailsUrl(appId));
   };
-
   const logo = useMemo(
     (): Logo =>
       appLogoUrl
@@ -59,12 +57,7 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
 
   return (
     <TopNavWrapper>
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-        width="100%"
-      >
+      <Box display="flex" alignItems="center" justifyContent="space-between" width="100%">
         <Box display="flex" gap={2} alignItems="center">
           {goBackUrl && <TopNavLink to={goBackUrl} variant="tertiary" />}
           <Box display="flex" gap={4} alignItems="center">
@@ -75,11 +68,7 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
               </Text>
               <Text size={2} color="default2" textTransform="uppercase">
                 {author && (
-                  <FormattedMessage
-                    defaultMessage="by {author}"
-                    id="6SL46U"
-                    values={{ author }}
-                  />
+                  <FormattedMessage defaultMessage="by {author}" id="6SL46U" values={{ author }} />
                 )}
               </Text>
             </Box>
@@ -95,31 +84,17 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
             data-test-id="app-settings-button"
           >
             <FormattedMessage
-              {...(hasManagedAppsPermission
-                ? messages.manageApp
-                : messages.appSettings)}
+              {...(hasManagedAppsPermission ? messages.manageApp : messages.appSettings)}
             />
           </Button>
         )}
         {supportUrl && (
-          <Button
-            variant="secondary"
-            size="medium"
-            href={supportUrl}
-            target="_blank"
-            as="a"
-          >
+          <Button variant="secondary" size="medium" href={supportUrl} target="_blank" as="a">
             <FormattedMessage defaultMessage="Support" id="HqRNN8" />
           </Button>
         )}
         {homepageUrl && (
-          <Button
-            variant="secondary"
-            size="medium"
-            href={homepageUrl}
-            target="_blank"
-            as="a"
-          >
+          <Button variant="secondary" size="medium" href={homepageUrl} target="_blank" as="a">
             <FormattedMessage defaultMessage="Homepage" id="rxNddi" />
           </Button>
         )}

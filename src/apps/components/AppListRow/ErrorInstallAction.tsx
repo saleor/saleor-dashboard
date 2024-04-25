@@ -28,10 +28,7 @@ const InstallErrorAction = ({
 
   return (
     <>
-      <Typography
-        className={classes.cardActionsIssueText}
-        data-test-id="app-installation-failed"
-      >
+      <Typography className={classes.cardActionsIssueText} data-test-id="app-installation-failed">
         <FormattedMessage {...appInstallationStatusMessages.failed} />
         <Tooltip>
           <Tooltip.Trigger>
@@ -46,11 +43,7 @@ const InstallErrorAction = ({
         </Tooltip>
       </Typography>
       {retryInstall && (
-        <Button
-          variant="secondary"
-          onClick={retryInstall}
-          data-test-id="app-retry-install-button"
-        >
+        <Button variant="secondary" onClick={retryInstall} data-test-id="app-retry-install-button">
           <FormattedMessage {...buttonMessages.retry} />
         </Button>
       )}
@@ -66,5 +59,6 @@ const InstallErrorAction = ({
     </>
   );
 };
+
 InstallErrorAction.displayName = "InstallErrorAction";
 export default InstallErrorAction;

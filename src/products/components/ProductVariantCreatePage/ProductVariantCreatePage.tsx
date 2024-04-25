@@ -87,9 +87,7 @@ interface ProductVariantCreatePageProps {
   weightUnit: string;
   referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
-  attributeValues: RelayToFlat<
-    SearchAttributeValuesQuery["attribute"]["choices"]
-  >;
+  attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
   onSubmit: (data: ProductVariantCreateData) => SubmitPromise;
   onVariantClick: (variantId: string) => void;
   onVariantReorder: ReorderAction;
@@ -135,10 +133,8 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const { isOpen: isManageChannelsModalOpen, toggle: toggleManageChannels } =
-    useManageChannels();
+  const { isOpen: isManageChannelsModalOpen, toggle: toggleManageChannels } = useManageChannels();
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
-
   const handleAssignReferenceAttribute = (
     attributeValues: Container[],
     data: ProductVariantCreateData,
@@ -200,11 +196,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                   />
                 </div>
                 <div>
-                  <ProductVariantName
-                    value={data.variantName}
-                    onChange={change}
-                    errors={errors}
-                  />
+                  <ProductVariantName value={data.variantName} onChange={change} errors={errors} />
                   <CardSpacer />
                   <ProductDetailsChannelsAvailabilityCard
                     disabled={disabled}
@@ -236,9 +228,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                   />
                   <CardSpacer />
                   <Attributes
-                    title={intl.formatMessage(
-                      messages.attributesSelectionHeader,
-                    )}
+                    title={intl.formatMessage(messages.attributesSelectionHeader)}
                     attributes={data.attributes.filter(
                       attribute =>
                         attribute.data.variantAttributeScope ===
@@ -277,12 +267,10 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                   <CardSpacer />
                   <ProductVariantPrice
                     disabled={!product}
-                    productVariantChannelListings={data.channelListings.map(
-                      channel => ({
-                        ...channel.data,
-                        ...channel.value,
-                      }),
-                    )}
+                    productVariantChannelListings={data.channelListings.map(channel => ({
+                      ...channel.data,
+                      ...channel.value,
+                    }))}
                     errors={[]}
                     loading={!product}
                     onChange={handlers.changeChannels}
@@ -324,9 +312,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                   confirmButtonState={"default"}
                   products={referenceProducts}
                   pages={referencePages}
-                  attribute={data.attributes.find(
-                    ({ id }) => id === assignReferencesAttributeId,
-                  )}
+                  attribute={data.attributes.find(({ id }) => id === assignReferencesAttributeId)}
                   hasMore={handlers.fetchMoreReferences?.hasMore}
                   open={canOpenAssignReferencesAttributeDialog}
                   onFetch={handlers.fetchReferences}
@@ -334,11 +320,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                   loading={handlers.fetchMoreReferences?.loading}
                   onClose={onCloseDialog}
                   onSubmit={attributeValues =>
-                    handleAssignReferenceAttribute(
-                      attributeValues,
-                      data,
-                      handlers,
-                    )
+                    handleAssignReferenceAttribute(attributeValues, data, handlers)
                   }
                 />
               )}
@@ -358,5 +340,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
     </ProductVariantCreateForm>
   );
 };
+
 ProductVariantCreatePage.displayName = "ProductVariantCreatePage";
 export default ProductVariantCreatePage;

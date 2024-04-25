@@ -13,11 +13,7 @@ const ProductVariantSetDefault: React.FC<ProductVariantSetDefaultProps> = ({
 
   return (
     <Box display="flex" alignItems="center" height="100%">
-      <Button
-        variant="secondary"
-        onClick={onSetDefaultVariant}
-        data-test-id="setDefault"
-      >
+      <Button variant="secondary" onClick={onSetDefaultVariant} data-test-id="setDefault">
         {intl.formatMessage({
           id: "SZH0fw",
           defaultMessage: "Set as default",

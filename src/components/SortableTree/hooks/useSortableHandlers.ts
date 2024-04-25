@@ -8,12 +8,7 @@ import {
 import { arrayMove } from "@dnd-kit/sortable";
 import { Dispatch, SetStateAction, useState } from "react";
 
-import {
-  CurrentPosition,
-  DataTypePlaceholder,
-  FlattenedItems,
-  TreeItems,
-} from "../types";
+import { CurrentPosition, DataTypePlaceholder, FlattenedItems, TreeItems } from "../types";
 import { buildTree, flattenTree, getProjection } from "../utils";
 
 interface UseSortableHandlersProps<T extends DataTypePlaceholder> {
@@ -37,20 +32,11 @@ export const useSortableHandlers = <T extends DataTypePlaceholder>({
 }: UseSortableHandlersProps<T>) => {
   const [overId, setOverId] = useState<UniqueIdentifier | null>(null);
   const [offsetLeft, setOffsetLeft] = useState(0);
-  const [currentPosition, setCurrentPosition] =
-    useState<CurrentPosition | null>(null);
-
+  const [currentPosition, setCurrentPosition] = useState<CurrentPosition | null>(null);
   const projected =
     activeId && overId
-      ? getProjection(
-          flattenedItems,
-          activeId,
-          overId,
-          offsetLeft,
-          indentationWidth,
-        )
+      ? getProjection(flattenedItems, activeId, overId, offsetLeft, indentationWidth)
       : null;
-
   const handleDragStart = ({ active: { id: activeId } }: DragStartEvent) => {
     setActiveId(activeId);
     setOverId(activeId);
@@ -66,23 +52,18 @@ export const useSortableHandlers = <T extends DataTypePlaceholder>({
 
     document.body.style.setProperty("cursor", "grabbing");
   };
-
   const handleDragMove = ({ delta }: DragMoveEvent) => {
     setOffsetLeft(delta.x);
   };
-
   const handleDragOver = ({ over }: DragOverEvent) => {
     setOverId(over?.id ?? null);
   };
-
   const handleDragEnd = ({ active, over }: DragEndEvent) => {
     resetState();
 
     if (projected && over) {
       const { depth, parentId } = projected;
-      const clonedItems: FlattenedItems<T> = JSON.parse(
-        JSON.stringify(flattenTree(items)),
-      );
+      const clonedItems: FlattenedItems<T> = JSON.parse(JSON.stringify(flattenTree(items)));
       const overIndex = clonedItems.findIndex(({ id }) => id === over.id);
       const activeIndex = clonedItems.findIndex(({ id }) => id === active.id);
       const activeTreeItem = clonedItems[activeIndex];
@@ -96,17 +77,14 @@ export const useSortableHandlers = <T extends DataTypePlaceholder>({
       onChange(newItems);
     }
   };
-
   const handleDragCancel = () => {
     resetState();
   };
-
   const resetState = () => {
     setOverId(null);
     setActiveId(null);
     setOffsetLeft(0);
     setCurrentPosition(null);
-
     document.body.style.setProperty("cursor", "");
   };
 

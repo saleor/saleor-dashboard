@@ -6,10 +6,7 @@ import { useCallback } from "react";
 interface VoucherCodesRowSelection {
   selectedVoucherCodesIds: string[];
   clearRowSelection: () => void;
-  handleSetSelectedVoucherCodesIds: (
-    rows: number[],
-    clearSelection: () => void,
-  ) => void;
+  handleSetSelectedVoucherCodesIds: (rows: number[], clearSelection: () => void) => void;
 }
 
 export const useVoucherCodesRowSelection = (
@@ -21,7 +18,6 @@ export const useVoucherCodesRowSelection = (
     clearRowSelection,
     setSelectedRowIds,
   } = useRowSelection();
-
   const handleSetSelectedVoucherCodesIds = useCallback(
     (rows: number[], clearSelection: () => void) => {
       if (!voucherCodes) {
@@ -37,12 +33,7 @@ export const useVoucherCodesRowSelection = (
 
       setClearDatagridRowSelectionCallback(clearSelection);
     },
-    [
-      voucherCodes,
-      selectedRowIds,
-      setClearDatagridRowSelectionCallback,
-      setSelectedRowIds,
-    ],
+    [voucherCodes, selectedRowIds, setClearDatagridRowSelectionCallback, setSelectedRowIds],
   );
 
   return {

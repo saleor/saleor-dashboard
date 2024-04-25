@@ -13,17 +13,13 @@ interface UseTooltipContainerState {
 }
 
 export const useTooltipContainer = () => {
-  const [tooltip, setTooltipState] = useState<
-    UseTooltipContainerState | undefined
-  >(undefined);
-
+  const [tooltip, setTooltipState] = useState<UseTooltipContainerState | undefined>(undefined);
   const setTooltip = (title: string, bounds: Bounds) => {
     setTooltipState({
       title,
       bounds,
     });
   };
-
   const clearTooltip = () => {
     setTooltipState(undefined);
   };

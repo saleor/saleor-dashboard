@@ -26,7 +26,6 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   value,
 }) => {
   const intl = useIntl();
-
   const parsedValue = value ? splitDateTime(value) : { date: "", time: "" };
 
   return (

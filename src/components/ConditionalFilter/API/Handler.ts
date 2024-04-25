@@ -64,12 +64,16 @@ export class AttributeChoicesHandler implements Handler {
         query,
       },
     });
+
     return createOptionsFromAPI(data.attribute?.choices?.edges ?? []);
   };
 }
 
 export class CollectionHandler implements Handler {
-  constructor(public client: ApolloClient<unknown>, public query: string) {}
+  constructor(
+    public client: ApolloClient<unknown>,
+    public query: string,
+  ) {}
 
   fetch = async () => {
     const { data } = await this.client.query<
@@ -88,7 +92,10 @@ export class CollectionHandler implements Handler {
 }
 
 export class CategoryHandler implements Handler {
-  constructor(public client: ApolloClient<unknown>, public query: string) {}
+  constructor(
+    public client: ApolloClient<unknown>,
+    public query: string,
+  ) {}
 
   fetch = async () => {
     const { data } = await this.client.query<
@@ -107,7 +114,10 @@ export class CategoryHandler implements Handler {
 }
 
 export class ProductTypeHandler implements Handler {
-  constructor(public client: ApolloClient<unknown>, public query: string) {}
+  constructor(
+    public client: ApolloClient<unknown>,
+    public query: string,
+  ) {}
 
   fetch = async () => {
     const { data } = await this.client.query<
@@ -126,7 +136,10 @@ export class ProductTypeHandler implements Handler {
 }
 
 export class ChannelHandler implements Handler {
-  constructor(public client: ApolloClient<unknown>, public query: string) {}
+  constructor(
+    public client: ApolloClient<unknown>,
+    public query: string,
+  ) {}
 
   fetch = async () => {
     const { data } = await this.client.query<
@@ -142,14 +155,15 @@ export class ChannelHandler implements Handler {
         slug,
       })) ?? [];
 
-    return options.filter(({ label }) =>
-      label.toLowerCase().includes(this.query.toLowerCase()),
-    );
+    return options.filter(({ label }) => label.toLowerCase().includes(this.query.toLowerCase()));
   };
 }
 
 export class AttributesHandler implements Handler {
-  constructor(public client: ApolloClient<unknown>, public query: string) {}
+  constructor(
+    public client: ApolloClient<unknown>,
+    public query: string,
+  ) {}
 
   fetch = async (): Promise<LeftOperand[]> => {
     const { data } = await this.client.query<
@@ -162,6 +176,7 @@ export class AttributesHandler implements Handler {
         query: this.query,
       },
     });
+
     return (
       data.attributes?.edges.map(({ node }) => ({
         label: node.name ?? "",

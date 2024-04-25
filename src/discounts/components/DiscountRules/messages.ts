@@ -51,8 +51,7 @@ export const messages = defineMessages({
   },
   ruleSummary: {
     id: "Lrp9WW",
-    defaultMessage:
-      "Discount of {value} on the purchase of {conditions} through the {channel}",
+    defaultMessage: "Discount of {value} on the purchase of {conditions} through the {channel}",
   },
   ruleSummaryWithoutConditions: {
     id: "7MUx0T",
@@ -60,8 +59,7 @@ export const messages = defineMessages({
   },
   ruleSummaryWithComplexConditions: {
     id: "f1Pj99",
-    defaultMessage:
-      "Discount of {value} through the {channel} with {unknown} conditions",
+    defaultMessage: "Discount of {value} through the {channel} with {unknown} conditions",
   },
   ruleSummaryMoreItems: {
     id: "B0fwAj",
@@ -93,8 +91,7 @@ export const messages = defineMessages({
   },
   noHanldedConditions: {
     id: "ckSjjv",
-    defaultMessage:
-      "Too complex conditions to display, use playground to see details.",
+    defaultMessage: "Too complex conditions to display, use playground to see details.",
   },
   noHandledConditionsReminder: {
     id: "E9E5Eh",

@@ -40,15 +40,7 @@ export const ATTRIBUTES = {
     names: ["DROPDOWN", "MULTISELECT", "SWATCH"],
   },
   attributeTypesWithoutAbilityToAddValues: {
-    names: [
-      "FILE",
-      "NUMERIC",
-      "RICH_TEXT",
-      "PLAIN_TEXT",
-      "BOOLEAN",
-      "DATE",
-      "DATE_TIME",
-    ],
+    names: ["FILE", "NUMERIC", "RICH_TEXT", "PLAIN_TEXT", "BOOLEAN", "DATE", "DATE_TIME"],
   },
   attributeReferencesEntities: {
     names: ["PAGE", "PRODUCT", "PRODUCT_VARIANT"],
@@ -219,10 +211,7 @@ export const CATEGORIES = {
     name: "a category to be updated",
   },
   categoriesToBeBulkDeleted: {
-    names: [
-      "a cateogry to be bulk deleted 1/2",
-      "a cateogry to be bulk deleted 2/2",
-    ],
+    names: ["a cateogry to be bulk deleted 1/2", "a cateogry to be bulk deleted 2/2"],
   },
   e2eCategory: {
     id: "Q2F0ZWdvcnk6NTEx",
@@ -559,10 +548,7 @@ export const NAVIGATION_ITEMS = {
     name: "e2e-menu-to-be-deleted-from-details-view",
   },
   navigationMenusToBeBulkDeleted: {
-    names: [
-      "e2e-menu-to-be-bulk-deleted 1/2",
-      "e2e-menu-to-be-bulk-deleted 2/2",
-    ],
+    names: ["e2e-menu-to-be-bulk-deleted 1/2", "e2e-menu-to-be-bulk-deleted 2/2"],
   },
 };
 
@@ -613,10 +599,7 @@ export const PAGE_TYPES = {
     info: "Page type used in delete page type test",
   },
   pageTypesToBeBulkDeleted: {
-    names: [
-      "a page type to be bulk deleted 1/2",
-      "a page type to be bulk deleted 2/2",
-    ],
+    names: ["a page type to be bulk deleted 1/2", "a page type to be bulk deleted 2/2"],
     ids: ["UGFnZVR5cGU6MzY=", "UGFnZVR5cGU6Mzc="],
   },
 };
@@ -632,10 +615,7 @@ export const PRODUCT_TYPES = {
     info: "Product type used in delete product type test",
   },
   productTypesToBeBulkDeleted: {
-    names: [
-      "a product type to be bulk deleted 1/2",
-      "a product type to be bulk deleted 2/2",
-    ],
+    names: ["a product type to be bulk deleted 1/2", "a product type to be bulk deleted 2/2"],
     ids: ["UHJvZHVjdFR5cGU6NzAw", "UHJvZHVjdFR5cGU6NzAx"],
   },
 };

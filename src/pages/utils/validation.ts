@@ -1,13 +1,8 @@
-import {
-  PageErrorCode,
-  PageErrorWithAttributesFragment,
-} from "@dashboard/graphql";
+import { PageErrorCode, PageErrorWithAttributesFragment } from "@dashboard/graphql";
 
 import { PageData } from "../components/PageDetailsPage/form";
 
-const createEmptyRequiredError = (
-  field: string,
-): PageErrorWithAttributesFragment => ({
+const createEmptyRequiredError = (field: string): PageErrorWithAttributesFragment => ({
   __typename: "PageError",
   code: PageErrorCode.REQUIRED,
   field,

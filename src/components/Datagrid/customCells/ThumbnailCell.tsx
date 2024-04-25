@@ -22,13 +22,10 @@ export const thumbnailCellRenderer: CustomRenderer<ThumbnailCell> = {
   draw: (args, cell) => {
     const { ctx, rect, theme, imageLoader, col, row } = args;
     const { image, name } = cell.data;
-
     const xPad = 5;
     const size = rect.height - xPad * 2;
-
     const drawX = rect.x + xPad;
     const drawY = rect.y + xPad;
-
     const imageResult = imageLoader.loadOrGetImage(image, col, row);
 
     ctx.save();
@@ -67,6 +64,7 @@ export const thumbnailCellRenderer: CustomRenderer<ThumbnailCell> = {
   provideEditor: () => ({
     editor: p => {
       const { isHighlighted, onChange, value } = p;
+
       return (
         <TextCellEntry
           highlight={isHighlighted}

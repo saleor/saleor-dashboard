@@ -1,8 +1,5 @@
 import BackButton from "@dashboard/components/BackButton";
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { OrderErrorFragment } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
@@ -31,7 +28,6 @@ export const OrderCancelDialog: React.FC<OrderCancelDialogProps> = props => {
     onSubmit,
     onClose,
   } = props;
-
   const intl = useIntl();
   const errors = useModalDialogErrors(apiErrors, open);
 
@@ -39,10 +35,7 @@ export const OrderCancelDialog: React.FC<OrderCancelDialogProps> = props => {
     <DashboardModal onChange={onClose} open={open}>
       <DashboardModal.Content>
         <DashboardModal.Title data-test-id="dialog-title">
-          <FormattedMessage
-            {...cancelOrderDialogMessages.dialogTitle}
-            values={{ orderNumber }}
-          />
+          <FormattedMessage {...cancelOrderDialogMessages.dialogTitle} values={{ orderNumber }} />
         </DashboardModal.Title>
         <Text>
           <FormattedMessage
@@ -63,14 +56,8 @@ export const OrderCancelDialog: React.FC<OrderCancelDialogProps> = props => {
           <BackButton onClick={onClose}>
             <FormattedMessage {...cancelOrderDialogMessages.buttonKeepOrder} />
           </BackButton>
-          <ConfirmButton
-            onClick={onSubmit}
-            transitionState={confirmButtonState}
-            type="submit"
-          >
-            <FormattedMessage
-              {...cancelOrderDialogMessages.buttonCancelOrder}
-            />
+          <ConfirmButton onClick={onSubmit} transitionState={confirmButtonState} type="submit">
+            <FormattedMessage {...cancelOrderDialogMessages.buttonCancelOrder} />
           </ConfirmButton>
         </DashboardModal.Actions>
       </DashboardModal.Content>

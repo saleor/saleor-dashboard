@@ -13,8 +13,7 @@ export const messages = defineMessages({
   },
   dropdownLabel: {
     id: "T0Mfxq",
-    defaultMessage:
-      "{channelCount} {channelCount,plural, =1 {Channel} other {Channels}}",
+    defaultMessage: "{channelCount} {channelCount,plural, =1 {Channel} other {Channels}}",
     description: "product status title",
   },
   noChannels: {
@@ -33,8 +32,7 @@ export const channelStatusMessages = defineMessages({
   scheduled: {
     id: "GzbSQk",
     defaultMessage: "Scheduled to publish",
-    description:
-      "Status label when object is scheduled to publish in a channel",
+    description: "Status label when object is scheduled to publish in a channel",
   },
   published: {
     id: "sdA14A",

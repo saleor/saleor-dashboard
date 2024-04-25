@@ -17,7 +17,6 @@ describe("getAllConditionsOptionsIdsToFetch", () => {
       variantsIds: [],
     });
   });
-
   it("should return product ids", () => {
     expect(
       getAllConditionsOptionsIdsToFetch({
@@ -46,12 +45,10 @@ describe("getAllConditionsOptionsIdsToFetch", () => {
     });
   });
 });
-
 describe("getRuleConditionsOptionsDetailsMap", () => {
   it("should return empty object if data is undefined", () => {
     expect(getRuleConditionsOptionsDetailsMap(undefined)).toEqual({});
   });
-
   it("should return product options details map", () => {
     expect(
       getRuleConditionsOptionsDetailsMap({

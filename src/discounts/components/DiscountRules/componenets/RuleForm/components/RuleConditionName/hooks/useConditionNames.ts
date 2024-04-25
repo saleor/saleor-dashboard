@@ -4,9 +4,7 @@ import { Option } from "@saleor/macaw-ui-next";
 import { useCatalogConditionNames } from "./useCatalogConditionNames";
 import { useOrderConditionNames } from "./useOrderConditionNames";
 
-export const useConditionNames = (
-  discountType: PromotionTypeEnum,
-): Option[] => {
+export const useConditionNames = (discountType: PromotionTypeEnum): Option[] => {
   const catalogOptions = useCatalogConditionNames();
   const orderOptions = useOrderConditionNames();
 

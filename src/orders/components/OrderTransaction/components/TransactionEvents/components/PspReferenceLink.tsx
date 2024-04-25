@@ -15,20 +15,12 @@ const useStyles = makeStyles(
   { name: "PspReferenceLink" },
 );
 
-export const PspReferenceLink: React.FC<PspRerefenceLinkProps> = ({
-  href,
-  children,
-}) => {
+export const PspReferenceLink: React.FC<PspRerefenceLinkProps> = ({ href, children }) => {
   const classes = useStyles();
 
   if (href) {
     return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={classes.link}
-      >
+      <a href={href} target="_blank" rel="noopener noreferrer" className={classes.link}>
         {children}
       </a>
     );

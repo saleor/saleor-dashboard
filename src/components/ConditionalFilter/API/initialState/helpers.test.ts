@@ -20,7 +20,6 @@ describe("ConditionalFilter / API / createInitialStateFromData", () => {
         ],
       },
     } as ApolloQueryResult<_GetChannelOperandsQuery>;
-
     const collectionQuery = {
       data: {
         collections: {
@@ -31,7 +30,6 @@ describe("ConditionalFilter / API / createInitialStateFromData", () => {
         },
       },
     } as ApolloQueryResult<_SearchCollectionsOperandsQuery>;
-
     const categoryQuery = {
       data: {
         categories: {
@@ -42,7 +40,6 @@ describe("ConditionalFilter / API / createInitialStateFromData", () => {
         },
       },
     } as ApolloQueryResult<_SearchCategoriesOperandsQuery>;
-
     const productTypeQuery = {
       data: {
         productTypes: {
@@ -57,7 +54,6 @@ describe("ConditionalFilter / API / createInitialStateFromData", () => {
         },
       },
     } as ApolloQueryResult<_SearchProductTypesOperandsQuery>;
-
     const attributeQuery = {
       data: {
         attributes: {
@@ -100,16 +96,11 @@ describe("ConditionalFilter / API / createInitialStateFromData", () => {
         },
       },
     } as ApolloQueryResult<_SearchAttributeOperandsQuery>;
-    const data = [
-      channelQuery,
-      collectionQuery,
-      categoryQuery,
-      productTypeQuery,
-      attributeQuery,
-    ];
+    const data = [channelQuery, collectionQuery, categoryQuery, productTypeQuery, attributeQuery];
     const channel = ["channel-1"];
     // Act
     const result = createInitialStateFromData(data, channel);
+
     // Assert
     expect(result).toMatchSnapshot();
   });

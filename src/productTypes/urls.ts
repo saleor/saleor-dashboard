@@ -56,7 +56,5 @@ export type ProductTypeUrlQueryParams = BulkAction &
   SingleAction & {
     type?: string;
   };
-export const productTypeUrl = (
-  id: string,
-  params?: ProductTypeUrlQueryParams,
-) => productTypePath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+export const productTypeUrl = (id: string, params?: ProductTypeUrlQueryParams) =>
+  productTypePath(encodeURIComponent(id)) + "?" + stringifyQs(params);
