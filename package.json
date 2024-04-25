@@ -134,6 +134,7 @@
     "@types/fuzzaldrin": "^2.1.4",
     "@types/is-ci": "^3.0.0",
     "@types/jscodeshift": "^0.11.3",
+    "@types/loadable__component": "^5.13.9",
     "@types/lodash-es": "^4.17.3",
     "@types/node": "^20.8.0",
     "@types/qs": "^6.9.12",
