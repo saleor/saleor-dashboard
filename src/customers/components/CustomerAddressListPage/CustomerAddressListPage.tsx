@@ -53,6 +53,7 @@ const messages = defineMessages({
     defaultMessage: "There is no address to show for this customer",
   },
 });
+
 const useStyles = makeStyles(
   theme => ({
     addButton: {
@@ -80,10 +81,13 @@ const useStyles = makeStyles(
   }),
   { name: "CustomerAddressListPage" },
 );
+
 const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props => {
   const { customer, disabled, onAdd, onEdit, onRemove, onSetAsDefault } = props;
   const classes = useStyles(props);
+
   const intl = useIntl();
+
   const isEmpty = customer?.addresses?.length === 0;
   const fullName = getStringOrPlaceholder(
     customer && [customer.firstName, customer.lastName].join(" "),
