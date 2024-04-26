@@ -9,7 +9,7 @@ interface ExampleTableProps {
 
 /**
  * This is example usage of DashboardTable component.
- * TODO: Remove before merging.
+ * TODO: Remove when implementing MERX-360.
  */
 export const ExampleTable: React.FC<ExampleTableProps> = ({ order }) => {
   if (!order?.lines[0]) {
@@ -19,27 +19,27 @@ export const ExampleTable: React.FC<ExampleTableProps> = ({ order }) => {
   const line = order.lines[0];
 
   return (
-    <DashboardTable height="100%">
-      <colgroup>
-        <Box as="col" __width="auto" />
-        <Box as="col" __width="10%" />
-        <Box as="col" __width="15%" />
-        <Box as="col" __width="15%" />
-        <Box as="col" __width="1%" />
-      </colgroup>
+    <DashboardTable height="100%" paddingX={6} striped>
+      <DashboardTable.Colgroup>
+        <DashboardTable.Col __width="auto" />
+        <DashboardTable.Col __width="15%" />
+        <DashboardTable.Col __width="15%" />
+        <DashboardTable.Col __width="15%" />
+        <DashboardTable.Col __width="10%" />
+      </DashboardTable.Colgroup>
       <DashboardTable.Header>
-        <DashboardTable.HeaderCell paddingLeft={6}>Products</DashboardTable.HeaderCell>
+        <DashboardTable.HeaderCell>Products</DashboardTable.HeaderCell>
         <DashboardTable.HeaderCell>Unit price</DashboardTable.HeaderCell>
         <DashboardTable.HeaderCell>Qty. ordered</DashboardTable.HeaderCell>
         <DashboardTable.HeaderCell>Qty. to refund</DashboardTable.HeaderCell>
-        <DashboardTable.HeaderCell></DashboardTable.HeaderCell>
+        <DashboardTable.HeaderCell>Reason</DashboardTable.HeaderCell>
       </DashboardTable.Header>
       <DashboardTable.Body>
         {Array(5)
           .fill(null)
-          .map(() => (
+          .map((_, ix) => (
             <DashboardTable.Row key={line.id + "row"}>
-              <DashboardTable.Cell paddingLeft={{ firstChild: 6, default: 2 }}>
+              <DashboardTable.Cell>
                 <Box display="flex" flexWrap="nowrap" alignItems="center">
                   <Box marginRight={2} width={8}>
                     <img src={line.thumbnail?.url} />
@@ -54,13 +54,22 @@ export const ExampleTable: React.FC<ExampleTableProps> = ({ order }) => {
               </DashboardTable.Cell>
               <DashboardTable.Cell>{line.unitPrice.gross.amount}</DashboardTable.Cell>
               <DashboardTable.Cell>{line.quantity}</DashboardTable.Cell>
-              <DashboardTable.Cell __width="80px">
-                <Input endAdornment={`/${line.quantity}`} backgroundColor="default1" />
+              <DashboardTable.Cell>
+                <Box backgroundColor="default1" display="flex" gap={2}>
+                  <Input
+                    endAdornment={`/${line.quantity}`}
+                    backgroundColor="default1"
+                    size="small"
+                  />
+                  <Button variant="secondary" size="medium">
+                    All
+                  </Button>
+                </Box>
               </DashboardTable.Cell>
               <DashboardTable.Cell>
-                <Box display="flex" justifyContent="center">
-                  <Button variant="secondary">All</Button>
-                </Box>
+                <Button variant="secondary" whiteSpace="nowrap">
+                  {ix % 2 === 0 ? "Add reason" : "Edit reason"}
+                </Button>
               </DashboardTable.Cell>
             </DashboardTable.Row>
           ))}

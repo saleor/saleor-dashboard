@@ -3,23 +3,32 @@ import React from "react";
 
 type TableRootElement = React.ElementRef<"div">;
 
-export const TableRoot = React.forwardRef<TableRootElement, PropsWithBox<unknown>>(
+export const TableContext = React.createContext({ striped: false });
+
+interface TableProps {
+  striped?: boolean;
+}
+
+export const TableRoot = React.forwardRef<TableRootElement, PropsWithBox<TableProps>>(
   (props, forwardedRef) => {
-    const { children, ...rest } = props;
+    const { children, striped = true, ...rest } = props;
 
     return (
-      <Box ref={forwardedRef} height={0} {...rest}>
-        <Box
-          as="table"
-          width="100%"
-          borderColor="default1"
-          borderTopStyle="solid"
-          borderBottomStyle="solid"
-          borderCollapse="collapse"
-        >
-          {children}
+      <TableContext.Provider value={{ striped }}>
+        <Box ref={forwardedRef} height={0} {...rest}>
+          <Box
+            as="table"
+            width="100%"
+            borderColor="default1"
+            borderTopStyle="solid"
+            borderBottomStyle="solid"
+            borderCollapse="collapse"
+            borderWidth={1}
+          >
+            {children}
+          </Box>
         </Box>
-      </Box>
+      </TableContext.Provider>
     );
   },
 );
