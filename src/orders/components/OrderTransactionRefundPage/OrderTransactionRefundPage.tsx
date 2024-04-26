@@ -23,6 +23,7 @@ import {
 } from "./components/OrderTransactionRefundDatagrid/OrderRefundTransactionDatagrid";
 import { OrderTransactionSummary } from "./components/OrderTransactionRefundSummary/OrderTransactionSummary";
 import { OrderTransactionTiles } from "./components/OrderTransactionTiles/OrderTransactionTiles";
+import { ExampleTable } from "./ExampleTable";
 import { orderTransactionRefundMessages as messages } from "./messages";
 import {
   canRefundShipping,
@@ -199,7 +200,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
               </Text>
             </DashboardCard.Content>
           </DashboardCard>
-          <OrderTransactionRefundDatagrid
+          {/* <OrderTransactionRefundDatagrid
             errors={datagridErrors}
             order={order}
             draftRefund={draftRefund}
@@ -207,7 +208,10 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
             onChange={onLinesToRefundChange}
             onMaxQtySet={onSetMaximumQty}
             linesToRefund={linesToRefund}
-          />
+          /> */}
+          <DashboardCard>
+            <ExampleTable order={order} />
+          </DashboardCard>
           <DashboardCard marginBottom={5}>
             <DashboardCard.Content>
               <Text fontWeight="medium" as="p" marginTop={5}>
