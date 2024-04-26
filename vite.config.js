@@ -188,20 +188,12 @@ export default defineConfig(({ command, mode }) => {
               return "vendor";
             }
 
-            if (id.includes("src/components")) {
-              return "components";
-            }
-
-            if (id.includes("src/utils")) {
-              return "utils";
-            }
-
-            if (id.includes("src/hooks")) {
-              return "hooks";
-            }
-
-            if (id.includes("src/graphql")) {
-              return "graphql";
+            if (
+              id.includes("src/components") ||
+              id.includes("src/utils") ||
+              id.includes("src/hooks")
+            ) {
+              return "common";
             }
           },
         },
