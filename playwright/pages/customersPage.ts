@@ -1,11 +1,32 @@
-import type { Page } from "@playwright/test";
+import { URL_LIST } from "@data/url";
+import { AddressDialog } from "@dialogs/addressDialog";
+import { DeleteDialog } from "@dialogs/deleteDialog";
+import { IssueGiftCardDialog } from "@dialogs/issueGiftCardDialog";
+import { AddressForm } from "@forms/addressForm";
+import { BasePage } from "@pages/basePage";
+import { Page } from "@playwright/test";
 
-export class CustomersPage {
-  readonly page: Page;
+export class CustomersPage extends BasePage {
+  readonly addressForm: AddressForm;
+
+  readonly deleteDialog: DeleteDialog;
+
+  readonly issueGiftCardDialog: IssueGiftCardDialog;
+
+  readonly addressDialog: AddressDialog;
 
   constructor(
     page: Page,
     readonly createCustomerButton = page.getByTestId("create-customer"),
+    readonly customerFirstNameInput = page.getByTestId("customer-first-name").locator("input"),
+    readonly customerLastNameInput = page.getByTestId("customer-last-name").locator("input"),
+    readonly customerEmailInput = page.getByTestId("customer-email").locator("input"),
+    readonly customerNoteInput = page.getByTestId("customer-note").locator("textarea[name='note']"),
+    readonly saveButton = page.getByTestId("button-bar-confirm"),
+    readonly deleteButton = page.getByTestId("button-bar-delete"),
+    readonly issueNewGiftCardButton = page.getByTestId("issue-new-gift-card"),
+    readonly emailPageTitleText = page.getByTestId("user-email-title"),
+    readonly customerActiveCheckbox = page.getByTestId("customer-active-checkbox").locator("input"),
   ) {
     super(page);
     this.addressForm = new AddressForm(page);
@@ -15,7 +36,7 @@ export class CustomersPage {
   }
 
   async goToCustomersListView() {
-    await this.waitForNetworkIdleAfterAction(async () => {
+    await this.waitForNetworkIdle(async () => {
       await this.page.goto(URL_LIST.customers);
     });
   }
@@ -25,7 +46,7 @@ export class CustomersPage {
   }
 
   async gotoCustomerDetailsPage(customerId: string) {
-    await this.waitForNetworkIdleAfterAction(async () => {
+    await this.waitForNetworkIdle(async () => {
       await this.page.goto(`${URL_LIST.customers}${customerId}`);
     });
   }
@@ -56,7 +77,7 @@ export class CustomersPage {
   }
 
   async clickIssueNewGiftCard() {
-    await this.waitForNetworkIdleAfterAction(async () => {
+    await this.waitForNetworkIdle(async () => {
       await this.issueNewGiftCardButton.click();
     });
   }

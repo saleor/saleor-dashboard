@@ -95,5 +95,6 @@ export class OrdersPage extends BasePage {
     const orderLink = URL_LIST.orders + orderId;
     await console.log("Navigating to order details view: " + orderLink);
     await this.page.goto(orderLink);
+    await this.waitForGrid();
   }
 }

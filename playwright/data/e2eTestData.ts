@@ -631,3 +631,63 @@ export const PRODUCT_TYPES = {
     ids: ["UHJvZHVjdFR5cGU6NzAw", "UHJvZHVjdFR5cGU6NzAx"],
   },
 };
+export const CUSTOMERS = {
+  deleteCustomer: {
+    id: "VXNlcjoxMzY3",
+    email: "e2e_customer@delete.com",
+  },
+  editCustomer: {
+    id: "VXNlcjoxMzY2",
+    email: "e2e_customer_with_addresses@saleor.io",
+    note: "simple note",
+    initialShippingAddress: {
+      firstName: "e2e_customer_with_addresses",
+      lastName: "to-be-edited",
+      companyName: "Saleor",
+      phone: "+48225042123",
+      addressLine1: "Teczowa",
+      addressLine2: "7",
+      city: "WROCLAW",
+      zip: "53-601",
+      country: "Poland",
+    },
+    initialBillingAddress: {
+      firstName: "address",
+      lastName: "to-be-deleted",
+      companyName: "Saleor",
+      phone: "+48225042123",
+      addressLine1: "Teczowa",
+      addressLine2: "7",
+      city: "WROCLAW",
+      zip: "53-601",
+      country: "Poland",
+    },
+    additionalAddress: {
+      firstName: "Test",
+      lastName: "Test",
+      addressLine1: "Nowy Świat",
+      city: "WARSZAWA",
+      zip: "00-504",
+      country: "Poland",
+    },
+  },
+  customersToBeBulkDeleted: {
+    names: [
+      "e2e_customer_1 bulk-delete",
+      "e2e_customer_2 bulk-delete",
+      "e2e_customer_3 bulk-delete",
+    ],
+  },
+  customerToBeActivated: {
+    id: "VXNlcjoxMzY0",
+    email: "e2e-customer@activate.com",
+    firstName: "e2e-customer",
+    lastName: "to-be-activated",
+  },
+  customerToBeDeactivated: {
+    id: "VXNlcjoxMzY1",
+    email: "e2e-customer@deactivate.com",
+    firstName: "e2e-customer",
+    lastName: "to-be-deactivated",
+  },
+};
