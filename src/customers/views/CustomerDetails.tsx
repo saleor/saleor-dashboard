@@ -33,9 +33,11 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({ id, para
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+
   const customerDetails = useCustomerDetails();
   const user = customerDetails?.customer?.user;
   const customerDetailsLoading = customerDetails?.loading;
+
   const [removeCustomer, removeCustomerOpts] = useRemoveCustomerMutation({
     onCompleted: data => {
       if (data.customerDelete.errors.length === 0) {
@@ -50,6 +52,7 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({ id, para
       }
     },
   });
+
   const [updateCustomer, updateCustomerOpts] = useUpdateCustomerMutation({
     onCompleted: data => {
       if (data.customerUpdate.errors.length === 0) {
@@ -60,6 +63,7 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({ id, para
       }
     },
   });
+
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
@@ -82,6 +86,7 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({ id, para
         },
       }),
     );
+
   const handleSubmit = createMetadataUpdateHandler(
     user,
     updateData,
@@ -91,7 +96,7 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({ id, para
 
   return (
     <>
-      <WindowTitle title={user?.email} />
+      <WindowTitle title={user?.email} data-test-id="user-email-title" />
       <CustomerDetailsPage
         customerId={id}
         customer={user}

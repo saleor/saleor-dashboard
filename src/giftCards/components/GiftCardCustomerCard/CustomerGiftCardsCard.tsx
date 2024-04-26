@@ -29,6 +29,7 @@ const CustomerGiftCardsCard: React.FC = () => {
   const customerDetails = useCustomerDetails();
   const customer = customerDetails?.customer?.user;
   const id = customer?.id;
+
   const { data, loading } = useCustomerGiftCardListQuery({
     variables: {
       first: 5,
@@ -38,14 +39,19 @@ const CustomerGiftCardsCard: React.FC = () => {
     },
     skip: !id,
   });
+
   const closeCreateDialog = () => setOpenCreateDialog(false);
+
   const giftCards = mapEdgesToItems(data?.giftCards);
+
   const classes = useCardActionsStyles({
     buttonPosition: giftCards?.length > 0 ? "right" : "left",
   });
+
   const viewAllGiftCardsUrl = giftCardListUrl({
     usedBy: [id],
   });
+
   const handleCreateNewCardButton = () => {
     setOpenCreateDialog(true);
   };
@@ -85,7 +91,11 @@ const CustomerGiftCardsCard: React.FC = () => {
           <Skeleton />
         )}
         <CardActions className={classes.cardActions}>
-          <Button variant="tertiary" onClick={handleCreateNewCardButton}>
+          <Button
+            variant="tertiary"
+            onClick={handleCreateNewCardButton}
+            data-test-id="issue-new-gift-card"
+          >
             <FormattedMessage {...messages.customerGiftCardsIssueNewCardButton} />
           </Button>
         </CardActions>

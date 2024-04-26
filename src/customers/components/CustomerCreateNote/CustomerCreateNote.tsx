@@ -24,6 +24,7 @@ const CustomerCreateNote: React.FC<CustomerCreateNoteProps> = ({
   onChange,
 }) => {
   const intl = useIntl();
+
   const formErrors = getFormErrors(["note"], errors);
 
   return (
@@ -44,6 +45,7 @@ const CustomerCreateNote: React.FC<CustomerCreateNoteProps> = ({
         </Typography>
         <FormSpacer />
         <TextField
+          data-test-id="customer-note"
           disabled={disabled}
           error={!!formErrors.note}
           fullWidth

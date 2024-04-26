@@ -15,26 +15,33 @@ const AddressFormatter: React.FC<AddressFormatterProps> = ({ address }) => {
 
   return (
     <address
+      data-test-id="address"
       style={{
         fontStyle: "inherit",
       }}
     >
-      <Typography component="p">
+      <Typography component="p" data-test-id="name">
         {address.firstName} {address.lastName}
       </Typography>
-      <Typography component="p">{address.phone}</Typography>
-      {address.companyName && <Typography component="p">{address.companyName}</Typography>}
-      <Typography component="p">
+      <Typography component="p" data-test-id="phone">
+        {address.phone}
+      </Typography>
+      {address.companyName && (
+        <Typography component="p" data-test-id="company-name">
+          {address.companyName}
+        </Typography>
+      )}
+      <Typography component="p" data-test-id="addressLines">
         {address.streetAddress1}
         <br />
         {address.streetAddress2}
       </Typography>
-      <Typography component="p">
+      <Typography component="p" data-test-id="postal-code-and-city">
         {" "}
         {address.postalCode} {address.city}
         {address.cityArea ? ", " + address.cityArea : ""}
       </Typography>
-      <Typography component="p">
+      <Typography component="p" data-test-id="country-area-and-country">
         {address.countryArea
           ? address.countryArea + ", " + address.country.country
           : address.country.country}
