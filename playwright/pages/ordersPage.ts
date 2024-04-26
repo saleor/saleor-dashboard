@@ -108,5 +108,6 @@ export class OrdersPage extends BasePage {
 
     await console.log("Navigating to order details view: " + orderLink);
     await this.page.goto(orderLink);
+    await this.waitForGrid();
   }
 }

@@ -47,6 +47,7 @@ export class DraftOrdersPage extends BasePage {
 
   async goToDraftOrdersListView() {
     await this.page.goto(URL_LIST.draftOrders);
+    await this.waitForGrid();
   }
 
   async clickBulkDeleteButton() {
