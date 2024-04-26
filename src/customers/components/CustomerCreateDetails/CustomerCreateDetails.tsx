@@ -32,8 +32,10 @@ export interface CustomerCreateDetailsProps {
 
 const CustomerCreateDetails: React.FC<CustomerCreateDetailsProps> = props => {
   const { data, disabled, errors, onChange } = props;
+
   const classes = useStyles(props);
   const intl = useIntl();
+
   const formErrors = getFormErrors(["customerFirstName", "customerLastName", "email"], errors);
 
   return (
@@ -48,6 +50,7 @@ const CustomerCreateDetails: React.FC<CustomerCreateDetailsProps> = props => {
       <CardContent>
         <div className={classes.root}>
           <TextField
+            data-test-id="customer-first-name"
             disabled={disabled}
             error={!!formErrors.customerFirstName}
             fullWidth
@@ -62,6 +65,7 @@ const CustomerCreateDetails: React.FC<CustomerCreateDetailsProps> = props => {
             }}
           />
           <TextField
+            data-test-id="customer-last-name"
             disabled={disabled}
             error={!!formErrors.customerLastName}
             fullWidth
@@ -76,6 +80,7 @@ const CustomerCreateDetails: React.FC<CustomerCreateDetailsProps> = props => {
             }}
           />
           <TextField
+            data-test-id="customer-email"
             disabled={disabled}
             error={!!formErrors.email}
             fullWidth

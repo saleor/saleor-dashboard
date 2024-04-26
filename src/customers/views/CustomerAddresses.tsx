@@ -35,10 +35,12 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({ id, params }) => 
   const notify = useNotifier();
   const shop = useShop();
   const intl = useIntl();
+
   const [openModal, closeModal] = createDialogActionHandlers<
     CustomerAddressesUrlDialog,
     CustomerAddressesUrlQueryParams
   >(navigate, params => customerAddressesUrl(id, params), params);
+
   const [setCustomerDefaultAddress] = useSetCustomerDefaultAddressMutation({
     onCompleted: data => {
       if (data.addressSetDefault.errors.length === 0) {
@@ -50,6 +52,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({ id, params }) => 
       }
     },
   });
+
   const [createCustomerAddress, createCustomerAddressOpts] = useCreateCustomerAddressMutation({
     onCompleted: data => {
       if (data.addressCreate.errors.length === 0) {
@@ -57,6 +60,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({ id, params }) => 
       }
     },
   });
+
   const [updateCustomerAddress, updateCustomerAddressOpts] = useUpdateCustomerAddressMutation({
     onCompleted: data => {
       if (data.addressUpdate.errors.length === 0) {
@@ -68,6 +72,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({ id, params }) => 
       }
     },
   });
+
   const [removeCustomerAddress, removeCustomerAddressOpts] = useRemoveCustomerAddressMutation({
     onCompleted: data => {
       if (data.addressDelete.errors.length === 0) {
@@ -79,12 +84,14 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({ id, params }) => 
       }
     },
   });
+
   const customerData = useCustomerAddressesQuery({
     displayLoader: true,
     variables: {
       id,
     },
   });
+
   const countryChoices = shop?.countries || [];
 
   return (
@@ -162,7 +169,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({ id, params }) => 
           })
         }
       >
-        <DialogContentText>
+        <DialogContentText data-test-id="delete-address-dialog-content">
           <FormattedMessage
             id="/kWzY1"
             defaultMessage="Are you sure you want to delete this address from users address book?"
