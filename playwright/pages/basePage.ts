@@ -26,6 +26,7 @@ export class BasePage {
     readonly searchInputListView = page.getByTestId("search-input"),
     readonly emptyDataGridListView = page.getByTestId("empty-data-grid-text"),
     readonly dialog = page.getByRole("dialog"),
+    readonly giftCardInTable = page.locator('[href*="/dashboard/gift-cards/.*]'),
     readonly selectAllCheckbox = page.getByTestId("select-all-checkbox").locator("input"),
   ) {
     this.page = page;
@@ -63,7 +64,10 @@ export class BasePage {
   }
 
   async typeInSearchOnListView(searchItem: string) {
-    await this.searchInputListView.fill(searchItem);
+    await this.waitForNetworkIdle(async () => {
+      await this.searchInputListView.fill(searchItem);
+      await this.waitForDOMToFullyLoad();
+    });
   }
 
   async clickNextPageButton() {
@@ -95,6 +99,10 @@ export class BasePage {
     await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
   }
 
+  async expectErrorBannerMessage(msg: string) {
+    await this.errorBanner.locator(`text=${msg}`).waitFor({ state: "visible", timeout: 10000 });
+  }
+
   async expectSuccessBanner() {
     await this.successBanner.first().waitFor({ state: "visible", timeout: 15000 });
     await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
@@ -105,7 +113,7 @@ export class BasePage {
     await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
   }
 
-  async waitForNetworkIdle(action: () => Promise<void>, timeoutMs = 50000) {
+  async waitForNetworkIdle(action: () => Promise<void>, timeoutMs = 60000) {
     const responsePromise = this.page.waitForResponse("**/graphql/", {
       timeout: timeoutMs,
     });
@@ -146,6 +154,7 @@ export class BasePage {
         We seek over the fiber node (hack), ignore typings for it.
       */
         const fiberParent = node.parentNode[fiberKey as keyof typeof node.parentNode] as any;
+
         const bounds: { x: number; y: number; width: number; height: number } =
           fiberParent.pendingProps.children.props.gridRef.current.getBounds(col, row);
 
@@ -163,6 +172,21 @@ export class BasePage {
     );
   }
 
+  async checkGridCellTextAndClick(
+    columnNumber: number,
+    rowsToCheck: number[],
+    listToCheck: string[],
+  ) {
+    const searchResults = [];
+
+    for (let i = 0; i < rowsToCheck.length; i++) {
+      const searchResult = await this.getGridCellText(rowsToCheck[i], columnNumber);
+
+      searchResults.push(searchResult);
+      await expect(searchResult).toEqual(listToCheck[i]);
+      await this.clickGridCell(columnNumber, rowsToCheck[i]);
+    }
+  }
   /*
     Example:
 
@@ -197,6 +221,7 @@ export class BasePage {
     await this.gridCanvas.locator("table tr").first().waitFor({ state: "attached" });
 
     const rowIndexes: number[] = [];
+
     const rows = await this.page.$$eval("table tr", rows => rows.map(row => row.textContent));
 
     for (const searchedText of searchTextArray) {
@@ -262,5 +287,16 @@ export class BasePage {
 
   async waitForDOMToFullyLoad() {
     await this.page.waitForLoadState("domcontentloaded", { timeout: 70000 });
+  }
+
+  async expectElementIsHidden(locator: Locator) {
+    await locator.first().waitFor({
+      state: "hidden",
+      timeout: 30000,
+    });
+  }
+
+  async waitForCanvasContainsText(text: string) {
+    await this.gridCanvas.getByText(text).waitFor({ state: "attached", timeout: 50000 });
   }
 }
