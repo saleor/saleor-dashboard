@@ -1,16 +1,16 @@
 import { Box, PropsWithBox } from "@saleor/macaw-ui-next";
 import React from "react";
 
-import { TableContext } from "./Root";
+import { GridTableContext } from "./Root";
 
-type TableRowElement = React.ElementRef<"tr">;
+type GridTableRowElement = React.ElementRef<"tr">;
 
-export const TableRow = React.forwardRef<TableRowElement, PropsWithBox<unknown>>(
+export const GridTableRow = React.forwardRef<GridTableRowElement, PropsWithBox<unknown>>(
   ({ children, ...props }, forwardedRef) => {
-    const ctx = React.useContext(TableContext);
+    const ctx = React.useContext(GridTableContext);
 
     if (!ctx) {
-      throw new Error("TableRow must be used within a TableRoot");
+      throw new Error("GridTableRow must be used within a GridTableRoot");
     }
 
     const backgroundColor = ctx.striped ? { evenChild: "default2" as const } : undefined;
@@ -22,4 +22,4 @@ export const TableRow = React.forwardRef<TableRowElement, PropsWithBox<unknown>>
     );
   },
 );
-TableRow.displayName = "Table.Row";
+GridTableRow.displayName = "GridTable.Row";

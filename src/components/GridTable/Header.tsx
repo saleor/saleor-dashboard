@@ -1,13 +1,13 @@
 import { Box, PropsWithBox } from "@saleor/macaw-ui-next";
 import React from "react";
 
-type TableHeaderElement = React.ElementRef<"thead">;
+type GridTableHeaderElement = React.ElementRef<"thead">;
 
-export const TableHeader = React.forwardRef<TableHeaderElement, PropsWithBox<unknown>>(
+export const GridTableHeader = React.forwardRef<GridTableHeaderElement, PropsWithBox<unknown>>(
   ({ children, ...props }, forwardedRef) => (
     <Box as="thead" ref={forwardedRef} {...props}>
       {children}
     </Box>
   ),
 );
-TableHeader.displayName = "Table.Header";
+GridTableHeader.displayName = "GridTable.Header";

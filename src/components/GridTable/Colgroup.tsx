@@ -1,13 +1,13 @@
 import { Box, PropsWithBox } from "@saleor/macaw-ui-next";
 import React from "react";
 
-type TableColgroupElement = React.ElementRef<"thead">;
+type GridTableColgroupElement = React.ElementRef<"thead">;
 
-export const TableColgroup = React.forwardRef<TableColgroupElement, PropsWithBox<unknown>>(
+export const GridTableColgroup = React.forwardRef<GridTableColgroupElement, PropsWithBox<unknown>>(
   ({ children, ...props }, forwardedRef) => (
     <Box as="colgroup" ref={forwardedRef} {...props}>
       {children}
     </Box>
   ),
 );
-TableColgroup.displayName = "Table.Colgroup";
+GridTableColgroup.displayName = "GridTable.Colgroup";

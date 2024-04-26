@@ -1,4 +1,4 @@
-import { DashboardTable } from "@dashboard/components/Table";
+import { GridTable } from "@dashboard/components/GridTable";
 import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
 import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -8,7 +8,7 @@ interface ExampleTableProps {
 }
 
 /**
- * This is example usage of DashboardTable component.
+ * This is example usage of GridTable component.
  * TODO: Remove when implementing MERX-360.
  */
 export const ExampleTable: React.FC<ExampleTableProps> = ({ order }) => {
@@ -19,27 +19,27 @@ export const ExampleTable: React.FC<ExampleTableProps> = ({ order }) => {
   const line = order.lines[0];
 
   return (
-    <DashboardTable height="100%" paddingX={6} striped>
-      <DashboardTable.Colgroup>
-        <DashboardTable.Col __width="auto" />
-        <DashboardTable.Col __width="15%" />
-        <DashboardTable.Col __width="15%" />
-        <DashboardTable.Col __width="15%" />
-        <DashboardTable.Col __width="10%" />
-      </DashboardTable.Colgroup>
-      <DashboardTable.Header>
-        <DashboardTable.HeaderCell>Products</DashboardTable.HeaderCell>
-        <DashboardTable.HeaderCell>Unit price</DashboardTable.HeaderCell>
-        <DashboardTable.HeaderCell>Qty. ordered</DashboardTable.HeaderCell>
-        <DashboardTable.HeaderCell>Qty. to refund</DashboardTable.HeaderCell>
-        <DashboardTable.HeaderCell>Reason</DashboardTable.HeaderCell>
-      </DashboardTable.Header>
-      <DashboardTable.Body>
+    <GridTable height="100%" paddingX={6} striped>
+      <GridTable.Colgroup>
+        <GridTable.Col __width="auto" />
+        <GridTable.Col __width="15%" />
+        <GridTable.Col __width="15%" />
+        <GridTable.Col __width="15%" />
+        <GridTable.Col __width="10%" />
+      </GridTable.Colgroup>
+      <GridTable.Header>
+        <GridTable.HeaderCell>Products</GridTable.HeaderCell>
+        <GridTable.HeaderCell>Unit price</GridTable.HeaderCell>
+        <GridTable.HeaderCell>Qty. ordered</GridTable.HeaderCell>
+        <GridTable.HeaderCell>Qty. to refund</GridTable.HeaderCell>
+        <GridTable.HeaderCell>Reason</GridTable.HeaderCell>
+      </GridTable.Header>
+      <GridTable.Body>
         {Array(5)
           .fill(null)
           .map((_, ix) => (
-            <DashboardTable.Row key={line.id + "row"}>
-              <DashboardTable.Cell>
+            <GridTable.Row key={line.id + "row"}>
+              <GridTable.Cell>
                 <Box display="flex" flexWrap="nowrap" alignItems="center">
                   <Box marginRight={2} width={8}>
                     <img src={line.thumbnail?.url} />
@@ -51,10 +51,10 @@ export const ExampleTable: React.FC<ExampleTableProps> = ({ order }) => {
                     </Text>
                   </Box>
                 </Box>
-              </DashboardTable.Cell>
-              <DashboardTable.Cell>{line.unitPrice.gross.amount}</DashboardTable.Cell>
-              <DashboardTable.Cell>{line.quantity}</DashboardTable.Cell>
-              <DashboardTable.Cell>
+              </GridTable.Cell>
+              <GridTable.Cell>{line.unitPrice.gross.amount}</GridTable.Cell>
+              <GridTable.Cell>{line.quantity}</GridTable.Cell>
+              <GridTable.Cell>
                 <Box backgroundColor="default1" display="flex" gap={2}>
                   <Input
                     endAdornment={`/${line.quantity}`}
@@ -65,15 +65,15 @@ export const ExampleTable: React.FC<ExampleTableProps> = ({ order }) => {
                     All
                   </Button>
                 </Box>
-              </DashboardTable.Cell>
-              <DashboardTable.Cell>
+              </GridTable.Cell>
+              <GridTable.Cell>
                 <Button variant="secondary" whiteSpace="nowrap">
                   {ix % 2 === 0 ? "Add reason" : "Edit reason"}
                 </Button>
-              </DashboardTable.Cell>
-            </DashboardTable.Row>
+              </GridTable.Cell>
+            </GridTable.Row>
           ))}
-      </DashboardTable.Body>
-    </DashboardTable>
+      </GridTable.Body>
+    </GridTable>
   );
 };

@@ -1,20 +1,20 @@
 import { Box, PropsWithBox } from "@saleor/macaw-ui-next";
 import React from "react";
 
-type TableRootElement = React.ElementRef<"div">;
+type GridTableRootElement = React.ElementRef<"div">;
 
-export const TableContext = React.createContext({ striped: false });
+export const GridTableContext = React.createContext({ striped: false });
 
-interface TableProps {
+interface GridTableProps {
   striped?: boolean;
 }
 
-export const TableRoot = React.forwardRef<TableRootElement, PropsWithBox<TableProps>>(
+export const GridTableRoot = React.forwardRef<GridTableRootElement, PropsWithBox<GridTableProps>>(
   (props, forwardedRef) => {
     const { children, striped = true, ...rest } = props;
 
     return (
-      <TableContext.Provider value={{ striped }}>
+      <GridTableContext.Provider value={{ striped }}>
         <Box ref={forwardedRef} height={0} {...rest}>
           <Box
             as="table"
@@ -28,8 +28,8 @@ export const TableRoot = React.forwardRef<TableRootElement, PropsWithBox<TablePr
             {children}
           </Box>
         </Box>
-      </TableContext.Provider>
+      </GridTableContext.Provider>
     );
   },
 );
-TableRoot.displayName = "Table.Root";
+GridTableRoot.displayName = "GridTable.Root";

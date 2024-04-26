@@ -1,9 +1,9 @@
 import { Box, PropsWithBox } from "@saleor/macaw-ui-next";
 import React from "react";
 
-type TableCellElement = React.ElementRef<"td">;
+type GridTableCellElement = React.ElementRef<"td">;
 
-export const TableCell = React.forwardRef<TableCellElement, PropsWithBox<unknown>>(
+export const GridTableCell = React.forwardRef<GridTableCellElement, PropsWithBox<unknown>>(
   ({ children, ...props }, forwardedRef) => {
     return (
       <Box
@@ -22,4 +22,4 @@ export const TableCell = React.forwardRef<TableCellElement, PropsWithBox<unknown
     );
   },
 );
-TableCell.displayName = "Table.Cell";
+GridTableCell.displayName = "GridTable.Cell";
