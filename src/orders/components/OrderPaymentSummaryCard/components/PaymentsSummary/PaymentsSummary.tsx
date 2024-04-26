@@ -27,7 +27,6 @@ export const PaymentsSummary: React.FC<PaymentsSummaryProps> = ({ order }) => {
 
         {shouldDisplay.authorizedPending && (
           <SummaryLine
-            hideEmpty
             text={<FormattedMessage {...orderPaymentMessages.authorized} />}
             subText={<FormattedMessage {...orderPaymentMessages.pending} />}
             money={order.totalAuthorizePending}
@@ -47,16 +46,13 @@ export const PaymentsSummary: React.FC<PaymentsSummaryProps> = ({ order }) => {
           />
         )}
 
-        {shouldDisplay.cancelled && (
-          <SummaryLine
-            text={<FormattedMessage {...orderPaymentMessages.cancelled} />}
-            money={order.totalCanceled}
-          />
-        )}
+        <SummaryLine
+          text={<FormattedMessage {...orderPaymentMessages.cancelled} />}
+          money={order.totalCanceled}
+        />
 
         {shouldDisplay.cancelledPending && (
           <SummaryLine
-            hideEmpty
             text={<FormattedMessage {...orderPaymentMessages.cancelled} />}
             subText={<FormattedMessage {...orderPaymentMessages.pending} />}
             money={order.totalCancelPending}
