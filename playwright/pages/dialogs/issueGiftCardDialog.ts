@@ -1,8 +1,7 @@
+import { BasePage } from "@pages/basePage";
 import { Page } from "@playwright/test";
 
-export class IssueGiftCardDialog {
-  readonly page: Page;
-
+export class IssueGiftCardDialog extends BasePage {
   constructor(
     page: Page,
     readonly enterAmountInput = page.locator('[name="balanceAmount"]'),
@@ -33,11 +32,13 @@ export class IssueGiftCardDialog {
     readonly okButton = page.getByTestId("submit"),
     readonly copyCodeButton = page.getByTestId("copy-code-button"),
   ) {
-    this.page = page;
+    super(page);
   }
 
   async clickIssueButton() {
-    await this.issueButton.click();
+    await this.waitForNetworkIdle(async () => {
+      await this.issueButton.click();
+    });
   }
   async clickOkButton() {
     await this.okButton.click();
@@ -86,5 +87,11 @@ export class IssueGiftCardDialog {
   }
   async clickRequiresActivationCheckbox() {
     await this.requiresActivationCheckbox.click();
+  }
+
+  async getGiftCardCode() {
+    const allTexts = await this.cardCode.allTextContents();
+
+    return allTexts[0];
   }
 }

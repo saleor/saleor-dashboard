@@ -1,9 +1,9 @@
+import { BasePage } from "@pages/basePage";
 import { ChannelSelectDialog } from "@pages/dialogs/channelSelectDialog";
 import { expect, Locator, Page } from "@playwright/test";
 
-export class RightSideDetailsPage {
+export class RightSideDetailsPage extends BasePage {
   readonly channelSelectDialog: ChannelSelectDialog;
-  readonly page: Page;
 
   constructor(
     page: Page,
@@ -80,7 +80,7 @@ export class RightSideDetailsPage {
       "PRIORITIZE_HIGH_STOCK",
     ),
   ) {
-    this.page = page;
+    super(page);
     this.channelSelectDialog = new ChannelSelectDialog(page);
   }
 
@@ -102,9 +102,7 @@ export class RightSideDetailsPage {
     }
   }
   async typeAndSelectSingleWarehouseShippingPage(warehouse = "Europe") {
-    await this.selectWarehouseShippingMethodButton
-      .locator("input")
-      .fill(warehouse);
+    await this.selectWarehouseShippingMethodButton.locator("input").fill(warehouse);
 
     await this.selectOption.filter({ hasText: warehouse }).first().click();
     // below click hides prompted options
@@ -112,9 +110,7 @@ export class RightSideDetailsPage {
   }
   async typeAndSelectMultipleWarehousesShippingPage(warehouses: string[]) {
     for (const warehouse of warehouses) {
-      await this.selectWarehouseShippingMethodButton
-        .locator("input")
-        .fill(warehouse);
+      await this.selectWarehouseShippingMethodButton.locator("input").fill(warehouse);
 
       await this.selectOption.filter({ hasText: warehouse }).first().click();
     }
@@ -188,6 +184,7 @@ export class RightSideDetailsPage {
   }
   async selectCustomer(customer = "allison.freeman@example.com") {
     await this.selectCustomerOption.locator(`text=${customer}`).click();
+    await this.waitForDOMToFullyLoad();
   }
   async selectOneChannelAsAvailableWhenMoreSelected(channel: string) {
     await this.manageChannelsButton.click();
@@ -199,6 +196,6 @@ export class RightSideDetailsPage {
     await this.manageChannelsButton.click();
     await this.channelSelectDialog.selectChannel(channel);
     await this.channelSelectDialog.clickConfirmButton();
-    await this.page.waitForLoadState("domcontentloaded");
+    await this.waitForDOMToFullyLoad();
   }
 }

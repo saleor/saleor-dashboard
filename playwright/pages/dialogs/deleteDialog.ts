@@ -15,10 +15,10 @@ export class DeleteDialog extends BasePage {
   }
 
   async clickDeleteButton() {
-    await this.waitForNetworkIdleAfterAction(async () => {
+    await this.waitForNetworkIdle(async () => {
       await this.deleteButton.first().click();
+      await this.deleteButton.waitFor({ state: "hidden" });
     });
-    await this.deleteButton.waitFor({ state: "hidden" });
   }
   async clickConfirmDeletionCheckbox() {
     await this.confirmDeletionCheckbox.click();
