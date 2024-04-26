@@ -565,6 +565,10 @@
     "context": "section header",
     "string": "Recent Orders"
   },
+  "1N8lSy": {
+    "context": "Order summary payment header",
+    "string": "Payments summary"
+  },
   "1T1fP8": {
     "context": "range input label",
     "string": "Postal codes (start)"
@@ -2889,10 +2893,6 @@
   "H3Uirw": {
     "context": "create new menu item, header",
     "string": "Add Item"
-  },
-  "H52OCA": {
-    "context": "Order summary payment header",
-    "string": "Payment"
   },
   "H5NKfr": {
     "context": "button",
@@ -6945,6 +6945,9 @@
   },
   "iMJka8": {
     "string": "No pages found"
+  },
+  "iOOPMd": {
+    "string": "A summary of all payments from registered transactions"
   },
   "iPk640": {
     "context": "dialog header",

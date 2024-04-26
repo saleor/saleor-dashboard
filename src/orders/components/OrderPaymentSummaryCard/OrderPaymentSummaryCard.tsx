@@ -69,6 +69,7 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkA
           />
         }
         title={<FormattedMessage {...orderPaymentMessages.paymentTitle} />}
+        subtitle={<FormattedMessage {...orderPaymentMessages.paymentSubtitle} />}
       />
       {showHasNoPayment ? (
         <CardContent className={classes.noPaymentContent} data-test-id="payment-section">
