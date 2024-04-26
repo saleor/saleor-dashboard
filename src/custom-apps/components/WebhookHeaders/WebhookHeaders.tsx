@@ -106,7 +106,7 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data: { customHeaders }
                       <FormattedMessage
                         {...messages.acceptedFormat}
                         values={{
-                          code: (...chunks) => <code>${chunks}</code>,
+                          code: (...chunks) => <code>{chunks}</code>,
                         }}
                       />
                     </Typography>
