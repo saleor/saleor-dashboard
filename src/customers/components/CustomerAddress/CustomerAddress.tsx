@@ -54,6 +54,7 @@ const messages = defineMessages({
     description: "button",
   },
 });
+
 const useStyles = makeStyles(
   {
     actions: {
@@ -83,11 +84,13 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
     onSetAsDefault,
   } = props;
   const classes = useStyles(props);
+
   const intl = useIntl();
 
   return (
-    <Card className={classes.card}>
+    <Card data-test-id="address-card" className={classes.card}>
       <CardTitle
+        data-test-id="address-type-title"
         title={
           address ? (
             <>
