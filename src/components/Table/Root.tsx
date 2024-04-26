@@ -1,6 +1,5 @@
 import { Box, PropsWithBox } from "@saleor/macaw-ui-next";
 import React from "react";
-// import * as ScrollArea from '@radix-ui/react-scroll-area';
 
 type TableRootElement = React.ElementRef<"div">;
 
