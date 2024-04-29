@@ -1,6 +1,5 @@
 const { Command } = require("commander");
 const program = new Command();
-const { Octokit } = require("@octokit/core");
 
 program
   .name("Send tests results")
@@ -53,41 +52,13 @@ function convertResults(results, environment, refName) {
   let status = results?.result?.status === 2 ? "SUCCESS" : "FAILURE";
   let message = `Tests run on environment: \n${environment}\n`;
   const linkToResults = `https:\/\/saleor.testmo.net\/automation\/runs\/view\/${results.result.id}`;
-  const threads = results.result.threads;
-
-  if (Array.isArray(threads)) {
-    const failureCount = threads
-      .map(thread => thread.failure_count)
-      .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-
-    const successCount = threads
-      .map(thread => thread.success_count)
-      .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-
-    const skippedCount = threads
-      .map(thread => thread.total_count - thread.completed_count)
-      .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-
-    if (failureCount > 0) {
-      message += `${failureCount} tests failed. `;
-    }
-    if (successCount > 0) {
-      message += `${successCount} tests passed. `;
-    }
-    if (skippedCount > 0) {
-      message += `${skippedCount} tests skipped. `;
-    }
-  } else {
-    status = "FAILURE";
-    message = "Empty test run. ";
-  }
 
   message += `See results at ${linkToResults}`;
 
   return {
     status,
     message,
-    title: `Cypress tests run on ${refName}`,
+    title: `Tests run on ${refName}`,
     linkToResults,
   };
 }
