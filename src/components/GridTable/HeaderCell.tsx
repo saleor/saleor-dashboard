@@ -14,15 +14,16 @@ export const GridTableHeaderCell = React.forwardRef<
     <Box
       as="th"
       ref={forwardedRef}
-      borderStyle="solid"
-      borderColor="default1"
       textAlign="left"
       padding={2}
       fontSize={2}
       fontWeight="medium"
       color="default1"
-      borderLeftStyle={{ firstChild: "none", default: "solid" }}
-      borderRightStyle={{ lastChild: "none", default: "solid" }}
+      borderTopStyle="solid"
+      borderBottomStyle="solid"
+      borderCollapse="collapse"
+      borderColor="default1"
+      borderWidth={1}
       {...props}
     >
       {children}

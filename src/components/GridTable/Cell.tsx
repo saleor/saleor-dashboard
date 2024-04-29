@@ -13,11 +13,12 @@ export const GridTableCell = React.forwardRef<GridTableCellElement, GridTableCel
         as="td"
         ref={forwardedRef}
         height="100%"
-        borderStyle="solid"
-        borderColor="default1"
         padding={2}
-        borderLeftStyle={{ firstChild: "none", default: "solid" }}
-        borderRightStyle={{ lastChild: "none", default: "solid" }}
+        borderTopStyle="solid"
+        borderBottomStyle="solid"
+        borderCollapse="collapse"
+        borderColor="default1"
+        borderWidth={1}
         {...props}
       >
         {children}

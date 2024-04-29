@@ -1,5 +1,7 @@
 import { GridTable } from "@dashboard/components/GridTable";
+import { formatMoney } from "@dashboard/components/Money";
 import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
+import useLocale from "@dashboard/hooks/useLocale";
 import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
@@ -12,6 +14,8 @@ interface ExampleTableProps {
  * TODO: Remove when implementing MERX-360.
  */
 export const ExampleTable: React.FC<ExampleTableProps> = ({ order }) => {
+  const locale = useLocale();
+
   if (!order?.lines[0]) {
     return null;
   }
@@ -19,45 +23,61 @@ export const ExampleTable: React.FC<ExampleTableProps> = ({ order }) => {
   const line = order.lines[0];
 
   return (
-    <GridTable height="100%" paddingX={6} striped>
+    <GridTable height="100%" paddingX={6} striped={false}>
       <GridTable.Colgroup>
-        <GridTable.Col __width="auto" />
-        <GridTable.Col __width="15%" />
-        <GridTable.Col __width="15%" />
-        <GridTable.Col __width="15%" />
+        <GridTable.Col __width="45%" />
+        <GridTable.Col __width="20%" />
+        <GridTable.Col __width="25%" />
         <GridTable.Col __width="10%" />
       </GridTable.Colgroup>
-      <GridTable.Header>
-        <GridTable.HeaderCell>Products</GridTable.HeaderCell>
-        <GridTable.HeaderCell>Unit price</GridTable.HeaderCell>
-        <GridTable.HeaderCell>Qty. ordered</GridTable.HeaderCell>
-        <GridTable.HeaderCell>Qty. to refund</GridTable.HeaderCell>
-        <GridTable.HeaderCell>Reason</GridTable.HeaderCell>
-      </GridTable.Header>
       <GridTable.Body>
         {Array(5)
           .fill(null)
           .map((_, ix) => (
             <GridTable.Row key={line.id + "row"}>
               <GridTable.Cell>
-                <Box display="flex" flexWrap="nowrap" alignItems="center">
-                  <Box marginRight={2} width={8}>
+                <Box
+                  display="grid"
+                  __gridTemplateColumns="minmax(0, 1fr) auto"
+                  gap={10}
+                  alignItems="center"
+                >
+                  <Box minWidth={8}>
                     <img src={line.thumbnail?.url} />
                   </Box>
-                  <Box display="flex" flexDirection="column">
+                  <Box overflow="hidden" minWidth={0}>
                     <Text size={2}>{line.productName}</Text>
-                    <Text size={2} color="default2">
-                      {"XL"}
-                    </Text>
+                    <Box overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap">
+                      <Text size={2} color="default2" textOverflow="ellipsis" overflow="hidden">
+                        {"500 ml / With Aloe Vera / White packaging / Mango - Passion fruit"}
+                      </Text>
+                    </Box>
                   </Box>
                 </Box>
               </GridTable.Cell>
-              <GridTable.Cell>{line.unitPrice.gross.amount}</GridTable.Cell>
-              <GridTable.Cell>{line.quantity}</GridTable.Cell>
+              <GridTable.Cell>
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  overflow="hidden"
+                  flexShrink="1"
+                  __minWidth="0px"
+                >
+                  {`${ix === 3 ? 5 : 999} ⨉ `}
+                  {formatMoney(line.unitPrice.gross, locale.locale)}
+                  {ix === 3 && (
+                    <Text size={2} whiteSpace="nowrap" color="default2">
+                      2 already refunded
+                    </Text>
+                  )}
+                </Box>
+              </GridTable.Cell>
               <GridTable.Cell>
                 <Box backgroundColor="default1" display="flex" gap={2}>
                   <Input
-                    endAdornment={`/${line.quantity}`}
+                    __minWidth="40px"
+                    placeholder="0"
+                    endAdornment={<Box whiteSpace="nowrap">of {ix === 3 ? 3 : 999}</Box>}
                     backgroundColor="default1"
                     size="small"
                   />

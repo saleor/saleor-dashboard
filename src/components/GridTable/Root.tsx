@@ -23,11 +23,14 @@ export const GridTableRoot = React.forwardRef<GridTableRootElement, GridTableRoo
             ref={forwardedRef}
             as="table"
             width="100%"
-            borderColor="default1"
             borderTopStyle="solid"
             borderBottomStyle="solid"
             borderCollapse="collapse"
+            borderColor="default1"
             borderWidth={1}
+            style={{
+              borderSpacing: 0,
+            }}
           >
             {children}
           </Box>
