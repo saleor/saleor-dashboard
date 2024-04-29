@@ -15,8 +15,9 @@ export const GridTableRoot = React.forwardRef<GridTableRootElement, PropsWithBox
 
     return (
       <GridTableContext.Provider value={{ striped }}>
-        <Box ref={forwardedRef} height={0} {...rest}>
+        <Box height={0} {...rest}>
           <Box
+            ref={forwardedRef}
             as="table"
             width="100%"
             borderColor="default1"
