@@ -14,7 +14,7 @@ type GridTableRootProps = PropsWithBox<
 
 export const GridTableRoot = React.forwardRef<GridTableRootElement, GridTableRootProps>(
   (props, forwardedRef) => {
-    const { children, striped = true, ...rest } = props;
+    const { children, striped = false, ...rest } = props;
 
     return (
       <GridTableContext.Provider value={{ striped }}>
