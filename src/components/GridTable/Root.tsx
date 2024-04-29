@@ -1,7 +1,9 @@
 import { Box, PropsWithBox } from "@saleor/macaw-ui-next";
 import React, { TableHTMLAttributes } from "react";
 
-interface GridTableOwnProps {
+import { GridTableContext } from "./useGridTableContext";
+
+export interface GridTableOwnProps {
   striped?: boolean;
 }
 type GridTableRootElement = React.ElementRef<"div">;
@@ -9,8 +11,6 @@ type GridTableRootProps = PropsWithBox<
   Omit<TableHTMLAttributes<HTMLTableElement>, "color" | "height" | "width">
 > &
   GridTableOwnProps;
-
-export const GridTableContext = React.createContext({ striped: false });
 
 export const GridTableRoot = React.forwardRef<GridTableRootElement, GridTableRootProps>(
   (props, forwardedRef) => {
