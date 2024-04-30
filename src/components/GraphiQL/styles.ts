@@ -1,8 +1,4 @@
-import {
-  useDragResize,
-  usePluginContext,
-  useTheme as useGraphiQLTheme,
-} from "@graphiql/react";
+import { useDragResize, usePluginContext, useTheme as useGraphiQLTheme } from "@graphiql/react";
 import { makeStyles } from "@saleor/macaw-ui";
 import { useTheme, vars } from "@saleor/macaw-ui-next";
 import { useEffect } from "react";
@@ -44,7 +40,6 @@ export const useStyles = makeStyles(
 
 export const useEditorStyles = () => {
   const pluginContext = usePluginContext();
-
   const pluginResize = useDragResize({
     defaultSizeRelation: 1 / 3,
     direction: "horizontal",
@@ -76,9 +71,7 @@ export const useDashboardTheme = () => {
       colors: { background },
     },
   } = useTheme();
-
   const match = background.default1.match(/hsla\(([^)]+)\)/);
-
   const rootStyle = {
     "--font-size-body": vars.fontSize[4],
     "--font-size-h2": vars.fontSize[6],

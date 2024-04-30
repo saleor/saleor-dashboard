@@ -7,9 +7,13 @@ import type { Page } from "@playwright/test";
 
 export class VariantsPage {
   readonly page: Page;
+
   channelSelectDialog: ChannelSelectDialog;
+
   metadataSeoPage: MetadataSeoPage;
+
   basePage: BasePage;
+
   deleteVariantDialog: DeleteVariantDialog;
 
   constructor(
@@ -30,15 +34,9 @@ export class VariantsPage {
     readonly shippingWeightInput = page.locator("[name='weight']"),
     readonly priceFieldInput = page.getByTestId("price-field"),
     readonly checkoutLimitInput = page.getByTestId("checkout-limit-input"),
-    readonly assignWarehouseButton = page.getByTestId(
-      "assign-warehouse-button",
-    ),
-    readonly booleanAttributeCheckbox = page.locator(
-      "[name*='attribute'][type='checkbox']",
-    ),
-    readonly selectOption = page.getByTestId(
-      "multi-autocomplete-select-option",
-    ),
+    readonly assignWarehouseButton = page.getByTestId("assign-warehouse-button"),
+    readonly booleanAttributeCheckbox = page.locator("[name*='attribute'][type='checkbox']"),
+    readonly selectOption = page.getByTestId("multi-autocomplete-select-option"),
     readonly manageChannels = page.getByTestId("manage-channels-button"),
     readonly allChannels = page.locator("[name='allChannels']"),
   ) {
@@ -53,25 +51,27 @@ export class VariantsPage {
     await this.variantNameInput.clear();
     await this.variantNameInput.fill(variantName);
   }
+
   async typeShippingWeight(weight = "150") {
     await this.shippingWeightInput.clear();
     await this.shippingWeightInput.fill(weight);
   }
+
   async typeCheckoutLimit(checkoutLimit = "10") {
     await this.checkoutLimitInput.clear();
     await this.checkoutLimitInput.fill(checkoutLimit);
   }
-  async typeSellingPriceInChannel(
-    channelName: string,
-    sellingPriceValue = "99",
-  ) {
+
+  async typeSellingPriceInChannel(channelName: string, sellingPriceValue = "99") {
     const sellingPriceInput = await this.page
       .locator(`[data-test-id="Channel-${channelName}"]`)
       .locator(this.priceFieldInput)
       .first();
+
     await sellingPriceInput.clear();
     await sellingPriceInput.fill(sellingPriceValue);
   }
+
   async typeCostPriceInChannel(channelName: string, costPriceValue = "10") {
     const costPriceInput = await this.page
       .locator(`[data-test-id="Channel-${channelName}"]`)
@@ -85,12 +85,15 @@ export class VariantsPage {
   async clickMageChannelsButton() {
     await this.manageChannels.click();
   }
+
   async clickDeleteVariantButton() {
     await this.deleteVariantButton.click();
   }
+
   async clickChooseMediaButton() {
     await this.chooseMediaButton.click();
   }
+
   async clickAddVariantButton() {
     await this.addVariantButton.click();
   }
@@ -99,41 +102,49 @@ export class VariantsPage {
     await this.skuTextField.clear();
     await this.skuTextField.fill(sku);
   }
+
   async clickAssignWarehouseButton() {
     await this.assignWarehouseButton.click();
   }
+
   async clickSaveVariantButton() {
     await this.saveButton.click();
   }
+
   async expectSuccessBanner() {
     await this.basePage.expectSuccessBanner();
   }
+
   async selectFirstAttributeValue() {
     await this.attributeSelector.click();
     await this.attributeOption.first().click();
   }
+
   async selectLastAttributeValue() {
     await this.attributeSelector.locator("input").clear();
     await this.attributeSelector.click();
     await this.attributeOption.last().click();
   }
+
   async selectWarehouse(warehouse = "Oceania") {
     await this.clickAssignWarehouseButton();
     await this.warehouseOption.locator(`text=${warehouse}`).click();
   }
+
   async typeQuantityInStock(warehouse = "Oceania", quantity = "10") {
-    const quantityInput = await this.page
-      .getByTestId(warehouse)
-      .locator(this.stockInput);
+    const quantityInput = await this.page.getByTestId(warehouse).locator(this.stockInput);
+
     await quantityInput.clear();
     await quantityInput.fill(quantity);
   }
+
   async addAllMetaData() {
     await this.metadataSeoPage.expandAndAddAllMetadata();
   }
 
   async gotoExistingVariantPage(productId: string, variantId: string) {
     const existingVariantUrl = `${URL_LIST.products}${productId}/${URL_LIST.variant}${variantId}`;
+
     console.log(`Navigating to existing variant: ${existingVariantUrl}`);
     await this.page.goto(existingVariantUrl);
     await this.variantNameInput.waitFor({ state: "visible" });

@@ -5,18 +5,12 @@ import { COLLECTION_DETAILS_FORM_ID } from "@dashboard/collections/views/consts"
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@dashboard/components/Metadata";
 import { CollectionDetailsFragment } from "@dashboard/graphql";
-import useForm, {
-  CommonUseFormResultWithHandlers,
-  FormChange,
-} from "@dashboard/hooks/useForm";
+import useForm, { CommonUseFormResultWithHandlers, FormChange } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import getMetadata from "@dashboard/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import {
-  RichTextContext,
-  RichTextContextValues,
-} from "@dashboard/utils/richText/context";
+import { RichTextContext, RichTextContextValues } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { OutputData } from "@editorjs/editorjs";
 import React, { useEffect } from "react";
@@ -35,10 +29,7 @@ export interface CollectionUpdateData extends CollectionUpdateFormData {
 
 interface CollectionUpdateHandlers {
   changeMetadata: FormChange;
-  changeChannels: (
-    id: string,
-    data: Omit<ChannelCollectionData, "name" | "id">,
-  ) => void;
+  changeChannels: (id: string, data: Omit<ChannelCollectionData, "name" | "id">) => void;
 }
 export type UseCollectionUpdateFormResult = CommonUseFormResultWithHandlers<
   CollectionUpdateData,
@@ -85,56 +76,45 @@ function useCollectionUpdateForm(
     confirmLeave: true,
     formId: COLLECTION_DETAILS_FORM_ID,
   });
-
   const handleFormSubmit = useHandleFormSubmit({
     formId,
     onSubmit,
   });
-
   const { setExitDialogSubmitRef } = useExitFormDialog({
     formId: COLLECTION_DETAILS_FORM_ID,
   });
-
   const richText = useRichText({
     initial: collection?.description,
     loading: !collection,
     triggerChange,
   });
-
   const {
     isMetadataModified,
     isPrivateMetadataModified,
     makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
-
   const changeMetadata = makeMetadataChangeHandler(handleChange);
-
   const data: CollectionUpdateData = {
     ...formData,
     description: null,
   };
-
   // Need to make it function to always have description.current up to date
   const getData = async (): Promise<CollectionUpdateData> => ({
     ...formData,
     description: await richText.getValue(),
   });
-
   const getSubmitData = async (): Promise<CollectionUpdateData> => ({
     ...(await getData()),
     ...getMetadata(formData, isMetadataModified, isPrivateMetadataModified),
   });
-
   const handleChannelChange = createChannelsChangeHandler(
     currentChannels,
     setChannels,
     triggerChange,
   );
-
   const submit = async () => handleFormSubmit(await getSubmitData());
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
-
   setIsSubmitDisabled(disabled);
 
   return {
@@ -167,9 +147,7 @@ const CollectionUpdateForm: React.FC<CollectionUpdateFormProps> = ({
 
   return (
     <form onSubmit={props.submit}>
-      <RichTextContext.Provider value={richText}>
-        {children(props)}
-      </RichTextContext.Provider>
+      <RichTextContext.Provider value={richText}>{children(props)}</RichTextContext.Provider>
     </form>
   );
 };

@@ -5,6 +5,7 @@ export class LoginPage {
   readonly page: Page;
 
   readonly homePage: HomePage;
+
   constructor(
     page: Page,
     readonly emailInput = page.getByTestId("email"),
@@ -21,33 +22,34 @@ export class LoginPage {
   async clickBackToLoginPageButton() {
     await this.backToLoginPageButton.click();
   }
+
   async clickResetPasswordLink() {
     await this.resetPasswordLink.click();
   }
+
   async clickSendEmailWithResetLinkButton() {
     await this.sendEmailWithResetLinkButton.click();
   }
 
-  async loginViaUI(
-    userEmail: string,
-    userPassword: string,
-  ) {
+  async loginViaUI(userEmail: string, userPassword: string) {
     await this.page.goto(process.env.BASE_URL!);
     await this.typeEmail(userEmail);
     await this.typePassword(userPassword);
     await this.clickSignInButton();
     await expect(this.homePage.welcomeMessage).toContainText("Hello there,", {
-      timeout: 15000
+      timeout: 15000,
     });
   }
 
   async typeEmail(email: string) {
-    await this.emailInput.waitFor({state: "visible", timeout:15000})
+    await this.emailInput.waitFor({ state: "visible", timeout: 15000 });
     await this.emailInput.fill(email);
   }
+
   async typePassword(password: string) {
     await this.passwordInput.fill(password);
   }
+
   async clickSignInButton() {
     await this.signInButton.click();
   }

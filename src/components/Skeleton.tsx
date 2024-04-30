@@ -37,7 +37,6 @@ interface SkeletonProps {
 
 const Skeleton: React.FC<SkeletonProps> = props => {
   const { className, primary, style } = props;
-
   const classes = useStyles(props);
 
   return (

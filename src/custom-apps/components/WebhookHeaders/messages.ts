@@ -24,8 +24,8 @@ export const messages = defineMessages({
     description: "header field name, header",
   },
   headerNameError: {
-    id: "iERn5G",
-    defaultMessage: "Should start with `x-` or `authorization`",
+    id: "sGDsFP",
+    defaultMessage: "Should match `x-*`, `authorization*`, or `brokerproperties`.",
     description: "header name input",
   },
   headerValue: {
@@ -45,8 +45,7 @@ export const messages = defineMessages({
   },
   headersCount: {
     id: "9Y5i/8",
-    defaultMessage:
-      "{number,plural,one{{number} header} other{{number} custom request headers}}",
+    defaultMessage: "{number,plural,one{{number} header} other{{number} custom request headers}}",
     description: "number of webhook headers in model",
   },
 });

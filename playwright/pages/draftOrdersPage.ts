@@ -10,17 +10,22 @@ import type { Page } from "@playwright/test";
 
 export class DraftOrdersPage extends BasePage {
   readonly page: Page;
+
   readonly deleteDraftOrdersDialog: DeleteDialog;
+
   readonly draftOrderCreateDialog: DraftOrderCreateDialog;
+
   readonly addProductsDialog: AddProductsDialog;
+
   readonly rightSideDetailsPage: RightSideDetailsPage;
+
   readonly addressDialog: AddressDialog;
+
   readonly shippingAddressDialog: ShippingAddressDialog;
+
   constructor(
     page: Page,
-    readonly createDraftOrderButton = page.getByTestId(
-      "create-draft-order-button",
-    ),
+    readonly createDraftOrderButton = page.getByTestId("create-draft-order-button"),
     readonly bulkDeleteButton = page.getByTestId("bulk-delete-button"),
     readonly addProducts = page.getByTestId("add-products-button"),
     readonly finalizeButton = page.getByTestId("button-bar-confirm"),
@@ -39,8 +44,10 @@ export class DraftOrdersPage extends BasePage {
   async clickCreateDraftOrderButton() {
     await this.createDraftOrderButton.click();
   }
+
   async goToDraftOrdersListView() {
     await this.page.goto(URL_LIST.draftOrders);
+    await this.waitForGrid();
   }
 
   async clickBulkDeleteButton() {

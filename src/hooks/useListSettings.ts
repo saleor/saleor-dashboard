@@ -38,19 +38,10 @@ export default function useListSettings<TColumns extends string = string>(
         return defaultListSettings;
       }
 
-      return mergeWith(
-        {},
-        defaultListSettings,
-        storedListSettings,
-        mergeCustomizer,
-      );
+      return mergeWith({}, defaultListSettings, storedListSettings, mergeCustomizer);
     },
   );
-
-  const updateListSettings = <T extends keyof ListSettings>(
-    key: T,
-    value: ListSettings[T],
-  ) =>
+  const updateListSettings = <T extends keyof ListSettings>(key: T, value: ListSettings[T]) =>
     setListSettings(settings => ({
       ...settings,
       [listName]: {

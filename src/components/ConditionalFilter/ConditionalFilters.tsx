@@ -7,24 +7,21 @@ import { FiltersArea } from "./FiltersArea";
 import { LoadingFiltersArea } from "./LoadingFiltersArea";
 import { ErrorEntry, Validator } from "./Validation";
 
-export const ConditionalFilters: FC<{ onClose: () => void }> = ({
-  onClose,
-}) => {
+export const ConditionalFilters: FC<{ onClose: () => void }> = ({ onClose }) => {
   const { valueProvider, containerState } = useConditionalFilterContext();
   const [errors, setErrors] = useState<ErrorEntry[]>([]);
-
   const handleConfirm = (value: FilterContainer) => {
     const validator = new Validator(value);
 
     if (validator.isValid()) {
       valueProvider.persist(value);
       onClose();
+
       return;
     }
 
     setErrors(validator.getErrors());
   };
-
   const handleCancel = () => {
     valueProvider.clear();
     containerState.clear();
@@ -35,11 +32,7 @@ export const ConditionalFilters: FC<{ onClose: () => void }> = ({
     <LoadingFiltersArea />
   ) : (
     <Box padding={3} borderBottomLeftRadius={2} borderBottomRightRadius={2}>
-      <FiltersArea
-        onConfirm={handleConfirm}
-        errors={errors}
-        onCancel={handleCancel}
-      />
+      <FiltersArea onConfirm={handleConfirm} errors={errors} onCancel={handleCancel} />
     </Box>
   );
 };

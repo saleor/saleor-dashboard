@@ -17,9 +17,7 @@ export const flagListFromMetadata = (
 ): FlagList => {
   const defaultsList = asFlagValue();
   const rawFlags = metadata.find(x => x.key === METADATA_KEY);
-  const flagList = rawFlags
-    ? JSON.parse(rawFlags.value)
-    : (defaultsList as FlagList);
+  const flagList = rawFlags ? JSON.parse(rawFlags.value) : (defaultsList as FlagList);
 
   return Object.keys(defaultsList).reduce((list: FlagList, key: string) => {
     list[key as AvailableFlags.Name] = defaultsList[key as AvailableFlags.Name];

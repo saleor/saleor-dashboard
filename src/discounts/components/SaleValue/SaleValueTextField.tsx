@@ -24,9 +24,7 @@ const SaleValueTextField: React.FC<SaleValueTextFieldProps> = ({
   onChange,
 }) => {
   const intl = useIntl();
-
   const { id, percentageValue, fixedValue } = listing;
-
   const getTextFieldValue = (dataType: SaleType) =>
     dataType === SaleType.PERCENTAGE ? percentageValue : fixedValue;
 

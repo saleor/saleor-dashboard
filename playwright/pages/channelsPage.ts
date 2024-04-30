@@ -6,7 +6,9 @@ import { Page } from "@playwright/test";
 
 export class ChannelPage extends BasePage {
   readonly page: Page;
+
   readonly rightSideDetailsPage: RightSideDetailsPage;
+
   readonly deleteChannelDialog: DeleteDialog;
 
   constructor(
@@ -17,9 +19,7 @@ export class ChannelPage extends BasePage {
     readonly createChannelButton = page.getByTestId("add-channel"),
     readonly channelsListTable = page.getByTestId("channel-list"),
     readonly channelNameInput = page.getByTestId("channel-name-input"),
-    readonly orderExpirationInput = page.getByTestId(
-      "delete-expired-order-input",
-    ),
+    readonly orderExpirationInput = page.getByTestId("delete-expired-order-input"),
     readonly transactionFlowCheckbox = page
       .getByTestId("order-settings-mark-as-paid")
       .locator("button")
@@ -36,9 +36,7 @@ export class ChannelPage extends BasePage {
     readonly channelCurrencySelect = page
       .getByTestId("channel-currency-select-input")
       .locator("input"),
-    readonly countrySelect = page
-      .getByTestId("country-select-input")
-      .locator("input"),
+    readonly countrySelect = page.getByTestId("country-select-input").locator("input"),
   ) {
     super(page);
     this.page = page;
@@ -49,37 +47,47 @@ export class ChannelPage extends BasePage {
   async clickAuthorizeInsteadOfChargingCheckbox() {
     await this.authorizeInsteadOfChargingCheckbox.click();
   }
+
   async clickDeleteButtonOnRowContainingChannelName(channelName: string) {
     await this.channelRow
       .filter({ hasText: channelName })
       .locator(this.deleteChannelButton)
       .click();
   }
+
   async clickAllowUnpaidOrdersCheckbox() {
     await this.allowUnpaidOrdersCheckbox.click();
   }
+
   async clickTransactionFlowCheckbox() {
     await this.transactionFlowCheckbox.click();
   }
+
   async clickCreateChannelButton() {
     await this.createChannelButton.click();
   }
+
   async clickSaveButton() {
     await this.saveButton.click();
   }
+
   async typeChannelName(channelName = "z - automation") {
     await this.channelNameInput.fill(channelName);
   }
+
   async typeSlugName(slugName: string) {
     await this.slugNameInput.fill(slugName);
   }
+
   async typeOrderExpiration(expirationDays = "120") {
     await this.orderExpirationInput.fill(expirationDays);
   }
+
   async selectCurrency(currencyName: string) {
     await this.channelCurrencySelect.click();
     await this.page.getByRole("option", { name: currencyName }).click();
   }
+
   async selectCountry(countryName: string) {
     await this.countrySelect.click();
     await this.page.getByRole("option", { name: countryName }).click();
@@ -87,9 +95,11 @@ export class ChannelPage extends BasePage {
 
   async gotoChannelDetails(channelId: string) {
     const channelDetailsUrl = URL_LIST.channels + channelId;
+
     await console.log("Navigating to channel details: " + channelDetailsUrl);
     await this.page.goto(channelDetailsUrl);
   }
+
   async gotoChannelList() {
     await this.page.goto(URL_LIST.channels);
   }

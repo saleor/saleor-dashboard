@@ -44,14 +44,9 @@ const ExtendedDiscountTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
-
   const { lines, date, type } = event;
-
   const parsedDiscount =
-    type === OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED
-      ? lines[0].discount
-      : event.discount;
-
+    type === OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED ? lines[0].discount : event.discount;
   const {
     valueType: calculationMode,
     value,
@@ -61,7 +56,6 @@ const ExtendedDiscountTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
     oldValue,
     oldAmount: oldMoneyData,
   } = parsedDiscount;
-
   const shouldDisplayOldNewSections = !!oldValue;
 
   return (

@@ -4,7 +4,6 @@ import { useIntl } from "react-intl";
 
 export const useOrderConditionNames = (): Option[] => {
   const intl = useIntl();
-
   const options = useMemo(
     () => [
       {

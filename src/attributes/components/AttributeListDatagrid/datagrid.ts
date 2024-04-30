@@ -70,17 +70,11 @@ export const createGetCellContent =
       case "name":
         return readonlyTextCell(rowData?.name ?? PLACEHOLDER);
       case "visible":
-        return readonlyTextCell(
-          translateBoolean(rowData?.visibleInStorefront, intl),
-        );
+        return readonlyTextCell(translateBoolean(rowData?.visibleInStorefront, intl));
       case "searchable":
-        return readonlyTextCell(
-          translateBoolean(rowData?.filterableInDashboard, intl),
-        );
+        return readonlyTextCell(translateBoolean(rowData?.filterableInDashboard, intl));
       case "use-in-faceted-search":
-        return readonlyTextCell(
-          translateBoolean(rowData?.filterableInStorefront, intl),
-        );
+        return readonlyTextCell(translateBoolean(rowData?.filterableInStorefront, intl));
       default:
         return readonlyTextCell("");
     }

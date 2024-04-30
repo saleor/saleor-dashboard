@@ -113,11 +113,7 @@ export const giftsLabelsMock = {
     query: GiftLabelsDocument,
     variables: {
       ...queryVariablesMock,
-      ids: [
-        "UHJvZHVjdFZhcmlhbnQ6MTkz",
-        "UHJvZHVjdFZhcmlhbnQ6Mjk5",
-        "UHJvZHVjdFZhcmlhbnQ6MjA2",
-      ],
+      ids: ["UHJvZHVjdFZhcmlhbnQ6MTkz", "UHJvZHVjdFZhcmlhbnQ6Mjk5", "UHJvZHVjdFZhcmlhbnQ6MjA2"],
     },
   },
   result: {

@@ -9,16 +9,9 @@ import PriceField from "@dashboard/components/PriceField";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import {
-  ProductChannelListingErrorFragment,
-  ProductErrorFragment,
-} from "@dashboard/graphql";
+import { ProductChannelListingErrorFragment, ProductErrorFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
-import {
-  getFormChannelError,
-  getFormChannelErrors,
-  getFormErrors,
-} from "@dashboard/utils/errors";
+import { getFormChannelError, getFormChannelErrors, getFormErrors } from "@dashboard/utils/errors";
 import getProductErrorMessage from "@dashboard/utils/errors/product";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { sprinkles, Text, vars } from "@saleor/macaw-ui-next";
@@ -30,18 +23,13 @@ interface ProductVariantPriceProps {
   errors: Array<ProductErrorFragment | ProductChannelListingErrorFragment>;
   loading?: boolean;
   disabled?: boolean;
-  onChange?: (
-    id: string,
-    data: ChannelPriceArgs | ChannelPriceAndPreorderArgs,
-  ) => void;
+  onChange?: (id: string, data: ChannelPriceArgs | ChannelPriceAndPreorderArgs) => void;
   disabledMessage?: MessageDescriptor;
 }
 
 const numberOfColumns = 2;
 
-export const ProductVariantPrice: React.FC<
-  ProductVariantPriceProps
-> = props => {
+export const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
   const {
     disabled = false,
     errors = [],
@@ -51,9 +39,7 @@ export const ProductVariantPrice: React.FC<
     disabledMessage,
   } = props;
   const intl = useIntl();
-  const channelErrors = errors.filter(
-    e => "channels" in e,
-  ) as ProductChannelListingErrorFragment[];
+  const channelErrors = errors.filter(e => "channels" in e) as ProductChannelListingErrorFragment[];
   const apiErrors = getFormChannelErrors(["price", "costPrice"], channelErrors);
 
   if (disabled || !productVariantChannelListings.length) {
@@ -129,21 +115,12 @@ export const ProductVariantPrice: React.FC<
             (listing, index) => {
               const fieldName = `${listing.id}-channel-price`;
               const formErrors = getFormErrors([fieldName], errors);
-
               const priceError =
-                getFormChannelError(apiErrors.price, listing.id) ||
-                formErrors[fieldName];
-
-              const costPriceError = getFormChannelError(
-                apiErrors.costPrice,
-                listing.id,
-              );
+                getFormChannelError(apiErrors.price, listing.id) || formErrors[fieldName];
+              const costPriceError = getFormChannelError(apiErrors.costPrice, listing.id);
 
               return (
-                <TableRowLink
-                  key={listing?.id || `skeleton-${index}`}
-                  data-test-id={listing?.name}
-                >
+                <TableRowLink key={listing?.id || `skeleton-${index}`} data-test-id={listing?.name}>
                   <TableCell style={{ paddingLeft: vars.spacing[6] }}>
                     <Text>{listing?.name || <Skeleton />}</Text>
                   </TableCell>
@@ -166,9 +143,7 @@ export const ProductVariantPrice: React.FC<
                         }
                         disabled={loading}
                         required
-                        hint={
-                          priceError && getProductErrorMessage(priceError, intl)
-                        }
+                        hint={priceError && getProductErrorMessage(priceError, intl)}
                       />
                     ) : (
                       <Skeleton />
@@ -192,11 +167,7 @@ export const ProductVariantPrice: React.FC<
                           })
                         }
                         disabled={loading}
-                        hint={
-                          costPriceError
-                            ? getProductErrorMessage(costPriceError, intl)
-                            : ""
-                        }
+                        hint={costPriceError ? getProductErrorMessage(costPriceError, intl) : ""}
                       />
                     ) : (
                       <Skeleton />
@@ -209,10 +180,7 @@ export const ProductVariantPrice: React.FC<
               <TableRowLink>
                 <TableCell colSpan={numberOfColumns}>
                   <Text>
-                    <FormattedMessage
-                      id="/glQgs"
-                      defaultMessage="No channels found"
-                    />
+                    <FormattedMessage id="/glQgs" defaultMessage="No channels found" />
                   </Text>
                 </TableCell>
               </TableRowLink>

@@ -2,10 +2,7 @@
 import { FetchResult } from "@apollo/client";
 import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
 import { getChannelsVariables } from "@dashboard/discounts/handlers";
-import {
-  DiscountTypeEnum,
-  RequirementsPicker,
-} from "@dashboard/discounts/types";
+import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
 import {
   DiscountValueTypeEnum,
   VoucherChannelListingUpdateMutation,
@@ -14,11 +11,7 @@ import {
   VoucherCreateMutationVariables,
   VoucherTypeEnum,
 } from "@dashboard/graphql";
-import {
-  extractMutationErrors,
-  getMutationErrors,
-  joinDateTime,
-} from "@dashboard/misc";
+import { extractMutationErrors, getMutationErrors, joinDateTime } from "@dashboard/misc";
 
 export function createHandler(
   voucherCreate: (
@@ -45,11 +38,9 @@ export function createHandler(
           formData.discountType === DiscountTypeEnum.VALUE_PERCENTAGE
             ? DiscountValueTypeEnum.PERCENTAGE
             : formData.discountType === DiscountTypeEnum.VALUE_FIXED
-            ? DiscountValueTypeEnum.FIXED
-            : DiscountValueTypeEnum.PERCENTAGE,
-        endDate: formData.hasEndDate
-          ? joinDateTime(formData.endDate, formData.endTime)
-          : null,
+              ? DiscountValueTypeEnum.FIXED
+              : DiscountValueTypeEnum.PERCENTAGE,
+        endDate: formData.hasEndDate ? joinDateTime(formData.endDate, formData.endTime) : null,
         minCheckoutItemsQuantity:
           formData.requirementsPicker !== RequirementsPicker.ITEM
             ? 0
@@ -63,7 +54,6 @@ export function createHandler(
         singleUse: formData.singleUse,
       },
     });
-
     const errors = getMutationErrors(response);
 
     if (errors.length > 0) {

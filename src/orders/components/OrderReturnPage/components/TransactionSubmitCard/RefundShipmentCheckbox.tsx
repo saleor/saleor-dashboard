@@ -32,7 +32,6 @@ const RefundShipmentCheckbox: React.FC<RefundShipmentCheckboxProps> = ({
     },
     [onChange],
   );
-
   const isDisabled = !canRefundShipping || !autoGrantRefund;
 
   return (

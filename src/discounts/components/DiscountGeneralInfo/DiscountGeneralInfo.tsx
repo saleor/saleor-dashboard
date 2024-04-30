@@ -12,11 +12,7 @@ interface DiscountNameProps {
   error: string | undefined;
 }
 
-export const DiscountGeneralInfo = ({
-  disabled,
-  typeDisabled,
-  error,
-}: DiscountNameProps) => {
+export const DiscountGeneralInfo = ({ disabled, typeDisabled, error }: DiscountNameProps) => {
   const intl = useIntl();
   const { formState } = useFormContext<DiscoutFormData>();
   const { field: nameField } = useController<DiscoutFormData, "name">({
@@ -25,7 +21,6 @@ export const DiscountGeneralInfo = ({
   const { field: typeField } = useController<DiscoutFormData, "type">({
     name: "type",
   });
-
   const discountTypes = useMemo(
     () => [
       {

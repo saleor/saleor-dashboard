@@ -24,17 +24,10 @@ export const ColumnPickerAvailableNodes = ({
 }: ColumnPickerAvailableNodesProps) => {
   const areNodesLoading = currentCategory.availableNodes === undefined;
   const areNodesEmpty = currentCategory.availableNodes?.length === 0;
-
   const renderNodes = () => {
     if (areNodesLoading) {
       return (
-        <Box
-          width="100%"
-          height="100%"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
+        <Box width="100%" height="100%" display="flex" alignItems="center" justifyContent="center">
           <CircularProgress />
         </Box>
       );
@@ -76,11 +69,7 @@ export const ColumnPickerAvailableNodes = ({
         style={{ boxSizing: "border-box" }}
         data-test-id="search-container"
       >
-        <ColumnPickerSearch
-          currentCategory={currentCategory}
-          query={query}
-          setQuery={setQuery}
-        />
+        <ColumnPickerSearch currentCategory={currentCategory} query={query} setQuery={setQuery} />
       </Box>
       <Box paddingX={5} paddingY={1.5} flexGrow="1">
         {renderNodes()}

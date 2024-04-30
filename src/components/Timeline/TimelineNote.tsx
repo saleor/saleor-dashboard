@@ -80,11 +80,7 @@ const TimelineAvatar = ({
 }) => {
   if (user) {
     return (
-      <UserAvatar
-        initials={getUserInitials(user)}
-        url={user?.avatar?.url}
-        className={className}
-      />
+      <UserAvatar initials={getUserInitials(user)} url={user?.avatar?.url} className={className} />
     );
   }
 

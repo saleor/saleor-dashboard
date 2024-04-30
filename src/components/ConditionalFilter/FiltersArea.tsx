@@ -18,15 +18,10 @@ interface FiltersAreaProps {
 
 const MAX_VALUE_ITEMS = 12;
 
-export const FiltersArea: FC<FiltersAreaProps> = ({
-  onConfirm,
-  onCancel,
-  errors,
-}) => {
+export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel, errors }) => {
   const { apiProvider, leftOperandsProvider } = useConditionalFilterContext();
   const translations = useFiltersAreaTranslations();
   const { translateOperandOptions, translateSelectedOperands } = useTranslate();
-
   const {
     value,
     hasEmptyRows,
@@ -38,7 +33,6 @@ export const FiltersArea: FC<FiltersAreaProps> = ({
     updateRightOptions,
     updateLeftOptions,
   } = useFilterContainer(apiProvider, leftOperandsProvider);
-
   const handleStateChange = async (event: FilterEvent["detail"]) => {
     if (!event) return;
 

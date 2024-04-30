@@ -7,6 +7,7 @@ export function useUpdateEffect(fn: () => void, depArr: any[]) {
     if (mounted.current) {
       return fn();
     }
+
     mounted.current = true;
   }, depArr);
 }

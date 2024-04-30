@@ -1,7 +1,4 @@
-import {
-  DiscountTypeEnum,
-  RequirementsPicker,
-} from "@dashboard/discounts/types";
+import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
 import { VoucherTypeEnum } from "@dashboard/graphql";
 
 import { FormData } from "./types";

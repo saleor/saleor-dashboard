@@ -20,10 +20,7 @@ export const OrderManualTransationRefundAmount = ({
     <Controller
       name="amount"
       control={control}
-      render={({
-        field: { value, onChange, ...field },
-        fieldState: { error },
-      }) => (
+      render={({ field: { value, onChange, ...field }, fieldState: { error } }) => (
         <Input
           {...field}
           value={value}

@@ -15,21 +15,15 @@ import {
   ProductTypeHandler,
 } from "./Handler";
 
-const getFilterElement = (
-  value: FilterContainer,
-  index: number,
-): FilterElement => {
+const getFilterElement = (value: FilterContainer, index: number): FilterElement => {
   const possibleFilterElement = value[index];
-  if (
-    typeof possibleFilterElement !== "string" &&
-    !Array.isArray(possibleFilterElement)
-  ) {
+
+  if (typeof possibleFilterElement !== "string" && !Array.isArray(possibleFilterElement)) {
     return possibleFilterElement;
   }
 
   throw new Error("Unknown filter element used to create API handler");
 };
-
 const isStaticBoolean = (rowType: RowType) => {
   return [
     "isAvailable",
@@ -40,7 +34,6 @@ const isStaticBoolean = (rowType: RowType) => {
     "price",
   ].includes(rowType);
 };
-
 const createAPIHandler = (
   selectedRow: FilterElement,
   client: ApolloClient<unknown>,
@@ -66,11 +59,7 @@ const createAPIHandler = (
   }
 
   if (rowType === "attribute") {
-    return new AttributeChoicesHandler(
-      client,
-      selectedRow.value.value,
-      inputValue,
-    );
+    return new AttributeChoicesHandler(client, selectedRow.value.value, inputValue);
   }
 
   if (rowType && isStaticBoolean(rowType)) {
@@ -111,7 +100,6 @@ const createAPIHandler = (
 
 export const useProductFilterAPIProvider = (): FilterAPIProvider => {
   const client = useApolloClient();
-
   const fetchRightOptions = async (
     position: string,
     value: FilterContainer,
@@ -123,9 +111,9 @@ export const useProductFilterAPIProvider = (): FilterAPIProvider => {
 
     return handler.fetch();
   };
-
   const fetchLeftOptions = async (inputValue: string) => {
     const handler = new AttributesHandler(client, inputValue);
+
     return handler.fetch();
   };
 

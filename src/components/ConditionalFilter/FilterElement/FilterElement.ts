@@ -3,11 +3,7 @@ import { RowType, STATIC_OPTIONS } from "../constants";
 import { LeftOperand } from "../LeftOperandsProvider";
 import { TokenType, UrlEntry, UrlToken } from "./../ValueProvider/UrlToken";
 import { Condition } from "./Condition";
-import {
-  ConditionItem,
-  ConditionOptions,
-  StaticElementName,
-} from "./ConditionOptions";
+import { ConditionItem, ConditionOptions, StaticElementName } from "./ConditionOptions";
 import { ConditionSelected } from "./ConditionSelected";
 import { ConditionValue, ItemOption } from "./ConditionValue";
 import { Constraint } from "./Constraint";
@@ -36,11 +32,7 @@ export class ExpressionValue {
   }
 
   public static fromLeftOperand(leftOperand: LeftOperand) {
-    return new ExpressionValue(
-      leftOperand.slug,
-      leftOperand.label,
-      leftOperand.type,
-    );
+    return new ExpressionValue(leftOperand.slug, leftOperand.label, leftOperand.type);
   }
 
   public static fromUrlToken(token: UrlToken) {
@@ -53,17 +45,10 @@ export class ExpressionValue {
     return new ExpressionValue(token.name, option.label, token.name);
   }
 
-  public static forAttribute(
-    attributeName: string,
-    response: InitialStateResponse,
-  ) {
+  public static forAttribute(attributeName: string, response: InitialStateResponse) {
     const attribute = response.attributeByName(attributeName);
 
-    return new ExpressionValue(
-      attributeName,
-      attribute.label,
-      attribute.inputType,
-    );
+    return new ExpressionValue(attributeName, attribute.label, attribute.inputType);
   }
 
   public static emptyStatic() {
@@ -107,8 +92,7 @@ export class FilterElement {
   }
 
   public updateCondition(conditionValue: ConditionItem) {
-    this.condition.selected =
-      ConditionSelected.fromConditionItem(conditionValue);
+    this.condition.selected = ConditionSelected.fromConditionItem(conditionValue);
   }
 
   public updateRightOperator(value: ConditionValue) {
@@ -122,6 +106,7 @@ export class FilterElement {
   public updateRightLoadingState(loading: boolean) {
     if (loading) {
       this.condition.selected.enableLoading();
+
       return;
     }
 
@@ -182,19 +167,11 @@ export class FilterElement {
   }
 
   public static createEmpty() {
-    return new FilterElement(
-      ExpressionValue.emptyStatic(),
-      Condition.createEmpty(),
-      false,
-    );
+    return new FilterElement(ExpressionValue.emptyStatic(), Condition.createEmpty(), false);
   }
 
   public static createStaticBySlug(slug: StaticElementName) {
-    return new FilterElement(
-      ExpressionValue.fromSlug(slug),
-      Condition.emptyFromSlug(slug),
-      false,
-    );
+    return new FilterElement(ExpressionValue.fromSlug(slug), Condition.emptyFromSlug(slug), false);
   }
 
   public static fromUrlToken(token: UrlToken, response: InitialStateResponse) {
@@ -213,14 +190,13 @@ export class FilterElement {
         false,
       );
     }
+
     return FilterElement.createEmpty();
   }
 }
 
 export const hasEmptyRows = (container: FilterContainer) => {
-  return container
-    .filter(FilterElement.isCompatible)
-    .some((e: FilterElement) => e.isEmpty());
+  return container.filter(FilterElement.isCompatible).some((e: FilterElement) => e.isEmpty());
 };
 
 export type FilterContainer = Array<string | FilterElement | FilterContainer>;

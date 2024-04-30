@@ -6,32 +6,22 @@ import { useIntl } from "react-intl";
 import ChannelsAvailabilityMenuContent from "../ChannelsAvailabilityMenuContent";
 import { Pill } from "../Pill";
 import { messages } from "./messages";
-import {
-  CollectionChannels,
-  getDropdownColor,
-  mapChannelsToPills,
-} from "./utils";
+import { CollectionChannels, getDropdownColor, mapChannelsToPills } from "./utils";
 
 export interface ChannelsAvailabilityDropdownProps {
   channels: CollectionChannels[] | null;
 }
 
-export const ChannelsAvailabilityDropdown: React.FC<
-  ChannelsAvailabilityDropdownProps
-> = ({ channels }) => {
+export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdownProps> = ({
+  channels,
+}) => {
   const intl = useIntl();
   const [isPopupOpen, setPopupOpen] = React.useState(false);
   const anchor = React.useRef<HTMLDivElement>(null);
-
-  const dropdownColor = React.useMemo(
-    () => getDropdownColor(channels),
-    [channels],
-  );
+  const dropdownColor = React.useMemo(() => getDropdownColor(channels), [channels]);
 
   if (!channels?.length) {
-    return (
-      <Pill label={intl.formatMessage(messages.noChannels)} color="error" />
-    );
+    return <Pill label={intl.formatMessage(messages.noChannels)} color="error" />;
   }
 
   return (
@@ -55,9 +45,7 @@ export const ChannelsAvailabilityDropdown: React.FC<
       </div>
       <Popper anchorEl={anchor.current} open={isPopupOpen} placement={"left"}>
         <Card elevation={8}>
-          <ChannelsAvailabilityMenuContent
-            pills={mapChannelsToPills(channels)}
-          />
+          <ChannelsAvailabilityMenuContent pills={mapChannelsToPills(channels)} />
         </Card>
       </Popper>
     </div>

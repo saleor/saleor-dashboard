@@ -8,13 +8,7 @@ export const categoryTranslations = gql`
     $last: Int
     $before: String
   ) {
-    translations(
-      kind: CATEGORY
-      before: $before
-      after: $after
-      first: $first
-      last: $last
-    ) {
+    translations(kind: CATEGORY, before: $before, after: $after, first: $first, last: $last) {
       edges {
         node {
           ...CategoryTranslation
@@ -35,13 +29,7 @@ export const collectionTranslations = gql`
     $last: Int
     $before: String
   ) {
-    translations(
-      kind: COLLECTION
-      before: $before
-      after: $after
-      first: $first
-      last: $last
-    ) {
+    translations(kind: COLLECTION, before: $before, after: $after, first: $first, last: $last) {
       edges {
         node {
           ...CollectionTranslation
@@ -62,13 +50,7 @@ export const productTranslations = gql`
     $last: Int
     $before: String
   ) {
-    translations(
-      kind: PRODUCT
-      before: $before
-      after: $after
-      first: $first
-      last: $last
-    ) {
+    translations(kind: PRODUCT, before: $before, after: $after, first: $first, last: $last) {
       edges {
         node {
           ...ProductTranslation
@@ -89,13 +71,7 @@ export const pageTranslations = gql`
     $last: Int
     $before: String
   ) {
-    translations(
-      kind: PAGE
-      before: $before
-      after: $after
-      first: $first
-      last: $last
-    ) {
+    translations(kind: PAGE, before: $before, after: $after, first: $first, last: $last) {
       edges {
         node {
           ...PageTranslation
@@ -116,13 +92,7 @@ export const voucherTranslations = gql`
     $last: Int
     $before: String
   ) {
-    translations(
-      kind: VOUCHER
-      before: $before
-      after: $after
-      first: $first
-      last: $last
-    ) {
+    translations(kind: VOUCHER, before: $before, after: $after, first: $first, last: $last) {
       edges {
         node {
           ...VoucherTranslation
@@ -143,13 +113,7 @@ export const saleTranslations = gql`
     $last: Int
     $before: String
   ) {
-    translations(
-      kind: SALE
-      before: $before
-      after: $after
-      first: $first
-      last: $last
-    ) {
+    translations(kind: SALE, before: $before, after: $after, first: $first, last: $last) {
       edges {
         node {
           ...SaleTranslation
@@ -170,13 +134,7 @@ export const attributeTranslations = gql`
     $last: Int
     $before: String
   ) {
-    translations(
-      kind: ATTRIBUTE
-      before: $before
-      after: $after
-      first: $first
-      last: $last
-    ) {
+    translations(kind: ATTRIBUTE, before: $before, after: $after, first: $first, last: $last) {
       edges {
         node {
           ...AttributeTranslation
@@ -224,13 +182,7 @@ export const menuItemTranslations = gql`
     $last: Int
     $before: String
   ) {
-    translations(
-      kind: MENU_ITEM
-      before: $before
-      after: $after
-      first: $first
-      last: $last
-    ) {
+    translations(kind: MENU_ITEM, before: $before, after: $after, first: $first, last: $last) {
       edges {
         node {
           ...MenuItemTranslation
@@ -265,10 +217,7 @@ export const productVariantList = gql`
 `;
 
 export const productVariantTranslationDetails = gql`
-  query ProductVariantTranslationDetails(
-    $id: ID!
-    $language: LanguageCodeEnum!
-  ) {
+  query ProductVariantTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
     translation(kind: VARIANT, id: $id) {
       ...ProductVariantTranslation
     }
@@ -331,10 +280,7 @@ export const attributeTranslationDetails = gql`
 `;
 
 export const shippingMethodTranslationDetails = gql`
-  query ShippingMethodTranslationDetails(
-    $id: ID!
-    $language: LanguageCodeEnum!
-  ) {
+  query ShippingMethodTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
     translation(kind: SHIPPING_METHOD, id: $id) {
       ...ShippingMethodTranslation
     }

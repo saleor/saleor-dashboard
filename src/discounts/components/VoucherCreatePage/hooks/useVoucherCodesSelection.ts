@@ -10,11 +10,7 @@ export const useVoucherCodesSelection = (codes: VoucherCode[]) => {
     setSelectedRowIds,
     clearRowSelection,
   } = useRowSelection();
-
-  const setSelectedVoucherCodesIds = (
-    rows: number[],
-    clearSelection: () => void,
-  ) => {
+  const setSelectedVoucherCodesIds = (rows: number[], clearSelection: () => void) => {
     if (!codes) {
       return;
     }

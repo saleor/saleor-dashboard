@@ -5,18 +5,13 @@ interface UserFilter<TUrlFilters> {
 
 export type GetFilterTabsOutput<TUrlFilters> = Array<UserFilter<TUrlFilters>>;
 
-function getFilterTabs<TUrlFilters>(
-  key: string,
-): GetFilterTabsOutput<TUrlFilters> {
+function getFilterTabs<TUrlFilters>(key: string): GetFilterTabsOutput<TUrlFilters> {
   const filterTabs = localStorage.getItem(key);
+
   return filterTabs ? JSON.parse(filterTabs) : [];
 }
 
-function saveFilterTab<TUrlFilters>(
-  name: string,
-  data: TUrlFilters,
-  key: string,
-) {
+function saveFilterTab<TUrlFilters>(name: string, data: TUrlFilters, key: string) {
   const userFilters = getFilterTabs<TUrlFilters>(key);
 
   localStorage.setItem(
@@ -31,11 +26,7 @@ function saveFilterTab<TUrlFilters>(
   );
 }
 
-function updateFilterTab<TUrlFilters>(
-  tabName: string,
-  data: TUrlFilters,
-  key: string,
-) {
+function updateFilterTab<TUrlFilters>(tabName: string, data: TUrlFilters, key: string) {
   const userFilters = getFilterTabs<TUrlFilters>(key);
   const updatedFilters = userFilters.map(tab => {
     if (tab.name === tabName) {
@@ -66,14 +57,11 @@ export interface StorageUtils<TUrlFilters> {
   updateFilterTab: (name: string, data: TUrlFilters) => void;
 }
 
-function createFilterTabUtils<TUrlFilters>(
-  key: string,
-): StorageUtils<TUrlFilters> {
+function createFilterTabUtils<TUrlFilters>(key: string): StorageUtils<TUrlFilters> {
   return {
     deleteFilterTab: (id: number) => deleteFilterTab(id, key),
     getFilterTabs: () => getFilterTabs<TUrlFilters>(key),
-    saveFilterTab: (name: string, data: TUrlFilters) =>
-      saveFilterTab<TUrlFilters>(name, data, key),
+    saveFilterTab: (name: string, data: TUrlFilters) => saveFilterTab<TUrlFilters>(name, data, key),
     updateFilterTab: (tabName: string, data: TUrlFilters) =>
       updateFilterTab<TUrlFilters>(tabName, data, key),
   };

@@ -35,7 +35,6 @@ const CustomAppInformation: React.FC<CustomAppInfoProps> = ({
 }) => {
   const intl = useIntl();
   const classes = useStyles();
-
   const formErrors = getFormErrors(["name"], errors);
 
   return (

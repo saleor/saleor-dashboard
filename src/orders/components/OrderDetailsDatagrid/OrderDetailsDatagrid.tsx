@@ -16,10 +16,7 @@ import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
 import { messages as orderMessages } from "../OrderListDatagrid/messages";
-import {
-  createGetCellContent,
-  orderDetailsStaticColumnsAdapter,
-} from "./datagrid";
+import { createGetCellContent, orderDetailsStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
 
 interface OrderDetailsDatagridProps {
@@ -35,16 +32,8 @@ export const OrderDetailsDatagrid = ({
 }: OrderDetailsDatagridProps) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
-
-  const { updateListSettings, settings } = useListSettings(
-    ListViews.ORDER_DETAILS_LIST,
-  );
-
-  const orderDetailsStaticColumns = useMemo(
-    () => orderDetailsStaticColumnsAdapter(intl),
-    [intl],
-  );
-
+  const { updateListSettings, settings } = useListSettings(ListViews.ORDER_DETAILS_LIST);
+  const orderDetailsStaticColumns = useMemo(() => orderDetailsStaticColumnsAdapter(intl), [intl]);
   const handleColumnChange = useCallback(
     picked => {
       if (updateListSettings) {
@@ -53,19 +42,12 @@ export const OrderDetailsDatagrid = ({
     },
     [updateListSettings],
   );
-
-  const {
-    handlers,
-    visibleColumns,
-    staticColumns,
-    selectedColumns,
-    recentlyAddedColumn,
-  } = useColumns({
-    staticColumns: orderDetailsStaticColumns,
-    selectedColumns: settings?.columns ?? [],
-    onSave: handleColumnChange,
-  });
-
+  const { handlers, visibleColumns, staticColumns, selectedColumns, recentlyAddedColumn } =
+    useColumns({
+      staticColumns: orderDetailsStaticColumns,
+      selectedColumns: settings?.columns ?? [],
+      onSave: handleColumnChange,
+    });
   const getCellContent = useCallback(
     createGetCellContent({
       columns: visibleColumns,
@@ -76,17 +58,13 @@ export const OrderDetailsDatagrid = ({
     }),
     [intl, visibleColumns, loading],
   );
-
   const getMenuItems = useCallback(
     index => [
       {
         disabled: !lines[index]?.variant?.product.id,
         label: intl.formatMessage(messages.productDetails),
         Icon: lines[index]?.variant?.product.id ? (
-          <Link
-            to={productPath(lines[index].variant.product.id)}
-            target="_blank"
-          >
+          <Link to={productPath(lines[index].variant.product.id)} target="_blank">
             <ExternalLinkIcon />
           </Link>
         ) : (

@@ -16,15 +16,11 @@ interface OrderTransactionRefundCreateProps {
   orderId: string;
 }
 
-const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({
-  orderId,
-}) => {
+const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({ orderId }) => {
   const notify = useNotifier();
   const navigate = useNavigator();
 
-  const [linesErrors, setLinesErrors] = useState<OrderTransactionRefundError[]>(
-    [],
-  );
+  const [linesErrors, setLinesErrors] = useState<OrderTransactionRefundError[]>([]);
 
   const { data, loading } = useOrderDetailsGrantRefundQuery({
     displayLoader: true,
@@ -47,9 +43,11 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({
           ),
         );
       }
+
       if (submitData?.orderGrantRefundCreate?.errors.length) {
         const { errors } = submitData.orderGrantRefundCreate;
         const errorLines: OrderTransactionRefundError[] = [];
+
         errors.forEach(err => {
           if (err.code !== OrderGrantRefundCreateErrorCode.REQUIRED) {
             notify({
@@ -72,14 +70,12 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({
     disableErrorHandling: true,
   });
 
-  const handleCreateRefund = async (
-    submitData: OrderTransactionRefundPageFormData,
-  ) => {
+  const handleCreateRefund = async (submitData: OrderTransactionRefundPageFormData) => {
     if (!data?.order) {
       return;
     }
-    const { amount, reason, linesToRefund, includeShipping, transactionId } =
-      submitData;
+
+    const { amount, reason, linesToRefund, includeShipping, transactionId } = submitData;
 
     createRefund({
       variables: {

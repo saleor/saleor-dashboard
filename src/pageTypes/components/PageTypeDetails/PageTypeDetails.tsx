@@ -20,14 +20,11 @@ interface PageTypeDetailsProps {
 const PageTypeDetails: React.FC<PageTypeDetailsProps> = props => {
   const { data, disabled, errors, onChange } = props;
   const intl = useIntl();
-
   const formErrors = getFormErrors(["name"], errors);
 
   return (
     <Card>
-      <CardTitle
-        title={intl.formatMessage(commonMessages.generalInformations)}
-      />
+      <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
       <CardContent>
         <TextField
           disabled={disabled}
@@ -47,6 +44,7 @@ const PageTypeDetails: React.FC<PageTypeDetailsProps> = props => {
     </Card>
   );
 };
+
 PageTypeDetails.defaultProps = {
   errors: [],
 };

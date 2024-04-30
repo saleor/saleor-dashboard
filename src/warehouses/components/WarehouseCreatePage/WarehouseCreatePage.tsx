@@ -8,10 +8,7 @@ import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import { AddressTypeInput } from "@dashboard/customers/types";
-import {
-  CountryWithCodeFragment,
-  WarehouseErrorFragment,
-} from "@dashboard/graphql";
+import { CountryWithCodeFragment, WarehouseErrorFragment } from "@dashboard/graphql";
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -46,7 +43,6 @@ const initialForm: WarehouseCreatePageFormData = {
   streetAddress1: "",
   streetAddress2: "",
 };
-
 const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
   countries,
   disabled,
@@ -56,11 +52,8 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-
   const [displayCountry, setDisplayCountry] = useStateFromProps("");
-
-  const { errors: validationErrors, submit: handleSubmit } =
-    useAddressValidation(onSubmit);
+  const { errors: validationErrors, submit: handleSubmit } = useAddressValidation(onSubmit);
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
@@ -71,7 +64,6 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
           setDisplayCountry,
           countryChoices,
         );
-
         const handleCountrySelect = createCountryHandler(countrySelect, set);
 
         return (
@@ -86,12 +78,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
             />
             <DetailPageLayout.Content>
               <div>
-                <WarehouseInfo
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
+                <WarehouseInfo data={data} disabled={disabled} errors={errors} onChange={change} />
                 <CardSpacer />
                 <CompanyAddressInput
                   countries={countryChoices}

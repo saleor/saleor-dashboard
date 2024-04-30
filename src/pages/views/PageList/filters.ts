@@ -20,10 +20,7 @@ import {
   getMultipleValueQueryParam,
 } from "@dashboard/utils/filters";
 import { createAutocompleteField } from "@dashboard/utils/filters/fields";
-import {
-  mapNodeToChoice,
-  mapSingleValueNodeToChoice,
-} from "@dashboard/utils/maps";
+import { mapNodeToChoice, mapSingleValueNodeToChoice } from "@dashboard/utils/maps";
 import { defineMessages, IntlShape } from "react-intl";
 
 export enum PageListFilterKeys {
@@ -94,11 +91,8 @@ export function createFilterStructure(
   ];
 }
 
-export function getFilterQueryParam(
-  filter: FilterElement<PageListFilterKeys>,
-): PageListUrlFilters {
+export function getFilterQueryParam(filter: FilterElement<PageListFilterKeys>): PageListUrlFilters {
   const { name } = filter;
-
   const { pageTypes } = PageListFilterKeys;
 
   switch (name) {
@@ -115,7 +109,7 @@ export type PageListUrlQueryParams = Pagination &
 
 export const storageUtils = createFilterTabUtils<string>(PAGES_FILTERS_KEY);
 
-export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
-  createFilterUtils<PageListUrlQueryParams, PageListUrlFilters>(
-    PageListUrlFiltersWithMultipleValues,
-  );
+export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
+  PageListUrlQueryParams,
+  PageListUrlFilters
+>(PageListUrlFiltersWithMultipleValues);

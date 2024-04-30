@@ -24,9 +24,7 @@ export const groupsDiff = (
   };
 };
 
-export const isMemberActive = (
-  staffMember: StaffMemberDetailsFragment | UserFragment,
-) => {
+export const isMemberActive = (staffMember: StaffMemberDetailsFragment | UserFragment) => {
   if (staffMember && "isActive" in staffMember) {
     return staffMember.isActive;
   }

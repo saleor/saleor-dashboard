@@ -1,4 +1,1 @@
-export type SaleValueInputOnChangeType = (
-  channelId: string,
-  passedValue: string,
-) => void;
+export type SaleValueInputOnChangeType = (channelId: string, passedValue: string) => void;

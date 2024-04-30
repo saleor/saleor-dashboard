@@ -25,6 +25,7 @@ import { getGrantedRefundStatus, getGrantedRefundStatusMessage } from "./utils";
 
 const useOrderRefundConstantColumns = () => {
   const intl = useIntl();
+
   return [
     {
       id: "status",
@@ -57,6 +58,7 @@ const useOrderRefundConstantColumns = () => {
 export const useOrderRefundStaticColumns = () => {
   const emptyColumn = useEmptyColumn();
   const constantColumns = useOrderRefundConstantColumns();
+
   return [emptyColumn, ...constantColumns];
 };
 
@@ -87,10 +89,7 @@ export const createGetCellContent =
           currentTheme,
         });
 
-        const statusMessage = getGrantedRefundStatusMessage(
-          rowData.status,
-          intl,
-        );
+        const statusMessage = getGrantedRefundStatusMessage(rowData.status, intl);
 
         return tagsCell(
           [
@@ -127,7 +126,6 @@ export const useDatagridOpts = (
   const datagrid = useDatagridChangeState();
   const { theme: currentTheme } = useTheme();
   const { updateListSettings, settings } = useListSettings(view);
-
   const handleColumnChange = React.useCallback(
     picked => {
       if (updateListSettings) {
@@ -136,6 +134,7 @@ export const useDatagridOpts = (
     },
     [updateListSettings],
   );
+
   return {
     datagrid,
     currentTheme,

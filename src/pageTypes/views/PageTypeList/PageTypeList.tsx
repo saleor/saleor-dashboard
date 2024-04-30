@@ -4,10 +4,7 @@ import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData,
 } from "@dashboard/components/SaveFilterTabDialog";
 import TypeDeleteWarningDialog from "@dashboard/components/TypeDeleteWarningDialog";
-import {
-  usePageTypeBulkDeleteMutation,
-  usePageTypeListQuery,
-} from "@dashboard/graphql";
+import { usePageTypeBulkDeleteMutation, usePageTypeListQuery } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -78,11 +75,8 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
     displayLoader: true,
     variables: queryVariables,
   });
-
   const tabs = getFilterTabs();
-
   const currentTab = getFiltersCurrentTab(params, tabs);
-
   const changeFilterField = (filter: PageTypeListUrlFilters) => {
     reset();
     navigate(
@@ -93,12 +87,10 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
       }),
     );
   };
-
   const [openModal, closeModal] = createDialogActionHandlers<
     PageTypeListUrlDialog,
     PageTypeListUrlQueryParams
   >(navigate, pageTypeListUrl, params);
-
   const handleTabChange = (tab: number) => {
     reset();
     navigate(
@@ -108,59 +100,50 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
       }),
     );
   };
-
   const handleTabDelete = () => {
     deleteFilterTab(currentTab);
     reset();
     navigate(pageTypeListUrl());
   };
-
   const handleTabSave = (data: SaveFilterTabDialogFormData) => {
     saveFilterTab(data.name, getActiveFilters(params));
     handleTabChange(tabs.length + 1);
   };
-
   const paginationValues = usePaginator({
     pageInfo: data?.pageTypes?.pageInfo,
     paginationState,
     queryString: params,
   });
-
   const handleSort = createSortHandler(navigate, pageTypeListUrl, params);
-
-  const [pageTypeBulkDelete, pageTypeBulkDeleteOpts] =
-    usePageTypeBulkDeleteMutation({
-      onCompleted: data => {
-        if (data.pageTypeBulkDelete.errors.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-          reset();
-          refetch();
-          navigate(
-            pageTypeListUrl({
-              ...params,
-              action: undefined,
-              ids: undefined,
-            }),
-          );
-        }
-      },
-    });
-
+  const [pageTypeBulkDelete, pageTypeBulkDeleteOpts] = usePageTypeBulkDeleteMutation({
+    onCompleted: data => {
+      if (data.pageTypeBulkDelete.errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+        reset();
+        refetch();
+        navigate(
+          pageTypeListUrl({
+            ...params,
+            action: undefined,
+            ids: undefined,
+          }),
+        );
+      }
+    },
+  });
   const hanldePageTypeBulkDelete = () =>
     pageTypeBulkDelete({
       variables: {
         ids: params.ids,
       },
     });
-
   const pageTypeDeleteData = usePageTypeDelete({
     selectedTypes: selectedPageTypes,
     params,
   });
-
   const pageTypesData = mapEdgesToItems(data?.pageTypes);
 
   return (

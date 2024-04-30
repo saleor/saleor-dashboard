@@ -7,27 +7,20 @@ import { matchPath } from "react-router";
 
 import { SidebarMenuItem } from "./types";
 
-export const mapToExtensionsItems = (
-  extensions: Extension[],
-  header: SidebarMenuItem,
-) => {
-  const items: SidebarMenuItem[] = extensions.map(
-    ({ label, id, app, url, permissions, open }) => ({
-      id: `extension-${id}`,
-      label,
-      url: AppUrls.resolveDashboardUrlFromAppCompleteUrl(
-        url,
-        app.appUrl,
-        app.id,
-      ),
-      permissions,
-      onClick: open,
-      type: "item",
-    }),
-  );
+export const mapToExtensionsItems = (extensions: Extension[], header: SidebarMenuItem) => {
+  const items: SidebarMenuItem[] = extensions.map(({ label, id, app, url, permissions, open }) => ({
+    id: `extension-${id}`,
+    label,
+    url: AppUrls.resolveDashboardUrlFromAppCompleteUrl(url, app.appUrl, app.id),
+    permissions,
+    onClick: open,
+    type: "item",
+  }));
+
   if (items.length) {
     items.unshift(header);
   }
+
   return items;
 };
 
@@ -63,9 +56,7 @@ const getPureUrl = (url: string) => {
 
   return url;
 };
-
-const isMenuItemExtension = (menuItem: SidebarMenuItem) =>
-  menuItem.id.startsWith("extension-");
+const isMenuItemExtension = (menuItem: SidebarMenuItem) => menuItem.id.startsWith("extension-");
 
 export const getMenuItemExtension = (
   extensions: Record<AppExtensionMountEnum, Extension[]>,
@@ -75,8 +66,7 @@ export const getMenuItemExtension = (
     (list, extensions) => list.concat(extensions),
     [],
   );
-  const extension = extensionsList.find(
-    extension => id === `extension-${extension.id}`,
-  );
+  const extension = extensionsList.find(extension => id === `extension-${extension.id}`);
+
   return extension;
 };

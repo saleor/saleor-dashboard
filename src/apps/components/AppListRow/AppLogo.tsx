@@ -5,10 +5,7 @@ interface AppLogoProps {
   backgroundColor: string;
 }
 
-export const AppLogo: React.FC<AppLogoProps> = ({
-  backgroundColor,
-  children,
-}) => (
+export const AppLogo: React.FC<AppLogoProps> = ({ backgroundColor, children }) => (
   <Box
     width={10}
     height={10}

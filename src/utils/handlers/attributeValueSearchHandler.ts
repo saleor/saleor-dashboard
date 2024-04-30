@@ -13,10 +13,7 @@ interface AttributeValueSearchHandlerState {
 
 export interface UseAttributeValueSearchHandler
   extends Omit<
-    UseSearchResult<
-      SearchAttributeValuesQuery,
-      SearchAttributeValuesQueryVariables
-    >,
+    UseSearchResult<SearchAttributeValuesQuery, SearchAttributeValuesQueryVariables>,
     "search"
   > {
   reset: () => void;
@@ -30,7 +27,6 @@ function useAttributeValueSearchHandler(
     id: null,
     query: variables.query,
   });
-
   const { loadMore, search, result } = useAttributeValueSearch({
     variables: {
       ...variables,
@@ -38,11 +34,11 @@ function useAttributeValueSearchHandler(
     },
     skip: !state.id,
   });
-
   const handleSearch = (query: string, id: string | null) => {
     if (query === "" || query !== state.query) {
       search(query);
     }
+
     if (id !== state.id || query !== state.query) {
       setState({
         query,
@@ -50,7 +46,6 @@ function useAttributeValueSearchHandler(
       });
     }
   };
-
   const reset = () => setState(prevState => ({ ...prevState, id: null }));
 
   useEffect(() => {

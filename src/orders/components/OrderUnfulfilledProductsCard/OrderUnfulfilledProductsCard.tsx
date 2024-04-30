@@ -19,9 +19,7 @@ interface OrderUnfulfilledProductsCardProps {
   onShowMetadata: (id: string) => void;
 }
 
-const OrderUnfulfilledProductsCard: React.FC<
-  OrderUnfulfilledProductsCardProps
-> = ({
+const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> = ({
   showFulfillmentAction,
   notAllowedToFulfillUnpaid,
   onShowMetadata,
@@ -38,17 +36,9 @@ const OrderUnfulfilledProductsCard: React.FC<
   return (
     <>
       <Card>
-        <OrderCardTitle
-          withStatus
-          status="unfulfilled"
-          className={classes.cardTitle}
-        />
+        <OrderCardTitle withStatus status="unfulfilled" className={classes.cardTitle} />
         <CardContent>
-          <OrderDetailsDatagrid
-            lines={lines}
-            loading={loading}
-            onShowMetadata={onShowMetadata}
-          />
+          <OrderDetailsDatagrid lines={lines} loading={loading} onShowMetadata={onShowMetadata} />
           {showFulfillmentAction && (
             <CardActions className={classes.actions}>
               <Button
@@ -57,17 +47,11 @@ const OrderUnfulfilledProductsCard: React.FC<
                 onClick={onFulfill}
                 disabled={notAllowedToFulfillUnpaid}
               >
-                <FormattedMessage
-                  id="/Xwjww"
-                  defaultMessage="Fulfill"
-                  description="button"
-                />
+                <FormattedMessage id="/Xwjww" defaultMessage="Fulfill" description="button" />
               </Button>
               {notAllowedToFulfillUnpaid && (
                 <Typography color="error" variant="caption">
-                  <FormattedMessage
-                    {...commonMessages.cannotFullfillUnpaidOrder}
-                  />
+                  <FormattedMessage {...commonMessages.cannotFullfillUnpaidOrder} />
                 </Typography>
               )}
             </CardActions>

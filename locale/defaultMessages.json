@@ -3982,6 +3982,9 @@
   "ORQvOg": {
     "string": "You don't have permission to perform this action"
   },
+  "OSnO9P": {
+    "string": "All transactions are non-refundable"
+  },
   "OTDo9I": {
     "context": "tab name",
     "string": "All staff members"
@@ -6063,6 +6066,9 @@
     "context": "section header",
     "string": "Refund Order"
   },
+  "brkxbY": {
+    "string": "There are no transactions to refund"
+  },
   "bsP4f3": {
     "string": "No tokens found"
   },
@@ -6930,10 +6936,6 @@
   "iBW3rG": {
     "context": "button",
     "string": "Apply"
-  },
-  "iERn5G": {
-    "context": "header name input",
-    "string": "Should start with `x-` or `authorization`"
   },
   "iEeIhY": {
     "context": "draft order",
@@ -8365,6 +8367,10 @@
   "sG0w22": {
     "context": "dialog title",
     "string": "Delete categories"
+  },
+  "sGDsFP": {
+    "context": "header name input",
+    "string": "Should match `x-*`, `authorization*`, or `brokerproperties`."
   },
   "sHON47": {
     "context": "refunded products list title",

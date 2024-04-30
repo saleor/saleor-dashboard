@@ -75,8 +75,7 @@ export interface ProductVariantPageFormData extends MetadataFormData {
   weight: string;
 }
 
-export interface ProductVariantPageSubmitData
-  extends ProductVariantPageFormData {
+export interface ProductVariantPageSubmitData extends ProductVariantPageFormData {
   attributes: AttributeInput[];
   addStocks: ProductStockInput[];
   updateStocks: ProductStockInput[];
@@ -84,8 +83,7 @@ export interface ProductVariantPageSubmitData
 }
 
 function byAttributeScope(scope: VariantAttributeScope) {
-  return (attribute: AttributeInput) =>
-    attribute.data.variantAttributeScope === scope;
+  return (attribute: AttributeInput) => attribute.data.variantAttributeScope === scope;
 }
 
 interface ProductVariantPageProps {
@@ -104,9 +102,7 @@ interface ProductVariantPageProps {
   warehouses: WarehouseFragment[];
   referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
-  attributeValues: RelayToFlat<
-    SearchAttributeValuesQuery["attribute"]["choices"]
-  >;
+  attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchMoreReferenceProducts?: FetchMoreProps;
   fetchMoreAttributeValues?: FetchMoreProps;
@@ -161,25 +157,18 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const { isOpen: isManageChannelsModalOpen, toggle: toggleManageChannels } =
-    useManageChannels();
+  const { isOpen: isManageChannelsModalOpen, toggle: toggleManageChannels } = useManageChannels();
   const [isModalOpened, setModalStatus] = React.useState(false);
   const toggleModal = () => setModalStatus(!isModalOpened);
-
-  const [isEndPreorderModalOpened, setIsEndPreorderModalOpened] =
-    React.useState(false);
-
-  const productMedia = [...(variant?.product?.media ?? [])]?.sort(
-    (prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1),
+  const [isEndPreorderModalOpened, setIsEndPreorderModalOpened] = React.useState(false);
+  const productMedia = [...(variant?.product?.media ?? [])]?.sort((prev, next) =>
+    prev.sortOrder > next.sortOrder ? 1 : -1,
   );
-
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
-
   const handleDeactivatePreorder = async () => {
     await onVariantPreorderDeactivate(variant.id);
     setIsEndPreorderModalOpened(false);
   };
-
   const handleAssignReferenceAttribute = (
     attributeValues: Container[],
     data: ProductVariantUpdateData,
@@ -238,7 +227,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
               byAttributeScope(VariantAttributeScope.VARIANT_SELECTION),
             );
             const media = getSelectedMedia(productMedia, data.media);
-
             const errors = [...apiErrors, ...validationErrors];
 
             return (
@@ -271,9 +259,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     {nonSelectionAttributes.length > 0 && (
                       <>
                         <Attributes
-                          title={intl.formatMessage(
-                            messages.nonSelectionAttributes,
-                          )}
+                          title={intl.formatMessage(messages.nonSelectionAttributes)}
                           attributes={nonSelectionAttributes}
                           attributeValues={attributeValues}
                           loading={loading}
@@ -296,9 +282,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     {selectionAttributes.length > 0 && (
                       <>
                         <Attributes
-                          title={intl.formatMessage(
-                            messages.selectionAttributesHeader,
-                          )}
+                          title={intl.formatMessage(messages.selectionAttributesHeader)}
                           attributes={selectionAttributes}
                           attributeValues={attributeValues}
                           loading={loading}
@@ -327,12 +311,10 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     <CardSpacer />
                     <ProductVariantPrice
                       disabled={!variant}
-                      productVariantChannelListings={data.channelListings.map(
-                        channel => ({
-                          ...channel.data,
-                          ...channel.value,
-                        }),
-                      )}
+                      productVariantChannelListings={data.channelListings.map(channel => ({
+                        ...channel.data,
+                        ...channel.value,
+                      }))}
                       errors={channelErrors}
                       loading={loading}
                       onChange={handlers.changeChannels}
@@ -355,12 +337,10 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     />
                     <CardSpacer />
                     <ProductStocks
-                      productVariantChannelListings={data.channelListings.map(
-                        channel => ({
-                          ...channel.data,
-                          ...channel.value,
-                        }),
-                      )}
+                      productVariantChannelListings={data.channelListings.map(channel => ({
+                        ...channel.data,
+                        ...channel.value,
+                      }))}
                       data={data}
                       disabled={loading}
                       hasVariants={true}
@@ -393,9 +373,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     confirmButtonState={"default"}
                     products={referenceProducts}
                     pages={referencePages}
-                    attribute={data.attributes.find(
-                      ({ id }) => id === assignReferencesAttributeId,
-                    )}
+                    attribute={data.attributes.find(({ id }) => id === assignReferencesAttributeId)}
                     hasMore={handlers.fetchMoreReferences?.hasMore}
                     open={canOpenAssignReferencesAttributeDialog}
                     onFetch={handlers.fetchReferences}
@@ -403,11 +381,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     loading={handlers.fetchMoreReferences?.loading}
                     onClose={onCloseDialog}
                     onSubmit={attributeValues =>
-                      handleAssignReferenceAttribute(
-                        attributeValues,
-                        data,
-                        handlers,
-                      )
+                      handleAssignReferenceAttribute(attributeValues, data, handlers)
                     }
                   />
                 )}
@@ -446,5 +420,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
     </DetailPageLayout>
   );
 };
+
 ProductVariantPage.displayName = "ProductVariantPage";
 export default ProductVariantPage;

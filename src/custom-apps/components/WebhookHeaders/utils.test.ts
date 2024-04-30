@@ -25,7 +25,6 @@ describe("mapHeaders", () => {
     expect(headers).toEqual(parsedHeaders);
   });
 });
-
 describe("stringifyHeaders", () => {
   it("should return stringified headers", () => {
     const stringified = stringifyHeaders(parsedHeaders);

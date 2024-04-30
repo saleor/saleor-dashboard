@@ -13,10 +13,7 @@ interface RuleValueChipsProps {
   currencySymbol: string;
 }
 
-export const RuleValueChips = ({
-  currencySymbol,
-  rule,
-}: RuleValueChipsProps) => {
+export const RuleValueChips = ({ currencySymbol, rule }: RuleValueChipsProps) => {
   const intl = useIntl();
   const { locale } = useLocale();
 
@@ -42,11 +39,7 @@ function renderRuleValue(rule: Rule, currencySymbol: string, locale: Locale) {
     },
     locale,
   );
-
-  const rewardValueWithPercentage = formatPercantage(
-    rule.rewardValue ?? 0,
-    locale,
-  );
+  const rewardValueWithPercentage = formatPercantage(rule.rewardValue ?? 0, locale);
 
   return rule.rewardValueType === RewardValueTypeEnum.FIXED
     ? rewardValueWithCurrency

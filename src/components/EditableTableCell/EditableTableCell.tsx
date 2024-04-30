@@ -1,11 +1,5 @@
 import useForm from "@dashboard/hooks/useForm";
-import {
-  Card,
-  CardContent,
-  TableCell,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { Card, CardContent, TableCell, TextField, Typography } from "@material-ui/core";
 import { TextFieldProps } from "@material-ui/core/TextField";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
@@ -70,9 +64,7 @@ export const EditableTableCell: React.FC<EditableTableCellProps> = props => {
   // };
 
   const [opened, setOpenStatus] = React.useState(focused);
-  const { change, data } = useForm(
-    { value } /* commenting out temporarily handleConfirm */,
-  );
+  const { change, data } = useForm({ value } /* commenting out temporarily handleConfirm */);
   const enable = () => setOpenStatus(true);
   const disable = () => setOpenStatus(false);
 

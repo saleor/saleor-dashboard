@@ -21,15 +21,11 @@ export const giftCardBulkCreateErrorKeys: GiftCardErrorKey[] = [
   "count",
 ];
 
-export interface GiftCardBulkCreateFormData
-  extends GiftCardCreateCommonFormData {
+export interface GiftCardBulkCreateFormData extends GiftCardCreateCommonFormData {
   cardsAmount: number;
 }
 
-export type GiftCardBulkCreateFormError = Pick<
-  GiftCardErrorFragment,
-  "code" | "field"
->;
+export type GiftCardBulkCreateFormError = Pick<GiftCardErrorFragment, "code" | "field">;
 
 export type GiftCardBulkCreateFormErrors = Partial<
   Record<GiftCardErrorKey, GiftCardBulkCreateFormError>

@@ -20,20 +20,12 @@ import ChannelsListComponent from "./views/ChannelsList";
 const ChannelDetails: React.FC<RouteComponentProps<any>> = ({ match }) => {
   const params = parseQs(location.search.substr(1));
 
-  return (
-    <ChannelDetailsComponent
-      id={decodeURIComponent(match.params.id)}
-      params={params}
-    />
-  );
+  return <ChannelDetailsComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
-
 const ChannelsList: React.FC<RouteComponentProps> = ({ location }) => {
   const qs = parseQs(location.search.substr(1)) as any;
-  const params: ChannelsListUrlQueryParams = asSortParams(
-    qs,
-    ChannelsListUrlSortField,
-  );
+  const params: ChannelsListUrlQueryParams = asSortParams(qs, ChannelsListUrlSortField);
+
   return <ChannelsListComponent params={params} />;
 };
 

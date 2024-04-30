@@ -11,6 +11,7 @@ export type FilterTextFieldProps = FilterFieldBaseProps<
 > & {
   currencySymbol: string | null;
 };
+
 const FilterTextField: React.FC<FilterTextFieldProps> = ({
   currencySymbol,
   filter,
@@ -32,8 +33,8 @@ const FilterTextField: React.FC<FilterTextFieldProps> = ({
           filter.type === FieldType.date
             ? "date"
             : [FieldType.number, FieldType.price].includes(filter.type)
-            ? "number"
-            : "text",
+              ? "number"
+              : "text",
       }}
       value={filter.value[0]}
       onChange={event =>

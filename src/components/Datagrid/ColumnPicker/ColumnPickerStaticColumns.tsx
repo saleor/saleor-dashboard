@@ -23,11 +23,7 @@ export const ColumnPickerStaticColumns = ({
           onPressedChange={() => handleToggle(column.id)}
           pressed={selectedColumns.includes(column.id)}
           // One static column must always be enabled
-          disabled={isLastEnabledColumn(
-            column.id,
-            staticColumns,
-            selectedColumns,
-          )}
+          disabled={isLastEnabledColumn(column.id, staticColumns, selectedColumns)}
         >
           <Text size={3} color="default1">
             {column.title}

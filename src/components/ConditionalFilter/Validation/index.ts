@@ -6,7 +6,6 @@ const VALIDATORS = {
   NUMERIC: numeric,
   price: numeric,
 } as Record<string, ValidateFn>;
-
 const toValidated = (
   element: string | FilterElement | FilterContainer,
   index: number,
@@ -14,7 +13,6 @@ const toValidated = (
   if (!FilterElement.isCompatible(element)) return false;
 
   const key = element.isAttribute() ? element.value.type : element.value.value;
-
   const validateFn = VALIDATORS[key as keyof typeof VALIDATORS];
 
   if (validateFn) {
@@ -23,7 +21,6 @@ const toValidated = (
 
   return false;
 };
-
 const hasErrors = (element: RawValidateEntry): element is ErrorEntry => {
   return element !== false;
 };

@@ -1,11 +1,7 @@
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { FetchMoreProps } from "@dashboard/types";
-import {
-  DynamicCombobox,
-  DynamicComboboxProps,
-  Option,
-} from "@saleor/macaw-ui-next";
+import { DynamicCombobox, DynamicComboboxProps, Option } from "@saleor/macaw-ui-next";
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -14,10 +10,7 @@ import { useComboboxHandlers } from "../hooks/useComboboxHandlers";
 
 type HandleOnChangeValue = Option | null;
 
-type ComboboxProps = Omit<
-  DynamicComboboxProps<Option | null>,
-  "value" | "onChange"
-> & {
+type ComboboxProps = Omit<DynamicComboboxProps<Option | null>, "value" | "onChange"> & {
   children?: ReactNode;
   fetchOptions: (data: string) => void;
   allowCustomValues?: boolean;
@@ -41,7 +34,6 @@ const ComboboxRoot = ({
   ...rest
 }: ComboboxProps) => {
   const intl = useIntl();
-
   const [selectedValue, setSelectedValue] = useState(value);
   const inputValue = useRef("");
 
@@ -51,19 +43,16 @@ const ComboboxRoot = ({
     }
   }, [value]);
 
-  const { handleFetchMore, handleFocus, handleInputChange } =
-    useComboboxHandlers({
-      fetchOptions,
-      alwaysFetchOnFocus,
-      fetchMore,
-    });
-
+  const { handleFetchMore, handleFocus, handleInputChange } = useComboboxHandlers({
+    fetchOptions,
+    alwaysFetchOnFocus,
+    fetchMore,
+  });
   const { customValueOption } = useCombbobxCustomOption({
     query: inputValue.current,
     allowCustomValues,
     selectedValue,
   });
-
   const handleOnChange = (value: HandleOnChangeValue) => {
     onChange({
       target: { value: value?.value ?? null, name: rest.name ?? "" },

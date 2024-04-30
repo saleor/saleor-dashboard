@@ -4,8 +4,7 @@ import React from "react";
 
 import Link from "../Link";
 
-export interface ListItemLinkProps
-  extends Omit<BaseListItemProps, "onClick" | "classes"> {
+export interface ListItemLinkProps extends Omit<BaseListItemProps, "onClick" | "classes"> {
   href?: string;
   className?: string;
   linkClassName?: string;

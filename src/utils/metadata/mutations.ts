@@ -1,11 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const updateMetadata = gql`
-  mutation UpdateMetadata(
-    $id: ID!
-    $input: [MetadataInput!]!
-    $keysToDelete: [String!]!
-  ) {
+  mutation UpdateMetadata($id: ID!, $input: [MetadataInput!]!, $keysToDelete: [String!]!) {
     updateMetadata(id: $id, input: $input) {
       errors {
         ...MetadataError
@@ -32,11 +28,7 @@ export const updateMetadata = gql`
 `;
 
 export const updatePrivateMetadata = gql`
-  mutation UpdatePrivateMetadata(
-    $id: ID!
-    $input: [MetadataInput!]!
-    $keysToDelete: [String!]!
-  ) {
+  mutation UpdatePrivateMetadata($id: ID!, $input: [MetadataInput!]!, $keysToDelete: [String!]!) {
     updatePrivateMetadata(id: $id, input: $input) {
       errors {
         ...MetadataError

@@ -36,9 +36,9 @@ const originalTree: MenuTreeItem[] = [
 describe("MenuItems tree - getDiff", () => {
   it("should return orinal tree when no changes", () => {
     const diff = getDiff(originalTree, []);
+
     expect(diff).toMatchSnapshot();
   });
-
   it("should return array with operations", () => {
     const diff = getDiff(originalTree, [
       {
@@ -69,6 +69,7 @@ describe("MenuItems tree - getDiff", () => {
         data: { name: "Groceries" } as MenuItemFragment,
       },
     ]);
+
     expect(diff).toMatchSnapshot();
   });
 });

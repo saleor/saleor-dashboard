@@ -46,11 +46,8 @@ export const FilterPresetsSelect = ({
   presetsChanged,
 }: FilterPresetsSelectProps) => {
   const intl = useIntl();
-  const showUpdateButton =
-    presetsChanged && savedPresets.length > 0 && activePreset;
-
+  const showUpdateButton = presetsChanged && savedPresets.length > 0 && activePreset;
   const showSaveButton = presetsChanged;
-
   const getLabel = () => {
     if (!activePreset) {
       return selectAllLabel;
@@ -58,9 +55,9 @@ export const FilterPresetsSelect = ({
 
     return savedPresets[activePreset - 1];
   };
-
   const handleSelectPreset = (e: MouseEvent<HTMLElement>, index: number) => {
     const target = e.target as HTMLElement;
+
     // Prevent run onSelect when click on remove button
     if (!["LI", "SPAN"].includes(target.tagName)) {
       return;
@@ -68,7 +65,6 @@ export const FilterPresetsSelect = ({
 
     onSelect(index);
   };
-
   const renderDropdown = () => {
     if (!savedPresets?.length) {
       return (
@@ -128,16 +124,8 @@ export const FilterPresetsSelect = ({
             backgroundColor="default1"
           >
             <Dropdown.Item>
-              <List.Item
-                paddingX={1.5}
-                paddingY={1}
-                gap={3}
-                borderRadius={3}
-                onClick={onSelectAll}
-              >
-                <Text fontWeight={activePreset === 0 ? "bold" : "regular"}>
-                  {selectAllLabel}
-                </Text>
+              <List.Item paddingX={1.5} paddingY={1} gap={3} borderRadius={3} onClick={onSelectAll}>
+                <Text fontWeight={activePreset === 0 ? "bold" : "regular"}>{selectAllLabel}</Text>
               </List.Item>
             </Dropdown.Item>
             {savedPresets.length > 0 && (

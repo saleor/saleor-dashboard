@@ -7,10 +7,10 @@ import { useIntl } from "react-intl";
 function useOnSetDefaultVariant(productId: string, variant: Node) {
   const notify = useNotifier();
   const intl = useIntl();
-
   const [productVariantSetDefault] = useProductVariantSetDefaultMutation({
     onCompleted: data => {
       const errors = data.productVariantSetDefault.errors;
+
       if (errors.length) {
         errors.map(error =>
           notify({
@@ -19,12 +19,10 @@ function useOnSetDefaultVariant(productId: string, variant: Node) {
           }),
         );
       } else {
-        const defaultVariant =
-          data.productVariantSetDefault.product.variants.find(
-            variant =>
-              variant.id ===
-              data.productVariantSetDefault.product.defaultVariant.id,
-          );
+        const defaultVariant = data.productVariantSetDefault.product.variants.find(
+          variant => variant.id === data.productVariantSetDefault.product.defaultVariant.id,
+        );
+
         if (defaultVariant) {
           notify({
             status: "success",
@@ -40,7 +38,6 @@ function useOnSetDefaultVariant(productId: string, variant: Node) {
       }
     },
   });
-
   const onSetDefaultVariant = (selectedVariant = null) => {
     productVariantSetDefault({
       variables: {

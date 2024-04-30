@@ -12,27 +12,14 @@ interface RuleConditionValuesProps {
   conditionIndex: number;
 }
 
-export const RuleConditionValues = ({
-  conditionIndex,
-}: RuleConditionValuesProps) => {
+export const RuleConditionValues = ({ conditionIndex }: RuleConditionValuesProps) => {
   const { watch } = useFormContext<Rule>();
   const { getConditionTypeByLabel } = useCondtionTypes();
   const { disabled } = useDiscountRulesContext();
-
   const condition = watch(`conditions.${conditionIndex}`);
-
-  const inputType = getConditionTypeByLabel(
-    condition.id ?? "",
-    condition.type ?? "",
-  );
-
-  const ruleConditionValuesFieldName =
-    `conditions.${conditionIndex}.value` as const;
-
-  const { field: valuesField } = useController<
-    Rule,
-    typeof ruleConditionValuesFieldName
-  >({
+  const inputType = getConditionTypeByLabel(condition.id ?? "", condition.type ?? "");
+  const ruleConditionValuesFieldName = `conditions.${conditionIndex}.value` as const;
+  const { field: valuesField } = useController<Rule, typeof ruleConditionValuesFieldName>({
     name: ruleConditionValuesFieldName,
   });
 

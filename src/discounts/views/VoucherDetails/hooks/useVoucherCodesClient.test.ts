@@ -4,7 +4,6 @@ import { renderHook } from "@testing-library/react-hooks";
 import { useVoucherCodesClient } from "./useVoucherCodesClient";
 
 jest.mock("uuid", () => ({ v4: () => "68276b31-3b41-4004-acd6-bad8c36d524f" }));
-
 describe("useVoucherCodesClient", () => {
   it("should add voucher code manually", () => {
     // Arrange
@@ -13,17 +12,13 @@ describe("useVoucherCodesClient", () => {
       updateListSettings: jest.fn(),
     };
     const switchToClientPagination = jest.fn();
-
-    const { result } = renderHook(() =>
-      useVoucherCodesClient(settings, switchToClientPagination),
-    );
+    const { result } = renderHook(() => useVoucherCodesClient(settings, switchToClientPagination));
 
     // Act
     act(() => {
       result.current.handleAddVoucherCode("code 1");
       result.current.handleAddVoucherCode("code 2");
     });
-
     // Assert
     expect(switchToClientPagination).toHaveBeenCalled();
     expect(result.current.addedVoucherCodes).toEqual([
@@ -31,7 +26,6 @@ describe("useVoucherCodesClient", () => {
       { code: "code 1", status: "Draft" },
     ]);
   });
-
   it("should add multiple voucher codes", () => {
     // Arrange
     const settings = {
@@ -39,10 +33,7 @@ describe("useVoucherCodesClient", () => {
       updateListSettings: jest.fn(),
     };
     const switchToClientPagination = jest.fn();
-
-    const { result } = renderHook(() =>
-      useVoucherCodesClient(settings, switchToClientPagination),
-    );
+    const { result } = renderHook(() => useVoucherCodesClient(settings, switchToClientPagination));
 
     // Act
     act(() => {
@@ -51,7 +42,6 @@ describe("useVoucherCodesClient", () => {
         prefix: "prefix",
       });
     });
-
     // Assert
     expect(switchToClientPagination).toHaveBeenCalled();
     expect(result.current.addedVoucherCodes).toEqual([

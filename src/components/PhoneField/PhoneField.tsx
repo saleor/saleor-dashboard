@@ -25,15 +25,7 @@ interface PhoneFieldProps {
 }
 
 const PhoneField: React.FC<PhoneFieldProps> = props => {
-  const {
-    name,
-    number: phoneNumber,
-    prefix,
-    prefixes,
-    label,
-    onChange,
-  } = props;
-
+  const { name, number: phoneNumber, prefix, prefixes, label, onChange } = props;
   const classes = useStyles(props);
 
   return (
@@ -45,14 +37,10 @@ const PhoneField: React.FC<PhoneFieldProps> = props => {
         value={prefix}
         label={label}
       />
-      <TextField
-        name={name + "_number"}
-        onChange={onChange}
-        value={phoneNumber}
-        label="&nbsp;"
-      />
+      <TextField name={name + "_number"} onChange={onChange} value={phoneNumber} label="&nbsp;" />
     </div>
   );
 };
+
 PhoneField.displayName = "PhoneField";
 export default PhoneField;

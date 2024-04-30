@@ -19,10 +19,8 @@ export const useExitFormDialog = (
   { formId, isDisabled }: UseExitFormDialogProps = { formId: undefined },
 ): UseExitFormDialogResult => {
   const id = useRef(formId || Symbol("exit-form-fallback-id")).current;
-
   const exitDialogProps = useContext(ExitFormDialogContext);
-  const { setIsDirty, setIsSubmitDisabled, setExitDialogSubmitRef } =
-    exitDialogProps;
+  const { setIsDirty, setIsSubmitDisabled, setExitDialogSubmitRef } = exitDialogProps;
 
   React.useEffect(() => {
     if (isDisabled !== undefined) {
@@ -34,7 +32,6 @@ export const useExitFormDialog = (
     ...exitDialogProps,
     formId: id,
     setIsDirty: (value: boolean) => setIsDirty(id, value),
-    setExitDialogSubmitRef: (submitFn: SubmitFn) =>
-      setExitDialogSubmitRef(id, submitFn),
+    setExitDialogSubmitRef: (submitFn: SubmitFn) => setExitDialogSubmitRef(id, submitFn),
   };
 };

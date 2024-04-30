@@ -38,5 +38,6 @@ const WeightRange: React.FC<WeightRangeProps> = ({ from, to }) =>
   ) : (
     <span>-</span>
   );
+
 WeightRange.displayName = "WeightRange";
 export default WeightRange;

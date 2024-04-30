@@ -3,14 +3,7 @@ import {
   ConditionalFilters,
   useConditionalFilterContext,
 } from "@dashboard/components/ConditionalFilter";
-import {
-  Box,
-  Button,
-  CloseIcon,
-  DropdownButton,
-  Popover,
-  Text,
-} from "@saleor/macaw-ui-next";
+import { Box, Button, CloseIcon, DropdownButton, Popover, Text } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -18,7 +11,6 @@ export const ExpressionFilters = () => {
   const [open, setOpen] = useState(false);
   const { formatMessage } = useIntl();
   const { valueProvider, containerState } = useConditionalFilterContext();
-
   const clickOutside = () => {
     containerState.clearEmpty();
   };
@@ -33,12 +25,7 @@ export const ExpressionFilters = () => {
         </DropdownButton>
       </Popover.Trigger>
       <Popover.Content align="start" onInteractOutside={clickOutside}>
-        <Box
-          __minHeight="250px"
-          __minWidth="636px"
-          display="grid"
-          __gridTemplateRows="auto 1fr"
-        >
+        <Box __minHeight="250px" __minWidth="636px" display="grid" __gridTemplateRows="auto 1fr">
           <Popover.Arrow fill="default1" />
           <Box
             paddingTop={3}

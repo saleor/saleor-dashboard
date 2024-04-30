@@ -6,10 +6,7 @@ import React from "react";
  * @param deps useEffect dependency array
  * @returns React ref to attach to focusable DOM element.
  */
-export function useAutofocus(
-  condition: boolean = true,
-  deps: React.DependencyList,
-) {
+export function useAutofocus(condition = true, deps: React.DependencyList) {
   const ref = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {

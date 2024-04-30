@@ -36,10 +36,7 @@ const CustomerCreateDetails: React.FC<CustomerCreateDetailsProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
 
-  const formErrors = getFormErrors(
-    ["customerFirstName", "customerLastName", "email"],
-    errors,
-  );
+  const formErrors = getFormErrors(["customerFirstName", "customerLastName", "email"], errors);
 
   return (
     <Card>
@@ -53,15 +50,13 @@ const CustomerCreateDetails: React.FC<CustomerCreateDetailsProps> = props => {
       <CardContent>
         <div className={classes.root}>
           <TextField
+            data-test-id="customer-first-name"
             disabled={disabled}
             error={!!formErrors.customerFirstName}
             fullWidth
             name="customerFirstName"
             label={intl.formatMessage(commonMessages.firstName)}
-            helperText={getAccountErrorMessage(
-              formErrors.customerFirstName,
-              intl,
-            )}
+            helperText={getAccountErrorMessage(formErrors.customerFirstName, intl)}
             type="text"
             value={data.customerFirstName}
             onChange={onChange}
@@ -70,15 +65,13 @@ const CustomerCreateDetails: React.FC<CustomerCreateDetailsProps> = props => {
             }}
           />
           <TextField
+            data-test-id="customer-last-name"
             disabled={disabled}
             error={!!formErrors.customerLastName}
             fullWidth
             name="customerLastName"
             label={intl.formatMessage(commonMessages.lastName)}
-            helperText={getAccountErrorMessage(
-              formErrors.customerLastName,
-              intl,
-            )}
+            helperText={getAccountErrorMessage(formErrors.customerLastName, intl)}
             type="text"
             value={data.customerLastName}
             onChange={onChange}
@@ -87,6 +80,7 @@ const CustomerCreateDetails: React.FC<CustomerCreateDetailsProps> = props => {
             }}
           />
           <TextField
+            data-test-id="customer-email"
             disabled={disabled}
             error={!!formErrors.email}
             fullWidth

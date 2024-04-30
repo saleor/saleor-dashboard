@@ -19,10 +19,8 @@ export const emptyFetchingParams: FetchingParams = {
 };
 
 const unique = <T>(array: Iterable<T>) => Array.from(new Set(array));
-
 const includedInParams = (c: UrlToken) =>
-  TokenType.ATTRIBUTE_DROPDOWN === c.type ||
-  TokenType.ATTRIBUTE_MULTISELECT === c.type;
+  TokenType.ATTRIBUTE_DROPDOWN === c.type || TokenType.ATTRIBUTE_MULTISELECT === c.type;
 
 export const toFetchingParams = (p: FetchingParams, c: UrlToken) => {
   const key = c.name as FetchingParamsKeys;

@@ -10,12 +10,7 @@ import {
   useGiftCardSettingsQuery,
 } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
-import {
-  DialogContent,
-  Divider,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { DialogContent, Divider, TextField, Typography } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -51,34 +46,32 @@ interface GiftCardBulkCreateDialogFormProps {
   onClose: () => void;
 }
 
-const GiftCardBulkCreateDialogForm: React.FC<
-  GiftCardBulkCreateDialogFormProps
-> = ({ onSubmit, opts, onClose, formErrors = {} }) => {
+const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> = ({
+  onSubmit,
+  opts,
+  onClose,
+  formErrors = {},
+}) => {
   const intl = useIntl();
   const classes = useStyles({});
+  const { data: settingsData, loading: loadingSettings } = useGiftCardSettingsQuery();
+  const getInitialExpirySettingsData = (): Partial<GiftCardBulkCreateFormData> => {
+    if (loadingSettings) {
+      return {};
+    }
 
-  const { data: settingsData, loading: loadingSettings } =
-    useGiftCardSettingsQuery();
+    const { expiryType, expiryPeriod } = settingsData?.giftCardSettings ?? {};
 
-  const getInitialExpirySettingsData =
-    (): Partial<GiftCardBulkCreateFormData> => {
-      if (loadingSettings) {
-        return {};
-      }
+    if (expiryType === GiftCardSettingsExpiryTypeEnum.NEVER_EXPIRE) {
+      return {};
+    }
 
-      const { expiryType, expiryPeriod } = settingsData?.giftCardSettings;
-
-      if (expiryType === GiftCardSettingsExpiryTypeEnum.NEVER_EXPIRE) {
-        return {};
-      }
-
-      return {
-        expiryType,
-        expiryPeriodType: expiryPeriod?.type,
-        expiryPeriodAmount: expiryPeriod?.amount,
-      };
+    return {
+      expiryType,
+      expiryPeriodType: expiryPeriod?.type,
+      expiryPeriodAmount: expiryPeriod?.amount,
     };
-
+  };
   const { submit, toggleValue, change, data, set } = useForm(
     {
       ...initialData,
@@ -87,9 +80,7 @@ const GiftCardBulkCreateDialogForm: React.FC<
     },
     onSubmit,
   );
-
   const { tags, requiresActivation, cardsAmount } = data;
-
   const commonFormProps: GiftCardBulkCreateFormCommonProps = {
     data,
     errors: formErrors,
@@ -126,14 +117,9 @@ const GiftCardBulkCreateDialogForm: React.FC<
         <VerticalSpacer />
         <Divider />
         <VerticalSpacer spacing={2} />
-        <GiftCardCreateRequiresActivationSection
-          onChange={change}
-          checked={requiresActivation}
-        />
+        <GiftCardCreateRequiresActivationSection onChange={change} checked={requiresActivation} />
         <VerticalSpacer spacing={2} />
-        <Typography>
-          {intl.formatMessage(messages.bulkCreateExplanation)}
-        </Typography>
+        <Typography>{intl.formatMessage(messages.bulkCreateExplanation)}</Typography>
       </DialogContent>
       <DialogButtons
         onConfirm={submit}

@@ -39,7 +39,6 @@ export const createUpdateHandler = (
           : null,
       },
     });
-
     const errors = getMutationErrors(updateResponse);
 
     if (errors.length) {
@@ -57,21 +56,16 @@ export const createRuleUpdateHandler = (
   ) => Promise<FetchResult<PromotionRuleUpdateMutation>>,
 ) => {
   return async (data: Rule) => {
-    const emptyRuleErrors = [] as Array<
-      CommonError<PromotionRuleUpdateErrorFragment>
-    >;
+    const emptyRuleErrors = [] as Array<CommonError<PromotionRuleUpdateErrorFragment>>;
 
     if (!promotionData) {
       return emptyRuleErrors;
     }
 
     const ruleData = promotionData?.rules?.find(rule => rule.id === data.id);
-    const ruleChannels: string[] =
-      ruleData?.channels?.map(channel => channel.id) ?? [];
+    const ruleChannels: string[] = ruleData?.channels?.map(channel => channel.id) ?? [];
     const ruleGifts: string[] = ruleData?.giftIds ?? [];
-
     const { channels, gifts, ...input } = toAPI(promotionData?.type)(data);
-
     const response = await updateRule({
       id: data.id!,
       input: {
@@ -82,7 +76,6 @@ export const createRuleUpdateHandler = (
         removeGifts: difference(ruleGifts, gifts ?? []),
       },
     });
-
     const errors = getMutationErrors(response);
 
     if (errors.length > 0) {
@@ -101,14 +94,12 @@ export const createRuleCreateHandler = (
 ) => {
   return async (data: Rule) => {
     const ruleData = toAPI(promotionData?.type)(data);
-
     const response = await createRule({
       input: {
         promotion: promotionData?.id ?? "",
         ...ruleData,
       },
     });
-
     const errors = getMutationErrors(response);
 
     if (errors.length > 0) {

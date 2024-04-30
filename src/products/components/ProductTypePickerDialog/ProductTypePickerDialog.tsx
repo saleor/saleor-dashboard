@@ -67,5 +67,6 @@ const ProductTypePickerDialog: React.FC<ProductTypePickerDialogProps> = ({
     </ActionDialog>
   );
 };
+
 ProductTypePickerDialog.displayName = "ProductTypePickerDialog";
 export default ProductTypePickerDialog;

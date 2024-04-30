@@ -11,9 +11,7 @@ interface AddressTextErrorProps {
   orderError: OrderErrorFragment;
 }
 
-export const AddressTextError: React.FC<AddressTextErrorProps> = ({
-  orderError,
-}) => {
+export const AddressTextError: React.FC<AddressTextErrorProps> = ({ orderError }) => {
   const intl = useIntl();
   const classes = useAddressTextErrorStyles();
 

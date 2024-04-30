@@ -12,19 +12,14 @@ import { useState } from "react";
 
 interface UseAddressValidation<TInput, TOutput> {
   errors: AccountErrorFragment[];
-  submit: (
-    data: TInput & AddressTypeInput,
-  ) => TOutput | Promise<AccountErrorFragment[]>;
+  submit: (data: TInput & AddressTypeInput) => TOutput | Promise<AccountErrorFragment[]>;
 }
 
 function useAddressValidation<TInput, TOutput>(
   onSubmit: (address: TInput & AddressInput) => TOutput,
   addressType?: AddressTypeEnum,
 ): UseAddressValidation<TInput, TOutput> {
-  const [validationErrors, setValidationErrors] = useState<
-    AccountErrorFragment[]
-  >([]);
-
+  const [validationErrors, setValidationErrors] = useState<AccountErrorFragment[]>([]);
   const countryRequiredError: AccountErrorFragment = {
     __typename: "AccountError",
     code: AccountErrorCode.REQUIRED,
@@ -38,16 +33,15 @@ function useAddressValidation<TInput, TOutput>(
     submit: (data: TInput & AddressTypeInput) => {
       try {
         setValidationErrors(
-          remove(
-            countryRequiredError,
-            validationErrors,
-            (a, b) => a.field === b.field,
-          ),
+          remove(countryRequiredError, validationErrors, (a, b) => a.field === b.field),
         );
+
         return onSubmit(transformFormToAddressInput(data));
       } catch {
         const errors = add(countryRequiredError, validationErrors);
+
         setValidationErrors(errors);
+
         // since every onSubmit must return Promise<error>
         return Promise.resolve(errors);
       }

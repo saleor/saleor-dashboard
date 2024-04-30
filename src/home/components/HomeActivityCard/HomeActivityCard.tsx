@@ -13,10 +13,7 @@ interface HomeActivityCardProps {
   testId?: string;
 }
 
-export const HomeActivityCard = ({
-  activities,
-  testId,
-}: HomeActivityCardProps) => {
+export const HomeActivityCard = ({ activities, testId }: HomeActivityCardProps) => {
   const intl = useIntl();
   const { themeValues } = useTheme();
   const title = intl.formatMessage({
@@ -31,10 +28,7 @@ export const HomeActivityCard = ({
         <DashboardCard.Title>{title}</DashboardCard.Title>
         <DashboardCard.Content>
           <Text color="default2">
-            <FormattedMessage
-              id="/U8FUp"
-              defaultMessage="Couldn't load activities"
-            />
+            <FormattedMessage id="/U8FUp" defaultMessage="Couldn't load activities" />
           </Text>
         </DashboardCard.Content>
       </DashboardCard>
@@ -92,10 +86,7 @@ export const HomeActivityCard = ({
             () => (
               <Box paddingY={4}>
                 <Text size={3}>
-                  <FormattedMessage
-                    id="wWTUrM"
-                    defaultMessage="No activities found"
-                  />
+                  <FormattedMessage id="wWTUrM" defaultMessage="No activities found" />
                 </Text>
               </Box>
             ),

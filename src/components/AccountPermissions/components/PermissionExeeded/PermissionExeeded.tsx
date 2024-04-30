@@ -9,9 +9,7 @@ interface PermissionsExceededProps {
   userPermissions: UserPermissionFragment[];
 }
 
-export const PermissionsExceeded = ({
-  userPermissions,
-}: PermissionsExceededProps) => {
+export const PermissionsExceeded = ({ userPermissions }: PermissionsExceededProps) => {
   const intl = useIntl();
 
   return (

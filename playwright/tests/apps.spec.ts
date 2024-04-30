@@ -1,10 +1,11 @@
-import { AppsPage } from "@pages/appsPage";
-import { AppInstallationPage } from "@pages/appInstallationPage";
-import { expect, test } from "@playwright/test";
-import { AppPage } from "@pages/appPageThirdparty";
 import { APPS } from "@data/e2eTestData";
+import { AppInstallationPage } from "@pages/appInstallationPage";
+import { AppPage } from "@pages/appPageThirdparty";
+import { AppsPage } from "@pages/appsPage";
+import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "./playwright/.auth/admin.json" });
+
 let appsPage: AppsPage;
 let installationPage: AppInstallationPage;
 let appPage: AppPage;
@@ -14,8 +15,7 @@ test.beforeEach(({ page }) => {
   installationPage = new AppInstallationPage(page);
   appPage = new AppPage(page);
 });
-
-//Adding temporary skip https://linear.app/saleor/issue/QAG-94/remove-skip-from-app-tests
+// Adding temporary skip https://linear.app/saleor/issue/QAG-94/remove-skip-from-app-tests
 test.skip("TC: SALEOR_119 User should be able to install and configure app from manifest @e2e", async ({
   page,
 }) => {
@@ -41,17 +41,16 @@ test.skip("TC: SALEOR_119 User should be able to install and configure app from 
     .first()
     .waitFor({ state: "visible", timeout: 50000 });
   await appsPage.appKlaviyo.click();
+
   const iframeLocator = page.frameLocator("iframe");
+
   await expect(iframeLocator.getByLabel("PUBLIC_TOKEN")).toBeVisible();
   await iframeLocator.getByLabel("PUBLIC_TOKEN").fill("test_token");
   await iframeLocator.getByText("Save").click();
   await appsPage.expectSuccessBanner();
 });
-
 test("TC: SALEOR_120 User should be able to delete thirdparty app @e2e", async () => {
-  await appPage.waitForNetworkIdle(() =>
-        appPage.goToExistingAppPage(APPS.appToBeDeleted.id)
-      );
+  await appPage.waitForNetworkIdle(() => appPage.goToExistingAppPage(APPS.appToBeDeleted.id));
   await appPage.pageHeader.waitFor({ state: "visible", timeout: 10000 });
   await expect(appPage.pageHeader).toContainText("Saleor QA App");
   await appPage.deleteButton.click();

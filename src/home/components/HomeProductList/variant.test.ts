@@ -13,7 +13,6 @@ describe("HomeProductList / variant", () => {
         { values: [{ name: "attr4" }] },
       ],
     } as ProductTopToday[number];
-
     // Act
     const attributesString = generateAttributesInfo(variant);
 

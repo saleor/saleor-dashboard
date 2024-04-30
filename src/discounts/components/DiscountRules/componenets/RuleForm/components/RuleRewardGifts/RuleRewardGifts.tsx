@@ -15,19 +15,12 @@ export const RuleRewardGifts = () => {
   const intl = useIntl();
   const { disabled, channels } = useDiscountRulesContext();
   const { watch, formState } = useFormContext<Rule>();
-
   const channel = watch("channel");
-  const channelSlug =
-    channels?.find(chan => chan.id === channel?.value)?.slug ?? "";
-
+  const channelSlug = channels?.find(chan => chan.id === channel?.value)?.slug ?? "";
   const ruleRewardGiftsFieldName = `rewardGifts` as const;
-  const { field: rewardGiftsField } = useController<
-    Rule,
-    typeof ruleRewardGiftsFieldName
-  >({
+  const { field: rewardGiftsField } = useController<Rule, typeof ruleRewardGiftsFieldName>({
     name: ruleRewardGiftsFieldName,
   });
-
   const {
     loadMore: loadMoreVariants,
     search: searchVariants,
@@ -39,24 +32,18 @@ export const RuleRewardGifts = () => {
     },
     skip: !channelSlug,
   });
-
   const fetchMoreVariants = getSearchFetchMoreProps(
     searchVariantsOpts as CommonSearchOpts,
     loadMoreVariants,
   );
-
-  const options = (mapEdgesToItems(searchVariantsOpts?.data?.search) ?? []).map(
-    product => ({
-      label: formatGiftsLabels(product),
-      value: product.id,
-    }),
-  );
-
+  const options = (mapEdgesToItems(searchVariantsOpts?.data?.search) ?? []).map(product => ({
+    label: formatGiftsLabels(product),
+    value: product.id,
+  }));
   const getRewardGiftsHelperText = () => {
     if (formState.errors?.rewardGifts?.message && !channel) {
       return intl.formatMessage({
-        defaultMessage:
-          "You must select a channel first and select at least one gift",
+        defaultMessage: "You must select a channel first and select at least one gift",
         id: "vAxm7u",
       });
     }

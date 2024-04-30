@@ -2,15 +2,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { MetadataInput } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
-import {
-  Box,
-  Button,
-  Input,
-  Text,
-  Textarea,
-  TrashBinIcon,
-  vars,
-} from "@saleor/macaw-ui-next";
+import { Box, Button, Input, Text, Textarea, TrashBinIcon, vars } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -23,11 +15,7 @@ interface MetadataCardTableProps {
   readonly?: boolean;
 }
 
-export const MetadataCardTable = ({
-  data,
-  onChange,
-  readonly = false,
-}: MetadataCardTableProps) => {
+export const MetadataCardTable = ({ data, onChange, readonly = false }: MetadataCardTableProps) => {
   if (!data || data.length === 0) {
     return null;
   }

@@ -16,10 +16,7 @@ import React, { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 
-import {
-  getValidationSchema,
-  ManualRefundForm,
-} from "./manualRefundValidationSchema";
+import { getValidationSchema, ManualRefundForm } from "./manualRefundValidationSchema";
 
 interface OrderManualTransationRefundFormProps {
   children: ReactNode;
@@ -37,34 +34,27 @@ export const OrderManualTransationRefundForm = ({
   const intl = useIntl();
   const navigate = useNavigator();
   const notify = useNotifier();
-
   const methods = useForm<ManualRefundForm>({
     mode: "onBlur",
     values: initialValues,
     resolver: zodResolver(getValidationSchema(intl)),
   });
-
-  const [manualRefund, manualRefundOpts] =
-    useOrderTransactionRequestActionMutation({
-      onCompleted: (data: OrderTransactionRequestActionMutation) => {
-        if (data.transactionRequestAction?.errors?.length) {
-          notify({
-            status: "error",
-            text: getOrderTransactionErrorMessage(
-              data.transactionRequestAction?.errors[0],
-              intl,
-            ),
-          });
-        } else {
-          notify({
-            status: "success",
-            text: intl.formatMessage(transactionRequestMessages.success),
-          });
-          navigate(orderUrl(orderId));
-        }
-      },
-    });
-
+  const [manualRefund, manualRefundOpts] = useOrderTransactionRequestActionMutation({
+    onCompleted: (data: OrderTransactionRequestActionMutation) => {
+      if (data.transactionRequestAction?.errors?.length) {
+        notify({
+          status: "error",
+          text: getOrderTransactionErrorMessage(data.transactionRequestAction?.errors[0], intl),
+        });
+      } else {
+        notify({
+          status: "success",
+          text: intl.formatMessage(transactionRequestMessages.success),
+        });
+        navigate(orderUrl(orderId));
+      }
+    },
+  });
   const handleSubmit = (data: ManualRefundForm) => {
     manualRefund({
       variables: {
@@ -77,10 +67,7 @@ export const OrderManualTransationRefundForm = ({
 
   return (
     <FormProvider {...methods}>
-      <form
-        id="manual-refund-form"
-        onSubmit={methods.handleSubmit(handleSubmit)}
-      >
+      <form id="manual-refund-form" onSubmit={methods.handleSubmit(handleSubmit)}>
         {children}
 
         <Savebar

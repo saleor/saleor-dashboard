@@ -47,9 +47,7 @@ export interface ShippingZoneRatesCreatePageProps extends WithFormId {
   backUrl: string;
   onDelete?: () => void;
   onSubmit: (data: ShippingZoneRateCommonFormData) => SubmitPromise;
-  onPostalCodeInclusionChange: (
-    inclusion: PostalCodeRuleInclusionTypeEnum,
-  ) => void;
+  onPostalCodeInclusionChange: (inclusion: PostalCodeRuleInclusionTypeEnum) => void;
   onPostalCodeAssign: () => void;
   onPostalCodeUnassign: (code: any) => void;
   onChannelsChange: (data: ChannelShippingData[]) => void;
@@ -59,9 +57,7 @@ export interface ShippingZoneRatesCreatePageProps extends WithFormId {
   fetchMoreTaxClasses: FetchMoreProps;
 }
 
-export const ShippingZoneRatesCreatePage: React.FC<
-  ShippingZoneRatesCreatePageProps
-> = ({
+export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePageProps> = ({
   allChannelsCount,
   shippingChannels,
   channelErrors,
@@ -84,7 +80,6 @@ export const ShippingZoneRatesCreatePage: React.FC<
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
   const initialForm: ShippingZoneRateCommonFormData = {
     channelListings: shippingChannels,
@@ -98,52 +93,42 @@ export const ShippingZoneRatesCreatePage: React.FC<
     type: null,
     taxClassId: "",
   };
-
   const [taxClassDisplayName, setTaxClassDisplayName] = React.useState("");
-
   const {
     change,
     data: formData,
     setIsSubmitDisabled,
     triggerChange,
   } = useForm(initialForm, undefined, { confirmLeave: true, formId });
-
   const handleFormSubmit = useHandleFormSubmit({
     formId,
     onSubmit,
   });
-
   const richText = useRichText({
     initial: null,
     triggerChange,
   });
-
   const data: ShippingZoneRateCommonFormData = {
     ...formData,
     description: null,
   };
-
   const getData = async (): Promise<ShippingZoneRateCommonFormData> => ({
     ...formData,
     description: await richText.getValue(),
   });
-
   const handleFormElementSubmit: FormEventHandler = async event => {
     event.preventDefault();
     handleFormSubmit(await getData());
   };
-
   const handleSubmit = async () => handleFormSubmit(await getData());
-
   const handleChannelsChange = createChannelsChangeHandler(
     shippingChannels,
     onChannelsChange,
     triggerChange,
   );
-  const isValid = !data.channelListings?.some(channel =>
-    validatePrice(channel.price),
-  );
+  const isValid = !data.channelListings?.some(channel => validatePrice(channel.price));
   const isSaveDisabled = disabled || !isValid;
+
   setIsSubmitDisabled(isSaveDisabled);
 
   return (
@@ -167,12 +152,7 @@ export const ShippingZoneRatesCreatePage: React.FC<
             }
           />
           <DetailPageLayout.Content>
-            <ShippingRateInfo
-              data={data}
-              disabled={disabled}
-              errors={errors}
-              onChange={change}
-            />
+            <ShippingRateInfo data={data} disabled={disabled} errors={errors} onChange={change} />
             <CardSpacer />
             {isPriceVariant ? (
               <OrderValue
@@ -223,12 +203,7 @@ export const ShippingZoneRatesCreatePage: React.FC<
               taxClasses={taxClasses}
               disabled={false}
               onChange={event =>
-                handleTaxClassChange(
-                  event,
-                  taxClasses,
-                  change,
-                  setTaxClassDisplayName,
-                )
+                handleTaxClassChange(event, taxClasses, change, setTaxClassDisplayName)
               }
               onFetchMore={fetchMoreTaxClasses}
             />

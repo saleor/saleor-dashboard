@@ -57,11 +57,7 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
           <>
             {maybe<React.ReactNode>(() => customer.email, <Skeleton />)}
             {customer && customer.dateJoined ? (
-              <Typography
-                className={classes.subtitle}
-                variant="caption"
-                component="div"
-              >
+              <Typography className={classes.subtitle} variant="caption" component="div">
                 <FormattedMessage
                   id="MjUyhA"
                   defaultMessage="Active member since {date}"
@@ -79,6 +75,7 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
       />
       <CardContent className={classes.content}>
         <ControlledCheckbox
+          data-test-id="customer-active-checkbox"
           checked={data.isActive}
           className={classes.checkbox}
           disabled={disabled}
@@ -91,6 +88,7 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
           onChange={onChange}
         />
         <TextField
+          data-test-id="customer-note"
           disabled={disabled}
           error={!!formErrors.note}
           fullWidth
@@ -109,5 +107,6 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
     </Card>
   );
 };
+
 CustomerDetails.displayName = "CustomerDetails";
 export default CustomerDetails;

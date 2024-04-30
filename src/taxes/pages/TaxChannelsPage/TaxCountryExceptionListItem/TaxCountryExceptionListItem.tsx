@@ -1,8 +1,6 @@
 // @ts-strict-ignore
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
-import SingleSelectField, {
-  Choice,
-} from "@dashboard/components/SingleSelectField";
+import SingleSelectField, { Choice } from "@dashboard/components/SingleSelectField";
 import { TaxConfigurationUpdateInput } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { LegacyFlowWarning } from "@dashboard/taxes/components";
@@ -23,9 +21,7 @@ interface TaxCountryExceptionListItemProps {
   strategyChoicesLoading: boolean;
 }
 
-export const TaxCountryExceptionListItem: React.FC<
-  TaxCountryExceptionListItemProps
-> = ({
+export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemProps> = ({
   country,
   onDelete,
   onChange,
@@ -37,17 +33,11 @@ export const TaxCountryExceptionListItem: React.FC<
 
   return (
     <>
-      <ListItem
-        hover={false}
-        className={classes.noDivider}
-        data-test-id="exception-country"
-      >
+      <ListItem hover={false} className={classes.noDivider} data-test-id="exception-country">
         <ListItemCell>{country.country.country}</ListItemCell>
         <ListItemCell className={classes.cell}>
           {!strategyChoicesLoading && (
-            <LegacyFlowWarning
-              taxCalculationStrategy={country.taxCalculationStrategy}
-            />
+            <LegacyFlowWarning taxCalculationStrategy={country.taxCalculationStrategy} />
           )}
           <Box display="flex">
             <ControlledCheckbox
@@ -60,17 +50,12 @@ export const TaxCountryExceptionListItem: React.FC<
               choices={strategyChoices}
               disabled={!country.chargeTaxes || strategyChoicesLoading}
               value={country.taxCalculationStrategy}
-              name={
-                "taxCalculationStrategy" as keyof TaxConfigurationUpdateInput
-              }
+              name={"taxCalculationStrategy" as keyof TaxConfigurationUpdateInput}
               onChange={onChange}
             />
           </Box>
         </ListItemCell>
-        <ListItemCell
-          className={classes.center}
-          data-test-id="display-gross-prices-checkbox"
-        >
+        <ListItemCell className={classes.center} data-test-id="display-gross-prices-checkbox">
           <ControlledCheckbox
             className={classes.center}
             checked={country.displayGrossPrices}
@@ -79,12 +64,7 @@ export const TaxCountryExceptionListItem: React.FC<
           />
         </ListItemCell>
         <ListItemCell>
-          <Button
-            size="small"
-            onClick={onDelete}
-            variant="secondary"
-            icon={<TrashBinIcon />}
-          />
+          <Button size="small" onClick={onDelete} variant="secondary" icon={<TrashBinIcon />} />
         </ListItemCell>
       </ListItem>
       {divider && <Divider />}

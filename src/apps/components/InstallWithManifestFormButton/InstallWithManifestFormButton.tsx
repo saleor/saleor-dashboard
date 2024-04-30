@@ -12,14 +12,12 @@ interface InstallWithManifestFormButtonProps {
   onSubmitted: (manifestUrl: string) => void;
 }
 
-export const InstallWithManifestFormButton: React.FC<
-  InstallWithManifestFormButtonProps
-> = ({ onSubmitted }) => {
+export const InstallWithManifestFormButton: React.FC<InstallWithManifestFormButtonProps> = ({
+  onSubmitted,
+}) => {
   const styles = useStyles();
   const intl = useIntl();
-
   const [inputOpened, setInputOpened] = useState(false);
-
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = e => {
     e.preventDefault();
 
@@ -28,6 +26,7 @@ export const InstallWithManifestFormButton: React.FC<
 
     try {
       const parsedURL = new URL(inputValue);
+
       onSubmitted(parsedURL.href);
     } catch (e) {
       console.error("Invalid URL from input. Should be validated by browser");

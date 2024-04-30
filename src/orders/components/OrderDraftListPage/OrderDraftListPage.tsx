@@ -3,12 +3,7 @@ import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { OrderDraftListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
 import { OrderDraftListUrlSortField } from "@dashboard/orders/urls";
-import {
-  FilterPagePropsWithPresets,
-  PageListProps,
-  RelayToFlat,
-  SortPage,
-} from "@dashboard/types";
+import { FilterPagePropsWithPresets, PageListProps, RelayToFlat, SortPage } from "@dashboard/types";
 import { isLimitReached } from "@dashboard/utils/limits";
 import { Card } from "@material-ui/core";
 import { Box } from "@saleor/macaw-ui-next";
@@ -18,11 +13,7 @@ import { useIntl } from "react-intl";
 import { OrderDraftListDatagrid } from "../OrderDraftListDatagrid";
 import { OrderDraftListHeader } from "../OrderDraftListHeader/OrderDraftListHeader";
 import OrderLimitReached from "../OrderLimitReached";
-import {
-  createFilterStructure,
-  OrderDraftFilterKeys,
-  OrderDraftListFilterOpts,
-} from "./filters";
+import { createFilterStructure, OrderDraftFilterKeys, OrderDraftListFilterOpts } from "./filters";
 
 export interface OrderDraftListPageProps
   extends PageListProps,
@@ -127,5 +118,6 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
     </>
   );
 };
+
 OrderDraftListPage.displayName = "OrderDraftListPage";
 export default OrderDraftListPage;

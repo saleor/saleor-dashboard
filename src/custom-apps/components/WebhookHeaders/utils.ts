@@ -15,7 +15,7 @@ const validateName = (name: string) => {
     name
       .toLowerCase()
       .match(
-        "(^x$)|(^x-)|^(a|$)(u|$)(t|$)(h|$)(o|$)(r|$)(i|$)(z|$)(a|$)(t|$)(i|$)(o|$)(n|$)(-|$)",
+        "(^x$)|(^x-)|^(a|$)(u|$)(t|$)(h|$)(o|$)(r|$)(i|$)(z|$)(a|$)(t|$)(i|$)(o|$)(n|$)(-|$)|^brokerproperties$",
       )
   ) {
     return false;

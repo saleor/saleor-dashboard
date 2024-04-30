@@ -17,9 +17,7 @@ export interface TableButtonWrapper {
  * </TableButtonWrapper>
  * ```
  */
-export const TableButtonWrapper = <T extends HTMLElement>({
-  children,
-}: TableButtonWrapper) => {
+export const TableButtonWrapper = <T extends HTMLElement>({ children }: TableButtonWrapper) => {
   const onClick = (e: React.MouseEvent<T>) => {
     if (!children.props.href) {
       // <TableRowLink> is a <a> that wraps each <tr>
@@ -28,6 +26,7 @@ export const TableButtonWrapper = <T extends HTMLElement>({
       // browser makes full page navigation directly, so we need to stop that
       e.preventDefault();
     }
+
     // Stop propagation of clicks to the <Link> component, to prevent navigation
     e.stopPropagation();
 

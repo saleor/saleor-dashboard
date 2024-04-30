@@ -16,14 +16,10 @@ export const hasAnyItemsReplaceable = (order?: OrderDetailsFragment) => {
   }
 
   const hasAnyUnfulfilledItems = getUnfulfilledLines(order).length > 0;
-
   const hasAnyWaitingLines = getWaitingFulfillments(order).length > 0;
-
   const hasAnyFulfilmentsToReturn = getFulfilledFulfillemnts(order).length > 0;
 
-  return (
-    hasAnyUnfulfilledItems || hasAnyFulfilmentsToReturn || hasAnyWaitingLines
-  );
+  return hasAnyUnfulfilledItems || hasAnyFulfilmentsToReturn || hasAnyWaitingLines;
 };
 
 export interface ConditionalItem {
@@ -34,9 +30,7 @@ export interface ConditionalItem {
 export const filteredConditionalItems = (items: ConditionalItem[]) =>
   items.filter(({ shouldExist }) => shouldExist).map(({ item }) => item);
 
-export const createOrderMetadataIdSchema = (
-  order: OrderDetailsFragment,
-): MetadataIdSchema => ({
+export const createOrderMetadataIdSchema = (order: OrderDetailsFragment): MetadataIdSchema => ({
   [order?.id]: {
     metadata: order?.metadata.map(mapMetadataItemToInput),
     privateMetadata: order?.privateMetadata.map(mapMetadataItemToInput),
@@ -59,6 +53,7 @@ export const createMetadataHandler =
   ) =>
   (event: ChangeEvent, objectId: string) => {
     const metadataType = event.target.name;
+
     set({
       [objectId]: {
         ...currentData[objectId],

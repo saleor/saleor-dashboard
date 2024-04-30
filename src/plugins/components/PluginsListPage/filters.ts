@@ -101,15 +101,11 @@ export function createFilterStructure(
         [
           {
             value: PluginConfigurationType.GLOBAL,
-            label: intl.formatMessage(
-              pluginChannelConfigurationCellMessages.globalLabel,
-            ),
+            label: intl.formatMessage(pluginChannelConfigurationCellMessages.globalLabel),
           },
           {
             value: PluginConfigurationType.PER_CHANNEL,
-            label: intl.formatMessage(
-              pluginChannelConfigurationCellMessages.channelLabel,
-            ),
+            label: intl.formatMessage(pluginChannelConfigurationCellMessages.channelLabel),
           },
         ],
       ),

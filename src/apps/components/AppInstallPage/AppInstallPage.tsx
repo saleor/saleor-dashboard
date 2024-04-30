@@ -11,12 +11,7 @@ import { AppFetchMutation, AppInstallMutation } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
 import { useTheme } from "@dashboard/theme";
-import {
-  Card,
-  CardContent,
-  CircularProgress,
-  Typography,
-} from "@material-ui/core";
+import { Card, CardContent, CircularProgress, Typography } from "@material-ui/core";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -28,9 +23,7 @@ export interface AppInstallPageProps {
   data: NonNullable<AppFetchMutation["appFetchManifest"]>["manifest"];
   loading: boolean;
   navigateToAppsList: () => void;
-  onSubmit: () => SubmitPromise<
-    NonNullable<AppInstallMutation["appInstall"]>["errors"]
-  >;
+  onSubmit: () => SubmitPromise<NonNullable<AppInstallMutation["appInstall"]>["errors"]>;
 }
 
 export const AppInstallPage: React.FC<AppInstallPageProps> = ({
@@ -42,7 +35,6 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
   const intl = useIntl();
   const classes = useStyles();
   const { theme } = useTheme();
-
   const getSaleorLogoUrl = () => {
     switch (theme) {
       case "defaultLight":
@@ -53,7 +45,6 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
         throw new Error("Invalid theme mode, should not happen.");
     }
   };
-
   const name = data?.name || "";
 
   return (
@@ -63,13 +54,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
           <CardSpacer />
           <Card>
             <CardTitle
-              title={
-                loading ? (
-                  <Skeleton />
-                ) : (
-                  intl.formatMessage(messages.title, { name })
-                )
-              }
+              title={loading ? <Skeleton /> : intl.formatMessage(messages.title, { name })}
               data-test-id="app-installation-page-header"
             />
             <CardContent className={classes.installCard}>
@@ -104,44 +89,29 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
           </Card>
           <CardSpacer />
           <Card>
-            {!loading && (
-              <CardTitle
-                title={intl.formatMessage(messages.permissionsTitle)}
-              />
-            )}
+            {!loading && <CardTitle title={intl.formatMessage(messages.permissionsTitle)} />}
             <CardContent>
               {loading ? (
                 <Skeleton />
               ) : (
                 <>
                   <Typography className={classes.installPermissionTitle}>
-                    <FormattedMessage
-                      {...messages.permissionsInstallDescription}
-                    />
+                    <FormattedMessage {...messages.permissionsInstallDescription} />
                   </Typography>
                   {!!data?.permissions?.length && (
                     <ul className={classes.permissionsContainer}>
-                      {data?.permissions?.map(perm => (
-                        <li key={perm.code}>{perm.name}</li>
-                      ))}
+                      {data?.permissions?.map(perm => <li key={perm.code}>{perm.name}</li>)}
                     </ul>
                   )}
                   <Hr className={classes.installSpacer} />
 
-                  <Typography
-                    variant="body2"
-                    className={classes.installPrivacyText}
-                  >
+                  <Typography variant="body2" className={classes.installPrivacyText}>
                     <FormattedMessage
                       {...messages.permissionsUninstallDescription}
                       values={{ name }}
                     />
                     {!!data?.dataPrivacyUrl && (
-                      <a
-                        href={data?.dataPrivacyUrl}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
+                      <a href={data?.dataPrivacyUrl} rel="noopener noreferrer" target="_blank">
                         <FormattedMessage {...messages.dataPrivacyLearnMore} />
                       </a>
                     )}
@@ -155,11 +125,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
             <Button variant="secondary" onClick={navigateToAppsList}>
               <FormattedMessage {...buttonMessages.cancel} />
             </Button>
-            <Button
-              variant="primary"
-              onClick={onSubmit}
-              data-test-id="install-app-button"
-            >
+            <Button variant="primary" onClick={onSubmit} data-test-id="install-app-button">
               <FormattedMessage {...messages.installButton} />
             </Button>
           </Box>

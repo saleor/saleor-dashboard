@@ -5,12 +5,10 @@ import { prepareCatalogueRuleConditions } from "./prepareConditions";
 describe("prepareCataloguePredicate", () => {
   it("should return empty array when cataloguePredicate is empty", () => {
     const cataloguePredicate = {};
-
     const result = prepareCatalogueRuleConditions(cataloguePredicate, {});
 
     expect(result).toEqual([]);
   });
-
   it("should return array of conditions when cataloguePredicate is not empty", () => {
     const cataloguePredicate = {
       OR: [
@@ -38,7 +36,6 @@ describe("prepareCataloguePredicate", () => {
         },
       ],
     } as CataloguePredicateAPI;
-
     const result = prepareCatalogueRuleConditions(cataloguePredicate, {});
 
     expect(result).toEqual([

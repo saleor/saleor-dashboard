@@ -1,29 +1,22 @@
 // @ts-strict-ignore
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import {
-  useCreateCustomerMutation,
-  useCustomerCreateDataQuery,
-} from "@dashboard/graphql";
+import { useCreateCustomerMutation, useCustomerCreateDataQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, maybe } from "../../misc";
-import CustomerCreatePage, {
-  CustomerCreatePageSubmitData,
-} from "../components/CustomerCreatePage";
+import CustomerCreatePage, { CustomerCreatePageSubmitData } from "../components/CustomerCreatePage";
 import { customerUrl } from "../urls";
 
 export const CustomerCreate: React.FC = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-
   const { data, loading } = useCustomerCreateDataQuery({
     displayLoader: true,
   });
-
   const [createCustomer, createCustomerOpts] = useCreateCustomerMutation({
     onCompleted: data => {
       if (data.customerCreate.errors.length === 0) {
@@ -38,7 +31,6 @@ export const CustomerCreate: React.FC = () => {
       }
     },
   });
-
   const handleSubmit = (formData: CustomerCreatePageSubmitData) =>
     extractMutationErrors(
       createCustomer({

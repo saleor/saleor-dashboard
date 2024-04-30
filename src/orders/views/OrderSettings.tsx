@@ -1,8 +1,5 @@
 // @ts-strict-ignore
-import {
-  useOrderSettingsQuery,
-  useOrderSettingsUpdateMutation,
-} from "@dashboard/graphql";
+import { useOrderSettingsQuery, useOrderSettingsUpdateMutation } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, getMutationState } from "@dashboard/misc";
@@ -15,27 +12,24 @@ import { OrderSettingsFormData } from "../components/OrderSettingsPage/types";
 export const OrderSettings: React.FC = () => {
   const intl = useIntl();
   const notify = useNotifier();
-
   const { data, loading } = useOrderSettingsQuery({});
-
-  const [orderSettingsUpdate, orderSettingsUpdateOpts] =
-    useOrderSettingsUpdateMutation({
-      onCompleted: ({ orderSettingsUpdate: { errors } }) => {
-        if (!errors.length) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-          return;
-        }
-
+  const [orderSettingsUpdate, orderSettingsUpdateOpts] = useOrderSettingsUpdateMutation({
+    onCompleted: ({ orderSettingsUpdate: { errors } }) => {
+      if (!errors.length) {
         notify({
-          status: "error",
-          text: intl.formatMessage(commonMessages.somethingWentWrong),
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
         });
-      },
-    });
 
+        return;
+      }
+
+      notify({
+        status: "error",
+        text: intl.formatMessage(commonMessages.somethingWentWrong),
+      });
+    },
+  });
   const handleSubmit = async ({
     automaticallyConfirmAllNewOrders,
     automaticallyFulfillNonShippableGiftCard,

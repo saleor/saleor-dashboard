@@ -21,20 +21,17 @@ test("Does not render errors after close", () => {
     open: true,
   });
   expect(result.current.length).toBe(0);
-
   // Throw errors
   rerender({
     errors,
     open: true,
   });
   expect(result.current.length).toBe(2);
-
   // Close modal
   rerender({
     errors,
     open: false,
   });
-
   // Open modal
   rerender({
     errors,

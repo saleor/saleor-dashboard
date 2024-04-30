@@ -2,9 +2,7 @@
 import { ChannelData } from "@dashboard/channels/utils";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
-import Datagrid, {
-  GetCellContentOpts,
-} from "@dashboard/components/Datagrid/Datagrid";
+import Datagrid, { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { Choice } from "@dashboard/components/SingleSelectField";
 import {
@@ -41,10 +39,7 @@ interface ProductVariantsProps {
   variantAttributes: ProductFragment["productType"]["variantAttributes"];
   variants: ProductDetailsVariantFragment[];
   productName: string;
-  onAttributeValuesSearch: (
-    id: string,
-    query: string,
-  ) => Promise<Array<Choice<string, string>>>;
+  onAttributeValuesSearch: (id: string, query: string) => Promise<Array<Choice<string, string>>>;
   onChange: (data: DatagridChangeOpts) => void;
   onRowClick: (id: string) => void;
 }
@@ -60,7 +55,6 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
   onRowClick,
 }) => {
   const intl = useIntl();
-
   // https://github.com/saleor/saleor-dashboard/issues/4165
   const { data: warehousesData } = useWarehouseListQuery({
     variables: {
@@ -83,20 +77,20 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
               `channel:${channel.id}`,
             ]),
             ...warehouses.map(warehouse => `warehouse:${warehouse.id}`),
-            ...variantAttributes
+            ...(variantAttributes
               ?.filter(
                 attribute =>
                   attribute.inputType === AttributeInputTypeEnum.DROPDOWN ||
                   attribute.inputType === AttributeInputTypeEnum.PLAIN_TEXT,
               )
-              .map(attribute => `attribute:${attribute.id}`),
+              .map(attribute => `attribute:${attribute.id}`) ?? []),
           ]
         : undefined,
     [channels, variantAttributes, warehouses],
   );
-  const [columnSettings, setColumnSettings] = useStateFromProps<
-    string[] | undefined
-  >(initialSettings);
+  const [columnSettings, setColumnSettings] = useStateFromProps<string[] | undefined>(
+    initialSettings,
+  );
 
   React.useEffect(() => {
     if (columnSettings) {
@@ -118,30 +112,22 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
     listings: channels,
     selectedColumns: columnSettings,
   });
-
   const availabilityCategory = useChannelAvailabilityAdapter({
     intl,
     listings: channels,
     selectedColumns: columnSettings,
   });
-
   const attributeCategory = useAttributesAdapter({
     intl,
     selectedColumns: columnSettings,
     attributes: variantAttributes,
   });
-
   const warehouseCategory = useWarehouseAdapter({
     selectedColumns: columnSettings,
     intl,
     warehouses,
   });
-
-  const memoizedStaticColumns = React.useMemo(
-    () => variantsStaticColumnsAdapter(intl),
-    [intl],
-  );
-
+  const memoizedStaticColumns = React.useMemo(() => variantsStaticColumnsAdapter(intl), [intl]);
   const {
     handlers,
     columnCategories,
@@ -152,16 +138,10 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
     recentlyAddedColumn,
   } = useColumns({
     staticColumns: memoizedStaticColumns,
-    columnCategories: [
-      channelCategory,
-      availabilityCategory,
-      attributeCategory,
-      warehouseCategory,
-    ],
+    columnCategories: [channelCategory, availabilityCategory, attributeCategory, warehouseCategory],
     selectedColumns: columnSettings ?? [],
     onSave: handleColumnChange,
   });
-
   const getCellContent = React.useCallback(
     ([column, row]: Item, opts: GetCellContentOpts) =>
       getData({
@@ -175,7 +155,6 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
       }),
     [channels, visibleColumns, onAttributeValuesSearch, variants],
   );
-
   const getCellError = React.useCallback(
     ([column, row]: Item, opts: GetCellContentOpts) =>
       getError(errors, {

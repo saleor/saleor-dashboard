@@ -10,13 +10,10 @@ interface ProductErrorCellProps {
   hasVariant: boolean;
 }
 
-export const ProductErrorCell: React.FC<ProductErrorCellProps> = ({
-  hasVariant,
-}) => {
+export const ProductErrorCell: React.FC<ProductErrorCellProps> = ({ hasVariant }) => {
   const classes = useProductErrorCellStyles({});
   const intl = useIntl();
   const popperAnchorRef = React.useRef<HTMLButtonElement | null>(null);
-
   const [showErrorBox, setShowErrorBox] = useState<boolean>(false);
 
   if (hasVariant) {
@@ -24,11 +21,7 @@ export const ProductErrorCell: React.FC<ProductErrorCellProps> = ({
   }
 
   return (
-    <TableCell
-      align="right"
-      className={classes.container}
-      ref={popperAnchorRef}
-    >
+    <TableCell align="right" className={classes.container} ref={popperAnchorRef}>
       <div
         data-test-id="product-error-message"
         className={classes.titleContainer}

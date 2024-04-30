@@ -1,11 +1,6 @@
 import { FieldType, FilterElementGeneric } from "@dashboard/components/Filter";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
-import {
-  FetchMoreProps,
-  KeyValue,
-  MinMax,
-  SearchPageProps,
-} from "@dashboard/types";
+import { FetchMoreProps, KeyValue, MinMax, SearchPageProps } from "@dashboard/types";
 
 export function createPriceField<K extends string = string>(
   name: K,

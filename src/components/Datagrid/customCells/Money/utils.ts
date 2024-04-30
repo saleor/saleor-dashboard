@@ -1,10 +1,6 @@
 import { Locale } from "@dashboard/components/Locale";
 import { formatMoneyAmount } from "@dashboard/components/Money";
-import {
-  getMiddleCenterBias,
-  Rectangle,
-  Theme,
-} from "@glideapps/glide-data-grid";
+import { getMiddleCenterBias, Rectangle, Theme } from "@glideapps/glide-data-grid";
 
 const OFFSET = 8;
 
@@ -48,15 +44,8 @@ export function drawCurrency(
 ) {
   ctx.fillStyle = theme.textMedium;
   ctx.textAlign = "left";
-  ctx.font = [
-    theme.baseFontStyle.replace(/bold/g, "normal"),
-    theme.fontFamily,
-  ].join(" ");
-  ctx.fillText(
-    currency,
-    rect.x + 8,
-    rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
-  );
+  ctx.font = [theme.baseFontStyle.replace(/bold/g, "normal"), theme.fontFamily].join(" ");
+  ctx.fillText(currency, rect.x + 8, rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme));
 }
 
 export function getFormattedMoney(
@@ -72,8 +61,6 @@ export function getFormattedMoney(
   return placeholder;
 }
 
-export function hasDiscountValue(
-  value: number | null | undefined,
-): value is number {
+export function hasDiscountValue(value: number | null | undefined): value is number {
   return value !== undefined && value !== null;
 }

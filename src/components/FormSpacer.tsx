@@ -16,7 +16,6 @@ interface FormSpacerProps {
 
 export const FormSpacer: React.FC<FormSpacerProps> = props => {
   const { children } = props;
-
   const classes = useStyles(props);
 
   return <div className={classes.spacer}>{children}</div>;

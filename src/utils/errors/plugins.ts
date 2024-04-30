@@ -14,10 +14,7 @@ const messages = defineMessages({
   },
 });
 
-function getPluginErrorMessage(
-  err: PluginErrorFragment,
-  intl: IntlShape,
-): string | undefined {
+function getPluginErrorMessage(err: PluginErrorFragment, intl: IntlShape): string | undefined {
   if (err) {
     switch (err.code) {
       case PluginErrorCode.PLUGIN_MISCONFIGURED:

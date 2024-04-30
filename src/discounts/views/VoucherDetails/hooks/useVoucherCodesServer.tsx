@@ -34,19 +34,12 @@ export const useVoucherCodesServer = ({
   isServerPagination,
   paginationState = {},
 }: UseVoucherCodesServerProps): VoucherCodesServer => {
-  const [
-    serverVoucherCodesPaginationState,
-    setServerVoucherCodesPaginationState,
-  ] = useLocalPaginationState(settings.rowNumber);
-
-  const serverVoucherCodesPaginate = useLocalPaginator(
-    setServerVoucherCodesPaginationState,
-  );
-
+  const [serverVoucherCodesPaginationState, setServerVoucherCodesPaginationState] =
+    useLocalPaginationState(settings.rowNumber);
+  const serverVoucherCodesPaginate = useLocalPaginator(setServerVoucherCodesPaginationState);
   const restartServerPagination = () => {
     setServerVoucherCodesPaginationState({});
   };
-
   const {
     data: voucherCodesData,
     loading: voucherCodesLoading,
@@ -55,28 +48,19 @@ export const useVoucherCodesServer = ({
     skip: skipFetch,
     variables: {
       id,
-      ...(!isServerPagination
-        ? paginationState
-        : serverVoucherCodesPaginationState),
+      ...(!isServerPagination ? paginationState : serverVoucherCodesPaginationState),
     },
   });
-
   const serverVoucherCodesPagination = serverVoucherCodesPaginate(
     voucherCodesData?.voucher?.codes?.pageInfo,
     serverVoucherCodesPaginationState,
   );
-
-  const hasServerPaginationNextPage =
-    serverVoucherCodesPagination?.pageInfo?.hasNextPage ?? false;
+  const hasServerPaginationNextPage = serverVoucherCodesPagination?.pageInfo?.hasNextPage ?? false;
   const hasServerPaginationPrevPage =
     serverVoucherCodesPagination?.pageInfo?.hasPreviousPage ?? false;
-
-  const serverVoucherCodes = (mapEdgesToItems(
-    voucherCodesData?.voucher?.codes,
-  ) ?? []) as VoucherCode[];
-
-  const freeSlotsInServerPagianationPage =
-    settings.rowNumber - serverVoucherCodes.length;
+  const serverVoucherCodes = (mapEdgesToItems(voucherCodesData?.voucher?.codes) ??
+    []) as VoucherCode[];
+  const freeSlotsInServerPagianationPage = settings.rowNumber - serverVoucherCodes.length;
 
   return {
     voucherCodesLoading,

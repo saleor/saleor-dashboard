@@ -88,18 +88,19 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card className={classes.card}>
+    <Card data-test-id="address-card" className={classes.card}>
       <CardTitle
+        data-test-id="address-type-title"
         title={
           address ? (
             <>
               {isDefaultBillingAddress && isDefaultShippingAddress
                 ? intl.formatMessage(messages.defaultAddress)
                 : isDefaultShippingAddress
-                ? intl.formatMessage(messages.defaultShippingAddress)
-                : isDefaultBillingAddress
-                ? intl.formatMessage(messages.defaultBillingAddress)
-                : null}
+                  ? intl.formatMessage(messages.defaultShippingAddress)
+                  : isDefaultBillingAddress
+                    ? intl.formatMessage(messages.defaultBillingAddress)
+                    : null}
             </>
           ) : (
             <Skeleton />
@@ -139,5 +140,6 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
     </Card>
   );
 };
+
 CustomerAddress.displayName = "CustomerAddress";
 export default CustomerAddress;
