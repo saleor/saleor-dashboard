@@ -23,7 +23,7 @@ export const ExampleTable: React.FC<ExampleTableProps> = ({ order }) => {
   const line = order.lines[0];
 
   return (
-    <GridTable height="100%" paddingX={6} striped={false}>
+    <GridTable height="100%" paddingX={6}>
       <GridTable.Colgroup>
         <GridTable.Col __width="45%" />
         <GridTable.Col __width="20%" />
