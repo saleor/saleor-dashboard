@@ -6933,10 +6933,6 @@
     "context": "button",
     "string": "Apply"
   },
-  "iERn5G": {
-    "context": "header name input",
-    "string": "Should start with `x-` or `authorization`"
-  },
   "iEeIhY": {
     "context": "draft order",
     "string": "Customer"
@@ -8367,6 +8363,10 @@
   "sG0w22": {
     "context": "dialog title",
     "string": "Delete categories"
+  },
+  "sGDsFP": {
+    "context": "header name input",
+    "string": "Should match `x-*`, `authorization*`, or `brokerproperties`."
   },
   "sHON47": {
     "context": "refunded products list title",
