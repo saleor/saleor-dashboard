@@ -65,10 +65,7 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({ orderId
       return;
     }
 
-    // @ts-expect-error - submit data actually returns a string
-    // and not a number so we have to this is a workaround
-    // see more: https://github.com/orgs/react-hook-form/discussions/8068
-    if (submitData.amount === "0") {
+    if (submitData.amount === 0) {
       setLinesErrors([
         {
           code: OrderGrantRefundUpdateErrorCode.REQUIRED,

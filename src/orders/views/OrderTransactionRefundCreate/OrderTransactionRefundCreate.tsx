@@ -1,5 +1,4 @@
 import {
-  OrderGrantRefundCreateErrorCode,
   useOrderDetailsGrantRefundQuery,
   useOrderGrantRefundAddMutation,
 } from "@dashboard/graphql";
@@ -11,6 +10,8 @@ import OrderTransactionRefundPage, {
 } from "@dashboard/orders/components/OrderTransactionRefundPage/OrderTransactionRefundPage";
 import { orderTransactionRefundEditUrl } from "@dashboard/orders/urls";
 import React, { useState } from "react";
+
+import { handleCreateRefundErrors } from "./errors";
 
 interface OrderTransactionRefundCreateProps {
   orderId: string;
@@ -42,29 +43,12 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({ o
             submitData.orderGrantRefundCreate.grantedRefund!.id,
           ),
         );
-      }
-
-      if (submitData?.orderGrantRefundCreate?.errors.length) {
-        const { errors } = submitData.orderGrantRefundCreate;
-        const errorLines: OrderTransactionRefundError[] = [];
-
-        errors.forEach(err => {
-          if (err.code !== OrderGrantRefundCreateErrorCode.REQUIRED) {
-            notify({
-              status: "error",
-              text: err.message,
-            });
-          }
-
-          errorLines.push({
-            code: err.code,
-            field: err.field,
-            lines: err.lines,
-            message: err.message,
-          } as OrderTransactionRefundError);
+      } else {
+        handleCreateRefundErrors({
+          submitData,
+          notify,
+          setLinesErrors,
         });
-
-        setLinesErrors(errorLines);
       }
     },
     disableErrorHandling: true,
