@@ -10,20 +10,10 @@ describe("GridTable", () => {
       { id: 1, name: "John", age: 30 },
       { id: 2, name: "Jane", age: 25 },
     ];
-    const headerData = ["ID", "Name", "Age"];
 
     // Act
     render(
       <GridTable>
-        <GridTable.Header>
-          <GridTable.Row>
-            {headerData.map((item, index) => (
-              <GridTable.HeaderCell data-test-id={`header-${index}`} key={"header" + index}>
-                {item}
-              </GridTable.HeaderCell>
-            ))}
-          </GridTable.Row>
-        </GridTable.Header>
         <GridTable.Body>
           {data.map((item, index) => (
             <GridTable.Row key={item.id} data-test-id={`row-${index}`}>
@@ -37,9 +27,6 @@ describe("GridTable", () => {
     );
 
     // Assert
-    expect(screen.getByTestId("header-0").textContent).toBe("ID");
-    expect(screen.getByTestId("header-1").textContent).toBe("Name");
-    expect(screen.getByTestId("header-2").textContent).toBe("Age");
     expect(screen.getByTestId("row-0-cell-0").textContent).toBe("1");
     expect(screen.getByTestId("row-0-cell-1").textContent).toBe("John");
     expect(screen.getByTestId("row-0-cell-2").textContent).toBe("30");

@@ -1,8 +1,10 @@
-import { Box, PropsWithBox } from "@saleor/macaw-ui-next";
+import { Box } from "@saleor/macaw-ui-next";
 import React, { HTMLAttributes } from "react";
 
+import { GridTableProps } from "./types";
+
 type GridTableBodyElement = React.ElementRef<"tbody">;
-type GridTableBodyProps = PropsWithBox<Omit<HTMLAttributes<HTMLTableSectionElement>, "color">>;
+type GridTableBodyProps = GridTableProps<HTMLAttributes<HTMLTableSectionElement>>;
 
 export const GridTableBody = React.forwardRef<GridTableBodyElement, GridTableBodyProps>(
   ({ children, ...props }, forwardedRef) => (
