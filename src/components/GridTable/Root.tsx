@@ -11,7 +11,7 @@ export const GridTableRoot = React.forwardRef<GridTableRootElement, GridTableRoo
     const { children, ...rest } = props;
 
     return (
-      <Box height={0} {...rest}>
+      <Box height={0}>
         <Box
           ref={forwardedRef}
           as="table"
@@ -24,6 +24,7 @@ export const GridTableRoot = React.forwardRef<GridTableRootElement, GridTableRoo
           style={{
             borderSpacing: 0,
           }}
+          {...rest}
         >
           {children}
         </Box>
