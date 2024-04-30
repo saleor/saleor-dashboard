@@ -4,7 +4,7 @@ import React from "react";
 import { GridTable } from "./index";
 
 describe("GridTable", () => {
-  it("renders table with header and rows", () => {
+  it("renders table with rows", () => {
     // Arrange
     const data = [
       { id: 1, name: "John", age: 30 },
