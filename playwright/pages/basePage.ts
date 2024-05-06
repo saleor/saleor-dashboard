@@ -72,7 +72,6 @@ export class BasePage {
     await this.waitForNetworkIdleAfterAction(async () => {
       await this.searchInputListView.fill(searchItem);
     });
-    await this.waitForGrid();
     await this.waitForDOMToFullyLoad();
   }
 
