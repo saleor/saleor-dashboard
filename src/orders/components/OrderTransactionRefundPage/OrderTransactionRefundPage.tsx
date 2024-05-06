@@ -208,6 +208,9 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
             onMaxQtySet={onSetMaximumQty}
             linesToRefund={linesToRefund}
           />
+          {/* <DashboardCard>
+            <ExampleTable order={order} />
+          </DashboardCard> */}
           <DashboardCard marginBottom={5}>
             <DashboardCard.Content>
               <Text fontWeight="medium" as="p" marginTop={5}>
