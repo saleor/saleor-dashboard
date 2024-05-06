@@ -2596,6 +2596,10 @@
     "context": "page header",
     "string": "Create Discount"
   },
+  "FX7ts2": {
+    "context": "error message",
+    "string": "Amount should be greater than 0"
+  },
   "FYfoiF": {
     "context": "section name",
     "string": "Allocation strategy"
@@ -8915,6 +8919,10 @@
   },
   "vprU7C": {
     "string": "Select visible order channels"
+  },
+  "vqu+23": {
+    "context": "success notifier message",
+    "string": "Saved draft"
   },
   "vuKrlW": {
     "string": "Stock"
