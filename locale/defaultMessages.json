@@ -8920,6 +8920,10 @@
   "vprU7C": {
     "string": "Select visible order channels"
   },
+  "vqu+23": {
+    "context": "success notifier message",
+    "string": "Saved draft"
+  },
   "vuKrlW": {
     "string": "Stock"
   },
