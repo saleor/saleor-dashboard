@@ -6,4 +6,9 @@ export const transactionRefundEditMessages = defineMessages({
     id: "FX7ts2",
     description: "error message",
   },
+  savedDraft: {
+    defaultMessage: "Saved draft",
+    id: "vqu+23",
+    description: "success notifier message",
+  },
 });

@@ -8,10 +8,10 @@ import OrderTransactionRefundPage, {
   OrderTransactionRefundError,
   OrderTransactionRefundPageFormData,
 } from "@dashboard/orders/components/OrderTransactionRefundPage/OrderTransactionRefundPage";
-import { orderTransactionRefundEditUrl } from "@dashboard/orders/urls";
 import React, { useState } from "react";
+import { useIntl } from "react-intl";
 
-import { handleCreateRefundErrors } from "./errors";
+import { handleRefundCreateComplete } from "./handlers";
 
 interface OrderTransactionRefundCreateProps {
   orderId: string;
@@ -20,6 +20,7 @@ interface OrderTransactionRefundCreateProps {
 const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({ orderId }) => {
   const notify = useNotifier();
   const navigate = useNavigator();
+  const intl = useIntl();
 
   const [linesErrors, setLinesErrors] = useState<OrderTransactionRefundError[]>([]);
 
@@ -31,26 +32,15 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({ o
   });
 
   const [createRefund, createRefundOpts] = useOrderGrantRefundAddMutation({
-    onCompleted: submitData => {
-      if (submitData?.orderGrantRefundCreate?.errors.length === 0) {
-        notify({
-          status: "success",
-          text: "Saved draft",
-        });
-        navigate(
-          orderTransactionRefundEditUrl(
-            orderId,
-            submitData.orderGrantRefundCreate.grantedRefund!.id,
-          ),
-        );
-      } else {
-        handleCreateRefundErrors({
-          submitData,
-          notify,
-          setLinesErrors,
-        });
-      }
-    },
+    onCompleted: submitData =>
+      handleRefundCreateComplete({
+        submitData,
+        navigate,
+        notify,
+        setLinesErrors,
+        intl,
+        orderId,
+      }),
     disableErrorHandling: true,
   });
 
