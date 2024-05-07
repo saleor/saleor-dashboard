@@ -8,9 +8,9 @@ export class ExportProductsDialog {
     readonly channelsAccordion = page.getByTestId("channel-expand-button"),
     readonly nextButton = page.getByTestId("next"),
     readonly submitButton = page.getByTestId("submit"),
-    readonly exportSearchedProductsRadioButton = page.locator(
-      "input[value='FILTER']",
-    ),
+    readonly exportSearchedProductsRadioButton = page.getByTestId("FILTER"),
+    readonly exportSelectedProductsRadioButton = page.getByTestId("IDS"),
+    readonly exportAllProductsRadioButton = page.getByTestId("ALL"),
   ) {
     this.page = page;
   }
@@ -26,6 +26,15 @@ export class ExportProductsDialog {
   async clickExportSearchedProductsRadioButton() {
     await this.exportSearchedProductsRadioButton.click();
   }
+
+  async clickExportSelectedProductsRadioButton() {
+    await this.exportSelectedProductsRadioButton.click();
+  }
+
+  async clickExportAllProductsRadioButton() {
+    await this.exportAllProductsRadioButton.click();
+  }
+
   async checkChannelCheckbox(channel = "PLN") {
     await this.page.locator(`[name="Channel-${channel}"]`).click();
   }
