@@ -17,9 +17,7 @@ export class ShippingAddressDialog extends BasePage {
   }
 
   async pickAndConfirmFirstShippingMethod() {
-    await this.waitForNetworkIdle(async () => {
-      await this.selectShippingMethodInput.click();
-    });
+    await this.selectShippingMethodInput.click();
     await this.shippingMethodOption.first().click();
     await this.confirmButton.click();
     await expect(this.selectShippingMethodInput).not.toBeVisible();
