@@ -57,6 +57,14 @@ export const refundGridMessages = defineMessages({
     id: "FZTrzW",
     defaultMessage: "Manual refund",
   },
+  noTransactionsToRefund: {
+    id: "brkxbY",
+    defaultMessage: "There are no transactions to refund",
+  },
+  allTransactionsNonRefundable: {
+    id: "OSnO9P",
+    defaultMessage: "All transactions are non-refundable",
+  },
 });
 
 export const refundStatuses = defineMessages({

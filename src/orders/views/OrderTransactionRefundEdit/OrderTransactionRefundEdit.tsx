@@ -1,6 +1,7 @@
 import {
   OrderDetailsGrantRefundDocument,
   OrderDetailsGrantRefundFragment,
+  OrderGrantRefundUpdateErrorCode,
   useOrderDetailsGrantRefundQuery,
   useOrderGrantRefundEditMutation,
   useOrderSendRefundForGrantedRefundMutation,
@@ -14,6 +15,9 @@ import OrderTransactionRefundPage, {
 } from "@dashboard/orders/components/OrderTransactionRefundPage/OrderTransactionRefundPage";
 import { orderUrl } from "@dashboard/orders/urls";
 import React, { useState } from "react";
+import { useIntl } from "react-intl";
+
+import { transactionRefundEditMessages } from "./messages";
 
 interface OrderTransactionRefundProps {
   orderId: string;
@@ -23,6 +27,7 @@ interface OrderTransactionRefundProps {
 const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({ orderId, refundId }) => {
   const notify = useNotifier();
   const navigate = useNavigator();
+  const intl = useIntl();
 
   const [linesErrors, setLinesErrors] = useState<OrderTransactionRefundError[]>([]);
 
@@ -40,6 +45,7 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({ orderId
           status: "success",
           text: "Saved draft",
         });
+        setLinesErrors([]);
       }
     },
     update(cache, { data }) {
@@ -56,6 +62,19 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({ orderId
 
   const handleUpdateRefund = async (submitData: OrderTransactionRefundPageFormData) => {
     if (!data?.order || !draftRefund) {
+      return;
+    }
+
+    if (submitData.amount === 0) {
+      setLinesErrors([
+        {
+          code: OrderGrantRefundUpdateErrorCode.REQUIRED,
+          field: "amount",
+          message: intl.formatMessage(transactionRefundEditMessages.noAmountError),
+          lines: [],
+        },
+      ]);
+
       return;
     }
 

@@ -102,7 +102,7 @@ export class MailpitService {
         {
           message: `Message with subject: ${mailSubject} was not found`,
           intervals: [2000, 3000, 5000, 5000],
-          timeout: 15000,
+          timeout: 30000,
         },
       )
       .toBe(true);

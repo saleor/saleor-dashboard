@@ -161,8 +161,7 @@ test("TC: SALEOR_46 As an admin, I should be able to update a product by uploadi
     "Newly added single image should be present",
   ).toEqual(1);
 });
-// blocked by bug https://github.com/saleor/saleor-dashboard/issues/4368
-test.skip("TC: SALEOR_56 As an admin, I should be able to export products from single channel as CSV file @basic-regression @product @e2e", async () => {
+test("TC: SALEOR_56 As an admin, I should be able to export products from single channel as CSV file @basic-regression @product @e2e", async () => {
   await productPage.gotoProductListPage();
   await productPage.waitForDOMToFullyLoad();
   await productPage.clickCogShowMoreButtonButton();
@@ -170,7 +169,7 @@ test.skip("TC: SALEOR_56 As an admin, I should be able to export products from s
   await productPage.exportProductsDialog.clickChannelsAccordion();
   await productPage.exportProductsDialog.checkChannelCheckbox("PLN");
   await productPage.exportProductsDialog.clickNextButton();
-  await productPage.exportProductsDialog.clickExportSearchedProductsRadioButton();
+  await productPage.exportProductsDialog.clickExportAllProductsRadioButton();
   await productPage.exportProductsDialog.clickSubmitButton();
   await productPage.expectInfoBanner();
   await mailpitService.checkDoesUserReceivedExportedData(

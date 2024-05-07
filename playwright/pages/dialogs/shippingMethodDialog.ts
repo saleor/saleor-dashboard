@@ -1,8 +1,7 @@
+import { BasePage } from "@pages/basePage";
 import { expect, Page } from "@playwright/test";
 
-export class ShippingAddressDialog {
-  readonly page: Page;
-
+export class ShippingAddressDialog extends BasePage {
   constructor(
     page: Page,
     readonly selectShippingMethodInput = page.locator('[id="mui-component-select-shippingMethod"]'),
@@ -10,7 +9,7 @@ export class ShippingAddressDialog {
     readonly backButton = page.getByTestId("back"),
     readonly shippingMethodOption = page.locator("[data-test-id*='select-field-option']"),
   ) {
-    this.page = page;
+    super(page);
   }
 
   async pickAndConfirmFirstShippingMethod() {

@@ -24,8 +24,8 @@ export const messages = defineMessages({
     description: "header field name, header",
   },
   headerNameError: {
-    id: "iERn5G",
-    defaultMessage: "Should start with `x-` or `authorization`",
+    id: "sGDsFP",
+    defaultMessage: "Should match `x-*`, `authorization*`, or `brokerproperties`.",
     description: "header name input",
   },
   headerValue: {
