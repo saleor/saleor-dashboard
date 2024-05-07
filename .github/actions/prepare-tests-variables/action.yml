@@ -7,6 +7,10 @@ inputs:
   CLI_TOKEN:
     description: "Saleor cli token"
     required: true
+  VERSION:
+    description: "Version in format X.XX, if run from other branch"
+    required: false
+
 outputs:
   BASE_URL:
     description: "Dashboard base url"
@@ -43,6 +47,7 @@ runs:
       uses: ./.github/actions/prepare-api-variables
       with:
         MODE: ${{ inputs.MODE }}
+        VERSION: ${{ inputs.VERSION || ''}} 
   
     - name: Generate backup
       id: backup

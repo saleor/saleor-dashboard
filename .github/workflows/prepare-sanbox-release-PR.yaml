@@ -1,0 +1,38 @@
+name: Prepare Sandbox release pull request
+on:
+  push:
+    tags:
+      # Matches stable and pre-releases
+      - "[0-9]+.[0-9]+.[0-9]+*"
+  workflow_dispatch:
+    inputs:
+      git_ref:
+        description: Git ref (tag, branch or commit hash) to deploy
+        required: true
+
+jobs:
+  prepare-sandbox-PR:
+    runs-on: ubuntu-20.04
+    env:
+      VERSION: ${{ github.event.inputs.git_ref || github.ref_name }}
+    steps:
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Prepare Sandbox release pull request
+        run: |
+          export GITHUB_TOKEN=$( \
+            curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
+          )
+          gh api /repos/saleor/saleor-cloud-deployments/dispatches \
+            --input - <<< '{
+              "event_type": "open-release-pull-request",
+              "client_payload": {
+                "project": "DASHBOARD",
+                "environment": "SANDBOX",
+                "version": "${{ env.VERSION }}"
+              }
+            }'
