@@ -2600,6 +2600,10 @@
     "context": "page header",
     "string": "Create Discount"
   },
+  "FX7ts2": {
+    "context": "error message",
+    "string": "Amount should be greater than 0"
+  },
   "FYfoiF": {
     "context": "section name",
     "string": "Allocation strategy"
@@ -3977,6 +3981,9 @@
   },
   "ORQvOg": {
     "string": "You don't have permission to perform this action"
+  },
+  "OSnO9P": {
+    "string": "All transactions are non-refundable"
   },
   "OTDo9I": {
     "context": "tab name",
@@ -6058,6 +6065,9 @@
   "bqAJCT": {
     "context": "section header",
     "string": "Refund Order"
+  },
+  "brkxbY": {
+    "string": "There are no transactions to refund"
   },
   "bsP4f3": {
     "string": "No tokens found"
@@ -8912,6 +8922,10 @@
   },
   "vprU7C": {
     "string": "Select visible order channels"
+  },
+  "vqu+23": {
+    "context": "success notifier message",
+    "string": "Saved draft"
   },
   "vuKrlW": {
     "string": "Stock"

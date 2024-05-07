@@ -1,5 +1,6 @@
 const { Command } = require("commander");
 const program = new Command();
+const core = require("@actions/core");
 const { Octokit } = require("@octokit/core");
 
 program
@@ -29,6 +30,10 @@ program
       options.ref_name,
     );
 
+    core.setOutput("status", testsStatus.status.toLowerCase());
+    core.setOutput("message", testsStatus.message.replaceAll(/\n/g, ""));
+    core.setOutput("linkToResults", testsStatus.linkToResults);
+
     await sendMessageOnSlack(
       testsStatus,
       options.slack_webhook_url,
@@ -51,7 +56,8 @@ async function getTestsStatus(runId, testmoToken) {
 
 function convertResults(results, environment, refName) {
   let status = results?.result?.status === 2 ? "SUCCESS" : "FAILURE";
-  let message = `Tests run on environment: \n${environment}\n`;
+  let message = `Tests run on environment: \n${environment} \n`;
+
   const linkToResults = `https:\/\/saleor.testmo.net\/automation\/runs\/view\/${results.result.id}`;
   const threads = results.result.threads;
 
