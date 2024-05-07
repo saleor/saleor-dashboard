@@ -1,8 +1,6 @@
 import { FulfillmentStatus, OrderRefundDataQuery } from "@dashboard/graphql";
 
-export const orderToRefund = (
-  placeholder: string,
-): OrderRefundDataQuery["order"] => ({
+export const orderToRefund = (placeholder: string): OrderRefundDataQuery["order"] => ({
   __typename: "Order",
   id: "ifgdfuhdfdf",
   number: "22",

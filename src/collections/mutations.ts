@@ -78,10 +78,7 @@ export const unassignCollectionProduct = gql`
     $last: Int
     $before: String
   ) {
-    collectionRemoveProducts(
-      collectionId: $collectionId
-      products: $productIds
-    ) {
+    collectionRemoveProducts(collectionId: $collectionId, products: $productIds) {
       collection {
         id
         products(first: $first, after: $after, before: $before, last: $last) {
@@ -124,10 +121,7 @@ export const collectionBulkDelete = gql`
 `;
 
 export const collectionChannelListingUpdate = gql`
-  mutation CollectionChannelListingUpdate(
-    $id: ID!
-    $input: CollectionChannelListingUpdateInput!
-  ) {
+  mutation CollectionChannelListingUpdate($id: ID!, $input: CollectionChannelListingUpdateInput!) {
     collectionChannelListingUpdate(id: $id, input: $input) {
       errors {
         ...CollectionChannelListingError

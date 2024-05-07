@@ -12,9 +12,7 @@ import { AppData, ExternalAppContext } from "./context";
 export const ExternalAppProvider: React.FC = ({ children }) => {
   const [open, setOpen] = React.useState(false);
   const [appData, setAppData] = React.useState<AppData | undefined>();
-
   const shop = useShop();
-
   const handleClose = () => {
     setOpen(false);
     setAppData(undefined);
@@ -42,21 +40,16 @@ export const ExternalAppProvider: React.FC = ({ children }) => {
 export const useExternalApp = () => {
   const { open, setOpen, setAppData } = React.useContext(ExternalAppContext);
   const navigate = useNavigator();
-
   const openApp = (appData: AppData) => {
     if (appData.target === AppExtensionTargetEnum.POPUP) {
       setOpen(true);
       setAppData(appData);
     } else {
-      navigate(
-        AppUrls.resolveAppDeepUrl(appData.id, appData.src, appData.params),
-        {
-          resetScroll: true,
-        },
-      );
+      navigate(AppUrls.resolveAppDeepUrl(appData.id, appData.src, appData.params), {
+        resetScroll: true,
+      });
     }
   };
-
   const closeApp = () => setOpen(false);
 
   return { open, openApp, closeApp };

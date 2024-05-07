@@ -11,17 +11,13 @@ import {
 import { manualRefundMessages, refundPageMessages } from "../messages";
 import { useManualRefundCardStyles } from "../styles";
 
-export const ManualRefundCard: React.FC<
-  OrderManualTransactionFormProps
-> = props => {
+export const ManualRefundCard: React.FC<OrderManualTransactionFormProps> = props => {
   const classes = useManualRefundCardStyles();
   const intl = useIntl();
 
   return (
     <Card>
-      <CardTitle
-        title={<FormattedMessage {...manualRefundMessages.refundManual} />}
-      ></CardTitle>
+      <CardTitle title={<FormattedMessage {...manualRefundMessages.refundManual} />}></CardTitle>
       <CardContent>
         <Typography>
           <FormattedMessage {...manualRefundMessages.refundManualDescription} />
@@ -42,9 +38,7 @@ export const ManualRefundCard: React.FC<
               className={classes.priceInput}
               label={intl.formatMessage(refundPageMessages.refundAmount)}
             />
-            <OrderManualTransactionForm.SubmitButton
-              className={classes.submitButton}
-            >
+            <OrderManualTransactionForm.SubmitButton className={classes.submitButton}>
               <FormattedMessage {...manualRefundMessages.refund} />
             </OrderManualTransactionForm.SubmitButton>
           </OrderManualTransactionForm.Form>

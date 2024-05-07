@@ -1,7 +1,4 @@
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { Rule } from "@dashboard/discounts/models";
 import { buttonMessages } from "@dashboard/intl";
@@ -33,7 +30,6 @@ export const RuleFormModal = ({
 }: RuleFormModalProps) => {
   const intl = useIntl();
   const { discountType } = useDiscountRulesContext();
-
   const methods = useForm<Rule>({
     mode: "onBlur",
     values: initialFormValues || getDefaultValue(discountType),
@@ -43,14 +39,8 @@ export const RuleFormModal = ({
   return (
     <DashboardModal open={true} onChange={onClose}>
       <DashboardModal.Content data-test-id="add-rule-dialog">
-        <DashboardModal.Title
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <FormattedMessage
-            {...(initialFormValues ? messages.editRule : messages.addRule)}
-          />
+        <DashboardModal.Title display="flex" justifyContent="space-between" alignItems="center">
+          <FormattedMessage {...(initialFormValues ? messages.editRule : messages.addRule)} />
           <DashboardModal.Close onClose={onClose} />
         </DashboardModal.Title>
         <FormProvider {...methods}>

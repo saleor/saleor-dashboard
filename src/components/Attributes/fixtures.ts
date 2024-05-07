@@ -45,7 +45,6 @@ const DROPDOWN_ATTRIBUTE: AttributeInput = {
   label: "Dropdown Attribute",
   value: [],
 };
-
 const MULTISELECT_ATTRIBUTE: AttributeInput = {
   data: {
     inputType: AttributeInputTypeEnum.MULTISELECT,
@@ -99,7 +98,6 @@ const MULTISELECT_ATTRIBUTE: AttributeInput = {
   label: "Multiselect Attribute",
   value: [],
 };
-
 const FILE_ATTRIBUTE: AttributeInput = {
   data: {
     inputType: AttributeInputTypeEnum.FILE,
@@ -129,7 +127,6 @@ const FILE_ATTRIBUTE: AttributeInput = {
   label: "File Attribute",
   value: [],
 };
-
 const REFERENCE_ATTRIBUTE: AttributeInput = {
   data: {
     entityType: AttributeEntityTypeEnum.PAGE,
@@ -198,7 +195,6 @@ const REFERENCE_ATTRIBUTE: AttributeInput = {
   label: "References Attribute",
   value: [],
 };
-
 const PLAIN_TEXT_ATTRIBUTE: AttributeInput = {
   data: {
     inputType: AttributeInputTypeEnum.PLAIN_TEXT,
@@ -225,7 +221,6 @@ const PLAIN_TEXT_ATTRIBUTE: AttributeInput = {
   label: "Plain Text Attribute",
   value: [],
 };
-
 const RICH_TEXT_ATTRIBUTE: AttributeInput = {
   data: {
     inputType: AttributeInputTypeEnum.RICH_TEXT,
@@ -256,7 +251,6 @@ const RICH_TEXT_ATTRIBUTE: AttributeInput = {
   label: "Rich Text Attribute",
   value: [],
 };
-
 const NUMERIC_ATTRIBUTE: AttributeInput = {
   data: {
     inputType: AttributeInputTypeEnum.NUMERIC,
@@ -283,7 +277,6 @@ const NUMERIC_ATTRIBUTE: AttributeInput = {
   label: "Numeric Attribute",
   value: [],
 };
-
 const BOOLEAN_ATTRIBUTE: AttributeInput = {
   data: {
     inputType: AttributeInputTypeEnum.BOOLEAN,
@@ -309,7 +302,6 @@ const BOOLEAN_ATTRIBUTE: AttributeInput = {
   label: "Boolean Attribute",
   value: [],
 };
-
 const DATE_ATTRIBUTE: AttributeInput = {
   data: {
     inputType: AttributeInputTypeEnum.DATE,
@@ -335,7 +327,6 @@ const DATE_ATTRIBUTE: AttributeInput = {
   label: "Date Attribute",
   value: [],
 };
-
 const DATE_TIME_ATTRIBUTE: AttributeInput = {
   data: {
     inputType: AttributeInputTypeEnum.DATE_TIME,
@@ -361,7 +352,6 @@ const DATE_TIME_ATTRIBUTE: AttributeInput = {
   label: "Date Time Attribute",
   value: [],
 };
-
 const SWATCH_ATTRIBUTE: AttributeInput = {
   data: {
     inputType: AttributeInputTypeEnum.SWATCH,
@@ -409,10 +399,7 @@ export const ATTRIBUTES_SELECTED: AttributeInput[] = [
   },
   {
     ...MULTISELECT_ATTRIBUTE,
-    value: [
-      MULTISELECT_ATTRIBUTE.data.values[0].slug,
-      MULTISELECT_ATTRIBUTE.data.values[1].slug,
-    ],
+    value: [MULTISELECT_ATTRIBUTE.data.values[0].slug, MULTISELECT_ATTRIBUTE.data.values[1].slug],
   },
   {
     ...FILE_ATTRIBUTE,

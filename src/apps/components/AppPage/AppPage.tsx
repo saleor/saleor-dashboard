@@ -1,7 +1,4 @@
-import {
-  borderHeight,
-  topBarHeight,
-} from "@dashboard/components/AppLayout/consts";
+import { borderHeight, topBarHeight } from "@dashboard/components/AppLayout/consts";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { APP_VERSION } from "@dashboard/config";
 import { AppQuery } from "@dashboard/graphql";
@@ -19,12 +16,7 @@ export interface AppPageProps {
   refetch?: () => void;
 }
 
-export const AppPage: React.FC<AppPageProps> = ({
-  data,
-  url,
-  onError,
-  refetch,
-}) => {
+export const AppPage: React.FC<AppPageProps> = ({ data, url, onError, refetch }) => {
   const shop = useShop();
 
   /**

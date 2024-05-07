@@ -83,12 +83,9 @@ const messages = defineMessages({
   },
 });
 
-export const PaymentSubmitCardValues: React.FC<
-  PaymentSubmitCardValuesProps
-> = props => {
+export const PaymentSubmitCardValues: React.FC<PaymentSubmitCardValuesProps> = props => {
   const intl = useIntl();
   const classes = useStyles({});
-
   const orderedKeys: Array<keyof PaymentSubmitCardValuesProps> = [
     "authorizedAmount",
     "shipmentCost",
@@ -98,12 +95,10 @@ export const PaymentSubmitCardValues: React.FC<
     "maxRefund",
     "refundTotalAmount",
   ];
-
   const highlightedItems: Array<keyof PaymentSubmitCardValuesProps> = [
     "maxRefund",
     "refundTotalAmount",
   ];
-
   const items = reduce(
     orderedKeys,
     (result, key) => {
@@ -113,10 +108,7 @@ export const PaymentSubmitCardValues: React.FC<
         return result;
       }
 
-      return [
-        ...result,
-        { data: value, highlighted: highlightedItems.includes(key), key },
-      ];
+      return [...result, { data: value, highlighted: highlightedItems.includes(key), key }];
     },
     [],
   );
@@ -131,9 +123,7 @@ export const PaymentSubmitCardValues: React.FC<
           key={key}
         >
           {intl.formatMessage(messages[key])}
-          <div>
-            {data?.amount !== undefined ? <Money money={data} /> : <Skeleton />}
-          </div>
+          <div>{data?.amount !== undefined ? <Money money={data} /> : <Skeleton />}</div>
         </div>
       ))}
     </div>

@@ -1,16 +1,10 @@
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
-import Link from "@dashboard/components/Link";
 import Money from "@dashboard/components/Money";
 import { Pill } from "@dashboard/components/Pill";
 import Skeleton from "@dashboard/components/Skeleton";
-import { giftCardPath } from "@dashboard/giftCards/urls";
-import {
-  OrderAction,
-  OrderDetailsFragment,
-  OrderStatus,
-} from "@dashboard/graphql";
+import { OrderAction, OrderDetailsFragment, OrderStatus } from "@dashboard/graphql";
 import { getDiscountTypeLabel } from "@dashboard/orders/utils/data";
 import { Card, CardContent } from "@material-ui/core";
 import { Divider } from "@saleor/macaw-ui-next";
@@ -19,12 +13,13 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { transformPaymentStatus } from "../../../misc";
+import { OrderUsedGiftCards } from "../OrderUsedGiftCards";
 import { orderPaymentMessages, paymentButtonMessages } from "./messages";
 import { useStyles } from "./styles";
 import {
   extractOrderGiftCardUsedAmount,
   extractRefundedAmount,
-  obtainUsedGifrcard,
+  obtainUsedGifrcards,
 } from "./utils";
 
 interface OrderPaymentProps {
@@ -38,19 +33,15 @@ interface OrderPaymentProps {
 const OrderPayment: React.FC<OrderPaymentProps> = props => {
   const { order, onCapture, onMarkAsPaid, onRefund, onVoid } = props;
   const classes = useStyles(props);
-
   const intl = useIntl();
-
   const canCapture = (order?.actions ?? []).includes(OrderAction.CAPTURE);
   const canVoid = (order?.actions ?? []).includes(OrderAction.VOID);
   const canRefund = (order?.actions ?? []).includes(OrderAction.REFUND);
-  const canMarkAsPaid = (order?.actions ?? []).includes(
-    OrderAction.MARK_AS_PAID,
-  );
+  const canMarkAsPaid = (order?.actions ?? []).includes(OrderAction.MARK_AS_PAID);
   const payment = transformPaymentStatus(order?.paymentStatus, intl);
   const refundedAmount = extractRefundedAmount(order);
   const usedGiftCardAmount = extractOrderGiftCardUsedAmount(order);
-  const usedGiftcard = obtainUsedGifrcard(order);
+  const usedGiftcards = obtainUsedGifrcards(order);
 
   const getDeliveryMethodName = (order: OrderDetailsFragment) => {
     if (
@@ -65,11 +56,10 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
       return order.collectionPointName == null ? (
         <FormattedMessage {...orderPaymentMessages.shippingDoesNotApply} />
       ) : (
-        <FormattedMessage
-          {...orderPaymentMessages.clickAndCollectShippingMethod}
-        />
+        <FormattedMessage {...orderPaymentMessages.clickAndCollectShippingMethod} />
       );
     }
+
     return order.shippingMethodName;
   };
 
@@ -99,11 +89,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                       </Button>
                     )}
                     {canRefund && (
-                      <Button
-                        variant="tertiary"
-                        onClick={onRefund}
-                        data-test-id="refund-button"
-                      >
+                      <Button variant="tertiary" onClick={onRefund} data-test-id="refund-button">
                         <FormattedMessage {...paymentButtonMessages.refund} />
                       </Button>
                     )}
@@ -118,9 +104,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                         onClick={onMarkAsPaid}
                         data-test-id="markAsPaidButton"
                       >
-                        <FormattedMessage
-                          {...paymentButtonMessages.markAsPaid}
-                        />
+                        <FormattedMessage {...paymentButtonMessages.markAsPaid} />
                       </Button>
                     )}
                   </div>
@@ -135,9 +119,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
             <div key={discount.id}>
               <FormattedMessage {...orderPaymentMessages.discount} />
               <HorizontalSpacer spacing={4} />
-              <span className={classes.supportText}>
-                {getDiscountTypeLabel(discount, intl)}
-              </span>
+              <span className={classes.supportText}>{getDiscountTypeLabel(discount, intl)}</span>
               <span
                 className={clsx(
                   classes.leftmostRightAlignedElement,
@@ -145,9 +127,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                   classes.supportText,
                 )}
               >
-                <FormattedMessage
-                  {...orderPaymentMessages.includedInSubtotal}
-                />
+                <FormattedMessage {...orderPaymentMessages.includedInSubtotal} />
               </span>
               <HorizontalSpacer spacing={2} />
               <div className={classes.supportText}>
@@ -164,9 +144,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
           <div>
             <FormattedMessage {...orderPaymentMessages.shipping} />
             <HorizontalSpacer spacing={4} />
-            <div className={classes.supportText}>
-              {getDeliveryMethodName(order)}
-            </div>
+            <div className={classes.supportText}>{getDeliveryMethodName(order)}</div>
             <div className={classes.leftmostRightAlignedElement}>
               {<Money money={order?.shippingPrice.gross} /> ?? <Skeleton />}
             </div>
@@ -182,9 +160,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                     classes.leftmostRightAlignedElement,
                   )}
                 >
-                  <FormattedMessage
-                    {...orderPaymentMessages.includedInPrices}
-                  />{" "}
+                  <FormattedMessage {...orderPaymentMessages.includedInPrices} />{" "}
                 </div>
                 <HorizontalSpacer spacing={2} />
               </>
@@ -192,8 +168,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
             <div
               className={clsx(
                 {
-                  [classes.leftmostRightAlignedElement]:
-                    order?.total.tax.amount === 0,
+                  [classes.leftmostRightAlignedElement]: order?.total.tax.amount === 0,
                 },
                 classes.supportText,
               )}
@@ -212,18 +187,9 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
       <Divider />
       <CardContent className={classes.payments}>
         <div className={classes.root}>
-          {!!usedGiftCardAmount && usedGiftcard && (
+          {!!usedGiftCardAmount && usedGiftcards && (
             <div>
-              <FormattedMessage
-                {...orderPaymentMessages.paidWithGiftCard}
-                values={{
-                  link: (
-                    <Link href={giftCardPath(usedGiftcard.id)}>
-                      {usedGiftcard.last4CodeChars}
-                    </Link>
-                  ),
-                }}
-              />
+              <OrderUsedGiftCards giftCards={usedGiftcards} />
               <div className={classes.leftmostRightAlignedElement}>
                 <Money
                   money={{
@@ -278,5 +244,6 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
     </Card>
   );
 };
+
 OrderPayment.displayName = "OrderPayment";
 export default OrderPayment;

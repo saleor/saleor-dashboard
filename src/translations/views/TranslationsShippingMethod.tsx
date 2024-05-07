@@ -35,25 +35,21 @@ const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({
   const notify = useNotifier();
   const shop = useShop();
   const intl = useIntl();
-
   const shippingMethodTranslations = useShippingMethodTranslationDetailsQuery({
     variables: { id, language: languageCode },
   });
-
-  const [updateTranslations, updateTranslationsOpts] =
-    useUpdateShippingMethodTranslationsMutation({
-      onCompleted: data => {
-        if (data.shippingPriceTranslate.errors.length === 0) {
-          shippingMethodTranslations.refetch();
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-          navigate("?", { replace: true });
-        }
-      },
-    });
-
+  const [updateTranslations, updateTranslationsOpts] = useUpdateShippingMethodTranslationsMutation({
+    onCompleted: data => {
+      if (data.shippingPriceTranslate.errors.length === 0) {
+        shippingMethodTranslations.refetch();
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+        navigate("?", { replace: true });
+      }
+    },
+  });
   const onEdit = (field: string) =>
     navigate(
       "?" +
@@ -62,11 +58,9 @@ const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({
         }),
       { replace: true },
     );
-
   const onDiscard = () => {
     navigate("?", { replace: true });
   };
-
   const handleSubmit = (
     { name: fieldName }: TranslationField<TranslationInputFieldName>,
     data: string,
@@ -80,29 +74,23 @@ const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({
         },
       }),
     );
-
   const translation = shippingMethodTranslations?.data?.translation;
 
   return (
     <TranslationsShippingMethodPage
       translationId={id}
       activeField={params.activeField}
-      disabled={
-        shippingMethodTranslations.loading || updateTranslationsOpts.loading
-      }
+      disabled={shippingMethodTranslations.loading || updateTranslationsOpts.loading}
       languages={shop?.languages || []}
       languageCode={languageCode}
       saveButtonState={updateTranslationsOpts.status}
       onEdit={onEdit}
       onDiscard={onDiscard}
       onSubmit={handleSubmit}
-      data={
-        translation?.__typename === "ShippingMethodTranslatableContent"
-          ? translation
-          : null
-      }
+      data={translation?.__typename === "ShippingMethodTranslatableContent" ? translation : null}
     />
   );
 };
+
 TranslationsShippingMethod.displayName = "TranslationsShippingMethod";
 export default TranslationsShippingMethod;

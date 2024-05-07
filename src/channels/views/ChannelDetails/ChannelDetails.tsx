@@ -28,12 +28,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
-import {
-  channelsListUrl,
-  channelUrl,
-  ChannelUrlDialog,
-  ChannelUrlQueryParams,
-} from "../../urls";
+import { channelsListUrl, channelUrl, ChannelUrlDialog, ChannelUrlQueryParams } from "../../urls";
 import { calculateItemsOrderMoves } from "./handlers";
 import { useShippingZones } from "./useShippingZones";
 import { useWarehouses } from "./useWarehouses";
@@ -43,82 +38,72 @@ interface ChannelDetailsProps {
   params: ChannelUrlQueryParams;
 }
 
-export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
-  id,
-  params,
-}) => {
+export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
   const shop = useShop();
-
   const channelsListData = useChannelsQuery({ displayLoader: true });
-
   const [openModal, closeModal] = createDialogActionHandlers<
     ChannelUrlDialog,
     ChannelUrlQueryParams
   >(navigate, params => channelUrl(id, params), params);
-
   const [updateChannel, updateChannelOpts] = useChannelUpdateMutation({
     onCompleted: ({ channelUpdate: { errors } }: ChannelUpdateMutation) =>
       notify(getDefaultNotifierSuccessErrorData(errors, intl)),
   });
-
   const { data, loading } = useChannelQuery({
     displayLoader: true,
     variables: { id },
   });
-
   const handleError = (error: ChannelErrorFragment) => {
     notify({
       status: "error",
       text: getChannelsErrorMessage(error, intl),
     });
   };
-
   const [activateChannel, activateChannelOpts] = useChannelActivateMutation({
     onCompleted: data => {
       const errors = data.channelActivate.errors;
+
       if (errors.length) {
         errors.forEach(error => handleError(error));
       }
     },
   });
+  const [deactivateChannel, deactivateChannelOpts] = useChannelDeactivateMutation({
+    onCompleted: data => {
+      const errors = data.channelDeactivate.errors;
 
-  const [deactivateChannel, deactivateChannelOpts] =
-    useChannelDeactivateMutation({
-      onCompleted: data => {
-        const errors = data.channelDeactivate.errors;
-        if (errors.length) {
-          errors.forEach(error => handleError(error));
-        }
-      },
-    });
-
+      if (errors.length) {
+        errors.forEach(error => handleError(error));
+      }
+    },
+  });
   const [reorderChannelWarehouses, reorderChannelWarehousesOpts] =
     useChannelReorderWarehousesMutation({
       onCompleted: data => {
         const errors = data.channelReorderWarehouses.errors;
+
         if (errors.length) {
           errors.forEach(error => handleError(error));
         }
       },
     });
-
   const handleSubmit = async ({
-    name,
-    slug,
-    shippingZonesIdsToRemove,
-    shippingZonesIdsToAdd,
-    warehousesIdsToRemove,
-    warehousesIdsToAdd,
-    warehousesToDisplay,
-    defaultCountry,
     allocationStrategy,
-    markAsPaidStrategy,
-    deleteExpiredOrdersAfter,
     allowUnpaidOrders,
+    defaultCountry,
     defaultTransactionFlowStrategy,
+    deleteExpiredOrdersAfter,
+    markAsPaidStrategy,
+    name,
+    shippingZonesIdsToAdd,
+    shippingZonesIdsToRemove,
+    slug,
+    warehousesIdsToAdd,
+    warehousesIdsToRemove,
+    warehousesToDisplay,
   }: FormData) => {
     const updateChannelMutation = updateChannel({
       variables: {
@@ -145,7 +130,6 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
         },
       },
     });
-
     const resultChannel = await updateChannelMutation;
     const errors = await extractMutationErrors(updateChannelMutation);
 
@@ -165,9 +149,9 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
 
     return errors;
   };
-
   const onDeleteCompleted = (data: ChannelDeleteMutation) => {
     const errors = data.channelDelete.errors;
+
     if (errors.length === 0) {
       notify({
         status: "success",
@@ -187,22 +171,19 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
       );
     }
   };
-
   const [deleteChannel, deleteChannelOpts] = useChannelDeleteMutation({
     onCompleted: onDeleteCompleted,
   });
-
   const channelsChoices = getChannelsCurrencyChoices(
     id,
     data?.channel,
     channelsListData?.data?.channels,
   );
-
   const handleRemoveConfirm = (channelId?: string) => {
     const data = channelId ? { id, input: { channelId } } : { id };
+
     deleteChannel({ variables: data });
   };
-
   const {
     shippingZonesCountData,
     shippingZonesCountLoading,
@@ -212,7 +193,6 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
     searchShippingZones,
     searchShippingZonesResult,
   } = useShippingZones(id);
-
   const {
     warehousesCountData,
     warehousesCountLoading,
@@ -220,11 +200,8 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
     searchWarehouses,
     searchWarehousesResult,
   } = useWarehouses();
-
   const channelWarehouses = data?.channel?.warehouses || [];
-  const channelShippingZones = mapEdgesToItems(
-    channelShippingZonesData?.shippingZones,
-  );
+  const channelShippingZones = mapEdgesToItems(channelShippingZonesData?.shippingZones);
 
   return (
     <>
@@ -237,9 +214,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
       />
       <ChannelDetailsPage
         channelShippingZones={channelShippingZones}
-        allShippingZonesCount={
-          shippingZonesCountData?.shippingZones?.totalCount
-        }
+        allShippingZonesCount={shippingZonesCountData?.shippingZones?.totalCount}
         searchShippingZones={searchShippingZones}
         searchShippingZonesData={searchShippingZonesResult.data}
         fetchMoreShippingZones={getSearchFetchMoreProps(
@@ -250,10 +225,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
         allWarehousesCount={warehousesCountData?.warehouses?.totalCount}
         searchWarehouses={searchWarehouses}
         searchWarehousesData={searchWarehousesResult.data}
-        fetchMoreWarehouses={getSearchFetchMoreProps(
-          searchWarehousesResult,
-          fetchMoreWarehouses,
-        )}
+        fetchMoreWarehouses={getSearchFetchMoreProps(searchWarehousesResult, fetchMoreWarehouses)}
         channel={data?.channel}
         disabled={
           updateChannelOpts.loading ||
@@ -263,9 +235,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
           warehousesCountLoading ||
           channelsShippingZonesLoading
         }
-        disabledStatus={
-          activateChannelOpts.loading || deactivateChannelOpts.loading
-        }
+        disabledStatus={activateChannelOpts.loading || deactivateChannelOpts.loading}
         errors={updateChannelOpts?.data?.channelUpdate?.errors || []}
         onDelete={() => openModal("remove")}
         onSubmit={handleSubmit}

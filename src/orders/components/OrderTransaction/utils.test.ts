@@ -1,9 +1,6 @@
 // @ts-strict-ignore
 import { TransactionEventFragment } from "@dashboard/graphql";
-import {
-  TransactionFakeEvent,
-  TransactionMappingResult,
-} from "@dashboard/orders/types";
+import { TransactionFakeEvent, TransactionMappingResult } from "@dashboard/orders/types";
 
 import { mapTransactionEvent } from "./utils";
 
@@ -14,7 +11,6 @@ describe("mapTransactionEvent", () => {
       status: null,
     });
   });
-
   it("unpacks transaction event into status and type", () => {
     expect(
       mapTransactionEvent({
@@ -25,7 +21,6 @@ describe("mapTransactionEvent", () => {
       type: "AUTHORIZATION",
       status: "FAILED",
     });
-
     expect(
       mapTransactionEvent({
         type: "AUTHORIZATION_REQUEST",
@@ -35,7 +30,6 @@ describe("mapTransactionEvent", () => {
       type: "AUTHORIZATION",
       status: "REQUEST",
     });
-
     expect(
       mapTransactionEvent({
         type: "AUTHORIZATION_SUCCESS",
@@ -45,7 +39,6 @@ describe("mapTransactionEvent", () => {
       type: "AUTHORIZATION",
       status: "SUCCESS",
     });
-
     expect(
       mapTransactionEvent({
         type: "CHARGE_BACK",
@@ -55,7 +48,6 @@ describe("mapTransactionEvent", () => {
       type: "CHARGEBACK",
       status: "INFO",
     });
-
     expect(
       mapTransactionEvent({
         type: "REFUND_REVERSE",
@@ -65,7 +57,6 @@ describe("mapTransactionEvent", () => {
       type: "REFUND_REVERSED",
       status: "INFO",
     });
-
     expect(
       mapTransactionEvent({
         type: "AUTHORIZATION_ADJUSTMENT",
@@ -76,7 +67,6 @@ describe("mapTransactionEvent", () => {
       status: "INFO",
     });
   });
-
   it("uses mappedResult from TransactionFakeEvent", () => {
     const result = mapTransactionEvent({
       __typename: "TransactionFakeEvent",

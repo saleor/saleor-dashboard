@@ -11,14 +11,9 @@ export const usePermissionsRequestRedirects = ({
   redirectPath: string;
 }) => {
   const navigate = useNavigator();
-
   const navigateToAppApproved = () => {
-    navigate(
-      AppPaths.resolveAppPath(encodeURIComponent(appId)) +
-        `?appPath=${redirectPath}`,
-    );
+    navigate(AppPaths.resolveAppPath(encodeURIComponent(appId)) + `?appPath=${redirectPath}`);
   };
-
   const navigateToAppDenied = (error: Errors) => {
     navigate(
       AppPaths.resolveAppPath(encodeURIComponent(appId)) +

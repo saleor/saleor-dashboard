@@ -25,10 +25,7 @@ import GiftCardCreateMoneyInput from "./GiftCardCreateMoneyInput";
 import GiftCardCreateRequiresActivationSection from "./GiftCardCreateRequiresActivationSection";
 import { giftCardCreateMessages as messages } from "./messages";
 import { useGiftCardCreateFormStyles as useStyles } from "./styles";
-import {
-  GiftCardCreateFormCommonProps,
-  GiftCardCreateFormCustomer,
-} from "./types";
+import { GiftCardCreateFormCommonProps, GiftCardCreateFormCustomer } from "./types";
 
 export interface GiftCardCreateFormData extends GiftCardCreateCommonFormData {
   note: string;
@@ -59,7 +56,6 @@ interface GiftCardCreateDialogFormProps {
 }
 
 const defaultInitialCustomer = { email: "", name: "" };
-
 const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
   onSubmit,
   opts,
@@ -69,24 +65,17 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
-
-  const { data: settingsData, loading: loadingSettings } =
-    useGiftCardSettingsQuery();
-
-  const [selectedCustomer, setSelectedCustomer] =
-    useState<GiftCardCreateFormCustomer>(
-      initialCustomer || defaultInitialCustomer,
-    );
-
-  const handleSubmit = (data: GiftCardCreateFormData) =>
-    onSubmit({ ...data, selectedCustomer });
-
+  const { data: settingsData, loading: loadingSettings } = useGiftCardSettingsQuery();
+  const [selectedCustomer, setSelectedCustomer] = useState<GiftCardCreateFormCustomer>(
+    initialCustomer || defaultInitialCustomer,
+  );
+  const handleSubmit = (data: GiftCardCreateFormData) => onSubmit({ ...data, selectedCustomer });
   const getInitialExpirySettingsData = (): Partial<GiftCardCreateFormData> => {
     if (loadingSettings) {
       return {};
     }
 
-    const { expiryType, expiryPeriod } = settingsData?.giftCardSettings;
+    const { expiryType, expiryPeriod } = settingsData?.giftCardSettings ?? {};
 
     if (expiryType === GiftCardSettingsExpiryTypeEnum.NEVER_EXPIRE) {
       return {};
@@ -98,7 +87,6 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
       expiryPeriodAmount: expiryPeriod?.amount,
     };
   };
-
   const { submit, change, toggleValue, data, set } = useForm(
     {
       ...initialData,
@@ -109,12 +97,10 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
     },
     handleSubmit,
   );
-
   const formErrors = getFormErrors(
     ["tags", "expiryDate", "customer", "currency", "amount", "balance"],
     apiErrors,
   );
-
   const {
     tags,
     sendToCustomerSelected,
@@ -125,7 +111,6 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
     expiryDate,
     requiresActivation,
   } = data;
-
   const shouldEnableSubmitButton = () => {
     if (!balanceAmount) {
       return false;
@@ -137,7 +122,6 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
 
     return true;
   };
-
   const commonFormProps: GiftCardCreateFormCommonProps = {
     data,
     errors: formErrors,
@@ -147,10 +131,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
 
   return (
     <>
-      <DialogContent
-        className={classes.dialogContent}
-        data-test-id="gift-card-dialog"
-      >
+      <DialogContent className={classes.dialogContent} data-test-id="gift-card-dialog">
         <GiftCardCreateMoneyInput {...commonFormProps} set={set} />
         <CardSpacer />
         <GiftCardTagInput
@@ -186,10 +167,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
         <VerticalSpacer />
         <Label text={intl.formatMessage(messages.noteSubtitle)} />
         <VerticalSpacer spacing={2} />
-        <GiftCardCreateRequiresActivationSection
-          onChange={change}
-          checked={requiresActivation}
-        />
+        <GiftCardCreateRequiresActivationSection onChange={change} checked={requiresActivation} />
       </DialogContent>
       <DialogButtons
         disabled={!shouldEnableSubmitButton()}

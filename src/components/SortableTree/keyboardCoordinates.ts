@@ -15,7 +15,6 @@ const directions: string[] = [
   KeyboardCode.Up,
   KeyboardCode.Left,
 ];
-
 const horizontal: string[] = [KeyboardCode.Left, KeyboardCode.Right];
 
 export const sortableTreeKeyboardCoordinates: <T extends DataTypePlaceholder>(
@@ -27,13 +26,7 @@ export const sortableTreeKeyboardCoordinates: <T extends DataTypePlaceholder>(
     event,
     {
       currentCoordinates,
-      context: {
-        active,
-        over,
-        collisionRect,
-        droppableRects,
-        droppableContainers,
-      },
+      context: { active, over, collisionRect, droppableRects, droppableContainers },
     },
   ) => {
     if (directions.includes(event.code)) {
@@ -64,6 +57,7 @@ export const sortableTreeKeyboardCoordinates: <T extends DataTypePlaceholder>(
                 x: currentCoordinates.x - indentationWidth,
               };
             }
+
             break;
           case KeyboardCode.Right:
             if (depth < maxDepth) {
@@ -72,6 +66,7 @@ export const sortableTreeKeyboardCoordinates: <T extends DataTypePlaceholder>(
                 x: currentCoordinates.x + indentationWidth,
               };
             }
+
             break;
         }
 
@@ -96,11 +91,13 @@ export const sortableTreeKeyboardCoordinates: <T extends DataTypePlaceholder>(
             if (collisionRect.top < rect.top) {
               containers.push(container);
             }
+
             break;
           case KeyboardCode.Up:
             if (collisionRect.top > rect.top) {
               containers.push(container);
             }
+
             break;
         }
       });
@@ -140,7 +137,6 @@ export const sortableTreeKeyboardCoordinates: <T extends DataTypePlaceholder>(
             const isBelow = newIndex > activeIndex;
             const modifier = isBelow ? 1 : -1;
             const offset = 0;
-
             const newCoordinates = {
               x: newRect.left + depth * indentationWidth,
               y: newRect.top + modifier * offset,

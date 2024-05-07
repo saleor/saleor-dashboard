@@ -8,10 +8,7 @@ interface AddConditionsSectionProps {
   addCondition: () => void;
 }
 
-export const AddConditionsSection = ({
-  disabled,
-  addCondition,
-}: AddConditionsSectionProps) => {
+export const AddConditionsSection = ({ disabled, addCondition }: AddConditionsSectionProps) => {
   const intl = useIntl();
 
   return (

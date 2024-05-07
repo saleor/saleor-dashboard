@@ -19,14 +19,9 @@ import {
   OrderLineDiscountConsumerProps,
   OrderLineDiscountData,
 } from "./types";
-import {
-  getOrderLineDiscount,
-  getParsedDiscountData,
-  useDiscountDialog,
-} from "./utils";
+import { getOrderLineDiscount, getParsedDiscountData, useDiscountDialog } from "./utils";
 
-export interface OrderLineDiscountContextConsumerProps
-  extends OrderDiscountConsumerCommonProps {
+export interface OrderLineDiscountContextConsumerProps extends OrderDiscountConsumerCommonProps {
   addOrderLineDiscount: (data: OrderDiscountCommonInput) => void;
   removeOrderLineDiscount: () => void;
   orderLineDiscount?: OrderLineDiscountData;
@@ -55,61 +50,46 @@ export const useOrderLineDiscountContext = () => {
   return context;
 };
 
-export const OrderLineDiscountProvider: React.FC<DiscountProviderProps> = ({
-  children,
-  order,
-}) => {
+export const OrderLineDiscountProvider: React.FC<DiscountProviderProps> = ({ children, order }) => {
   const intl = useIntl();
   const notify = useNotifier();
-
   const { isDialogOpen, openDialog, closeDialog } = useDiscountDialog();
   const [currentLineId, setCurrentLineId] = useState<string | null>(null);
-
   const handleOpenDialog = (orderLineId: string) => () => {
     setCurrentLineId(orderLineId);
     openDialog();
   };
-
   const handleCloseDialog = () => {
     setCurrentLineId(null);
     closeDialog();
   };
-
   const [orderLineDiscountAddOrUpdate, orderLineDiscountAddOrUpdateOpts] =
     useOrderLineDiscountUpdateMutation({
       onCompleted: ({ orderLineDiscountUpdate: { errors } }) =>
         handleDiscountDataSubmission(errors),
     });
-
-  const [orderLineDiscountRemove, orderLineDiscountRemoveOpts] =
-    useOrderLineDiscountRemoveMutation({
+  const [orderLineDiscountRemove, orderLineDiscountRemoveOpts] = useOrderLineDiscountRemoveMutation(
+    {
       onCompleted: ({ orderLineDiscountRemove: { errors } }) =>
         handleDiscountDataSubmission(errors),
-    });
-
+    },
+  );
   const handleDiscountDataSubmission = (errors: any[]) => {
     closeDialog();
     notify(getDefaultNotifierSuccessErrorData(errors, intl));
   };
-
-  const addOrUpdateOrderLineDiscount =
-    (orderLineId: string) => (input: OrderDiscountCommonInput) =>
-      orderLineDiscountAddOrUpdate({
-        variables: {
-          orderLineId,
-          input: getParsedDiscountData(input),
-        },
-      });
-
+  const addOrUpdateOrderLineDiscount = (orderLineId: string) => (input: OrderDiscountCommonInput) =>
+    orderLineDiscountAddOrUpdate({
+      variables: {
+        orderLineId,
+        input: getParsedDiscountData(input),
+      },
+    });
   const removeOrderLineDiscount = (orderLineId: string) => () =>
     orderLineDiscountRemove({ variables: { orderLineId } });
-
   const isOrderLineDialogOpen = (orderLineId: string) =>
     isDialogOpen && currentLineId === orderLineId;
-
-  const getOrderLine = (orderLineId: string) =>
-    order?.lines.find(getById(orderLineId));
-
+  const getOrderLine = (orderLineId: string) => order?.lines.find(getById(orderLineId));
   const getDiscountProviderValues = (
     orderLineId: string,
   ): OrderLineDiscountContextConsumerProps => ({
@@ -123,8 +103,7 @@ export const OrderLineDiscountProvider: React.FC<DiscountProviderProps> = ({
     openDialog: handleOpenDialog(orderLineId),
     totalDiscountedPrice: getOrderLine(orderLineId).totalPrice.gross,
     unitDiscountedPrice: getOrderLine(orderLineId).unitPrice.gross,
-    unitUndiscountedPrice:
-      getOrderLine(orderLineId).undiscountedUnitPrice.gross,
+    unitUndiscountedPrice: getOrderLine(orderLineId).undiscountedUnitPrice.gross,
   });
 
   return (
@@ -134,12 +113,11 @@ export const OrderLineDiscountProvider: React.FC<DiscountProviderProps> = ({
   );
 };
 
-export const OrderLineDiscountConsumer: React.FC<
-  OrderLineDiscountConsumerProps
-> = ({ children, orderLineId }) => (
+export const OrderLineDiscountConsumer: React.FC<OrderLineDiscountConsumerProps> = ({
+  children,
+  orderLineId,
+}) => (
   <OrderLineDiscountContext.Consumer>
-    {(getValues: GetOrderLineDiscountContextConsumerProps) =>
-      children(getValues(orderLineId))
-    }
+    {(getValues: GetOrderLineDiscountContextConsumerProps) => children(getValues(orderLineId))}
   </OrderLineDiscountContext.Consumer>
 );

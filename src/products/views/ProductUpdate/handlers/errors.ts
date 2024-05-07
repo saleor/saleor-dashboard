@@ -40,14 +40,12 @@ export type ProductVariantListError =
 export function getCreateVariantMutationError(
   result: FetchResult<ProductVariantBulkCreateMutation>,
 ): ProductVariantListError[] {
-  return result.data.productVariantBulkCreate.errors.map<ProductVariantListError>(
-    error => ({
-      __typename: "DatagridError",
-      type: "create",
-      index: error.index,
-      error: error.code,
-    }),
-  );
+  return result.data.productVariantBulkCreate.errors.map<ProductVariantListError>(error => ({
+    __typename: "DatagridError",
+    type: "create",
+    index: error.index,
+    error: error.code,
+  }));
 }
 
 export function getVariantUpdateMutationErrors(
@@ -56,9 +54,7 @@ export function getVariantUpdateMutationErrors(
 ): ProductVariantListError[] {
   const { productVariantBulkUpdate } = mutationResult.data;
   const generalErrors = productVariantBulkUpdate.errors;
-  const variantsErrors = productVariantBulkUpdate.results.flatMap(
-    res => res.errors,
-  );
+  const variantsErrors = productVariantBulkUpdate.results.flatMap(res => res.errors);
   const allErrors = [...generalErrors, ...variantsErrors];
 
   return [
@@ -68,10 +64,7 @@ export function getVariantUpdateMutationErrors(
   ];
 }
 
-function getChannelErrors(
-  errors: ProductVariantBulkErrorFragment[],
-  varaintsIds: string[],
-) {
+function getChannelErrors(errors: ProductVariantBulkErrorFragment[], varaintsIds: string[]) {
   return errors.reduce<ProductVariantListError[]>((acc, error, index) => {
     if (error.channels?.length) {
       const variantId = varaintsIds[index];
@@ -89,10 +82,7 @@ function getChannelErrors(
   }, []);
 }
 
-function getStockErrors(
-  errors: ProductVariantBulkErrorFragment[],
-  varaintsIds: string[],
-) {
+function getStockErrors(errors: ProductVariantBulkErrorFragment[], varaintsIds: string[]) {
   return errors.reduce<ProductVariantListError[]>((acc, error, index) => {
     if (error.warehouses?.length) {
       const variantId = varaintsIds[index];
@@ -105,7 +95,7 @@ function getStockErrors(
               variantId,
               warehouseId: warehouse,
               type: "stock",
-            } as const),
+            }) as const,
         ),
       );
     }
@@ -114,10 +104,7 @@ function getStockErrors(
   }, []);
 }
 
-function getRestOfErrors(
-  errors: ProductVariantBulkErrorFragment[],
-  varaintsIds: string[],
-) {
+function getRestOfErrors(errors: ProductVariantBulkErrorFragment[], varaintsIds: string[]) {
   return errors.reduce<ProductVariantListError[]>((acc, error, index) => {
     if (!error.warehouses?.length && !error.channels?.length) {
       const variantId = varaintsIds[index];

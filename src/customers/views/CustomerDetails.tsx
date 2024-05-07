@@ -29,10 +29,7 @@ interface CustomerDetailsViewProps {
   params: CustomerUrlQueryParams;
 }
 
-const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
-  id,
-  params,
-}) => {
+const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -99,14 +96,12 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
 
   return (
     <>
-      <WindowTitle title={user?.email} />
+      <WindowTitle title={user?.email} data-test-id="user-email-title" />
       <CustomerDetailsPage
         customerId={id}
         customer={user}
         disabled={
-          customerDetailsLoading ||
-          updateCustomerOpts.loading ||
-          removeCustomerOpts.loading
+          customerDetailsLoading || updateCustomerOpts.loading || removeCustomerOpts.loading
         }
         errors={updateCustomerOpts.data?.customerUpdate.errors || []}
         saveButtonBar={updateCustomerOpts.status}
@@ -152,10 +147,7 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
   );
 };
 
-export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
-  id,
-  params,
-}) => (
+export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({ id, params }) => (
   <CustomerDetailsProvider id={id}>
     <CustomerDetailsViewInner id={id} params={params} />
   </CustomerDetailsProvider>

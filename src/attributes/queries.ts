@@ -10,12 +10,7 @@ export const attributeDetails = gql`
   ) {
     attribute(id: $id) {
       ...AttributeDetails
-      choices(
-        first: $firstValues
-        after: $afterValues
-        last: $lastValues
-        before: $beforeValues
-      ) {
+      choices(first: $firstValues, after: $afterValues, last: $lastValues, before: $beforeValues) {
         ...AttributeValueList
       }
     }

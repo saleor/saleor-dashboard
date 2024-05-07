@@ -80,11 +80,6 @@ export const orderPaymentMessages = defineMessages({
     defaultMessage: "Outstanding Balance",
     description: "order payment",
   },
-  paidWithGiftCard: {
-    id: "yivxZJ",
-    defaultMessage: "Paid with Gift Card: ({link})",
-    description: "order payment",
-  },
   includedInSubtotal: {
     id: "pPef6L",
     defaultMessage: "Included in subtotal",

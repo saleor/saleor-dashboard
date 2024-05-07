@@ -6,18 +6,14 @@ type ErrorTrackerFactory = (
   permissions?: TrackerPermission[],
 ) => TrackerMethods;
 
-export const ErrorTrackerFactory: ErrorTrackerFactory = (
-  extension,
-  permissions = [],
-) => {
+export const ErrorTrackerFactory: ErrorTrackerFactory = (extension, permissions = []) => {
   let ENABLED = false;
 
   const safelyInvoke = <T extends () => any>(
     fn: T,
     permission?: TrackerPermission,
   ): ReturnType<T> => {
-    const hasPermission =
-      permission !== undefined ? permissions.includes(permission) : true;
+    const hasPermission = permission !== undefined ? permissions.includes(permission) : true;
 
     if (ENABLED && hasPermission) {
       try {
@@ -27,7 +23,6 @@ export const ErrorTrackerFactory: ErrorTrackerFactory = (
       }
     }
   };
-
   const init: TrackerMethods["init"] = () => {
     if (!ENABLED) {
       ENABLED = extension.init();
@@ -35,13 +30,8 @@ export const ErrorTrackerFactory: ErrorTrackerFactory = (
 
     return ENABLED;
   };
-
   const setUserData: TrackerMethods["setUserData"] = (userData: UserData) =>
-    safelyInvoke(
-      () => extension.setUserData(userData),
-      TrackerPermission.USER_DATA,
-    );
-
+    safelyInvoke(() => extension.setUserData(userData), TrackerPermission.USER_DATA);
   const captureException: TrackerMethods["captureException"] = (e: Error) =>
     safelyInvoke(() => extension.captureException(e));
 

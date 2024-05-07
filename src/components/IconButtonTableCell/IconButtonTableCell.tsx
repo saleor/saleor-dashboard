@@ -26,12 +26,12 @@ const useStyles = makeStyles(
 );
 const IconButtonTableCell: React.FC<IconButtonTableCellProps> = props => {
   const { children, className, disabled, onClick } = props;
-
   const classes = useStyles(props);
 
   return (
     <TableCell className={clsx(classes.root, className)}>
       <IconButton
+        data-test-id="delete-button"
         variant="secondary"
         color="primary"
         disabled={disabled}
@@ -42,5 +42,6 @@ const IconButtonTableCell: React.FC<IconButtonTableCellProps> = props => {
     </TableCell>
   );
 };
+
 IconButtonTableCell.displayName = "IconButtonTableCell";
 export default IconButtonTableCell;

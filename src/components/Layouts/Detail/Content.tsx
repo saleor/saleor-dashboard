@@ -6,10 +6,7 @@ interface DetailPageLayoutContentProps {
   children: React.ReactNode;
 }
 
-export const Content: React.FC<DetailPageLayoutContentProps> = ({
-  children,
-  ...rest
-}) => (
+export const Content: React.FC<DetailPageLayoutContentProps> = ({ children, ...rest }) => (
   <Box
     height="100%"
     overflowY="auto"

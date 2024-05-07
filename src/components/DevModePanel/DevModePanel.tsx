@@ -16,15 +16,11 @@ const authorizedFetch = createFetch();
 export const DevModePanel: React.FC = () => {
   const intl = useIntl();
   const { rootStyle } = useDashboardTheme();
-
-  const { isDevModeVisible, variables, devModeContent, setDevModeVisibility } =
-    useDevModeContext();
-
+  const { isDevModeVisible, variables, devModeContent, setDevModeVisibility } = useDevModeContext();
   const fetcher = createGraphiQLFetcher({
     url: process.env.API_URI,
     fetch: authorizedFetch,
   });
-
   const overwriteCodeMirrorCSSVariables = {
     __html: `
       .graphiql-container, .CodeMirror-info, .CodeMirror-lint-tooltip, reach-portal{
@@ -50,11 +46,7 @@ export const DevModePanel: React.FC = () => {
         {intl.formatMessage(messages.title)}
       </DialogHeader>
       <DialogContent style={{ padding: 0, margin: 1, overflowY: "auto" }}>
-        <GraphiQL
-          query={devModeContent}
-          variables={variables}
-          fetcher={fetcher}
-        />
+        <GraphiQL query={devModeContent} variables={variables} fetcher={fetcher} />
       </DialogContent>
     </Dialog>
   );

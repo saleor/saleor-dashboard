@@ -6,9 +6,7 @@ export const useConditionalFilterContext = () => {
   const context = useContext(ConditionalFilterContext);
 
   if (!context) {
-    throw new Error(
-      "Filter context must be used within ConditionalFilterContext.Provider.",
-    );
+    throw new Error("Filter context must be used within ConditionalFilterContext.Provider.");
   }
 
   return context;

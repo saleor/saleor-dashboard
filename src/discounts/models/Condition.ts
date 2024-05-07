@@ -16,15 +16,11 @@ export const createEmptyCodition = (): Condition => ({
   value: null,
 });
 
-export const isString = (
-  conditionValue: ConditionValue,
-): conditionValue is string => {
+export const isString = (conditionValue: ConditionValue): conditionValue is string => {
   return typeof conditionValue === "string";
 };
 
-export const isTuple = (
-  conditionValue: ConditionValue,
-): conditionValue is [string, string] => {
+export const isTuple = (conditionValue: ConditionValue): conditionValue is [string, string] => {
   return (
     Array.isArray(conditionValue) &&
     conditionValue.length === 2 &&
@@ -33,8 +29,6 @@ export const isTuple = (
   );
 };
 
-export const isArrayOfOptions = (
-  conditionValue: ConditionValue,
-): conditionValue is Option[] => {
+export const isArrayOfOptions = (conditionValue: ConditionValue): conditionValue is Option[] => {
   return Array.isArray(conditionValue) && !isTuple(conditionValue);
 };

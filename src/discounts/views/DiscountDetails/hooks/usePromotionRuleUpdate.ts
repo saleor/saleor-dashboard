@@ -13,46 +13,42 @@ import { useIntl } from "react-intl";
 export const usePromotionRuleUpdate = (id: string) => {
   const intl = useIntl();
   const notify = useNotifier();
+  const [promotionRuleUpdate, promotionRuleUpdateOpts] = usePromotionRuleUpdateMutation({
+    update(cache, { data }) {
+      if (data?.promotionRuleUpdate?.errors?.length === 0) {
+        const cachedPromotion = cache.readQuery<{
+          promotion: PromotionDetailsFragment;
+        }>({
+          query: PromotionDetailsDocument,
+          variables: {
+            id,
+          },
+        });
 
-  const [promotionRuleUpdate, promotionRuleUpdateOpts] =
-    usePromotionRuleUpdateMutation({
-      update(cache, { data }) {
-        if (data?.promotionRuleUpdate?.errors?.length === 0) {
-          const cachedPromotion = cache.readQuery<{
-            promotion: PromotionDetailsFragment;
-          }>({
-            query: PromotionDetailsDocument,
-            variables: {
-              id,
-            },
-          });
-
-          if (!cachedPromotion?.promotion) {
-            return;
-          }
-
-          cache.writeQuery({
-            query: PromotionDetailsDocument,
-            data: {
-              promotion: {
-                ...cachedPromotion.promotion,
-                rules: sortAPIRules(
-                  updateRulesCache(cachedPromotion.promotion, data),
-                ),
-              },
-            },
-          });
+        if (!cachedPromotion?.promotion) {
+          return;
         }
-      },
-      onCompleted(data) {
-        if (data?.promotionRuleUpdate?.errors?.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-        }
-      },
-    });
+
+        cache.writeQuery({
+          query: PromotionDetailsDocument,
+          data: {
+            promotion: {
+              ...cachedPromotion.promotion,
+              rules: sortAPIRules(updateRulesCache(cachedPromotion.promotion, data)),
+            },
+          },
+        });
+      }
+    },
+    onCompleted(data) {
+      if (data?.promotionRuleUpdate?.errors?.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+      }
+    },
+  });
 
   return {
     promotionRuleUpdate,
@@ -64,8 +60,7 @@ function updateRulesCache(
   cachedPromotion: PromotionDetailsFragment,
   data: PromotionRuleUpdateMutation,
 ) {
-  const cachedRules =
-    cachedPromotion.rules?.filter(byNoUpdatedRules(data)) ?? [];
+  const cachedRules = cachedPromotion.rules?.filter(byNoUpdatedRules(data)) ?? [];
 
   return [
     ...cachedRules,

@@ -36,7 +36,6 @@ export const searchGiftCardTags = gql`
   }
 `;
 
-export default makeTopLevelSearch<
-  SearchGiftCardTagsQuery,
-  SearchGiftCardTagsQueryVariables
->(SearchGiftCardTagsDocument);
+export default makeTopLevelSearch<SearchGiftCardTagsQuery, SearchGiftCardTagsQueryVariables>(
+  SearchGiftCardTagsDocument,
+);

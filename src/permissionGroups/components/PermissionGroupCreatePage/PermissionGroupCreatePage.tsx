@@ -6,11 +6,7 @@ import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
-import {
-  ChannelFragment,
-  PermissionEnum,
-  PermissionGroupErrorFragment,
-} from "@dashboard/graphql";
+import { ChannelFragment, PermissionEnum, PermissionGroupErrorFragment } from "@dashboard/graphql";
 import { FormChange, SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { buttonMessages, sectionNames } from "@dashboard/intl";
@@ -52,9 +48,7 @@ export interface PermissionGroupCreatePageProps {
   onSubmit: (data: PermissionGroupCreateFormData) => SubmitPromise;
 }
 
-export const PermissionGroupCreatePage: React.FC<
-  PermissionGroupCreatePageProps
-> = ({
+export const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
   disabled,
   permissions,
   channels,
@@ -65,12 +59,8 @@ export const PermissionGroupCreatePage: React.FC<
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-
   const formErrors = getFormErrors(["addPermissions"], errors || []);
-  const permissionsError = getPermissionGroupErrorMessage(
-    formErrors.addPermissions,
-    intl,
-  );
+  const permissionsError = getPermissionGroupErrorMessage(formErrors.addPermissions, intl);
 
   return (
     <Form
@@ -91,7 +81,6 @@ export const PermissionGroupCreatePage: React.FC<
             },
           });
         };
-
         const handleHasAllChannelsChange = () => {
           change({
             target: {

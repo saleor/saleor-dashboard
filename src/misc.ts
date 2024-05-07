@@ -34,36 +34,27 @@ import {
   UserError,
 } from "./types";
 
-export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<
-  T,
-  Exclude<keyof T, Keys>
-> &
+export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<T, Exclude<keyof T, Keys>> &
   { [K in Keys]-?: Required<Pick<T, K>> }[Keys];
 
-export type RequireOnlyOne<T, Keys extends keyof T = keyof T> = Pick<
-  T,
-  Exclude<keyof T, Keys>
-> &
+export type RequireOnlyOne<T, Keys extends keyof T = keyof T> = Pick<T, Exclude<keyof T, Keys>> &
   {
-    [K in Keys]-?: Required<Pick<T, K>> &
-      Partial<Record<Exclude<Keys, K>, undefined>>;
+    [K in Keys]-?: Required<Pick<T, K>> & Partial<Record<Exclude<Keys, K>, undefined>>;
   }[Keys];
 
 export function renderCollection<T>(
   collection: T[] | undefined,
-  renderItem: (
-    item: T | undefined,
-    index: number | undefined,
-    collection: T[] | undefined,
-  ) => any,
+  renderItem: (item: T | undefined, index: number | undefined, collection: T[] | undefined) => any,
   renderEmpty?: (collection: T[]) => any,
 ) {
   if (collection === undefined) {
     return renderItem(undefined, undefined, collection);
   }
+
   if (collection.length === 0) {
-    return !!renderEmpty ? renderEmpty(collection) : null;
+    return renderEmpty ? renderEmpty(collection) : null;
   }
+
   return collection.map(renderItem);
 }
 
@@ -71,6 +62,7 @@ export function decimal(value: string | number) {
   if (typeof value === "string") {
     return value === "" ? null : value;
   }
+
   return value;
 }
 
@@ -78,8 +70,7 @@ export function weight(value: string) {
   return value === "" ? null : parseFloat(value);
 }
 
-export const removeDoubleSlashes = (url: string) =>
-  url.replace(/([^:]\/)\/+/g, "$1");
+export const removeDoubleSlashes = (url: string) => url.replace(/([^:]\/)\/+/g, "$1");
 
 export const transformPaymentStatus = (
   status: string,
@@ -127,6 +118,7 @@ export const transformPaymentStatus = (
         status: StatusType.ERROR,
       };
   }
+
   return {
     localized: status,
     status: StatusType.ERROR,
@@ -179,6 +171,7 @@ export const transformOrderStatus = (
         status: StatusType.INFO,
       };
   }
+
   return {
     localized: status,
     status: StatusType.ERROR,
@@ -204,6 +197,7 @@ export function maybe<T>(exp: () => T, d: T): T;
 export function maybe(exp: any, d?: any) {
   try {
     const result = exp();
+
     return result === undefined ? d : result;
   } catch {
     return d;
@@ -217,17 +211,11 @@ export function only<T extends object>(obj: T, key: keyof T): boolean {
 }
 
 export function empty(obj: {}): boolean {
-  return Object.keys(obj).every(
-    key => obj[key as keyof typeof obj] === undefined,
-  );
+  return Object.keys(obj).every(key => obj[key as keyof typeof obj] === undefined);
 }
 
 export function hasErrors(errorList: UserError[] | null): boolean {
-  return !(
-    errorList === undefined ||
-    errorList === null ||
-    errorList.length === 0
-  );
+  return !(errorList === undefined || errorList === null || errorList.length === 0);
 }
 
 export function getMutationState(
@@ -238,11 +226,11 @@ export function getMutationState(
   if (loading) {
     return "loading";
   }
+
   if (called) {
-    return errorList.map(hasErrors).reduce((acc, curr) => acc || curr, false)
-      ? "error"
-      : "success";
+    return errorList.map(hasErrors).reduce((acc, curr) => acc || curr, false) ? "error" : "success";
   }
+
   return "default";
 }
 
@@ -260,7 +248,6 @@ export const extractMutationErrors = async <
   submitPromise: TPromise,
 ): Promise<TErrors> => {
   const result = await submitPromise;
-
   const e = getMutationErrors(result);
 
   return e as TErrors;
@@ -270,6 +257,7 @@ export const hasMutationErrors = (result: FetchResult): boolean => {
   if (!result?.data) {
     return false;
   }
+
   return Object.values(result.data).some(
     ({ errors }: SaleorMutationResult) => errors && errors.length > 0,
   );
@@ -285,29 +273,26 @@ export const getMutationErrors = <
   if (!result?.data) {
     return [] as TErrors;
   }
+
   return Object.values<TData>(result.data).reduce(
     (acc: TErrors[], mut) => [
       ...acc,
       ...(mut.errors || []),
-      ...(mut?.results?.flatMap((res: { errors: TErrors[] }) => res.errors) ||
-        []),
+      ...(mut?.results?.flatMap((res: { errors: TErrors[] }) => res.errors) || []),
     ],
     [] as TErrors[],
   ) as TErrors;
 };
 
-export function getMutationStatus<
-  TData extends Record<string, SaleorMutationResult | any>,
->(opts: MutationResult<TData>): ConfirmButtonTransitionState {
+export function getMutationStatus<TData extends Record<string, SaleorMutationResult | any>>(
+  opts: MutationResult<TData>,
+): ConfirmButtonTransitionState {
   const errors = getMutationErrors(opts);
 
   return getMutationState(opts.called, opts.loading, errors);
 }
 
-export function getMutationProviderData<
-  TData extends object,
-  TVariables extends object,
->(
+export function getMutationProviderData<TData extends object, TVariables extends object>(
   mutateFn: MutationFunction<TData, TVariables>,
   opts: MutationResult<TData> & MutationResultAdditionalProps,
 ): PartialMutationProviderOutput<TData, TVariables> {
@@ -356,13 +341,13 @@ interface User {
   lastName?: string;
 }
 
-export function getUserName(user?: User, returnEmail?: boolean) {
+export function getUserName(user: User | null | undefined, returnEmail?: boolean) {
   return user && (user.email || (user.firstName && user.lastName))
     ? user.firstName && user.lastName
       ? [user.firstName, user.lastName].join(" ")
       : returnEmail
-      ? user.email
-      : user.email.split("@")[0]
+        ? user.email
+        : user.email.split("@")[0]
     : undefined;
 }
 
@@ -384,9 +369,7 @@ export function getUserInitials(user?: User) {
 interface AnyEventWithPropagation {
   stopPropagation: () => void;
 }
-export function stopPropagation<T extends AnyEventWithPropagation>(
-  cb: (event?: T) => void,
-) {
+export function stopPropagation<T extends AnyEventWithPropagation>(cb: (event?: T) => void) {
   return (event: T) => {
     event.stopPropagation();
     cb(event);
@@ -396,9 +379,7 @@ export function stopPropagation<T extends AnyEventWithPropagation>(
 interface AnyEventWithPreventDefault {
   preventDefault: () => void;
 }
-export function preventDefault<T extends AnyEventWithPreventDefault>(
-  cb: (event?: T) => void,
-) {
+export function preventDefault<T extends AnyEventWithPreventDefault>(cb: (event?: T) => void) {
   return (event: T) => {
     event.preventDefault();
     cb(event);
@@ -414,8 +395,10 @@ export function joinDateTime(date: string, time?: string) {
   if (!date) {
     return null;
   }
+
   const setTime = time || "00:00";
   const dateTime = moment(date + " " + setTime).format();
+
   return dateTime;
 }
 
@@ -426,8 +409,10 @@ export function splitDateTime(dateTime: string) {
       time: "",
     };
   }
+
   // Default html input format YYYY-MM-DD HH:mm
   const splitDateTime = moment(dateTime).format("YYYY-MM-DD HH:mm").split(" ");
+
   return {
     date: splitDateTime[0],
     time: splitDateTime[1],
@@ -437,9 +422,11 @@ export function splitDateTime(dateTime: string) {
 export function generateCode(charNum: number) {
   let result = "";
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
   for (let i = 0; i < charNum; i++) {
     result += characters.charAt(Math.floor(Math.random() * characters.length));
   }
+
   return result;
 }
 
@@ -449,7 +436,8 @@ export function isInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
 
 export function findInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
   const match = Object.keys(haystack).find(key => key === needle);
-  if (!!match) {
+
+  if (match) {
     return haystack[needle as keyof TEnum];
   }
 
@@ -469,13 +457,11 @@ export function findValueInEnum<TEnum extends {}>(
   return needle as unknown as TEnum[keyof TEnum];
 }
 
-export function parseBoolean(
-  a: string | undefined,
-  defaultValue: boolean,
-): boolean {
+export function parseBoolean(a: string | undefined, defaultValue: boolean): boolean {
   if (a === undefined) {
     return defaultValue;
   }
+
   return a === "true";
 }
 
@@ -483,19 +469,14 @@ export function capitalize(s: string) {
   return s.charAt(0).toLocaleUpperCase() + s.slice(1);
 }
 
-export function transformFormToAddressInput<T>(
-  address: T & AddressTypeInput,
-): T & AddressInput {
+export function transformFormToAddressInput<T>(address: T & AddressTypeInput): T & AddressInput {
   return {
     ...address,
     country: findInEnum(address.country, CountryCode),
   };
 }
 
-export function getStringOrPlaceholder(
-  s: string | undefined | null,
-  placeholder?: string,
-): string {
+export function getStringOrPlaceholder(s: string | undefined | null, placeholder?: string): string {
   return s || placeholder || "...";
 }
 
@@ -530,9 +511,7 @@ export const transformAddressToAddressInput = (data?: AddressType) => ({
   streetAddress2: data?.streetAddress2 || "",
 });
 
-export function getFullName<T extends { firstName: string; lastName: string }>(
-  data: T,
-) {
+export function getFullName<T extends { firstName: string; lastName: string }>(data: T) {
   if (!data || !data.firstName || !data.lastName) {
     return "";
   }
@@ -545,10 +524,7 @@ export const flatten = (obj: object) => {
   const result = {};
 
   Object.keys(obj).forEach(key => {
-    if (
-      typeof obj[key as keyof typeof obj] === "object" &&
-      obj[key as keyof typeof obj] !== null
-    ) {
+    if (typeof obj[key as keyof typeof obj] === "object" && obj[key as keyof typeof obj] !== null) {
       Object.assign(result, flatten(obj[key as keyof typeof obj]));
     } else {
       result[key as keyof typeof obj] = obj[key as keyof typeof obj];
@@ -575,30 +551,27 @@ export const combinedMultiAutocompleteChoices = (
   choices: MultiAutocompleteChoiceType[],
 ) => uniqBy([...selected, ...choices], "value");
 
-export type WithOptional<T, K extends keyof T> = Omit<T, K> &
-  Partial<Pick<T, K>>;
+export type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
-export const getBySlug = (slugToCompare: string) => (obj: SlugNode) =>
-  obj.slug === slugToCompare;
+export const getBySlug = (slugToCompare: string) => (obj: SlugNode) => obj.slug === slugToCompare;
 
-export const getById = (idToCompare: string) => (obj: Node) =>
-  obj.id === idToCompare;
+export const getById = (idToCompare: string) => (obj: Node) => obj.id === idToCompare;
 
-export const getByUnmatchingId =
-  (idToCompare: string) => (obj: { id: string }) =>
-    obj.id !== idToCompare;
+export const getByUnmatchingId = (idToCompare: string) => (obj: { id: string }) =>
+  obj.id !== idToCompare;
 
-export const findById = <T extends Node>(id: string, list?: T[]) =>
-  list?.find(getById(id));
+export const findById = <T extends Node>(id: string, list?: T[]) => list?.find(getById(id));
 
 export const COLOR_WARNING = "#FBE5AC";
 export const COLOR_WARNING_DARK = "#3E2F0A";
+
+export type PillStatusType = "error" | "warning" | "info" | "success" | "generic";
 
 export const getStatusColor = ({
   status,
   currentTheme,
 }: {
-  status: "error" | "warning" | "info" | "success" | "generic";
+  status: PillStatusType;
   currentTheme: DefaultTheme;
 }) => {
   const statusHue = getStatusHue(status);
@@ -608,13 +581,12 @@ export const getStatusColor = ({
     : hueToPillColorLight(statusHue);
 };
 
-const getStatusHue = (
-  status: "error" | "warning" | "info" | "success" | "generic",
-): number => {
+const getStatusHue = (status: PillStatusType): number => {
   const red = 0;
   const blue = 236;
   const green = 145;
   const yellow = 71;
+
   switch (status) {
     case "error":
       return red;
@@ -631,10 +603,7 @@ const getStatusHue = (
   }
 };
 
-export const getDotColor = (
-  status: DotStatus,
-  themeValues: ThemeTokensValues,
-) => {
+export const getDotColor = (status: DotStatus, themeValues: ThemeTokensValues) => {
   switch (status) {
     case "success":
       // TODO: add this as success2 to MacawUI
@@ -648,14 +617,8 @@ export const getDotColor = (
 
 export const isFirstColumn = (column: number) => [-1, 0].includes(column);
 
-const getAllRemovedRowsBeforeRowIndex = (
-  rowIndex: number,
-  removedRowsIndexs: number[],
-) => removedRowsIndexs.filter(r => r <= rowIndex);
+const getAllRemovedRowsBeforeRowIndex = (rowIndex: number, removedRowsIndexs: number[]) =>
+  removedRowsIndexs.filter(r => r <= rowIndex);
 
-export const getDatagridRowDataIndex = (
-  rowIndex: number,
-  removedRowsIndexs: number[],
-) =>
-  rowIndex +
-  getAllRemovedRowsBeforeRowIndex(rowIndex, removedRowsIndexs).length;
+export const getDatagridRowDataIndex = (rowIndex: number, removedRowsIndexs: number[]) =>
+  rowIndex + getAllRemovedRowsBeforeRowIndex(rowIndex, removedRowsIndexs).length;

@@ -2,10 +2,7 @@
 import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { ProductFragment } from "@dashboard/graphql";
 
-import {
-  getUpdateVariantChannelInputs,
-  getVariantChannelsInputs,
-} from "./channel";
+import { getUpdateVariantChannelInputs, getVariantChannelsInputs } from "./channel";
 
 const channelListings = [
   {
@@ -49,7 +46,6 @@ describe("getUpdateVariantChannelInputs", () => {
         },
       ],
     };
-
     // Act
     const channels = getUpdateVariantChannelInputs(changeData, 1, {
       channelListings,
@@ -71,7 +67,6 @@ describe("getUpdateVariantChannelInputs", () => {
       ],
     });
   });
-
   test("should handle removed channels", () => {
     // Arrange
     const changeData: DatagridChangeOpts = {
@@ -90,7 +85,6 @@ describe("getUpdateVariantChannelInputs", () => {
         },
       ],
     };
-
     // Act
     const channels = getUpdateVariantChannelInputs(changeData, 1, {
       channelListings,
@@ -106,7 +100,6 @@ describe("getUpdateVariantChannelInputs", () => {
       update: [],
     });
   });
-
   test("should handle created channels", () => {
     // Arrange
     const changeData: DatagridChangeOpts = {
@@ -129,7 +122,6 @@ describe("getUpdateVariantChannelInputs", () => {
         },
       ],
     };
-
     // Act
     const channels = getUpdateVariantChannelInputs(changeData, 1, {
       channelListings,
@@ -147,7 +139,6 @@ describe("getUpdateVariantChannelInputs", () => {
       update: [],
     });
   });
-
   test("should return empty arrays when no changes for given row", () => {
     // Arrange
     const changeData: DatagridChangeOpts = {
@@ -165,7 +156,6 @@ describe("getUpdateVariantChannelInputs", () => {
         },
       ],
     };
-
     // Act
     const channels = getUpdateVariantChannelInputs(changeData, 1, {
       channelListings,
@@ -178,7 +168,6 @@ describe("getUpdateVariantChannelInputs", () => {
       update: [],
     });
   });
-
   test("should return empty arrays when no changes for given column", () => {
     // Arrange
     const changeData: DatagridChangeOpts = {
@@ -189,7 +178,6 @@ describe("getUpdateVariantChannelInputs", () => {
         { column: "attribute:2", row: 1, data: { value: { value: "test2" } } },
       ],
     };
-
     // Act
     const channels = getUpdateVariantChannelInputs(changeData, 1, {
       channelListings,
@@ -203,7 +191,6 @@ describe("getUpdateVariantChannelInputs", () => {
     });
   });
 });
-
 describe("getVariantChannelsInputs", () => {
   test("should filter and map change data to channel format", () => {
     // Arrange
@@ -222,7 +209,6 @@ describe("getVariantChannelsInputs", () => {
         },
       ],
     };
-
     // Act
     const channels = getVariantChannelsInputs(changeData, 1);
 
@@ -235,7 +221,6 @@ describe("getVariantChannelsInputs", () => {
       },
     ]);
   });
-
   test("should filter out changes with null prices", () => {
     // Arrange
     const changeData: DatagridChangeOpts = {
@@ -249,14 +234,12 @@ describe("getVariantChannelsInputs", () => {
         },
       ],
     };
-
     // Act
     const channels = getVariantChannelsInputs(changeData, 1);
 
     // Assert
     expect(channels).toEqual([]);
   });
-
   test("should return empty arrays when no changes for given row", () => {
     // Arrange
     const changeData: DatagridChangeOpts = {
@@ -274,14 +257,12 @@ describe("getVariantChannelsInputs", () => {
         },
       ],
     };
-
     // Act
     const channels = getVariantChannelsInputs(changeData, 1);
 
     // Assert
     expect(channels).toEqual([]);
   });
-
   test("should return empty arrays when no changes for given column", () => {
     // Arrange
     const changeData: DatagridChangeOpts = {
@@ -292,7 +273,6 @@ describe("getVariantChannelsInputs", () => {
         { column: "attribute:2", row: 1, data: { value: { value: "test2" } } },
       ],
     };
-
     // Act
     const channels = getVariantChannelsInputs(changeData, 1);
 

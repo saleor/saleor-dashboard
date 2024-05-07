@@ -3,14 +3,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { MenuItemType } from "@dashboard/navigation/components/MenuItemDialog";
 import { RecursiveMenuItem } from "@dashboard/navigation/types";
 import { UniqueIdentifier } from "@dnd-kit/core";
-import {
-  Box,
-  Button,
-  EditIcon,
-  GripIcon,
-  Text,
-  TrashBinIcon,
-} from "@saleor/macaw-ui-next";
+import { Box, Button, EditIcon, GripIcon, Text, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -53,6 +46,7 @@ export const MenuItemsSortableTreeItem = ({
       pointerEvents={disableInteraction ? "none" : undefined}
     >
       <Box
+        data-test-id="menu-item"
         position="relative"
         borderColor="default1"
         borderStyle="solid"
@@ -74,16 +68,21 @@ export const MenuItemsSortableTreeItem = ({
           <Text>{data.name}</Text>
         </Box>
         <Box display="flex" gap={2}>
-          <Button
-            variant="secondary"
-            onClick={() => onClick(getItemId(data), getItemType(data))}
-          >
+          <Button variant="secondary" onClick={() => onClick(getItemId(data), getItemType(data))}>
             <FormattedMessage {...buttonMessages.show} />
           </Button>
-          <Button variant="secondary" onClick={() => onEdit(id)}>
+          <Button
+            data-test-id="edit-menu-item-button"
+            variant="secondary"
+            onClick={() => onEdit(id)}
+          >
             <EditIcon />
           </Button>
-          <Button variant="secondary" onClick={() => onRemove(id)}>
+          <Button
+            data-test-id="remove-menu-item-button"
+            variant="secondary"
+            onClick={() => onRemove(id)}
+          >
             <TrashBinIcon />
           </Button>
         </Box>

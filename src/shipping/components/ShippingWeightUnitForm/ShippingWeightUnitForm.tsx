@@ -44,9 +44,7 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
       confirmLeave
       initial={initialForm}
       onSubmit={formData => {
-        return formData.unit
-          ? onSubmit(formData.unit.value as WeightUnitsEnum)
-          : undefined;
+        return formData.unit ? onSubmit(formData.unit.value as WeightUnitsEnum) : undefined;
       }}
     >
       {({ change, data, submit }) => {
@@ -65,8 +63,7 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
                 onChange={value => change({ target: { name: "unit", value } })}
                 helperText={intl.formatMessage({
                   id: "4Kq3O6",
-                  defaultMessage:
-                    "This unit will be used as default shipping weight",
+                  defaultMessage: "This unit will be used as default shipping weight",
                 })}
               />
             </Box>
@@ -85,5 +82,6 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
     </Form>
   );
 };
+
 ShippingWeightUnitForm.displayName = "ShippingWeightUnitForm";
 export default ShippingWeightUnitForm;

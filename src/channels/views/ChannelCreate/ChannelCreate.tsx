@@ -29,14 +29,12 @@ export const ChannelCreateView = () => {
   const notify = useNotifier();
   const intl = useIntl();
   const shop = useShop();
-
   const handleError = (error: ChannelErrorFragment) => {
     notify({
       status: "error",
       text: getChannelsErrorMessage(error, intl),
     });
   };
-
   const [createChannel, createChannelOpts] = useChannelCreateMutation({
     onCompleted: ({ channelCreate: { errors } }: ChannelCreateMutation) => {
       if (!errors.length) {
@@ -47,11 +45,11 @@ export const ChannelCreateView = () => {
       }
     },
   });
-
   const [reorderChannelWarehouses, reorderChannelWarehousesOpts] =
     useChannelReorderWarehousesMutation({
       onCompleted: data => {
         const errors = data.channelReorderWarehouses.errors;
+
         if (errors.length) {
           errors.forEach(error => handleError(error));
         }
@@ -59,34 +57,36 @@ export const ChannelCreateView = () => {
         navigate(channelPath(data.channelReorderWarehouses.channel?.id));
       },
     });
-
   const saveChannel = useSaveChannel({
     createChannel,
     reorderChannelWarehouses,
   });
-
   const handleSubmit = async ({
+    allocationStrategy,
+    allowUnpaidOrders,
+    currencyCode,
+    defaultCountry,
+    defaultTransactionFlowStrategy,
+    deleteExpiredOrdersAfter,
+    markAsPaidStrategy,
+    name,
     shippingZonesIdsToAdd,
+    slug,
     warehousesIdsToAdd,
     warehousesToDisplay,
-    currencyCode,
-    allocationStrategy,
-    name,
-    slug,
-    defaultCountry,
-    markAsPaidStrategy,
-    deleteExpiredOrdersAfter,
-    allowUnpaidOrders,
   }: FormData) => {
     const input: ChannelCreateInput = {
-      defaultCountry,
       name,
       slug,
+      defaultCountry,
       currencyCode: currencyCode.toUpperCase(),
       addShippingZones: shippingZonesIdsToAdd,
       addWarehouses: warehousesIdsToAdd,
       stockSettings: {
         allocationStrategy,
+      },
+      paymentSettings: {
+        defaultTransactionFlowStrategy,
       },
       orderSettings: {
         markAsPaidStrategy,
@@ -97,7 +97,6 @@ export const ChannelCreateView = () => {
 
     return saveChannel(input, warehousesToDisplay);
   };
-
   const {
     shippingZonesCountData,
     shippingZonesCountLoading,
@@ -105,7 +104,6 @@ export const ChannelCreateView = () => {
     searchShippingZones,
     searchShippingZonesResult,
   } = useShippingZones();
-
   const {
     warehousesCountData,
     warehousesCountLoading,
@@ -113,7 +111,6 @@ export const ChannelCreateView = () => {
     searchWarehouses,
     searchWarehousesResult,
   } = useWarehouses();
-
   const currencyCodeChoices = currencyCodes.data.map(currencyData => ({
     label: intl.formatMessage(
       {
@@ -140,9 +137,7 @@ export const ChannelCreateView = () => {
       />
       <>
         <ChannelDetailsPage
-          allShippingZonesCount={
-            shippingZonesCountData?.shippingZones?.totalCount
-          }
+          allShippingZonesCount={shippingZonesCountData?.shippingZones?.totalCount}
           searchShippingZones={searchShippingZones}
           searchShippingZonesData={searchShippingZonesResult.data}
           fetchMoreShippingZones={getSearchFetchMoreProps(
@@ -152,10 +147,7 @@ export const ChannelCreateView = () => {
           allWarehousesCount={warehousesCountData?.warehouses?.totalCount}
           searchWarehouses={searchWarehouses}
           searchWarehousesData={searchWarehousesResult.data}
-          fetchMoreWarehouses={getSearchFetchMoreProps(
-            searchWarehousesResult,
-            fetchMoreWarehouses,
-          )}
+          fetchMoreWarehouses={getSearchFetchMoreProps(searchWarehousesResult, fetchMoreWarehouses)}
           disabled={
             createChannelOpts.loading ||
             reorderChannelWarehousesOpts.loading ||

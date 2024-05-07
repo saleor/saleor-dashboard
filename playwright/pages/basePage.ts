@@ -11,9 +11,7 @@ export class BasePage {
     readonly pageHeaderStatusInfo = page.getByTestId("status-info"),
     readonly bulkDeleteGridRowsButton = page.getByTestId("bulk-delete-button"),
     readonly gridCanvas = page.locator('[data-testid="data-grid-canvas"]'),
-    readonly gridInput = page
-      .locator('[class="clip-region"]')
-      .locator("textarea"),
+    readonly gridInput = page.locator('[class="clip-region"]').locator("textarea"),
     readonly successBanner = page.locator(LOCATORS.successBanner),
     readonly deleteButton = page.locator(LOCATORS.deleteButton),
     readonly filterButton = page.getByTestId("filters-button"),
@@ -21,17 +19,15 @@ export class BasePage {
     readonly saveButton = page.locator(LOCATORS.saveButton),
     readonly infoBanner = page.locator(LOCATORS.infoBanner),
     readonly loader = page.locator(LOCATORS.loader),
-    readonly previousPagePaginationButton = page.getByTestId(
-      "button-pagination-back",
-    ),
+    readonly previousPagePaginationButton = page.getByTestId("button-pagination-back"),
     readonly rowNumberButton = page.getByTestId("PaginationRowNumberSelect"),
     readonly rowNumberOption = page.getByTestId("rowNumberOption"),
-    readonly nextPagePaginationButton = page.getByTestId(
-      "button-pagination-next",
-    ),
+    readonly nextPagePaginationButton = page.getByTestId("button-pagination-next"),
     readonly searchInputListView = page.getByTestId("search-input"),
     readonly emptyDataGridListView = page.getByTestId("empty-data-grid-text"),
     readonly dialog = page.getByRole("dialog"),
+    readonly giftCardInTable = page.locator('[href*="/dashboard/gift-cards/.*]'),
+    readonly selectAllCheckbox = page.getByTestId("select-all-checkbox").locator("input"),
   ) {
     this.page = page;
   }
@@ -47,8 +43,12 @@ export class BasePage {
     return cellText;
   }
 
+  async selectAll() {
+    await this.selectAllCheckbox.click();
+  }
+
   async clickPaginationRowNumberOption(value: string) {
-    await this.rowNumberOption.filter({hasText: value}).click();
+    await this.rowNumberOption.filter({ hasText: value }).click();
   }
 
   async clickFilterButton() {
@@ -58,73 +58,77 @@ export class BasePage {
   async clickBulkDeleteGridRowsButton() {
     await this.bulkDeleteGridRowsButton.click();
   }
+
   async clickDeleteButton() {
     await this.deleteButton.click();
   }
+
   async typeInSearchOnListView(searchItem: string) {
-    await this.searchInputListView.fill(searchItem);
+    await this.waitForNetworkIdle(async () => {
+      await this.searchInputListView.fill(searchItem);
+      await this.waitForDOMToFullyLoad();
+    });
   }
+
   async clickNextPageButton() {
     await this.nextPagePaginationButton.click();
-    await expect(
-      this.errorBanner,
-      "No error banner should be visible",
-    ).not.toBeVisible();
+    await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
   }
+
   async clickPreviousPageButton() {
     await this.previousPagePaginationButton.click();
-    await expect(
-      this.errorBanner,
-      "No error banner should be visible",
-    ).not.toBeVisible();
+    await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
   }
+
   async clickNumbersOfRowsButton() {
     await this.rowNumberButton.click();
   }
+
   async expectGridToBeAttached() {
     await expect(this.gridCanvas).toBeAttached({
       timeout: 10000,
     });
   }
+
   async clickSaveButton() {
     await this.saveButton.click();
   }
+
   async expectSuccessBannerMessage(msg: string) {
-    await this.successBanner
-      .locator(`text=${msg}`)
-      .waitFor({ state: "visible", timeout: 10000 });
-    await expect(
-      this.errorBanner,
-      "No error banner should be visible",
-    ).not.toBeVisible();
+    await this.successBanner.locator(`text=${msg}`).waitFor({ state: "visible", timeout: 10000 });
+    await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
   }
+
+  async expectErrorBannerMessage(msg: string) {
+    await this.errorBanner.locator(`text=${msg}`).waitFor({ state: "visible", timeout: 10000 });
+  }
+
   async expectSuccessBanner() {
-    await this.successBanner
-      .first()
-      .waitFor({ state: "visible", timeout: 15000 });
-    await expect(
-      this.errorBanner,
-      "No error banner should be visible",
-    ).not.toBeVisible();
+    await this.successBanner.first().waitFor({ state: "visible", timeout: 15000 });
+    await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
   }
+
   async expectInfoBanner() {
     await this.infoBanner.first().waitFor({ state: "visible", timeout: 15000 });
-    await expect(
-      this.errorBanner,
-      "No error banner should be visible",
-    ).not.toBeVisible();
+    await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
   }
-  async waitForNetworkIdle(action: () => Promise<void>) {
-    const responsePromise = this.page.waitForResponse('**/graphql/');
+
+  async waitForNetworkIdle(action: () => Promise<void>, timeoutMs = 60000) {
+    const responsePromise = this.page.waitForResponse("**/graphql/", {
+      timeout: timeoutMs,
+    });
+
     await action();
     await responsePromise;
   }
+
   async resizeWindow(w: number, h: number) {
-    await this.page.setViewportSize({width: w, height: h,});
+    await this.page.setViewportSize({ width: w, height: h });
   }
-  async clickOnSpecificPositionOnPage(x:number, y: number){
-    await this.page.mouse.click(x,y)
-}
+
+  async clickOnSpecificPositionOnPage(x: number, y: number) {
+    await this.page.mouse.click(x, y);
+  }
 
   async getRandomInt(max: number) {
     return Math.floor(Math.random() * (max + 1));
@@ -142,24 +146,17 @@ export class BasePage {
   private async findGridCellBounds(col: number, row: number) {
     return this.gridCanvas.evaluate(
       (node, { col, row }) => {
-        const fiberKey = Object.keys(node).find(
-          x => x && x.includes("__reactFiber"),
-        );
+        const fiberKey = Object.keys(node).find(x => x && x.includes("__reactFiber"));
 
         if (!fiberKey || !node.parentNode) return null;
 
         /*
         We seek over the fiber node (hack), ignore typings for it.
       */
-        const fiberParent = node.parentNode[
-          fiberKey as keyof typeof node.parentNode
-        ] as any;
+        const fiberParent = node.parentNode[fiberKey as keyof typeof node.parentNode] as any;
 
         const bounds: { x: number; y: number; width: number; height: number } =
-          fiberParent.pendingProps.children.props.gridRef.current.getBounds(
-            col,
-            row,
-          );
+          fiberParent.pendingProps.children.props.gridRef.current.getBounds(col, row);
 
         if (!bounds) return null;
 
@@ -175,6 +172,21 @@ export class BasePage {
     );
   }
 
+  async checkGridCellTextAndClick(
+    columnNumber: number,
+    rowsToCheck: number[],
+    listToCheck: string[],
+  ) {
+    const searchResults = [];
+
+    for (let i = 0; i < rowsToCheck.length; i++) {
+      const searchResult = await this.getGridCellText(rowsToCheck[i], columnNumber);
+
+      searchResults.push(searchResult);
+      await expect(searchResult).toEqual(listToCheck[i]);
+      await this.clickGridCell(columnNumber, rowsToCheck[i]);
+    }
+  }
   /*
     Example:
 
@@ -190,37 +202,30 @@ export class BasePage {
   async fillGridCell(col: number, row: number, content: string) {
     const bounds = await this.findGridCellBounds(col, row);
 
-    if (!bounds)
-      throw new Error(`Unable to find cell, col: ${col}, row: ${row}`);
+    if (!bounds) throw new Error(`Unable to find cell, col: ${col}, row: ${row}`);
 
     await this.page.mouse.dblclick(bounds.center.x, bounds.center.y);
     await this.gridInput.waitFor({ state: "attached" });
     await this.gridInput.fill(content);
   }
+
   async clickGridCell(col: number, row: number) {
     const bounds = await this.findGridCellBounds(col, row);
 
-    if (!bounds)
-      throw new Error(`Unable to find cell, col: ${col}, row: ${row}`);
+    if (!bounds) throw new Error(`Unable to find cell, col: ${col}, row: ${row}`);
 
     await this.page.mouse.click(bounds.center.x, bounds.center.y);
   }
 
   async findRowIndexBasedOnText(searchTextArray: string[]) {
-    await this.gridCanvas
-      .locator("table tr")
-      .first()
-      .waitFor({ state: "attached" });
-    let rowIndexes: number[] = [];
+    await this.gridCanvas.locator("table tr").first().waitFor({ state: "attached" });
 
-    const rows = await this.page.$$eval("table tr", rows =>
-      rows.map(row => row.textContent),
-    );
+    const rowIndexes: number[] = [];
+
+    const rows = await this.page.$$eval("table tr", rows => rows.map(row => row.textContent));
 
     for (const searchedText of searchTextArray) {
-      const rowIndex = rows.findIndex(rowText =>
-        rowText!.includes(searchedText),
-      );
+      const rowIndex = rows.findIndex(rowText => rowText!.includes(searchedText));
 
       if (rowIndex !== -1) {
         console.log("Index of row containing text:", rowIndex - 1);
@@ -228,50 +233,70 @@ export class BasePage {
         rowIndexes.push(rowIndex - 1);
       }
     }
+
     return rowIndexes;
   }
 
   // check row on grid list view
   async checkListRowsBasedOnContainingText(searchText: string[]) {
     const rowIndexes = await this.findRowIndexBasedOnText(searchText);
+
     for (const rowIndex of rowIndexes) {
       await this.clickGridCell(0, rowIndex);
     }
     // make sure all searched texts were found and checked
     await expect(searchText.length).toEqual(rowIndexes.length);
   }
+
   async clickListRowBasedOnContainingText(searchText: string) {
     const rowIndex = await this.findRowIndexBasedOnText([searchText]);
+
     await this.clickGridCell(1, rowIndex[0]);
   }
 
-  async expectElementContainsTextFromObjectValues(
-    locator: Locator,
-    object: object,
-  ) {
+  async expectElementContainsTextFromObjectValues(locator: Locator, object: object) {
     const objectValuesArray = await Object.values(object);
+
     for (const objectProperty of objectValuesArray) {
       expect(locator).toContainText(objectProperty);
     }
   }
+
   async getNumberOfGridRowsWithText(expectedText: string) {
     await this.gridCanvas
       .locator("tr")
       .filter({ hasText: expectedText })
       .first()
       .waitFor({ state: "attached", timeout: 10000 });
+
     const gridRowsWithText = await this.gridCanvas
       .locator("tr")
       .filter({ hasText: expectedText })
       .count();
+
     return gridRowsWithText;
   }
+
   async getNumberOfGridRows() {
     await this.gridCanvas.locator("tr").first().waitFor({ state: "attached" });
+
     const gridRowsWithText = await this.gridCanvas.locator("tr").count();
+
     return gridRowsWithText;
   }
+
   async waitForDOMToFullyLoad() {
-    await this.page.waitForLoadState('domcontentloaded', { timeout: 70000 });
+    await this.page.waitForLoadState("domcontentloaded", { timeout: 70000 });
+  }
+
+  async expectElementIsHidden(locator: Locator) {
+    await locator.first().waitFor({
+      state: "hidden",
+      timeout: 30000,
+    });
+  }
+
+  async waitForCanvasContainsText(text: string) {
+    await this.gridCanvas.getByText(text).waitFor({ state: "attached", timeout: 50000 });
   }
 }

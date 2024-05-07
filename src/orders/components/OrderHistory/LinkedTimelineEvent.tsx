@@ -39,12 +39,8 @@ interface LinkedTimelineEventProps {
   hasPlainDate?: boolean;
 }
 
-const LinkedTimelineEvent: React.FC<LinkedTimelineEventProps> = ({
-  event,
-  hasPlainDate,
-}) => {
+const LinkedTimelineEvent: React.FC<LinkedTimelineEventProps> = ({ event, hasPlainDate }) => {
   const intl = useIntl();
-
   const getTitleElements = (): TitleElement[] => {
     const { type, relatedOrder, lines } = event;
 
@@ -63,9 +59,7 @@ const LinkedTimelineEvent: React.FC<LinkedTimelineEventProps> = ({
       case OrderEventsEnum.ORDER_DISCOUNT_DELETED: {
         return [
           {
-            text: intl.formatMessage(
-              discountRemovedMessages.orderDiscountRemoved,
-            ),
+            text: intl.formatMessage(discountRemovedMessages.orderDiscountRemoved),
           },
           getEmployeeNameLink(event),
         ];
@@ -73,10 +67,9 @@ const LinkedTimelineEvent: React.FC<LinkedTimelineEventProps> = ({
       case OrderEventsEnum.ORDER_LINE_DISCOUNT_REMOVED: {
         return [
           {
-            text: intl.formatMessage(
-              discountRemovedMessages.productDiscountRemoved,
-              { productName: lines[0].itemName },
-            ),
+            text: intl.formatMessage(discountRemovedMessages.productDiscountRemoved, {
+              productName: lines[0].itemName,
+            }),
           },
           getEmployeeNameLink(event),
         ];

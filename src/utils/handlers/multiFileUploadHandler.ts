@@ -29,9 +29,8 @@ function createMultiFileUploadHandler<T>(
           onAfterUpload(fileIndex, files);
         }
       } catch (exception) {
-        console.error(
-          `Could not upload file #${fileIndex + 1}. Reason: ${exception}`,
-        );
+        console.error(`Could not upload file #${fileIndex + 1}. Reason: ${exception}`);
+
         if (onError) {
           onError(fileIndex, files);
         }
@@ -40,6 +39,7 @@ function createMultiFileUploadHandler<T>(
       }
     }
   }
+
   return async (files: FileList): Promise<void> => {
     const fileArray = Array.from(files);
 

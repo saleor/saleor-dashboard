@@ -100,18 +100,9 @@ export type MediaTileProps = MediaTileBaseProps &
   );
 
 const MediaTile: React.FC<MediaTileProps> = props => {
-  const {
-    loading,
-    onDelete,
-    onEdit,
-    editHref,
-    media,
-    disableOverlay = false,
-  } = props;
+  const { loading, onDelete, onEdit, editHref, media, disableOverlay = false } = props;
   const classes = useStyles(props);
-  const parsedMediaOembedData = media?.oembedData
-    ? JSON.parse(media.oembedData)
-    : null;
+  const parsedMediaOembedData = media?.oembedData ? JSON.parse(media.oembedData) : null;
   const mediaUrl = parsedMediaOembedData?.thumbnail_url || media.url;
 
   return (
@@ -154,5 +145,6 @@ const MediaTile: React.FC<MediaTileProps> = props => {
     </div>
   );
 };
+
 MediaTile.displayName = "MediaTile";
 export default MediaTile;

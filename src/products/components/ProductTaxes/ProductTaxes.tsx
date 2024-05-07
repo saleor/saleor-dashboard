@@ -19,21 +19,12 @@ interface ProductTaxesProps {
 }
 
 const ProductTaxes: React.FC<ProductTaxesProps> = props => {
-  const {
-    value,
-    disabled,
-    taxClasses,
-    taxClassDisplayName,
-    onChange,
-    onFetchMore,
-  } = props;
+  const { value, disabled, taxClasses, taxClassDisplayName, onChange, onFetchMore } = props;
   const intl = useIntl();
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        {intl.formatMessage(sectionNames.taxes)}
-      </DashboardCard.Title>
+      <DashboardCard.Title>{intl.formatMessage(sectionNames.taxes)}</DashboardCard.Title>
       <DashboardCard.Content>
         <Box data-test-id="taxes">
           <Combobox
@@ -42,7 +33,7 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
               label: choice.name,
               value: choice.id,
             }))}
-            fetchOptions={() => {}}
+            fetchOptions={() => undefined}
             value={
               value
                 ? {
@@ -61,5 +52,6 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
     </DashboardCard>
   );
 };
+
 ProductTaxes.displayName = "ProductTaxes";
 export default ProductTaxes;

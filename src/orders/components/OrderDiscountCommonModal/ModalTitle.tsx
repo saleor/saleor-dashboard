@@ -26,11 +26,7 @@ interface ModalTitleProps {
   withBorder?: boolean;
 }
 
-const ModalTitle: React.FC<ModalTitleProps> = ({
-  title,
-  onClose,
-  withBorder = false,
-}) => {
+const ModalTitle: React.FC<ModalTitleProps> = ({ title, onClose, withBorder = false }) => {
   const classes = useStyles({});
 
   return (

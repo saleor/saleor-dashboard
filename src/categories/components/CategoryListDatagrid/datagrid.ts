@@ -48,13 +48,9 @@ export const createGetCellContent =
       case "name":
         return readonlyTextCell(rowData?.name ?? "");
       case "subcategories":
-        return readonlyTextCell(
-          rowData?.children?.totalCount?.toString() ?? "",
-        );
+        return readonlyTextCell(rowData?.children?.totalCount?.toString() ?? "");
       case "products":
-        return readonlyTextCell(
-          rowData?.products?.totalCount?.toString() ?? "",
-        );
+        return readonlyTextCell(rowData?.products?.totalCount?.toString() ?? "");
       default:
         return readonlyTextCell("", false);
     }

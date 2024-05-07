@@ -9,9 +9,9 @@ export interface TranslationsLanguageListPageProps {
   languages: LanguageFragment[];
 }
 
-const TranslationsLanguageListPage: React.FC<
-  TranslationsLanguageListPageProps
-> = ({ languages }) => {
+const TranslationsLanguageListPage: React.FC<TranslationsLanguageListPageProps> = ({
+  languages,
+}) => {
   const intl = useIntl();
 
   return (
@@ -26,5 +26,6 @@ const TranslationsLanguageListPage: React.FC<
     </>
   );
 };
+
 TranslationsLanguageListPage.displayName = "TranslationsLanguageListPage";
 export default TranslationsLanguageListPage;

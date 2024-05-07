@@ -24,10 +24,7 @@ export const permissionGroupCreate = gql`
 `;
 
 export const permissionGroupUpdate = gql`
-  mutation PermissionGroupUpdate(
-    $id: ID!
-    $input: PermissionGroupUpdateInput!
-  ) {
+  mutation PermissionGroupUpdate($id: ID!, $input: PermissionGroupUpdateInput!) {
     permissionGroupUpdate(id: $id, input: $input) {
       errors {
         ...PermissionGroupError

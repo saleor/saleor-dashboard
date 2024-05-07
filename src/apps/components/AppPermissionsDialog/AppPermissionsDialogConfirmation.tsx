@@ -23,7 +23,6 @@ export const AppPermissionsDialogConfirmation = ({
   const isPermissionsAdded = addedPermissions.length > 0;
   const isPermissionsRemoved = removedPermissions.length > 0;
   const intl = useIntl();
-
   const { mapCodesToNames } = useGetAvailableAppPermissions();
 
   return (

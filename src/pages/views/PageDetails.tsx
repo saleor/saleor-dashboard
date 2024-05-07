@@ -12,10 +12,7 @@ import {
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { AttributeInput } from "@dashboard/components/Attributes";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import {
-  DEFAULT_INITIAL_SEARCH_DATA,
-  VALUES_PAGINATE_BY,
-} from "@dashboard/config";
+import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
   AttributeErrorFragment,
   AttributeValueInput,
@@ -82,21 +79,15 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
   const intl = useIntl();
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
-
   const pageDetails = usePageDetailsQuery({
     variables: {
       id,
       firstValues: VALUES_PAGINATE_BY,
     },
   });
-
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
-
   const [pageUpdate, pageUpdateOpts] = usePageUpdateMutation({});
-
-  const [deleteAttributeValue, deleteAttributeValueOpts] =
-    useAttributeValueDeleteMutation({});
-
+  const [deleteAttributeValue, deleteAttributeValueOpts] = useAttributeValueDeleteMutation({});
   const [pageRemove, pageRemoveOpts] = usePageRemoveMutation({
     onCompleted: data => {
       if (data.pageDelete.errors.length === 0) {
@@ -108,7 +99,6 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
       }
     },
   });
-
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       pageUrl(id, {
@@ -117,37 +107,26 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
         id: attribute.id,
       }),
     );
-
   const handleUpdate = async (data: PageSubmitData) => {
-    let errors: Array<
-      AttributeErrorFragment | UploadErrorFragment | PageErrorFragment
-    > = [];
+    let errors: Array<AttributeErrorFragment | UploadErrorFragment | PageErrorFragment> = [];
 
     const uploadFilesResult = await handleUploadMultipleFiles(
       data.attributesWithNewFileValue,
       variables => uploadFile({ variables }),
     );
-
-    const deleteAttributeValuesResult =
-      await handleDeleteMultipleAttributeValues(
-        data.attributesWithNewFileValue,
-        pageDetails?.data?.page?.attributes,
-        variables => deleteAttributeValue({ variables }),
-      );
-
+    const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
+      data.attributesWithNewFileValue,
+      pageDetails?.data?.page?.attributes,
+      variables => deleteAttributeValue({ variables }),
+    );
     const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
       data.attributesWithNewFileValue,
       uploadFilesResult,
     );
-
     const updateResult = await pageUpdate({
       variables: {
         id,
-        input: createPageInput(
-          data,
-          pageDetails?.data?.page,
-          updatedFileAttributes,
-        ),
+        input: createPageInput(data, pageDetails?.data?.page, updatedFileAttributes),
         firstValues: VALUES_PAGINATE_BY,
       },
     });
@@ -161,14 +140,12 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
 
     return errors;
   };
-
   const handleSubmit = createMetadataUpdateHandler(
     pageDetails.data?.page,
     handleUpdate,
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables }),
   );
-
   const {
     loadMore: loadMorePages,
     search: searchPages,
@@ -189,10 +166,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
     result: searchAttributeValuesOpts,
     reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
-
-  const attributeValues =
-    mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
-
+  const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
   const fetchMoreReferencePages = {
     hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchPagesOpts.loading,
@@ -204,9 +178,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
     onFetchMore: loadMoreProducts,
   };
   const fetchMoreAttributeValues = {
-    hasMore:
-      !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo
-        ?.hasNextPage,
+    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
     loading: !!searchAttributeValuesOpts.loading,
     onFetchMore: loadMoreAttributeValues,
   };
@@ -233,14 +205,10 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
           )
         }
         onSubmit={handleSubmit}
-        assignReferencesAttributeId={
-          params.action === "assign-attribute-value" && params.id
-        }
+        assignReferencesAttributeId={params.action === "assign-attribute-value" && params.id}
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
-        referenceProducts={
-          mapEdgesToItems(searchProductsOpts?.data?.search) || []
-        }
+        referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search) || []}
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}
@@ -268,11 +236,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
             defaultMessage="Are you sure you want to delete {title}?"
             description="delete page"
             values={{
-              title: (
-                <strong>
-                  {getStringOrPlaceholder(pageDetails.data?.page?.title)}
-                </strong>
-              ),
+              title: <strong>{getStringOrPlaceholder(pageDetails.data?.page?.title)}</strong>,
             }}
           />
         </DialogContentText>

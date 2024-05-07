@@ -78,18 +78,10 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
   const intl = useIntl();
   const [, copy] = useClipboard();
   const formErrors = getFormErrors<keyof FormData, ChannelErrorFragment>(
-    [
-      "name",
-      "slug",
-      "currencyCode",
-      "defaultCountry",
-      "deleteExpiredOrdersAfter",
-    ],
+    ["name", "slug", "currencyCode", "defaultCountry", "deleteExpiredOrdersAfter"],
     errors,
   );
-
-  const renderCurrencySelection =
-    currencyCodes && typeof onCurrencyCodeChange === "function";
+  const renderCurrencySelection = currencyCodes && typeof onCurrencyCodeChange === "function";
 
   return (
     <>
@@ -147,10 +139,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
                   "data-test-id": "currency-text-input-helper-text",
                 } as ExtendedFormHelperTextProps
               }
-              helperText={getChannelsErrorMessage(
-                formErrors?.currencyCode,
-                intl,
-              )}
+              helperText={getChannelsErrorMessage(formErrors?.currencyCode, intl)}
               disabled={disabled}
               label={intl.formatMessage(messages.channelCurrency)}
               choices={currencyCodes}
@@ -180,10 +169,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
                 "data-test-id": "country-text-input-helper-text",
               } as ExtendedFormHelperTextProps
             }
-            helperText={getChannelsErrorMessage(
-              formErrors?.defaultCountry,
-              intl,
-            )}
+            helperText={getChannelsErrorMessage(formErrors?.defaultCountry, intl)}
             disabled={disabled}
             label={intl.formatMessage(messages.defaultCountry)}
             choices={countries}
@@ -210,26 +196,26 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
           />
         </Box>
         <MarkAsPaid
-          isDiabled={disabled}
-          isChecked={
-            data.markAsPaidStrategy === MarkAsPaidStrategyEnum.TRANSACTION_FLOW
-          }
+          isChecked={data.markAsPaidStrategy === MarkAsPaidStrategyEnum.TRANSACTION_FLOW}
           onCheckedChange={onMarkAsPaidStrategyChange}
+          hasError={!!formErrors.markAsPaidStrategy}
+          disabled={disabled}
         />
         <Box />
         <AllowUnpaidOrders
           onChange={onChange}
           isChecked={data.allowUnpaidOrders}
           hasError={!!formErrors.allowUnpaidOrders}
+          disabled={disabled}
         />
         <Box />
         <DefaultTransactionFlowStrategy
           onChange={onTransactionFlowStrategyChange}
           isChecked={
-            data.defaultTransactionFlowStrategy ===
-            TransactionFlowStrategyEnum.AUTHORIZATION
+            data.defaultTransactionFlowStrategy === TransactionFlowStrategyEnum.AUTHORIZATION
           }
           hasError={!!formErrors.defaultTransactionFlowStrategy}
+          disabled={disabled}
         />
       </Box>
     </>

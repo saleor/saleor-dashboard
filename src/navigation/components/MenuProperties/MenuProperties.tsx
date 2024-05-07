@@ -16,23 +16,16 @@ export interface MenuPropertiesProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const MenuProperties: React.FC<MenuPropertiesProps> = ({
-  data,
-  disabled,
-  errors,
-  onChange,
-}) => {
+const MenuProperties: React.FC<MenuPropertiesProps> = ({ data, disabled, errors, onChange }) => {
   const intl = useIntl();
-
   const formErrors = getFormErrors(["name"], errors);
 
   return (
     <Card>
-      <CardTitle
-        title={intl.formatMessage(commonMessages.generalInformations)}
-      />
+      <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
       <CardContent>
         <TextField
+          data-test-id="menu-name"
           disabled={disabled}
           error={!!formErrors.name}
           name={"name" as keyof MenuDetailsFormData}
@@ -49,5 +42,6 @@ const MenuProperties: React.FC<MenuPropertiesProps> = ({
     </Card>
   );
 };
+
 MenuProperties.displayName = "MenuProperties";
 export default MenuProperties;

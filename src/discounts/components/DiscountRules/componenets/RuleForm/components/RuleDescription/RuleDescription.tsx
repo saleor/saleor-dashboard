@@ -18,9 +18,7 @@ interface RuleDescriptionProps {
 export const RuleDescription = ({ error = false }: RuleDescriptionProps) => {
   const intl = useIntl();
   const { disabled } = useDiscountRulesContext();
-  const { defaultValue, editorRef, isReadyForMount, handleChange } =
-    useRichTextContext();
-
+  const { defaultValue, editorRef, isReadyForMount, handleChange } = useRichTextContext();
   const { field } = useController<Rule, "description">({
     name: "description",
   });

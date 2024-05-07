@@ -3,9 +3,7 @@ import { PageTypeSortField } from "@dashboard/graphql";
 import { PageTypeListUrlSortField } from "@dashboard/pageTypes/urls";
 import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 
-export function getSortQueryField(
-  sort: PageTypeListUrlSortField,
-): PageTypeSortField {
+export function getSortQueryField(sort: PageTypeListUrlSortField): PageTypeSortField {
   switch (sort) {
     case PageTypeListUrlSortField.name:
       return PageTypeSortField.NAME;
@@ -14,5 +12,4 @@ export function getSortQueryField(
   }
 }
 
-export const getSortQueryVariables =
-  createGetSortQueryVariables(getSortQueryField);
+export const getSortQueryVariables = createGetSortQueryVariables(getSortQueryField);

@@ -7,8 +7,7 @@ export const stockExceededDialogMessages = defineMessages({
     description: "stock exceeded dialog title",
   },
   infoLabel: {
-    defaultMessage:
-      "Stock for items shown below are not enough to prepare fulfillment:",
+    defaultMessage: "Stock for items shown below are not enough to prepare fulfillment:",
     id: "Z7Tf8e",
     description: "stock exceeded dialog description",
   },

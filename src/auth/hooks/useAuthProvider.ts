@@ -12,12 +12,7 @@ import {
   saveCredentials,
 } from "@dashboard/utils/credentialsManagement";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
-import {
-  GetExternalAccessTokenData,
-  LoginData,
-  useAuth,
-  useAuthState,
-} from "@saleor/sdk";
+import { GetExternalAccessTokenData, LoginData, useAuth, useAuthState } from "@saleor/sdk";
 import isEmpty from "lodash/isEmpty";
 import { useEffect, useRef, useState } from "react";
 import { IntlShape } from "react-intl";
@@ -39,19 +34,11 @@ export interface UseAuthProviderOpts {
   apolloClient: ApolloClient<any>;
 }
 
-export function useAuthProvider({
-  intl,
-  notify,
-  apolloClient,
-}: UseAuthProviderOpts): UserContext {
-  const { login, getExternalAuthUrl, getExternalAccessToken, logout } =
-    useAuth();
+export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderOpts): UserContext {
+  const { login, getExternalAuthUrl, getExternalAccessToken, logout } = useAuth();
   const navigate = useNavigator();
   const { authenticated, authenticating, user } = useAuthState();
-  const [requestedExternalPluginId] = useLocalStorage(
-    "requestedExternalPluginId",
-    null,
-  );
+  const [requestedExternalPluginId] = useLocalStorage("requestedExternalPluginId", null);
   const [errors, setErrors] = useState<UserContextError[]>([]);
   const permitCredentialsAPI = useRef(true);
 
@@ -60,13 +47,11 @@ export function useAuthProvider({
       setErrors([]);
     }
   }, [authenticating]);
-
   useEffect(() => {
     if (authenticated) {
       permitCredentialsAPI.current = true;
     }
   }, [authenticated]);
-
   useEffect(() => {
     if (
       !authenticated &&
@@ -86,7 +71,6 @@ export function useAuthProvider({
     // state will cause an error
     fetchPolicy: "cache-and-network",
   });
-
   const handleLoginError = (error: ApolloError) => {
     const parsedErrors = parseAuthError(error);
 
@@ -96,22 +80,17 @@ export function useAuthProvider({
       setErrors(["unknownLoginError"]);
     }
   };
-
   const handleLogout = async () => {
-    const returnTo = urlJoin(
-      window.location.origin,
-      getAppMountUriForRedirect(),
-    );
-
+    const returnTo = urlJoin(window.location.origin, getAppMountUriForRedirect());
     const result = await logout({
       input: JSON.stringify({
         returnTo,
       } as RequestExternalLogoutInput),
     });
-
     // Clear credentials from browser's credential manager only when exist.
     // Chrome 115 crash when calling preventSilentAccess() when no credentials exist.
     const hasCredentials = await checkIfCredentialsExist();
+
     if (isCredentialsManagementAPISupported && !!hasCredentials) {
       navigator.credentials.preventSilentAccess();
     }
@@ -121,7 +100,6 @@ export function useAuthProvider({
     apolloClient.clearStore();
 
     const errors = result?.errors || [];
-
     const externalLogoutUrl = result
       ? JSON.parse(result.data?.externalLogout?.logoutData || null)?.logoutUrl
       : "";
@@ -134,7 +112,6 @@ export function useAuthProvider({
       }
     }
   };
-
   const handleLogin = async (email: string, password: string) => {
     try {
       const result = await login({
@@ -169,11 +146,7 @@ export function useAuthProvider({
       }
     }
   };
-
-  const handleRequestExternalLogin = async (
-    pluginId: string,
-    input: RequestExternalLoginInput,
-  ) => {
+  const handleRequestExternalLogin = async (pluginId: string, input: RequestExternalLoginInput) => {
     const result = await getExternalAuthUrl({
       pluginId,
       input: JSON.stringify(input),
@@ -181,23 +154,18 @@ export function useAuthProvider({
 
     return result?.data?.externalAuthenticationUrl;
   };
-
-  const handleExternalLogin = async (
-    pluginId: string | null,
-    input: ExternalLoginInput,
-  ) => {
+  const handleExternalLogin = async (pluginId: string | null, input: ExternalLoginInput) => {
     if (!pluginId) {
       return;
     }
+
     try {
       const result = await getExternalAccessToken({
         pluginId,
         input: JSON.stringify(input),
       });
 
-      if (
-        isEmpty(result.data?.externalObtainAccessTokens?.user?.userPermissions)
-      ) {
+      if (isEmpty(result.data?.externalObtainAccessTokens?.user?.userPermissions)) {
         setErrors(["noPermissionsError"]);
         await handleLogout();
       }
@@ -222,10 +190,7 @@ export function useAuthProvider({
       }
     }
   };
-
-  const logoutNonStaffUser = async (
-    data: LoginData | GetExternalAccessTokenData,
-  ) => {
+  const logoutNonStaffUser = async (data: LoginData | GetExternalAccessTokenData) => {
     if (data?.user && !data.user.isStaff) {
       notify({
         status: "error",

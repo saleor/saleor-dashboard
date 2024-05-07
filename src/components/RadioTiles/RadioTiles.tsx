@@ -10,18 +10,9 @@ export interface RadioTilesProps {
   onValueChange: (value: string) => void;
 }
 
-const RadioTilesBase = ({
-  children,
-  asChild,
-  value,
-  onValueChange,
-}: RadioTilesProps) => {
+const RadioTilesBase = ({ children, asChild, value, onValueChange }: RadioTilesProps) => {
   return (
-    <RadixRadioGroup.Root
-      asChild={asChild}
-      value={value}
-      onValueChange={onValueChange}
-    >
+    <RadixRadioGroup.Root asChild={asChild} value={value} onValueChange={onValueChange}>
       {children}
     </RadixRadioGroup.Root>
   );

@@ -14,10 +14,7 @@ import {
 
 type Money = OrderPaymentFragment["total"];
 
-export const getTransactionAmount = (
-  money: Money | null,
-  fallbackCurrency: string,
-): Money => {
+export const getTransactionAmount = (money: Money | null, fallbackCurrency: string): Money => {
   if (!money) {
     return {
       currency: fallbackCurrency,
@@ -29,10 +26,7 @@ export const getTransactionAmount = (
   return money;
 };
 
-export const findMethodName = (
-  gatewayId: string,
-  allMethods: PaymentGatewayFragment[],
-): string =>
+export const findMethodName = (gatewayId: string, allMethods: PaymentGatewayFragment[]): string =>
   allMethods.find(method => method.id === gatewayId)?.name ?? gatewayId;
 
 const mapPaymentKindToTransaction = (
@@ -125,10 +119,7 @@ export const mapPaymentToTransactionEvents = (
         __typename: "TransactionFakeEvent" as const,
       };
     })
-    .sort(
-      (a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-    );
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 };
 
 export const mapOrderActionsToTransactionActions = (

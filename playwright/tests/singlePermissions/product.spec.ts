@@ -1,6 +1,6 @@
-import { HomePage } from "@pages/homePage";
 import { CategoriesPage } from "@pages/categoriesPage";
 import { CollectionsPage } from "@pages/collectionsPage";
+import { HomePage } from "@pages/homePage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { ProductPage } from "@pages/productPage";
 import { expect, test } from "@playwright/test";
@@ -20,7 +20,6 @@ test.beforeEach(({ page }) => {
   categoriesPage = new CategoriesPage(page);
   collectionsPage = new CollectionsPage(page);
 });
-
 test("TC: SALEOR_23 User should be able to navigate to product list as a staff member using PRODUCT permission @e2e", async () => {
   await home.goto();
   await home.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });
@@ -29,7 +28,6 @@ test("TC: SALEOR_23 User should be able to navigate to product list as a staff m
   await mainMenuPage.expectMenuItemsCount(6);
   await productPage.expectGridToBeAttached();
 });
-
 test("TC: SALEOR_24 User should be able to navigate to collections list as a staff member using PRODUCT permission @e2e", async () => {
   await home.goto();
   await home.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });
@@ -38,7 +36,6 @@ test("TC: SALEOR_24 User should be able to navigate to collections list as a sta
   await mainMenuPage.expectMenuItemsCount(6);
   await collectionsPage.expectGridToBeAttached();
 });
-
 test("TC: SALEOR_25 User should be able to navigate to categories list as a staff member using PRODUCT permission @e2e", async () => {
   await home.goto();
   await home.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });

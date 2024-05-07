@@ -31,10 +31,7 @@ const GiftCardListSearchAndFilters: React.FC = () => {
   const intl = useIntl();
   const [selectedChannel] = useLocalStorage("channel", "");
   const { availableChannels } = useAppChannel(false);
-  const selectedChannelData = availableChannels.find(
-    channel => channel.slug === selectedChannel,
-  );
-
+  const selectedChannelData = availableChannels.find(channel => channel.slug === selectedChannel);
   const {
     params,
     changeFilters,
@@ -44,19 +41,15 @@ const GiftCardListSearchAndFilters: React.FC = () => {
     getPresetNameToDelete,
     selectedRowIds,
   } = useGiftCardList();
-
   const { onClose, openDeleteDialog } = useGiftCardListDialogs();
-
   const defaultSearchVariables = {
     variables: { ...DEFAULT_INITIAL_SEARCH_DATA, first: 5 },
   };
-
   const {
     loadMore: fetchMoreCustomers,
     search: searchCustomers,
     result: searchCustomersResult,
   } = useCustomerSearch(defaultSearchVariables);
-
   const {
     loadMore: fetchMoreProducts,
     search: searchProducts,
@@ -68,16 +61,13 @@ const GiftCardListSearchAndFilters: React.FC = () => {
       channel: selectedChannel,
     },
   });
-
   const {
     loadMore: fetchMoreGiftCardTags,
     search: searchGiftCardTags,
     result: searchGiftCardTagsResult,
   } = useGiftCardTagsSearch(defaultSearchVariables);
-
   const { data: giftCardCurrenciesData, loading: loadingGiftCardCurrencies } =
     useGiftCardCurrenciesQuery();
-
   const filterOpts = getFilterOpts({
     params,
     productSearchProps: {
@@ -93,19 +83,11 @@ const GiftCardListSearchAndFilters: React.FC = () => {
     },
     customers: mapEdgesToItems(searchCustomersResult?.data?.search),
     tagSearchProps: {
-      ...getSearchFetchMoreProps(
-        searchGiftCardTagsResult,
-        fetchMoreGiftCardTags,
-      ),
+      ...getSearchFetchMoreProps(searchGiftCardTagsResult, fetchMoreGiftCardTags),
       onSearchChange: searchGiftCardTags,
     },
-    tags: compact(
-      mapEdgesToItems(searchGiftCardTagsResult?.data?.search)?.map(
-        ({ name }) => name,
-      ),
-    ),
+    tags: compact(mapEdgesToItems(searchGiftCardTagsResult?.data?.search)?.map(({ name }) => name)),
   });
-
   const filterStructure = createFilterStructure(intl, filterOpts);
 
   return (
@@ -131,10 +113,7 @@ const GiftCardListSearchAndFilters: React.FC = () => {
               <>
                 <GiftCardListBulkActions />
                 <BulkDeleteButton onClick={openDeleteDialog}>
-                  <FormattedMessage
-                    defaultMessage="Delete gift cards"
-                    id="d68yq7"
-                  />
+                  <FormattedMessage defaultMessage="Delete gift cards" id="d68yq7" />
                 </BulkDeleteButton>
               </>
             )}

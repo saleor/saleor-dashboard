@@ -51,6 +51,7 @@ export enum ListViews {
   PRODUCT_DETAILS = "PRODUCT_DETAILS",
   VOUCHER_CODES = "VOUCHER_CODES",
   ORDER_REFUNDS = "ORDER_REFUNDS",
+  ORDER_TRANSACTION_REFUNDS = "ORDER_TRANSACTION_REFUNDS",
 }
 
 export interface ListProps<TColumns extends string = string> {
@@ -90,14 +91,12 @@ export interface ListActionsWithoutToolbar {
   isChecked: (id: string) => boolean | undefined;
   selected: number;
 }
-export type TabListActions<TToolbars extends string> =
-  ListActionsWithoutToolbar &
-    Record<TToolbars, React.ReactNode | React.ReactNodeArray>;
+export type TabListActions<TToolbars extends string> = ListActionsWithoutToolbar &
+  Record<TToolbars, React.ReactNode | React.ReactNodeArray>;
 export interface ListActions extends ListActionsWithoutToolbar {
   toolbar: React.ReactNode | React.ReactNodeArray;
 }
-export interface PageListProps<TColumns extends string = string>
-  extends ListProps<TColumns> {
+export interface PageListProps<TColumns extends string = string> extends ListProps<TColumns> {
   defaultSettings?: ListSettings<TColumns>;
 }
 
@@ -114,10 +113,8 @@ export interface FilterPageProps<TKeys extends string, TOpts extends {}>
   filterOpts: TOpts;
 }
 
-export interface FilterPagePropsWithPresets<
-  TKeys extends string,
-  TOpts extends {},
-> extends FilterProps<TKeys>,
+export interface FilterPagePropsWithPresets<TKeys extends string, TOpts extends {}>
+  extends FilterProps<TKeys>,
     SearchPageProps,
     FilterPresetsProps {
   filterOpts: TOpts;
@@ -153,10 +150,7 @@ export interface ChannelProps {
   selectedChannelId: string;
 }
 
-export interface PartialMutationProviderOutput<
-  TData extends {} = {},
-  TVariables extends {} = {},
-> {
+export interface PartialMutationProviderOutput<TData extends {} = {}, TVariables extends {} = {}> {
   opts: MutationResult<TData> & MutationResultAdditionalProps;
   mutate: (variables: TVariables) => Promise<FetchResult<TData>>;
 }
@@ -183,9 +177,7 @@ export type Dialog<TDialog extends string> = Partial<{
 export type ActiveTab<TTab extends string = string> = Partial<{
   activeTab: TTab;
 }>;
-export type Filters<TFilters extends string> = Partial<
-  Record<TFilters, string>
->;
+export type Filters<TFilters extends string> = Partial<Record<TFilters, string>>;
 export type FiltersWithMultipleValues<TFilters extends string> = Partial<
   Record<TFilters, string[]>
 >;
@@ -244,9 +236,7 @@ export interface FilterOpts<T> {
   value: T;
 }
 
-export interface AutocompleteFilterOpts
-  extends Partial<FetchMoreProps>,
-    Partial<SearchPageProps> {
+export interface AutocompleteFilterOpts extends Partial<FetchMoreProps>, Partial<SearchPageProps> {
   choices: MultiAutocompleteChoiceType[];
   displayValues: MultiAutocompleteChoiceType[];
 }
@@ -260,5 +250,8 @@ export enum StatusType {
   SUCCESS = "success",
 }
 
-export type RelayToFlat<T extends { edges: Array<{ node: any }> } | null> =
-  T extends { edges: Array<{ node: infer U }> } ? U[] : null;
+export type RelayToFlat<T extends { edges: Array<{ node: any }> } | null> = T extends {
+  edges: Array<{ node: infer U }>;
+}
+  ? U[]
+  : null;

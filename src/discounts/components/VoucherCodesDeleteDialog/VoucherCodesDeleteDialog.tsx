@@ -16,7 +16,6 @@ export const VoucherCodesDeleteDialog = ({
   onDelete,
 }: VoucherCodesDeleteDialogProps) => {
   const intl = useIntl();
-
   const handleSubmit = async () => {
     onDelete();
     onClose();
@@ -41,9 +40,7 @@ export const VoucherCodesDeleteDialog = ({
             {intl.formatMessage(buttonMessages.back)}
           </Button>
 
-          <Button onClick={handleSubmit}>
-            {intl.formatMessage(buttonMessages.delete)}
-          </Button>
+          <Button onClick={handleSubmit}>{intl.formatMessage(buttonMessages.delete)}</Button>
         </DashboardModal.Actions>
       </DashboardModal.Content>
     </DashboardModal>

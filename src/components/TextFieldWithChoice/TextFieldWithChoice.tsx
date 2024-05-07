@@ -40,11 +40,9 @@ const useStyles = makeStyles(
   },
   { name: "TextFieldWithChoice" },
 );
-
 const TextFieldWithChoice: React.FC<TextFieldWithChoiceProps> = props => {
   const { ChoiceProps, InputProps, onChange, ...rest } = props;
   const classes = useStyles(props);
-
   const anchor = React.useRef<HTMLDivElement>();
 
   return (
@@ -55,10 +53,7 @@ const TextFieldWithChoice: React.FC<TextFieldWithChoiceProps> = props => {
         ...InputProps,
         endAdornment: (
           <MenuToggle ariaOwns="user-menu">
-            {({
-              open: menuOpen,
-              actions: { open: openMenu, close: closeMenu },
-            }) => {
+            {({ open: menuOpen, actions: { open: openMenu, close: closeMenu } }) => {
               const handleSelect = value => {
                 onChange({
                   target: {
@@ -93,17 +88,11 @@ const TextFieldWithChoice: React.FC<TextFieldWithChoiceProps> = props => {
                       <Grow
                         {...TransitionProps}
                         style={{
-                          transformOrigin:
-                            placement === "bottom"
-                              ? "right top"
-                              : "right bottom",
+                          transformOrigin: placement === "bottom" ? "right top" : "right bottom",
                         }}
                       >
                         <Paper>
-                          <ClickAwayListener
-                            onClickAway={closeMenu}
-                            mouseEvent="onClick"
-                          >
+                          <ClickAwayListener onClickAway={closeMenu} mouseEvent="onClick">
                             <Menu>
                               {ChoiceProps.values.map(choice => (
                                 <MenuItem

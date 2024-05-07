@@ -34,10 +34,7 @@ export const MenuItemsSortableTree = ({
         borderBottomStyle="solid"
       >
         <Text>
-          <FormattedMessage
-            id="WwZfNK"
-            defaultMessage="Add new menu item to begin creating menu"
-          />
+          <FormattedMessage id="WwZfNK" defaultMessage="Add new menu item to begin creating menu" />
         </Text>
       </Box>
     );

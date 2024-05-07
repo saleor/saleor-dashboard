@@ -23,15 +23,7 @@ export interface MenuItemsProps {
 }
 
 const MenuItems: React.FC<MenuItemsProps> = props => {
-  const {
-    canUndo,
-    items,
-    onChange,
-    onItemAdd,
-    onItemClick,
-    onItemEdit,
-    onUndo,
-  } = props;
+  const { canUndo, items, onChange, onItemAdd, onItemClick, onItemEdit, onUndo } = props;
   const intl = useIntl();
   const currentTree = useMemo(() => items.map(getNodeData), [items]);
 
@@ -44,33 +36,27 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
             defaultMessage: "Menu Items",
             description: "header",
           })}
-          <Button disabled={!canUndo} onClick={onUndo}>
+          <Button disabled={!canUndo} onClick={onUndo} data-test-id="undo-button">
             <FormattedMessage {...buttonMessages.undo} />
           </Button>
         </Box>
       </DashboardCard.Title>
       <DashboardCard.Content>
-        <Box backgroundColor="default1" marginBottom={4}>
+        <Box data-test-id="menu-items-list" backgroundColor="default1" marginBottom={4}>
           {items === undefined ? (
             <Skeleton />
           ) : (
             <MenuItemsSortableTree
               items={items}
               onChange={newTree => onChange(getDiff(currentTree, newTree))}
-              onItemRemove={id =>
-                onChange([{ id: id.toString(), type: "remove" }])
-              }
+              onItemRemove={id => onChange([{ id: id.toString(), type: "remove" }])}
               onItemClick={onItemClick}
               onItemEdit={onItemEdit}
             />
           )}
         </Box>
 
-        <Button
-          onClick={onItemAdd}
-          variant="secondary"
-          data-test-id="create-new-menu-item"
-        >
+        <Button onClick={onItemAdd} variant="secondary" data-test-id="create-new-menu-item">
           <FormattedMessage
             id="Uf3oHA"
             defaultMessage="Create new item"
@@ -81,5 +67,6 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
     </DashboardCard>
   );
 };
+
 MenuItems.displayName = "MenuItems";
 export default MenuItems;

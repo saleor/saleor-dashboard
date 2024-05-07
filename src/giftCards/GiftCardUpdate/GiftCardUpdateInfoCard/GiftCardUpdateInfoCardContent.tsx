@@ -22,22 +22,10 @@ import { giftCardUpdateInfoCardMessages as messages } from "./messages";
 const GiftCardUpdateInfoCardContent: React.FC = () => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
-
   const { giftCard } = useGiftCardDetails();
-
-  const {
-    created,
-    createdByEmail,
-    createdBy,
-    usedByEmail,
-    usedBy,
-    product,
-    events,
-  } = giftCard;
-
+  const { created, createdByEmail, createdBy, usedByEmail, usedBy, product, events } = giftCard;
   const cardIssuedEvent = events.find(getByType(GiftCardEventsEnum.ISSUED));
   const cardBoughtEvent = events.find(getByType(GiftCardEventsEnum.BOUGHT));
-
   const getBuyerFieldData = (): {
     label: MessageDescriptor;
     name: string;
@@ -78,7 +66,6 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
       url: customerUrl(createdBy?.id),
     };
   };
-
   const getOrderData = () => {
     if (cardIssuedEvent) {
       const { orderId, orderNumber } = cardIssuedEvent;
@@ -104,13 +91,7 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
 
     return null;
   };
-
-  const {
-    label: buyerLabelMessage,
-    name: buyerName,
-    url: buyerUrl,
-  } = getBuyerFieldData();
-
+  const { label: buyerLabelMessage, name: buyerName, url: buyerUrl } = getBuyerFieldData();
   const orderData = getOrderData();
 
   return (
@@ -136,20 +117,14 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
       <CardSpacer />
 
       <Label text={intl.formatMessage(buyerLabelMessage)} />
-      {buyerUrl ? (
-        <Link href={buyerUrl}>{buyerName}</Link>
-      ) : (
-        <Typography>{buyerName}</Typography>
-      )}
+      {buyerUrl ? <Link href={buyerUrl}>{buyerName}</Link> : <Typography>{buyerName}</Typography>}
       <CardSpacer />
 
       <Label text={intl.formatMessage(messages.usedByLabel)} />
       {usedBy ? (
         <Link href={customerUrl(usedBy.id)}>{getFullName(usedBy)}</Link>
       ) : (
-        <Typography>
-          {getStringOrPlaceholder(usedByEmail, PLACEHOLDER)}
-        </Typography>
+        <Typography>{getStringOrPlaceholder(usedByEmail, PLACEHOLDER)}</Typography>
       )}
     </>
   );

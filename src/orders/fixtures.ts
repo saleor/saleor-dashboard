@@ -15,6 +15,7 @@ import {
   OrderEventsEnum,
   OrderFulfillLineFragment,
   OrderGrantedRefundFragment,
+  OrderGrantedRefundStatusEnum,
   OrderListQuery,
   OrderPaymentFragment,
   OrderSettingsFragment,
@@ -34,19 +35,14 @@ import {
 } from "@dashboard/graphql";
 import { staffMember } from "@dashboard/staff/fixtures";
 import { RelayToFlat } from "@dashboard/types";
-import {
-  warehouseForPickup,
-  warehouseList,
-} from "@dashboard/warehouses/fixtures";
+import { warehouseForPickup, warehouseList } from "@dashboard/warehouses/fixtures";
 import { MessageDescriptor } from "react-intl";
 
 import { transformOrderStatus, transformPaymentStatus } from "../misc";
 
 export const MOCK_PAYMENT_GATEWAY_ID = "saleor.dummy.payment";
 
-export const prepareMoney = (
-  amount?: number,
-): OrderDetailsQuery["order"]["totalAuthorized"] => ({
+export const prepareMoney = (amount?: number): OrderDetailsQuery["order"]["totalAuthorized"] => ({
   __typename: "Money",
   amount: amount ?? ORDER_AMOUNT,
   currency: "USD",
@@ -80,28 +76,28 @@ export const shop: OrderDetailsQuery["shop"] = {
 
 export const clients: RelayToFlat<SearchCustomersQuery["search"]> = [
   {
-    __typename: "User" as "User",
+    __typename: "User" as const,
     email: "test.client1@example.com",
     firstName: "John",
     id: "c1",
     lastName: "Doe",
   },
   {
-    __typename: "User" as "User",
+    __typename: "User" as const,
     email: "test.client2@example.com",
     firstName: "Dough",
     id: "c2",
     lastName: "Jones",
   },
   {
-    __typename: "User" as "User",
+    __typename: "User" as const,
     email: "test.client3@example.com",
     firstName: "Jonas",
     id: "c3",
     lastName: "Dough",
   },
   {
-    __typename: "User" as "User",
+    __typename: "User" as const,
     email: "test.client4@example.com",
     firstName: "Bill",
     id: "c4",
@@ -915,17 +911,10 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
 
 export const ORDER_AMOUNT = 234.93;
 
-export const order = (
-  placeholder: string,
-): OrderDetailsWithMetadataFragment => ({
+export const order = (placeholder: string): OrderDetailsWithMetadataFragment => ({
   __typename: "Order",
   giftCards: [],
-  actions: [
-    OrderAction.CAPTURE,
-    OrderAction.MARK_AS_PAID,
-    OrderAction.REFUND,
-    OrderAction.VOID,
-  ],
+  actions: [OrderAction.CAPTURE, OrderAction.MARK_AS_PAID, OrderAction.REFUND, OrderAction.VOID],
   shippingMethods: [
     {
       __typename: "ShippingMethod",
@@ -1025,6 +1014,7 @@ export const order = (
         __typename: "App",
         name: "Testapp",
         appUrl: "https://www.google.com/",
+        brand: null,
       },
       user: {
         __typename: "User",
@@ -1032,6 +1022,7 @@ export const order = (
         firstName: "John",
         id: "QWRkcmVzczoxNQ==",
         lastName: "Doe",
+        avatar: null,
       },
     },
     {
@@ -1080,6 +1071,7 @@ export const order = (
         __typename: "App",
         name: "Testapp",
         appUrl: "https://www.google.com/",
+        brand: null,
       },
       user: {
         __typename: "User",
@@ -1087,6 +1079,7 @@ export const order = (
         firstName: "Jane",
         id: "QWRkcmVzczoxNQ==",
         lastName: "Doe",
+        avatar: null,
       },
     },
     {
@@ -1238,7 +1231,7 @@ export const order = (
               },
             ],
             thumbnail: {
-              __typename: "Image" as "Image",
+              __typename: "Image" as const,
               url: placeholder,
             },
             totalPrice: {
@@ -1368,7 +1361,7 @@ export const order = (
               },
             ],
             thumbnail: {
-              __typename: "Image" as "Image",
+              __typename: "Image" as const,
               url: placeholder,
             },
             totalPrice: {
@@ -1504,7 +1497,7 @@ export const order = (
         },
       ],
       thumbnail: {
-        __typename: "Image" as "Image",
+        __typename: "Image" as const,
         url: placeholder,
       },
       totalPrice: {
@@ -1617,7 +1610,7 @@ export const order = (
         },
       ],
       thumbnail: {
-        __typename: "Image" as "Image",
+        __typename: "Image" as const,
         url: placeholder,
       },
       totalPrice: {
@@ -1817,10 +1810,8 @@ export const order = (
   transactions: orderTransactions,
 });
 
-export const draftOrder = (
-  placeholder: string,
-): OrderDetailsWithMetadataFragment => ({
-  __typename: "Order" as "Order",
+export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragment => ({
+  __typename: "Order" as const,
   giftCards: [],
   actions: [OrderAction.CAPTURE],
   shippingMethods: [],
@@ -1875,7 +1866,7 @@ export const draftOrder = (
   isShippingRequired: false,
   lines: [
     {
-      __typename: "OrderLine" as "OrderLine",
+      __typename: "OrderLine" as const,
       id: "T3JkZXJMaW5lOjQ1",
       isShippingRequired: false,
       productName: "Davis Group (Hard)",
@@ -1897,7 +1888,7 @@ export const draftOrder = (
         },
       ],
       thumbnail: {
-        __typename: "Image" as "Image",
+        __typename: "Image" as const,
         url: placeholder,
       },
       totalPrice: {
@@ -1936,14 +1927,14 @@ export const draftOrder = (
       unitDiscountType: null,
       unitDiscountValue: 0,
       unitPrice: {
-        __typename: "TaxedMoney" as "TaxedMoney",
+        __typename: "TaxedMoney" as const,
         gross: {
-          __typename: "Money" as "Money",
+          __typename: "Money" as const,
           amount: 65.95,
           currency: "USD",
         },
         net: {
-          __typename: "Money" as "Money",
+          __typename: "Money" as const,
           amount: 65.95,
           currency: "USD",
         },
@@ -1988,7 +1979,7 @@ export const draftOrder = (
       },
     },
     {
-      __typename: "OrderLine" as "OrderLine",
+      __typename: "OrderLine" as const,
       id: "T3JkZXJMaW5lOjQ2",
       isShippingRequired: false,
       productName: "Anderson PLC (15-1337)",
@@ -2010,7 +2001,7 @@ export const draftOrder = (
         },
       ],
       thumbnail: {
-        __typename: "Image" as "Image",
+        __typename: "Image" as const,
         url: placeholder,
       },
       totalPrice: {
@@ -2049,14 +2040,14 @@ export const draftOrder = (
       unitDiscountType: null,
       unitDiscountValue: 0,
       unitPrice: {
-        __typename: "TaxedMoney" as "TaxedMoney",
+        __typename: "TaxedMoney" as const,
         gross: {
-          __typename: "Money" as "Money",
+          __typename: "Money" as const,
           amount: 68.2,
           currency: "USD",
         },
         net: {
-          __typename: "Money" as "Money",
+          __typename: "Money" as const,
           amount: 68.2,
           currency: "USD",
         },
@@ -2111,41 +2102,41 @@ export const draftOrder = (
   collectionPointName: null,
   deliveryMethod: null,
   shippingPrice: {
-    __typename: "TaxedMoney" as "TaxedMoney",
+    __typename: "TaxedMoney" as const,
     gross: {
-      __typename: "Money" as "Money",
+      __typename: "Money" as const,
       amount: 0,
       currency: "USD",
     },
   },
   status: "DRAFT" as OrderStatus.DRAFT,
   subtotal: {
-    __typename: "TaxedMoney" as "TaxedMoney",
+    __typename: "TaxedMoney" as const,
     gross: {
-      __typename: "Money" as "Money",
+      __typename: "Money" as const,
       amount: 168.3,
       currency: "USD",
     },
     net: {
-      __typename: "Money" as "Money",
+      __typename: "Money" as const,
       amount: 168.3,
       currency: "USD",
     },
   },
   total: {
-    __typename: "TaxedMoney" as "TaxedMoney",
+    __typename: "TaxedMoney" as const,
     gross: {
-      __typename: "Money" as "Money",
+      __typename: "Money" as const,
       amount: 168.3,
       currency: "USD",
     },
     net: {
-      __typename: "Money" as "Money",
+      __typename: "Money" as const,
       amount: 100,
       currency: "USD",
     },
     tax: {
-      __typename: "Money" as "Money",
+      __typename: "Money" as const,
       amount: 68.3,
       currency: "USD",
     },
@@ -2153,7 +2144,7 @@ export const draftOrder = (
   totalAuthorized: prepareMoney(234.93),
   totalCaptured: prepareMoney(0),
   totalBalance: {
-    __typename: "Money" as "Money",
+    __typename: "Money" as const,
     amount: 168.3,
     currency: "USD",
   },
@@ -2200,9 +2191,7 @@ export const flatOrders = orders.map(order => ({
   } as any),
 }));
 
-export const fulfillOrderLine = (
-  placeholderImage: string,
-): OrderFulfillLineFragment => ({
+export const fulfillOrderLine = (placeholderImage: string): OrderFulfillLineFragment => ({
   __typename: "OrderLine",
   id: "T3JkZXJMaW5lOjIz",
   isShippingRequired: false,
@@ -2223,7 +2212,7 @@ export const fulfillOrderLine = (
     },
   ],
   thumbnail: {
-    __typename: "Image" as "Image",
+    __typename: "Image" as const,
     url: placeholderImage,
   },
   variant: {
@@ -2279,16 +2268,16 @@ export const orderLineSearch = (
   placeholderImage: string,
 ): RelayToFlat<SearchOrderVariantQuery["search"]> => [
   {
-    __typename: "Product" as "Product",
+    __typename: "Product" as const,
     id: "UHJvZHVjdDo3Mg==",
     name: "Apple Juice",
     thumbnail: {
-      __typename: "Image" as "Image",
+      __typename: "Image" as const,
       url: placeholderImage,
     },
     variants: [
       {
-        __typename: "ProductVariant" as "ProductVariant",
+        __typename: "ProductVariant" as const,
         id: "UHJvZHVjdFZhcmlhbnQ6MjAy",
         name: "500ml",
         sku: "93855755",
@@ -2314,7 +2303,7 @@ export const orderLineSearch = (
         },
       },
       {
-        __typename: "ProductVariant" as "ProductVariant",
+        __typename: "ProductVariant" as const,
         id: "UHJvZHVjdFZhcmlhbnQ6MjAz",
         name: "1l",
         sku: "43226647",
@@ -2340,7 +2329,7 @@ export const orderLineSearch = (
         },
       },
       {
-        __typename: "ProductVariant" as "ProductVariant",
+        __typename: "ProductVariant" as const,
         id: "UHJvZHVjdFZhcmlhbnQ6MjA0",
         name: "2l",
         sku: "80884671",
@@ -2368,16 +2357,16 @@ export const orderLineSearch = (
     ],
   },
   {
-    __typename: "Product" as "Product",
+    __typename: "Product" as const,
     id: "UHJvZHVjdDo3NQ==",
     name: "Pineapple Juice",
     thumbnail: {
-      __typename: "Image" as "Image",
+      __typename: "Image" as const,
       url: placeholderImage,
     },
     variants: [
       {
-        __typename: "ProductVariant" as "ProductVariant",
+        __typename: "ProductVariant" as const,
         id: "UHJvZHVjdFZhcmlhbnQ6MjEx",
         name: "500ml",
         sku: "43200242",
@@ -2403,7 +2392,7 @@ export const orderLineSearch = (
         },
       },
       {
-        __typename: "ProductVariant" as "ProductVariant",
+        __typename: "ProductVariant" as const,
         id: "UHJvZHVjdFZhcmlhbnQ6MjEy",
         name: "1l",
         sku: "79129513",
@@ -2429,7 +2418,7 @@ export const orderLineSearch = (
         },
       },
       {
-        __typename: "ProductVariant" as "ProductVariant",
+        __typename: "ProductVariant" as const,
         id: "UHJvZHVjdFZhcmlhbnQ6MjEz",
         name: "2l",
         sku: "75799450",
@@ -3354,6 +3343,8 @@ export const grantedRefunds: OrderGrantedRefundFragment[] = [
     user: null,
     createdAt: "2022-08-22T10:40:22.226875+00:00",
     __typename: "OrderGrantedRefund",
+    status: OrderGrantedRefundStatusEnum.SUCCESS,
+    transactionEvents: null,
   },
   {
     id: "12344",
@@ -3371,5 +3362,7 @@ export const grantedRefunds: OrderGrantedRefundFragment[] = [
     },
     createdAt: "2022-08-22T10:40:22.226875+00:00",
     __typename: "OrderGrantedRefund",
+    status: OrderGrantedRefundStatusEnum.SUCCESS,
+    transactionEvents: null,
   },
 ];

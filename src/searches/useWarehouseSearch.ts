@@ -29,7 +29,6 @@ export const searchWarehouses = gql`
   }
 `;
 
-export default makeTopLevelSearch<
-  SearchWarehousesQuery,
-  SearchWarehousesQueryVariables
->(SearchWarehousesDocument);
+export default makeTopLevelSearch<SearchWarehousesQuery, SearchWarehousesQueryVariables>(
+  SearchWarehousesDocument,
+);

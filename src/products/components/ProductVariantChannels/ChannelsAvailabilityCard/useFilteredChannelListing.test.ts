@@ -5,7 +5,6 @@ describe("useFilteredChannelListing", () => {
     // Arrange
     const allAvailableListings = [{ id: "1" }, { id: "2" }];
     const channelListing = null;
-
     // Act
     const result = useFilteredChannelListing({
       allAvailableListings,
@@ -15,7 +14,6 @@ describe("useFilteredChannelListing", () => {
     // Assert
     expect(result).toEqual([]);
   });
-
   it("should return array with filtered channel listings", () => {
     // Arrange
     const allAvailableListings = [{ id: "1" }, { id: "2" }, { id: "3" }];
@@ -24,7 +22,6 @@ describe("useFilteredChannelListing", () => {
       { channel: { id: "3" } },
       { channel: { id: "4" } },
     ];
-
     // Act
     const result = useFilteredChannelListing({
       allAvailableListings,
@@ -32,9 +29,6 @@ describe("useFilteredChannelListing", () => {
     });
 
     // Assert
-    expect(result).toEqual([
-      { channel: { id: "1" } },
-      { channel: { id: "3" } },
-    ]);
+    expect(result).toEqual([{ channel: { id: "1" } }, { channel: { id: "3" } }]);
   });
 });

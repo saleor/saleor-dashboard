@@ -3,10 +3,7 @@ import { IntlShape } from "react-intl";
 
 import getAccountErrorMessage from "./account";
 
-function getStaffErrorMessage(
-  err: StaffErrorFragment,
-  intl: IntlShape,
-): string | undefined {
+function getStaffErrorMessage(err: StaffErrorFragment, intl: IntlShape): string | undefined {
   return getAccountErrorMessage(err, intl);
 }
 

@@ -16,13 +16,13 @@ export interface NumberCellProps {
   readonly options?: {
     format?: "number" | "percent";
     hasFloatingPoint?: boolean;
+    cursor?: "pointer" | "default";
   };
 }
 
 export type NumberCell = CustomCell<NumberCellProps>;
 
-const onlyDigitsRegExp = /^\d+$/;
-const flaotingPointDigits = /^[0-9]+[.,]?[0-9]+$/;
+const floatOrDigits = /^\d+$|^[0-9]+[.,]?[0-9]+$/;
 
 const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
   value: cell,
@@ -35,9 +35,7 @@ const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
         ...cell,
         data: {
           ...cell.data,
-          value: event.target.value
-            ? parseFloat(event.target.value)
-            : numberCellEmptyValue,
+          value: event.target.value ? parseFloat(event.target.value) : numberCellEmptyValue,
         },
       })
     }
@@ -46,19 +44,18 @@ const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
   />
 );
 
-export const numberCellRenderer = (
-  locale: Locale,
-): CustomRenderer<NumberCell> => ({
+export const numberCellRenderer = (locale: Locale): CustomRenderer<NumberCell> => ({
   kind: GridCellKind.Custom,
   isMatch: (c): c is NumberCell => (c.data as any).kind === "number-cell",
   draw: (args, cell) => {
     const { ctx, theme, rect } = args;
     const { value, options } = cell.data;
-    let formatted =
-      value === numberCellEmptyValue ? "-" : value.toLocaleString(locale);
+    let formatted = value === numberCellEmptyValue ? "-" : value.toLocaleString(locale);
+
     if (options?.format === "percent") {
       formatted += "%";
     }
+
     ctx.fillStyle = theme.textDark;
     ctx.textAlign = "right";
     ctx.fillText(
@@ -82,16 +79,11 @@ export const numberCellRenderer = (
     }),
   }),
   onPaste: (value, data) => {
-    const testRegExp = data.options?.hasFloatingPoint
-      ? flaotingPointDigits
-      : onlyDigitsRegExp;
-    if (!testRegExp.test(value)) {
-      return undefined;
-    }
+    const isValueValid = floatOrDigits.test(value);
 
     return {
       ...data,
-      value: value ? parseFloat(value) : numberCellEmptyValue,
+      value: isValueValid ? parseFloat(value) : numberCellEmptyValue,
     };
   },
 });

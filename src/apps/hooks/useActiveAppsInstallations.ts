@@ -36,22 +36,18 @@ function useActiveAppsInstallations({
     Array<Record<"id" | "name", string>>
   >("activeInstallations", []);
   const intervalId = useRef<null | number>(null);
-
   const refetchExtensionList = () => {
     client.refetchQueries({
       include: [EXTENSION_LIST_QUERY],
     });
   };
-
   const removeInstallation = (id: string) =>
-    setActiveInstallations(installations =>
-      installations.filter(item => item.id !== id),
-    );
-
+    setActiveInstallations(installations => installations.filter(item => item.id !== id));
   const [retryInstallApp, retryInstallAppOpts] = useAppRetryInstallMutation({
     onCompleted: data => {
       if (!data?.appRetryInstall?.errors?.length) {
         const appInstallation = data.appRetryInstall?.appInstallation;
+
         if (appInstallation) {
           setActiveInstallations(installations => [
             ...installations,
@@ -64,21 +60,16 @@ function useActiveAppsInstallations({
       }
     },
   });
-
-  const handleAppInstallRetry = (id: string) =>
-    retryInstallApp({ variables: { id } });
-
-  const [deleteInProgressApp, deleteInProgressAppOpts] =
-    useAppDeleteFailedInstallationMutation({
-      onCompleted: data => {
-        if (!data?.appDeleteFailedInstallation?.errors?.length) {
-          removeInProgressAppNotify();
-          appsInProgressRefetch();
-          onRemoveInProgressAppSuccess();
-        }
-      },
-    });
-
+  const handleAppInstallRetry = (id: string) => retryInstallApp({ variables: { id } });
+  const [deleteInProgressApp, deleteInProgressAppOpts] = useAppDeleteFailedInstallationMutation({
+    onCompleted: data => {
+      if (!data?.appDeleteFailedInstallation?.errors?.length) {
+        removeInProgressAppNotify();
+        appsInProgressRefetch();
+        onRemoveInProgressAppSuccess();
+      }
+    },
+  });
   const handleRemoveInProgress = (id: string) =>
     deleteInProgressApp({
       variables: {
@@ -93,9 +84,8 @@ function useActiveAppsInstallations({
     () =>
       appsInProgressData?.appsInstallations?.forEach(app => {
         if (app.status === JobStatusEnum.PENDING) {
-          const item = activeInstallations.find(
-            installation => installation.id === app.id,
-          );
+          const item = activeInstallations.find(installation => installation.id === app.id);
+
           if (!item) {
             setActiveInstallations(installations => [
               ...installations,
@@ -109,7 +99,6 @@ function useActiveAppsInstallations({
       }),
     [appsInProgressData],
   );
-
   /**
    * Fetch active installations to make its status in localStorage up to date.
    */
@@ -122,6 +111,7 @@ function useActiveAppsInstallations({
         }, 2000);
       }
     }
+
     if (!activeInstallations.length && intervalId.current) {
       clearInterval(intervalId.current);
       intervalId.current = null;
@@ -134,16 +124,18 @@ function useActiveAppsInstallations({
       }
     };
   }, [activeInstallations.length, appsInProgressData]);
-
   /**
    * Do what is needed and call chaange handlers when installation status changes.
    */
   useEffect(() => {
     const appsInProgress = appsInProgressData?.appsInstallations || [];
+
     if (activeInstallations.length && !!appsInProgressData) {
       let newAppInstalled = false;
+
       activeInstallations.forEach(installation => {
         const item = appsInProgress?.find(app => app.id === installation.id);
+
         if (!item) {
           removeInstallation(installation.id);
           installedAppNotify(installation.name);
@@ -160,6 +152,7 @@ function useActiveAppsInstallations({
           onInstallError(item);
         }
       });
+
       if (newAppInstalled) {
         refetchExtensionList();
       }

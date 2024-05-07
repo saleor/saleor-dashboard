@@ -7,8 +7,7 @@ export const changeWarehouseDialogMessages = defineMessages({
     description: "change warehouse dialog title",
   },
   dialogDescription: {
-    defaultMessage:
-      "Choose warehouse from which you want to fulfill {productName}",
+    defaultMessage: "Choose warehouse from which you want to fulfill {productName}",
     id: "Ila7WO",
     description: "change warehouse dialog description",
   },

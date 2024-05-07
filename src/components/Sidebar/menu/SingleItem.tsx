@@ -1,7 +1,4 @@
-import {
-  extensionMountPoints,
-  useExtensions,
-} from "@dashboard/apps/hooks/useExtensions";
+import { extensionMountPoints, useExtensions } from "@dashboard/apps/hooks/useExtensions";
 import { Box, List, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -16,13 +13,14 @@ interface Props {
 export const SingleItem: React.FC<Props> = ({ menuItem }) => {
   const extensions = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);
   const active = isMenuActive(location.pathname, menuItem);
-
   const handleMenuItemClick = () => {
     const extension = getMenuItemExtension(extensions, menuItem.id);
+
     if (extension) {
       extension.open();
     }
   };
+
   return (
     <List.Item
       borderRadius={3}

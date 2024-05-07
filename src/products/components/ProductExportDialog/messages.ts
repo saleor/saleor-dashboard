@@ -21,7 +21,6 @@ export const productExportDialogMessages = defineMessages({
 
 function useProductExportFieldMessages() {
   const intl = useIntl();
-
   const messages = {
     [ProductFieldEnum.CATEGORY]: intl.formatMessage({
       id: "KupNHw",

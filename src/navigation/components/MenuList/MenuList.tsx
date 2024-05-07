@@ -18,10 +18,7 @@ import { DeleteIcon, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-export interface MenuListProps
-  extends ListProps,
-    ListActions,
-    SortPage<MenuListUrlSortField> {
+export interface MenuListProps extends ListProps, ListActions, SortPage<MenuListUrlSortField> {
   menus: MenuFragment[];
   onDelete: (id: string) => void;
 }
@@ -49,9 +46,7 @@ const useStyles = makeStyles(
   }),
   { name: "MenuList" },
 );
-
 const numberOfColumns = 4;
-
 const MenuList: React.FC<MenuListProps> = props => {
   const {
     settings,
@@ -67,7 +62,6 @@ const MenuList: React.FC<MenuListProps> = props => {
     toggleAll,
     toolbar,
   } = props;
-
   const classes = useStyles(props);
 
   return (
@@ -83,9 +77,7 @@ const MenuList: React.FC<MenuListProps> = props => {
         >
           <TableCellHeader
             direction={
-              sort.sort === MenuListUrlSortField.name
-                ? getArrowDirection(sort.asc)
-                : undefined
+              sort.sort === MenuListUrlSortField.name ? getArrowDirection(sort.asc) : undefined
             }
             arrowPosition="right"
             onClick={() => onSort(MenuListUrlSortField.name)}
@@ -95,9 +87,7 @@ const MenuList: React.FC<MenuListProps> = props => {
           </TableCellHeader>
           <TableCellHeader
             direction={
-              sort.sort === MenuListUrlSortField.items
-                ? getArrowDirection(sort.asc)
-                : undefined
+              sort.sort === MenuListUrlSortField.items ? getArrowDirection(sort.asc) : undefined
             }
             textAlign="right"
             onClick={() => onSort(MenuListUrlSortField.items)}
@@ -120,7 +110,7 @@ const MenuList: React.FC<MenuListProps> = props => {
             />
           </TableRowLink>
         </TableFooter>
-        <TableBody>
+        <TableBody data-test-id="navigation-menu-list">
           {renderCollection(
             menus,
             menu => {
@@ -128,6 +118,7 @@ const MenuList: React.FC<MenuListProps> = props => {
 
               return (
                 <TableRowLink
+                  data-test-id="navigation-menu"
                   hover={!!menu}
                   key={menu ? menu.id : "skeleton"}
                   href={menu && menuUrl(menu.id)}
@@ -142,14 +133,11 @@ const MenuList: React.FC<MenuListProps> = props => {
                       onChange={() => toggle(menu.id)}
                     />
                   </TableCell>
-                  <TableCell className={classes.colTitle}>
+                  <TableCell className={classes.colTitle} data-test-id="menu-name">
                     {maybe<React.ReactNode>(() => menu.name, <Skeleton />)}
                   </TableCell>
                   <TableCell className={classes.colItems}>
-                    {maybe<React.ReactNode>(
-                      () => menu.items.length,
-                      <Skeleton />,
-                    )}
+                    {maybe<React.ReactNode>(() => menu.items.length, <Skeleton />)}
                   </TableCell>
                   <TableButtonWrapper>
                     <IconButtonTableCell
@@ -166,10 +154,7 @@ const MenuList: React.FC<MenuListProps> = props => {
             () => (
               <TableRowLink>
                 <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage
-                    id="DWs4ba"
-                    defaultMessage="No menus found"
-                  />
+                  <FormattedMessage id="DWs4ba" defaultMessage="No menus found" />
                 </TableCell>
               </TableRowLink>
             ),
@@ -179,5 +164,6 @@ const MenuList: React.FC<MenuListProps> = props => {
     </Card>
   );
 };
+
 MenuList.displayName = "MenuList";
 export default MenuList;

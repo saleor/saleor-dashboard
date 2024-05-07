@@ -30,9 +30,7 @@ import ChannelsSection from "./channels";
 import { channelsSection } from "./channels/urls";
 import CollectionSection from "./collections";
 import AppLayout from "./components/AppLayout";
-import useAppChannel, {
-  AppChannelProvider,
-} from "./components/AppLayout/AppChannelContext";
+import useAppChannel, { AppChannelProvider } from "./components/AppLayout/AppChannelContext";
 import { DateProvider } from "./components/Date";
 import { DevModeProvider } from "./components/DevModePanel/DevModeProvider";
 import ErrorPage from "./components/ErrorPage";
@@ -48,7 +46,6 @@ import ConfigurationSection from "./configuration";
 import { getConfigMenuItemsPermissions } from "./configuration/utils";
 import AppStateProvider from "./containers/AppState";
 import BackgroundTasksProvider from "./containers/BackgroundTasks";
-import ServiceWorker from "./containers/ServiceWorker/ServiceWorker";
 import CustomAppsSection from "./custom-apps";
 import { CustomAppSections } from "./custom-apps/urls";
 import { CustomerSection } from "./customers";
@@ -95,6 +92,7 @@ const handleLegacyTheming = () => {
 
   if (activeTheme === "defaultDark") {
     localStorage.setItem("macaw-ui-theme", "dark");
+
     return;
   }
 
@@ -107,15 +105,11 @@ const App: React.FC = () => (
   <SaleorProvider client={saleorClient}>
     <ApolloProvider client={apolloClient}>
       <BrowserRouter basename={getAppMountUri()}>
-        <LegacyThemeProvider
-          overrides={themeOverrides}
-          palettes={paletteOverrides}
-        >
+        <LegacyThemeProvider overrides={themeOverrides} palettes={paletteOverrides}>
           <ThemeProvider>
             <DateProvider>
               <LocaleProvider>
                 <MessageManagerProvider>
-                  <ServiceWorker />
                   <BackgroundTasksProvider>
                     <AppStateProvider>
                       <AuthProvider>
@@ -144,20 +138,14 @@ const App: React.FC = () => (
     </ApolloProvider>
   </SaleorProvider>
 );
-
 const Routes: React.FC = () => {
   const intl = useIntl();
   const [, dispatchAppState] = useAppState();
   const { authenticated, authenticating } = useAuthRedirection();
-
   const { channel } = useAppChannel(false);
-
   const channelLoaded = typeof channel !== "undefined";
-
   const homePageLoaded = channelLoaded && authenticated;
-
   const homePageLoading = (authenticated && !channelLoaded) || authenticating;
-
   const { isAppPath } = useLocationState();
 
   return (
@@ -244,9 +232,7 @@ const Routes: React.FC = () => {
                     component={ProductSection}
                   />
                   <SectionRoute
-                    permissions={[
-                      PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
-                    ]}
+                    permissions={[PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES]}
                     path="/product-types"
                     component={ProductTypesSection}
                   />

@@ -22,11 +22,7 @@ import { getSortParams } from "@dashboard/utils/sort";
 import React from "react";
 
 import PluginsListPage from "../../components/PluginsListPage/PluginsListPage";
-import {
-  pluginListUrl,
-  PluginListUrlDialog,
-  PluginListUrlQueryParams,
-} from "../../urls";
+import { pluginListUrl, PluginListUrlDialog, PluginListUrlQueryParams } from "../../urls";
 import {
   deleteFilterTab,
   getActiveFilters,
@@ -45,9 +41,7 @@ interface PluginsListProps {
 
 export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
   const navigate = useNavigator();
-  const { updateListSettings, settings } = useListSettings(
-    ListViews.PLUGINS_LIST,
-  );
+  const { updateListSettings, settings } = useListSettings(ListViews.PLUGINS_LIST);
 
   usePaginationReset(pluginListUrl, params, settings.rowNumber);
 
@@ -64,24 +58,18 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
     displayLoader: true,
     variables: queryVariables,
   });
-
   const tabs = getFilterTabs();
-
   const currentTab = getFiltersCurrentTab(params, tabs);
-
-  const [changeFilters, resetFilters, handleSearchChange] =
-    createFilterHandlers({
-      createUrl: pluginListUrl,
-      getFilterQueryParam,
-      navigate,
-      params,
-    });
-
+  const [changeFilters, resetFilters, handleSearchChange] = createFilterHandlers({
+    createUrl: pluginListUrl,
+    getFilterQueryParam,
+    navigate,
+    params,
+  });
   const [openModal, closeModal] = createDialogActionHandlers<
     PluginListUrlDialog,
     PluginListUrlQueryParams
   >(navigate, pluginListUrl, params);
-
   const handleTabChange = (tab: number) => {
     navigate(
       pluginListUrl({
@@ -90,26 +78,21 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
       }),
     );
   };
-
   const handleFilterTabDelete = () => {
     deleteFilterTab(currentTab);
     navigate(pluginListUrl());
   };
-
   const handleFilterTabSave = (data: SaveFilterTabDialogFormData) => {
     saveFilterTab(data.name, getActiveFilters(params));
     handleTabChange(tabs.length + 1);
   };
-
   const paginationValues = usePaginator({
     pageInfo: maybe(() => data.plugins.pageInfo),
     paginationState,
     queryString: params,
   });
-
   const handleSort = createSortHandler(navigate, pluginListUrl, params);
   const channelsSearchWithLoadMoreProps = useChannelsSearchWithLoadMore();
-
   const filterOpts = getFilterOpts(params, channelsSearchWithLoadMoreProps);
 
   return (

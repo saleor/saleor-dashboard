@@ -1,4 +1,1 @@
-export type VoucherCodesUrlDialog =
-  | "delete-codes"
-  | "multiple-codes"
-  | "single-codes";
+export type VoucherCodesUrlDialog = "delete-codes" | "multiple-codes" | "single-codes";

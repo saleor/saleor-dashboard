@@ -64,9 +64,7 @@ export const ChannelPermission = ({
               disabled={disabled}
               options={channelsChoices}
               label={intl.formatMessage(messages.selectChannels)}
-              value={channelsChoices.filter(channel =>
-                selectedChannels.includes(channel.value),
-              )}
+              value={channelsChoices.filter(channel => selectedChannels.includes(channel.value))}
               placeholder={intl.formatMessage(messages.searchChannels)}
               onChange={values => {
                 onChannelChange({

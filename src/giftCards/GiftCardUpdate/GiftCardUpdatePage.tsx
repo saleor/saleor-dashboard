@@ -17,13 +17,11 @@ import useGiftCardUpdateForm from "./providers/GiftCardUpdateFormProvider/hooks/
 const GiftCardUpdatePage: React.FC = () => {
   const { openDeleteDialog } = useGiftCardUpdateDialogs();
   const navigate = useNavigator();
-
   const {
     submit,
     data,
     handlers: { changeMetadata },
   } = useGiftCardUpdateForm();
-
   const {
     opts: { loading: loadingUpdate, status },
   } = useGiftCardUpdate();

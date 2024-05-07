@@ -29,26 +29,16 @@ interface OrderFulfillLineProps {
 }
 
 export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
-  const { line, lineIndex, formsetData, formsetChange, onWarehouseChange } =
-    props;
+  const { line, lineIndex, formsetData, formsetChange, onWarehouseChange } = props;
   const classes = useStyles();
   const intl = useIntl();
-
   const isDeletedVariant = !line?.variant;
   const isPreorder = !!line.variant?.preorder;
-  const lineFormQuantity = isPreorder
-    ? 0
-    : formsetData[lineIndex]?.value?.[0]?.quantity;
+  const lineFormQuantity = isPreorder ? 0 : formsetData[lineIndex]?.value?.[0]?.quantity;
   const lineFormWarehouse = formsetData[lineIndex]?.value?.[0]?.warehouse;
-
   const overfulfill = lineFormQuantity > line.quantityToFulfill;
-
-  const warehouseStock = getWarehouseStock(
-    line?.variant?.stocks,
-    lineFormWarehouse?.id,
-  );
+  const warehouseStock = getWarehouseStock(line?.variant?.stocks, lineFormWarehouse?.id);
   const availableQuantity = getOrderLineAvailableQuantity(line, warehouseStock);
-
   const isStockExceeded = lineFormQuantity > availableQuantity;
 
   if (!line) {
@@ -90,9 +80,7 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
                 <Tooltip.Arrow />
                 <Box __maxWidth={350}>
                   {intl.formatMessage(
-                    isPreorder
-                      ? messages.preorderWarning
-                      : messages.deletedVariantWarning,
+                    isPreorder ? messages.preorderWarning : messages.deletedVariantWarning,
                   )}
                 </Box>
               </Tooltip.Content>
@@ -117,8 +105,7 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
             type="number"
             inputProps={{
               className: clsx(classes.quantityInnerInput, {
-                [classes.quantityInnerInputNoRemaining]:
-                  !line.variant?.trackInventory,
+                [classes.quantityInnerInputNoRemaining]: !line.variant?.trackInventory,
               }),
               min: 0,
               style: { textAlign: "right" },
@@ -143,20 +130,14 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
                   }),
               },
               endAdornment: (
-                <div className={classes.remainingQuantity}>
-                  / {line.quantityToFulfill}
-                </div>
+                <div className={classes.remainingQuantity}>/ {line.quantityToFulfill}</div>
               ),
             }}
           />
         </TableCell>
       )}
       <TableCell className={classes.colStock} key="total">
-        {lineFormWarehouse
-          ? isPreorder || isDeletedVariant
-            ? undefined
-            : availableQuantity
-          : "-"}
+        {lineFormWarehouse ? (isPreorder || isDeletedVariant ? undefined : availableQuantity) : "-"}
       </TableCell>
       <TableCell className={classes.colWarehouse}>
         {isPreorder ? (
@@ -172,8 +153,7 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
           >
             <div className={classes.warehouseButtonContent}>
               <Typography className={classes.warehouseButtonContentText}>
-                {lineFormWarehouse?.name ??
-                  intl.formatMessage(messages.selectWarehouse)}
+                {lineFormWarehouse?.name ?? intl.formatMessage(messages.selectWarehouse)}
               </Typography>
               <ChevronIcon />
             </div>

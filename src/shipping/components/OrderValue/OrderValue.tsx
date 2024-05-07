@@ -7,11 +7,7 @@ import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { ShippingChannelsErrorFragment } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
-import {
-  ChannelError,
-  getFormChannelError,
-  getFormChannelErrors,
-} from "@dashboard/utils/errors";
+import { ChannelError, getFormChannelError, getFormChannelErrors } from "@dashboard/utils/errors";
 import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
 import { Card, TableBody, TableCell, Typography } from "@material-ui/core";
 import React from "react";
@@ -118,14 +114,8 @@ export const OrderValue: React.FC<OrderValueProps> = ({
             </TableHead>
             <TableBody>
               {channels?.map(channel => {
-                const minError = getFormChannelError(
-                  formErrors.minimumOrderPrice,
-                  channel.id,
-                );
-                const maxError = getFormChannelError(
-                  formErrors.maximumOrderPrice,
-                  channel.id,
-                );
+                const minError = getFormChannelError(formErrors.minimumOrderPrice, channel.id);
+                const maxError = getFormChannelError(formErrors.maximumOrderPrice, channel.id);
 
                 return (
                   <TableRowLink key={channel.id}>
@@ -150,9 +140,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                           })
                         }
                         currencySymbol={channel.currency}
-                        hint={
-                          minError && getShippingErrorMessage(minError, intl)
-                        }
+                        hint={minError && getShippingErrorMessage(minError, intl)}
                       />
                     </TableCell>
                     <TableCell className={classes.price}>
@@ -174,9 +162,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                           })
                         }
                         currencySymbol={channel.currency}
-                        hint={
-                          maxError && getShippingErrorMessage(maxError, intl)
-                        }
+                        hint={maxError && getShippingErrorMessage(maxError, intl)}
                       />
                     </TableCell>
                   </TableRowLink>

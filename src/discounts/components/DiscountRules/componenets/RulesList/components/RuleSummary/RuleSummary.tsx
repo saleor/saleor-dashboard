@@ -26,9 +26,7 @@ export const RuleSummary = ({ rule, currencySymbol }: RuleSummaryProps) => {
         <FormattedMessage
           {...messages.ruleSummaryWithComplexConditions}
           values={{
-            value: (
-              <RuleValueChips rule={rule} currencySymbol={currencySymbol} />
-            ),
+            value: <RuleValueChips rule={rule} currencySymbol={currencySymbol} />,
             unknown: <RuleUnknownChips />,
             channel: <RuleChannelChips channel={rule.channel} />,
           }}
@@ -43,9 +41,7 @@ export const RuleSummary = ({ rule, currencySymbol }: RuleSummaryProps) => {
         <FormattedMessage
           {...messages.ruleSummaryWithoutConditions}
           values={{
-            value: (
-              <RuleValueChips rule={rule} currencySymbol={currencySymbol} />
-            ),
+            value: <RuleValueChips rule={rule} currencySymbol={currencySymbol} />,
             channel: <RuleChannelChips channel={rule.channel} />,
           }}
         />
@@ -59,9 +55,7 @@ export const RuleSummary = ({ rule, currencySymbol }: RuleSummaryProps) => {
         {...messages.ruleSummary}
         values={{
           value: <RuleValueChips rule={rule} currencySymbol={currencySymbol} />,
-          conditions: (
-            <RuleConditionsChips rule={rule} currencySymbol={currencySymbol} />
-          ),
+          conditions: <RuleConditionsChips rule={rule} currencySymbol={currencySymbol} />,
           channel: <RuleChannelChips channel={rule.channel} />,
         }}
       />

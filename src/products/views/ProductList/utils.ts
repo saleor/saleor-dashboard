@@ -38,10 +38,7 @@ export const getProductKindOpts = (
   });
 
 export const getProductGiftCardFilterParam = (productKind?: string) => {
-  if (
-    productKind === undefined ||
-    !isInEnum(productKind, ProductTypeKindEnum)
-  ) {
+  if (productKind === undefined || !isInEnum(productKind, ProductTypeKindEnum)) {
     return null;
   }
 
@@ -63,8 +60,7 @@ export const getNextUniqueTabName = (name: string, avialabeNames: string[]) => {
 export const getActiveTabIndexAfterTabDelete = (
   currentTab: number,
   tabIndexToDelete: number,
-): string =>
-  tabIndexToDelete < currentTab ? `${currentTab - 1}` : `${currentTab}`;
+): string => (tabIndexToDelete < currentTab ? `${currentTab - 1}` : `${currentTab}`);
 
 export const obtainChannelFromFilter = (valueProvider: FilterValueProvider) => {
   const channelToken = valueProvider.getTokenByName("channel");

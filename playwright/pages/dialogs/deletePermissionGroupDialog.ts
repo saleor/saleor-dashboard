@@ -8,8 +8,7 @@ export class DeletePermissionGroupDialog {
     readonly deleteButton = page.getByTestId("submit"),
     readonly deleteDialog = page.getByRole("dialog").getByText("Delete Permission Group"),
     readonly deleteDialogContent = page.getByTestId("permission-group-delete-dialog-text"),
-
-     ) {
+  ) {
     this.page = page;
   }
 

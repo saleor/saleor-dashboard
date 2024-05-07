@@ -39,7 +39,7 @@
     "@material-ui/styles": "^4.11.4",
     "@reach/auto-id": "^0.16.0",
     "@saleor/macaw-ui": "npm:@saleor/macaw-ui@0.7.4",
-    "@saleor/macaw-ui-next": "npm:@saleor/macaw-ui@1.1.3",
+    "@saleor/macaw-ui-next": "npm:@saleor/macaw-ui@1.1.4",
     "@saleor/sdk": "0.6.0",
     "@sentry/react": "^7.83.0",
     "@sentry/vite-plugin": "^2.15.0",
@@ -58,6 +58,7 @@
     "debug": "^4.3.4",
     "downshift": "^6.1.7",
     "editorjs-inline-tool": "^0.4.0",
+    "eslint-plugin-prettier": "^5.1.3",
     "faker": "^5.1.0",
     "fast-array-diff": "^0.2.0",
     "find-test-names": "^1.17.1",
@@ -163,15 +164,10 @@
     "esbuild-loader": "^2.18.0",
     "eslint": "^8.43.0",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-config-standard-with-typescript": "^35.0.0",
     "eslint-nibble": "^8.1.0",
-    "eslint-plugin-cypress": "^2.11.2",
     "eslint-plugin-formatjs": "^4.10.3",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-local-rules": "^0.1.1",
-    "eslint-plugin-n": "^15.7.0",
-    "eslint-plugin-prefer-arrow": "^1.1.6",
-    "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.1",
@@ -188,7 +184,6 @@
     "mochawesome-report-generator": "^6.2.0",
     "playwright-testmo-reporter": "^1.8.4",
     "regenerator-runtime": "^0.11.1",
-    "register-service-worker": "^1.7.2",
     "require-context.macro": "^1.1.1",
     "rimraf": "^3.0.0",
     "rollup-plugin-polyfill-node": "^0.11.0",
@@ -196,13 +191,7 @@
     "typescript": "^5.0.4",
     "typescript-strict-plugin": "^2.1.0",
     "vite": "^3.2.7",
-    "vite-plugin-html": "^3.2.0",
-    "vite-plugin-pwa": "^0.13.3",
-    "workbox-cacheable-response": "^6.1.2",
-    "workbox-expiration": "^6.1.2",
-    "workbox-precaching": "^6.1.2",
-    "workbox-routing": "^6.1.2",
-    "workbox-strategies": "^6.1.2"
+    "vite-plugin-html": "^3.2.0"
   },
   "optionalDependencies": {
     "@swc/core-darwin-arm64": "1.3.40",
@@ -240,7 +229,7 @@
     "mochawesome": "^7.0.1",
     "mochawesome-merge": "^4.2.2",
     "mochawesome-report-generator": "^6.0.1",
-    "prettier": "^2.8.4",
+    "prettier": "^3.2.5",
     "setup-polly-jest": "^0.9.1",
     "ts-jest": "^27.1.5"
   },
@@ -288,9 +277,8 @@
     "resolve": "1.20.0"
   },
   "lint-staged": {
-    "./src/**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
+    "./{src,playwright}/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
     ]
   },
   "scripts": {
@@ -320,7 +308,7 @@
     "test": "jest src/",
     "posttest": "node scripts/pika.js",
     "test:watch": "jest --watch src/",
-    "lint": "eslint \"src/**/*.@(tsx|ts|jsx|js)\" --fix",
+    "lint": "eslint \"{src,playwright}/**/*.@(tsx|ts|jsx|js)\" --fix",
     "lint:check-progress": "eslint-nibble \"src/**/*.@(tsx|ts|jsx|js)\"",
     "prebuild": "npm run build-types",
     "predev": "npm run build-types",

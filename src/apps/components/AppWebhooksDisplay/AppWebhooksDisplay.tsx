@@ -1,8 +1,5 @@
 import { DateTime } from "@dashboard/components/Date";
-import {
-  EventDeliveryStatusEnum,
-  useAppWebhookDeliveriesQuery,
-} from "@dashboard/graphql";
+import { EventDeliveryStatusEnum, useAppWebhookDeliveriesQuery } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import {
   Accordion,
@@ -42,7 +39,6 @@ const Wrapper = (boxProps: BoxProps) => {
     </Box>
   );
 };
-
 const mapDeliveryStatusToTextColor = (
   status: EventDeliveryStatusEnum,
 ): keyof ThemeTokensValues["colors"]["text"] => {
@@ -55,7 +51,6 @@ const mapDeliveryStatusToTextColor = (
       return "success1";
   }
 };
-
 const mapDeliveryStatusToBackgroundColor = (
   status: EventDeliveryStatusEnum,
 ): keyof ThemeTokensValues["colors"]["background"] => {
@@ -68,12 +63,7 @@ const mapDeliveryStatusToBackgroundColor = (
       return "accent1";
   }
 };
-
-const DeliveryStatusDisplay = ({
-  status,
-}: {
-  status: EventDeliveryStatusEnum;
-}) => {
+const DeliveryStatusDisplay = ({ status }: { status: EventDeliveryStatusEnum }) => {
   const { formatMessage } = useIntl();
 
   switch (status) {
@@ -87,7 +77,6 @@ const DeliveryStatusDisplay = ({
       throw new Error("Invalid EventDeliveryStatusEnum value");
   }
 };
-
 const StatusChip = ({ status }: { status: EventDeliveryStatusEnum }) => {
   return (
     <Chip backgroundColor={mapDeliveryStatusToBackgroundColor(status)}>
@@ -97,7 +86,6 @@ const StatusChip = ({ status }: { status: EventDeliveryStatusEnum }) => {
     </Chip>
   );
 };
-
 const DisabledWebhookChip = () => {
   const { formatMessage } = useIntl();
 
@@ -112,20 +100,14 @@ const DisabledWebhookChip = () => {
     </Chip>
   );
 };
-
 /**
  * Refresh webhooks deliveries every 5 seconds
  */
 const REFRESH_INTERVAL = 5000;
 
-export const AppWebhooksDisplay = ({
-  appId,
-  ...boxProps
-}: AppWebhooksDisplayProps) => {
+export const AppWebhooksDisplay = ({ appId, ...boxProps }: AppWebhooksDisplayProps) => {
   const { formatMessage } = useIntl();
-
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
-
   const { data: webhooksData, loading } = useAppWebhookDeliveriesQuery({
     variables: { appId },
     skip: !hasManagedAppsPermission,
@@ -147,13 +129,8 @@ export const AppWebhooksDisplay = ({
       <Wrapper {...boxProps}>
         <Accordion>
           {webhooksData.app.webhooks.map((wh, index) => {
-            const isLastWebhook =
-              index === (webhooksData?.app?.webhooks ?? []).length - 1;
-
-            const events = [...wh.asyncEvents, ...wh.syncEvents]
-              .flatMap(e => e.name)
-              .join(", ");
-
+            const isLastWebhook = index === (webhooksData?.app?.webhooks ?? []).length - 1;
+            const events = [...wh.asyncEvents, ...wh.syncEvents].flatMap(e => e.name).join(", ");
             const eventDeliveries = wh.eventDeliveries?.edges ?? [];
 
             return (
@@ -165,12 +142,7 @@ export const AppWebhooksDisplay = ({
                 borderBottomStyle="solid"
               >
                 <Box>
-                  <Box
-                    display="flex"
-                    gap={2}
-                    alignItems="center"
-                    marginBottom={2}
-                  >
+                  <Box display="flex" gap={2} alignItems="center" marginBottom={2}>
                     <Text>{wh.name}</Text>
                     {!wh.isActive && <DisabledWebhookChip />}
                   </Box>
@@ -190,8 +162,7 @@ export const AppWebhooksDisplay = ({
                     <Accordion.Trigger alignItems="center">
                       <Text size={4} fontWeight="bold" as="h2">
                         {formatMessage({
-                          defaultMessage:
-                            "Pending & failed deliveries (last 10)",
+                          defaultMessage: "Pending & failed deliveries (last 10)",
                           id: "SRMNCS",
                         })}
                       </Text>
@@ -201,18 +172,12 @@ export const AppWebhooksDisplay = ({
                       {eventDeliveries.map(ed => {
                         const { createdAt } = ed.node;
                         const attempts = ed.node.attempts?.edges ?? [];
-
                         const attemptsCount = attempts.length;
-                        const lastAttemptDate =
-                          attempts[attemptsCount - 1]?.node.createdAt;
+                        const lastAttemptDate = attempts[attemptsCount - 1]?.node.createdAt;
 
                         return (
                           <Box key={createdAt} marginBottom={4}>
-                            <Box
-                              paddingLeft={0}
-                              display="grid"
-                              __gridTemplateColumns={"1fr 1fr"}
-                            >
+                            <Box paddingLeft={0} display="grid" __gridTemplateColumns={"1fr 1fr"}>
                               <Text as="p" size={4} fontWeight="bold">
                                 <DateTime plain date={createdAt} />
                               </Text>

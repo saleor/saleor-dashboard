@@ -21,15 +21,12 @@ interface CategoryCreateViewProps {
   parentId?: string;
 }
 
-export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
-  parentId,
-}) => {
+export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({ parentId }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
-
   const handleSuccess = (data: CategoryCreateMutation) => {
     if (data.categoryCreate?.errors.length === 0) {
       notify({
@@ -42,18 +39,15 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
       navigate(categoryUrl(data.categoryCreate.category?.id || ""));
     }
   };
-
   const [createCategory, createCategoryResult] = useCategoryCreateMutation({
     onCompleted: handleSuccess,
   });
-
   const handleCreate = async (formData: CategoryCreateData) => {
     const result = await createCategory({
       variables: {
         input: {
           description:
-            formData.description &&
-            getParsedDataForJsonStringField(formData.description),
+            formData.description && getParsedDataForJsonStringField(formData.description),
           name: formData.name,
           seo: {
             description: formData.seoDescription,
@@ -70,7 +64,6 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
       errors: getMutationErrors(result),
     };
   };
-
   const handleSubmit = createMetadataCreateHandler(
     handleCreate,
     updateMetadata,

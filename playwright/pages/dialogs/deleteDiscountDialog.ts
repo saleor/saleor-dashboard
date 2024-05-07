@@ -1,14 +1,12 @@
+import { BasePage } from "@pages/basePage";
 import type { Page } from "@playwright/test";
 
-export class DeleteDiscountDialog {
-  readonly page: Page;
-
+export class DeleteDiscountDialog extends BasePage {
   constructor(
     page: Page,
-    readonly deleteButton = page.getByTestId("delete-confirmation-button")
-
-     ) {
-    this.page = page;
+    readonly deleteButton = page.getByTestId("delete-confirmation-button"),
+  ) {
+    super(page);
   }
 
   async clickConfirmDeleteButton() {

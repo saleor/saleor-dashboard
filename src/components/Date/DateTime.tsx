@@ -16,9 +16,11 @@ interface DateTimeProps {
 export const DateTime: React.FC<DateTimeProps> = ({ date, plain }) => {
   const getTitle = (value: string, locale?: string, tz?: string) => {
     let date = moment(value).locale(locale);
+
     if (tz !== undefined) {
       date = date.tz(tz);
     }
+
     return date.format("lll");
   };
 

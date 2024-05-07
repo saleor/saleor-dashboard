@@ -40,7 +40,7 @@ export const pageType: PageTypeDetailsFragment = {
   hasPages: true,
   attributes: [
     {
-      __typename: "Attribute" as "Attribute",
+      __typename: "Attribute" as const,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
       name: "Author",
       slug: "author",
@@ -52,7 +52,7 @@ export const pageType: PageTypeDetailsFragment = {
       unit: null,
     },
     {
-      __typename: "Attribute" as "Attribute",
+      __typename: "Attribute" as const,
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMQ==",
       name: "Language",
       slug: "language",
@@ -64,7 +64,7 @@ export const pageType: PageTypeDetailsFragment = {
       unit: null,
     },
     {
-      __typename: "Attribute" as "Attribute",
+      __typename: "Attribute" as const,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
       name: "Author",
       slug: "author",

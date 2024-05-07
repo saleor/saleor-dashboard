@@ -1,7 +1,4 @@
-import {
-  ConfirmButton,
-  ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
 import { Box, Button, Input } from "@saleor/macaw-ui-next";
@@ -26,13 +23,11 @@ export const VoucherCodesManualDialog = ({
   const intl = useIntl();
   const [error, setError] = useState("");
   const [code, setCode] = useState("");
-
   const handleModalClose = () => {
     onClose();
     setCode("");
     setError("");
   };
-
   const handleSubmit = async () => {
     try {
       await onSubmit(code);

@@ -49,19 +49,13 @@ const useStyles = makeStyles(
     name: "NavigatorSearchSection",
   },
 );
-
 const NavigatorSearchSection: React.FC<NavigatorSearchSectionProps> = props => {
   const { getItemProps, highlightedIndex, label, items, offset } = props;
-
   const classes = useStyles(props);
 
   return (
     <div className={classes.root}>
-      <Typography
-        className={classes.label}
-        variant="caption"
-        color="textSecondary"
-      >
+      <Typography className={classes.label} variant="caption" color="textSecondary">
         {label}
       </Typography>
       {items.map((item, itemIndex) => {
@@ -79,13 +73,9 @@ const NavigatorSearchSection: React.FC<NavigatorSearchSectionProps> = props => {
             key={[item.label, item.type].join(":")}
           >
             <span className={classes.itemLabel}>
-              {item.symbol && (
-                <span className={classes.symbol}>{item.symbol}</span>
-              )}
+              {item.symbol && <span className={classes.symbol}>{item.symbol}</span>}
               <span>{item.label}</span>
-              {item.caption && (
-                <Typography variant="caption">{item.caption}</Typography>
-              )}
+              {item.caption && <Typography variant="caption">{item.caption}</Typography>}
             </span>
             <span className={classes.spacer} />
             {item.extraInfo}

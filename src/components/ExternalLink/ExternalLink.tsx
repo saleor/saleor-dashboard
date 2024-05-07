@@ -23,11 +23,8 @@ interface ExternalLinkProps extends React.HTMLProps<HTMLAnchorElement> {
  * @deprecated use ExternalLinkNext
  */
 const ExternalLink: React.FC<ExternalLinkProps> = props => {
-  const { className, children, href, typographyProps, target, rel, ...rest } =
-    props;
-
+  const { className, children, href, typographyProps, target, rel, ...rest } = props;
   const classes = useStyles(props);
-
   const opensNewTab = target === "_blank";
 
   return (
@@ -44,6 +41,7 @@ const ExternalLink: React.FC<ExternalLinkProps> = props => {
     </a>
   );
 };
+
 ExternalLink.displayName = "ExternalLink";
 export default ExternalLink;
 

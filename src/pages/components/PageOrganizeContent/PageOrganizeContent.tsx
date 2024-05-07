@@ -36,7 +36,6 @@ const useStyles = makeStyles(
   }),
   { name: "PageOrganizeContent" },
 );
-
 const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
   const {
     canChangeType,
@@ -50,10 +49,8 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
     fetchPageTypes,
     fetchMorePageTypes,
   } = props;
-
   const classes = useStyles(props);
   const intl = useIntl();
-
   const formErrors = getFormErrors(["pageType"], errors);
 
   return (
@@ -99,5 +96,6 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
     </Card>
   );
 };
+
 PageOrganizeContent.displayName = "PageOrganizeContent";
 export default PageOrganizeContent;

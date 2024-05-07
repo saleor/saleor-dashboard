@@ -32,10 +32,7 @@ const FilterContentBodyNameField: React.FC<FilterContentBodyNameFieldProps> = ({
     <div className={classes.container}>
       <FormControlLabel
         control={
-          <Checkbox
-            data-test-id={"filter-group-active-" + filter.name}
-            checked={filter.active}
-          />
+          <Checkbox data-test-id={"filter-group-active-" + filter.name} checked={filter.active} />
         }
         label={filter.label}
         onClick={event => event.stopPropagation()}

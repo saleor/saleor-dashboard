@@ -16,13 +16,9 @@ const useStyles = makeStyles(
   { name: "FilterGroupLabel" },
 );
 
-export type FilterGroupLabelProps<K extends string = string> =
-  FilterFieldBaseProps<K>;
+export type FilterGroupLabelProps<K extends string = string> = FilterFieldBaseProps<K>;
 
-const FilterGroupLabel: React.FC<FilterGroupLabelProps> = ({
-  filter,
-  onFilterPropertyChange,
-}) => {
+const FilterGroupLabel: React.FC<FilterGroupLabelProps> = ({ filter, onFilterPropertyChange }) => {
   const classes = useStyles({});
 
   if (!filter) {
@@ -33,10 +29,7 @@ const FilterGroupLabel: React.FC<FilterGroupLabelProps> = ({
     <div className={classes.container}>
       <FormControlLabel
         control={
-          <Checkbox
-            data-test-id={"filter-group-active-" + filter.name}
-            checked={filter.active}
-          />
+          <Checkbox data-test-id={"filter-group-active-" + filter.name} checked={filter.active} />
         }
         label={filter.label}
         onClick={event => event.stopPropagation()}

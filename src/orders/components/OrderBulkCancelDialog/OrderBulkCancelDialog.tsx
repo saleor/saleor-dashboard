@@ -47,5 +47,6 @@ const OrderBulkCancelDialog: React.FC<OrderBulkCancelDialogProps> = ({
     </ActionDialog>
   );
 };
+
 OrderBulkCancelDialog.displayName = "OrderBulkCancelDialog";
 export default OrderBulkCancelDialog;

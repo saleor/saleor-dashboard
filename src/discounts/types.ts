@@ -17,12 +17,8 @@ export enum DiscountTypeEnum {
   SHIPPING = "SHIPPING",
 }
 
-export type SearchCategoriesOpts = ReturnType<
-  typeof useCategorySearch
->["result"];
-export type SearchCollectionOpts = ReturnType<
-  typeof useCollectionSearch
->["result"];
+export type SearchCategoriesOpts = ReturnType<typeof useCategorySearch>["result"];
+export type SearchCollectionOpts = ReturnType<typeof useCollectionSearch>["result"];
 export type SearchProductsOpts = ReturnType<typeof useProductSearch>["result"];
 
 export interface DiscoutFormData {
@@ -39,11 +35,7 @@ export interface DiscoutFormData {
   rules: Rule[];
 }
 
-export type CatalogConditions =
-  | "product"
-  | "category"
-  | "collection"
-  | "variant";
+export type CatalogConditions = "product" | "category" | "collection" | "variant";
 
 export type OrderConditions = "baseSubtotalPrice" | "baseTotalPrice";
 

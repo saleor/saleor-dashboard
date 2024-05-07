@@ -1,18 +1,11 @@
 // @ts-strict-ignore
-import {
-  FilterElement,
-  FilterElementRegular,
-} from "@dashboard/components/Filter";
+import { FilterElement, FilterElementRegular } from "@dashboard/components/Filter";
 import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   VoucherFilterKeys,
   VoucherListFilterOpts,
 } from "@dashboard/discounts/components/VoucherListPage";
-import {
-  DiscountStatusEnum,
-  VoucherDiscountType,
-  VoucherFilterInput,
-} from "@dashboard/graphql";
+import { DiscountStatusEnum, VoucherDiscountType, VoucherFilterInput } from "@dashboard/graphql";
 import { findValueInEnum, joinDateTime, maybe } from "@dashboard/misc";
 
 import {
@@ -46,16 +39,12 @@ export function getFilterOpts(
     saleType: {
       active: !!maybe(() => params.type),
       value: dedupeFilter(
-        params.type?.map(type => findValueInEnum(type, VoucherDiscountType)) ||
-          [],
+        params.type?.map(type => findValueInEnum(type, VoucherDiscountType)) || [],
       ),
     },
     started: {
       active: maybe(
-        () =>
-          [params.startedFrom, params.startedTo].some(
-            field => field !== undefined,
-          ),
+        () => [params.startedFrom, params.startedTo].some(field => field !== undefined),
         false,
       ),
       value: {
@@ -66,17 +55,12 @@ export function getFilterOpts(
     status: {
       active: !!maybe(() => params.status),
       value: dedupeFilter(
-        params.status?.map(status =>
-          findValueInEnum(status, DiscountStatusEnum),
-        ) || [],
+        params.status?.map(status => findValueInEnum(status, DiscountStatusEnum)) || [],
       ),
     },
     timesUsed: {
       active: maybe(
-        () =>
-          [params.timesUsedFrom, params.timesUsedTo].some(
-            field => field !== undefined,
-          ),
+        () => [params.timesUsedFrom, params.timesUsedTo].some(field => field !== undefined),
         false,
       ),
       value: {
@@ -87,21 +71,17 @@ export function getFilterOpts(
   };
 }
 
-export function getFilterVariables(
-  params: VoucherListUrlFilters,
-): VoucherFilterInput {
+export function getFilterVariables(params: VoucherListUrlFilters): VoucherFilterInput {
   return {
     discountType:
-      params.type &&
-      params.type.map(type => findValueInEnum(type, VoucherDiscountType)),
+      params.type && params.type.map(type => findValueInEnum(type, VoucherDiscountType)),
     search: params.query,
     started: getGteLteVariables({
       gte: joinDateTime(params.startedFrom),
       lte: joinDateTime(params.startedTo),
     }),
     status:
-      params.status &&
-      params.status.map(status => findValueInEnum(status, DiscountStatusEnum)),
+      params.status && params.status.map(status => findValueInEnum(status, DiscountStatusEnum)),
     timesUsed: getGteLteVariables({
       gte: parseInt(params.timesUsedFrom, 10),
       lte: parseInt(params.timesUsedTo, 10),
@@ -144,17 +124,16 @@ export function getFilterQueryParam(
       );
 
     case VoucherFilterKeys.channel:
-      return getSingleValueQueryParam(
-        filter,
-        VoucherListUrlFiltersEnum.channel,
-      );
+      return getSingleValueQueryParam(filter, VoucherListUrlFiltersEnum.channel);
   }
 }
 
 export const storageUtils = createFilterTabUtils<string>(VOUCHER_FILTERS_KEY);
 
-export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
-  createFilterUtils<VoucherListUrlQueryParams, VoucherListUrlFilters>({
-    ...VoucherListUrlFiltersEnum,
-    ...VoucherListUrlFiltersWithMultipleValues,
-  });
+export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
+  VoucherListUrlQueryParams,
+  VoucherListUrlFilters
+>({
+  ...VoucherListUrlFiltersEnum,
+  ...VoucherListUrlFiltersWithMultipleValues,
+});

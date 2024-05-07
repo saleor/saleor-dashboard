@@ -43,12 +43,7 @@ const CardAddItemsFooter: React.FC<CardAddItemsFooterProps> = ({
       <Link data-test-id={testIds.link} onClick={onAdd}>
         {title}
       </Link>
-      <IconButton
-        variant="secondary"
-        data-test-id={testIds.button}
-        color="primary"
-        onClick={onAdd}
-      >
+      <IconButton variant="secondary" data-test-id={testIds.button} color="primary" onClick={onAdd}>
         <AddIcon />
       </IconButton>
       {children}

@@ -41,20 +41,15 @@ const OrderGrantedRefunds: React.FC<OrderGrantedRefundsProps> = ({ order }) => {
         title={
           <div className={classes.cardTitleContent}>
             <span>
-              <FormattedMessage
-                {...orderGrantedRefundsMessages.grantedRefunds}
-              />
+              <FormattedMessage {...orderGrantedRefundsMessages.grantedRefunds} />
             </span>
             <div>
               {unsettled.amount > 0 && (
                 <Pill
                   color="error"
-                  label={intl.formatMessage(
-                    orderGrantedRefundsMessages.unsettled,
-                    {
-                      money: formatMoney(unsettled, locale),
-                    },
-                  )}
+                  label={intl.formatMessage(orderGrantedRefundsMessages.unsettled, {
+                    money: formatMoney(unsettled, locale),
+                  })}
                 />
               )}
             </div>
@@ -67,9 +62,7 @@ const OrderGrantedRefunds: React.FC<OrderGrantedRefundsProps> = ({ order }) => {
             <TableCell className={classes.colMoney}>
               <Money money={grantedRefund.amount} />
             </TableCell>
-            <TableCell className={classes.colReason}>
-              {grantedRefund.reason}
-            </TableCell>
+            <TableCell className={classes.colReason}>{grantedRefund.reason}</TableCell>
             <TableCell>
               <EventTime date={grantedRefund.createdAt} />
             </TableCell>
@@ -87,9 +80,7 @@ const OrderGrantedRefunds: React.FC<OrderGrantedRefundsProps> = ({ order }) => {
               ) : null}
             </TableCell>
             <TableCell className={classes.colAction}>
-              <Button
-                href={orderGrantRefundEditUrl(order.id, grantedRefund.id)}
-              >
+              <Button href={orderGrantRefundEditUrl(order.id, grantedRefund.id)}>
                 <FormattedMessage {...buttonMessages.edit} />
               </Button>
             </TableCell>

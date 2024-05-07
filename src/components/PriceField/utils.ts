@@ -1,6 +1,6 @@
 import { SEPARATOR_CHARACTERS } from "./consts";
 
-const getNumberFormatting = (currency: string = "USD") => {
+const getNumberFormatting = (currency = "USD") => {
   try {
     return new Intl.NumberFormat("en-GB", {
       style: "currency",
@@ -26,6 +26,7 @@ const getNumberFormatting = (currency: string = "USD") => {
 
 export const getCurrencyDecimalPoints = (currency?: string) => {
   const options = getNumberFormatting(currency).resolvedOptions();
+
   return options.maximumFractionDigits;
 };
 

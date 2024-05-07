@@ -256,12 +256,7 @@ export const variantAttributeFragment = gql`
     entityType
     valueRequired
     unit
-    choices(
-      first: $firstValues
-      after: $afterValues
-      last: $lastValues
-      before: $beforeValues
-    ) {
+    choices(first: $firstValues, after: $afterValues, last: $lastValues, before: $beforeValues) {
       ...AttributeValueList
     }
   }
@@ -285,9 +280,7 @@ export const fragmentVariant = gql`
     selectionAttributes: attributes(variantSelection: VARIANT_SELECTION) {
       ...SelectedVariantAttribute
     }
-    nonSelectionAttributes: attributes(
-      variantSelection: NOT_VARIANT_SELECTION
-    ) {
+    nonSelectionAttributes: attributes(variantSelection: NOT_VARIANT_SELECTION) {
       ...SelectedVariantAttribute
     }
     media {

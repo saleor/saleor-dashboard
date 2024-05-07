@@ -54,10 +54,7 @@ export const orderLineDiscountRemoveMutation = gql`
 `;
 
 export const orderLineDiscountUpdateMutation = gql`
-  mutation OrderLineDiscountUpdate(
-    $input: OrderDiscountCommonInput!
-    $orderLineId: ID!
-  ) {
+  mutation OrderLineDiscountUpdate($input: OrderDiscountCommonInput!, $orderLineId: ID!) {
     orderLineDiscountUpdate(input: $input, orderLineId: $orderLineId) {
       errors {
         ...OrderError
@@ -70,10 +67,7 @@ export const orderLineDiscountUpdateMutation = gql`
 `;
 
 export const orderDiscountUpdateMutation = gql`
-  mutation OrderDiscountUpdate(
-    $input: OrderDiscountCommonInput!
-    $discountId: ID!
-  ) {
+  mutation OrderDiscountUpdate($input: OrderDiscountCommonInput!, $discountId: ID!) {
     orderDiscountUpdate(input: $input, discountId: $discountId) {
       errors {
         ...OrderError
@@ -137,10 +131,7 @@ export const orderDraftFinalizeMutation = gql`
 `;
 
 export const orderReturnCreateMutation = gql`
-  mutation FulfillmentReturnProducts(
-    $id: ID!
-    $input: OrderReturnProductsInput!
-  ) {
+  mutation FulfillmentReturnProducts($id: ID!, $input: OrderReturnProductsInput!) {
     orderFulfillmentReturnProducts(input: $input, order: $id) {
       errors {
         ...OrderError
@@ -169,10 +160,7 @@ export const orderRefundMutation = gql`
 `;
 
 export const orderFulfillmentRefundProductsMutation = gql`
-  mutation OrderFulfillmentRefundProducts(
-    $input: OrderRefundProductsInput!
-    $order: ID!
-  ) {
+  mutation OrderFulfillmentRefundProducts($input: OrderRefundProductsInput!, $order: ID!) {
     orderFulfillmentRefundProducts(input: $input, order: $order) {
       errors {
         ...OrderError
@@ -227,10 +215,7 @@ export const orderCaptureMutation = gql`
 `;
 
 export const orderFulfillmentUpdateTrackingMutation = gql`
-  mutation OrderFulfillmentUpdateTracking(
-    $id: ID!
-    $input: FulfillmentUpdateTrackingInput!
-  ) {
+  mutation OrderFulfillmentUpdateTracking($id: ID!, $input: FulfillmentUpdateTrackingInput!) {
     orderFulfillmentUpdateTracking(id: $id, input: $input) {
       errors {
         ...OrderError
@@ -319,10 +304,7 @@ export const orderDraftUpdateMutation = gql`
 `;
 
 export const orderShippingMethodUpdateMutation = gql`
-  mutation OrderShippingMethodUpdate(
-    $id: ID!
-    $input: OrderUpdateShippingInput!
-  ) {
+  mutation OrderShippingMethodUpdate($id: ID!, $input: OrderUpdateShippingInput!) {
     orderUpdateShipping(order: $id, input: $input) {
       errors {
         ...OrderError
@@ -500,11 +482,7 @@ export const orderTransactionRequestActionMutation = gql`
     $transactionId: ID!
     $amount: PositiveDecimal
   ) {
-    transactionRequestAction(
-      actionType: $action
-      id: $transactionId
-      amount: $amount
-    ) {
+    transactionRequestAction(actionType: $action, id: $transactionId, amount: $amount) {
       errors {
         ...TransactionRequestActionError
       }
@@ -519,6 +497,7 @@ export const orderGrantRefundAddMutation = gql`
     $reason: String
     $lines: [OrderGrantRefundCreateLineInput!]
     $grantRefundForShipping: Boolean
+    $transactionId: ID
   ) {
     orderGrantRefundCreate(
       id: $orderId
@@ -527,6 +506,7 @@ export const orderGrantRefundAddMutation = gql`
         reason: $reason
         lines: $lines
         grantRefundForShipping: $grantRefundForShipping
+        transactionId: $transactionId
       }
     ) {
       errors {
@@ -577,6 +557,7 @@ export const orderGrantRefundEditMutation = gql`
     $addLines: [OrderGrantRefundUpdateLineAddInput!]
     $removeLines: [ID!]
     $grantRefundForShipping: Boolean
+    $transactionId: ID
   ) {
     orderGrantRefundUpdate(
       id: $refundId
@@ -586,10 +567,14 @@ export const orderGrantRefundEditMutation = gql`
         addLines: $addLines
         removeLines: $removeLines
         grantRefundForShipping: $grantRefundForShipping
+        transactionId: $transactionId
       }
     ) {
       errors {
         ...OrderGrantRefundUpdateError
+      }
+      order {
+        ...OrderDetailsGrantRefund
       }
     }
   }
@@ -597,11 +582,7 @@ export const orderGrantRefundEditMutation = gql`
 
 export const orderSendRefundMutation = gql`
   mutation OrderSendRefund($amount: PositiveDecimal!, $transactionId: ID!) {
-    transactionRequestAction(
-      actionType: REFUND
-      amount: $amount
-      id: $transactionId
-    ) {
+    transactionRequestAction(actionType: REFUND, amount: $amount, id: $transactionId) {
       transaction {
         ...TransactionItem
       }
@@ -613,10 +594,7 @@ export const orderSendRefundMutation = gql`
 `;
 
 export const orderSendRefundForGrantedRefund = gql`
-  mutation OrderSendRefundForGrantedRefund(
-    $grantedRefundId: ID!
-    $transactionId: ID!
-  ) {
+  mutation OrderSendRefundForGrantedRefund($grantedRefundId: ID!, $transactionId: ID!) {
     transactionRequestRefundForGrantedRefund(
       grantedRefundId: $grantedRefundId
       id: $transactionId

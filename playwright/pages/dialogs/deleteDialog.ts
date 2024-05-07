@@ -1,23 +1,23 @@
+import { BasePage } from "@pages/basePage";
 import type { Page } from "@playwright/test";
 
-export class DeleteDialog {
-  readonly page: Page;
-
+export class DeleteDialog extends BasePage {
   constructor(
     page: Page,
     readonly deleteButton = page.getByTestId("submit"),
-    readonly confirmDeletionCheckbox = page.locator(
-      "[name='delete-assigned-items-consent']",
-    ),
-    readonly confirmDeleteButton = page.getByTestId("confirm-delete")
+    readonly confirmDeletionCheckbox = page.locator("[name='delete-assigned-items-consent']"),
+    readonly confirmDeleteButton = page.getByTestId("confirm-delete"),
   ) {
-    this.page = page;
+    super(page);
   }
 
   async clickDeleteButton() {
-    await this.deleteButton.first().click();
-    await this.deleteButton.waitFor({ state: "hidden" });
+    await this.waitForNetworkIdle(async () => {
+      await this.deleteButton.first().click();
+      await this.deleteButton.waitFor({ state: "hidden" });
+    });
   }
+
   async clickConfirmDeletionCheckbox() {
     await this.confirmDeletionCheckbox.click();
   }

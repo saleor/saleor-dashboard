@@ -40,37 +40,26 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
   const intl = useIntl();
   const classes = useStyles();
   const navigate = useNavigator();
-
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
-
-  const verifiedInstalledApps = getVerifiedInstalledApps(
-    installedApps,
-    installableMarketplaceApps,
-  );
-
+  const verifiedInstalledApps = getVerifiedInstalledApps(installedApps, installableMarketplaceApps);
   const verifiedAppsInstallations = getVerifiedAppsInstallations(
     appsInstallations,
     installableMarketplaceApps,
   );
-
-  const verifiedInstallableMarketplaceApps =
-    getVerifiedInstallableMarketplaceApps(
-      installedApps,
-      installableMarketplaceApps,
-    );
-
+  const verifiedInstallableMarketplaceApps = getVerifiedInstallableMarketplaceApps(
+    installedApps,
+    installableMarketplaceApps,
+  );
   const sectionsAvailability = resolveSectionsAvailability({
     ...props,
     installableMarketplaceApps: verifiedInstallableMarketplaceApps,
   });
-
   const navigateToAppInstallPage = useCallback(
     (manifestUrl: string) => {
       navigate(AppUrls.resolveAppInstallUrl(manifestUrl));
     },
     [navigate],
   );
-
   const navigateToGithubForkPage = useCallback((githubForkUrl: string) => {
     window.open(githubForkUrl, "_blank");
   }, []);
@@ -79,17 +68,10 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
     <>
       <TopNav title={intl.formatMessage(sectionNames.apps)}>
         {hasManagedAppsPermission && (
-          <InstallWithManifestFormButton
-            onSubmitted={navigateToAppInstallPage}
-          />
+          <InstallWithManifestFormButton onSubmitted={navigateToAppInstallPage} />
         )}
       </TopNav>
-      <Box
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        marginY={5}
-      >
+      <Box display="flex" flexDirection="column" alignItems="center" marginY={5}>
         <Box className={classes.appContent} marginY={5}>
           <Box paddingX={5} paddingY={3}>
             <Text as="h3" size={5} fontWeight="bold" color="default2">

@@ -342,9 +342,7 @@ export const channel: ChannelDetailsFragment = {
   },
 };
 
-type ProductChannelsWithPricing = NonNullable<
-  ProductFragment["channelListings"]
->[0] & {
+type ProductChannelsWithPricing = NonNullable<ProductFragment["channelListings"]>[0] & {
   pricing: {
     priceRange: {
       start: {

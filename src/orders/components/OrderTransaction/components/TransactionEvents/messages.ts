@@ -24,8 +24,7 @@ export const statusMessages = defineMessages({
   info: {
     defaultMessage: "Info",
     id: "if9gAZ",
-    description:
-      "Transaction event status - unknown status, info without event data",
+    description: "Transaction event status - unknown status, info without event data",
   },
 });
 

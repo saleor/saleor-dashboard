@@ -14,11 +14,7 @@ import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import { commonMessages } from "@dashboard/intl";
-import {
-  getDatagridRowDataIndex,
-  getStatusColor,
-  isFirstColumn,
-} from "@dashboard/misc";
+import { getDatagridRowDataIndex, getStatusColor, isFirstColumn } from "@dashboard/misc";
 import { useOrderLineDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
@@ -108,28 +104,20 @@ export const useGetCellContent = ({
 
     const columnId = columns[column]?.id;
     const change = changes.current[getChangeIndex(columnId, row)]?.data;
-    const rowData = added.includes(row)
-      ? undefined
-      : lines[getDatagridRowDataIndex(row, removed)];
+    const rowData = added.includes(row) ? undefined : lines[getDatagridRowDataIndex(row, removed)];
 
     if (!rowData || !columnId) {
       return readonlyTextCell("", false);
     }
 
-    const { unitUndiscountedPrice, unitDiscountedPrice } = getValues(
-      rowData.id,
-    );
+    const { unitUndiscountedPrice, unitDiscountedPrice } = getValues(rowData.id);
 
     switch (columnId) {
       case "product":
-        return thumbnailCell(
-          rowData?.productName ?? "",
-          rowData.thumbnail?.url ?? "",
-          {
-            readonly: true,
-            allowOverlay: false,
-          },
-        );
+        return thumbnailCell(rowData?.productName ?? "", rowData.thumbnail?.url ?? "", {
+          readonly: true,
+          allowOverlay: false,
+        });
       case "quantity":
         return numberCell(change?.value || rowData.quantity);
       case "price":
@@ -163,26 +151,19 @@ export const useGetCellContent = ({
       case "variantName":
         return readonlyTextCell(rowData?.variant?.name ?? "", false);
       case "total":
-        return moneyCell(
-          rowData.totalPrice.gross.amount,
-          rowData.totalPrice.gross.currency,
-          {
-            readonly: true,
-            allowOverlay: false,
-          },
-        );
+        return moneyCell(rowData.totalPrice.gross.amount, rowData.totalPrice.gross.currency, {
+          readonly: true,
+          allowOverlay: false,
+        });
       case "isGift":
         return booleanCell(rowData?.isGift, {
           allowOverlay: false,
           readonly: true,
         });
       case "metadata":
-        return buttonCell(
-          intl.formatMessage(commonMessages.viewMetadata),
-          () => {
-            onShowMetadata(rowData.id);
-          },
-        );
+        return buttonCell(intl.formatMessage(commonMessages.viewMetadata), () => {
+          onShowMetadata(rowData.id);
+        });
 
       default:
         return readonlyTextCell("", false);

@@ -51,31 +51,22 @@ interface PermissionGroupDetailsProps {
   params: PermissionGroupDetailsUrlQueryParams;
 }
 
-type Members = NonNullable<
-  NonNullable<PermissionGroupDetailsQuery["permissionGroup"]>["users"]
->;
+type Members = NonNullable<NonNullable<PermissionGroupDetailsQuery["permissionGroup"]>["users"]>;
 
-export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
-  id,
-  params,
-}) => {
+export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const shop = useShop();
   const notify = useNotifier();
   const intl = useIntl();
   const user = useUser();
-
   const { data, loading, refetch } = usePermissionGroupDetailsQuery({
     displayLoader: true,
     variables: { id, userId: user?.user?.id ?? "" },
   });
-
   const { availableChannels } = useAppChannel(false);
-
   const [membersList, setMembersList] = useStateFromProps<Members>(
     data?.permissionGroup?.users ?? [],
   );
-
   const {
     search,
     result: searchResult,
@@ -83,111 +74,79 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
   } = useStaffMemberSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
+  const { isSelected, listElements, toggle, toggleAll } = useBulkActions(params.ids);
+  const [permissionGroupUpdate, permissionGroupUpdateResult] = usePermissionGroupUpdateMutation({
+    onCompleted: updatedData => {
+      if (updatedData?.permissionGroupUpdate?.errors?.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
 
-  const { isSelected, listElements, toggle, toggleAll } = useBulkActions(
-    params.ids,
-  );
-
-  const [permissionGroupUpdate, permissionGroupUpdateResult] =
-    usePermissionGroupUpdateMutation({
-      onCompleted: updatedData => {
-        if (updatedData?.permissionGroupUpdate?.errors?.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-
-          // When user belong to editedd permission group refetch user details
-          // as they are root of user accessible channels
-          if (
-            checkIfUserBelongToPermissionGroup(
-              data?.permissionGroup,
-              user?.user?.id ?? "",
-            ) &&
-            user.refetchUser
-          ) {
-            user.refetchUser();
-          }
-
-          refetch();
-          closeModal();
-        } else if (
-          updatedData?.permissionGroupUpdate?.errors.some(
-            e => e.field === "removeUsers",
-          )
+        // When user belong to editedd permission group refetch user details
+        // as they are root of user accessible channels
+        if (
+          checkIfUserBelongToPermissionGroup(data?.permissionGroup, user?.user?.id ?? "") &&
+          user.refetchUser
         ) {
-          openModal("unassignError");
+          user.refetchUser();
         }
-      },
-    });
 
+        refetch();
+        closeModal();
+      } else if (updatedData?.permissionGroupUpdate?.errors.some(e => e.field === "removeUsers")) {
+        openModal("unassignError");
+      }
+    },
+  });
   const [openModal, closeModal] = createDialogActionHandlers<
     PermissionGroupDetailsUrlDialog,
     PermissionGroupDetailsUrlQueryParams
   >(navigate, params => permissionGroupDetailsUrl(id, params), params);
-
   const handleSort = createSortHandler(
     navigate,
     params => permissionGroupDetailsUrl(id, params),
     params,
   );
-
-  const [deleteError, setDeleteError] =
-    React.useState<PermissionGroupErrorFragment>();
-
-  const [permissionGroupDelete, permissionGroupDeleteOps] =
-    usePermissionGroupDeleteMutation({
-      onCompleted: data => {
-        if (data?.permissionGroupDelete?.errors?.length === 0) {
-          notify({
-            status: "success",
-            text: intl.formatMessage({
-              id: "DovGIa",
-              defaultMessage: "Permission Group Deleted",
-            }),
-          });
-          navigate(permissionGroupListUrl());
-        } else {
-          setDeleteError(data?.permissionGroupDelete?.errors?.[0]);
-        }
-      },
-    });
-
+  const [deleteError, setDeleteError] = React.useState<PermissionGroupErrorFragment>();
+  const [permissionGroupDelete, permissionGroupDeleteOps] = usePermissionGroupDeleteMutation({
+    onCompleted: data => {
+      if (data?.permissionGroupDelete?.errors?.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage({
+            id: "DovGIa",
+            defaultMessage: "Permission Group Deleted",
+          }),
+        });
+        navigate(permissionGroupListUrl());
+      } else {
+        setDeleteError(data?.permissionGroupDelete?.errors?.[0]);
+      }
+    },
+  });
   const unassignMembers = () => {
-    setMembersList(
-      membersList?.filter(m => !listElements.includes(m.id)) ?? [],
-    );
+    setMembersList(membersList?.filter(m => !listElements.includes(m.id)) ?? []);
     closeModal();
   };
-
   const isGroupEditable =
     (data?.user?.editableGroups || []).filter(g => g.id === id).length > 0 &&
     data?.permissionGroup?.userCanManage;
-
   const lastSourcesOfPermission = (data?.user?.userPermissions || [])
     .filter(
       perm =>
-        perm.sourcePermissionGroups?.length === 1 &&
-        perm.sourcePermissionGroups?.[0].id === id,
+        perm.sourcePermissionGroups?.length === 1 && perm.sourcePermissionGroups?.[0].id === id,
     )
     .map(perm => perm.code);
-
   const userPermissions = user?.user?.userPermissions?.map(p => p.code) || [];
-
   const permissions = (shop?.permissions || []).map(perm => ({
     ...perm,
     disabled: !userPermissions.includes(perm.code),
     lastSource: lastSourcesOfPermission.includes(perm.code),
   }));
-
-  const permissionsExceeded = arePermissionsExceeded(
-    data?.permissionGroup,
-    user?.user,
-  );
-
+  const permissionsExceeded = arePermissionsExceeded(data?.permissionGroup, user?.user);
   const isLoading = loading || permissionGroupUpdateResult.loading;
   const disabled = isLoading || !isGroupEditable || permissionsExceeded;
-
   const handleSubmit = async (formData: PermissionGroupDetailsPageFormData) =>
     extractMutationErrors(
       permissionGroupUpdate({
@@ -197,12 +156,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
             name: formData.name,
             ...permissionsDiff(data?.permissionGroup, formData),
             ...usersDiff(data?.permissionGroup, formData),
-            ...channelsDiff(
-              data?.permissionGroup,
-              formData,
-              availableChannels,
-              !!isGroupEditable,
-            ),
+            ...channelsDiff(data?.permissionGroup, formData, availableChannels, !!isGroupEditable),
             restrictedAccessToChannels: !formData.hasAllChannels,
           },
         },
@@ -220,9 +174,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
         onAssign={() => openModal("assign")}
         onUnassign={ids => openModal("unassign", { ids })}
         onDelete={() => openModal("remove")}
-        errors={
-          permissionGroupUpdateResult?.data?.permissionGroupUpdate?.errors ?? []
-        }
+        errors={permissionGroupUpdateResult?.data?.permissionGroupUpdate?.errors ?? []}
         onSubmit={handleSubmit}
         permissions={permissions}
         saveButtonBarState={permissionGroupUpdateResult.status}
@@ -234,7 +186,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
         sort={getSortParams(params)}
         toolbar={
           <Button
-          data-test-id="unassign-members-button"
+            data-test-id="unassign-members-button"
             variant="secondary"
             onClick={() => openModal("unassign", { ids: listElements })}
           >

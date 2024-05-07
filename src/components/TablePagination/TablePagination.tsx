@@ -53,21 +53,14 @@ export const TablePagination: React.FC<PaginationProps> = ({
         hasNextPage={hasNextPage && !disabled}
         hasPreviousPage={hasPreviousPage && !disabled}
         labels={{
-          noOfRows:
-            labels?.noOfRows ?? intl.formatMessage(commonMessages.noOfRows),
+          noOfRows: labels?.noOfRows ?? intl.formatMessage(commonMessages.noOfRows),
         }}
         rowNumber={settings?.rowNumber}
         onRowNumberUpdate={
-          onUpdateListSettings
-            ? value => onUpdateListSettings("rowNumber", value)
-            : undefined
+          onUpdateListSettings ? value => onUpdateListSettings("rowNumber", value) : undefined
         }
-        nextIconButtonProps={
-          nextHref ? { component: Link, to: nextHref } : undefined
-        }
-        prevIconButtonProps={
-          prevHref ? { component: Link, to: prevHref } : undefined
-        }
+        nextIconButtonProps={nextHref ? { component: Link, to: nextHref } : undefined}
+        prevIconButtonProps={prevHref ? { component: Link, to: prevHref } : undefined}
       />
     </Wrapper>
   );

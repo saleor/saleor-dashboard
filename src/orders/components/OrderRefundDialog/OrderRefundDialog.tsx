@@ -10,23 +10,25 @@ import { orderRefundDialogMesages } from "./messages";
 interface OrderRefundDialogProps {
   open: boolean;
   onClose: () => void;
-  onConfirm: () => void;
+  onStandardRefund: () => void;
+  onManualRefund: () => void;
 }
 
-type RefundType = "standard" | "misc";
+type RefundType = "standard" | "manual";
 
 export const OrderRefundDialog = ({
   open,
   onClose,
-  onConfirm,
+  onStandardRefund,
+  onManualRefund,
 }: OrderRefundDialogProps) => {
   const [selected, setSelected] = React.useState<RefundType>("standard");
   const intl = useIntl();
-
   const handleClose = () => {
     setSelected("standard");
     onClose();
   };
+
   return (
     <DashboardModal open={open} onChange={handleClose}>
       <DashboardModal.Content __width="400px">
@@ -34,11 +36,7 @@ export const OrderRefundDialog = ({
           {intl.formatMessage(orderRefundDialogMesages.title)}
         </DashboardModal.Title>
         <Text>{intl.formatMessage(orderRefundDialogMesages.subtitle)}</Text>
-        <RadioTiles
-          asChild
-          value={selected}
-          onValueChange={val => setSelected(val as RefundType)}
-        >
+        <RadioTiles asChild value={selected} onValueChange={val => setSelected(val as RefundType)}>
           <Box
             as="fieldset"
             borderWidth={0}
@@ -50,33 +48,25 @@ export const OrderRefundDialog = ({
           >
             <RadioTiles.RadioTile
               value={"standard"}
+              data-test-id="standard-refund"
               checked={selected === "standard"}
-              title={intl.formatMessage(
-                orderRefundDialogMesages.standardRefundTitle,
-              )}
-              description={intl.formatMessage(
-                orderRefundDialogMesages.standardRefundSubtitle,
-              )}
+              title={intl.formatMessage(orderRefundDialogMesages.standardRefundTitle)}
+              description={intl.formatMessage(orderRefundDialogMesages.standardRefundSubtitle)}
             />
             <RadioTiles.RadioTile
-              value={"misc"}
-              checked={selected === "misc"}
-              title={intl.formatMessage(
-                orderRefundDialogMesages.miscRefundTitle,
-              )}
-              description={intl.formatMessage(
-                orderRefundDialogMesages.miscRefundSubtitle,
-              )}
+              value={"manual"}
+              data-test-id="manual-refund"
+              checked={selected === "manual"}
+              title={intl.formatMessage(orderRefundDialogMesages.manualRefundTitle)}
+              description={intl.formatMessage(orderRefundDialogMesages.manualRefundSubtitle)}
             />
           </Box>
         </RadioTiles>
         <DashboardModal.Actions>
           <Button onClick={onClose} variant="secondary">
-            <Text fontWeight="medium">
-              {intl.formatMessage(buttonMessages.cancel)}
-            </Text>
+            <Text fontWeight="medium">{intl.formatMessage(buttonMessages.cancel)}</Text>
           </Button>
-          <Button onClick={onConfirm}>
+          <Button onClick={selected === "standard" ? onStandardRefund : onManualRefund}>
             <Text fontWeight="medium" color="buttonDefaultPrimary">
               {intl.formatMessage(buttonMessages.confirm)}
             </Text>

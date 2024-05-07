@@ -54,8 +54,7 @@ export const useStyles = makeStyles(
 const messages = defineMessages({
   selectTitle: {
     id: "7scATx",
-    defaultMessage:
-      "Select channels you want for {contentType} to be available on",
+    defaultMessage: "Select channels you want for {contentType} to be available on",
     description: "select title",
   },
   selectAllChannelsLabel: {
@@ -86,9 +85,7 @@ export interface ChannelsAvailabilityContentProps {
   hasAllSelected: boolean;
 }
 
-export const ChannelsAvailabilityContentWrapper: React.FC<
-  ChannelsAvailabilityContentProps
-> = ({
+export const ChannelsAvailabilityContentWrapper: React.FC<ChannelsAvailabilityContentProps> = ({
   contentType = "",
   toggleAll,
   toggleAllLabel,
@@ -129,9 +126,7 @@ export const ChannelsAvailabilityContentWrapper: React.FC<
               name="allChannels"
               label={
                 toggleAllLabel || (
-                  <Label
-                    text={intl.formatMessage(messages.selectAllChannelsLabel)}
-                  />
+                  <Label text={intl.formatMessage(messages.selectAllChannelsLabel)} />
                 )
               }
               onChange={toggleAll}

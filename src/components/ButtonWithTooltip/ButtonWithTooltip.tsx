@@ -6,11 +6,7 @@ interface ButtonWithTooltipProps extends ButtonProps {
   children: React.ReactNode;
 }
 
-export const ButtonWithTooltip = ({
-  tooltip,
-  children,
-  ...props
-}: ButtonWithTooltipProps) => {
+export const ButtonWithTooltip = ({ tooltip, children, ...props }: ButtonWithTooltipProps) => {
   if (!tooltip) {
     return <Button {...props}>{children}</Button>;
   }

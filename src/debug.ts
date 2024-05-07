@@ -5,5 +5,4 @@ import debugPkg from "debug";
  * Eg. DEBUG=saleor-dashboard:* - enable all
  *     DEUBG=saleor-dashboard:apps:* - enable apps debugger
  */
-export const createDebug = (namespace: string) =>
-  debugPkg.debug(`saleor-dashboard:${namespace}`);
+export const createDebug = (namespace: string) => debugPkg.debug(`saleor-dashboard:${namespace}`);

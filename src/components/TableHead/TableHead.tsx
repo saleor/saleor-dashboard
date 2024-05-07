@@ -1,10 +1,6 @@
 // @ts-strict-ignore
 import TableRowLink from "@dashboard/components/TableRowLink";
-import {
-  TableCell,
-  TableHead as MuiTableHead,
-  Typography,
-} from "@material-ui/core";
+import { TableCell, TableHead as MuiTableHead, Typography } from "@material-ui/core";
 import { TableHeadProps as MuiTableHeadProps } from "@material-ui/core/TableHead";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
@@ -95,6 +91,7 @@ const TableHead: React.FC<TableHeadProps> = props => {
             })}
           >
             <Checkbox
+              data-test-id="select-all-checkbox"
               indeterminate={items && items.length > selected && selected > 0}
               checked={selected !== 0}
               disabled={disabled}
@@ -121,7 +118,11 @@ const TableHead: React.FC<TableHeadProps> = props => {
                   </Typography>
                 )}
                 <div className={classes.spacer} />
-                {toolbar && <div className={classes.toolbar}>{toolbar}</div>}
+                {toolbar && (
+                  <div data-test-id="bulk-delete-button" className={classes.toolbar}>
+                    {toolbar}
+                  </div>
+                )}
               </div>
             </TableCell>
           </>
@@ -132,5 +133,6 @@ const TableHead: React.FC<TableHeadProps> = props => {
     </MuiTableHead>
   );
 };
+
 TableHead.displayName = "TableHead";
 export default TableHead;

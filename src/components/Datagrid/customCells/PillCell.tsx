@@ -8,17 +8,18 @@ import chroma from "chroma-js";
 
 export const stringToHue = (str: string): number => {
   let hash = 0;
+
   for (let i = 0; i < str.length; i++) {
     const char = str.charCodeAt(i);
+
     hash = (hash << 5) - hash + char;
     hash &= hash; // Convert to 32bit integer
   }
+
   return hash % 360;
 };
 
-const oklchIsSupported =
-  typeof CSS !== "undefined" && CSS.supports("color: oklch(0% 0 0)");
-
+const oklchIsSupported = typeof CSS !== "undefined" && CSS.supports("color: oklch(0% 0 0)");
 const oklch = (l: number, c: number, h: number) => {
   if (oklchIsSupported) {
     return `oklch(${l}% ${c} ${h})`;
@@ -73,12 +74,9 @@ export const pillCellRenderer = (): CustomRenderer<PillCell> => ({
     const { rect, ctx, theme } = args;
     const { x, y, height } = rect;
     const { base, border, text } = cell.data.color;
-
     const textMetrics = ctx.measureText(label);
     const textWidth = textMetrics.width;
-    const textHeight =
-      textMetrics.fontBoundingBoxAscent + textMetrics.fontBoundingBoxDescent;
-
+    const textHeight = textMetrics.fontBoundingBoxAscent + textMetrics.fontBoundingBoxDescent;
     const tileWidth = textWidth + 10;
     const tileHeight = textHeight * 1.2;
 
@@ -86,23 +84,12 @@ export const pillCellRenderer = (): CustomRenderer<PillCell> => ({
     ctx.fillStyle = base;
     ctx.strokeStyle = border;
     ctx.beginPath();
-    ctx.roundRect(
-      x + 10,
-      y + height / 2 - tileHeight / 2,
-      tileWidth,
-      tileHeight,
-      5,
-    );
+    ctx.roundRect(x + 10, y + height / 2 - tileHeight / 2, tileWidth, tileHeight, 5);
     ctx.stroke();
     ctx.fill();
-
     // Draw the text
     ctx.fillStyle = text;
-    ctx.fillText(
-      label,
-      x + 15,
-      y + height / 2 + getMiddleCenterBias(ctx, theme),
-    );
+    ctx.fillText(label, x + 15, y + height / 2 + getMiddleCenterBias(ctx, theme));
 
     return true;
   },

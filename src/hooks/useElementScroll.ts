@@ -5,23 +5,23 @@ import { MutableRefObject, useEffect, useState } from "react";
 export type Position = Record<"x" | "y", number>;
 
 function getPosition(anchor?: HTMLElement): Position {
-  if (!!anchor) {
+  if (anchor) {
     return {
       x: anchor.scrollLeft,
       y: anchor.scrollTop,
     };
   }
+
   return undefined;
 }
 
 export function isScrolledToBottom(
   anchor: MutableRefObject<HTMLElement>,
   position: Position,
-  offset: number = 0,
+  offset = 0,
 ) {
   return !!anchor.current && position
-    ? position.y + anchor.current.clientHeight + offset >=
-        anchor.current.scrollHeight
+    ? position.y + anchor.current.clientHeight + offset >= anchor.current.scrollHeight
     : undefined;
 }
 
@@ -31,21 +31,18 @@ function useElementScroll(anchor: MutableRefObject<HTMLElement>): Position {
   useEffect(() => {
     const anchorInstance = anchor.current;
 
-    if (!!anchorInstance) {
-      const handleScroll = throttle(
-        () => setScroll(getPosition(anchorInstance)),
-        100,
-      );
+    if (anchorInstance) {
+      const handleScroll = throttle(() => setScroll(getPosition(anchorInstance)), 100);
+
       anchorInstance.addEventListener("scroll", handleScroll);
 
       return () => {
-        if (!!anchorInstance) {
+        if (anchorInstance) {
           anchorInstance.removeEventListener("scroll", handleScroll);
         }
       };
     }
   }, [anchor.current]);
-
   useEffect(() => {
     setTimeout(() => setScroll(getPosition(anchor.current)), 100);
   }, []);

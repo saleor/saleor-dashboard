@@ -54,18 +54,12 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-
   const initialForm: MenuDetailsFormData = {
     name: menu?.name ?? "",
   };
-
-  const [treeOperations, setTreeOperations] = React.useState<TreeOperation[]>(
-    [],
-  );
-
+  const [treeOperations, setTreeOperations] = React.useState<TreeOperation[]>([]);
   const removeSimulatedMoves = (operations: TreeOperation[]) =>
     operations.filter(operation => !operation.simulatedMove);
-
   const handleSubmit = async (data: MenuDetailsFormData) => {
     const result = await onSubmit({
       name: data.name,
@@ -78,13 +72,17 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
 
     return result;
   };
-
   const handleChange = (operations: TreeOperation[]) => {
     setTreeOperations([...treeOperations, ...operations]);
   };
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
+    <Form
+      data-test-id="navigation-menu-details-page"
+      confirmLeave
+      initial={initialForm}
+      onSubmit={handleSubmit}
+    >
       {({ change, data, submit }) => (
         <DetailPageLayout gridTemplateColumns={1}>
           <DetailPageLayout.Content>
@@ -114,11 +112,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
                   <CardSpacer />
                   <MenuItems
                     canUndo={treeOperations.length > 0}
-                    items={
-                      menu?.items
-                        ? computeRelativeTree(menu.items, treeOperations)
-                        : []
-                    }
+                    items={menu?.items ? computeRelativeTree(menu.items, treeOperations) : []}
                     onChange={handleChange}
                     onItemAdd={onItemAdd}
                     onItemClick={onItemClick}
@@ -131,6 +125,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
                             return operations.slice(0, operations.length - 2);
                           }
                         }
+
                         return operations.slice(0, operations.length - 1);
                       })
                     }
@@ -151,5 +146,6 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
     </Form>
   );
 };
+
 MenuDetailsPage.displayName = "MenuDetailsPage";
 export default MenuDetailsPage;

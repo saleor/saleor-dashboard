@@ -9,21 +9,14 @@ interface RuleConditionTypeProps {
   conditionIndex: number;
 }
 
-export const RuleConditionType = ({
-  conditionIndex,
-}: RuleConditionTypeProps) => {
+export const RuleConditionType = ({ conditionIndex }: RuleConditionTypeProps) => {
   const { watch } = useFormContext<Rule>();
   const condition = watch(`conditions.${conditionIndex}`);
   const { disabled } = useDiscountRulesContext();
-
   const { getConditionTypesOptions } = useCondtionTypes();
   const conditionTypesOptions = getConditionTypesOptions(condition.id ?? "");
-
   const ruleCondtionTypeFileName = `conditions.${conditionIndex}.type` as const;
-  const { field: typeField } = useController<
-    Rule,
-    typeof ruleCondtionTypeFileName
-  >({
+  const { field: typeField } = useController<Rule, typeof ruleCondtionTypeFileName>({
     name: ruleCondtionTypeFileName,
   });
 

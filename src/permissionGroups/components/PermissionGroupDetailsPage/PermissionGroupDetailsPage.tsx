@@ -16,10 +16,7 @@ import {
 import { FormChange, SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { buttonMessages } from "@dashboard/intl";
-import {
-  MembersListUrlSortField,
-  permissionGroupListUrl,
-} from "@dashboard/permissionGroups/urls";
+import { MembersListUrlSortField, permissionGroupListUrl } from "@dashboard/permissionGroups/urls";
 import { ListActions, SortPage } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
@@ -47,8 +44,7 @@ export interface PermissionGroupDetailsPageFormData {
   channels: string[];
 }
 
-export interface PermissionData
-  extends Omit<UserPermissionFragment, "__typename"> {
+export interface PermissionData extends Omit<UserPermissionFragment, "__typename"> {
   lastSource?: boolean;
   disabled?: boolean;
 }
@@ -71,9 +67,7 @@ export interface PermissonGroupDetailsPageProps
   onSubmit: (data: PermissionGroupDetailsPageFormData) => SubmitPromise;
 }
 
-export const PermissionGroupDetailsPage: React.FC<
-  PermissonGroupDetailsPageProps
-> = ({
+export const PermissionGroupDetailsPage: React.FC<PermissonGroupDetailsPageProps> = ({
   disabled,
   errors,
   members,
@@ -90,12 +84,8 @@ export const PermissionGroupDetailsPage: React.FC<
   const intl = useIntl();
   const navigate = useNavigator();
   const user = useUser();
-
   const channelsOptions = getUserAccessibleChannelsOptions(channels, user.user);
-  const hasUserRestrictedChannels = checkIfUserHasRestictedAccessToChannels(
-    user.user,
-  );
-
+  const hasUserRestrictedChannels = checkIfUserHasRestictedAccessToChannels(user.user);
   const initialForm: PermissionGroupDetailsPageFormData = {
     hasFullAccess: isGroupFullAccess(permissionGroup, permissions),
     hasAllChannels: !permissionGroup?.restrictedAccessToChannels ?? false,
@@ -105,12 +95,8 @@ export const PermissionGroupDetailsPage: React.FC<
     permissions: extractPermissionCodes(permissionGroup),
     users: members,
   };
-
   const formErrors = getFormErrors(["addPermissions"], errors);
-  const permissionsError = getPermissionGroupErrorMessage(
-    formErrors.addPermissions,
-    intl,
-  );
+  const permissionsError = getPermissionGroupErrorMessage(formErrors.addPermissions, intl);
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
@@ -123,7 +109,6 @@ export const PermissionGroupDetailsPage: React.FC<
             },
           });
         };
-
         const handleHasAllChannelsChange = () => {
           change({
             target: {
@@ -135,10 +120,7 @@ export const PermissionGroupDetailsPage: React.FC<
 
         return (
           <DetailPageLayout>
-            <TopNav
-              href={permissionGroupListUrl()}
-              title={permissionGroup?.name}
-            />
+            <TopNav href={permissionGroupListUrl()} title={permissionGroup?.name} />
             <DetailPageLayout.Content>
               <PermissionGroupInfo
                 data={data}

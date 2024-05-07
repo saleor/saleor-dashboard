@@ -48,57 +48,40 @@ interface OrderDetailsMessages {
     handleDraftUpdate: (data: OrderDraftUpdateMutation) => void;
     handleNoteAdd: (data: OrderAddNoteMutation) => void;
     handleOrderCancel: (data: OrderCancelMutation) => void;
-    handleOrderFulfillmentApprove: (
-      data: OrderFulfillmentApproveMutation,
-    ) => void;
-    handleOrderFulfillmentCancel: (
-      data: OrderFulfillmentCancelMutation,
-    ) => void;
-    handleOrderFulfillmentUpdate: (
-      data: OrderFulfillmentUpdateTrackingMutation,
-    ) => void;
+    handleOrderFulfillmentApprove: (data: OrderFulfillmentApproveMutation) => void;
+    handleOrderFulfillmentCancel: (data: OrderFulfillmentCancelMutation) => void;
+    handleOrderFulfillmentUpdate: (data: OrderFulfillmentUpdateTrackingMutation) => void;
     handleOrderLinesAdd: (data: OrderLinesAddMutation) => void;
     handleOrderLineDelete: (data: OrderLineDeleteMutation) => void;
     handleOrderLineUpdate: (data: OrderLineUpdateMutation) => void;
     handleOrderMarkAsPaid: (data: OrderMarkAsPaidMutation) => void;
     handleOrderVoid: (data: OrderVoidMutation) => void;
     handlePaymentCapture: (data: OrderCaptureMutation) => void;
-    handleShippingMethodUpdate: (
-      data: OrderShippingMethodUpdateMutation,
-    ) => void;
+    handleShippingMethodUpdate: (data: OrderShippingMethodUpdateMutation) => void;
     handleUpdate: (data: OrderUpdateMutation) => void;
     handleInvoiceGeneratePending: (data: InvoiceRequestMutation) => void;
     handleInvoiceGenerateFinished: (data: InvoiceRequestMutation) => void;
     handleInvoiceSend: (data: InvoiceEmailSendMutation) => void;
-    handleTransactionAction: (
-      data: OrderTransactionRequestActionMutation,
-    ) => void;
-    handleAddManualTransaction: (
-      data: CreateManualTransactionCaptureMutation,
-    ) => void;
+    handleTransactionAction: (data: OrderTransactionRequestActionMutation) => void;
+    handleAddManualTransaction: (data: CreateManualTransactionCaptureMutation) => void;
   }) => React.ReactElement;
   id: string;
   params: OrderUrlQueryParams;
 }
 
-export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
-  children,
-  id,
-  params,
-}) => {
+export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children, id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
   const { locale } = useLocale();
-
   const [, closeModal] = createDialogActionHandlers(
     navigate,
     params => orderUrl(id, params),
     params,
   );
-
   const handlePaymentCapture = (data: OrderCaptureMutation) => {
     const errs = data.orderCapture?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -112,6 +95,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   };
   const handleOrderMarkAsPaid = (data: OrderMarkAsPaidMutation) => {
     const errs = data.orderMarkAsPaid?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -125,6 +109,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   };
   const handleOrderCancel = (data: OrderCancelMutation) => {
     const errs = data.orderCancel?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -138,6 +123,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   };
   const handleDraftCancel = (data: OrderDraftCancelMutation) => {
     const errs = data.draftOrderDelete?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -151,6 +137,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   };
   const handleOrderVoid = (data: OrderVoidMutation) => {
     const errs = data.orderVoid?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -164,6 +151,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   };
   const handleNoteAdd = (data: OrderAddNoteMutation) => {
     const errs = data.orderAddNote?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -176,6 +164,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   };
   const handleUpdate = (data: OrderUpdateMutation) => {
     const errs = data.orderUpdate?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -189,6 +178,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   };
   const handleDraftUpdate = (data: OrderDraftUpdateMutation) => {
     const errs = data.draftOrderUpdate?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -200,10 +190,9 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       closeModal();
     }
   };
-  const handleShippingMethodUpdate = (
-    data: OrderShippingMethodUpdateMutation,
-  ) => {
+  const handleShippingMethodUpdate = (data: OrderShippingMethodUpdateMutation) => {
     const errs = data.orderUpdateShipping?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -217,6 +206,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   };
   const handleOrderLineDelete = (data: OrderLineDeleteMutation) => {
     const errs = data.orderLineDelete?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -229,6 +219,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   };
   const handleOrderLinesAdd = (data: OrderLinesAddMutation) => {
     const errs = data.orderLinesCreate?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -242,6 +233,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   };
   const handleOrderLineUpdate = (data: OrderLineUpdateMutation) => {
     const errs = data.orderLineUpdate?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -259,10 +251,9 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       );
     }
   };
-  const handleOrderFulfillmentApprove = (
-    data: OrderFulfillmentApproveMutation,
-  ) => {
+  const handleOrderFulfillmentApprove = (data: OrderFulfillmentApproveMutation) => {
     const errs = data.orderFulfillmentApprove?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -278,10 +269,9 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       }
     }
   };
-  const handleOrderFulfillmentCancel = (
-    data: OrderFulfillmentCancelMutation,
-  ) => {
+  const handleOrderFulfillmentCancel = (data: OrderFulfillmentCancelMutation) => {
     const errs = data.orderFulfillmentCancel?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -293,10 +283,9 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       closeModal();
     }
   };
-  const handleOrderFulfillmentUpdate = (
-    data: OrderFulfillmentUpdateTrackingMutation,
-  ) => {
+  const handleOrderFulfillmentUpdate = (data: OrderFulfillmentUpdateTrackingMutation) => {
     const errs = data.orderFulfillmentUpdateTracking?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -310,6 +299,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   };
   const handleDraftFinalize = (data: OrderDraftFinalizeMutation) => {
     const errs = data.draftOrderComplete?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -322,6 +312,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   };
   const handleInvoiceGeneratePending = (data: InvoiceRequestMutation) => {
     const errs = data.invoiceRequest?.errors;
+
     if (errs.length === 0) {
       notify({
         text: intl.formatMessage({
@@ -339,6 +330,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   };
   const handleInvoiceGenerateFinished = (data: InvoiceRequestMutation) => {
     const errs = data.invoiceRequest?.errors;
+
     if (errs.length === 0) {
       notify({
         status: "success",
@@ -350,6 +342,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   };
   const handleInvoiceSend = (data: InvoiceEmailSendMutation) => {
     const errs = data.invoiceSendNotification?.errors;
+
     if (errs.length === 0) {
       notify({
         text: intl.formatMessage({
@@ -360,9 +353,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       closeModal();
     }
   };
-  const handleTransactionAction = (
-    data: OrderTransactionRequestActionMutation,
-  ) => {
+  const handleTransactionAction = (data: OrderTransactionRequestActionMutation) => {
     const {
       transactionRequestAction: { errors },
     } = data;
@@ -381,9 +372,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       closeModal();
     }
   };
-  const handleAddManualTransaction = (
-    data: CreateManualTransactionCaptureMutation,
-  ) => {
+  const handleAddManualTransaction = (data: CreateManualTransactionCaptureMutation) => {
     const {
       transactionCreate: { errors, transaction },
     } = data;

@@ -9,12 +9,11 @@ import { MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
 import { MenuItemDialogFormData } from "../../components/MenuItemDialog";
 import { unknownTypeError } from "../../components/MenuItemsSortableTree/utils";
 
-export function getMenuItemInputData(
-  data: MenuItemDialogFormData,
-): MenuItemInput {
+export function getMenuItemInputData(data: MenuItemDialogFormData): MenuItemInput {
   const variables: MenuItemInput = {
     name: data.name,
   };
+
   switch (data.type) {
     case "category":
       variables.category = data.id;
@@ -47,6 +46,7 @@ export function getMenuItemCreateInputData(
     menu,
     name: data.name,
   };
+
   switch (data.type) {
     case "category":
       variables.category = data.id;
@@ -75,6 +75,7 @@ export function getInitialDisplayValue(item: MenuItemFragment): string {
   if (!item) {
     return "...";
   }
+
   if (item.category) {
     return item.category.name;
   } else if (item.collection) {

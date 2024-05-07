@@ -33,12 +33,8 @@ interface DiscountDetailsFormProps {
   disabled: boolean;
   data: PromotionDetailsFragment | undefined | null;
   onSubmit: (data: DiscoutFormData) => void;
-  onRuleUpdateSubmit: (
-    data: Rule,
-  ) => Promise<Array<CommonError<PromotionRuleUpdateErrorFragment>>>;
-  onRuleCreateSubmit: (
-    data: Rule,
-  ) => Promise<Array<CommonError<PromotionRuleCreateErrorFragment>>>;
+  onRuleUpdateSubmit: (data: Rule) => Promise<Array<CommonError<PromotionRuleUpdateErrorFragment>>>;
+  onRuleCreateSubmit: (data: Rule) => Promise<Array<CommonError<PromotionRuleCreateErrorFragment>>>;
   onRuleDeleteSubmit: (id: string) => void;
 }
 
@@ -52,7 +48,6 @@ export const DiscountDetailsForm = ({
   onRuleUpdateSubmit,
 }: DiscountDetailsFormProps) => {
   const intl = useIntl();
-
   const methods = useForm<DiscoutFormData>({
     mode: "onBlur",
     values: {
@@ -70,17 +65,13 @@ export const DiscountDetailsForm = ({
     },
     resolver: zodResolver(getValidationSchema(intl)),
   });
-
   const discountType = methods.watch("type");
-
   const richText = useRichText({
     initial: JSON.stringify(data?.description),
     loading: disabled,
     triggerChange: methods.trigger,
   });
-
   const handleSubmit = methods.handleSubmit(onSubmit);
-
   const { ruleConditionsValues, gifts } = useLabelMapsContext();
   const { onDeleteRule, onRuleSubmit, rules, rulesErrors } = useRulesHandlers({
     data,

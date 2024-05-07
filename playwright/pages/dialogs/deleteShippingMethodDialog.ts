@@ -7,7 +7,6 @@ export class DeleteShippingMethodDialog {
 
   constructor(page: Page) {
     this.page = page;
-
     this.deleteButton = page.getByTestId("submit");
   }
 
