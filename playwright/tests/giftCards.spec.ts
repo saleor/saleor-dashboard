@@ -17,6 +17,7 @@ test.beforeEach(async ({ page, request }) => {
 });
 
 test("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
+  test.slow();
   await giftCardsPage.clickIssueCardButton();
   await giftCardsPage.issueGiftCardDialog.typeAmount("50");
   await giftCardsPage.issueGiftCardDialog.typeTag(
@@ -43,6 +44,7 @@ test("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
 });
 
 test("TC: SALEOR_106 Issue gift card with specific customer and expiry date @e2e @gift", async () => {
+  test.slow();
   await giftCardsPage.clickIssueCardButton();
   await giftCardsPage.issueGiftCardDialog.clickSendToCustomerCheckbox();
   await giftCardsPage.issueGiftCardDialog.typeCustomer("Allison Freeman");

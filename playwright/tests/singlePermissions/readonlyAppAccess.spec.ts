@@ -1,16 +1,17 @@
 import { URL_LIST } from "@data/url";
-import { permissions } from "@data/userPermissions";
-import { AppDetailsPage } from "@pages/appDetailsPage";
-import { AppPage } from "@pages/appPageThirdparty";
 import { AppsPage } from "@pages/appsPage";
+import { AppPage } from "@pages/appPageThirdparty";
+import { AppDetailsPage } from "@pages/appDetailsPage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { expect, test } from "@playwright/test";
+import { permissions } from "@data/userPermissions";
 
-const permissionToExclude = "app";
+let permissionToExclude = "app";
 const permissionList = permissions.filter(item => item !== permissionToExclude);
 
 for (const permission of permissionList) {
   test.use({ storageState: `playwright/.auth/${permission}.json` });
+
   test(`TC: SALEOR_131 User with ${permission} permissions should have readonly access to Apps @e2e`, async ({
     page,
   }) => {
@@ -20,7 +21,7 @@ for (const permission of permissionList) {
     const appDetailsPage = new AppDetailsPage(page);
 
     await page.goto(URL_LIST.homePage);
-    await mainMenuPage.waitForNetworkIdleAfterAction(() => mainMenuPage.openApps());
+    await mainMenuPage.waitForNetworkIdle(() =>mainMenuPage.openApps()),
     await mainMenuPage.waitForDOMToFullyLoad();
     await expect(appsPage.installExternalAppButton).not.toBeVisible();
 
@@ -29,13 +30,12 @@ for (const permission of permissionList) {
       appsPage.availableAppsList,
       appsPage.upcomingAppsList,
     ];
-
     for (const appList of appLists) {
       await expect(appList).toBeVisible();
     }
-    await appsPage.waitForNetworkIdleAfterAction(() => appsPage.installedAppRow.first().click());
+    await appsPage.waitForNetworkIdle(() => appsPage.installedAppRow.first().click()),
     await expect(appPage.appSettingsButton).toBeVisible();
-    await appsPage.waitForNetworkIdleAfterAction(() => appPage.appSettingsButton.click());
+    await appsPage.waitForNetworkIdle(() => appPage.appSettingsButton.click()),
     await expect(appDetailsPage.appDetailsSection).toBeVisible();
 
     const buttons = [
@@ -43,7 +43,6 @@ for (const permission of permissionList) {
       appDetailsPage.appActivateButton,
       appDetailsPage.appEditPermissionsButton,
     ];
-
     for (const button of buttons) {
       await button.waitFor({
         state: "visible",
