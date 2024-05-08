@@ -19,7 +19,8 @@ export class ProductCreateDialog extends BasePage{
   }
   async selectProductTypeWithVariants(productType: string = "Beer") {
     await this.waitForNetworkIdle(() => this.dialogProductTypeInput.fill(productType));
-    await this.promptedOptions.filter({hasText:productType}).click();
+    await this.promptedOptions.filter({ hasText: productType }).waitFor({ state: "attached" });
+    await this.promptedOptions.filter({ hasText: productType }).click();
   }
   async clickConfirmButton() {
     await this.confirmButton.click();
