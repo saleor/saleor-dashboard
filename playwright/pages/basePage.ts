@@ -66,6 +66,7 @@ export class BasePage {
   async typeInSearchOnListView(searchItem: string) {
     await this.waitForNetworkIdle(async () => {
       await this.searchInputListView.fill(searchItem);
+      await this.waitForGrid();
       await this.waitForDOMToFullyLoad();
     });
   }
