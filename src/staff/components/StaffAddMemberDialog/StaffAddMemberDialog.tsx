@@ -79,11 +79,7 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
 
   return (
     <Dialog onClose={onClose} open={open}>
-      <Form
-        data-test-id="invite-staff-member-dialog-form"
-        initial={initialForm}
-        onSubmit={onConfirm}
-      >
+      <Form initial={initialForm} onSubmit={onConfirm}>
         {({ change, data: formData }) => (
           <>
             <DialogTitle disableTypography>

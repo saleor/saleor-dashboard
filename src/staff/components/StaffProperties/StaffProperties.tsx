@@ -136,7 +136,7 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
   });
 
   return (
-    <Card className={className} data-test-id="staff-member-information">
+    <Card className={className}>
       <CardTitle
         title={intl.formatMessage({
           id: "VTITVe",
