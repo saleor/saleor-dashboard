@@ -45,6 +45,7 @@ import ProductExternalMediaDialog from "@dashboard/products/components/ProductEx
 import { ProductOrganization } from "@dashboard/products/components/ProductOrganization/ProductOrganization";
 import { defaultGraphiQLQuery } from "@dashboard/products/queries";
 import { productImageUrl, productListUrl } from "@dashboard/products/urls";
+import { getChoicesWithAncestors } from "@dashboard/products/utils/utils";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
@@ -168,7 +169,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     getChoices(maybe(() => product.collections, [])),
   );
   const [selectedTaxClass, setSelectedTaxClass] = useStateFromProps(product?.taxClass?.name ?? "");
-  const categories = getChoices(categoryChoiceList);
+  const categories = getChoicesWithAncestors(categoryChoiceList);
   const collections = getChoices(collectionChoiceList);
   const hasVariants = product?.productType?.hasVariants;
   const taxClassesChoices =

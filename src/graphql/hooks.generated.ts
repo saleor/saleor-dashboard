@@ -15819,6 +15819,14 @@ export const SearchCategoriesDocument = gql`
       node {
         id
         name
+        ancestors(first: $first) {
+          edges {
+            node {
+              id
+              name
+            }
+          }
+        }
       }
     }
     pageInfo {
