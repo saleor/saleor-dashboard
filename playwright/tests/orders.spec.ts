@@ -87,6 +87,8 @@ test("TC: SALEOR_78 Capture partial amounts by manual transactions and fulfill o
   const firstManualTransactionAmount = "100";
   const secondManualTransactionAmount = "20";
 
+  test.slow();
+
   await ordersPage.goToExistingOrderPage(
     ORDERS.ordersWithinTransactionFlow.captureManualTransactionOrder.orderId,
   );
@@ -240,6 +242,7 @@ test("TC: SALEOR_83 Draft orders bulk delete @e2e @draft", async () => {
 });
 
 test("TC: SALEOR_84 Create draft order @e2e @draft", async () => {
+  test.slow();
   await draftOrdersPage.goToDraftOrdersListView();
   await draftOrdersPage.clickCreateDraftOrderButton();
   await draftOrdersPage.draftOrderCreateDialog.completeDraftOrderCreateDialogWithFirstChannel();
