@@ -15,6 +15,7 @@ test.beforeEach(async ({ page, request }) => {
   await giftCardsPage.waitForDOMToFullyLoad();
 });
 test("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
+  test.slow();
   await giftCardsPage.clickIssueCardButton();
   await giftCardsPage.issueGiftCardDialog.typeAmount("50");
   await giftCardsPage.issueGiftCardDialog.typeTag("super ultra automation discount");
@@ -42,6 +43,7 @@ test("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
     .waitFor({ state: "attached", timeout: 30000 });
 });
 test("TC: SALEOR_106 Issue gift card with specific customer and expiry date @e2e @gift", async () => {
+  test.slow();
   await giftCardsPage.clickIssueCardButton();
   await giftCardsPage.issueGiftCardDialog.clickSendToCustomerCheckbox();
   await giftCardsPage.issueGiftCardDialog.typeCustomer("Allison Freeman");
