@@ -50,24 +50,28 @@ export const searchCategoriesMock = {
             node: {
               id: "Q2F0ZWdvcnk6Nw==",
               name: "Accessories",
+              ancestors: [],
             },
           },
           {
             node: {
               id: "Q2F0ZWdvcnk6OA==",
               name: "Groceries",
+              ancestors: [],
             },
           },
           {
             node: {
               id: "Q2F0ZWdvcnk6OQ==",
               name: "Apparel",
+              ancestors: [],
             },
           },
           {
             node: {
               id: "Q2F0ZWdvcnk6MTA=",
               name: "T-shirts",
+              ancestors: [],
             },
           },
         ],

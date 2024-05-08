@@ -24,16 +24,10 @@ export const getChoicesWithAncestors = (choices: ChoiceWithAncestors[]) =>
     return {
       value: category.id,
       label: category.name,
-      endAdornment: hasAncestors && (
-        <Text size={2} color="default2" marginLeft={2}>
-          {ancestorItems.map(ancestor => (
-            <>
-              <Box as="span" key={ancestor.id} marginRight={1}>
-                {`/ ${ancestor.name}`}
-              </Box>
-            </>
-          ))}
+      endAdornment: hasAncestors ? (
+        <Text size={2} color="default2" marginLeft={2} key={`ancestor-${category.id}`}>
+          {ancestorItems.reduce((acc, ancestor) => `${acc} / ${ancestor.name}`, "")}
         </Text>
-      ),
+      ) : undefined,
     };
   });
