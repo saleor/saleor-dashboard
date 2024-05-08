@@ -1,7 +1,7 @@
 import { getChoicesWithAncestors } from "@dashboard/products/utils/utils";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { MemoryRouter as Router } from "react-router-dom";
 
 import { ProductOrganization } from "./ProductOrganization";
@@ -89,36 +89,40 @@ const categoriesWithAncestors = getChoicesWithAncestors([
   },
 ]);
 
+const Wrapper: React.FC<PropsWithChildren<{}>> = ({ children }) => (
+  <Router>
+    <ThemeProvider>{children}</ThemeProvider>
+  </Router>
+);
+
 describe("Products ProductOrganization", () => {
   it("renders combobox dropdown list", async () => {
     // Arrange & Act
     render(
-      <Router>
-        <ThemeProvider>
-          <ProductOrganization
-            categories={categories}
-            canChangeType={false}
-            categoryInputDisplayValue="categoryInputDisplayValue"
-            collections={[]}
-            collectionsInputDisplayValue={[]}
-            data={{ category: "category", collections: [] }}
-            disabled={false}
-            errors={[]}
-            fetchCategories={jest.fn()}
-            fetchCollections={jest.fn()}
-            // @ts-expect-error - fn not used in this test
-            fetchMoreCategories={jest.fn()}
-            // @ts-expect-error - fn not used in this test
-            fetchMoreCollections={jest.fn()}
-            productType={{ hasVariants: true, id: "id", name: "name" }}
-            productTypeInputDisplayValue="productTypeInputDisplayValue"
-            productTypes={undefined}
-            onCategoryChange={jest.fn()}
-            onCollectionChange={jest.fn()}
-            onProductTypeChange={jest.fn()}
-          />
-        </ThemeProvider>
-      </Router>,
+      <Wrapper>
+        <ProductOrganization
+          categories={categories}
+          canChangeType={false}
+          categoryInputDisplayValue="categoryInputDisplayValue"
+          collections={[]}
+          collectionsInputDisplayValue={[]}
+          data={{ category: "category", collections: [] }}
+          disabled={false}
+          errors={[]}
+          fetchCategories={jest.fn()}
+          fetchCollections={jest.fn()}
+          // @ts-expect-error - fn not used in this test
+          fetchMoreCategories={jest.fn()}
+          // @ts-expect-error - fn not used in this test
+          fetchMoreCollections={jest.fn()}
+          productType={{ hasVariants: true, id: "id", name: "name" }}
+          productTypeInputDisplayValue="productTypeInputDisplayValue"
+          productTypes={undefined}
+          onCategoryChange={jest.fn()}
+          onCollectionChange={jest.fn()}
+          onProductTypeChange={jest.fn()}
+        />
+      </Wrapper>,
     );
 
     const labelElement = screen.getAllByRole("combobox", {
@@ -139,32 +143,30 @@ describe("Products ProductOrganization", () => {
   it("renders combobox with dropdown list with multiple ancestors", async () => {
     // Arrange & Act
     render(
-      <Router>
-        <ThemeProvider>
-          <ProductOrganization
-            categories={categoriesWithAncestors}
-            canChangeType={false}
-            categoryInputDisplayValue="categoryInputDisplayValue"
-            collections={[]}
-            collectionsInputDisplayValue={[]}
-            data={{ category: "category", collections: [] }}
-            disabled={false}
-            errors={[]}
-            fetchCategories={jest.fn()}
-            fetchCollections={jest.fn()}
-            // @ts-expect-error - fn not used in this test
-            fetchMoreCategories={jest.fn()}
-            // @ts-expect-error - fn not used in this test
-            fetchMoreCollections={jest.fn()}
-            productType={{ hasVariants: true, id: "id", name: "name" }}
-            productTypeInputDisplayValue="productTypeInputDisplayValue"
-            productTypes={undefined}
-            onCategoryChange={jest.fn()}
-            onCollectionChange={jest.fn()}
-            onProductTypeChange={jest.fn()}
-          />
-        </ThemeProvider>
-      </Router>,
+      <Wrapper>
+        <ProductOrganization
+          categories={categoriesWithAncestors}
+          canChangeType={false}
+          categoryInputDisplayValue="categoryInputDisplayValue"
+          collections={[]}
+          collectionsInputDisplayValue={[]}
+          data={{ category: "category", collections: [] }}
+          disabled={false}
+          errors={[]}
+          fetchCategories={jest.fn()}
+          fetchCollections={jest.fn()}
+          // @ts-expect-error - fn not used in this test
+          fetchMoreCategories={jest.fn()}
+          // @ts-expect-error - fn not used in this test
+          fetchMoreCollections={jest.fn()}
+          productType={{ hasVariants: true, id: "id", name: "name" }}
+          productTypeInputDisplayValue="productTypeInputDisplayValue"
+          productTypes={undefined}
+          onCategoryChange={jest.fn()}
+          onCollectionChange={jest.fn()}
+          onProductTypeChange={jest.fn()}
+        />
+      </Wrapper>,
     );
 
     const labelElement = screen.getAllByRole("combobox", {

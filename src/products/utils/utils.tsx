@@ -1,4 +1,5 @@
 import { mapEdgesToItems } from "@dashboard/utils/maps";
+import type { Option } from "@saleor/macaw-ui-next";
 import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
@@ -15,7 +16,7 @@ type ChoiceWithAncestors = Choice & {
   };
 };
 
-export const getChoicesWithAncestors = (choices: ChoiceWithAncestors[]) =>
+export const getChoicesWithAncestors = (choices: ChoiceWithAncestors[]): Option[] =>
   choices.map(category => {
     const { ancestors } = category;
     const ancestorItems = mapEdgesToItems(ancestors)?.reverse();
