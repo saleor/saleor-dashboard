@@ -177,7 +177,7 @@ const ShippingMethodProductsAddDialog: React.FC<
             height={450}
           >
             <ResponsiveTable key="table">
-              <TableBody>
+              <TableBody data-test-id="assign-product-list">
                 {renderCollection(
                   products,
                   (product, productIndex) => {
