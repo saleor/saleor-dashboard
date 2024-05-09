@@ -13,7 +13,7 @@ import { useCallback, useRef } from "react";
 import { ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDialog";
 
 const emptyListing: Omit<ProductChannelListingAddInput, "channelId"> = {
-  availableForPurchaseDate: null,
+  availableForPurchaseAt: null,
   isAvailableForPurchase: false,
   isPublished: false,
   publishedAt: null,
@@ -30,7 +30,7 @@ export const updateChannelsInput = (
       return {
         ...listing,
         ...data,
-        availableForPurchaseDate: data.availableForPurchase,
+        availableForPurchaseAt: data.availableForPurchase,
       };
     }
 
@@ -51,7 +51,7 @@ export function useProductChannelListingsForm(
     removeChannels: [],
     updateChannels: product?.channelListings.map(listing => ({
       channelId: listing.channel.id,
-      availableForPurchaseDate: listing.availableForPurchase,
+      availableForPurchaseAt: listing.availableForPurchaseAt,
       ...listing,
     })),
   });

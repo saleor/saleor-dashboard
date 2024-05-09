@@ -4,7 +4,7 @@ describe("ProductUpdatePage - fromChannels", () => {
   describe("updateChannelsInput", () => {
     const channel = {
       channelId: "Q2hhbm5lbDox",
-      availableForPurchaseDate: null,
+      availableForPurchaseAt: null,
       __typename: "ProductChannelListing",
       isPublished: true,
       publishedAt: "2020-01-01",
@@ -19,7 +19,7 @@ describe("ProductUpdatePage - fromChannels", () => {
       },
     };
 
-    it("should update availableForPurchaseDate if isAvailableForPurchase is set to true", () => {
+    it("should update availableForPurchaseAt if isAvailableForPurchase is set to true", () => {
       const input = {
         removeChannels: [],
         updateChannels: [channel],
@@ -39,13 +39,13 @@ describe("ProductUpdatePage - fromChannels", () => {
           {
             ...channel,
             isAvailableForPurchase: true,
-            availableForPurchaseDate: "2020-10-01",
+            availableForPurchaseAt: "2020-10-01",
             availableForPurchase: "2020-10-01",
           },
         ],
       });
     });
-    it("should update availableForPurchaseDate if isAvailableForPurchase is set to false", () => {
+    it("should update availableForPurchaseAt if isAvailableForPurchase is set to false", () => {
       const oldData = {
         removeChannels: [],
         updateChannels: [channel],
@@ -64,7 +64,7 @@ describe("ProductUpdatePage - fromChannels", () => {
         updateChannels: [
           {
             ...channel,
-            availableForPurchaseDate: "2020-10-01",
+            availableForPurchaseAt: "2020-10-01",
             availableForPurchase: "2020-10-01",
           },
         ],

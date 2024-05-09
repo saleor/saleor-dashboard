@@ -39,7 +39,7 @@ export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
 
   return (
     <>
-      <Box display="flex" gap={5}>
+      <Box display="flex" gap={4} width="100%">
         <Input
           width={fullWidth ? "100%" : undefined}
           size="small"

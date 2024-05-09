@@ -57,7 +57,7 @@ export const channelListingProductWithoutPricingFragment = gql`
     isPublished
     publishedAt
     isAvailableForPurchase
-    availableForPurchase
+    availableForPurchaseAt
     visibleInListings
     channel {
       id

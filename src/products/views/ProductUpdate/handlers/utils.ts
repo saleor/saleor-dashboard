@@ -90,7 +90,7 @@ export function getProductChannelsUpdateVariables(
       ] as Array<keyof ProductChannelListingAddInput>;
 
       if (!listing.isAvailableForPurchase) {
-        fieldsToPick.push("availableForPurchaseAt", "availableForPurchaseDate");
+        fieldsToPick.push("availableForPurchaseAt");
       }
 
       if (!listing.isPublished) {
@@ -113,7 +113,7 @@ export function getProductChannelsUpdateVariables(
       return {
         ...data,
         isAvailableForPurchase:
-          data.availableForPurchaseDate !== null ? true : data.isAvailableForPurchase,
+          data.availableForPurchaseAt !== null ? true : data.isAvailableForPurchase,
       };
     });
 

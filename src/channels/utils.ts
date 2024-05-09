@@ -36,7 +36,7 @@ export interface ChannelData {
   variantsIds?: string[];
   price?: string;
   costPrice?: string;
-  availableForPurchase?: string;
+  availableForPurchaseAt?: string;
   isAvailableForPurchase?: boolean;
   visibleInListings?: boolean;
   preorderThreshold?: number;
@@ -46,7 +46,7 @@ export interface ChannelData {
 export interface ProductChannelListingData extends Channel {
   isPublished: boolean;
   publishedAt: string | null;
-  availableForPurchase: string;
+  availableForPurchaseAt: string;
   isAvailableForPurchase: boolean;
   visibleInListings: boolean;
   currency?: string;
@@ -189,7 +189,7 @@ export const createChannelsDataWithDiscountPrice = (
 
 export const createChannelsData = (data?: ChannelFragment[]): ChannelData[] =>
   data?.map(channel => ({
-    availableForPurchase: undefined,
+    availableForPurchaseAt: undefined,
     costPrice: "",
     currency: channel.currencyCode,
     id: channel.id,
@@ -285,7 +285,7 @@ export const createChannelsDataFromProduct = (productData?: ProductFragment) =>
   productData?.channelListings?.map(
     ({
       channel,
-      availableForPurchase,
+      availableForPurchaseAt,
       isAvailableForPurchase,
       visibleInListings,
       publishedAt,
@@ -309,7 +309,7 @@ export const createChannelsDataFromProduct = (productData?: ProductFragment) =>
         !isSimpleProduct && !haveVariantsChannelListings ? true : isPublished;
 
       return {
-        availableForPurchase,
+        availableForPurchaseAt,
         isPublished: isProductPublished,
         publishedAt,
         variantsIds,
