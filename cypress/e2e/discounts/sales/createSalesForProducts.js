@@ -9,7 +9,10 @@ import { updateChannelInProduct } from "../../../support/api/requests/Product";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import { createShipping } from "../../../support/api/utils/shippingUtils";
-import { getProductPrice } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
+import {
+  getProductPrice,
+  getProductPriceRetry,
+} from "../../../support/api/utils/storeFront/storeFrontProductUtils";
 import {
   getDefaultTaxClass,
   updateTaxConfigurationForChannel,
@@ -108,7 +111,9 @@ describe("As an admin I want to create sale for products", () => {
         discountOption: discountOptions.PERCENTAGE,
         discountValue,
         taxClassId: taxClass.id,
-      }).should("eq", expectedPrice);
+      }).then(
+        getProductPriceRetry(productType.id, defaultChannel, expectedPrice),
+      );
     },
   );
 

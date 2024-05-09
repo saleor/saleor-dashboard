@@ -31,22 +31,30 @@ export const getProductVariants = (productId, channelSlug) => {
 };
 
 export const getProductPrice = (productId, channelSlug) => {
-  getProductDetails(productId, channelSlug).then(
+  return getProductDetails(productId, channelSlug).then(
     resp => resp.body.data.product.variants[0].pricing.price.gross.amount,
   );
 };
 
-export const getProductPriceRetry = (productId, channelSlug, i = 0) => {
-  const discountValue = 50;
-  const productPrice = 100;
-  const expectedPrice = (productPrice * discountValue) / 100;
-
-  if (i > 3) {
-    throw new Error(`There is no correct price ${expectedPrice}`);
+export const getProductPriceRetry = (
+  productId,
+  channelSlug,
+  expectedPrice,
+  i = 0,
+) => {
+  cy.log("main-scope");
+  if (i > 2) {
+    throw new Error(`This is not a correct price: ${expectedPrice}`);
   }
-  return cy.getProductPriceRetry(expectedPrice).then();
+  getProductPrice(productId, channelSlug).then(amount => {
+    console.log(amount);
 
-  getProductDetails(productId, channelSlug).then(
-    resp => resp.body.data.product.variants[0].pricing.price.gross.amount,
-  );
+    if (amount !== expectedPrice) {
+      console.log("price-scope2");
+      cy.wait(3000);
+      getProductPriceRetry(productId, channelSlug, expectedPrice, i + 1);
+    } else {
+      return amount;
+    }
+  });
 };
