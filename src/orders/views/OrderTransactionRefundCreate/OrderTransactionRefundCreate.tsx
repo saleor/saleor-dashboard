@@ -1,4 +1,5 @@
 import {
+  OrderGrantRefundCreateLineInput,
   useOrderDetailsGrantRefundQuery,
   useOrderGrantRefundAddMutation,
 } from "@dashboard/graphql";
@@ -56,11 +57,19 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({ o
         orderId,
         amount,
         reason,
-        lines: linesToRefund.map(line => ({
-          quantity: line.quantity,
-          reason: line.reason,
-          id: data.order!.lines[line.row].id,
-        })),
+        lines: linesToRefund.reduce<OrderGrantRefundCreateLineInput[]>((acc, line, ix) => {
+          if (typeof line.quantity === "string") {
+            return acc;
+          }
+
+          const lineToAdd = {
+            quantity: line.quantity,
+            reason: line.reason,
+            id: data.order!.lines[ix].id,
+          };
+
+          return [...acc, lineToAdd];
+        }, []),
         grantRefundForShipping: includeShipping,
         transactionId,
       },

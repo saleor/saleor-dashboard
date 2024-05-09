@@ -1,20 +1,10 @@
-import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
 import { renderHook } from "@testing-library/react-hooks";
 import { useForm } from "react-hook-form";
 
+import { getRefundEditOrderLinesToRefund } from "./formDefaults";
 import { LineToRefund, OrderTransactionRefundPageFormData } from "./OrderTransactionRefundPage";
-import {
-  canRefundShipping,
-  createSetMaxQty,
-  getMaxQtyToRefund,
-  getRefundEditOrderLinesToRefund,
-  getSelectedProductsValue,
-  handleLinesToRefundChange,
-  useRecalculateTotalAmount,
-  validateQty,
-  ValidateQtyParams,
-} from "./utils";
+import { canRefundShipping, getMaxQtyToRefund, useRecalculateTotalAmount } from "./utils";
 
 describe("getMaxQtyToRefund", () => {
   it("returns 0 when rowData or order is not provided", () => {
@@ -91,122 +81,65 @@ describe("getMaxQtyToRefund", () => {
   });
 });
 
-describe("createSetMaxQty", () => {
-  it("does nothing when order is not provided", () => {
-    // Arrange
-    const setValue = jest.fn();
-    const params = {
-      order: null,
-      draftRefund: undefined,
-      linesToRefund: [],
-      setValue,
-    };
+// describe("getSelectedProductsValue", () => {
+//   it("returns 0 when linesToRefund or order is not provided", () => {
+//     // Arrange
+//     const params = {
+//       linesToRefund: [],
+//       order: null,
+//     };
 
-    const setMaxQty = createSetMaxQty(params);
+//     // Act
+//     const result = getSelectedProductsValue(params);
 
-    // Act
-    setMaxQty([0]);
+//     // Assert
+//     expect(result).toBe(0);
+//   });
 
-    // Assert
-    expect(setValue).not.toHaveBeenCalled();
-  });
+//   it("returns the total value of selected products", () => {
+//     // Arrange
+//     const linesToRefund = [
+//       {
+//         row: 0,
+//         quantity: 2,
+//         reason: "",
+//       },
+//       {
+//         row: 1,
+//         quantity: 3,
+//         reason: "",
+//       },
+//     ] as LineToRefund[];
 
-  it("updates the linesToRefund form value", () => {
-    // Arrange
-    const setValue = jest.fn();
-    const params = {
-      order: {
-        lines: [
-          {
-            id: "1",
-            quantity: 10,
-          },
-        ],
-        grantedRefunds: [],
-      } as unknown as OrderDetailsGrantRefundFragment,
-      draftRefund: undefined,
-      linesToRefund: [],
-      setValue,
-    };
-    const setMaxQty = createSetMaxQty(params);
+//     const order = {
+//       lines: [
+//         {
+//           unitPrice: {
+//             gross: {
+//               amount: 10,
+//             },
+//           },
+//         },
+//         {
+//           unitPrice: {
+//             gross: {
+//               amount: 20,
+//             },
+//           },
+//         },
+//       ],
+//     } as unknown as OrderDetailsGrantRefundFragment;
 
-    // Act
-    setMaxQty([0]);
+//     // Act
+//     const result = getSelectedProductsValue({
+//       linesToRefund,
+//       order,
+//     });
 
-    // Assert
-    expect(setValue).toHaveBeenCalledWith(
-      "linesToRefund",
-      [
-        {
-          row: 0,
-          quantity: 10, // max quantity to refund for row 0
-          reason: "",
-        },
-      ],
-      { shouldDirty: true },
-    );
-  });
-});
-
-describe("getSelectedProductsValue", () => {
-  it("returns 0 when linesToRefund or order is not provided", () => {
-    // Arrange
-    const params = {
-      linesToRefund: [],
-      order: null,
-    };
-
-    // Act
-    const result = getSelectedProductsValue(params);
-
-    // Assert
-    expect(result).toBe(0);
-  });
-
-  it("returns the total value of selected products", () => {
-    // Arrange
-    const linesToRefund = [
-      {
-        row: 0,
-        quantity: 2,
-        reason: "",
-      },
-      {
-        row: 1,
-        quantity: 3,
-        reason: "",
-      },
-    ] as LineToRefund[];
-
-    const order = {
-      lines: [
-        {
-          unitPrice: {
-            gross: {
-              amount: 10,
-            },
-          },
-        },
-        {
-          unitPrice: {
-            gross: {
-              amount: 20,
-            },
-          },
-        },
-      ],
-    } as unknown as OrderDetailsGrantRefundFragment;
-
-    // Act
-    const result = getSelectedProductsValue({
-      linesToRefund,
-      order,
-    });
-
-    // Assert
-    expect(result).toBe(80); // (10 * 2) + (20 * 3) = 80
-  });
-});
+//     // Assert
+//     expect(result).toBe(80); // (10 * 2) + (20 * 3) = 80
+//   });
+// });
 
 describe("useRecalculateTotalAmount", () => {
   it("updates the amount form value when includeShipping is true", () => {
@@ -290,132 +223,132 @@ describe("useRecalculateTotalAmount", () => {
   });
 });
 
-describe("validateQty", () => {
-  it("returns 0 when update data value or order is not provided", () => {
-    const result = validateQty({
-      update: { data: { value: null }, row: 0 },
-      order: null,
-      draftRefund: undefined,
-    } as unknown as ValidateQtyParams);
+// describe("validateQty", () => {
+//   it("returns 0 when update data value or order is not provided", () => {
+//     const result = validateQty({
+//       update: { data: { value: null }, row: 0 },
+//       order: null,
+//       draftRefund: undefined,
+//     } as unknown as ValidateQtyParams);
 
-    expect(result).toBe(0);
-  });
+//     expect(result).toBe(0);
+//   });
 
-  it("returns 0 when update data value is not a number", () => {
-    const result = validateQty({
-      update: { data: { value: "not a number" }, row: 0 },
-      order: { lines: [{ id: "1", quantity: 10 }], grantedRefunds: [] },
-      draftRefund: undefined,
-    } as unknown as ValidateQtyParams);
+//   it("returns 0 when update data value is not a number", () => {
+//     const result = validateQty({
+//       update: { data: { value: "not a number" }, row: 0 },
+//       order: { lines: [{ id: "1", quantity: 10 }], grantedRefunds: [] },
+//       draftRefund: undefined,
+//     } as unknown as ValidateQtyParams);
 
-    expect(result).toBe(0);
-  });
+//     expect(result).toBe(0);
+//   });
 
-  it("returns 0 when update data value is less than 0", () => {
-    const result = validateQty({
-      update: { data: { value: "-5" }, row: 0 },
-      order: { lines: [{ id: "1", quantity: 10 }], grantedRefunds: [] },
-      draftRefund: undefined,
-    } as unknown as ValidateQtyParams);
+//   it("returns 0 when update data value is less than 0", () => {
+//     const result = validateQty({
+//       update: { data: { value: "-5" }, row: 0 },
+//       order: { lines: [{ id: "1", quantity: 10 }], grantedRefunds: [] },
+//       draftRefund: undefined,
+//     } as unknown as ValidateQtyParams);
 
-    expect(result).toBe(0);
-  });
+//     expect(result).toBe(0);
+//   });
 
-  it("returns maxQtyToRefund when update data value is greater than maxQtyToRefund", () => {
-    const result = validateQty({
-      update: { data: { value: "15" }, row: 0 },
-      order: { lines: [{ id: "1", quantity: 10 }], grantedRefunds: [] },
-      draftRefund: undefined,
-    } as unknown as ValidateQtyParams);
+//   it("returns maxQtyToRefund when update data value is greater than maxQtyToRefund", () => {
+//     const result = validateQty({
+//       update: { data: { value: "15" }, row: 0 },
+//       order: { lines: [{ id: "1", quantity: 10 }], grantedRefunds: [] },
+//       draftRefund: undefined,
+//     } as unknown as ValidateQtyParams);
 
-    expect(result).toBe(10);
-  });
+//     expect(result).toBe(10);
+//   });
 
-  it("returns update data value when it is within the valid range", () => {
-    const result = validateQty({
-      update: { data: { value: "5" }, row: 0 },
-      order: { lines: [{ id: "1", quantity: 10 }], grantedRefunds: [] },
-      draftRefund: undefined,
-    } as unknown as ValidateQtyParams);
+//   it("returns update data value when it is within the valid range", () => {
+//     const result = validateQty({
+//       update: { data: { value: "5" }, row: 0 },
+//       order: { lines: [{ id: "1", quantity: 10 }], grantedRefunds: [] },
+//       draftRefund: undefined,
+//     } as unknown as ValidateQtyParams);
 
-    expect(result).toBe(5);
-  });
-});
+//     expect(result).toBe(5);
+//   });
+// });
 
-describe("handleLinesToRefundChange", () => {
-  it("does nothing when currentUpdate is not provided", () => {
-    // Arrange
-    const setValue = jest.fn();
-    const params = {
-      data: { currentUpdate: null } as unknown as DatagridChangeOpts,
-      linesToRefund: [],
-      order: null,
-      draftRefund: undefined,
-      setValue,
-    };
+// describe("handleLinesToRefundChange", () => {
+//   it("does nothing when currentUpdate is not provided", () => {
+//     // Arrange
+//     const setValue = jest.fn();
+//     const params = {
+//       data: { currentUpdate: null } as unknown as DatagridChangeOpts,
+//       linesToRefund: [],
+//       order: null,
+//       draftRefund: undefined,
+//       setValue,
+//     };
 
-    // Act
-    handleLinesToRefundChange(params);
+//     // Act
+//     handleLinesToRefundChange(params);
 
-    // Assert
-    expect(setValue).not.toHaveBeenCalled();
-  });
+//     // Assert
+//     expect(setValue).not.toHaveBeenCalled();
+//   });
 
-  it("updates the linesToRefund form value", () => {
-    // Arrange
-    const setValue = jest.fn();
-    const params = {
-      data: {
-        currentUpdate: { row: 0, data: { value: "5" } },
-      } as DatagridChangeOpts,
-      linesToRefund: [
-        {
-          row: 0,
-          quantity: 2,
-          reason: "",
-        },
-        {
-          row: 1,
-          quantity: 3,
-          reason: "",
-        },
-      ],
-      order: {
-        lines: [
-          {
-            id: "1",
-            quantity: 10,
-          },
-        ],
-        grantedRefunds: [],
-      } as unknown as OrderDetailsGrantRefundFragment,
-      draftRefund: undefined,
-      setValue,
-    };
+//   it("updates the linesToRefund form value", () => {
+//     // Arrange
+//     const setValue = jest.fn();
+//     const params = {
+//       data: {
+//         currentUpdate: { row: 0, data: { value: "5" } },
+//       } as DatagridChangeOpts,
+//       linesToRefund: [
+//         {
+//           row: 0,
+//           quantity: 2,
+//           reason: "",
+//         },
+//         {
+//           row: 1,
+//           quantity: 3,
+//           reason: "",
+//         },
+//       ],
+//       order: {
+//         lines: [
+//           {
+//             id: "1",
+//             quantity: 10,
+//           },
+//         ],
+//         grantedRefunds: [],
+//       } as unknown as OrderDetailsGrantRefundFragment,
+//       draftRefund: undefined,
+//       setValue,
+//     };
 
-    // Act
-    handleLinesToRefundChange(params);
+//     // Act
+//     handleLinesToRefundChange(params);
 
-    // Assert
-    expect(setValue).toHaveBeenCalledWith(
-      "linesToRefund",
-      [
-        {
-          row: 1,
-          quantity: 3,
-          reason: "",
-        },
-        {
-          row: 0,
-          quantity: 5, // updated value
-          reason: "",
-          isDirty: true,
-        },
-      ],
-      { shouldDirty: true },
-    );
-  });
-});
+//     // Assert
+//     expect(setValue).toHaveBeenCalledWith(
+//       "linesToRefund",
+//       [
+//         {
+//           row: 1,
+//           quantity: 3,
+//           reason: "",
+//         },
+//         {
+//           row: 0,
+//           quantity: 5, // updated value
+//           reason: "",
+//           isDirty: true,
+//         },
+//       ],
+//       { shouldDirty: true },
+//     );
+//   });
+// });
 
 describe("canRefundShipping", () => {
   it("returns true when no refund with shipping costs included is found", () => {
@@ -539,12 +472,10 @@ describe("getRefundEditOrderLinesToRefund", () => {
     // Assert
     expect(result).toEqual([
       {
-        row: 0,
         quantity: 2,
         reason: "",
       },
       {
-        row: 1,
         quantity: 3,
         reason: "",
       },

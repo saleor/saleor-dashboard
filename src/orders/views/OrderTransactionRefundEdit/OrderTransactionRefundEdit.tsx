@@ -2,6 +2,7 @@ import {
   OrderDetailsGrantRefundDocument,
   OrderDetailsGrantRefundFragment,
   OrderGrantRefundUpdateErrorCode,
+  OrderGrantRefundUpdateLineAddInput,
   useOrderDetailsGrantRefundQuery,
   useOrderGrantRefundEditMutation,
   useOrderSendRefundForGrantedRefundMutation,
@@ -79,27 +80,53 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({ orderId
     }
 
     const { amount, reason, linesToRefund, includeShipping, transactionId } = submitData;
+    /**
+     * Contrary to the datagrid we hold full state of the lines, instead of the change.
+     * This allows us to make a full update. We just remove all lines available in draft refund
+     * and add everything that is held in linesToRefund (except 0 and empty string values)
+     * Amount should be skipped if it's equal to selected products value - check it if it's
+     * handled somewhere above this logic
+     */
 
-    const dirtyLinesToRefund = linesToRefund.filter(item => item.isDirty);
+    /** ********************************************** */
+    /** ***** PREVIOUS CODE IN CASE IT'S NEEDED ****** */
+    /** ********************************************** */
 
-    const toAdd = dirtyLinesToRefund.map(line => ({
-      quantity: line.quantity,
-      reason: line.reason,
-      id: data.order!.lines[line.row].id,
-    }));
+    // const dirtyLinesToRefund = linesToRefund.filter(item => item.isDirty);
 
-    const toRemove =
-      draftRefund.lines?.reduce<string[]>((acc, line) => {
-        dirtyLinesToRefund.forEach(qty => {
-          const orderLine = data.order!.lines[qty.row];
+    // const toAdd = dirtyLinesToRefund.map(line => ({
+    //   quantity: line.quantity,
+    //   reason: line.reason,
+    //   id: data.order!.lines[line.row].id,
+    // }));
+    // // We should do a full update
+    // const toRemove =
+    //   draftRefund.lines?.reduce<string[]>((acc, line) => {
+    //     dirtyLinesToRefund.forEach(qty => {
+    //       const orderLine = data.order!.lines[qty.row];
 
-          if (line.orderLine.id === orderLine.id && !acc.includes(line.id)) {
-            acc.push(line.id);
-          }
+    //       if (line.orderLine.id === orderLine.id && !acc.includes(line.id)) {
+    //         acc.push(line.id);
+    //       }
+    //     });
+
+    //     return acc;
+    //   }, []) ?? [];
+
+    /** ********************************************** */
+    const draftRefundLines = draftRefund.lines ?? [];
+    const toRemove = draftRefundLines.map(line => line.id);
+    const toAdd = linesToRefund.reduce<OrderGrantRefundUpdateLineAddInput[]>((acc, line, ix) => {
+      if (typeof line.quantity === "number" && line.quantity > 0) {
+        acc.push({
+          id: data.order!.lines[ix].id,
+          quantity: line.quantity,
+          reason: line.reason,
         });
+      }
 
-        return acc;
-      }, []) ?? [];
+      return acc;
+    }, []);
 
     const result = await updateRefund({
       variables: {

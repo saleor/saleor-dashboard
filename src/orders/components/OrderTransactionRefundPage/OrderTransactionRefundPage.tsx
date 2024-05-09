@@ -1,7 +1,6 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { TopNav } from "@dashboard/components/AppLayout";
 import { DashboardCard } from "@dashboard/components/Card";
-import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Pill } from "@dashboard/components/Pill";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
@@ -17,23 +16,23 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderTransactionReason } from "./components/OrderTransactionReason/OrderTransactionReason";
+import { OrderTransactionSummary } from "./components/OrderTransactionRefundSummary/OrderTransactionSummary";
 import {
   OrderRefundTransactionDatagridError,
-  OrderTransactionRefundDatagrid,
-} from "./components/OrderTransactionRefundDatagrid/OrderRefundTransactionDatagrid";
-import { OrderTransactionSummary } from "./components/OrderTransactionRefundSummary/OrderTransactionSummary";
+  OrderTransactionRefundTable,
+} from "./components/OrderTransactionRefundTable/OrderTransactionRefundTable";
 import { OrderTransactionTiles } from "./components/OrderTransactionTiles/OrderTransactionTiles";
+import { getRefundFormDefaultValues } from "./formDefaults";
 import { orderTransactionRefundMessages as messages } from "./messages";
 import {
   canRefundShipping,
-  createSetMaxQty,
-  getRefundFormDefaultValues,
   getRefundFormSubmitBehavior,
   getRefundStatusColor,
   getRefundStatusLabel,
   getRefundViewTitle,
   getSelectedProductsValue,
   handleLinesToRefundChange,
+  RefundQuantityChange,
   useRecalculateTotalAmount,
 } from "./utils";
 
@@ -60,10 +59,8 @@ export interface OrderTransactionRefundPageProps {
 }
 
 export interface LineToRefund {
-  row: number;
-  quantity: number;
+  quantity: number | string;
   reason: string;
-  isDirty?: boolean;
 }
 
 export interface OrderTransactionRefundPageFormData {
@@ -148,10 +145,11 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
   const linesToRefund = watch("linesToRefund");
   const includeShipping = watch("includeShipping");
 
-  const selectedProductsValue = getSelectedProductsValue({
-    linesToRefund,
-    order,
-  });
+  const selectedProductsValue =
+    getSelectedProductsValue({
+      linesToRefund,
+      order,
+    }) ?? 0;
 
   useRecalculateTotalAmount({
     getValues,
@@ -163,16 +161,18 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
     isFormDirty: isDirty,
   });
 
-  const onSetMaximumQty = createSetMaxQty({
-    order,
-    draftRefund,
-    linesToRefund,
-    setValue,
-  });
+  // const onSetMaximumQty = createSetMaxQty({
+  //   order,
+  //   draftRefund,
+  //   linesToRefund,
+  //   setValue,
+  // });
 
-  const onLinesToRefundChange = (data: DatagridChangeOpts) => {
+  const onLinesToRefundChange = (data: RefundQuantityChange, index: number, validate: boolean) => {
     handleLinesToRefundChange({
       data,
+      index,
+      validate,
       linesToRefund,
       setValue,
       order,
@@ -199,18 +199,17 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
               </Text>
             </DashboardCard.Content>
           </DashboardCard>
-          <OrderTransactionRefundDatagrid
-            errors={datagridErrors}
-            order={order}
-            draftRefund={draftRefund}
-            control={control}
-            onChange={onLinesToRefundChange}
-            onMaxQtySet={onSetMaximumQty}
-            linesToRefund={linesToRefund}
-          />
-          {/* <DashboardCard>
-            <ExampleTable order={order} />
-          </DashboardCard> */}
+          <DashboardCard paddingX={6}>
+            <OrderTransactionRefundTable
+              errors={datagridErrors}
+              order={order}
+              draftRefund={draftRefund}
+              control={control}
+              onChange={onLinesToRefundChange}
+              // onMaxQtySet={onSetMaximumQty}
+              linesToRefund={linesToRefund}
+            />
+          </DashboardCard>
           <DashboardCard marginBottom={5}>
             <DashboardCard.Content>
               <Text fontWeight="medium" as="p" marginTop={5}>
