@@ -1,0 +1,46 @@
+name: Execute automation tests
+run-name: Run tests on ${{github.event.client_payload.version}} ${{github.event.client_payload.project}}
+
+on:
+  repository_dispatch:
+    types: [automation-tests-event]
+
+jobs:
+  get-environment-variables:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    outputs:
+      VERSION: ${{ steps.get-environment-variables.outputs.version }}
+    env:
+      REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      CUSTOM_VERSION: ${{github.event.client_payload.custom_version}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Install dependencies
+        run: |
+          cd .github/workflows
+          npm ci
+
+      - name: get environment variables
+        id: get-environment-variables
+        run: |
+          node .github/workflows/getEnvironmentVariables.js \
+            --custom_version $CUSTOM_VERSION \
+            --repo_token "$REPO_TOKEN" 
+
+  run-tests-on-release:
+    needs: get-environment-variables
+    uses: ./.github/workflows/run-tests-on-release.yml@${{needs.get-environment-variables.outputs.VERSION}}
+    with:
+      VERSION: ${{needs.get-environment-variables.outputs.VERSION}}
+      CUSTOM_VERSION: ${{github.event.client_payload.custom_version}}
+      HEAD_SHA_OF_RELEASE_PR: ${{github.event.client_payload.release_pr_head_sha}}
+    secrets: inherit
+  

@@ -10,6 +10,14 @@ on:
         type: string
         required: true
         description: Version of run eg. "3.19.4-5a41d18"
+      HEAD_SHA_OF_RELEASE_PR:
+        type: string
+        required: false
+        description: head sha of release pr if triggered for core release
+      CHECK_REPOSITORY:
+        type: string
+        required: false
+        description: repository for check, required if different than saleor-dashboard
 
     secrets:
       STAGING_TOKEN:
@@ -46,34 +54,19 @@ jobs:
       BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
       BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
       CHECK_ID: ${{ steps.create-check.outputs.CHECK_ID }}
-      FRAMEWORK: ${{ steps.check-framework.outputs.result }}
     steps:
       - uses: actions/checkout@v4
 
-      - id: check-framework
-        uses: actions/github-script@v7
-        env:
-          VERSION: "${{inputs.VERSION}}"
-        with:
-          script: |
-            const { VERSION } = process.env
-            const versionWithoutDot = VERSION.replaceAll(/\./g, "")
-            if(versionWithoutDot >= 319){
-              return "playwright"
-            }else{
-              return "cypress"
-            }
-
       - name: Create check if release PR exists
-        if: steps.check-framework.outputs.result == '"playwright"'
         id: create-check
         uses: ./.github/actions/checks/create-pull-request-check
         with:
-          PR_HEAD: "changeset-release/${{env.MINOR_VERSION}}"
+          PR_HEAD: ${{inputs.HEAD_SHA_OF_RELEASE_PR }} | "changeset-release/${{env.MINOR_VERSION}}"
           CHECK_NAME: "Automation_tests_run"
           STATUS: "in_progress"
           TITLE: "Automation tests run"
           DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          REPOSITORY: ${{inputs.CHECK_REPOSITORY }}
 
       - name: Generate variables
         id: cloud_variables
@@ -84,7 +77,6 @@ jobs:
           VERSION: ${{ env.VERSION }}
 
       - name: Prepare instances
-        if: steps.check-framework.outputs.result == '"playwright"' 
         id: pool_variables
         uses: ./.github/actions/prepare-instance
         with:
@@ -97,47 +89,15 @@ jobs:
           BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
 
       - uses: ./.github/actions/testmo/testmo-init
-        if: steps.check-framework.outputs.result == '"playwright"' 
         with:
           testmoUrl: ${{ secrets.TESTMO_URL }}
           testmoToken: ${{ secrets.TESTMO_TOKEN }}
           testmoRunName: "Playwright run ${{ env.CUSTOM_VERSION }}"
         id: init-testmo
 
-  run-cy-tests:
-    runs-on: ubuntu-22.04
-    needs: "add-check-and-prepare-instance"
-    if: ${{ needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"cypress"' }}
-    steps:
-      - name: Trigger dashboard cypress automation tests
-        env: 
-          VERSION: ${{inputs.CUSTOM_VERSION}}
-        run: |
-          GITHUB_TOKEN=$( \
-            curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
-          )
-          export GITHUB_TOKEN
-
-          payload=$(\
-          jq --null-input \
-          --arg version "$VERSION" \
-          '{
-            "event_type":"automation-tests-event", 
-            "client_payload": {
-              "project": "DASHBOARD",
-              "environment": "SANDBOX",
-              "version": $version
-            }
-          }'
-          )
-
-          gh api /repos/saleor/saleor-dashboard/dispatches \
-            --input - <<< "$payload"
-
   run-pw-tests:
     runs-on: ubuntu-22.04
     needs: "add-check-and-prepare-instance"
-    if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"playwright"'
     strategy:
       fail-fast: false
       matrix:
@@ -171,8 +131,7 @@ jobs:
 
   tests-complete-pw:
     if: |
-      !cancelled() && 
-      needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"playwright"'
+      !cancelled()
     needs: ["add-check-and-prepare-instance", "run-pw-tests"]
     runs-on: ubuntu-22.04
     steps:
@@ -218,14 +177,14 @@ jobs:
           TITLE: "Automation tests run"
           SUMMARY: "${{ steps.send-slack-message.outputs.message }}. Run details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          REPOSITORY: ${{inputs.CHECK_REPOSITORY }}
 
   update-check-status-if-previous-job-fails:
     runs-on: ubuntu-latest
     needs: [tests-complete-pw, add-check-and-prepare-instance]
     if: |
       always() &&
-      (needs.tests-complete-pw != 'success' && cancelled()) &&
-      needs.add-check-and-prepare-instance.outputs.FRAMEWORK   == '"playwright"'
+      (needs.tests-complete-pw != 'success' && cancelled())
 
     steps:
       - uses: actions/checkout@v4
@@ -251,3 +210,4 @@ jobs:
           TITLE: "Automation tests run"
           SUMMARY: "Run failed"
           DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          REPOSITORY: ${{inputs.CHECK_REPOSITORY }}
