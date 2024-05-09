@@ -1,0 +1,11 @@
+name: Test workflow
+
+on: [pull_request]
+
+jobs:
+  run-tests-on-production:
+    uses: ./.github/workflows/test-release-workflow.yml
+    with:
+      VERSION: "3.18"
+      CUSTOM_VERSION: "3.18.4-5a41d18"
+    secrets: inherit
