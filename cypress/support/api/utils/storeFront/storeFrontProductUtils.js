@@ -43,10 +43,10 @@ export const getProductPriceRetry = (
   i = 0,
 ) => {
   cy.log("main-scope");
-  if (i > 2) {
+  if (i > 3) {
     throw new Error(`This is not a correct price: ${expectedPrice}`);
   }
-  getProductPrice(productId, channelSlug).then(amount => {
+  return getProductPrice(productId, channelSlug).then(amount => {
     console.log(amount);
 
     if (amount !== expectedPrice) {

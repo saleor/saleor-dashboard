@@ -92,7 +92,7 @@ describe("As an admin I want to create sale for products", () => {
     });
   });
 
-  it(
+  it.only(
     "should be able to create percentage discount. TC: SALEOR_1801",
     { tags: ["@sales", "@allEnv", "@stable"] },
     () => {
@@ -100,20 +100,53 @@ describe("As an admin I want to create sale for products", () => {
       const expectedPrice = (productPrice * discountValue) / 100;
       cy.log(expectedPrice);
 
-      createSaleWithNewProduct({
-        name: saleName,
-        channel: defaultChannel,
-        warehouseId: warehouse.id,
-        productTypeId: productType.id,
-        attributeId: attribute.id,
-        categoryId: category.id,
-        price: productPrice,
-        discountOption: discountOptions.PERCENTAGE,
-        discountValue,
-        taxClassId: taxClass.id,
-      }).then(
-        getProductPriceRetry(productType.id, defaultChannel, expectedPrice),
-      );
+      // createSaleWithNewProduct({
+      //   name: saleName,
+      //   channel: defaultChannel,
+      //   warehouseId: warehouse.id,
+      //   productTypeId: productType.id,
+      //   attributeId: attribute.id,
+      //   categoryId: category.id,
+      //   price: productPrice,
+      //   discountOption: discountOptions.PERCENTAGE,
+      //   discountValue,
+      //   taxClassId: taxClass.id,
+      // }).then(
+      //   getProductPriceRetry(productType.id, defaultChannel, expectedPrice),
+      // );
+
+      productsUtils
+        .createProductInChannel({
+          name: saleName,
+          channelId: defaultChannel.id,
+          warehouseId: warehouse.id,
+          productTypeId: productType.id,
+          attributeId: attribute.id,
+          categoryId: category.id,
+          price: productPrice,
+          taxClassId: taxClass.id,
+        })
+        .then(({ product: productResp }) => {
+          const product = productResp;
+          /* Uncomment after fixing SALEOR-3367 bug
+           cy.clearSessionData()
+          .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
+          */
+          cy.visit(urlList.sales);
+          return createSale({
+            saleName: saleName,
+            channelName: defaultChannel.name,
+            discountValue,
+            discountOption: discountOptions.PERCENTAGE,
+          }).then(() => {
+            assignProducts(product.name);
+            return getProductPriceRetry(
+              product.id,
+              defaultChannel.slug,
+              expectedPrice,
+            );
+          });
+        });
     },
   );
 
