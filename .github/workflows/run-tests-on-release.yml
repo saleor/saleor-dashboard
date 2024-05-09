@@ -166,7 +166,7 @@ jobs:
         with:
           testmoUrl: ${{ secrets.TESTMO_URL }}
           testmoToken: ${{ secrets.TESTMO_TOKEN }}
-          testmoRunId: ${{ needs.testmo-report-preparation.outputs.TESTMO_RUN_ID }}
+          testmoRunId: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
 
   tests-complete:
     if: |
