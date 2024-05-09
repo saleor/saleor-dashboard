@@ -70,13 +70,14 @@ interface Message {
 }
 
 export interface DateFields {
-  publicationDate: string;
-  availableForPurchase?: string;
+  publishedAt: string;
+  availableForPurchaseAt?: string;
 }
 
 export interface VisibilityCardProps {
-  children?: React.ReactNode | React.ReactNodeArray;
+  children?: React.ReactNode;
   data: DateFields & {
+    availableForPurchaseAt?: string;
     isAvailableForPurchase?: boolean;
     isPublished: boolean;
     visibleInListings?: boolean;
@@ -91,10 +92,10 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
   const {
     children,
     data: {
-      availableForPurchase,
-      isAvailableForPurchase: isAvailable,
+      isAvailableForPurchase,
+      availableForPurchaseAt,
       isPublished,
-      publicationDate,
+      publishedAt,
       visibleInListings,
     },
     errors,
@@ -106,7 +107,8 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
   const dateNow = useCurrentDate();
-  const hasAvailableProps = isAvailable !== undefined && availableForPurchase !== undefined;
+  const hasAvailableProps =
+    isAvailableForPurchase !== undefined && availableForPurchaseAt !== undefined;
   const visibleMessage = (date: string) =>
     intl.formatMessage(visibilityCardMessages.sinceDate, {
       date: localizeDate(date),
@@ -136,9 +138,9 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
           firstOptionLabel={
             <>
               <p className={classes.label}>{messages.visibleLabel}</p>
-              {isPublished && publicationDate && Date.parse(publicationDate) < dateNow && (
+              {isPublished && publishedAt && Date.parse(publishedAt) < dateNow && (
                 <span className={classes.secondLabel}>
-                  {messages.visibleSecondLabel || visibleMessage(publicationDate)}
+                  {messages.visibleSecondLabel || visibleMessage(publishedAt)}
                 </span>
               )}
             </>
@@ -147,28 +149,28 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
           secondOptionLabel={
             <>
               <p className={classes.label}>{messages.hiddenLabel}</p>
-              {publicationDate && !isPublished && Date.parse(publicationDate) >= dateNow && (
+              {publishedAt && !isPublished && Date.parse(publishedAt) >= dateNow && (
                 <span className={classes.secondLabel}>{messages.hiddenSecondLabel}</span>
               )}
             </>
           }
           value={isPublished}
-          onChange={handleRadioFieldChange("publicationDate")}
+          onChange={handleRadioFieldChange("publishedAt")}
         />
         {!isPublished && (
           <DateVisibilitySelector
             buttonText={intl.formatMessage(visibilityCardMessages.setPublicationDate)}
-            onInputClose={() => onChange({ target: { name: "publicationDate", value: null } })}
+            onInputClose={() => onChange({ target: { name: "publishedAt", value: null } })}
           >
             <TextField
-              error={!!getFieldError(errors, "publicationDate")}
+              error={!!getFieldError(errors, "publishedAt")}
               disabled={disabled}
               label={intl.formatMessage(visibilityCardMessages.publishOn)}
-              name="publicationDate"
+              name="publishedAt"
               type="date"
               fullWidth={true}
-              helperText={getFieldError(errors, "publicationDate")?.message}
-              value={publicationDate || ""}
+              helperText={getFieldError(errors, "publishedAt")?.message}
+              value={publishedAt || ""}
               onChange={onChange}
               className={classes.date}
               InputLabelProps={{
@@ -193,11 +195,11 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
               firstOptionLabel={
                 <>
                   <p className={classes.label}>{messages.availableLabel}</p>
-                  {isAvailable &&
-                    availableForPurchase &&
-                    Date.parse(availableForPurchase) < dateNow && (
+                  {isAvailableForPurchase &&
+                    availableForPurchaseAt &&
+                    Date.parse(availableForPurchaseAt) < dateNow && (
                       <span className={classes.secondLabel}>
-                        {visibleMessage(availableForPurchase)}
+                        {visibleMessage(availableForPurchaseAt)}
                       </span>
                     )}
                 </>
@@ -206,15 +208,15 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
               secondOptionLabel={
                 <>
                   <p className={classes.label}>{messages.unavailableLabel}</p>
-                  {availableForPurchase && !isAvailable && (
+                  {availableForPurchaseAt && !isAvailableForPurchase && (
                     <span className={classes.secondLabel}>{messages.availableSecondLabel}</span>
                   )}
                 </>
               }
-              value={isAvailable}
-              onChange={handleRadioFieldChange("availableForPurchase")}
+              value={isAvailableForPurchase}
+              onChange={handleRadioFieldChange("availableForPurchaseAt")}
             />
-            {!isAvailable && (
+            {!isAvailableForPurchase && (
               <DateVisibilitySelector
                 buttonText={messages.setAvailabilityDateLabel}
                 onInputClose={() =>
@@ -227,11 +229,11 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
                   error={!!getFieldError(errors, "startDate")}
                   disabled={disabled}
                   label={intl.formatMessage(visibilityCardMessages.setAvailableOn)}
-                  name="availableForPurchase"
+                  name="availableForPurchaseAt"
                   type="date"
                   fullWidth={true}
                   helperText={getFieldError(errors, "startDate")?.message}
-                  value={availableForPurchase || ""}
+                  value={availableForPurchaseAt || ""}
                   onChange={onChange}
                   className={classes.date}
                   InputLabelProps={{

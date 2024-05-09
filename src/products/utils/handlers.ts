@@ -112,7 +112,7 @@ export const getAvailabilityVariables = (
       isAvailableForPurchase,
       availableForPurchase,
       isPublished,
-      publicationDate,
+      publishedAt,
       visibleInListings,
     } = channel;
     const isAvailable =
@@ -124,7 +124,7 @@ export const getAvailabilityVariables = (
       channelId: channel.id,
       isAvailableForPurchase: isAvailable,
       isPublished,
-      publicationDate,
+      publishedAt,
       visibleInListings,
     };
   });

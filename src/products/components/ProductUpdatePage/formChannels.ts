@@ -16,7 +16,7 @@ const emptyListing: Omit<ProductChannelListingAddInput, "channelId"> = {
   availableForPurchaseDate: null,
   isAvailableForPurchase: false,
   isPublished: false,
-  publicationDate: null,
+  publishedAt: null,
   visibleInListings: false,
 };
 

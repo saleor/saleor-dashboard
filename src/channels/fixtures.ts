@@ -383,7 +383,7 @@ export const productChannels: ProductChannelsWithPricing[] = [
         },
       },
     },
-    publicationDate: "2020-07-14",
+    publishedAt: "2020-07-14",
     visibleInListings: true,
   },
   {
@@ -413,7 +413,7 @@ export const productChannels: ProductChannelsWithPricing[] = [
         },
       },
     },
-    publicationDate: "2020-07-30",
+    publishedAt: "2020-07-30",
     visibleInListings: true,
   },
   {
@@ -443,7 +443,7 @@ export const productChannels: ProductChannelsWithPricing[] = [
         },
       },
     },
-    publicationDate: null,
+    publishedAt: null,
     visibleInListings: true,
   },
 ];

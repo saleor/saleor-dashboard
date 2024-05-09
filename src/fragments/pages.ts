@@ -64,6 +64,6 @@ export const pageDetailsFragment = gql`
     content
     seoTitle
     seoDescription
-    publicationDate
+    publishedAt
   }
 `;

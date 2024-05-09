@@ -82,7 +82,7 @@ export function getProductChannelsUpdateVariables(
 
   data.channels.updateChannels
     .map(listing => {
-      const fielsToPick = [
+      const fieldsToPick = [
         "channelId",
         "isAvailableForPurchase",
         "isPublished",
@@ -90,17 +90,17 @@ export function getProductChannelsUpdateVariables(
       ] as Array<keyof ProductChannelListingAddInput>;
 
       if (!listing.isAvailableForPurchase) {
-        fielsToPick.push("availableForPurchaseAt", "availableForPurchaseDate");
+        fieldsToPick.push("availableForPurchaseAt", "availableForPurchaseDate");
       }
 
       if (!listing.isPublished) {
-        fielsToPick.push("publicationDate", "publishedAt");
+        fieldsToPick.push("publishedAt");
       }
 
       return pick(
         listing,
         // Filtering it here so we send only fields defined in input schema
-        fielsToPick,
+        fieldsToPick,
       );
     })
     .forEach(listing => dataUpdated.set(listing.channelId, listing));

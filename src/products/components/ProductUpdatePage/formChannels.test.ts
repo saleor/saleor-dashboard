@@ -7,7 +7,7 @@ describe("ProductUpdatePage - fromChannels", () => {
       availableForPurchaseDate: null,
       __typename: "ProductChannelListing",
       isPublished: true,
-      publicationDate: "2020-01-01",
+      publishedAt: "2020-01-01",
       isAvailableForPurchase: false,
       availableForPurchase: null,
       visibleInListings: true,
@@ -28,7 +28,7 @@ describe("ProductUpdatePage - fromChannels", () => {
         availableForPurchase: "2020-10-01",
         isAvailableForPurchase: true,
         isPublished: true,
-        publicationDate: "2020-01-01",
+        publishedAt: "2020-01-01",
         visibleInListings: true,
       };
       const result = updateChannelsInput(input, data, channel.channelId);
@@ -54,7 +54,7 @@ describe("ProductUpdatePage - fromChannels", () => {
         availableForPurchase: "2020-10-01",
         isAvailableForPurchase: false,
         isPublished: true,
-        publicationDate: "2020-01-01",
+        publishedAt: "2020-01-01",
         visibleInListings: true,
       };
       const result = updateChannelsInput(oldData, newData, channel.channelId);
@@ -79,7 +79,7 @@ describe("ProductUpdatePage - fromChannels", () => {
         availableForPurchase: "2020-10-01",
         isAvailableForPurchase: true,
         isPublished: true,
-        publicationDate: "2020-01-01",
+        publishedAt: "2020-01-01",
         visibleInListings: true,
       };
       const result = updateChannelsInput(input, data, "42");

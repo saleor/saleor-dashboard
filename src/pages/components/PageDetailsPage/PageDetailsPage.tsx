@@ -190,7 +190,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 messages={{
                   hiddenLabel: intl.formatMessage(messages.hiddenLabel),
                   hiddenSecondLabel: intl.formatMessage(messages.hiddenSecondLabel, {
-                    date: localizeDate(data.publicationDate),
+                    date: localizeDate(data.publishedAt, "llll"),
                   }),
                   visibleLabel: intl.formatMessage(messages.visibleLabel),
                 }}

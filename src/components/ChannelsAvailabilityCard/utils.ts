@@ -23,23 +23,23 @@ export const getChannelsAvailabilityMessages = ({
       [currVal.id]: {
         ...messages,
         availableDateText:
-          currVal.publicationDate && !currVal.isPublished
+          currVal.publishedAt && !currVal.isPublished
             ? intl.formatMessage(publicationMessages.willBecomePublishedOn, {
-                date: localizeDate(currVal.publicationDate),
+                date: localizeDate(currVal.publishedAt, "llll"),
               })
-            : currVal.publicationDate
+            : currVal.publishedAt
               ? intl.formatMessage(publicationMessages.publishedSince, {
-                  date: localizeDate(currVal.publicationDate),
+                  date: localizeDate(currVal.publishedAt, "llll"),
                 })
               : currVal.isPublished
                 ? intl.formatMessage(publicationMessages.published)
                 : intl.formatMessage(publicationMessages.notPublished),
         availableLabel: intl.formatMessage(publicationMessages.availableForPurchase),
         availableSecondLabel: intl.formatMessage(publicationMessages.willBecomeAvailableOn, {
-          date: localizeDate(currVal.availableForPurchase),
+          date: localizeDate(currVal.availableForPurchase, "llll"),
         }),
         hiddenSecondLabel: intl.formatMessage(publicationMessages.willBecomePublishedOn, {
-          date: localizeDate(currVal.publicationDate),
+          date: localizeDate(currVal.publishedAt, "llll"),
         }),
         setAvailabilityDateLabel: intl.formatMessage(publicationMessages.setAvailabilityDate),
         unavailableLabel: intl.formatMessage(publicationMessages.unavailableForPurchase),

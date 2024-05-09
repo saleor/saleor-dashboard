@@ -31,7 +31,7 @@ export interface ChannelData {
   id: string;
   name: string;
   isPublished?: boolean;
-  publicationDate?: string | null;
+  publishedAt?: string | null;
   currency?: string;
   variantsIds?: string[];
   price?: string;
@@ -45,7 +45,7 @@ export interface ChannelData {
 
 export interface ProductChannelListingData extends Channel {
   isPublished: boolean;
-  publicationDate: string | null;
+  publishedAt: string | null;
   availableForPurchase: string;
   isAvailableForPurchase: boolean;
   visibleInListings: boolean;
@@ -113,7 +113,7 @@ export interface ChannelCollectionData {
   id: string;
   isPublished: boolean;
   name: string;
-  publicationDate: string | null;
+  publishedAt: string | null;
 }
 
 export const createCollectionChannels = (data?: ChannelFragment[]) =>
@@ -121,7 +121,7 @@ export const createCollectionChannels = (data?: ChannelFragment[]) =>
     id: channel.id,
     isPublished: false,
     name: channel.name,
-    publicationDate: null,
+    publishedAt: null,
   }));
 
 export const createVoucherChannels = (data?: ChannelFragment[]) =>
@@ -198,7 +198,7 @@ export const createChannelsData = (data?: ChannelFragment[]): ChannelData[] =>
     isPublished: true,
     name: channel.name,
     price: "",
-    publicationDate: null,
+    publishedAt: null,
     visibleInListings: true,
   })) || [];
 
@@ -246,7 +246,7 @@ export const createCollectionChannelsData = (collectionData?: CollectionDetailsF
       id: listing.channel.id,
       isPublished: listing.isPublished,
       name: listing.channel.name,
-      publicationDate: listing.publicationDate,
+      publishedAt: listing.publishedAt,
     }));
 
     return collectionDataArr;
@@ -288,7 +288,7 @@ export const createChannelsDataFromProduct = (productData?: ProductFragment) =>
       availableForPurchase,
       isAvailableForPurchase,
       visibleInListings,
-      publicationDate,
+      publishedAt,
       isPublished,
     }) => {
       const variantChannel = productData?.variants?.[0].channelListings!.find(
@@ -311,7 +311,7 @@ export const createChannelsDataFromProduct = (productData?: ProductFragment) =>
       return {
         availableForPurchase,
         isPublished: isProductPublished,
-        publicationDate,
+        publishedAt,
         variantsIds,
         costPrice: costPrice?.amount.toString() ?? "",
         currency: price ? price.currency : "",
