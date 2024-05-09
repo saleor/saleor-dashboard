@@ -41,7 +41,7 @@ const _AppIFrame = forwardRef<HTMLIFrameElement, AppIFrameProps>(
         onLoad={onLoad}
         onError={onError}
         className={className}
-        sandbox="allow-same-origin allow-forms allow-scripts"
+        sandbox="allow-same-origin allow-forms allow-scripts allow-popups allow-popups-to-escape-sandbox"
       />
     );
   },
