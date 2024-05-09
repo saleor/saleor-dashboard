@@ -104,7 +104,7 @@ jobs:
         id: get-environment-variables
         run: |
           node .github/workflows/cypressTestsHelpers/getEnvironmentVariables.js \
-            --version $VERSION \
+            --version $CUSTOM_VERSION \
             --token "$TOKEN" \
             --repo_token "$REPO_TOKEN" \
             --project "$PROJECT"
