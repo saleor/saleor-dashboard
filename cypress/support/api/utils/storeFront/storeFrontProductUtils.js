@@ -35,3 +35,18 @@ export const getProductPrice = (productId, channelSlug) => {
     resp => resp.body.data.product.variants[0].pricing.price.gross.amount,
   );
 };
+
+export const getProductPriceRetry = (productId, channelSlug, i = 0) => {
+  const discountValue = 50;
+  const productPrice = 100;
+  const expectedPrice = (productPrice * discountValue) / 100;
+
+  if (i > 3) {
+    throw new Error(`There is no correct price ${expectedPrice}`);
+  }
+  return cy.getProductPriceRetry(expectedPrice).then();
+
+  getProductDetails(productId, channelSlug).then(
+    resp => resp.body.data.product.variants[0].pricing.price.gross.amount,
+  );
+};

@@ -29,7 +29,9 @@ export function createSale({
     .get(discountOption)
     .click();
   selectChannelInDetailsPages(channelName);
-  cy.get(SALES_SELECTORS.discountValue)
+
+  return cy
+    .get(SALES_SELECTORS.discountValue)
     .type(discountValue)
     .get(SALES_SELECTORS.startDateInput)
     .type(todaysDate)
@@ -101,14 +103,15 @@ export function createSaleWithNewProduct({
       .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
       */
     cy.visit(urlList.sales);
-    createSale({
+    return createSale({
       saleName: name,
       channelName: channel.name,
       discountValue,
       discountOption,
+    }).then(() => {
+      assignProducts(product.name);
+      return getProductPrice(product.id, channel.slug);
     });
-    assignProducts(product.name);
-    return getProductPrice(product.id, channel.slug);
   });
 }
 

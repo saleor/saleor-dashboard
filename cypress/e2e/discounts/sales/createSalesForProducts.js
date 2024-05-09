@@ -7,12 +7,9 @@ import { urlList } from "../../../fixtures/urlList";
 import { createChannel } from "../../../support/api/requests/Channels";
 import { updateChannelInProduct } from "../../../support/api/requests/Product";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
-import * as productsUtils
-  from "../../../support/api/utils/products/productsUtils";
+import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import { createShipping } from "../../../support/api/utils/shippingUtils";
-import {
-  getProductPrice,
-} from "../../../support/api/utils/storeFront/storeFrontProductUtils";
+import { getProductPrice } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
 import {
   getDefaultTaxClass,
   updateTaxConfigurationForChannel,
@@ -98,6 +95,7 @@ describe("As an admin I want to create sale for products", () => {
     () => {
       const saleName = `${startsWith}${faker.datatype.number()}`;
       const expectedPrice = (productPrice * discountValue) / 100;
+      cy.log(expectedPrice);
 
       createSaleWithNewProduct({
         name: saleName,
@@ -165,9 +163,8 @@ describe("As an admin I want to create sale for products", () => {
             productId: product.id,
             channelId: channel.id,
           });
-          /* Uncomment after fixing SALEOR-3367 bug 
-           cy.clearSessionData()
-          .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
+          /*Uncomment after fixing SALEOR-3367 bug
+          cy.clearSessionData().loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount);
           */
           cy.visit(urlList.sales);
           createSale({
