@@ -15,6 +15,8 @@ import { Box, Option, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { getApproxTextWidth } from "./utils";
+
 interface ProductType {
   hasVariants: boolean;
   id: string;
@@ -156,6 +158,10 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
               id: "ccXLVi",
               defaultMessage: "Category",
             })}
+            __width={data.category ? getApproxTextWidth(categoryInputDisplayValue) : undefined}
+            endAdornment={val =>
+              val ? categories.find(category => category.value === val.value)?.endAdornment : null
+            }
           />
         </Box>
         <Multiselect
