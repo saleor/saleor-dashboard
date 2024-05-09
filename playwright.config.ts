@@ -31,9 +31,9 @@ export default defineConfig({
         ],
       ]
     : [["html"], ["list"]],
-  expect: { timeout: 10000 },
-  maxFailures: 5,
-  timeout: env.CI ? 45000 : 60000,
+  expect: { timeout: 5000 },
+  maxFailures: 2,
+  timeout: 30000,
   use: {
     baseURL: env.BASE_URL || "",
     trace: env.CI ? "on-all-retries" : "on",
