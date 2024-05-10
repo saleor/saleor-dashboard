@@ -8,7 +8,7 @@ export class IssueGiftCardDialog extends BasePage {
     readonly expiryPeriodAmountInput = page.locator('[name="expiryPeriodAmount"]'),
     readonly tagsInput = page.getByTestId("gift-card-tag-select-field").locator("input"),
     readonly cardCode = page.getByTestId("cardCode"),
-
+    readonly giftCardExpireFields = page.getByTestId("gift-card-expire-data-fields"),
     readonly sendToCustomerCheckbox = page
       .getByTestId("send-to-customer-section")
       .locator('input[type="checkbox"]'),
@@ -71,6 +71,9 @@ export class IssueGiftCardDialog extends BasePage {
 
   async clickSendExpireDateCheckbox() {
     await this.sendExpireDateCheckbox.click();
+    await this.waitForDOMToFullyLoad();
+    await expect(this.sendExpireDateCheckbox.isChecked()).toBeTruthy();
+    await this.giftCardExpireFields.waitFor({ state: "attached" });
   }
 
   async clickRequiresActivationCheckbox() {

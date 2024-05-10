@@ -48,8 +48,8 @@ test("TC: SALEOR_106 Issue gift card with specific customer and expiry date @e2e
   await giftCardsPage.issueGiftCardDialog.typeExpiryPeriodAmount("2");
   await giftCardsPage.issueGiftCardDialog.clickSendToCustomerCheckbox();
   await giftCardsPage.issueGiftCardDialog.selectCustomer("e2e-customer to-be-activated");
-  await giftCardsPage.issueGiftCardDialog.clickIssueButton(),
-    await expect(giftCardsPage.issueGiftCardDialog.cardCode).toBeVisible();
+  await giftCardsPage.issueGiftCardDialog.clickIssueButton();
+  await expect(giftCardsPage.issueGiftCardDialog.cardCode).toBeVisible();
 
   const code = (await giftCardsPage.issueGiftCardDialog.cardCode.innerText()).slice(-4);
 
