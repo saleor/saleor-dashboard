@@ -100,21 +100,19 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
             {intl.formatMessage(availabilityItemMessages.setPublicationDate)}
           </Checkbox>
           {isPublishedAt && (
-            <Box display="flex" gap={4} width="100%">
-              <DateTimeTimezoneField
-                error={!!formErrors.publishedAt}
-                disabled={disabled}
-                name={`channel:publicationTime:${id}`}
-                value={publishedAt || ""}
-                onChange={dateTime =>
-                  onChange(id, {
-                    ...formData,
-                    publishedAt: dateTime,
-                  })
-                }
-                fullWidth
-              />
-            </Box>
+            <DateTimeTimezoneField
+              error={!!formErrors.publishedAt}
+              disabled={disabled}
+              name={`channel:publicationTime:${id}`}
+              value={publishedAt || ""}
+              onChange={dateTime =>
+                onChange(id, {
+                  ...formData,
+                  publishedAt: dateTime,
+                })
+              }
+              fullWidth
+            />
           )}
         </Box>
       )}
