@@ -24,7 +24,7 @@ test.beforeEach(({ page }) => {
 });
 
 test("TC: SALEOR_139 Should be able to navigate to permission groups page @permissions @e2e", async () => {
-  await config.gotoConfigurationView();
+  await config.goToConfigurationView();
   await config.permissionGroupsButton.scrollIntoViewIfNeeded();
   await config.openPermissionGroups();
   await expect(permissions.permissionGroupsList).toBeVisible();

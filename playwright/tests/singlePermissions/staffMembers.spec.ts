@@ -16,7 +16,7 @@ test.beforeEach(async ({ page, request }) => {
   mainMenuPage = new MainMenuPage(page);
   configurationPage = new ConfigurationPage(page);
   permissionGroupsPage = new PermissionGroupsPage(page);
-  await configurationPage.gotoConfigurationView();
+  await configurationPage.goToConfigurationView();
   await configurationPage.waitForDOMToFullyLoad();
 });
 

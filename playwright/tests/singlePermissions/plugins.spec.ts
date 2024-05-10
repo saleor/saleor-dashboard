@@ -16,7 +16,7 @@ test.beforeEach(({ page }) => {
 });
 
 test("TC: SALEOR_16 User should be able to navigate to plugin list as a staff member using PLUGINS permission @e2e", async () => {
-  await configurationPage.gotoConfigurationView();
+  await configurationPage.goToConfigurationView();
   await configurationPage.openPlugins();
   await expect(pluginsPage.pluginRow.first()).toBeVisible();
   await mainMenuPage.expectMenuItemsCount(3);

@@ -63,7 +63,7 @@ export class ConfigurationPage extends BasePage{
     await this.pluginsButton.click();
   }
 
-  async goToConfirgurationView() {
+  async goToConfigurationView() {
     await this.page.goto(URL_LIST.configuration);
   }
   async openWebhooksAndEvents() {
@@ -71,9 +71,5 @@ export class ConfigurationPage extends BasePage{
   }
   async openAttributes() {
     await this.attributesButton.click();
-  }
-
-  async gotoConfigurationView() {
-    await this.page.goto(URL_LIST.configuration);
   }
 }
