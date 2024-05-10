@@ -24,6 +24,17 @@ const convertToDateTimeLocal = (date: string) => {
   return moment(date).format("YYYY-MM-DDThh:mm");
 };
 
+const min = "1970-01-01T00:00";
+const max = "2100-01-01T23:59";
+
+const isInputValid = (value: string) => {
+  const isValid = moment(value).isValid();
+  const isAfterMin = moment(value).isAfter(min);
+  const isBeforeMax = moment(value).isBefore(max);
+
+  return isValid && isAfterMin && isBeforeMax;
+};
+
 export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
   disabled,
   name,
@@ -62,6 +73,13 @@ export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
           type="datetime-local"
           value={value}
           helperText={helperText}
+          min={min}
+          max={max}
+          onBlur={() => {
+            if (!isInputValid(value)) {
+              setValue("");
+            }
+          }}
         />
       </Box>
       {error && <ErrorNoticeBar className={sprinkles({ marginTop: 3 })} message={error} />}
