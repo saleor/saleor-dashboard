@@ -202,8 +202,8 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
                             {!isProductAvailable && (
                               <Text display="block" size={1} color="default2">
                                 {intl.formatMessage({
-                                  defaultMessage: "Product is not available in selected channel",
-                                  id: "AGqyzl",
+                                  defaultMessage: "Product is not available in selected channels",
+                                  id: "jmZSK1",
                                 })}
                               </Text>
                             )}
