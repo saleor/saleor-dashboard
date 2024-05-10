@@ -95,7 +95,7 @@ const GiftCardCreateExpirySelect: React.FC<GiftCardCreateExpirySelectProps> = ({
           )}
 
           {expiryType === "EXPIRY_PERIOD" && (
-            <div className={classes.periodField}>
+            <div data-test-id="gift-card-expire-data-fields" className={classes.periodField}>
               <TimePeriodField
                 isError={!!errors?.expiryDate}
                 helperText={getGiftCardErrorMessage(errors?.expiryDate, intl)}

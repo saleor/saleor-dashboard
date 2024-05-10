@@ -20,7 +20,7 @@ test.beforeEach(({ page }) => {
   addNavigationMenuItemDialog = new AddNavigationMenuItemDialog(page);
 });
 test("TC: SALEOR_193 Should go to Navigation page @navigation @e2e", async () => {
-  await config.gotoConfigurationView();
+  await config.goToConfigurationView();
   await navigation.clickNavigationButtonFromConfiguration();
   await expect(navigation.navigationHeader).toBeVisible();
   await expect(navigation.navigationList).toBeVisible();
