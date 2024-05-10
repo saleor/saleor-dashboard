@@ -159,8 +159,8 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
               defaultMessage: "Category",
             })}
             __width={data.category ? getApproxTextWidth(categoryInputDisplayValue) : undefined}
-            endAdornment={val =>
-              val ? categories.find(category => category.value === val.value)?.endAdornment : null
+            startAdornment={val =>
+              val ? categories.find(category => category.value === val.value)?.startAdornment : null
             }
           />
         </Box>
