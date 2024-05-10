@@ -193,6 +193,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                     date: localizeDate(data.publishedAt, "llll"),
                   }),
                   visibleLabel: intl.formatMessage(messages.visibleLabel),
+                  setAvailabilityDateLabel: intl.formatMessage(messages.setAvailabilityDate),
                 }}
                 onChange={change}
               />

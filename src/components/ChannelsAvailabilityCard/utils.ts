@@ -36,7 +36,7 @@ export const getChannelsAvailabilityMessages = ({
                 : intl.formatMessage(publicationMessages.notPublished),
         availableLabel: intl.formatMessage(publicationMessages.availableForPurchase),
         availableSecondLabel: intl.formatMessage(publicationMessages.willBecomeAvailableOn, {
-          date: localizeDate(currVal.availableForPurchase, "llll"),
+          date: localizeDate(currVal.availableForPurchaseAt, "llll"),
         }),
         hiddenSecondLabel: intl.formatMessage(publicationMessages.willBecomePublishedOn, {
           date: localizeDate(currVal.publishedAt, "llll"),

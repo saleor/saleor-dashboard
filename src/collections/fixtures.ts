@@ -195,7 +195,7 @@ export const collection: (
           channelListings: [
             {
               __typename: "ProductChannelListing",
-              availableForPurchase: null,
+              availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
                 currencyCode: "USD",
@@ -209,7 +209,7 @@ export const collection: (
             },
             {
               __typename: "ProductChannelListing",
-              availableForPurchase: null,
+              availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
                 currencyCode: "USD",
@@ -239,7 +239,7 @@ export const collection: (
           channelListings: [
             {
               __typename: "ProductChannelListing",
-              availableForPurchase: null,
+              availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
                 currencyCode: "USD",
@@ -253,7 +253,7 @@ export const collection: (
             },
             {
               __typename: "ProductChannelListing",
-              availableForPurchase: null,
+              availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
                 currencyCode: "USD",
@@ -283,7 +283,7 @@ export const collection: (
           channelListings: [
             {
               __typename: "ProductChannelListing",
-              availableForPurchase: null,
+              availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
                 currencyCode: "USD",
@@ -297,7 +297,7 @@ export const collection: (
             },
             {
               __typename: "ProductChannelListing",
-              availableForPurchase: null,
+              availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
                 currencyCode: "USD",
@@ -327,7 +327,7 @@ export const collection: (
           channelListings: [
             {
               __typename: "ProductChannelListing",
-              availableForPurchase: null,
+              availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
                 currencyCode: "USD",
@@ -341,7 +341,7 @@ export const collection: (
             },
             {
               __typename: "ProductChannelListing",
-              availableForPurchase: null,
+              availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
                 currencyCode: "USD",

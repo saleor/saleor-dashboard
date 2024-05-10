@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { commonMessages } from "@dashboard/intl";
-import { DateTime, joinDateTime, splitDateTime } from "@dashboard/misc";
 import { Box, Input, sprinkles } from "@saleor/macaw-ui-next";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -16,7 +16,13 @@ interface DateTimeFieldProps {
   disabled?: boolean;
   fullWidth?: boolean;
   name: string;
+  label?: string;
+  helperText?: string;
 }
+
+const convertToDateTimeLocal = (date: string) => {
+  return moment(date).format("YYYY-MM-DDThh:mm");
+};
 
 export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
   disabled,
@@ -24,17 +30,17 @@ export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
   onChange,
   error,
   fullWidth,
+  label,
+  helperText,
   value: initialValue,
 }) => {
   const intl = useIntl();
-  const [value, setValue] = useState<DateTime>(
-    initialValue ? splitDateTime(initialValue) : { date: "", time: "" },
+  const [value, setValue] = useState<string>(
+    initialValue ? convertToDateTimeLocal(initialValue) : "",
   );
 
   useEffect(() => {
-    const newDate = joinDateTime(value.date, value.time);
-
-    onChange(newDate);
+    onChange(value);
   }, [value]);
 
   return (
@@ -46,31 +52,16 @@ export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
           marginRight={3}
           disabled={disabled}
           error={!!error}
-          label={intl.formatMessage(commonMessages.date)}
-          name={`${name}:date`}
+          label={label ?? intl.formatMessage(commonMessages.date)}
+          name={name}
           onChange={event => {
             const date = event.target.value;
 
-            setValue(value => ({ ...value, date }));
+            setValue(date);
           }}
-          type="date"
-          value={value.date}
-        />
-
-        <Input
-          width={fullWidth ? "100%" : undefined}
-          size="small"
-          disabled={disabled}
-          error={!!error}
-          label={intl.formatMessage(commonMessages.time)}
-          name={`${name}:time`}
-          onChange={event => {
-            const time = event.target.value;
-
-            setValue(value => ({ ...value, time }));
-          }}
-          type="time"
-          value={value.time}
+          type="datetime-local"
+          value={value}
+          helperText={helperText}
         />
       </Box>
       {error && <ErrorNoticeBar className={sprinkles({ marginTop: 3 })} message={error} />}

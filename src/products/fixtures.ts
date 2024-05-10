@@ -215,7 +215,7 @@ export const product: (
       ],
     },
   ],
-  availableForPurchase: null,
+  availableForPurchaseAt: null,
   category: {
     __typename: "Category",
     id: "Q2F0ZWdvcnk6MQ==",
@@ -224,7 +224,7 @@ export const product: (
   channelListings: [
     {
       __typename: "ProductChannelListing",
-      availableForPurchase: null,
+      availableForPurchaseAt: null,
       channel: channelsList[0],
       isAvailableForPurchase: false,
       isPublished: true,
@@ -255,7 +255,7 @@ export const product: (
     },
     {
       __typename: "ProductChannelListing",
-      availableForPurchase: null,
+      availableForPurchaseAt: null,
       channel: channelsList[1],
       isAvailableForPurchase: false,
       isPublished: false,
@@ -1237,7 +1237,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1273,7 +1273,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1332,7 +1332,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1368,7 +1368,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1427,7 +1427,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1463,7 +1463,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1544,7 +1544,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1580,7 +1580,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1661,7 +1661,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1697,7 +1697,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1778,7 +1778,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1815,7 +1815,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
 
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1896,7 +1896,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1932,7 +1932,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2013,7 +2013,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2049,7 +2049,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2130,7 +2130,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2166,7 +2166,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2247,7 +2247,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2283,7 +2283,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2364,7 +2364,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2400,7 +2400,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2481,7 +2481,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2517,7 +2517,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2598,7 +2598,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2634,7 +2634,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2715,7 +2715,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2751,7 +2751,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2832,7 +2832,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2868,7 +2868,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2949,7 +2949,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2985,7 +2985,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -3066,7 +3066,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -3102,7 +3102,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -3183,7 +3183,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -3219,7 +3219,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -3300,7 +3300,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -3336,7 +3336,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -3417,7 +3417,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -3453,7 +3453,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
