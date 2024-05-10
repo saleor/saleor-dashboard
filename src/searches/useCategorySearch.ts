@@ -14,7 +14,7 @@ export const searchCategories = gql`
         node {
           id
           name
-          ancestors(first: $first) {
+          ancestors(last: 2) {
             edges {
               node {
                 id
