@@ -23,6 +23,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -166,12 +167,12 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
                       selectedProduct => selectedProduct.id === product.id,
                     );
 
-                    const isProductDisabled =
-                      loading ||
-                      !isAvailableInChannel({
-                        availableChannels,
-                        channelListings: product?.channelListings ?? [],
-                      });
+                    const isProductAvailable = isAvailableInChannel({
+                      availableChannels,
+                      channelListings: product?.channelListings ?? [],
+                    });
+
+                    const isProductDisabled = loading || !isProductAvailable;
 
                     return (
                       <React.Fragment key={product ? product.id : `skeleton-${productIndex}`}>
@@ -198,6 +199,14 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
                           />
                           <TableCell className={classes.colName} colSpan={2}>
                             {product?.name || <Skeleton />}
+                            {!isProductAvailable && (
+                              <Text display="block" size={1} color="default2">
+                                {intl.formatMessage({
+                                  defaultMessage: "Product is not available in selected channel",
+                                  id: "AGqyzl",
+                                })}
+                              </Text>
+                            )}
                           </TableCell>
                         </TableRowLink>
                       </React.Fragment>
