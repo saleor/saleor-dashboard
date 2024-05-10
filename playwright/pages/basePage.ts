@@ -32,6 +32,7 @@ export class BasePage {
     readonly searchInputListView = page.getByTestId("search-input"),
     readonly emptyDataGridListView = page.getByTestId("empty-data-grid-text"),
     readonly dialog = page.getByRole("dialog"),
+    readonly submitButton = page.getByTestId("submit"),
     readonly giftCardInTable = page.locator('[href*="/dashboard/gift-cards/.*]'),
     readonly selectAllCheckbox = page.getByTestId("select-all-checkbox").locator("input"),
   ) {
@@ -65,6 +66,11 @@ export class BasePage {
   async clickDeleteButton() {
     await this.deleteButton.click();
   }
+
+  async clickSubmitButton() {
+    await this.submitButton.click();
+  }
+
   async typeInSearchOnListView(searchItem: string) {
     await this.waitForNetworkIdle(async () => {
       await this.searchInputListView.fill(searchItem);

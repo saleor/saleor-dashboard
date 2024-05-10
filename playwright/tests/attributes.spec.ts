@@ -21,7 +21,7 @@ for (const attr of attributeClasses) {
     const uniqueSlug = `${attr}-${type}-${SALEOR_124_uuid}`;
     test(`TC: SALEOR_124 User should be able to create ${attr} ${type} attribute with ability to add values, required, public @e2e @attributes`, async ({page}) => {
       await page.context().storageState({ path: "./playwright/.auth/admin.json" });
-      await configurationPage.gotoConfigurationView();
+      await configurationPage.goToConfigurationView();
       await configurationPage.openAttributes();
       await attributesPage.clickCreateAttributeButton();
       await attributesPage.selectAttributeType(attr);
@@ -53,7 +53,7 @@ for (const attr of attributeClasses) {
     const uniqueSlug = `${attr}-${type}-${SALEOR_125_uuid}`;
     test(`TC: SALEOR_125 User should be able to create ${attr} ${type} attribute without ability to add values, NOT required, private @e2e @attributes`, async ({page}) => {
       await page.context().storageState({ path: "./playwright/.auth/admin.json" });
-      await configurationPage.gotoConfigurationView();
+      await configurationPage.goToConfigurationView();
       await configurationPage.openAttributes();
       await attributesPage.waitForDOMToFullyLoad();
       await attributesPage.clickCreateAttributeButton();
@@ -88,7 +88,7 @@ for (const attr of attributeClasses) {
     const uniqueSlug = `${attr}-${entity}-${SALEOR_126_uuid}`;
     test(`TC: SALEOR_126 User should be able to create ${attr} References attribute for ${entity}, NOT required, public @e2e @attributes`, async ({page}) => {
       await page.context().storageState({ path: "./playwright/.auth/admin.json" });
-      await configurationPage.gotoConfigurationView();
+      await configurationPage.goToConfigurationView();
       await configurationPage.openAttributes();
       await attributesPage.waitForDOMToFullyLoad();
       await attributesPage.clickCreateAttributeButton();

@@ -43,7 +43,7 @@ test("TC: SALEOR_14 User should be able to navigate to content list as a staff m
 });
 
 test("TC: SALEOR_15 User should be able to navigate to page types list as a staff member using CONTENT aka PAGE permission @e2e", async () => {
-  await configurationPage.goToConfirgurationView();
+  await configurationPage.goToConfigurationView();
   await expect(configurationPage.taxesButton).toBeVisible();
   await expect(configurationPage.pageTypesButton).toBeVisible();
   await expect(configurationPage.webhooksAndEventsButton).toBeVisible();
