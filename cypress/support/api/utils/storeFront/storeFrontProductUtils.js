@@ -35,26 +35,3 @@ export const getProductPrice = (productId, channelSlug) => {
     resp => resp.body.data.product.variants[0].pricing.price.gross.amount,
   );
 };
-
-export const getProductPriceRetry = (
-  productId,
-  channelSlug,
-  expectedPrice,
-  i = 0,
-) => {
-  cy.log("main-scope");
-  if (i > 3) {
-    throw new Error(`This is not a correct price: ${expectedPrice}`);
-  }
-  return getProductPrice(productId, channelSlug).then(amount => {
-    console.log(amount);
-
-    if (amount !== expectedPrice) {
-      console.log("price-scope2");
-      cy.wait(3000);
-      getProductPriceRetry(productId, channelSlug, expectedPrice, i + 1);
-    } else {
-      return amount;
-    }
-  });
-};

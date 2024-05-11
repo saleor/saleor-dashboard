@@ -6,13 +6,12 @@ import faker from "faker";
 import { urlList } from "../../../fixtures/urlList";
 import { createChannel } from "../../../support/api/requests/Channels";
 import { updateChannelInProduct } from "../../../support/api/requests/Product";
+import { expectProductVisibleInShop } from "../../../support/api/requests/storeFront/Search";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import { createShipping } from "../../../support/api/utils/shippingUtils";
-import {
-  getProductPrice,
-  getProductPriceRetry,
-} from "../../../support/api/utils/storeFront/storeFrontProductUtils";
+
+import { getProductPrice } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
 import {
   getDefaultTaxClass,
   updateTaxConfigurationForChannel,
@@ -26,8 +25,8 @@ import {
 
 describe("As an admin I want to create sale for products", () => {
   const startsWith = "SalesProd-";
-  const discountValue = 50;
-  const productPrice = 100;
+  const discountValue = 10;
+  const productPrice = 50;
 
   let productType;
   let attribute;
@@ -92,70 +91,12 @@ describe("As an admin I want to create sale for products", () => {
     });
   });
 
-  it.only(
+  it(
     "should be able to create percentage discount. TC: SALEOR_1801",
     { tags: ["@sales", "@allEnv", "@stable"] },
     () => {
       const saleName = `${startsWith}${faker.datatype.number()}`;
-      const expectedPrice = (productPrice * discountValue) / 100;
-      cy.log(expectedPrice);
-
-      // createSaleWithNewProduct({
-      //   name: saleName,
-      //   channel: defaultChannel,
-      //   warehouseId: warehouse.id,
-      //   productTypeId: productType.id,
-      //   attributeId: attribute.id,
-      //   categoryId: category.id,
-      //   price: productPrice,
-      //   discountOption: discountOptions.PERCENTAGE,
-      //   discountValue,
-      //   taxClassId: taxClass.id,
-      // }).then(
-      //   getProductPriceRetry(productType.id, defaultChannel, expectedPrice),
-      // );
-
-      productsUtils
-        .createProductInChannel({
-          name: saleName,
-          channelId: defaultChannel.id,
-          warehouseId: warehouse.id,
-          productTypeId: productType.id,
-          attributeId: attribute.id,
-          categoryId: category.id,
-          price: productPrice,
-          taxClassId: taxClass.id,
-        })
-        .then(({ product: productResp }) => {
-          const product = productResp;
-          /* Uncomment after fixing SALEOR-3367 bug
-           cy.clearSessionData()
-          .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
-          */
-          cy.visit(urlList.sales);
-          return createSale({
-            saleName: saleName,
-            channelName: defaultChannel.name,
-            discountValue,
-            discountOption: discountOptions.PERCENTAGE,
-          }).then(() => {
-            assignProducts(product.name);
-            return getProductPriceRetry(
-              product.id,
-              defaultChannel.slug,
-              expectedPrice,
-            );
-          });
-        });
-    },
-  );
-
-  it(
-    "should be able to create fixed price discount. TC: SALEOR_1802",
-    { tags: ["@sales", "@allEnv", "@stable"] },
-    () => {
-      const saleName = `${startsWith}${faker.datatype.number()}`;
-      const expectedPrice = productPrice - discountValue;
+      const discountOption = discountOptions.PERCENTAGE;
 
       createSaleWithNewProduct({
         name: saleName,
@@ -165,14 +106,36 @@ describe("As an admin I want to create sale for products", () => {
         attributeId: attribute.id,
         categoryId: category.id,
         price: productPrice,
-        discountOption: discountOptions.FIXED,
+        discountOption,
         discountValue,
-      }).should("eq", expectedPrice);
+        taxClassId: taxClass.id,
+      }).should("eq", 45);
     },
   );
 
   it(
-    "should not be able to see product discount not assign to channel. TC: SALEOR_1803",
+    "should be able to create fixed price discount. TC: SALEOR_1802",
+    { tags: ["@sales", "@allEnv", "@stable"] },
+    () => {
+      const saleName = `${startsWith}${faker.datatype.number()}`;
+      const discountOption = discountOptions.FIXED;
+
+      createSaleWithNewProduct({
+        name: saleName,
+        channel: defaultChannel,
+        warehouseId: warehouse.id,
+        productTypeId: productType.id,
+        attributeId: attribute.id,
+        categoryId: category.id,
+        price: productPrice,
+        discountOption,
+        discountValue,
+      }).should("eq", 40);
+    },
+  );
+
+  it(
+    "should not be able to see product discount not assigned to channel. TC: SALEOR_1803",
     { tags: ["@sales", "@allEnv", "@stable"] },
     () => {
       const saleName = `${startsWith}${faker.datatype.number()}`;
@@ -210,10 +173,12 @@ describe("As an admin I want to create sale for products", () => {
             channelName: channel.name,
             discountValue,
           });
+          // Make sure the product is searchable before assigning
+          expectProductVisibleInShop(product.name);
           assignProducts(product.name);
           getProductPrice(product.id, defaultChannel.slug);
         })
-        .should("eq", productPrice);
+        .should("eq", 50);
     },
   );
 });

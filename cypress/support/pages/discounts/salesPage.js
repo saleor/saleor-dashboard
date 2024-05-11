@@ -1,3 +1,4 @@
+import { SHARED_ELEMENTS } from "../../../elements";
 import { SALES_SELECTORS } from "../../../elements/discounts/sales";
 import { ASSIGN_ELEMENTS_SELECTORS } from "../../../elements/shared/assign-elements-selectors";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
@@ -5,6 +6,7 @@ import { urlList } from "../../../fixtures/urlList";
 import { getVariantWithSaleStatus } from "../../../support/api/utils/discounts/salesUtils";
 import { formatDate } from "../../../support/formatData/formatDate";
 import { getVariant } from "../../api/requests/Product";
+import { expectProductVisibleInShop } from "../../api/requests/storeFront/Search";
 import { createProductInChannel } from "../../api/utils/products/productsUtils";
 import { getProductPrice } from "../../api/utils/storeFront/storeFrontProductUtils";
 import { selectChannelInDetailsPages } from "../channelsPage";
@@ -38,7 +40,9 @@ export function createSale({
     .addAliasToGraphRequest("SaleCreate")
     .get(SALES_SELECTORS.saveButton)
     .click()
-    .waitForRequestAndCheckIfNoErrors("@SaleCreate");
+    .waitForRequestAndCheckIfNoErrors("@SaleCreate")
+    .get(SHARED_ELEMENTS.notificationMessage)
+    .should("contain", "Successfully created sale");
 }
 
 export function assignProducts(productName) {
@@ -55,6 +59,10 @@ export function assignProducts(productName) {
   cy.addAliasToGraphRequest("SaleCataloguesAdd");
   cy.get(BUTTON_SELECTORS.submit).click();
   cy.waitForRequestAndCheckIfNoErrors("@SaleCataloguesAdd");
+  cy.get(SHARED_ELEMENTS.notificationMessage).should(
+    "contain",
+    "Saved changes",
+  );
 }
 
 export function assignVariants(productName, variantName) {
@@ -96,22 +104,32 @@ export function createSaleWithNewProduct({
     categoryId,
     price,
     taxClassId,
-  }).then(({ product: productResp }) => {
+  }).then(({ product: productResp, variantsList }) => {
     const product = productResp;
+
     /* Uncomment after fixing SALEOR-3367 bug
        cy.clearSessionData()
       .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
       */
     cy.visit(urlList.sales);
-    return createSale({
+    createSale({
       saleName: name,
       channelName: channel.name,
       discountValue,
       discountOption,
-    }).then(() => {
-      assignProducts(product.name);
-      return getProductPrice(product.id, channel.slug);
     });
+
+    // Make sure the product is searchable before assigning
+    expectProductVisibleInShop(product.name);
+    assignProducts(product.name);
+    // Wait until product variant receives onSale status
+    getVariantWithSaleStatus({
+      variantId: variantsList[0].id,
+      channelSlug: channel.slug,
+      onSaleStatus: true,
+    });
+
+    return getProductPrice(product.id, channel.slug);
   });
 }
 

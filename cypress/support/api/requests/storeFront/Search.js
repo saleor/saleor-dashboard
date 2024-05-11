@@ -15,7 +15,10 @@ export function searchInShop(searchQuery) {
   }`;
   return cy.sendRequestWithQuery(query, "token");
 }
-export function expectProductVisibleInShop(productName, retries = 0) {
+
+export function expectProductVisibleInShop(productName, maxRetries = 5) {
+  let retries = 0;
+
   return searchInShop(productName).then(searchInShopResponse => {
     const productsList = searchInShopResponse.body.data.products;
     if (
@@ -24,13 +27,14 @@ export function expectProductVisibleInShop(productName, retries = 0) {
     ) {
       cy.log(`Found product name: ${productName}`);
       return;
-    } else if (retries > 4) {
+    } else if (retries >= maxRetries) {
       throw new Error(
-        `Product with name ${productName} is not visible in search results. Retried for ${retries} times`,
+        `Product with name ${productName} is not visible in search results. Retried for ${maxRetries} times`,
       );
     } else {
       cy.wait(5000);
-      expectProductVisibleInShop(productName, retries + 1);
+      retries++;
+      expectProductVisibleInShop(productName);
     }
   });
 }
