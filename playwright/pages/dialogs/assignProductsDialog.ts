@@ -1,4 +1,4 @@
-import { Page } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
 export class AssignProductsDialog {
   readonly page: Page;
@@ -31,5 +31,6 @@ export class AssignProductsDialog {
 
     await product.waitFor({ state: "visible" });
     await product.getByRole("checkbox").click();
+    await expect(product.getByRole("checkbox")).toBeChecked();
   }
 }

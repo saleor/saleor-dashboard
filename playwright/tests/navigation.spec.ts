@@ -26,6 +26,7 @@ test("TC: SALEOR_193 Should go to Navigation page @navigation @e2e", async () =>
   await expect(navigation.navigationList).toBeVisible();
 });
 test("TC: SALEOR_194 Should create a new menu navigation with menu item @navigation @e2e", async () => {
+  test.slow();
   await navigation.goToNavigationView();
   await navigation.createMenuButton.click();
   await expect(navigation.createMenuDialogTitle).toBeVisible();
@@ -48,21 +49,19 @@ test("TC: SALEOR_194 Should create a new menu navigation with menu item @navigat
   await expect(navigationDetailsPage.menuItemList).toContainText(menuItemName);
 });
 // TODO: To be updated after https://linear.app/saleor/issue/MERX-307 is fixed
-test.skip("TC: SALEOR_198 Should update existing menu @navigation @e2e", async () => {
+test("TC: SALEOR_198 Should update existing menu @navigation @e2e", async () => {
   await navigationDetailsPage.goToExistingMenuView(NAVIGATION_ITEMS.navigationMenuToBeUpdated.id);
 
   const menuItemToBeUpdated = NAVIGATION_ITEMS.navigationMenuToBeUpdated.menuItems[0];
   const menuItemToBeDeleted = NAVIGATION_ITEMS.navigationMenuToBeUpdated.menuItems[1];
   const newItemName = faker.random.word();
 
-  await navigationDetailsPage.waitForDOMToFullyLoad();
   await navigationDetailsPage.clickEditMenuItemButton(menuItemToBeUpdated.name);
   await addNavigationMenuItemDialog.typeMenuItemName(newItemName);
   await addNavigationMenuItemDialog.selectLinkOption("category", "Polo Shirts");
   await addNavigationMenuItemDialog.clickSaveButton();
   await expect(navigationDetailsPage.addMenuItemDialog).not.toBeVisible();
   await navigationDetailsPage.clickDeleteMenuItemButton(menuItemToBeDeleted.name);
-  await navigationDetailsPage.waitForDOMToFullyLoad();
   await navigationDetailsPage.clickCreateNewMenuItem();
   await expect(navigationDetailsPage.addMenuItemDialog).toBeVisible();
 
@@ -73,10 +72,8 @@ test.skip("TC: SALEOR_198 Should update existing menu @navigation @e2e", async (
   await addNavigationMenuItemDialog.clickSaveButton();
   await expect(navigationDetailsPage.menuItemList).toContainText(menuItemName);
   await navigationDetailsPage.clickDeleteMenuItemButton(menuItemName);
-  await navigationDetailsPage.waitForDOMToFullyLoad();
   await expect(navigationDetailsPage.menuItemList).not.toContainText(menuItemName);
   await navigationDetailsPage.clickUndoButton();
-  await navigationDetailsPage.waitForDOMToFullyLoad();
   await expect(navigationDetailsPage.menuItemList).toContainText(menuItemName);
   await expect(navigationDetailsPage.menuItemList).toContainText(newItemName);
   await expect(navigationDetailsPage.menuItemList).not.toContainText(menuItemToBeDeleted.name);
@@ -116,7 +113,6 @@ test("TC: SALEOR_196 Should bulk delete menus from the list @navigation @e2e", a
   const menusToBeBulkDeleted = NAVIGATION_ITEMS.navigationMenusToBeBulkDeleted.names;
   const menus = await navigation.menuName.allInnerTexts();
 
-  await navigationDetailsPage.waitForDOMToFullyLoad();
   for (const name of menus) {
     await expect(navigation.checkedRows.locator(`:nth-match(:text(${name})`)).toBeTruthy();
   }
