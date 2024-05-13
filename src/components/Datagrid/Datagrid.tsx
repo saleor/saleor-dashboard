@@ -443,6 +443,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
             )}
           </Header>
         )}
+        <Box>test</Box>
         <CardContent classes={{ root: classes.cardContentRoot }} data-test-id="list">
           {rowsTotal > 0 || showEmptyDatagrid ? (
             <>
