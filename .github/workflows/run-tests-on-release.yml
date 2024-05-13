@@ -10,14 +10,10 @@ on:
         type: string
         required: true
         description: Version of run eg. "3.19.4-5a41d18"
-      HEAD_SHA_OF_RELEASE_PR:
+      PROJECT:
         type: string
         required: false
-        description: head sha of release pr if triggered for core release
-      CHECK_REPOSITORY:
-        type: string
-        required: false
-        description: repository for check, required if different than saleor-dashboard
+        description: release project
 
     secrets:
       STAGING_TOKEN:
@@ -36,6 +32,10 @@ on:
         required: true
       SLACK_QA_STATUSES_WEBHOOK_URL:
         required: true
+
+    outputs:
+      TESTS_CONCLUSION: ${{ jobs.tests-complete.outputs.TESTS_CONCLUSION }}
+      RUN_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
         
 jobs:
   add-check-and-prepare-instance:
@@ -61,12 +61,11 @@ jobs:
         id: create-check
         uses: ./.github/actions/checks/create-pull-request-check
         with:
-          PR_HEAD: ${{inputs.HEAD_SHA_OF_RELEASE_PR }} | "changeset-release/${{env.MINOR_VERSION}}"
+          PR_HEAD: "changeset-release/${{env.MINOR_VERSION}}"
           CHECK_NAME: "Automation_tests_run"
           STATUS: "in_progress"
           TITLE: "Automation tests run"
           DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          REPOSITORY: ${{inputs.CHECK_REPOSITORY }}
 
       - name: Generate variables
         id: cloud_variables
@@ -129,11 +128,13 @@ jobs:
           testmoToken: ${{ secrets.TESTMO_TOKEN }}
           testmoRunId: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
 
-  tests-complete-pw:
+  tests-complete:
     if: |
       !cancelled()
     needs: ["add-check-and-prepare-instance", "run-pw-tests"]
     runs-on: ubuntu-22.04
+    outputs:
+      TESTS_CONCLUSION: "${{ steps.send-slack-message.outputs.status }}"
     steps:
       - uses: actions/checkout@v4
 
@@ -177,7 +178,6 @@ jobs:
           TITLE: "Automation tests run"
           SUMMARY: "${{ steps.send-slack-message.outputs.message }}. Run details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          REPOSITORY: ${{inputs.CHECK_REPOSITORY }}
 
   update-check-status-if-previous-job-fails:
     runs-on: ubuntu-latest
@@ -210,4 +210,3 @@ jobs:
           TITLE: "Automation tests run"
           SUMMARY: "Run failed"
           DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          REPOSITORY: ${{inputs.CHECK_REPOSITORY }}

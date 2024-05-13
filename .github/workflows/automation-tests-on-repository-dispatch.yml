@@ -1,5 +1,5 @@
 name: Execute automation tests
-run-name: Run tests on ${{github.event.client_payload.version}} ${{github.event.client_payload.project}}
+run-name: Run tests on ${{github.event.client_payload.custom_version}} ${{github.event.client_payload.project}}
 
 on:
   repository_dispatch:
@@ -41,6 +41,35 @@ jobs:
     with:
       VERSION: ${{needs.get-environment-variables.outputs.VERSION}}
       CUSTOM_VERSION: ${{github.event.client_payload.custom_version}}
-      HEAD_SHA_OF_RELEASE_PR: ${{github.event.client_payload.release_pr_head_sha}}
     secrets: inherit
-  
+
+  create-release-PR:
+    needs: run-tests-on-release 
+    if: ${{ needs.run-tests-on-release.outputs.TESTS_CONCLUSION == 'success'}} && ${{github.event.client_payload.project == 'CORE' }}
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Open release PR
+        run: |
+          export GITHUB_TOKEN=$( \
+            curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
+          )
+
+          payload=$(\
+            jq --null-input \
+            --arg version "$CURRENT_VERSION" \
+            --arg details_url_to_test_run "$RUN_URL" \
+            --arg test_status "$STATUS" \
+            '{
+              "project": "CORE",
+              "environment": "SANDBOX",
+              "version": $version
+              "details_url_to_test_run": $details_url_to_test_run
+              "test_status": $test_status
+            }'
+            )
+
+          gh api /repos/saleor/saleor-cloud-deployments/dispatches \
+            --input - <<< '{
+              "event_type": "open-release-pull-request",
+              "client_payload": "$payload"
+            }'
