@@ -63,7 +63,7 @@ export class IssueGiftCardDialog extends BasePage {
 
   async clickSendToCustomerCheckbox() {
     await this.sendToCustomerCheckbox.click();
-    await expect(this.sendToCustomerCheckbox.isChecked()).toBeTruthy();
+    await expect(this.sendToCustomerCheckbox).toBeChecked();
     await this.customerInput.waitFor({ state: "attached" });
   }
   async clickSendExpireDateCheckbox() {
@@ -71,7 +71,7 @@ export class IssueGiftCardDialog extends BasePage {
     await expect(this.sendExpireDateCheckbox).toBeEnabled();
     await this.sendExpireDateCheckbox.click();
     await this.waitForDOMToFullyLoad();
-    await expect(this.sendExpireDateCheckbox.isChecked()).toBeTruthy();
+    await expect(this.sendExpireDateCheckbox).toBeChecked();
     await this.giftCardExpireFields.waitFor({ state: "attached" });
   }
   async clickRequiresActivationCheckbox() {

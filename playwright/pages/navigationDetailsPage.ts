@@ -37,11 +37,18 @@ async goToExistingMenuView(id: string) {
 async clickEditMenuItemButton(name:string) {
     const menuItem = await this.menuItem.filter({hasText:name})
     await menuItem.getByTestId("edit-menu-item-button").first().click();
-}
-async clickDeleteMenuItemButton(name:string) {
-    await this.menuItem.filter({hasText:name}).locator("[data-test-id='remove-menu-item-button']").first().click();
-}
-async fillName(name: string) {
+  }
+
+  async clickDeleteMenuItemButton(name: string) {
+    await this.menuItem
+      .filter({ hasText: name })
+      .locator("[data-test-id='remove-menu-item-button']")
+      .first()
+      .click();
+    await this.waitForDOMToFullyLoad();
+  }
+
+  async fillName(name: string) {
     await this.menuNameInput.fill(name);
 }
 async clickCreateNewMenuItem() {
@@ -55,5 +62,6 @@ async clickDeleteButton() {
 }
 async clickUndoButton() {
     await this.undoButton.click();
-}
+    await this.waitForDOMToFullyLoad();
+  }
 }
