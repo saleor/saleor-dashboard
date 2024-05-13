@@ -54,6 +54,8 @@ const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
       productKind: qs.productKind,
     },
     ProductListUrlSortField,
+    ProductListUrlSortField.date,
+    false,
   );
 
   return (
