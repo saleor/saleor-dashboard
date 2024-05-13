@@ -4,7 +4,7 @@ import { DateTimeTimezoneField } from "@dashboard/components/DateTimeTimezoneFie
 import { RadioGroup } from "@dashboard/components/RadioGroup";
 import useCurrentDate from "@dashboard/hooks/useCurrentDate";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
-import { getFormErrors } from "@dashboard/utils/errors";
+import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { Box, Checkbox, Divider, Text } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
@@ -102,6 +102,9 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
           {isPublishedAt && (
             <DateTimeTimezoneField
               error={!!formErrors.publishedAt}
+              helperText={
+                formErrors.publishedAt ? getProductErrorMessage(formErrors.publishedAt, intl) : ""
+              }
               disabled={disabled}
               name={`channel:publicationTime:${id}`}
               value={publishedAt || ""}
