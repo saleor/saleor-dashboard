@@ -13,6 +13,7 @@
       "@pages/*": ["./pages/*"],
       "@api/*": ["./api/*"],
       "@data/*": ["./data/*"],
+      "@forms/*": ["./pages/forms/*"],
       "@dialogs/*": ["./pages/dialogs/*"],
       "@pageElements/*": ["./pages/pageElements/*"]
     }

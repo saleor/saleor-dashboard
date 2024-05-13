@@ -2,12 +2,13 @@ import { WAREHOUSES } from "@data/e2eTestData";
 import { WarehousePage } from "@pages/warehousePage";
 import { expect, test } from "@playwright/test";
 
-test.use({ storageState: "playwright/.auth/admin.json" });
+test.use({ storageState: "./playwright/.auth/admin.json" });
+
 let warehousePage: WarehousePage;
+
 test.beforeEach(({ page }) => {
   warehousePage = new WarehousePage(page);
 });
-
 test("TC: SALEOR_30 Create basic warehouse @e2e @warehouse", async () => {
   await warehousePage.gotoWarehouseListView();
   await warehousePage.clickCreateNewWarehouseButton();
@@ -16,10 +17,7 @@ test("TC: SALEOR_30 Create basic warehouse @e2e @warehouse", async () => {
   await warehousePage.basePage.expectSuccessBanner();
 });
 test("TC: SALEOR_100 Edit warehouse @e2e @warehouse", async () => {
-  await warehousePage.gotoExistingWarehousePage(
-    WAREHOUSES.warehouseToBeEdited.id,
-  );
-
+  await warehousePage.gotoExistingWarehousePage(WAREHOUSES.warehouseToBeEdited.id);
   await warehousePage.typeWarehouseName("edited warehouse");
   await warehousePage.typeCompanyName("Umbrella");
   await warehousePage.typeAddressLine1("edited warehouse address 1");
@@ -32,10 +30,7 @@ test("TC: SALEOR_100 Edit warehouse @e2e @warehouse", async () => {
 });
 test("TC: SALEOR_101 Delete warehouse @e2e @warehouse", async () => {
   await warehousePage.gotoWarehouseListView();
-  await warehousePage.clickDeleteWarehouseButton(
-    WAREHOUSES.warehouseToBeDeleted.name,
-  );
-
+  await warehousePage.clickDeleteWarehouseButton(WAREHOUSES.warehouseToBeDeleted.name);
   await warehousePage.deleteWarehouseDialog.clickDeleteButton();
   await warehousePage.expectSuccessBanner();
   await expect(warehousePage.warehousesList).not.toContainText(

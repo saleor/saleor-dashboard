@@ -16,18 +16,18 @@ export class ChannelSelectDialog {
   async clickAllChannelsCheckbox() {
     await this.allChannelsCheckbox.click();
   }
+
   async selectChannel(channelName: string) {
     await this.displayedChannels
       .filter({ hasText: channelName })
       .locator(this.displayedChannelsCheckboxes)
       .click();
   }
+
   async selectLastChannel() {
-    await this.displayedChannels
-      .last()
-      .locator(this.displayedChannelsCheckboxes)
-      .click();
+    await this.displayedChannels.last().locator(this.displayedChannelsCheckboxes).click();
   }
+
   async clickConfirmButton() {
     await this.confirmButton.first().click();
   }

@@ -12,13 +12,21 @@ import { Page } from "@playwright/test";
 
 export class OrdersPage extends BasePage {
   orderCreateDialog: OrderCreateDialog;
+
   markOrderAsPaidDialog: MarkOrderAsPaidDialog;
+
   addProductsDialog: AddProductsDialog;
+
   addressDialog: AddressDialog;
+
   shippingAddressDialog: ShippingAddressDialog;
+
   basePage: BasePage;
+
   manualTransactionDialog: ManualTransactionDialog;
+
   addTrackingDialog: AddTrackingDialog;
+
   rightSideDetailsPage: RightSideDetailsPage;
 
   constructor(
@@ -28,18 +36,14 @@ export class OrdersPage extends BasePage {
     readonly addTrackingButton = page.getByTestId("add-tracking-button"),
     readonly editTrackingButton = page.getByTestId("edit-tracking-button"),
     readonly setTrackingNumber = page.getByTestId("tracking-number-set"),
-    readonly manualTransactionButton = page.getByTestId(
-      "captureManualTransactionButton",
-    ),
+    readonly manualTransactionButton = page.getByTestId("captureManualTransactionButton"),
     readonly orderSummarySection = page.getByTestId("OrderSummaryCard"),
     readonly paymentSummarySection = page.getByTestId("payment-section"),
     readonly paymentStatusInfo = page.getByTestId("payment-status"),
     readonly balanceStatusInfo = page.getByTestId("order-balance-status"),
     readonly fulfillButton = page.getByTestId("fulfill-button"),
     readonly addProducts = page.getByTestId("add-products-button"),
-    readonly orderTransactionsList = page
-      .getByTestId("orderTransactionsList")
-      .locator("table"),
+    readonly orderTransactionsList = page.getByTestId("orderTransactionsList").locator("table"),
     readonly salesChannel = page.getByTestId("salesChannel"),
     readonly addShippingCarrierLink = page.getByTestId("add-shipping-carrier"),
     readonly finalizeButton = page.getByTestId("button-bar-confirm"),
@@ -61,29 +65,36 @@ export class OrdersPage extends BasePage {
   async clickCreateOrderButton() {
     await this.createOrderButton.click();
   }
+
   async clickAddTrackingButton() {
     await this.addTrackingButton.click();
   }
+
   async clickManualTransactionButton() {
     await this.manualTransactionButton.click();
   }
+
   async clickMarkAsPaidButton() {
     await this.markAsPaidButton.waitFor({ state: "visible", timeout: 60000 });
     await this.markAsPaidButton.click();
   }
+
   async clickFulfillButton() {
     await this.fulfillButton.click();
   }
+
   async clickAddShippingCarrierButton() {
     await this.addShippingCarrierLink.click();
   }
+
   async clickAddProductsButton() {
     await this.addProducts.click();
   }
 
   async clickFinalizeButton() {
-    await this.finalizeButton.click({timeout: 90000});
+    await this.finalizeButton.click({ timeout: 90000 });
   }
+
   async expectSuccessBanner() {
     await this.basePage.expectSuccessBanner();
   }
@@ -91,9 +102,12 @@ export class OrdersPage extends BasePage {
   async goToOrdersListView() {
     await this.page.goto(URL_LIST.orders);
   }
+
   async goToExistingOrderPage(orderId: string) {
     const orderLink = URL_LIST.orders + orderId;
+
     await console.log("Navigating to order details view: " + orderLink);
     await this.page.goto(orderLink);
+    await this.waitForGrid();
   }
 }

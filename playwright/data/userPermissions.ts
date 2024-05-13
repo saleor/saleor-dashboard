@@ -1,4 +1,21 @@
-export const USER_PERMISSION = {
+export interface UserPermissionType {
+  channel: string;
+  shipping: string;
+  giftCard: string;
+  app: string;
+  settings: string;
+  page: string;
+  order: string;
+  translations: string;
+  staff: string;
+  customer: string;
+  productTypeAndAttribute: string;
+  discount: string;
+  plugin: string;
+  product: string;
+}
+
+export const USER_PERMISSION: UserPermissionType = {
   channel: "channel.manager@example.com",
   shipping: "shipping.manager@example.com",
   giftCard: "gift.card.manager@example.com",
@@ -14,3 +31,20 @@ export const USER_PERMISSION = {
   plugin: "plugin.manager@example.com",
   product: "product.manager@example.com",
 };
+
+export const permissions: Array<keyof UserPermissionType> = [
+  "app",
+  "discount",
+  "order",
+  "channel",
+  "customer",
+  "giftCard",
+  "page",
+  "plugin",
+  "productTypeAndAttribute",
+  "product",
+  "settings",
+  "staff",
+  "shipping",
+  "translations",
+];

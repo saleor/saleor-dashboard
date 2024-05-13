@@ -1,9 +1,12 @@
 import type { Page } from "@playwright/test";
 
-export class PluginsPage {
-  readonly page: Page;
+import { BasePage } from "./basePage";
 
-  constructor(page: Page, readonly pluginRow = page.getByTestId("plugin")) {
-    this.page = page;
+export class PluginsPage extends BasePage {
+  constructor(
+    page: Page,
+    readonly pluginRow = page.getByTestId("plugin"),
+  ) {
+    super(page);
   }
 }

@@ -20,6 +20,7 @@ export class AssignSpecificProductsDialog {
     const specificProductCheckbox = await this.page
       .getByRole("row", { name: nameAkaText })
       .getByRole("checkbox");
+
     await specificProductCheckbox.click();
     await this.clickAssignAndSaveButton();
     await this.assignAndSaveButton.waitFor({ state: "hidden" });

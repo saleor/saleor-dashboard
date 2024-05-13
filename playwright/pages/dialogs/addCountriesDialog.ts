@@ -5,9 +5,7 @@ export class AddCountriesDialog {
 
   constructor(
     page: Page,
-    readonly searchCountryInput = page
-      .getByTestId("search-country-input")
-      .locator("input"),
+    readonly searchCountryInput = page.getByTestId("search-country-input").locator("input"),
     readonly countryRow = page.getByTestId("country-row"),
     readonly addButton = page.getByTestId("add-button"),
     readonly rowRadioButton = page.locator("input[type='radio']"),
@@ -20,10 +18,7 @@ export class AddCountriesDialog {
   }
 
   async checkAndSaveSingleCountry(countryName = "Canada") {
-    await this.countryRow
-      .filter({ hasText: countryName })
-      .locator(this.rowRadioButton)
-      .click();
+    await this.countryRow.filter({ hasText: countryName }).locator(this.rowRadioButton).click();
     await this.addButton.click();
     await this.countryRow.first().waitFor({ state: "hidden" });
   }
