@@ -146,6 +146,7 @@ describe("As a staff user I want to manage apps", () => {
         .click()
         .get(BUTTON_SELECTORS.confirm)
         .click()
+        .wait(3000)
         .confirmationMessageShouldDisappear();
       getApp(createdApp.app.id).then(({ webhooks }) => {
         expect(webhooks[0].name).to.eq(randomWebhookName);
