@@ -26,7 +26,15 @@ export const getChoicesWithAncestors = (choices: ChoiceWithAncestors[]): Option[
       value: category.id,
       label: category.name,
       startAdornment: hasAncestors ? (
-        <Text size={2} color="default2" marginRight={2} key={`ancestor-${category.id}`}>
+        <Text
+          size={2}
+          color="default2"
+          marginRight={1}
+          key={`ancestor-${category.id}`}
+          display="flex"
+          height="100%"
+          alignItems="center"
+        >
           {ancestorItems.reduce((acc, ancestor) => `${ancestor.name} / ${acc}`, "")}
         </Text>
       ) : undefined,
