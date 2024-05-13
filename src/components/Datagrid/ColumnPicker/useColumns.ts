@@ -91,7 +91,9 @@ export const useColumns = ({
   };
 
   const handleVisibleColumnsChange = (currentColumns: (AvailableColumn | undefined)[]) => {
-    const columns = currentColumns.map(column => PersistedColumn.fromAvailableColumn(column));
+    const columns = currentColumns
+      .filter(isValidColumn)
+      .map(column => PersistedColumn.fromAvailableColumn(column));
 
     update(columns);
 
@@ -133,7 +135,9 @@ export const useColumns = ({
       return setVisibleColumns(prevColumns =>
         handleVisibleColumnsChange(
           prevColumns.map(prevColumn =>
-            prevColumn.id === column.id ? { ...prevColumn, width: newSize } : prevColumn,
+            prevColumn && prevColumn.id === column.id
+              ? { ...prevColumn, width: newSize }
+              : prevColumn,
           ),
         ),
       );

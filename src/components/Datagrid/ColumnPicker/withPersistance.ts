@@ -1,6 +1,7 @@
 import { byDuplicates } from "../persistance/byDuplicates";
 import { PersistedColumn } from "../persistance/persistedColumn";
 import { AvailableColumn } from "../types";
+import { isValidColumn } from "./utils";
 
 type VisibleColumn = AvailableColumn | undefined;
 type DynamicColumn = AvailableColumn;
@@ -13,11 +14,11 @@ export const visibleWithPersistance = (
   visibleColumns: VisibleColumn[],
   persistedColumns: PersistedColumn[],
 ) => {
-  if (persistedColumns.length === 0) return visibleColumns;
+  const validColumns = visibleColumns.filter(isValidColumn);
 
-  return visibleColumns.map(column => {
-    if (!column) return column;
+  if (persistedColumns.length === 0) return validColumns;
 
+  return validColumns.map(column => {
     const persistedColumn = persistedColumns.find(byColumnId(column.id));
 
     if (persistedColumn) return persistedColumn.mergeWithAvailableColumn(column);

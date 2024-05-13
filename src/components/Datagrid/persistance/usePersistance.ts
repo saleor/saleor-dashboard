@@ -6,8 +6,10 @@ import { byDuplicates } from "./byDuplicates";
 import { PersistedColumn, RawColumn } from "./persistedColumn";
 import { useMetadata } from "./useMetadata";
 
-const parseGridMetadata = (metadata: MetadataItemFragment) => {
+const parseGridMetadata = (metadata?: MetadataItemFragment) => {
   try {
+    if (!metadata) return [];
+
     const rawColumns = JSON.parse(metadata.value) as RawColumn[];
 
     return rawColumns.map(col => PersistedColumn.fromRaw(col));
