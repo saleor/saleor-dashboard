@@ -17,7 +17,7 @@ interface OrderTransactionRefundTableProps {
   draftRefund?: OrderDetailsGrantRefundFragment["grantedRefunds"][0];
   control: Control<OrderTransactionRefundPageFormData, any>;
   onChange: (data: RefundQuantityChange, index: number, validate: boolean) => void;
-  onEditReasonModal: React.Dispatch<React.SetStateAction<number>>;
+  onEditReasonModal: React.Dispatch<React.SetStateAction<number | null>>;
   linesToRefund: LineToRefund[];
   refundFields: FieldArrayWithId<OrderTransactionRefundPageFormData, "linesToRefund", "id">[];
   refundFieldsUpdate: UseFieldArrayUpdate<OrderTransactionRefundPageFormData, "linesToRefund">;

@@ -267,10 +267,10 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
         />
         <OrderTransactionReasonModal
           open={refundIndex !== null}
-          reason={linesToRefund[refundIndex]?.reason}
+          reason={linesToRefund[refundIndex!]?.reason}
           onClose={() => setRefundIndex(null)}
           onConfirm={(reason: string) => {
-            onReasonChange(reason, refundIndex);
+            onReasonChange(reason, refundIndex!);
           }}
         />
       </Box>

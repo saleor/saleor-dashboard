@@ -22,7 +22,7 @@ export const OrderTransactionReasonModal = ({
   const [tempReason, setTempReason] = React.useState<string>(reason ?? "");
 
   React.useEffect(() => {
-    setTempReason(reason);
+    setTempReason(reason ?? "");
   }, [reason]);
 
   return (
