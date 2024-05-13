@@ -180,7 +180,7 @@ describe("Products ProductOrganization", () => {
 
     await waitFor(() => {
       expect(screen.getByText("Running")).toBeInTheDocument();
-      expect(screen.getByText("/ Sneakers / Shoes")).toBeInTheDocument();
+      expect(screen.getByText("Shoes / Sneakers /")).toBeInTheDocument();
     });
   });
 });
