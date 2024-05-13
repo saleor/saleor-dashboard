@@ -2,7 +2,7 @@ import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useData
 import { OrderDetailsGrantRefundFragment, OrderGrantedRefundStatusEnum } from "@dashboard/graphql";
 import { ConfirmButtonTransitionState, SavebarLabels } from "@saleor/macaw-ui";
 import React from "react";
-import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
+import { UseFieldArrayUpdate, UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import { IntlShape } from "react-intl";
 
 import {
@@ -117,6 +117,20 @@ export const handleLinesToRefundChange = ({
     },
     { shouldDirty: true },
   );
+};
+
+export const handleReasonChange = ({
+  reason,
+  index,
+  linesToRefund,
+  refundFieldsUpdate,
+}: {
+  reason: string;
+  index: number;
+  linesToRefund: LineToRefund[];
+  refundFieldsUpdate: UseFieldArrayUpdate<OrderTransactionRefundPageFormData, "linesToRefund">;
+}) => {
+  refundFieldsUpdate(index, { quantity: linesToRefund[index].quantity, reason });
 };
 
 export const useRecalculateTotalAmount = ({

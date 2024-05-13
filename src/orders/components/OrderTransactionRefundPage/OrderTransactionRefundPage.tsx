@@ -12,10 +12,11 @@ import { orderUrl } from "@dashboard/orders/urls";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderTransactionReason } from "./components/OrderTransactionReason/OrderTransactionReason";
+import { OrderTransactionReasonModal } from "./components/OrderTransactionReasonModal/OrderTransactionReasonModal";
 import { OrderTransactionSummary } from "./components/OrderTransactionRefundSummary/OrderTransactionSummary";
 import {
   OrderRefundTransactionDatagridError,
@@ -32,6 +33,7 @@ import {
   getRefundViewTitle,
   getSelectedProductsValue,
   handleLinesToRefundChange,
+  handleReasonChange,
   RefundQuantityChange,
   useRecalculateTotalAmount,
 } from "./utils";
@@ -84,6 +86,8 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
   const navigate = useNavigator();
   const intl = useIntl();
 
+  const [refundIndex, setRefundIndex] = React.useState<number | null>(null);
+
   const datagridErrors: OrderRefundTransactionDatagridError[] = errors
     .filter(err => err.field === "lines" || err.field === "addLines")
     .flatMap(error => error?.lines)
@@ -102,6 +106,11 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
     formState: { isDirty, errors: formErrors },
   } = useForm<OrderTransactionRefundPageFormData>({
     values: getRefundFormDefaultValues({ order, draftRefund }),
+  });
+
+  const { fields: refundFields, update: refundFieldsUpdate } = useFieldArray({
+    name: "linesToRefund",
+    control,
   });
 
   const permissions = useUserPermissions();
@@ -180,6 +189,15 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
     });
   };
 
+  const onReasonChange = (reason: string, index: number) => {
+    handleReasonChange({
+      reason,
+      index,
+      linesToRefund,
+      refundFieldsUpdate,
+    });
+  };
+
   return (
     <DetailPageLayout gridTemplateColumns={1}>
       <Box as="form" display="contents" onSubmit={handleSubmit(onSubmit)}>
@@ -206,8 +224,10 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
               draftRefund={draftRefund}
               control={control}
               onChange={onLinesToRefundChange}
-              // onMaxQtySet={onSetMaximumQty}
+              onEditReasonModal={setRefundIndex}
               linesToRefund={linesToRefund}
+              refundFields={refundFields}
+              refundFieldsUpdate={refundFieldsUpdate}
             />
           </DashboardCard>
           <DashboardCard marginBottom={5}>
@@ -244,6 +264,14 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
           disabled={disabled}
           state={submitBehavior.submitState}
           labels={submitBehavior.submitLabels}
+        />
+        <OrderTransactionReasonModal
+          open={refundIndex !== null}
+          reason={linesToRefund[refundIndex]?.reason}
+          onClose={() => setRefundIndex(null)}
+          onConfirm={(reason: string) => {
+            onReasonChange(reason, refundIndex);
+          }}
         />
       </Box>
     </DetailPageLayout>

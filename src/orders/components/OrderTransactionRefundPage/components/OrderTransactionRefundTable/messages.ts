@@ -26,4 +26,9 @@ export const refundTableMessages = defineMessages({
     defaultMessage: "Edit reason",
     description: "button label",
   },
+  allItemsRefunded: {
+    id: "WigK1f",
+    defaultMessage: "All items refunded",
+    description: "helper text",
+  },
 });

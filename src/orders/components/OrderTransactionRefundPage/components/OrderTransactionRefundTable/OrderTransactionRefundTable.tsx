@@ -4,7 +4,7 @@ import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import { Control, Controller, useFieldArray } from "react-hook-form";
+import { Control, Controller, FieldArrayWithId, UseFieldArrayUpdate } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
 import { LineToRefund, OrderTransactionRefundPageFormData } from "../../OrderTransactionRefundPage";
@@ -17,8 +17,10 @@ interface OrderTransactionRefundTableProps {
   draftRefund?: OrderDetailsGrantRefundFragment["grantedRefunds"][0];
   control: Control<OrderTransactionRefundPageFormData, any>;
   onChange: (data: RefundQuantityChange, index: number, validate: boolean) => void;
-  // onMaxQtySet: (rows: number[]) => void;
+  onEditReasonModal: React.Dispatch<React.SetStateAction<number>>;
   linesToRefund: LineToRefund[];
+  refundFields: FieldArrayWithId<OrderTransactionRefundPageFormData, "linesToRefund", "id">[];
+  refundFieldsUpdate: UseFieldArrayUpdate<OrderTransactionRefundPageFormData, "linesToRefund">;
 }
 
 export interface OrderRefundTransactionDatagridError {
@@ -27,20 +29,17 @@ export interface OrderRefundTransactionDatagridError {
 }
 
 export const OrderTransactionRefundTable: React.FC<OrderTransactionRefundTableProps> = ({
-  //errors,
   order,
   draftRefund,
   control,
   onChange,
+  onEditReasonModal,
   // onMaxQtySet,
   linesToRefund,
+  refundFields,
+  refundFieldsUpdate,
 }) => {
   const locale = useLocale();
-
-  const { fields, update } = useFieldArray({
-    name: "linesToRefund",
-    control,
-  });
 
   return (
     <GridTable height="100%" paddingX={6}>
@@ -51,7 +50,7 @@ export const OrderTransactionRefundTable: React.FC<OrderTransactionRefundTablePr
         <GridTable.Col __width="10%" />
       </GridTable.Colgroup>
       <GridTable.Body>
-        {fields?.map((field, ix) => {
+        {refundFields?.map((field, ix) => {
           const line = order?.lines[ix];
 
           if (!line) {
@@ -100,12 +99,16 @@ export const OrderTransactionRefundTable: React.FC<OrderTransactionRefundTablePr
                   {formatMoney(line.unitPrice.gross, locale.locale)}
                   {maxQtyToRefund !== line.quantity && (
                     <Text size={2} whiteSpace="nowrap" color="default2">
-                      <FormattedMessage
-                        {...refundTableMessages.alreadyRefunded}
-                        values={{
-                          value: (line.quantity - maxQtyToRefund).toString(),
-                        }}
-                      />
+                      {maxQtyToRefund === 0 ? (
+                        <FormattedMessage {...refundTableMessages.allItemsRefunded} />
+                      ) : (
+                        <FormattedMessage
+                          {...refundTableMessages.alreadyRefunded}
+                          values={{
+                            value: (line.quantity - maxQtyToRefund).toString(),
+                          }}
+                        />
+                      )}
                     </Text>
                   )}
                 </Box>
@@ -115,9 +118,9 @@ export const OrderTransactionRefundTable: React.FC<OrderTransactionRefundTablePr
                   <Controller
                     control={control}
                     name={`linesToRefund.${ix}`}
-                    render={({ field }) => (
+                    render={({ field: inputField }) => (
                       <Input
-                        {...field}
+                        {...inputField}
                         __minWidth="40px"
                         width="100%"
                         placeholder="0"
@@ -135,6 +138,7 @@ export const OrderTransactionRefundTable: React.FC<OrderTransactionRefundTablePr
                         type="number"
                         min={0}
                         max={maxQtyToRefund}
+                        disabled={maxQtyToRefund === 0}
                         onChange={event =>
                           onChange(
                             {
@@ -146,8 +150,8 @@ export const OrderTransactionRefundTable: React.FC<OrderTransactionRefundTablePr
                           )
                         }
                         onBlur={event =>
-                          update(ix, {
-                            reason: "",
+                          refundFieldsUpdate(ix, {
+                            reason: field.reason,
                             quantity: validateQty({
                               order,
                               draftRefund,
@@ -162,15 +166,27 @@ export const OrderTransactionRefundTable: React.FC<OrderTransactionRefundTablePr
                   <Button
                     variant="secondary"
                     size="medium"
-                    onClick={() => update(ix, { reason: "", quantity: maxQtyToRefund })}
+                    onClick={() =>
+                      refundFieldsUpdate(ix, { reason: field.reason, quantity: maxQtyToRefund })
+                    }
+                    disabled={maxQtyToRefund === 0}
                   >
                     <FormattedMessage {...refundTableMessages.all} />
                   </Button>
                 </Box>
               </GridTable.Cell>
               <GridTable.Cell>
-                <Button variant="secondary" whiteSpace="nowrap">
-                  {ix % 2 === 0 ? "Add reason" : "Edit reason"}
+                <Button
+                  variant="secondary"
+                  whiteSpace="nowrap"
+                  onClick={() => onEditReasonModal(ix)}
+                  disabled={!field.quantity}
+                >
+                  {!field.reason ? (
+                    <FormattedMessage {...refundTableMessages.addReason} />
+                  ) : (
+                    <FormattedMessage {...refundTableMessages.editReason} />
+                  )}
                 </Button>
               </GridTable.Cell>
             </GridTable.Row>

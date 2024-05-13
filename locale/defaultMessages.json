@@ -5237,6 +5237,10 @@
     "context": "plugins section name",
     "string": "Plugins"
   },
+  "WigK1f": {
+    "context": "helper text",
+    "string": "All items refunded"
+  },
   "WkxE8/": {
     "context": "percentage or fixed, header",
     "string": "Discount Type"
