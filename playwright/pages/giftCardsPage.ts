@@ -51,6 +51,8 @@ export class GiftCardsPage extends BasePage {
 
   async clickIssueCardButton() {
     await this.issueCardButton.click();
+    await this.loader.waitFor({ state: "hidden" });
+    await this.giftCardDialog.waitFor({ state: "visible" });
   }
 
   async clickBulkDeleteButton() {
