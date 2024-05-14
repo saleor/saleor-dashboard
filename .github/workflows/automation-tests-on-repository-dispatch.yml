@@ -32,7 +32,7 @@ jobs:
         id: get-environment-variables
         run: |
           node .github/workflows/getEnvironmentVariables.js \
-            --custom_version "$CUSTOM_VERSION" \
+            --custom_version $CUSTOM_VERSION \
             --repo_token "$REPO_TOKEN" 
 
   run-tests-on-release:
@@ -54,22 +54,14 @@ jobs:
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
           )
 
-          payload=$(\
-            jq --null-input \
-            --arg version "$CURRENT_VERSION" \
-            --arg details_url_to_test_run "$RUN_URL" \
-            --arg test_status "$STATUS" \
-            '{
-              "project": "CORE",
-              "environment": "SANDBOX",
-              "version": $version
-              "details_url_to_test_run": $details_url_to_test_run
-              "test_status": $test_status
-            }'
-            )
-
           gh api /repos/saleor/saleor-cloud-deployments/dispatches \
             --input - <<< '{
               "event_type": "open-release-pull-request",
-              "client_payload": "$payload"
+              "client_payload": {
+                "project": "CORE",
+                "environment": "SANDBOX",
+                "version": "${{github.event.client_payload.custom_version}}"
+                "details_url_to_test_run": "${{needs.run-tests-on-release.outputs.RUN_URL}}"
+                "test_status": "${{needs.run-tests-on-release.outputs.TESTS_CONCLUSION}}"
+              }
             }'
