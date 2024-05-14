@@ -1,6 +1,5 @@
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import type { Option } from "@saleor/macaw-ui-next";
-import { Text } from "@saleor/macaw-ui-next";
+import { Option, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 type Choice = {
@@ -31,7 +30,7 @@ export const getChoicesWithAncestors = (choices: ChoiceWithAncestors[]): Option[
           color="default2"
           marginRight={1}
           key={`ancestor-${category.id}`}
-          display="flex"
+          __display="inline"
           height="100%"
           alignItems="center"
         >

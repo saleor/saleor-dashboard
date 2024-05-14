@@ -15,8 +15,6 @@ import { Box, Option, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { getApproxTextWidth } from "./utils";
-
 interface ProductType {
   hasVariants: boolean;
   id: string;
@@ -78,6 +76,7 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
     ["productType", "category", "collections", "isPublished"],
     errors,
   );
+  const [categoryInputActive, setCategoryInputActive] = React.useState(false);
   const noCategoryError =
     formErrors.isPublished?.code === ProductErrorCode.PRODUCT_WITHOUT_CATEGORY
       ? formErrors.isPublished
@@ -158,10 +157,36 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
               id: "ccXLVi",
               defaultMessage: "Category",
             })}
-            __width={data.category ? getApproxTextWidth(categoryInputDisplayValue) : undefined}
-            startAdornment={val =>
-              val ? categories.find(category => category.value === val.value)?.startAdornment : null
-            }
+            {...(!categoryInputActive && {
+              width: "100%",
+              __opacity: 0,
+              position: "absolute",
+            })}
+            onFocus={() => {
+              setCategoryInputActive(true);
+            }}
+            onBlur={() => {
+              setCategoryInputActive(false);
+            }}
+            startAdornment={val => {
+              if (categoryInputActive) {
+                return undefined;
+              }
+
+              const adornment = val
+                ? categories.find(category => category.value === val.value)?.startAdornment
+                : null;
+
+              return (
+                <>
+                  {React.cloneElement(adornment as React.ReactElement, {
+                    size: 3,
+                  })}
+                  <Text size={3}>{categoryInputDisplayValue}</Text>
+                </>
+              );
+            }}
+            id="category-list"
           />
         </Box>
         <Multiselect
