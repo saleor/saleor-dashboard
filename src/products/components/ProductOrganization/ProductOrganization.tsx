@@ -136,7 +136,6 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
 
         <Box data-test-id="category">
           <Combobox
-            id="category"
             disabled={disabled}
             options={disabled ? [] : categories}
             value={
