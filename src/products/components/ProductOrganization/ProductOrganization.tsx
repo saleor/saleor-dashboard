@@ -169,13 +169,13 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
               setCategoryInputActive(false);
             }}
             startAdornment={val => {
-              if (categoryInputActive) {
-                return undefined;
-              }
-
               const adornment = val
                 ? categories.find(category => category.value === val.value)?.startAdornment
                 : null;
+
+              if (categoryInputActive || !adornment) {
+                return undefined;
+              }
 
               return (
                 <>
