@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.18.3
+
+### Patch Changes
+
+- ad6c8b7c0: Fixed flaky Cypress tests related to Discounts
+- cb22186e8: fixes e2e tests which fails on nightly run orders, apps, vouchers
+- deb6c1ea6: Add manual workflow for cypress tests
+- 79a2c6d11: Fix action that configures login to staging Saleor Cloud for CLI
+
 ## 3.18.2
 
 ### Patch Changes
