@@ -3,10 +3,9 @@ import { AddPostalCodeDialog } from "@pages/dialogs/addPostalCodeDialog";
 import { AssignProductsDialog } from "@pages/dialogs/assignProductsDialog";
 import { RightSideDetailsPage } from "@pages/pageElements/rightSideDetailsSection";
 import type { Page } from "@playwright/test";
+import { expect } from "@playwright/test";
 
-export class ShippingRatesPage {
-  readonly page: Page;
-
+export class ShippingRatesPage extends BasePage {
   readonly basePage: BasePage;
 
   readonly rightSideDetailsPage: RightSideDetailsPage;
@@ -35,8 +34,10 @@ export class ShippingRatesPage {
     readonly excludedProductsRows = page.getByTestId("excluded-products-rows"),
     readonly includePostalCodesRadioButton = page.getByTestId("INCLUDE"),
     readonly assignedPostalCodesRows = page.getByTestId("assigned-postal-codes-rows"),
+    readonly assignDialogProductList = page.getByTestId("assign-product-list"),
+    readonly assignDialogProductRow = page.getByTestId("product-row"),
   ) {
-    this.page = page;
+    super(page);
     this.basePage = new BasePage(page);
     this.assignProductsDialog = new AssignProductsDialog(page);
     this.addPostalCodeDialog = new AddPostalCodeDialog(page);
@@ -46,7 +47,11 @@ export class ShippingRatesPage {
   async addExcludedProduct(name: string) {
     await this.assignProductButton.click();
     await this.assignProductsDialog.searchForProductInDialog(name);
+    await this.waitForDOMToFullyLoad();
+    await this.assignDialogProductList.waitFor({ state: "visible" });
+    await this.assignDialogProductRow.filter({ hasText: name }).waitFor({ state: "visible" });
     await this.assignProductsDialog.selectProduct(name);
+    await expect(this.assignProductsDialog.assignAndSaveButton).toBeEnabled();
     await this.assignProductsDialog.assignAndSaveButton.click();
     await this.assignProductsDialog.assignAndSaveButton.waitFor({
       state: "hidden",

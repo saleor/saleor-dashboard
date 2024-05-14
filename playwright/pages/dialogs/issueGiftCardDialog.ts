@@ -1,5 +1,5 @@
 import { BasePage } from "@pages/basePage";
-import { Page } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
 export class IssueGiftCardDialog extends BasePage {
   constructor(
@@ -8,8 +8,10 @@ export class IssueGiftCardDialog extends BasePage {
     readonly expiryPeriodAmountInput = page.locator('[name="expiryPeriodAmount"]'),
     readonly tagsInput = page.getByTestId("gift-card-tag-select-field").locator("input"),
     readonly cardCode = page.getByTestId("cardCode"),
-
-    readonly sendToCustomerCheckbox = page.getByTestId("send-to-customer-section").locator("input"),
+    readonly giftCardExpireFields = page.getByTestId("gift-card-expire-data-fields"),
+    readonly sendToCustomerCheckbox = page
+      .getByTestId("send-to-customer-section")
+      .locator('input[type="checkbox"]'),
     readonly sendExpireDateCheckbox = page.getByTestId("expiry-section").locator("input"),
     readonly customerInput = page.getByTestId("customer-field").locator("input"),
     readonly noteTextArea = page.getByTestId("note-field").locator('[name="note"]'),
@@ -19,14 +21,14 @@ export class IssueGiftCardDialog extends BasePage {
     readonly issueButton = page.getByTestId("submit"),
     readonly okButton = page.getByTestId("submit"),
     readonly copyCodeButton = page.getByTestId("copy-code-button"),
+    readonly dropdown = page.getByTestId("autocomplete-dropdown"),
+    readonly option = page.getByTestId("single-autocomplete-select-option"),
   ) {
     super(page);
   }
 
   async clickIssueButton() {
-    await this.waitForNetworkIdle(async () => {
-      await this.issueButton.click();
-    });
+    await this.issueButton.click();
   }
 
   async clickOkButton() {
@@ -41,8 +43,12 @@ export class IssueGiftCardDialog extends BasePage {
     await this.enterAmountInput.fill(amount);
   }
 
-  async typeCustomer(customer: string) {
+  async selectCustomer(customer: string) {
     await this.customerInput.fill(customer);
+    await this.dropdown.waitFor({ state: "attached" });
+    await this.option.filter({ hasText: customer }).waitFor({ state: "visible" });
+    await this.option.filter({ hasText: customer }).click();
+    await expect(this.customerInput).toHaveValue(customer);
   }
 
   async typeExpiryPeriodAmount(expiryPeriodAmount: string) {
@@ -59,10 +65,15 @@ export class IssueGiftCardDialog extends BasePage {
 
   async clickSendToCustomerCheckbox() {
     await this.sendToCustomerCheckbox.click();
+    await expect(this.sendToCustomerCheckbox).toBeChecked();
+    await this.customerInput.waitFor({ state: "attached" });
   }
 
   async clickSendExpireDateCheckbox() {
     await this.sendExpireDateCheckbox.click();
+    await this.waitForDOMToFullyLoad();
+    await expect(this.sendExpireDateCheckbox).toBeChecked();
+    await this.giftCardExpireFields.waitFor({ state: "attached" });
   }
 
   async clickRequiresActivationCheckbox() {
