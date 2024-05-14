@@ -13,7 +13,7 @@ test.beforeEach(({ page }) => {
   taxesPage = new TaxesPage(page);
 });
 test("TC: SALEOR_115 Change taxes in channel to use tax app  @taxes @e2e", async () => {
-  await configurationPage.gotoConfigurationView();
+  await configurationPage.goToConfigurationView();
   await configurationPage.openTaxes();
   await taxesPage.selectChannel(CHANNELS.channelForTaxEdition.name);
   await taxesPage.selectTaxCalculationMethod("saleor.app.dummy.tax");

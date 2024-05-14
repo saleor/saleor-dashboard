@@ -97,5 +97,6 @@ export class GiftCardsPage extends BasePage {
 
     console.log("Navigating to existing gift card: " + existingGiftCardUrl);
     await this.page.goto(existingGiftCardUrl);
+    await this.waitForDOMToFullyLoad();
   }
 }
