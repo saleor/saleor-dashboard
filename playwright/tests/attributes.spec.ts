@@ -25,7 +25,7 @@ for (const attr of attributeClasses) {
       page,
     }) => {
       await page.context().storageState({ path: "./playwright/.auth/admin.json" });
-      await configurationPage.gotoConfigurationView();
+      await configurationPage.goToConfigurationView();
       await configurationPage.openAttributes();
       await attributesPage.clickCreateAttributeButton();
       await attributesPage.selectAttributeType(attr);
@@ -59,7 +59,7 @@ for (const attr of attributeClasses) {
       page,
     }) => {
       await page.context().storageState({ path: "./playwright/.auth/admin.json" });
-      await configurationPage.gotoConfigurationView();
+      await configurationPage.goToConfigurationView();
       await configurationPage.openAttributes();
       await attributesPage.waitForDOMToFullyLoad();
       await attributesPage.clickCreateAttributeButton();
@@ -94,7 +94,7 @@ for (const attr of attributeClasses) {
       page,
     }) => {
       await page.context().storageState({ path: "./playwright/.auth/admin.json" });
-      await configurationPage.gotoConfigurationView();
+      await configurationPage.goToConfigurationView();
       await configurationPage.openAttributes();
       await attributesPage.waitForDOMToFullyLoad();
       await attributesPage.clickCreateAttributeButton();

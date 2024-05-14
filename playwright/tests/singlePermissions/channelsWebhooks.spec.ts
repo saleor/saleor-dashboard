@@ -37,7 +37,7 @@ test("TC: SALEOR_11 User should be able to navigate to channel list as a staff m
   await expect(channelPage.deleteChannelButton.first()).toBeVisible();
 });
 test("TC: SALEOR_12 User should be able to navigate to webhooks and events as a staff member using CHANNEL permission @e2e", async () => {
-  await configurationPage.goToConfirgurationView();
+  await configurationPage.goToConfigurationView();
   await mainMenuPage.expectMenuItemsCount(3);
   await configurationPage.openWebhooksAndEvents();
   await expect(webhooksEventsPage.createAppButton).toBeVisible();
