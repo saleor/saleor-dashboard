@@ -31,7 +31,7 @@ export const getProductVariants = (productId, channelSlug) => {
 };
 
 export const getProductPrice = (productId, channelSlug) => {
-  getProductDetails(productId, channelSlug).then(
+  return getProductDetails(productId, channelSlug).then(
     resp => resp.body.data.product.variants[0].pricing.price.gross.amount,
   );
 };
