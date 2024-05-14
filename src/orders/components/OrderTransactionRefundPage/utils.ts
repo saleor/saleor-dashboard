@@ -87,18 +87,12 @@ export interface RefundQuantityChange {
 export const handleLinesToRefundChange = ({
   data,
   index,
-  validate,
   linesToRefund,
-  order,
-  draftRefund,
   setValue,
 }: {
   data: RefundQuantityChange;
   index: number;
-  validate: boolean;
   linesToRefund: LineToRefund[];
-  order: OrderDetailsGrantRefundFragment | undefined | null;
-  draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0] | undefined;
   setValue: UseFormSetValue<OrderTransactionRefundPageFormData>;
 }) => {
   const line = linesToRefund[index];
@@ -107,13 +101,7 @@ export const handleLinesToRefundChange = ({
     `linesToRefund.${index}`,
     {
       ...line,
-      quantity: validate
-        ? validateQty({
-            update: data,
-            order,
-            draftRefund,
-          })
-        : data.value,
+      quantity: data.value,
     },
     { shouldDirty: true },
   );

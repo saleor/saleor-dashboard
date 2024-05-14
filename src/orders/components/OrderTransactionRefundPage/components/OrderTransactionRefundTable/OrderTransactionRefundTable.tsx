@@ -16,7 +16,7 @@ interface OrderTransactionRefundTableProps {
   order: OrderDetailsGrantRefundFragment | undefined | null;
   draftRefund?: OrderDetailsGrantRefundFragment["grantedRefunds"][0];
   control: Control<OrderTransactionRefundPageFormData, any>;
-  onChange: (data: RefundQuantityChange, index: number, validate: boolean) => void;
+  onChange: (data: RefundQuantityChange, index: number) => void;
   onEditReasonModal: React.Dispatch<React.SetStateAction<number | null>>;
   linesToRefund: LineToRefund[];
   refundFields: FieldArrayWithId<OrderTransactionRefundPageFormData, "linesToRefund", "id">[];
@@ -34,7 +34,6 @@ export const OrderTransactionRefundTable: React.FC<OrderTransactionRefundTablePr
   control,
   onChange,
   onEditReasonModal,
-  // onMaxQtySet,
   linesToRefund,
   refundFields,
   refundFieldsUpdate,
@@ -146,7 +145,6 @@ export const OrderTransactionRefundTable: React.FC<OrderTransactionRefundTablePr
                               row: ix,
                             },
                             ix,
-                            false,
                           )
                         }
                         onBlur={event =>

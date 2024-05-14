@@ -170,22 +170,12 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
     isFormDirty: isDirty,
   });
 
-  // const onSetMaximumQty = createSetMaxQty({
-  //   order,
-  //   draftRefund,
-  //   linesToRefund,
-  //   setValue,
-  // });
-
-  const onLinesToRefundChange = (data: RefundQuantityChange, index: number, validate: boolean) => {
+  const onLinesToRefundChange = (data: RefundQuantityChange, index: number) => {
     handleLinesToRefundChange({
       data,
       index,
-      validate,
       linesToRefund,
       setValue,
-      order,
-      draftRefund,
     });
   };
 
