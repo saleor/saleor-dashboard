@@ -1,6 +1,7 @@
+import { UseDebounceFn } from "@dashboard/hooks/useDebounce";
 import { renderHook } from "@testing-library/react-hooks";
 
-import { PersistedColumn } from "./persistedColumn";
+import { PersistedColumn, RawColumn } from "./persistedColumn";
 import { useMetadata } from "./useMetadata";
 import { usePersistance } from "./usePersistance";
 
@@ -11,7 +12,7 @@ jest.mock("./useMetadata", () => ({
   })),
 }));
 
-jest.mock("@dashboard/hooks/useDebounce", () => fn => fn);
+jest.mock("@dashboard/hooks/useDebounce", () => (fn: UseDebounceFn<unknown>) => fn);
 
 describe("Datagrid / persistance / usePersistance", () => {
   it("gets all persisted columns", () => {
@@ -50,7 +51,7 @@ describe("Datagrid / persistance / usePersistance", () => {
   });
 
   it("updates and gets all persisted columns", () => {
-    const rawColumns = [];
+    const rawColumns: RawColumn[] = [];
     const persist = jest.fn();
 
     (useMetadata as jest.Mock).mockReturnValue({
