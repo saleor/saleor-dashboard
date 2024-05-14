@@ -174,7 +174,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
               <Text>{messages.hiddenLabel}</Text>
               {publishedAt && !isPublished && (
                 <Text size={2} color="default2">
-                  {messages.availableSecondLabel}
+                  {messages.hiddenSecondLabel}
                 </Text>
               )}
             </Box>
