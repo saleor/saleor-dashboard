@@ -7131,6 +7131,9 @@
     "context": "informations about product prices etc, header",
     "string": "Financial Information"
   },
+  "jmZSK1": {
+    "string": "Product is not available in selected channels"
+  },
   "jmh0rV": {
     "context": "no gift card products alert message",
     "string": "{createGiftCardProduct} to start selling gift cards in your store."

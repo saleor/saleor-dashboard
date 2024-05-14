@@ -404,3 +404,21 @@ export const validateVoucherPrice = (
 ) =>
   validatePrice(channel.discountValue) ||
   (data.requirementsPicker === RequirementsPicker.ORDER && validatePrice(channel.minSpent));
+
+type BareChannel = { id: string };
+type BareChannelListing = { channel: BareChannel };
+
+const channelsToIds = (channels: BareChannel[]) => channels.map(({ id }) => id);
+const channelListingsToChannels = (listings: BareChannelListing[]) =>
+  listings.map(ch => ch.channel);
+
+export const isAvailableInChannel = ({
+  availableChannels,
+  channelListings,
+}: {
+  availableChannels: BareChannel[];
+  channelListings: BareChannelListing[];
+}) =>
+  channelsToIds(availableChannels).some(id =>
+    channelsToIds(channelListingsToChannels(channelListings)).includes(id),
+  );
