@@ -32,7 +32,7 @@ jobs:
         id: get-environment-variables
         run: |
           node .github/workflows/getEnvironmentVariables.js \
-            --custom_version $CUSTOM_VERSION \
+            --custom_version "$CUSTOM_VERSION" \
             --repo_token "$REPO_TOKEN" 
 
   run-tests-on-release:
