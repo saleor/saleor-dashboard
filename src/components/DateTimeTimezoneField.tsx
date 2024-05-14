@@ -51,7 +51,7 @@ export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
   );
 
   useEffect(() => {
-    onChange(value);
+    onChange(value === "" ? null : value);
   }, [value]);
 
   return (

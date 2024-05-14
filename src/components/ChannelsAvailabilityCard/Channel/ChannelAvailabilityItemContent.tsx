@@ -45,7 +45,7 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
   const dateNow = useCurrentDate();
   const localizeDate = useDateLocalize();
   const hasAvailableProps = isAvailable !== undefined && availableForPurchaseAt !== undefined;
-  const [isPublishedAt, setPublishedAt] = useState(publishedAt === null);
+  const [isPublishedAt, setPublishedAt] = useState(!!publishedAt);
   const [isAvailableDate, setAvailableDate] = useState(false);
   const intl = useIntl();
   const visibleMessage = (date: string) =>
