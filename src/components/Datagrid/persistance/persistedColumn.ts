@@ -23,14 +23,6 @@ export class PersistedColumn {
     return new PersistedColumn(column.id, column.width);
   }
 
-  public equalsById(id: string) {
-    if (id === this.id) {
-      return true;
-    }
-
-    return this.id.split(":")[1] === id;
-  }
-
   public mergeWithAvailableColumn(column: AvailableColumn): AvailableColumn {
     return { ...column, width: this.width };
   }
