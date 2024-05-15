@@ -49,6 +49,10 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Open release PR
+        env:
+          VERSION: ${{github.event.client_payload.custom_version}}
+          DETAILS_URL_TO_TEST_RUN: ${{needs.run-tests-on-release.outputs.RUN_URL}}
+          TEST_STATUS: ${{needs.run-tests-on-release.outputs.TESTS_CONCLUSION}}
         run: |
           export GITHUB_TOKEN=$( \
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
@@ -60,8 +64,8 @@ jobs:
               "client_payload": {
                 "project": "CORE",
                 "environment": "SANDBOX",
-                "version": "${{github.event.client_payload.custom_version}}"
-                "details_url_to_test_run": "${{needs.run-tests-on-release.outputs.RUN_URL}}"
-                "test_status": "${{needs.run-tests-on-release.outputs.TESTS_CONCLUSION}}"
+                "version": "$VERSION"
+                "details_url_to_test_run": "$DETAILS_URL_TO_TEST_RUN"
+                "test_status": "$TEST_STATUS"
               }
             }'
