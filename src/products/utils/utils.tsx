@@ -13,13 +13,35 @@ type ChoiceWithAncestors = Choice & {
       node: Choice;
     }[];
   };
+  level: number;
+  parent: {
+    id: string;
+    name: string;
+  };
+};
+
+const getAncestorsLabel = (choice: ChoiceWithAncestors): string => {
+  const { parent, level, ancestors } = choice;
+
+  if (level === 0) {
+    return "";
+  }
+
+  if (level === 1) {
+    return `${parent?.name} / ` || "";
+  }
+
+  const ancestor = mapEdgesToItems(ancestors)?.[0];
+
+  const parentLabel = parent ? parent.name : null;
+  const rootCategoryLabel = ancestor?.name || null;
+
+  return `${rootCategoryLabel} ${level > 2 ? "/ ... /" : "/"} ${parentLabel} / `;
 };
 
 export const getChoicesWithAncestors = (choices: ChoiceWithAncestors[]): Option[] =>
   choices.map(category => {
-    const { ancestors } = category;
-    const ancestorItems = mapEdgesToItems(ancestors)?.reverse();
-    const hasAncestors = !!ancestorItems && ancestorItems.length > 0;
+    const hasAncestors = category.level > 0;
 
     return {
       value: category.id,
@@ -28,13 +50,12 @@ export const getChoicesWithAncestors = (choices: ChoiceWithAncestors[]): Option[
         <Text
           size={2}
           color="default2"
-          marginRight={1}
           key={`ancestor-${category.id}`}
           __display="inline"
           height="100%"
           alignItems="center"
         >
-          {ancestorItems.reduce((acc, ancestor) => `${ancestor.name} / ${acc}`, "")}
+          {getAncestorsLabel(category)}
         </Text>
       ) : undefined,
     };

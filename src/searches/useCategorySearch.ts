@@ -14,7 +14,7 @@ export const searchCategories = gql`
         node {
           id
           name
-          ancestors(last: 2) {
+          ancestors(first: 1) {
             edges {
               node {
                 id
@@ -22,6 +22,11 @@ export const searchCategories = gql`
               }
             }
           }
+          parent {
+            name
+            id
+          }
+          level
         }
       }
       pageInfo {
