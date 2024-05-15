@@ -157,11 +157,12 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
               id: "ccXLVi",
               defaultMessage: "Category",
             })}
-            {...(!categoryInputActive && {
-              width: "100%",
-              __opacity: 0,
-              position: "absolute",
-            })}
+            {...(!categoryInputActive &&
+              !disabled && {
+                width: "100%",
+                __opacity: 0,
+                position: "absolute",
+              })}
             onFocus={() => {
               setCategoryInputActive(true);
             }}
@@ -169,7 +170,7 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
               setCategoryInputActive(false);
             }}
             startAdornment={val => {
-              if (categoryInputActive) {
+              if (categoryInputActive || disabled) {
                 return undefined;
               }
 
