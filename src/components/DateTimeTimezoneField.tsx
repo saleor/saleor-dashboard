@@ -1,15 +1,13 @@
 // @ts-strict-ignore
 import { commonMessages } from "@dashboard/intl";
-import { Box, Input, sprinkles } from "@saleor/macaw-ui-next";
+import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import ErrorNoticeBar from "./ErrorNoticeBar";
-
 interface DateTimeFieldProps {
   onChange: (value: string) => void;
-  error: string | React.ReactNode;
+  error?: string | React.ReactNode;
   setError?: () => void;
   futureDatesOnly?: boolean;
   value: string;
@@ -71,6 +69,7 @@ export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
             setValue(date);
           }}
           type="datetime-local"
+          data-test-id="date-time-field"
           value={value}
           helperText={helperText}
           min={min}
@@ -82,7 +81,11 @@ export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
           }}
         />
       </Box>
-      {error && <ErrorNoticeBar className={sprinkles({ marginTop: 3 })} message={error} />}
+      {error && (
+        <Text marginTop={3} width="100%" color="critical1">
+          {error}
+        </Text>
+      )}
     </>
   );
 };
