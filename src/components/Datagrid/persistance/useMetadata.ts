@@ -16,11 +16,15 @@ export const useMetadata = (key: string) => {
 
   const [updateAccount] = useUserAccountUpdateMutation({
     update: (cache, { data }) => {
+      const { metadata: incomingMetadata } = data?.accountUpdate?.user || {};
+
+      if (!incomingMetadata || !user) return;
+
       cache.modify({
         id: cache.identify(user),
         fields: {
           metadata() {
-            return data.accountUpdate.user.metadata;
+            return incomingMetadata;
           },
         },
       });
