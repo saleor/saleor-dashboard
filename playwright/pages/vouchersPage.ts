@@ -3,7 +3,7 @@ import { AddVoucherCodeDialog } from "@dialogs/addVoucherCodeDialog";
 import { AssignSpecificProductsDialog } from "@dialogs/assignSpecificProductsDialog";
 import { RightSideDetailsPage } from "@pageElements/rightSideDetailsSection";
 import { BasePage } from "@pages/basePage";
-import type { Page } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
 import { DeleteDialog } from "./dialogs/deleteDialog";
 
@@ -27,7 +27,9 @@ export class VouchersPage extends BasePage {
     readonly bulkDeleteButton = page.getByTestId("bulk-delete-button"),
     readonly deleteButton = page.getByTestId("button-bar-delete"),
     readonly addCodeButton = page.getByTestId("add-code-button"),
-    readonly usageLimitCheckbox = page.getByTestId("has-usage-limit"),
+    readonly usageLimitCheckbox = page
+      .getByTestId("has-usage-limit")
+      .locator('input[type="checkbox"]'),
     readonly oncePerCustomerLimitCheckbox = page.getByTestId("apply-once-per-customer"),
     readonly onlyForStaffLimitCheckbox = page.getByTestId("only-for-staff"),
     readonly singleUseLimitCheckbox = page.getByTestId("single-use"),
@@ -133,6 +135,8 @@ export class VouchersPage extends BasePage {
 
   async clickUsageTotalLimitCheckbox() {
     await this.usageLimitCheckbox.click();
+    await expect(await this.usageLimitCheckbox.isChecked()).toBeTruthy();
+    await this.usageLimitInput.waitFor({ state: "attached" });
   }
 
   async clickSingleUseLimitCheckbox() {
