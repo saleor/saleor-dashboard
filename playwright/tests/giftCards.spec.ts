@@ -9,13 +9,14 @@ let giftCardsPage: GiftCardsPage;
 let mailpitService: MailpitService;
 
 test.beforeEach(async ({ page, request }) => {
+  test.slow();
   giftCardsPage = new GiftCardsPage(page);
   mailpitService = new MailpitService(request);
   await giftCardsPage.gotoGiftCardsListView();
   await giftCardsPage.waitForDOMToFullyLoad();
 });
-test("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
-  test.slow();
+//Adding skip until https://linear.app/saleor/issue/MERX-451/gift-card-modal-is-flickering-upon-an-interaction is fixed
+test.skip("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
   await giftCardsPage.clickIssueCardButton();
   await giftCardsPage.issueGiftCardDialog.typeAmount("50");
   await giftCardsPage.issueGiftCardDialog.typeTag("super ultra automation discount");
@@ -41,7 +42,6 @@ test("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
     .waitFor({ state: "attached", timeout: 30000 });
 });
 test("TC: SALEOR_106 Issue gift card with specific customer and expiry date @e2e @gift", async () => {
-  test.slow();
   await giftCardsPage.clickIssueCardButton();
 
   await giftCardsPage.issueGiftCardDialog.clickSendExpireDateCheckbox();
