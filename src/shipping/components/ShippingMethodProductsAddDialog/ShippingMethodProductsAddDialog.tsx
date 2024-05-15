@@ -196,6 +196,9 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
                           <TableCellAvatar
                             className={classes.avatar}
                             thumbnail={product?.thumbnail?.url}
+                            style={{
+                              opacity: isProductDisabled ? 0.5 : 1,
+                            }}
                           />
                           <TableCell className={classes.colName} colSpan={2}>
                             {product?.name || <Skeleton />}
