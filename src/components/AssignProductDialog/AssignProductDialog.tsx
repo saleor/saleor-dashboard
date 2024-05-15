@@ -162,9 +162,19 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
 
                   return (
                     <TableRowLink key={product.id} data-test-id="assign-product-table-row">
+                      <TableCell padding="checkbox" className={classes.checkboxCell}>
+                        <Checkbox
+                          checked={isSelected}
+                          disabled={!isProductAvailable}
+                          onChange={() => handleChange(product.id)}
+                        />
+                      </TableCell>
                       <TableCellAvatar
                         className={classes.avatar}
                         thumbnail={maybe(() => product.thumbnail.url)}
+                        style={{
+                          opacity: !isProductAvailable ? 0.5 : 1,
+                        }}
                       />
                       <TableCell className={classes.colName}>
                         {product.name}
@@ -173,13 +183,6 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
                             {productUnavailableText}
                           </Text>
                         )}
-                      </TableCell>
-                      <TableCell padding="checkbox" className={classes.checkboxCell}>
-                        <Checkbox
-                          checked={isSelected}
-                          disabled={!isProductAvailable}
-                          onChange={() => handleChange(product.id)}
-                        />
                       </TableCell>
                     </TableRowLink>
                   );
