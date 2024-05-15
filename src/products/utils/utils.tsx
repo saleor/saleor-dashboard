@@ -17,7 +17,7 @@ type ChoiceWithAncestors = Choice & {
   parent: {
     id: string;
     name: string;
-  };
+  } | null;
 };
 
 const getAncestorsLabel = (choice: ChoiceWithAncestors): string => {
@@ -33,7 +33,7 @@ const getAncestorsLabel = (choice: ChoiceWithAncestors): string => {
 
   const ancestor = mapEdgesToItems(ancestors)?.[0];
 
-  const parentLabel = parent ? parent.name : null;
+  const parentLabel = parent?.name ?? null;
   const rootCategoryLabel = ancestor?.name || null;
 
   return `${rootCategoryLabel} ${level > 2 ? "/ ... /" : "/"} ${parentLabel} / `;

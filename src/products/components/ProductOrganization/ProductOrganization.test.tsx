@@ -28,6 +28,8 @@ const categories = getChoicesWithAncestors([
     ancestors: {
       edges: [],
     },
+    parent: null,
+    level: 0,
   },
   {
     id: "2",
@@ -35,6 +37,8 @@ const categories = getChoicesWithAncestors([
     ancestors: {
       edges: [],
     },
+    parent: null,
+    level: 0,
   },
   {
     id: "3",
@@ -42,33 +46,39 @@ const categories = getChoicesWithAncestors([
     ancestors: {
       edges: [],
     },
+    parent: null,
+    level: 0,
   },
 ]);
 
 const categoriesWithAncestors = getChoicesWithAncestors([
   {
-    id: "1",
+    id: "1", // Shoes
     name: "Shoes",
     ancestors: {
       edges: [],
     },
+    parent: null,
+    level: 0,
   },
   {
-    id: "2",
+    id: "2", // Shoes / Sneakers
     name: "Sneakers",
     ancestors: {
       edges: [
         {
-          node: {
-            id: "2-1",
-            name: "Shoes",
-          },
+          node: { id: "2-1", name: "Shoes" },
         },
       ],
     },
+    parent: {
+      id: "2-1",
+      name: "Shoes",
+    },
+    level: 1,
   },
   {
-    id: "3",
+    id: "3", // Shoes / ... / Trekking / Running
     name: "Running",
     ancestors: {
       edges: [
@@ -78,14 +88,13 @@ const categoriesWithAncestors = getChoicesWithAncestors([
             name: "Shoes",
           },
         },
-        {
-          node: {
-            id: "3-2",
-            name: "Sneakers",
-          },
-        },
       ],
     },
+    parent: {
+      id: "4-2",
+      name: "Trekking",
+    },
+    level: 4,
   },
 ]);
 
@@ -180,7 +189,8 @@ describe("Products ProductOrganization", () => {
 
     await waitFor(() => {
       expect(screen.getByText("Running")).toBeInTheDocument();
-      expect(screen.getByText("Shoes / Sneakers /")).toBeInTheDocument();
+      expect(screen.getByText("Shoes /")).toBeInTheDocument();
+      expect(screen.getByText("Shoes / ... / Trekking /")).toBeInTheDocument();
     });
   });
 });
