@@ -10,9 +10,22 @@ const extractGridRelatedMetadata = (metadata: MetadataItemFragment[], key: strin
 };
 
 export const useMetadata = (key: string) => {
-  const user = useUser();
-  const metadata = extractGridRelatedMetadata(user.user?.metadata ?? [], key);
-  const [updateAccount] = useUserAccountUpdateMutation();
+  const { user } = useUser();
+
+  const metadata = extractGridRelatedMetadata(user?.metadata ?? [], key);
+
+  const [updateAccount] = useUserAccountUpdateMutation({
+    update: (cache, { data }) => {
+      cache.modify({
+        id: cache.identify(user),
+        fields: {
+          metadata() {
+            return data.accountUpdate.user.metadata;
+          },
+        },
+      });
+    },
+  });
 
   const persist = async (metadataInput: MetadataInput[]) => {
     await updateAccount({
