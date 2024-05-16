@@ -15840,21 +15840,7 @@ export const SearchCategoriesDocument = gql`
   search: categories(after: $after, first: $first, filter: {search: $query}) {
     edges {
       node {
-        id
-        name
-        ancestors(first: 1) {
-          edges {
-            node {
-              id
-              name
-            }
-          }
-        }
-        parent {
-          name
-          id
-        }
-        level
+        ...CategoryWithAncestors
       }
     }
     pageInfo {
@@ -15862,7 +15848,8 @@ export const SearchCategoriesDocument = gql`
     }
   }
 }
-    ${PageInfoFragmentDoc}`;
+    ${CategoryWithAncestorsFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useSearchCategoriesQuery__

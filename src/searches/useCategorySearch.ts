@@ -12,21 +12,7 @@ export const searchCategories = gql`
     search: categories(after: $after, first: $first, filter: { search: $query }) {
       edges {
         node {
-          id
-          name
-          ancestors(first: 1) {
-            edges {
-              node {
-                id
-                name
-              }
-            }
-          }
-          parent {
-            name
-            id
-          }
-          level
+          ...CategoryWithAncestors
         }
       }
       pageInfo {
