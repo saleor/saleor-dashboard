@@ -150,7 +150,7 @@ export const useColumns = ({
 
     if (!isDynamic) {
       if (isAdded) {
-        onSave([...selectedColumns, columnId]);
+        onSave([columnId, ...selectedColumns]);
         setRecentlyAddedColumn(columnId);
       } else {
         onSave(selectedColumns.filter(id => id !== columnId));
