@@ -1,11 +1,16 @@
 import { IMessage } from "@dashboard/components/messages";
 import {
+  OrderDetailsGrantRefundQuery,
   OrderGrantRefundAddMutation,
   OrderGrantRefundCreateErrorCode,
   OrderGrantRefundCreateErrorFragment,
+  OrderGrantRefundCreateLineInput,
 } from "@dashboard/graphql";
 import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
-import { OrderTransactionRefundError } from "@dashboard/orders/components/OrderTransactionRefundPage/OrderTransactionRefundPage";
+import {
+  LineToRefund,
+  OrderTransactionRefundError,
+} from "@dashboard/orders/components/OrderTransactionRefundPage/OrderTransactionRefundPage";
 import { orderTransactionRefundEditUrl } from "@dashboard/orders/urls";
 import { IntlShape } from "react-intl";
 
@@ -63,4 +68,20 @@ export const handleRefundCreateComplete = ({
       setLinesErrors(errorLines);
     });
   }
+};
+
+export const prepareRefundAddLines = ({
+  linesToRefund,
+  data,
+}: {
+  linesToRefund: LineToRefund[];
+  data: OrderDetailsGrantRefundQuery;
+}): OrderGrantRefundCreateLineInput[] => {
+  return linesToRefund
+    .filter(line => typeof line.quantity === "number" && line.quantity > 0)
+    .map((line, ix) => ({
+      quantity: line.quantity as number,
+      reason: line.reason,
+      id: data.order!.lines[ix].id,
+    }));
 };

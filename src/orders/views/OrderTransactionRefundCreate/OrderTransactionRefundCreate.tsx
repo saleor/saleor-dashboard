@@ -1,5 +1,4 @@
 import {
-  OrderGrantRefundCreateLineInput,
   useOrderDetailsGrantRefundQuery,
   useOrderGrantRefundAddMutation,
 } from "@dashboard/graphql";
@@ -12,7 +11,7 @@ import OrderTransactionRefundPage, {
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { handleRefundCreateComplete } from "./handlers";
+import { handleRefundCreateComplete, prepareRefundAddLines } from "./handlers";
 
 interface OrderTransactionRefundCreateProps {
   orderId: string;
@@ -57,19 +56,7 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({ o
         orderId,
         amount,
         reason,
-        lines: linesToRefund.reduce<OrderGrantRefundCreateLineInput[]>((acc, line, ix) => {
-          if (typeof line.quantity === "string") {
-            return acc;
-          }
-
-          const lineToAdd = {
-            quantity: line.quantity,
-            reason: line.reason,
-            id: data.order!.lines[ix].id,
-          };
-
-          return [...acc, lineToAdd];
-        }, []),
+        lines: prepareRefundAddLines({ linesToRefund, data }),
         grantRefundForShipping: includeShipping,
         transactionId,
       },

@@ -2,7 +2,6 @@ import {
   OrderDetailsGrantRefundDocument,
   OrderDetailsGrantRefundFragment,
   OrderGrantRefundUpdateErrorCode,
-  OrderGrantRefundUpdateLineAddInput,
   useOrderDetailsGrantRefundQuery,
   useOrderGrantRefundEditMutation,
   useOrderSendRefundForGrantedRefundMutation,
@@ -18,6 +17,7 @@ import { orderUrl } from "@dashboard/orders/urls";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
+import { prepareRefundAddLines } from "../OrderTransactionRefundCreate/handlers";
 import { transactionRefundEditMessages } from "./messages";
 
 interface OrderTransactionRefundProps {
@@ -83,17 +83,7 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({ orderId
 
     const draftRefundLines = draftRefund.lines ?? [];
     const toRemove = draftRefundLines.map(line => line.id);
-    const toAdd = linesToRefund.reduce<OrderGrantRefundUpdateLineAddInput[]>((acc, line, ix) => {
-      if (typeof line.quantity === "number" && line.quantity > 0) {
-        acc.push({
-          id: data.order!.lines[ix].id,
-          quantity: line.quantity,
-          reason: line.reason,
-        });
-      }
-
-      return acc;
-    }, []);
+    const toAdd = prepareRefundAddLines({ linesToRefund, data });
 
     const result = await updateRefund({
       variables: {
