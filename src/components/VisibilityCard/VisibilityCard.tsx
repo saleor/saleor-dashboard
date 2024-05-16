@@ -19,6 +19,7 @@ import { DateTimeTimezoneField } from "../DateTimeTimezoneField";
 import FormSpacer from "../FormSpacer";
 import DateVisibilitySelector from "./DateVisibilitySelector";
 import { visibilityCardMessages } from "./messages";
+import { isAvailableOrPublished } from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
@@ -162,7 +163,11 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
           <RadioGroup.Item id={`isPublished-true`} value="true">
             <Box display="flex" __alignItems="baseline" gap={2}>
               <Text>{messages.visibleLabel}</Text>
-              {isPublished && publishedAt && Date.parse(publishedAt) < dateNow && (
+              {isAvailableOrPublished({
+                condition: isPublished,
+                date: publishedAt,
+                now: dateNow,
+              }) && (
                 <Text size={2} color="default2">
                   {visibleMessage(publishedAt)}
                 </Text>
@@ -227,13 +232,15 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
               firstOptionLabel={
                 <>
                   <p className={classes.label}>{messages.availableLabel}</p>
-                  {isAvailableForPurchase &&
-                    availableForPurchaseAt &&
-                    Date.parse(availableForPurchaseAt) < dateNow && (
-                      <span className={classes.secondLabel}>
-                        {visibleMessage(availableForPurchaseAt)}
-                      </span>
-                    )}
+                  {isAvailableOrPublished({
+                    condition: isAvailableForPurchase,
+                    date: availableForPurchaseAt,
+                    now: dateNow,
+                  }) && (
+                    <span className={classes.secondLabel}>
+                      {visibleMessage(availableForPurchaseAt)}
+                    </span>
+                  )}
                 </>
               }
               name={"isAvailableForPurchase" as keyof FormData}
