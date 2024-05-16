@@ -31,4 +31,9 @@ export const refundTableMessages = defineMessages({
     defaultMessage: "All items refunded",
     description: "helper text",
   },
+  lineReasonDescription: {
+    id: "QisX+2",
+    defaultMessage: "You can specify a reason why this line is being returned.",
+    description: "reason per line helper text",
+  },
 });

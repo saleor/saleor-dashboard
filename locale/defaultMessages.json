@@ -4338,6 +4338,10 @@
   "QirE3M": {
     "string": "Start Date"
   },
+  "QisX+2": {
+    "context": "reason per line helper text",
+    "string": "You can specify a reason why this line is being returned."
+  },
   "Qj/3sH": {
     "context": "limit voucher",
     "string": "Limit number of times this discount can be used in total"
