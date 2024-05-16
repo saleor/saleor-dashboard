@@ -46,6 +46,7 @@ interface ProductOrganizationProps {
   onCategoryChange: (event: ChangeEvent) => void;
   onCollectionChange: (event: ChangeEvent) => void;
   onProductTypeChange?: (event: ChangeEvent) => void;
+  selectedProductCategory?: Option;
 }
 
 export const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
@@ -70,6 +71,7 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
     onCategoryChange,
     onCollectionChange,
     onProductTypeChange,
+    selectedProductCategory,
   } = props;
   const intl = useIntl();
   const formErrors = getFormErrors(
@@ -174,8 +176,14 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
                 return undefined;
               }
 
+              let availableCategories = categories;
+
+              if (selectedProductCategory) {
+                availableCategories = [...categories, selectedProductCategory];
+              }
+
               const adornment = val
-                ? categories.find(category => category.value === val.value)?.startAdornment
+                ? availableCategories.find(category => category.value === val.value)?.startAdornment
                 : null;
 
               if (!adornment) {

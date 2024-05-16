@@ -7,7 +7,7 @@ type Choice = {
   name: string;
 };
 
-type ChoiceWithAncestors = Choice & {
+export type ChoiceWithAncestors = Choice & {
   ancestors: {
     edges: {
       node: Choice;
