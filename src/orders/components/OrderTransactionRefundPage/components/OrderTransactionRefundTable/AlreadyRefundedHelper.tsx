@@ -13,7 +13,7 @@ export const AlreadyRefundedHelper: React.FC<AlreadyRefundedHelperProps> = ({
   maxQtyToRefund,
   qtyToRefund,
 }) =>
-  maxQtyToRefund !== qtyToRefund && (
+  maxQtyToRefund !== qtyToRefund ? (
     <Text size={2} whiteSpace="nowrap" color="default2">
       {maxQtyToRefund === 0 ? (
         <FormattedMessage {...refundTableMessages.allItemsRefunded} />
@@ -26,4 +26,4 @@ export const AlreadyRefundedHelper: React.FC<AlreadyRefundedHelperProps> = ({
         />
       )}
     </Text>
-  );
+  ) : null;
