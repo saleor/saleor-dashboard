@@ -4035,6 +4035,9 @@
     "context": "numeric attribute unit",
     "string": "Unit"
   },
+  "OtMtzH": {
+    "string": "Product unavailable in collection channels"
+  },
   "OwG/0z": {
     "string": "Deleted menu"
   },
@@ -4954,6 +4957,9 @@
     "context": "attribute values",
     "string": "Value {number}"
   },
+  "Uwo+ai": {
+    "string": "Product unavailable in discount channels"
+  },
   "UxOcKE": {
     "context": "order history message",
     "string": "Transaction charge requested"
@@ -5375,6 +5381,9 @@
   "XNeJay": {
     "context": "section header",
     "string": "Eligible Collections"
+  },
+  "XOkUxQ": {
+    "string": "Product unavailable in voucher channels"
   },
   "XPiJex": {
     "context": "Transaction void button - return preauthorized amount to client",
@@ -7124,6 +7133,9 @@
   "jj3Cb8": {
     "context": "informations about product prices etc, header",
     "string": "Financial Information"
+  },
+  "jmZSK1": {
+    "string": "Product is not available in selected channels"
   },
   "jmh0rV": {
     "context": "no gift card products alert message",
