@@ -39,6 +39,9 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkA
   const canMarkAsPaid = order?.actions?.includes(OrderAction.MARK_AS_PAID);
   const shouldDisplay = getShouldDisplayAmounts(order);
 
+  const showHasNoPayment =
+    !canAnyRefund && !shouldDisplay.charged && !shouldDisplay.authorized && !hasGiftCards;
+
   if (!order) {
     return (
       <Card>
@@ -66,8 +69,9 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkA
           />
         }
         title={<FormattedMessage {...orderPaymentMessages.paymentTitle} />}
+        subtitle={<FormattedMessage {...orderPaymentMessages.paymentSubtitle} />}
       />
-      {!canAnyRefund && !shouldDisplay.charged && !shouldDisplay.authorized && !hasGiftCards && (
+      {showHasNoPayment ? (
         <CardContent className={classes.noPaymentContent} data-test-id="payment-section">
           <Typography variant="h5" className={classes.noPaymentTitle}>
             <FormattedMessage {...orderPaymentMessages.noPayments} />
@@ -82,8 +86,9 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkA
             </Button>
           )}
         </CardContent>
+      ) : (
+        <PaymentsSummary order={order} />
       )}
-      <PaymentsSummary order={order} />
       {canAnyRefund && !enabled && (
         <>
           <Divider />

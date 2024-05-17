@@ -7,7 +7,7 @@ export interface ChannelOpts {
   availableForPurchase?: string;
   isAvailableForPurchase?: boolean;
   isPublished: boolean;
-  publicationDate: string | null;
+  publishedAt: string | null;
   visibleInListings?: boolean;
 }
 

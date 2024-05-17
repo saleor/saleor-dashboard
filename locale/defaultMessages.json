@@ -399,6 +399,10 @@
     "context": "dialog header",
     "string": "Create Menu"
   },
+  "0ReyKr": {
+    "context": "VariantDetailsChannelsAvailabilityCard item subtitle published",
+    "string": "Published since {publishedAt}"
+  },
   "0TQuo4": {
     "context": "dialog header",
     "string": "Unassign Collection From Sale"
@@ -564,6 +568,10 @@
   "1LiVhv": {
     "context": "section header",
     "string": "Recent Orders"
+  },
+  "1N8lSy": {
+    "context": "Order summary payment header",
+    "string": "Payments summary"
   },
   "1T1fP8": {
     "context": "range input label",
@@ -2886,6 +2894,10 @@
     "context": "dialog content",
     "string": "You are not able to modify this group members. Solve this problem to continue with request."
   },
+  "H/xj8R": {
+    "context": "VariantDetailsChannelsAvailabilityCard item subtitle published",
+    "string": "Published since {getPublishedAt}"
+  },
   "H27/Gy": {
     "context": "error message",
     "string": "Maximum weight cannot be lower than minimum"
@@ -2893,10 +2905,6 @@
   "H3Uirw": {
     "context": "create new menu item, header",
     "string": "Add Item"
-  },
-  "H52OCA": {
-    "context": "Order summary payment header",
-    "string": "Payment"
   },
   "H5NKfr": {
     "context": "button",
@@ -4035,6 +4043,9 @@
     "context": "numeric attribute unit",
     "string": "Unit"
   },
+  "OtMtzH": {
+    "string": "Product unavailable in collection channels"
+  },
   "OwG/0z": {
     "string": "Deleted menu"
   },
@@ -4954,6 +4965,9 @@
     "context": "attribute values",
     "string": "Value {number}"
   },
+  "Uwo+ai": {
+    "string": "Product unavailable in discount channels"
+  },
   "UxOcKE": {
     "context": "order history message",
     "string": "Transaction charge requested"
@@ -5375,6 +5389,9 @@
   "XNeJay": {
     "context": "section header",
     "string": "Eligible Collections"
+  },
+  "XOkUxQ": {
+    "string": "Product unavailable in voucher channels"
   },
   "XPiJex": {
     "context": "Transaction void button - return preauthorized amount to client",
@@ -6404,6 +6421,10 @@
     "context": "button",
     "string": "Done"
   },
+  "eP2yRZ": {
+    "context": "page availability date label",
+    "string": "Set availability date"
+  },
   "eQ7bCN": {
     "string": "App Webhooks"
   },
@@ -6952,6 +6973,9 @@
   "iMJka8": {
     "string": "No pages found"
   },
+  "iOOPMd": {
+    "string": "A summary of all payments from registered transactions"
+  },
   "iPk640": {
     "context": "dialog header",
     "string": "Media Selection"
@@ -7121,6 +7145,9 @@
   "jj3Cb8": {
     "context": "informations about product prices etc, header",
     "string": "Financial Information"
+  },
+  "jmZSK1": {
+    "string": "Product is not available in selected channels"
   },
   "jmh0rV": {
     "context": "no gift card products alert message",
@@ -8219,10 +8246,6 @@
   "rHoRbE": {
     "context": "Status label when object is unpublished in a channel",
     "string": "Unpublished"
-  },
-  "rJ3lkW": {
-    "context": "VariantDetailsChannelsAvailabilityCard item subtitle published",
-    "string": "Published since {publicationDate}"
   },
   "rKf4LU": {
     "context": "dialog title",

@@ -15,7 +15,7 @@ test.beforeEach(({ page }) => {
 test("TC: SALEOR_97 Create basic channel @e2e @channels", async () => {
   const slugName = new Date().toISOString();
 
-  await configurationPage.gotoConfigurationView();
+  await configurationPage.goToConfigurationView();
   await configurationPage.openChannels();
   await channelPage.clickCreateChannelButton();
   await channelPage.typeChannelName();
@@ -29,7 +29,7 @@ test("TC: SALEOR_97 Create basic channel @e2e @channels", async () => {
 test("TC: SALEOR_208 Create channel with all settings @e2e @channels", async () => {
   const slugName = new Date().toISOString();
 
-  await configurationPage.gotoConfigurationView();
+  await configurationPage.goToConfigurationView();
   await configurationPage.openChannels();
   await channelPage.clickCreateChannelButton();
   await channelPage.typeChannelName();

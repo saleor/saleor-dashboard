@@ -55,9 +55,9 @@ export const fragmentProductMedia = gql`
 export const channelListingProductWithoutPricingFragment = gql`
   fragment ChannelListingProductWithoutPricing on ProductChannelListing {
     isPublished
-    publicationDate
+    publishedAt
     isAvailableForPurchase
-    availableForPurchase
+    availableForPurchaseAt
     visibleInListings
     channel {
       id
@@ -304,7 +304,7 @@ export const fragmentVariant = gql`
       }
       channelListings {
         id
-        publicationDate
+        publishedAt
         isPublished
         channel {
           id

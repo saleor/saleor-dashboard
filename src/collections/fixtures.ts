@@ -35,7 +35,7 @@ export const collections: Collections = [
           name: "Channel",
         },
         isPublished: false,
-        publicationDate: null,
+        publishedAt: null,
       },
     ],
     id: "Q29sbGVjdGlvbjox",
@@ -56,7 +56,7 @@ export const collections: Collections = [
           name: "Channel",
         },
         isPublished: false,
-        publicationDate: null,
+        publishedAt: null,
       },
     ],
     id: "Q29sbGVjdGlvbjoy",
@@ -77,7 +77,7 @@ export const collections: Collections = [
           name: "Channel",
         },
         isPublished: false,
-        publicationDate: null,
+        publishedAt: null,
       },
     ],
     id: "Q29sbGVjdGlvbjoz",
@@ -98,7 +98,7 @@ export const collections: Collections = [
           name: "Channel",
         },
         isPublished: false,
-        publicationDate: null,
+        publishedAt: null,
       },
     ],
     id: "Q29sbGVjdGlvbjoa",
@@ -119,7 +119,7 @@ export const collections: Collections = [
           name: "Channel",
         },
         isPublished: false,
-        publicationDate: null,
+        publishedAt: null,
       },
     ],
     id: "Q29sbGVjdGlvbjob",
@@ -140,7 +140,7 @@ export const collections: Collections = [
           name: "Channel",
         },
         isPublished: false,
-        publicationDate: null,
+        publishedAt: null,
       },
     ],
     id: "Q29sbGVjdGlvbjoc",
@@ -171,7 +171,7 @@ export const collection: (
         name: "Channel",
       },
       isPublished: false,
-      publicationDate: null,
+      publishedAt: null,
     },
   ],
   description: JSON.stringify(content),
@@ -195,7 +195,7 @@ export const collection: (
           channelListings: [
             {
               __typename: "ProductChannelListing",
-              availableForPurchase: null,
+              availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
                 currencyCode: "USD",
@@ -204,12 +204,12 @@ export const collection: (
               },
               isAvailableForPurchase: false,
               isPublished: true,
-              publicationDate: "2020-07-14",
+              publishedAt: "2020-07-14",
               visibleInListings: true,
             },
             {
               __typename: "ProductChannelListing",
-              availableForPurchase: null,
+              availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
                 currencyCode: "USD",
@@ -218,7 +218,7 @@ export const collection: (
               },
               isAvailableForPurchase: false,
               isPublished: false,
-              publicationDate: "2020-07-30",
+              publishedAt: "2020-07-30",
               visibleInListings: true,
             },
           ],
@@ -239,7 +239,7 @@ export const collection: (
           channelListings: [
             {
               __typename: "ProductChannelListing",
-              availableForPurchase: null,
+              availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
                 currencyCode: "USD",
@@ -248,12 +248,12 @@ export const collection: (
               },
               isAvailableForPurchase: false,
               isPublished: true,
-              publicationDate: "2020-07-14",
+              publishedAt: "2020-07-14",
               visibleInListings: true,
             },
             {
               __typename: "ProductChannelListing",
-              availableForPurchase: null,
+              availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
                 currencyCode: "USD",
@@ -262,7 +262,7 @@ export const collection: (
               },
               isAvailableForPurchase: false,
               isPublished: false,
-              publicationDate: "2020-07-30",
+              publishedAt: "2020-07-30",
               visibleInListings: true,
             },
           ],
@@ -283,7 +283,7 @@ export const collection: (
           channelListings: [
             {
               __typename: "ProductChannelListing",
-              availableForPurchase: null,
+              availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
                 currencyCode: "USD",
@@ -292,12 +292,12 @@ export const collection: (
               },
               isAvailableForPurchase: false,
               isPublished: true,
-              publicationDate: "2020-07-14",
+              publishedAt: "2020-07-14",
               visibleInListings: false,
             },
             {
               __typename: "ProductChannelListing",
-              availableForPurchase: null,
+              availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
                 currencyCode: "USD",
@@ -306,7 +306,7 @@ export const collection: (
               },
               isAvailableForPurchase: false,
               isPublished: false,
-              publicationDate: "2020-07-30",
+              publishedAt: "2020-07-30",
               visibleInListings: false,
             },
           ],
@@ -327,7 +327,7 @@ export const collection: (
           channelListings: [
             {
               __typename: "ProductChannelListing",
-              availableForPurchase: null,
+              availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
                 currencyCode: "USD",
@@ -336,12 +336,12 @@ export const collection: (
               },
               isAvailableForPurchase: false,
               isPublished: true,
-              publicationDate: "2020-07-14",
+              publishedAt: "2020-07-14",
               visibleInListings: false,
             },
             {
               __typename: "ProductChannelListing",
-              availableForPurchase: null,
+              availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
                 currencyCode: "USD",
@@ -350,7 +350,7 @@ export const collection: (
               },
               isAvailableForPurchase: false,
               isPublished: false,
-              publicationDate: "2020-07-30",
+              publishedAt: "2020-07-30",
               visibleInListings: false,
             },
           ],

@@ -250,6 +250,25 @@ export const CategoryDetailsFragmentDoc = gql`
   }
 }
     ${MetadataFragmentDoc}`;
+export const CategoryWithAncestorsFragmentDoc = gql`
+    fragment CategoryWithAncestors on Category {
+  id
+  name
+  parent {
+    id
+    name
+  }
+  level
+  ancestors(first: 1) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
 export const ChannelErrorFragmentDoc = gql`
     fragment ChannelError on ChannelError {
   code
@@ -263,7 +282,7 @@ export const CollectionFragmentDoc = gql`
   name
   channelListings {
     isPublished
-    publicationDate
+    publishedAt
     channel {
       id
       name
@@ -289,9 +308,9 @@ ${MetadataFragmentDoc}`;
 export const ChannelListingProductWithoutPricingFragmentDoc = gql`
     fragment ChannelListingProductWithoutPricing on ProductChannelListing {
   isPublished
-  publicationDate
+  publishedAt
   isAvailableForPurchase
-  availableForPurchase
+  availableForPurchaseAt
   visibleInListings
   channel {
     id
@@ -2333,7 +2352,7 @@ export const PageDetailsFragmentDoc = gql`
   content
   seoTitle
   seoDescription
-  publicationDate
+  publishedAt
 }
     ${PageFragmentDoc}
 ${PageAttributesFragmentDoc}
@@ -2764,7 +2783,7 @@ export const ProductVariantFragmentDoc = gql`
     }
     channelListings {
       id
-      publicationDate
+      publishedAt
       isPublished
       channel {
         id
@@ -15143,9 +15162,13 @@ export const ProductDetailsDocument = gql`
     query ProductDetails($id: ID!, $channel: String, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   product(id: $id, channel: $channel) {
     ...Product
+    category {
+      ...CategoryWithAncestors
+    }
   }
 }
-    ${ProductFragmentDoc}`;
+    ${ProductFragmentDoc}
+${CategoryWithAncestorsFragmentDoc}`;
 
 /**
  * __useProductDetailsQuery__
@@ -15291,7 +15314,7 @@ export const ProductVariantCreateDataDocument = gql`
     }
     channelListings {
       isPublished
-      publicationDate
+      publishedAt
       channel {
         id
         name
@@ -15817,8 +15840,7 @@ export const SearchCategoriesDocument = gql`
   search: categories(after: $after, first: $first, filter: {search: $query}) {
     edges {
       node {
-        id
-        name
+        ...CategoryWithAncestors
       }
     }
     pageInfo {
@@ -15826,7 +15848,8 @@ export const SearchCategoriesDocument = gql`
     }
   }
 }
-    ${PageInfoFragmentDoc}`;
+    ${CategoryWithAncestorsFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useSearchCategoriesQuery__
@@ -16237,6 +16260,13 @@ export const SearchProductsDocument = gql`
         name
         thumbnail {
           url
+        }
+        channelListings {
+          channel {
+            id
+            name
+            currencyCode
+          }
         }
         variants {
           id

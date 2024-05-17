@@ -31,12 +31,12 @@ export interface ChannelData {
   id: string;
   name: string;
   isPublished?: boolean;
-  publicationDate?: string | null;
+  publishedAt?: string | null;
   currency?: string;
   variantsIds?: string[];
   price?: string;
   costPrice?: string;
-  availableForPurchase?: string;
+  availableForPurchaseAt?: string;
   isAvailableForPurchase?: boolean;
   visibleInListings?: boolean;
   preorderThreshold?: number;
@@ -45,8 +45,8 @@ export interface ChannelData {
 
 export interface ProductChannelListingData extends Channel {
   isPublished: boolean;
-  publicationDate: string | null;
-  availableForPurchase: string;
+  publishedAt: string | null;
+  availableForPurchaseAt: string;
   isAvailableForPurchase: boolean;
   visibleInListings: boolean;
   currency?: string;
@@ -113,7 +113,7 @@ export interface ChannelCollectionData {
   id: string;
   isPublished: boolean;
   name: string;
-  publicationDate: string | null;
+  publishedAt: string | null;
 }
 
 export const createCollectionChannels = (data?: ChannelFragment[]) =>
@@ -121,7 +121,7 @@ export const createCollectionChannels = (data?: ChannelFragment[]) =>
     id: channel.id,
     isPublished: false,
     name: channel.name,
-    publicationDate: null,
+    publishedAt: null,
   }));
 
 export const createVoucherChannels = (data?: ChannelFragment[]) =>
@@ -189,7 +189,7 @@ export const createChannelsDataWithDiscountPrice = (
 
 export const createChannelsData = (data?: ChannelFragment[]): ChannelData[] =>
   data?.map(channel => ({
-    availableForPurchase: undefined,
+    availableForPurchaseAt: undefined,
     costPrice: "",
     currency: channel.currencyCode,
     id: channel.id,
@@ -198,7 +198,7 @@ export const createChannelsData = (data?: ChannelFragment[]): ChannelData[] =>
     isPublished: true,
     name: channel.name,
     price: "",
-    publicationDate: null,
+    publishedAt: null,
     visibleInListings: true,
   })) || [];
 
@@ -246,7 +246,7 @@ export const createCollectionChannelsData = (collectionData?: CollectionDetailsF
       id: listing.channel.id,
       isPublished: listing.isPublished,
       name: listing.channel.name,
-      publicationDate: listing.publicationDate,
+      publishedAt: listing.publishedAt,
     }));
 
     return collectionDataArr;
@@ -285,10 +285,10 @@ export const createChannelsDataFromProduct = (productData?: ProductFragment) =>
   productData?.channelListings?.map(
     ({
       channel,
-      availableForPurchase,
+      availableForPurchaseAt,
       isAvailableForPurchase,
       visibleInListings,
-      publicationDate,
+      publishedAt,
       isPublished,
     }) => {
       const variantChannel = productData?.variants?.[0].channelListings!.find(
@@ -309,9 +309,9 @@ export const createChannelsDataFromProduct = (productData?: ProductFragment) =>
         !isSimpleProduct && !haveVariantsChannelListings ? true : isPublished;
 
       return {
-        availableForPurchase,
+        availableForPurchaseAt,
         isPublished: isProductPublished,
-        publicationDate,
+        publishedAt,
         variantsIds,
         costPrice: costPrice?.amount.toString() ?? "",
         currency: price ? price.currency : "",
@@ -404,3 +404,21 @@ export const validateVoucherPrice = (
 ) =>
   validatePrice(channel.discountValue) ||
   (data.requirementsPicker === RequirementsPicker.ORDER && validatePrice(channel.minSpent));
+
+type BareChannel = { id: string };
+type BareChannelListing = { channel: BareChannel };
+
+const channelsToIds = (channels: BareChannel[]) => channels.map(({ id }) => id);
+const channelListingsToChannels = (listings: BareChannelListing[]) =>
+  listings.map(ch => ch.channel);
+
+export const isAvailableInChannel = ({
+  availableChannels,
+  channelListings,
+}: {
+  availableChannels: BareChannel[];
+  channelListings: BareChannelListing[];
+}) =>
+  channelsToIds(availableChannels).some(id =>
+    channelsToIds(channelListingsToChannels(channelListings)).includes(id),
+  );

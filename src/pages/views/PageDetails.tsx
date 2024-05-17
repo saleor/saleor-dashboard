@@ -64,7 +64,7 @@ const createPageInput = (
   }),
   content: getParsedDataForJsonStringField(data.content),
   isPublished: data.isPublished,
-  publicationDate: data.publicationDate,
+  publishedAt: data.publishedAt,
   seo: {
     description: data.seoDescription,
     title: data.seoTitle,

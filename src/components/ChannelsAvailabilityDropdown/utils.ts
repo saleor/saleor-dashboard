@@ -9,13 +9,13 @@ import { channelStatusMessages } from "./messages";
 
 export type CollectionChannels = Pick<
   CollectionFragment["channelListings"][0],
-  "isPublished" | "publicationDate" | "channel"
+  "isPublished" | "publishedAt" | "channel"
 >;
 export type Channels = Pick<CollectionFragment["channelListings"][0], "channel">;
 
 export const isActive = (channelData: CollectionChannels) => channelData?.isPublished;
 export const isScheduled = (channelData: CollectionChannels) =>
-  channelData?.publicationDate && !channelData?.isPublished;
+  channelData?.publishedAt && !channelData?.isPublished;
 
 export const getDropdownColor = (channels: CollectionChannels[]) => {
   if (channels.some(isActive)) {

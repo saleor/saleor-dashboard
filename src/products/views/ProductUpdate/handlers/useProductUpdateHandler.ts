@@ -116,7 +116,9 @@ export function useProductUpdateHandler(
         variables: updateProductChannelsData,
       });
 
-      errors = [...errors, ...updateChannelsResult.data.productChannelListingUpdate.errors];
+      if (updateChannelsResult.data) {
+        errors = [...errors, ...updateChannelsResult.data.productChannelListingUpdate.errors];
+      }
     }
 
     if (data.variants.removed.length > 0) {
