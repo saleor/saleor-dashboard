@@ -43,8 +43,8 @@ export const OrderTransactionRefundTable: React.FC<OrderTransactionRefundTablePr
         <GridTable.Col __width="10%" />
       </GridTable.Colgroup>
       <GridTable.Body>
-        {refundFields?.map((field, ix) => {
-          const line = order?.lines[ix];
+        {refundFields?.map((field, index) => {
+          const line = order?.lines[index];
 
           if (!line) {
             return;
@@ -61,11 +61,11 @@ export const OrderTransactionRefundTable: React.FC<OrderTransactionRefundTablePr
               key={field.id}
               control={control}
               field={field}
-              index={ix}
+              index={index}
               line={line}
               order={order}
               draftRefund={draftRefund}
-              qtyToRefund={linesToRefund[ix].quantity}
+              qtyToRefund={linesToRefund[index].quantity}
               maxQtyToRefund={maxQtyToRefund}
               onChange={onChange}
               refundFieldsUpdate={refundFieldsUpdate}

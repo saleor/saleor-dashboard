@@ -86,7 +86,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
   const navigate = useNavigator();
   const intl = useIntl();
 
-  const [refundIndex, setRefundIndex] = React.useState<number | null>(null);
+  const [editedRefundLineIndex, setEditedRefundLineIndex] = React.useState<number | null>(null);
 
   const datagridErrors: OrderRefundTransactionDatagridError[] = errors
     .filter(err => err.field === "lines" || err.field === "addLines")
@@ -214,7 +214,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
               draftRefund={draftRefund}
               control={control}
               onChange={onLinesToRefundChange}
-              onEditReasonModal={setRefundIndex}
+              onEditReasonModal={setEditedRefundLineIndex}
               linesToRefund={linesToRefund}
               refundFields={refundFields}
               refundFieldsUpdate={refundFieldsUpdate}
@@ -256,11 +256,11 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
           labels={submitBehavior.submitLabels}
         />
         <OrderTransactionReasonModal
-          open={refundIndex !== null}
-          reason={linesToRefund[refundIndex!]?.reason}
-          onClose={() => setRefundIndex(null)}
+          open={editedRefundLineIndex !== null}
+          reason={linesToRefund[editedRefundLineIndex!]?.reason}
+          onClose={() => setEditedRefundLineIndex(null)}
           onConfirm={(reason: string) => {
-            onReasonChange(reason, refundIndex!);
+            onReasonChange(reason, editedRefundLineIndex!);
           }}
         />
       </Box>
