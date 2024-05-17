@@ -30,3 +30,23 @@ export const categoryDetailsFragment = gql`
     }
   }
 `;
+
+export const categoryWithAncestorFragment = gql`
+  fragment CategoryWithAncestors on Category {
+    id
+    name
+    parent {
+      id
+      name
+    }
+    level
+    ancestors(first: 1) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
