@@ -25,6 +25,7 @@ import {
   ChannelFragment,
   PermissionEnum,
   ProductChannelListingErrorFragment,
+  ProductDetailsQuery,
   ProductDetailsVariantFragment,
   ProductErrorFragment,
   ProductErrorWithAttributesFragment,
@@ -45,6 +46,7 @@ import ProductExternalMediaDialog from "@dashboard/products/components/ProductEx
 import { ProductOrganization } from "@dashboard/products/components/ProductOrganization/ProductOrganization";
 import { defaultGraphiQLQuery } from "@dashboard/products/queries";
 import { productImageUrl, productListUrl } from "@dashboard/products/urls";
+import { ChoiceWithAncestors, getChoicesWithAncestors } from "@dashboard/products/utils/utils";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
@@ -78,7 +80,7 @@ export interface ProductUpdatePageProps {
   limits: RefreshLimitsQuery["shop"]["limits"];
   variants: ProductDetailsVariantFragment[];
   media: ProductFragment["media"];
-  product: ProductFragment;
+  product: ProductDetailsQuery["product"];
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   taxClasses: TaxClassBaseFragment[];
@@ -168,7 +170,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     getChoices(maybe(() => product.collections, [])),
   );
   const [selectedTaxClass, setSelectedTaxClass] = useStateFromProps(product?.taxClass?.name ?? "");
-  const categories = getChoices(categoryChoiceList);
+  const categories = getChoicesWithAncestors(categoryChoiceList);
+  const selectedProductCategory = product?.category
+    ? getChoicesWithAncestors([product.category as ChoiceWithAncestors])[0]
+    : undefined;
   const collections = getChoices(collectionChoiceList);
   const hasVariants = product?.productType?.hasVariants;
   const taxClassesChoices =
@@ -377,6 +382,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 productType={product?.productType}
                 onCategoryChange={handlers.selectCategory}
                 onCollectionChange={handlers.selectCollection}
+                selectedProductCategory={selectedProductCategory}
               />
               <ChannelsAvailabilityCard {...availabilityCommonProps} channels={listings ?? []} />
               <Box paddingBottom={52}>
