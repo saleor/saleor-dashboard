@@ -399,6 +399,10 @@
     "context": "dialog header",
     "string": "Create Menu"
   },
+  "0ReyKr": {
+    "context": "VariantDetailsChannelsAvailabilityCard item subtitle published",
+    "string": "Published since {publishedAt}"
+  },
   "0TQuo4": {
     "context": "dialog header",
     "string": "Unassign Collection From Sale"
@@ -2889,6 +2893,10 @@
   "H/o4Ex": {
     "context": "dialog content",
     "string": "You are not able to modify this group members. Solve this problem to continue with request."
+  },
+  "H/xj8R": {
+    "context": "VariantDetailsChannelsAvailabilityCard item subtitle published",
+    "string": "Published since {getPublishedAt}"
   },
   "H27/Gy": {
     "context": "error message",
@@ -6413,6 +6421,10 @@
     "context": "button",
     "string": "Done"
   },
+  "eP2yRZ": {
+    "context": "page availability date label",
+    "string": "Set availability date"
+  },
   "eQ7bCN": {
     "string": "App Webhooks"
   },
@@ -8234,10 +8246,6 @@
   "rHoRbE": {
     "context": "Status label when object is unpublished in a channel",
     "string": "Unpublished"
-  },
-  "rJ3lkW": {
-    "context": "VariantDetailsChannelsAvailabilityCard item subtitle published",
-    "string": "Published since {publicationDate}"
   },
   "rKf4LU": {
     "context": "dialog title",

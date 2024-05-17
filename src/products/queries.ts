@@ -190,7 +190,7 @@ export const productVariantCreateQuery = gql`
       }
       channelListings {
         isPublished
-        publicationDate
+        publishedAt
         channel {
           id
           name

@@ -110,21 +110,21 @@ export const getAvailabilityVariables = (
   channels.map(channel => {
     const {
       isAvailableForPurchase,
-      availableForPurchase,
+      availableForPurchaseAt,
       isPublished,
-      publicationDate,
+      publishedAt,
       visibleInListings,
     } = channel;
     const isAvailable =
-      availableForPurchase && !isAvailableForPurchase ? true : isAvailableForPurchase;
+      availableForPurchaseAt && !isAvailableForPurchase ? true : isAvailableForPurchase;
 
     return {
-      availableForPurchaseDate:
-        isAvailableForPurchase || availableForPurchase === "" ? null : availableForPurchase,
+      availableForPurchaseAt:
+        isAvailableForPurchase || availableForPurchaseAt === "" ? null : availableForPurchaseAt,
       channelId: channel.id,
       isAvailableForPurchase: isAvailable,
       isPublished,
-      publicationDate,
+      publishedAt,
       visibleInListings,
     };
   });
