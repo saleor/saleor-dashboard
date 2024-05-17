@@ -1,6 +1,5 @@
 import { OrderDetailsFragment } from "@dashboard/graphql";
 import { CardContent } from "@material-ui/core";
-import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -8,7 +7,7 @@ import SummaryLine from "../../../OrderSummaryCard/SummaryLine";
 import { SummaryList } from "../../../OrderSummaryCard/SummaryList";
 import { orderPaymentMessages } from "../../messages";
 import { useStyles } from "../../styles";
-import { getShouldDisplayAmounts, shouldHideSummary } from "./utils";
+import { getShouldDisplayAmounts } from "./utils";
 
 interface PaymentsSummaryProps {
   order: OrderDetailsFragment;
@@ -18,59 +17,48 @@ export const PaymentsSummary: React.FC<PaymentsSummaryProps> = ({ order }) => {
   const classes = useStyles();
   const shouldDisplay = getShouldDisplayAmounts(order);
 
-  if (shouldHideSummary(shouldDisplay)) {
-    return null;
-  }
-
   return (
     <CardContent>
       <SummaryList className={classes.amountGrid}>
-        {shouldDisplay.authorized && (
+        <SummaryLine
+          text={<FormattedMessage {...orderPaymentMessages.authorized} />}
+          money={order.totalAuthorized}
+        />
+
+        {shouldDisplay.authorizedPending && (
           <SummaryLine
-            vertical
             text={<FormattedMessage {...orderPaymentMessages.authorized} />}
-            money={order.totalAuthorized}
+            subText={<FormattedMessage {...orderPaymentMessages.pending} />}
+            money={order.totalAuthorizePending}
           />
         )}
 
-        {shouldDisplay.charged && (
+        <SummaryLine
+          text={<FormattedMessage {...orderPaymentMessages.captured} />}
+          money={order.totalCharged}
+        />
+
+        {shouldDisplay.chargedPending && (
           <SummaryLine
-            vertical
             text={<FormattedMessage {...orderPaymentMessages.captured} />}
-            money={order.totalCharged}
+            subText={<FormattedMessage {...orderPaymentMessages.pending} />}
+            money={order.totalChargePending}
           />
         )}
 
-        {shouldDisplay.cancelled && (
+        <SummaryLine
+          text={<FormattedMessage {...orderPaymentMessages.cancelled} />}
+          money={order.totalCanceled}
+        />
+
+        {shouldDisplay.cancelledPending && (
           <SummaryLine
-            vertical
             text={<FormattedMessage {...orderPaymentMessages.cancelled} />}
-            money={order.totalCanceled}
+            subText={<FormattedMessage {...orderPaymentMessages.pending} />}
+            money={order.totalCancelPending}
           />
         )}
       </SummaryList>
-      {shouldDisplay.pending && (
-        <SummaryList className={clsx(classes.amountGrid, classes.pendingGrid)}>
-          <SummaryLine
-            vertical
-            hideEmpty
-            text={<FormattedMessage {...orderPaymentMessages.pending} />}
-            money={order.totalAuthorizePending}
-          />
-          <SummaryLine
-            vertical
-            hideEmpty
-            text={<FormattedMessage {...orderPaymentMessages.pending} />}
-            money={order.totalChargePending}
-          />
-          <SummaryLine
-            vertical
-            hideEmpty
-            text={<FormattedMessage {...orderPaymentMessages.pending} />}
-            money={order.totalCancelPending}
-          />
-        </SummaryList>
-      )}
     </CardContent>
   );
 };
