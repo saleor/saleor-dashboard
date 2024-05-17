@@ -176,11 +176,9 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
                 return undefined;
               }
 
-              let availableCategories = categories;
-
-              if (selectedProductCategory) {
-                availableCategories = [...categories, selectedProductCategory];
-              }
+              const availableCategories = selectedProductCategory
+                ? [...categories, selectedProductCategory]
+                : categories;
 
               const adornment = val
                 ? availableCategories.find(category => category.value === val.value)?.startAdornment
