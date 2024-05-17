@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { FetchResult } from "@apollo/client";
+import { Channel, isAvailableInChannel } from "@dashboard/channels/utils";
 import BackButton from "@dashboard/components/BackButton";
 import Checkbox from "@dashboard/components/Checkbox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -22,6 +23,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -65,6 +67,7 @@ export interface ShippingMethodProductsAddDialogProps extends FetchMoreProps {
   onClose: () => void;
   onFetch: (query: string) => void;
   onSubmit: (ids: string[]) => Promise<FetchResult<ShippingPriceExcludeProductMutation>>;
+  availableChannels: Channel[];
 }
 
 const handleProductAssign = (
@@ -81,19 +84,19 @@ const handleProductAssign = (
     setSelectedProducts([...selectedProducts, product]);
   }
 };
-const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogProps> = props => {
-  const {
-    confirmButtonState,
-    open,
-    loading,
-    hasMore,
-    products,
-    onFetch,
-    onFetchMore,
-    onClose,
-    onSubmit,
-  } = props;
-  const classes = useStyles(props);
+const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogProps> = ({
+  confirmButtonState,
+  open,
+  loading,
+  hasMore,
+  products,
+  onFetch,
+  onFetchMore,
+  onClose,
+  onSubmit,
+  availableChannels,
+}) => {
+  const classes = useStyles();
   const intl = useIntl();
   const [query, onQueryChange, resetQuery] = useSearchQuery(onFetch);
   const [selectedProducts, setSelectedProducts] = React.useState<
@@ -164,6 +167,13 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
                       selectedProduct => selectedProduct.id === product.id,
                     );
 
+                    const isProductAvailable = isAvailableInChannel({
+                      availableChannels,
+                      channelListings: product?.channelListings ?? [],
+                    });
+
+                    const isProductDisabled = loading || !isProductAvailable;
+
                     return (
                       <React.Fragment key={product ? product.id : `skeleton-${productIndex}`}>
                         <TableRowLink data-test-id="product-row">
@@ -171,7 +181,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
                             {product && (
                               <Checkbox
                                 checked={isSelected}
-                                disabled={loading}
+                                disabled={isProductDisabled}
                                 onChange={() =>
                                   handleProductAssign(
                                     product,
@@ -186,9 +196,20 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
                           <TableCellAvatar
                             className={classes.avatar}
                             thumbnail={product?.thumbnail?.url}
+                            style={{
+                              opacity: isProductDisabled ? 0.5 : 1,
+                            }}
                           />
                           <TableCell className={classes.colName} colSpan={2}>
                             {product?.name || <Skeleton />}
+                            {!isProductAvailable && (
+                              <Text display="block" size={1} color="default2">
+                                {intl.formatMessage({
+                                  defaultMessage: "Product is not available in selected channels",
+                                  id: "jmZSK1",
+                                })}
+                              </Text>
+                            )}
                           </TableCell>
                         </TableRowLink>
                       </React.Fragment>
