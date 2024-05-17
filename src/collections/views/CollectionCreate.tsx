@@ -110,7 +110,7 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({ params }) =>
             addChannels: formData.channelListings.map(channel => ({
               channelId: channel.id,
               isPublished: channel.isPublished,
-              publicationDate: channel.publicationDate,
+              publishedAt: channel.publishedAt,
             })),
             removeChannels: [],
           },

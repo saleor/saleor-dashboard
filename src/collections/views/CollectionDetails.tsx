@@ -199,7 +199,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({ id, params
           addChannels: formData.channelListings.map(channel => ({
             channelId: channel.id,
             isPublished: channel.isPublished,
-            publicationDate: channel.publicationDate,
+            publishedAt: channel.publishedAt,
           })),
           removeChannels: idsDiff.removed,
         },
@@ -329,6 +329,11 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({ id, params
         onChannelsChange={setCurrentChannels}
       />
       <AssignProductDialog
+        selectedChannels={currentChannels}
+        productUnavailableText={intl.formatMessage({
+          id: "OtMtzH",
+          defaultMessage: "Product unavailable in collection channels",
+        })}
         selectedIds={assignedProductDict}
         confirmButtonState={assignProductOpts.status}
         hasMore={result.data?.search?.pageInfo.hasNextPage}

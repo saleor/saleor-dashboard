@@ -121,7 +121,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
           content: getParsedDataForJsonStringField(formData.content),
           isPublished: formData.isPublished,
           pageType: formData.pageType?.id,
-          publicationDate: formData.publicationDate,
+          publishedAt: formData.publishedAt,
           seo: {
             description: formData.seoDescription,
             title: formData.seoTitle,

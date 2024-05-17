@@ -1,22 +1,37 @@
 // @ts-strict-ignore
 import { commonMessages } from "@dashboard/intl";
-import { DateTime, joinDateTime, splitDateTime } from "@dashboard/misc";
-import { Box, Input, sprinkles } from "@saleor/macaw-ui-next";
+import { Box, Input, Text } from "@saleor/macaw-ui-next";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import ErrorNoticeBar from "./ErrorNoticeBar";
-
 interface DateTimeFieldProps {
   onChange: (value: string) => void;
-  error: string | React.ReactNode;
+  error?: string | React.ReactNode;
   setError?: () => void;
   futureDatesOnly?: boolean;
   value: string;
   disabled?: boolean;
   fullWidth?: boolean;
   name: string;
+  label?: string;
+  helperText?: string;
 }
+
+const convertToDateTimeLocal = (date: string) => {
+  return moment(date).format("YYYY-MM-DDThh:mm");
+};
+
+const min = "1970-01-01T00:00";
+const max = "2100-01-01T23:59";
+
+const isInputValid = (value: string) => {
+  const isValid = moment(value).isValid();
+  const isAfterMin = moment(value).isAfter(min);
+  const isBeforeMax = moment(value).isBefore(max);
+
+  return isValid && isAfterMin && isBeforeMax;
+};
 
 export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
   disabled,
@@ -24,56 +39,53 @@ export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
   onChange,
   error,
   fullWidth,
+  label,
+  helperText,
   value: initialValue,
 }) => {
   const intl = useIntl();
-  const [value, setValue] = useState<DateTime>(
-    initialValue ? splitDateTime(initialValue) : { date: "", time: "" },
+  const [value, setValue] = useState<string>(
+    initialValue ? convertToDateTimeLocal(initialValue) : "",
   );
 
   useEffect(() => {
-    const newDate = joinDateTime(value.date, value.time);
-
-    onChange(newDate);
+    onChange(value === "" ? null : value);
   }, [value]);
 
   return (
     <>
-      <Box display="flex" gap={5}>
+      <Box display="flex" gap={4} width="100%">
         <Input
           width={fullWidth ? "100%" : undefined}
           size="small"
           marginRight={3}
           disabled={disabled}
           error={!!error}
-          label={intl.formatMessage(commonMessages.date)}
-          name={`${name}:date`}
+          label={label ?? intl.formatMessage(commonMessages.date)}
+          name={name}
           onChange={event => {
             const date = event.target.value;
 
-            setValue(value => ({ ...value, date }));
+            setValue(date);
           }}
-          type="date"
-          value={value.date}
-        />
-
-        <Input
-          width={fullWidth ? "100%" : undefined}
-          size="small"
-          disabled={disabled}
-          error={!!error}
-          label={intl.formatMessage(commonMessages.time)}
-          name={`${name}:time`}
-          onChange={event => {
-            const time = event.target.value;
-
-            setValue(value => ({ ...value, time }));
+          type="datetime-local"
+          data-test-id="date-time-field"
+          value={value}
+          helperText={helperText}
+          min={min}
+          max={max}
+          onBlur={() => {
+            if (!isInputValid(value)) {
+              setValue("");
+            }
           }}
-          type="time"
-          value={value.time}
         />
       </Box>
-      {error && <ErrorNoticeBar className={sprinkles({ marginTop: 3 })} message={error} />}
+      {error && (
+        <Text marginTop={3} width="100%" color="critical1">
+          {error}
+        </Text>
+      )}
     </>
   );
 };

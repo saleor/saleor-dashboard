@@ -263,7 +263,7 @@ export const CollectionFragmentDoc = gql`
   name
   channelListings {
     isPublished
-    publicationDate
+    publishedAt
     channel {
       id
       name
@@ -289,9 +289,9 @@ ${MetadataFragmentDoc}`;
 export const ChannelListingProductWithoutPricingFragmentDoc = gql`
     fragment ChannelListingProductWithoutPricing on ProductChannelListing {
   isPublished
-  publicationDate
+  publishedAt
   isAvailableForPurchase
-  availableForPurchase
+  availableForPurchaseAt
   visibleInListings
   channel {
     id
@@ -2333,7 +2333,7 @@ export const PageDetailsFragmentDoc = gql`
   content
   seoTitle
   seoDescription
-  publicationDate
+  publishedAt
 }
     ${PageFragmentDoc}
 ${PageAttributesFragmentDoc}
@@ -2764,7 +2764,7 @@ export const ProductVariantFragmentDoc = gql`
     }
     channelListings {
       id
-      publicationDate
+      publishedAt
       isPublished
       channel {
         id
@@ -15291,7 +15291,7 @@ export const ProductVariantCreateDataDocument = gql`
     }
     channelListings {
       isPublished
-      publicationDate
+      publishedAt
       channel {
         id
         name
@@ -16237,6 +16237,13 @@ export const SearchProductsDocument = gql`
         name
         thumbnail {
           url
+        }
+        channelListings {
+          channel {
+            id
+            name
+            currencyCode
+          }
         }
         variants {
           id
