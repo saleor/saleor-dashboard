@@ -569,6 +569,10 @@
     "context": "section header",
     "string": "Recent Orders"
   },
+  "1N8lSy": {
+    "context": "Order summary payment header",
+    "string": "Payments summary"
+  },
   "1T1fP8": {
     "context": "range input label",
     "string": "Postal codes (start)"
@@ -2902,10 +2906,6 @@
     "context": "create new menu item, header",
     "string": "Add Item"
   },
-  "H52OCA": {
-    "context": "Order summary payment header",
-    "string": "Payment"
-  },
   "H5NKfr": {
     "context": "button",
     "string": "Create"
@@ -4043,6 +4043,9 @@
     "context": "numeric attribute unit",
     "string": "Unit"
   },
+  "OtMtzH": {
+    "string": "Product unavailable in collection channels"
+  },
   "OwG/0z": {
     "string": "Deleted menu"
   },
@@ -4962,6 +4965,9 @@
     "context": "attribute values",
     "string": "Value {number}"
   },
+  "Uwo+ai": {
+    "string": "Product unavailable in discount channels"
+  },
   "UxOcKE": {
     "context": "order history message",
     "string": "Transaction charge requested"
@@ -5383,6 +5389,9 @@
   "XNeJay": {
     "context": "section header",
     "string": "Eligible Collections"
+  },
+  "XOkUxQ": {
+    "string": "Product unavailable in voucher channels"
   },
   "XPiJex": {
     "context": "Transaction void button - return preauthorized amount to client",
@@ -6964,6 +6973,9 @@
   "iMJka8": {
     "string": "No pages found"
   },
+  "iOOPMd": {
+    "string": "A summary of all payments from registered transactions"
+  },
   "iPk640": {
     "context": "dialog header",
     "string": "Media Selection"
@@ -7133,6 +7145,9 @@
   "jj3Cb8": {
     "context": "informations about product prices etc, header",
     "string": "Financial Information"
+  },
+  "jmZSK1": {
+    "string": "Product is not available in selected channels"
   },
   "jmh0rV": {
     "context": "no gift card products alert message",

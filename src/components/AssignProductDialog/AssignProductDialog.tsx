@@ -3,12 +3,11 @@ import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/componen
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { SearchProductsQuery } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { maybe } from "@dashboard/misc";
 import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle";
-import { DialogProps, FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { DialogProps, FetchMoreProps } from "@dashboard/types";
 import {
   CircularProgress,
   Dialog,
@@ -19,6 +18,7 @@ import {
   TableCell,
   TextField,
 } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React, { useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -28,15 +28,19 @@ import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
+import { Products, SelectedChannel } from "./types";
+import { isProductAvailableInVoucherChannels } from "./utils";
 
 export interface AssignProductDialogFormData {
-  products: RelayToFlat<SearchProductsQuery["search"]>;
+  products: Products;
   query: string;
 }
 
 export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  products: RelayToFlat<SearchProductsQuery["search"]>;
+  products: Products;
+  selectedChannels?: SelectedChannel[];
+  productUnavailableText?: string;
   selectedIds?: Record<string, boolean>;
   loading: boolean;
   onFetch: (value: string) => void;
@@ -47,6 +51,8 @@ const scrollableTargetId = "assignProductScrollableDialog";
 const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
   const {
     confirmButtonState,
+    selectedChannels,
+    productUnavailableText,
     hasMore,
     open,
     loading,
@@ -149,16 +155,34 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
               {products &&
                 products.map(product => {
                   const isSelected = productsDict[product.id] || false;
+                  const isProductAvailable = isProductAvailableInVoucherChannels(
+                    product.channelListings,
+                    selectedChannels,
+                  );
 
                   return (
                     <TableRowLink key={product.id} data-test-id="assign-product-table-row">
+                      <TableCell padding="checkbox" className={classes.checkboxCell}>
+                        <Checkbox
+                          checked={isSelected}
+                          disabled={!isProductAvailable}
+                          onChange={() => handleChange(product.id)}
+                        />
+                      </TableCell>
                       <TableCellAvatar
                         className={classes.avatar}
                         thumbnail={maybe(() => product.thumbnail.url)}
+                        style={{
+                          opacity: !isProductAvailable ? 0.5 : 1,
+                        }}
                       />
-                      <TableCell className={classes.colName}>{product.name}</TableCell>
-                      <TableCell padding="checkbox" className={classes.checkboxCell}>
-                        <Checkbox checked={isSelected} onChange={() => handleChange(product.id)} />
+                      <TableCell className={classes.colName}>
+                        {product.name}
+                        {!isProductAvailable && productUnavailableText && (
+                          <Text display="block" size={1} color="default2">
+                            {productUnavailableText}
+                          </Text>
+                        )}
                       </TableCell>
                     </TableRowLink>
                   );
