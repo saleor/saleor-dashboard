@@ -77,11 +77,15 @@ export const prepareRefundAddLines = ({
   linesToRefund: LineToRefund[];
   data: OrderDetailsGrantRefundQuery;
 }): OrderGrantRefundCreateLineInput[] => {
-  return linesToRefund
-    .filter(line => typeof line.quantity === "number" && line.quantity > 0)
-    .map((line, ix) => ({
-      quantity: line.quantity as number,
-      reason: line.reason,
-      id: data.order!.lines[ix].id,
-    }));
+  return linesToRefund.reduce<OrderGrantRefundCreateLineInput[]>((acc, line, ix) => {
+    if (typeof line.quantity === "number" && line.quantity > 0) {
+      acc.push({
+        quantity: line.quantity,
+        reason: line.reason,
+        id: data.order!.lines[ix].id,
+      });
+    }
+
+    return acc;
+  }, []);
 };
