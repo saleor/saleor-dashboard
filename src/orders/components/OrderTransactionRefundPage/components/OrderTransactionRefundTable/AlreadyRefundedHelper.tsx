@@ -13,7 +13,7 @@ export const AlreadyRefundedHelper: React.FC<AlreadyRefundedHelperProps> = ({
   maxQtyToRefund,
   qtyToRefund,
 }) => {
-  if (maxQtyToRefund === maxQtyToRefund) {
+  if (maxQtyToRefund === qtyToRefund) {
     return null;
   }
 
