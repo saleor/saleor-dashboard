@@ -37,12 +37,12 @@ export const OrderRefundTable: React.FC<OrderRefundTableProps> = ({
     intl,
   });
 
-  const textRefs = React.useRef([]);
+  const textRefs = React.useRef<HTMLTableCellElement[]>([]);
 
-  const tooltipContent = (index: number, reason: string): string => {
+  const tooltipContent = (index: number, reason: string | null): string => {
     const element = textRefs.current[index];
 
-    return element && element.scrollWidth > element.clientWidth ? reason : "";
+    return element && element.scrollWidth > element.clientWidth ? reason ?? "" : "";
   };
 
   return (
@@ -79,7 +79,8 @@ export const OrderRefundTable: React.FC<OrderRefundTableProps> = ({
           <GridTable.Col __width="20%" />
           <GridTable.Col __width="10%" />
         </GridTable.Colgroup>
-        {mergedRefunds.map((refund, index) => {
+        {/* TODO: Handle empty state */}
+        {mergedRefunds?.map((refund, index) => {
           const isEditable = isRefundEditable(refund);
 
           return (
@@ -97,7 +98,9 @@ export const OrderRefundTable: React.FC<OrderRefundTableProps> = ({
               <Tooltip open={tooltipContent(index, refund.reason) ? undefined : false}>
                 <Tooltip.Trigger>
                   <GridTable.Cell
-                    ref={el => (textRefs.current[index] = el)}
+                    ref={el => {
+                      if (el) textRefs.current[index] = el;
+                    }}
                     __maxWidth="200px"
                     overflow="hidden"
                     textOverflow="ellipsis"
@@ -114,7 +117,7 @@ export const OrderRefundTable: React.FC<OrderRefundTableProps> = ({
               <GridTable.Cell>
                 <DateTime plain date={refund.createdAt} />
               </GridTable.Cell>
-              <GridTable.Cell>{refund.user.email}</GridTable.Cell>
+              <GridTable.Cell>{refund.user?.email ?? ""}</GridTable.Cell>
               <GridTable.Cell textAlign="right">
                 <Box display="flex" justifyContent="flex-end">
                   {isEditable ? (
