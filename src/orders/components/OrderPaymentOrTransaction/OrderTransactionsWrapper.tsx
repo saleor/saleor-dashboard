@@ -12,7 +12,6 @@ import OrderAddTransaction from "../OrderAddTransaction";
 import { useStyles } from "../OrderDetailsPage/styles";
 import OrderGrantedRefunds from "../OrderGrantedRefunds";
 import OrderPaymentSummaryCard from "../OrderPaymentSummaryCard";
-import { OrderRefundDatagrid } from "../OrderRefundDatagrid";
 import { OrderRefundTable } from "../OrderRefundDatagrid/OrderRefundTable";
 import OrderSummaryCard from "../OrderSummaryCard";
 import OrderTransaction from "../OrderTransaction";
@@ -55,7 +54,6 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
       <>
         {enabled && (
           <>
-            {/* <OrderRefundDatagrid orderId={order?.id} order={order} onRefundAdd={onRefundAdd} /> */}
             <OrderRefundTable orderId={order?.id} order={order} onRefundAdd={onRefundAdd} />
             <CardSpacer />
           </>
