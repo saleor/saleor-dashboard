@@ -10,8 +10,8 @@ interface RefundTableProductCellProps {
 
 export const RefundTableProductCell: React.FC<RefundTableProductCellProps> = ({ line, index }) => {
   // TODO: Abstract and move it to dedicated hook in MERX-359
-  const productNameRefs = React.useRef([]);
-  const variantNameRefs = React.useRef([]);
+  const productNameRefs = React.useRef<HTMLElement[]>([]);
+  const variantNameRefs = React.useRef<HTMLElement[]>([]);
   const isOverflowing = (index: number): false | undefined => {
     const productElement = productNameRefs.current[index];
     const variantElement = variantNameRefs.current[index];
@@ -36,7 +36,9 @@ export const RefundTableProductCell: React.FC<RefundTableProductCellProps> = ({ 
             </Box>
             <Box overflow="hidden" minWidth={0}>
               <Box
-                ref={el => (productNameRefs.current[index] = el)}
+                ref={el => {
+                  if (el) productNameRefs.current[index] = el;
+                }}
                 overflow="hidden"
                 textOverflow="ellipsis"
                 whiteSpace="nowrap"
@@ -46,7 +48,9 @@ export const RefundTableProductCell: React.FC<RefundTableProductCellProps> = ({ 
                 </Text>
               </Box>
               <Box
-                ref={el => (variantNameRefs.current[index] = el)}
+                ref={el => {
+                  if (el) variantNameRefs.current[index] = el;
+                }}
                 overflow="hidden"
                 textOverflow="ellipsis"
                 whiteSpace="nowrap"
