@@ -1,5 +1,6 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
+import { useOverflowDetection } from "@dashboard/hooks/useOverflowDetection/useOverflowDetection";
 import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 
@@ -9,25 +10,15 @@ interface RefundTableProductCellProps {
 }
 
 export const RefundTableProductCell: React.FC<RefundTableProductCellProps> = ({ line, index }) => {
-  // TODO: Abstract and move it to dedicated hook in MERX-359
-  const productNameRefs = React.useRef<HTMLElement[]>([]);
-  const variantNameRefs = React.useRef<HTMLElement[]>([]);
-  const isOverflowing = (index: number): false | undefined => {
-    const productElement = productNameRefs.current[index];
-    const variantElement = variantNameRefs.current[index];
+  const { setRef: setProductNameRef, isOverflowing: isProductOverflowing } =
+    useOverflowDetection<HTMLElement>();
+  const { setRef: setVariantNameRef, isOverflowing: isVariantOverflowing } =
+    useOverflowDetection<HTMLElement>();
 
-    if (!productElement || !variantElement) {
-      return undefined;
-    }
-
-    const productOverflow = productElement.scrollWidth > productElement.clientWidth;
-    const variantOverflow = variantElement.scrollWidth > variantElement.clientWidth;
-
-    return productOverflow || variantOverflow ? undefined : false;
-  };
+  const isAnyOverflowing = isProductOverflowing(index) || isVariantOverflowing(index);
 
   return (
-    <Tooltip open={isOverflowing(index)}>
+    <Tooltip open={isAnyOverflowing}>
       <Tooltip.Trigger>
         <GridTable.Cell>
           <Box display="grid" __gridTemplateColumns="min-content auto" gap={2} alignItems="start">
@@ -36,27 +27,23 @@ export const RefundTableProductCell: React.FC<RefundTableProductCellProps> = ({ 
             </Box>
             <Box overflow="hidden" minWidth={0}>
               <Box
-                ref={el => {
-                  if (el) productNameRefs.current[index] = el;
-                }}
+                ref={setProductNameRef(index)}
                 overflow="hidden"
                 textOverflow="ellipsis"
                 whiteSpace="nowrap"
               >
                 <Text size={2} textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
-                  {index === 0 ? line.productName : line.productName}
+                  {line.productName}
                 </Text>
               </Box>
               <Box
-                ref={el => {
-                  if (el) variantNameRefs.current[index] = el;
-                }}
+                ref={setVariantNameRef(index)}
                 overflow="hidden"
                 textOverflow="ellipsis"
                 whiteSpace="nowrap"
               >
                 <Text size={2} color="default2" textOverflow="ellipsis" overflow="hidden">
-                  {index === 0 ? line.variantName : line.variantName}
+                  {line.variantName}
                 </Text>
               </Box>
             </Box>

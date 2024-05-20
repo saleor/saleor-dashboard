@@ -3,6 +3,7 @@ import { DateTime } from "@dashboard/components/Date";
 import { GridTable } from "@dashboard/components/GridTable";
 import Money from "@dashboard/components/Money";
 import { OrderDetailsFragment } from "@dashboard/graphql";
+import { useOverflowDetection } from "@dashboard/hooks/useOverflowDetection/useOverflowDetection";
 import { orderTransactionRefundEditUrl } from "@dashboard/orders/urls";
 import { Box, Button, EditIcon, PlusIcon, Text, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -37,13 +38,7 @@ export const OrderDetailsRefundTable: React.FC<OrderDetailsRefundTableProps> = (
     intl,
   });
 
-  const textRefs = React.useRef<HTMLTableCellElement[]>([]);
-
-  const tooltipContent = (index: number, reason: string | null): string => {
-    const element = textRefs.current[index];
-
-    return element && element.scrollWidth > element.clientWidth ? reason ?? "" : "";
-  };
+  const { setRef, isOverflowing } = useOverflowDetection<HTMLTableCellElement>();
 
   return (
     <DashboardCard paddingX={6}>
@@ -94,12 +89,10 @@ export const OrderDetailsRefundTable: React.FC<OrderDetailsRefundTableProps> = (
               <GridTable.Cell>
                 <Money money={refund.amount} />
               </GridTable.Cell>
-              <Tooltip open={tooltipContent(index, refund.reason) ? undefined : false}>
+              <Tooltip open={isOverflowing(index)}>
                 <Tooltip.Trigger>
                   <GridTable.Cell
-                    ref={el => {
-                      if (el) textRefs.current[index] = el;
-                    }}
+                    ref={setRef(index)}
                     __maxWidth="200px"
                     overflow="hidden"
                     textOverflow="ellipsis"
@@ -110,7 +103,7 @@ export const OrderDetailsRefundTable: React.FC<OrderDetailsRefundTableProps> = (
                   </GridTable.Cell>
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  <Box __maxWidth="300px">{tooltipContent(index, refund.reason)}</Box>
+                  <Box __maxWidth="300px">{refund.reason}</Box>
                 </Tooltip.Content>
               </Tooltip>
               <GridTable.Cell>

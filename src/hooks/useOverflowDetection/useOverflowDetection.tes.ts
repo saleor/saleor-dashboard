@@ -1,0 +1,37 @@
+import { act, renderHook } from "@testing-library/react-hooks";
+
+import { useOverflowDetection } from "./useOverflowDetection";
+
+describe("useOverflowDetection", () => {
+  it("should set ref and detect overflow correctly", () => {
+    // Arrange
+    const { result } = renderHook(() => useOverflowDetection<HTMLDivElement>());
+
+    const testElement = document.createElement("div");
+
+    testElement.style.width = "100px";
+    testElement.style.overflow = "hidden";
+
+    // Act
+    act(() => {
+      result.current.setRef(0)(testElement);
+    });
+
+    // Mock scrollWidth and clientWidth to simulate overflow
+    Object.defineProperty(testElement, "scrollWidth", { value: 150, configurable: true });
+    Object.defineProperty(testElement, "clientWidth", { value: 100, configurable: true });
+
+    // Assert
+    expect(result.current.isOverflowing(0)).toBe(true);
+
+    // Act
+    Object.defineProperty(testElement, "scrollWidth", { value: 50 });
+    Object.defineProperty(testElement, "clientWidth", { value: 100 });
+
+    // Assert
+    expect(result.current.isOverflowing(0)).toBe(false);
+
+    // Act & Assert for undefined element
+    expect(result.current.isOverflowing(1)).toBeUndefined();
+  });
+});
