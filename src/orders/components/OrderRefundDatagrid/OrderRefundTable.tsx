@@ -79,7 +79,6 @@ export const OrderRefundTable: React.FC<OrderRefundTableProps> = ({
           <GridTable.Col __width="20%" />
           <GridTable.Col __width="10%" />
         </GridTable.Colgroup>
-        {/* TODO: Handle empty state */}
         {mergedRefunds?.map((refund, index) => {
           const isEditable = isRefundEditable(refund);
 
@@ -141,6 +140,13 @@ export const OrderRefundTable: React.FC<OrderRefundTableProps> = ({
           );
         })}
       </GridTable>
+      {mergedRefunds.length === 0 && (
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <Text size={2} color="default2">
+            <FormattedMessage {...refundGridMessages.noRefunds} />
+          </Text>
+        </Box>
+      )}
     </DashboardCard>
   );
 };
