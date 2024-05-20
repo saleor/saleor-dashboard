@@ -133,7 +133,7 @@ export const OrderDetailsRefundTable: React.FC<OrderDetailsRefundTableProps> = (
           );
         })}
       </GridTable>
-      {mergedRefunds.length === 0 && (
+      {mergedRefunds?.length === 0 && (
         <Box display="flex" justifyContent="center" alignItems="center">
           <Text size={2} color="default2">
             <FormattedMessage {...refundGridMessages.noRefunds} />
