@@ -10,9 +10,9 @@ import React from "react";
 
 import OrderAddTransaction from "../OrderAddTransaction";
 import { useStyles } from "../OrderDetailsPage/styles";
+import { OrderDetailsRefundTable } from "../OrderDetailsRefundTable/OrderDetailsRefundTable";
 import OrderGrantedRefunds from "../OrderGrantedRefunds";
 import OrderPaymentSummaryCard from "../OrderPaymentSummaryCard";
-import { OrderRefundTable } from "../OrderRefundDatagrid/OrderRefundTable";
 import OrderSummaryCard from "../OrderSummaryCard";
 import OrderTransaction from "../OrderTransaction";
 import OrderTransactionGiftCard from "../OrderTransactionGiftCard";
@@ -54,7 +54,7 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
       <>
         {enabled && (
           <>
-            <OrderRefundTable orderId={order?.id} order={order} onRefundAdd={onRefundAdd} />
+            <OrderDetailsRefundTable orderId={order?.id} order={order} onRefundAdd={onRefundAdd} />
             <CardSpacer />
           </>
         )}

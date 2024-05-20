@@ -19,13 +19,13 @@ import {
   isRefundEditable,
 } from "./utils";
 
-interface OrderRefundTableProps {
+interface OrderDetailsRefundTableProps {
   orderId: string;
   order: OrderDetailsFragment;
   onRefundAdd: () => void;
 }
 
-export const OrderRefundTable: React.FC<OrderRefundTableProps> = ({
+export const OrderDetailsRefundTable: React.FC<OrderDetailsRefundTableProps> = ({
   orderId,
   order,
   onRefundAdd,
