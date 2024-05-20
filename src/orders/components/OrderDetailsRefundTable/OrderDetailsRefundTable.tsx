@@ -89,7 +89,7 @@ export const OrderDetailsRefundTable: React.FC<OrderDetailsRefundTableProps> = (
               <GridTable.Cell>
                 <Money money={refund.amount} />
               </GridTable.Cell>
-              <Tooltip open={isOverflowing(index)}>
+              <Tooltip open={isOverflowing(index) ? undefined : false}>
                 <Tooltip.Trigger>
                   <GridTable.Cell
                     ref={setRef(index)}

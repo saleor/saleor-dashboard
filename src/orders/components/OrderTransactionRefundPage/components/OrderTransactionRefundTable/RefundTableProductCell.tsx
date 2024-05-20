@@ -18,7 +18,7 @@ export const RefundTableProductCell: React.FC<RefundTableProductCellProps> = ({ 
   const isAnyOverflowing = isProductOverflowing(index) || isVariantOverflowing(index);
 
   return (
-    <Tooltip open={isAnyOverflowing}>
+    <Tooltip open={isAnyOverflowing ? undefined : false}>
       <Tooltip.Trigger>
         <GridTable.Cell>
           <Box display="grid" __gridTemplateColumns="min-content auto" gap={2} alignItems="start">
