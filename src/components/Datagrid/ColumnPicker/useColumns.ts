@@ -83,7 +83,7 @@ export const useColumns = ({
         return persistentEquivalent;
       }
 
-      return PersistedColumn.withDefaultWith(columnId);
+      return PersistedColumn.withDefaultWidth(columnId);
     });
 
     update(columns);

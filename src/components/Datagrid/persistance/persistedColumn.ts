@@ -1,5 +1,6 @@
 import { AvailableColumn } from "../types";
 
+// Representation of PersistedColumn in the metadata
 export interface RawColumn {
   id: string;
   w: number;
@@ -15,7 +16,7 @@ export class PersistedColumn {
     return new PersistedColumn(raw.id, raw.w);
   }
 
-  public static withDefaultWith(id: string) {
+  public static withDefaultWidth(id: string) {
     return new PersistedColumn(id, 200);
   }
 
