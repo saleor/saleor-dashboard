@@ -1,5 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { DateTime } from "@dashboard/components/Date";
+import EventTime from "@dashboard/components/EventTime";
 import { GridTable } from "@dashboard/components/GridTable";
 import Money from "@dashboard/components/Money";
 import { UserAvatar } from "@dashboard/components/UserAvatar";
@@ -69,12 +70,12 @@ export const OrderDetailsRefundTable: React.FC<OrderDetailsRefundTableProps> = (
       </Box>
       <GridTable height="100%" paddingX={6}>
         <GridTable.Colgroup>
-          <GridTable.Col __width="15%" />
-          <GridTable.Col __width="15%" />
-          <GridTable.Col __width="25%" />
-          <GridTable.Col __width="20%" />
-          <GridTable.Col __width="20%" />
+          <GridTable.Col __width="1%" />
           <GridTable.Col __width="10%" />
+          <GridTable.Col __width="25%" />
+          <GridTable.Col __width="1%" />
+          <GridTable.Col __width="20%" />
+          <GridTable.Col __width="1%" />
         </GridTable.Colgroup>
         {mergedRefunds?.map((refund, index) => {
           const isEditable = isRefundEditable(refund);
@@ -89,7 +90,9 @@ export const OrderDetailsRefundTable: React.FC<OrderDetailsRefundTableProps> = (
                 />
               </GridTable.Cell>
               <GridTable.Cell>
-                <Money money={refund.amount} />
+                <Box display="flex" justifyContent="flex-end">
+                  <Money money={refund.amount} />
+                </Box>
               </GridTable.Cell>
               <Tooltip open={isOverflowing(index) ? undefined : false}>
                 <Tooltip.Trigger>
@@ -108,14 +111,18 @@ export const OrderDetailsRefundTable: React.FC<OrderDetailsRefundTableProps> = (
                   <Box __maxWidth="300px">{refund.reason}</Box>
                 </Tooltip.Content>
               </Tooltip>
+              <Tooltip>
+                <Tooltip.Trigger>
+                  <GridTable.Cell>
+                    <UserAvatar initials={getUserInitials(refund.user)} />
+                  </GridTable.Cell>
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  <Text size={2}>{getUserName(refund.user, true)}</Text>
+                </Tooltip.Content>
+              </Tooltip>
               <GridTable.Cell>
-                <Box display="flex" alignItems="center" gap={2}>
-                  <UserAvatar initials={getUserInitials(refund.user)} />
-                  {getUserName(refund.user, true)}
-                </Box>
-              </GridTable.Cell>
-              <GridTable.Cell>
-                <DateTime plain date={refund.createdAt} />
+                <EventTime date={refund.createdAt} />
               </GridTable.Cell>
               <GridTable.Cell textAlign="right">
                 <Box display="flex" justifyContent="flex-end">
