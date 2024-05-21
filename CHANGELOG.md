@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.19.7
+
+### Patch Changes
+
+- c7e124f3c: Run cypress or playwright tests on release
+- 2c2cabfe3: Product list view will now sort by last updated product in descending order by default.
+- 405cb9b1f: Replace tax app in tests
+
 ## 3.19.6
 
 ### Patch Changes
