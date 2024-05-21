@@ -10,9 +10,9 @@ interface RefundTableProductCellProps {
 }
 
 export const RefundTableProductCell: React.FC<RefundTableProductCellProps> = ({ line, index }) => {
-  const { setRef: setProductNameRef, isOverflowing: isProductOverflowing } =
+  const { getRefForIndex: getProductNameRefForIndex, isOverflowing: isProductOverflowing } =
     useOverflowDetection<HTMLElement>();
-  const { setRef: setVariantNameRef, isOverflowing: isVariantOverflowing } =
+  const { getRefForIndex: getVariantNameRefForIndex, isOverflowing: isVariantOverflowing } =
     useOverflowDetection<HTMLElement>();
 
   const isAnyOverflowing = isProductOverflowing(index) || isVariantOverflowing(index);
@@ -27,7 +27,7 @@ export const RefundTableProductCell: React.FC<RefundTableProductCellProps> = ({ 
             </Box>
             <Box overflow="hidden" minWidth={0}>
               <Box
-                ref={setProductNameRef(index)}
+                ref={getProductNameRefForIndex(index)}
                 overflow="hidden"
                 textOverflow="ellipsis"
                 whiteSpace="nowrap"
@@ -37,7 +37,7 @@ export const RefundTableProductCell: React.FC<RefundTableProductCellProps> = ({ 
                 </Text>
               </Box>
               <Box
-                ref={setVariantNameRef(index)}
+                ref={getVariantNameRefForIndex(index)}
                 overflow="hidden"
                 textOverflow="ellipsis"
                 whiteSpace="nowrap"

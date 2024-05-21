@@ -41,7 +41,7 @@ export const OrderDetailsRefundTable: React.FC<OrderDetailsRefundTableProps> = (
     intl,
   });
 
-  const { setRef, isOverflowing } = useOverflowDetection<HTMLTableCellElement>();
+  const { getRefForIndex, isOverflowing } = useOverflowDetection<HTMLTableCellElement>();
 
   return (
     <DashboardCard paddingX={6}>
@@ -97,7 +97,7 @@ export const OrderDetailsRefundTable: React.FC<OrderDetailsRefundTableProps> = (
               <Tooltip open={isOverflowing(index) ? undefined : false}>
                 <Tooltip.Trigger>
                   <GridTable.Cell
-                    ref={setRef(index)}
+                    ref={getRefForIndex(index)}
                     __maxWidth="200px"
                     overflow="hidden"
                     textOverflow="ellipsis"

@@ -14,7 +14,7 @@ describe("useOverflowDetection", () => {
 
     // Act
     act(() => {
-      result.current.setRef(0)(testElement);
+      result.current.getRefForIndex(0)(testElement);
     });
 
     // Mock scrollWidth and clientWidth to simulate overflow
