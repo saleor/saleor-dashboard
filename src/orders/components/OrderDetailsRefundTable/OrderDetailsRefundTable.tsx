@@ -2,8 +2,10 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { DateTime } from "@dashboard/components/Date";
 import { GridTable } from "@dashboard/components/GridTable";
 import Money from "@dashboard/components/Money";
+import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { OrderDetailsFragment } from "@dashboard/graphql";
 import { useOverflowDetection } from "@dashboard/hooks/useOverflowDetection/useOverflowDetection";
+import { getUserInitials, getUserName } from "@dashboard/misc";
 import { orderTransactionRefundEditUrl } from "@dashboard/orders/urls";
 import { Box, Button, EditIcon, PlusIcon, Text, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -107,9 +109,14 @@ export const OrderDetailsRefundTable: React.FC<OrderDetailsRefundTableProps> = (
                 </Tooltip.Content>
               </Tooltip>
               <GridTable.Cell>
+                <Box display="flex" alignItems="center" gap={2}>
+                  <UserAvatar initials={getUserInitials(refund.user)} />
+                  {getUserName(refund.user, true)}
+                </Box>
+              </GridTable.Cell>
+              <GridTable.Cell>
                 <DateTime plain date={refund.createdAt} />
               </GridTable.Cell>
-              <GridTable.Cell>{refund.user?.email ?? ""}</GridTable.Cell>
               <GridTable.Cell textAlign="right">
                 <Box display="flex" justifyContent="flex-end">
                   {isEditable ? (
