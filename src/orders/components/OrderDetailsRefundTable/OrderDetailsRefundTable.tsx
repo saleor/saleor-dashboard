@@ -1,12 +1,11 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { DateTime } from "@dashboard/components/Date";
 import EventTime from "@dashboard/components/EventTime";
 import { GridTable } from "@dashboard/components/GridTable";
 import Money from "@dashboard/components/Money";
 import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { OrderDetailsFragment } from "@dashboard/graphql";
 import { useOverflowDetection } from "@dashboard/hooks/useOverflowDetection/useOverflowDetection";
-import { getUserInitials, getUserName } from "@dashboard/misc";
+import { getUserInitials, getUserName, User } from "@dashboard/misc";
 import { orderTransactionRefundEditUrl } from "@dashboard/orders/urls";
 import { Box, Button, EditIcon, PlusIcon, Text, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -114,7 +113,7 @@ export const OrderDetailsRefundTable: React.FC<OrderDetailsRefundTableProps> = (
               <Tooltip>
                 <Tooltip.Trigger>
                   <GridTable.Cell>
-                    <UserAvatar initials={getUserInitials(refund.user)} />
+                    <UserAvatar initials={getUserInitials(refund.user as User)} />
                   </GridTable.Cell>
                 </Tooltip.Trigger>
                 <Tooltip.Content>
