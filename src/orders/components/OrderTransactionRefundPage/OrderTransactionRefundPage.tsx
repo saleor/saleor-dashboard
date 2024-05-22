@@ -1,7 +1,6 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { TopNav } from "@dashboard/components/AppLayout";
 import { DashboardCard } from "@dashboard/components/Card";
-import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Pill } from "@dashboard/components/Pill";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
@@ -13,27 +12,29 @@ import { orderUrl } from "@dashboard/orders/urls";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderTransactionReason } from "./components/OrderTransactionReason/OrderTransactionReason";
+import { OrderTransactionReasonModal } from "./components/OrderTransactionReasonModal/OrderTransactionReasonModal";
+import { OrderTransactionSummary } from "./components/OrderTransactionRefundSummary/OrderTransactionSummary";
 import {
   OrderRefundTransactionDatagridError,
-  OrderTransactionRefundDatagrid,
-} from "./components/OrderTransactionRefundDatagrid/OrderRefundTransactionDatagrid";
-import { OrderTransactionSummary } from "./components/OrderTransactionRefundSummary/OrderTransactionSummary";
+  OrderTransactionRefundTable,
+} from "./components/OrderTransactionRefundTable/OrderTransactionRefundTable";
 import { OrderTransactionTiles } from "./components/OrderTransactionTiles/OrderTransactionTiles";
+import { getRefundFormDefaultValues } from "./formDefaults";
 import { orderTransactionRefundMessages as messages } from "./messages";
 import {
   canRefundShipping,
-  createSetMaxQty,
-  getRefundFormDefaultValues,
   getRefundFormSubmitBehavior,
   getRefundStatusColor,
   getRefundStatusLabel,
   getRefundViewTitle,
   getSelectedProductsValue,
   handleLinesToRefundChange,
+  handleReasonChange,
+  RefundQuantityChange,
   useRecalculateTotalAmount,
 } from "./utils";
 
@@ -60,10 +61,8 @@ export interface OrderTransactionRefundPageProps {
 }
 
 export interface LineToRefund {
-  row: number;
-  quantity: number;
+  quantity: number | string;
   reason: string;
-  isDirty?: boolean;
 }
 
 export interface OrderTransactionRefundPageFormData {
@@ -87,6 +86,8 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
   const navigate = useNavigator();
   const intl = useIntl();
 
+  const [editedRefundLineIndex, setEditedRefundLineIndex] = React.useState<number | null>(null);
+
   const datagridErrors: OrderRefundTransactionDatagridError[] = errors
     .filter(err => err.field === "lines" || err.field === "addLines")
     .flatMap(error => error?.lines)
@@ -105,6 +106,11 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
     formState: { isDirty, errors: formErrors },
   } = useForm<OrderTransactionRefundPageFormData>({
     values: getRefundFormDefaultValues({ order, draftRefund }),
+  });
+
+  const { fields: refundFields, update: refundFieldsUpdate } = useFieldArray({
+    name: "linesToRefund",
+    control,
   });
 
   const permissions = useUserPermissions();
@@ -148,10 +154,11 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
   const linesToRefund = watch("linesToRefund");
   const includeShipping = watch("includeShipping");
 
-  const selectedProductsValue = getSelectedProductsValue({
-    linesToRefund,
-    order,
-  });
+  const selectedProductsValue =
+    getSelectedProductsValue({
+      linesToRefund,
+      order,
+    }) ?? 0;
 
   useRecalculateTotalAmount({
     getValues,
@@ -163,20 +170,21 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
     isFormDirty: isDirty,
   });
 
-  const onSetMaximumQty = createSetMaxQty({
-    order,
-    draftRefund,
-    linesToRefund,
-    setValue,
-  });
-
-  const onLinesToRefundChange = (data: DatagridChangeOpts) => {
+  const onLinesToRefundChange = (data: RefundQuantityChange, index: number) => {
     handleLinesToRefundChange({
       data,
+      index,
       linesToRefund,
       setValue,
-      order,
-      draftRefund,
+    });
+  };
+
+  const onReasonChange = (reason: string, index: number) => {
+    handleReasonChange({
+      reason,
+      index,
+      linesToRefund,
+      refundFieldsUpdate,
     });
   };
 
@@ -199,18 +207,19 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
               </Text>
             </DashboardCard.Content>
           </DashboardCard>
-          <OrderTransactionRefundDatagrid
-            errors={datagridErrors}
-            order={order}
-            draftRefund={draftRefund}
-            control={control}
-            onChange={onLinesToRefundChange}
-            onMaxQtySet={onSetMaximumQty}
-            linesToRefund={linesToRefund}
-          />
-          {/* <DashboardCard>
-            <ExampleTable order={order} />
-          </DashboardCard> */}
+          <DashboardCard paddingX={6}>
+            <OrderTransactionRefundTable
+              errors={datagridErrors}
+              order={order}
+              draftRefund={draftRefund}
+              control={control}
+              onChange={onLinesToRefundChange}
+              onEditReasonModal={setEditedRefundLineIndex}
+              linesToRefund={linesToRefund}
+              refundFields={refundFields}
+              refundFieldsUpdate={refundFieldsUpdate}
+            />
+          </DashboardCard>
           <DashboardCard marginBottom={5}>
             <DashboardCard.Content>
               <Text fontWeight="medium" as="p" marginTop={5}>
@@ -245,6 +254,14 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
           disabled={disabled}
           state={submitBehavior.submitState}
           labels={submitBehavior.submitLabels}
+        />
+        <OrderTransactionReasonModal
+          open={editedRefundLineIndex !== null}
+          reason={linesToRefund[editedRefundLineIndex!]?.reason}
+          onClose={() => setEditedRefundLineIndex(null)}
+          onConfirm={(reason: string) => {
+            onReasonChange(reason, editedRefundLineIndex!);
+          }}
         />
       </Box>
     </DetailPageLayout>

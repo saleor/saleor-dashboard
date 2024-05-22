@@ -228,10 +228,6 @@
   "/Fa+RP": {
     "string": "Couldn't load top products"
   },
-  "/Gu3A7": {
-    "context": "transaction refund datagrid helper button",
-    "string": "Set maximum qty"
-  },
   "/ILyIf": {
     "context": "tax classes menu header",
     "string": "Tax class label"
@@ -1109,10 +1105,6 @@
   "5BajZK": {
     "string": "View and update your site settings"
   },
-  "5D30zr": {
-    "context": "transaction refund datagrid unit price column",
-    "string": "Unit price"
-  },
   "5HwLx9": {
     "context": "alert",
     "string": "Warehouse limit reached"
@@ -1926,6 +1918,10 @@
   "B0fwAj": {
     "string": "and {itemsLength} more"
   },
+  "B1yzuX": {
+    "context": "button label",
+    "string": "Add reason"
+  },
   "B2LE7A": {
     "context": "menu item loading",
     "string": "working..."
@@ -2266,10 +2262,6 @@
   "DEa1T1": {
     "context": "button",
     "string": "Save Search"
-  },
-  "DEavHl": {
-    "context": "transaction refund datagrid reason. to refund column",
-    "string": "Reason"
   },
   "DGCzal": {
     "string": "This token gives you access to your shop's API, which you'll find here: {url}"
@@ -3029,10 +3021,6 @@
   "HqRNN8": {
     "string": "Support"
   },
-  "HqT1bA": {
-    "context": "transaction refund datagrid max qty column",
-    "string": "Max qty. to refund"
-  },
   "HqeqEV": {
     "context": "create gift card product alert message",
     "string": "Create a gift card product"
@@ -3057,6 +3045,10 @@
   "I2wCwj": {
     "context": "swatch attribute image label",
     "string": "Image"
+  },
+  "I5vC7T": {
+    "context": "button label",
+    "string": "Edit reason"
   },
   "I7HyJZ": {
     "context": "order refund amount",
@@ -3660,6 +3652,10 @@
     "context": "WarehouseSettings pickup title",
     "string": "Pickup"
   },
+  "MIp3c7": {
+    "context": "input adornment helper text",
+    "string": "of {value}"
+  },
   "MJ2jZQ": {
     "string": "Total"
   },
@@ -3702,6 +3698,10 @@
   "MXZuVP": {
     "context": "remove country from shipping zone and save, button",
     "string": "Remove and save"
+  },
+  "MZDkkX": {
+    "context": "button label",
+    "string": "All"
   },
   "MaTR88": {
     "context": "header",
@@ -4346,12 +4346,12 @@
     "context": "active",
     "string": "Active"
   },
-  "QiSJFa": {
-    "context": "transaction refund datagrid qty. ordered column",
-    "string": "Qty. ordered"
-  },
   "QirE3M": {
     "string": "Start Date"
+  },
+  "QisX+2": {
+    "context": "reason per line helper text",
+    "string": "You can specify a reason why this line is being returned."
   },
   "Qj/3sH": {
     "context": "limit voucher",
@@ -4984,10 +4984,6 @@
     "context": "channel name",
     "string": "Channel name"
   },
-  "V+ONPA": {
-    "context": "transaction refund datagrid qty. to refund column",
-    "string": "Qty. to refund"
-  },
   "V+fkAO": {
     "context": "number of products in category",
     "string": "Products"
@@ -5258,6 +5254,10 @@
   "WhvuCb": {
     "context": "plugins section name",
     "string": "Plugins"
+  },
+  "WigK1f": {
+    "context": "helper text",
+    "string": "All items refunded"
   },
   "WkxE8/": {
     "context": "percentage or fixed, header",
@@ -6206,10 +6206,6 @@
   "ccXLVi": {
     "string": "Category"
   },
-  "ccuz+A": {
-    "context": "transaction refund datagrid product column",
-    "string": "Product"
-  },
   "cd13nN": {
     "context": "product attribute error",
     "string": "All attributes should have value"
@@ -6517,6 +6513,10 @@
   "fExm0/": {
     "context": "gift card history message",
     "string": "Gift card was activated by {activatedBy}"
+  },
+  "fITtdb": {
+    "context": "helper text",
+    "string": "{value} already refunded"
   },
   "fKrRhF": {
     "string": "General information"
