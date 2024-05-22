@@ -64,7 +64,7 @@ export const OrderTransactionRefundTableLine: React.FC<OrderTransactionRefundTab
 
   return (
     <GridTable.Row key={field.id}>
-      <RefundTableProductCell line={line} index={index} />
+      <RefundTableProductCell line={line} />
       <RefundTablePriceCell line={line} maxQtyToRefund={maxQtyToRefund} />
       <RefundTableInputCell
         control={control}
