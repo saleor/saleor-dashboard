@@ -58,6 +58,7 @@ export const VoucherListDatagrid = ({
   );
   const { handlers, visibleColumns, recentlyAddedColumn, staticColumns, selectedColumns } =
     useColumns({
+      gridName: "voucher_list",
       selectedColumns: settings?.columns ?? [],
       staticColumns: vouchersListStaticColumns,
       onSave: onColumnChange,

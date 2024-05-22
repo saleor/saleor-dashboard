@@ -60,6 +60,7 @@ export const CustomerListDatagrid = ({
   );
   const { handlers, visibleColumns, staticColumns, selectedColumns, recentlyAddedColumn } =
     useColumns({
+      gridName: "customer_list",
       staticColumns: customerListStaticColumns,
       selectedColumns: settings?.columns ?? [],
       onSave: onColumnChange,
