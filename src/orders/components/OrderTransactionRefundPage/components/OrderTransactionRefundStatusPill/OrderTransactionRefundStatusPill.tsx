@@ -4,6 +4,8 @@ import React from "react";
 
 interface OrderTransactionRefundStatusPillProps {
   status: OrderGrantedRefundStatusEnum;
+  label?: string;
+  size?: "small" | "medium";
 }
 
 const getStatusColor = (status: OrderGrantedRefundStatusEnum) => {
@@ -15,7 +17,7 @@ const getStatusColor = (status: OrderGrantedRefundStatusEnum) => {
     case OrderGrantedRefundStatusEnum.NONE:
       return "generic";
     case OrderGrantedRefundStatusEnum.PENDING:
-      return "warning";
+      return "info";
     default:
       return "generic";
   }
@@ -23,6 +25,8 @@ const getStatusColor = (status: OrderGrantedRefundStatusEnum) => {
 
 export const OrderTransactionRefundStatusPill: React.FC<OrderTransactionRefundStatusPillProps> = ({
   status,
+  label,
+  size,
 }) => {
-  return <Pill color={getStatusColor(status)} label={status} />;
+  return <Pill color={getStatusColor(status)} label={label ?? status} size={size} />;
 };

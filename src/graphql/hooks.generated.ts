@@ -17521,6 +17521,12 @@ export type UserPassowrdChangeMutationOptions = Apollo.BaseMutationOptions<Types
 export const UserAccountUpdateDocument = gql`
     mutation UserAccountUpdate($input: AccountInput!) {
   accountUpdate(input: $input) {
+    user {
+      metadata {
+        key
+        value
+      }
+    }
     errors {
       ...AccountError
     }
