@@ -112,6 +112,19 @@ const expectedDynamicColumns = [
 ];
 const onSave = jest.fn();
 
+jest.mock("../persistance/usePersistance", () => ({
+  usePersistance: () => ({
+    columns: [],
+    update: jest.fn(),
+  }),
+}));
+
+jest.mock("./withPersistance", () => ({
+  visibleWithPersistance: (x: AvailableColumn[]) => x,
+  dynamicWithPersistance: (x: AvailableColumn[]) => x,
+  selectedWithPersistance: (x: AvailableColumn[]) => x,
+}));
+
 describe("useColumns", () => {
   afterEach(() => {
     jest.resetAllMocks();
