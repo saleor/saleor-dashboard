@@ -164,7 +164,7 @@ jobs:
               "client_payload": {
                 "project": "DASHBOARD",
                 "environment": "SANDBOX",
-                "version": "${{ env.VERSION }}"
+                "version": "${{ env.CUSTOM_VERSION }}"
               }
             }'
 
