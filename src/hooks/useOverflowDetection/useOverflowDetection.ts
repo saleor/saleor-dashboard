@@ -1,19 +1,10 @@
 import { useCallback, useRef } from "react";
 
 export const useOverflowDetection = <T extends HTMLElement>() => {
-  const elementsRef = useRef<T[]>([]);
+  const elementRef = useRef<T | null>(null);
 
-  const getRefForIndex = useCallback(
-    (index: number) => (element: T | null) => {
-      if (element) {
-        elementsRef.current[index] = element;
-      }
-    },
-    [],
-  );
-
-  const isOverflowing = useCallback((index: number): boolean | undefined => {
-    const element = elementsRef.current[index];
+  const isOverflowing = useCallback((): boolean | undefined => {
+    const element = elementRef.current;
 
     if (!element) {
       return undefined;
@@ -22,5 +13,5 @@ export const useOverflowDetection = <T extends HTMLElement>() => {
     return element.scrollWidth > element.clientWidth;
   }, []);
 
-  return { getRefForIndex, isOverflowing, elementsRef };
+  return { isOverflowing, elementRef };
 };

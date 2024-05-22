@@ -1,26 +1,14 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import EventTime from "@dashboard/components/EventTime";
 import { GridTable } from "@dashboard/components/GridTable";
-import Money from "@dashboard/components/Money";
-import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { OrderDetailsFragment } from "@dashboard/graphql";
-import { useOverflowDetection } from "@dashboard/hooks/useOverflowDetection/useOverflowDetection";
-import { getUserInitials, getUserName, User } from "@dashboard/misc";
-import { orderTransactionRefundEditUrl } from "@dashboard/orders/urls";
-import { Box, Button, EditIcon, PlusIcon, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Button, PlusIcon, Text, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Link } from "react-router-dom";
 
-import { OrderTransactionRefundStatusPill } from "../OrderTransactionRefundPage/components/OrderTransactionRefundStatusPill/OrderTransactionRefundStatusPill";
 import { refundGridMessages } from "./messages";
+import { OrderDetailsRefundLine } from "./OrderDetailsRefundLine";
 import { manualRefundsExtractor, mergeRefunds } from "./refunds";
-import {
-  canAddRefund,
-  getGrantedRefundStatusMessage,
-  getNotEditabledRefundMessage,
-  isRefundEditable,
-} from "./utils";
+import { canAddRefund } from "./utils";
 
 interface OrderDetailsRefundTableProps {
   orderId: string;
@@ -39,8 +27,6 @@ export const OrderDetailsRefundTable: React.FC<OrderDetailsRefundTableProps> = (
     transactions: order?.transactions,
     intl,
   });
-
-  const { getRefForIndex, isOverflowing } = useOverflowDetection<HTMLTableCellElement>();
 
   return (
     <DashboardCard paddingX={6}>
@@ -76,75 +62,9 @@ export const OrderDetailsRefundTable: React.FC<OrderDetailsRefundTableProps> = (
           <GridTable.Col __width="20%" />
           <GridTable.Col __width="1%" />
         </GridTable.Colgroup>
-        {mergedRefunds?.map((refund, index) => {
-          const isEditable = isRefundEditable(refund);
-
-          return (
-            <GridTable.Row key={refund.id}>
-              <GridTable.Cell>
-                <OrderTransactionRefundStatusPill
-                  status={refund.status}
-                  label={getGrantedRefundStatusMessage(refund.status, intl).toUpperCase()}
-                  size="small"
-                />
-              </GridTable.Cell>
-              <GridTable.Cell>
-                <Box display="flex" justifyContent="flex-end">
-                  <Money money={refund.amount} />
-                </Box>
-              </GridTable.Cell>
-              <Tooltip open={isOverflowing(index) ? undefined : false}>
-                <Tooltip.Trigger>
-                  <GridTable.Cell
-                    ref={getRefForIndex(index)}
-                    __maxWidth="200px"
-                    overflow="hidden"
-                    textOverflow="ellipsis"
-                  >
-                    <Text ellipsis size={2}>
-                      {refund.reason}
-                    </Text>
-                  </GridTable.Cell>
-                </Tooltip.Trigger>
-                <Tooltip.Content>
-                  <Box __maxWidth="300px">{refund.reason}</Box>
-                </Tooltip.Content>
-              </Tooltip>
-              <Tooltip>
-                <Tooltip.Trigger>
-                  <GridTable.Cell>
-                    <UserAvatar initials={getUserInitials(refund.user as User)} />
-                  </GridTable.Cell>
-                </Tooltip.Trigger>
-                <Tooltip.Content>
-                  <Text size={2}>{getUserName(refund.user, true)}</Text>
-                </Tooltip.Content>
-              </Tooltip>
-              <GridTable.Cell>
-                <EventTime date={refund.createdAt} />
-              </GridTable.Cell>
-              <GridTable.Cell textAlign="right">
-                <Box display="flex" justifyContent="flex-end">
-                  {isEditable ? (
-                    <Link to={orderTransactionRefundEditUrl(orderId, refund.id)}>
-                      <Button icon={<EditIcon />} variant="secondary" />
-                    </Link>
-                  ) : (
-                    <Tooltip>
-                      <Tooltip.Trigger>
-                        <Button disabled icon={<EditIcon />} variant="secondary" />
-                      </Tooltip.Trigger>
-                      <Tooltip.Content>
-                        <Tooltip.Arrow />
-                        <FormattedMessage {...getNotEditabledRefundMessage(refund)} />
-                      </Tooltip.Content>
-                    </Tooltip>
-                  )}
-                </Box>
-              </GridTable.Cell>
-            </GridTable.Row>
-          );
-        })}
+        {mergedRefunds?.map(refund => (
+          <OrderDetailsRefundLine key={refund.id} refund={refund} orderId={orderId} />
+        ))}
       </GridTable>
       {mergedRefunds?.length === 0 && (
         <Box display="flex" justifyContent="center" alignItems="center">

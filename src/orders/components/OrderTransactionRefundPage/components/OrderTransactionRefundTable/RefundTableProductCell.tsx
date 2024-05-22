@@ -6,16 +6,15 @@ import React from "react";
 
 interface RefundTableProductCellProps {
   line: OrderDetailsGrantRefundFragment["lines"][number];
-  index: number;
 }
 
-export const RefundTableProductCell: React.FC<RefundTableProductCellProps> = ({ line, index }) => {
-  const { getRefForIndex: getProductNameRefForIndex, isOverflowing: isProductOverflowing } =
-    useOverflowDetection<HTMLElement>();
-  const { getRefForIndex: getVariantNameRefForIndex, isOverflowing: isVariantOverflowing } =
-    useOverflowDetection<HTMLElement>();
+export const RefundTableProductCell: React.FC<RefundTableProductCellProps> = ({ line }) => {
+  const { elementRef: productElementRef, isOverflowing: isProductOverflowing } =
+    useOverflowDetection<HTMLDivElement>();
+  const { elementRef: variantElementRef, isOverflowing: isVariantOverflowing } =
+    useOverflowDetection<HTMLDivElement>();
 
-  const isAnyOverflowing = isProductOverflowing(index) || isVariantOverflowing(index);
+  const isAnyOverflowing = isProductOverflowing() || isVariantOverflowing();
 
   return (
     <Tooltip open={isAnyOverflowing ? undefined : false}>
@@ -27,7 +26,7 @@ export const RefundTableProductCell: React.FC<RefundTableProductCellProps> = ({ 
             </Box>
             <Box overflow="hidden" minWidth={0}>
               <Box
-                ref={getProductNameRefForIndex(index)}
+                ref={productElementRef}
                 overflow="hidden"
                 textOverflow="ellipsis"
                 whiteSpace="nowrap"
@@ -37,7 +36,7 @@ export const RefundTableProductCell: React.FC<RefundTableProductCellProps> = ({ 
                 </Text>
               </Box>
               <Box
-                ref={getVariantNameRefForIndex(index)}
+                ref={variantElementRef}
                 overflow="hidden"
                 textOverflow="ellipsis"
                 whiteSpace="nowrap"
