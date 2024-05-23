@@ -22,6 +22,7 @@ export function DevModeProvider({ children }) {
 
       const variables = JSON.stringify(
         {
+          // @ts-expect-error - TODO
           filter: getFilterVariables(params),
         },
         null,

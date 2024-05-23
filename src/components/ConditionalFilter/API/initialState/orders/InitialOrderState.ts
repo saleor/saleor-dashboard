@@ -1,6 +1,6 @@
 import { ItemOption } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionValue";
 
-import { InitialState } from "../../InitialStateResponse";
+// import { InitialState } from "../../InitialStateResponse";
 
 interface _InitialOrderState {
   paymentStatus: ItemOption[];
@@ -30,7 +30,7 @@ export class InitialOrderState implements _InitialOrderState {
     return [];
   }
 
-  private getEntryByName(name: string) {
-    return this[name];
-  }
+  // private getEntryByName(name: string) {
+  //   return this[name];
+  // }
 }

@@ -148,7 +148,7 @@ export const useOrderFilterAPIProvider = (): FilterAPIProvider => {
     return handler.fetch();
   };
 
-  const fetchLeftOptions = async (value: any) => {
+  const fetchLeftOptions = async () => {
     return [];
   };
 

@@ -81,6 +81,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
 
     const variables = JSON.stringify(
       {
+        // @ts-expect-error - TODO
         filter: getFilterVariables(params),
         // TODO add sorting: Issue #3409
         // strange error when uncommenting this line

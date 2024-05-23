@@ -16,6 +16,7 @@ import { getFilterQueryParam, getFilterVariables } from "./filters";
 describe("Filtering query params", () => {
   it("should be empty object if no params given", () => {
     const params: OrderListUrlFilters = {};
+    // @ts-expect-error - TODO
     const filterVariables = getFilterVariables(params);
 
     expect(getExistingKeys(filterVariables)).toHaveLength(0);
@@ -27,6 +28,7 @@ describe("Filtering query params", () => {
       customer: "email@example.com",
       status: [OrderStatusFilter.FULFILLED, OrderStatusFilter.PARTIALLY_FULFILLED],
     };
+    // @ts-expect-error - TODO
     const filterVariables = getFilterVariables(params);
 
     expect(getExistingKeys(filterVariables)).toHaveLength(3);
