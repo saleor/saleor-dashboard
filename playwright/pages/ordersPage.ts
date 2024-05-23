@@ -95,10 +95,6 @@ export class OrdersPage extends BasePage {
     await this.finalizeButton.click({ timeout: 90000 });
   }
 
-  async expectSuccessBanner() {
-    await this.basePage.expectSuccessBanner();
-  }
-
   async goToOrdersListView() {
     await this.page.goto(URL_LIST.orders);
   }
