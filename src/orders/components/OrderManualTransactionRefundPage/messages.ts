@@ -9,7 +9,7 @@ export const messages = defineMessages({
     id: "Bl6896",
     defaultMessage: "Refund amount",
   },
-  selectTransation: {
+  selectTransaction: {
     id: "dO05fh",
     defaultMessage: "Select a refund you want to fullfill",
   },

@@ -18,19 +18,19 @@ import { useIntl } from "react-intl";
 
 import { getValidationSchema, ManualRefundForm } from "./manualRefundValidationSchema";
 
-interface OrderManualTransationRefundFormProps {
+interface OrderManualTransactionRefundFormProps {
   children: ReactNode;
   disabled: boolean;
   initialValues: ManualRefundForm;
   orderId: string;
 }
 
-export const OrderManualTransationRefundForm = ({
+export const OrderManualTransactionRefundForm = ({
   disabled,
   orderId,
   initialValues,
   children,
-}: OrderManualTransationRefundFormProps) => {
+}: OrderManualTransactionRefundFormProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const notify = useNotifier();

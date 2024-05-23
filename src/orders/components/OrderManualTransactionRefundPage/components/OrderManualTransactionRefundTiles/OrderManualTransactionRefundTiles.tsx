@@ -1,23 +1,24 @@
-import { TransactionBaseItemFragment } from "@dashboard/graphql";
+import { TransactionItemFragment } from "@dashboard/graphql";
+import { TileHeaderMoney } from "@dashboard/orders/components/OrderTransactionRefundPage/components/OrderTransactionTiles/TileHeaderMoney";
 import { OrderTransactionTile } from "@dashboard/orders/components/OrderTransactionTile";
-import { RadioGroup, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, RadioGroup, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "../../messages";
 import { isTransactionRefundable } from "../../utils";
-import { ManualRefundForm } from "../OrderManualTransationRefundForm/manualRefundValidationSchema";
+import { ManualRefundForm } from "../OrderManualTransactionRefundForm/manualRefundValidationSchema";
 
-interface OrderManualTransationRefundTilesProps {
+interface OrderManualTransactionRefundTilesProps {
   loading: boolean;
-  transactions: TransactionBaseItemFragment[];
+  transactions: TransactionItemFragment[];
 }
 
-export const OrderManualTransationRefundTiles = ({
+export const OrderManualTransactionRefundTiles = ({
   transactions,
   loading,
-}: OrderManualTransationRefundTilesProps) => {
+}: OrderManualTransactionRefundTilesProps) => {
   const { formState } = useFormContext<ManualRefundForm>();
   const error = formState.errors.transationId;
 
@@ -52,15 +53,26 @@ export const OrderManualTransationRefundTiles = ({
                           disabled={!isRefundable}
                           error={!!error}
                           padding={4}
+                          width="100%"
+                          display="grid"
+                          __gridTemplateColumns="max-content 1fr"
                         >
-                          <Text
-                            size={5}
-                            fontWeight="medium"
-                            padding={4}
-                            color={isRefundable ? "default1" : "defaultDisabled"}
+                          <Box
+                            display="flex"
+                            justifyContent="space-between"
+                            alignItems="center"
+                            width="100%"
                           >
-                            {transaction?.name || "Transaction"}
-                          </Text>
+                            <Text
+                              size={5}
+                              fontWeight="medium"
+                              padding={4}
+                              color={isRefundable ? "default1" : "defaultDisabled"}
+                            >
+                              {transaction?.name || "Transaction"}
+                            </Text>
+                            <TileHeaderMoney transaction={transaction} />
+                          </Box>
                         </RadioGroup.Item>
                       </Tooltip.Trigger>
                       <Tooltip.Content side="left">

@@ -1,34 +1,34 @@
 import { TopNav } from "@dashboard/components/AppLayout";
 import { DashboardCard } from "@dashboard/components/Card";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { TransactionBaseItemFragment } from "@dashboard/graphql";
+import { TransactionItemFragment } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { OrderManualTransationRefundAmount } from "./components/OrderManualTransationRefundAmount";
-import { OrderManualTransationRefundForm } from "./components/OrderManualTransationRefundForm";
-import { OrderManualTransationRefundTiles } from "./components/OrderManualTransationRefundTiles";
+import { OrderManualTransactionRefundAmount } from "./components/OrderManualTransactionRefundAmount";
+import { OrderManualTransactionRefundForm } from "./components/OrderManualTransactionRefundForm";
+import { OrderManualTransactionRefundTiles } from "./components/OrderManualTransactionRefundTiles";
 import { messages } from "./messages";
 
-interface OrderManualTransationRefundProps {
+interface OrderManualTransactionRefundProps {
   orderId: string;
-  transactions: TransactionBaseItemFragment[];
+  transactions: TransactionItemFragment[];
   loading: boolean;
   currency: string;
 }
 
-export const OrderManualTransationRefundPage = ({
+export const OrderManualTransactionRefundPage = ({
   orderId,
   transactions,
   currency,
   loading,
-}: OrderManualTransationRefundProps) => {
+}: OrderManualTransactionRefundProps) => {
   const hasTransactionsToRefund = transactions.length > 0;
 
   return (
-    <OrderManualTransationRefundForm
+    <OrderManualTransactionRefundForm
       disabled={loading || !hasTransactionsToRefund}
       orderId={orderId}
       initialValues={{
@@ -43,10 +43,10 @@ export const OrderManualTransationRefundPage = ({
           <DashboardCard>
             <DashboardCard.Content>
               <Text size={4} marginY={5} display="block" fontWeight="bold">
-                <FormattedMessage {...messages.selectTransation} />
+                <FormattedMessage {...messages.selectTransaction} />
               </Text>
 
-              <OrderManualTransationRefundTiles loading={loading} transactions={transactions} />
+              <OrderManualTransactionRefundTiles loading={loading} transactions={transactions} />
             </DashboardCard.Content>
           </DashboardCard>
         </DetailPageLayout.Content>
@@ -61,12 +61,12 @@ export const OrderManualTransationRefundPage = ({
                   <FormattedMessage {...messages.sidebardDescription} />
                 </Text>
 
-                <OrderManualTransationRefundAmount currency={currency} />
+                <OrderManualTransactionRefundAmount currency={currency} />
               </DashboardCard.Content>
             </DashboardCard>
           </Box>
         </DetailPageLayout.RightSidebar>
       </DetailPageLayout>
-    </OrderManualTransationRefundForm>
+    </OrderManualTransactionRefundForm>
   );
 };

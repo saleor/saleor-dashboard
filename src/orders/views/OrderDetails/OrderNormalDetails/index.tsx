@@ -57,7 +57,7 @@ import OrderPaymentDialog from "../../../components/OrderPaymentDialog";
 import OrderPaymentVoidDialog from "../../../components/OrderPaymentVoidDialog";
 import {
   orderFulfillUrl,
-  orderManualTransationRefundUrl,
+  orderManualTransactionRefundUrl,
   orderPaymentRefundUrl,
   orderReturnUrl,
   orderTransactionRefundUrl,
@@ -438,7 +438,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         open={params.action === "add-refund"}
         onClose={closeModal}
         onStandardRefund={() => navigate(orderTransactionRefundUrl(id), { replace: true })}
-        onManualRefund={() => navigate(orderManualTransationRefundUrl(id), { replace: true })}
+        onManualRefund={() => navigate(orderManualTransactionRefundUrl(id), { replace: true })}
       />
 
       <OrderAddressFields

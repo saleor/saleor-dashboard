@@ -13,7 +13,7 @@ import userEvent from "@testing-library/user-event";
 import React, { ReactNode } from "react";
 import { BrowserRouter } from "react-router-dom";
 
-import { OrderManualTransationRefundPage } from "./OrderManualTransationRefundPage";
+import { OrderManualTransactionRefundPage } from "./OrderManualTransactionRefundPage";
 
 jest.mock("@dashboard/hooks/useNavigator", () => () => jest.fn);
 jest.mock("@dashboard/components/Savebar", () => {
@@ -57,7 +57,7 @@ const getWrapper = (mocks: MockedResponse[] = []) => {
   return WrapperComponent;
 };
 
-describe("OrderManualTransationRefundPage", () => {
+describe("OrderManualTransactionRefundPage", () => {
   it("should select transaction, set amount and submit form", async () => {
     // Arrange
     const mockNofitication = jest.fn();
@@ -93,7 +93,7 @@ describe("OrderManualTransationRefundPage", () => {
     ] as unknown as TransactionItemFragment[];
 
     render(
-      <OrderManualTransationRefundPage
+      <OrderManualTransactionRefundPage
         currency="USD"
         loading={false}
         orderId="1"
@@ -114,7 +114,7 @@ describe("OrderManualTransationRefundPage", () => {
   it("should display skeleton when loading", async () => {
     // Arrange &&  Act
     render(
-      <OrderManualTransationRefundPage
+      <OrderManualTransactionRefundPage
         currency="USD"
         loading={true}
         orderId="1"
