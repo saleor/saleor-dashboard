@@ -190,8 +190,6 @@ test("TC: SALEOR_81 Change billing address in fulfilled order @e2e @order", asyn
 
   await ordersPage.expectSuccessBanner();
 
-  await ordersPage.expectSuccessBanner();
-
   await addressesListPage.verifyRequiredAddressFields(newAddress.firstName, newAddress);
   await addressesListPage.verifyPhoneField(newAddress.firstName, newAddress);
   await addressesListPage.verifyCompanyField(newAddress.firstName, newAddress);

@@ -42,7 +42,8 @@ for (const type of discountType) {
 
 test(`TC: SALEOR_151 Update existing promotion @discounts @e2e`, async () => {
   const newDiscountName = `${faker.lorem.word()}`;
-  await discounts.waitForNetworkIdle(() =>
+
+  await discounts.waitForNetworkIdleAfterAction(() =>
     discounts.gotoExistingDiscount(DISCOUNTS.promotionToBeEdited.id),
   );
   await discounts.ruleSection.waitFor({
@@ -75,7 +76,7 @@ const promotions = [
 ];
 for (const promotion of promotions) {
   test(`TC: SALEOR_153 Delete existing ${promotion.name} @discounts @e2e`, async () => {
-    await discounts.waitForNetworkIdle(() =>
+    await discounts.waitForNetworkIdleAfterAction(() =>
       discounts.gotoExistingDiscount(promotion.id),
     );
     await discounts.ruleSection.waitFor({
@@ -87,7 +88,7 @@ for (const promotion of promotions) {
     });
     await discounts.clickDeleteButton();
     await discounts.deleteDiscountDialog.waitForDOMToFullyLoad();
-    await discounts.waitForNetworkIdle(() =>
+    await discounts.waitForNetworkIdleAfterAction(() =>
       discounts.deleteDiscountDialog.clickConfirmDeleteButton(),
     );
     await expect(discounts.successBanner).toBeVisible({ timeout: 10000 });
@@ -120,7 +121,7 @@ const rewardValue = "10";
 const channelName = CHANNELS.channelPLN.name;
 for (const { promotionRule, predicateValue } of predicateValues) {
   test(`TC: SALEOR_155 Create ${promotionRule} rule for ${predicateValue} in a catalogue promotion @discounts @e2e`, async () => {
-    await discounts.waitForNetworkIdle(() =>
+    await discounts.waitForNetworkIdleAfterAction(() =>
       discounts.gotoExistingDiscount(promotion.id),
     );
     await discounts.ruleSection.waitFor({
@@ -172,7 +173,7 @@ const notEqConditions = [conditionLte, conditionGte];
 const orderPromotion = DISCOUNTS.orderPromotion;
 for (const { conditionType, value, conditionDesc } of notEqConditions) {
   test(`TC: SALEOR_157 Create subtotal type rule with multiple conditions with ${conditionDesc} in order promotion @discounts @e2e`, async () => {
-    await discounts.waitForNetworkIdle(() =>
+    await discounts.waitForNetworkIdleAfterAction(() =>
       discounts.gotoExistingDiscount(orderPromotion.id),
     );
     await discounts.ruleSection.waitFor({
@@ -214,7 +215,7 @@ const condition2 = { condition: "Total", gte: "20.00", lte: "50.00" };
 const conditionsBetween = [condition1, condition2];
 for (const { condition, lte, gte } of conditionsBetween) {
   test(`TC: SALEOR_160 Create gift reward rule with ${condition} between ${gte} and ${lte} in order promotion @discounts @e2e`, async () => {
-    await discounts.waitForNetworkIdle(() =>
+    await discounts.waitForNetworkIdleAfterAction(() =>
       discounts.gotoExistingDiscount(orderPromotion.id),
     );
     await discounts.ruleSection.waitFor({
@@ -234,11 +235,8 @@ for (const { condition, lte, gte } of conditionsBetween) {
     await discounts.promotionRuleDialog.clickRuleConditionPredicateDropdown();
     await discounts.promotionRuleDialog.selectPredicate(`${condition} price`);
     await discounts.promotionRuleDialog.selectRuleConditionType("between");
-    await discounts.promotionRuleDialog.typeRuleConditionBoundaryValues(
-      gte,
-      lte,
-    );
-    await discounts.waitForNetworkIdle(() =>
+    await discounts.promotionRuleDialog.typeRuleConditionBoundaryValues(gte, lte);
+    await discounts.waitForNetworkIdleAfterAction(() =>
       discounts.promotionRuleDialog.clickSaveRuleButton(),
     );
     await expect(discounts.successBanner).toBeVisible({ timeout: 10000 });
@@ -260,10 +258,8 @@ const orderRules = [
 ];
 for (const rule of orderRules) {
   test(`TC: SALEOR_163 Update promotion ${rule.name} from Order promotion @discounts @e2e`, async () => {
-    await discounts.waitForNetworkIdle(() =>
-      discounts.gotoExistingDiscount(
-        DISCOUNTS.orderPromotionWithRulesToBeUpdated.id,
-      ),
+    await discounts.waitForNetworkIdleAfterAction(() =>
+      discounts.gotoExistingDiscount(DISCOUNTS.orderPromotionWithRulesToBeUpdated.id),
     );
     await discounts.ruleSection.waitFor({
       state: "visible",
@@ -320,10 +316,8 @@ const catalogRules = [
 ];
 for (const rule of catalogRules) {
   test(`TC: SALEOR_166 Update promotion ${rule.name} from Catalog promotion @discounts @e2e`, async () => {
-    await discounts.waitForNetworkIdle(() =>
-      discounts.gotoExistingDiscount(
-        DISCOUNTS.catalogPromotionWithRulesToBeUpdated.id,
-      ),
+    await discounts.waitForNetworkIdleAfterAction(() =>
+      discounts.gotoExistingDiscount(DISCOUNTS.catalogPromotionWithRulesToBeUpdated.id),
     );
     await discounts.ruleSection.waitFor({
       state: "visible",
@@ -378,7 +372,7 @@ const promotionsWithRules = [
 for (const promotion of promotionsWithRules) {
   for (const rule of promotion.rules) {
     test(`TC: SALEOR_167 Delete promotion ${rule.name} from ${promotion.type} promotion @discounts @e2e`, async () => {
-      await discounts.waitForNetworkIdle(() =>
+      await discounts.waitForNetworkIdleAfterAction(() =>
         discounts.gotoExistingDiscount(promotion.id),
       );
       await discounts.ruleSection.waitFor({
@@ -389,7 +383,7 @@ for (const promotion of promotionsWithRules) {
         `${promotion.type} rule: ${rule.name}`,
       );
       await expect(discounts.deleteRuleModal).toBeVisible({ timeout: 10000 });
-      await discounts.waitForNetworkIdle(() =>
+      await discounts.waitForNetworkIdleAfterAction(() =>
         discounts.deleteRuleDialog.clickConfirmDeleteButton(),
       );
       await expect(discounts.successBanner).toBeVisible({ timeout: 10000 });

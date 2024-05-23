@@ -16,7 +16,7 @@ export class DeleteAddressDialog extends BasePage {
   }
 
   async clickDeleteButton() {
-    await this.waitForNetworkIdle(async () => {
+    await this.waitForNetworkIdleAfterAction(async () => {
       await this.submitButton.click();
     });
   }
