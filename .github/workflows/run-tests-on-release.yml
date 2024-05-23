@@ -61,7 +61,7 @@ jobs:
         id: create-check
         uses: ./.github/actions/checks/create-pull-request-check
         with:
-          PR_HEAD: "changeset-release/${{env.MINOR_VERSION}}"
+          PR_HEAD: "changeset-release/${{env.VERSION}}"
           CHECK_NAME: "Automation_tests_run"
           STATUS: "in_progress"
           TITLE: "Automation tests run"
@@ -173,8 +173,8 @@ jobs:
         with:
           CHECK_ID: ${{ needs.add-check-and-prepare-instance.outputs.CHECK_ID }}
           CHECK_NAME: "Automation_tests_run"
-          STATUS: "completed"
-          CONCLUSION: "${{ steps.send-slack-message.outputs.status }}"
+          STATUS: "${{ steps.deploy.outcome }}"
+          CONCLUSION: "completed"
           TITLE: "Automation tests run"
           SUMMARY: "${{ steps.send-slack-message.outputs.message }}. Run details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
