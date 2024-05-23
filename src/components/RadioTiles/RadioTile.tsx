@@ -10,13 +10,21 @@ export interface RadioTileProps {
   title: string;
   description: string;
   value: string;
+  disabled?: boolean;
 }
 
-export const RadioTile = ({ checked, title, description, value, ...props }: RadioTileProps) => {
+export const RadioTile = ({
+  checked,
+  title,
+  description,
+  value,
+  disabled,
+  ...props
+}: RadioTileProps) => {
   const [isHoverState, setHoverState] = React.useState(false);
 
   return (
-    <RadixRadioGroup.Item value={value} asChild {...props}>
+    <RadixRadioGroup.Item value={value} disabled={disabled} asChild {...props}>
       <Box
         position="relative"
         as="label"
@@ -29,9 +37,9 @@ export const RadioTile = ({ checked, title, description, value, ...props }: Radi
         borderStyle="solid"
         borderRadius={2}
         padding={3}
-        cursor="pointer"
         onMouseEnter={() => setHoverState(true)}
         onMouseLeave={() => setHoverState(false)}
+        cursor={disabled ? "not-allowed" : "pointer"}
       >
         <Box
           width={5}
@@ -59,9 +67,11 @@ export const RadioTile = ({ checked, title, description, value, ...props }: Radi
             <RadioTileIndicator />
           </Box>
         </Box>
-        <Text size={5}>{title}</Text>
+        <Text size={5} color={disabled ? "defaultDisabled" : "default1"}>
+          {title}
+        </Text>
         <Box />
-        <Text size={1} color="default2">
+        <Text size={1} color={disabled ? "defaultDisabled" : "default2"}>
           {description}
         </Text>
       </Box>
