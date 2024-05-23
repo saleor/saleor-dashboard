@@ -37,4 +37,8 @@ export const validationMessages = defineMessages({
     id: "F2kF9e",
     defaultMessage: "You must select transaction that you want to refund",
   },
+  amountExceedsChargedAmount: {
+    id: "kfvvnM",
+    defaultMessage: "Provided amount cannot exceed charged amount for the selected transaction",
+  },
 });

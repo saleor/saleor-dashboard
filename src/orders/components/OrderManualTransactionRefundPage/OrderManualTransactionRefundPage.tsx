@@ -35,6 +35,7 @@ export const OrderManualTransactionRefundPage = ({
         amount: 0,
         transationId: transactions?.[0]?.id ?? "",
       }}
+      transactions={transactions}
     >
       <DetailPageLayout gridTemplateColumns={1}>
         <TopNav href={orderUrl(orderId)} title={<FormattedMessage {...messages.transactions} />} />
