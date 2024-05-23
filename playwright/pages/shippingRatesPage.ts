@@ -52,7 +52,9 @@ export class ShippingRatesPage extends BasePage {
     await this.assignDialogProductRow.filter({ hasText: name }).waitFor({ state: "visible" });
     await this.assignProductsDialog.selectProduct(name);
     await expect(this.assignProductsDialog.assignAndSaveButton).toBeEnabled();
-    await this.assignProductsDialog.assignAndSaveButton.click();
+    await this.waitForNetworkIdleAfterAction(() =>
+      this.assignProductsDialog.assignAndSaveButton.click(),
+    );
     await this.assignProductsDialog.assignAndSaveButton.waitFor({
       state: "hidden",
       timeout: 5000,
