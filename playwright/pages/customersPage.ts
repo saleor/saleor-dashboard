@@ -36,7 +36,7 @@ export class CustomersPage extends BasePage {
   }
 
   async goToCustomersListView() {
-    await this.waitForNetworkIdle(async () => {
+    await this.waitForNetworkIdleAfterAction(async () => {
       await this.page.goto(URL_LIST.customers);
     });
   }
@@ -46,7 +46,7 @@ export class CustomersPage extends BasePage {
   }
 
   async gotoCustomerDetailsPage(customerId: string) {
-    await this.waitForNetworkIdle(async () => {
+    await this.waitForNetworkIdleAfterAction(async () => {
       await this.page.goto(`${URL_LIST.customers}${customerId}`);
     });
   }
@@ -77,7 +77,7 @@ export class CustomersPage extends BasePage {
   }
 
   async clickIssueNewGiftCard() {
-    await this.waitForNetworkIdle(async () => {
+    await this.waitForNetworkIdleAfterAction(async () => {
       await this.issueNewGiftCardButton.click();
     });
   }

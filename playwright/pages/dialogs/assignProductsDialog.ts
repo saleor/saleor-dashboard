@@ -1,8 +1,7 @@
+import { BasePage } from "@pages/basePage";
 import { expect, Page } from "@playwright/test";
 
-export class AssignProductsDialog {
-  readonly page: Page;
-
+export class AssignProductsDialog extends BasePage {
   constructor(
     page: Page,
     readonly productRow = page.getByTestId("product-row"),
@@ -11,7 +10,7 @@ export class AssignProductsDialog {
     readonly assignAndSaveButton = page.getByTestId("assign-and-save-button"),
     readonly searchInput = page.getByTestId("search-bar").locator("input"),
   ) {
-    this.page = page;
+    super(page);
   }
 
   async clickAssignButton() {
@@ -30,7 +29,12 @@ export class AssignProductsDialog {
     const product = this.productRow.filter({ hasText: name });
 
     await product.waitFor({ state: "visible" });
+
+    await product.getByRole("checkbox").waitFor({ state: "visible" });
+    await expect(product.getByRole("checkbox")).toBeEnabled();
+
     await product.getByRole("checkbox").click();
+    await this.waitForDOMToFullyLoad();
     await expect(product.getByRole("checkbox")).toBeChecked();
   }
 }

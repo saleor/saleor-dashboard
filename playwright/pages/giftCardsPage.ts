@@ -50,7 +50,7 @@ export class GiftCardsPage extends BasePage {
   }
 
   async clickIssueCardButton() {
-    await this.issueCardButton.click();
+    await this.waitForNetworkIdleAfterAction(async () => await this.issueCardButton.click());
     await this.loader.waitFor({ state: "hidden" });
     await this.giftCardDialog.waitFor({ state: "visible" });
   }
@@ -88,10 +88,10 @@ export class GiftCardsPage extends BasePage {
   }
 
   async gotoGiftCardsListView() {
-    await this.waitForNetworkIdle(async () => {
+    await this.waitForNetworkIdleAfterAction(async () => {
       await this.page.goto(URL_LIST.giftCards);
-      await this.waitForDOMToFullyLoad();
     });
+    await this.waitForDOMToFullyLoad();
   }
 
   async gotoExistingGiftCardView(giftCardId: string) {
