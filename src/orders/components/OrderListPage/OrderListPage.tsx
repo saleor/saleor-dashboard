@@ -12,6 +12,7 @@ import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
+import { useFlag } from "@dashboard/featureFlags";
 import { OrderListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { orderMessages } from "@dashboard/orders/messages";
@@ -63,6 +64,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
+  const orderFiltersFeatureFlag = useFlag("order_filters");
   const userAccessibleChannels = useUserAccessibleChannels();
   const hasAccessibleChannels = userAccessibleChannels.length > 0;
   const filterStructure = createFilterStructure(intl, filterOpts);
@@ -91,6 +93,9 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
     context.setVariables(variables);
     context.setDevModeVisibility(true);
   };
+
+  const isOrderListPage = window.location.pathname.includes("/orders");
+  const newOrdersFiltersEnabled = isOrderListPage && orderFiltersFeatureFlag;
 
   return (
     <ListPageLayout>
@@ -211,7 +216,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
             id: "wTHjt3",
             defaultMessage: "Search Orders...",
           })}
-          filtersEnabled={true} // TODO
+          filtersEnabled={!!newOrdersFiltersEnabled}
         />
         <OrderListDatagrid {...listProps} hasRowHover={!isFilterPresetOpen} rowAnchor={orderUrl} />
       </Card>
