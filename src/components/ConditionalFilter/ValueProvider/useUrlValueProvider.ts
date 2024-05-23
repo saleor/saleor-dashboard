@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { stringify } from "qs";
 import { useEffect, useState } from "react";
 import useRouter from "use-react-router";
@@ -46,8 +47,11 @@ export const useUrlValueProvider = (
   const fetchingParams = tokenizedUrl.getFetchingParams();
 
   useEffect(() => {
-    initialState?.fetchQueries(fetchingParams);
+    if (initialState?.fetchQueries) {
+      initialState.fetchQueries(fetchingParams);
+    }
   }, [locationSearch]);
+
   useEffect(() => {
     if (!initialState) return;
 
@@ -57,6 +61,7 @@ export const useUrlValueProvider = (
 
     setValue(tokenizedUrl.asFilterValuesFromResponse(data));
   }, [initialState?.data, initialState?.loading]);
+
   useEffect(() => {
     if (initialState) return;
 
@@ -76,18 +81,22 @@ export const useUrlValueProvider = (
     });
     setValue(filterValue);
   };
+
   const clear = () => {
     router.history.replace({
       pathname: router.location.pathname,
     });
     setValue([]);
   };
+
   const isPersisted = (element: FilterElement) => {
     return value.some(p => FilterElement.isCompatible(p) && p.equals(element));
   };
+
   const getTokenByName = (name: string) => {
     return tokenizedUrl.asFlatArray().find(token => token.name === name);
   };
+
   const count = value.filter(v => typeof v !== "string").length;
 
   return {

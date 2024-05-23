@@ -3,6 +3,7 @@ import {
   DateTimeFilterInput,
   DecimalFilterInput,
   GlobalIdFilterInput,
+  OrderFilterInput,
   ProductWhereInput,
   PromotionWhereInput,
 } from "@dashboard/graphql";
@@ -147,7 +148,7 @@ export const createProductQueryVariables = (value: FilterContainer): ProductQuer
   }, {} as ProductWhereInput);
 };
 
-export const creatDiscountsQueryVariables = (value: FilterContainer): PromotionWhereInput => {
+export const createDiscountsQueryVariables = (value: FilterContainer): PromotionWhereInput => {
   return value.reduce((p, c) => {
     if (typeof c === "string" || Array.isArray(c)) return p;
 
@@ -157,4 +158,49 @@ export const creatDiscountsQueryVariables = (value: FilterContainer): PromotionW
 
     return p;
   }, {} as PromotionWhereInput);
+};
+
+export const createOrderQueryVariables = (value: FilterContainer) => {
+  return value.reduce((p, c) => {
+    if (typeof c === "string" || Array.isArray(c)) {
+      return p;
+    }
+
+    // if (c.isStatic()) {
+    //   console.log("isStatic: c.value.value", c.value.value);
+    //   p[c.value.value as keyof ProductWhereInput] = createStaticQueryPart(c.condition.selected);
+    // }
+
+    if (c.value.type === "updatedAt" || c.value.type === "created") {
+      // TODO:
+      // @ts-expect-error - todo
+      p[c.value.value as "updatedAt" | "created"] = createStaticQueryPart(
+        c.condition.selected,
+      ) as DateTimeFilterInput;
+    }
+
+    if (c.isStatic()) {
+      p[c.value.value] = createStaticQueryPart(c.condition.selected);
+    }
+
+    // if (c.value.type === "status") {
+    //   p.status = p.status || [];
+    //   p.status.push(c.condition.selected.value[0] as OrderStatusFilter);
+    // }
+
+    // if (c.value.type === "paymentStatus") {
+    //   p.paymentStatus = p.paymentStatus || [];
+    //   p.paymentStatus.push(c.condition.selected.value[0] as PaymentChargeStatusEnum);
+    // }
+
+    // if (c.value.type === "giftCardBought") {
+    //   p.giftCardUsed = true;
+    // }
+
+    // if (c.value.type === "giftCardUsed") {
+    //   p.giftCardUsed = true;
+    // }
+
+    return p;
+  }, {} as OrderFilterInput);
 };

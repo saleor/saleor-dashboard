@@ -19,9 +19,12 @@ import {
   _GetProductTypesChoicesQuery,
   _GetProductTypesChoicesQueryVariables,
 } from "@dashboard/graphql";
+import { IntlShape } from "react-intl";
 
+import { RowType } from "../constants";
 import { ItemOption } from "../FilterElement/ConditionValue";
 import { LeftOperand } from "../LeftOperandsProvider";
+import { getLocalizedLabel } from "./initialState/orders/intl";
 
 export interface Handler {
   fetch: () => Promise<ItemOption[]>;
@@ -190,6 +193,23 @@ export class AttributesHandler implements Handler {
 
 export class BooleanValuesHandler implements Handler {
   constructor(public options: LeftOperand[]) {}
+
+  fetch = async (): Promise<LeftOperand[]> => {
+    return this.options;
+  };
+}
+
+export class EnumValuesHandler implements Handler {
+  private options: LeftOperand[];
+
+  constructor(enumObject: Record<string, string>, type: RowType, intl: IntlShape) {
+    this.options = Object.values(enumObject).map(value => ({
+      value,
+      slug: value,
+      type: type as LeftOperand["type"], // TODO
+      label: getLocalizedLabel(type as LeftOperand["type"], value, intl), // TODO: get label from enum, translation
+    }));
+  }
 
   fetch = async (): Promise<LeftOperand[]> => {
     return this.options;

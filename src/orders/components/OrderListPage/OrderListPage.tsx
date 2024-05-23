@@ -198,7 +198,9 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
           </Box>
         </Box>
       </TopNav>
+
       {limitsReached && <OrderLimitReached />}
+
       <Card>
         <ListFilters
           initialSearch={initialSearch}
@@ -209,6 +211,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
             id: "wTHjt3",
             defaultMessage: "Search Orders...",
           })}
+          filtersEnabled={true} // TODO
         />
         <OrderListDatagrid {...listProps} hasRowHover={!isFilterPresetOpen} rowAnchor={orderUrl} />
       </Card>

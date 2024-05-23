@@ -1,4 +1,6 @@
 // @ts-strict-ignore
+import { FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
+import { createOrderQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import { OrderFilterInput, OrderStatusFilter, PaymentChargeStatusEnum } from "@dashboard/graphql";
 import { findInEnum, findValueInEnum, parseBoolean } from "@dashboard/misc";
@@ -92,7 +94,39 @@ export function getFilterOpts(
   };
 }
 
-export function getFilterVariables(params: OrderListUrlFilters): OrderFilterInput {
+const featureFlagEnabled = true;
+
+const whereInputTypes = ["oneOf", "eq", "range", "gte", "lte"];
+
+const _whereToLegacyVariables = (where: OrderFilterInput) => {
+  return where
+    ? Object.keys(where).reduce((acc, key) => {
+        if (where[key]) {
+          const valueKeys = Object.keys(where[key]);
+
+          valueKeys.forEach(valueKey => {
+            if (whereInputTypes.includes(valueKey)) {
+              // TODO: handle multiple left side uses
+              acc[key] = where[key][valueKey];
+            }
+          });
+        }
+
+        return acc;
+      }, {})
+    : {};
+};
+
+export function getFilterVariables(
+  params: OrderListUrlFilters,
+  filterContainer: FilterContainer,
+): OrderFilterInput {
+  let queryVariables;
+
+  if (featureFlagEnabled) {
+    queryVariables = _whereToLegacyVariables(createOrderQueryVariables(filterContainer));
+  }
+
   return {
     channels: params.channel as unknown as string[],
     created: getGteLteVariables({
@@ -102,9 +136,10 @@ export function getFilterVariables(params: OrderListUrlFilters): OrderFilterInpu
     customer: params.customer,
     search: params.query,
     status: params?.status?.map(status => findInEnum(status, OrderStatusFilter)),
-    paymentStatus: params?.paymentStatus?.map(paymentStatus =>
-      findInEnum(paymentStatus, PaymentChargeStatusEnum),
-    ),
+    // paymentStatus: params?.paymentStatus?.map(paymentStatus =>
+    //   findInEnum(paymentStatus, PaymentChargeStatusEnum),
+    // ),
+    // paymentStatus: queryVariables.paymentStatus.map(({ values }) => values[0])[0],
     isClickAndCollect:
       params.clickAndCollect !== undefined
         ? parseBoolean(params.clickAndCollect, false)
@@ -114,6 +149,7 @@ export function getFilterVariables(params: OrderListUrlFilters): OrderFilterInpu
       params?.giftCard?.some(param => param === OrderFilterGiftCard.bought) || undefined,
     giftCardUsed: params?.giftCard?.some(param => param === OrderFilterGiftCard.paid) || undefined,
     metadata: params?.metadata,
+    ...queryVariables,
   };
 }
 

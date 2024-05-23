@@ -1,5 +1,5 @@
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
-import { creatDiscountsQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
+import { createDiscountsQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -44,7 +44,7 @@ export const DiscountList: React.FC<DiscountListProps> = ({ params }) => {
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const { valueProvider } = useConditionalFilterContext();
-  const where = creatDiscountsQueryVariables(valueProvider.value);
+  const where = createDiscountsQueryVariables(valueProvider.value);
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,

@@ -2,6 +2,7 @@
 import { useUser } from "@dashboard/auth";
 import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
@@ -43,6 +44,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.ORDER_LIST);
+  const { valueProvider } = useConditionalFilterContext();
   const {
     hasPresetsChanged,
     onPresetChange,
@@ -98,10 +100,11 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     OrderListUrlQueryParams
   >(navigate, orderListUrl, params);
   const paginationState = createPaginationState(settings.rowNumber, params);
+  const filterVariables = getFilterVariables(params, valueProvider.value);
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
-      filter: getFilterVariables(params),
+      filter: filterVariables,
       sort: getSortQueryVariables(params),
     }),
     [params, settings.rowNumber],
