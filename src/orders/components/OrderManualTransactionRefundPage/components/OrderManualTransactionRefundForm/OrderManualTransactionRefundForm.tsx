@@ -49,7 +49,7 @@ export const OrderManualTransactionRefundForm = ({
     transaction => transaction.id === selectedTransactionId,
   );
 
-  const chargedAmount = selectedTransaction?.chargedAmount.amount || 0;
+  const chargedAmount = selectedTransaction?.chargedAmount?.amount || 0;
 
   React.useEffect(() => {
     setChargedAmountForValidation(chargedAmount);

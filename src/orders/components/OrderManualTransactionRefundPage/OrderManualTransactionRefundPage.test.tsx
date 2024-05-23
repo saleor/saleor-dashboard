@@ -83,12 +83,18 @@ describe("OrderManualTransactionRefundPage", () => {
         name: "Transaction 1",
         events: [],
         actions: [TransactionActionEnum.REFUND],
+        chargedAmount: {
+          amount: 20,
+        },
       },
       {
         id: "2",
         name: "Transaction 2",
         events: [],
         actions: [TransactionActionEnum.REFUND],
+        chargedAmount: {
+          amount: 40,
+        },
       },
     ] as unknown as TransactionItemFragment[];
 
@@ -102,7 +108,7 @@ describe("OrderManualTransactionRefundPage", () => {
       { wrapper: getWrapper(mocks) },
     );
     // Act
-    await userEvent.click(screen.getByRole("radio", { name: "Transaction 2" }));
+    await userEvent.click(screen.getByRole("radio", { name: /Transaction 2/i }));
     await userEvent.type(screen.getByLabelText(/refund amount/i), "5");
     await userEvent.click(screen.getByRole("button", { name: "save" }));
     // Assert
