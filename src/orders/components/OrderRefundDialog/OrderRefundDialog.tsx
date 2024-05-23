@@ -19,7 +19,7 @@ interface OrderRefundDialogProps {
   onManualRefund: () => void;
 }
 
-type RefundType = "standard" | "manual";
+type RefundType = "standard" | "manual" | null;
 
 export const OrderRefundDialog = ({
   order,
@@ -28,7 +28,7 @@ export const OrderRefundDialog = ({
   onStandardRefund,
   onManualRefund,
 }: OrderRefundDialogProps) => {
-  const [selected, setSelected] = React.useState<RefundType>("standard");
+  const [selected, setSelected] = React.useState<RefundType>(null);
   const intl = useIntl();
   const handleClose = () => {
     setSelected("standard");
@@ -38,7 +38,6 @@ export const OrderRefundDialog = ({
   const userPermissions = useUserPermissions();
   const canCreateManualRefund = hasPermissions(userPermissions, [PermissionEnum.HANDLE_PAYMENTS]);
   const canCreateStandardRefund = !isEveryLineFullyRefunded(calculateOrderLineRefundTotals(order));
-
   const handleChangeRefundType = (val: string) => {
     if (val === "standard" && canCreateStandardRefund) {
       setSelected("standard");
@@ -50,10 +49,20 @@ export const OrderRefundDialog = ({
   };
 
   React.useEffect(() => {
-    if (!canCreateStandardRefund) {
-      setSelected("manual");
+    if (canCreateStandardRefund) {
+      setSelected("standard");
+
+      return;
     }
-  }, [canCreateStandardRefund]);
+
+    if (canCreateManualRefund) {
+      setSelected("manual");
+
+      return;
+    }
+
+    setSelected(null);
+  }, [canCreateStandardRefund, canCreateManualRefund]);
 
   return (
     <DashboardModal open={open} onChange={handleClose}>
@@ -114,7 +123,10 @@ export const OrderRefundDialog = ({
           <Button onClick={onClose} variant="secondary">
             <Text fontWeight="medium">{intl.formatMessage(buttonMessages.cancel)}</Text>
           </Button>
-          <Button onClick={selected === "standard" ? onStandardRefund : onManualRefund}>
+          <Button
+            onClick={selected === "standard" ? onStandardRefund : onManualRefund}
+            disabled={!canCreateManualRefund && !canCreateStandardRefund}
+          >
             <Text fontWeight="medium" color="buttonDefaultPrimary">
               {intl.formatMessage(buttonMessages.confirm)}
             </Text>
