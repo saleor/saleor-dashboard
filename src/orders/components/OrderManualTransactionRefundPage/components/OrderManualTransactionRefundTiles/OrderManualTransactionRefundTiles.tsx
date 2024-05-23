@@ -53,6 +53,7 @@ export const OrderManualTransactionRefundTiles = ({
                           disabled={!isRefundable}
                           error={!!error}
                           padding={4}
+                          paddingTop={0}
                           width="100%"
                           display="grid"
                           __gridTemplateColumns="max-content 1fr"
