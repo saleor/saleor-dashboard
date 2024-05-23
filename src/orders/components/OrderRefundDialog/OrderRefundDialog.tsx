@@ -19,7 +19,7 @@ interface OrderRefundDialogProps {
   onManualRefund: () => void;
 }
 
-type RefundType = "standard" | "manual" | null;
+type RefundType = "standard" | "manual" | "none";
 
 export const OrderRefundDialog = ({
   order,
@@ -28,7 +28,7 @@ export const OrderRefundDialog = ({
   onStandardRefund,
   onManualRefund,
 }: OrderRefundDialogProps) => {
-  const [selected, setSelected] = React.useState<RefundType>(null);
+  const [selected, setSelected] = React.useState<RefundType>("none");
   const intl = useIntl();
   const handleClose = () => {
     setSelected("standard");
@@ -36,7 +36,9 @@ export const OrderRefundDialog = ({
   };
 
   const userPermissions = useUserPermissions();
-  const canCreateManualRefund = hasPermissions(userPermissions, [PermissionEnum.HANDLE_PAYMENTS]);
+  const canCreateManualRefund = hasPermissions(userPermissions ?? [], [
+    PermissionEnum.HANDLE_PAYMENTS,
+  ]);
   const canCreateStandardRefund = !isEveryLineFullyRefunded(calculateOrderLineRefundTotals(order));
   const handleChangeRefundType = (val: string) => {
     if (val === "standard" && canCreateStandardRefund) {
@@ -61,7 +63,7 @@ export const OrderRefundDialog = ({
       return;
     }
 
-    setSelected(null);
+    setSelected("none");
   }, [canCreateStandardRefund, canCreateManualRefund]);
 
   return (

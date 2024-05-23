@@ -12,7 +12,8 @@ export const calculateOrderLineRefundTotals = (
     const lineWithTotalRefunded = { ...line, totalQtyRefunded: 0 };
 
     order?.grantedRefunds.forEach(refund => {
-      const refundLine = refund.lines.find(refundLine => refundLine.orderLine.id === lineId);
+      const refundLines = refund.lines ?? [];
+      const refundLine = refundLines.find(refundLine => refundLine.orderLine.id === lineId);
 
       if (!refundLine) {
         return;
