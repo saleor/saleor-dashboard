@@ -209,7 +209,9 @@ for (const attribute of attributesToBeDeleted) {
 
 test("TC: SALEOR_130 Bulk delete attributes @e2e @attributes", async () => {
   await attributesPage.gotoListView();
-  await attributesPage.searchAndFindRowIndexes("e2e attribute to be bulk deleted");
+  await attributesPage.waitForNetworkIdleAfterAction(() =>
+    attributesPage.typeInSearchOnListView("e2e attribute to be bulk deleted"),
+  );
   await attributesPage.clickGridCell(0, 0);
   await attributesPage.clickGridCell(0, 1);
   await attributesPage.clickGridCell(0, 2);

@@ -187,10 +187,14 @@ test("TC: SALEOR_81 Change billing address in fulfilled order @e2e @order", asyn
   await ordersPage.waitForGrid();
   await ordersPage.rightSideDetailsPage.clickEditBillingAddressButton();
   await ordersPage.addressDialog.clickNewAddressRadioButton();
-  await ordersPage.addressDialog.completeAddressFormAllFields(
-    CUSTOMER_ADDRESS.changeBillingAddress,
-  );
-  await ordersPage.expectSuccessBanner();
+
+  const newAddress = ADDRESS.addressPL;
+
+  await addressForm.completeBasicInfoAddressForm(newAddress);
+  await addressForm.typeCompanyName(newAddress.companyName);
+  await addressForm.typePhone(newAddress.phone);
+  await addressForm.typeAddressLine2(newAddress.addressLine2);
+  await addressDialog.clickConfirmButton();
 
   await ordersPage.expectElementContainsTextFromObjectValues(
     ordersPage.rightSideDetailsPage.billingAddressSection,
