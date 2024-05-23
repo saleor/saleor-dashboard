@@ -66,6 +66,7 @@ export const ConditionalOrderFilterProvider: FC<{
   const apiProvider = useOrderFilterAPIProvider();
 
   const initialState = useInitialOrderState();
+  // @ts-expect-error - todo
   const valueProvider = useUrlValueProvider(locationSearch, initialState);
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_ORDER_OPTIONS);
   const containerState = useContainerState(valueProvider);

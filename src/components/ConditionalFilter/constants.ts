@@ -65,9 +65,9 @@ export const STATIC_CONDITIONS = {
     },
   ],
   created: [
-    { type: "datetime", label: "lower", value: "input-1" },
-    { type: "datetime", label: "greater", value: "input-2" },
-    { type: "datetime.range", label: "between", value: "input-3" },
+    { type: "date", label: "lower", value: "input-1" },
+    { type: "date", label: "greater", value: "input-2" },
+    { type: "date.range", label: "between", value: "input-3" },
   ],
   authorizeStatus: [
     {
@@ -181,7 +181,7 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
   },
   {
     value: "status",
-    label: "Status",
+    label: "Fulfillment Status",
     type: "status",
     slug: "status",
   },

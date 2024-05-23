@@ -10,7 +10,7 @@ import { IntlShape, useIntl } from "react-intl";
 
 import { RowType } from "../constants";
 import { FilterContainer, FilterElement } from "../FilterElement";
-import { BooleanValuesHandler, ChannelHandler, EnumValuesHandler, Handler } from "./Handler";
+import { BooleanValuesHandler, EnumValuesHandler, Handler, LegacyChannelHandler } from "./Handler";
 
 const getFilterElement = (value: FilterContainer, index: number): FilterElement => {
   const possibleFilterElement = value[index];
@@ -54,14 +54,14 @@ const createAPIHandler = (
   if (rowType === "giftCardUsage") {
     return new BooleanValuesHandler([
       {
-        label: "Ordered",
-        value: "true",
+        label: "Bought",
+        value: "bought",
         type: rowType,
         slug: "giftCardUsed",
       },
       {
         label: "Paid with",
-        value: "true",
+        value: "paid_with",
         type: rowType,
         slug: "giftCardBought",
       },
@@ -119,7 +119,7 @@ const createAPIHandler = (
   }
 
   if (rowType === "channels") {
-    return new ChannelHandler(client, inputValue);
+    return new LegacyChannelHandler(client, inputValue);
   }
 
   // if (rowType === "customer") {

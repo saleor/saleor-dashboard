@@ -5904,6 +5904,42 @@ export function use_GetChannelOperandsLazyQuery(baseOptions?: ApolloReactHooks.L
 export type _GetChannelOperandsQueryHookResult = ReturnType<typeof use_GetChannelOperandsQuery>;
 export type _GetChannelOperandsLazyQueryHookResult = ReturnType<typeof use_GetChannelOperandsLazyQuery>;
 export type _GetChannelOperandsQueryResult = Apollo.QueryResult<Types._GetChannelOperandsQuery, Types._GetChannelOperandsQueryVariables>;
+export const _GetLegacyChannelOperandsDocument = gql`
+    query _GetLegacyChannelOperands {
+  channels {
+    id
+    name
+    slug
+  }
+}
+    `;
+
+/**
+ * __use_GetLegacyChannelOperandsQuery__
+ *
+ * To run a query within a React component, call `use_GetLegacyChannelOperandsQuery` and pass it any options that fit your needs.
+ * When your component renders, `use_GetLegacyChannelOperandsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = use_GetLegacyChannelOperandsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function use_GetLegacyChannelOperandsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types._GetLegacyChannelOperandsQuery, Types._GetLegacyChannelOperandsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types._GetLegacyChannelOperandsQuery, Types._GetLegacyChannelOperandsQueryVariables>(_GetLegacyChannelOperandsDocument, options);
+      }
+export function use_GetLegacyChannelOperandsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetLegacyChannelOperandsQuery, Types._GetLegacyChannelOperandsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types._GetLegacyChannelOperandsQuery, Types._GetLegacyChannelOperandsQueryVariables>(_GetLegacyChannelOperandsDocument, options);
+        }
+export type _GetLegacyChannelOperandsQueryHookResult = ReturnType<typeof use_GetLegacyChannelOperandsQuery>;
+export type _GetLegacyChannelOperandsLazyQueryHookResult = ReturnType<typeof use_GetLegacyChannelOperandsLazyQuery>;
+export type _GetLegacyChannelOperandsQueryResult = Apollo.QueryResult<Types._GetLegacyChannelOperandsQuery, Types._GetLegacyChannelOperandsQueryVariables>;
 export const _SearchCollectionsOperandsDocument = gql`
     query _SearchCollectionsOperands($first: Int!, $collectionsSlugs: [String!]) {
   collections(first: $first, filter: {slugs: $collectionsSlugs}) {

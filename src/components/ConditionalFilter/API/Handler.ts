@@ -15,6 +15,7 @@ import {
   _GetDynamicLeftOperandsDocument,
   _GetDynamicLeftOperandsQuery,
   _GetDynamicLeftOperandsQueryVariables,
+  _GetLegacyChannelOperandsDocument,
   _GetProductTypesChoicesDocument,
   _GetProductTypesChoicesQuery,
   _GetProductTypesChoicesQueryVariables,
@@ -151,6 +152,33 @@ export class ChannelHandler implements Handler {
     >({
       query: _GetChannelOperandsDocument,
     });
+
+    const options =
+      data.channels?.map(({ id, name, slug }) => ({
+        label: name,
+        value: id,
+        slug,
+      })) ?? [];
+
+    return options.filter(({ label }) => label.toLowerCase().includes(this.query.toLowerCase()));
+  };
+}
+
+// 'Orders' filter required channel ID, not slug
+export class LegacyChannelHandler implements Handler {
+  constructor(
+    public client: ApolloClient<unknown>,
+    public query: string,
+  ) {}
+
+  fetch = async () => {
+    const { data } = await this.client.query<
+      _GetChannelOperandsQuery,
+      _GetChannelOperandsQueryVariables
+    >({
+      query: _GetLegacyChannelOperandsDocument,
+    });
+
     const options =
       data.channels?.map(({ id, name, slug }) => ({
         label: name,

@@ -97,7 +97,9 @@ export function getFilterOpts(
 const featureFlagEnabled = true;
 
 const whereInputTypes = ["oneOf", "eq", "range", "gte", "lte"];
+const orderBooleanFilters = ["isClickAndCollect", "isPreorder"];
 
+// TODO: create connector type for OrderFilterInput
 const _whereToLegacyVariables = (where: OrderFilterInput) => {
   return where
     ? Object.keys(where).reduce((acc, key) => {
@@ -108,6 +110,20 @@ const _whereToLegacyVariables = (where: OrderFilterInput) => {
             if (whereInputTypes.includes(valueKey)) {
               // TODO: handle multiple left side uses
               acc[key] = where[key][valueKey];
+
+              if (orderBooleanFilters.includes(key)) {
+                acc[key] = acc[key] === "true";
+
+                return;
+              }
+
+              if (key === "giftCardUsage") {
+                // @ts-expect-error - todo
+                acc.giftCardBought = acc[key].includes("bought");
+                // @ts-expect-error - todo
+                acc.giftCardUsed = acc[key].includes("paid_with");
+                acc[key] = undefined;
+              }
             }
           });
         }
