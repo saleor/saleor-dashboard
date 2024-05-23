@@ -72,12 +72,11 @@ export class BasePage {
   }
 
   async typeInSearchOnListView(searchItem: string) {
-    await this.waitForNetworkIdle(async () => {
+    await this.waitForNetworkIdleAfterAction(async () => {
       await this.searchInputListView.fill(searchItem);
-      await this.loader.waitFor({ state: "attached" });
-      await this.waitForGrid();
-      await this.waitForDOMToFullyLoad();
     });
+    await this.waitForGrid();
+    await this.waitForDOMToFullyLoad();
   }
   async clickNextPageButton() {
     await this.nextPagePaginationButton.click();
@@ -132,7 +131,7 @@ export class BasePage {
     await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
   }
 
-  async waitForNetworkIdle(action: () => Promise<void>, timeoutMs = 60000) {
+  async waitForNetworkIdleAfterAction(action: () => Promise<void>, timeoutMs = 90000) {
     const responsePromise = this.page.waitForResponse("**/graphql/", {
       timeout: timeoutMs,
     });
@@ -336,6 +335,7 @@ export class BasePage {
   }
   async waitForDOMToFullyLoad() {
     await this.page.waitForLoadState("domcontentloaded", { timeout: 70000 });
+    await this.loader.waitFor({ state: "hidden" });
   }
 
   async expectElementIsHidden(locator: Locator) {

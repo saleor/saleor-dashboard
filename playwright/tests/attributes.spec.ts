@@ -31,9 +31,7 @@ for (const attr of attributeClasses) {
       await expect(attributesPage.attrValuesSection).toBeVisible();
       await attributesPage.clickAssignAttributeValueButton();
       await attributesPage.addValueDialog.typeAndSaveAttributeValue();
-      await attributesPage.waitForNetworkIdle(() =>
-        attributesPage.clickSaveButton(),
-      );
+      await attributesPage.waitForNetworkIdleAfterAction(() => attributesPage.clickSaveButton());
       await attributesPage.expectSuccessBanner();
       await expect(await attributesPage.attributesRows.count()).toEqual(1);
       await attributesPage.valueRequiredCheckbox.waitFor({
@@ -65,9 +63,7 @@ for (const attr of attributeClasses) {
       await expect(attributesPage.assignAttributeValueButton).not.toBeVisible();
       await attributesPage.clickValueRequiredCheckbox();
       await attributesPage.changeAttributeVisibility();
-      await attributesPage.waitForNetworkIdle(() =>
-        attributesPage.clickSaveButton(),
-      );
+      await attributesPage.waitForNetworkIdleAfterAction(() => attributesPage.clickSaveButton());
       await attributesPage.expectSuccessBanner();
       await attributesPage.valueRequiredCheckbox.waitFor({
         state: "visible",
@@ -100,9 +96,7 @@ for (const attr of attributeClasses) {
       await attributesPage.selectAttributeInputType("REFERENCE");
       await attributesPage.selectAttributeEntityType(entity);
       await attributesPage.clickValueRequiredCheckbox();
-      await attributesPage.waitForNetworkIdle(() =>
-        attributesPage.clickSaveButton(),
-      );
+      await attributesPage.waitForNetworkIdleAfterAction(() => attributesPage.clickSaveButton());
       await attributesPage.expectSuccessBanner();
       await attributesPage.valueRequiredCheckbox.waitFor({
         state: "visible",
@@ -137,8 +131,9 @@ const attributesWithValuesToBeUpdated = [
 ];
 for (const attribute of attributesWithValuesToBeUpdated) {
   test(`TC: SALEOR_127 User should be able to update attribute values in existing ${attribute.name} attribute @e2e @attributes`, async () => {
-    await attributesPage.waitForNetworkIdle(() =>  attributesPage.gotoExistingAttributePage(attribute.id, attribute.name));
-
+    await attributesPage.waitForNetworkIdleAfterAction(() =>
+      attributesPage.gotoExistingAttributePage(attribute.id, attribute.name),
+    );
     await attributesPage.clickDeleteAttrValueButton(attribute.valueToBeDeleted);
     await expect(attributesPage.dialog).toBeVisible();
     await attributesPage.deleteAttributeValueDialog.deleteAttributeValue();
@@ -153,12 +148,9 @@ for (const attribute of attributesWithValuesToBeUpdated) {
       `new value for ${attribute.name}`,
     );
     await attributesPage.expectSuccessBanner();
-    await attributesPage.waitForNetworkIdle(() =>
-        attributesPage.clickSaveButton(),
-      );    await attributesPage.expectSuccessBanner();
-    await expect(attributesPage.attrValuesSection).not.toContainText(
-      attribute.valueToBeDeleted,
-    );
+    await attributesPage.waitForNetworkIdleAfterAction(() => attributesPage.clickSaveButton());
+    await attributesPage.expectSuccessBanner();
+    await expect(attributesPage.attrValuesSection).not.toContainText(attribute.valueToBeDeleted);
     await expect(attributesPage.attrValuesSection).toContainText(
       `updated value for ${attribute.name}`,
     );
@@ -170,18 +162,20 @@ for (const attribute of attributesWithValuesToBeUpdated) {
 
 for (const attr of ATTRIBUTES.attributesToBeUpdated) {
   test(`TC: SALEOR_128 User should be able to edit existing ${attr.name} attribute @e2e @attributes`, async () => {
-    await attributesPage.waitForNetworkIdle(() =>  attributesPage.gotoExistingAttributePage(attr.id, attr.name));
+    await attributesPage.waitForNetworkIdleAfterAction(() =>
+      attributesPage.gotoExistingAttributePage(attr.id, attr.name),
+    );
     await attributesPage.attributeDefaultLabelInput.clear();
     await attributesPage.typeAttributeDefaultLabel(`updated ${attr.name}`);
     await attributesPage.expandMetadataSection();
     await attributesPage.metadataAddFieldButton.click();
     await attributesPage.fillMetadataFields("new key", "new value");
-    await attributesPage.waitForNetworkIdle(() =>
-        attributesPage.clickSaveButton(),
-      );    await attributesPage.expectSuccessBanner();
-    await expect(
-      attributesPage.attributeSelect.getByRole("button"),
-    ).toHaveAttribute("aria-disabled", "true");
+    await attributesPage.waitForNetworkIdleAfterAction(() => attributesPage.clickSaveButton());
+    await attributesPage.expectSuccessBanner();
+    await expect(attributesPage.attributeSelect.getByRole("button")).toHaveAttribute(
+      "aria-disabled",
+      "true",
+    );
     await expect(attributesPage.metadataKeyInput).toHaveValue("new key");
     await expect(attributesPage.metadataValueInput).toHaveValue("new value");
     await expect(attributesPage.attributeDefaultLabelInput).toHaveValue(
@@ -210,26 +204,26 @@ for (const attribute of attributesToBeDeleted) {
       state: "visible",
       timeout: 10000,
     });
-    await attributesPage.waitForNetworkIdle(() =>
-        attributesPage.deleteAttributeDialog.deleteAttribute(),
-      );
+    await attributesPage.waitForNetworkIdleAfterAction(() =>
+      attributesPage.deleteAttributeDialog.deleteAttribute(),
+    );
     await attributesPage.waitForGrid();
     await expect(attributesPage.gridCanvas).not.toContainText(attribute.name);
   });
 }
 
 test("TC: SALEOR_130 Bulk delete attributes @e2e @attributes", async () => {
-  await attributesPage.gotoListView()
-  await attributesPage.waitForNetworkIdle(() => attributesPage.typeInSearchOnListView(
-    "e2e attribute to be bulk deleted",
-  ));
+  await attributesPage.gotoListView();
+  await attributesPage.waitForNetworkIdleAfterAction(() =>
+    attributesPage.typeInSearchOnListView("e2e attribute to be bulk deleted"),
+  );
   await attributesPage.clickGridCell(0, 0);
   await attributesPage.clickGridCell(0, 1);
   await attributesPage.clickGridCell(0, 2);
   await attributesPage.clickBulkDeleteGridRowsButton();
-  await attributesPage.waitForNetworkIdle(() =>
-        attributesPage.deleteAttributesInBulkDialog.deleteSelectedAttributes(),
-      );
+  await attributesPage.waitForNetworkIdleAfterAction(() =>
+    attributesPage.deleteAttributesInBulkDialog.deleteSelectedAttributes(),
+  );
   await attributesPage.expectSuccessBanner();
   await expect(attributesPage.emptyDataGridListView).toBeVisible();
 });

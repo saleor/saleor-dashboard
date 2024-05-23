@@ -21,7 +21,7 @@ for (const permission of permissionList) {
     const appDetailsPage = new AppDetailsPage(page);
 
     await page.goto(URL_LIST.homePage);
-    await mainMenuPage.waitForNetworkIdle(() =>mainMenuPage.openApps()),
+    await mainMenuPage.waitForNetworkIdleAfterAction(() => mainMenuPage.openApps());
     await mainMenuPage.waitForDOMToFullyLoad();
     await expect(appsPage.installExternalAppButton).not.toBeVisible();
 
@@ -33,9 +33,9 @@ for (const permission of permissionList) {
     for (const appList of appLists) {
       await expect(appList).toBeVisible();
     }
-    await appsPage.waitForNetworkIdle(() => appsPage.installedAppRow.first().click()),
+    await appsPage.waitForNetworkIdleAfterAction(() => appsPage.installedAppRow.first().click());
     await expect(appPage.appSettingsButton).toBeVisible();
-    await appsPage.waitForNetworkIdle(() => appPage.appSettingsButton.click()),
+    await appsPage.waitForNetworkIdleAfterAction(() => appPage.appSettingsButton.click());
     await expect(appDetailsPage.appDetailsSection).toBeVisible();
 
     const buttons = [

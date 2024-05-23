@@ -20,7 +20,7 @@ export class AddAddressDialog extends BasePage {
   }
 
   async clickConfirmButton() {
-    await this.waitForNetworkIdle(async () => {
+    await this.waitForNetworkIdleAfterAction(async () => {
       await this.submitButton.click();
     });
   }
