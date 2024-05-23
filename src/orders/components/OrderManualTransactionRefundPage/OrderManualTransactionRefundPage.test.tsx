@@ -117,6 +117,40 @@ describe("OrderManualTransactionRefundPage", () => {
       text: "Transaction action requested successfully",
     });
   });
+  it("should fail validation when refund amount is higher than transaction charged amount", async () => {
+    // Arrange
+    const transactions = [
+      {
+        id: "1",
+        name: "Transaction 1",
+        events: [],
+        actions: [TransactionActionEnum.REFUND],
+        chargedAmount: {
+          amount: 20,
+        },
+      },
+    ] as unknown as TransactionItemFragment[];
+
+    render(
+      <OrderManualTransactionRefundPage
+        currency="USD"
+        loading={false}
+        orderId="1"
+        transactions={transactions}
+      />,
+      { wrapper: getWrapper() },
+    );
+
+    // Act
+    await userEvent.click(screen.getByRole("radio", { name: /Transaction 1/i }));
+    await userEvent.type(screen.getByLabelText(/refund amount/i), "25");
+    await userEvent.click(screen.getByRole("button", { name: "save" }));
+
+    // Assert
+    expect(
+      screen.getByText("Provided amount cannot exceed charged amount for the selected transaction"),
+    ).toBeInTheDocument();
+  });
   it("should display skeleton when loading", async () => {
     // Arrange &&  Act
     render(
