@@ -7328,6 +7328,9 @@
   "kdRcqU": {
     "string": "Search customers..."
   },
+  "kfvvnM": {
+    "string": "Provided amount cannot exceed charged amount for the selected transaction"
+  },
   "kgVqk1": {
     "string": "Category name"
   },
