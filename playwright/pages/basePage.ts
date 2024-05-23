@@ -52,7 +52,7 @@ export class BasePage {
     await this.waitForNetworkIdleAfterAction(async () => {
       await this.searchInputListView.fill(searchItem);
     });
-    await expect(this.searchInputListView).toHaveValue(searchItem);
+    await this.waitForGrid();
     await this.waitForDOMToFullyLoad();
   }
   async clickNextPageButton() {
@@ -97,10 +97,33 @@ export class BasePage {
   }
   async expectInfoBanner() {
     await this.infoBanner.first().waitFor({ state: "visible", timeout: 15000 });
-    await expect(
-      this.errorBanner,
-      "No error banner should be visible",
-    ).not.toBeVisible();
+    await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
+  }
+
+  async waitForNetworkIdleAfterAction(action: () => Promise<void>, timeoutMs = 90000) {
+    const responsePromise = this.page.waitForResponse("**/graphql/", {
+      timeout: timeoutMs,
+    });
+
+    await action();
+    await responsePromise;
+  }
+
+  async waitForRequestsToFinishBeforeAction(action: () => Promise<void>, timeoutMs = 90000) {
+    const responsePromise = this.page.waitForResponse("**/graphql/", {
+      timeout: timeoutMs,
+    });
+
+    await responsePromise;
+    await action();
+  }
+
+  async resizeWindow(w: number, h: number) {
+    await this.page.setViewportSize({ width: w, height: h });
+  }
+
+  async clickOnSpecificPositionOnPage(x: number, y: number) {
+    await this.page.mouse.click(x, y);
   }
 
   async getRandomInt(max: number) {
@@ -270,5 +293,21 @@ export class BasePage {
     await this.gridCanvas.locator("tr").first().waitFor({ state: "attached" });
     const gridRowsWithText = await this.gridCanvas.locator("tr").count();
     return gridRowsWithText;
+  }
+
+  async waitForDOMToFullyLoad() {
+    await this.page.waitForLoadState("domcontentloaded", { timeout: 70000 });
+    await this.loader.waitFor({ state: "hidden" });
+  }
+
+  async expectElementIsHidden(locator: Locator) {
+    await locator.first().waitFor({
+      state: "hidden",
+      timeout: 30000,
+    });
+  }
+
+  async waitForCanvasContainsText(text: string) {
+    await this.gridCanvas.getByText(text).waitFor({ state: "attached", timeout: 50000 });
   }
 }

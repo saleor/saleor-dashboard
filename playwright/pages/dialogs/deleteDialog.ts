@@ -14,7 +14,9 @@ export class DeleteDialog {
   }
 
   async clickDeleteButton() {
-    await this.deleteButton.first().click();
+    await this.waitForNetworkIdleAfterAction(async () => {
+      await this.deleteButton.first().click();
+    });
     await this.deleteButton.waitFor({ state: "hidden" });
   }
   async clickConfirmDeletionCheckbox() {

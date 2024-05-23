@@ -68,7 +68,10 @@ export class GiftCardsPage extends BasePage {
     await this.resendCodeButton.click();
   }
   async gotoGiftCardsListView() {
-    await this.page.goto(URL_LIST.giftCards);
+    await this.waitForNetworkIdleAfterAction(async () => {
+      await this.page.goto(URL_LIST.giftCards);
+    });
+    await this.waitForDOMToFullyLoad();
   }
   async gotoExistingGiftCardView(giftCardId: string) {
     const existingGiftCardUrl = URL_LIST.giftCards + giftCardId;

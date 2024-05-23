@@ -54,9 +54,16 @@ export class ShippingRatesPage {
 
   async addFirstAvailableExcludedProduct() {
     await this.assignProductButton.click();
-    await this.addProductsDialog.productRowCheckbox.first().click();
-    await this.addProductsDialog.assignAndSaveButton.click();
-    await this.addProductsDialog.assignAndSaveButton.waitFor({
+    await this.assignProductsDialog.searchForProductInDialog(name);
+    await this.waitForDOMToFullyLoad();
+    await this.assignDialogProductList.waitFor({ state: "visible" });
+    await this.assignDialogProductRow.filter({ hasText: name }).waitFor({ state: "visible" });
+    await this.assignProductsDialog.selectProduct(name);
+    await expect(this.assignProductsDialog.assignAndSaveButton).toBeEnabled();
+    await this.waitForNetworkIdleAfterAction(() =>
+      this.assignProductsDialog.assignAndSaveButton.click(),
+    );
+    await this.assignProductsDialog.assignAndSaveButton.waitFor({
       state: "hidden",
       timeout: 5000,
     });

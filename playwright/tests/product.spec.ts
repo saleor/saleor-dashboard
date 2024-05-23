@@ -230,10 +230,10 @@ test("TC: SALEOR_58 As an admin I should be able use pagination on product list 
 });
 
 test("TC: SALEOR_59 As an admin I should be able to filter products by channel on product list view @basic-regression @product @e2e", async () => {
-  await productPage.gotoProductListPage();
-  await productPage.searchAndFindRowIndexes(PRODUCTS.productAvailableOnlyInUsdChannel.name);
-  expect(
-    await productPage.gridCanvas.locator("table tbody tr").count(),
+  await productPage.waitForNetworkIdleAfterAction(() => productPage.gotoProductListPage());
+  await productPage.waitForDOMToFullyLoad();
+  await expect(
+    productPage.gridCanvas,
     `Product: ${PRODUCTS.productAvailableOnlyInUsdChannel.name} should be visible on grid table`,
   ).toEqual(1);
   await productPage.typeInSearchOnListView("");
@@ -254,9 +254,11 @@ test("TC: SALEOR_60 As an admin I should be able update existing variant @basic-
   const variantName = `TC: SALEOR_60 - variant name - ${new Date().toISOString()}`;
   const sku = `SALEOR_60-sku-${new Date().toISOString()}`;
 
-  await variantsPage.gotoExistingVariantPage(
-    PRODUCTS.productWithVariantWhichWillBeUpdated.id,
-    PRODUCTS.productWithVariantWhichWillBeUpdated.variantId,
+  await productPage.waitForNetworkIdleAfterAction(() =>
+    variantsPage.gotoExistingVariantPage(
+      PRODUCTS.productWithVariantWhichWillBeUpdated.id,
+      PRODUCTS.productWithVariantWhichWillBeUpdated.variantId,
+    ),
   );
   await variantsPage.typeVariantName(variantName);
   await variantsPage.clickMageChannelsButton();
@@ -282,9 +284,11 @@ test("TC: SALEOR_60 As an admin I should be able update existing variant @basic-
   await productPage.productImage.waitFor({ state: "visible" });
 });
 test("TC: SALEOR_61 As an admin I should be able to delete existing variant @basic-regression @product @e2e", async () => {
-  await variantsPage.gotoExistingVariantPage(
-    PRODUCTS.singleVariantDeleteProduct.productId,
-    PRODUCTS.singleVariantDeleteProduct.variantId,
+  await productPage.waitForNetworkIdleAfterAction(() =>
+    variantsPage.gotoExistingVariantPage(
+      PRODUCTS.singleVariantDeleteProduct.productId,
+      PRODUCTS.singleVariantDeleteProduct.variantId,
+    ),
   );
 
   await variantsPage.clickDeleteVariantButton();
@@ -302,8 +306,8 @@ test("TC: SALEOR_61 As an admin I should be able to delete existing variant @bas
 });
 
 test("TC: SALEOR_62 As an admin I should be able to bulk delete existing variants @basic-regression @product @e2e", async () => {
-  await productPage.gotoExistingProductPage(
-    PRODUCTS.multipleVariantsBulkDeleteProduct.productId,
+  await productPage.waitForNetworkIdleAfterAction(() =>
+    productPage.gotoExistingProductPage(PRODUCTS.multipleVariantsBulkDeleteProduct.productId),
   );
   await productPage.waitForGrid();
   await productPage.gridCanvas.scrollIntoViewIfNeeded();

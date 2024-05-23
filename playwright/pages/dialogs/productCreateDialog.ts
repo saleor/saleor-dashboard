@@ -15,9 +15,11 @@ export class ProductCreateDialog {
   ) {
     this.page = page;
   }
-  async selectProductTypeWithVariants() {
-    await this.dialogProductTypeInput.fill("beer");
-    await this.promptedOptions.filter({ hasText: "Beer" }).click();
+
+  async selectProductTypeWithVariants(productType = "Beer") {
+    await this.waitForNetworkIdleAfterAction(() => this.dialogProductTypeInput.fill(productType));
+    await this.promptedOptions.filter({ hasText: productType }).waitFor({ state: "attached" });
+    await this.promptedOptions.filter({ hasText: productType }).click();
   }
   async clickConfirmButton() {
     await this.confirmButton.click();

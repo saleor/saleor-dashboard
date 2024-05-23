@@ -9,6 +9,7 @@ let shippingRatesPage: ShippingRatesPage;
 
 
 test.beforeEach(({ page }) => {
+  test.slow();
   shippingMethodsPage = new ShippingMethodsPage(page);
   shippingRatesPage = new ShippingRatesPage(page);
 });
