@@ -1,15 +1,13 @@
-import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { RadioTiles } from "@dashboard/components/RadioTiles/RadioTiles";
-import { hasPermissions } from "@dashboard/components/RequirePermissions";
-import { OrderDetailsFragment, PermissionEnum } from "@dashboard/graphql";
+import { OrderDetailsFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { orderRefundDialogMesages } from "./messages";
-import { calculateOrderLineRefundTotals, isEveryLineFullyRefunded } from "./utils";
+import { useOrderRefundDialog } from "./useOrderRefundDialog";
 
 interface OrderRefundDialogProps {
   order: OrderDetailsFragment;
@@ -19,8 +17,6 @@ interface OrderRefundDialogProps {
   onManualRefund: () => void;
 }
 
-type RefundType = "standard" | "manual" | "none";
-
 export const OrderRefundDialog = ({
   order,
   open,
@@ -28,52 +24,22 @@ export const OrderRefundDialog = ({
   onStandardRefund,
   onManualRefund,
 }: OrderRefundDialogProps) => {
-  const [selected, setSelected] = React.useState<RefundType>("none");
   const intl = useIntl();
-  const handleClose = () => {
-    setSelected("standard");
-    onClose();
-  };
-
-  const userPermissions = useUserPermissions();
-  const canCreateManualRefund = hasPermissions(userPermissions ?? [], [
-    PermissionEnum.HANDLE_PAYMENTS,
-  ]);
-  const canCreateStandardRefund = !isEveryLineFullyRefunded(calculateOrderLineRefundTotals(order));
-  const handleChangeRefundType = (val: string) => {
-    if (val === "standard" && canCreateStandardRefund) {
-      setSelected("standard");
-    }
-
-    if (val === "manual" && canCreateManualRefund) {
-      setSelected("manual");
-    }
-  };
-
-  React.useEffect(() => {
-    if (canCreateStandardRefund) {
-      setSelected("standard");
-
-      return;
-    }
-
-    if (canCreateManualRefund) {
-      setSelected("manual");
-
-      return;
-    }
-
-    setSelected("none");
-  }, [canCreateStandardRefund, canCreateManualRefund]);
+  const {
+    selectedRefundType,
+    handleChangeRefundType,
+    canCreateManualRefund,
+    canCreateStandardRefund,
+  } = useOrderRefundDialog(order);
 
   return (
-    <DashboardModal open={open} onChange={handleClose}>
+    <DashboardModal open={open} onChange={onClose}>
       <DashboardModal.Content __width="400px">
         <DashboardModal.Title>
           {intl.formatMessage(orderRefundDialogMesages.title)}
         </DashboardModal.Title>
         <Text>{intl.formatMessage(orderRefundDialogMesages.subtitle)}</Text>
-        <RadioTiles asChild value={selected} onValueChange={handleChangeRefundType}>
+        <RadioTiles asChild value={selectedRefundType} onValueChange={handleChangeRefundType}>
           <Box
             as="fieldset"
             borderWidth={0}
@@ -89,7 +55,7 @@ export const OrderRefundDialog = ({
                   <RadioTiles.RadioTile
                     value={"standard"}
                     data-test-id="standard-refund"
-                    checked={selected === "standard"}
+                    checked={selectedRefundType === "standard"}
                     title={intl.formatMessage(orderRefundDialogMesages.standardRefundTitle)}
                     description={intl.formatMessage(
                       orderRefundDialogMesages.standardRefundSubtitle,
@@ -108,7 +74,7 @@ export const OrderRefundDialog = ({
                   <RadioTiles.RadioTile
                     value={"manual"}
                     data-test-id="manual-refund"
-                    checked={selected === "manual"}
+                    checked={selectedRefundType === "manual"}
                     title={intl.formatMessage(orderRefundDialogMesages.manualRefundTitle)}
                     description={intl.formatMessage(orderRefundDialogMesages.manualRefundSubtitle)}
                     disabled={!canCreateManualRefund}
@@ -126,7 +92,7 @@ export const OrderRefundDialog = ({
             <Text fontWeight="medium">{intl.formatMessage(buttonMessages.cancel)}</Text>
           </Button>
           <Button
-            onClick={selected === "standard" ? onStandardRefund : onManualRefund}
+            onClick={selectedRefundType === "standard" ? onStandardRefund : onManualRefund}
             disabled={!canCreateManualRefund && !canCreateStandardRefund}
           >
             <Text fontWeight="medium" color="buttonDefaultPrimary">
