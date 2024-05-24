@@ -50,24 +50,48 @@ export const searchCategoriesMock = {
             node: {
               id: "Q2F0ZWdvcnk6Nw==",
               name: "Accessories",
+              level: 0,
+              parent: null,
+              ancestors: {
+                edges: [],
+              },
+              __typename: "Category",
             },
           },
           {
             node: {
               id: "Q2F0ZWdvcnk6OA==",
               name: "Groceries",
+              level: 0,
+              parent: null,
+              ancestors: {
+                edges: [],
+              },
+              __typename: "Category",
             },
           },
           {
             node: {
               id: "Q2F0ZWdvcnk6OQ==",
               name: "Apparel",
+              level: 0,
+              parent: null,
+              ancestors: {
+                edges: [],
+              },
+              __typename: "Category",
             },
           },
           {
             node: {
               id: "Q2F0ZWdvcnk6MTA=",
               name: "T-shirts",
+              level: 0,
+              parent: null,
+              ancestors: {
+                edges: [],
+              },
+              __typename: "Category",
             },
           },
         ],
@@ -144,6 +168,7 @@ export const searchProductsMock = {
                 url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjc=/256/",
                 __typename: "Image",
               },
+              channelListings: [],
               variants: [
                 {
                   id: "UHJvZHVjdFZhcmlhbnQ6MjAz",
@@ -273,6 +298,7 @@ export const searchProductsMock = {
                 url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjk=/256/",
                 __typename: "Image",
               },
+              channelListings: [],
               variants: [
                 {
                   id: "UHJvZHVjdFZhcmlhbnQ6MjA5",
@@ -402,6 +428,7 @@ export const searchProductsMock = {
                 url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjE0/256/",
                 __typename: "Image",
               },
+              channelListings: [],
               variants: [
                 {
                   id: "UHJvZHVjdFZhcmlhbnQ6MjI1",
@@ -531,6 +558,7 @@ export const searchProductsMock = {
                 url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjQ2/256/",
                 __typename: "Image",
               },
+              channelListings: [],
               variants: [
                 {
                   id: "UHJvZHVjdFZhcmlhbnQ6Mjk5",

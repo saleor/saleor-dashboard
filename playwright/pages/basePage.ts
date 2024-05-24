@@ -26,6 +26,7 @@ export class BasePage {
     readonly searchInputListView = page.getByTestId("search-input"),
     readonly emptyDataGridListView = page.getByTestId("empty-data-grid-text"),
     readonly dialog = page.getByRole("dialog"),
+    readonly submitButton = page.getByTestId("submit"),
     readonly giftCardInTable = page.locator('[href*="/dashboard/gift-cards/.*]'),
     readonly selectAllCheckbox = page.getByTestId("select-all-checkbox").locator("input"),
   ) {
@@ -63,11 +64,16 @@ export class BasePage {
     await this.deleteButton.click();
   }
 
+  async clickSubmitButton() {
+    await this.submitButton.click();
+  }
+
   async typeInSearchOnListView(searchItem: string) {
-    await this.waitForNetworkIdle(async () => {
+    await this.waitForNetworkIdleAfterAction(async () => {
       await this.searchInputListView.fill(searchItem);
-      await this.waitForDOMToFullyLoad();
     });
+    await this.waitForGrid();
+    await this.waitForDOMToFullyLoad();
   }
 
   async clickNextPageButton() {
@@ -113,13 +119,22 @@ export class BasePage {
     await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
   }
 
-  async waitForNetworkIdle(action: () => Promise<void>, timeoutMs = 60000) {
+  async waitForNetworkIdleAfterAction(action: () => Promise<void>, timeoutMs = 90000) {
     const responsePromise = this.page.waitForResponse("**/graphql/", {
       timeout: timeoutMs,
     });
 
     await action();
     await responsePromise;
+  }
+
+  async waitForRequestsToFinishBeforeAction(action: () => Promise<void>, timeoutMs = 90000) {
+    const responsePromise = this.page.waitForResponse("**/graphql/", {
+      timeout: timeoutMs,
+    });
+
+    await responsePromise;
+    await action();
   }
 
   async resizeWindow(w: number, h: number) {
@@ -287,6 +302,7 @@ export class BasePage {
 
   async waitForDOMToFullyLoad() {
     await this.page.waitForLoadState("domcontentloaded", { timeout: 70000 });
+    await this.loader.waitFor({ state: "hidden" });
   }
 
   async expectElementIsHidden(locator: Locator) {

@@ -130,6 +130,7 @@ export const OrderTransactionSummary: React.FC<OrderTransactionSummaryProps> = (
               type="number"
               value={amountField.value}
               onChange={amountField.onChange}
+              onBlur={event => amountField.onChange(parseFloat(event.target.value))}
               error={!!amountError}
               __width={100}
               endAdornment={currency}

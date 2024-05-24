@@ -104,6 +104,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     columnCategories,
     recentlyAddedColumn,
   } = useColumns({
+    gridName: "product_list",
     staticColumns: memoizedStaticColumns,
     columnCategories: productListDynamicColumnAdapter({
       availableAttributesData: getAvailableAttributesData({

@@ -39,6 +39,12 @@ export const userPassowrdChangeMutation = gql`
 export const userAccountUpdateMutation = gql`
   mutation UserAccountUpdate($input: AccountInput!) {
     accountUpdate(input: $input) {
+      user {
+        metadata {
+          key
+          value
+        }
+      }
       errors {
         ...AccountError
       }

@@ -215,7 +215,7 @@ export const product: (
       ],
     },
   ],
-  availableForPurchase: null,
+  availableForPurchaseAt: null,
   category: {
     __typename: "Category",
     id: "Q2F0ZWdvcnk6MQ==",
@@ -224,7 +224,7 @@ export const product: (
   channelListings: [
     {
       __typename: "ProductChannelListing",
-      availableForPurchase: null,
+      availableForPurchaseAt: null,
       channel: channelsList[0],
       isAvailableForPurchase: false,
       isPublished: true,
@@ -250,12 +250,12 @@ export const product: (
           },
         },
       },
-      publicationDate: "2020-07-14",
+      publishedAt: "2020-07-14",
       visibleInListings: true,
     },
     {
       __typename: "ProductChannelListing",
-      availableForPurchase: null,
+      availableForPurchaseAt: null,
       channel: channelsList[1],
       isAvailableForPurchase: false,
       isPublished: false,
@@ -281,7 +281,7 @@ export const product: (
           },
         },
       },
-      publicationDate: "2020-07-30",
+      publishedAt: "2020-07-30",
       visibleInListings: true,
     },
   ],
@@ -577,7 +577,7 @@ export const product: (
       },
     ],
   },
-  publicationDate: "2018-08-25T18:45:54.125Z",
+  publishedAt: "2018-08-25T18:45:54.125Z",
   purchaseCost: {
     __typename: "MoneyRange",
     start: {
@@ -1237,7 +1237,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1268,12 +1268,12 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-14",
+        publishedAt: "2020-07-14",
         visibleInListings: true,
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1304,7 +1304,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-30",
+        publishedAt: "2020-07-30",
         visibleInListings: true,
       },
     ],
@@ -1332,7 +1332,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1363,12 +1363,12 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-14",
+        publishedAt: "2020-07-14",
         visibleInListings: false,
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1399,7 +1399,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-30",
+        publishedAt: "2020-07-30",
         visibleInListings: false,
       },
     ],
@@ -1427,7 +1427,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1458,12 +1458,12 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-14",
+        publishedAt: "2020-07-14",
         visibleInListings: false,
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1494,7 +1494,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-30",
+        publishedAt: "2020-07-30",
         visibleInListings: false,
       },
     ],
@@ -1544,7 +1544,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1575,12 +1575,12 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-14",
+        publishedAt: "2020-07-14",
         visibleInListings: false,
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1611,7 +1611,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-30",
+        publishedAt: "2020-07-30",
         visibleInListings: false,
       },
     ],
@@ -1661,7 +1661,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1692,12 +1692,12 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-14",
+        publishedAt: "2020-07-14",
         visibleInListings: false,
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1728,7 +1728,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-30",
+        publishedAt: "2020-07-30",
         visibleInListings: false,
       },
     ],
@@ -1778,7 +1778,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1809,13 +1809,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-14",
+        publishedAt: "2020-07-14",
         visibleInListings: false,
       },
 
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1846,7 +1846,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-30",
+        publishedAt: "2020-07-30",
         visibleInListings: false,
       },
     ],
@@ -1896,7 +1896,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1927,12 +1927,12 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-14",
+        publishedAt: "2020-07-14",
         visibleInListings: false,
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -1963,7 +1963,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-30",
+        publishedAt: "2020-07-30",
         visibleInListings: false,
       },
     ],
@@ -2013,7 +2013,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2044,12 +2044,12 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-14",
+        publishedAt: "2020-07-14",
         visibleInListings: false,
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2080,7 +2080,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-30",
+        publishedAt: "2020-07-30",
         visibleInListings: false,
       },
     ],
@@ -2130,7 +2130,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2161,12 +2161,12 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-14",
+        publishedAt: "2020-07-14",
         visibleInListings: true,
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2197,7 +2197,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-30",
+        publishedAt: "2020-07-30",
         visibleInListings: true,
       },
     ],
@@ -2247,7 +2247,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2278,12 +2278,12 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-14",
+        publishedAt: "2020-07-14",
         visibleInListings: false,
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2314,7 +2314,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-30",
+        publishedAt: "2020-07-30",
         visibleInListings: false,
       },
     ],
@@ -2364,7 +2364,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2395,12 +2395,12 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-14",
+        publishedAt: "2020-07-14",
         visibleInListings: true,
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2431,7 +2431,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-30",
+        publishedAt: "2020-07-30",
         visibleInListings: true,
       },
     ],
@@ -2481,7 +2481,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2512,12 +2512,12 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-14",
+        publishedAt: "2020-07-14",
         visibleInListings: true,
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2548,7 +2548,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-30",
+        publishedAt: "2020-07-30",
         visibleInListings: true,
       },
     ],
@@ -2598,7 +2598,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2629,12 +2629,12 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-14",
+        publishedAt: "2020-07-14",
         visibleInListings: true,
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2665,7 +2665,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-30",
+        publishedAt: "2020-07-30",
         visibleInListings: true,
       },
     ],
@@ -2715,7 +2715,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2746,12 +2746,12 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-14",
+        publishedAt: "2020-07-14",
         visibleInListings: false,
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2782,7 +2782,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-30",
+        publishedAt: "2020-07-30",
         visibleInListings: false,
       },
     ],
@@ -2832,7 +2832,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2863,12 +2863,12 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-14",
+        publishedAt: "2020-07-14",
         visibleInListings: false,
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2899,7 +2899,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-30",
+        publishedAt: "2020-07-30",
         visibleInListings: false,
       },
     ],
@@ -2949,7 +2949,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2980,12 +2980,12 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-14",
+        publishedAt: "2020-07-14",
         visibleInListings: true,
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -3016,7 +3016,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-30",
+        publishedAt: "2020-07-30",
         visibleInListings: true,
       },
     ],
@@ -3066,7 +3066,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -3097,12 +3097,12 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-14",
+        publishedAt: "2020-07-14",
         visibleInListings: false,
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -3133,7 +3133,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-30",
+        publishedAt: "2020-07-30",
         visibleInListings: false,
       },
     ],
@@ -3183,7 +3183,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -3214,12 +3214,12 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-14",
+        publishedAt: "2020-07-14",
         visibleInListings: true,
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -3250,7 +3250,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-30",
+        publishedAt: "2020-07-30",
         visibleInListings: true,
       },
     ],
@@ -3300,7 +3300,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -3331,12 +3331,12 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-14",
+        publishedAt: "2020-07-14",
         visibleInListings: true,
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -3367,7 +3367,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-30",
+        publishedAt: "2020-07-30",
         visibleInListings: true,
       },
     ],
@@ -3417,7 +3417,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     channelListings: [
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -3448,12 +3448,12 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-14",
+        publishedAt: "2020-07-14",
         visibleInListings: true,
       },
       {
         __typename: "ProductChannelListing",
-        availableForPurchase: null,
+        availableForPurchaseAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -3484,7 +3484,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
             },
           },
         },
-        publicationDate: "2020-07-30",
+        publishedAt: "2020-07-30",
         visibleInListings: true,
       },
     ],
@@ -3676,7 +3676,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
         id: "2",
         __typename: "ProductChannelListing",
         isPublished: false,
-        publicationDate: null,
+        publishedAt: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -3688,7 +3688,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
         id: "2",
         __typename: "ProductChannelListing",
         isPublished: true,
-        publicationDate: "2022-01-21",
+        publishedAt: "2022-01-21",
         channel: {
           __typename: "Channel",
           currencyCode: "USD",

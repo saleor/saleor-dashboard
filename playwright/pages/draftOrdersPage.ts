@@ -60,6 +60,7 @@ export class DraftOrdersPage extends BasePage {
 
   async clickAddShippingCarrierButton() {
     await this.addShippingCarrierLink.click();
+    await this.waitForDOMToFullyLoad();
   }
 
   async clickFinalizeButton() {

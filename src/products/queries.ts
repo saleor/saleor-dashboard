@@ -119,6 +119,9 @@ export const productDetailsQuery = gql`
   ) {
     product(id: $id, channel: $channel) {
       ...Product
+      category {
+        ...CategoryWithAncestors
+      }
     }
   }
 `;
@@ -190,7 +193,7 @@ export const productVariantCreateQuery = gql`
       }
       channelListings {
         isPublished
-        publicationDate
+        publishedAt
         channel {
           id
           name

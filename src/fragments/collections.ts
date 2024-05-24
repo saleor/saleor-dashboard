@@ -6,7 +6,7 @@ export const collectionFragment = gql`
     name
     channelListings {
       isPublished
-      publicationDate
+      publishedAt
       channel {
         id
         name

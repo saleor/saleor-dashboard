@@ -90,4 +90,8 @@ export const messages = defineMessages({
     defaultMessage: "Manage Channel Availability",
     description: "channel availability dialog header",
   },
+  productUnavailable: {
+    id: "Uwo+ai",
+    defaultMessage: "Product unavailable in discount channels",
+  },
 });

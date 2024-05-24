@@ -250,6 +250,25 @@ export const CategoryDetailsFragmentDoc = gql`
   }
 }
     ${MetadataFragmentDoc}`;
+export const CategoryWithAncestorsFragmentDoc = gql`
+    fragment CategoryWithAncestors on Category {
+  id
+  name
+  parent {
+    id
+    name
+  }
+  level
+  ancestors(first: 1) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
 export const ChannelErrorFragmentDoc = gql`
     fragment ChannelError on ChannelError {
   code
@@ -263,7 +282,7 @@ export const CollectionFragmentDoc = gql`
   name
   channelListings {
     isPublished
-    publicationDate
+    publishedAt
     channel {
       id
       name
@@ -289,9 +308,9 @@ ${MetadataFragmentDoc}`;
 export const ChannelListingProductWithoutPricingFragmentDoc = gql`
     fragment ChannelListingProductWithoutPricing on ProductChannelListing {
   isPublished
-  publicationDate
+  publishedAt
   isAvailableForPurchase
-  availableForPurchase
+  availableForPurchaseAt
   visibleInListings
   channel {
     id
@@ -1627,6 +1646,13 @@ export const OrderGrantedRefundFragmentDoc = gql`
     id
     name
   }
+  lines {
+    id
+    quantity
+    orderLine {
+      id
+    }
+  }
 }
     ${UserBaseAvatarFragmentDoc}`;
 export const OrderDiscountFragmentDoc = gql`
@@ -2333,7 +2359,7 @@ export const PageDetailsFragmentDoc = gql`
   content
   seoTitle
   seoDescription
-  publicationDate
+  publishedAt
 }
     ${PageFragmentDoc}
 ${PageAttributesFragmentDoc}
@@ -2764,7 +2790,7 @@ export const ProductVariantFragmentDoc = gql`
     }
     channelListings {
       id
-      publicationDate
+      publishedAt
       isPublished
       channel {
         id
@@ -12181,12 +12207,12 @@ export function useOrderRefundDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQ
 export type OrderRefundDataQueryHookResult = ReturnType<typeof useOrderRefundDataQuery>;
 export type OrderRefundDataLazyQueryHookResult = ReturnType<typeof useOrderRefundDataLazyQuery>;
 export type OrderRefundDataQueryResult = Apollo.QueryResult<Types.OrderRefundDataQuery, Types.OrderRefundDataQueryVariables>;
-export const OrderTransationsDataDocument = gql`
-    query OrderTransationsData($orderId: ID!) {
+export const OrderTransactionsDataDocument = gql`
+    query OrderTransactionsData($orderId: ID!) {
   order(id: $orderId) {
     id
     transactions {
-      ...TransactionBaseItem
+      ...TransactionItem
     }
     total {
       gross {
@@ -12195,36 +12221,36 @@ export const OrderTransationsDataDocument = gql`
     }
   }
 }
-    ${TransactionBaseItemFragmentDoc}
+    ${TransactionItemFragmentDoc}
 ${MoneyFragmentDoc}`;
 
 /**
- * __useOrderTransationsDataQuery__
+ * __useOrderTransactionsDataQuery__
  *
- * To run a query within a React component, call `useOrderTransationsDataQuery` and pass it any options that fit your needs.
- * When your component renders, `useOrderTransationsDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useOrderTransactionsDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOrderTransactionsDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useOrderTransationsDataQuery({
+ * const { data, loading, error } = useOrderTransactionsDataQuery({
  *   variables: {
  *      orderId: // value for 'orderId'
  *   },
  * });
  */
-export function useOrderTransationsDataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderTransationsDataQuery, Types.OrderTransationsDataQueryVariables>) {
+export function useOrderTransactionsDataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderTransactionsDataQuery, Types.OrderTransactionsDataQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.OrderTransationsDataQuery, Types.OrderTransationsDataQueryVariables>(OrderTransationsDataDocument, options);
+        return ApolloReactHooks.useQuery<Types.OrderTransactionsDataQuery, Types.OrderTransactionsDataQueryVariables>(OrderTransactionsDataDocument, options);
       }
-export function useOrderTransationsDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderTransationsDataQuery, Types.OrderTransationsDataQueryVariables>) {
+export function useOrderTransactionsDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderTransactionsDataQuery, Types.OrderTransactionsDataQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.OrderTransationsDataQuery, Types.OrderTransationsDataQueryVariables>(OrderTransationsDataDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.OrderTransactionsDataQuery, Types.OrderTransactionsDataQueryVariables>(OrderTransactionsDataDocument, options);
         }
-export type OrderTransationsDataQueryHookResult = ReturnType<typeof useOrderTransationsDataQuery>;
-export type OrderTransationsDataLazyQueryHookResult = ReturnType<typeof useOrderTransationsDataLazyQuery>;
-export type OrderTransationsDataQueryResult = Apollo.QueryResult<Types.OrderTransationsDataQuery, Types.OrderTransationsDataQueryVariables>;
+export type OrderTransactionsDataQueryHookResult = ReturnType<typeof useOrderTransactionsDataQuery>;
+export type OrderTransactionsDataLazyQueryHookResult = ReturnType<typeof useOrderTransactionsDataLazyQuery>;
+export type OrderTransactionsDataQueryResult = Apollo.QueryResult<Types.OrderTransactionsDataQuery, Types.OrderTransactionsDataQueryVariables>;
 export const ChannelUsabilityDataDocument = gql`
     query ChannelUsabilityData($channel: String!) {
   products(channel: $channel) {
@@ -15143,9 +15169,13 @@ export const ProductDetailsDocument = gql`
     query ProductDetails($id: ID!, $channel: String, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   product(id: $id, channel: $channel) {
     ...Product
+    category {
+      ...CategoryWithAncestors
+    }
   }
 }
-    ${ProductFragmentDoc}`;
+    ${ProductFragmentDoc}
+${CategoryWithAncestorsFragmentDoc}`;
 
 /**
  * __useProductDetailsQuery__
@@ -15291,7 +15321,7 @@ export const ProductVariantCreateDataDocument = gql`
     }
     channelListings {
       isPublished
-      publicationDate
+      publishedAt
       channel {
         id
         name
@@ -15817,8 +15847,7 @@ export const SearchCategoriesDocument = gql`
   search: categories(after: $after, first: $first, filter: {search: $query}) {
     edges {
       node {
-        id
-        name
+        ...CategoryWithAncestors
       }
     }
     pageInfo {
@@ -15826,7 +15855,8 @@ export const SearchCategoriesDocument = gql`
     }
   }
 }
-    ${PageInfoFragmentDoc}`;
+    ${CategoryWithAncestorsFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useSearchCategoriesQuery__
@@ -16237,6 +16267,13 @@ export const SearchProductsDocument = gql`
         name
         thumbnail {
           url
+        }
+        channelListings {
+          channel {
+            id
+            name
+            currencyCode
+          }
         }
         variants {
           id
@@ -17491,6 +17528,12 @@ export type UserPassowrdChangeMutationOptions = Apollo.BaseMutationOptions<Types
 export const UserAccountUpdateDocument = gql`
     mutation UserAccountUpdate($input: AccountInput!) {
   accountUpdate(input: $input) {
+    user {
+      metadata {
+        key
+        value
+      }
+    }
     errors {
       ...AccountError
     }

@@ -137,6 +137,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
     selectedColumns,
     recentlyAddedColumn,
   } = useColumns({
+    gridName: "variants",
     staticColumns: memoizedStaticColumns,
     columnCategories: [channelCategory, availabilityCategory, attributeCategory, warehouseCategory],
     selectedColumns: columnSettings ?? [],

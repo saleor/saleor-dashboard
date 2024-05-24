@@ -161,8 +161,7 @@ test("TC: SALEOR_46 As an admin, I should be able to update a product by uploadi
     "Newly added single image should be present",
   ).toEqual(1);
 });
-// blocked by bug https://github.com/saleor/saleor-dashboard/issues/4368
-test.skip("TC: SALEOR_56 As an admin, I should be able to export products from single channel as CSV file @basic-regression @product @e2e", async () => {
+test("TC: SALEOR_56 As an admin, I should be able to export products from single channel as CSV file @basic-regression @product @e2e", async () => {
   await productPage.gotoProductListPage();
   await productPage.waitForDOMToFullyLoad();
   await productPage.clickCogShowMoreButtonButton();
@@ -170,7 +169,7 @@ test.skip("TC: SALEOR_56 As an admin, I should be able to export products from s
   await productPage.exportProductsDialog.clickChannelsAccordion();
   await productPage.exportProductsDialog.checkChannelCheckbox("PLN");
   await productPage.exportProductsDialog.clickNextButton();
-  await productPage.exportProductsDialog.clickExportSearchedProductsRadioButton();
+  await productPage.exportProductsDialog.clickExportAllProductsRadioButton();
   await productPage.exportProductsDialog.clickSubmitButton();
   await productPage.expectInfoBanner();
   await mailpitService.checkDoesUserReceivedExportedData(
@@ -216,7 +215,7 @@ test("TC: SALEOR_58 As an admin I should be able use pagination on product list 
   ).toContainText(firstPageProductName);
 });
 test("TC: SALEOR_59 As an admin I should be able to filter products by channel on product list view @basic-regression @product @e2e", async () => {
-  await productPage.waitForNetworkIdle(() => productPage.gotoProductListPage());
+  await productPage.waitForNetworkIdleAfterAction(() => productPage.gotoProductListPage());
   await productPage.waitForDOMToFullyLoad();
   await expect(
     productPage.gridCanvas,
@@ -239,7 +238,7 @@ test("TC: SALEOR_60 As an admin I should be able update existing variant @basic-
   const variantName = `TC: SALEOR_60 - variant name - ${new Date().toISOString()}`;
   const sku = `SALEOR_60-sku-${new Date().toISOString()}`;
 
-  await productPage.waitForNetworkIdle(() =>
+  await productPage.waitForNetworkIdleAfterAction(() =>
     variantsPage.gotoExistingVariantPage(
       PRODUCTS.productWithVariantWhichWillBeUpdated.id,
       PRODUCTS.productWithVariantWhichWillBeUpdated.variantId,
@@ -269,7 +268,7 @@ test("TC: SALEOR_60 As an admin I should be able update existing variant @basic-
   await productPage.productImage.waitFor({ state: "visible" });
 });
 test("TC: SALEOR_61 As an admin I should be able to delete existing variant @basic-regression @product @e2e", async () => {
-  await productPage.waitForNetworkIdle(() =>
+  await productPage.waitForNetworkIdleAfterAction(() =>
     variantsPage.gotoExistingVariantPage(
       PRODUCTS.singleVariantDeleteProduct.productId,
       PRODUCTS.singleVariantDeleteProduct.variantId,
@@ -288,7 +287,7 @@ test("TC: SALEOR_61 As an admin I should be able to delete existing variant @bas
   ).toContain(PRODUCTS.singleVariantDeleteProduct.productId);
 });
 test("TC: SALEOR_62 As an admin I should be able to bulk delete existing variants @basic-regression @product @e2e", async () => {
-  await productPage.waitForNetworkIdle(() =>
+  await productPage.waitForNetworkIdleAfterAction(() =>
     productPage.gotoExistingProductPage(PRODUCTS.multipleVariantsBulkDeleteProduct.productId),
   );
   await productPage.waitForGrid();

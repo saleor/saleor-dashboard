@@ -12,8 +12,8 @@ export const variantDetailsChannelsAvailabilityCardMessages = defineMessages({
     description: "VariantDetailsChannelsAvailabilityCard subtitle",
   },
   itemSubtitlePublished: {
-    id: "rJ3lkW",
-    defaultMessage: "Published since {publicationDate}",
+    id: "0ReyKr",
+    defaultMessage: "Published since {publishedAt}",
     description: "VariantDetailsChannelsAvailabilityCard item subtitle published",
   },
   itemSubtitleHidden: {

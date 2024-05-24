@@ -1,6 +1,7 @@
 import {
   OrderDetailsGrantRefundDocument,
   OrderDetailsGrantRefundFragment,
+  OrderGrantRefundUpdateErrorCode,
   useOrderDetailsGrantRefundQuery,
   useOrderGrantRefundEditMutation,
   useOrderSendRefundForGrantedRefundMutation,
@@ -14,6 +15,10 @@ import OrderTransactionRefundPage, {
 } from "@dashboard/orders/components/OrderTransactionRefundPage/OrderTransactionRefundPage";
 import { orderUrl } from "@dashboard/orders/urls";
 import React, { useState } from "react";
+import { useIntl } from "react-intl";
+
+import { prepareRefundAddLines } from "../OrderTransactionRefundCreate/handlers";
+import { transactionRefundEditMessages } from "./messages";
 
 interface OrderTransactionRefundProps {
   orderId: string;
@@ -23,6 +28,7 @@ interface OrderTransactionRefundProps {
 const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({ orderId, refundId }) => {
   const notify = useNotifier();
   const navigate = useNavigator();
+  const intl = useIntl();
 
   const [linesErrors, setLinesErrors] = useState<OrderTransactionRefundError[]>([]);
 
@@ -40,6 +46,7 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({ orderId
           status: "success",
           text: "Saved draft",
         });
+        setLinesErrors([]);
       }
     },
     update(cache, { data }) {
@@ -59,28 +66,24 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({ orderId
       return;
     }
 
+    if (submitData.amount === 0) {
+      setLinesErrors([
+        {
+          code: OrderGrantRefundUpdateErrorCode.REQUIRED,
+          field: "amount",
+          message: intl.formatMessage(transactionRefundEditMessages.noAmountError),
+          lines: [],
+        },
+      ]);
+
+      return;
+    }
+
     const { amount, reason, linesToRefund, includeShipping, transactionId } = submitData;
 
-    const dirtyLinesToRefund = linesToRefund.filter(item => item.isDirty);
-
-    const toAdd = dirtyLinesToRefund.map(line => ({
-      quantity: line.quantity,
-      reason: line.reason,
-      id: data.order!.lines[line.row].id,
-    }));
-
-    const toRemove =
-      draftRefund.lines?.reduce<string[]>((acc, line) => {
-        dirtyLinesToRefund.forEach(qty => {
-          const orderLine = data.order!.lines[qty.row];
-
-          if (line.orderLine.id === orderLine.id && !acc.includes(line.id)) {
-            acc.push(line.id);
-          }
-        });
-
-        return acc;
-      }, []) ?? [];
+    const draftRefundLines = draftRefund.lines ?? [];
+    const toRemove = draftRefundLines.map(line => line.id);
+    const toAdd = prepareRefundAddLines({ linesToRefund, data });
 
     const result = await updateRefund({
       variables: {
