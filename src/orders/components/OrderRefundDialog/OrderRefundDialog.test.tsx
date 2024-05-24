@@ -1,14 +1,23 @@
+import { PermissionEnum } from "@dashboard/graphql";
+import { order as orderMock } from "@dashboard/orders/fixtures";
 import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 
 import { OrderRefundDialog } from "./OrderRefundDialog";
+
+const order = orderMock("");
 
 jest.mock("react-intl", () => ({
   useIntl: jest.fn(() => ({
     formatMessage: jest.fn(x => x.defaultMessage),
   })),
   defineMessages: jest.fn(x => x),
+  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
 }));
+jest.mock("@dashboard/auth/hooks/useUserPermissions", () => ({
+  useUserPermissions: jest.fn(() => [{ code: PermissionEnum.HANDLE_PAYMENTS }]),
+}));
+
 describe("OrderRefundDialog", () => {
   it("renders the dialog when open is true", () => {
     // Arrange
@@ -17,6 +26,7 @@ describe("OrderRefundDialog", () => {
       onClose: jest.fn(),
       onStandardRefund: jest.fn(),
       onManualRefund: jest.fn(),
+      order,
     };
 
     // Act
@@ -34,6 +44,7 @@ describe("OrderRefundDialog", () => {
       onClose: jest.fn(),
       onStandardRefund: jest.fn(),
       onManualRefund: jest.fn(),
+      order,
     };
 
     // Act
@@ -52,6 +63,7 @@ describe("OrderRefundDialog", () => {
       onClose: jest.fn(),
       onStandardRefund: jest.fn(),
       onManualRefund: jest.fn(),
+      order,
     };
 
     // Act
@@ -71,6 +83,7 @@ describe("OrderRefundDialog", () => {
       onClose: jest.fn(),
       onStandardRefund: jest.fn(),
       onManualRefund: jest.fn(),
+      order,
     };
 
     // Act
@@ -89,6 +102,7 @@ describe("OrderRefundDialog", () => {
       onClose: jest.fn(),
       onStandardRefund: jest.fn(),
       onManualRefund: jest.fn(),
+      order,
     };
 
     // Act

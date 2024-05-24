@@ -435,6 +435,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         }
       />
       <OrderRefundDialog
+        order={data?.order}
         open={params.action === "add-refund"}
         onClose={closeModal}
         onStandardRefund={() => navigate(orderTransactionRefundUrl(id), { replace: true })}
