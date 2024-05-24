@@ -180,8 +180,7 @@ test("TC: SALEOR_56 As an admin, I should be able to export products from single
 test("TC: SALEOR_57 As an admin, I should be able to search products on list view @basic-regression @product @e2e", async () => {
   await productPage.gotoProductListPage();
   await productPage.waitForDOMToFullyLoad();
-  await productPage.typeInSearchOnListView(PRODUCTS.productToAddVariants.name);
-  await productPage.waitForGrid();
+  await productPage.searchAndFindRowIndexes(PRODUCTS.productToAddVariants.name);
   await productPage.checkListRowsBasedOnContainingText([PRODUCTS.productToAddVariants.name]);
   expect(
     await productPage.gridCanvas.locator("table tbody tr").count(),
@@ -216,8 +215,7 @@ test("TC: SALEOR_58 As an admin I should be able use pagination on product list 
 });
 test("TC: SALEOR_59 As an admin I should be able to filter products by channel on product list view @basic-regression @product @e2e", async () => {
   await productPage.gotoProductListPage();
-  await productPage.typeInSearchOnListView(PRODUCTS.productAvailableOnlyInUsdChannel.name);
-  await productPage.findRowIndexBasedOnText([PRODUCTS.productAvailableOnlyInUsdChannel.name]);
+  await productPage.searchAndFindRowIndexes(PRODUCTS.productAvailableOnlyInUsdChannel.name);
   expect(
     await productPage.gridCanvas.locator("table tbody tr").count(),
     `Product: ${PRODUCTS.productAvailableOnlyInUsdChannel.name} should be visible on grid table`,

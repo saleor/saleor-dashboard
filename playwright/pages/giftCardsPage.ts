@@ -6,7 +6,7 @@ import { ResendGiftCardCodeDialog } from "@dialogs/resendGiftCardCodeDialog";
 import { SetGiftCardsBalanceDialog } from "@dialogs/setGiftCardBalanceDialog";
 import { MetadataSeoPage } from "@pageElements/metadataSeoPage";
 import { BasePage } from "@pages/basePage";
-import type { Page } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
 export class GiftCardsPage extends BasePage {
   readonly page: Page;
@@ -30,7 +30,10 @@ export class GiftCardsPage extends BasePage {
     readonly resendCodeButton = page.getByTestId("resend-code"),
     readonly deactivateButton = page.getByTestId("enable-button"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
-    readonly cardExpiresCheckbox = page.locator("[name='cardExpires']"),
+    readonly cardExpiresCheckboxOnModal = page.getByTestId("expiry-section").locator("input"),
+    readonly giftCardExpiresCheckbox = page
+      .getByTestId("gift-card-expire-section")
+      .locator("input"),
     readonly exportCardCodesButton = page.getByTestId("exportCodesMenuItem"),
     readonly setBalanceButton = page.getByTestId("set-balance-button"),
     readonly showMoreMenuButton = page.getByTestId("show-more-button"),
@@ -53,6 +56,8 @@ export class GiftCardsPage extends BasePage {
     await this.waitForNetworkIdleAfterAction(async () => await this.issueCardButton.click());
     await this.loader.waitFor({ state: "hidden" });
     await this.giftCardDialog.waitFor({ state: "visible" });
+    await this.cardExpiresCheckboxOnModal.waitFor({ state: "visible" });
+    await expect(this.cardExpiresCheckboxOnModal).toBeEnabled();
   }
 
   async clickBulkDeleteButton() {
@@ -63,8 +68,12 @@ export class GiftCardsPage extends BasePage {
     await this.saveButton.click();
   }
 
+  async clickCardExpiresCheckboxOnModal() {
+    await this.cardExpiresCheckboxOnModal.click();
+  }
+
   async clickCardExpiresCheckbox() {
-    await this.cardExpiresCheckbox.click();
+    await this.giftCardExpiresCheckbox.click();
   }
 
   async clickDeactivateButton() {

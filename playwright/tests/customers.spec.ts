@@ -126,7 +126,8 @@ test("TC: SALEOR_205 Bulk delete customers @e2e @customer", async () => {
   const customersToBeBulkDeleted = CUSTOMERS.customersToBeBulkDeleted.names;
 
   await customersPage.goToCustomersListView();
-  await customersPage.typeInSearchOnListView("bulk-delete");
+  await customersPage.searchAndFindRowIndexes("bulk-delete");
+  await customersPage.waitForGrid();
 
   const rowsToCheck = [0, 1, 2];
 
