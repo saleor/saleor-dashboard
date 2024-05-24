@@ -48,7 +48,7 @@ import OrderProductAddDialog from "../../../components/OrderProductAddDialog";
 import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog";
 import {
   orderFulfillUrl,
-  orderManualTransationRefundUrl,
+  orderManualTransactionRefundUrl,
   orderPaymentRefundUrl,
   orderReturnUrl,
   orderTransactionRefundUrl,
@@ -472,7 +472,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
         order={order}
         onClose={closeModal}
         onStandardRefund={() => navigate(orderTransactionRefundUrl(id), { replace: true })}
-        onManualRefund={() => navigate(orderManualTransationRefundUrl(id), { replace: true })}
+        onManualRefund={() => navigate(orderManualTransactionRefundUrl(id), { replace: true })}
       />
     </>
   );

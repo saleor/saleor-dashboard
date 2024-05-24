@@ -188,8 +188,8 @@ export const orderTransactionRefundEditPath = (orderId: string, refundId: string
 
 export const orderTransactionRefundEditUrl = (orderId: string, refundId: string) =>
   orderTransactionRefundEditPath(encodeURIComponent(orderId), encodeURIComponent(refundId));
-export const orderManualTransationRefundPath = (id: string) =>
+export const orderManualTransactionRefundPath = (id: string) =>
   urlJoin(orderPath(id), "manual-refund");
 
-export const orderManualTransationRefundUrl = (id: string) =>
-  orderManualTransationRefundPath(encodeURIComponent(id));
+export const orderManualTransactionRefundUrl = (id: string) =>
+  orderManualTransactionRefundPath(encodeURIComponent(id));
