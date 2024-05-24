@@ -106,7 +106,7 @@ test("TC: SALEOR_44 As an admin I should be able to delete a several products @b
   await productPage.deleteProductDialog.clickDeleteButton();
   await productPage.expectSuccessBanner();
   await productPage.waitForGrid();
-  await expect(
+  expect(
     await productPage.findRowIndexBasedOnText(PRODUCTS.productsToBeBulkDeleted.names),
     `Given products: ${PRODUCTS.productsToBeBulkDeleted.names} should be deleted from the list`,
   ).toEqual([]);
@@ -148,7 +148,7 @@ test("TC: SALEOR_46 As an admin, I should be able to update a product by uploadi
 
   const postSaveTax = await productPage.rightSideDetailsPage.taxInput.locator("input").inputValue();
 
-  await expect(preSaveTax, "Pre save tax name should be equal as the one after save").toEqual(
+  expect(preSaveTax, "Pre save tax name should be equal as the one after save").toEqual(
     postSaveTax,
   );
   await productPage.gridCanvas.getByText(newVariantName).waitFor({ state: "attached" });
@@ -199,7 +199,7 @@ test("TC: SALEOR_58 As an admin I should be able use pagination on product list 
 
   const secondPageProductName = await productPage.getGridCellText(1, 1);
 
-  await expect(
+  expect(
     firstPageProductName,
     `Second side first product name: ${secondPageProductName} should be visible and be different than: ${firstPageProductName}`,
   ).not.toEqual(secondPageProductName);
@@ -215,16 +215,17 @@ test("TC: SALEOR_58 As an admin I should be able use pagination on product list 
   ).toContainText(firstPageProductName);
 });
 test("TC: SALEOR_59 As an admin I should be able to filter products by channel on product list view @basic-regression @product @e2e", async () => {
-  await productPage.waitForNetworkIdleAfterAction(() => productPage.gotoProductListPage());
-  await productPage.waitForDOMToFullyLoad();
-  await expect(
-    productPage.gridCanvas,
+  await productPage.gotoProductListPage();
+  await productPage.typeInSearchOnListView(PRODUCTS.productAvailableOnlyInUsdChannel.name);
+  await productPage.findRowIndexBasedOnText([PRODUCTS.productAvailableOnlyInUsdChannel.name]);
+  expect(
+    await productPage.gridCanvas.locator("table tbody tr").count(),
     `Product: ${PRODUCTS.productAvailableOnlyInUsdChannel.name} should be visible on grid table`,
-  ).toContainText(PRODUCTS.productAvailableOnlyInUsdChannel.name);
+  ).toEqual(1);
+  await productPage.typeInSearchOnListView("");
   await productPage.clickFilterButton();
   await productPage.filtersPage.pickFilter("Channel", "Channel-PLN");
   await productPage.filtersPage.clickSaveFiltersButton();
-  await productPage.waitForGrid();
   await expect(
     productPage.gridCanvas,
     `Product: ${PRODUCTS.productAvailableOnlyInUsdChannel.name} should not be visible on grid table`,
@@ -281,7 +282,7 @@ test("TC: SALEOR_61 As an admin I should be able to delete existing variant @bas
     productPage.noVariantsText,
     "Message about how to add new variant should be visible in place of list of variants",
   ).toBeVisible();
-  await expect(
+  expect(
     productPage.page.url(),
     "Deleting last variant from variant details page should redirect to product page",
   ).toContain(PRODUCTS.singleVariantDeleteProduct.productId);
