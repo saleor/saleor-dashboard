@@ -191,6 +191,8 @@ export class BasePage {
     rowsToCheck: number[],
     listToCheck: string[],
   ) {
+    await this.waitForDOMToFullyLoad();
+
     const searchResults = [];
 
     for (let i = 0; i < rowsToCheck.length; i++) {
