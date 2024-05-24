@@ -37,23 +37,12 @@ export const OrderManualTransactionRefundForm = ({
   const intl = useIntl();
   const navigate = useNavigator();
   const notify = useNotifier();
-  const [chargedAmountForValidation, setChargedAmountForValidation] = React.useState(0);
+
   const methods = useForm<ManualRefundForm>({
     mode: "onBlur",
     values: initialValues,
-    resolver: zodResolver(getValidationSchema(intl, chargedAmountForValidation)),
+    resolver: zodResolver(getValidationSchema(intl, transactions)),
   });
-
-  const selectedTransactionId = methods.watch("transationId");
-  const selectedTransaction = transactions.find(
-    transaction => transaction.id === selectedTransactionId,
-  );
-
-  const chargedAmount = selectedTransaction?.chargedAmount?.amount || 0;
-
-  React.useEffect(() => {
-    setChargedAmountForValidation(chargedAmount);
-  }, [chargedAmount]);
 
   const [manualRefund, manualRefundOpts] = useOrderTransactionRequestActionMutation({
     onCompleted: (data: OrderTransactionRequestActionMutation) => {
