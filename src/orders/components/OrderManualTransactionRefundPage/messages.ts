@@ -26,6 +26,11 @@ export const messages = defineMessages({
     id: "HW6Vef",
     defaultMessage: "This transaction is non-refundable",
   },
+  defaultTransactionName: {
+    id: "p9bXAy",
+    defaultMessage: "Transaction",
+    description: "default transaction name",
+  },
 });
 
 export const validationMessages = defineMessages({

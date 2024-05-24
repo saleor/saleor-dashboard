@@ -7938,6 +7938,10 @@
     "context": "button to keep order",
     "string": "Keep order"
   },
+  "p9bXAy": {
+    "context": "default transaction name",
+    "string": "Transaction"
+  },
   "pA8Mlv": {
     "context": "alert",
     "string": "Staff Member limit reached"

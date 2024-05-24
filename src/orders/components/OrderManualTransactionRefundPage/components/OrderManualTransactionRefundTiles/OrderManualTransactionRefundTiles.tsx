@@ -4,7 +4,7 @@ import { OrderTransactionTile } from "@dashboard/orders/components/OrderTransact
 import { Box, RadioGroup, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "../../messages";
 import { isTransactionRefundable } from "../../utils";
@@ -21,6 +21,7 @@ export const OrderManualTransactionRefundTiles = ({
 }: OrderManualTransactionRefundTilesProps) => {
   const { formState } = useFormContext<ManualRefundForm>();
   const error = formState.errors.transationId;
+  const intl = useIntl();
 
   if (loading) {
     return <Skeleton marginTop={5} data-test-id="loading-skeleton" />;
@@ -70,7 +71,8 @@ export const OrderManualTransactionRefundTiles = ({
                               padding={4}
                               color={isRefundable ? "default1" : "defaultDisabled"}
                             >
-                              {transaction?.name || "Transaction"}
+                              {transaction?.name ||
+                                intl.formatMessage(messages.defaultTransactionName)}
                             </Text>
                             <TileHeaderMoney transaction={transaction} />
                           </Box>
