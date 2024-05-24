@@ -7336,6 +7336,9 @@
   "kdRcqU": {
     "string": "Search customers..."
   },
+  "kfvvnM": {
+    "string": "Provided amount cannot exceed charged amount for the selected transaction"
+  },
   "kgVqk1": {
     "string": "Category name"
   },
@@ -7942,6 +7945,10 @@
   "p6ugX0": {
     "context": "button to keep order",
     "string": "Keep order"
+  },
+  "p9bXAy": {
+    "context": "default transaction name",
+    "string": "Transaction"
   },
   "pA8Mlv": {
     "context": "alert",

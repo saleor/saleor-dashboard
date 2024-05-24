@@ -2,6 +2,7 @@ import Savebar from "@dashboard/components/Savebar";
 import {
   OrderTransactionRequestActionMutation,
   TransactionActionEnum,
+  TransactionItemFragment,
   useOrderTransactionRequestActionMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -18,27 +19,31 @@ import { useIntl } from "react-intl";
 
 import { getValidationSchema, ManualRefundForm } from "./manualRefundValidationSchema";
 
-interface OrderManualTransationRefundFormProps {
+interface OrderManualTransactionRefundFormProps {
   children: ReactNode;
   disabled: boolean;
   initialValues: ManualRefundForm;
   orderId: string;
+  transactions: TransactionItemFragment[];
 }
 
-export const OrderManualTransationRefundForm = ({
+export const OrderManualTransactionRefundForm = ({
   disabled,
   orderId,
   initialValues,
+  transactions,
   children,
-}: OrderManualTransationRefundFormProps) => {
+}: OrderManualTransactionRefundFormProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const notify = useNotifier();
+
   const methods = useForm<ManualRefundForm>({
     mode: "onBlur",
     values: initialValues,
-    resolver: zodResolver(getValidationSchema(intl)),
+    resolver: zodResolver(getValidationSchema(intl, transactions)),
   });
+
   const [manualRefund, manualRefundOpts] = useOrderTransactionRequestActionMutation({
     onCompleted: (data: OrderTransactionRequestActionMutation) => {
       if (data.transactionRequestAction?.errors?.length) {
