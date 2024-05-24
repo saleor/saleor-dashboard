@@ -3616,6 +3616,10 @@
   "M59JhX": {
     "string": "Manual"
   },
+  "M6mWHL": {
+    "context": "tooltip helper text",
+    "string": "You do not have permissions to create a manual refund."
+  },
   "M6s/9e": {
     "context": "unassign country, dialog header",
     "string": "Remove from Shipping Zone"
@@ -5013,6 +5017,10 @@
   "V8FhTt": {
     "context": "collection label",
     "string": "Hidden"
+  },
+  "V8uYhj": {
+    "context": "tooltip helper text",
+    "string": "All items have already been refunded"
   },
   "VCzrEZ": {
     "context": "link",

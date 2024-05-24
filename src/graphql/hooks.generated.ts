@@ -1646,6 +1646,13 @@ export const OrderGrantedRefundFragmentDoc = gql`
     id
     name
   }
+  lines {
+    id
+    quantity
+    orderLine {
+      id
+    }
+  }
 }
     ${UserBaseAvatarFragmentDoc}`;
 export const OrderDiscountFragmentDoc = gql`
