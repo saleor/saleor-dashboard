@@ -65,10 +65,10 @@ export const OrderDetailsRefundLine: React.FC<OrderDetailsRefundLineProps> = ({
       <Tooltip>
         <Tooltip.Trigger>
           <GridTable.Cell>
-            {!!refund.user.email && <UserAvatar initials={getUserInitials(refund.user as User)} />}
+            {!!refund.user?.email && <UserAvatar initials={getUserInitials(refund.user as User)} />}
           </GridTable.Cell>
         </Tooltip.Trigger>
-        {!!refund.user.email && (
+        {!!refund.user?.email && (
           <Tooltip.Content>
             <Text size={2}>{getUserName(refund.user, true)}</Text>
           </Tooltip.Content>
