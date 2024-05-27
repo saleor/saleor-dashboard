@@ -1,5 +1,5 @@
 ---
-"saleor-dashboard": patch
+"saleor-dashboard": minor
 ---
 
-Apply grid persistance on other views
+Now you can see columns and their ordering that you previously selected when swtich betetween listing pages.
