@@ -58,6 +58,7 @@ export const GiftCardsListDatagrid = () => {
   );
   const { handlers, staticColumns, visibleColumns, selectedColumns, recentlyAddedColumn } =
     useColumns({
+      gridName: "gift_cards_list",
       staticColumns: availableColumns,
       selectedColumns: settings?.columns ?? [],
       onSave: onColumnChange,

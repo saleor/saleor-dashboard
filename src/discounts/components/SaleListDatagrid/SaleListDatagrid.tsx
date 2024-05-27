@@ -57,6 +57,7 @@ export const SaleListDatagrid = ({
   );
   const { handlers, visibleColumns, staticColumns, selectedColumns, recentlyAddedColumn } =
     useColumns({
+      gridName: "sale_list",
       staticColumns: collectionListStaticColumns,
       selectedColumns: settings?.columns ?? [],
       onSave: onColumnChange,
