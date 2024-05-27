@@ -367,17 +367,37 @@ function getAttributeCellContent(
 }
 
 export function getDescriptionValue(value: string) {
-  const parsed = JSON.parse(value);
+  try {
+    const parsed = JSON.parse(value);
 
-  if (parsed) {
-    const descriptionFirstParagraph = parsed?.blocks.find(block => block.type === "paragraph");
+    if (parsed) {
+      // TODO: obsluga listy jako pierwszego elementu description
+      const descriptionFirstParagraph = findFirstBlockWithText(parsed?.blocks);
 
-    if (descriptionFirstParagraph) {
-      return (descriptionFirstParagraph.data?.text ?? "").replace("&nbsp;", "");
+      if (descriptionFirstParagraph) {
+        return (
+          (descriptionFirstParagraph.data?.text ?? "")
+            // Regular expression to identify HTML tags in
+            // the input string. Replacing the identified
+            // HTML tag with a null string.
+            .replace(/(<([^>]+)>)/gi, "")
+            .replace(/&nbsp;/g, "")
+        );
+      }
     }
+
+    return "";
+  } catch (e) {
+    return "";
+  }
+}
+
+function findFirstBlockWithText(blocks?: Array<{ id: string; data: { text: string } }>) {
+  if (!blocks) {
+    return undefined;
   }
 
-  return "";
+  return blocks.find(block => block?.data?.text?.length > 0);
 }
 
 export function getColumnMetadata(column: string) {
