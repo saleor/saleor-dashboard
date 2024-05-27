@@ -3345,6 +3345,17 @@ export const grantedRefunds: OrderGrantedRefundFragment[] = [
     __typename: "OrderGrantedRefund",
     status: OrderGrantedRefundStatusEnum.SUCCESS,
     transactionEvents: null,
+    lines: [
+      {
+        __typename: "OrderGrantedRefundLine" as const,
+        id: "grantedRefund1",
+        orderLine: {
+          __typename: "OrderLine" as const,
+          id: "orderLine1",
+        },
+        quantity: 1,
+      },
+    ],
   },
   {
     id: "12344",
@@ -3364,5 +3375,16 @@ export const grantedRefunds: OrderGrantedRefundFragment[] = [
     __typename: "OrderGrantedRefund",
     status: OrderGrantedRefundStatusEnum.SUCCESS,
     transactionEvents: null,
+    lines: [
+      {
+        __typename: "OrderGrantedRefundLine" as const,
+        id: "grantedRefund2",
+        orderLine: {
+          __typename: "OrderLine" as const,
+          id: "orderLine1",
+        },
+        quantity: 1,
+      },
+    ],
   },
 ];
