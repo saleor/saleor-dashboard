@@ -52,6 +52,7 @@ export const CategoryListDatagrid = ({
     [onUpdateListSettings],
   );
   const { handlers, selectedColumns, staticColumns, visibleColumns } = useColumns({
+    gridName: "category_list",
     staticColumns: memoizedStaticColumns,
     selectedColumns: settings?.columns ?? [],
     onSave: handleColumnChange,

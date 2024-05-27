@@ -61,6 +61,7 @@ export const CollectionListDatagrid = ({
   );
   const { handlers, visibleColumns, staticColumns, selectedColumns, recentlyAddedColumn } =
     useColumns({
+      gridName: "collection_list",
       staticColumns: collectionListStaticColumns,
       selectedColumns: settings?.columns ?? [],
       onSave: onColumnChange,

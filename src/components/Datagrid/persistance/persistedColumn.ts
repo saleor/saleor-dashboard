@@ -35,4 +35,8 @@ export class PersistedColumn {
   public identifier() {
     return this.id;
   }
+
+  public isEmpty() {
+    return this.id === "empty";
+  }
 }

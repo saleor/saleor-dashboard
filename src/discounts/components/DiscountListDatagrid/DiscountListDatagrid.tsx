@@ -52,6 +52,7 @@ export const DiscountListDatagrid = ({
   );
   const { handlers, visibleColumns, staticColumns, selectedColumns, recentlyAddedColumn } =
     useColumns({
+      gridName: "discount_list",
       staticColumns: discountListStaticColumns,
       selectedColumns: settings?.columns ?? [],
       onSave: onColumnChange,
