@@ -20,6 +20,7 @@ import { GetRowThemeCallback } from "@glideapps/glide-data-grid/dist/ts/data-gri
 import { Card, CardContent, CircularProgress } from "@material-ui/core";
 import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
+import debounce from "lodash/debounce";
 import range from "lodash/range";
 import React, {
   MutableRefObject,
@@ -239,17 +240,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
     },
     [onCellEdited, availableColumns],
   );
-  const handleRowHover = useCallback(
+
+  const handleRowHref = useCallback(
     (args: GridMouseEventArgs) => {
-      if (hasRowHover) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const [_, row] = args.location;
-
-        setHoverRow(args.kind !== "cell" ? undefined : row);
-      }
-
-      // the code below is responsible for adding native <a> element when hovering over rows in the datagrid
-      // this makes it possible to open links in a new tab and copy them
       if (args.kind !== "cell" || !hackARef.current || !rowAnchor) {
         return;
       }
@@ -271,7 +264,23 @@ export const Datagrid: React.FC<DatagridProps> = ({
       hackARef.current.href = getAppMountUri() + (href.startsWith("/") ? href.slice(1) : href);
       hackARef.current.dataset.reactRouterPath = href;
     },
-    [hasRowHover, rowAnchor, rowMarkers],
+    [rowAnchor, rowMarkers],
+  );
+
+  const debouncedHandleRowHref = debounce(handleRowHref, 500);
+
+  const handleRowHover = useCallback(
+    (args: GridMouseEventArgs) => {
+      if (hasRowHover) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const [_, row] = args.location;
+
+        setHoverRow(args.kind !== "cell" ? undefined : row);
+      }
+
+      debouncedHandleRowHref(args);
+    },
+    [debouncedHandleRowHref, hasRowHover],
   );
   const handleCellClick = useCallback(
     (item: Item, args: CellClickedEventArgs) => {

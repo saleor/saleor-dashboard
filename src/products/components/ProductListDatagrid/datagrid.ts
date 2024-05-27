@@ -224,7 +224,7 @@ export function createGetCellContent({
 }
 
 function getDateCellContent(rowData: RelayToFlat<ProductListQuery["products"]>[number]) {
-  return dateCell(rowData?.updatedAt);
+  return dateCell(rowData?.updatedAt, { cursor: "pointer" });
 }
 
 function getProductTypeCellContent(
@@ -234,7 +234,7 @@ function getProductTypeCellContent(
   const hue = stringToHue(rowData.productType?.name);
   const color = theme === "defaultDark" ? hueToPillColorDark(hue) : hueToPillColorLight(hue);
 
-  return pillCell(rowData.productType?.name, color);
+  return pillCell(rowData.productType?.name, color, { cursor: "pointer" });
 }
 
 function getCategoryCellContent(
@@ -242,13 +242,13 @@ function getCategoryCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
 ) {
   if (!rowData.category) {
-    return readonlyTextCell("-");
+    return readonlyTextCell("-", true);
   }
 
   const hue = stringToHue(rowData.category?.name);
   const color = theme === "defaultDark" ? hueToPillColorDark(hue) : hueToPillColorLight(hue);
 
-  return pillCell(rowData.category?.name, color);
+  return pillCell(rowData.category?.name, color, { cursor: "pointer" });
 }
 
 function getCollectionsCellContent(
@@ -256,7 +256,7 @@ function getCollectionsCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
 ) {
   if (rowData.collections === undefined || rowData.collections.length === 0) {
-    return readonlyTextCell("-");
+    return readonlyTextCell("-", true);
   }
 
   const tags = rowData.collections.map(collection => {
@@ -274,6 +274,7 @@ function getCollectionsCellContent(
     tags.map(tag => tag.tag),
     {
       readonly: true,
+      cursor: "pointer",
       allowOverlay: false,
     },
   );
@@ -288,6 +289,7 @@ function getAvailabilityCellContent(
     return statusCell(
       getChannelAvailabilityStatus(selectedChannnel),
       intl.formatMessage(getChannelAvailabilityLabel(selectedChannnel)),
+      { cursor: "pointer" },
     );
   }
 
@@ -297,9 +299,10 @@ function getAvailabilityCellContent(
       intl.formatMessage(messages.dropdownLabel, {
         channelCount: rowData?.channelListings?.length,
       }),
+      { cursor: "pointer" },
     );
   } else {
-    return statusCell("error", intl.formatMessage(messages.noChannels));
+    return statusCell("error", intl.formatMessage(messages.noChannels), { cursor: "pointer" });
   }
 }
 
@@ -311,10 +314,10 @@ function getDescriptionCellContent(
   const value = change ?? rowData?.[columnId] ?? "";
 
   if (!value) {
-    return readonlyTextCell("");
+    return readonlyTextCell("", true);
   }
 
-  return readonlyTextCell(getDescriptionValue(value));
+  return readonlyTextCell(getDescriptionValue(value), true);
 }
 
 function getNameCellContent(
@@ -335,7 +338,9 @@ function getPriceCellContent(
   const to = selectedChannnel?.pricing?.priceRange?.stop?.net;
   const price = from?.amount === to?.amount ? from?.amount : [from?.amount, to?.amount];
 
-  return from ? moneyCell(price, from?.currency || "") : readonlyTextCell("–");
+  return from
+    ? moneyCell(price, from?.currency || "", { cursor: "pointer" })
+    : readonlyTextCell("–", true);
 }
 
 function getAttributeCellContent(
