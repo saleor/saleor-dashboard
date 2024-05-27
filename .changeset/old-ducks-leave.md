@@ -1,5 +1,5 @@
 ---
-"saleor-dashboard": minor
+"saleor-dashboard": patch
 ---
 
-Update description how to run e2e tests
+Update description of how to run e2e tests
