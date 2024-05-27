@@ -15,6 +15,8 @@ export interface OrderFetchingParams {
   chargeStatus: string[];
   channels: string[];
   giftCardUsage: string[];
+  // isPreorder: string[];
+  // isClickAndCollect: string[];
 }
 
 type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute">;
@@ -25,6 +27,18 @@ export const emptyFetchingParams: FetchingParams = {
   channel: [],
   productType: [],
   attribute: {},
+};
+
+export const emptyOrderFetchingParams: OrderFetchingParams = {
+  paymentStatus: [],
+  status: [],
+  authorizeStatus: [],
+  chargeStatus: [],
+  channels: [],
+  giftCardUsage: [],
+  // // TODO
+  // isClickAndCollect: [],
+  // isPreorder: [],
 };
 
 const unique = <T>(array: Iterable<T>) => Array.from(new Set(array));

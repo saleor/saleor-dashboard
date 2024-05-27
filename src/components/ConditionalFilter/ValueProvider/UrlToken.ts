@@ -17,6 +17,12 @@ const STATIC_TO_LOAD = [
   "hasCategory",
   "giftCard",
   "paymentStatus",
+  "status",
+  "authorizeStatus",
+  "chargeStatus",
+  "giftCardUsage",
+  "isPreorder",
+  "isClickAndCollect",
 ];
 
 export const TokenType = {

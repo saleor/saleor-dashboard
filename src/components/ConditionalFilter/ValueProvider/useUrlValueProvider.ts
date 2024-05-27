@@ -7,6 +7,7 @@ import { InitialAPIState } from "../API";
 import { FilterContainer, FilterElement } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
 import { TokenArray } from "./TokenArray";
+import { emptyFetchingParams, emptyOrderFetchingParams } from "./TokenArray/fetchingParams";
 import { UrlEntry } from "./UrlToken";
 
 type Structure = Array<string | UrlEntry | Structure>;
@@ -26,6 +27,7 @@ const prepareStructure = (filterValue: FilterContainer): Structure =>
 
 export const useUrlValueProvider = (
   locationSearch: string,
+  type: "product" | "order" | "discount",
   initialState?: InitialAPIState,
 ): FilterValueProvider => {
   const router = useRouter();
@@ -44,7 +46,8 @@ export const useUrlValueProvider = (
   params.delete("after");
 
   const tokenizedUrl = new TokenArray(params.toString());
-  const fetchingParams = tokenizedUrl.getFetchingParams();
+  const paramsFromType = type === "product" ? emptyFetchingParams : emptyOrderFetchingParams;
+  const fetchingParams = tokenizedUrl.getFetchingParams(paramsFromType);
 
   useEffect(() => {
     if (initialState?.fetchQueries) {

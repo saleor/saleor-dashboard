@@ -162,8 +162,6 @@ export const createDiscountsQueryVariables = (value: FilterContainer): Promotion
 
 export const createOrderQueryVariables = (value: FilterContainer) => {
   return value.reduce((p, c) => {
-    console.log("createOrderQuery", { p, c });
-
     if (typeof c === "string" || Array.isArray(c)) {
       return p;
     }

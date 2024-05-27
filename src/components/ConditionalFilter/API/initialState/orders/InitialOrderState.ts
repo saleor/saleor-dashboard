@@ -1,13 +1,14 @@
 import { ItemOption } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionValue";
 import { UrlToken } from "@dashboard/components/ConditionalFilter/ValueProvider/UrlToken";
 
-// import { InitialState } from "../../InitialStateResponse";
-
 interface _InitialOrderState {
   paymentStatus: ItemOption[];
   status: ItemOption[];
+  authorizeStatus: ItemOption[];
+  chargeStatus: ItemOption[];
+  channels: ItemOption[];
   isClickAndCollect: ItemOption[];
-  // TODO: rest
+  isPreorder: ItemOption[];
 }
 
 export class InitialOrderState implements _InitialOrderState {
@@ -18,6 +19,7 @@ export class InitialOrderState implements _InitialOrderState {
     public chargeStatus: ItemOption[] = [],
     public channels: ItemOption[] = [],
     public isClickAndCollect: ItemOption[] = [],
+    public isPreorder: ItemOption[] = [],
   ) {}
 
   public static empty() {
@@ -25,10 +27,10 @@ export class InitialOrderState implements _InitialOrderState {
   }
 
   public filterByUrlToken(token: UrlToken) {
-    return this.getEntryByName(token.name);
+    return this.getEntryByName(token.name).filter(({ slug }) => slug && token.value.includes(slug));
   }
 
-  private getEntryByName(name: string) {
-    return this[name];
+  private getEntryByName(name: string): ItemOption[] {
+    return this[name] ?? [];
   }
 }

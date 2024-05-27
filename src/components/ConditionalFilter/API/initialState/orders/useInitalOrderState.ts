@@ -26,6 +26,7 @@ export const useInitialOrderState = () => {
     giftCardUsage,
     paymentStatus,
     status,
+    ...props
   }: OrderFetchingParams) => {
     const paymentStatusInit = new EnumValuesHandler(
       PaymentChargeStatusEnum,
@@ -47,6 +48,7 @@ export const useInitialOrderState = () => {
       intl,
       chargeStatus,
     );
+
     // @ts-expect-error - TODO
     const channelsInit = new LegacyChannelHandler(client, channels);
 
@@ -57,6 +59,7 @@ export const useInitialOrderState = () => {
         await authorizeStatusInit.fetch(),
         await chargeStatusInit.fetch(),
         await channelsInit.fetch(),
+        createBooleanOptions(),
         createBooleanOptions(),
       ),
     );
