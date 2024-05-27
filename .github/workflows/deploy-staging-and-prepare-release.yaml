@@ -133,8 +133,8 @@ jobs:
         with:
           CHECK_ID: ${{ steps.create-check.outputs.CHECK_ID }}
           CHECK_NAME: "Deploy_staging"
-          STATUS: "${{ steps.deploy.outcome }}"
-          CONCLUSION: "${{ steps.deploy.conclusion }}"
+          STATUS: "completed"
+          CONCLUSION: "${{ steps.deploy.outcome }}" 
           TITLE: "Deploy staging"
           SUMMARY: "Deploy finished with status ${{ steps.deploy.outcome }}. To check details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
@@ -171,6 +171,6 @@ jobs:
     if: needs.prepare-release.outputs.hasChangesets == 'true'
     uses: ./.github/workflows/run-tests-on-release.yml
     with:
-      VERSION: ${{ needs.build.MINOR_VERSION }} # eg. "3.19"
-      CUSTOM_VERSION: ${{ needs.build.CUSTOM_VERSION }} # eg. "3.19.4-5a41d18"
+      VERSION: ${{ needs.build.outputs.MINOR_VERSION }} # eg. "3.19"
+      CUSTOM_VERSION: ${{ needs.build.outputs.CUSTOM_VERSION }} # eg. "3.19.4-5a41d18"
     secrets: inherit
