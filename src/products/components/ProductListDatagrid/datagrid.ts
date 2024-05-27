@@ -366,6 +366,8 @@ function getAttributeCellContent(
   return readonlyTextCell("");
 }
 
+const MAX_DESCRIPTION_LENGHT = 100;
+
 export function getDescriptionValue(value: string) {
   try {
     const parsed = JSON.parse(value);
@@ -374,14 +376,18 @@ export function getDescriptionValue(value: string) {
       const descriptionFirstParagraph = findFirstBlockWithText(parsed?.blocks);
 
       if (descriptionFirstParagraph) {
-        return (
-          (descriptionFirstParagraph.data?.text ?? "")
-            // Regular expression to identify HTML tags in
-            // the input string. Replacing the identified
-            // HTML tag with a null string.
-            .replace(/(<([^>]+)>)/gi, "")
-            .replace(/&nbsp;/g, "")
-        );
+        const description = (descriptionFirstParagraph.data?.text ?? "")
+          // Regular expression to identify HTML tags in
+          // the input string. Replacing the identified
+          // HTML tag with a null string.
+          .replace(/(<([^>]+)>)/gi, "")
+          .replace(/&nbsp;/g, "");
+
+        if (description.length > MAX_DESCRIPTION_LENGHT) {
+          return description.slice(0, MAX_DESCRIPTION_LENGHT) + "...";
+        }
+
+        return description;
       }
     }
 

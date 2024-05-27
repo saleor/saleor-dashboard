@@ -36,4 +36,14 @@ describe("getDescriptionValue", () => {
       ),
     ).toBe("description");
   });
+
+  it("should cut description when too long", () => {
+    expect(
+      getDescriptionValue(
+        '{"time": 1634014163888, "blocks": [{"data": {"text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus, nisi sed dapibus eleifend, nisl tellus tempor mi, tristique pretium."}, "type": "heading"},{"data": {"text": ""}, "type": "paragraph"},{"data": {"text": "description"}, "type": "paragraph"}], "version": "2.20.0"}',
+      ),
+    ).toBe(
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus, nisi sed dapibus eleifend, nisl ...",
+    );
+  });
 });
