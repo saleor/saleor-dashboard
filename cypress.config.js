@@ -17,6 +17,7 @@ module.exports = defineConfig({
     env: {
       grepFilterSpecs: true
     },
+    baseUrl: process.env.BASE_URL,
     setupNodeEvents(on, config) {
       config = require("./cypress/support/cypress-grep/plugin")(config);
       config = require("./cypress/plugins/index.js")(on, config);
