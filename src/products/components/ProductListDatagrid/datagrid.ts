@@ -371,7 +371,6 @@ export function getDescriptionValue(value: string) {
     const parsed = JSON.parse(value);
 
     if (parsed) {
-      // TODO: obsluga listy jako pierwszego elementu description
       const descriptionFirstParagraph = findFirstBlockWithText(parsed?.blocks);
 
       if (descriptionFirstParagraph) {
