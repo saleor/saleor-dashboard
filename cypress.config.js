@@ -26,6 +26,7 @@ module.exports = defineConfig({
       grepFilterSpecs: true,
       demoTests: false,
     },
+    baseUrl: process.env.BASE_URL,
     setupNodeEvents(on, config) {
       config.specPattern = process.env.CYPRESS_demoTests
         ? "cypress/e2e/percy/**/*.{js,jsx,ts,tsx}"
