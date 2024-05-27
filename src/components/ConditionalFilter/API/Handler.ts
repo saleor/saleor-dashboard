@@ -186,7 +186,9 @@ export class LegacyChannelHandler implements Handler {
         slug,
       })) ?? [];
 
-    return options.filter(({ label }) => label.toLowerCase().includes(this.query.toLowerCase()));
+    return this.query
+      ? options.filter(({ label }) => label.toLowerCase().includes(this.query.toLowerCase()))
+      : options;
   };
 }
 
@@ -230,16 +232,28 @@ export class BooleanValuesHandler implements Handler {
 export class EnumValuesHandler implements Handler {
   private options: LeftOperand[];
 
-  constructor(enumObject: Record<string, string>, type: RowType, intl: IntlShape) {
+  public query?: string[];
+
+  constructor(
+    enumObject: Record<string, string>,
+    type: RowType,
+    intl: IntlShape,
+    query?: string[],
+  ) {
     this.options = Object.values(enumObject).map(value => ({
       value,
       slug: value,
       type: type as LeftOperand["type"], // TODO
       label: getLocalizedLabel(type as LeftOperand["type"], value, intl), // TODO: get label from enum, translation
     }));
+    this.query = query;
   }
 
   fetch = async (): Promise<LeftOperand[]> => {
+    if (this.query) {
+      return this.options.filter(el => this.query.includes(el.value));
+    }
+
     return this.options;
   };
 }

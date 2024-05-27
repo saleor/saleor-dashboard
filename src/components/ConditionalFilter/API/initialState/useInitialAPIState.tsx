@@ -18,15 +18,16 @@ import {
 } from "@dashboard/graphql";
 import { useState } from "react";
 
-import { FetchingParams } from "../../ValueProvider/TokenArray/fetchingParams";
+import { FetchingParams, OrderFetchingParams } from "../../ValueProvider/TokenArray/fetchingParams";
 import { InitialStateResponse } from "../InitialStateResponse";
 import { createInitialStateFromData } from "./helpers";
+import { InitialOrderState } from "./orders/InitialOrderState";
 import { InitialAPIResponse } from "./types";
 
 export interface InitialAPIState {
-  data: InitialStateResponse;
+  data: InitialStateResponse | InitialOrderState;
   loading: boolean;
-  fetchQueries?: (params: FetchingParams) => Promise<void>;
+  fetchQueries?: (params: FetchingParams | OrderFetchingParams) => Promise<void>;
 }
 
 export const useProductInitialAPIState = (): InitialAPIState => {

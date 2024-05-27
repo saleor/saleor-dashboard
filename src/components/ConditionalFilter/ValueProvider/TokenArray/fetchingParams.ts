@@ -8,6 +8,15 @@ export interface FetchingParams {
   attribute: Record<string, string[]>;
 }
 
+export interface OrderFetchingParams {
+  paymentStatus: string[];
+  status: string[];
+  authorizeStatus: string[];
+  chargeStatus: string[];
+  channels: string[];
+  giftCardUsage: string[];
+}
+
 type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute">;
 
 export const emptyFetchingParams: FetchingParams = {

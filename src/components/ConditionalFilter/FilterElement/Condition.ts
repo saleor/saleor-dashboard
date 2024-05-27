@@ -1,3 +1,4 @@
+import { InitialOrderState } from "../API/initialState/orders/InitialOrderState";
 import { InitialStateResponse } from "../API/InitialStateResponse";
 import { LeftOperand } from "../LeftOperandsProvider";
 import { UrlToken } from "./../ValueProvider/UrlToken";
@@ -44,7 +45,7 @@ export class Condition {
     return new Condition(options, ConditionSelected.fromConditionItem(options.first()), false);
   }
 
-  public static fromUrlToken(token: UrlToken, response: InitialStateResponse) {
+  public static fromUrlToken(token: UrlToken, response: InitialStateResponse | InitialOrderState) {
     if (ConditionOptions.isStaticName(token.name)) {
       const staticOptions = ConditionOptions.fromStaticElementName(token.name);
       const selectedOption = staticOptions.findByLabel(token.conditionKind);
@@ -66,7 +67,7 @@ export class Condition {
     }
 
     if (token.isAttribute()) {
-      const attribute = response.attributeByName(token.name);
+      const attribute = (response as InitialStateResponse).attributeByName(token.name);
       const options = ConditionOptions.fromAttributeType(attribute.inputType);
       const option = options.find(item => item.label === token.conditionKind)!;
       const value = response.filterByUrlToken(token);

@@ -1,9 +1,15 @@
 import { parse, ParsedQs } from "qs";
 
+import { InitialOrderState } from "../../API/initialState/orders/InitialOrderState";
 import { InitialStateResponse } from "../../API/InitialStateResponse";
 import { FilterContainer, FilterElement } from "../../FilterElement";
 import { UrlEntry, UrlToken } from "../UrlToken";
-import { emptyFetchingParams, FetchingParams, toFetchingParams } from "./fetchingParams";
+import {
+  emptyFetchingParams,
+  FetchingParams,
+  OrderFetchingParams,
+  toFetchingParams,
+} from "./fetchingParams";
 
 const toFlatUrlTokens = (p: UrlToken[], c: TokenArray[number]) => {
   if (typeof c === "string") {
@@ -37,7 +43,7 @@ const tokenizeUrl = (urlParams: string) => {
 };
 const mapUrlTokensToFilterValues = (
   urlTokens: TokenArray,
-  response: InitialStateResponse,
+  response: InitialStateResponse | InitialOrderState,
 ): FilterContainer =>
   urlTokens.map(el => {
     if (typeof el === "string") {
@@ -59,14 +65,16 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
   public getFetchingParams() {
     return this.asFlatArray()
       .filter(token => token.isLoadable())
-      .reduce<FetchingParams>(toFetchingParams, emptyFetchingParams);
+      .reduce<FetchingParams | OrderFetchingParams>(toFetchingParams, emptyFetchingParams);
   }
 
   public asFlatArray() {
     return flatenate(this);
   }
 
-  public asFilterValuesFromResponse(response: InitialStateResponse): FilterContainer {
+  public asFilterValuesFromResponse(
+    response: InitialStateResponse | InitialOrderState,
+  ): FilterContainer {
     return this.map(el => {
       if (typeof el === "string") {
         return el;

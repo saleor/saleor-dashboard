@@ -23,6 +23,7 @@ export const ConditionalFilters: FC<{ onClose: () => void }> = ({ onClose }) => 
     setErrors(validator.getErrors());
   };
   const handleCancel = () => {
+    console.log("cancelllll");
     valueProvider.clear();
     containerState.clear();
     onClose();

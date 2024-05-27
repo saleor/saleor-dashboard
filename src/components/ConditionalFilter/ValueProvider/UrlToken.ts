@@ -16,6 +16,7 @@ const STATIC_TO_LOAD = [
   "isVisibleInListing",
   "hasCategory",
   "giftCard",
+  "paymentStatus",
 ];
 
 export const TokenType = {

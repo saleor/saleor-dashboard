@@ -162,6 +162,8 @@ export const createDiscountsQueryVariables = (value: FilterContainer): Promotion
 
 export const createOrderQueryVariables = (value: FilterContainer) => {
   return value.reduce((p, c) => {
+    console.log("createOrderQuery", { p, c });
+
     if (typeof c === "string" || Array.isArray(c)) {
       return p;
     }
@@ -183,6 +185,8 @@ export const createOrderQueryVariables = (value: FilterContainer) => {
       // TODO: fix type
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
+
+      // DOESN'T RECEIVE 'VALUE'
       p[c.value.value as any] = createStaticQueryPart(c.condition.selected) as any;
     }
 

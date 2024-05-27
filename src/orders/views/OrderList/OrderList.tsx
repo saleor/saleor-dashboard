@@ -45,6 +45,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.ORDER_LIST);
   const { valueProvider } = useConditionalFilterContext();
+
   const {
     hasPresetsChanged,
     onPresetChange,
@@ -101,6 +102,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   >(navigate, orderListUrl, params);
   const paginationState = createPaginationState(settings.rowNumber, params);
   const filterVariables = getFilterVariables(params, valueProvider.value);
+
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,

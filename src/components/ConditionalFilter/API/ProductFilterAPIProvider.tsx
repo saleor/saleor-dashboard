@@ -107,6 +107,7 @@ export const useProductFilterAPIProvider = (): FilterAPIProvider => {
   ) => {
     const index = parseInt(position, 10);
     const filterElement = getFilterElement(value, index);
+
     const handler = createAPIHandler(filterElement, client, inputValue);
 
     return handler.fetch();

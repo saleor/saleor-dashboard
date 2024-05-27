@@ -143,6 +143,7 @@ export const useOrderFilterAPIProvider = (): FilterAPIProvider => {
   ) => {
     const index = parseInt(position, 10);
     const filterElement = getFilterElement(value, index);
+
     const handler = createAPIHandler(filterElement, inputValue, intl, client);
 
     return handler.fetch();

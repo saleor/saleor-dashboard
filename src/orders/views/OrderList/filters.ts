@@ -103,13 +103,16 @@ const orderBooleanFilters = ["isClickAndCollect", "isPreorder"];
 const _whereToLegacyVariables = (where: OrderFilterInput) => {
   return where
     ? Object.keys(where).reduce((acc, key) => {
-        if (where[key]) {
+        if (typeof where[key] === "object") {
           const valueKeys = Object.keys(where[key]);
 
           valueKeys.forEach(valueKey => {
             if (whereInputTypes.includes(valueKey)) {
               // TODO: handle multiple left side uses
-              acc[key] = where[key][valueKey];
+              const valueObj = where[key];
+              const value = valueObj[valueKey];
+
+              acc[key] = value;
 
               if (orderBooleanFilters.includes(key)) {
                 acc[key] = acc[key] === "true";
@@ -128,6 +131,11 @@ const _whereToLegacyVariables = (where: OrderFilterInput) => {
           });
         }
 
+        if (typeof where[key] === "boolean") {
+          // Careful - done so that isClickAndCollect works
+          acc[key] = where[key];
+        }
+
         return acc;
       }, {})
     : {};
@@ -140,7 +148,9 @@ export function getFilterVariables(
   let queryVariables;
 
   if (featureFlagEnabled) {
+    // FILTER CONTAINER INCOMPLETE
     queryVariables = _whereToLegacyVariables(createOrderQueryVariables(filterContainer));
+    console.log({ queryVariables, filterContainer });
   }
 
   return {
