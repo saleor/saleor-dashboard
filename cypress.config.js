@@ -14,12 +14,10 @@ module.exports = defineConfig({
     runMode: 1,
     openMode: 0,
   },
-  reporter: "junit",
+  screenshotsFolder: "cypress/reports/mochareports",
+  reporter: "cypress-multi-reporters",
   reporterOptions: {
-    mochaFile: "results/test-output-[hash].xml",
-    jenkinsMode: true,
-    outputs: true,
-    testCaseSwitchClassnameAndName: true,
+    configFile: "reporter-config.json",
   },
   e2e: {
     env: {
