@@ -37,7 +37,7 @@ import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Item } from "@glideapps/glide-data-grid";
+import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { DefaultTheme } from "@saleor/macaw-ui-next";
 import { IntlShape } from "react-intl";
 
@@ -223,8 +223,10 @@ export function createGetCellContent({
   };
 }
 
+const COMMON_CELL_PROPS: Partial<GridCell> = { cursor: "pointer" };
+
 function getDateCellContent(rowData: RelayToFlat<ProductListQuery["products"]>[number]) {
-  return dateCell(rowData?.updatedAt, { cursor: "pointer" });
+  return dateCell(rowData?.updatedAt, COMMON_CELL_PROPS);
 }
 
 function getProductTypeCellContent(
@@ -234,7 +236,7 @@ function getProductTypeCellContent(
   const hue = stringToHue(rowData.productType?.name);
   const color = theme === "defaultDark" ? hueToPillColorDark(hue) : hueToPillColorLight(hue);
 
-  return pillCell(rowData.productType?.name, color, { cursor: "pointer" });
+  return pillCell(rowData.productType?.name, color, COMMON_CELL_PROPS);
 }
 
 function getCategoryCellContent(
@@ -248,7 +250,7 @@ function getCategoryCellContent(
   const hue = stringToHue(rowData.category?.name);
   const color = theme === "defaultDark" ? hueToPillColorDark(hue) : hueToPillColorLight(hue);
 
-  return pillCell(rowData.category?.name, color, { cursor: "pointer" });
+  return pillCell(rowData.category?.name, color, COMMON_CELL_PROPS);
 }
 
 function getCollectionsCellContent(
@@ -273,8 +275,7 @@ function getCollectionsCellContent(
     tags,
     tags.map(tag => tag.tag),
     {
-      readonly: true,
-      cursor: "pointer",
+      ...COMMON_CELL_PROPS,
       allowOverlay: false,
     },
   );
@@ -289,7 +290,7 @@ function getAvailabilityCellContent(
     return statusCell(
       getChannelAvailabilityStatus(selectedChannnel),
       intl.formatMessage(getChannelAvailabilityLabel(selectedChannnel)),
-      { cursor: "pointer" },
+      COMMON_CELL_PROPS,
     );
   }
 
@@ -299,10 +300,10 @@ function getAvailabilityCellContent(
       intl.formatMessage(messages.dropdownLabel, {
         channelCount: rowData?.channelListings?.length,
       }),
-      { cursor: "pointer" },
+      COMMON_CELL_PROPS,
     );
   } else {
-    return statusCell("error", intl.formatMessage(messages.noChannels), { cursor: "pointer" });
+    return statusCell("error", intl.formatMessage(messages.noChannels), COMMON_CELL_PROPS);
   }
 }
 
@@ -326,9 +327,7 @@ function getNameCellContent(
 ) {
   const name = change?.name ?? rowData?.name ?? "";
 
-  return thumbnailCell(name, rowData?.thumbnail?.url ?? "", {
-    cursor: "pointer",
-  });
+  return thumbnailCell(name, rowData?.thumbnail?.url ?? "", COMMON_CELL_PROPS);
 }
 
 function getPriceCellContent(
@@ -339,7 +338,7 @@ function getPriceCellContent(
   const price = from?.amount === to?.amount ? from?.amount : [from?.amount, to?.amount];
 
   return from
-    ? moneyCell(price, from?.currency || "", { cursor: "pointer" })
+    ? moneyCell(price, from?.currency || "", COMMON_CELL_PROPS)
     : readonlyTextCell("–", true);
 }
 
