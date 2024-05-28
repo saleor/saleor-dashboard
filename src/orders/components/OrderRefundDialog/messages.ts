@@ -37,9 +37,4 @@ export const orderRefundDialogMesages = defineMessages({
     defaultMessage: "You do not have permissions to create a manual refund.",
     description: "tooltip helper text",
   },
-  cannotCreateStandard: {
-    id: "V8uYhj",
-    defaultMessage: "All items have already been refunded",
-    description: "tooltip helper text",
-  },
 });
