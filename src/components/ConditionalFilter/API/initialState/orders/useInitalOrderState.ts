@@ -1,5 +1,4 @@
 import { useApolloClient } from "@apollo/client";
-import { createBooleanOptions } from "@dashboard/components/ConditionalFilter/constants";
 import { OrderFetchingParams } from "@dashboard/components/ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
 import {
   _GetLegacyChannelOperandsDocument,
@@ -29,7 +28,6 @@ export const useInitialOrderState = () => {
   const fetchQueries = async ({
     channels,
     chargeStatus,
-    giftCardUsage,
     paymentStatus,
     status,
     authorizeStatus,
@@ -70,7 +68,6 @@ export const useInitialOrderState = () => {
       status: await statusInit.fetch(),
       authorizeStatus: await authorizeStatusInit.fetch(),
       chargeStatus: await chargeStatusInit.fetch(),
-      giftCardUsage: [],
     };
 
     setData(
@@ -82,6 +79,8 @@ export const useInitialOrderState = () => {
         initialState.channels,
         initialState.isPreorder,
         initialState.isClickAndCollect,
+        initialState.giftCardBought,
+        initialState.giftCardUsed,
       ),
     );
     setLoading(false);

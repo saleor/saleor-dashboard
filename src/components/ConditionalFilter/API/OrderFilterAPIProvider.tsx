@@ -51,56 +51,39 @@ const createAPIHandler = (
     ]);
   }
 
-  if (rowType === "giftCardUsage") {
-    return new BooleanValuesHandler([
-      {
-        label: "Bought",
-        value: "bought",
-        type: rowType,
-        slug: "giftCardUsed",
-      },
-      {
-        label: "Paid with",
-        value: "paid_with",
-        type: rowType,
-        slug: "giftCardBought",
-      },
-    ]);
-  }
+  // if (rowType === "isClickAndCollect") {
+  //   return new BooleanValuesHandler([
+  //     {
+  //       label: "Yes",
+  //       value: "true",
+  //       type: rowType,
+  //       slug: "isClickAndCollect",
+  //     },
+  //     {
+  //       label: "No",
+  //       value: "false",
+  //       type: rowType,
+  //       slug: "isClickAndCollect",
+  //     },
+  //   ]);
+  // }
 
-  if (rowType === "isClickAndCollect") {
-    return new BooleanValuesHandler([
-      {
-        label: "Yes",
-        value: "true",
-        type: rowType,
-        slug: "isClickAndCollect",
-      },
-      {
-        label: "No",
-        value: "false",
-        type: rowType,
-        slug: "isClickAndCollect",
-      },
-    ]);
-  }
-
-  if (rowType === "isPreorder") {
-    return new BooleanValuesHandler([
-      {
-        label: "Yes",
-        value: "true",
-        type: rowType,
-        slug: "isPreorder",
-      },
-      {
-        label: "No",
-        value: "false",
-        type: rowType,
-        slug: "isPreorder",
-      },
-    ]);
-  }
+  // if (rowType === "isPreorder") {
+  //   return new BooleanValuesHandler([
+  //     {
+  //       label: "Yes",
+  //       value: "true",
+  //       type: rowType,
+  //       slug: "isPreorder",
+  //     },
+  //     {
+  //       label: "No",
+  //       value: "false",
+  //       type: rowType,
+  //       slug: "isPreorder",
+  //     },
+  //   ]);
+  // }
 
   if (rowType === "paymentStatus") {
     return new EnumValuesHandler(PaymentChargeStatusEnum, rowType, intl);

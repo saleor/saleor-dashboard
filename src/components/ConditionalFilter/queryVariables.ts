@@ -1,6 +1,8 @@
 import {
   AttributeInput,
+  DateRangeInput,
   DateTimeFilterInput,
+  DateTimeRangeInput,
   DecimalFilterInput,
   GlobalIdFilterInput,
   OrderFilterInput,
@@ -166,45 +168,15 @@ export const createOrderQueryVariables = (value: FilterContainer) => {
       return p;
     }
 
-    // if (c.isStatic()) {
-    //   console.log("isStatic: c.value.value", c.value.value);
-    //   p[c.value.value as keyof ProductWhereInput] = createStaticQueryPart(c.condition.selected);
-    // }
-
     if (c.value.type === "updatedAt" || c.value.type === "created") {
-      // TODO:
-      // @ts-expect-error - todo
-      p[c.value.value as "updatedAt" | "created"] = createStaticQueryPart(
-        c.condition.selected,
-      ) as DateTimeFilterInput;
+      p[c.value.value as "updatedAt" | "created"] = createStaticQueryPart(c.condition.selected) as
+        | DateTimeRangeInput
+        | DateRangeInput;
     }
 
     if (c.isStatic()) {
-      // TODO: fix type
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-
-      // DOESN'T RECEIVE 'VALUE'
-      p[c.value.value as any] = createStaticQueryPart(c.condition.selected) as any;
+      p[c.value.value] = createStaticQueryPart(c.condition.selected);
     }
-
-    // if (c.value.type === "status") {
-    //   p.status = p.status || [];
-    //   p.status.push(c.condition.selected.value[0] as OrderStatusFilter);
-    // }
-
-    // if (c.value.type === "paymentStatus") {
-    //   p.paymentStatus = p.paymentStatus || [];
-    //   p.paymentStatus.push(c.condition.selected.value[0] as PaymentChargeStatusEnum);
-    // }
-
-    // if (c.value.type === "giftCardBought") {
-    //   p.giftCardUsed = true;
-    // }
-
-    // if (c.value.type === "giftCardUsed") {
-    //   p.giftCardUsed = true;
-    // }
 
     return p;
   }, {} as OrderFilterInput);

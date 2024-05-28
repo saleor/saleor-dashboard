@@ -9,7 +9,8 @@ export interface InitialOrderState {
   channels: ItemOption[];
   isClickAndCollect: ItemOption[];
   isPreorder: ItemOption[];
-  giftCardUsage: ItemOption[];
+  giftCardBought: ItemOption[];
+  giftCardUsed: ItemOption[];
 }
 
 export class InitialOrderStateResponse implements InitialOrderState {
@@ -21,7 +22,8 @@ export class InitialOrderStateResponse implements InitialOrderState {
     public channels: ItemOption[] = [],
     public isClickAndCollect: ItemOption[] = [],
     public isPreorder: ItemOption[] = [],
-    public giftCardUsage: ItemOption[] = [],
+    public giftCardBought: ItemOption[] = [],
+    public giftCardUsed: ItemOption[] = [],
   ) {}
 
   public static empty() {
@@ -33,6 +35,27 @@ export class InitialOrderStateResponse implements InitialOrderState {
   }
 
   private getEntryByName(name: string): ItemOption[] {
-    return this[name] ?? [];
+    switch (name) {
+      case "paymentStatus":
+        return this.paymentStatus;
+      case "status":
+        return this.status;
+      case "authorizeStatus":
+        return this.authorizeStatus;
+      case "chargeStatus":
+        return this.chargeStatus;
+      case "channels":
+        return this.channels;
+      case "isClickAndCollect":
+        return this.isClickAndCollect;
+      case "isPreorder":
+        return this.isPreorder;
+      case "giftCardBought":
+        return this.giftCardBought;
+      case "giftCardUsed":
+        return this.giftCardUsed;
+      default:
+        return [];
+    }
   }
 }

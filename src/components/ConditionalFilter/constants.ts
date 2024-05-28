@@ -37,9 +37,8 @@ export const STATIC_CONDITIONS = {
   ],
   isClickAndCollect: [{ type: "select", label: "is", value: "input-1" }],
   isPreorder: [{ type: "select", label: "is", value: "input-1" }],
-  // giftCardUsed: [{ type: "select", label: "is", value: "input-1" }],
-  // giftCardBought: [{ type: "select", label: "is", value: "input-1" }],
-  giftCardUsage: [{ type: "multiselect", label: "is", value: "input-1" }], // Used or Bought or both
+  giftCardUsed: [{ type: "select", label: "is", value: "input-1" }],
+  giftCardBought: [{ type: "select", label: "is", value: "input-1" }],
   paymentStatus: [
     {
       type: "combobox",
@@ -222,10 +221,16 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
     slug: "isPreorder",
   },
   {
-    value: "giftCardUsage",
-    label: "Gift Card",
-    type: "giftCardUsage",
-    slug: "giftCardUsage",
+    value: "giftCardBought",
+    label: "Gift card bought",
+    type: "giftCardBought",
+    slug: "giftCardBought",
+  },
+  {
+    value: "giftCardUsed",
+    label: "Gift card used",
+    type: "giftCardUsed",
+    slug: "giftCardUsed",
   },
 ];
 
