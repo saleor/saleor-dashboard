@@ -53,6 +53,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
     [emptyColumn, intl, sort],
   );
   const { handlers, staticColumns, visibleColumns, selectedColumns } = useColumns({
+    gridName: "order_list",
     staticColumns: memoizedStaticColumns,
     selectedColumns: settings?.columns ?? [],
     onSave: handleColumnChange,
