@@ -1,6 +1,5 @@
 import "@glideapps/glide-data-grid/dist/index.css";
 
-import { getAppMountUri } from "@dashboard/config";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { usePreventHistoryBack } from "@dashboard/hooks/usePreventHistoryBack";
 import DataEditor, {
@@ -10,7 +9,6 @@ import DataEditor, {
   EditableGridCell,
   GridCell,
   GridColumn,
-  GridMouseEventArgs,
   GridSelection,
   HeaderClickedEventArgs,
   Item,
@@ -20,7 +18,6 @@ import { GetRowThemeCallback } from "@glideapps/glide-data-grid/dist/ts/data-gri
 import { Card, CardContent, CircularProgress } from "@material-ui/core";
 import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import debounce from "lodash/debounce";
 import range from "lodash/range";
 import React, {
   MutableRefObject,
@@ -44,6 +41,7 @@ import { headerIcons } from "./headerIcons";
 import useDatagridChange, { DatagridChange, OnDatagridChange } from "./hooks/useDatagridChange";
 import { useFullScreenMode } from "./hooks/useFullScreenMode";
 import { usePortalClasses } from "./hooks/usePortalClasses";
+import { useRowHover } from "./hooks/useRowHover";
 import { useScrollRight } from "./hooks/useScrollRight";
 import { useTooltipContainer } from "./hooks/useTooltipContainer";
 import useStyles, { cellHeight, useDatagridTheme, useFullScreenStyles } from "./styles";
@@ -135,15 +133,19 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const datagridTheme = useDatagridTheme(readonly, readonly);
   const editor = useRef<DataEditorRef | null>(null);
   const customRenderers = useCustomCellRenderers();
-  const hackARef = useRef<HTMLAnchorElement | null>(null);
   const navigate = useNavigator();
   const { scrolledToRight, scroller } = useScrollRight();
   const fullScreenClasses = useFullScreenStyles(classes);
   const { isOpen, isAnimationOpenFinished, toggle } = useFullScreenMode();
   const { clearTooltip, tooltip, setTooltip } = useTooltipContainer();
   const [selection, setSelection] = useState<GridSelection>();
-  const [hoverRow, setHoverRow] = useState<number | undefined>(undefined);
   const [areCellsDirty, setCellsDirty] = useState(true);
+
+  const { handleRowHover, handleSetHackARef, hoverRow, hackARef } = useRowHover({
+    hasRowHover,
+    rowAnchor,
+    rowMarkers,
+  });
 
   // Allow to listen to which row is selected and notfiy parent component
   useEffect(() => {
@@ -241,47 +243,6 @@ export const Datagrid: React.FC<DatagridProps> = ({
     [onCellEdited, availableColumns],
   );
 
-  const handleRowHref = useCallback(
-    (args: GridMouseEventArgs) => {
-      if (args.kind !== "cell" || !hackARef.current || !rowAnchor) {
-        return;
-      }
-
-      const href = rowAnchor(args.location);
-
-      if (!href) {
-        return;
-      }
-
-      if (preventRowClickOnSelectionCheckbox(rowMarkers, args.location[0])) {
-        return;
-      }
-
-      hackARef.current.style.left = `${window.scrollX + args.bounds.x}px`;
-      hackARef.current.style.width = `${args.bounds.width}px`;
-      hackARef.current.style.top = `${window.scrollY + args.bounds.y}px`;
-      hackARef.current.style.height = `${args.bounds.height}px`;
-      hackARef.current.href = getAppMountUri() + (href.startsWith("/") ? href.slice(1) : href);
-      hackARef.current.dataset.reactRouterPath = href;
-    },
-    [rowAnchor, rowMarkers],
-  );
-
-  const debouncedHandleRowHref = debounce(handleRowHref, 500);
-
-  const handleRowHover = useCallback(
-    (args: GridMouseEventArgs) => {
-      if (hasRowHover) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const [_, row] = args.location;
-
-        setHoverRow(args.kind !== "cell" ? undefined : row);
-      }
-
-      debouncedHandleRowHref(args);
-    },
-    [debouncedHandleRowHref, hasRowHover],
-  );
   const handleCellClick = useCallback(
     (item: Item, args: CellClickedEventArgs) => {
       if (preventRowClickOnSelectionCheckbox(rowMarkers, item[0])) {
@@ -559,7 +520,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
       />
       {rowAnchor && (
         <a
-          ref={hackARef}
+          ref={handleSetHackARef}
           style={{ position: "absolute" }}
           tabIndex={-1}
           aria-hidden={true}
