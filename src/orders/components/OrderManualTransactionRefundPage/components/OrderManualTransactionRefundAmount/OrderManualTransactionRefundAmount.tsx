@@ -4,15 +4,15 @@ import { Controller, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { messages } from "../../messages";
-import { ManualRefundForm } from "../OrderManualTransationRefundForm/manualRefundValidationSchema";
+import { ManualRefundForm } from "../OrderManualTransactionRefundForm/manualRefundValidationSchema";
 
-interface OrderManualTransationRefundAmountProps {
+interface OrderManualTransactionRefundAmountProps {
   currency: string;
 }
 
-export const OrderManualTransationRefundAmount = ({
+export const OrderManualTransactionRefundAmount = ({
   currency,
-}: OrderManualTransationRefundAmountProps) => {
+}: OrderManualTransactionRefundAmountProps) => {
   const { control } = useFormContext<ManualRefundForm>();
   const intl = useIntl();
 

@@ -9,7 +9,7 @@ export const messages = defineMessages({
     id: "Bl6896",
     defaultMessage: "Refund amount",
   },
-  selectTransation: {
+  selectTransaction: {
     id: "dO05fh",
     defaultMessage: "Select a refund you want to fullfill",
   },
@@ -26,6 +26,11 @@ export const messages = defineMessages({
     id: "HW6Vef",
     defaultMessage: "This transaction is non-refundable",
   },
+  defaultTransactionName: {
+    id: "p9bXAy",
+    defaultMessage: "Transaction",
+    description: "default transaction name",
+  },
 });
 
 export const validationMessages = defineMessages({
@@ -36,5 +41,9 @@ export const validationMessages = defineMessages({
   transactionIdRequired: {
     id: "F2kF9e",
     defaultMessage: "You must select transaction that you want to refund",
+  },
+  amountExceedsChargedAmount: {
+    id: "kfvvnM",
+    defaultMessage: "Provided amount cannot exceed charged amount for the selected transaction",
   },
 });

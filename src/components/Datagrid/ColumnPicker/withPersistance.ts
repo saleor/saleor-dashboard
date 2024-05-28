@@ -48,5 +48,5 @@ export const selectedWithPersistance = (
 ) => {
   if (persistedColumns.length === 0) return selectedColumns;
 
-  return persistedColumns.map(column => column.identifier());
+  return persistedColumns.filter(column => !column.isEmpty()).map(column => column.identifier());
 };

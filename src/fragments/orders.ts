@@ -637,6 +637,13 @@ export const fragmentOrderGrantedRefunds = gql`
       id
       name
     }
+    lines {
+      id
+      quantity
+      orderLine {
+        id
+      }
+    }
   }
 `;
 

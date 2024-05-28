@@ -13,7 +13,7 @@ import userEvent from "@testing-library/user-event";
 import React, { ReactNode } from "react";
 import { BrowserRouter } from "react-router-dom";
 
-import { OrderManualTransationRefundPage } from "./OrderManualTransationRefundPage";
+import { OrderManualTransactionRefundPage } from "./OrderManualTransactionRefundPage";
 
 jest.mock("@dashboard/hooks/useNavigator", () => () => jest.fn);
 jest.mock("@dashboard/components/Savebar", () => {
@@ -57,7 +57,7 @@ const getWrapper = (mocks: MockedResponse[] = []) => {
   return WrapperComponent;
 };
 
-describe("OrderManualTransationRefundPage", () => {
+describe("OrderManualTransactionRefundPage", () => {
   it("should select transaction, set amount and submit form", async () => {
     // Arrange
     const mockNofitication = jest.fn();
@@ -83,17 +83,23 @@ describe("OrderManualTransationRefundPage", () => {
         name: "Transaction 1",
         events: [],
         actions: [TransactionActionEnum.REFUND],
+        chargedAmount: {
+          amount: 20,
+        },
       },
       {
         id: "2",
         name: "Transaction 2",
         events: [],
         actions: [TransactionActionEnum.REFUND],
+        chargedAmount: {
+          amount: 40,
+        },
       },
     ] as unknown as TransactionItemFragment[];
 
     render(
-      <OrderManualTransationRefundPage
+      <OrderManualTransactionRefundPage
         currency="USD"
         loading={false}
         orderId="1"
@@ -102,7 +108,7 @@ describe("OrderManualTransationRefundPage", () => {
       { wrapper: getWrapper(mocks) },
     );
     // Act
-    await userEvent.click(screen.getByRole("radio", { name: "Transaction 2" }));
+    await userEvent.click(screen.getByRole("radio", { name: /Transaction 2/i }));
     await userEvent.type(screen.getByLabelText(/refund amount/i), "5");
     await userEvent.click(screen.getByRole("button", { name: "save" }));
     // Assert
@@ -111,10 +117,44 @@ describe("OrderManualTransationRefundPage", () => {
       text: "Transaction action requested successfully",
     });
   });
+  it("should fail validation when refund amount is higher than transaction charged amount", async () => {
+    // Arrange
+    const transactions = [
+      {
+        id: "1",
+        name: "Transaction 1",
+        events: [],
+        actions: [TransactionActionEnum.REFUND],
+        chargedAmount: {
+          amount: 20,
+        },
+      },
+    ] as unknown as TransactionItemFragment[];
+
+    render(
+      <OrderManualTransactionRefundPage
+        currency="USD"
+        loading={false}
+        orderId="1"
+        transactions={transactions}
+      />,
+      { wrapper: getWrapper() },
+    );
+
+    // Act
+    await userEvent.click(screen.getByRole("radio", { name: /Transaction 1/i }));
+    await userEvent.type(screen.getByLabelText(/refund amount/i), "25");
+    await userEvent.click(screen.getByRole("button", { name: "save" }));
+
+    // Assert
+    expect(
+      screen.getByText("Provided amount cannot exceed charged amount for the selected transaction"),
+    ).toBeInTheDocument();
+  });
   it("should display skeleton when loading", async () => {
     // Arrange &&  Act
     render(
-      <OrderManualTransationRefundPage
+      <OrderManualTransactionRefundPage
         currency="USD"
         loading={true}
         orderId="1"
