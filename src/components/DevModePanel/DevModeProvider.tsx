@@ -15,6 +15,7 @@ export function DevModeProvider({ children }) {
   // dashboard to be passed to the dev mode panel
   const [devModeContent, setDevModeContent] = useState("");
   const [isDevModeVisible, setDevModeVisibility] = useState(false);
+
   const params = extractQueryParams(useLocation().search);
   const triggerHandler = ({ shift }: { shift: boolean }) => {
     if (shift) {
@@ -22,8 +23,7 @@ export function DevModeProvider({ children }) {
 
       const variables = JSON.stringify(
         {
-          // @ts-expect-error - TODO
-          filter: getFilterVariables(params),
+          filter: getFilterVariables(params, []),
         },
         null,
         2,

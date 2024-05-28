@@ -9,6 +9,7 @@ import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
@@ -76,13 +77,14 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   const extensionMenuItems = mapToMenuItemsForOrderListActions(ORDER_OVERVIEW_MORE_ACTIONS);
   const extensionCreateButtonItems = mapToMenuItemsForOrderListActions(ORDER_OVERVIEW_CREATE);
   const context = useDevModeContext();
+  const { valueProvider } = useConditionalFilterContext();
+
   const openPlaygroundURL = () => {
     context.setDevModeContent(DevModeQuery);
 
     const variables = JSON.stringify(
       {
-        // @ts-expect-error - TODO
-        filter: getFilterVariables(params),
+        filter: getFilterVariables(params, valueProvider.value),
         // TODO add sorting: Issue #3409
         // strange error when uncommenting this line
         // sortBy: getSortQueryVariables(params)
