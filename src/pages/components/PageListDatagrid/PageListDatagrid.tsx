@@ -54,6 +54,7 @@ export const PageListDatagrid = ({
   );
   const { handlers, visibleColumns, staticColumns, selectedColumns, recentlyAddedColumn } =
     useColumns({
+      gridName: "page_list",
       staticColumns: pageListStaticColumns,
       selectedColumns: settings?.columns ?? [],
       onSave: onColumnChange,
