@@ -63,6 +63,7 @@ export const useInitialOrderState = () => {
     );
 
     const data = await Promise.all(queriesToRun);
+
     const initialState = {
       ...createInitialOrderState(data),
       paymentStatus: await paymentStatusInit.fetch(),
@@ -73,7 +74,7 @@ export const useInitialOrderState = () => {
         {
           type: "customer",
           label: "Customer",
-          value: Array.isArray(customer.length) && customer.length > 0 ? customer.at(-1) : "",
+          value: Array.isArray(customer) && customer.length > 0 ? customer.at(-1) : "",
           slug: "customer",
         },
       ],
