@@ -31,6 +31,7 @@ export const useInitialOrderState = () => {
     paymentStatus,
     status,
     authorizeStatus,
+    customer,
   }: OrderFetchingParams) => {
     if (channels.length > 0) {
       queriesToRun.push(
@@ -68,6 +69,14 @@ export const useInitialOrderState = () => {
       status: await statusInit.fetch(),
       authorizeStatus: await authorizeStatusInit.fetch(),
       chargeStatus: await chargeStatusInit.fetch(),
+      customer: [
+        {
+          type: "customer",
+          label: "Customer",
+          value: Array.isArray(customer.length) && customer.length > 0 ? customer.at(-1) : "",
+          slug: "customer",
+        },
+      ],
     };
 
     setData(
@@ -81,6 +90,7 @@ export const useInitialOrderState = () => {
         initialState.isClickAndCollect,
         initialState.giftCardBought,
         initialState.giftCardUsed,
+        initialState.customer,
       ),
     );
     setLoading(false);

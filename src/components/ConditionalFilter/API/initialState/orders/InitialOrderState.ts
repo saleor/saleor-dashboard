@@ -11,7 +11,10 @@ export interface InitialOrderState {
   isPreorder: ItemOption[];
   giftCardBought: ItemOption[];
   giftCardUsed: ItemOption[];
+  customer: ItemOption[];
 }
+
+const isTextInput = (name: string) => ["customer"].includes(name);
 
 export class InitialOrderStateResponse implements InitialOrderState {
   constructor(
@@ -24,6 +27,7 @@ export class InitialOrderStateResponse implements InitialOrderState {
     public isPreorder: ItemOption[] = [],
     public giftCardBought: ItemOption[] = [],
     public giftCardUsed: ItemOption[] = [],
+    public customer: ItemOption[] = [],
   ) {}
 
   public static empty() {
@@ -31,7 +35,13 @@ export class InitialOrderStateResponse implements InitialOrderState {
   }
 
   public filterByUrlToken(token: UrlToken) {
-    return this.getEntryByName(token.name).filter(({ slug }) => slug && token.value.includes(slug));
+    return this.getEntryByName(token.name).filter(({ slug }) => {
+      if (isTextInput(token.name)) {
+        return true;
+      }
+
+      return slug && token.value.includes(slug);
+    });
   }
 
   private getEntryByName(name: string): ItemOption[] {
@@ -54,6 +64,8 @@ export class InitialOrderStateResponse implements InitialOrderState {
         return this.giftCardBought;
       case "giftCardUsed":
         return this.giftCardUsed;
+      case "customer":
+        return this.customer;
       default:
         return [];
     }

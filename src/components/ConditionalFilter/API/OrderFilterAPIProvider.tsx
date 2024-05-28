@@ -10,7 +10,13 @@ import { IntlShape, useIntl } from "react-intl";
 
 import { RowType } from "../constants";
 import { FilterContainer, FilterElement } from "../FilterElement";
-import { BooleanValuesHandler, EnumValuesHandler, Handler, LegacyChannelHandler } from "./Handler";
+import {
+  BooleanValuesHandler,
+  EnumValuesHandler,
+  Handler,
+  LegacyChannelHandler,
+  TextInputValuesHandler,
+} from "./Handler";
 
 const getFilterElement = (value: FilterContainer, index: number): FilterElement => {
   const possibleFilterElement = value[index];
@@ -51,40 +57,6 @@ const createAPIHandler = (
     ]);
   }
 
-  // if (rowType === "isClickAndCollect") {
-  //   return new BooleanValuesHandler([
-  //     {
-  //       label: "Yes",
-  //       value: "true",
-  //       type: rowType,
-  //       slug: "isClickAndCollect",
-  //     },
-  //     {
-  //       label: "No",
-  //       value: "false",
-  //       type: rowType,
-  //       slug: "isClickAndCollect",
-  //     },
-  //   ]);
-  // }
-
-  // if (rowType === "isPreorder") {
-  //   return new BooleanValuesHandler([
-  //     {
-  //       label: "Yes",
-  //       value: "true",
-  //       type: rowType,
-  //       slug: "isPreorder",
-  //     },
-  //     {
-  //       label: "No",
-  //       value: "false",
-  //       type: rowType,
-  //       slug: "isPreorder",
-  //     },
-  //   ]);
-  // }
-
   if (rowType === "paymentStatus") {
     return new EnumValuesHandler(PaymentChargeStatusEnum, rowType, intl);
   }
@@ -105,12 +77,16 @@ const createAPIHandler = (
     return new LegacyChannelHandler(client, inputValue);
   }
 
-  // if (rowType === "customer") {
-  //   // String/input type??
-  // }
-
-  // if (rowType === "created") {
-  // }
+  if (rowType === "customer") {
+    return new TextInputValuesHandler([
+      {
+        label: "Customer",
+        value: selectedRow.condition.selected.value as string,
+        type: "customer",
+        slug: "customer",
+      },
+    ]);
+  }
 
   throw new Error(`Unknown filter element: "${rowType}"`);
 };

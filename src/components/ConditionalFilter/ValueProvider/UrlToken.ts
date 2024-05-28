@@ -25,6 +25,7 @@ const STATIC_TO_LOAD = [
   "isPreorder",
   "isClickAndCollect",
   "channels",
+  "customer",
 ];
 
 export const TokenType = {

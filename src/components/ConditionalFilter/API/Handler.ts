@@ -255,3 +255,11 @@ export class EnumValuesHandler implements Handler {
     return this.options;
   };
 }
+
+export class TextInputValuesHandler implements Handler {
+  constructor(public options: LeftOperand[]) {}
+
+  fetch = async (): Promise<LeftOperand[]> => {
+    return this.options;
+  };
+}

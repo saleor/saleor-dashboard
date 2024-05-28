@@ -129,5 +129,6 @@ export const createInitialOrderState = (data: InitialOrderAPIResponse[]) =>
       isPreorder: createBooleanOptions(),
       giftCardBought: createBooleanOptions(),
       giftCardUsed: createBooleanOptions(),
+      customer: [],
     },
   );

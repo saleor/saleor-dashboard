@@ -97,6 +97,13 @@ export const STATIC_CONDITIONS = {
     { type: "datetime", label: "greater", value: "input-2" },
     { type: "datetime.range", label: "between", value: "input-3" },
   ],
+  customer: [
+    {
+      type: "text",
+      label: "is",
+      value: "input-1",
+    },
+  ],
 };
 
 export const CONSTRAINTS = {
@@ -231,6 +238,12 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
     label: "Gift card used",
     type: "giftCardUsed",
     slug: "giftCardUsed",
+  },
+  {
+    value: "customer",
+    label: "Customer",
+    type: "customer",
+    slug: "customer",
   },
 ];
 

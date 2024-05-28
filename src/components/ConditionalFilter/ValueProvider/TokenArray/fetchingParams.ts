@@ -14,6 +14,7 @@ export interface OrderFetchingParams {
   authorizeStatus: string[];
   chargeStatus: string[];
   channels: string[];
+  customer: string[];
 }
 
 type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute">;
@@ -32,6 +33,7 @@ export const emptyOrderFetchingParams: OrderFetchingParams = {
   authorizeStatus: [],
   chargeStatus: [],
   channels: [],
+  customer: [],
 };
 
 const unique = <T>(array: Iterable<T>) => Array.from(new Set(array));
