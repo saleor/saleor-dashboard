@@ -71,6 +71,6 @@ runs:
 
     - name: Add client origins 
       shell: bash
-      if: ! contains(inputs.BASE_URL, inputs.POOL_INSTANCE) # Add base url as a trusted origins if we're using deployed dashboard in repo (saleor.rocks)
+      if: ${{!contains(inputs.BASE_URL, inputs.POOL_INSTANCE)}} # Add base url as a trusted origins if we're using deployed dashboard in repo (saleor.rocks)
       run: |
         saleor env origins ${{ inputs.POOL_NAME }} --origins=inputs.BASE_URL
