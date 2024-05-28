@@ -186,11 +186,7 @@ export class LegacyChannelHandler implements Handler {
         slug,
       })) ?? [];
 
-    return options;
-
-    // return this.query
-    //   ? options.filter(({ value }) => this.query.some((query: string) => query === value))
-    //   : options;
+    return options.filter(({ label }) => label.toLowerCase().includes(this.query.toLowerCase()));
   };
 }
 

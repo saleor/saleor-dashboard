@@ -1,4 +1,4 @@
-import { InitialOrderState } from "../API/initialState/orders/InitialOrderState";
+import { InitialOrderStateResponse } from "../API/initialState/orders/InitialOrderState";
 import { InitialStateResponse } from "../API/InitialStateResponse";
 import { LeftOperand } from "../LeftOperandsProvider";
 import { UrlToken } from "./../ValueProvider/UrlToken";
@@ -46,7 +46,10 @@ export class Condition {
   }
 
   // Here something is wrong, boolean option receives two values, but it should receive only one
-  public static fromUrlToken(token: UrlToken, response: InitialStateResponse | InitialOrderState) {
+  public static fromUrlToken(
+    token: UrlToken,
+    response: InitialStateResponse | InitialOrderStateResponse,
+  ) {
     if (ConditionOptions.isStaticName(token.name)) {
       const staticOptions = ConditionOptions.fromStaticElementName(token.name);
       const selectedOption = staticOptions.findByLabel(token.conditionKind);

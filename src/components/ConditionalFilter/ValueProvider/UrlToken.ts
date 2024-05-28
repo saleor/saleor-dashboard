@@ -23,6 +23,7 @@ const STATIC_TO_LOAD = [
   "giftCardUsage",
   "isPreorder",
   "isClickAndCollect",
+  "channels",
 ];
 
 export const TokenType = {

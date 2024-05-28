@@ -21,11 +21,11 @@ import { useState } from "react";
 import { FetchingParams, OrderFetchingParams } from "../../ValueProvider/TokenArray/fetchingParams";
 import { InitialStateResponse } from "../InitialStateResponse";
 import { createInitialStateFromData } from "./helpers";
-import { InitialOrderState } from "./orders/InitialOrderState";
+import { InitialOrderStateResponse } from "./orders/InitialOrderState";
 import { InitialAPIResponse } from "./types";
 
 export interface InitialAPIState {
-  data: InitialStateResponse | InitialOrderState;
+  data: InitialStateResponse | InitialOrderStateResponse;
   loading: boolean;
   fetchQueries?: (params: FetchingParams | OrderFetchingParams) => Promise<void>;
 }

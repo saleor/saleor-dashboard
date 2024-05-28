@@ -1,6 +1,6 @@
 import { parse, ParsedQs } from "qs";
 
-import { InitialOrderState } from "../../API/initialState/orders/InitialOrderState";
+import { InitialOrderStateResponse } from "../../API/initialState/orders/InitialOrderState";
 import { InitialStateResponse } from "../../API/InitialStateResponse";
 import { FilterContainer, FilterElement } from "../../FilterElement";
 import { UrlEntry, UrlToken } from "../UrlToken";
@@ -38,7 +38,7 @@ const tokenizeUrl = (urlParams: string) => {
 };
 const mapUrlTokensToFilterValues = (
   urlTokens: TokenArray,
-  response: InitialStateResponse | InitialOrderState,
+  response: InitialStateResponse | InitialOrderStateResponse,
 ): FilterContainer =>
   urlTokens.map(el => {
     if (typeof el === "string") {
@@ -68,7 +68,7 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
   }
 
   public asFilterValuesFromResponse(
-    response: InitialStateResponse | InitialOrderState,
+    response: InitialStateResponse | InitialOrderStateResponse,
   ): FilterContainer {
     return this.map(el => {
       if (typeof el === "string") {
