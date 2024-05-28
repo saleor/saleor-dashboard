@@ -103,6 +103,7 @@ jobs:
         shell: bash
         working-directory: .github/workflows
     runs-on: ubuntu-22.04
+    if: always()
     needs: [run-tests-in-parallel, testmo-report-preparation]
     steps:
       - name: Checkout
