@@ -25,70 +25,71 @@ export const dateCellRenderer = (locale: Locale): CustomRenderer<DateCell> => ({
 
     const date = new Date(value);
 
-    // if (isNaN(date?.getTime())) {
-    //   // invalid date object
-    //   return;
-    // }
+    if (isNaN(date?.getTime())) {
+      // invalid date object
+      return;
+    }
 
-    // const dateFormats = {
-    //   full: new Intl.DateTimeFormat(locale, {
-    //     dateStyle: "full",
-    //   }).format(date),
-    //   long: new Intl.DateTimeFormat(locale, {
-    //     dateStyle: "long",
-    //   }).format(date),
-    //   short: new Intl.DateTimeFormat(locale, {
-    //     dateStyle: "short",
-    //   }).format(date),
-    // };
-    // const time = new Intl.DateTimeFormat(locale, {
-    //   timeStyle: "short",
-    // }).format(date);
+    const dateFormats = {
+      full: new Intl.DateTimeFormat(locale, {
+        dateStyle: "full",
+      }).format(date),
+      long: new Intl.DateTimeFormat(locale, {
+        dateStyle: "long",
+      }).format(date),
+      short: new Intl.DateTimeFormat(locale, {
+        dateStyle: "short",
+      }).format(date),
+    };
+    const time = new Intl.DateTimeFormat(locale, {
+      timeStyle: "short",
+    }).format(date);
 
-    // ctx.textAlign = "left";
+    ctx.textAlign = "left";
 
-    // let justifyToRight = true;
+    let justifyToRight = true;
 
-    // const candidateFormats = [
-    //   {
-    //     format: dateFormats.full,
-    //     width: ctx.measureText(`${dateFormats.full} ${time}`).width,
-    //   },
-    //   {
-    //     format: dateFormats.long,
-    //     width: ctx.measureText(`${dateFormats.long} ${time}`).width,
-    //   },
-    //   {
-    //     format: dateFormats.short,
-    //     width: ctx.measureText(`${dateFormats.short} ${time}`).width,
-    //   },
-    // ];
-    // const cellWidth = rect.width - theme.cellHorizontalPadding * 2;
-    // let displayDate: string | undefined = dateFormats.full;
+    const candidateFormats = [
+      {
+        format: dateFormats.full,
+        width: ctx.measureText(`${dateFormats.full} ${time}`).width,
+      },
+      {
+        format: dateFormats.long,
+        width: ctx.measureText(`${dateFormats.long} ${time}`).width,
+      },
+      {
+        format: dateFormats.short,
+        width: ctx.measureText(`${dateFormats.short} ${time}`).width,
+      },
+    ];
+    const cellWidth = rect.width - theme.cellHorizontalPadding * 2;
+    let displayDate: string | undefined = dateFormats.full;
 
-    // if (cellWidth < candidateFormats[0].width) {
-    //   displayDate = candidateFormats.find(format => format.width <= cellWidth)?.format;
+    if (cellWidth < candidateFormats[0].width) {
+      displayDate = candidateFormats.find(format => format.width <= cellWidth)?.format;
 
-    //   if (!displayDate) {
-    //     displayDate = dateFormats.short;
-    //     justifyToRight = false;
-    //   }
-    // }
+      if (!displayDate) {
+        displayDate = dateFormats.short;
+        justifyToRight = false;
+      }
+    }
 
     ctx.fillStyle = theme.textDark;
     ctx.fillText(
-      date.toISOString(),
+      displayDate,
       rect.x + theme.cellHorizontalPadding,
       rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
     );
     ctx.fillStyle = theme.textLight;
-    // ctx.fillText(
-    //   time,
-    //   justifyToRight
-    //     ? rect.x + rect.width - theme.cellHorizontalPadding
-    //     : rect.x + theme.cellHorizontalPadding + ctx.measureText(displayDate).width + 5,
-    //   rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
-    // );
+    ctx.textAlign = justifyToRight ? "right" : "left";
+    ctx.fillText(
+      time,
+      justifyToRight
+        ? rect.x + rect.width - theme.cellHorizontalPadding
+        : rect.x + theme.cellHorizontalPadding + ctx.measureText(displayDate).width + 5,
+      rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
+    );
 
     return true;
   },
