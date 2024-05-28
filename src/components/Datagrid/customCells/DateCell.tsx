@@ -14,50 +14,57 @@ interface DateCellProps {
 
 export type DateCell = CustomCell<DateCellProps>;
 
-export const dateCellRenderer = (locale: Locale): CustomRenderer<DateCell> => ({
-  kind: GridCellKind.Custom,
-  isMatch: (c): c is DateCell => (c.data as any).kind === "date-cell",
-  draw: (args, cell) => {
-    const { ctx, theme, rect } = args;
-    const { value } = cell.data;
+export const dateCellRenderer = (locale: Locale): CustomRenderer<DateCell> => {
+  const dateFormater = new Intl.DateTimeFormat(locale, {
+    dateStyle: "short",
+  });
 
-    if (value === numberCellEmptyValue) return;
+  const timeFromater = new Intl.DateTimeFormat(locale, {
+    timeStyle: "short",
+  });
 
-    const date = new Date(value);
+  return {
+    kind: GridCellKind.Custom,
+    isMatch: (c): c is DateCell => (c.data as any).kind === "date-cell",
+    draw: (args, cell) => {
+      const { ctx, theme, rect } = args;
+      const { value } = cell.data;
 
-    if (isNaN(date?.getTime())) {
-      // invalid date object
-      return;
-    }
+      if (value === numberCellEmptyValue) return;
 
-    const dateFormat = new Intl.DateTimeFormat(locale, {
-      dateStyle: "short",
-    }).format(date);
+      const date = new Date(value);
 
-    const time = new Intl.DateTimeFormat(locale, {
-      timeStyle: "short",
-    }).format(date);
+      if (isNaN(date?.getTime())) {
+        // invalid date object
+        return;
+      }
 
-    ctx.textAlign = "left";
+      const dateFormat = dateFormater.format(date);
+      const time = timeFromater.format(date);
 
-    const justifyToRight = false;
+      ctx.textAlign = "left";
 
-    ctx.fillStyle = theme.textDark;
-    ctx.fillText(
-      dateFormat,
-      rect.x + theme.cellHorizontalPadding,
-      rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
-    );
-    ctx.fillStyle = theme.textLight;
-    ctx.textAlign = justifyToRight ? "right" : "left";
-    ctx.fillText(
-      time,
-      justifyToRight
-        ? rect.x + rect.width - theme.cellHorizontalPadding
-        : rect.x + theme.cellHorizontalPadding + ctx.measureText(dateFormat).width + 5,
-      rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
-    );
+      const justifyToRight = false;
+      const bias = getMiddleCenterBias(ctx, theme);
 
-    return true;
-  },
-});
+      ctx.fillStyle = theme.textDark;
+      ctx.fillText(
+        dateFormat,
+        rect.x + theme.cellHorizontalPadding,
+        rect.y + rect.height / 2 + bias,
+      );
+
+      ctx.fillStyle = theme.textLight;
+      ctx.textAlign = justifyToRight ? "right" : "left";
+      ctx.fillText(
+        time,
+        justifyToRight
+          ? rect.x + rect.width - theme.cellHorizontalPadding
+          : rect.x + theme.cellHorizontalPadding + ctx.measureText(dateFormat).width + 5,
+        rect.y + rect.height / 2 + bias,
+      );
+
+      return true;
+    },
+  };
+};
