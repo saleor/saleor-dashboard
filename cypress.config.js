@@ -14,6 +14,11 @@ module.exports = defineConfig({
     runMode: 1,
     openMode: 0,
   },
+  screenshotsFolder: "cypress/reports/mochareports",
+  reporter: "cypress-multi-reporters",
+  reporterOptions: {
+    configFile: "reporter-config.json",
+  },
   e2e: {
     env: {
       grepFilterSpecs: true,
