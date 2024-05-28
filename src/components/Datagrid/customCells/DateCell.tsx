@@ -30,54 +30,21 @@ export const dateCellRenderer = (locale: Locale): CustomRenderer<DateCell> => ({
       return;
     }
 
-    const dateFormats = {
-      full: new Intl.DateTimeFormat(locale, {
-        dateStyle: "full",
-      }).format(date),
-      long: new Intl.DateTimeFormat(locale, {
-        dateStyle: "long",
-      }).format(date),
-      short: new Intl.DateTimeFormat(locale, {
-        dateStyle: "short",
-      }).format(date),
-    };
+    const dateFormat = new Intl.DateTimeFormat(locale, {
+      dateStyle: "short",
+    }).format(date);
+
     const time = new Intl.DateTimeFormat(locale, {
       timeStyle: "short",
     }).format(date);
 
     ctx.textAlign = "left";
 
-    let justifyToRight = true;
-
-    const candidateFormats = [
-      {
-        format: dateFormats.full,
-        width: ctx.measureText(`${dateFormats.full} ${time}`).width,
-      },
-      {
-        format: dateFormats.long,
-        width: ctx.measureText(`${dateFormats.long} ${time}`).width,
-      },
-      {
-        format: dateFormats.short,
-        width: ctx.measureText(`${dateFormats.short} ${time}`).width,
-      },
-    ];
-    const cellWidth = rect.width - theme.cellHorizontalPadding * 2;
-    let displayDate: string | undefined = dateFormats.full;
-
-    if (cellWidth < candidateFormats[0].width) {
-      displayDate = candidateFormats.find(format => format.width <= cellWidth)?.format;
-
-      if (!displayDate) {
-        displayDate = dateFormats.short;
-        justifyToRight = false;
-      }
-    }
+    const justifyToRight = false;
 
     ctx.fillStyle = theme.textDark;
     ctx.fillText(
-      displayDate,
+      dateFormat,
       rect.x + theme.cellHorizontalPadding,
       rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
     );
@@ -87,7 +54,7 @@ export const dateCellRenderer = (locale: Locale): CustomRenderer<DateCell> => ({
       time,
       justifyToRight
         ? rect.x + rect.width - theme.cellHorizontalPadding
-        : rect.x + theme.cellHorizontalPadding + ctx.measureText(displayDate).width + 5,
+        : rect.x + theme.cellHorizontalPadding + ctx.measureText(dateFormat).width + 5,
       rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
     );
 
