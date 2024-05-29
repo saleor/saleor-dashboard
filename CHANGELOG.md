@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.16.3
+
+### Patch Changes
+
+- 338c9f82d: Add manual workflow for cypress tests
+- 5b8e9eaf5: Run cypress or playwright tests on release
+
 ## 3.16.2
 
 ### Patch Changes
