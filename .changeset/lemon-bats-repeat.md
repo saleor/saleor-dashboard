@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Improve ux of issue gift card modal
+You can now open issue gift card modal without any flickering
