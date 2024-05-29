@@ -22,7 +22,7 @@ jobs:
       POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
       BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
       BASE_URL_DOMAIN: ${{ steps.cloud_variables.outputs.BASE_URL_DOMAIN }}
-      API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
+      API_URL: 'https://add-client-logs.api.saleor.rocks/graphql/'
       BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
       BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
       BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
@@ -45,7 +45,7 @@ jobs:
           STRATEGY: reload
           CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
           BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
-          API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
+          API_URL: 'https://add-client-logs.api.saleor.rocks/graphql/'
           POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
           POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
           BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
@@ -107,7 +107,7 @@ jobs:
 
       - name: Build dashboard
         env:
-          API_URI: ${{ needs.initialize-cloud.outputs.API_URL }}
+          API_URI: 'https://add-client-logs.api.saleor.rocks/graphql/'
           APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
           APP_MOUNT_URI: /
           STATIC_URL: /
@@ -160,7 +160,7 @@ jobs:
         with:
           SHARD: ${{ matrix.shard }}
           BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
-          API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
+          API_URL: 'https://add-client-logs.api.saleor.rocks/graphql/'
           E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
           E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
