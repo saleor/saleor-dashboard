@@ -73,4 +73,4 @@ runs:
       shell: bash
       if: ${{!contains(inputs.BASE_URL, inputs.POOL_INSTANCE) && !steps.instance_check.outputs.INSTANCE_KEY }} # Add base url as a trusted origins if we're using deployed dashboard in repo (saleor.rocks)
       run: |
-        npx saleor env origins ${{ inputs.POOL_NAME }} --origins=inputs.BASE_URL
+        npx saleor env origins ${{ inputs.POOL_NAME }} --origins=${{ inputs.BASE_URL }}
