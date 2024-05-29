@@ -469,7 +469,6 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
 
       <OrderRefundDialog
         open={params.action === "add-refund"}
-        order={order}
         onClose={closeModal}
         onStandardRefund={() => navigate(orderTransactionRefundUrl(id), { replace: true })}
         onManualRefund={() => navigate(orderManualTransactionRefundUrl(id), { replace: true })}

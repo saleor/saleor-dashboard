@@ -1,6 +1,5 @@
 import { DashboardModal } from "@dashboard/components/Modal";
 import { RadioTiles } from "@dashboard/components/RadioTiles/RadioTiles";
-import { OrderDetailsFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -10,7 +9,6 @@ import { orderRefundDialogMesages } from "./messages";
 import { useOrderRefundDialog } from "./useOrderRefundDialog";
 
 interface OrderRefundDialogProps {
-  order: OrderDetailsFragment;
   open: boolean;
   onClose: () => void;
   onStandardRefund: () => void;
@@ -18,19 +16,14 @@ interface OrderRefundDialogProps {
 }
 
 export const OrderRefundDialog = ({
-  order,
   open,
   onClose,
   onStandardRefund,
   onManualRefund,
 }: OrderRefundDialogProps) => {
   const intl = useIntl();
-  const {
-    selectedRefundType,
-    handleChangeRefundType,
-    canCreateManualRefund,
-    canCreateStandardRefund,
-  } = useOrderRefundDialog(order);
+  const { selectedRefundType, handleChangeRefundType, canCreateManualRefund } =
+    useOrderRefundDialog();
 
   return (
     <DashboardModal open={open} onChange={onClose}>
@@ -49,25 +42,15 @@ export const OrderRefundDialog = ({
             display="flex"
             flexDirection="column"
           >
-            <Tooltip open={canCreateStandardRefund ? false : undefined}>
-              <Tooltip.Trigger>
-                <Box>
-                  <RadioTiles.RadioTile
-                    value={"standard"}
-                    data-test-id="standard-refund"
-                    checked={selectedRefundType === "standard"}
-                    title={intl.formatMessage(orderRefundDialogMesages.standardRefundTitle)}
-                    description={intl.formatMessage(
-                      orderRefundDialogMesages.standardRefundSubtitle,
-                    )}
-                    disabled={!canCreateStandardRefund}
-                  />
-                </Box>
-              </Tooltip.Trigger>
-              <Tooltip.Content>
-                <FormattedMessage {...orderRefundDialogMesages.cannotCreateStandard} />
-              </Tooltip.Content>
-            </Tooltip>
+            <Box>
+              <RadioTiles.RadioTile
+                value={"standard"}
+                data-test-id="standard-refund"
+                checked={selectedRefundType === "standard"}
+                title={intl.formatMessage(orderRefundDialogMesages.standardRefundTitle)}
+                description={intl.formatMessage(orderRefundDialogMesages.standardRefundSubtitle)}
+              />
+            </Box>
             <Tooltip open={canCreateManualRefund ? false : undefined}>
               <Tooltip.Trigger>
                 <Box>
@@ -91,10 +74,7 @@ export const OrderRefundDialog = ({
           <Button onClick={onClose} variant="secondary">
             <Text fontWeight="medium">{intl.formatMessage(buttonMessages.cancel)}</Text>
           </Button>
-          <Button
-            onClick={selectedRefundType === "standard" ? onStandardRefund : onManualRefund}
-            disabled={!canCreateManualRefund && !canCreateStandardRefund}
-          >
+          <Button onClick={selectedRefundType === "standard" ? onStandardRefund : onManualRefund}>
             <Text fontWeight="medium" color="buttonDefaultPrimary">
               {intl.formatMessage(buttonMessages.confirm)}
             </Text>
