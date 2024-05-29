@@ -75,7 +75,7 @@ export class BasePage {
     await this.waitForNetworkIdleAfterAction(async () => {
       await this.searchInputListView.fill(searchItem);
     });
-    await this.waitForGrid();
+    await expect(this.searchInputListView).toHaveValue(searchItem);
     await this.waitForDOMToFullyLoad();
   }
   async clickNextPageButton() {
@@ -220,6 +220,8 @@ export class BasePage {
     rowsToCheck: number[],
     listToCheck: string[],
   ) {
+    await this.waitForDOMToFullyLoad();
+
     const searchResults = [];
 
     for (let i = 0; i < rowsToCheck.length; i++) {
@@ -271,8 +273,6 @@ export class BasePage {
     const rows = await this.page.locator("table tr").allTextContents();
 
     const rowIndexes: number[] = [];
-
-    const rows = await this.page.$$eval("table tr", rows => rows.map(row => row.textContent));
 
     for (const searchedText of searchTextArray) {
       const rowIndex = rows.findIndex(rowText => rowText.includes(searchedText));

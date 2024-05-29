@@ -30,12 +30,13 @@ export class AddNavigationMenuItemDialog extends BasePage{
       .waitFor({ state: "visible" });
     await this.menuLinkOptions.getByRole("option", { name: "Pages" }).waitFor({ state: "visible" });
     await expect(this.menuLinkOptions.getByRole("option", { name: "Categories" })).toBeEnabled();
-    await this.menuLinkOptions.getByTestId(option).click();
+    await this.menuLinkOptions.getByTestId(option).click({ force: true });
     await this.waitForDOMToFullyLoad();
     await this.menuLinkOptions
       .getByRole("option", { name: optionName })
       .waitFor({ state: "visible" });
-    await this.menuLinkOptions.getByRole("option", { name: optionName }).click();
+    expect(this.menuLinkOptions.getByRole("option", { name: optionName })).toBeEnabled();
+    await this.menuLinkOptions.getByRole("option", { name: optionName }).click({ force: true });
     await this.waitForDOMToFullyLoad();
     await expect(this.linkSelect).toHaveValue(optionName);
   }

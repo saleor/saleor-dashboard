@@ -56,8 +56,10 @@ async clickCreateNewMenuItem() {
 }
 async clickSaveButton() {
     await this.saveButton.click();
-}
-async clickDeleteButton() {
+    await this.waitForDOMToFullyLoad();
+  }
+
+  async clickDeleteButton() {
     await this.deleteButton.click();
 }
 async clickUndoButton() {

@@ -194,11 +194,8 @@ test("TC: SALEOR_56 As an admin, I should be able to export products from single
 test("TC: SALEOR_57 As an admin, I should be able to search products on list view @basic-regression @product @e2e", async () => {
   await productPage.gotoProductListPage();
   await productPage.waitForDOMToFullyLoad();
-  await productPage.typeInSearchOnListView(PRODUCTS.productToAddVariants.name);
-  await productPage.waitForGrid();
-  await productPage.checkListRowsBasedOnContainingText([
-    PRODUCTS.productToAddVariants.name,
-  ]);
+  await productPage.searchAndFindRowIndexes(PRODUCTS.productToAddVariants.name);
+  await productPage.checkListRowsBasedOnContainingText([PRODUCTS.productToAddVariants.name]);
   expect(
     await productPage.gridCanvas.locator("table tbody tr").count(),
     "There should be only one product visible on list",
@@ -212,7 +209,8 @@ test("TC: SALEOR_58 As an admin I should be able use pagination on product list 
   await productPage.clickNextPageButton();
   await productPage.waitForGrid();
   const secondPageProductName = await productPage.getGridCellText(1, 1);
-  await expect(
+
+  expect(
     firstPageProductName,
     `Second side first product name: ${secondPageProductName} should be visible and be different than: ${firstPageProductName}`,
   ).not.toEqual(secondPageProductName);
@@ -229,16 +227,16 @@ test("TC: SALEOR_58 As an admin I should be able use pagination on product list 
 });
 
 test("TC: SALEOR_59 As an admin I should be able to filter products by channel on product list view @basic-regression @product @e2e", async () => {
-  await productPage.waitForNetworkIdleAfterAction(() => productPage.gotoProductListPage());
-  await productPage.waitForDOMToFullyLoad();
-  await expect(
-    productPage.gridCanvas,
+  await productPage.gotoProductListPage();
+  await productPage.searchAndFindRowIndexes(PRODUCTS.productAvailableOnlyInUsdChannel.name);
+  expect(
+    await productPage.gridCanvas.locator("table tbody tr").count(),
     `Product: ${PRODUCTS.productAvailableOnlyInUsdChannel.name} should be visible on grid table`,
-  ).toContainText(PRODUCTS.productAvailableOnlyInUsdChannel.name);
+  ).toEqual(1);
+  await productPage.typeInSearchOnListView("");
   await productPage.clickFilterButton();
   await productPage.filtersPage.pickFilter("Channel", "Channel-PLN");
   await productPage.filtersPage.clickSaveFiltersButton();
-  await productPage.waitForGrid();
   await expect(
     productPage.gridCanvas,
     `Product: ${PRODUCTS.productAvailableOnlyInUsdChannel.name} should not be visible on grid table`,
