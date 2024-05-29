@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Improve performance of product list datagrid by refactor date cell render method and debounce function for setup anchor when hover on row
+You can now hover over each row in product datagrid and hover effect will be fast and smooth
