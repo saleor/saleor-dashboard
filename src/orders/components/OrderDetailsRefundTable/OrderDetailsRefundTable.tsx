@@ -22,9 +22,12 @@ export const OrderDetailsRefundTable: React.FC<OrderDetailsRefundTableProps> = (
   onRefundAdd,
 }) => {
   const intl = useIntl();
-  const mergedRefunds = mergeRefunds(order?.grantedRefunds, manualRefundsExtractor(order, intl));
+  const mergedRefunds = mergeRefunds(
+    order.grantedRefunds ?? [],
+    manualRefundsExtractor(order, intl),
+  );
   const isRefundPossible = canAddRefund({
-    transactions: order?.transactions,
+    transactions: order.transactions,
     intl,
   });
 
@@ -62,11 +65,11 @@ export const OrderDetailsRefundTable: React.FC<OrderDetailsRefundTableProps> = (
           <GridTable.Col __width="20%" />
           <GridTable.Col __width="1%" />
         </GridTable.Colgroup>
-        {mergedRefunds?.map(refund => (
+        {mergedRefunds.map(refund => (
           <OrderDetailsRefundLine key={refund.id} refund={refund} orderId={orderId} />
         ))}
       </GridTable>
-      {mergedRefunds?.length === 0 && (
+      {mergedRefunds.length === 0 && (
         <Box display="flex" justifyContent="center" alignItems="center">
           <Text size={2} color="default2">
             <FormattedMessage {...refundGridMessages.noRefunds} />
