@@ -90,28 +90,23 @@ const mapEventGroupsToDatagridRefunds = (
 };
 
 export const manualRefundsExtractor = (
-  order: OrderDetailsFragment | undefined,
+  order: OrderDetailsFragment,
   intl: IntlShape,
-): DatagridRefund[] | undefined => {
-  if (!order) {
-    return;
-  }
-
+): DatagridRefund[] => {
   // Extract all events from all transactions
-  const events = order?.transactions.flatMap(transaction => transaction.events);
+  const events = order.transactions.flatMap(transaction => transaction.events);
 
   // Filter for supported refund events
-  const refundEvents = events?.filter(event => event.type && SUPPORTED_REFUNDS.has(event.type));
+  const refundEvents = events.filter(event => event.type && SUPPORTED_REFUNDS.has(event.type));
 
   // Collect IDs of events associated with granted refunds
   const idsOfEventsAssociatedToGrantedRefunds = new Set(
-    order?.grantedRefunds.flatMap(gr => gr.transactionEvents?.map(te => te.id)),
+    order.grantedRefunds.flatMap(gr => gr.transactionEvents?.map(te => te.id)),
   );
 
   // Filter out refunds that are already granted
-  const manualRefundEvents = refundEvents?.filter(
-    event => !idsOfEventsAssociatedToGrantedRefunds.has(event.id),
-  );
+  const manualRefundEvents =
+    refundEvents?.filter(event => !idsOfEventsAssociatedToGrantedRefunds.has(event.id)) ?? [];
 
   const eventsByPspReference = groupEventsByPspReference(manualRefundEvents);
   const datagridRefunds = mapEventGroupsToDatagridRefunds(eventsByPspReference, intl);
@@ -130,13 +125,9 @@ function determineCreatorDisplay(creator: RefundCreator | null): string {
 }
 
 export const mergeRefunds = (
-  grantedRefunds: OrderDetailsFragment["grantedRefunds"] | undefined,
-  manualRefunds: DatagridRefund[] | undefined,
-): DatagridRefund[] | undefined => {
-  if (!grantedRefunds || !manualRefunds) {
-    return undefined;
-  }
-
+  grantedRefunds: OrderDetailsFragment["grantedRefunds"],
+  manualRefunds: DatagridRefund[],
+): DatagridRefund[] => {
   return [...prepareGrantedRefunds(grantedRefunds), ...manualRefunds].sort((a, b) =>
     a.createdAt.localeCompare(b.createdAt),
   );

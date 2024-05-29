@@ -4,18 +4,6 @@ import { intlMock } from "@test/intl";
 import { manualRefundsExtractor } from "./refunds";
 
 describe("manualRefundsExtractor", () => {
-  it("returns undefined when order is not provided", () => {
-    // Arrange
-    const order = undefined;
-    const intl = intlMock;
-
-    // Act
-    const result = manualRefundsExtractor(order, intl);
-
-    // Assert
-    expect(result).toBeUndefined();
-  });
-
   it("returns empty array when transactions have no events", () => {
     // Arrange
     const intl = intlMock;
