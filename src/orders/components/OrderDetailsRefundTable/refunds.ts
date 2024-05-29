@@ -25,10 +25,25 @@ export interface DatagridRefund {
   } | null;
 }
 
+type EventsByPspReference = Record<string, TransactionEventFragment[]>;
+
 const findLatestEventWithCreatedBy = (
   eventGroup: TransactionEventFragment[],
 ): TransactionEventFragment | null => {
   return eventGroup.find(event => !!event.createdBy) || null;
+};
+
+const mapEventToRefundStatus = (event: TransactionEventFragment): OrderGrantedRefundStatusEnum => {
+  switch (event.type) {
+    case TransactionEventTypeEnum.REFUND_SUCCESS:
+      return OrderGrantedRefundStatusEnum.SUCCESS;
+    case TransactionEventTypeEnum.REFUND_FAILURE:
+      return OrderGrantedRefundStatusEnum.FAILURE;
+    case TransactionEventTypeEnum.REFUND_REQUEST:
+      return OrderGrantedRefundStatusEnum.PENDING;
+    default:
+      return OrderGrantedRefundStatusEnum.NONE;
+  }
 };
 
 const SUPPORTED_REFUNDS = new Set([
@@ -36,6 +51,43 @@ const SUPPORTED_REFUNDS = new Set([
   TransactionEventTypeEnum.REFUND_FAILURE,
   TransactionEventTypeEnum.REFUND_REQUEST,
 ]);
+
+const groupEventsByPspReference = (events: TransactionEventFragment[]): EventsByPspReference => {
+  return events?.reduce<EventsByPspReference>((acc, event) => {
+    if (!acc[event.pspReference]) {
+      acc[event.pspReference] = [];
+    }
+
+    acc[event.pspReference].push(event);
+
+    return acc;
+  }, {});
+};
+
+const mapEventGroupsToDatagridRefunds = (
+  eventsByPspReference: EventsByPspReference,
+  intl: IntlShape,
+): DatagridRefund[] => {
+  return Object.values(eventsByPspReference).map(eventGroup => {
+    const sortedEvents = eventGroup.sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    );
+    const latestEvent = sortedEvents[0];
+    const latestEventWithAuthor = findLatestEventWithCreatedBy(sortedEvents) || latestEvent;
+
+    return {
+      id: latestEvent.id,
+      type: "manual" as const,
+      status: mapEventToRefundStatus(latestEvent),
+      amount: latestEvent.amount,
+      createdAt: latestEvent.createdAt,
+      user: {
+        email: determineCreatorDisplay(latestEventWithAuthor.createdBy),
+      },
+      reason: intl.formatMessage(refundGridMessages.manualRefund),
+    };
+  });
+};
 
 export const manualRefundsExtractor = (
   order: OrderDetailsFragment | undefined,
@@ -61,44 +113,8 @@ export const manualRefundsExtractor = (
     event => !idsOfEventsAssociatedToGrantedRefunds.has(event.id),
   );
 
-  // Group events by pspReference
-  const eventsByPspReference = manualRefundEvents?.reduce<
-    Record<string, TransactionEventFragment[]>
-  >((acc, event) => {
-    if (!acc[event.pspReference]) {
-      acc[event.pspReference] = [];
-    }
-
-    acc[event.pspReference].push(event);
-
-    return acc;
-  }, {});
-
-  // Map grouped events to DatagridRefund objects, taking the latest status
-  const datagridRefunds = Object.values(eventsByPspReference).map(eventGroup => {
-    const sortedEvents = eventGroup.sort(
-      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-    );
-    const latestEvent = sortedEvents[0];
-    const latestEventWithAuthor = findLatestEventWithCreatedBy(sortedEvents) || latestEvent;
-
-    return {
-      id: latestEvent.id,
-      type: "manual" as const,
-      status:
-        latestEvent.type === "REFUND_SUCCESS"
-          ? OrderGrantedRefundStatusEnum.SUCCESS
-          : latestEvent.type === "REFUND_FAILURE"
-            ? OrderGrantedRefundStatusEnum.FAILURE
-            : OrderGrantedRefundStatusEnum.PENDING,
-      amount: latestEvent.amount,
-      createdAt: latestEvent.createdAt,
-      user: {
-        email: determineCreatorDisplay(latestEventWithAuthor.createdBy),
-      },
-      reason: intl.formatMessage(refundGridMessages.manualRefund),
-    };
-  });
+  const eventsByPspReference = groupEventsByPspReference(manualRefundEvents);
+  const datagridRefunds = mapEventGroupsToDatagridRefunds(eventsByPspReference, intl);
 
   return datagridRefunds;
 };
