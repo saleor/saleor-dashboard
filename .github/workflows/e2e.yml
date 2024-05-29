@@ -98,7 +98,7 @@ jobs:
         run: |
           echo "domain=${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
       - name: Get API_URL
-        id: API_URL
+        id: api_url
         # Search for API_URL in PR description and use default if not defined
         env:
           pull_request_body: ${{ github.event.pull_request.body }}
@@ -106,14 +106,14 @@ jobs:
           pattern: (http|https)://[a-zA-Z0-9.-]+/graphql/?
           fallback_uri: ${{ secrets.CYPRESS_API_URL }}
         run: |
-          echo "custom_API_URL=$(echo "$pull_request_body" | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1 | { read custom_uri; if [ -z "$custom_uri" ]; then echo "$fallback_uri"; else echo "$custom_uri"; fi })" >> $GITHUB_OUTPUT
+          echo "custom_api_url=$(echo "$pull_request_body" | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1 | { read custom_url; if [ -z "$custom_url" ]; then echo "$fallback_url"; else echo "$custom_url"; fi })" >> $GITHUB_OUTPUT
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Cypress run
         uses: cypress-io/github-action@v4
         env:
-          API_URL: ${{ steps.API_URL.outputs.custom_API_URL }}
+          API_URL: ${{ steps.api_url.outputs.custom_api_url }}
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
           BASE_URL: https://${{ steps.set-domain.outputs.domain }}/
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}

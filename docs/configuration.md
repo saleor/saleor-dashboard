@@ -8,7 +8,7 @@ Run `cp .env.template .env` to create default configuration that will be connect
 
 Create or edit `.env` file in a root directory or set environment variables with the following values:
 
-- `API_URL` (required) - URI of Saleor GraphQL API instance.
+- `API_URL` (required) - URL of Saleor GraphQL API instance.
   If you are running Saleor locally with the default settings, set `API_URL` to: "http://localhost:8000/graphql/".
   Make sure you have "/" at the end of `API_URL`.
 
