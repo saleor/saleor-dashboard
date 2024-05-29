@@ -1,7 +1,7 @@
+import { BasePage } from "@pages/basePage";
 import type { Page } from "@playwright/test";
 
-export class FiltersPage {
-  readonly page: Page;
+export class FiltersPage extends BasePage {
   constructor(
     page: Page,
     readonly saveFiltersButton = page.getByTestId("save-filters-button"),
@@ -11,7 +11,7 @@ export class FiltersPage {
     readonly showFiltersButton = page.getByTestId("filters-button"),
     readonly addFilterButton = page.getByTestId("add-filter-button"),
   ) {
-    this.page = page;
+    super(page);
   }
 
   async clickAddFilterButton() {
@@ -25,6 +25,7 @@ export class FiltersPage {
   }
   async clickSaveFiltersButton() {
     await this.saveFiltersButton.click();
+    await this.waitForDOMToFullyLoad();
   }
 
   async pickFilter(filterKind: string, channelName: string) {

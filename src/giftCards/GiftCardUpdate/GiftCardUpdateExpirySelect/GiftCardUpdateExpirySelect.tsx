@@ -40,6 +40,7 @@ const GiftCardUpdateExpirySelect: React.FC = () => {
       <Typography>{intl.formatMessage(messages.expiryDateLabel)}</Typography>
       <VerticalSpacer />
       <ControlledCheckbox
+        data-test-id="gift-card-expire-section"
         name="cardExpires"
         label={intl.formatMessage(messages.expiryDateCheckboxLabel)}
         checked={cardExpiresSelected}
