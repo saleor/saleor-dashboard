@@ -81,9 +81,12 @@ test("TC: SALEOR_198 Should update existing menu @navigation @e2e", async () => 
   const newName = faker.random.word();
 
   await navigationDetailsPage.fillName(newName);
-  // await navigationDetailsPage.clickSaveButton();
-  // await expect(navigationDetailsPage.menuNameInput).not.toHaveText(NAVIGATION_ITEMS.navigationMenuToBeUpdated.name);
-  // await expect(navigationDetailsPage.menuNameInput).toHaveText(newName);
+  await navigationDetailsPage.clickSaveButton();
+
+  const currentMenuName = await navigationDetailsPage.menuNameInput.inputValue();
+
+  await expect(currentMenuName).not.toBe(NAVIGATION_ITEMS.navigationMenuToBeUpdated.name);
+  await expect(currentMenuName).toBe(newName);
 });
 test("TC: SALEOR_197 Should remove existing menu from it's details page @navigation @e2e", async () => {
   await navigationDetailsPage.goToExistingMenuView(

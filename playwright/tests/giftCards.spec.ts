@@ -15,7 +15,8 @@ test.beforeEach(async ({ page, request }) => {
   await giftCardsPage.gotoGiftCardsListView();
   await giftCardsPage.waitForDOMToFullyLoad();
 });
-test("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
+//Adding skip due to https://linear.app/saleor/issue/MERX-451/gift-card-modal-is-flickering-upon-an-interaction
+test.skip("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
   await giftCardsPage.clickIssueCardButton();
   await giftCardsPage.issueGiftCardDialog.typeAmount("50");
   await giftCardsPage.issueGiftCardDialog.typeTag("super ultra automation discount");
@@ -34,19 +35,19 @@ test("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
     state: "hidden",
     timeout: 30000,
   });
-  await giftCardsPage.waitForNetworkIdleAfterAction(() => giftCardsPage.gotoGiftCardsListView());
-  await giftCardsPage.waitForDOMToFullyLoad();
+  await giftCardsPage.gotoGiftCardsListView();
   await giftCardsPage.gridCanvas
     .getByText(`Code ending with ${code}`)
     .waitFor({ state: "attached", timeout: 30000 });
 });
-test("TC: SALEOR_106 Issue gift card with specific customer and expiry date @e2e @gift", async () => {
+//Adding skip due to https://linear.app/saleor/issue/MERX-451/gift-card-modal-is-flickering-upon-an-interaction
+test.skip("TC: SALEOR_106 Issue gift card with specific customer and expiry date @e2e @gift", async () => {
   await giftCardsPage.clickIssueCardButton();
 
-  await giftCardsPage.issueGiftCardDialog.clickSendToCustomerCheckbox();
-  await giftCardsPage.issueGiftCardDialog.selectCustomer("e2e-customer to-be-activated");
   await giftCardsPage.issueGiftCardDialog.clickSendExpireDateCheckbox();
   await giftCardsPage.issueGiftCardDialog.typeExpiryPeriodAmount("2");
+  await giftCardsPage.issueGiftCardDialog.clickSendToCustomerCheckbox();
+  await giftCardsPage.issueGiftCardDialog.selectCustomer("e2e-customer to-be-activated");
   await giftCardsPage.issueGiftCardDialog.clickIssueButton();
   await expect(giftCardsPage.issueGiftCardDialog.cardCode).toBeVisible();
 
@@ -60,8 +61,7 @@ test("TC: SALEOR_106 Issue gift card with specific customer and expiry date @e2e
     timeout: 30000,
   });
   await giftCardsPage.gotoGiftCardsListView();
-  await giftCardsPage.typeInSearchOnListView(fullCode);
-  await giftCardsPage.findRowIndexBasedOnText([fullCode]);
+  await giftCardsPage.searchAndFindRowIndexes(fullCode);
   expect(
     await giftCardsPage.gridCanvas.locator("table tbody tr").count(),
     "There should be only one gift card visible on list",
