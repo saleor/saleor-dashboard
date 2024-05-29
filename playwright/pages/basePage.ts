@@ -49,7 +49,11 @@ export class BasePage {
   }
 
   async typeInSearchOnListView(searchItem: string) {
-    await this.searchInputListView.fill(searchItem);
+    await this.waitForNetworkIdleAfterAction(async () => {
+      await this.searchInputListView.fill(searchItem);
+    });
+    await expect(this.searchInputListView).toHaveValue(searchItem);
+    await this.waitForDOMToFullyLoad();
   }
   async clickNextPageButton() {
     await this.nextPagePaginationButton.click();
@@ -121,7 +125,7 @@ export class BasePage {
 
         if (!fiberKey || !node.parentNode) return null;
 
-        /* 
+        /*
         We seek over the fiber node (hack), ignore typings for it.
       */
         const fiberParent = node.parentNode[
@@ -148,6 +152,23 @@ export class BasePage {
     );
   }
 
+  async checkGridCellTextAndClick(
+    columnNumber: number,
+    rowsToCheck: number[],
+    listToCheck: string[],
+  ) {
+    await this.waitForDOMToFullyLoad();
+
+    const searchResults = [];
+
+    for (let i = 0; i < rowsToCheck.length; i++) {
+      const searchResult = await this.getGridCellText(rowsToCheck[i], columnNumber);
+
+      searchResults.push(searchResult);
+      await expect(searchResult).toEqual(listToCheck[i]);
+      await this.clickGridCell(columnNumber, rowsToCheck[i]);
+    }
+  }
   /*
     Example:
 
@@ -180,28 +201,33 @@ export class BasePage {
   }
 
   async findRowIndexBasedOnText(searchTextArray: string[]) {
-    await this.gridCanvas
-      .locator("table tr")
-      .first()
-      .waitFor({ state: "attached" });
-    let rowIndexes: number[] = [];
+    await this.waitForDOMToFullyLoad();
 
-    const rows = await this.page.$$eval("table tr", rows =>
-      rows.map(row => row.textContent),
-    );
+    await this.gridCanvas.locator("table tr").first().waitFor({ state: "attached" });
+
+    await this.page.waitForSelector("table tr", { state: "attached" });
+
+    const rows = await this.page.locator("table tr").allTextContents();
+
+    const rowIndexes: number[] = [];
 
     for (const searchedText of searchTextArray) {
-      const rowIndex = rows.findIndex(rowText =>
-        rowText!.includes(searchedText),
-      );
+      const rowIndex = rows.findIndex(rowText => rowText.includes(searchedText));
 
       if (rowIndex !== -1) {
         console.log("Index of row containing text:", rowIndex - 1);
-        // since row index starts with 1 and selecting cells in grid starts with zero there is -1 on rowIndex
         rowIndexes.push(rowIndex - 1);
       }
     }
     return rowIndexes;
+  }
+
+  async searchAndFindRowIndexes(searchItem: string) {
+    await this.typeInSearchOnListView(searchItem);
+
+    await this.page.waitForTimeout(1000);
+
+    return await this.findRowIndexBasedOnText([searchItem]);
   }
 
   // check row on grid list view

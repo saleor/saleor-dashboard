@@ -89,14 +89,22 @@ export class ProductPage extends BasePage {
     const createProductUrl = `${URL_LIST.products}${URL_LIST.productsAdd}${productTypeId}`;
     await console.log("Navigating to create product view: " + createProductUrl);
     await this.page.goto(createProductUrl);
-    await expect(this.basePage.pageHeader).toBeVisible({ timeout: 10000 });
+    await this.waitForDOMToFullyLoad();
+    await this.pageHeader.waitFor({ state: "visible", timeout: 50000 });
+  }
+
+  async searchforProduct(productName: string) {
+    await this.searchInput.fill(productName);
+    await this.waitForGrid();
+    await this.waitForDOMToFullyLoad();
   }
 
   async gotoExistingProductPage(productId: string) {
     const existingProductUrl = `${URL_LIST.products}${productId}`;
     console.log(`Navigating to existing product: ${existingProductUrl}`);
     await this.page.goto(existingProductUrl);
-    await expect(this.basePage.pageHeader).toBeVisible({ timeout: 10000 });
+    await this.waitForDOMToFullyLoad();
+    await this.pageHeader.waitFor({ state: "visible", timeout: 50000 });
   }
 
   async clickDeleteProductButton() {
@@ -185,6 +193,7 @@ export class ProductPage extends BasePage {
 
   async gotoProductListPage() {
     await this.page.goto(URL_LIST.products);
+    await this.waitForDOMToFullyLoad();
   }
 
   async uploadProductImage(fileName: string) {

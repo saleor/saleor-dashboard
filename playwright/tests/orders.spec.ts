@@ -242,14 +242,12 @@ test("TC: SALEOR_84 Create draft order @e2e @draft", async () => {
   await draftOrdersPage.rightSideDetailsPage.clickEditCustomerButton();
   await draftOrdersPage.rightSideDetailsPage.clickSearchCustomerInput();
   await draftOrdersPage.rightSideDetailsPage.selectCustomer();
-
-  await expect(
-    draftOrdersPage.addressDialog.existingAddressRadioButton,
-  ).toBeVisible();
-
+  await draftOrdersPage.expectSuccessBanner();
   await draftOrdersPage.addressDialog.clickConfirmButton();
+  await draftOrdersPage.expectSuccessBanner();
   await draftOrdersPage.clickAddShippingCarrierButton();
   await draftOrdersPage.shippingAddressDialog.pickAndConfirmFirstShippingMethod();
+  await draftOrdersPage.expectSuccessBanner();
   await draftOrdersPage.clickFinalizeButton();
 
   await draftOrdersPage.successBanner
