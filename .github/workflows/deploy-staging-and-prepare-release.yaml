@@ -1,0 +1,176 @@
+name: Deploy Dashboard to staging
+on:
+  push:
+    branches:
+      # Matches release branches
+      - "[0-9]+.[0-9]+"
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  prepare-release:
+    name: Prepare release with Changesets
+    runs-on: ubuntu-22.04
+    outputs:
+      hasChangesets: ${{ steps.changesets.outputs.hasChangesets }}
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+      - name: Install Dependencies
+        run: npm ci
+      - name: Publishing version
+        uses: changesets/action@d89c1de63c7f28ac47ec85ed395f5f1d045d4697 # v1.4.4
+        id: changesets
+        with:
+          title: "Prepare release ${{ github.ref_name }}"
+          commit: "Release ${{ github.ref_name }}"
+          publish: "npm run release"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build:
+    needs: prepare-release
+    if: always()
+    runs-on: ubuntu-20.04
+    outputs:
+      MINOR_VERSION: ${{ env.MINOR_VERSION }}
+      CUSTOM_VERSION: ${{ env.CUSTOM_VERSION || env.VERSION }}
+    env:
+      API_URI: /graphql/
+      APP_MOUNT_URI: /dashboard/
+      STATIC_URL: /dashboard/static/
+      SENTRY_ORG: saleor
+      SENTRY_PROJECT: dashboard
+      SENTRY_URL_PREFIX: "~/dashboard/static"
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
+      VERSION: ${{ github.event.inputs.git_ref || github.ref_name }}
+      IS_CLOUD_INSTANCE: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.VERSION }}
+
+      - name: Set environment
+        # Convert version into staging deployment name (e.g 3.3.0 -> saleor-staging-v33)
+        run: |
+          set -x
+          environment=$(echo $VERSION | sed -n 's#\([0-9]\+\).\([0-9]\+\).*#saleor-staging-v\1\2#p')
+          echo "ENVIRONMENT=${environment}" >> "$GITHUB_ENV"
+      
+      - name: Set custom version
+        env:
+          VERSION: ${{ github.event.inputs.git_ref || github.ref_name }}
+        # Add commit hash to basic version number
+        run: |
+          set -x
+          HASH=$(git rev-parse --short HEAD)
+          CURRENT_VERSION=$(jq -r .version package.json)
+          RELEASE="${CURRENT_VERSION}-${HASH}"
+          echo "CUSTOM_VERSION=${RELEASE}" >> "$GITHUB_ENV"
+          echo "SENTRY_RELEASE=${RELEASE}" >> "$GITHUB_ENV"
+          minor_version=$(echo "$VERSION" | sed -n 's#\([0-9]\+\).\([0-9]\+\).*#\1.\2#p')
+          echo "MINOR_VERSION=${minor_version}" >> "$GITHUB_ENV"
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Create check in prepare release PR
+        if: needs.prepare-release.outputs.hasChangesets == 'true'
+        id: create-check
+        uses: ./.github/actions/checks/create-pull-request-check
+        with:
+          PR_HEAD: "changeset-release/${{env.MINOR_VERSION}}"
+          CHECK_NAME: "Deploy_staging"
+          STATUS: "in_progress"
+          TITLE: "Deploy staging"
+          DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+      - name: Package
+        timeout-minutes: 15
+        run: |
+          npm ci
+
+      - name: Build
+        run: |
+          npm run build
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_CLOUD_STAGING_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_CLOUD_STAGING_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Deploy
+        id: deploy
+        run: |
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/${ENVIRONMENT}/static/"
+          aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/${ENVIRONMENT}/"
+
+          IFS=',' read -ra DISTRIBUTIONS_ARRAY <<< "${CDN_DISTRIBUTIONS}"
+          for DISTRIBUTION in "${DISTRIBUTIONS_ARRAY[@]}"; do
+            echo "::add-mask::$DISTRIBUTION"
+            for i in {1..3}; do aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION" --paths "/dashboard*" && break || sleep 5; done
+          done
+        env:
+          DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_STAGING_DEPLOYMENT_BUCKET }}
+          CDN_DISTRIBUTIONS: ${{ secrets.AWS_CLOUD_STAGING_CDN_DISTRIBUTIONS }}
+
+      - name: Update check
+        if: always() && ${{ steps.create-check.outputs.CHECK_ID }}
+        uses: ./.github/actions/checks/update-pull-request-check
+        with:
+          CHECK_ID: ${{ steps.create-check.outputs.CHECK_ID }}
+          CHECK_NAME: "Deploy_staging"
+          STATUS: "completed"
+          CONCLUSION: "${{ steps.deploy.outcome }}" 
+          TITLE: "Deploy staging"
+          SUMMARY: "Deploy finished with status ${{ steps.deploy.outcome }}. To check details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+      - name: Notify Slack
+        if: ${{ always() }}
+        env:
+          JOB_DEPLOYMENT_KIND: staging
+          JOB_STATUS: ${{ job.status }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
+          SLACK_MENTION_GROUP_ID: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
+          JOB_TITLE: "Dashboard deployment of ${{ env.CUSTOM_VERSION || env.VERSION }} to ${{ env.ENVIRONMENT }}"
+        run: |
+          python3 ./.github/workflows/notify/notify-slack.py
+
+      - name: Prepare Sandbox release pull request
+        if: needs.prepare-release.outputs.hasChangesets == 'false'
+        run: |
+          export GITHUB_TOKEN=$( \
+            curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
+          )
+          gh api /repos/saleor/saleor-cloud-deployments/dispatches \
+            --input - <<< '{
+              "event_type": "open-release-pull-request",
+              "client_payload": {
+                "project": "DASHBOARD",
+                "environment": "SANDBOX",
+                "version": "${{ env.VERSION }}"
+              }
+            }'
+
+  run-tests-on-release:
+    needs: [prepare-release, build]
+    if: needs.prepare-release.outputs.hasChangesets == 'true'
+    uses: ./.github/workflows/run-tests-on-release.yml
+    with:
+      VERSION: ${{ needs.build.outputs.MINOR_VERSION }} # eg. "3.19"
+      CUSTOM_VERSION: ${{ needs.build.outputs.CUSTOM_VERSION }} # eg. "3.19.4-5a41d18"
+    secrets: inherit
