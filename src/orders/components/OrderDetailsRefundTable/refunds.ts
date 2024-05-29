@@ -3,6 +3,7 @@ import {
   OrderDetailsFragment,
   OrderGrantedRefundStatusEnum,
   StaffMemberAvatarFragment,
+  TransactionEventFragment,
   TransactionEventTypeEnum,
 } from "@dashboard/graphql";
 import { IntlShape } from "react-intl";
@@ -24,46 +25,93 @@ export interface DatagridRefund {
   } | null;
 }
 
+type EventsByPspReference = Record<string, TransactionEventFragment[]>;
+
+const findLatestEventWithCreatedBy = (
+  eventGroup: TransactionEventFragment[],
+): TransactionEventFragment | null => {
+  return eventGroup.find(event => !!event.createdBy) || null;
+};
+
+const mapEventToRefundStatus = (event: TransactionEventFragment): OrderGrantedRefundStatusEnum => {
+  switch (event.type) {
+    case TransactionEventTypeEnum.REFUND_SUCCESS:
+      return OrderGrantedRefundStatusEnum.SUCCESS;
+    case TransactionEventTypeEnum.REFUND_FAILURE:
+      return OrderGrantedRefundStatusEnum.FAILURE;
+    case TransactionEventTypeEnum.REFUND_REQUEST:
+      return OrderGrantedRefundStatusEnum.PENDING;
+    default:
+      return OrderGrantedRefundStatusEnum.NONE;
+  }
+};
+
 const SUPPORTED_REFUNDS = new Set([
   TransactionEventTypeEnum.REFUND_SUCCESS,
   TransactionEventTypeEnum.REFUND_FAILURE,
+  TransactionEventTypeEnum.REFUND_REQUEST,
 ]);
 
-export const manualRefundsExtractor = (
-  order: OrderDetailsFragment | undefined,
+const groupEventsByPspReference = (events: TransactionEventFragment[]): EventsByPspReference => {
+  return events?.reduce<EventsByPspReference>((acc, event) => {
+    if (!acc[event.pspReference]) {
+      acc[event.pspReference] = [];
+    }
+
+    acc[event.pspReference].push(event);
+
+    return acc;
+  }, {});
+};
+
+const mapEventGroupsToDatagridRefunds = (
+  eventsByPspReference: EventsByPspReference,
   intl: IntlShape,
-): DatagridRefund[] | undefined => {
+): DatagridRefund[] => {
+  return Object.values(eventsByPspReference).map(eventGroup => {
+    const sortedEvents = eventGroup.sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    );
+    const latestEvent = sortedEvents[0];
+    const latestEventWithAuthor = findLatestEventWithCreatedBy(sortedEvents) || latestEvent;
+
+    return {
+      id: latestEvent.id,
+      type: "manual" as const,
+      status: mapEventToRefundStatus(latestEvent),
+      amount: latestEvent.amount,
+      createdAt: latestEvent.createdAt,
+      user: {
+        email: determineCreatorDisplay(latestEventWithAuthor.createdBy),
+      },
+      reason: intl.formatMessage(refundGridMessages.manualRefund),
+    };
+  });
+};
+
+export const manualRefundsExtractor = (
+  order: OrderDetailsFragment,
+  intl: IntlShape,
+): DatagridRefund[] => {
   // Extract all events from all transactions
-  const events = order?.transactions.flatMap(transaction => transaction.events);
+  const events = order.transactions.flatMap(transaction => transaction.events);
 
   // Filter for supported refund events
-  const refundEvents = events?.filter(event => event.type && SUPPORTED_REFUNDS.has(event.type));
+  const refundEvents = events.filter(event => event.type && SUPPORTED_REFUNDS.has(event.type));
 
   // Collect IDs of events associated with granted refunds
   const idsOfEventsAssociatedToGrantedRefunds = new Set(
-    order?.grantedRefunds.flatMap(gr => gr.transactionEvents?.map(te => te.id)),
+    order.grantedRefunds.flatMap(gr => gr.transactionEvents?.map(te => te.id)),
   );
 
   // Filter out refunds that are already granted
-  const manualRefundEvents = refundEvents?.filter(
-    event => !idsOfEventsAssociatedToGrantedRefunds.has(event.id),
-  );
+  const manualRefundEvents =
+    refundEvents?.filter(event => !idsOfEventsAssociatedToGrantedRefunds.has(event.id)) ?? [];
 
-  // Map filtered events to DatagridRefund objects
-  return manualRefundEvents?.map(event => ({
-    id: event.id,
-    type: "manual",
-    status:
-      event.type === "REFUND_SUCCESS"
-        ? OrderGrantedRefundStatusEnum.SUCCESS
-        : OrderGrantedRefundStatusEnum.FAILURE,
-    amount: event.amount,
-    createdAt: event.createdAt,
-    user: {
-      email: determineCreatorDisplay(event.createdBy),
-    },
-    reason: intl.formatMessage(refundGridMessages.manualRefund),
-  }));
+  const eventsByPspReference = groupEventsByPspReference(manualRefundEvents);
+  const datagridRefunds = mapEventGroupsToDatagridRefunds(eventsByPspReference, intl);
+
+  return datagridRefunds;
 };
 
 type RefundCreator = AppAvatarFragment | StaffMemberAvatarFragment;
@@ -77,13 +125,9 @@ function determineCreatorDisplay(creator: RefundCreator | null): string {
 }
 
 export const mergeRefunds = (
-  grantedRefunds: OrderDetailsFragment["grantedRefunds"] | undefined,
-  manualRefunds: DatagridRefund[] | undefined,
-): DatagridRefund[] | undefined => {
-  if (!grantedRefunds || !manualRefunds) {
-    return undefined;
-  }
-
+  grantedRefunds: OrderDetailsFragment["grantedRefunds"],
+  manualRefunds: DatagridRefund[],
+): DatagridRefund[] => {
   return [...prepareGrantedRefunds(grantedRefunds), ...manualRefunds].sort((a, b) =>
     a.createdAt.localeCompare(b.createdAt),
   );
