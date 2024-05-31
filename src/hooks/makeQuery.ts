@@ -97,7 +97,7 @@ export function useQuery<TData, TVariables>(
       useBatching: true,
     },
     errorPolicy: "all",
-    fetchPolicy: fetchPolicy ?? "cache-and-network",
+    fetchPolicy: fetchPolicy ?? "cache-first",
     onError: error => {
       if (handleError) {
         handleError(error);
