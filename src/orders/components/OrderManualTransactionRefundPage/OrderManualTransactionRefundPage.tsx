@@ -10,6 +10,7 @@ import { FormattedMessage } from "react-intl";
 import { OrderManualTransactionRefundAmount } from "./components/OrderManualTransactionRefundAmount";
 import { OrderManualTransactionRefundForm } from "./components/OrderManualTransactionRefundForm";
 import { OrderManualTransactionRefundTiles } from "./components/OrderManualTransactionRefundTiles";
+import { OrderManualTransactionRefundWarning } from "./components/OrderManualTransactionRefundWarning/OrderManualTransactionRefundWarning";
 import { messages } from "./messages";
 
 interface OrderManualTransactionRefundProps {
@@ -38,7 +39,7 @@ export const OrderManualTransactionRefundPage = ({
       transactions={transactions}
     >
       <DetailPageLayout gridTemplateColumns={1}>
-        <TopNav href={orderUrl(orderId)} title={<FormattedMessage {...messages.transactions} />} />
+        <TopNav href={orderUrl(orderId)} title={<FormattedMessage {...messages.title} />} />
 
         <DetailPageLayout.Content>
           <DashboardCard>
@@ -55,13 +56,10 @@ export const OrderManualTransactionRefundPage = ({
           <Box __maxWidth={400}>
             <DashboardCard>
               <DashboardCard.Title>
-                <FormattedMessage {...messages.sidebarTitle} />
+                <FormattedMessage {...messages.refundAmount} />
               </DashboardCard.Title>
               <DashboardCard.Content>
-                <Text marginBottom={6} as="p">
-                  <FormattedMessage {...messages.sidebardDescription} />
-                </Text>
-
+                <OrderManualTransactionRefundWarning />
                 <OrderManualTransactionRefundAmount currency={currency} />
               </DashboardCard.Content>
             </DashboardCard>

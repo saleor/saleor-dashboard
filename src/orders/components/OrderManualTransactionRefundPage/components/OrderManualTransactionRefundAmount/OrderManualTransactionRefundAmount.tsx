@@ -24,7 +24,7 @@ export const OrderManualTransactionRefundAmount = ({
         <Input
           {...field}
           value={value}
-          label={intl.formatMessage(messages.amount)}
+          label={intl.formatMessage(messages.refundAmount)}
           type="number"
           endAdornment={currency}
           onChange={onChange}

@@ -1,26 +1,26 @@
 import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
-  transactions: {
-    id: "/jJLYy",
-    defaultMessage: "Transactions",
+  title: {
+    id: "IOg+Hh",
+    defaultMessage: "Refund with manual amount",
   },
-  amount: {
+  refundAmount: {
     id: "Bl6896",
     defaultMessage: "Refund amount",
   },
   selectTransaction: {
-    id: "dO05fh",
-    defaultMessage: "Select a refund you want to fullfill",
-  },
-  sidebarTitle: {
-    id: "CNblvR",
-    defaultMessage: "Refund fullfilling",
+    id: "JJLkzh",
+    defaultMessage: "Select transaction to refund",
   },
   sidebardDescription: {
-    id: "SuqHws",
+    id: "Ql7OM1",
     defaultMessage:
-      " You are now selecting which granted refund you want to fullfill and send to a customer.",
+      "Performing a manual refund will immediately trigger a refund request and decrease the transaction’s charged amount, impacting the order balance.",
+  },
+  seeDocs: {
+    id: "e0lt+l",
+    defaultMessage: "See documentation",
   },
   notRefundable: {
     id: "HW6Vef",
