@@ -28,6 +28,7 @@ export const OrderManualTransactionRefundAmount = ({
               </Text>
               <Input
                 {...field}
+                data-test-id="refund-amount"
                 value={value}
                 __width={100}
                 type="number"
