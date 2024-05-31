@@ -41,6 +41,7 @@ import { headerIcons } from "./headerIcons";
 import useDatagridChange, { DatagridChange, OnDatagridChange } from "./hooks/useDatagridChange";
 import { useFullScreenMode } from "./hooks/useFullScreenMode";
 import { usePortalClasses } from "./hooks/usePortalClasses";
+import { useRowAnchor } from "./hooks/useRowAnchor";
 import { useRowHover } from "./hooks/useRowHover";
 import { useScrollRight } from "./hooks/useScrollRight";
 import { useTooltipContainer } from "./hooks/useTooltipContainer";
@@ -141,10 +142,14 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const [selection, setSelection] = useState<GridSelection>();
   const [areCellsDirty, setCellsDirty] = useState(true);
 
-  const { handleRowHover, handleSetHackARef, hoverRow, hackARef } = useRowHover({
-    hasRowHover,
-    rowAnchor,
+  const { rowAnchorRef, setRowAnchorRef, setSAnchorPosition } = useRowAnchor({
+    getRowAnchorUrl: rowAnchor,
     rowMarkers,
+  });
+
+  const { handleRowHover, hoverRow } = useRowHover({
+    hasRowHover,
+    onRowHover: setSAnchorPosition,
   });
 
   // Allow to listen to which row is selected and notfiy parent component
@@ -255,11 +260,11 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
       handleRowHover(args);
 
-      if (hackARef.current) {
-        hackARef.current.click();
+      if (rowAnchorRef.current) {
+        rowAnchorRef.current.click();
       }
     },
-    [rowMarkers, onRowClick, handleRowHover],
+    [rowMarkers, onRowClick, handleRowHover, rowAnchorRef],
   );
   const handleGridSelectionChange = (gridSelection: GridSelection) => {
     // In readonly we not allow selecting cells, but we allow selcting column
@@ -366,18 +371,18 @@ export const Datagrid: React.FC<DatagridProps> = ({
           clearTimeout(timer);
         }
 
-        if (hackARef.current) {
-          hackARef.current.style.display = "none";
+        if (rowAnchorRef.current) {
+          rowAnchorRef.current.style.display = "none";
         }
 
         timer = setTimeout(() => {
-          if (hackARef.current) {
-            hackARef.current.style.display = "block";
+          if (rowAnchorRef.current) {
+            rowAnchorRef.current.style.display = "block";
           }
         }, 100);
       };
     })(),
-    [hackARef],
+    [rowAnchorRef],
   );
 
   if (loading) {
@@ -520,7 +525,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
       />
       {rowAnchor && (
         <a
-          ref={handleSetHackARef}
+          ref={setRowAnchorRef}
           style={{ position: "absolute" }}
           tabIndex={-1}
           aria-hidden={true}
