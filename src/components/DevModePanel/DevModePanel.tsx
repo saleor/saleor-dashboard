@@ -18,7 +18,7 @@ export const DevModePanel: React.FC = () => {
   const { rootStyle } = useDashboardTheme();
   const { isDevModeVisible, variables, devModeContent, setDevModeVisibility } = useDevModeContext();
   const fetcher = createGraphiQLFetcher({
-    url: process.env.API_URI,
+    url: process.env.API_URL,
     fetch: authorizedFetch,
   });
   const overwriteCodeMirrorCSSVariables = {

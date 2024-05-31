@@ -107,8 +107,8 @@ jobs:
 
       - name: Build dashboard
         env:
-          API_URI: ${{ needs.initialize-cloud.outputs.API_URL }}
-          APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
+          API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
+          APPS_MARKETPLACE_API_URL: "https://apps.staging.saleor.io/api/v2/saleor-apps"
           APP_MOUNT_URI: /
           STATIC_URL: /
           IS_CLOUD_INSTANCE: true
