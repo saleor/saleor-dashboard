@@ -19,10 +19,6 @@
     "context": "order, button",
     "string": "Mark as paid"
   },
-  "+6liDh": {
-    "context": "radio button label",
-    "string": "The purchased product list will be sent and used to suggest amount to refund."
-  },
   "+7OsyM": {
     "context": "button",
     "string": "Set as default shipping address"
@@ -42,6 +38,10 @@
   "+HuipK": {
     "context": "variant sku",
     "string": "SKU {sku}"
+  },
+  "+IayD+": {
+    "context": "order transaction refund summary title",
+    "string": "Refund amount"
   },
   "+Jgot0": {
     "context": "tax class for a product type",
@@ -294,9 +294,6 @@
   "/iijFq": {
     "context": "input label",
     "string": "Global threshold"
-  },
-  "/jJLYy": {
-    "string": "Transactions"
   },
   "/kWzY1": {
     "string": "Are you sure you want to delete this address from users address book?"
@@ -964,6 +961,10 @@
     "context": "column picker section default header",
     "string": "Categories"
   },
+  "4EdlF/": {
+    "context": "datagrid title label",
+    "string": "Select transaction to refund"
+  },
   "4IgzXs": {
     "context": "label",
     "string": "App Manifest URL"
@@ -1254,6 +1255,10 @@
   "64aYF0": {
     "context": "informations about product organization, header",
     "string": "Product Organization"
+  },
+  "65j8ft": {
+    "context": "dialog title",
+    "string": "Create new refund"
   },
   "67V0c0": {
     "context": "unassign product from collection, button",
@@ -2120,9 +2125,6 @@
     "context": "section header",
     "string": "Preferences"
   },
-  "CNblvR": {
-    "string": "Refund fullfilling"
-  },
   "CRAfpd": {
     "context": "gift card export dialog confirm button label",
     "string": "Export codes"
@@ -2243,10 +2245,6 @@
   "DASYUF": {
     "context": "section title",
     "string": "Checkout Configuration"
-  },
-  "DAgLzp": {
-    "context": "radio button label",
-    "string": "Do not use information about the products and rely on amount provided manually."
   },
   "DDYrvn": {
     "string": "Rule reward value must be less than 100"
@@ -2400,10 +2398,6 @@
   },
   "EM730i": {
     "string": "Manage Channel Availability"
-  },
-  "EOPuT6": {
-    "context": "datagrid title label",
-    "string": "Select transaction you want to refund"
   },
   "EP+jcU": {
     "context": "checkbox",
@@ -2727,10 +2721,6 @@
   "GD/bom": {
     "context": "label",
     "string": "Min Delivery Time"
-  },
-  "GFIwLo": {
-    "context": "create refund title",
-    "string": "Create refund"
   },
   "GFJabu": {
     "context": "dialog header",
@@ -3096,6 +3086,9 @@
     "context": "payment status",
     "string": "Partially paid"
   },
+  "IOg+Hh": {
+    "string": "Refund with manual amount"
+  },
   "IOshTA": {
     "context": "header",
     "string": "Translation MenuItem \"{menuItemName}\" - {languageCode}"
@@ -3237,6 +3230,9 @@
   "JI2Xwp": {
     "context": "dialog title",
     "string": "Delete attribute"
+  },
+  "JJLkzh": {
+    "string": "Select transaction to refund"
   },
   "JJgJwi": {
     "string": "Selecting this will change the language of your dashboard"
@@ -3918,10 +3914,6 @@
     "context": "window title",
     "string": "Fulfill Order"
   },
-  "O+w1k0": {
-    "context": "dialog subtitle",
-    "string": "How do you want to make a refund?"
-  },
   "O22NIZ": {
     "context": "deletion error message",
     "string": "Cant's delete group which is out of your permission scope"
@@ -4017,10 +4009,6 @@
   },
   "OhdPS1": {
     "context": "amount of refunded money",
-    "string": "Amount"
-  },
-  "OoMaRq": {
-    "context": "order transaction refund summary title",
     "string": "Amount"
   },
   "OrMr/k": {
@@ -4315,6 +4303,10 @@
     "context": "product field",
     "string": "Charge Taxes"
   },
+  "QX0gQb": {
+    "context": "radio button label",
+    "string": "Use the product list to suggest refund amount. Ideal for refunding specific items or entire order."
+  },
   "QZVD+5": {
     "context": "button, unassign attribute from object",
     "string": "Unassign and save"
@@ -4356,6 +4348,9 @@
   "QkFeOa": {
     "context": "order refund amount button",
     "string": "Refund"
+  },
+  "Ql7OM1": {
+    "string": "Performing a manual refund will immediately trigger a refund request and decrease the transaction’s charged amount, impacting the order balance."
   },
   "QooeI/": {
     "context": "button",
@@ -4646,9 +4641,6 @@
   "SqhC7g": {
     "context": "checkbox label, fulfillment approval",
     "string": "Send shipment details to customer"
-  },
-  "SuqHws": {
-    "string": "You are now selecting which granted refund you want to fullfill and send to a customer."
   },
   "Sxzua5": {
     "context": "order payment",
@@ -5056,6 +5048,9 @@
   "VKb1MS": {
     "string": "Categories"
   },
+  "VNX4fn": {
+    "string": "Proceed"
+  },
   "VOiUXQ": {
     "string": "Used to calculate rates for shipping for products of this product type, when specific weight is not given"
   },
@@ -5109,6 +5104,10 @@
   "VvFJ/T": {
     "context": "PageTypeDeleteWarningDialog single no assigned items description",
     "string": "Are you sure you want to delete <b>{typeName}</b>? If you remove it you won’t be able to assign it to created pages."
+  },
+  "VyC+Bm": {
+    "context": "radio button label",
+    "string": "Enter the refund amount without using the product list. Best for overcharges and custom adjustments."
   },
   "VyKl39": {
     "context": "Dialog warning text",
@@ -5478,6 +5477,10 @@
     "context": "Dry run items list item",
     "string": "Item:"
   },
+  "Y0NwOq": {
+    "context": "dialog subtitle",
+    "string": "Select refund method:"
+  },
   "Y1B0PN": {
     "context": "error message",
     "string": "There's no payment associated with the order"
@@ -5776,10 +5779,6 @@
   "a55zOn": {
     "context": "section header",
     "string": "Data privacy"
-  },
-  "a5D12C": {
-    "context": "order transaction refund summary description",
-    "string": "Amount is calculated automatically based on the items selected, but you can modify it manually."
   },
   "a5msuh": {
     "string": "Yes"
@@ -6298,9 +6297,6 @@
   "dM86a2": {
     "string": "No categories found"
   },
-  "dO05fh": {
-    "string": "Select a refund you want to fullfill"
-  },
   "dOQB9o": {
     "context": "payment status",
     "string": "Cancelled"
@@ -6358,6 +6354,9 @@
   "e0RKe+": {
     "context": "generate invoice button",
     "string": "Generate"
+  },
+  "e0lt+l": {
+    "string": "See documentation"
   },
   "e1vU/4": {
     "context": "attribute is filterable in storefront",
@@ -6485,6 +6484,10 @@
   },
   "f3hf+w": {
     "string": "App doesn't provide a privacy policy."
+  },
+  "f4oJRg": {
+    "context": "order transaction refund summary description",
+    "string": "The refund amount is calculated automatically based on the items selected. You can modify it manually if needed."
   },
   "f91E8b": {
     "context": "app repository",
@@ -6659,6 +6662,10 @@
   "gAqkrG": {
     "context": "gift card history message",
     "string": "Gift card was deactivated by {deactivatedBy}"
+  },
+  "gF6ueC": {
+    "context": "edit refund title",
+    "string": "Edit refund wiht line items"
   },
   "gKdGxP": {
     "context": "error message",
@@ -7090,10 +7097,6 @@
   },
   "jHJmjf": {
     "string": "No results"
-  },
-  "jIVn80": {
-    "context": "dialog title",
-    "string": "Create a new refund"
   },
   "jMzyU8": {
     "context": "tax classes card header",
@@ -7731,10 +7734,6 @@
   "nTF6tG": {
     "context": "number of order",
     "string": "No. of Order"
-  },
-  "nW5Cca": {
-    "context": "edit refund title",
-    "string": "Edit refund"
   },
   "nX2pCU": {
     "context": "window title",
@@ -9059,6 +9058,10 @@
   "wjKYSU": {
     "context": "WarehousesSection subtitle",
     "string": "Select warehouse from which you will ship products for this shipping zone. This warehouse address will also be used to calculate taxes."
+  },
+  "wkeWw9": {
+    "context": "create refund title",
+    "string": "Create refund with line items"
   },
   "wlQTfb": {
     "context": "go to next step, button",
