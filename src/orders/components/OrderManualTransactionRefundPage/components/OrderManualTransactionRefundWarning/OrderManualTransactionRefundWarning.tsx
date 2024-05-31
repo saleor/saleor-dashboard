@@ -9,7 +9,8 @@ export const OrderManualTransactionRefundWarning = () => {
   return (
     <Box backgroundColor="warning1" padding={3} borderRadius={2} marginBottom={6}>
       <Text size={2}>
-        <FormattedMessage {...messages.sidebardDescription} />{" "}
+        <FormattedMessage {...messages.sidebardDescription} />
+        <br />
         <ExternalLinkNext
           size={2}
           color="accent1"
