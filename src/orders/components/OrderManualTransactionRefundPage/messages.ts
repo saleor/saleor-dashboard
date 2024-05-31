@@ -31,6 +31,10 @@ export const messages = defineMessages({
     defaultMessage: "Transaction",
     description: "default transaction name",
   },
+  totalAmount: {
+    id: "ye3r1t",
+    defaultMessage: "Total amount:",
+  },
 });
 
 export const validationMessages = defineMessages({
