@@ -1,5 +1,5 @@
 name: Execute automation tests
-run-name: Run tests on ${{github.event.client_payload.custom_version}} ${{github.event.client_payload.project}}
+run-name: Run tests on ${{github.event.client_payload.version}} ${{github.event.client_payload.project}}
 
 on:
   repository_dispatch:
@@ -32,7 +32,7 @@ jobs:
         id: get-environment-variables
         run: |
           node .github/workflows/getEnvironmentVariables.js \
-            --custom_version "$CUSTOM_VERSION" \
+            --custom_version $CUSTOM_VERSION \
             --repo_token "$REPO_TOKEN" 
 
   run-tests-on-release:
@@ -41,8 +41,9 @@ jobs:
     with:
       VERSION: ${{needs.get-environment-variables.outputs.VERSION}}
       CUSTOM_VERSION: ${{github.event.client_payload.custom_version}}
+      HEAD_SHA_OF_RELEASE_PR: ${{github.event.client_payload.release_pr_head_sha}}
     secrets: inherit
-
+  
   create-release-PR:
     needs: run-tests-on-release 
     if: ${{ needs.run-tests-on-release.outputs.TESTS_CONCLUSION == 'success'}} && ${{github.event.client_payload.project == 'CORE' }}
