@@ -89,7 +89,7 @@ export const ShippingZoneListDatagrid = ({
         onColumnMoved={handlers.onMove}
         onColumnResize={handlers.onResize}
         onRowSelectionChange={onSelectShippingZones}
-        verticalBorder={col => col > 0}
+        verticalBorder={false}
         rows={shippingZones?.length ?? 0}
         availableColumns={visibleColumns}
         emptyText={intl.formatMessage(messages.empty)}
