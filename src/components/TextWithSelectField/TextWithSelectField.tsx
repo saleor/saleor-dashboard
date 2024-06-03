@@ -3,6 +3,7 @@ import SingleSelectField, {
 } from "@dashboard/components/SingleSelectField";
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import { TextField } from "@material-ui/core";
+import { Box, Spinner } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 
@@ -20,6 +21,7 @@ export interface TextWithSelectFieldProps {
   choices: Choices;
   helperText?: string;
   isError?: boolean;
+  loading?: boolean;
   textFieldProps: CommonFieldProps & {
     value?: string | number;
     minValue?: number;
@@ -31,6 +33,7 @@ export interface TextWithSelectFieldProps {
 const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
   change,
   choices,
+  loading,
   containerClassName,
   textFieldProps,
   selectFieldProps,
@@ -102,7 +105,11 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
           className: clsx(classes.textField, {
             [classes.textFieldCentered]: !textFieldLabel,
           }),
-          endAdornment: (
+          endAdornment: loading ? (
+            <Box paddingTop={1} paddingRight={4}>
+              <Spinner />
+            </Box>
+          ) : (
             <SingleSelectField
               name={selectFieldName}
               onChange={handleSelectChange}

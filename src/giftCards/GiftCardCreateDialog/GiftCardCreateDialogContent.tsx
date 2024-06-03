@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import {
   GiftCardCreateInput,
-  useChannelCurrenciesQuery,
   useGiftCardCreateMutation,
 } from "@dashboard/graphql";
 import useCurrentDate from "@dashboard/hooks/useCurrentDate";
@@ -11,7 +10,6 @@ import { DialogTitle } from "@material-ui/core";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import ContentWithProgress from "./ContentWithProgress";
 import GiftCardCreateDialogCodeContent from "./GiftCardCreateDialogCodeContent";
 import GiftCardCreateDialogForm, {
   GiftCardCreateFormData,
@@ -34,9 +32,6 @@ const GiftCardCreateDialogContent: React.FC<
 > = ({ onClose, refetchQueries, initialCustomer }) => {
   const intl = useIntl();
   const notify = useNotifier();
-
-  const { loading: loadingChannelCurrencies } = useChannelCurrenciesQuery({});
-
   const [cardCode, setCardCode] = useState(null);
 
   const currentDate = useCurrentDate();
@@ -99,23 +94,20 @@ const GiftCardCreateDialogContent: React.FC<
       <DialogTitle disableTypography>
         {intl.formatMessage(messages.title)}
       </DialogTitle>
-      <ContentWithProgress>
-        {!loadingChannelCurrencies &&
-          (cardCode ? (
-            <GiftCardCreateDialogCodeContent
-              cardCode={cardCode}
-              onClose={handleClose}
-            />
-          ) : (
-            <GiftCardCreateDialogForm
-              opts={createGiftCardOpts}
-              onClose={handleClose}
-              apiErrors={createGiftCardOpts?.data?.giftCardCreate?.errors}
-              onSubmit={handleSubmit}
-              initialCustomer={initialCustomer}
-            />
-          ))}
-      </ContentWithProgress>
+      {cardCode ? (
+        <GiftCardCreateDialogCodeContent
+          cardCode={cardCode}
+          onClose={handleClose}
+        />
+      ) : (
+        <GiftCardCreateDialogForm
+          opts={createGiftCardOpts}
+          onClose={handleClose}
+          apiErrors={createGiftCardOpts?.data?.giftCardCreate?.errors}
+          onSubmit={handleSubmit}
+          initialCustomer={initialCustomer}
+        />
+      )}
     </>
   );
 };
