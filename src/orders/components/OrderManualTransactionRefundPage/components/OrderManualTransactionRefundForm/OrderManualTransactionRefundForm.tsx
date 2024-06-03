@@ -7,6 +7,7 @@ import {
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
+import { refundSavebarMessages } from "@dashboard/orders/components/OrderTransactionRefundPage/messages";
 import { orderUrl } from "@dashboard/orders/urls";
 import {
   getOrderTransactionErrorMessage,
@@ -80,6 +81,9 @@ export const OrderManualTransactionRefundForm = ({
           onCancel={() => navigate(orderUrl(orderId))}
           onSubmit={methods.handleSubmit(handleSubmit)}
           state={manualRefundOpts.status}
+          labels={{
+            confirm: intl.formatMessage(refundSavebarMessages.transferFunds),
+          }}
         />
       </form>
     </FormProvider>

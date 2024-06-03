@@ -2,13 +2,13 @@ import { defineMessages } from "react-intl";
 
 export const orderRefundDialogMesages = defineMessages({
   title: {
-    id: "jIVn80",
-    defaultMessage: "Create a new refund",
+    id: "65j8ft",
+    defaultMessage: "Create new refund",
     description: "dialog title",
   },
   subtitle: {
-    id: "O+w1k0",
-    defaultMessage: "How do you want to make a refund?",
+    id: "Y0NwOq",
+    defaultMessage: "Select refund method:",
     description: "dialog subtitle",
   },
   standardRefundTitle: {
@@ -17,8 +17,9 @@ export const orderRefundDialogMesages = defineMessages({
     description: "radio button label",
   },
   standardRefundSubtitle: {
-    id: "+6liDh",
-    defaultMessage: "The purchased product list will be sent and used to suggest amount to refund.",
+    id: "QX0gQb",
+    defaultMessage:
+      "Use the product list to suggest refund amount. Ideal for refunding specific items or entire order.",
     description: "radio button label",
   },
   manualRefundTitle: {
@@ -27,9 +28,9 @@ export const orderRefundDialogMesages = defineMessages({
     description: "radio button label",
   },
   manualRefundSubtitle: {
-    id: "DAgLzp",
+    id: "VyC+Bm",
     defaultMessage:
-      "Do not use information about the products and rely on amount provided manually.",
+      "Enter the refund amount without using the product list. Best for overcharges and custom adjustments.",
     description: "radio button label",
   },
   cannotCreateManual: {
