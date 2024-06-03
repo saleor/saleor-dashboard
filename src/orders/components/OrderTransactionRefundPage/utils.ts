@@ -121,6 +121,10 @@ export const handleReasonChange = ({
   refundFieldsUpdate(index, { quantity: linesToRefund[index].quantity, reason });
 };
 
+const roundToTwoDecimals = (num: number) => {
+  return parseFloat(num.toFixed(2));
+};
+
 export const useRecalculateTotalAmount = ({
   getValues,
   setValue,
@@ -144,7 +148,7 @@ export const useRecalculateTotalAmount = ({
 
       if (includeShipping) {
         const shippingPrice = order?.shippingPrice.gross.amount;
-        const totalAmount = selectedProductsValue + (shippingPrice ?? 0);
+        const totalAmount = roundToTwoDecimals(selectedProductsValue + (shippingPrice ?? 0));
 
         if (totalAmount !== customAmount) {
           setValue("amount", totalAmount);
@@ -153,8 +157,10 @@ export const useRecalculateTotalAmount = ({
         return;
       }
 
-      if (selectedProductsValue !== customAmount) {
-        setValue("amount", selectedProductsValue);
+      const roundedSelectedProductsValue = roundToTwoDecimals(selectedProductsValue);
+
+      if (roundedSelectedProductsValue !== customAmount) {
+        setValue("amount", roundedSelectedProductsValue);
       }
     }
   }, [linesToRefund, includeShipping]);
