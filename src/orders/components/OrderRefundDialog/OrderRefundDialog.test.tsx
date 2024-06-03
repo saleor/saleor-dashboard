@@ -89,7 +89,7 @@ describe("OrderRefundDialog", () => {
     // Act
     render(<OrderRefundDialog {...props} />);
 
-    const confirmButton = screen.getByRole("button", { name: /confirm/i });
+    const confirmButton = screen.getByRole("button", { name: /proceed/i });
 
     fireEvent.click(confirmButton);
     // Assert
@@ -108,7 +108,7 @@ describe("OrderRefundDialog", () => {
     // Act
     render(<OrderRefundDialog {...props} />);
 
-    const confirmButton = screen.getByRole("button", { name: /confirm/i });
+    const confirmButton = screen.getByRole("button", { name: /proceed/i });
     const manualRefundRadio = screen.getByTestId("manual-refund");
 
     await fireEvent.click(manualRefundRadio);
