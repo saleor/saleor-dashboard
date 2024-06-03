@@ -161,6 +161,42 @@ describe("useRecalculateTotalAmount", () => {
     // Assert
     expect(getValues("amount")).toBe(20); // selectedProductsValue = 20
   });
+  it("rounds the amount to two decimal places", () => {
+    // Arrange
+    const { result } = renderHook(() =>
+      useForm({
+        defaultValues: {
+          linesToRefund: [] as LineToRefund[],
+          amount: 5,
+          transactionId: "",
+          includeShipping: true,
+          reason: "",
+        } as OrderTransactionRefundPageFormData,
+      }),
+    );
+    const { setValue, getValues } = result.current;
+    const params = {
+      getValues,
+      setValue,
+      includeShipping: false,
+      order: null,
+      selectedProductsValue: 3.0300000000000002,
+      linesToRefund: [
+        {
+          row: 0,
+          quantity: 2,
+          reason: "",
+        },
+      ],
+      isFormDirty: true,
+    };
+
+    // Act
+    renderHook(() => useRecalculateTotalAmount(params));
+
+    // Assert
+    expect(getValues("amount")).toBe(3.03); // selectedProductsValue = 3.03, rounded to 3.03
+  });
 });
 
 describe("canRefundShipping", () => {
