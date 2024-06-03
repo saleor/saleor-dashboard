@@ -23,7 +23,7 @@ export function DevModeProvider({ children }) {
 
       const variables = JSON.stringify(
         {
-          filter: getFilterVariables(params, []),
+          filter: getFilterVariables(params, [], false),
         },
         null,
         2,

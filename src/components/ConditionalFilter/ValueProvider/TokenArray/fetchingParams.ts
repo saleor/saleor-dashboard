@@ -18,6 +18,7 @@ export interface OrderFetchingParams {
 }
 
 type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute">;
+type OrderParamsKeys = keyof OrderFetchingParams;
 
 export const emptyFetchingParams: FetchingParams = {
   category: [],
@@ -61,6 +62,18 @@ export const toFetchingParams = (p: FetchingParams, c: UrlToken) => {
     p.attribute[c.name] = [];
 
     return p;
+  }
+
+  p[key] = unique(p[key].concat(c.value));
+
+  return p;
+};
+
+export const toOrderFetchingParams = (p: OrderFetchingParams, c: UrlToken) => {
+  const key = c.name as OrderParamsKeys;
+
+  if (!p[key]) {
+    p[key] = [];
   }
 
   p[key] = unique(p[key].concat(c.value));

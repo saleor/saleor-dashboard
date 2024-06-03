@@ -4,10 +4,16 @@ import { useEffect, useState } from "react";
 import useRouter from "use-react-router";
 
 import { InitialAPIState } from "../API";
+import { InitialOrderAPIState } from "../API/initialState/orders/useInitalOrderState";
 import { FilterContainer, FilterElement } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
 import { TokenArray } from "./TokenArray";
-import { emptyFetchingParams, emptyOrderFetchingParams } from "./TokenArray/fetchingParams";
+import {
+  emptyFetchingParams,
+  emptyOrderFetchingParams,
+  FetchingParams,
+  OrderFetchingParams,
+} from "./TokenArray/fetchingParams";
 import { UrlEntry } from "./UrlToken";
 
 type Structure = Array<string | UrlEntry | Structure>;
@@ -28,7 +34,7 @@ const prepareStructure = (filterValue: FilterContainer): Structure =>
 export const useUrlValueProvider = (
   locationSearch: string,
   type: "product" | "order" | "discount",
-  initialState?: InitialAPIState,
+  initialState?: InitialAPIState | InitialOrderAPIState,
 ): FilterValueProvider => {
   const router = useRouter();
   const params = new URLSearchParams(locationSearch);
@@ -50,8 +56,17 @@ export const useUrlValueProvider = (
   const fetchingParams = tokenizedUrl.getFetchingParams(paramsFromType);
 
   useEffect(() => {
-    if (initialState?.fetchQueries) {
-      initialState.fetchQueries(fetchingParams);
+    if (initialState && initialState?.fetchQueries) {
+      switch (type) {
+        case "product":
+          (initialState as InitialAPIState).fetchQueries!(fetchingParams as FetchingParams);
+          break;
+        case "order":
+          (initialState as InitialOrderAPIState).fetchQueries!(
+            fetchingParams as OrderFetchingParams,
+          );
+          break;
+      }
     }
   }, [locationSearch]);
 

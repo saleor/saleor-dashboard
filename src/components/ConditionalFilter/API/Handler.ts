@@ -22,7 +22,6 @@ import {
 } from "@dashboard/graphql";
 import { IntlShape } from "react-intl";
 
-import { RowType } from "../constants";
 import { ItemOption } from "../FilterElement/ConditionValue";
 import { LeftOperand } from "../LeftOperandsProvider";
 import { getLocalizedLabel } from "./initialState/orders/intl";
@@ -234,22 +233,28 @@ export class EnumValuesHandler implements Handler {
 
   constructor(
     enumObject: Record<string, string>,
-    type: RowType,
+    type: LeftOperand["type"],
     intl: IntlShape,
     query?: string[],
   ) {
     this.options = Object.values(enumObject).map(value => ({
       value,
       slug: value,
-      type: type as LeftOperand["type"], // TODO
-      label: getLocalizedLabel(type as LeftOperand["type"], value, intl), // TODO: get label from enum, translation
+      type,
+      label: getLocalizedLabel(type, value, intl),
     }));
     this.query = query;
   }
 
   fetch = async (): Promise<LeftOperand[]> => {
     if (this.query) {
-      return this.options.filter(el => this.query.includes(el.value));
+      return this.options.filter(el => {
+        if (this.query) {
+          return this.query.includes(el.value);
+        }
+
+        return false;
+      });
     }
 
     return this.options;

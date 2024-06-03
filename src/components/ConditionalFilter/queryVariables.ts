@@ -175,6 +175,8 @@ export const createOrderQueryVariables = (value: FilterContainer) => {
     }
 
     if (c.isStatic()) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore - seems to be a bug in TS, works fine in 5.4.5
       p[c.value.value] = createStaticQueryPart(c.condition.selected);
     }
 

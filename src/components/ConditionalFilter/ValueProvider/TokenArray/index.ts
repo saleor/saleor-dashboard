@@ -4,7 +4,12 @@ import { InitialOrderStateResponse } from "../../API/initialState/orders/Initial
 import { InitialStateResponse } from "../../API/InitialStateResponse";
 import { FilterContainer, FilterElement } from "../../FilterElement";
 import { UrlEntry, UrlToken } from "../UrlToken";
-import { FetchingParams, OrderFetchingParams, toFetchingParams } from "./fetchingParams";
+import {
+  FetchingParams,
+  OrderFetchingParams,
+  toFetchingParams,
+  toOrderFetchingParams,
+} from "./fetchingParams";
 
 const toFlatUrlTokens = (p: UrlToken[], c: TokenArray[number]) => {
   if (typeof c === "string") {
@@ -58,9 +63,15 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
   }
 
   public getFetchingParams(params: OrderFetchingParams | FetchingParams) {
+    if ("paymentStatus" in params) {
+      return this.asFlatArray()
+        .filter(token => token.isLoadable())
+        .reduce<OrderFetchingParams>(toOrderFetchingParams, params);
+    }
+
     return this.asFlatArray()
       .filter(token => token.isLoadable())
-      .reduce<FetchingParams | OrderFetchingParams>(toFetchingParams, params);
+      .reduce<FetchingParams>(toFetchingParams, params);
   }
 
   public asFlatArray() {

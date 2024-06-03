@@ -17,7 +17,21 @@ import { createInitialOrderState } from "../helpers";
 import { InitialOrderAPIResponse } from "../types";
 import { InitialOrderStateResponse } from "./InitialOrderState";
 
-export const useInitialOrderState = () => {
+const getCustomer = (customer: string[]) => {
+  if (Array.isArray(customer) && customer.length > 0) {
+    return customer.at(-1) ?? "";
+  }
+
+  return "";
+};
+
+export interface InitialOrderAPIState {
+  data: InitialOrderStateResponse;
+  loading: boolean;
+  fetchQueries?: (params: OrderFetchingParams) => Promise<void>;
+}
+
+export const useInitialOrderState = (): InitialOrderAPIState => {
   const client = useApolloClient();
   const intl = useIntl();
   const [data, setData] = useState<InitialOrderStateResponse>(InitialOrderStateResponse.empty());
@@ -74,7 +88,7 @@ export const useInitialOrderState = () => {
         {
           type: "customer",
           label: "Customer",
-          value: Array.isArray(customer) && customer.length > 0 ? customer.at(-1) : "",
+          value: getCustomer(customer),
           slug: "customer",
         },
       ],

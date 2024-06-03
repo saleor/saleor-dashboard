@@ -118,6 +118,8 @@ export const createInitialOrderState = (data: InitialOrderAPIResponse[]) =>
           })),
         };
       }
+
+      return acc;
     },
     {
       channels: [],

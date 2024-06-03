@@ -13,7 +13,6 @@ import { useConditionalFilterContext } from "@dashboard/components/ConditionalFi
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
-import { useFlag } from "@dashboard/featureFlags";
 import { OrderListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { orderMessages } from "@dashboard/orders/messages";
