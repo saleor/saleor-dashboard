@@ -1,15 +1,15 @@
 // @ts-nocheck
 
-import D11073 from "./images/discounts-list.png"
-import X45125 from "./images/improved_refunds.png"
-import L95455 from "./images/order-filters.webp"
-import N65478 from "./images/filters.png"
+import L19499 from "./images/discounts-list.png"
+import I59669 from "./images/improved_refunds.png"
+import M04994 from "./images/order-filters.png"
+import C77988 from "./images/filters.png"
 
-const discounts_rules = () => (<><p><img src={D11073} alt="Discount rules"/></p>
+const discounts_rules = () => (<><p><img src={L19499} alt="Discount rules"/></p>
 <p>Apply the new discounts rules to narrow your promotions audience.
 Set up conditions and channels that must be fulfilled to apply defined reward.</p>
 </>)
-const improved_refunds = () => (<><p><img src={X45125} alt="Improved refunds"/></p>
+const improved_refunds = () => (<><p><img src={I59669} alt="Improved refunds"/></p>
 <h3 id="enable-the-enhanced-refund-feature-to-streamline-your-refund-process">Enable the enhanced refund feature to streamline your refund process:</h3>
 <ul>
 <li><p>• Choose between automatic calculations based on selected items or enter refund amounts directly for overcharges and custom adjustments.</p>
@@ -19,11 +19,11 @@ const improved_refunds = () => (<><p><img src={X45125} alt="Improved refunds"/><
 </ul>
 
 </>)
-const order_filters = () => (<><p><img src={L95455} alt="new filters"/></p>
+const order_filters = () => (<><p><img src={M04994} alt="new filters"/></p>
 <p>Experience the new look and enhanced abilities of new orders filtering mechanism.
 Easily combine any criteria you want, and quickly browse their values.</p>
 </>)
-const product_filters = () => (<><p><img src={N65478} alt="new filters"/></p>
+const product_filters = () => (<><p><img src={C77988} alt="new filters"/></p>
 <p>Experience the new look and enhanced abilities of new fitering mechanism.
 Easily combine any criteria you want, and quickly browse their values.</p>
 </>)
