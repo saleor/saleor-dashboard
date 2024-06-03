@@ -94,8 +94,6 @@ export function getFilterOpts(
   };
 }
 
-const featureFlagEnabled = true;
-
 const whereInputTypes = ["oneOf", "eq", "range", "gte", "lte"];
 const orderBooleanFilters = ["isClickAndCollect", "isPreorder"];
 
@@ -144,10 +142,11 @@ const _whereToLegacyVariables = (where: OrderFilterInput) => {
 export function getFilterVariables(
   params: OrderListUrlFilters,
   filterContainer: FilterContainer,
+  isFeatureFlagEnabled: boolean,
 ): OrderFilterInput {
   let queryVariables;
 
-  if (featureFlagEnabled) {
+  if (isFeatureFlagEnabled) {
     // FILTER CONTAINER INCOMPLETE
     queryVariables = _whereToLegacyVariables(createOrderQueryVariables(filterContainer));
     console.log({ queryVariables, filterContainer });

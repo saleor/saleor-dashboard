@@ -38,6 +38,7 @@ export interface OrderListPageProps
   limits: RefreshLimitsQuery["shop"]["limits"];
   orders: RelayToFlat<OrderListQuery["orders"]>;
   hasPresetsChanged: boolean;
+  newOrdersFiltersEnabled: boolean;
   onSettingsOpen: () => void;
   onAdd: () => void;
   params: OrderListUrlQueryParams;
@@ -62,10 +63,10 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   onAll,
   currentTab,
   hasPresetsChanged,
+  newOrdersFiltersEnabled,
   ...listProps
 }) => {
   const intl = useIntl();
-  const orderFiltersFeatureFlag = useFlag("order_filters");
   const userAccessibleChannels = useUserAccessibleChannels();
   const hasAccessibleChannels = userAccessibleChannels.length > 0;
   const filterStructure = createFilterStructure(intl, filterOpts);
@@ -84,7 +85,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
 
     const variables = JSON.stringify(
       {
-        filter: getFilterVariables(params, valueProvider.value),
+        filter: getFilterVariables(params, valueProvider.value, newOrdersFiltersEnabled),
         // TODO add sorting: Issue #3409
         // strange error when uncommenting this line
         // sortBy: getSortQueryVariables(params)
@@ -96,9 +97,6 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
     context.setVariables(variables);
     context.setDevModeVisibility(true);
   };
-
-  const isOrderListPage = window.location.pathname.includes("/orders");
-  const newOrdersFiltersEnabled = isOrderListPage && orderFiltersFeatureFlag;
 
   return (
     <ListPageLayout>

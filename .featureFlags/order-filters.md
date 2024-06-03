@@ -6,7 +6,7 @@ payload: "default"
 visible: true
 ---
 
-![new filters](./images/filters.png)
+![new filters](./images/order-filters.webp)
 
-Experience the new look and enhanced abilities of new filtering mechanism.
+Experience the new look and enhanced abilities of new orders filtering mechanism.
 Easily combine any criteria you want, and quickly browse their values.
