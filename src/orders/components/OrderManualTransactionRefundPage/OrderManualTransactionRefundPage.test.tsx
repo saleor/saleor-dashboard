@@ -109,7 +109,7 @@ describe("OrderManualTransactionRefundPage", () => {
     );
     // Act
     await userEvent.click(screen.getByRole("radio", { name: /Transaction 2/i }));
-    await userEvent.type(screen.getByLabelText(/refund amount/i), "5");
+    await userEvent.type(screen.getByTestId("refund-amount"), "5");
     await userEvent.click(screen.getByRole("button", { name: "save" }));
     // Assert
     expect(mockNofitication).toHaveBeenCalledWith({
@@ -143,7 +143,7 @@ describe("OrderManualTransactionRefundPage", () => {
 
     // Act
     await userEvent.click(screen.getByRole("radio", { name: /Transaction 1/i }));
-    await userEvent.type(screen.getByLabelText(/refund amount/i), "25");
+    await userEvent.type(screen.getByTestId("refund-amount"), "25");
     await userEvent.click(screen.getByRole("button", { name: "save" }));
 
     // Assert

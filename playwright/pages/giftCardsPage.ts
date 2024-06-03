@@ -54,7 +54,6 @@ export class GiftCardsPage extends BasePage {
 
   async clickIssueCardButton() {
     await this.waitForNetworkIdleAfterAction(async () => await this.issueCardButton.click());
-    await this.loader.waitFor({ state: "hidden" });
     await this.giftCardDialog.waitFor({ state: "visible" });
     await this.cardExpiresCheckboxOnModal.waitFor({ state: "visible" });
     await expect(this.cardExpiresCheckboxOnModal).toBeEnabled();

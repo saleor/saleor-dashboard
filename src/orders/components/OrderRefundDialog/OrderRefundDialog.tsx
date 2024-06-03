@@ -76,7 +76,7 @@ export const OrderRefundDialog = ({
           </Button>
           <Button onClick={selectedRefundType === "standard" ? onStandardRefund : onManualRefund}>
             <Text fontWeight="medium" color="buttonDefaultPrimary">
-              {intl.formatMessage(buttonMessages.confirm)}
+              {intl.formatMessage(buttonMessages.proceed)}
             </Text>
           </Button>
         </DashboardModal.Actions>

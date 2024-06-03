@@ -2,14 +2,14 @@ import { defineMessages } from "react-intl";
 
 export const orderTransactionRefundSummaryMessages = defineMessages({
   amount: {
-    defaultMessage: "Amount",
-    id: "OoMaRq",
+    defaultMessage: "Refund amount",
+    id: "+IayD+",
     description: "order transaction refund summary title",
   },
   amountDescription: {
     defaultMessage:
-      "Amount is calculated automatically based on the items selected, but you can modify it manually.",
-    id: "a5D12C",
+      "The refund amount is calculated automatically based on the items selected. You can modify it manually if needed.",
+    id: "f4oJRg",
     description: "order transaction refund summary description",
   },
   selectedProducts: {
