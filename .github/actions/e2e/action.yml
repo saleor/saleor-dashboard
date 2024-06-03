@@ -58,7 +58,7 @@ runs:
         install: ${{inputs.install}}
         browser: ${{inputs.browser}}
       env:
-        API_URI: ${{inputs.apiUrl}}
+        API_URL: ${{inputs.apiUrl}}
         APP_MOUNT_URI: ${{ inputs.appMountUri }}
         BASE_URL: ${{inputs.baseUrl}}
         CYPRESS_USER_NAME: ${{ inputs.userName }}

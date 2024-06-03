@@ -67,18 +67,19 @@ export class IssueGiftCardDialog extends BasePage {
   async clickSendToCustomerCheckbox() {
     await this.sendToCustomerCheckbox.waitFor({ state: "visible" });
     await expect(this.sendToCustomerCheckbox).toBeEnabled();
-    await this.waitForRequestsToFinishBeforeAction(() =>
-      this.sendToCustomerCheckbox.click({ force: true }),
-    );
-    await this.waitForDOMToFullyLoad();
+    await this.waitForNetworkIdleAfterAction(async () => {
+      await this.sendToCustomerCheckbox.check({ force: true });
+    }),
+      await this.waitForDOMToFullyLoad();
     await expect(this.sendToCustomerCheckbox).toBeChecked();
     await this.customerInput.waitFor({ state: "visible" });
+    await expect(this.customerInput).toBeEnabled();
   }
 
   async clickSendExpireDateCheckbox() {
     await this.sendExpireDateCheckbox.waitFor({ state: "visible" });
     await expect(this.sendExpireDateCheckbox).toBeEnabled();
-    await this.sendExpireDateCheckbox.click();
+    await this.sendExpireDateCheckbox.check({ force: true });
     await this.waitForDOMToFullyLoad();
     await expect(this.sendExpireDateCheckbox).toBeChecked();
     await this.giftCardExpireFields.waitFor({ state: "visible" });

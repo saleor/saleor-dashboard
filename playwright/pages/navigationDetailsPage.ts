@@ -60,6 +60,7 @@ export class NavigationDetailsPage extends BasePage {
 
   async clickSaveButton() {
     await this.saveButton.click();
+    await this.waitForDOMToFullyLoad();
   }
 
   async clickDeleteButton() {
