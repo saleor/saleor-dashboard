@@ -97,7 +97,6 @@ export function getFilterOpts(
 const whereInputTypes = ["oneOf", "eq", "range", "gte", "lte"];
 const orderBooleanFilters = ["isClickAndCollect", "isPreorder"];
 
-// TODO: create connector type for OrderFilterInput
 const _whereToLegacyVariables = (where: OrderFilterInput) => {
   return where
     ? Object.keys(where).reduce((acc, key) => {
@@ -106,7 +105,6 @@ const _whereToLegacyVariables = (where: OrderFilterInput) => {
 
           valueKeys.forEach(valueKey => {
             if (whereInputTypes.includes(valueKey)) {
-              // TODO: handle multiple left side uses
               const valueObj = where[key];
               const value = valueObj[valueKey];
 
@@ -117,20 +115,11 @@ const _whereToLegacyVariables = (where: OrderFilterInput) => {
 
                 return;
               }
-
-              if (key === "giftCardUsage") {
-                // @ts-expect-error - todo
-                acc.giftCardBought = acc[key].includes("bought");
-                // @ts-expect-error - todo
-                acc.giftCardUsed = acc[key].includes("paid_with");
-                acc[key] = undefined;
-              }
             }
           });
         }
 
         if (typeof where[key] === "boolean") {
-          // Careful - done so that isClickAndCollect works
           acc[key] = where[key];
         }
 
@@ -147,9 +136,7 @@ export function getFilterVariables(
   let queryVariables;
 
   if (isFeatureFlagEnabled) {
-    // FILTER CONTAINER INCOMPLETE
     queryVariables = _whereToLegacyVariables(createOrderQueryVariables(filterContainer));
-    console.log({ queryVariables, filterContainer });
   }
 
   return {
@@ -161,10 +148,9 @@ export function getFilterVariables(
     customer: params.customer,
     search: params.query,
     status: params?.status?.map(status => findInEnum(status, OrderStatusFilter)),
-    // paymentStatus: params?.paymentStatus?.map(paymentStatus =>
-    //   findInEnum(paymentStatus, PaymentChargeStatusEnum),
-    // ),
-    // paymentStatus: queryVariables.paymentStatus.map(({ values }) => values[0])[0],
+    paymentStatus: params?.paymentStatus?.map(paymentStatus =>
+      findInEnum(paymentStatus, PaymentChargeStatusEnum),
+    ),
     isClickAndCollect:
       params.clickAndCollect !== undefined
         ? parseBoolean(params.clickAndCollect, false)
