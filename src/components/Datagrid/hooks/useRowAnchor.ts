@@ -20,7 +20,7 @@ export const useRowAnchor = ({
     rowAnchorRef.current = element;
   }, []);
 
-  const setSAnchorPosition = useCallback(
+  const setAnchorPosition = useCallback(
     useDebounce((args: GridMouseEventArgs) => {
       if (args.kind !== "cell" || !rowAnchorRef.current || !getRowAnchorUrl) {
         return;
@@ -49,6 +49,6 @@ export const useRowAnchor = ({
   return {
     rowAnchorRef,
     setRowAnchorRef,
-    setSAnchorPosition,
+    setAnchorPosition,
   };
 };

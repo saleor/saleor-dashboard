@@ -142,14 +142,14 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const [selection, setSelection] = useState<GridSelection>();
   const [areCellsDirty, setCellsDirty] = useState(true);
 
-  const { rowAnchorRef, setRowAnchorRef, setSAnchorPosition } = useRowAnchor({
+  const { rowAnchorRef, setRowAnchorRef, setAnchorPosition } = useRowAnchor({
     getRowAnchorUrl: rowAnchor,
     rowMarkers,
   });
 
   const { handleRowHover, hoverRow } = useRowHover({
     hasRowHover,
-    onRowHover: setSAnchorPosition,
+    onRowHover: setAnchorPosition,
   });
 
   // Allow to listen to which row is selected and notfiy parent component
