@@ -15,8 +15,7 @@ test.beforeEach(async ({ page, request }) => {
   await giftCardsPage.gotoGiftCardsListView();
   await giftCardsPage.waitForDOMToFullyLoad();
 });
-//Adding skip due to https://linear.app/saleor/issue/MERX-451/gift-card-modal-is-flickering-upon-an-interaction
-test.skip("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
+test("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
   await giftCardsPage.clickIssueCardButton();
   await giftCardsPage.issueGiftCardDialog.typeAmount("50");
   await giftCardsPage.issueGiftCardDialog.typeTag("super ultra automation discount");
@@ -40,8 +39,7 @@ test.skip("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
     .getByText(`Code ending with ${code}`)
     .waitFor({ state: "attached", timeout: 30000 });
 });
-//Adding skip due to https://linear.app/saleor/issue/MERX-451/gift-card-modal-is-flickering-upon-an-interaction
-test.skip("TC: SALEOR_106 Issue gift card with specific customer and expiry date @e2e @gift", async () => {
+test("TC: SALEOR_106 Issue gift card with specific customer and expiry date @e2e @gift", async () => {
   await giftCardsPage.clickIssueCardButton();
 
   await giftCardsPage.issueGiftCardDialog.clickSendExpireDateCheckbox();
