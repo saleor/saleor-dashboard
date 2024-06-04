@@ -29,10 +29,10 @@ export interface DatagridRefund {
 
 type EventsByPspReference = Record<string, TransactionEventFragment[]>;
 
-const findLatestEventWithCreatedBy = (
+const findLatestEventWithUserAuthor = (
   eventGroup: TransactionEventFragment[],
 ): TransactionEventFragment | null => {
-  return eventGroup.find(event => !!event.createdBy) || null;
+  return eventGroup.find(event => event.createdBy?.__typename === "User") || null;
 };
 
 const mapEventToRefundStatus = (event: TransactionEventFragment): OrderGrantedRefundStatusEnum => {
@@ -75,7 +75,7 @@ const mapEventGroupsToDatagridRefunds = (
       (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
     );
     const latestEvent = sortedEvents[0];
-    const latestEventWithAuthor = findLatestEventWithCreatedBy(sortedEvents) || latestEvent;
+    const latestEventWithAuthor = findLatestEventWithUserAuthor(sortedEvents) || latestEvent;
 
     return {
       id: latestEvent.id,
