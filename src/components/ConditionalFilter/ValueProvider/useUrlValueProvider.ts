@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import useRouter from "use-react-router";
 
 import { InitialAPIState } from "../API";
-import { InitialOrderAPIState } from "../API/initialState/orders/useInitalOrderState";
+import { InitialOrderAPIState } from "../API/initialState/orders/useInitialOrderState";
 import { FilterContainer, FilterElement } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
 import { TokenArray } from "./TokenArray";

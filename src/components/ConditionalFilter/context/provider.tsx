@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 
 import { useDiscountFilterAPIProvider } from "../API/DiscountFiltersAPIProvider";
-import { useInitialOrderState } from "../API/initialState/orders/useInitalOrderState";
+import { useInitialOrderState } from "../API/initialState/orders/useInitialOrderState";
 import { useProductInitialAPIState } from "../API/initialState/useInitialAPIState";
 import { useOrderFilterAPIProvider } from "../API/OrderFilterAPIProvider";
 import { useProductFilterAPIProvider } from "../API/ProductFilterAPIProvider";
