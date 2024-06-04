@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.19.8
+
+### Patch Changes
+
+- 9a6e52d34: You can now open issue gift card modal without any flickering
+- d8814bd28: Fix product list crash when description contains empty object
+  Improve description by removing html tags and &nbsp;
+- cb1c95fb4: You can now hover over each row in product datagrid and hover effect will be fast and smooth
+- 78fb0ff7f: Fix release workflow
+
 ## 3.19.7
 
 ### Patch Changes
