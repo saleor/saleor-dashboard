@@ -67,6 +67,7 @@ export const createGetCellContent =
         return readonlyTextCell(getCustomerName(rowData));
       case "total":
         return moneyCell(rowData.total?.gross?.amount ?? 0, rowData.total?.gross?.currency ?? "", {
+          cursor: "pointer",
           readonly: true,
         });
       default:

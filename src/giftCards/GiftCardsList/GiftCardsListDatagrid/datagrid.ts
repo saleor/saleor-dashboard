@@ -58,6 +58,8 @@ export const getColumns = (intl: IntlShape, sort?: Sort<GiftCardUrlSortField>): 
     icon: sort ? getColumnSortDirectionIcon(sort, column.id) : undefined,
   }));
 
+const COMMON_CELL_PROPS: Partial<GridCell> = { cursor: "pointer" };
+
 export const createGetCellContent =
   (
     categories: Array<
@@ -99,6 +101,7 @@ export const createGetCellContent =
               },
             ],
             [intl.formatMessage(messages.active)],
+            COMMON_CELL_PROPS,
           );
         }
 
@@ -112,6 +115,7 @@ export const createGetCellContent =
             },
           ],
           [statusLabel],
+          COMMON_CELL_PROPS,
         );
       }
       case "tag":
@@ -125,7 +129,11 @@ export const createGetCellContent =
 
         return readonlyTextCell(rowData?.usedByEmail ?? PLACEHOLDER);
       case "balance":
-        return moneyCell(rowData.currentBalance.amount, rowData.currentBalance.currency);
+        return moneyCell(
+          rowData.currentBalance.amount,
+          rowData.currentBalance.currency,
+          COMMON_CELL_PROPS,
+        );
       default:
         return readonlyTextCell("", false);
     }

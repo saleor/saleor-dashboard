@@ -37,7 +37,7 @@ import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Item } from "@glideapps/glide-data-grid";
+import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { DefaultTheme } from "@saleor/macaw-ui-next";
 import { IntlShape } from "react-intl";
 
@@ -223,8 +223,10 @@ export function createGetCellContent({
   };
 }
 
+const COMMON_CELL_PROPS: Partial<GridCell> = { cursor: "pointer" };
+
 function getDateCellContent(rowData: RelayToFlat<ProductListQuery["products"]>[number]) {
-  return dateCell(rowData?.updatedAt);
+  return dateCell(rowData?.updatedAt, COMMON_CELL_PROPS);
 }
 
 function getProductTypeCellContent(
@@ -234,7 +236,7 @@ function getProductTypeCellContent(
   const hue = stringToHue(rowData.productType?.name);
   const color = theme === "defaultDark" ? hueToPillColorDark(hue) : hueToPillColorLight(hue);
 
-  return pillCell(rowData.productType?.name, color);
+  return pillCell(rowData.productType?.name, color, COMMON_CELL_PROPS);
 }
 
 function getCategoryCellContent(
@@ -242,13 +244,13 @@ function getCategoryCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
 ) {
   if (!rowData.category) {
-    return readonlyTextCell("-");
+    return readonlyTextCell("-", true);
   }
 
   const hue = stringToHue(rowData.category?.name);
   const color = theme === "defaultDark" ? hueToPillColorDark(hue) : hueToPillColorLight(hue);
 
-  return pillCell(rowData.category?.name, color);
+  return pillCell(rowData.category?.name, color, COMMON_CELL_PROPS);
 }
 
 function getCollectionsCellContent(
@@ -256,7 +258,7 @@ function getCollectionsCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
 ) {
   if (rowData.collections === undefined || rowData.collections.length === 0) {
-    return readonlyTextCell("-");
+    return readonlyTextCell("-", true);
   }
 
   const tags = rowData.collections.map(collection => {
@@ -273,7 +275,7 @@ function getCollectionsCellContent(
     tags,
     tags.map(tag => tag.tag),
     {
-      readonly: true,
+      ...COMMON_CELL_PROPS,
       allowOverlay: false,
     },
   );
@@ -288,6 +290,7 @@ function getAvailabilityCellContent(
     return statusCell(
       getChannelAvailabilityStatus(selectedChannnel),
       intl.formatMessage(getChannelAvailabilityLabel(selectedChannnel)),
+      COMMON_CELL_PROPS,
     );
   }
 
@@ -297,9 +300,10 @@ function getAvailabilityCellContent(
       intl.formatMessage(messages.dropdownLabel, {
         channelCount: rowData?.channelListings?.length,
       }),
+      COMMON_CELL_PROPS,
     );
   } else {
-    return statusCell("error", intl.formatMessage(messages.noChannels));
+    return statusCell("error", intl.formatMessage(messages.noChannels), COMMON_CELL_PROPS);
   }
 }
 
@@ -311,10 +315,10 @@ function getDescriptionCellContent(
   const value = change ?? rowData?.[columnId] ?? "";
 
   if (!value) {
-    return readonlyTextCell("");
+    return readonlyTextCell("", true);
   }
 
-  return readonlyTextCell(getDescriptionValue(value));
+  return readonlyTextCell(getDescriptionValue(value), true);
 }
 
 function getNameCellContent(
@@ -323,9 +327,7 @@ function getNameCellContent(
 ) {
   const name = change?.name ?? rowData?.name ?? "";
 
-  return thumbnailCell(name, rowData?.thumbnail?.url ?? "", {
-    cursor: "pointer",
-  });
+  return thumbnailCell(name, rowData?.thumbnail?.url ?? "", COMMON_CELL_PROPS);
 }
 
 function getPriceCellContent(
@@ -335,7 +337,9 @@ function getPriceCellContent(
   const to = selectedChannnel?.pricing?.priceRange?.stop?.net;
   const price = from?.amount === to?.amount ? from?.amount : [from?.amount, to?.amount];
 
-  return from ? moneyCell(price, from?.currency || "") : readonlyTextCell("–");
+  return from
+    ? moneyCell(price, from?.currency || "", COMMON_CELL_PROPS)
+    : readonlyTextCell("–", true);
 }
 
 function getAttributeCellContent(
