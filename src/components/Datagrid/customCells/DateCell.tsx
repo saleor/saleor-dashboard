@@ -4,6 +4,8 @@ import {
   CustomRenderer,
   getMiddleCenterBias,
   GridCellKind,
+  Rectangle,
+  Theme,
 } from "@glideapps/glide-data-grid";
 
 export const numberCellEmptyValue = Symbol("date-cell-empty-value");
@@ -14,90 +16,187 @@ interface DateCellProps {
 
 export type DateCell = CustomCell<DateCellProps>;
 
-export const dateCellRenderer = (locale: Locale): CustomRenderer<DateCell> => ({
-  kind: GridCellKind.Custom,
-  isMatch: (c): c is DateCell => (c.data as any).kind === "date-cell",
-  draw: (args, cell) => {
-    const { ctx, theme, rect } = args;
-    const { value } = cell.data;
+interface DateFormaters {
+  full: Intl.DateTimeFormat;
+  long: Intl.DateTimeFormat;
+  short: Intl.DateTimeFormat;
+}
 
-    if (value === numberCellEmptyValue) return;
+export const dateCellRenderer = (locale: Locale): CustomRenderer<DateCell> => {
+  const dateFormaters: DateFormaters = {
+    full: new Intl.DateTimeFormat(locale, {
+      dateStyle: "full",
+    }),
+    long: new Intl.DateTimeFormat(locale, {
+      dateStyle: "long",
+    }),
+    short: new Intl.DateTimeFormat(locale, {
+      dateStyle: "short",
+    }),
+  };
 
-    const date = new Date(value);
+  const timeFromater = new Intl.DateTimeFormat(locale, {
+    timeStyle: "short",
+  });
 
-    if (isNaN(date?.getTime())) {
-      // invalid date object
-      return;
-    }
+  return {
+    kind: GridCellKind.Custom,
+    isMatch: (c): c is DateCell => (c.data as any).kind === "date-cell",
+    draw: (args, cell) => {
+      const { ctx, theme, rect } = args;
+      const { value } = cell.data;
 
-    const dateFormats = {
-      full: new Intl.DateTimeFormat(locale, {
-        dateStyle: "full",
-      }).format(date),
-      long: new Intl.DateTimeFormat(locale, {
-        dateStyle: "long",
-      }).format(date),
-      short: new Intl.DateTimeFormat(locale, {
-        dateStyle: "short",
-      }).format(date),
-    };
+      if (value === numberCellEmptyValue) return;
 
-    const time = new Intl.DateTimeFormat(locale, {
-      timeStyle: "short",
-    }).format(date);
+      const date = new Date(value);
 
-    ctx.textAlign = "left";
-    let justifyToRight = true;
-
-    const candidateFormats = [
-      {
-        format: dateFormats.full,
-        width: ctx.measureText(`${dateFormats.full} ${time}`).width,
-      },
-      {
-        format: dateFormats.long,
-        width: ctx.measureText(`${dateFormats.long} ${time}`).width,
-      },
-      {
-        format: dateFormats.short,
-        width: ctx.measureText(`${dateFormats.short} ${time}`).width,
-      },
-    ];
-
-    const cellWidth = rect.width - theme.cellHorizontalPadding * 2;
-    let displayDate: string | undefined = dateFormats.full;
-
-    if (cellWidth < candidateFormats[0].width) {
-      displayDate = candidateFormats.find(
-        format => format.width <= cellWidth,
-      )?.format;
-      if (!displayDate) {
-        displayDate = dateFormats.short;
-        justifyToRight = false;
+      if (isNaN(date?.getTime())) {
+        // invalid date object
+        return;
       }
-    }
 
-    ctx.fillStyle = theme.textDark;
+      const cellWidth = getCellWidth(rect, theme);
+      const textY = getCellMiddleY(ctx, rect, theme);
+      const textXStart = getCellX(rect, theme);
 
-    ctx.fillText(
-      displayDate,
-      rect.x + theme.cellHorizontalPadding,
-      rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
-    );
+      const displayTime = timeFromater.format(date);
 
-    ctx.fillStyle = theme.textLight;
-    ctx.textAlign = justifyToRight ? "right" : "left";
-    ctx.fillText(
-      time,
-      justifyToRight
-        ? rect.x + rect.width - theme.cellHorizontalPadding
-        : rect.x +
-            theme.cellHorizontalPadding +
-            ctx.measureText(displayDate).width +
-            5,
-      rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
-    );
+      const { displayDate, justifyToRight } = formatDate({
+        date,
+        formaters: dateFormaters,
+        time: displayTime,
+        ctx,
+        cellWidth,
+      });
 
-    return true;
-  },
-});
+      drawText({
+        ctx,
+        text: displayDate,
+        x: textXStart,
+        y: textY,
+        align: "left",
+        color: theme.textDark,
+      });
+
+      const dateTextXEnd = textXStart + ctx.measureText(displayDate).width;
+
+      drawText({
+        ctx,
+        text: displayTime,
+        x: calculateTimeX({ rect, theme, justifyToRight, dateTextXEnd }),
+        y: textY,
+        align: justifyToRight ? "right" : "left",
+        color: theme.textLight,
+      });
+
+      return true;
+    },
+  };
+};
+
+function formatDate({
+  cellWidth,
+  ctx,
+  date,
+  formaters,
+  time,
+}: {
+  date: Date;
+  formaters: DateFormaters;
+  time: string;
+  ctx: CanvasRenderingContext2D;
+  cellWidth: number;
+}): { displayDate: string; justifyToRight: boolean } {
+  const fullFormater = formaters.full.format(date);
+  const longFormater = formaters.long.format(date);
+  const shortFormater = formaters.short.format(date);
+
+  if (cellWidth >= getTextWidth(ctx, fullFormater, time)) {
+    return { displayDate: fullFormater, justifyToRight: true };
+  }
+
+  const candidateFormats = [
+    {
+      format: longFormater,
+      width: getTextWidth(ctx, longFormater, time),
+    },
+    {
+      format: shortFormater,
+      width: getTextWidth(ctx, shortFormater, time),
+    },
+  ];
+
+  const displayFormat = candidateFormats.find(
+    format => format.width <= cellWidth,
+  )?.format;
+
+  if (!displayFormat) {
+    return { displayDate: shortFormater, justifyToRight: false };
+  }
+
+  return { displayDate: displayFormat, justifyToRight: true };
+}
+
+function drawText({
+  align,
+  color,
+  ctx,
+  text,
+  x,
+  y,
+}: {
+  ctx: CanvasRenderingContext2D;
+  text: string;
+  x: number;
+  y: number;
+  align: CanvasTextAlign;
+  color: string;
+}) {
+  ctx.fillStyle = color;
+  ctx.textAlign = align;
+  ctx.fillText(text, x, y);
+}
+
+function getCellMiddleY(
+  ctx: CanvasRenderingContext2D,
+  rect: Rectangle,
+  theme: Theme,
+) {
+  const bias = getMiddleCenterBias(ctx, theme);
+
+  return rect.y + rect.height / 2 + bias;
+}
+
+function getCellWidth(rect: Rectangle, theme: Theme) {
+  return rect.width - theme.cellHorizontalPadding * 2;
+}
+
+function getCellX(rect: Rectangle, theme: Theme) {
+  return rect.x + theme.cellHorizontalPadding;
+}
+
+function getTextWidth(
+  ctx: CanvasRenderingContext2D,
+  date: string,
+  time: string,
+) {
+  return ctx.measureText(`${date} ${time}`).width;
+}
+
+function calculateTimeX({
+  rect,
+  justifyToRight,
+  theme,
+  dateTextXEnd,
+}: {
+  rect: Rectangle;
+  theme: Theme;
+  justifyToRight: boolean;
+  dateTextXEnd: number;
+}) {
+  if (justifyToRight) {
+    return rect.x + rect.width - theme.cellHorizontalPadding;
+  }
+
+  return dateTextXEnd + 5;
+}

@@ -75,6 +75,7 @@ export const createGetCellContent =
           rowData.total?.gross?.amount ?? 0,
           rowData.total?.gross?.currency ?? "",
           {
+            cursor: "pointer",
             readonly: true,
           },
         );

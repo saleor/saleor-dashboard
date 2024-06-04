@@ -34,21 +34,19 @@ export const thumbnailCellRenderer: CustomRenderer<ThumbnailCell> = {
     ctx.save();
 
     if (imageResult !== undefined && image) {
-      ctx.save();
       roundedImage(ctx, drawX, drawY, size, size, 4);
       ctx.strokeStyle = theme.borderColor;
       ctx.stroke();
       ctx.clip();
       ctx.drawImage(imageResult, drawX, drawY, size, size);
-      ctx.restore();
     } else {
-      ctx.save();
       ctx.beginPath();
       roundedImage(ctx, drawX, drawY, size, size, 4);
       ctx.fillStyle = theme.borderColor;
       ctx.fill();
-      ctx.restore();
     }
+
+    ctx.restore();
 
     if (name !== undefined) {
       ctx.fillStyle = theme.textDark;
@@ -58,8 +56,6 @@ export const thumbnailCellRenderer: CustomRenderer<ThumbnailCell> = {
         rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
       );
     }
-
-    ctx.restore();
 
     return true;
   },
