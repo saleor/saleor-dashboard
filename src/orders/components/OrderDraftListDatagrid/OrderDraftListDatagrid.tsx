@@ -103,7 +103,7 @@ export const OrderDraftListDatagrid = ({
         hasRowHover={hasRowHover}
         loading={disabled}
         availableColumns={visibleColumns}
-        verticalBorder={col => col > 0}
+        verticalBorder={false}
         getCellContent={getCellContent}
         getCellError={() => false}
         menuItems={() => []}

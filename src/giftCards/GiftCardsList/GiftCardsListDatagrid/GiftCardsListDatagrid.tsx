@@ -148,7 +148,7 @@ export const GiftCardsListDatagrid = () => {
         hasRowHover={true}
         onColumnMoved={handlers.onMove}
         onColumnResize={handlers.onResize}
-        verticalBorder={col => col > 0}
+        verticalBorder={false}
         rows={giftCards?.length ?? 0}
         availableColumns={visibleColumns}
         emptyText={intl.formatMessage(messages.noData)}
