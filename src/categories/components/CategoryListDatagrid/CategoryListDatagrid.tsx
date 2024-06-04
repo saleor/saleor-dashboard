@@ -81,7 +81,7 @@ export const CategoryListDatagrid = ({
         hasRowHover={hasRowHover}
         loading={disabled}
         columnSelect={sort !== undefined ? "single" : undefined}
-        verticalBorder={col => col > 0}
+        verticalBorder={false}
         rowMarkers="checkbox-visible"
         availableColumns={visibleColumns}
         rows={categories?.length ?? 0}

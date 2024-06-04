@@ -96,7 +96,7 @@ export const StaffListDatagrid = ({
         hasRowHover={true}
         onColumnMoved={handlers.onMove}
         onColumnResize={handlers.onResize}
-        verticalBorder={col => col > 1}
+        verticalBorder={false}
         rows={staffMembers?.length ?? 0}
         availableColumns={visibleColumns}
         emptyText={intl.formatMessage(messages.empty)}

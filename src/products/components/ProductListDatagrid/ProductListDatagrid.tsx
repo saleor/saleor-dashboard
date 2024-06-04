@@ -234,7 +234,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           hasRowHover={hasRowHover}
           onColumnMoved={handlers.onMove}
           onColumnResize={handlers.onResize}
-          verticalBorder={col => col > 0}
+          verticalBorder={false}
           getColumnTooltipContent={handleGetColumnTooltipContent}
           availableColumns={visibleColumns}
           onHeaderClicked={handleHeaderClicked}

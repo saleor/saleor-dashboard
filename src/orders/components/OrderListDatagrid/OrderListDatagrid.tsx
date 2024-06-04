@@ -107,7 +107,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
           columnSelect="single"
           hasRowHover={hasRowHover}
           freezeColumns={2}
-          verticalBorder={col => col > 1}
+          verticalBorder={false}
           availableColumns={visibleColumns}
           onHeaderClicked={handleHeaderClick}
           emptyText={intl.formatMessage(messages.emptyText)}

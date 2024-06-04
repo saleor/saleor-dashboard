@@ -100,7 +100,7 @@ export const PermissionGroupListDatagrid = ({
         freezeColumns={2}
         onColumnMoved={handlers.onMove}
         onColumnResize={handlers.onResize}
-        verticalBorder={col => col > 1}
+        verticalBorder={false}
         rows={permissionGroups?.length ?? 0}
         availableColumns={visibleColumns}
         emptyText={intl.formatMessage(messages.empty)}
