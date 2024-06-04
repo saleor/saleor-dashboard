@@ -55,8 +55,7 @@ export class Condition {
       const valueItems = response.filterByUrlToken(token) as ItemOption[];
 
       const isMultiSelect = selectedOption?.type === "multiselect" && valueItems.length > 0;
-      const isDate =
-        typeof valueItems === "string" || valueItems.every(el => typeof el === "string");
+      const isDate = ["created", "updatedAt", "startDate", "endDate"].includes(token.name);
 
       const value = isMultiSelect || isDate ? valueItems : valueItems[0];
 
