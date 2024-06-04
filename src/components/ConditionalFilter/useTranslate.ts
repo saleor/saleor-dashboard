@@ -9,8 +9,6 @@ type TranslationKeys = keyof typeof leftOperatorsMessages;
 export const useTranslate = () => {
   const intl = useIntl();
   const formatLeftOperand = (label: TranslationKeys) => {
-    // Label: Payment status, status, etc.....
-    // TODO
     const key = leftOperatorsMessages[label];
 
     if (!key) return label;
@@ -19,12 +17,11 @@ export const useTranslate = () => {
   };
 
   return {
-    translateOperandOptions: (operands: LeftOperand[]) => {
-      return operands.map(el => ({
+    translateOperandOptions: (operands: LeftOperand[]) =>
+      operands.map(el => ({
         ...el,
         label: formatLeftOperand(el.label as TranslationKeys),
-      }));
-    },
+      })),
     translateSelectedOperands: (container: FilterContainer) =>
       container.map(el => {
         if (FilterElement.isCompatible(el)) {
