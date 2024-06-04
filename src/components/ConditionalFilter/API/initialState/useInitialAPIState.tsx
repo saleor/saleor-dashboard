@@ -26,7 +26,7 @@ import { InitialAPIResponse } from "./types";
 export interface InitialAPIState {
   data: InitialStateResponse;
   loading: boolean;
-  fetchQueries?: (params: FetchingParams) => Promise<void>;
+  fetchQueries: (params: FetchingParams) => Promise<void>;
 }
 
 export const useProductInitialAPIState = (): InitialAPIState => {

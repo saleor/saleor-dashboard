@@ -86,4 +86,12 @@ describe("ConditionalFilter / API / Orders / InitialOrderState", () => {
     // Assert
     expect(result).toEqual(expectedOutput);
   });
+
+  it("should filter by created date", () => {
+    const initialOrderState = InitialOrderStateResponse.empty();
+
+    const token = UrlToken.fromUrlEntry(new UrlEntry("s4.created", "2024-06-04T11%3A22"));
+
+    expect(token.value).toEqual(initialOrderState.filterByUrlToken(token));
+  });
 });

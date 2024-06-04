@@ -28,7 +28,7 @@ const getCustomer = (customer: string[]) => {
 export interface InitialOrderAPIState {
   data: InitialOrderStateResponse;
   loading: boolean;
-  fetchQueries?: (params: OrderFetchingParams) => Promise<void>;
+  fetchQueries: (params: OrderFetchingParams) => Promise<void>;
 }
 
 export const useInitialOrderState = (): InitialOrderAPIState => {
@@ -106,6 +106,8 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
         initialState.giftCardBought,
         initialState.giftCardUsed,
         initialState.customer,
+        initialState.created,
+        initialState.updatedAt,
       ),
     );
     setLoading(false);

@@ -12,9 +12,12 @@ export interface InitialOrderState {
   giftCardBought: ItemOption[];
   giftCardUsed: ItemOption[];
   customer: ItemOption[];
+  created: string | string[];
+  updatedAt: string | string[];
 }
 
 const isTextInput = (name: string) => ["customer"].includes(name);
+const isDateField = (name: string) => ["created", "updatedAt"].includes(name);
 
 export class InitialOrderStateResponse implements InitialOrderState {
   constructor(
@@ -28,6 +31,8 @@ export class InitialOrderStateResponse implements InitialOrderState {
     public giftCardBought: ItemOption[] = [],
     public giftCardUsed: ItemOption[] = [],
     public customer: ItemOption[] = [],
+    public created: string | string[] = [],
+    public updatedAt: string | string[] = [],
   ) {}
 
   public static empty() {
@@ -35,6 +40,10 @@ export class InitialOrderStateResponse implements InitialOrderState {
   }
 
   public filterByUrlToken(token: UrlToken) {
+    if (isDateField(token.name)) {
+      return token.value;
+    }
+
     return this.getEntryByName(token.name).filter(({ slug }) => {
       if (isTextInput(token.name)) {
         return true;

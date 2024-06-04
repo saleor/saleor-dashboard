@@ -45,6 +45,7 @@ export const DiscountList: React.FC<DiscountListProps> = ({ params }) => {
   const paginationState = createPaginationState(settings.rowNumber, params);
   const { valueProvider } = useConditionalFilterContext();
   const where = createDiscountsQueryVariables(valueProvider.value);
+
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,

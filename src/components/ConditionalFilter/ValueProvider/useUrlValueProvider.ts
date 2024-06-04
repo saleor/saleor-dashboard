@@ -56,13 +56,13 @@ export const useUrlValueProvider = (
   const fetchingParams = tokenizedUrl.getFetchingParams(paramsFromType);
 
   useEffect(() => {
-    if (initialState && initialState?.fetchQueries) {
+    if (initialState) {
       switch (type) {
         case "product":
-          (initialState as InitialAPIState).fetchQueries!(fetchingParams as FetchingParams);
+          (initialState as InitialAPIState).fetchQueries(fetchingParams as FetchingParams);
           break;
         case "order":
-          (initialState as InitialOrderAPIState).fetchQueries!(
+          (initialState as InitialOrderAPIState).fetchQueries(
             fetchingParams as OrderFetchingParams,
           );
           break;

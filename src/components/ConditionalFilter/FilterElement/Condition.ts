@@ -45,7 +45,6 @@ export class Condition {
     return new Condition(options, ConditionSelected.fromConditionItem(options.first()), false);
   }
 
-  // Here something is wrong, boolean option receives two values, but it should receive only one
   public static fromUrlToken(
     token: UrlToken,
     response: InitialStateResponse | InitialOrderStateResponse,
@@ -55,10 +54,11 @@ export class Condition {
       const selectedOption = staticOptions.findByLabel(token.conditionKind);
       const valueItems = response.filterByUrlToken(token) as ItemOption[];
 
-      const value =
-        selectedOption?.type === "multiselect" && valueItems.length > 0
-          ? valueItems
-          : valueItems[0];
+      const isMultiSelect = selectedOption?.type === "multiselect" && valueItems.length > 0;
+      const isDate =
+        typeof valueItems === "string" || valueItems.every(el => typeof el === "string");
+
+      const value = isMultiSelect || isDate ? valueItems : valueItems[0];
 
       if (!selectedOption) {
         return Condition.createEmpty();
