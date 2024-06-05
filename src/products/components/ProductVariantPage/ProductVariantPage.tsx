@@ -25,7 +25,6 @@ import {
   SearchAttributeValuesQuery,
   SearchPagesQuery,
   SearchProductsQuery,
-  WarehouseFragment,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { VariantDetailsChannelsAvailabilityCard } from "@dashboard/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
@@ -100,7 +99,6 @@ interface ProductVariantPageProps {
   placeholderImage?: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   variant?: ProductVariantFragment;
-  warehouses: WarehouseFragment[];
   referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
   attributeValues: RelayToFlat<
@@ -136,7 +134,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   placeholderImage,
   saveButtonBarState,
   variant,
-  warehouses,
   referencePages = [],
   referenceProducts = [],
   attributeValues,
@@ -206,7 +203,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
         <ProductVariantUpdateForm
           variant={variant}
           onSubmit={onSubmit}
-          warehouses={warehouses}
           currentChannels={channels}
           referencePages={referencePages}
           referenceProducts={referenceProducts}
@@ -355,6 +351,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                           ...channel.value,
                         }),
                       )}
+                      channels={channels}
                       onVariantChannelListingChange={handlers.changeChannels}
                       data={data}
                       disabled={loading}
@@ -362,7 +359,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                       errors={errors}
                       formErrors={formErrors}
                       stocks={data.stocks}
-                      warehouses={warehouses}
                       onChange={handlers.changeStock}
                       onFormDataChange={change}
                       onChangePreorderEndDate={handlers.changePreorderEndDate}
