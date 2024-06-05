@@ -16,7 +16,6 @@ import {
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
   useVariantCreateMutation,
-  useWarehouseListQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -52,12 +51,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
   const notify = useNotifier();
   const shop = useShop();
   const intl = useIntl();
-  const warehouses = useWarehouseListQuery({
-    displayLoader: true,
-    variables: {
-      first: 50,
-    },
-  });
   const { data, loading: productLoading } = useProductVariantCreateDataQuery({
     displayLoader: true,
     variables: {
@@ -234,7 +227,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantReorder={handleVariantReorder}
         saveButtonBarState={variantCreateResult.status}
-        warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         weightUnit={shop?.defaultWeightUnit}
         assignReferencesAttributeId={params.action === "assign-attribute-value" && params.id}
         onAssignReferencesClick={handleAssignAttributeReferenceClick}

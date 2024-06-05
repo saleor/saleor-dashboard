@@ -17,7 +17,6 @@ import {
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
   useVariantCreateMutation,
-  useWarehouseListQuery,
 } from "@dashboard/graphql";
 import useChannels from "@dashboard/hooks/useChannels";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -149,15 +148,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
       formId: PRODUCT_CREATE_FORM_ID,
     },
   );
-  const warehouses = useWarehouseListQuery({
-    displayLoader: true,
-    variables: {
-      first: 50,
-      filter: {
-        channels: currentChannels.map(channel => channel.id),
-      },
-    },
-  });
+
   const handleSuccess = (productId: string) => {
     notify({
       status: "success",
@@ -322,7 +313,6 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         fetchMoreCategories={fetchMoreCategories}
         fetchMoreCollections={fetchMoreCollections}
         fetchMoreProductTypes={fetchMoreProductTypes}
-        warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         taxClasses={taxClasses ?? []}
         fetchMoreTaxClasses={fetchMoreTaxClasses}
         weightUnit={shop?.defaultWeightUnit}

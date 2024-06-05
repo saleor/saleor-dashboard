@@ -26,7 +26,6 @@ import {
   SearchPagesQuery,
   SearchProductsQuery,
   SearchProductTypesQuery,
-  SearchWarehousesQuery,
   TaxClassBaseFragment,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -70,7 +69,6 @@ interface ProductCreatePageProps {
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   weightUnit: string;
-  warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
   taxClasses: TaxClassBaseFragment[];
   fetchMoreTaxClasses: FetchMoreProps;
   selectedProductType?: ProductTypeQuery["productType"];
@@ -113,7 +111,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   referencePages = [],
   referenceProducts = [],
   saveButtonBarState,
-  warehouses,
   taxClasses,
   fetchMoreTaxClasses,
   selectedProductType,
@@ -190,7 +187,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       setSelectedTaxClass={setSelectedTaxClass}
       setChannels={onChannelsChange}
       taxClasses={taxClassChoices}
-      warehouses={warehouses}
       currentChannels={currentChannels}
       fetchReferencePages={fetchReferencePages}
       fetchMoreReferencePages={fetchMoreReferencePages}
@@ -267,7 +263,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                     onFormDataChange={change}
                     errors={errors}
                     stocks={data.stocks}
-                    warehouses={warehouses}
+                    channels={currentChannels}
                     onChange={handlers.changeStock}
                     onWarehouseStockAdd={handlers.addStock}
                     onWarehouseStockDelete={handlers.deleteStock}

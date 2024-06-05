@@ -43,9 +43,13 @@ export const ProductStocksAssignWarehouses = ({
   }, [hasMoreWarehouses, warehousesToAssign.length]);
 
   const handleInfiniteScroll = () => {
-    const scrollHeight = warehousesListRef.current?.scrollHeight;
-    const scrollTop = warehousesListRef.current?.scrollTop;
-    const clientHeight = warehousesListRef.current?.clientHeight;
+    if (!warehousesListRef.current) {
+      return;
+    }
+
+    const scrollHeight = warehousesListRef.current.scrollHeight;
+    const scrollTop = warehousesListRef.current.scrollTop;
+    const clientHeight = warehousesListRef.current.clientHeight;
     const scrollBottom = scrollHeight - (scrollTop + clientHeight);
 
     if (scrollBottom < SCROLL_THRESHOLD && hasMoreWarehouses) {

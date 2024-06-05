@@ -23,7 +23,6 @@ import {
   SearchAttributeValuesQuery,
   SearchPagesQuery,
   SearchProductsQuery,
-  SearchWarehousesQuery,
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -83,7 +82,6 @@ interface ProductVariantCreatePageProps {
   header: string;
   product: ProductVariantCreateDataQuery["product"];
   saveButtonBarState: ConfirmButtonTransitionState;
-  warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
   weightUnit: string;
   referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
@@ -112,7 +110,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   header,
   product,
   saveButtonBarState,
-  warehouses,
   weightUnit,
   referencePages = [],
   referenceProducts = [],
@@ -159,7 +156,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
     <ProductVariantCreateForm
       product={product}
       onSubmit={onSubmit}
-      warehouses={warehouses}
       referencePages={referencePages}
       referenceProducts={referenceProducts}
       fetchReferencePages={fetchReferencePages}
@@ -278,12 +274,12 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                   <CardSpacer />
                   <ProductStocks
                     data={data}
+                    channels={[]}
                     disabled={disabled}
                     hasVariants={true}
                     onFormDataChange={change}
                     errors={errors}
                     stocks={data.stocks}
-                    warehouses={warehouses}
                     onChange={handlers.changeStock}
                     onWarehouseStockAdd={handlers.addStock}
                     onWarehouseStockDelete={handlers.deleteStock}

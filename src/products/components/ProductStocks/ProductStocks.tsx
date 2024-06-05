@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { ChannelData, ChannelPriceData } from "@dashboard/channels/utils";
+import { ChannelData } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -34,7 +34,7 @@ export interface ProductStockFormData {
 export interface ProductStocksProps {
   productVariantChannelListings?: ChannelData[];
   data: ProductStockFormData;
-  channels: ChannelPriceData[];
+  channels: ChannelData[];
   disabled: boolean;
   errors: ProductErrorFragment[];
   hasVariants: boolean;
@@ -42,7 +42,7 @@ export interface ProductStocksProps {
   onChange: FormsetChange;
   onFormDataChange: FormChange;
   onWarehouseStockAdd: (warehouseId: string, warehouseName: string) => void;
-  onWarehouseStockDelete: (warehouseId: string, warehouseName: string) => void;
+  onWarehouseStockDelete: (warehouseId: string) => void;
   onWarehouseConfigure: () => void;
 }
 
@@ -215,7 +215,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
                           type="button"
                           variant="secondary"
                           icon={<TrashBinIcon />}
-                          onClick={() => onWarehouseStockDelete(stock.id, stock.label)}
+                          onClick={() => onWarehouseStockDelete(stock.id)}
                         />
                       </TableCell>
                     </TableRowLink>
