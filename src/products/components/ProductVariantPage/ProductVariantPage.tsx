@@ -26,7 +26,6 @@ import {
   SearchAttributeValuesQuery,
   SearchPagesQuery,
   SearchProductsQuery,
-  WarehouseFragment,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { VariantDetailsChannelsAvailabilityCard } from "@dashboard/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
@@ -99,7 +98,6 @@ interface ProductVariantPageProps {
   placeholderImage?: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   variant?: ProductVariantFragment;
-  warehouses: WarehouseFragment[];
   referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
   attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
@@ -133,7 +131,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   placeholderImage,
   saveButtonBarState,
   variant,
-  warehouses,
   referencePages = [],
   referenceProducts = [],
   attributeValues,
@@ -200,7 +197,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
         <ProductVariantUpdateForm
           variant={variant}
           onSubmit={onSubmit}
-          warehouses={warehouses}
           currentChannels={channels}
           referencePages={referencePages}
           referenceProducts={referenceProducts}
@@ -341,12 +337,12 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                         ...channel.data,
                         ...channel.value,
                       }))}
+                      channels={channels}
                       data={data}
                       disabled={loading}
                       hasVariants={true}
                       errors={errors}
                       stocks={data.stocks}
-                      warehouses={warehouses}
                       onChange={handlers.changeStock}
                       onFormDataChange={change}
                       onWarehouseStockAdd={handlers.addStock}

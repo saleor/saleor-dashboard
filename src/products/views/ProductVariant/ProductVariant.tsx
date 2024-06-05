@@ -58,7 +58,6 @@ import {
 } from "../../urls";
 import { mapFormsetStockToStockInput } from "../../utils/data";
 import { createVariantReorderHandler } from "./../ProductUpdate/handlers";
-import { useAllWarehouses } from "./useAllWarehouses";
 import { useSubmitChannels } from "./useSubmitChannels";
 
 interface ProductUpdateProps {
@@ -122,7 +121,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, produc
   const { handleSubmitChannels, updateChannelsOpts } = useSubmitChannels();
   const variant = data?.productVariant;
   const channels = createVariantChannels(variant);
-  const warehouses = useAllWarehouses(channels);
   const [deactivatePreorder, deactivatePreoderOpts] = useProductVariantPreorderDeactivateMutation(
     {},
   );
@@ -273,7 +271,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, produc
         placeholderImage={placeholderImg}
         variant={variant}
         header={variant?.name || variant?.sku}
-        warehouses={warehouses}
         onDelete={() => openModal("remove")}
         onSubmit={handleSubmit}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
