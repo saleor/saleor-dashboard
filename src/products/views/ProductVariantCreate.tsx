@@ -22,6 +22,7 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import usePageSearch from "@dashboard/searches/usePageSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
+import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -51,6 +52,16 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
   const notify = useNotifier();
   const shop = useShop();
   const intl = useIntl();
+
+  const { loadMore: fetchMoreWarehouses, result: searchWarehousesResult } = useWarehouseSearch({
+    variables: {
+      first: 100,
+      channnelsId: [],
+      query: "",
+    },
+    skip: true,
+  });
+
   const { data, loading: productLoading } = useProductVariantCreateDataQuery({
     displayLoader: true,
     variables: {
@@ -220,6 +231,8 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
           defaultMessage: "Create Variant",
           description: "header",
         })}
+        fetchMoreWarehouses={fetchMoreWarehouses}
+        searchWarehousesResult={searchWarehousesResult}
         product={data?.product}
         attributeValues={attributeValues}
         onSubmit={handleSubmit}

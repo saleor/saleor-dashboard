@@ -37,6 +37,7 @@ import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import usePageSearch from "@dashboard/searches/usePageSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
+import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
@@ -44,7 +45,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseAddPath } from "@dashboard/warehouses/urls";
-import React from "react";
+import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { PRODUCT_CREATE_FORM_ID } from "./consts";
@@ -148,6 +149,17 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
       formId: PRODUCT_CREATE_FORM_ID,
     },
   );
+
+  const channnelsId = useMemo(() => currentChannels.map(channel => channel.id), [currentChannels]);
+
+  const { loadMore: fetchMoreWarehouses, result: searchWarehousesResult } = useWarehouseSearch({
+    variables: {
+      first: 100,
+      channnelsId,
+      query: "",
+    },
+    skip: !currentChannels.length,
+  });
 
   const handleSuccess = (productId: string) => {
     notify({
@@ -331,6 +343,8 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         selectedProductType={selectedProductType?.productType}
         onSelectProductType={handleSelectProductType}
         onAttributeSelectBlur={searchAttributeReset}
+        fetchMoreWarehouses={fetchMoreWarehouses}
+        searchWarehousesResult={searchWarehousesResult}
       />
     </>
   );

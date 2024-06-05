@@ -54,7 +54,7 @@ export const ProductStocksAssignWarehouses = ({
       <Dropdown.Content align="end">
         <Box>
           <List
-            ref={setScrolltRef}
+            ref={ref => setScrolltRef(ref as HTMLElement)}
             id="warehouse-list"
             padding={2}
             borderRadius={4}

@@ -1,4 +1,3 @@
-import { log } from "console";
 import { useCallback, useRef } from "react";
 
 import useDebounce from "./useDebounce";
@@ -17,7 +16,7 @@ export const useInfinityScroll = ({
   debounceTime?: number;
   loadOnInit?: boolean;
 }) => {
-  const elementRef = useRef<HTMLElement>(null);
+  const elementRef = useRef<HTMLElement>();
 
   const setScrolltRef = (element: HTMLElement) => {
     if (!elementRef.current) {

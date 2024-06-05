@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { QueryResult } from "@apollo/client";
 import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
@@ -26,6 +27,7 @@ import {
   SearchPagesQuery,
   SearchProductsQuery,
   SearchProductTypesQuery,
+  SearchWarehousesQuery,
   TaxClassBaseFragment,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -34,6 +36,7 @@ import { ProductOrganization } from "@dashboard/products/components/ProductOrgan
 import { ProductVariantPrice } from "@dashboard/products/components/ProductVariantPrice";
 import { ProductCreateUrlQueryParams, productListUrl } from "@dashboard/products/urls";
 import { getChoices } from "@dashboard/products/utils/data";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -89,6 +92,8 @@ interface ProductCreatePageProps {
   onCloseDialog: (currentParams?: ProductCreateUrlQueryParams) => void;
   onSelectProductType: (productTypeId: string) => void;
   onSubmit?: (data: ProductCreateData) => any;
+  fetchMoreWarehouses: () => void;
+  searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
 }
 
 export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
@@ -131,6 +136,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   onCloseDialog,
   onSelectProductType,
   onAttributeSelectBlur,
+  fetchMoreWarehouses,
+  searchWarehousesResult,
 }: ProductCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -258,12 +265,14 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   />
                   <ProductStocks
                     data={data}
+                    warehouses={mapEdgesToItems(searchWarehousesResult?.data?.search) ?? []}
+                    fetchMoreWarehouses={fetchMoreWarehouses}
+                    hasMoreWarehouses={searchWarehousesResult?.data?.search?.pageInfo?.hasNextPage}
                     disabled={loading}
                     hasVariants={false}
                     onFormDataChange={change}
                     errors={errors}
                     stocks={data.stocks}
-                    channels={currentChannels}
                     onChange={handlers.changeStock}
                     onWarehouseStockAdd={handlers.addStock}
                     onWarehouseStockDelete={handlers.deleteStock}

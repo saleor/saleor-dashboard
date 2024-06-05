@@ -39,12 +39,13 @@ import { getAttributeInputFromVariant } from "@dashboard/products/utils/data";
 import { handleAssignMedia } from "@dashboard/products/utils/handlers";
 import usePageSearch from "@dashboard/searches/usePageSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
+import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseAddPath } from "@dashboard/warehouses/urls";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import ProductVariantDeleteDialog from "../../components/ProductVariantDeleteDialog";
@@ -121,6 +122,18 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, produc
   const { handleSubmitChannels, updateChannelsOpts } = useSubmitChannels();
   const variant = data?.productVariant;
   const channels = createVariantChannels(variant);
+
+  const channnelsId = useMemo(() => channels.map(channel => channel.id), [channels]);
+
+  const { loadMore: fetchMoreWarehouses, result: searchWarehousesResult } = useWarehouseSearch({
+    variables: {
+      first: 100,
+      channnelsId,
+      query: "",
+    },
+    skip: !channels.length,
+  });
+
   const [deactivatePreorder, deactivatePreoderOpts] = useProductVariantPreorderDeactivateMutation(
     {},
   );
@@ -273,6 +286,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, produc
         header={variant?.name || variant?.sku}
         onDelete={() => openModal("remove")}
         onSubmit={handleSubmit}
+        fetchMoreWarehouses={fetchMoreWarehouses}
+        searchWarehousesResult={searchWarehousesResult}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantPreorderDeactivate={handleDeactivateVariantPreorder}
         variantDeactivatePreoderButtonState={deactivatePreoderOpts.status}

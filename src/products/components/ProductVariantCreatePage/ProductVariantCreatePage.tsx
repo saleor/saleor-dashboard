@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { QueryResult } from "@apollo/client";
 import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
@@ -23,12 +24,14 @@ import {
   SearchAttributeValuesQuery,
   SearchPagesQuery,
   SearchProductsQuery,
+  SearchWarehousesQuery,
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ProductDetailsChannelsAvailabilityCard } from "@dashboard/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
 import { productUrl } from "@dashboard/products/urls";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -100,6 +103,8 @@ interface ProductVariantCreatePageProps {
   fetchMoreAttributeValues?: FetchMoreProps;
   onCloseDialog: () => void;
   onAttributeSelectBlur: () => void;
+  fetchMoreWarehouses: () => void;
+  searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
 }
 
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
@@ -127,6 +132,8 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   fetchMoreAttributeValues,
   onCloseDialog,
   onAttributeSelectBlur,
+  fetchMoreWarehouses,
+  searchWarehousesResult,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -274,7 +281,9 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                   <CardSpacer />
                   <ProductStocks
                     data={data}
-                    channels={[]}
+                    warehouses={mapEdgesToItems(searchWarehousesResult?.data?.search) ?? []}
+                    fetchMoreWarehouses={fetchMoreWarehouses}
+                    hasMoreWarehouses={searchWarehousesResult?.data?.search?.pageInfo?.hasNextPage}
                     disabled={disabled}
                     hasVariants={true}
                     onFormDataChange={change}

@@ -3,7 +3,7 @@ import { ChannelData } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { ProductErrorFragment } from "@dashboard/graphql";
+import { ProductErrorFragment, WarehouseFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { FormsetAtomicData, FormsetChange } from "@dashboard/hooks/useFormset";
 import { renderCollection } from "@dashboard/misc";
@@ -11,11 +11,10 @@ import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";
 import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Box, Button, Checkbox, Input, Text, TrashBinIcon, vars } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductStocksAssignWarehouses } from "./components/ProductStocksAssignWarehouses";
-import { useWarehouses } from "./hooks/useWarehouses";
 import { messages } from "./messages";
 
 export interface ProductStockFormsetData {
@@ -34,40 +33,44 @@ export interface ProductStockFormData {
 export interface ProductStocksProps {
   productVariantChannelListings?: ChannelData[];
   data: ProductStockFormData;
-  channels: ChannelData[];
   disabled: boolean;
   errors: ProductErrorFragment[];
   hasVariants: boolean;
   stocks: ProductStockInput[];
+  warehouses: WarehouseFragment[];
   onChange: FormsetChange;
   onFormDataChange: FormChange;
   onWarehouseStockAdd: (warehouseId: string, warehouseName: string) => void;
   onWarehouseStockDelete: (warehouseId: string) => void;
   onWarehouseConfigure: () => void;
+  fetchMoreWarehouses: () => void;
+  hasMoreWarehouses: boolean;
 }
 
 export const ProductStocks: React.FC<ProductStocksProps> = ({
   data,
-  channels,
   disabled,
   hasVariants,
   errors,
   stocks,
   productVariantChannelListings = [],
+  warehouses,
+  hasMoreWarehouses,
   onChange,
   onFormDataChange,
   onWarehouseStockAdd,
   onWarehouseStockDelete,
   onWarehouseConfigure,
+  fetchMoreWarehouses,
 }) => {
   const intl = useIntl();
   const [lastStockRowFocus, setLastStockRowFocus] = React.useState(false);
   const formErrors = getFormErrors(["sku"], errors);
 
-  const { loadMoreWarehouses, warehouses, warehousesToAssign, hasMoreWarehouses } = useWarehouses(
-    channels.map(channel => channel.id),
-    stocks.map(stock => stock.id),
-  );
+  const stocksIds = useMemo(() => stocks.map(stock => stock.id), [stocks]);
+
+  const warehousesToAssign =
+    warehouses?.filter(warehouse => !stocksIds.includes(warehouse.id)) || [];
 
   const handleWarehouseStockAdd = (warehouseId: string, warehouseName: string) => {
     onWarehouseStockAdd(warehouseId, warehouseName);
@@ -225,7 +228,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
             <ProductStocksAssignWarehouses
               warehousesToAssign={warehousesToAssign}
               hasMoreWarehouses={hasMoreWarehouses}
-              loadMoreWarehouses={loadMoreWarehouses}
+              loadMoreWarehouses={fetchMoreWarehouses}
               onWarehouseSelect={handleWarehouseStockAdd}
             />
           )}
