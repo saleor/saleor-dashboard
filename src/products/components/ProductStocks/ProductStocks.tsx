@@ -221,7 +221,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
 
         {productVariantChannelListings?.length > 0 &&
           warehouses?.length > 0 &&
-          warehousesToAssign.length > 0 && (
+          (warehousesToAssign.length > 0 || hasMoreWarehouses) && (
             <ProductStocksAssignWarehouses
               warehousesToAssign={warehousesToAssign}
               hasMoreWarehouses={hasMoreWarehouses}

@@ -20,6 +20,8 @@ export const ProductStocksAssignWarehouses = ({
   warehousesToAssign,
 }: ProductStocksAssignWarehousesProps) => {
   useEffect(() => {
+    // In case there is no more warehouses to assign, load more warehouses
+    // Example: from first page all warehouse has been already assigned, so we need to load more warehouses to assign
     if (hasMoreWarehouses && !warehousesToAssign.length) {
       loadMoreWarehouses();
     }
@@ -32,6 +34,7 @@ export const ProductStocksAssignWarehouses = ({
   };
 
   const { onScroll, setScrolltRef } = useInfinityScroll({
+    loadOnInit: true,
     onLoadMore: handleOnScroll,
     theshold: 1000,
   });
