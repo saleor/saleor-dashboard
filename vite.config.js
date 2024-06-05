@@ -41,7 +41,7 @@ export default defineConfig(({ command, mode }) => {
   */
   const {
     NODE_ENV,
-    API_URL,
+    API_URI,
     SW_INTERVAL,
     IS_CLOUD_INSTANCE,
     APP_MOUNT_URI,
@@ -49,7 +49,7 @@ export default defineConfig(({ command, mode }) => {
     SENTRY_RELEASE,
     ENVIRONMENT,
     STATIC_URL,
-    APPS_MARKETPLACE_API_URL,
+    APPS_MARKETPLACE_API_URI,
     APPS_TUNNEL_URL_KEYWORDS,
     SKIP_SOURCEMAPS,
     DEMO_MODE,
@@ -82,9 +82,9 @@ export default defineConfig(({ command, mode }) => {
       template: "index.html",
       inject: {
         data: {
-          API_URL: API_URL,
+          API_URL: API_URI,
           APP_MOUNT_URI,
-          APPS_MARKETPLACE_API_URL,
+          APPS_MARKETPLACE_API_URI,
           APPS_TUNNEL_URL_KEYWORDS,
           IS_CLOUD_INSTANCE,
           LOCALE_CODE,
@@ -153,7 +153,7 @@ export default defineConfig(({ command, mode }) => {
       */
       "process.env": {
         NODE_ENV,
-        API_URL,
+        API_URI,
         SW_INTERVAL,
         IS_CLOUD_INSTANCE,
         APP_MOUNT_URI,
