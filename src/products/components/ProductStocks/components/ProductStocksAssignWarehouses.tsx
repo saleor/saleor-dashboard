@@ -75,7 +75,13 @@ export const ProductStocksAssignWarehouses = ({
             ))}
             {hasMoreWarehouses && (
               <Dropdown.Item>
-                <List.Item paddingX={1.5} paddingY={2} borderRadius={4}>
+                <List.Item
+                  paddingX={1.5}
+                  paddingY={2}
+                  borderRadius={4}
+                  display="flex"
+                  justifyContent="center"
+                >
                   <Spinner />
                 </List.Item>
               </Dropdown.Item>
