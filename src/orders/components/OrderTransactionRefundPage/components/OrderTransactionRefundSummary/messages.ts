@@ -28,8 +28,8 @@ export const orderTransactionRefundSummaryMessages = defineMessages({
     description: "order transaction refund summary disabled shipping tooltip content",
   },
   totalAmount: {
-    defaultMessage: "Total amount:",
-    id: "cYkerh",
+    defaultMessage: "Total:",
+    id: "XgsXQv",
     description: "order transaction refund summary label",
   },
 });

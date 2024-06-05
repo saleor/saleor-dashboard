@@ -22,15 +22,17 @@ export interface DatagridRefund {
   createdAt: string;
   user: {
     email: string;
+    firstName: string;
+    lastName: string;
   } | null;
 }
 
 type EventsByPspReference = Record<string, TransactionEventFragment[]>;
 
-const findLatestEventWithCreatedBy = (
+const findLatestEventWithUserAuthor = (
   eventGroup: TransactionEventFragment[],
 ): TransactionEventFragment | null => {
-  return eventGroup.find(event => !!event.createdBy) || null;
+  return eventGroup.find(event => event.createdBy?.__typename === "User") || null;
 };
 
 const mapEventToRefundStatus = (event: TransactionEventFragment): OrderGrantedRefundStatusEnum => {
@@ -73,7 +75,7 @@ const mapEventGroupsToDatagridRefunds = (
       (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
     );
     const latestEvent = sortedEvents[0];
-    const latestEventWithAuthor = findLatestEventWithCreatedBy(sortedEvents) || latestEvent;
+    const latestEventWithAuthor = findLatestEventWithUserAuthor(sortedEvents) || latestEvent;
 
     return {
       id: latestEvent.id,
@@ -81,9 +83,7 @@ const mapEventGroupsToDatagridRefunds = (
       status: mapEventToRefundStatus(latestEvent),
       amount: latestEvent.amount,
       createdAt: latestEvent.createdAt,
-      user: {
-        email: determineCreatorDisplay(latestEventWithAuthor.createdBy),
-      },
+      user: determineCreatorDisplay(latestEventWithAuthor.createdBy),
       reason: intl.formatMessage(refundGridMessages.manualRefund),
     };
   });
@@ -116,12 +116,16 @@ export const manualRefundsExtractor = (
 
 type RefundCreator = AppAvatarFragment | StaffMemberAvatarFragment;
 
-function determineCreatorDisplay(creator: RefundCreator | null): string {
+function determineCreatorDisplay(creator: RefundCreator | null): DatagridRefund["user"] | null {
   if (creator?.__typename === "User") {
-    return creator.email;
+    return {
+      email: creator.email,
+      firstName: creator.firstName,
+      lastName: creator.lastName,
+    };
   }
 
-  return "";
+  return null;
 }
 
 export const mergeRefunds = (

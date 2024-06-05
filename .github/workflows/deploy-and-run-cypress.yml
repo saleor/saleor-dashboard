@@ -56,7 +56,7 @@ jobs:
 
       - name: Run build
         env:
-          API_URL: ${{github.event.inputs.api_url}}
+          API_URI: ${{github.event.inputs.api_url}}
           APP_MOUNT_URI: /
           STATIC_URL: /
           IS_CLOUD_INSTANCE: true
@@ -108,7 +108,7 @@ jobs:
       - name: Cypress run critical
         uses: cypress-io/github-action@v4
         env:
-          API_URL: ${{github.event.inputs.api_url}}
+          API_URI: ${{github.event.inputs.api_url}}
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
           BASE_URL: https://${{needs.deploy.outputs.base_URL}}
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
