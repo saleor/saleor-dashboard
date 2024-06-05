@@ -94,3 +94,44 @@ export const prepareRefundAddLines = ({
     return acc;
   }, []);
 };
+
+export const checkAmountExceedsChargedAmount = ({
+  order,
+  transactionId,
+  amount,
+}: {
+  order: OrderDetailsGrantRefundQuery["order"];
+  transactionId: string | undefined;
+  amount: number | undefined;
+}): boolean => {
+  if (!transactionId || !amount || !order) {
+    return false;
+  }
+
+  const selectedTransaction = order.transactions.find(
+    transaction => transaction.id === transactionId,
+  );
+
+  if (!selectedTransaction) {
+    return false;
+  }
+
+  return amount > selectedTransaction?.chargedAmount.amount;
+};
+
+export const handleAmountExceedsChargedAmount = ({
+  setLinesErrors,
+  intl,
+}: {
+  setLinesErrors: (value: React.SetStateAction<OrderTransactionRefundError[]>) => void;
+  intl: IntlShape;
+}) => {
+  setLinesErrors([
+    {
+      field: "amount",
+      message: intl.formatMessage(transactionRefundEditMessages.amountExceedsChargedAmount),
+      code: "AMOUNT_GREATER_THAN_AVAILABLE",
+      lines: [],
+    },
+  ]);
+};

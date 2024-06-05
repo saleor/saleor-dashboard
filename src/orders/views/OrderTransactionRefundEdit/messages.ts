@@ -11,4 +11,9 @@ export const transactionRefundEditMessages = defineMessages({
     id: "vqu+23",
     description: "success notifier message",
   },
+  amountExceedsChargedAmount: {
+    defaultMessage: "Provided amount cannot exceed charged amount for the selected transaction",
+    id: "vpTyL1",
+    description: "error message",
+  },
 });
