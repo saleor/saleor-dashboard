@@ -10,7 +10,7 @@ Create or edit `.env` file in a root directory or set environment variables with
 
 - `API_URL` (required) - URI of Saleor GraphQL API instance.
   If you are running Saleor locally with the default settings, set `API_URL` to: "http://localhost:8000/graphql/".
-  Make sure you have "/" at the end of `L`.
+  Make sure you have "/" at the end of `API_URL`.
 
 - `APP_MOUNT_URI` - URI at which the Dashboard app will be mounted.
   E.g., if you set `APP_MOUNT_URI` to "/dashboard/", your app will be mounted at "http://localhost:9000/dashboard/".
