@@ -1,17 +1,6 @@
-import TableRowLink from "@dashboard/components/TableRowLink";
 import { WarehouseFragment } from "@dashboard/graphql";
 import useDebounce from "@dashboard/hooks/useDebounce";
-import { TableCell } from "@material-ui/core";
-import {
-  Box,
-  Button,
-  Dropdown,
-  List,
-  PlusIcon,
-  sprinkles,
-  Text,
-  vars,
-} from "@saleor/macaw-ui-next";
+import { Box, Button, Dropdown, List, Spinner, Text } from "@saleor/macaw-ui-next";
 import React, { useEffect, useRef } from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -20,16 +9,14 @@ import { messages } from "../messages";
 interface ProductStocksAssignWarehousesProps {
   warehousesToAssign: WarehouseFragment[];
   hasMoreWarehouses: boolean;
-  hasWarehousesLoading: boolean;
   loadMoreWarehouses: () => void;
   onWarehouseSelect: (warehouseId: string, warehouseName: string) => void;
 }
 
-const SCROLL_THRESHOLD = 500;
+const SCROLL_THRESHOLD = 1000;
 
 export const ProductStocksAssignWarehouses = ({
   hasMoreWarehouses,
-  hasWarehousesLoading,
   loadMoreWarehouses,
   onWarehouseSelect,
   warehousesToAssign,
@@ -62,16 +49,14 @@ export const ProductStocksAssignWarehouses = ({
   return (
     <Dropdown>
       <Dropdown.Trigger>
-        <TableRowLink className={sprinkles({ cursor: "pointer" })}>
-          <TableCell colSpan={3} style={{ paddingLeft: vars.spacing[6] }}>
-            <Text>
-              <FormattedMessage {...messages.assignWarehouse} />
-            </Text>
-          </TableCell>
-          <TableCell style={{ paddingRight: vars.spacing[6] }}>
-            <Button type="button" icon={<PlusIcon />} variant="secondary" />
-          </TableCell>
-        </TableRowLink>
+        <Button
+          type="button"
+          variant="secondary"
+          marginTop={5}
+          data-test-id="assign-warehouse-button"
+        >
+          <FormattedMessage {...messages.assignWarehouse} />
+        </Button>
       </Dropdown.Trigger>
       <Dropdown.Content align="end">
         <Box>
@@ -98,12 +83,10 @@ export const ProductStocksAssignWarehouses = ({
                 </List.Item>
               </Dropdown.Item>
             ))}
-            {hasWarehousesLoading && (
-              <Dropdown.Item key="loading">
+            {hasMoreWarehouses && (
+              <Dropdown.Item>
                 <List.Item paddingX={1.5} paddingY={2} borderRadius={4}>
-                  <Text>
-                    <FormattedMessage id="gjBiyj" defaultMessage="Loading..." />
-                  </Text>
+                  <Spinner />
                 </List.Item>
               </Dropdown.Item>
             )}

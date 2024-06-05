@@ -64,13 +64,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
   const [lastStockRowFocus, setLastStockRowFocus] = React.useState(false);
   const formErrors = getFormErrors(["sku"], errors);
 
-  const {
-    loadMoreWarehouses,
-    warehouses,
-    warehousesToAssign,
-    hasMoreWarehouses,
-    hasWarehousesLoading,
-  } = useWarehouses(
+  const { loadMoreWarehouses, warehouses, warehousesToAssign, hasMoreWarehouses } = useWarehouses(
     channels.map(channel => channel.id),
     stocks.map(stock => stock.id),
   );
@@ -231,7 +225,6 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
             <ProductStocksAssignWarehouses
               warehousesToAssign={warehousesToAssign}
               hasMoreWarehouses={hasMoreWarehouses}
-              hasWarehousesLoading={hasWarehousesLoading}
               loadMoreWarehouses={loadMoreWarehouses}
               onWarehouseSelect={handleWarehouseStockAdd}
             />

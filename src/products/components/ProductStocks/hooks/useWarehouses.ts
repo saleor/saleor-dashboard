@@ -23,6 +23,5 @@ export const useWarehouses = (channnelsId: string[], stocksIds: string[]) => {
     warehouses,
     warehousesToAssign,
     hasMoreWarehouses: searchWarehousesResult?.data?.search?.pageInfo?.hasNextPage || false,
-    hasWarehousesLoading: searchWarehousesResult?.loading || false,
   };
 };
