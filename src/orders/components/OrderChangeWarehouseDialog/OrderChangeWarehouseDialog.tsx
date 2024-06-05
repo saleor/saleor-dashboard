@@ -72,6 +72,7 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
   } = useWarehouseSearch({
     variables: {
       after: null,
+      channnelsId: null,
       first: 20,
       query: "",
     },

@@ -11943,6 +11943,7 @@ export type SearchWarehousesQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
   first: Scalars['Int'];
   query: Scalars['String'];
+  channnelsId?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
 }>;
 
 
