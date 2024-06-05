@@ -155,6 +155,7 @@
     "core-js": "^3.7.0",
     "cross-env": "^6.0.3",
     "cypress-recurse": "^1.27.0",
+    "cypress-split": "^1.23.6",
     "dependency-cruiser": "^12.10.0",
     "dotenv": "^10.0.0",
     "env-var": "^7.3.0",
