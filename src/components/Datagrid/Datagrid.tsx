@@ -1,6 +1,5 @@
 import "@glideapps/glide-data-grid/dist/index.css";
 
-import { getAppMountUri } from "@dashboard/config";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { usePreventHistoryBack } from "@dashboard/hooks/usePreventHistoryBack";
 import DataEditor, {
@@ -10,7 +9,6 @@ import DataEditor, {
   EditableGridCell,
   GridCell,
   GridColumn,
-  GridMouseEventArgs,
   GridSelection,
   HeaderClickedEventArgs,
   Item,
@@ -43,6 +41,8 @@ import { headerIcons } from "./headerIcons";
 import useDatagridChange, { DatagridChange, OnDatagridChange } from "./hooks/useDatagridChange";
 import { useFullScreenMode } from "./hooks/useFullScreenMode";
 import { usePortalClasses } from "./hooks/usePortalClasses";
+import { useRowAnchor } from "./hooks/useRowAnchor";
+import { useRowHover } from "./hooks/useRowHover";
 import { useScrollRight } from "./hooks/useScrollRight";
 import { useTooltipContainer } from "./hooks/useTooltipContainer";
 import useStyles, { cellHeight, useDatagridTheme, useFullScreenStyles } from "./styles";
@@ -134,15 +134,23 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const datagridTheme = useDatagridTheme(readonly, readonly);
   const editor = useRef<DataEditorRef | null>(null);
   const customRenderers = useCustomCellRenderers();
-  const hackARef = useRef<HTMLAnchorElement | null>(null);
   const navigate = useNavigator();
   const { scrolledToRight, scroller } = useScrollRight();
   const fullScreenClasses = useFullScreenStyles(classes);
   const { isOpen, isAnimationOpenFinished, toggle } = useFullScreenMode();
   const { clearTooltip, tooltip, setTooltip } = useTooltipContainer();
   const [selection, setSelection] = useState<GridSelection>();
-  const [hoverRow, setHoverRow] = useState<number | undefined>(undefined);
   const [areCellsDirty, setCellsDirty] = useState(true);
+
+  const { rowAnchorRef, setRowAnchorRef, setAnchorPosition } = useRowAnchor({
+    getRowAnchorUrl: rowAnchor,
+    rowMarkers,
+  });
+
+  const { handleRowHover, hoverRow } = useRowHover({
+    hasRowHover,
+    onRowHover: setAnchorPosition,
+  });
 
   // Allow to listen to which row is selected and notfiy parent component
   useEffect(() => {
@@ -239,40 +247,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
     },
     [onCellEdited, availableColumns],
   );
-  const handleRowHover = useCallback(
-    (args: GridMouseEventArgs) => {
-      if (hasRowHover) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const [_, row] = args.location;
 
-        setHoverRow(args.kind !== "cell" ? undefined : row);
-      }
-
-      // the code below is responsible for adding native <a> element when hovering over rows in the datagrid
-      // this makes it possible to open links in a new tab and copy them
-      if (args.kind !== "cell" || !hackARef.current || !rowAnchor) {
-        return;
-      }
-
-      const href = rowAnchor(args.location);
-
-      if (!href) {
-        return;
-      }
-
-      if (preventRowClickOnSelectionCheckbox(rowMarkers, args.location[0])) {
-        return;
-      }
-
-      hackARef.current.style.left = `${window.scrollX + args.bounds.x}px`;
-      hackARef.current.style.width = `${args.bounds.width}px`;
-      hackARef.current.style.top = `${window.scrollY + args.bounds.y}px`;
-      hackARef.current.style.height = `${args.bounds.height}px`;
-      hackARef.current.href = getAppMountUri() + (href.startsWith("/") ? href.slice(1) : href);
-      hackARef.current.dataset.reactRouterPath = href;
-    },
-    [hasRowHover, rowAnchor, rowMarkers],
-  );
   const handleCellClick = useCallback(
     (item: Item, args: CellClickedEventArgs) => {
       if (preventRowClickOnSelectionCheckbox(rowMarkers, item[0])) {
@@ -285,11 +260,11 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
       handleRowHover(args);
 
-      if (hackARef.current) {
-        hackARef.current.click();
+      if (rowAnchorRef.current) {
+        rowAnchorRef.current.click();
       }
     },
-    [rowMarkers, onRowClick, handleRowHover],
+    [rowMarkers, onRowClick, handleRowHover, rowAnchorRef],
   );
   const handleGridSelectionChange = (gridSelection: GridSelection) => {
     // In readonly we not allow selecting cells, but we allow selcting column
@@ -396,18 +371,18 @@ export const Datagrid: React.FC<DatagridProps> = ({
           clearTimeout(timer);
         }
 
-        if (hackARef.current) {
-          hackARef.current.style.display = "none";
+        if (rowAnchorRef.current) {
+          rowAnchorRef.current.style.display = "none";
         }
 
         timer = setTimeout(() => {
-          if (hackARef.current) {
-            hackARef.current.style.display = "block";
+          if (rowAnchorRef.current) {
+            rowAnchorRef.current.style.display = "block";
           }
         }, 100);
       };
     })(),
-    [hackARef],
+    [rowAnchorRef],
   );
 
   if (loading) {
@@ -550,7 +525,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
       />
       {rowAnchor && (
         <a
-          ref={hackARef}
+          ref={setRowAnchorRef}
           style={{ position: "absolute" }}
           tabIndex={-1}
           aria-hidden={true}

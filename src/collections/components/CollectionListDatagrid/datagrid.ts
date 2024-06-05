@@ -88,6 +88,7 @@ export const createGetCellContent =
           ],
           [label],
           {
+            cursor: "pointer",
             readonly: true,
             allowOverlay: false,
           },

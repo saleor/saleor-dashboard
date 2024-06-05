@@ -17,7 +17,11 @@ import { orderUrl } from "@dashboard/orders/urls";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { prepareRefundAddLines } from "../OrderTransactionRefundCreate/handlers";
+import {
+  checkAmountExceedsChargedAmount,
+  handleAmountExceedsChargedAmount,
+  prepareRefundAddLines,
+} from "../OrderTransactionRefundCreate/handlers";
 import { handleRefundEditComplete } from "./handlers";
 import { transactionRefundEditMessages } from "./messages";
 
@@ -82,6 +86,18 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({ orderId
     }
 
     const { amount, reason, linesToRefund, includeShipping, transactionId } = submitData;
+
+    if (
+      checkAmountExceedsChargedAmount({
+        amount,
+        order: data.order,
+        transactionId,
+      })
+    ) {
+      handleAmountExceedsChargedAmount({ setLinesErrors, intl });
+
+      return;
+    }
 
     const draftRefundLines = draftRefund.lines ?? [];
     const toRemove = draftRefundLines.map(line => line.id);

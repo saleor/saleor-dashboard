@@ -102,8 +102,10 @@ export const useGetCellContent = ({ columns, orders }: GetCellContentProps) => {
   };
 };
 
+const COMMON_CELL_PROPS: Partial<GridCell> = { cursor: "pointer" };
+
 export function getDateCellContent(rowData: RelayToFlat<OrderListQuery["orders"]>[number]) {
-  return dateCell(rowData?.created);
+  return dateCell(rowData?.created, COMMON_CELL_PROPS);
 }
 
 export function getCustomerCellContent(
@@ -135,7 +137,7 @@ export function getStatusCellContent(
       currentTheme,
     });
 
-    return pillCell(orderStatus.localized, color);
+    return pillCell(orderStatus.localized, color, COMMON_CELL_PROPS);
   }
 
   return readonlyTextCell("-");
@@ -154,7 +156,7 @@ export function getPaymentCellContent(
       currentTheme,
     });
 
-    return pillCell(paymentStatus.localized, color);
+    return pillCell(paymentStatus.localized, color, COMMON_CELL_PROPS);
   }
 
   return readonlyTextCell("-");
@@ -162,9 +164,7 @@ export function getPaymentCellContent(
 
 export function getTotalCellContent(rowData: RelayToFlat<OrderListQuery["orders"]>[number]) {
   if (rowData?.total?.gross) {
-    return moneyCell(rowData.total.gross.amount, rowData.total.gross.currency, {
-      cursor: "pointer",
-    });
+    return moneyCell(rowData.total.gross.amount, rowData.total.gross.currency, COMMON_CELL_PROPS);
   }
 
   return readonlyTextCell("-");

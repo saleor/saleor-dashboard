@@ -78,6 +78,7 @@ export const createGetCellContent =
             },
           ],
           [tag],
+          { cursor: "pointer" },
         );
       }
       default:
