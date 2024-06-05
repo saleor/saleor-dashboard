@@ -32,6 +32,7 @@ module.exports = defineConfig({
     async setupNodeEvents(on, config) {
       config = require("./cypress/support/cypress-grep/plugin")(config);
       config = await require("./cypress/plugins/index.js")(on, config);
+
       cypressSplit(on, config);
       on("after:spec", (spec, results) => {
         if (results && results.video) {
