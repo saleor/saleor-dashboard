@@ -1,0 +1,71 @@
+name: Execute automation tests
+run-name: Run tests on ${{github.event.client_payload.version}} ${{github.event.client_payload.project}}
+
+on:
+  repository_dispatch:
+    types: [automation-tests-event]
+
+jobs:
+  get-environment-variables:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    outputs:
+      VERSION: ${{ steps.get-environment-variables.outputs.version }}
+    env:
+      REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      CUSTOM_VERSION: ${{github.event.client_payload.custom_version}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Install dependencies
+        run: |
+          cd .github/workflows
+          npm ci
+
+      - name: get environment variables
+        id: get-environment-variables
+        run: |
+          node .github/workflows/getEnvironmentVariables.js \
+            --custom_version $CUSTOM_VERSION \
+            --repo_token "$REPO_TOKEN" 
+
+  run-tests-on-release:
+    needs: get-environment-variables
+    uses: ./.github/workflows/run-tests-on-release.yml@${{needs.get-environment-variables.outputs.VERSION}}
+    with:
+      VERSION: ${{needs.get-environment-variables.outputs.VERSION}}
+      CUSTOM_VERSION: ${{github.event.client_payload.custom_version}}
+    secrets: inherit
+  
+  Add-tests-status-to-release-PR:
+    needs: run-tests-on-release 
+    if: ${{ needs.run-tests-on-release.outputs.TESTS_CONCLUSION == 'success'}} && ${{github.event.client_payload.project == 'CORE' }}
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Open release PR
+        env:
+          VERSION: ${{github.event.client_payload.custom_version}}
+          DETAILS_URL_TO_TEST_RUN: ${{needs.run-tests-on-release.outputs.RUN_URL}}
+          TEST_STATUS: ${{needs.run-tests-on-release.outputs.TESTS_CONCLUSION}}
+        run: |
+          export GITHUB_TOKEN=$( \
+            curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
+          )
+
+          gh api /repos/saleor/saleor-cloud-deployments/dispatches \
+            --input - <<< "{
+              \"event_type\": \"open-release-pull-request-and-add-tests-results\",
+              \"client_payload\": {
+                \"project\": \"CORE\",
+                \"environment\": \"SANDBOX\",
+                \"version\": \"$VERSION\"
+                \"details_url_to_test_run\": \"$DETAILS_URL_TO_TEST_RUN\"
+                \"test_status\": \"$TEST_STATUS\"
+              }
+            }"

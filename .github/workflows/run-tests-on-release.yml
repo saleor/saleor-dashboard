@@ -28,6 +28,10 @@ on:
         required: true
       SLACK_QA_STATUSES_WEBHOOK_URL:
         required: true
+
+    outputs:
+      TESTS_CONCLUSION: ${{ jobs.tests-complete.outputs.TESTS_CONCLUSION }}
+      RUN_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
         
 jobs:
   add-check-and-prepare-instance:
@@ -169,12 +173,13 @@ jobs:
           testmoToken: ${{ secrets.TESTMO_TOKEN }}
           testmoRunId: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
 
-  tests-complete-pw:
+  tests-complete:
     if: |
-      !cancelled() && 
-      needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"playwright"'
+      !cancelled()
     needs: ["add-check-and-prepare-instance", "run-pw-tests"]
     runs-on: ubuntu-22.04
+    outputs:
+      TESTS_CONCLUSION: "${{ steps.send-slack-message.outputs.status }}"
     steps:
       - uses: actions/checkout@v4
 
@@ -221,10 +226,10 @@ jobs:
 
   update-check-status-if-previous-job-fails:
     runs-on: ubuntu-latest
-    needs: [tests-complete-pw, add-check-and-prepare-instance]
+    needs: [tests-complete, add-check-and-prepare-instance]
     if: |
       always() &&
-      (needs.tests-complete-pw != 'success' && cancelled()) &&
+      (needs.tests-complete != 'success' && cancelled()) &&
       needs.add-check-and-prepare-instance.outputs.FRAMEWORK   == '"playwright"'
 
     steps:
@@ -241,7 +246,7 @@ jobs:
           DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
       - name: Change job status if previous job failed or skipped
-        if: needs.tests-complete-pw != 'success' && !cancelled()
+        if: needs.tests-complete != 'success' && !cancelled()
         uses: ./.github/actions/checks/update-pull-request-check
         with:
           CHECK_ID: ${{ needs.add-check-and-prepare-instance.outputs.CHECK_ID }}
