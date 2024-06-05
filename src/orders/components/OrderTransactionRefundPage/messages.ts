@@ -39,9 +39,9 @@ export const refundSavebarMessages = defineMessages({
     description: "transfer funds button",
   },
   cancel: {
-    defaultMessage: "Cancel",
-    id: "sR5mWJ",
-    description: "cancel button",
+    defaultMessage: "Back",
+    id: "PNq9W/",
+    description: "back button",
   },
 });
 
