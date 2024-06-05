@@ -4,6 +4,7 @@ const { defineConfig } = require("cypress");
 const fs = require("fs");
 const cypressSplit = require("cypress-split");
 
+
 module.exports = defineConfig({
   projectId: "51ef7c",
   chromeWebSecurity: false,
