@@ -46,7 +46,7 @@ export class BasicApiService {
                 }
             }
         }`;
-    const loginResponse = await this.request.post(process.env.API_URL || "", {
+    const loginResponse = await this.request.post(process.env.API_URI || "", {
       data: { query },
     });
     const loginResponseJson = await loginResponse.json();
