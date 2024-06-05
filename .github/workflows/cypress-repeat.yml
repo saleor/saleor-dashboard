@@ -45,7 +45,10 @@ jobs:
         id: cypress
         uses: cypress-io/github-action@v4
         env:
+          ## backward compatibility for older versions
           API_URI: ${{ github.event.inputs.API_url}}
+
+          API_URL: ${{ github.event.inputs.API_url}}
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
           BASE_URL: ${{ github.event.inputs.dashboard_url}}
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
