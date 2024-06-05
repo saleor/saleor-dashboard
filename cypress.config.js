@@ -11,11 +11,14 @@ module.exports = defineConfig({
   requestTimeout: 20000,
   viewportWidth: 1400,
   viewportHeight: 660,
+  screenshotsFolder: "cypress/reports/mochareports",
+  screenshotOnRunFailure: true,
+  experimentalMemoryManagement: true,
+  numTestsKeptInMemory: 8,
   retries: {
-    runMode: 1,
+    runMode: 2,
     openMode: 0,
   },
-  screenshotsFolder: "cypress/reports/mochareports",
   reporter: "cypress-multi-reporters",
   reporterOptions: {
     configFile: "reporter-config.json",
@@ -23,11 +26,12 @@ module.exports = defineConfig({
   e2e: {
     env: {
       grepFilterSpecs: true,
+      grepOmitFiltered: true,
     },
     baseUrl: process.env.BASE_URL,
-    setupNodeEvents(on, config) {
+    async setupNodeEvents(on, config) {
       config = require("./cypress/support/cypress-grep/plugin")(config);
-      config = require("./cypress/plugins/index.js")(on, config);
+      config = await require("./cypress/plugins/index.js")(on, config);
       cypressSplit(on, config);
       on("after:spec", (spec, results) => {
         if (results && results.video) {
@@ -42,7 +46,6 @@ module.exports = defineConfig({
       });
       return config;
     },
-    baseUrl: "http://localhost:4173/",
     specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}",
   },
 });
