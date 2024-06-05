@@ -40,3 +40,4 @@ runs:
         TESTMO_TOKEN: ${{ inputs.testmoToken }}
         RUN_NAME: ${{inputs.testmoRunName}}
       id: run-tests
+
