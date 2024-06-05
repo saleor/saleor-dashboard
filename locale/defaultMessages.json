@@ -8936,6 +8936,10 @@
     "context": "button",
     "string": "Create category"
   },
+  "vpTyL1": {
+    "context": "error message",
+    "string": "Provided amount cannot exceed charged amount for the selected transaction"
+  },
   "vprU7C": {
     "string": "Select visible order channels"
   },
