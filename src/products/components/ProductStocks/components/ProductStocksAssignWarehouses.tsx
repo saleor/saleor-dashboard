@@ -1,7 +1,7 @@
 import { WarehouseFragment } from "@dashboard/graphql";
-import useDebounce from "@dashboard/hooks/useDebounce";
+import { useInfinityScroll } from "@dashboard/hooks/useInfinityScroll";
 import { Box, Button, Dropdown, List, Spinner, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "../messages";
@@ -13,38 +13,28 @@ interface ProductStocksAssignWarehousesProps {
   onWarehouseSelect: (warehouseId: string, warehouseName: string) => void;
 }
 
-const SCROLL_THRESHOLD = 1000;
-
 export const ProductStocksAssignWarehouses = ({
   hasMoreWarehouses,
   loadMoreWarehouses,
   onWarehouseSelect,
   warehousesToAssign,
 }: ProductStocksAssignWarehousesProps) => {
-  const warehousesListRef = useRef<HTMLUListElement>(null);
-
   useEffect(() => {
     if (hasMoreWarehouses && !warehousesToAssign.length) {
       loadMoreWarehouses();
     }
   }, [hasMoreWarehouses, warehousesToAssign.length]);
 
-  const handleInfiniteScroll = () => {
-    if (!warehousesListRef.current) {
-      return;
-    }
-
-    const scrollHeight = warehousesListRef.current.scrollHeight;
-    const scrollTop = warehousesListRef.current.scrollTop;
-    const clientHeight = warehousesListRef.current.clientHeight;
-    const scrollBottom = scrollHeight - (scrollTop + clientHeight);
-
-    if (scrollBottom < SCROLL_THRESHOLD && hasMoreWarehouses) {
+  const handleOnScroll = () => {
+    if (hasMoreWarehouses) {
       loadMoreWarehouses();
     }
   };
 
-  const debouncedHandleInfiniteScroll = useDebounce(handleInfiniteScroll, 500);
+  const { onScroll, setScrolltRef } = useInfinityScroll({
+    onLoadMore: handleOnScroll,
+    theshold: 1000,
+  });
 
   return (
     <Dropdown>
@@ -61,7 +51,7 @@ export const ProductStocksAssignWarehouses = ({
       <Dropdown.Content align="end">
         <Box>
           <List
-            ref={warehousesListRef}
+            ref={setScrolltRef}
             id="warehouse-list"
             padding={2}
             borderRadius={4}
@@ -69,7 +59,7 @@ export const ProductStocksAssignWarehouses = ({
             backgroundColor="default1"
             __maxHeight={400}
             overflowY="auto"
-            onScroll={debouncedHandleInfiniteScroll}
+            onScroll={onScroll}
           >
             {warehousesToAssign.map(warehouse => (
               <Dropdown.Item key={warehouse.id}>
