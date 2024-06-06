@@ -1,6 +1,5 @@
 const { Command } = require("commander");
 const core = require("@actions/core");
-const fetch = require("node-fetch");
 const { Octokit } = require("@octokit/core");
 
 const program = new Command();
@@ -8,54 +7,14 @@ const program = new Command();
 program
   .name("Approve PR")
   .description("Approve and merge PR if patch release")
-  .option("--version <version>", "version of a project")
-  .option("--token <token>", "token for login to cloud")
+  .option("--custom_version <custom_version>", "version of a project")
   .option("--repo_token <repo_token>", "github token")
-  .option("--project <project>", "release project")
   .action(async options => {
-    const isOldVersion = await checkIfOldVersion(
-      options.version,
-      options.repo_token,
-    );
-    core.setOutput("IS_OLD_VERSION", isOldVersion);
 
-    core.setOutput(
-      "url",
-      `https://v${getFormattedVersion(options.version)}.staging.saleor.cloud/`,
-    );
-
-    const branch = await getBranch(options.repo_token, options.version);
-    core.setOutput("branch", branch);
+    const version = await getBranch(options.repo_token, options.version);
+    core.setOutput("version", version);
   })
   .parse();
-
-function getFormattedVersion(version) {
-  const regex = /^\d+\.\d+\./;
-  return version.match(regex)[0].replace(/\./g, "");
-}
-
-async function checkIfOldVersion(version, token) {
-  const newestVersion = await getTheNewestVersion(token);
-  const howManyVersionsBehind =
-    getFormattedVersion(newestVersion) - getFormattedVersion(version);
-  //All versions besides last three are old versions
-  return howManyVersionsBehind > 2 ? "true" : "false";
-}
-
-async function getTheNewestVersion(token) {
-  const octokit = new Octokit({
-    auth: token,
-  });
-
-  const response = await octokit.request(
-    "GET /repos/{owner}/{repo}/releases/latest",
-    {
-      owner: "saleor",
-      repo: "saleor-dashboard",
-    },
-  );
-  return response.data["tag_name"];
-}
 
 async function getBranch(token, version) {
   const regex = /^\d+\.\d+/;
