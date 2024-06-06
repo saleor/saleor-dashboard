@@ -19,10 +19,6 @@ export const useInfinityScroll = <TElementRef extends HTMLElement>({
   const elementRef = useRef<TElementRef>();
   const isRefSet = useRef(false);
 
-  const setScrollRef = (element: TElementRef) => {
-    elementRef.current = element;
-  };
-
   useEffect(() => {
     if (!isRefSet.current && elementRef.current) {
       isRefSet.current = true;
@@ -65,8 +61,20 @@ export const useInfinityScroll = <TElementRef extends HTMLElement>({
 
   const debouncedHandleInfiniteScroll = useDebounce(handleInfiniteScroll, debounceTime);
 
+  const setScrollRef = (element: TElementRef) => {
+    if (!element) {
+      return;
+    }
+
+    if (elementRef.current) {
+      elementRef.current.removeEventListener("wheel", debouncedHandleInfiniteScroll);
+    }
+
+    elementRef.current = element;
+    elementRef.current.addEventListener("wheel", debouncedHandleInfiniteScroll);
+  };
+
   return {
-    onScroll: debouncedHandleInfiniteScroll,
     setScrollRef,
   };
 };

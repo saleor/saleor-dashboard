@@ -33,7 +33,7 @@ export const ProductStocksAssignWarehouses = ({
     }
   };
 
-  const { onScroll, setScrollRef } = useInfinityScroll<HTMLUListElement>({
+  const { setScrollRef } = useInfinityScroll<HTMLUListElement>({
     loadOnInit: true,
     onLoadMore: handleOnScroll,
     threshold: 1000,
@@ -62,7 +62,6 @@ export const ProductStocksAssignWarehouses = ({
             backgroundColor="default1"
             __maxHeight={400}
             overflowY="auto"
-            onScroll={onScroll}
           >
             {warehousesToAssign.map(warehouse => (
               <Dropdown.Item key={warehouse.id}>
