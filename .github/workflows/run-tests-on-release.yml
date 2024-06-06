@@ -30,7 +30,7 @@ on:
         required: true
 
     outputs:
-      TESTS_CONCLUSION: ${{ jobs.tests-complete.outputs.TESTS_CONCLUSION }}
+      TESTS_CONCLUSION: ${{ needs.tests-complete.outputs.TESTS_CONCLUSION }}
       RUN_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
         
 jobs:
