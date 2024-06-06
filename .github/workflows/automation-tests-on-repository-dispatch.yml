@@ -14,7 +14,7 @@ jobs:
       VERSION: ${{ steps.get-environment-variables.outputs.version }}
     env:
       REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      CUSTOM_VERSION: ${{github.event.client_payload.custom_version || 3.19.8 }}
+      CUSTOM_VERSION: ${{github.event.client_payload.custom_version || '3.19.8' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -41,7 +41,7 @@ jobs:
     uses: ./.github/workflows/run-tests-on-release.yml
     with:
       VERSION: ${{needs.get-environment-variables.outputs.VERSION}}
-      CUSTOM_VERSION: ${{github.event.client_payload.custom_version || 3.19.8 }}
+      CUSTOM_VERSION: ${{github.event.client_payload.custom_version || '3.19.8' }}
     secrets: inherit
   
   Add-tests-status-to-release-PR:
@@ -51,7 +51,7 @@ jobs:
     steps:
       - name: Open release PR
         env:
-          VERSION: ${{github.event.client_payload.custom_version || 3.19.8 }}
+          VERSION: ${{github.event.client_payload.custom_version || '3.19.8' }}
           DETAILS_URL_TO_TEST_RUN: ${{needs.run-tests-on-release.outputs.RUN_URL}}
           TEST_STATUS: ${{needs.run-tests-on-release.outputs.TESTS_CONCLUSION}}
         run: |
