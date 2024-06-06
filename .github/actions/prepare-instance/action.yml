@@ -44,7 +44,7 @@ runs:
 
     - name: Reload snapshot
       shell: bash
-      if: ${{ steps.instance_check.outputs.INSTANCE_KEY }} && ${{ inputs.BACKUP_ID != 'null'}}
+      if: ${{ steps.instance_check.outputs.INSTANCE_KEY && inputs.BACKUP_ID != null}}
       env:
         BACKUP_ID: ${{ inputs.BACKUP_ID }}
         INSTANCE_NAME: ${{ inputs.POOL_NAME }}
