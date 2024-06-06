@@ -91,7 +91,6 @@ jobs:
           VERSION: ${{ env.VERSION }}
 
       - name: Prepare instances
-        if: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
         id: pool_variables
         uses: ./.github/actions/prepare-instance
         with:
