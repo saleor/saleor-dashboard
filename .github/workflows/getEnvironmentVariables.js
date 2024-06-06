@@ -57,23 +57,6 @@ async function getTheNewestVersion(token) {
   return response.data["tag_name"];
 }
 
-async function getServices(token) {
-  // us-east-1
-  const response = await fetch(
-    `https://staging-cloud.saleor.io/platform/api/regions/us-east-1/services`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Token ${token}`,
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-    },
-  );
-  const responseInJson = await response.json();
-  return responseInJson;
-}
-
 async function getBranch(token, version) {
   const regex = /^\d+\.\d+/;
   const formattedVersion = version.match(regex)[0];
