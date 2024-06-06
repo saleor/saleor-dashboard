@@ -67,11 +67,11 @@ export const useInfinityScroll = <TElementRef extends HTMLElement>({
     }
 
     if (elementRef.current) {
-      elementRef.current.removeEventListener("wheel", debouncedHandleInfiniteScroll);
+      elementRef.current.removeEventListener("scroll", () => debouncedHandleInfiniteScroll());
     }
 
     elementRef.current = element;
-    elementRef.current.addEventListener("wheel", debouncedHandleInfiniteScroll);
+    elementRef.current.addEventListener("scroll", () => debouncedHandleInfiniteScroll());
   };
 
   return {
