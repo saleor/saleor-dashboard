@@ -103,7 +103,6 @@ jobs:
           BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
 
       - uses: ./.github/actions/testmo/testmo-init
-        if: steps.check-framework.outputs.result == '"playwright"' 
         with:
           testmoUrl: ${{ secrets.TESTMO_URL }}
           testmoToken: ${{ secrets.TESTMO_TOKEN }}
