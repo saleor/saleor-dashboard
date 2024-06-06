@@ -38,7 +38,7 @@ jobs:
 
   run-tests-on-release:
     needs: get-environment-variables
-    uses: ./.github/workflows/run-tests-on-release.yml@${{needs.get-environment-variables.outputs.VERSION}}
+    uses: ./.github/workflows/run-tests-on-release.yml
     with:
       VERSION: ${{needs.get-environment-variables.outputs.VERSION}}
       CUSTOM_VERSION: ${{github.event.client_payload.custom_version || 3.19.8 }}
