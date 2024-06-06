@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 import useDebounce from "./useDebounce";
 
@@ -17,42 +17,48 @@ export const useInfinityScroll = ({
   loadOnInit?: boolean;
 }) => {
   const elementRef = useRef<HTMLElement>();
+  const isRefSet = useRef(false);
 
   const setScrolltRef = (element: HTMLElement) => {
-    if (!elementRef.current) {
-      elementRef.current = element;
+    elementRef.current = element;
+  };
 
-      // In case when we set scrollRef on the first time and we have to immediately load more warehouses
+  useEffect(() => {
+    if (!isRefSet.current && elementRef.current) {
+      isRefSet.current = true;
+
+      //  In case when we set scrollRef on the first time and we have to immediately load more warehouses
       // because we reached theshold
-      if (loadOnInit && shouldLoadMore(element)) {
+      if (loadOnInit && shouldLoadMore()) {
         onLoadMore();
       }
     }
+  }, [isRefSet, loadOnInit, onLoadMore]);
+
+  const shouldLoadMore = () => {
+    if (!elementRef.current) {
+      return false;
+    }
+
+    const scrollHeight = elementRef.current.scrollHeight;
+    const scrollTop = elementRef.current.scrollTop;
+    const clientHeight = elementRef.current.clientHeight;
+
+    if (scrollTop === 0 && scrollHeight === 0 && clientHeight === 0) {
+      return false;
+    }
+
+    const scrollBottom = scrollHeight - (scrollTop + clientHeight);
+
+    return scrollBottom < theshold;
   };
-
-  const shouldLoadMore = useCallback(
-    (element: HTMLElement | null) => {
-      if (!element) {
-        return false;
-      }
-
-      const scrollHeight = element.scrollHeight;
-      const scrollTop = element.scrollTop;
-      const clientHeight = element.clientHeight;
-
-      const scrollBottom = scrollHeight - (scrollTop + clientHeight);
-
-      return scrollBottom < theshold;
-    },
-    [theshold],
-  );
 
   const handleInfiniteScroll = () => {
     if (!elementRef.current) {
       return;
     }
 
-    if (shouldLoadMore(elementRef.current)) {
+    if (shouldLoadMore()) {
       onLoadMore();
     }
   };
