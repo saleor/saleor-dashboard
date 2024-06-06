@@ -11,7 +11,7 @@ program
   .option("--repo_token <repo_token>", "github token")
   .action(async options => {
 
-    const version = await getBranch(options.repo_token, options.version);
+    const version = await getBranch(options.repo_token, options.custom_version);
     core.setOutput("version", version);
   })
   .parse();
