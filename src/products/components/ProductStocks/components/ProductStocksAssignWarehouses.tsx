@@ -33,10 +33,10 @@ export const ProductStocksAssignWarehouses = ({
     }
   };
 
-  const { onScroll, setScrolltRef } = useInfinityScroll({
+  const { onScroll, setScrollRef } = useInfinityScroll<HTMLUListElement>({
     loadOnInit: true,
     onLoadMore: handleOnScroll,
-    theshold: 1000,
+    threshold: 1000,
   });
 
   return (
@@ -54,7 +54,7 @@ export const ProductStocksAssignWarehouses = ({
       <Dropdown.Content align="end">
         <Box>
           <List
-            ref={ref => setScrolltRef(ref as HTMLElement)}
+            ref={setScrollRef}
             id="warehouse-list"
             padding={2}
             borderRadius={4}

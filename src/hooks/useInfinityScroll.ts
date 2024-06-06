@@ -5,21 +5,21 @@ import useDebounce from "./useDebounce";
 const SCROLL_THRESHOLD = 100;
 const DEBOUNCE_TIME = 500;
 
-export const useInfinityScroll = ({
+export const useInfinityScroll = <TElementRef extends HTMLElement>({
   onLoadMore,
-  theshold = SCROLL_THRESHOLD,
+  threshold = SCROLL_THRESHOLD,
   debounceTime = DEBOUNCE_TIME,
   loadOnInit,
 }: {
   onLoadMore: () => void;
-  theshold?: number;
+  threshold?: number;
   debounceTime?: number;
   loadOnInit?: boolean;
 }) => {
-  const elementRef = useRef<HTMLElement>();
+  const elementRef = useRef<TElementRef>();
   const isRefSet = useRef(false);
 
-  const setScrolltRef = (element: HTMLElement) => {
+  const setScrollRef = (element: TElementRef) => {
     elementRef.current = element;
   };
 
@@ -28,7 +28,7 @@ export const useInfinityScroll = ({
       isRefSet.current = true;
 
       //  In case when we set scrollRef on the first time and we have to immediately load more warehouses
-      // because we reached theshold
+      // because we reached threshold
       if (loadOnInit && shouldLoadMore()) {
         onLoadMore();
       }
@@ -50,7 +50,7 @@ export const useInfinityScroll = ({
 
     const scrollBottom = scrollHeight - (scrollTop + clientHeight);
 
-    return scrollBottom < theshold;
+    return scrollBottom < threshold;
   };
 
   const handleInfiniteScroll = () => {
@@ -67,6 +67,6 @@ export const useInfinityScroll = ({
 
   return {
     onScroll: debouncedHandleInfiniteScroll,
-    setScrolltRef,
+    setScrollRef,
   };
 };
