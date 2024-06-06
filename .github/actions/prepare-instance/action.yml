@@ -44,11 +44,12 @@ runs:
 
     - name: Reload snapshot
       shell: bash
-      if: ${{ steps.instance_check.outputs.INSTANCE_KEY }}
+      if: ${{ steps.instance_check.outputs.INSTANCE_KEY }} && ${{ inputs.BACKUP_ID != 'null'}}
       env:
         BACKUP_ID: ${{ inputs.BACKUP_ID }}
         INSTANCE_NAME: ${{ inputs.POOL_NAME }}
       run: |
+        echo "$BACKUP_ID"
         npx saleor backup restore "$BACKUP_ID" \
           --environment="$INSTANCE_NAME" \
           --skip-webhooks-update
