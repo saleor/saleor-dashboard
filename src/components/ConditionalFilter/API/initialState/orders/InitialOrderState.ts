@@ -14,9 +14,10 @@ export interface InitialOrderState {
   customer: ItemOption[];
   created: string | string[];
   updatedAt: string | string[];
+  ids: ItemOption[];
 }
 
-const isTextInput = (name: string) => ["customer"].includes(name);
+const isTextInput = (name: string) => ["customer", "ids"].includes(name);
 const isDateField = (name: string) => ["created", "updatedAt"].includes(name);
 
 export class InitialOrderStateResponse implements InitialOrderState {
@@ -33,6 +34,7 @@ export class InitialOrderStateResponse implements InitialOrderState {
     public customer: ItemOption[] = [],
     public created: string | string[] = [],
     public updatedAt: string | string[] = [],
+    public ids: ItemOption[] = [],
   ) {}
 
   public static empty() {
@@ -44,16 +46,16 @@ export class InitialOrderStateResponse implements InitialOrderState {
       return token.value;
     }
 
-    return this.getEntryByName(token.name).filter(({ slug }) => {
-      if (isTextInput(token.name)) {
-        return true;
-      }
+    const entry = this.getEntryByName(token.name);
 
-      return slug && token.value.includes(slug);
-    });
+    if (isTextInput(token.name)) {
+      return entry;
+    }
+
+    return (entry as ItemOption[]).filter(({ slug }) => slug && token.value.includes(slug));
   }
 
-  private getEntryByName(name: string): ItemOption[] {
+  private getEntryByName(name: string): ItemOption[] | string | string[] {
     switch (name) {
       case "paymentStatus":
         return this.paymentStatus;
@@ -75,6 +77,8 @@ export class InitialOrderStateResponse implements InitialOrderState {
         return this.giftCardUsed;
       case "customer":
         return this.customer;
+      case "ids":
+        return this.ids;
       default:
         return [];
     }

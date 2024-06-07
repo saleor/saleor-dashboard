@@ -25,6 +25,14 @@ const getCustomer = (customer: string[]) => {
   return "";
 };
 
+const getIDs = (ids: string[]) =>
+  ids.map(id => ({
+    type: "ids",
+    label: id,
+    value: id,
+    slug: id,
+  }));
+
 export interface InitialOrderAPIState {
   data: InitialOrderStateResponse;
   loading: boolean;
@@ -46,6 +54,7 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
     status,
     authorizeStatus,
     customer,
+    ids,
   }: OrderFetchingParams) => {
     if (channels.length > 0) {
       queriesToRun.push(
@@ -92,6 +101,7 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
           slug: "customer",
         },
       ],
+      ids: getIDs(ids),
     };
 
     setData(
@@ -108,6 +118,7 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
         initialState.customer,
         initialState.created,
         initialState.updatedAt,
+        initialState.ids,
       ),
     );
     setLoading(false);

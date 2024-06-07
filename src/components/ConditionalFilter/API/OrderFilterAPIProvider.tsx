@@ -10,11 +10,13 @@ import { IntlShape, useIntl } from "react-intl";
 
 import { RowType } from "../constants";
 import { FilterContainer, FilterElement } from "../FilterElement";
+import { ItemOption } from "../FilterElement/ConditionValue";
 import {
   BooleanValuesHandler,
   EnumValuesHandler,
   Handler,
   LegacyChannelHandler,
+  NoopValuesHandler,
   TextInputValuesHandler,
 } from "./Handler";
 
@@ -86,6 +88,10 @@ const createAPIHandler = (
         slug: "customer",
       },
     ]);
+  }
+
+  if (rowType === "ids") {
+    return new NoopValuesHandler([]);
   }
 
   throw new Error(`Unknown filter element: "${rowType}"`);

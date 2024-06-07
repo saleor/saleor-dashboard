@@ -56,8 +56,10 @@ export class Condition {
 
       const isMultiSelect = selectedOption?.type === "multiselect" && valueItems.length > 0;
       const isDate = ["created", "updatedAt", "startDate", "endDate"].includes(token.name);
+      // TODO check if it works
+      const isText = ["customer", "ids"].includes(token.name);
 
-      const value = isMultiSelect || isDate ? valueItems : valueItems[0];
+      const value = isMultiSelect || isDate || isText ? valueItems : valueItems[0];
 
       if (!selectedOption) {
         return Condition.createEmpty();
