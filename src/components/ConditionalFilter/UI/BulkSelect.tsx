@@ -32,6 +32,8 @@ const BulkSelect = ({ selected, emitter, index, error, helperText, disabled }: B
   const ref = useRef<HTMLInputElement>(null);
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!ref.current) return;
+
     const currentValue = (event.target as HTMLInputElement).value;
 
     switch (event.key) {
@@ -88,6 +90,8 @@ const BulkSelect = ({ selected, emitter, index, error, helperText, disabled }: B
         emitter.focusRightOperator(index);
       }}
       onBlur={event => {
+        if (!ref.current) return;
+
         const onBlurValue = event.target.value;
 
         if (onBlurValue !== "") {
