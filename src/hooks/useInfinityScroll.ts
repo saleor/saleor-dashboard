@@ -16,41 +16,29 @@ export const useInfinityScroll = <TElementRef extends HTMLElement>({
   debounceTime?: number;
   loadOnInit?: boolean;
 }) => {
-  const elementRef = useRef<TElementRef>();
-  const isRefSet = useRef(false);
-
-  useEffect(() => {
-    if (!isRefSet.current && elementRef.current) {
-      isRefSet.current = true;
-
-      //  In case when we set scrollRef on the first time and we have to immediately load more warehouses
-      // because we reached threshold
-      if (loadOnInit && shouldLoadMore()) {
-        onLoadMore();
-      }
-    }
-  }, [isRefSet, loadOnInit, onLoadMore]);
+  const scrollRef = useRef<TElementRef>(null);
 
   const shouldLoadMore = () => {
-    if (!elementRef.current) {
+    if (!scrollRef.current) {
       return false;
     }
 
-    const scrollHeight = elementRef.current.scrollHeight;
-    const scrollTop = elementRef.current.scrollTop;
-    const clientHeight = elementRef.current.clientHeight;
+    const totalScrollHeight = scrollRef.current.scrollHeight;
+    const scrollTop = scrollRef.current.scrollTop;
+    const clientHeight = scrollRef.current.clientHeight;
 
-    if (scrollTop === 0 && scrollHeight === 0 && clientHeight === 0) {
+    if (scrollTop === 0 && totalScrollHeight === 0 && clientHeight === 0) {
       return false;
     }
 
-    const scrollBottom = scrollHeight - (scrollTop + clientHeight);
+    const scrolledHeight = scrollTop + clientHeight;
+    const scrollBottom = totalScrollHeight - scrolledHeight;
 
     return scrollBottom < threshold;
   };
 
   const handleInfiniteScroll = () => {
-    if (!elementRef.current) {
+    if (!scrollRef.current) {
       return;
     }
 
@@ -61,20 +49,29 @@ export const useInfinityScroll = <TElementRef extends HTMLElement>({
 
   const debouncedHandleInfiniteScroll = useDebounce(handleInfiniteScroll, debounceTime);
 
-  const setScrollRef = (element: TElementRef) => {
-    if (!element) {
+  useEffect(() => {
+    if (!scrollRef.current) {
       return;
     }
 
-    if (elementRef.current) {
-      elementRef.current.removeEventListener("scroll", () => debouncedHandleInfiniteScroll());
-    }
+    const callback = () => debouncedHandleInfiniteScroll();
 
-    elementRef.current = element;
-    elementRef.current.addEventListener("scroll", () => debouncedHandleInfiniteScroll());
-  };
+    scrollRef.current.addEventListener("scroll", callback);
+
+    return () => {
+      scrollRef.current?.removeEventListener("scroll", callback);
+    };
+  }, [debouncedHandleInfiniteScroll]);
+
+  useEffect(() => {
+    //  In case when we set scrollRef on the first time and we have to immediately load more warehouses
+    // because we reached threshold
+    if (scrollRef.current && loadOnInit && shouldLoadMore()) {
+      onLoadMore();
+    }
+  }, []);
 
   return {
-    setScrollRef,
+    scrollRef,
   };
 };

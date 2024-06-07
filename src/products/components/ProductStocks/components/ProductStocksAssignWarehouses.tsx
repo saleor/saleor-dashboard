@@ -1,10 +1,10 @@
 import { WarehouseFragment } from "@dashboard/graphql";
-import { useInfinityScroll } from "@dashboard/hooks/useInfinityScroll";
 import { Box, Button, Dropdown, List, Spinner, Text } from "@saleor/macaw-ui-next";
 import React, { useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "../messages";
+import { ProductStocksInfinityScrollList } from "./ProductStocksInfinityScrollList";
 
 interface ProductStocksAssignWarehousesProps {
   warehousesToAssign: WarehouseFragment[];
@@ -33,12 +33,6 @@ export const ProductStocksAssignWarehouses = ({
     }
   };
 
-  const { setScrollRef } = useInfinityScroll<HTMLUListElement>({
-    loadOnInit: true,
-    onLoadMore: handleOnScroll,
-    threshold: 1000,
-  });
-
   return (
     <Dropdown>
       <Dropdown.Trigger>
@@ -53,16 +47,7 @@ export const ProductStocksAssignWarehouses = ({
       </Dropdown.Trigger>
       <Dropdown.Content align="end">
         <Box>
-          <List
-            ref={setScrollRef}
-            id="warehouse-list"
-            padding={2}
-            borderRadius={4}
-            boxShadow="defaultOverlay"
-            backgroundColor="default1"
-            __maxHeight={400}
-            overflowY="auto"
-          >
+          <ProductStocksInfinityScrollList onLoadMore={handleOnScroll}>
             {warehousesToAssign.map(warehouse => (
               <Dropdown.Item key={warehouse.id}>
                 <List.Item
@@ -88,7 +73,7 @@ export const ProductStocksAssignWarehouses = ({
                 </List.Item>
               </Dropdown.Item>
             )}
-          </List>
+          </ProductStocksInfinityScrollList>
         </Box>
       </Dropdown.Content>
     </Dropdown>
