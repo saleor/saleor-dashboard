@@ -8,14 +8,19 @@ import faker from "faker";
 
 test.use({ storageState: "./playwright/.auth/admin.json" });
 
-test("TC: SALEOR_137 Admin User should be able to deactivate other user @e2e @staff-members", async ({
-  page,
-  request,
-}) => {
-  const staffMembersPage = new StaffMembersPage(page, request);
-  const basicApiService = new BasicApiService(request);
+let staffMembersPage: StaffMembersPage;
+let config: ConfigurationPage;
+let permissionGroupsPage: PermissionGroupsPage;
+let basicApiService: BasicApiService;
 
-  await page.goto(URL_LIST.staffMembers + USERS.userToBeDeactivated.id);
+test.beforeEach(async ({ page, request }) => {
+  staffMembersPage = new StaffMembersPage(page, request);
+  config = new ConfigurationPage(page);
+  permissionGroupsPage = new PermissionGroupsPage(page);
+  basicApiService = new BasicApiService(request);
+});
+test("TC: SALEOR_137 Admin User should be able to deactivate other user @e2e @staff-members", async () => {
+  await staffMembersPage.goToStaffDetailsPage(USERS.userToBeDeactivated.id);
   await staffMembersPage.clickIsActiveCheckbox();
   await staffMembersPage.clickSaveButton();
   await staffMembersPage.basePage.expectSuccessBanner();
