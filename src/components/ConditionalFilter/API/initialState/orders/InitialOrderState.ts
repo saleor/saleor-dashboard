@@ -17,7 +17,7 @@ export interface InitialOrderState {
   ids: ItemOption[];
 }
 
-const isTextInput = (name: string) => ["customer", "ids"].includes(name);
+const isTextInput = (name: string) => ["customer"].includes(name);
 const isDateField = (name: string) => ["created", "updatedAt"].includes(name);
 
 export class InitialOrderStateResponse implements InitialOrderState {
