@@ -13,6 +13,7 @@ export class InviteStaffMembersDialog {
       .locator("input"),
     readonly emailInput = page.getByTestId("email-input").locator("input"),
     readonly sendInviteButton = page.getByTestId("submit"),
+    readonly inviteStaffMemberDialogForm = page.getByTestId("invite-staff-member-dialog-form"),
   ) {
     this.page = page;
   }
@@ -28,6 +29,5 @@ export class InviteStaffMembersDialog {
     await this.firstNameInput.fill(name);
     await this.lastNameInput.fill(lastName);
     await this.emailInput.fill(email);
-    await this.sendInviteButton.click();
   }
 }
