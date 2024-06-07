@@ -502,6 +502,18 @@ export const USERS = {
     name: "change password",
     lastName: "user",
   },
+  staffToBeEdited: {
+    id: "VXNlcjoxMzcx",
+    name: "e2e_staff_to_be_updated",
+    lastName: "DO NOT DELETE",
+    email: "test123@hotmail.com",
+    permission: "Apps management",
+  },
+  staffToBeDeleted: {
+    id: "VXNlcjoxMzcy",
+    name: "e2e_staff_to_be_deleted",
+    lastName: "DO NOT DELETE",
+  },
 };
 
 export const APPS = {
