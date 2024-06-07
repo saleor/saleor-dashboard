@@ -20,7 +20,7 @@ const truncate = ({ label, ...rest }: RightOperatorOption) => ({
 
 const sanitize = (text: string) => text.replace(/\s/g, ",");
 const clean = (text: string) => text !== "";
-const toOptions = (text: string) => ({
+const toOption = (text: string) => ({
   label: text,
   value: text,
   slug: text,
@@ -48,14 +48,7 @@ const BulkSelect = ({ selected, emitter, index, error, helperText, disabled }: B
           return;
         }
 
-        setOptions(prev => [
-          ...prev,
-          {
-            label: currentValue,
-            value: currentValue,
-            slug: currentValue,
-          },
-        ]);
+        setOptions(prev => [...prev, toOption(currentValue)]);
         ref.current.value = "";
         ref.current.blur();
         ref.current.focus();
@@ -97,14 +90,7 @@ const BulkSelect = ({ selected, emitter, index, error, helperText, disabled }: B
         if (onBlurValue !== "") {
           ref.current.style.display = "none";
 
-          setOptions(prev => [
-            ...prev,
-            {
-              label: onBlurValue,
-              value: onBlurValue,
-              slug: onBlurValue,
-            },
-          ]);
+          setOptions(prev => [...prev, toOption(onBlurValue)]);
         }
 
         emitter.blurRightOperator(index);
@@ -123,7 +109,7 @@ const BulkSelect = ({ selected, emitter, index, error, helperText, disabled }: B
 
         const text = clipboardData.getData("text") as string;
 
-        const newOptions = sanitize(text).split(",").filter(clean).map(toOptions);
+        const newOptions = sanitize(text).split(",").filter(clean).map(toOption);
 
         setOptions(prev => [...prev, ...newOptions]);
       }}
