@@ -2,9 +2,8 @@ name: Execute automation tests
 run-name: Run tests on ${{github.event.client_payload.version}} ${{github.event.client_payload.project}}
 
 on:
-  # repository_dispatch:
-  #   types: [automation-tests-event]
-  push:
+  repository_dispatch:
+    types: [automation-tests-event]
 
 jobs:
   get-environment-variables:
@@ -14,7 +13,7 @@ jobs:
       VERSION: ${{ steps.get-environment-variables.outputs.version }}
     env:
       REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      CUSTOM_VERSION: ${{github.event.client_payload.custom_version || '3.14.5' }}
+      CUSTOM_VERSION: ${{github.event.client_payload.custom_version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -41,17 +40,17 @@ jobs:
     uses: ./.github/workflows/run-tests-on-release.yml
     with:
       VERSION: ${{needs.get-environment-variables.outputs.VERSION}}
-      CUSTOM_VERSION: ${{github.event.client_payload.custom_version || '3.14.5' }}
+      CUSTOM_VERSION: ${{github.event.client_payload.custom_version }}
     secrets: inherit
   
-  Add-tests-status-to-release-PR:
+  add-tests-status-to-release-PR:
     needs: run-tests-on-release 
     if: ${{ needs.run-tests-on-release.outputs.TESTS_CONCLUSION == 'success' && github.event.client_payload.project == 'CORE' }}
     runs-on: ubuntu-22.04
     steps:
       - name: Open release PR
         env:
-          VERSION: ${{github.event.client_payload.custom_version || '3.14.5' }}
+          VERSION: ${{github.event.client_payload.custom_version }}
           DETAILS_URL_TO_TEST_RUN: ${{needs.run-tests-on-release.outputs.RUN_URL}}
           TEST_STATUS: ${{needs.run-tests-on-release.outputs.TESTS_CONCLUSION}}
         run: |
@@ -61,7 +60,7 @@ jobs:
 
           gh api /repos/saleor/saleor-cloud-deployments/dispatches \
             --input - <<< "{
-              \"event_type\": \"open-release-pull-request-and-add-tests-results\",
+              \"event_type\": \"open-release-pull-request\",
               \"client_payload\": {
                 \"project\": \"CORE\",
                 \"environment\": \"SANDBOX\",
