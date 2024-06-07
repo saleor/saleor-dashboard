@@ -11,7 +11,6 @@ export const ProductStocksInfinityScrollList = ({
   onLoadMore,
 }: ProductStocksInfinityScrollListProps) => {
   const { scrollRef } = useInfinityScroll<HTMLOListElement>({
-    loadOnInit: true,
     onLoadMore,
     threshold: 1000,
   });

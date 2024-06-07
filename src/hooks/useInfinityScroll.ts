@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 import useDebounce from "./useDebounce";
 
@@ -9,16 +9,14 @@ export const useInfinityScroll = <TElementRef extends HTMLElement>({
   onLoadMore,
   threshold = SCROLL_THRESHOLD,
   debounceTime = DEBOUNCE_TIME,
-  loadOnInit,
 }: {
   onLoadMore: () => void;
   threshold?: number;
   debounceTime?: number;
-  loadOnInit?: boolean;
 }) => {
   const scrollRef = useRef<TElementRef>(null);
 
-  const shouldLoadMore = () => {
+  const shouldLoadMore = useCallback(() => {
     if (!scrollRef.current) {
       return false;
     }
@@ -35,7 +33,7 @@ export const useInfinityScroll = <TElementRef extends HTMLElement>({
     const scrollBottom = totalScrollHeight - scrolledHeight;
 
     return scrollBottom < threshold;
-  };
+  }, [threshold]);
 
   const handleInfiniteScroll = () => {
     if (!scrollRef.current) {
@@ -64,12 +62,11 @@ export const useInfinityScroll = <TElementRef extends HTMLElement>({
   }, [debouncedHandleInfiniteScroll]);
 
   useEffect(() => {
-    //  In case when we set scrollRef on the first time and we have to immediately load more warehouses
-    // because we reached threshold
-    if (scrollRef.current && loadOnInit && shouldLoadMore()) {
+    // On init check thresholdd and load more if needed
+    if (shouldLoadMore()) {
       onLoadMore();
     }
-  }, []);
+  }, [onLoadMore, shouldLoadMore]);
 
   return {
     scrollRef,
