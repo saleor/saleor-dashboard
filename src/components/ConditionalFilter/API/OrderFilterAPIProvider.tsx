@@ -10,7 +10,6 @@ import { IntlShape, useIntl } from "react-intl";
 
 import { RowType } from "../constants";
 import { FilterContainer, FilterElement } from "../FilterElement";
-import { ItemOption } from "../FilterElement/ConditionValue";
 import {
   BooleanValuesHandler,
   EnumValuesHandler,
