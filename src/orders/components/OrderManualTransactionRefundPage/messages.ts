@@ -32,8 +32,12 @@ export const messages = defineMessages({
     description: "default transaction name",
   },
   totalAmount: {
-    id: "ye3r1t",
-    defaultMessage: "Total amount:",
+    id: "q4EmsW",
+    defaultMessage: "Total:",
+  },
+  amountDescription: {
+    id: "NmXWPM",
+    defaultMessage: "Enter the refund amount directly. No additional calculations will be made.",
   },
 });
 

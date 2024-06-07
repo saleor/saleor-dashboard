@@ -3886,6 +3886,9 @@
   "NmK6zy": {
     "string": "Payment"
   },
+  "NmXWPM": {
+    "string": "Enter the refund amount directly. No additional calculations will be made."
+  },
   "NnhrxZ": {
     "context": "amount of sent refund for transaction",
     "string": "{transactionType} refund"
@@ -4116,6 +4119,10 @@
   "PLX6FH": {
     "context": "sum of all manual refunds for transaction",
     "string": "Manual refund"
+  },
+  "PNq9W/": {
+    "context": "back button",
+    "string": "Back"
   },
   "PTW56s": {
     "context": "alert",
@@ -5446,6 +5453,10 @@
     "context": "navigator default mode description",
     "string": "Search Views and Actions"
   },
+  "XgsXQv": {
+    "context": "order transaction refund summary label",
+    "string": "Total:"
+  },
   "XitW/z": {
     "string": "Translation Category \"{categoryName}\" - {languageCode}"
   },
@@ -6198,10 +6209,6 @@
   },
   "cY42ht": {
     "string": "Password cannot be entirely numeric"
-  },
-  "cYkerh": {
-    "context": "order transaction refund summary label",
-    "string": "Total amount:"
   },
   "cZN5Jd": {
     "context": "Webhook details events",
@@ -8103,6 +8110,9 @@
     "context": "key-value field input",
     "string": "Key"
   },
+  "q4EmsW": {
+    "string": "Total:"
+  },
   "q5Lfp4": {
     "context": "tooltip",
     "string": "Order contains products that have \"Track inventory\" enabled."
@@ -8424,10 +8434,6 @@
   "sR0urA": {
     "context": "dialog content",
     "string": "Are you sure you want to delete {name}?"
-  },
-  "sR5mWJ": {
-    "context": "cancel button",
-    "string": "Cancel"
   },
   "sS5aVm": {
     "context": "voucher discount type",
@@ -9360,9 +9366,6 @@
   "ycrTBX": {
     "context": "table header channel col label",
     "string": "Channel"
-  },
-  "ye3r1t": {
-    "string": "Total amount:"
   },
   "yfhLcv": {
     "string": "We are working on replacing plugins with apps. Read more about"

@@ -31,7 +31,7 @@ interface WebhookSubscriptionQueryProps {
 }
 
 const fetcher = createGraphiQLFetcher({
-  url: process.env.API_URL,
+  url: process.env.API_URI,
 });
 const WebhookSubscriptionQuery: React.FC<WebhookSubscriptionQueryProps> = ({
   errors,

@@ -32,8 +32,8 @@ export const OrderDetailsRefundTable: React.FC<OrderDetailsRefundTableProps> = (
   });
 
   return (
-    <DashboardCard paddingX={6}>
-      <Box paddingTop={6} display="flex" justifyContent="space-between">
+    <DashboardCard>
+      <Box paddingTop={6} display="flex" justifyContent="space-between" paddingX={6}>
         <Text size={5} fontWeight="bold">
           <FormattedMessage {...refundGridMessages.refundSection} />
         </Text>

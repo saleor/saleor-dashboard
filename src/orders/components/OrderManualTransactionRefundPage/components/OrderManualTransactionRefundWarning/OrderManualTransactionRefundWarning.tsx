@@ -7,7 +7,7 @@ import { messages } from "../../messages";
 
 export const OrderManualTransactionRefundWarning = () => {
   return (
-    <Box backgroundColor="warning1" padding={3} borderRadius={3} marginBottom={6}>
+    <Box backgroundColor="warning1" padding={3} borderRadius={3}>
       <Text size={2}>
         <FormattedMessage {...messages.sidebardDescription} />
         <br />

@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const config: CodegenConfig = {
-  schema: process.env.API_URL,
+  schema: process.env.API_URI,
   generates: {
     './introspection.json': {
       plugins: ['introspection']

@@ -50,7 +50,7 @@ runs:
     - name: Run tests
       shell: bash
       env:
-        API_URL: ${{ inputs.API_URL }}
+        API_URI: ${{ inputs.API_URL }}
         BASE_URL: ${{ inputs.BASE_URL }}
         E2E_USER_NAME: ${{ inputs.E2E_USER_NAME }}
         E2E_USER_PASSWORD: ${{ inputs.E2E_USER_PASSWORD }}
