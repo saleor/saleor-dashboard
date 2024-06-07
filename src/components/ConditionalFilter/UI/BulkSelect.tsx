@@ -36,6 +36,7 @@ const BulkSelect = ({ selected, emitter, index, error, helperText, disabled }: B
 
     switch (event.key) {
       case "Tab":
+      case "Enter":
       case ",":
       case " ":
         event.preventDefault();
