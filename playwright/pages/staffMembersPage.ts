@@ -58,4 +58,17 @@ export class StaffMembersPage extends BasePage {
     const staffMemberUrl = `${URL_LIST.staffMembers}${staffMemberId}`;
     await this.page.goto(staffMemberUrl);
   }
+
+  async verifyAssignedPermission(permission: string) {
+    await expect(this.assignedPermissionGroups.filter({ hasText: permission })).toBeVisible();
+  }
+
+  async updateStaffInfo(name: string, lastName: string, email: string) {
+    await this.firstName.clear();
+    await this.firstName.fill(name);
+    await this.lastName.clear();
+    await this.lastName.fill(lastName);
+    await this.email.clear();
+    await this.email.fill(email);
+  }
 }
