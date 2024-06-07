@@ -27,7 +27,6 @@ import {
   ProductVariantFragment,
   SearchPagesQuery,
   SearchProductsQuery,
-  SearchWarehousesQuery,
 } from "@dashboard/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
@@ -107,7 +106,6 @@ export interface ProductVariantUpdateSubmitData
 }
 
 export interface UseProductVariantUpdateFormOpts {
-  warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
   currentChannels: ChannelPriceAndPreorderData[];
   referencePages: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
@@ -129,7 +127,8 @@ export interface ProductVariantUpdateHandlers
     Record<"selectAttributeReference", FormsetChange<string[]>>,
     Record<"selectAttributeFile", FormsetChange<File>>,
     Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
-    Record<"addStock" | "deleteStock", (id: string) => void> {
+    Record<"addStock", (id: string, label: string) => void>,
+    Record<"deleteStock", (id: string) => void> {
   changePreorderEndDate: FormChange;
   changeMetadata: FormChange;
   changeMedia: (ids: string[]) => void;
@@ -283,8 +282,7 @@ function useProductVariantUpdateForm(
     attributes.data,
     triggerChange,
   );
-
-  const handleStockAdd = (id: string) => {
+  const handleStockAdd = (id: string, label: string) => {
     triggerChange();
     stocks.add({
       data: {
@@ -293,7 +291,7 @@ function useProductVariantUpdateForm(
             ?.quantityAllocated || 0,
       },
       id,
-      label: opts.warehouses.find(warehouse => warehouse.id === id).name,
+      label,
       value: "0",
     });
   };

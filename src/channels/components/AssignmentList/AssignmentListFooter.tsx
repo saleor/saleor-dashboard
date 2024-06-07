@@ -1,5 +1,5 @@
 import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
-import CardAddItemsFooter from "@dashboard/products/components/ProductStocks/CardAddItemsFooter";
+import CardAddItemsFooter from "@dashboard/products/components/ProductStocks/components/CardAddItemsFooter";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { ClickAwayListener } from "@material-ui/core";
 import React, { useEffect, useRef, useState } from "react";
