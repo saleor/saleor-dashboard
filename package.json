@@ -1,6 +1,6 @@
 {
   "name": "saleor-dashboard",
-  "version": "3.14.15",
+  "version": "3.14.16",
   "main": "src/index.tsx",
   "repository": {
     "type": "git",
