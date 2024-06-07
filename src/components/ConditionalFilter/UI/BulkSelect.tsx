@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { FilterEventEmitter } from "./EventEmitter";
 import { BulkselectOperator, RightOperatorOption } from "./types";
 
-interface BulkSelectProps {
+export interface BulkSelectProps {
   selected: BulkselectOperator;
   emitter: FilterEventEmitter;
   index: number;
@@ -14,8 +14,16 @@ interface BulkSelectProps {
 }
 
 const truncate = ({ label, ...rest }: RightOperatorOption) => ({
-  label: label.length > 15 ? label.slice(0, 15) + "..." : label,
+  label: label.length > 15 ? label.slice(0, 8) + "..." : label,
   ...rest,
+});
+
+const sanitize = (text: string) => text.replace(/\s/g, ",");
+const clean = (text: string) => text !== "";
+const toOptions = (text: string) => ({
+  label: text,
+  value: text,
+  slug: text,
 });
 
 const BulkSelect = ({ selected, emitter, index, error, helperText, disabled }: BulkSelectProps) => {
@@ -102,6 +110,18 @@ const BulkSelect = ({ selected, emitter, index, error, helperText, disabled }: B
       helperText={helperText}
       disabled={disabled}
       ref={ref}
+      onPaste={e => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const clipboardData = e.clipboardData || (window as any).clipboardData;
+
+        const text = clipboardData.getData("text") as string;
+
+        const newOptions = sanitize(text).split(",").filter(clean).map(toOptions);
+
+        setOptions(prev => [...prev, ...newOptions]);
+      }}
     />
   );
 };
