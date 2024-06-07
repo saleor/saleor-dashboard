@@ -16,13 +16,13 @@ import {
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
   useVariantCreateMutation,
-  useWarehouseListQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import usePageSearch from "@dashboard/searches/usePageSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
+import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -56,12 +56,16 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
 
   const shop = useShop();
   const intl = useIntl();
-  const warehouses = useWarehouseListQuery({
-    displayLoader: true,
-    variables: {
-      first: 50,
-    },
-  });
+
+  const { loadMore: fetchMoreWarehouses, result: searchWarehousesResult } =
+    useWarehouseSearch({
+      variables: {
+        first: 100,
+        channnelsId: [],
+        query: "",
+      },
+      skip: true,
+    });
 
   const { data, loading: productLoading } = useProductVariantCreateDataQuery({
     displayLoader: true,
@@ -257,6 +261,8 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
           defaultMessage: "Create Variant",
           description: "header",
         })}
+        fetchMoreWarehouses={fetchMoreWarehouses}
+        searchWarehousesResult={searchWarehousesResult}
         product={data?.product}
         attributeValues={attributeValues}
         onSubmit={handleSubmit}
@@ -264,7 +270,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantReorder={handleVariantReorder}
         saveButtonBarState={variantCreateResult.status}
-        warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         weightUnit={shop?.defaultWeightUnit}
         assignReferencesAttributeId={
           params.action === "assign-attribute-value" && params.id

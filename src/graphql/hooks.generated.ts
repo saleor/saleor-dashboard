@@ -14648,12 +14648,12 @@ export type SearchStaffMembersQueryHookResult = ReturnType<typeof useSearchStaff
 export type SearchStaffMembersLazyQueryHookResult = ReturnType<typeof useSearchStaffMembersLazyQuery>;
 export type SearchStaffMembersQueryResult = Apollo.QueryResult<Types.SearchStaffMembersQuery, Types.SearchStaffMembersQueryVariables>;
 export const SearchWarehousesDocument = gql`
-    query SearchWarehouses($after: String, $first: Int!, $query: String!) {
+    query SearchWarehouses($after: String, $first: Int!, $query: String!, $channnelsId: [ID!]) {
   search: warehouses(
     after: $after
     first: $first
     sortBy: {direction: ASC, field: NAME}
-    filter: {search: $query}
+    filter: {search: $query, channels: $channnelsId}
   ) {
     totalCount
     edges {
@@ -14684,6 +14684,7 @@ export const SearchWarehousesDocument = gql`
  *      after: // value for 'after'
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      channnelsId: // value for 'channnelsId'
  *   },
  * });
  */

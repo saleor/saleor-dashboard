@@ -2,7 +2,6 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
 import { createVariantChannels } from "@dashboard/channels/utils";
 import { ProductErrorCode } from "@dashboard/graphql";
-import { warehouseList } from "@dashboard/warehouses/fixtures";
 import React from "react";
 
 import { variant as variantFixture } from "../../fixtures";
@@ -30,7 +29,6 @@ export const WhenLoadedData = () => (
     onVariantReorder={() => undefined}
     saveButtonBarState="default"
     variantDeactivatePreoderButtonState="default"
-    warehouses={warehouseList}
     onWarehouseConfigure={() => undefined}
     referencePages={[]}
     referenceProducts={[]}
@@ -40,6 +38,8 @@ export const WhenLoadedData = () => (
     onCloseDialog={() => undefined}
     onAttributeSelectBlur={() => undefined}
     onVariantPreorderDeactivate={() => undefined}
+    fetchMoreWarehouses={() => undefined}
+    searchWarehousesResult={undefined}
   />
 );
 
@@ -59,7 +59,6 @@ export const WhenLoadingData = () => (
     onVariantReorder={() => undefined}
     saveButtonBarState="default"
     variantDeactivatePreoderButtonState="default"
-    warehouses={warehouseList}
     onWarehouseConfigure={() => undefined}
     referencePages={[]}
     referenceProducts={[]}
@@ -69,6 +68,8 @@ export const WhenLoadingData = () => (
     onCloseDialog={() => undefined}
     onAttributeSelectBlur={() => undefined}
     onVariantPreorderDeactivate={() => undefined}
+    fetchMoreWarehouses={() => undefined}
+    searchWarehousesResult={undefined}
   />
 );
 
@@ -87,7 +88,6 @@ export const NoWarehouses = () => (
     onVariantReorder={() => undefined}
     saveButtonBarState="default"
     variantDeactivatePreoderButtonState="default"
-    warehouses={[]}
     onWarehouseConfigure={() => undefined}
     referencePages={[]}
     referenceProducts={[]}
@@ -97,6 +97,8 @@ export const NoWarehouses = () => (
     onCloseDialog={() => undefined}
     onAttributeSelectBlur={() => undefined}
     onVariantPreorderDeactivate={() => undefined}
+    fetchMoreWarehouses={() => undefined}
+    searchWarehousesResult={undefined}
   />
 );
 
@@ -143,7 +145,6 @@ export const AttributeErrors = () => (
         message: "Product price cannot be lower than 0.",
       },
     ]}
-    warehouses={warehouseList}
     onWarehouseConfigure={() => undefined}
     referencePages={[]}
     referenceProducts={[]}
@@ -153,5 +154,7 @@ export const AttributeErrors = () => (
     onCloseDialog={() => undefined}
     onAttributeSelectBlur={() => undefined}
     onVariantPreorderDeactivate={() => undefined}
+    fetchMoreWarehouses={() => undefined}
+    searchWarehousesResult={undefined}
   />
 );

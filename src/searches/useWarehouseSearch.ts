@@ -8,12 +8,17 @@ import {
 import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
 
 export const searchWarehouses = gql`
-  query SearchWarehouses($after: String, $first: Int!, $query: String!) {
+  query SearchWarehouses(
+    $after: String
+    $first: Int!
+    $query: String!
+    $channnelsId: [ID!]
+  ) {
     search: warehouses(
       after: $after
       first: $first
       sortBy: { direction: ASC, field: NAME }
-      filter: { search: $query }
+      filter: { search: $query, channels: $channnelsId }
     ) {
       totalCount
       edges {

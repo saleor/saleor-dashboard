@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import placeholderImage from "@assets/images/placeholder255x255.png";
 import { ProductErrorCode } from "@dashboard/graphql";
-import { warehouseList } from "@dashboard/warehouses/fixtures";
 import React from "react";
 
 import { product as productFixture } from "../../fixtures";
@@ -25,7 +24,6 @@ export const Default = () => (
     onVariantClick={undefined}
     onVariantReorder={() => undefined}
     saveButtonBarState="default"
-    warehouses={warehouseList}
     onWarehouseConfigure={() => undefined}
     referencePages={[]}
     referenceProducts={[]}
@@ -34,6 +32,8 @@ export const Default = () => (
     onAssignReferencesClick={() => undefined}
     onCloseDialog={() => undefined}
     onAttributeSelectBlur={() => undefined}
+    fetchMoreWarehouses={() => undefined}
+    searchWarehousesResult={undefined}
   />
 );
 
@@ -71,7 +71,6 @@ export const WithErrors = () => (
     onVariantClick={undefined}
     onVariantReorder={() => undefined}
     saveButtonBarState="default"
-    warehouses={warehouseList}
     onWarehouseConfigure={() => undefined}
     referencePages={[]}
     referenceProducts={[]}
@@ -80,6 +79,8 @@ export const WithErrors = () => (
     onAssignReferencesClick={() => undefined}
     onCloseDialog={() => undefined}
     onAttributeSelectBlur={() => undefined}
+    fetchMoreWarehouses={() => undefined}
+    searchWarehousesResult={undefined}
   />
 );
 
@@ -95,7 +96,6 @@ export const WhenLoadingData = () => (
     onVariantClick={undefined}
     onVariantReorder={() => undefined}
     saveButtonBarState="default"
-    warehouses={warehouseList}
     onWarehouseConfigure={() => undefined}
     referencePages={[]}
     referenceProducts={[]}
@@ -104,6 +104,8 @@ export const WhenLoadingData = () => (
     onAssignReferencesClick={() => undefined}
     onCloseDialog={() => undefined}
     onAttributeSelectBlur={() => undefined}
+    fetchMoreWarehouses={() => undefined}
+    searchWarehousesResult={undefined}
   />
 );
 
@@ -122,7 +124,6 @@ export const AddFirstVariant = () => (
     onVariantClick={undefined}
     onVariantReorder={() => undefined}
     saveButtonBarState="default"
-    warehouses={warehouseList}
     onWarehouseConfigure={() => undefined}
     referencePages={[]}
     referenceProducts={[]}
@@ -131,6 +132,8 @@ export const AddFirstVariant = () => (
     onAssignReferencesClick={() => undefined}
     onCloseDialog={() => undefined}
     onAttributeSelectBlur={() => undefined}
+    fetchMoreWarehouses={() => undefined}
+    searchWarehousesResult={undefined}
   />
 );
 
@@ -146,7 +149,6 @@ export const NoWarehouses = () => (
     onVariantClick={undefined}
     onVariantReorder={() => undefined}
     saveButtonBarState="default"
-    warehouses={[]}
     onWarehouseConfigure={() => undefined}
     referencePages={[]}
     referenceProducts={[]}
@@ -155,5 +157,7 @@ export const NoWarehouses = () => (
     onAssignReferencesClick={() => undefined}
     onCloseDialog={() => undefined}
     onAttributeSelectBlur={() => undefined}
+    fetchMoreWarehouses={() => undefined}
+    searchWarehousesResult={undefined}
   />
 );

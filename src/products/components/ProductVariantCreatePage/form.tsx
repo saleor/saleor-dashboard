@@ -26,7 +26,6 @@ import {
   ProductVariantCreateDataQuery,
   SearchPagesQuery,
   SearchProductsQuery,
-  SearchWarehousesQuery,
 } from "@dashboard/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
@@ -82,7 +81,6 @@ export interface ProductVariantCreateData extends ProductVariantCreateFormData {
 }
 
 export interface UseProductVariantCreateFormOpts {
-  warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
   referencePages: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
   fetchReferencePages?: (data: string) => void;
@@ -103,7 +101,8 @@ export interface ProductVariantCreateHandlers
     Record<"selectAttributeReference", FormsetChange<string[]>>,
     Record<"selectAttributeFile", FormsetChange<File>>,
     Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
-    Record<"addStock" | "deleteStock", (id: string) => void> {
+    Record<"addStock", (id: string, label: string) => void>,
+    Record<"deleteStock", (id: string) => void> {
   changeMetadata: FormChange;
   updateChannels: (selectedChannelsIds: string[]) => void;
   changePreorderEndDate: FormChange;
@@ -232,14 +231,14 @@ function useProductVariantCreateForm(
     attributes.data,
     triggerChange,
   );
-  const handleStockAdd = (id: string) => {
+  const handleStockAdd = (id: string, label: string) => {
     triggerChange();
     stocks.add({
       data: {
         quantityAllocated: 0,
       },
       id,
-      label: opts.warehouses.find(warehouse => warehouse.id === id).name,
+      label,
       value: "0",
     });
   };

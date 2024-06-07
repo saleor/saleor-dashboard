@@ -61,6 +61,8 @@ const props = {
   onCloseDialog: () => undefined,
   onSelectProductType: () => undefined,
   onAttributeSelectBlur: () => undefined,
+  fetchMoreWarehouses: () => undefined,
+  searchWarehousesResult: undefined,
 };
 
 export const Default = () => <ProductCreatePage {...props} />;
