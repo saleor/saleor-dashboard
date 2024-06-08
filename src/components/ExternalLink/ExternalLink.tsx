@@ -52,10 +52,10 @@ export const ExternalLinkNext = (
 
   return (
     <Text
+      textDecoration="none"
       {...props}
       as="a"
       rel={props.rel ?? opensNewTab ? "noopener noreferer" : ""}
-      textDecoration="none"
     />
   );
 };
