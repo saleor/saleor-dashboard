@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { QueryResult } from "@apollo/client";
 import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
@@ -30,6 +31,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { ProductDetailsChannelsAvailabilityCard } from "@dashboard/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
 import { productUrl } from "@dashboard/products/urls";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -83,7 +85,6 @@ interface ProductVariantCreatePageProps {
   header: string;
   product: ProductVariantCreateDataQuery["product"];
   saveButtonBarState: ConfirmButtonTransitionState;
-  warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
   weightUnit: string;
   referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
@@ -102,6 +103,8 @@ interface ProductVariantCreatePageProps {
   fetchMoreAttributeValues?: FetchMoreProps;
   onCloseDialog: () => void;
   onAttributeSelectBlur: () => void;
+  fetchMoreWarehouses: () => void;
+  searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
 }
 
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
@@ -112,7 +115,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   header,
   product,
   saveButtonBarState,
-  warehouses,
   weightUnit,
   referencePages = [],
   referenceProducts = [],
@@ -130,6 +132,8 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   fetchMoreAttributeValues,
   onCloseDialog,
   onAttributeSelectBlur,
+  fetchMoreWarehouses,
+  searchWarehousesResult,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -159,7 +163,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
     <ProductVariantCreateForm
       product={product}
       onSubmit={onSubmit}
-      warehouses={warehouses}
       referencePages={referencePages}
       referenceProducts={referenceProducts}
       fetchReferencePages={fetchReferencePages}
@@ -278,12 +281,14 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                   <CardSpacer />
                   <ProductStocks
                     data={data}
+                    warehouses={mapEdgesToItems(searchWarehousesResult?.data?.search) ?? []}
+                    fetchMoreWarehouses={fetchMoreWarehouses}
+                    hasMoreWarehouses={searchWarehousesResult?.data?.search?.pageInfo?.hasNextPage}
                     disabled={disabled}
                     hasVariants={true}
                     onFormDataChange={change}
                     errors={errors}
                     stocks={data.stocks}
-                    warehouses={warehouses}
                     onChange={handlers.changeStock}
                     onWarehouseStockAdd={handlers.addStock}
                     onWarehouseStockDelete={handlers.deleteStock}
