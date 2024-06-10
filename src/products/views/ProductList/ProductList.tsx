@@ -287,7 +287,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const filteredColumnIds = (settings.columns ?? [])
     .filter(isAttributeColumnValue)
     .map(getAttributeIdFromColumnValue);
-  const { data, loading, refetch } = useProductListQuery({
+  const { data, refetch } = useProductListQuery({
     displayLoader: true,
     variables: {
       ...queryVariables,
