@@ -67,25 +67,23 @@ describe("AutocompleteSelectMenu", () => {
   it("renders without crashing", () => {
     // Arrange & Act
     const { container } = render(<AutocompleteSelectMenu {...defaultProps} />);
+
     // Assert
     expect(container).toBeInTheDocument();
   });
 
   it("renders the input field", () => {
     // Arrange & Act
-    const { getByPlaceholderText } = render(
-      <AutocompleteSelectMenu {...defaultProps} />,
-    );
+    const { getByPlaceholderText } = render(<AutocompleteSelectMenu {...defaultProps} />);
     const input = getByPlaceholderText(defaultProps.placeholder);
+
     // Assert
     expect(input).toBeInTheDocument();
   });
 
   it("calls onInputChange when typing in the input field", async () => {
     // Arrange
-    const { getByPlaceholderText } = render(
-      <AutocompleteSelectMenu {...defaultProps} />,
-    );
+    const { getByPlaceholderText } = render(<AutocompleteSelectMenu {...defaultProps} />);
     const input = getByPlaceholderText(defaultProps.placeholder);
 
     // Act
@@ -108,7 +106,9 @@ describe("AutocompleteSelectMenu", () => {
 
     // Act
     fireEvent.focus(input);
+
     const option = getByText("Option 1");
+
     fireEvent.click(option);
 
     // Assert
