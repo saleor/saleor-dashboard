@@ -1,6 +1,7 @@
 import { ApolloQueryResult } from "@apollo/client";
 import {
   _GetChannelOperandsQuery,
+  _GetLegacyChannelOperandsQuery,
   _SearchAttributeOperandsQuery,
   _SearchCategoriesOperandsQuery,
   _SearchCollectionsOperandsQuery,
@@ -10,11 +11,15 @@ import {
 import { createBooleanOptions } from "../../constants";
 import { createOptionsFromAPI } from "../Handler";
 import { InitialState } from "../InitialStateResponse";
-import { InitialAPIResponse } from "./types";
+import { InitialOrderState } from "./orders/InitialOrderState";
+import { InitialAPIResponse, InitialOrderAPIResponse } from "./types";
 
 const isChannelQuery = (
   query: InitialAPIResponse,
 ): query is ApolloQueryResult<_GetChannelOperandsQuery> => "channels" in query.data;
+const isChannelsQuery = (
+  query: InitialOrderAPIResponse,
+): query is ApolloQueryResult<_GetLegacyChannelOperandsQuery> => "channels" in query.data;
 const isCollectionQuery = (
   query: InitialAPIResponse,
 ): query is ApolloQueryResult<_SearchCollectionsOperandsQuery> => "collections" in query.data;
@@ -97,5 +102,37 @@ export const createInitialStateFromData = (data: InitialAPIResponse[], channel: 
       hasCategory: createBooleanOptions(),
       giftCard: createBooleanOptions(),
       attribute: {},
+    },
+  );
+
+export const createInitialOrderState = (data: InitialOrderAPIResponse[]) =>
+  data.reduce<InitialOrderState>(
+    (acc, query) => {
+      if (isChannelsQuery(query)) {
+        return {
+          ...acc,
+          channels: (query.data?.channels ?? []).map(({ id, name, slug }) => ({
+            label: name,
+            value: id,
+            slug,
+          })),
+        };
+      }
+
+      return acc;
+    },
+    {
+      channels: [],
+      paymentStatus: [],
+      status: [],
+      authorizeStatus: [],
+      chargeStatus: [],
+      isClickAndCollect: createBooleanOptions(),
+      isPreorder: createBooleanOptions(),
+      giftCardBought: createBooleanOptions(),
+      giftCardUsed: createBooleanOptions(),
+      customer: [],
+      created: "",
+      updatedAt: "",
     },
   );

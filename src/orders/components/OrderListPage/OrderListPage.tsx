@@ -9,6 +9,7 @@ import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
@@ -36,6 +37,7 @@ export interface OrderListPageProps
   limits: RefreshLimitsQuery["shop"]["limits"];
   orders: RelayToFlat<OrderListQuery["orders"]>;
   hasPresetsChanged: boolean;
+  newOrdersFiltersEnabled: boolean;
   onSettingsOpen: () => void;
   onAdd: () => void;
   params: OrderListUrlQueryParams;
@@ -60,6 +62,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   onAll,
   currentTab,
   hasPresetsChanged,
+  newOrdersFiltersEnabled,
   ...listProps
 }) => {
   const intl = useIntl();
@@ -74,12 +77,14 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   const extensionMenuItems = mapToMenuItemsForOrderListActions(ORDER_OVERVIEW_MORE_ACTIONS);
   const extensionCreateButtonItems = mapToMenuItemsForOrderListActions(ORDER_OVERVIEW_CREATE);
   const context = useDevModeContext();
+  const { valueProvider } = useConditionalFilterContext();
+
   const openPlaygroundURL = () => {
     context.setDevModeContent(DevModeQuery);
 
     const variables = JSON.stringify(
       {
-        filter: getFilterVariables(params),
+        filter: getFilterVariables(params, valueProvider.value, newOrdersFiltersEnabled),
         // TODO add sorting: Issue #3409
         // strange error when uncommenting this line
         // sortBy: getSortQueryVariables(params)
@@ -198,7 +203,9 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
           </Box>
         </Box>
       </TopNav>
+
       {limitsReached && <OrderLimitReached />}
+
       <Card>
         <ListFilters
           initialSearch={initialSearch}
@@ -209,6 +216,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
             id: "wTHjt3",
             defaultMessage: "Search Orders...",
           })}
+          filtersEnabled={!!newOrdersFiltersEnabled}
         />
         <OrderListDatagrid {...listProps} hasRowHover={!isFilterPresetOpen} rowAnchor={orderUrl} />
       </Card>

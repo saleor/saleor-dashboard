@@ -1,9 +1,15 @@
 import { parse, ParsedQs } from "qs";
 
+import { InitialOrderStateResponse } from "../../API/initialState/orders/InitialOrderState";
 import { InitialStateResponse } from "../../API/InitialStateResponse";
 import { FilterContainer, FilterElement } from "../../FilterElement";
 import { UrlEntry, UrlToken } from "../UrlToken";
-import { emptyFetchingParams, FetchingParams, toFetchingParams } from "./fetchingParams";
+import {
+  FetchingParams,
+  OrderFetchingParams,
+  toFetchingParams,
+  toOrderFetchingParams,
+} from "./fetchingParams";
 
 const toFlatUrlTokens = (p: UrlToken[], c: TokenArray[number]) => {
   if (typeof c === "string") {
@@ -37,7 +43,7 @@ const tokenizeUrl = (urlParams: string) => {
 };
 const mapUrlTokensToFilterValues = (
   urlTokens: TokenArray,
-  response: InitialStateResponse,
+  response: InitialStateResponse | InitialOrderStateResponse,
 ): FilterContainer =>
   urlTokens.map(el => {
     if (typeof el === "string") {
@@ -56,17 +62,25 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
     super(...tokenizeUrl(url));
   }
 
-  public getFetchingParams() {
+  public getFetchingParams(params: OrderFetchingParams | FetchingParams) {
+    if ("paymentStatus" in params) {
+      return this.asFlatArray()
+        .filter(token => token.isLoadable())
+        .reduce<OrderFetchingParams>(toOrderFetchingParams, params);
+    }
+
     return this.asFlatArray()
       .filter(token => token.isLoadable())
-      .reduce<FetchingParams>(toFetchingParams, emptyFetchingParams);
+      .reduce<FetchingParams>(toFetchingParams, params);
   }
 
   public asFlatArray() {
     return flatenate(this);
   }
 
-  public asFilterValuesFromResponse(response: InitialStateResponse): FilterContainer {
+  public asFilterValuesFromResponse(
+    response: InitialStateResponse | InitialOrderStateResponse,
+  ): FilterContainer {
     return this.map(el => {
       if (typeof el === "string") {
         return el;
