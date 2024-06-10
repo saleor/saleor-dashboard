@@ -1,16 +1,17 @@
 import { DynamicMultiselect } from "@saleor/macaw-ui-next";
 import React, { useEffect, useRef, useState } from "react";
 
-import { FilterEventEmitter } from "./EventEmitter";
 import { BulkselectOperator, RightOperatorOption } from "./types";
 
 export interface BulkSelectProps {
   selected: BulkselectOperator;
-  emitter: FilterEventEmitter;
-  index: number;
   error: boolean;
   helperText: string;
   disabled: boolean;
+  dataTestId?: string;
+  onFocus: () => void;
+  onBlur: () => void;
+  onOptionsChange: (options: RightOperatorOption[]) => void;
 }
 
 const truncateOptionsLabel = ({ label, ...rest }: RightOperatorOption) => ({
@@ -26,7 +27,16 @@ const toOption = (text: string) => ({
   slug: text,
 });
 
-const BulkSelect = ({ selected, emitter, index, error, helperText, disabled }: BulkSelectProps) => {
+const BulkSelect = ({
+  selected,
+  dataTestId,
+  error,
+  helperText,
+  disabled,
+  onFocus,
+  onBlur,
+  onOptionsChange,
+}: BulkSelectProps) => {
   const [options, setOptions] = useState<RightOperatorOption[]>(selected.value ?? []);
 
   const ref = useRef<HTMLInputElement>(null);
@@ -66,22 +76,18 @@ const BulkSelect = ({ selected, emitter, index, error, helperText, disabled }: B
   };
 
   useEffect(() => {
-    emitter.changeRightOperator(index, options);
-  }, [options, emitter, index]);
+    onOptionsChange(options);
+  }, [options, onOptionsChange]);
 
   return (
     <DynamicMultiselect
-      data-test-id={`right-${index}`}
+      data-test-id={dataTestId ?? "bulk-select"}
       value={options.map(truncateOptionsLabel)}
       options={[]}
       loading={selected.loading}
-      onChange={val => {
-        setOptions(val);
-      }}
+      onChange={val => setOptions(val)}
       onInputValueChange={() => undefined}
-      onFocus={() => {
-        emitter.focusRightOperator(index);
-      }}
+      onFocus={() => onFocus()}
       onBlur={event => {
         if (!ref.current) return;
 
@@ -93,7 +99,7 @@ const BulkSelect = ({ selected, emitter, index, error, helperText, disabled }: B
           setOptions(prev => [...prev, toOption(onBlurValue)]);
         }
 
-        emitter.blurRightOperator(index);
+        onBlur();
         ref.current.style.display = "block";
       }}
       onKeyDown={e => onKeyDown(e)}

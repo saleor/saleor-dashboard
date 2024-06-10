@@ -89,11 +89,13 @@ export const RightOperator = ({
     return (
       <BulkSelect
         selected={selected}
-        emitter={emitter}
-        index={index}
         error={error}
         helperText={helperText}
         disabled={disabled}
+        dataTestId={`right-${index}`}
+        onFocus={() => emitter.focusRightOperator(index)}
+        onBlur={() => emitter.blurRightOperator(index)}
+        onOptionsChange={options => emitter.changeRightOperator(index, options)}
       />
     );
   }
