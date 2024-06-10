@@ -4,6 +4,7 @@ import {
   CountryCode,
   DateRangeInput,
   OrderStatus,
+  OrderStatusFilter,
   PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
 import { Node, SlugNode } from "@dashboard/types";
@@ -168,6 +169,16 @@ export const transformOrderStatus = (
     case OrderStatus.RETURNED:
       return {
         localized: intl.formatMessage(orderStatusMessages.returned),
+        status: StatusType.INFO,
+      };
+    case OrderStatusFilter.READY_TO_CAPTURE:
+      return {
+        localized: intl.formatMessage(orderStatusMessages.readyToCapture),
+        status: StatusType.INFO,
+      };
+    case OrderStatusFilter.READY_TO_FULFILL:
+      return {
+        localized: intl.formatMessage(orderStatusMessages.readyToFulfill),
         status: StatusType.INFO,
       };
   }

@@ -34,6 +34,14 @@ export const initialDynamicOperands = gql`
     }
   }
 
+  query _GetLegacyChannelOperands {
+    channels {
+      id
+      name
+      slug
+    }
+  }
+
   query _SearchCollectionsOperands($first: Int!, $collectionsSlugs: [String!]) {
     collections(first: $first, filter: { slugs: $collectionsSlugs }) {
       edges {

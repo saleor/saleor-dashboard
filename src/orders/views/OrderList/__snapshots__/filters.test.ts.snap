@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Filtering URL params should not be empty if active filters are present 1`] = `
+exports[`[old] Filtering URL params should not be empty if active filters are present 1`] = `
 Object {
   "channel": Array [],
   "clickAndCollect": "false",
@@ -24,4 +24,4 @@ Object {
 }
 `;
 
-exports[`Filtering URL params should not be empty if active filters are present 2`] = `"clickAndCollect=false&preorder=false&customer=email%40example.com&createdFrom=2019-12-09&createdTo=2019-12-38&giftCard%5B0%5D=paid&giftCard%5B1%5D=bought&status%5B0%5D=FULFILLED&status%5B1%5D=PARTIALLY_FULFILLED&paymentStatus%5B0%5D=FULLY_CHARGED&paymentStatus%5B1%5D=PARTIALLY_CHARGED"`;
+exports[`[old] Filtering URL params should not be empty if active filters are present 2`] = `"clickAndCollect=false&preorder=false&customer=email%40example.com&createdFrom=2019-12-09&createdTo=2019-12-38&giftCard%5B0%5D=paid&giftCard%5B1%5D=bought&status%5B0%5D=FULFILLED&status%5B1%5D=PARTIALLY_FULFILLED&paymentStatus%5B0%5D=FULLY_CHARGED&paymentStatus%5B1%5D=PARTIALLY_CHARGED"`;

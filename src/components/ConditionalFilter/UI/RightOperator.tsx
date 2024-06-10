@@ -44,7 +44,7 @@ export const RightOperator = ({
     return (
       <Input
         data-test-id={`right-${index}`}
-        value={selected.value}
+        value={typeof selected.value === "object" ? selected.value.value : selected.value}
         onChange={e => {
           emitter.changeRightOperator(index, e.target.value);
         }}
@@ -66,7 +66,7 @@ export const RightOperator = ({
       <Input
         data-test-id={`right-${index}`}
         type="number"
-        value={selected.value}
+        value={typeof selected.value === "object" ? selected.value.value : selected.value}
         onChange={e => {
           emitter.changeRightOperator(index, e.target.value);
         }}

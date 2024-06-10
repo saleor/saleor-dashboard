@@ -17,7 +17,6 @@ import {
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
   useVariantCreateMutation,
-  useWarehouseListQuery,
 } from "@dashboard/graphql";
 import useChannels from "@dashboard/hooks/useChannels";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -38,6 +37,7 @@ import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import usePageSearch from "@dashboard/searches/usePageSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
+import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
@@ -45,7 +45,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseAddPath } from "@dashboard/warehouses/urls";
-import React from "react";
+import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { PRODUCT_CREATE_FORM_ID } from "./consts";
@@ -149,15 +149,18 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
       formId: PRODUCT_CREATE_FORM_ID,
     },
   );
-  const warehouses = useWarehouseListQuery({
-    displayLoader: true,
+
+  const channnelsId = useMemo(() => currentChannels.map(channel => channel.id), [currentChannels]);
+
+  const { loadMore: fetchMoreWarehouses, result: searchWarehousesResult } = useWarehouseSearch({
     variables: {
-      first: 50,
-      filter: {
-        channels: currentChannels.map(channel => channel.id),
-      },
+      first: 100,
+      channnelsId,
+      query: "",
     },
+    skip: !currentChannels.length,
   });
+
   const handleSuccess = (productId: string) => {
     notify({
       status: "success",
@@ -322,7 +325,6 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         fetchMoreCategories={fetchMoreCategories}
         fetchMoreCollections={fetchMoreCollections}
         fetchMoreProductTypes={fetchMoreProductTypes}
-        warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         taxClasses={taxClasses ?? []}
         fetchMoreTaxClasses={fetchMoreTaxClasses}
         weightUnit={shop?.defaultWeightUnit}
@@ -341,6 +343,8 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         selectedProductType={selectedProductType?.productType}
         onSelectProductType={handleSelectProductType}
         onAttributeSelectBlur={searchAttributeReset}
+        fetchMoreWarehouses={fetchMoreWarehouses}
+        searchWarehousesResult={searchWarehousesResult}
       />
     </>
   );

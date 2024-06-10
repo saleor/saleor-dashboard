@@ -15,6 +15,7 @@ import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { ProductListColumns } from "@dashboard/config";
+import { useFlag } from "@dashboard/featureFlags";
 import {
   Exact,
   GridAttributesQuery,
@@ -125,6 +126,10 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     DEFAULT_PRODUCT_LIST_VIEW_TYPE,
   );
   const isDatagridView = storedProductListViewType === "datagrid";
+
+  const isProductPage = window.location.pathname.includes("/products");
+  const productListingPageFiltersFlag = useFlag("product_filters");
+  const filtersEnabled = isProductPage && productListingPageFiltersFlag.enabled;
 
   return (
     <ListPageLayout>
@@ -245,6 +250,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               id: "kIvvax",
               defaultMessage: "Search Products...",
             })}
+            filtersEnabled={filtersEnabled}
             actions={
               <Box display="flex" gap={4}>
                 {selectedProductIds.length > 0 && (

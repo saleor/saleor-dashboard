@@ -1,3 +1,4 @@
+import { InitialOrderStateResponse } from "../API/initialState/orders/InitialOrderState";
 import { InitialStateResponse } from "../API/InitialStateResponse";
 import { RowType, STATIC_OPTIONS } from "../constants";
 import { LeftOperand } from "../LeftOperandsProvider";
@@ -174,7 +175,10 @@ export class FilterElement {
     return new FilterElement(ExpressionValue.fromSlug(slug), Condition.emptyFromSlug(slug), false);
   }
 
-  public static fromUrlToken(token: UrlToken, response: InitialStateResponse) {
+  public static fromUrlToken(
+    token: UrlToken,
+    response: InitialStateResponse | InitialOrderStateResponse,
+  ) {
     if (token.isStatic()) {
       return new FilterElement(
         ExpressionValue.fromUrlToken(token),
@@ -185,7 +189,7 @@ export class FilterElement {
 
     if (token.isAttribute()) {
       return new FilterElement(
-        ExpressionValue.forAttribute(token.name, response),
+        ExpressionValue.forAttribute(token.name, response as InitialStateResponse),
         Condition.fromUrlToken(token, response),
         false,
       );
