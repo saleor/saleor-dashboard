@@ -1236,6 +1236,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     attributes: [],
     channelListings: [
       {
+        id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -1272,6 +1273,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
         visibleInListings: true,
       },
       {
+        id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -1331,6 +1333,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     channelListings: [
       {
+        id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -1367,6 +1370,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
         visibleInListings: false,
       },
       {
+        id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -1426,6 +1430,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     channelListings: [
       {
+        id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -1462,6 +1467,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
         visibleInListings: false,
       },
       {
+        id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -1543,6 +1549,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     ],
     channelListings: [
       {
+        id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -1579,6 +1586,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
         visibleInListings: false,
       },
       {
+        id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -1660,6 +1668,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     ],
     channelListings: [
       {
+        id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -1696,6 +1705,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
         visibleInListings: false,
       },
       {
+        id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -1777,6 +1787,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     ],
     channelListings: [
       {
+        id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -1814,6 +1825,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       },
 
       {
+        id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -1895,6 +1907,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     ],
     channelListings: [
       {
+        id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -1931,6 +1944,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
         visibleInListings: false,
       },
       {
+        id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -2012,6 +2026,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     ],
     channelListings: [
       {
+        id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -2048,6 +2063,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
         visibleInListings: false,
       },
       {
+        id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -2129,6 +2145,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     ],
     channelListings: [
       {
+        id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -2165,6 +2182,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
         visibleInListings: true,
       },
       {
+        id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -2246,6 +2264,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     ],
     channelListings: [
       {
+        id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -2282,6 +2301,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
         visibleInListings: false,
       },
       {
+        id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -2363,6 +2383,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     ],
     channelListings: [
       {
+        id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -2399,6 +2420,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
         visibleInListings: true,
       },
       {
+        id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -2480,6 +2502,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     ],
     channelListings: [
       {
+        id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -2516,6 +2539,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
         visibleInListings: true,
       },
       {
+        id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -2597,6 +2621,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     ],
     channelListings: [
       {
+        id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -2633,6 +2658,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
         visibleInListings: true,
       },
       {
+        id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -2714,6 +2740,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     ],
     channelListings: [
       {
+        id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -2750,6 +2777,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
         visibleInListings: false,
       },
       {
+        id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -2831,6 +2859,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     ],
     channelListings: [
       {
+        id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -2867,6 +2896,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
         visibleInListings: false,
       },
       {
+        id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -2948,6 +2978,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     ],
     channelListings: [
       {
+        id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -2984,6 +3015,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
         visibleInListings: true,
       },
       {
+        id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -3065,6 +3097,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     ],
     channelListings: [
       {
+        id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -3101,6 +3134,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
         visibleInListings: false,
       },
       {
+        id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -3182,6 +3216,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     ],
     channelListings: [
       {
+        id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -3218,6 +3253,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
         visibleInListings: true,
       },
       {
+        id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -3299,6 +3335,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     ],
     channelListings: [
       {
+        id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -3335,6 +3372,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
         visibleInListings: true,
       },
       {
+        id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -3416,6 +3454,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     ],
     channelListings: [
       {
+        id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
@@ -3452,6 +3491,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
         visibleInListings: true,
       },
       {
+        id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
         availableForPurchaseAt: null,
         channel: {
