@@ -697,6 +697,10 @@
     "context": "Previous discount label",
     "string": "Previous discount value"
   },
+  "2V6eD8": {
+    "context": "refund type",
+    "string": "Miscellaneous refund"
+  },
   "2VSP8C": {
     "context": "delete token",
     "string": "Are you sure you want to delete token {token}?"
@@ -1915,10 +1919,6 @@
   "B0fwAj": {
     "string": "and {itemsLength} more"
   },
-  "B1yzuX": {
-    "context": "button label",
-    "string": "Add reason"
-  },
   "B2LE7A": {
     "context": "menu item loading",
     "string": "working..."
@@ -2116,10 +2116,6 @@
   "CJpx4E": {
     "context": "page header",
     "string": "Order no. {orderNumber} - Add Fulfillment"
-  },
-  "CLB1k9": {
-    "context": "refund type",
-    "string": "Refund Products"
   },
   "CLeDae": {
     "context": "section header",
@@ -3040,10 +3036,6 @@
     "context": "swatch attribute image label",
     "string": "Image"
   },
-  "I5vC7T": {
-    "context": "button label",
-    "string": "Edit reason"
-  },
   "I7HyJZ": {
     "context": "order refund amount",
     "string": "Max Refund"
@@ -3545,10 +3537,6 @@
   },
   "LKoIB1": {
     "string": "Add search engine title and description to make this product easier to find"
-  },
-  "LKpQYh": {
-    "context": "refund type",
-    "string": "Miscellaneous Refund"
   },
   "LLrOK3": {
     "context": "paragraph, description in manual refund card",
@@ -4356,10 +4344,6 @@
   "QirE3M": {
     "string": "Start Date"
   },
-  "QisX+2": {
-    "context": "reason per line helper text",
-    "string": "You can specify a reason why this line is being returned."
-  },
   "Qj/3sH": {
     "context": "limit voucher",
     "string": "Limit number of times this discount can be used in total"
@@ -5080,6 +5064,10 @@
   },
   "VOiUXQ": {
     "string": "Used to calculate rates for shipping for products of this product type, when specific weight is not given"
+  },
+  "VOjJWA": {
+    "context": "refund type",
+    "string": "Refund products"
   },
   "VSj89H": {
     "context": "fulfill button label",
@@ -6331,6 +6319,10 @@
   },
   "dM86a2": {
     "string": "No categories found"
+  },
+  "dNO7rg": {
+    "context": "button label",
+    "string": "Add refund reason for this line"
   },
   "dOQB9o": {
     "context": "payment status",
@@ -9063,6 +9055,10 @@
   },
   "wQdR8M": {
     "string": "Add search engine title and description to make this category easier to find"
+  },
+  "wQkHPZ": {
+    "context": "button label",
+    "string": "Edit refund reason for this line"
   },
   "wRvjoc": {
     "context": "app created at label",
