@@ -9366,6 +9366,11 @@ export type _GetChannelOperandsQueryVariables = Exact<{ [key: string]: never; }>
 
 export type _GetChannelOperandsQuery = { __typename: 'Query', channels: Array<{ __typename: 'Channel', name: string, slug: string, id: string }> | null };
 
+export type _GetLegacyChannelOperandsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type _GetLegacyChannelOperandsQuery = { __typename: 'Query', channels: Array<{ __typename: 'Channel', id: string, name: string, slug: string }> | null };
+
 export type _SearchCollectionsOperandsQueryVariables = Exact<{
   first: Scalars['Int'];
   collectionsSlugs?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;

@@ -2447,6 +2447,14 @@
     "context": "info card title",
     "string": "Card information"
   },
+  "EoTI4r": {
+    "context": "authorize status none",
+    "string": "None"
+  },
+  "EojeG7": {
+    "context": "authorize status partial",
+    "string": "Partial"
+  },
   "Epm41J": {
     "context": "change warehouse dialog warehouse list label",
     "string": "Warehouses A to Z"
@@ -2479,6 +2487,10 @@
   "EwoyVr": {
     "context": "bulk remove button label",
     "string": "Delete shipping zones"
+  },
+  "F/JMp6": {
+    "context": "authorize status full",
+    "string": "Full"
   },
   "F0AXNs": {
     "context": "invoice create date prefix",
@@ -3407,6 +3419,10 @@
   "KOqZv3": {
     "context": "tooltip, submit form",
     "string": "You have to grant refund first."
+  },
+  "KPmk40": {
+    "context": "charge status partial",
+    "string": "Partial"
   },
   "KRqgfo": {
     "string": "User is out of your permissions scope"
@@ -4855,6 +4871,10 @@
     "context": "searchbar placeholder",
     "string": "Country"
   },
+  "UIM5bq": {
+    "context": "charge status full",
+    "string": "Full"
+  },
   "UJ97Lb": {
     "string": "Delete codes"
   },
@@ -5695,6 +5715,10 @@
   "ZMy18J": {
     "string": "You have reached your channel limit, you will be no longer able to add channels to your store. If you would like to up your limit, contact your administration staff about raising your limits."
   },
+  "ZOamBQ": {
+    "context": "charge status overcharged",
+    "string": "Overcharged"
+  },
   "ZPOyI1": {
     "context": "fulfilled fulfillment, section header",
     "string": "Fulfilled from {warehouseName}"
@@ -6300,6 +6324,10 @@
   "dJVXIb": {
     "context": "vat included in order price",
     "string": "VAT included"
+  },
+  "dLIeRH": {
+    "context": "charge status none",
+    "string": "None"
   },
   "dM86a2": {
     "string": "No categories found"

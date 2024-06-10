@@ -1,4 +1,6 @@
 // @ts-strict-ignore
+import { FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
+import { createOrderQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import { OrderFilterInput, OrderStatusFilter, PaymentChargeStatusEnum } from "@dashboard/graphql";
 import { findInEnum, findValueInEnum, parseBoolean } from "@dashboard/misc";
@@ -92,7 +94,51 @@ export function getFilterOpts(
   };
 }
 
-export function getFilterVariables(params: OrderListUrlFilters): OrderFilterInput {
+const whereInputTypes = ["oneOf", "eq", "range", "gte", "lte"];
+const orderBooleanFilters = ["isClickAndCollect", "isPreorder"];
+
+const _whereToLegacyVariables = (where: OrderFilterInput) => {
+  return where
+    ? Object.keys(where).reduce((acc, key) => {
+        if (typeof where[key] === "object") {
+          const valueKeys = Object.keys(where[key]);
+
+          valueKeys.forEach(valueKey => {
+            if (whereInputTypes.includes(valueKey)) {
+              const valueObj = where[key];
+              const value = valueObj[valueKey];
+
+              acc[key] = value;
+
+              if (orderBooleanFilters.includes(key)) {
+                acc[key] = acc[key] === "true";
+
+                return;
+              }
+            }
+          });
+        }
+
+        if (typeof where[key] === "boolean") {
+          acc[key] = where[key];
+        }
+
+        return acc;
+      }, {})
+    : {};
+};
+
+export function getFilterVariables(
+  params: OrderListUrlFilters,
+  filterContainer: FilterContainer,
+  isFeatureFlagEnabled: boolean,
+): OrderFilterInput {
+  let queryVariables;
+
+  if (isFeatureFlagEnabled) {
+    queryVariables = _whereToLegacyVariables(createOrderQueryVariables(filterContainer));
+  }
+
   return {
     channels: params.channel as unknown as string[],
     created: getGteLteVariables({
@@ -114,6 +160,7 @@ export function getFilterVariables(params: OrderListUrlFilters): OrderFilterInpu
       params?.giftCard?.some(param => param === OrderFilterGiftCard.bought) || undefined,
     giftCardUsed: params?.giftCard?.some(param => param === OrderFilterGiftCard.paid) || undefined,
     metadata: params?.metadata,
+    ...queryVariables,
   };
 }
 

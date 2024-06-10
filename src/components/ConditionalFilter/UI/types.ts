@@ -61,7 +61,7 @@ export type SelectedOperator =
   | DateTimeRangeOperator;
 
 export interface InputOperator {
-  value: string;
+  value: string | RightOperatorOption;
   conditionValue: ConditionOption<"text" | "number"> | null;
 }
 

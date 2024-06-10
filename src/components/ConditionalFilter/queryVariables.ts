@@ -1,8 +1,11 @@
 import {
   AttributeInput,
+  DateRangeInput,
   DateTimeFilterInput,
+  DateTimeRangeInput,
   DecimalFilterInput,
   GlobalIdFilterInput,
+  OrderFilterInput,
   ProductWhereInput,
   PromotionWhereInput,
 } from "@dashboard/graphql";
@@ -147,7 +150,7 @@ export const createProductQueryVariables = (value: FilterContainer): ProductQuer
   }, {} as ProductWhereInput);
 };
 
-export const creatDiscountsQueryVariables = (value: FilterContainer): PromotionWhereInput => {
+export const createDiscountsQueryVariables = (value: FilterContainer): PromotionWhereInput => {
   return value.reduce((p, c) => {
     if (typeof c === "string" || Array.isArray(c)) return p;
 
@@ -157,4 +160,26 @@ export const creatDiscountsQueryVariables = (value: FilterContainer): PromotionW
 
     return p;
   }, {} as PromotionWhereInput);
+};
+
+export const createOrderQueryVariables = (value: FilterContainer) => {
+  return value.reduce((p, c) => {
+    if (typeof c === "string" || Array.isArray(c)) {
+      return p;
+    }
+
+    if (c.value.type === "updatedAt" || c.value.type === "created") {
+      p[c.value.value as "updatedAt" | "created"] = createStaticQueryPart(c.condition.selected) as
+        | DateTimeRangeInput
+        | DateRangeInput;
+    }
+
+    if (c.isStatic()) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore - seems to be a bug in TS, works fine in 5.4.5
+      p[c.value.value] = createStaticQueryPart(c.condition.selected);
+    }
+
+    return p;
+  }, {} as OrderFilterInput);
 };
