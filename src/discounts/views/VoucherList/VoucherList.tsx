@@ -63,7 +63,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber],
   );
-  const { data, loading, refetch } = useVoucherListQuery({
+  const { data, refetch } = useVoucherListQuery({
     displayLoader: true,
     variables: queryVariables,
   });

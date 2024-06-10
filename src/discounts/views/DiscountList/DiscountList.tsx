@@ -59,7 +59,7 @@ export const DiscountList: React.FC<DiscountListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber],
   );
-  const { data, loading } = usePromotionsListQuery({
+  const { data } = usePromotionsListQuery({
     displayLoader: true,
     variables: queryVariables,
   });

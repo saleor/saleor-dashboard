@@ -120,7 +120,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     }),
     [paginationState, params],
   );
-  const { data, loading, refetch } = useOrderDraftListQuery({
+  const { data, refetch } = useOrderDraftListQuery({
     displayLoader: true,
     variables: queryVariables,
   });

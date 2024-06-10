@@ -88,7 +88,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber],
   );
-  const { data, loading, refetch } = usePageListQuery({
+  const { data, refetch } = usePageListQuery({
     displayLoader: true,
     variables: queryVariables,
   });
