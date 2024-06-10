@@ -73,7 +73,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber],
   );
-  const { data, loading, refetch } = useListCustomersQuery({
+  const { data, refetch } = useListCustomersQuery({
     displayLoader: true,
     variables: queryVariables,
   });
