@@ -22,13 +22,13 @@ interface OrderRefundProps {
 
 const messages = defineMessages({
   refundMiscellaneous: {
-    id: "LKpQYh",
-    defaultMessage: "Miscellaneous Refund",
+    id: "2V6eD8",
+    defaultMessage: "Miscellaneous refund",
     description: "refund type",
   },
   refundProducts: {
-    id: "CLB1k9",
-    defaultMessage: "Refund Products",
+    id: "VOjJWA",
+    defaultMessage: "Refund products",
     description: "refund type",
   },
 });
