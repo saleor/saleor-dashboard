@@ -33,7 +33,7 @@ export const OrderDetailsRefundLine: React.FC<OrderDetailsRefundLineProps> = ({
 
   return (
     <GridTable.Row key={refund.id}>
-      <GridTable.Cell>
+      <GridTable.Cell paddingLeft={8}>
         <OrderTransactionRefundStatusPill
           status={refund.status}
           label={getGrantedRefundStatusMessage(refund.status, intl).toUpperCase()}
@@ -77,7 +77,7 @@ export const OrderDetailsRefundLine: React.FC<OrderDetailsRefundLineProps> = ({
       <GridTable.Cell>
         <EventTime date={refund.createdAt} />
       </GridTable.Cell>
-      <GridTable.Cell textAlign="right">
+      <GridTable.Cell textAlign="right" paddingRight={6}>
         <Box display="flex" justifyContent="flex-end">
           {isEditable ? (
             <Link to={orderTransactionRefundEditUrl(orderId, refund.id)}>

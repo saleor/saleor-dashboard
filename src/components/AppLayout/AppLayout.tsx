@@ -40,8 +40,8 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         >
           <Sidebar />
         </Box>
-        <Box height="100%" width="100%">
-          <Box as="main" width="100%">
+        <Box height="100%" width="100%" overflow="hidden">
+          <Box as="main" width="100%" height="100%">
             {children}
           </Box>
           <Box

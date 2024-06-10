@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { QueryResult } from "@apollo/client";
 import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
@@ -26,13 +27,14 @@ import {
   SearchAttributeValuesQuery,
   SearchPagesQuery,
   SearchProductsQuery,
-  WarehouseFragment,
+  SearchWarehousesQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { VariantDetailsChannelsAvailabilityCard } from "@dashboard/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
 import { productUrl } from "@dashboard/products/urls";
 import { getSelectedMedia } from "@dashboard/products/utils/data";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -99,7 +101,6 @@ interface ProductVariantPageProps {
   placeholderImage?: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   variant?: ProductVariantFragment;
-  warehouses: WarehouseFragment[];
   referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
   attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
@@ -119,6 +120,8 @@ interface ProductVariantPageProps {
   onSubmit: (data: ProductVariantUpdateSubmitData) => any;
   onSetDefaultVariant: () => any;
   onWarehouseConfigure: () => any;
+  fetchMoreWarehouses: () => void;
+  searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
 }
 
 const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
@@ -133,7 +136,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   placeholderImage,
   saveButtonBarState,
   variant,
-  warehouses,
   referencePages = [],
   referenceProducts = [],
   attributeValues,
@@ -154,6 +156,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   fetchMoreAttributeValues,
   onCloseDialog,
   onAttributeSelectBlur,
+  fetchMoreWarehouses,
+  searchWarehousesResult,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -200,7 +204,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
         <ProductVariantUpdateForm
           variant={variant}
           onSubmit={onSubmit}
-          warehouses={warehouses}
           currentChannels={channels}
           referencePages={referencePages}
           referenceProducts={referenceProducts}
@@ -341,12 +344,16 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                         ...channel.data,
                         ...channel.value,
                       }))}
+                      warehouses={mapEdgesToItems(searchWarehousesResult?.data?.search) ?? []}
+                      fetchMoreWarehouses={fetchMoreWarehouses}
+                      hasMoreWarehouses={
+                        searchWarehousesResult?.data?.search?.pageInfo?.hasNextPage
+                      }
                       data={data}
                       disabled={loading}
                       hasVariants={true}
                       errors={errors}
                       stocks={data.stocks}
-                      warehouses={warehouses}
                       onChange={handlers.changeStock}
                       onFormDataChange={change}
                       onWarehouseStockAdd={handlers.addStock}
