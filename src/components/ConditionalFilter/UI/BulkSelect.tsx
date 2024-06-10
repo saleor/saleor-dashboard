@@ -13,7 +13,7 @@ export interface BulkSelectProps {
   disabled: boolean;
 }
 
-const truncate = ({ label, ...rest }: RightOperatorOption) => ({
+const truncateOptionsLabel = ({ label, ...rest }: RightOperatorOption) => ({
   label: label.length > 15 ? label.slice(0, 8) + "..." : label,
   ...rest,
 });
@@ -72,7 +72,7 @@ const BulkSelect = ({ selected, emitter, index, error, helperText, disabled }: B
   return (
     <DynamicMultiselect
       data-test-id={`right-${index}`}
-      value={options.map(truncate)}
+      value={options.map(truncateOptionsLabel)}
       options={[]}
       loading={selected.loading}
       onChange={val => {
