@@ -15,7 +15,7 @@ export interface BulkSelectProps {
 }
 
 const truncateOptionsLabel = ({ label, ...rest }: RightOperatorOption) => ({
-  label: label.length > 15 ? label.slice(0, 8) + "..." : label,
+  label: label.length > 8 ? label.slice(0, 8) + "..." : label,
   ...rest,
 });
 
