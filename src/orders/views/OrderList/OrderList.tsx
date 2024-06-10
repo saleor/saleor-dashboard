@@ -116,7 +116,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber],
   );
-  const { data, loading } = useOrderListQuery({
+  const { data } = useOrderListQuery({
     displayLoader: true,
     variables: queryVariables,
   });
@@ -132,7 +132,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
       <OrderListPage
         settings={settings}
         currentTab={selectedPreset}
-        disabled={loading}
+        disabled={!data}
         filterOpts={getFilterOpts(params, channelOpts)}
         limits={limitOpts.data?.shop.limits}
         orders={mapEdgesToItems(data?.orders)}

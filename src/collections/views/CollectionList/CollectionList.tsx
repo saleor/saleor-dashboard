@@ -177,7 +177,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         onTabSave={() => openModal("save-search")}
         onTabUpdate={onPresetUpdate}
         tabs={presets.map(tab => tab.name)}
-        loading={loading}
+        loading={!data}
         disabled={loading}
         collections={collections}
         settings={settings}

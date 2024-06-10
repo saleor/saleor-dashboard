@@ -180,7 +180,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
         filterPresets={presets.map(tab => tab.name)}
         settings={settings}
         vouchers={vouchers}
-        disabled={loading}
+        disabled={!data}
         onUpdateListSettings={updateListSettings}
         onSort={handleSort}
         sort={getSortParams(params)}

@@ -178,8 +178,8 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <PageListPage
-        disabled={loading}
-        loading={loading}
+        disabled={!data}
+        loading={!data}
         settings={settings}
         pages={pages}
         onUpdateListSettings={updateListSettings}

@@ -381,7 +381,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         gridAttributesOpts={gridAttributesOpts}
         settings={settings}
         availableColumnsAttributesOpts={availableColumnsAttributesOpts}
-        disabled={loading || valueProvider.loading}
+        disabled={!data}
         limits={limitOpts.data?.shop.limits}
         products={products}
         onUpdateListSettings={(...props) => {

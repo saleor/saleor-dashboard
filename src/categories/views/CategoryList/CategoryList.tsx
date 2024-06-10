@@ -158,7 +158,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         settings={settings}
         sort={getSortParams(params)}
         onSort={handleSort}
-        disabled={loading}
+        disabled={!data}
         onUpdateListSettings={(...props) => {
           clearRowSelection();
           updateListSettings(...props);
