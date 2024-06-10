@@ -1,3 +1,4 @@
+import { ConditionalOrderFilterProvider } from "@dashboard/components/ConditionalFilter";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
@@ -54,7 +55,11 @@ const OrderList: React.FC<RouteComponentProps<any>> = ({ location }) => {
     false,
   );
 
-  return <OrderListComponent params={params} />;
+  return (
+    <ConditionalOrderFilterProvider locationSearch={location.search}>
+      <OrderListComponent params={params} />
+    </ConditionalOrderFilterProvider>
+  );
 };
 const OrderDraftList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1)) as any;

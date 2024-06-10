@@ -15,6 +15,7 @@ export const STATIC_CONDITIONS = {
   ],
   collection: [{ type: "multiselect", label: "in", value: "input-4" }],
   channel: [{ type: "select", label: "is", value: "input-5" }],
+  channels: [{ type: "multiselect", label: "in", value: "input-1" }],
   productType: [
     { type: "combobox", label: "is", value: "input-1" },
     { type: "multiselect", label: "in", value: "input-2" },
@@ -33,6 +34,75 @@ export const STATIC_CONDITIONS = {
     { type: "datetime", label: "lower", value: "input-1" },
     { type: "datetime", label: "greater", value: "input-2" },
     { type: "datetime.range", label: "between", value: "input-3" },
+  ],
+  isClickAndCollect: [{ type: "select", label: "is", value: "input-1" }],
+  isPreorder: [{ type: "select", label: "is", value: "input-1" }],
+  giftCardUsed: [{ type: "select", label: "is", value: "input-1" }],
+  giftCardBought: [{ type: "select", label: "is", value: "input-1" }],
+  paymentStatus: [
+    {
+      type: "combobox",
+      label: "is",
+      value: "input-1",
+    },
+    {
+      type: "multiselect",
+      label: "in",
+      value: "input-2",
+    },
+  ],
+  status: [
+    {
+      type: "combobox",
+      label: "is",
+      value: "input-1",
+    },
+    {
+      type: "multiselect",
+      label: "in",
+      value: "input-2",
+    },
+  ],
+  created: [
+    { type: "date", label: "lower", value: "input-1" },
+    { type: "date", label: "greater", value: "input-2" },
+    { type: "date.range", label: "between", value: "input-3" },
+  ],
+  authorizeStatus: [
+    {
+      type: "combobox",
+      label: "is",
+      value: "input-1",
+    },
+    {
+      type: "multiselect",
+      label: "in",
+      value: "input-2",
+    },
+  ],
+  chargeStatus: [
+    {
+      type: "combobox",
+      label: "is",
+      value: "input-1",
+    },
+    {
+      type: "multiselect",
+      label: "in",
+      value: "input-2",
+    },
+  ],
+  updatedAt: [
+    { type: "datetime", label: "lower", value: "input-1" },
+    { type: "datetime", label: "greater", value: "input-2" },
+    { type: "datetime.range", label: "between", value: "input-3" },
+  ],
+  customer: [
+    {
+      type: "text",
+      label: "is",
+      value: "input-1",
+    },
   ],
 };
 
@@ -107,7 +177,81 @@ export const STATIC_DISCOUNT_OPTIONS: LeftOperand[] = [
   },
 ];
 
-export const STATIC_OPTIONS = [...STATIC_PRODUCT_OPTIONS, ...STATIC_DISCOUNT_OPTIONS];
+export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
+  { value: "channels", label: "Channels", type: "channels", slug: "channels" },
+  {
+    value: "paymentStatus",
+    label: "Payment status",
+    type: "paymentStatus",
+    slug: "paymentStatus",
+  },
+  {
+    value: "status",
+    label: "Fulfillment Status",
+    type: "status",
+    slug: "status",
+  },
+  {
+    value: "created",
+    label: "Created",
+    type: "created",
+    slug: "created",
+  },
+  {
+    value: "authorizeStatus",
+    label: "Authorize status",
+    type: "authorizeStatus",
+    slug: "authorizeStatus",
+  },
+  {
+    value: "chargeStatus",
+    label: "Charge status",
+    type: "chargeStatus",
+    slug: "chargeStatus",
+  },
+  {
+    value: "updatedAt",
+    label: "Updated at",
+    type: "updatedAt",
+    slug: "updatedAt",
+  },
+  {
+    value: "isClickAndCollect",
+    label: "Click and collect",
+    type: "isClickAndCollect",
+    slug: "isClickAndCollect",
+  },
+  {
+    value: "isPreorder",
+    label: "Preorder",
+    type: "isPreorder",
+    slug: "isPreorder",
+  },
+  {
+    value: "giftCardBought",
+    label: "Gift card bought",
+    type: "giftCardBought",
+    slug: "giftCardBought",
+  },
+  {
+    value: "giftCardUsed",
+    label: "Gift card used",
+    type: "giftCardUsed",
+    slug: "giftCardUsed",
+  },
+  {
+    value: "customer",
+    label: "Customer",
+    type: "customer",
+    slug: "customer",
+  },
+];
+
+export const STATIC_OPTIONS = [
+  ...STATIC_PRODUCT_OPTIONS,
+  ...STATIC_DISCOUNT_OPTIONS,
+  ...STATIC_ORDER_OPTIONS,
+];
 
 export const ATTRIBUTE_INPUT_TYPE_CONDITIONS = {
   DROPDOWN: [{ type: "multiselect", label: "in", value: "input-2" }],

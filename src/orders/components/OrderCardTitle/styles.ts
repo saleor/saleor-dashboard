@@ -27,6 +27,7 @@ export const useStyles = makeStyles(
     indicator: {
       display: "flex",
       alignItems: "center",
+      marginBottom: "1px",
     },
   }),
   { name: "OrderCardTitle" },

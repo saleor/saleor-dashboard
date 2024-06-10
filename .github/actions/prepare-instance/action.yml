@@ -70,3 +70,12 @@ runs:
           --domain="$INSTANCE_NAME" \
           --skip-restrict \
           --skip-webhooks-update
+
+    - name: Add client origins
+      shell: bash
+      if: ${{!contains(inputs.BASE_URL, inputs.POOL_INSTANCE) && !steps.instance_check.outputs.INSTANCE_KEY }} # Add base url as a trusted origins if we're using deployed dashboard in repo (saleor.rocks)
+      env:
+        POOL_NAME: ${{ inputs.POOL_NAME }}
+        BASE_URL: ${{ inputs.BASE_URL }}
+      run: |
+        npx saleor env origins "$POOL_NAME" --origins="$BASE_URL"
