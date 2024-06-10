@@ -25,7 +25,7 @@ module.exports = async (on, config) => {
 
   require("dotenv").config();
 
-  config.env.API_URI = process.env.API_URI;
+  config.env.API_URL = process.env.API_URL;
   config.env.APP_MOUNT_URI = process.env.APP_MOUNT_URI;
   config.env.SHOP = await getShopInfo(process.env);
   config.env.STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
@@ -61,7 +61,7 @@ function getShopInfo(envVariables) {
     }
   }`;
 
-  const client = new graphql.GraphQLClient(envVariables.API_URI, {
+  const client = new graphql.GraphQLClient(envVariables.API_URL, {
     headers: {},
   });
 
