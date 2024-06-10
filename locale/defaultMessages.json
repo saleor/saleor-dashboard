@@ -419,10 +419,6 @@
     "context": "column header",
     "string": "Title"
   },
-  "0Zu8PM": {
-    "context": "helper text",
-    "string": "All items were refunded"
-  },
   "0a0fLZ": {
     "context": "countries list menu label when no countries are assigned",
     "string": "There are no countries assigned"
@@ -700,6 +696,10 @@
   "2Sx05f": {
     "context": "Previous discount label",
     "string": "Previous discount value"
+  },
+  "2V6eD8": {
+    "context": "refund type",
+    "string": "Miscellaneous refund"
   },
   "2VSP8C": {
     "context": "delete token",
@@ -2116,10 +2116,6 @@
   "CJpx4E": {
     "context": "page header",
     "string": "Order no. {orderNumber} - Add Fulfillment"
-  },
-  "CLB1k9": {
-    "context": "refund type",
-    "string": "Refund Products"
   },
   "CLeDae": {
     "context": "section header",
@@ -3541,10 +3537,6 @@
   },
   "LKoIB1": {
     "string": "Add search engine title and description to make this product easier to find"
-  },
-  "LKpQYh": {
-    "context": "refund type",
-    "string": "Miscellaneous Refund"
   },
   "LLrOK3": {
     "context": "paragraph, description in manual refund card",
@@ -5073,6 +5065,10 @@
   "VOiUXQ": {
     "string": "Used to calculate rates for shipping for products of this product type, when specific weight is not given"
   },
+  "VOjJWA": {
+    "context": "refund type",
+    "string": "Refund products"
+  },
   "VSj89H": {
     "context": "fulfill button label",
     "string": "Fulfill anyway"
@@ -5260,6 +5256,10 @@
   "WhvuCb": {
     "context": "plugins section name",
     "string": "Plugins"
+  },
+  "WigK1f": {
+    "context": "helper text",
+    "string": "All items refunded"
   },
   "WkxE8/": {
     "context": "percentage or fixed, header",
