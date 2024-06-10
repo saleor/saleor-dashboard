@@ -17,14 +17,14 @@ export const refundTableMessages = defineMessages({
     description: "input adornment helper text",
   },
   addReason: {
-    id: "dNO7rg",
+    id: "Fxahwt",
     defaultMessage: "Add refund reason for this line",
-    description: "button label",
+    description: "modal title",
   },
   editReason: {
-    id: "wQkHPZ",
+    id: "PALiyV",
     defaultMessage: "Edit refund reason for this line",
-    description: "button label",
+    description: "modal title",
   },
   addReasonBtn: {
     id: "B1yzuX",
