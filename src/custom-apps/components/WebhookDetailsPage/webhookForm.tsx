@@ -6,7 +6,7 @@ export const getWebhookFormInitialFormValues = ({
   webhook,
   prettifiedQuery,
 }: {
-  webhook: WebhookDetailsFragment | undefined;
+  webhook: WebhookDetailsFragment | null | undefined;
   prettifiedQuery: string;
 }): WebhookFormData => ({
   syncEvents: webhook?.syncEvents?.map(event => event.eventType) ?? [],
