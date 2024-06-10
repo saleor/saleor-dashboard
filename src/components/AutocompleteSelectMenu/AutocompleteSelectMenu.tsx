@@ -89,6 +89,8 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
   // Reset input value after displayValue change
   React.useEffect(() => setInputValue(displayValue), [displayValue]);
 
+  const menuOptions = getMenuItemByPath(options, menuPath);
+
   return (
     <DebounceAutocomplete debounceFn={onInputChange}>
       {debounceFn => (
@@ -139,10 +141,7 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
                           <FormattedMessage {...buttonMessages.back} />
                         </MenuItem>
                       )}
-                      {(menuPath.length
-                        ? getMenuItemByPath(options, menuPath).children
-                        : options
-                      ).map((suggestion, index) => (
+                      {(menuOptions ? menuOptions.children : options).map((suggestion, index) => (
                         <MenuItem
                           data-test-id={testIds ? testIds[index] : ""}
                           key={`${suggestion.value}:${index}`}
