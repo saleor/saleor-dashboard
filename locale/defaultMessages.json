@@ -419,6 +419,10 @@
     "context": "column header",
     "string": "Title"
   },
+  "0Zu8PM": {
+    "context": "helper text",
+    "string": "All items were refunded"
+  },
   "0a0fLZ": {
     "context": "countries list menu label when no countries are assigned",
     "string": "There are no countries assigned"
@@ -1915,10 +1919,6 @@
   "B0fwAj": {
     "string": "and {itemsLength} more"
   },
-  "B1yzuX": {
-    "context": "button label",
-    "string": "Add reason"
-  },
   "B2LE7A": {
     "context": "menu item loading",
     "string": "working..."
@@ -3039,10 +3039,6 @@
   "I2wCwj": {
     "context": "swatch attribute image label",
     "string": "Image"
-  },
-  "I5vC7T": {
-    "context": "button label",
-    "string": "Edit reason"
   },
   "I7HyJZ": {
     "context": "order refund amount",
@@ -4356,10 +4352,6 @@
   "QirE3M": {
     "string": "Start Date"
   },
-  "QisX+2": {
-    "context": "reason per line helper text",
-    "string": "You can specify a reason why this line is being returned."
-  },
   "Qj/3sH": {
     "context": "limit voucher",
     "string": "Limit number of times this discount can be used in total"
@@ -5268,10 +5260,6 @@
   "WhvuCb": {
     "context": "plugins section name",
     "string": "Plugins"
-  },
-  "WigK1f": {
-    "context": "helper text",
-    "string": "All items refunded"
   },
   "WkxE8/": {
     "context": "percentage or fixed, header",
@@ -6331,6 +6319,10 @@
   },
   "dM86a2": {
     "string": "No categories found"
+  },
+  "dNO7rg": {
+    "context": "button label",
+    "string": "Add refund reason for this line"
   },
   "dOQB9o": {
     "context": "payment status",
@@ -9063,6 +9055,10 @@
   },
   "wQdR8M": {
     "string": "Add search engine title and description to make this category easier to find"
+  },
+  "wQkHPZ": {
+    "context": "button label",
+    "string": "Edit refund reason for this line"
   },
   "wRvjoc": {
     "context": "app created at label",

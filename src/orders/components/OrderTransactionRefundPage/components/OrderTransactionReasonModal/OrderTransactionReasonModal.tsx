@@ -1,6 +1,6 @@
 import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
-import { Button, Text, Textarea } from "@saleor/macaw-ui-next";
+import { Button, Textarea } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -27,16 +27,13 @@ export const OrderTransactionReasonModal = ({
 
   return (
     <DashboardModal open={open} onChange={onClose}>
-      <DashboardModal.Content data-test-id="refund-reason-dialog" __minWidth="300px">
+      <DashboardModal.Content data-test-id="refund-reason-dialog" __minWidth="400px">
         <DashboardModal.Title display="flex" justifyContent="space-between" alignItems="center">
           <FormattedMessage
             {...(reason ? refundTableMessages.editReason : refundTableMessages.addReason)}
           />
           <DashboardModal.Close onClose={onClose} />
         </DashboardModal.Title>
-        <Text color="default2">
-          <FormattedMessage {...refundTableMessages.lineReasonDescription} />
-        </Text>
 
         <Textarea
           rows={5}
