@@ -1919,6 +1919,10 @@
   "B0fwAj": {
     "string": "and {itemsLength} more"
   },
+  "B1yzuX": {
+    "context": "button label",
+    "string": "Add reason"
+  },
   "B2LE7A": {
     "context": "menu item loading",
     "string": "working..."
@@ -3035,6 +3039,10 @@
   "I2wCwj": {
     "context": "swatch attribute image label",
     "string": "Image"
+  },
+  "I5vC7T": {
+    "context": "button label",
+    "string": "Edit reason"
   },
   "I7HyJZ": {
     "context": "order refund amount",
