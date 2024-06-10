@@ -1,25 +1,27 @@
 # Running E2E tests
 
-Add Cypress-specific env variables to `.env` file (created in the configuration section above):
+Cypress tests work until version 3.18. From version 3.19 we moved the tests to PW. 
+
+> [!NOTE]
+> The tests are based on Saleor Cloud and use snapshots with prepared data.
+> If you want to run those tests on your infrastructure you should update test data with your own created objects
+https://github.com/saleor/saleor-dashboard/blob/main/playwright/data/e2eTestData.ts and make sure to create snapshot.
+
+Playwright-specific env variables to `.env` file
 
 ```
-CYPRESS_USER_NAME=
-CYPRESS_USER_PASSWORD=
-CYPRESS_SECOND_USER_NAME=
-CYPRESS_PERMISSIONS_USERS_PASSWORD=
+BASE_URL=
+API_URL=
 
-CYPRESS_mailHogUrl=
-STRIPE_SECRET_KEY=
-STRIPE_PUBLIC_KEY=
+E2E_USER_NAME=
+E2E_USER_PASSWORD=
+E2E_PERMISSIONS_USERS_PASSWORD=
 
-// not required
-CYPRESS_RECORD_KEY= // if you want your local runs recorded
+MAILPITURL=
 ```
 
-For values of those variables, refer to our internal documentation.
-
-You are ready to run Cypress commands like:
+You are ready to run PW commands like:
 
 ```shell
-npm run cy:open
+npm run qa:pw-ui
 ```
