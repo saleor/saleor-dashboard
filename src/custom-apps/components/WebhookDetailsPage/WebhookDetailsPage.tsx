@@ -31,6 +31,7 @@ import PermissionAlert from "../PermissionAlert";
 import WebhookHeaders from "../WebhookHeaders";
 import WebhookSubscriptionQuery from "../WebhookSubscriptionQuery";
 import { getHeaderTitle, messages } from "./messages";
+import { getWebhookFormInitialFormValues } from "./webhookForm";
 
 export interface WebhookFormData {
   syncEvents: WebhookEventTypeSyncEnum[];
@@ -74,16 +75,8 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
     prettified = webhook?.subscriptionQuery || "";
   }
 
-  const initialForm: WebhookFormData = {
-    syncEvents: webhook?.syncEvents?.map(event => event.eventType) || [],
-    asyncEvents: webhook?.asyncEvents?.map(event => event.eventType) || [],
-    isActive: !!webhook?.isActive || true,
-    name: webhook?.name || "",
-    secretKey: webhook?.secretKey || "",
-    targetUrl: webhook?.targetUrl || "",
-    subscriptionQuery: prettified || "",
-    customHeaders: webhook?.customHeaders || "{}",
-  };
+  const initialForm = getWebhookFormInitialFormValues({ webhook, prettifiedQuery: prettified });
+
   const backUrl = CustomAppUrls.resolveAppUrl(appId);
   const [query, setQuery] = useState(prettified);
 
