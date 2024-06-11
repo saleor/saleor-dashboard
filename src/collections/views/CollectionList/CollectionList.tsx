@@ -178,7 +178,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         onTabUpdate={onPresetUpdate}
         tabs={presets.map(tab => tab.name)}
         loading={!data}
-        disabled={loading}
+        disabled={!data}
         collections={collections}
         settings={settings}
         onSort={handleSort}
