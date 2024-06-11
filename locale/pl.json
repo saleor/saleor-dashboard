@@ -24,7 +24,7 @@
   },
   "+RffqY": {
     "context": "Dry run dialog object title",
-    "string": "Wybierz typ obiektu do wykonania suchego przebiegu na dostarczonym zapytaniu"
+    "string": "Wybierz typ obiektu do wykonania próbnego przebiegu na dostarczonym zapytaniu"
   },
   "+SYLEL": {
     "context": "refunded fulfillment, section header",
@@ -156,7 +156,7 @@
   },
   "0kPdlb": {
     "context": "deprecated secret key toolbar label",
-    "string": "Użyj sygnatury RS256 zamiast."
+    "string": "Użyj sygnatury RS256."
   },
   "0khVBN": {
     "context": "discount type",
@@ -172,7 +172,7 @@
   },
   "0vsMRq": {
     "context": "delete custom app",
-    "string": "Usuwanie tej aplikacji spowoduje usunięcie wszystkich danych i webhooków dotyczących tej aplikacji."
+    "string": "Usunięcie tej aplikacji spowoduje usunięcie wszystkich danych i webhooków dotyczących tej aplikacji."
   },
   "0whAeC": {
     "context": "sum of all pending refunds inside an order",
@@ -202,7 +202,7 @@
   },
   "1H+V6k": {
     "context": "error message",
-    "string": "Strona o tych atrybutach już istnieje."
+    "string": "Strona z tymi atrybutami już istnieje."
   },
   "1N8lSy": {
     "context": "Order summary payment header",
@@ -256,7 +256,7 @@
   },
   "2rJcFa": {
     "context": "delete app",
-    "string": "Usuwanie tej aplikacji spowoduje usunięcie jej instalacji. Jeśli płacisz za subskrypcję aplikacji, pamiętaj, aby zrezygnować z subskrypcji tej aplikacji w Marketplace Saleor."
+    "string": "Usunięcie tej aplikacji spowoduje usunięcie jej instalacji. Jeśli płacisz za subskrypcję aplikacji, pamiętaj, aby zrezygnować z subskrypcji tej aplikacji w Marketplace Saleor."
   },
   "2x9ZgK": {
     "context": "card title",
@@ -666,7 +666,7 @@
   },
   "BYTvv/": {
     "context": "Dry run events unavailable",
-    "string": "Następujące zdarzenia z dostarczonego zapytania nie są obecnie dostępne dla suchego przebiegu:"
+    "string": "Następujące zdarzenia z dostarczonego zapytania nie są obecnie dostępne dla próbnego przebiegu:"
   },
   "BbP+k3": {
     "context": "variant availability in channel",
@@ -2212,7 +2212,7 @@
   },
   "k6sfZr": {
     "context": "tooltip content when product is in preorder",
-    "string": "Ten produkt jest jeszcze w przedsprzedaży. Będziesz mógł go zrealizować po osiągnięciu daty wydania"
+    "string": "Ten produkt jest jeszcze w przedsprzedaży. Będziesz mógł go zrealizować po dacie wydania"
   },
   "kAAlGL": {
     "string": "Reguły"
@@ -2966,7 +2966,7 @@
   },
   "+do3gl": {
     "context": "input helper text",
-    "string": "Ta liczba definiuje ilość przedmiotów w linii kasy, które można kupić. Możesz zastąpić to ustawienie dla każdej odmiany. Pozostawienie tego ustawienia pustego oznacza brak limitów."
+    "string": "Ta liczba definiuje ilość przedmiotów w linii kasy, które można kupić. Możesz zastąpić to ustawienie dla każdego wariantu. Pozostawienie tego ustawienia pustego oznacza brak limitów."
   },
   "+jCDvp": {
     "context": "section header",
@@ -3378,7 +3378,7 @@
   },
   "4k9rMQ": {
     "context": "variant attribute checkbox",
-    "string": "Wybór Odmiany"
+    "string": "Wybór wariantu"
   },
   "4prRLv": {
     "string": "Uprawnienia są poza twoim zakresem"
@@ -3450,11 +3450,11 @@
   },
   "5kvaFR": {
     "context": "product field",
-    "string": "Eksportuj SKU odmiany"
+    "string": "Eksportuj SKU wariantu"
   },
   "5pHBSU": {
     "context": "switch button",
-    "string": "Typ produktu używa Atrybutów Odmiany"
+    "string": "Typ produktu używa Atrybutów Wariantu"
   },
   "5t/4um": {
     "context": "message title",
@@ -3516,7 +3516,7 @@
   },
   "6iw4VR": {
     "context": "delete variant dialog title",
-    "string": "Usuń Odmiany Produktu"
+    "string": "Usuń Warianty Produktu"
   },
   "6sjBvJ": {
     "context": "input placeholder",
@@ -8026,7 +8026,7 @@
     "string": "Wróć do panelu"
   },
   "fNFEkh": {
-    "string": "Wyników na stronie:"
+    "string": "Wyniki na stronie:"
   },
   "w2Cewo": {
     "string": "Tytuł strony"
@@ -8233,7 +8233,7 @@
   },
   "Uu76vj": {
     "context": "no categories",
-    "string": "Nie znaleziono kategorii "
+    "string": "Nie znaleziono kategorii"
   },
   "fV6yX5": {
     "context": "table head",
@@ -8553,15 +8553,15 @@
   },
   "Yxihwg": {
     "context": "consent removal of gift cards with balance button label",
-    "string": "{selectedItemsCount,plural,one {I am aware that I am removing a gift card with balance} other {I am aware that I am removing gift cards with balance}}"
+    "string": "{selectedItemsCount,plural,one {Jestem świadomy, że usuwam gift card z saldem} other {Jestem świadomy, że usuwam gift card z saldem}}"
   },
   "zLtb4N": {
     "context": "gift card removed success alert message",
-    "string": "{selectedItemsCount,plural,one {Successfully deleted gift card} other {Successfully deleted gift cards}}"
+    "string": "{selectedItemsCount,plural,one {Pomyślnie usunięto gift card} other {Pomyślnie usunięto gift card}}"
   },
   "a+iRI1": {
     "context": "single gift card title",
-    "string": "{selectedItemsCount,plural,one {Delete Gift Card} other {Delete Gift Cards}}"
+    "string": "{selectedItemsCount,plural,one {Usuń Gift Card} other {Usuń Gift Cards}}"
   },
   "4JW9iJ": {
     "context": "home section name",
