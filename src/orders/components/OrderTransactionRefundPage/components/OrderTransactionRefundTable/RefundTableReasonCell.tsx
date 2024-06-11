@@ -27,9 +27,9 @@ export const RefundTableReasonCell: React.FC<RefundTableReasonCellProps> = ({
         disabled={!field.quantity}
       >
         {!field.reason ? (
-          <FormattedMessage {...refundTableMessages.addReason} />
+          <FormattedMessage {...refundTableMessages.addReasonBtn} />
         ) : (
-          <FormattedMessage {...refundTableMessages.editReason} />
+          <FormattedMessage {...refundTableMessages.editReasonBtn} />
         )}
       </Button>
     </GridTable.Cell>
