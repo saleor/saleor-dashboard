@@ -94,7 +94,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber],
   );
-  const { data, loading, refetch } = useCollectionListQuery({
+  const { data, refetch } = useCollectionListQuery({
     displayLoader: true,
     variables: queryVariables,
   });
