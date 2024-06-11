@@ -1919,6 +1919,10 @@
   "B0fwAj": {
     "string": "and {itemsLength} more"
   },
+  "B1yzuX": {
+    "context": "button label",
+    "string": "Add reason"
+  },
   "B2LE7A": {
     "context": "menu item loading",
     "string": "working..."
@@ -2672,6 +2676,10 @@
     "context": "page header",
     "string": "Add Collection"
   },
+  "Fxahwt": {
+    "context": "modal title",
+    "string": "Add refund reason for this line"
+  },
   "Fz3kic": {
     "context": "error message",
     "string": "Billing address is not set or invoice is not ready to be send"
@@ -3035,6 +3043,10 @@
   "I2wCwj": {
     "context": "swatch attribute image label",
     "string": "Image"
+  },
+  "I5vC7T": {
+    "context": "button label",
+    "string": "Edit reason"
   },
   "I7HyJZ": {
     "context": "order refund amount",
@@ -4066,6 +4078,10 @@
   "P9YktI": {
     "context": "save preset, header",
     "string": "Save view preset"
+  },
+  "PALiyV": {
+    "context": "modal title",
+    "string": "Edit refund reason for this line"
   },
   "PAqicb": {
     "context": "button",
@@ -6319,10 +6335,6 @@
   },
   "dM86a2": {
     "string": "No categories found"
-  },
-  "dNO7rg": {
-    "context": "button label",
-    "string": "Add refund reason for this line"
   },
   "dOQB9o": {
     "context": "payment status",
@@ -9055,10 +9067,6 @@
   },
   "wQdR8M": {
     "string": "Add search engine title and description to make this category easier to find"
-  },
-  "wQkHPZ": {
-    "context": "button label",
-    "string": "Edit refund reason for this line"
   },
   "wRvjoc": {
     "context": "app created at label",
