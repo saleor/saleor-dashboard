@@ -10,6 +10,7 @@ export function canBeSorted(sort: ProductListUrlSortField, isChannelSelected: bo
     case ProductListUrlSortField.name:
     case ProductListUrlSortField.productType:
     case ProductListUrlSortField.date:
+    case ProductListUrlSortField.created:
     case ProductListUrlSortField.attribute:
     case ProductListUrlSortField.rank:
       return true;
@@ -35,6 +36,8 @@ export function getSortQueryField(sort: ProductListUrlSortField): ProductOrderFi
       return ProductOrderField.RANK;
     case ProductListUrlSortField.date:
       return ProductOrderField.DATE;
+    case ProductListUrlSortField.created:
+      return ProductOrderField.CREATED_AT;
     default:
       return undefined;
   }
