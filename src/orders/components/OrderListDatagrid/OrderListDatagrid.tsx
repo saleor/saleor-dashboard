@@ -125,7 +125,6 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
               onToggle={handlers.onToggle}
             />
           )}
-          fullScreenTitle={intl.formatMessage(messages.orders)}
           onRowClick={handleRowClick}
           rowAnchor={handleRowAnchor}
         />
