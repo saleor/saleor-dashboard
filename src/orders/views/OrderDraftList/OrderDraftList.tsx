@@ -120,7 +120,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     }),
     [paginationState, params],
   );
-  const { data, loading, refetch } = useOrderDraftListQuery({
+  const { data, refetch } = useOrderDraftListQuery({
     displayLoader: true,
     variables: queryVariables,
   });
@@ -167,7 +167,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         onFilterPresetUpdate={onPresetUpdate}
         onFilterPresetPresetSave={() => openModal("save-search")}
         filterPresets={presets.map(tab => tab.name)}
-        disabled={loading}
+        disabled={!data}
         settings={settings}
         orders={orderDrafts}
         onAdd={() => openModal("create-order")}

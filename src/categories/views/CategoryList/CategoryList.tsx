@@ -82,7 +82,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     }),
     [paginationState, params],
   );
-  const { data, loading, refetch } = useRootCategoriesQuery({
+  const { data, refetch } = useRootCategoriesQuery({
     displayLoader: true,
     variables: queryVariables,
   });
@@ -158,7 +158,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         settings={settings}
         sort={getSortParams(params)}
         onSort={handleSort}
-        disabled={loading}
+        disabled={!data}
         onUpdateListSettings={(...props) => {
           clearRowSelection();
           updateListSettings(...props);

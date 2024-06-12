@@ -59,7 +59,7 @@ export const DiscountList: React.FC<DiscountListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber],
   );
-  const { data, loading } = usePromotionsListQuery({
+  const { data } = usePromotionsListQuery({
     displayLoader: true,
     variables: queryVariables,
   });
@@ -116,7 +116,7 @@ export const DiscountList: React.FC<DiscountListProps> = ({ params }) => {
       <DiscountListPage
         promotions={promotions}
         settings={settings}
-        disabled={loading}
+        disabled={!data}
         onSort={handleSort}
         onFilterPresetDelete={(id: number) => {
           setPresetIdToDelete(id);

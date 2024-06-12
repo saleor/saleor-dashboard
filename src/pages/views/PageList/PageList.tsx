@@ -88,7 +88,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber],
   );
-  const { data, loading, refetch } = usePageListQuery({
+  const { data, refetch } = usePageListQuery({
     displayLoader: true,
     variables: queryVariables,
   });
@@ -178,8 +178,8 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <PageListPage
-        disabled={loading}
-        loading={loading}
+        disabled={!data}
+        loading={!data}
         settings={settings}
         pages={pages}
         onUpdateListSettings={updateListSettings}

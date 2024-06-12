@@ -307,6 +307,7 @@ export const CollectionDetailsFragmentDoc = gql`
 ${MetadataFragmentDoc}`;
 export const ChannelListingProductWithoutPricingFragmentDoc = gql`
     fragment ChannelListingProductWithoutPricing on ProductChannelListing {
+  id
   isPublished
   publishedAt
   isAvailableForPurchase
@@ -16305,6 +16306,7 @@ export const SearchProductsDocument = gql`
           url
         }
         channelListings {
+          id
           channel {
             id
             name
