@@ -176,7 +176,7 @@
     "html-to-react": "^1.6.0",
     "identity-obj-proxy": "^3.0.0",
     "is-ci": "^3.0.1",
-    "jscodeshift": "^0.13.0",
+    "jscodeshift": "^0.15.2",
     "junit-merge": "^2.0.0",
     "mocha": "^10.2.0",
     "mochawesome": "^7.1.3",
