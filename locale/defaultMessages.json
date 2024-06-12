@@ -5910,6 +5910,10 @@
     "context": "app settings error",
     "string": "Failed to fetch app settings"
   },
+  "acgbDa": {
+    "context": "product created at",
+    "string": "Created at"
+  },
   "agZQkB": {
     "context": "window title",
     "string": "Create App"
