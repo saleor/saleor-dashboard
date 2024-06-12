@@ -51,10 +51,9 @@ test("TC: SALEOR_189 As an admin user I can delete page type with assigned conte
   await pageTypePage.gotoExistingPageTypePage(pageType.id);
   await pageTypePage.clickDeleteButton();
   await pageTypePage.deletePageTypeDialog.waitForDOMToFullyLoad();
-  await pageTypePage.deletePageTypeDialog.clickConfirmDeletionCheckbox();
-  await pageTypePage.waitForNetworkIdleAfterAction(() => pageTypePage.clickConfirmRemovalButton());
+  await pageTypePage.clickConfirmRemovalButton();
   await pageTypePage.expectSuccessBanner();
-  await pageTypePage.waitForNetworkIdleAfterAction(() => pageTypePage.gotoPageTypeListPage());
+  await  pageTypePage.gotoPageTypeListPage();
   await expect(pageTypePage.pageTypeList).not.toContainText(pageType.name);
 });
 

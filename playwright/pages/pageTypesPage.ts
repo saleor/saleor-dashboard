@@ -35,6 +35,7 @@ export class PageTypesPage extends BasePage {
 
   async gotoPageTypeListPage() {
     await this.page.goto(URL_LIST.pageTypes);
+    await this.waitForDOMToFullyLoad();
   }
 async clickConfirmRemovalButton() {
   await this.confirmRemovalButton.click();

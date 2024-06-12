@@ -72,9 +72,9 @@ export class BasePage {
   }
 
   async typeInSearchOnListView(searchItem: string) {
-    await this.waitForNetworkIdleAfterAction(async () => {
-      await this.searchInputListView.fill(searchItem);
-    });
+    await expect(this.searchInputListView).toBeEnabled();
+    await this.searchInputListView.fill(searchItem);
+    await this.waitForDOMToFullyLoad();
     await expect(this.searchInputListView).toHaveValue(searchItem);
     await this.waitForDOMToFullyLoad();
   }
@@ -153,17 +153,12 @@ export class BasePage {
     await this.page.setViewportSize({ width: w, height: h });
   }
 
-  async clickOnSpecificPositionOnPage(x: number, y: number) {
-    await this.page.mouse.click(x, y);
-  }
   async waitForNetworkIdle(action: () => Promise<void>,timeoutMs: number = 50000) {
     const responsePromise = this.page.waitForResponse("**/graphql/",{ timeout: timeoutMs });
     await action();
     await responsePromise;
   }
-  async resizeWindow(w: number, h: number) {
-    await this.page.setViewportSize({ width: w, height: h });
-  }
+
   async clickOnSpecificPositionOnPage(x: number, y: number) {
     await this.page.mouse.click(x, y);
   }

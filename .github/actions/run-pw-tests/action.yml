@@ -50,14 +50,15 @@ runs:
     - name: Run tests
       shell: bash
       env:
+        ## backward compatibility for older versions
         API_URI: ${{ inputs.API_URL }}
+
+        API_URL: ${{ inputs.API_URL }}
         BASE_URL: ${{ inputs.BASE_URL }}
         E2E_USER_NAME: ${{ inputs.E2E_USER_NAME }}
         E2E_USER_PASSWORD: ${{ inputs.E2E_USER_PASSWORD }}
         E2E_PERMISSIONS_USERS_PASSWORD: ${{ inputs.E2E_PERMISSIONS_USERS_PASSWORD }}
         SHARD_NUMBER: ${{ inputs.SHARD }}
-        MAILPITURL: ${{ inputs.MAILPITURL }}
-        URL_TO_RUN: ${{ inputs.URL_TO_RUN }}
         MAILPITURL: ${{ inputs.MAILPITURL }}
         URL_TO_RUN: ${{ inputs.URL_TO_RUN }}
         WORKERS: ${{ inputs.PW_WORKERS }}

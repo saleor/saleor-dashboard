@@ -29,11 +29,11 @@ export const ATTRIBUTES = {
   attributesToBeUpdated: [
     {
       name: "e2e product attribute to be updated 1",
-      id: "QXR0cmlidXRlOjc0MA==",
+      id: "QXR0cmlidXRlOjczOQ==",
     },
     {
       name: "e2e content attribute to be updated 2",
-      id: "QXR0cmlidXRlOjczOQ==",
+      id: "QXR0cmlidXRlOjc0MA==",
     },
   ],
   attributeTypesWithAbilityToAddValues: {
@@ -436,7 +436,7 @@ export const ORDERS = {
 
 export const SHIPPING_METHODS = {
   shippingMethodWithoutRates: {
-    id: "U2hpcHBpbmdab25lOjIzOTA%3D",
+    id:"U2hpcHBpbmdab25lOjIzOTA=",
     info: "Shipping method that is used to add rates",
   },
   shippingMethodToBeUpdated: {
@@ -460,7 +460,7 @@ export const SHIPPING_METHODS = {
     name: "e2e-test-shippingZone-to-be-bulk-deleted-3",
   },
   shippingMethodWithRatesToBeDeleted: {
-    id: "U2hpcHBpbmdab25lOjIzODk%3D",
+    id: "U2hpcHBpbmdNZXRob2RUeXBlOjIyMTk=",
     info: "Shipping zone with methods to be deleted",
     name: "e2e-test-shippingZone-to-be-deleted",
     rates: {
@@ -503,14 +503,14 @@ export const USERS = {
     lastName: "user",
   },
   staffToBeEdited: {
-    id: "VXNlcjoxMzcx",
+    id: "VXNlcjoxMzYx",
     name: "e2e_staff_to_be_updated",
     lastName: "DO NOT DELETE",
     email: "test123@hotmail.com",
     permission: "Apps management",
   },
   staffToBeDeleted: {
-    id: "VXNlcjoxMzcy",
+    id: "VXNlcjoxMzYy",
     name: "e2e_staff_to_be_deleted",
     lastName: "DO NOT DELETE",
   },
@@ -518,7 +518,7 @@ export const USERS = {
 
 export const APPS = {
   appToBeDeleted: {
-    id: "QXBwOjcw",
+    id: "QXBwOjY2",
     name: "Saleor QA App",
     info: "App used in delete app test",
   },
@@ -552,11 +552,11 @@ export const NAVIGATION_ITEMS = {
     ],
   },
   navigationMenuToBeDeletedFromList: {
-    id: "TWVudTozOQ==",
+    id: "TWVudTozNg==",
     name: "e2e-menu-to-be-deleted-from-list",
   },
   navigationMenuToBeDeletedFromDetailsView: {
-    id: "TWVudTo0MA==",
+    id: "TWVudTozNw==",
     name: "e2e-menu-to-be-deleted-from-details-view",
   },
   navigationMenusToBeBulkDeleted: {
@@ -566,7 +566,7 @@ export const NAVIGATION_ITEMS = {
 
 export const PERMISSION_GROUPS = {
   permissionGroupToBeEdited: {
-    id: "R3JvdXA6MTEx",
+    id: "R3JvdXA6MTEw",
     name: "e2e_permission_group_to_be_updated",
     assignedMembers: {
       names: [
@@ -580,7 +580,7 @@ export const PERMISSION_GROUPS = {
     },
   },
   permissionGroupToBeDeleted: {
-    id: "R3JvdXA6MTEw",
+    id: "R3JvdXA6MTEx",
     name: "e2e_permission_group_to_be_deleted",
   },
   permissionGroupMembers: [
@@ -617,27 +617,27 @@ export const PAGE_TYPES = {
 };
 export const PRODUCT_TYPES = {
   productTypeToBeEdited: {
-    id: "UHJvZHVjdFR5cGU6Njk4",
+    id: "UHJvZHVjdFR5cGU6NzAw",
     name: "A product type to be edited",
     info: "Product type used in edit product type test",
   },
   productTypeToBeRemoved: {
-    id: "UHJvZHVjdFR5cGU6Njk5",
+    id: "UHJvZHVjdFR5cGU6NzAx",
     name: "A product type to be removed",
     info: "Product type used in delete product type test",
   },
   productTypesToBeBulkDeleted: {
     names: ["a product type to be bulk deleted 1/2", "a product type to be bulk deleted 2/2"],
-    ids: ["UHJvZHVjdFR5cGU6NzAw", "UHJvZHVjdFR5cGU6NzAx"],
+    ids: ["UHJvZHVjdFR5cGU6Njk4", "UHJvZHVjdFR5cGU6Njk5"],
   },
 };
 export const CUSTOMERS = {
   deleteCustomer: {
-    id: "VXNlcjoxMzY3",
+    id: "VXNlcjoxMzU3",
     email: "e2e_customer@delete.com",
   },
   editCustomer: {
-    id: "VXNlcjoxMzY2",
+    id: "VXNlcjoxMzU4",
     email: "e2e_customer_with_addresses@saleor.io",
     note: "simple note",
     initialShippingAddress: {
@@ -679,13 +679,13 @@ export const CUSTOMERS = {
     ],
   },
   customerToBeActivated: {
-    id: "VXNlcjoxMzY0",
+    id: "VXNlcjoxMzU5",
     email: "e2e-customer@activate.com",
     firstName: "e2e-customer",
     lastName: "to-be-activated",
   },
   customerToBeDeactivated: {
-    id: "VXNlcjoxMzY1",
+    id: "VXNlcjoxMzYw",
     email: "e2e-customer@deactivate.com",
     firstName: "e2e-customer",
     lastName: "to-be-deactivated",

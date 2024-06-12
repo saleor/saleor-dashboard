@@ -83,10 +83,7 @@ export class AttributesPage extends BasePage {
       state: "visible",
       timeout: 10000,
     });
-    await this.gridCanvas.waitFor({
-      state: "visible",
-      timeout: 10000,
-    });
+    await this.waitForGrid();
   }
   async assertSearchResultsVisibility(searchText: string) {
     const elements = await this.page.$$("text=" + searchText);

@@ -233,7 +233,7 @@ test("TC: SALEOR_59 As an admin I should be able to filter products by channel o
     await productPage.gridCanvas.locator("table tbody tr").count(),
     `Product: ${PRODUCTS.productAvailableOnlyInUsdChannel.name} should be visible on grid table`,
   ).toEqual(1);
-  await productPage.typeInSearchOnListView("");
+  await productPage.gotoProductListPage();
   await productPage.clickFilterButton();
   await productPage.filtersPage.pickFilter("Channel", "Channel-PLN");
   await productPage.filtersPage.clickSaveFiltersButton();

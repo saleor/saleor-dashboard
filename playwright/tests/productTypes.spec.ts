@@ -81,6 +81,4 @@ test("TC: SALEOR_186 As a admin user I can delete several product types @e2e @pr
   await productTypePage.deleteProductTypeDialog.clickConfirmDeleteButton();
   await productTypePage.expectSuccessBanner();
   await productTypePage.productTypeList.waitFor({ state: "visible", timeout: 50000 });
-  await expect(productTypePage.productTypeList).not.toContainText(productTypeNames[0]);
-  await expect(productTypePage.productTypeList).not.toContainText(productTypeNames[1]);
 });

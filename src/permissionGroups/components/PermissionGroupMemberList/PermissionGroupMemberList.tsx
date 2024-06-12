@@ -221,7 +221,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
                         <Text data-test-id="member-name">
                           {getUserName(user) || <Skeleton />}
                         </Text>
-                        <Text size={2} color="default2">
+                        <Text color="default2">
                           {!user ? (
                             <Skeleton />
                           ) : user.isActive ? (
