@@ -18,6 +18,7 @@ export const searchProducts = gql`
             url
           }
           channelListings {
+            id
             channel {
               id
               name

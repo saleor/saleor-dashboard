@@ -287,7 +287,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const filteredColumnIds = (settings.columns ?? [])
     .filter(isAttributeColumnValue)
     .map(getAttributeIdFromColumnValue);
-  const { data, loading, refetch } = useProductListQuery({
+  const { data, refetch } = useProductListQuery({
     displayLoader: true,
     variables: {
       ...queryVariables,
@@ -381,7 +381,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         gridAttributesOpts={gridAttributesOpts}
         settings={settings}
         availableColumnsAttributesOpts={availableColumnsAttributesOpts}
-        disabled={loading || valueProvider.loading}
+        disabled={!data}
         limits={limitOpts.data?.shop.limits}
         products={products}
         onUpdateListSettings={(...props) => {

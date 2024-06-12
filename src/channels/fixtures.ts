@@ -358,6 +358,7 @@ type ProductChannelsWithPricing = NonNullable<ProductFragment["channelListings"]
 export const productChannels: ProductChannelsWithPricing[] = [
   {
     __typename: "ProductChannelListing",
+    id: "123",
     availableForPurchaseAt: null,
     channel: {
       __typename: "Channel",
@@ -388,6 +389,7 @@ export const productChannels: ProductChannelsWithPricing[] = [
   },
   {
     __typename: "ProductChannelListing",
+    id: "124",
     availableForPurchaseAt: null,
     channel: {
       __typename: "Channel",
@@ -418,6 +420,7 @@ export const productChannels: ProductChannelsWithPricing[] = [
   },
   {
     __typename: "ProductChannelListing",
+    id: "125",
     availableForPurchaseAt: null,
     channel: {
       __typename: "Channel",
