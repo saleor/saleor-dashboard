@@ -33,10 +33,10 @@ describe("ConditionalFilter / UI / BulkSelect", () => {
 
   it("renders BulkSelect", () => {
     // Arrange & Act
-    const element = render(<BulkSelect {...defaultProps} />);
+    const { baseElement } = render(<BulkSelect {...defaultProps} />);
 
     // Assert
-    expect(element).toBeInTheDocument();
+    expect(baseElement).toBeInTheDocument();
   });
 
   it("renders options inside the input", () => {
