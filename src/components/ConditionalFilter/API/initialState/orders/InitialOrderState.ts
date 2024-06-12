@@ -55,7 +55,7 @@ export class InitialOrderStateResponse implements InitialOrderState {
     return (entry as ItemOption[]).filter(({ slug }) => slug && token.value.includes(slug));
   }
 
-  private getEntryByName(name: string): ItemOption[] | string | string[] {
+  private getEntryByName(name: string): ItemOption[] {
     switch (name) {
       case "paymentStatus":
         return this.paymentStatus;

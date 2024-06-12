@@ -1,5 +1,5 @@
 import { DynamicMultiselect } from "@saleor/macaw-ui-next";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 import { BulkselectOperator, RightOperatorOption } from "./types";
 
@@ -41,6 +41,11 @@ const BulkSelect = ({
 
   const ref = useRef<HTMLInputElement>(null);
 
+  const handleOptionsChange = (options: RightOperatorOption[]) => {
+    setOptions(options);
+    onOptionsChange(options);
+  };
+
   const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (!ref.current) return;
 
@@ -58,7 +63,7 @@ const BulkSelect = ({
           return;
         }
 
-        setOptions(prev => [...prev, toOption(currentValue)]);
+        handleOptionsChange([...options, toOption(currentValue)]);
         ref.current.value = "";
         ref.current.blur();
         ref.current.focus();
@@ -66,7 +71,7 @@ const BulkSelect = ({
         return;
       case "Backspace":
         if (currentValue === "") {
-          setOptions(prev => prev.slice(0, prev.length - 1));
+          handleOptionsChange(options.slice(0, options.length - 1));
         }
 
         return;
@@ -75,9 +80,33 @@ const BulkSelect = ({
     }
   };
 
-  useEffect(() => {
-    onOptionsChange(options);
-  }, [options, onOptionsChange]);
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement, Element>) => {
+    if (!ref.current) return;
+
+    const onBlurValue = e.target.value;
+
+    if (onBlurValue !== "") {
+      ref.current.style.display = "none";
+
+      handleOptionsChange([...options, toOption(onBlurValue)]);
+    }
+
+    onBlur();
+    ref.current.style.display = "block";
+  };
+
+  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const clipboardData = e.clipboardData || (window as any).clipboardData;
+
+    const text = clipboardData.getData("text") as string;
+
+    const newOptions = sanitize(text).split(",").filter(clean).map(toOption);
+
+    handleOptionsChange([...options, ...newOptions]);
+  };
 
   return (
     <DynamicMultiselect
@@ -85,40 +114,16 @@ const BulkSelect = ({
       value={options.map(truncateOptionsLabel)}
       options={[]}
       loading={selected.loading}
-      onChange={val => setOptions(val)}
+      onChange={handleOptionsChange}
       onInputValueChange={() => undefined}
       onFocus={() => onFocus()}
-      onBlur={event => {
-        if (!ref.current) return;
-
-        const onBlurValue = event.target.value;
-
-        if (onBlurValue !== "") {
-          ref.current.style.display = "none";
-
-          setOptions(prev => [...prev, toOption(onBlurValue)]);
-        }
-
-        onBlur();
-        ref.current.style.display = "block";
-      }}
-      onKeyDown={e => onKeyDown(e)}
+      onBlur={handleBlur}
+      onKeyDown={onKeyDown}
       error={error}
       helperText={helperText}
       disabled={disabled}
       ref={ref}
-      onPaste={e => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        const clipboardData = e.clipboardData || (window as any).clipboardData;
-
-        const text = clipboardData.getData("text") as string;
-
-        const newOptions = sanitize(text).split(",").filter(clean).map(toOption);
-
-        setOptions(prev => [...prev, ...newOptions]);
-      }}
+      onPaste={handlePaste}
     />
   );
 };

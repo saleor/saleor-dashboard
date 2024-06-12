@@ -25,7 +25,7 @@ const getCustomer = (customer: string[]) => {
   return "";
 };
 
-const getIDs = (ids: string[]) =>
+const mapIDsToOptions = (ids: string[]) =>
   ids.map(id => ({
     type: "ids",
     label: id,
@@ -101,7 +101,7 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
           slug: "customer",
         },
       ],
-      ids: getIDs(ids),
+      ids: mapIDsToOptions(ids),
     };
 
     setData(

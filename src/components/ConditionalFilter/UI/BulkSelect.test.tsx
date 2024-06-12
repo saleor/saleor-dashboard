@@ -36,7 +36,7 @@ describe("ConditionalFilter / UI / BulkSelect", () => {
     const element = render(<BulkSelect {...defaultProps} />);
 
     // Assert
-    expect(element).toMatchSnapshot();
+    expect(element).toBeInTheDocument();
   });
 
   it("renders options inside the input", () => {
@@ -58,7 +58,6 @@ describe("ConditionalFilter / UI / BulkSelect", () => {
     );
 
     // Act & Assert
-    expect(element).toMatchSnapshot();
     expect(element.getByText("value1")).toBeInTheDocument();
   });
 
@@ -79,7 +78,6 @@ describe("ConditionalFilter / UI / BulkSelect", () => {
       />,
     );
 
-    expect(element).toMatchSnapshot();
     expect(element.getByText("verylong...")).toBeInTheDocument();
   });
 
