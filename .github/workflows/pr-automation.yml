@@ -27,17 +27,27 @@ jobs:
       BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
       BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
       SHARD_MATRIX: ${{ steps.generate-shard-matrix.outputs.SHARD_MATRIX }}
+      TESTS_MODE: ${{ steps.set-tests-mode.outputs.TESTS_MODE }}
     steps:
       - uses: actions/checkout@v4
         with:
           sparse-checkout: ./.github/actions
+
+      - name: Select mode of running tests
+        id: set-tests-mode
+        run: |
+          if [[ ${{ github.base_ref }} == 'refs/heads/main' ]]; then
+            echo "TESTS_MODE=pull-request" >> $GITHUB_OUTPUT
+          else
+            echo "TESTS_MODE=release" >> $GITHUB_OUTPUT
+          fi
 
       - name: Generate variables
         id: cloud_variables
         uses: ./.github/actions/prepare-tests-variables
         with:
           CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
-          MODE: pull-request
+          MODE: ${{ needs.set-tests-mode.outputs.TESTS_MODE }}
 
       - name: Prepare instances
         uses: ./.github/actions/prepare-instance
