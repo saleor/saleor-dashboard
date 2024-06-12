@@ -39,6 +39,7 @@ runs:
         MODE: ${{ inputs.MODE }}
         PULL_REQUEST_NUMBER: ${{ github.event.number }}
         PREFIX: pr-
+        DESTINATION_BRANCH: ${{ github.event.pull_request.base.ref }}
 
       run: |
         if [[ "$MODE" == 'pull-request' ]]; then
@@ -48,7 +49,6 @@ runs:
           echo "POOL_NAME=${PREFIX}${PULL_REQUEST_NUMBER}" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://${PREFIX}${PULL_REQUEST_NUMBER}.staging.saleor.cloud" >> $GITHUB_OUTPUT
 
-          DESTINATION_BRANCH=$(echo "${GITHUB_REF}" | sed "s/refs\/pull\///")
           if [[ "$DESTINATION_BRANCH" == 'main' ]]; then
             echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
           else
