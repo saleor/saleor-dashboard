@@ -31,6 +31,7 @@ export class BasePage {
     ),
     readonly searchInputListView = page.getByTestId("search-input"),
     readonly emptyDataGridListView = page.getByTestId("empty-data-grid-text"),
+    readonly dialog = page.getByRole("dialog"),
   ) {
     this.page = page;
   }
@@ -297,7 +298,6 @@ export class BasePage {
       expect(locator).toContainText(objectProperty);
     }
   }
-
   async getNumberOfGridRowsWithText(expectedText: string) {
     await this.gridCanvas
       .locator("tr")
@@ -315,20 +315,7 @@ export class BasePage {
     const gridRowsWithText = await this.gridCanvas.locator("tr").count();
     return gridRowsWithText;
   }
-
   async waitForDOMToFullyLoad() {
-    await this.page.waitForLoadState("domcontentloaded", { timeout: 70000 });
-    await this.loader.waitFor({ state: "hidden" });
-  }
-
-  async expectElementIsHidden(locator: Locator) {
-    await locator.first().waitFor({
-      state: "hidden",
-      timeout: 30000,
-    });
-  }
-
-  async waitForCanvasContainsText(text: string) {
-    await this.gridCanvas.getByText(text).waitFor({ state: "attached", timeout: 50000 });
+    await this.page.waitForLoadState('domcontentloaded', { timeout: 70000 });
   }
 }
