@@ -50,7 +50,6 @@ runs:
         BACKUP_ID: ${{ inputs.BACKUP_ID }}
         INSTANCE_NAME: ${{ inputs.POOL_NAME }}
       run: |
-        echo "$BACKUP_ID"
         npx saleor backup restore "$BACKUP_ID" \
           --environment="$INSTANCE_NAME" \
           --skip-webhooks-update
