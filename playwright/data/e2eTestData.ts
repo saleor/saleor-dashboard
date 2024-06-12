@@ -40,15 +40,7 @@ export const ATTRIBUTES = {
     names: ["DROPDOWN", "MULTISELECT", "SWATCH"],
   },
   attributeTypesWithoutAbilityToAddValues: {
-    names: [
-      "FILE",
-      "NUMERIC",
-      "RICH_TEXT",
-      "PLAIN_TEXT",
-      "BOOLEAN",
-      "DATE",
-      "DATE_TIME",
-    ],
+    names: ["FILE", "NUMERIC", "RICH_TEXT", "PLAIN_TEXT", "BOOLEAN", "DATE", "DATE_TIME"],
   },
   attributeReferencesEntities: {
     names: ["PAGE", "PRODUCT", "PRODUCT_VARIANT"],
@@ -219,10 +211,7 @@ export const CATEGORIES = {
     name: "a category to be updated",
   },
   categoriesToBeBulkDeleted: {
-    names: [
-      "a cateogry to be bulk deleted 1/2",
-      "a cateogry to be bulk deleted 2/2",
-    ],
+    names: ["a cateogry to be bulk deleted 1/2", "a cateogry to be bulk deleted 2/2"],
   },
   e2eCategory: {
     id: "Q2F0ZWdvcnk6NTEx",
@@ -450,6 +439,26 @@ export const SHIPPING_METHODS = {
     id: "U2hpcHBpbmdab25lOjIzOTA%3D",
     info: "Shipping method that is used to add rates",
   },
+  shippingMethodToBeUpdated: {
+    id: "U2hpcHBpbmdab25lOjIzOTI=",
+    info: "Shipping zone to be updated",
+    name: "e2e-test-shippingZone-to-be-updated",
+  },
+  shippingMethodToBeBulkDeleted1: {
+    id: "U2hpcHBpbmdab25lOjIzOTM=",
+    info: "First shipping zone to be bulk deleted",
+    name: "e2e-test-shippingZone-to-be-bulk-deleted-1",
+  },
+  shippingMethodToBeBulkDeleted2: {
+    id: "U2hpcHBpbmdab25lOjIzOTQ=",
+    info: "Second shipping zone to be bulk deleted",
+    name: "e2e-test-shippingZone-to-be-bulk-deleted-2",
+  },
+  shippingMethodToBeBulkDeleted3: {
+    id: "U2hpcHBpbmdab25lOjIzOTU=",
+    info: "Third shipping zone to be bulk deleted",
+    name: "e2e-test-shippingZone-to-be-bulk-deleted-3",
+  },
   shippingMethodWithRatesToBeDeleted: {
     id: "U2hpcHBpbmdab25lOjIzODk%3D",
     info: "Shipping zone with methods to be deleted",
@@ -551,10 +560,7 @@ export const NAVIGATION_ITEMS = {
     name: "e2e-menu-to-be-deleted-from-details-view",
   },
   navigationMenusToBeBulkDeleted: {
-    names: [
-      "e2e-menu-to-be-bulk-deleted 1/2",
-      "e2e-menu-to-be-bulk-deleted 2/2",
-    ],
+    names: ["e2e-menu-to-be-bulk-deleted 1/2", "e2e-menu-to-be-bulk-deleted 2/2"],
   },
 };
 
@@ -605,10 +611,7 @@ export const PAGE_TYPES = {
     info: "Page type used in delete page type test",
   },
   pageTypesToBeBulkDeleted: {
-    names: [
-      "a page type to be bulk deleted 1/2",
-      "a page type to be bulk deleted 2/2",
-    ],
+    names: ["a page type to be bulk deleted 1/2", "a page type to be bulk deleted 2/2"],
     ids: ["UGFnZVR5cGU6MzY=", "UGFnZVR5cGU6Mzc="],
   },
 };
@@ -624,10 +627,7 @@ export const PRODUCT_TYPES = {
     info: "Product type used in delete product type test",
   },
   productTypesToBeBulkDeleted: {
-    names: [
-      "a product type to be bulk deleted 1/2",
-      "a product type to be bulk deleted 2/2",
-    ],
+    names: ["a product type to be bulk deleted 1/2", "a product type to be bulk deleted 2/2"],
     ids: ["UHJvZHVjdFR5cGU6NzAw", "UHJvZHVjdFR5cGU6NzAx"],
   },
 };
