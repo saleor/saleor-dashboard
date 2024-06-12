@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-You can now distinguish primary and secondary buttons in order transaction cancel modal. Secondary button has changed copy to Back insted of Cancel to fix problem with double button with the same copy. Unify secondary button copy in create refund modal.
+You can no longer see a duplicated cancel button when canceling the transaction. This means you now can go back to edition by using "back" button and "cancel" to continue your intention
