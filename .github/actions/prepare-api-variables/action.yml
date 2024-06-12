@@ -59,7 +59,7 @@ runs:
         fi
 
         if [[ "$MODE" == 'release' ]]; then
-          CURRENT_BRANCH=$(echo "${GITHUB_REF}" | sed "s/refs\/heads\///")
+          CURRENT_BRANCH=$(echo "${GITHUB_REF}" | sed "s/refs\/pull\///")
           VERSION_SLUG=$(echo "${CURRENT_BRANCH}" | sed "s/\.//")
 
           echo "BASE_URL=https://v${VERSION_SLUG}.staging.saleor.cloud/dashboard/" >> $GITHUB_OUTPUT
