@@ -68,6 +68,7 @@ export class ProductPage extends BasePage {
     readonly visibleRadioBtn = page.locator("[name='isPublished']"),
     readonly channelAvailabilityItem = page.locator("[data-test-id*='channel-availability-item']"),
     readonly addVariantButton = page.locator("[data-test-id*='button-add-variant']"),
+    readonly datagridFullscreenButton = page.locator("[data-test-id*='button-exit-fullscreen']"),
     readonly ratingInput = page.locator("[name='rating']"),
     readonly warehouseOption = page.locator("[role='menuitem']"),
     readonly costPriceInput = page.locator("[name*='costPrice']"),
@@ -202,6 +203,10 @@ export class ProductPage extends BasePage {
 
   async clickAddVariantButton() {
     await this.addVariantButton.click();
+  }
+
+  async clickDatagridFullscreenButton() {
+    await this.datagridFullscreenButton.click();
   }
 
   async gotoProductListPage() {
