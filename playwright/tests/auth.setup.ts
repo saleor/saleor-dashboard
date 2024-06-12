@@ -5,6 +5,7 @@ import path from 'path';
 import { USER_PERMISSION, UserPermissionType, permissions } from "@data/userPermissions";
 
 const authenticateAndSaveState = async (request: APIRequestContext, email: string, password: string, filePath: string) => {
+
     const basicApiService = new BasicApiService(request);
     await basicApiService.logInUserViaApi({ email, password });
 

@@ -1,9 +1,8 @@
 import { URL_LIST } from "@data/url";
 import type { Page } from "@playwright/test";
+import { BasePage } from "./basePage";
 
-export class ConfigurationPage {
-  readonly page: Page;
-
+export class ConfigurationPage extends BasePage{
   constructor(
     page: Page,
     readonly pluginsButton = page.locator("[data-test-id*='plugins']"),
@@ -34,7 +33,7 @@ export class ConfigurationPage {
       "[data-test-id*='configuration-menu-taxes']",
     ),
   ) {
-    this.page = page;
+      super(page)
   }
   async openShippingMethods() {
     await this.shippingMethodsButton.click();

@@ -1,5 +1,5 @@
 import type { Page } from "@playwright/test";
-import { expect } from "@playwright/test";
+import {expect} from "@playwright/test";
 
 export class ProductCreateDialog {
   readonly page: Page;
@@ -12,15 +12,17 @@ export class ProductCreateDialog {
     readonly promptedOptions = page.getByTestId(
       "single-autocomplete-select-option",
     ),
+    readonly dropdown = page.getByTestId("autocomplete-dropdown"),
     readonly confirmButton = page.getByTestId("submit"),
+    readonly tooltipResult = page.getByRole("tooltip"),
   ) {
     this.page = page;
   }
   async selectProductTypeWithVariants(productType: string = "Beer") {
+    const responsePromise = this.page.waitForResponse('**/graphql/');
     await this.dialogProductTypeInput.fill(productType);
-    await this.promptedOptions.filter({ hasText: productType }).first().click();
-    await this.promptedOptions.waitFor({ state: "hidden", timeout: 30000});
-    await this.confirmButton.waitFor({ state: "visible", timeout: 30000});
+    await responsePromise;
+    await this.promptedOptions.filter({hasText:productType}).click();
   }
   async clickConfirmButton() {
     await this.confirmButton.click();
