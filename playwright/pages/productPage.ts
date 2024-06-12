@@ -202,7 +202,7 @@ export class ProductPage extends BasePage {
   }
 
   async clickAddVariantButton() {
-    await this.addVariantButton.click();
+    await this.addVariantButton.nth(0).click();
   }
 
   async clickDatagridFullscreenButton() {
