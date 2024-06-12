@@ -47,8 +47,14 @@ runs:
           echo "BASE_URL_DOMAIN=${PREFIX}${PULL_REQUEST_NUMBER}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
           echo "POOL_NAME=${PREFIX}${PULL_REQUEST_NUMBER}" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://${PREFIX}${PULL_REQUEST_NUMBER}.staging.saleor.cloud" >> $GITHUB_OUTPUT
-          echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
-          
+
+          DESTINATION_BRANCH=$(echo "${GITHUB_REF}" | sed "s/refs\/heads\///")
+          if [[ "$DESTINATION_BRANCH" == 'main' ]]; then
+            echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
+          else
+            # case: handle pull requests to branches other than main (e.g. release branches)
+            echo "BACKUP_NAMESPACE=snapshot-automation-tests-${DESTINATION_BRANCH}" >> $GITHUB_OUTPUT
+          fi
           exit 0
         fi
 
@@ -92,4 +98,3 @@ runs:
 
         echo "Unknown mode: $MODE" >&2
         exit 1
-
