@@ -308,6 +308,7 @@ export const sale: SaleDetailsFragment = {
           channelListings: [
             {
               __typename: "ProductChannelListing",
+              id: "1",
               availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
@@ -341,6 +342,7 @@ export const sale: SaleDetailsFragment = {
           channelListings: [
             {
               __typename: "ProductChannelListing",
+              id: "1",
               availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
@@ -374,6 +376,7 @@ export const sale: SaleDetailsFragment = {
           channelListings: [
             {
               __typename: "ProductChannelListing",
+              id: "1",
               availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
@@ -407,6 +410,7 @@ export const sale: SaleDetailsFragment = {
           channelListings: [
             {
               __typename: "ProductChannelListing",
+              id: "1",
               availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
@@ -462,6 +466,7 @@ export const sale: SaleDetailsFragment = {
             },
             channelListings: [
               {
+                id: "1",
                 isPublished: true,
                 publishedAt: "2020-01-01",
                 isAvailableForPurchase: true,
@@ -500,6 +505,7 @@ export const sale: SaleDetailsFragment = {
             },
             channelListings: [
               {
+                id: "1",
                 isPublished: true,
                 publishedAt: "2020-01-01",
                 isAvailableForPurchase: true,
@@ -538,6 +544,7 @@ export const sale: SaleDetailsFragment = {
             },
             channelListings: [
               {
+                id: "1",
                 isPublished: true,
                 publishedAt: "2020-01-01",
                 isAvailableForPurchase: true,
@@ -552,6 +559,7 @@ export const sale: SaleDetailsFragment = {
                 __typename: "ProductChannelListing",
               },
               {
+                id: "2",
                 isPublished: true,
                 publishedAt: "2020-01-01",
                 isAvailableForPurchase: true,

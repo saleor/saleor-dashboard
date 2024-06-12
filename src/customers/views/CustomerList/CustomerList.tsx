@@ -73,7 +73,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber],
   );
-  const { data, loading, refetch } = useListCustomersQuery({
+  const { data, refetch } = useListCustomersQuery({
     displayLoader: true,
     variables: queryVariables,
   });
@@ -147,8 +147,8 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
         filterPresets={presets.map(preset => preset.name)}
         customers={customers}
         settings={settings}
-        disabled={loading}
-        loading={loading}
+        disabled={!data}
+        loading={!data}
         onUpdateListSettings={updateListSettings}
         onSort={handleSort}
         selectedCustomerIds={selectedRowIds}
