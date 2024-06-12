@@ -29,11 +29,9 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { FormattedMessage } from "react-intl";
 
 import { CardMenuItem } from "../CardMenu";
 import { FullScreenContainer } from "./components/FullScreenContainer";
-import { Header } from "./components/Header";
 import { RowActions } from "./components/RowActions";
 import { TooltipContainer } from "./components/TooltipContainer";
 import { useCustomCellRenderers } from "./customCells/useCustomCellRenderers";
@@ -60,9 +58,15 @@ export interface MenuItemsActions {
   removeRows: (indexes: number[]) => void;
 }
 
+export interface DatagridRenderHeaderProps {
+  isFullscreenOpen: boolean;
+  toggleFullscreen: () => void;
+  addRowOnDatagrid: () => void;
+  isAnimationOpenFinished: boolean;
+}
+
 export interface DatagridProps {
   fillHandle?: boolean;
-  addButtonLabel?: string;
   availableColumns: readonly AvailableColumn[];
   emptyText: string;
   getCellError: (item: Item, opts: GetCellContentOpts) => boolean;
@@ -70,8 +74,6 @@ export interface DatagridProps {
   getColumnTooltipContent?: (colIndex: number) => string;
   menuItems: (index: number) => CardMenuItem[];
   rows: number;
-  title?: string;
-  fullScreenTitle?: string;
   loading?: boolean;
   selectionActions: (selection: number[], actions: MenuItemsActions) => ReactNode;
   onChange?: OnDatagridChange;
@@ -93,10 +95,10 @@ export interface DatagridProps {
   actionButtonPosition?: "left" | "right";
   recentlyAddedColumn?: string | null; // Enables scroll to recently added column
   onClearRecentlyAddedColumn?: () => void;
+  renderHeader?: (props: DatagridRenderHeaderProps) => ReactNode;
 }
 
 export const Datagrid: React.FC<DatagridProps> = ({
-  addButtonLabel,
   availableColumns,
   emptyText,
   getCellContent,
@@ -104,8 +106,6 @@ export const Datagrid: React.FC<DatagridProps> = ({
   menuItems,
   rows,
   selectionActions,
-  title,
-  fullScreenTitle,
   onHeaderClicked,
   onChange,
   renderColumnPicker,
@@ -127,6 +127,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   recentlyAddedColumn,
   onClearRecentlyAddedColumn,
   rowHeight = cellHeight,
+  renderHeader,
   ...datagridProps
 }): ReactElement => {
   const classes = useStyles({ actionButtonPosition });
@@ -190,7 +191,6 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const rowsTotal = rows - removed.length + added.length;
   const hasMenuItem = !!menuItems(0).length;
   const hasColumnGroups = availableColumns.some(col => col.group);
-  const headerTitle = isAnimationOpenFinished ? fullScreenTitle ?? title : title;
   const handleGetCellContent = useCallback(
     ([column, row]: Item): GridCell => {
       const item = [column, row] as const;
@@ -396,28 +396,12 @@ export const Datagrid: React.FC<DatagridProps> = ({
   return (
     <FullScreenContainer open={isOpen} className={fullScreenClasses.fullScreenContainer}>
       <Card className={classes.root}>
-        {headerTitle && (
-          <Header title={headerTitle}>
-            <Header.ButtonFullScreen isOpen={isOpen} onToggle={toggle}>
-              {isOpen ? (
-                <FormattedMessage
-                  id="QjPJ78"
-                  defaultMessage="Close"
-                  description="close full-screen"
-                />
-              ) : (
-                <FormattedMessage
-                  id="483Xnh"
-                  defaultMessage="Open"
-                  description="open full-screen"
-                />
-              )}
-            </Header.ButtonFullScreen>
-            {addButtonLabel && (
-              <Header.ButtonAddRow onAddRow={onRowAdded}>{addButtonLabel}</Header.ButtonAddRow>
-            )}
-          </Header>
-        )}
+        {renderHeader?.({
+          toggleFullscreen: toggle,
+          addRowOnDatagrid: onRowAdded,
+          isFullscreenOpen: isOpen,
+          isAnimationOpenFinished,
+        })}
         <CardContent classes={{ root: classes.cardContentRoot }} data-test-id="list">
           {rowsTotal > 0 || showEmptyDatagrid ? (
             <>
