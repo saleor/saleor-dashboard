@@ -1,5 +1,5 @@
 ---
-"saleor-dashboard": patch
+"saleor-dashboard": minor
 ---
 
-Datagrid on product variants page when click add variant redirect to create new variant page instead of create new row in datagrid. Creating new row in datagrid is only possible in fullscreen mode
+Adding the new variant as a row is no longer possible from the product details. This means "add new variant" button now leads you to the variant creation page
