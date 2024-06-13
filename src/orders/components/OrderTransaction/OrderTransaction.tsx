@@ -32,6 +32,7 @@ const OrderTransaction: React.FC<OrderTransactionProps> = ({
       // @ts-expect-error - there seems to be a TS bug when
       // `DashboardCard.Root` prop type is extended with `BoxProps`
       __opacity={disabled ? "0.6" : "1"}
+      data-test-id="orderTransactionsList"
     >
       <DashboardCard.Title>
         <OrderTransactionCardTitle
