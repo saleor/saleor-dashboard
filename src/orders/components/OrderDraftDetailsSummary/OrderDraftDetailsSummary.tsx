@@ -156,9 +156,9 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
           <td>
             <Popover open={isDialogOpen}>
               <Popover.Trigger>
-                <Button variant="tertiary" onClick={isDialogOpen ? closeDialog : openDialog}>
+                <Box onClick={isDialogOpen ? closeDialog : openDialog}>
                   <Link>{intl.formatMessage(discountTitle)}</Link>
-                </Button>
+                </Box>
               </Popover.Trigger>
               <Popover.Content align="start" className={sprinkles({ zIndex: "3" })}>
                 <Box boxShadow="defaultOverlay">
