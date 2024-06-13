@@ -94,7 +94,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber],
   );
-  const { data, loading, refetch } = useCollectionListQuery({
+  const { data, refetch } = useCollectionListQuery({
     displayLoader: true,
     variables: queryVariables,
   });
@@ -177,8 +177,8 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         onTabSave={() => openModal("save-search")}
         onTabUpdate={onPresetUpdate}
         tabs={presets.map(tab => tab.name)}
-        loading={loading}
-        disabled={loading}
+        loading={!data}
+        disabled={!data}
         collections={collections}
         settings={settings}
         onSort={handleSort}
