@@ -161,6 +161,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       pageCreateUrl({
+        ...params,
         action: "assign-attribute-value",
         id: attribute.id,
       }),
@@ -227,7 +228,9 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
         fetchAttributeValues={searchAttributeValues}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
-        onCloseDialog={() => navigate(pageCreateUrl())}
+        onCloseDialog={() =>
+          navigate(pageCreateUrl({ "page-type-id": params["page-type-id"] }))
+        }
         selectedPageType={selectedPageType?.pageType}
         onSelectPageType={handleSelectPageTypeId}
         onAttributeSelectBlur={searchAttributeReset}
