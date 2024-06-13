@@ -13,7 +13,7 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Button, Popover, sprinkles } from "@saleor/macaw-ui-next";
+import { Box, Popover, sprinkles } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
