@@ -44,11 +44,7 @@ export const OrderTransactionCardTitle: React.FC<CardTitleProps> = ({
   return (
     <div className={classes.title}>
       {transaction.externalUrl ? (
-        <TransactionLink
-          // eslint-disable-next-line prettier/prettier
-          href={transaction.externalUrl}
-          className={classes.methodName}
-        >
+        <TransactionLink href={transaction.externalUrl} className={classes.methodName}>
           {transaction.externalUrl && (
             <IconButton>
               <LinkIcon />
