@@ -72,7 +72,7 @@ export const OrderRefundDialog = ({
         </RadioTiles>
         <DashboardModal.Actions>
           <Button onClick={onClose} variant="secondary">
-            <Text fontWeight="medium">{intl.formatMessage(buttonMessages.cancel)}</Text>
+            <Text fontWeight="medium">{intl.formatMessage(buttonMessages.back)}</Text>
           </Button>
           <Button onClick={selectedRefundType === "standard" ? onStandardRefund : onManualRefund}>
             <Text fontWeight="medium" color="buttonDefaultPrimary">

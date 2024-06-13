@@ -56,7 +56,7 @@ describe("OrderRefundDialog", () => {
     expect(dialog).not.toBeInTheDocument();
   });
 
-  it("closes the modal when user clicks on cancel", () => {
+  it("closes the modal when user clicks on back", () => {
     // Arrange
     const props = {
       open: true,
@@ -69,9 +69,9 @@ describe("OrderRefundDialog", () => {
     // Act
     render(<OrderRefundDialog {...props} />);
 
-    const cancelButton = screen.getByRole("button", { name: /cancel/i });
+    const backButton = screen.getByRole("button", { name: /back/i });
 
-    fireEvent.click(cancelButton);
+    fireEvent.click(backButton);
     // Assert
     expect(props.onClose).toHaveBeenCalled();
   });
