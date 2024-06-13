@@ -245,7 +245,6 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           rows={productsLength}
           onRowSelectionChange={onSelectProductIds}
           selectionActions={() => null}
-          fullScreenTitle={intl.formatMessage(messages.products)}
           onRowClick={handleRowClick}
           rowAnchor={handleRowAnchor}
           recentlyAddedColumn={recentlyAddedColumn}
