@@ -22,17 +22,3 @@ export const useStyles = makeStyles(
   }),
   { name: "OrderTransactionCardTitle" },
 );
-
-export const useMoneyDisplayStyles = makeStyles(
-  theme => ({
-    wrapper: {
-      fontSize: vars.fontSize[1],
-      lineHeight: vars.lineHeight[1],
-      color: theme.palette.saleor.main[2],
-      margin: 0,
-    },
-  }),
-  {
-    name: "MoneyDisplay",
-  },
-);

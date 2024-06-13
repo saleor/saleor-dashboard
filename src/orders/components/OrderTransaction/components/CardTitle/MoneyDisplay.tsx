@@ -1,9 +1,8 @@
 import { formatMoneyAmount } from "@dashboard/components/Money";
 import useLocale from "@dashboard/hooks/useLocale";
 import { IMoney } from "@dashboard/utils/intl";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-
-import { useMoneyDisplayStyles } from "./styles";
 
 interface MoneyDisplayProps {
   label: string;
@@ -12,16 +11,15 @@ interface MoneyDisplayProps {
 
 export const MoneyDisplay = ({ label, money }: MoneyDisplayProps) => {
   const { locale } = useLocale();
-  const classes = useMoneyDisplayStyles();
   const amount = formatMoneyAmount(money, locale);
 
   return (
-    <div className={classes.wrapper}>
-      <div>{label}</div>
-      <div>
-        <span>{money.currency}&nbsp;</span>
-        <span>{amount}</span>
-      </div>
-    </div>
+    <Box display="flex" flexDirection="column">
+      <Text size={1}>{label}</Text>
+      <Box as="span">
+        <Text fontWeight="bold">{money.currency}&nbsp;</Text>
+        <Text fontWeight="bold">{amount}</Text>
+      </Box>
+    </Box>
   );
 };

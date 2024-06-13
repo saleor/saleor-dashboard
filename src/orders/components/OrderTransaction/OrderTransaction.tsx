@@ -1,13 +1,11 @@
 // @ts-strict-ignore
+import { DashboardCard } from "@dashboard/components/Card";
 import { TransactionActionEnum, TransactionItemFragment } from "@dashboard/graphql";
 import { FakeTransaction, TransactionFakeEvent } from "@dashboard/orders/types";
-import { Card } from "@material-ui/core";
-import clsx from "clsx";
 import React from "react";
 
-import { CardTitle } from "./components";
+import { OrderTransactionCardTitle } from "./components";
 import { TransactionEvents } from "./components/TransactionEvents";
-import { useStyles } from "./styles";
 import { getTransactionEvents } from "./utils";
 
 export interface OrderTransactionProps {
@@ -27,26 +25,27 @@ const OrderTransaction: React.FC<OrderTransactionProps> = ({
   cardFooter,
   disabled = false,
 }) => {
-  const classes = useStyles();
   const events = getTransactionEvents(transaction, fakeEvents);
 
-  if (!transaction) {
-    return null;
-  }
-
   return (
-    <Card
-      className={clsx(classes.card, disabled && classes.disabled)}
-      data-test-id="orderTransactionsList"
+    <DashboardCard
+      // @ts-expect-error - there seems to be a TS bug when
+      // `DashboardCard.Root` prop type is extended with `BoxProps`
+      __opacity={disabled ? "0.6" : "1"}
     >
-      <CardTitle
-        transaction={transaction}
-        onTransactionAction={onTransactionAction}
-        showActions={showActions}
-      />
-      <TransactionEvents events={events} />
-      {cardFooter}
-    </Card>
+      <DashboardCard.Title>
+        <OrderTransactionCardTitle
+          transaction={transaction}
+          onTransactionAction={onTransactionAction}
+          showActions={showActions}
+        />
+      </DashboardCard.Title>
+
+      <DashboardCard.Content paddingX={0}>
+        <TransactionEvents events={events} />
+        {cardFooter}
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

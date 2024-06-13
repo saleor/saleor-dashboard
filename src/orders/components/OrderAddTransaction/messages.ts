@@ -2,8 +2,8 @@ import { defineMessages } from "react-intl";
 
 export const addTransactionMessages = defineMessages({
   captureTransaction: {
-    defaultMessage: "Manual transaction",
-    id: "biDgQS",
+    defaultMessage: "Add manual capture",
+    id: "wnnJC7",
     description: "button, opens modal to create transaction in order",
   },
   markAsPaid: {
