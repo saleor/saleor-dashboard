@@ -23,6 +23,9 @@ inputs:
   BACKUP_ID:
     description: "The id of backup"
     required: true
+  SALEOR_CLOUD_SERVICE:
+    description: "Which saleor cloud service to use"
+    required: true
 runs:
   using: "composite"
   steps:
