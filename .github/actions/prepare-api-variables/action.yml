@@ -45,18 +45,14 @@ runs:
         if [[ "$MODE" == 'pull-request' ]]; then
           echo "API_URL=https://${PREFIX}${PULL_REQUEST_NUMBER}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://${PREFIX}${PULL_REQUEST_NUMBER}.staging.saleor.cloud" >> $GITHUB_OUTPUT
+          echo "POOL_NAME=${PREFIX}${PULL_REQUEST_NUMBER}" >> $GITHUB_OUTPUT
+          echo "BASE_URL=https://${PREFIX}${PULL_REQUEST_NUMBER}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
+          echo "BASE_URL_DOMAIN=${PREFIX}${PULL_REQUEST_NUMBER}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
 
           if [[ "$DESTINATION_BRANCH" == 'main' ]]; then
-            echo "BASE_URL=https://${PREFIX}${PULL_REQUEST_NUMBER}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
-            echo "BASE_URL_DOMAIN=${PREFIX}${PULL_REQUEST_NUMBER}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
-            echo "POOL_NAME=${PREFIX}${PULL_REQUEST_NUMBER}" >> $GITHUB_OUTPUT
             echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
           else
             # case: handle pull requests to branches other than main (e.g. release branches)
-            VERSION_SLUG=$(echo "${DESTINATION_BRANCH}" | sed "s/\.//")
-            echo "BASE_URL=https://${PREFIX}${PULL_REQUEST_NUMBER}.staging.saleor.cloud/dashboard/" >> $GITHUB_OUTPUT
-            echo "BASE_URL_DOMAIN=${PREFIX}${PULL_REQUEST_NUMBER}.staging.saleor.cloud" >> $GITHUB_OUTPUT
-            echo "POOL_NAME=${DESTINATION_BRANCH} Staging" >> $GITHUB_OUTPUT
             echo "BACKUP_NAMESPACE=snapshot-automation-tests-${DESTINATION_BRANCH}" >> $GITHUB_OUTPUT
           fi
           exit 0
