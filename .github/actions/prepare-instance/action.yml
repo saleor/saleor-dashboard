@@ -59,12 +59,13 @@ runs:
       env:
         BACKUP_ID: ${{ inputs.BACKUP_ID }}
         INSTANCE_NAME: ${{ inputs.POOL_NAME }}
+        SALEOR_CLOUD_SERVICE: ${{ inputs.SALEOR_CLOUD_SERVICE }}
       run: |
          npx saleor env create "$INSTANCE_NAME" \
           --project=project-for-pr-testing \
           --database=snapshot \
           --restore-from="$BACKUP_ID" \
-          --saleor=saleor-master-staging \
+          --saleor="$SALEOR_CLOUD_SERVICE" \
           --domain="$INSTANCE_NAME" \
           --skip-restrict \
           --skip-webhooks-update
