@@ -40,7 +40,12 @@ export const FeatureFlagsModal = ({
         >
           <Header>
             <Modal.Close>
-              <Button variant="tertiary" icon={<CloseIcon />} size="small" />
+              <Button
+                data-test-id="close_feature-preview-dialog"
+                variant="tertiary"
+                icon={<CloseIcon />}
+                size="small"
+              />
             </Modal.Close>
           </Header>
           <Box display="flex" backgroundColor="default1" height="100%">

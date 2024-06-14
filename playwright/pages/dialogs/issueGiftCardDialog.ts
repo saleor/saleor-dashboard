@@ -27,11 +27,13 @@ export class IssueGiftCardDialog extends BasePage {
     readonly copyCodeButton = page.getByTestId("copy-code-button"),
     readonly dropdown = page.getByTestId("autocomplete-dropdown"),
     readonly option = page.getByTestId("single-autocomplete-select-option"),
+    readonly giftCardDialog = page.getByTestId("gift-card-dialog"),
   ) {
     super(page);
   }
 
   async clickIssueButton() {
+    await this.issueButton.waitFor({state:"visible"});
     await this.issueButton.click();
   }
   async clickOkButton() {

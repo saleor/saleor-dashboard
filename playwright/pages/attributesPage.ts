@@ -131,6 +131,7 @@ export class AttributesPage extends BasePage {
   async selectAttributeInputType(attributeType: string) {
     await this.attributeSelect.click();
     await this.page.getByTestId(`select-field-option-${attributeType}`).click();
+    await this.waitForDOMToFullyLoad();
   }
   async clickAssignAttributeValueButton() {
     await this.assignAttributeValueButton.click();

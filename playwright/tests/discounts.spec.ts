@@ -12,12 +12,14 @@ import faker from "faker";
 test.use({ storageState: "./playwright/.auth/admin.json" });
 let discounts: DiscountsPage;
 
-test.beforeEach(({ page }) => {
-  discounts = new DiscountsPage(page);
+test.beforeEach( async ({ page }) => {
+  discounts = new DiscountsPage(page)
+
 });
 
 const discountType = ["Order", "Catalog"];
 for (const type of discountType) {
+
   test(`TC: SALEOR_149 Create promotion with ${type} predicate @discounts @e2e`, async () => {
     const discountName = `${faker.lorem.word()}+${type}`;
     await discounts.gotoListView();

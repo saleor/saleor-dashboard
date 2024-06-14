@@ -52,7 +52,11 @@ test("TC: SALEOR_38 Admin User should be able to activate other user @e2e @staff
   await expect(loginViaApiDeactivatedUserResponse.data.tokenCreate.errors).toEqual([]);
   await expect(loginViaApiDeactivatedUserResponse.data.tokenCreate.token).not.toEqual(null);
 });
-test("TC: SALEOR_211 Create a staff member @e2e @staff-members", async () => {
+//Adding skip since there is an error:
+// Something went wrong
+// https://pr-4947.dashboard.saleor.rocks/new-password/ is not allowed.
+// Please check `Trusted client origins` configuration in Saleor Cloud.
+test.skip("TC: SALEOR_211 Create a staff member @e2e @staff-members", async () => {
   const name = faker.name.firstName();
   const lastName = faker.name.lastName();
   const email = faker.internet.email().toLowerCase();

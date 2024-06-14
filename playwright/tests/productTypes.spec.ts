@@ -59,7 +59,6 @@ test("TC: SALEOR_185 As a admin user I can delete product type with assigned pro
 
   await productTypePage.gotoExistingProductTypePage(PRODUCT_TYPES.productTypeToBeRemoved.id);
   await productTypePage.clickDeleteButton();
-  await productTypePage.deleteProductTypeDialog.clickConfirmDeletionCheckbox();
   await productTypePage.deleteProductTypeDialog.clickConfirmDeleteButton();
   await productTypePage.expectSuccessBanner();
   await productTypePage.productTypeList.waitFor({ state: "visible", timeout: 50000 });

@@ -4,7 +4,7 @@ import { DeleteDialog } from "@dialogs/deleteDialog";
 import { IssueGiftCardDialog } from "@dialogs/issueGiftCardDialog";
 import { AddressForm } from "@forms/addressForm";
 import { BasePage } from "@pages/basePage";
-import { Page } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
 export class CustomersPage extends BasePage {
   readonly addressForm: AddressForm;
@@ -47,8 +47,12 @@ export class CustomersPage extends BasePage {
 
   async gotoCustomerDetailsPage(customerId: string) {
     await this.waitForNetworkIdleAfterAction(async () => {
-      await this.page.goto(`${URL_LIST.customers}${customerId}`);
+    await this.page.goto(`${URL_LIST.customers}${customerId}`);
     });
+    await this.waitForDOMToFullyLoad();
+    await this.pageHeader.waitFor({state:"visible"})
+    //TODO remove this line after MERX-600 is fixed
+    await this.page.waitForTimeout(8000);
   }
 
   async clickOnCreateCustomer() {
@@ -77,9 +81,15 @@ export class CustomersPage extends BasePage {
   }
 
   async clickIssueNewGiftCard() {
-    await this.waitForNetworkIdleAfterAction(async () => {
+
       await this.issueNewGiftCardButton.click();
-    });
+
+    await this.waitForDOMToFullyLoad()
+    await this.issueGiftCardDialog.giftCardDialog.waitFor({state:"visible"})
+    expect(this.issueGiftCardDialog.giftCardDialog).toBeEditable();
+    //TODO remove this line after MERX-600 is fixed
+    await this.page.waitForTimeout(8000);
+
   }
 
   async clickCustomerActiveCheckbox() {

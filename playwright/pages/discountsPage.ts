@@ -1,4 +1,4 @@
-import type { Page } from "@playwright/test";
+import  { Page } from "@playwright/test";
 import { URL_LIST } from "@data/url";
 import { DeleteDiscountDialog } from "@dialogs/deleteDiscountDialog";
 import { DeleteRuleDialog } from "@dialogs/deleteRuleDialog";
@@ -41,7 +41,8 @@ export class DiscountsPage extends BasePage {
     this.deleteDiscountDialog = new DeleteDiscountDialog(page);
     this.promotionRuleDialog = new PromotionRuleDialog(page);
     this.deleteRuleDialog = new DeleteRuleDialog(page);
-  }
+}
+
   async clickCreateDiscountButton() {
     await this.createDiscountButton.click();
   }

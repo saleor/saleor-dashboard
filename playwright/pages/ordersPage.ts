@@ -83,6 +83,7 @@ export class OrdersPage extends BasePage {
 
   async clickFinalizeButton() {
     await this.finalizeButton.click({timeout: 90000});
+    await this.waitForDOMToFullyLoad();
   }
 
   async goToOrdersListView() {
