@@ -1,6 +1,6 @@
 // @ts-strict-ignore
+import { ButtonLink } from "@dashboard/components/ButtonLink";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
-import Link from "@dashboard/components/Link";
 import Money from "@dashboard/components/Money";
 import {
   DiscountValueTypeEnum,
@@ -123,16 +123,16 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
   };
   const getShippingMethodComponent = () => {
     if (hasChosenShippingMethod) {
-      return <Link onClick={onShippingMethodEdit}>{`${shippingMethodName}`}</Link>;
+      return <ButtonLink onClick={onShippingMethodEdit}>{`${shippingMethodName}`}</ButtonLink>;
     }
 
     const shippingCarrierBase = intl.formatMessage(messages.addShippingCarrier);
 
     if (shippingAddress) {
       return (
-        <Link onClick={onShippingMethodEdit} data-test-id="add-shipping-carrier">
+        <ButtonLink onClick={onShippingMethodEdit} data-test-id="add-shipping-carrier">
           {shippingCarrierBase}
-        </Link>
+        </ButtonLink>
       );
     }
 
@@ -140,9 +140,9 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
 
     return (
       <div className={classes.shippingMethodContainer}>
-        <Link underline disabled onClick={onShippingMethodEdit}>
+        <ButtonLink underline disabled onClick={onShippingMethodEdit}>
           {shippingCarrierBase}
-        </Link>
+        </ButtonLink>
         <HorizontalSpacer />
         <Typography variant="caption">{`(${addShippingAddressInfo})`}</Typography>
       </div>
@@ -156,8 +156,10 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
           <td>
             <Popover open={isDialogOpen}>
               <Popover.Trigger>
-                <Box onClick={isDialogOpen ? closeDialog : openDialog}>
-                  <Link>{intl.formatMessage(discountTitle)}</Link>
+                <Box>
+                  <ButtonLink onClick={isDialogOpen ? closeDialog : openDialog}>
+                    {intl.formatMessage(discountTitle)}
+                  </ButtonLink>
                 </Box>
               </Popover.Trigger>
               <Popover.Content align="start" className={sprinkles({ zIndex: "3" })}>
