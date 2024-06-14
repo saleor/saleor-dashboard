@@ -1,0 +1,5 @@
+---
+"saleor-dashboard": minor
+---
+
+test
