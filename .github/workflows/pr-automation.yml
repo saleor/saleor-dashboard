@@ -1,6 +1,14 @@
 name: PR automation
 
-on: [pull_request]
+on:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      shards:
+        type: number
+        description: 'Number of shards to use for parallel testing'
+        required: false
+        default: 2 # This is the default only for manually (re-)triggered runs. Default for runs triggered by pull requests is configured via `jobs.initialize-cloud.generate-shard-matrix.env.CONCURRENCY`.
 
 concurrency:
   group: ${{ github.ref }}
@@ -18,6 +26,7 @@ jobs:
       BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
       BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
       BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
+      SHARD_MATRIX: ${{ steps.generate-shard-matrix.outputs.SHARD_MATRIX }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -40,6 +49,24 @@ jobs:
           POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
           POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
           BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
+          SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
+
+      - name: Generate shard matrix
+        id: generate-shard-matrix
+        env:
+          CONCURRENCY: ${{ inputs.shards || 2 }}
+        run: |
+          MAX_CONCURRENCY=4
+          if [ "$CONCURRENCY" -gt "$MAX_CONCURRENCY" ]; then
+            echo "[WARN] The requested number of shards ($CONCURRENCY) exceeds maximum allowed value ($MAX_CONCURRENCY). Using $MAX_CONCURRENCY shards instead." >&2
+            CONCURRENCY=$MAX_CONCURRENCY
+          fi
+          shard_matrix=()                             # Initialize an empty array to store the shard values.
+          for i in $(seq 1 "$CONCURRENCY"); do        # Loop through the numbers from 1 to $CONCURRENCY.
+            shard_matrix+=("\"$i/$CONCURRENCY\"")     # For each number i, append a string in the format "${i}/${CONCURRENCY}" to the shard_matrix array.
+          done
+          shard_matrix=( $(IFS=,; echo "[${shard_matrix[*]}]") ) # Join the elements of the shard_matrix array with commas and wrap the result in square brackets to create a valid JSON array string.
+          echo "SHARD_MATRIX=${shard_matrix[0]}" >> "$GITHUB_OUTPUT"
 
   deploy-dashboard:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
@@ -81,7 +108,10 @@ jobs:
 
       - name: Build dashboard
         env:
+          ## backward compatibility for older versions
           API_URI: ${{ needs.initialize-cloud.outputs.API_URL }}
+
+          API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
           APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
           APP_MOUNT_URI: /
           STATIC_URL: /
@@ -118,13 +148,14 @@ jobs:
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
 
+
   run-tests:
     runs-on: ubuntu-22.04
     needs: [initialize-cloud, deploy-dashboard]
     strategy:
       fail-fast: false
       matrix:
-        shard: [1/2, 2/2]
+        shard: ${{ fromJson(needs.initialize-cloud.outputs.SHARD_MATRIX) }}
     steps:
       - uses: actions/checkout@v4
 
@@ -134,9 +165,12 @@ jobs:
           SHARD: ${{ matrix.shard }}
           BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
           API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
-          E2E_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
-          E2E_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
-          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
+          MAILPITURL: ${{ secrets.MAILPITURL }}
+          PW_WORKERS: ${{ vars.PW_WORKERS }}
+          PW_RETRIES: ${{ vars.PW_RETRIES }}
 
   merge-reports:
     if: "!cancelled()"
