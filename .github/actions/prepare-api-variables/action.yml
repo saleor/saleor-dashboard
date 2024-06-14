@@ -28,6 +28,9 @@ outputs:
   BACKUP_NAMESPACE:
     description: "The backup namespace"
     value: ${{ steps.generate.outputs.BACKUP_NAMESPACE }}
+  SALEOR_CLOUD_SERVICE:
+    description: "Which saleor cloud service will be used"
+    value: ${{ steps.generate.outputs.SALEOR_CLOUD_SERVICE }}
 
 runs:
   using: "composite"
