@@ -51,12 +51,12 @@ runs:
 
           if [[ "$DESTINATION_BRANCH" == 'main' ]]; then
             echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
-            echo "SALEOR_CLOUD_SERVICE"=saleor-master-staging" >> $GITHUB_OUTPUT
+            echo "SALEOR_CLOUD_SERVICE="saleor-master-staging" >> $GITHUB_OUTPUT
           else
             # it handles pull requests to the other branches than main, e.g. release branches
             VERSION_SLUG=$(echo "${DESTINATION_BRANCH}" | sed "s/\.//")
             echo "BACKUP_NAMESPACE=snapshot-automation-tests-${DESTINATION_BRANCH}" >> $GITHUB_OUTPUT
-            echo "SALEOR_CLOUD_SERVICE"=saleor-staging-v${VERSION_SLUG}" >> $GITHUB_OUTPUT
+            echo "SALEOR_CLOUD_SERVICE="saleor-staging-v${VERSION_SLUG}" >> $GITHUB_OUTPUT
           fi
 
           exit 0
@@ -72,7 +72,7 @@ runs:
           echo "POOL_NAME=${CURRENT_BRANCH} Staging" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://v${VERSION_SLUG}.staging.saleor.cloud/" >> $GITHUB_OUTPUT
           echo "BACKUP_NAMESPACE=snapshot-automation-tests-${CURRENT_BRANCH}" >> $GITHUB_OUTPUT
-          echo "SALEOR_CLOUD_SERVICE"=saleor-master-staging" >> $GITHUB_OUTPUT
+          echo "SALEOR_CLOUD_SERVICE="saleor-master-staging" >> $GITHUB_OUTPUT
 
           exit 0
         fi
@@ -84,7 +84,7 @@ runs:
           echo "POOL_NAME=automation-dashboard" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://automation-dashboard.staging.saleor.cloud" >> $GITHUB_OUTPUT
           echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
-          echo "SALEOR_CLOUD_SERVICE"=saleor-master-staging" >> $GITHUB_OUTPUT
+          echo "SALEOR_CLOUD_SERVICE="saleor-master-staging" >> $GITHUB_OUTPUT
 
           exit 0
         fi
@@ -98,7 +98,7 @@ runs:
           echo "POOL_NAME=${VERSION} Staging" >> "$GITHUB_OUTPUT"
           echo "POOL_INSTANCE=https://v${VERSION_SLUG}.staging.saleor.cloud/" >> "$GITHUB_OUTPUT"
           echo "BACKUP_NAMESPACE=snapshot-automation-tests-${VERSION}" >> "$GITHUB_OUTPUT"
-          echo "SALEOR_CLOUD_SERVICE"=saleor-master-staging" >> $GITHUB_OUTPUT
+          echo "SALEOR_CLOUD_SERVICE="saleor-master-staging" >> $GITHUB_OUTPUT
 
           exit 0
         fi
