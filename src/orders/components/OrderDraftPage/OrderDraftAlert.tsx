@@ -1,9 +1,10 @@
 // @ts-strict-ignore
 import { ChannelUsabilityDataQuery, OrderDetailsFragment } from "@dashboard/graphql";
 import { Alert, AlertProps } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
-import { MessageDescriptor, useIntl } from "react-intl";
+import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
 import OrderAlerts from "../OrderAlerts";
 import { alertMessages } from "./messages";
@@ -59,7 +60,22 @@ const OrderDraftAlert: React.FC<OrderDraftAlertProps> = props => {
       className={clsx(classes.root, "remove-icon-background")}
       {...alertProps}
     >
-      <OrderAlerts alerts={alerts} alertsHeader={intl.formatMessage(alertMessages.manyAlerts)} />
+      <OrderAlerts
+        alerts={alerts}
+        alertsHeader={intl.formatMessage(alertMessages.manyAlerts)}
+        values={{
+          country: order.shippingAddress.country.country,
+          configLink: (
+            <Box as="a" textDecoration="underline" href="/shipping" color="accent1" target="_blank">
+              <FormattedMessage
+                defaultMessage="shipping zones configuration"
+                id="T3cLGs"
+                description="alert link message"
+              />
+            </Box>
+          ),
+        }}
+      />
     </Alert>
   );
 };
