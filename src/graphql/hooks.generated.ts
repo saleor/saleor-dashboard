@@ -13327,7 +13327,7 @@ export const PermissionGroupDetailsDocument = gql`
   permissionGroup(id: $id) {
     ...PermissionGroupDetails
   }
-  user(id: $userId) {
+  user: me {
     editableGroups {
       id
     }
