@@ -1191,6 +1191,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    created: "2020-06-22T13:52:05.094636+00:00",
     attributes: [],
     channelListings: [
       {
@@ -1286,6 +1287,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    created: "2020-06-22T13:52:05.094636+00:00",
     attributes: [],
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
@@ -1383,6 +1385,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    created: "2020-06-22T13:52:05.094636+00:00",
     attributes: [],
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
@@ -1480,6 +1483,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
@@ -1599,6 +1603,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
@@ -1718,6 +1723,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
@@ -1838,6 +1844,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
@@ -1957,6 +1964,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
@@ -2076,6 +2084,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
@@ -2197,6 +2206,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    created: "2020-06-22T13:52:05.094636+00:00",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -2314,6 +2324,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
@@ -2433,6 +2444,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
@@ -2552,6 +2564,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
@@ -2671,6 +2684,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
@@ -2790,6 +2804,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
@@ -2909,6 +2924,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
@@ -3028,6 +3044,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
@@ -3147,6 +3164,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
@@ -3266,6 +3284,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
@@ -3385,6 +3404,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
