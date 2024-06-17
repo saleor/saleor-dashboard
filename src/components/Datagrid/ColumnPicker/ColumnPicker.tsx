@@ -62,7 +62,7 @@ export const ColumnPicker = ({
         />
       </Popover.Trigger>
       <Popover.Content
-        className={sprinkles({ margin: 1.5 })}
+        className={sprinkles({ margin: 1.5, zIndex: "1" })}
         align={align}
         side={side}
       >
