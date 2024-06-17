@@ -65,7 +65,7 @@ jobs:
           set -x
           environment=$(echo $VERSION | sed -n 's#\([0-9]\+\).\([0-9]\+\).*#saleor-staging-v\1\2#p')
           echo "ENVIRONMENT=${environment}" >> "$GITHUB_ENV"
-      
+
       - name: Set custom version
         env:
           VERSION: ${{ github.event.inputs.git_ref || github.ref_name }}
@@ -134,7 +134,7 @@ jobs:
           CHECK_ID: ${{ steps.create-check.outputs.CHECK_ID }}
           CHECK_NAME: "Deploy_staging"
           STATUS: "completed"
-          CONCLUSION: "${{ steps.deploy.outcome }}" 
+          CONCLUSION: "${{ steps.deploy.outcome }}"
           TITLE: "Deploy staging"
           SUMMARY: "Deploy finished with status ${{ steps.deploy.outcome }}. To check details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
@@ -156,15 +156,18 @@ jobs:
           export GITHUB_TOKEN=$( \
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
           )
-          gh api /repos/saleor/saleor-cloud-deployments/dispatches \
-            --input - <<< '{
-              "event_type": "open-release-pull-request",
-              "client_payload": {
-                "project": "DASHBOARD",
-                "environment": "SANDBOX",
-                "version": "${{ env.VERSION }}"
-              }
-            }'
+
+          version=$(cat package.json | jq -r .version)
+          payload=$(jq --null-input --arg version "$version" '{
+            "event_type": "open-release-pull-request",
+            "client_payload": {
+              "project": "DASHBOARD",
+              "environment": "SANDBOX",
+              "version": $version
+            }
+          }')
+
+          gh api /repos/saleor/saleor-cloud-deployments/dispatches --input - <<< $payload
 
   run-tests-on-release:
     needs: [prepare-release, build]
