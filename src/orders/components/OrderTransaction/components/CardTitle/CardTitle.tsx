@@ -1,9 +1,8 @@
+import { ButtonLink } from "@dashboard/components/ButtonLink";
 import { TransactionActionEnum, TransactionItemFragment } from "@dashboard/graphql";
 import { capitalize } from "@dashboard/misc";
 import { FakeTransaction } from "@dashboard/orders/types";
-import { IconButton } from "@material-ui/core";
-import { Button, LinkIcon } from "@saleor/macaw-ui";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, ExternalLinkIcon, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -11,7 +10,6 @@ import { OrderTransactionProps } from "../../OrderTransaction";
 import { mapActionToMessage } from "../../utils";
 import { messages } from "./messages";
 import { MoneyDisplay } from "./MoneyDisplay";
-import { useStyles } from "./styles";
 
 interface CardTitleProps {
   transaction: TransactionItemFragment | FakeTransaction;
@@ -24,12 +22,8 @@ export const OrderTransactionCardTitle: React.FC<CardTitleProps> = ({
   onTransactionAction,
   showActions = true,
 }) => {
-  const classes = useStyles();
   const intl = useIntl();
-  const TransactionLink = React.useMemo(
-    () => (transaction.externalUrl ? "a" : "span"),
-    [transaction.externalUrl],
-  );
+
   const {
     refundedAmount,
     refundPendingAmount,
@@ -44,15 +38,18 @@ export const OrderTransactionCardTitle: React.FC<CardTitleProps> = ({
   return (
     <Box width="100%" display="flex" justifyContent="space-between" alignItems="center">
       {transaction.externalUrl ? (
-        <TransactionLink href={transaction.externalUrl} className={classes.methodName}>
-          {transaction.externalUrl && (
-            <IconButton>
-              <LinkIcon />
-            </IconButton>
-          )}
+        <ButtonLink
+          as="a"
+          href={transaction.externalUrl}
+          display="flex"
+          gap={2}
+          alignItems="center"
+          size="large"
+        >
+          <ExternalLinkIcon size="small" />
 
           {capitalize(transaction.name)}
-        </TransactionLink>
+        </ButtonLink>
       ) : (
         <Text size={3} fontWeight="bold">
           {transaction.name ? (
