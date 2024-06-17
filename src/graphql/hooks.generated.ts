@@ -15110,6 +15110,7 @@ export const ProductListDocument = gql`
       node {
         ...ProductWithChannelListings
         updatedAt
+        created
         description
         attributes {
           ...ProductListAttribute
