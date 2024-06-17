@@ -39,6 +39,10 @@ outputs:
   BACKUP_NAMESPACE:
     description: "The name of backup"
     value: ${{ steps.api.outputs.BACKUP_NAMESPACE }}
+  SALEOR_CLOUD_SERVICE:
+    description: "Which saleor cloud service will be used"
+    value: ${{ steps.api.outputs.SALEOR_CLOUD_SERVICE }}
+
 runs:
   using: "composite"
   steps:
