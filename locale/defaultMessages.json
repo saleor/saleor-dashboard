@@ -6086,6 +6086,10 @@
     "context": "click and collect",
     "string": "Click&Collect"
   },
+  "biDgQS": {
+    "context": "button, opens modal to create transaction in order",
+    "string": "Manual transaction"
+  },
   "biVFKU": {
     "context": "subsection header",
     "string": "Billing Address"
@@ -9134,10 +9138,6 @@
   },
   "wn3di2": {
     "string": "This password is too commonly used"
-  },
-  "wnnJC7": {
-    "context": "button, opens modal to create transaction in order",
-    "string": "Add manual capture"
   },
   "wpAXKX": {
     "context": "checkbox label description",
