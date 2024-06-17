@@ -2,4 +2,4 @@
 "saleor-dashboard": minor
 ---
 
-You can now filter orders by IDs of orders. Input field can handle one or multiple IDs, just use a comma, space or Enter to separate them.
+Filters for orders now allow filtering by ID. This means its form handles one or multiple ID that you can attach by using comma, space, or enter for separation.
