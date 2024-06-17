@@ -51,8 +51,8 @@ runs:
       uses: ./.github/actions/prepare-api-variables
       with:
         MODE: ${{ inputs.MODE }}
-        VERSION: ${{ inputs.VERSION || ''}} 
-  
+        VERSION: ${{ inputs.VERSION || ''}}
+
     - name: Generate backup
       id: backup
       uses: ./.github/actions/prepare-backups-variables
@@ -79,4 +79,5 @@ runs:
         echo "::notice title=POOL_INSTANCE::${POOL_INSTANCE}"
         echo "::notice title=BACKUP_NAMESPACE::${BACKUP_NAMESPACE}"
         echo "::notice title=SNAPSHOT::backup_id=${BACKUP_ID}, version=${BACKUP_VER}, name=${BACKUP_NAME}"
+
         echo "::notice title=SALEOR_CLOUD_SERVICE::${SALEOR_CLOUD_SERVICE}"

@@ -432,6 +432,18 @@ export const ORDERS = {
   orderNotFulfilledToChangeShippingAddress: {
     id: "T3JkZXI6ZWFhZjA0MzgtNzkyYi00ZTdlLWIyODUtMTBkMjViMjM0MzRk",
   },
+  fullyPaidOrdersWithSingleTransaction: {
+    ids: [
+      "T3JkZXI6ZjZjZWUxMzItNDk2Zi00MWUyLWJkNTItYTk1MDM1YTVlZmVm",
+      "T3JkZXI6YzI4YjFmYmEtZWU1NS00YmU5LTg5MjktNTMyYzk5MDlkZGVk",
+    ],
+  },
+  fullyPaidOrderWithSeveralTransactions: {
+    id: "T3JkZXI6MTVhYTEwMzYtZWE3OS00MzJiLTliODctNDhlYTMwYmU1NmNl",
+  },
+  partiallyPaidOrder: {
+    id: "T3JkZXI6NmVlMDMwMTctZTViOS00OGNmLWFkYTQtODg4YTQ5MDI3ZjNk",
+  },
 };
 
 export const SHIPPING_METHODS = {
