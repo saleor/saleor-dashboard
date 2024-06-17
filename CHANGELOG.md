@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.15.7
+
+### Patch Changes
+
+- e688404a2: Add manual workflow for cypress tests
+- 7d9a959ce: Run cypress or playwright tests on release
+- 78d4279dc: update old versions and new home page e2e test - cypress
+- 6e27ae57f: Add Cypress split to run tests in parallel
+- a781c90b2: Dashboard no longer crashes when assigning reference attribute while creating content.
+
 ## 3.15.5
 
 ### Patch Changes
