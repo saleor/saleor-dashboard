@@ -42,7 +42,7 @@ export const OrderTransactionCardTitle: React.FC<CardTitleProps> = ({
   } = transaction;
 
   return (
-    <div className={classes.title}>
+    <Box width="100%" display="flex" justifyContent="space-between" alignItems="center">
       {transaction.externalUrl ? (
         <TransactionLink href={transaction.externalUrl} className={classes.methodName}>
           {transaction.externalUrl && (
@@ -66,70 +66,65 @@ export const OrderTransactionCardTitle: React.FC<CardTitleProps> = ({
         </Text>
       )}
 
-      <Box display="flex" flexDirection="row" gap={8}>
-        <div className={classes.dataDisplay}>
-          {cancelPendingAmount.amount > 0 && (
-            <MoneyDisplay
-              label={intl.formatMessage(messages.cancelPending)}
-              money={cancelPendingAmount}
-            />
-          )}
+      <Box display="flex" gap={8} alignItems="center">
+        {cancelPendingAmount.amount > 0 && (
+          <MoneyDisplay
+            label={intl.formatMessage(messages.cancelPending)}
+            money={cancelPendingAmount}
+          />
+        )}
 
-          {canceledAmount.amount > 0 && (
-            <MoneyDisplay label={intl.formatMessage(messages.canceled)} money={canceledAmount} />
-          )}
+        {canceledAmount.amount > 0 && (
+          <MoneyDisplay label={intl.formatMessage(messages.canceled)} money={canceledAmount} />
+        )}
 
-          {refundPendingAmount.amount > 0 && (
-            <MoneyDisplay
-              label={intl.formatMessage(messages.refundPending)}
-              money={refundPendingAmount}
-            />
-          )}
+        {refundPendingAmount.amount > 0 && (
+          <MoneyDisplay
+            label={intl.formatMessage(messages.refundPending)}
+            money={refundPendingAmount}
+          />
+        )}
 
-          {refundedAmount.amount > 0 && (
-            <MoneyDisplay label={intl.formatMessage(messages.refunded)} money={refundedAmount} />
-          )}
+        {refundedAmount.amount > 0 && (
+          <MoneyDisplay label={intl.formatMessage(messages.refunded)} money={refundedAmount} />
+        )}
 
-          {chargePendingAmount.amount > 0 && (
-            <MoneyDisplay
-              label={intl.formatMessage(messages.chargePending)}
-              money={chargePendingAmount}
-            />
-          )}
+        {chargePendingAmount.amount > 0 && (
+          <MoneyDisplay
+            label={intl.formatMessage(messages.chargePending)}
+            money={chargePendingAmount}
+          />
+        )}
 
-          {chargedAmount.amount > 0 && (
-            <MoneyDisplay label={intl.formatMessage(messages.charged)} money={chargedAmount} />
-          )}
+        {chargedAmount.amount > 0 && (
+          <MoneyDisplay label={intl.formatMessage(messages.charged)} money={chargedAmount} />
+        )}
 
-          {authorizePendingAmount.amount > 0 && (
-            <MoneyDisplay
-              label={intl.formatMessage(messages.authorizePending)}
-              money={authorizePendingAmount}
-            />
-          )}
+        {authorizePendingAmount.amount > 0 && (
+          <MoneyDisplay
+            label={intl.formatMessage(messages.authorizePending)}
+            money={authorizePendingAmount}
+          />
+        )}
 
-          {authorizedAmount.amount > 0 && (
-            <MoneyDisplay
-              label={intl.formatMessage(messages.authorized)}
-              money={authorizedAmount}
-            />
-          )}
+        {authorizedAmount.amount > 0 && (
+          <MoneyDisplay label={intl.formatMessage(messages.authorized)} money={authorizedAmount} />
+        )}
 
-          {showActions &&
-            transaction.actions
-              .filter(action => action !== TransactionActionEnum.REFUND)
-              .map(action => (
-                <div key={`translation-action-${action}`}>
-                  <Button
-                    variant="tertiary"
-                    onClick={() => onTransactionAction(transaction.id, action)}
-                  >
-                    <FormattedMessage {...mapActionToMessage[action]} />
-                  </Button>
-                </div>
-              ))}
-        </div>
+        {showActions &&
+          transaction.actions
+            .filter(action => action !== TransactionActionEnum.REFUND)
+            .map(action => (
+              <div key={`translation-action-${action}`}>
+                <Button
+                  variant="tertiary"
+                  onClick={() => onTransactionAction(transaction.id, action)}
+                >
+                  <FormattedMessage {...mapActionToMessage[action]} />
+                </Button>
+              </div>
+            ))}
       </Box>
-    </div>
+    </Box>
   );
 };

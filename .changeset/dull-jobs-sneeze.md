@@ -1,5 +1,5 @@
 ---
-"saleor-dashboard": patch
+"saleor-dashboard": minor
 ---
 
-Transaction section in order details has been improved. Now transaction navigation and management is easier.
+The list of transactions is now placed under the new section called "Transactions" when you visit order details page
