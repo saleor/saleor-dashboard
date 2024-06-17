@@ -84,6 +84,7 @@ export const productListQuery = gql`
         node {
           ...ProductWithChannelListings
           updatedAt
+          created
           description
           attributes {
             ...ProductListAttribute

@@ -941,10 +941,6 @@
   "47hJzu": {
     "string": "Updated app permissions"
   },
-  "483Xnh": {
-    "context": "open full-screen",
-    "string": "Open"
-  },
   "48dMqY": {
     "context": "Dry run trigger button",
     "string": "Run"
@@ -1645,6 +1641,10 @@
   "9Mro3c": {
     "context": "Transaction event status - pending",
     "string": "Pending"
+  },
+  "9OZ/fr": {
+    "context": "open full-screen mode with bulk edit",
+    "string": "Bulk edit"
   },
   "9OtpHt": {
     "string": "Order line deleted"
@@ -5909,6 +5909,10 @@
   "ac+Y98": {
     "context": "app settings error",
     "string": "Failed to fetch app settings"
+  },
+  "acgbDa": {
+    "context": "product created at",
+    "string": "Created at"
   },
   "agZQkB": {
     "context": "window title",

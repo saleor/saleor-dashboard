@@ -42,7 +42,7 @@ export const OrderTransactionActionDialog: React.FC<OrderTransactionActionDialog
       </DialogContent>
       <DialogActions>
         <Button data-test-id="back" variant="secondary" color="text" onClick={onClose}>
-          <FormattedMessage {...buttonMessages.cancel} />
+          <FormattedMessage {...buttonMessages.back} />
         </Button>
         <ConfirmButton
           onClick={onSubmit}

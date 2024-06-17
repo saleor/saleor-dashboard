@@ -55,6 +55,7 @@ export const OrderDraftDetailsDatagrid = ({
   );
   const { handlers, visibleColumns, staticColumns, selectedColumns, recentlyAddedColumn } =
     useColumns({
+      gridName: "order_draft_details_products",
       staticColumns: orderDraftDetailsStaticColumns,
       selectedColumns: settings?.columns ?? [],
       onSave: handleColumnChange,
