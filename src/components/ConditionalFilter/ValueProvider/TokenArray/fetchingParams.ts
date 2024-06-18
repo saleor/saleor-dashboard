@@ -15,6 +15,7 @@ export interface OrderFetchingParams {
   chargeStatus: string[];
   channels: string[];
   customer: string[];
+  ids: string[];
 }
 
 type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute">;
@@ -35,6 +36,7 @@ export const emptyOrderFetchingParams: OrderFetchingParams = {
   chargeStatus: [],
   channels: [],
   customer: [],
+  ids: [],
 };
 
 const unique = <T>(array: Iterable<T>) => Array.from(new Set(array));
@@ -74,6 +76,12 @@ export const toOrderFetchingParams = (p: OrderFetchingParams, c: UrlToken) => {
 
   if (!p[key]) {
     p[key] = [];
+  }
+
+  if (key === "ids") {
+    p[key] = unique(c.value);
+
+    return p;
   }
 
   p[key] = unique(p[key].concat(c.value));

@@ -78,6 +78,7 @@ export function getCreateShippingPriceRateVariables(
       shippingZone: id,
       type: ShippingMethodTypeEnum.PRICE,
       description: getParsedDataForJsonStringField(data.description),
+      taxClass: data.taxClassId,
     },
   };
 }
@@ -107,6 +108,7 @@ export function getCreateShippingWeightRateVariables(
       shippingZone: id,
       type: ShippingMethodTypeEnum.WEIGHT,
       description: getParsedDataForJsonStringField(data.description),
+      taxClass: data.taxClassId,
     },
   };
 }

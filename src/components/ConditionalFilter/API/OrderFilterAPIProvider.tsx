@@ -15,6 +15,7 @@ import {
   EnumValuesHandler,
   Handler,
   LegacyChannelHandler,
+  NoopValuesHandler,
   TextInputValuesHandler,
 } from "./Handler";
 
@@ -86,6 +87,10 @@ const createAPIHandler = (
         slug: "customer",
       },
     ]);
+  }
+
+  if (rowType === "ids") {
+    return new NoopValuesHandler([]);
   }
 
   throw new Error(`Unknown filter element: "${rowType}"`);
