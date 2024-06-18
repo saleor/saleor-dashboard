@@ -28,7 +28,11 @@ export function textCell(value: string, opts?: Partial<TextCell>): GridCell {
   };
 }
 
-export function readonlyTextCell(value: string, hasCursorPointer = true): TextCell {
+export function readonlyTextCell(
+  value: string,
+  hasCursorPointer = true,
+  style: TextCell["style"] = "normal",
+): TextCell {
   return {
     cursor: hasCursorPointer ? "pointer" : "default",
     allowOverlay: false,
@@ -36,6 +40,7 @@ export function readonlyTextCell(value: string, hasCursorPointer = true): TextCe
     data: value,
     displayData: value,
     kind: GridCellKind.Text,
+    style,
   };
 }
 

@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { LazyQueryResult } from "@apollo/client/react";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
@@ -31,6 +32,7 @@ import {
   createGetCellContent,
   getAttributesFetchMoreProps,
   getAvailableAttributesData,
+  getCellAction,
   getColumnMetadata,
   getColumnSortIconName,
   getProductRowsLength,
@@ -78,19 +80,31 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   hasRowHover,
   rowAnchor,
 }) => {
+  const isChannelSelected = !!selectedChannelId;
   const intl = useIntl();
   const { theme } = useTheme();
   const datagrid = useDatagridChangeState();
   const { locale } = useLocale();
   const productsLength = getProductRowsLength(disabled, products, disabled);
+  const { filterWindow } = useConditionalFilterContext();
   const handleColumnChange = useCallback(
     (picked: ProductListColumns[]) => {
       onUpdateListSettings("columns", picked.filter(Boolean));
     },
     [onUpdateListSettings],
   );
+  const handlePriceClick = (productId: string) => {
+    if (!productId || isChannelSelected) return;
+
+    filterWindow.setOpen(true);
+  };
   const memoizedStaticColumns = useMemo(
-    () => productListStaticColumnAdapter(intl, sort),
+    () =>
+      productListStaticColumnAdapter({
+        intl,
+        sort,
+        onPriceClick: handlePriceClick,
+      }),
     [intl, sort],
   );
   const [queryAvailableColumnsAttributes, availableColumnsAttributesData] =
@@ -166,8 +180,16 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     [visibleColumns, onSort, selectedChannelId],
   );
   const handleRowClick = useCallback(
-    ([_, row]: Item) => {
+    ([col, row]: Item) => {
       if (!onRowClick) {
+        return;
+      }
+
+      const action = getCellAction(visibleColumns, col);
+
+      if (action) {
+        action(products[row].id);
+
         return;
       }
 
