@@ -2042,10 +2042,6 @@
   "BvGp1I": {
     "string": "between"
   },
-  "BvRyoX": {
-    "context": "alert message",
-    "string": "There are no available shipping methods in this channel."
-  },
   "Bx367s": {
     "context": "product is hidden",
     "string": "Hidden"
@@ -4686,6 +4682,10 @@
   "T34dJq": {
     "context": "Displayed when order has no payment",
     "string": "This order has no payment yet."
+  },
+  "T3cLGs": {
+    "context": "alert link message",
+    "string": "shipping zones configuration"
   },
   "T4GOiX": {
     "string": "End Date"
@@ -9501,6 +9501,10 @@
   "zZCCqz": {
     "context": "button",
     "string": "Assign countries"
+  },
+  "zb1rmx": {
+    "context": "alert message",
+    "string": "{country} is not available as a shipping destination for this channel, check {configLink}."
   },
   "zb4eBO": {
     "context": "order total price",
