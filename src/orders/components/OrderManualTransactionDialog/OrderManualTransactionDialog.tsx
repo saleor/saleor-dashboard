@@ -10,6 +10,7 @@ import {
   DialogTitle,
 } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -49,7 +50,9 @@ export const OrderManualTransactionDialog: React.FC<OrderManualTransactionDialog
     <OrderManualTransactionForm {...props}>
       <Dialog onClose={onClose} {...dialogProps} fullWidth maxWidth="xs">
         <DialogTitle>
-          <FormattedMessage {...manualTransactionMessages.dialogTitle} />
+          <Text size={5} fontWeight="bold">
+            <FormattedMessage {...manualTransactionMessages.dialogTitle} />
+          </Text>
         </DialogTitle>
         <OrderManualTransactionForm.Form className={classes.form}>
           <DialogContent>
@@ -73,8 +76,11 @@ export const OrderManualTransactionDialog: React.FC<OrderManualTransactionDialog
           </DialogContent>
           <DialogActions>
             <BackButton onClick={onClose} />
-            <OrderManualTransactionForm.SubmitButton>
-              <FormattedMessage {...manualTransactionMessages.submitButton} />
+
+            <OrderManualTransactionForm.SubmitButton size="medium">
+              <Text fontWeight="medium" color="buttonDefaultPrimary">
+                <FormattedMessage {...manualTransactionMessages.submitButton} />
+              </Text>
             </OrderManualTransactionForm.SubmitButton>
           </DialogActions>
         </OrderManualTransactionForm.Form>

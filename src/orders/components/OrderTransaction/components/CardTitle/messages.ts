@@ -1,6 +1,16 @@
 import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
+  transactionCardTitle: {
+    defaultMessage: "Transaction",
+    id: "1wbsEu",
+    description: "Transaction card title",
+  },
+  transactionCardTitleWithName: {
+    defaultMessage: "Transaction - {name}",
+    id: "xNElry",
+    description: "Transaction card title with name",
+  },
   cancelPending: {
     defaultMessage: "Pending cancel",
     id: "YUaalK",
