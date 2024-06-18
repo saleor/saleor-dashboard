@@ -26,7 +26,9 @@ import { Item } from "@glideapps/glide-data-grid";
 import { Box, useTheme } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
+import { useHistory } from "react-router";
 
+import { ProductFilterKeys } from "../ProductListPage/filters";
 import { getAttributeIdFromColumnValue, isAttributeColumnValue } from "../ProductListPage/utils";
 import {
   createGetCellContent,
@@ -81,6 +83,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   rowAnchor,
 }) => {
   const isChannelSelected = !!selectedChannelId;
+  const history = useHistory();
   const intl = useIntl();
   const { theme } = useTheme();
   const datagrid = useDatagridChangeState();
@@ -95,6 +98,18 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   );
   const handlePriceClick = (productId: string) => {
     if (!productId || isChannelSelected) return;
+
+    const params = new URLSearchParams(history.location.search);
+
+    const hasChannelFilter = Array.from(params.keys()).find(key =>
+      key.includes(ProductFilterKeys.channel),
+    );
+
+    if (!hasChannelFilter) {
+      params.append(`0[s0.${ProductFilterKeys.channel}]`, "");
+
+      history.replace({ search: params.toString() });
+    }
 
     filterWindow.setOpen(true);
   };
