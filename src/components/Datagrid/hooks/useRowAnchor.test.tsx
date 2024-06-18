@@ -55,9 +55,9 @@ describe("useRowAnchor", () => {
       scrollEdge: [0, 0],
     });
 
-    expect(result.current.rowAnchorRef.current).not.toBeNull();
-    expect(result.current.rowAnchorRef.current.style.left).toBe("0px");
-    expect(result.current.rowAnchorRef.current.href).toBe("http://localhost/test");
+    expect(result.current.rowAnchorRef.current!).not.toBeNull();
+    expect(result.current.rowAnchorRef.current!.style.left).toBe("0px");
+    expect(result.current.rowAnchorRef.current!.href).toBe("http://localhost/test");
   });
   it("should not set anchor position when cell has action", () => {
     const { result } = renderHook(() =>
@@ -94,6 +94,6 @@ describe("useRowAnchor", () => {
       scrollEdge: [0, 0],
     } as GridMouseEventArgs);
 
-    expect(result.current.rowAnchorRef.current.href).toBe("");
+    expect(result.current.rowAnchorRef.current!.href).toBe("");
   });
 });
