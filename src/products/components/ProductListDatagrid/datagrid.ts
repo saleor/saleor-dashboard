@@ -51,7 +51,7 @@ export const productListStaticColumnAdapter = ({
 }: {
   intl: IntlShape;
   sort: Sort<ProductListUrlSortField>;
-  onPriceClick: (productId: string) => void;
+  onPriceClick: ((productId: string) => void) | undefined;
 }) =>
   [
     {

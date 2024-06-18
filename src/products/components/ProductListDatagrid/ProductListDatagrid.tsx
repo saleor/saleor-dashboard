@@ -97,7 +97,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     [onUpdateListSettings],
   );
   const handlePriceClick = (productId: string) => {
-    if (!productId || isChannelSelected) return;
+    if (!productId) return;
 
     const params = new URLSearchParams(history.location.search);
 
@@ -118,7 +118,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
       productListStaticColumnAdapter({
         intl,
         sort,
-        onPriceClick: handlePriceClick,
+        onPriceClick: !isChannelSelected && handlePriceClick,
       }),
     [intl, sort],
   );
