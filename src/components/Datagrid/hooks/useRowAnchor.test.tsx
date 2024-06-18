@@ -28,17 +28,21 @@ describe("useRowAnchor", () => {
   };
 
   it("should return row anchor ref", () => {
+    // Arrange & Act
     const { result } = renderHook(() => useRowAnchor(props));
 
     render(<a ref={result.current.setRowAnchorRef} />);
 
+    // Assert
     expect(result.current.rowAnchorRef).toBeDefined();
   });
   it("should have anchor set", () => {
+    // Arrange
     const { result } = renderHook(() => useRowAnchor(props));
 
     render(<a ref={result.current.setRowAnchorRef} />);
 
+    // Act
     result.current.setAnchorPosition({
       kind: "cell",
       location: [1, 0],
@@ -55,11 +59,13 @@ describe("useRowAnchor", () => {
       scrollEdge: [0, 0],
     });
 
+    // Assert
     expect(result.current.rowAnchorRef.current!).not.toBeNull();
     expect(result.current.rowAnchorRef.current!.style.left).toBe("0px");
     expect(result.current.rowAnchorRef.current!.href).toBe("http://localhost/test");
   });
   it("should not set anchor position when cell has action", () => {
+    // Arrange
     const { result } = renderHook(() =>
       useRowAnchor({
         ...props,
@@ -78,9 +84,10 @@ describe("useRowAnchor", () => {
 
     render(<a ref={result.current.setRowAnchorRef} />);
 
+    // Act
     result.current.setAnchorPosition({
       kind: "cell",
-      location: [2, 0],
+      location: [2, 0], // note: 2 is the index of the "price" column (with 'action')
       bounds: { x: 0, y: 0, width: 0, height: 0 },
       isEdge: false,
       shiftKey: false,
@@ -94,6 +101,7 @@ describe("useRowAnchor", () => {
       scrollEdge: [0, 0],
     } as GridMouseEventArgs);
 
+    // Assert
     expect(result.current.rowAnchorRef.current!.href).toBe("");
   });
 });
