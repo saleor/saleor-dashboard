@@ -6,16 +6,7 @@ import { slugFromConditionValue } from "../FilterElement/ConditionValue";
 
 export const CONDITIONS = ["is", "equals", "in", "between", "lower", "greater"];
 
-const STATIC_TO_LOAD = [
-  "category",
-  "collection",
-  "channel",
-  "productType",
-  "isAvailable",
-  "isPublished",
-  "isVisibleInListing",
-  "hasCategory",
-  "giftCard",
+const ORDER_STATICS = [
   "paymentStatus",
   "status",
   "authorizeStatus",
@@ -26,6 +17,20 @@ const STATIC_TO_LOAD = [
   "isClickAndCollect",
   "channels",
   "customer",
+  "ids",
+];
+
+const STATIC_TO_LOAD = [
+  "category",
+  "collection",
+  "channel",
+  "productType",
+  "isAvailable",
+  "isPublished",
+  "isVisibleInListing",
+  "hasCategory",
+  "giftCard",
+  ...ORDER_STATICS,
 ];
 
 export const TokenType = {

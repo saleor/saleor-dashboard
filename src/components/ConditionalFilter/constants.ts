@@ -104,6 +104,13 @@ export const STATIC_CONDITIONS = {
       value: "input-1",
     },
   ],
+  ids: [
+    {
+      type: "bulkselect",
+      label: "in",
+      value: "input-1",
+    },
+  ],
 };
 
 export const CONSTRAINTS = {
@@ -178,6 +185,12 @@ export const STATIC_DISCOUNT_OPTIONS: LeftOperand[] = [
 ];
 
 export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
+  {
+    value: "ids",
+    label: "IDs",
+    type: "ids",
+    slug: "ids",
+  },
   { value: "channels", label: "Channels", type: "channels", slug: "channels" },
   {
     value: "paymentStatus",
