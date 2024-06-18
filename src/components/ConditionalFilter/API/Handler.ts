@@ -268,3 +268,5 @@ export class TextInputValuesHandler implements Handler {
     return this.options;
   };
 }
+
+export const NoopValuesHandler = TextInputValuesHandler;
