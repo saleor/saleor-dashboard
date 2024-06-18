@@ -566,6 +566,9 @@ export const getAttributesFetchMoreProps = ({
     onPreviousPage,
   };
 };
-export const getCellAction = (availableColumns: readonly AvailableColumn[], column: number) => {
+export const getCellAction = (
+  availableColumns: readonly AvailableColumn[] | undefined,
+  column: number,
+) => {
   return availableColumns[column]?.action;
 };
