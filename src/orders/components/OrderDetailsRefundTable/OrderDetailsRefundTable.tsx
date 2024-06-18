@@ -40,6 +40,7 @@ export const OrderDetailsRefundTable: React.FC<OrderDetailsRefundTableProps> = (
         <Tooltip>
           <Tooltip.Trigger>
             <Button
+              data-test-id="add-new-refund-button"
               variant="secondary"
               onClick={onRefundAdd}
               disabled={!isRefundPossible.canRefund}

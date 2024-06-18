@@ -433,16 +433,39 @@ export const ORDERS = {
     id: "T3JkZXI6ZWFhZjA0MzgtNzkyYi00ZTdlLWIyODUtMTBkMjViMjM0MzRk",
   },
   fullyPaidOrdersWithSingleTransaction: {
-    ids: [
-      "T3JkZXI6ZjZjZWUxMzItNDk2Zi00MWUyLWJkNTItYTk1MDM1YTVlZmVm",
-      "T3JkZXI6YzI4YjFmYmEtZWU1NS00YmU5LTg5MjktNTMyYzk5MDlkZGVk",
-    ],
+    first: {
+      id: "T3JkZXI6ZjZjZWUxMzItNDk2Zi00MWUyLWJkNTItYTk1MDM1YTVlZmVm",
+      lineItems: [
+        {
+          name: "Bean Juice",
+          quantity: "1",
+        },
+        { name: "Lake Tunes", quantity: "2" },
+      ],
+    },
+    second: {
+      id: "T3JkZXI6YzI4YjFmYmEtZWU1NS00YmU5LTg5MjktNTMyYzk5MDlkZGVk",
+      lineItems: ["Blue Hoodie 2", "Black Hoodie", "Mustard Hoodie", "White Hoodie"],
+    },
   },
   fullyPaidOrderWithSeveralTransactions: {
     id: "T3JkZXI6MTVhYTEwMzYtZWE3OS00MzJiLTliODctNDhlYTMwYmU1NmNl",
   },
   partiallyPaidOrder: {
     id: "T3JkZXI6NmVlMDMwMTctZTViOS00OGNmLWFkYTQtODg4YTQ5MDI3ZjNk",
+  },
+  orderWithRefunds: {
+    id: "T3JkZXI6Y2YyY2EwNWYtZmQ3Yy00ODk5LThjZTktMzQ4NjYxYThjZDkx",
+    refunds: [
+      {
+        lineOrderRefundId: "T3JkZXJHcmFudGVkUmVmdW5kOjE=",
+        amount: 4.5,
+      },
+      {
+        manualRefundId: "",
+        amount: 22.0,
+      },
+    ],
   },
 };
 
