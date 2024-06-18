@@ -335,6 +335,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 />
               )}
               <ProductVariants
+                productId={productId}
                 productName={product?.name}
                 errors={variantListErrors}
                 channels={listings}

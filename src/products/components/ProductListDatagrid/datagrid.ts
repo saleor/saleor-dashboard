@@ -75,6 +75,11 @@ export const productListStaticColumnAdapter = (
       width: 300,
     },
     {
+      id: "created",
+      title: intl.formatMessage(columnsMessages.created),
+      width: 300,
+    },
+    {
       id: "price",
       title: intl.formatMessage(columnsMessages.price),
       width: 250,
@@ -207,6 +212,8 @@ export function createGetCellContent({
         return getPriceCellContent(channel);
       case "date":
         return getDateCellContent(rowData);
+      case "created":
+        return getCreatedCellContent(rowData);
       case "productCategory":
         return getCategoryCellContent(theme, rowData);
       case "productCollections":
@@ -227,6 +234,10 @@ const COMMON_CELL_PROPS: Partial<GridCell> = { cursor: "pointer" };
 
 function getDateCellContent(rowData: RelayToFlat<ProductListQuery["products"]>[number]) {
   return dateCell(rowData?.updatedAt, COMMON_CELL_PROPS);
+}
+
+function getCreatedCellContent(rowData: RelayToFlat<ProductListQuery["products"]>[number]) {
+  return dateCell(rowData?.created, COMMON_CELL_PROPS);
 }
 
 function getProductTypeCellContent(
