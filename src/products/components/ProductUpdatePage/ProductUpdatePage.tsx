@@ -52,7 +52,7 @@ import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductU
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { AttributeValuesMetadata, getChoices } from "../../utils/data";
 import { ProductDetailsForm } from "../ProductDetailsForm";
