@@ -76,12 +76,12 @@ export const createGetCellContent =
   };
 
 export function getCustomerName(rowData: OrderDraft) {
-  if (rowData?.billingAddress?.firstName && rowData?.billingAddress?.lastName) {
-    return `${rowData.billingAddress.firstName} ${rowData.billingAddress.lastName}`;
-  }
-
   if (rowData.userEmail) {
     return rowData.userEmail;
+  }
+
+  if (rowData?.billingAddress?.firstName && rowData?.billingAddress?.lastName) {
+    return `${rowData.billingAddress.firstName} ${rowData.billingAddress.lastName}`;
   }
 
   return "-";
