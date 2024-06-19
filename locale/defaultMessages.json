@@ -295,6 +295,9 @@
     "context": "input label",
     "string": "Global threshold"
   },
+  "/jJLYy": {
+    "string": "Transactions"
+  },
   "/kWzY1": {
     "string": "Are you sure you want to delete this address from users address book?"
   },
@@ -613,6 +616,10 @@
   "1tXSSK": {
     "context": "header",
     "string": "Translation Voucher \"{voucherName}\" - {languageCode}"
+  },
+  "1wbsEu": {
+    "context": "Transaction card title",
+    "string": "Transaction"
   },
   "1wyZpQ": {
     "string": "These passwords are too similar"
@@ -1433,6 +1440,10 @@
     "context": "navigator section header",
     "string": "Search in Catalog"
   },
+  "7QPLu0": {
+    "context": "empty state message",
+    "string": "No transactions made for this order."
+  },
   "7U/NPm": {
     "context": "tax class rates list label when no country is selected",
     "string": "Add country to access tax classes"
@@ -1798,10 +1809,6 @@
     "context": "order refund subtitle",
     "string": "Refunded items can't be fulfilled"
   },
-  "AMlXrQ": {
-    "context": "submit button",
-    "string": "Create manual transaction"
-  },
   "AOI4LW": {
     "context": "navigator placeholder",
     "string": "Search in Catalog"
@@ -2041,10 +2048,6 @@
   },
   "BvGp1I": {
     "string": "between"
-  },
-  "BvRyoX": {
-    "context": "alert message",
-    "string": "There are no available shipping methods in this channel."
   },
   "Bx367s": {
     "context": "product is hidden",
@@ -4687,6 +4690,10 @@
     "context": "Displayed when order has no payment",
     "string": "This order has no payment yet."
   },
+  "T3cLGs": {
+    "context": "alert link message",
+    "string": "shipping zones configuration"
+  },
   "T4GOiX": {
     "string": "End Date"
   },
@@ -5849,6 +5856,10 @@
   "aFU0vm": {
     "context": "description",
     "string": "or continue with"
+  },
+  "aFVFeH": {
+    "context": "submit button",
+    "string": "Add manual capture"
   },
   "aHc89n": {
     "context": "select warehouse to restock items",
@@ -9185,6 +9196,10 @@
   "xJQX5t": {
     "string": "No staff members found"
   },
+  "xNElry": {
+    "context": "Transaction card title with name",
+    "string": "Transaction - {name}"
+  },
   "xNfh4L": {
     "context": "app permissions tooltip header",
     "string": "App permissions"
@@ -9501,6 +9516,10 @@
   "zZCCqz": {
     "context": "button",
     "string": "Assign countries"
+  },
+  "zb1rmx": {
+    "context": "alert message",
+    "string": "{country} is not available as a shipping destination for this channel, check {configLink}."
   },
   "zb4eBO": {
     "context": "order total price",

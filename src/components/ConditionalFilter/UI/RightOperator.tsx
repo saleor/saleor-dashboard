@@ -7,8 +7,10 @@ import {
 } from "@saleor/macaw-ui-next";
 import React from "react";
 
+import BulkSelect from "./BulkSelect";
 import { FilterEventEmitter } from "./EventEmitter";
 import {
+  isBulkSelect,
   isCombobox,
   isDate,
   isDateRange,
@@ -83,6 +85,21 @@ export const RightOperator = ({
     );
   }
 
+  if (isBulkSelect(selected)) {
+    return (
+      <BulkSelect
+        selected={selected}
+        error={error}
+        helperText={helperText}
+        disabled={disabled}
+        dataTestId={`right-${index}`}
+        onFocus={() => emitter.focusRightOperator(index)}
+        onBlur={() => emitter.blurRightOperator(index)}
+        onOptionsChange={options => emitter.changeRightOperator(index, options)}
+      />
+    );
+  }
+
   if (isMultiselect(selected)) {
     return (
       <DynamicMultiselect
@@ -90,7 +107,9 @@ export const RightOperator = ({
         value={selected.value}
         options={selected.options ?? []}
         loading={selected.loading}
-        onChange={value => emitter.changeRightOperator(index, value)}
+        onChange={value => {
+          emitter.changeRightOperator(index, value);
+        }}
         onInputValueChange={value => {
           emitter.inputChangeRightOperator(index, value);
         }}
