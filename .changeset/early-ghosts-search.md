@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Properly handle PRs to branches other than main
+Now you can execute e2e tests on release branches
