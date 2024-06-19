@@ -1,5 +1,20 @@
 # Changelog
 
+## 3.19.9
+
+### Patch Changes
+
+- 63c423809: You can now see Add discount align with rest of content
+- 90503b9b4: Fixes an issue where column picker is not visible in bulk edit mode
+- 4eed02323: You can now use improved Polish translations
+- bd4588ad7: You can now properly edit permission groups when you have full access
+- 1153bf497: Update description of how to run e2e tests
+- a1e237882: Fixes an issue that caused an error when a page was serched in navigation menu
+- fe50d2f48: You can now hover over each row in product datagrid and hover effect will be fast and smooth
+- 209b999b1: You can now assign warehouses in product variant page without page crash
+- 7cb031db2: Webhook details view now correctly displays active/inactive status.
+- e8d1ed3fd: Fixes an issue where creating shipping rate would omit tax class setting
+
 ## 3.19.8
 
 ### Patch Changes
