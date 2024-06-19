@@ -111,14 +111,14 @@ export function getDateCellContent(rowData: RelayToFlat<OrderListQuery["orders"]
 export function getCustomerCellContent(
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ): TextCell {
+  if (rowData.userEmail) {
+    return readonlyTextCell(rowData.userEmail);
+  }
+
   if (rowData?.billingAddress?.firstName && rowData?.billingAddress?.lastName) {
     return readonlyTextCell(
       `${rowData.billingAddress.firstName} ${rowData.billingAddress.lastName}`,
     );
-  }
-
-  if (rowData.userEmail) {
-    return readonlyTextCell(rowData.userEmail);
   }
 
   return readonlyTextCell("-");
