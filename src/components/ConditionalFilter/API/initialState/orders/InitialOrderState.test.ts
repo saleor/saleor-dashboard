@@ -31,13 +31,13 @@ describe("ConditionalFilter / API / Orders / InitialOrderState", () => {
     expect(result).toEqual(expectedOutput);
   });
 
-  it("should filter by customer", () => {
+  it("should filter by customer email", () => {
     // Arrange
     const initialOrderState = InitialOrderStateResponse.empty();
 
     initialOrderState.customer = [
       {
-        label: "Customer",
+        label: "Customer email",
         slug: "customer",
         value: "test",
       },
@@ -46,7 +46,7 @@ describe("ConditionalFilter / API / Orders / InitialOrderState", () => {
     const token = UrlToken.fromUrlEntry(new UrlEntry("s0.customer", "test"));
     const expectedOutput = [
       {
-        label: "Customer",
+        label: "Customer email",
         slug: "customer",
         value: "test",
       },

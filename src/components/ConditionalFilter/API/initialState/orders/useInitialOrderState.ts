@@ -96,7 +96,7 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
       customer: [
         {
           type: "customer",
-          label: "Customer",
+          label: "Customer email",
           value: getCustomer(customer),
           slug: "customer",
         },

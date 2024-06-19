@@ -81,7 +81,7 @@ const createAPIHandler = (
   if (rowType === "customer") {
     return new TextInputValuesHandler([
       {
-        label: "Customer",
+        label: "Customer email",
         value: selectedRow.condition.selected.value as string,
         type: "customer",
         slug: "customer",

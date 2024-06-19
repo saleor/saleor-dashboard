@@ -254,7 +254,7 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
   },
   {
     value: "customer",
-    label: "Customer",
+    label: "Customer email",
     type: "customer",
     slug: "customer",
   },
