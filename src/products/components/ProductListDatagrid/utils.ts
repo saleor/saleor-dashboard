@@ -15,10 +15,16 @@ export const getPriceClickSearchParams = (search: string): string => {
 
       return number;
     })
-    .filter(Boolean)
-    .sort((a, b) => a - b);
+    .filter(el => el !== undefined)
+    .sort((a, b) => {
+      if (a === undefined || b === undefined) {
+        return a === b ? 0 : a ? -1 : 1;
+      }
 
-  const lastFilterIndex = filtersIndices.at(-1);
+      return a - b;
+    });
+
+  const lastFilterIndex = filtersIndices.at(-1) ?? 0;
   const hasChannelFilter = Array.from(params.keys()).find(key =>
     key.includes(ProductFilterKeys.channel),
   );
@@ -30,7 +36,7 @@ export const getPriceClickSearchParams = (search: string): string => {
       params.append(`${lastFilterIndex + 1}`, "AND");
       params.append(`${lastFilterIndex + 2}${channelFilter}`, "");
     } else {
-      params.append(`${lastFilterIndex + 1}${channelFilter}`, "");
+      params.append(`0${channelFilter}`, "");
     }
   }
 
