@@ -18,7 +18,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import { Choice } from "@dashboard/components/SingleSelectField";
 import {
@@ -52,7 +52,7 @@ import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductU
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { AttributeValuesMetadata, getChoices } from "../../utils/data";
 import { ProductDetailsForm } from "../ProductDetailsForm";
@@ -398,13 +398,27 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
               </Box>
             </DetailPageLayout.RightSidebar>
 
-            <Savebar
+            {/* <Savebar
               onCancel={() => navigate(productListUrl())}
               onDelete={onDelete}
               onSubmit={submit}
               state={saveButtonBarState}
               disabled={isSaveDisabled}
-            />
+            /> */}
+
+            <Savebar>
+              <Savebar.DeleteButton onClick={onDelete}>
+                <FormattedMessage id="HYQNkF" defaultMessage="Delete Product" />
+              </Savebar.DeleteButton>
+              <Savebar.Spacer />
+              <Savebar.ConfirmButton onClick={submit} disabled={isSaveDisabled}>
+                <FormattedMessage id="jvo0vs" defaultMessage="Save" />
+              </Savebar.ConfirmButton>
+              <Savebar.CancelButton onClick={() => navigate(productListUrl())}>
+                <FormattedMessage id="47FYwb" defaultMessage="Cancel" />
+              </Savebar.CancelButton>
+            </Savebar>
+
             {canOpenAssignReferencesAttributeDialog && entityType && (
               <AssignAttributeValueDialog
                 entityType={entityType}
