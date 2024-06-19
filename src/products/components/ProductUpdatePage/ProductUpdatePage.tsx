@@ -398,25 +398,15 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
               </Box>
             </DetailPageLayout.RightSidebar>
 
-            {/* <Savebar
-              onCancel={() => navigate(productListUrl())}
-              onDelete={onDelete}
-              onSubmit={submit}
-              state={saveButtonBarState}
-              disabled={isSaveDisabled}
-            /> */}
-
             <Savebar>
-              <Savebar.DeleteButton onClick={onDelete}>
-                <FormattedMessage id="HYQNkF" defaultMessage="Delete Product" />
-              </Savebar.DeleteButton>
+              <Savebar.DeleteButton onClick={onDelete} />
               <Savebar.Spacer />
-              <Savebar.ConfirmButton onClick={submit} disabled={isSaveDisabled}>
-                <FormattedMessage id="jvo0vs" defaultMessage="Save" />
-              </Savebar.ConfirmButton>
-              <Savebar.CancelButton onClick={() => navigate(productListUrl())}>
-                <FormattedMessage id="47FYwb" defaultMessage="Cancel" />
-              </Savebar.CancelButton>
+              <Savebar.CancelButton onClick={() => navigate(productListUrl())} />
+              <Savebar.ConfirmButton
+                transitionState={saveButtonBarState}
+                onClick={submit}
+                disabled={isSaveDisabled}
+              />
             </Savebar>
 
             {canOpenAssignReferencesAttributeDialog && entityType && (
