@@ -12,12 +12,12 @@ export const SubmitButton: React.FC<Omit<ConfirmButtonProps, "type" | "transitio
 
   return (
     <ConfirmButton
-      {...props}
       size="large"
       type="submit"
       transitionState={submitState}
       disabled={!amount || disabled}
       data-test-id="manualTransactionSubmit"
+      {...props}
     />
   );
 };

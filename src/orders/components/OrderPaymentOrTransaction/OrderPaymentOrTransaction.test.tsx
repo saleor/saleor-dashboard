@@ -25,6 +25,7 @@ jest.mock("@saleor/macaw-ui", () => ({
   ResponsiveTable: jest.fn(() => <></>),
 }));
 jest.mock("@saleor/macaw-ui-next", () => ({
+  ...(jest.requireActual("@saleor/macaw-ui-next") as object),
   useTheme: jest.fn(() => () => ({})),
   Divider: jest.fn(() => <></>),
   vars: {

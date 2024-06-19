@@ -1,6 +1,6 @@
 import Skeleton from "@dashboard/components/Skeleton";
 import { OrderDetailsFragment } from "@dashboard/graphql";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { Box, Button, PlusIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -11,39 +11,24 @@ interface OrderAddTransactionProps {
   onAddTransaction: () => void;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    wrapper: {
-      display: "flex",
-      justifyContent: "flex-end",
-      marginTop: theme.spacing(2),
-      marginBottom: theme.spacing(2),
-      paddingRight: theme.spacing(4),
-    },
-  }),
-  { name: "OrderAddTransaction" },
-);
 const OrderAddTransaction: React.FC<OrderAddTransactionProps> = ({ order, onAddTransaction }) => {
-  const classes = useStyles();
-
   if (!order) {
     return (
-      <div className={classes.wrapper}>
+      <Box display="flex" justifyContent="flex-end" marginTop={2} marginBottom={2} paddingRight={4}>
         <Skeleton />
-      </div>
+      </Box>
     );
   }
 
   return (
-    <div className={classes.wrapper}>
-      <Button
-        variant="primary"
-        onClick={onAddTransaction}
-        data-test-id="captureManualTransactionButton"
-      >
-        <FormattedMessage {...addTransactionMessages.captureTransaction} />
-      </Button>
-    </div>
+    <Button
+      variant="secondary"
+      onClick={onAddTransaction}
+      data-test-id="captureManualTransactionButton"
+    >
+      <PlusIcon />
+      <FormattedMessage {...addTransactionMessages.captureTransaction} />
+    </Button>
   );
 };
 
