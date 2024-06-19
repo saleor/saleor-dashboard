@@ -1,30 +1,29 @@
+import { Root as Portal } from "@radix-ui/react-portal";
 import { Box, Button, ButtonProps } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { savebarHeight } from "../AppLayout/consts";
+import { useSavebarRef } from "./SavebarRefContext";
 
 interface SavebarProps {
   children: React.ReactNode;
 }
 
 const SavebarComponent = ({ children }: SavebarProps) => {
+  const { anchor } = useSavebarRef();
+
+  if (!anchor.current) {
+    return null;
+  }
+
   return (
-    <Box
-      position="fixed"
-      width="100%"
-      bottom={0}
-      left={0}
-      zIndex="2"
-      __height={savebarHeight}
-      backgroundColor="default1"
-      borderTopWidth={1}
-      borderTopStyle="solid"
-      borderColor="default1"
-    >
-      <Box display="flex" alignItems="center" gap={3} paddingX={6} height="100%">
-        {children}
+    <Portal container={anchor.current} asChild>
+      <Box __height={savebarHeight} backgroundColor="default1">
+        <Box display="flex" alignItems="center" gap={3} paddingX={6} height="100%">
+          {children}
+        </Box>
       </Box>
-    </Box>
+    </Portal>
   );
 };
 
