@@ -44,7 +44,7 @@ const ConfirmButton = ({
   ...props
 }: {
   children?: React.ReactNode;
-  transitionState?: ConfirmButtonProps["transitionState"];
+  transitionState: ConfirmButtonProps["transitionState"];
 } & ButtonProps) => (
   <ConfirmButtonComponent
     size="large"
