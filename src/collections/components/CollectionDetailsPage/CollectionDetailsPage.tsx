@@ -7,7 +7,7 @@ import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailability
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import {
   CollectionChannelListingErrorFragment,
@@ -135,13 +135,17 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
               />
             </div>
           </DetailPageLayout.RightSidebar>
-          <Savebar
-            state={saveButtonBarState}
-            disabled={isSaveDisabled}
-            onCancel={() => navigate(collectionListUrl())}
-            onDelete={onCollectionRemove}
-            onSubmit={submit}
-          />
+
+          <Savebar>
+            <Savebar.DeleteButton onClick={onCollectionRemove} />
+            <Savebar.Spacer />
+            <Savebar.CancelButton onClick={() => navigate(collectionListUrl())} />
+            <Savebar.ConfirmButton
+              transitionState={saveButtonBarState}
+              onClick={submit}
+              disabled={isSaveDisabled}
+            />
+          </Savebar>
         </DetailPageLayout>
       )}
     </CollectionUpdateForm>

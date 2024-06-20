@@ -7,7 +7,7 @@ import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { MetadataFormData } from "@dashboard/components/Metadata/types";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import { ListSettingsUpdate } from "@dashboard/components/TablePagination";
 import {
   AttributeDetailsFragment,
@@ -204,13 +204,17 @@ const AttributePage: React.FC<AttributePageProps> = ({
                   onChange={change}
                 />
               </DetailPageLayout.RightSidebar>
-              <Savebar
-                disabled={!!isSaveDisabled}
-                state={saveButtonBarState}
-                onCancel={() => navigate(attributeListUrl())}
-                onSubmit={submit}
-                onDelete={attribute === null ? undefined : onDelete}
-              />
+
+              <Savebar>
+                {attribute !== null && <Savebar.DeleteButton onClick={onDelete} />}
+                <Savebar.Spacer />
+                <Savebar.CancelButton onClick={() => navigate(attributeListUrl())} />
+                <Savebar.ConfirmButton
+                  transitionState={saveButtonBarState}
+                  onClick={submit}
+                  disabled={!!isSaveDisabled}
+                />
+              </Savebar>
             </DetailPageLayout>
             {children(data)}
           </>

@@ -6,7 +6,7 @@ import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import { AddressTypeInput } from "@dashboard/customers/types";
 import {
   CountryWithCodeFragment,
@@ -112,14 +112,17 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
                 onChange={change}
                 setData={set}
               />
-            </DetailPageLayout.RightSidebar>
-            <Savebar
-              disabled={!!isSaveDisabled}
-              onCancel={() => navigate(warehouseListUrl())}
-              onDelete={onDelete}
-              onSubmit={submit}
-              state={saveButtonBarState}
-            />
+            </DetailPageLayout.RightSidebar>{" "}
+            <Savebar>
+              <Savebar.DeleteButton onClick={onDelete} />
+              <Savebar.Spacer />
+              <Savebar.CancelButton onClick={() => navigate(warehouseListUrl())} />
+              <Savebar.ConfirmButton
+                transitionState={saveButtonBarState}
+                onClick={submit}
+                disabled={!!isSaveDisabled}
+              />
+            </Savebar>
           </DetailPageLayout>
         );
       }}

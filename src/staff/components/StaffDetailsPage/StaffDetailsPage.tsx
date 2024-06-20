@@ -7,7 +7,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import {
   SearchPermissionGroupsQuery,
   StaffErrorFragment,
@@ -134,7 +134,6 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                 </>
               )}
             </DetailPageLayout.Content>
-
             <DetailPageLayout.RightSidebar>
               {canEditPreferences && (
                 <StaffPreferences locale={locale} onLocaleChange={setLocale} />
@@ -180,14 +179,17 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                   </Card>
                 </>
               )}
-            </DetailPageLayout.RightSidebar>
-            <Savebar
-              disabled={isSaveDisabled}
-              state={saveButtonBarState}
-              onCancel={() => navigate(staffListUrl())}
-              onSubmit={submit}
-              onDelete={canRemove ? onDelete : undefined}
-            />
+            </DetailPageLayout.RightSidebar>{" "}
+            <Savebar>
+              {canRemove && <Savebar.DeleteButton onClick={onDelete} />}
+              <Savebar.Spacer />
+              <Savebar.CancelButton onClick={() => navigate(staffListUrl())} />
+              <Savebar.ConfirmButton
+                transitionState={saveButtonBarState}
+                onClick={submit}
+                disabled={isSaveDisabled}
+              />
+            </Savebar>
           </DetailPageLayout>
         );
       }}

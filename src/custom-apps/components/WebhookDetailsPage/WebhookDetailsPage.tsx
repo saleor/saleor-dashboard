@@ -3,7 +3,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import WebhookEvents from "@dashboard/custom-apps/components/WebhookEvents";
 import WebhookInfo from "@dashboard/custom-apps/components/WebhookInfo";
 import WebhookStatus from "@dashboard/custom-apps/components/WebhookStatus";
@@ -149,12 +149,16 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
                 <WebhookHeaders data={data} onChange={change} />
               </Box>
             </DetailPageLayout.Content>
-            <Savebar
-              disabled={disabled}
-              state={saveButtonBarState}
-              onCancel={() => navigate(backUrl)}
-              onSubmit={submit}
-            />
+
+            <Savebar>
+              <Savebar.Spacer />
+              <Savebar.CancelButton onClick={() => navigate(backUrl)} />
+              <Savebar.ConfirmButton
+                transitionState={saveButtonBarState}
+                onClick={submit}
+                disabled={disabled}
+              />
+            </Savebar>
           </DetailPageLayout>
         );
       }}

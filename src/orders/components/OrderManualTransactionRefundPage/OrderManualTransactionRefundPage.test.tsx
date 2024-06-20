@@ -1,12 +1,14 @@
+/* eslint-disable react/display-name */
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { mockResizeObserver } from "@dashboard/components/Datagrid/testUtils";
+import { SavebarProps } from "@dashboard/components/Savebar/Savebar";
 import {
   OrderTransactionRequestActionDocument,
   TransactionActionEnum,
   TransactionItemFragment,
 } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
-import { SavebarProps, ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
+import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -17,16 +19,19 @@ import { OrderManualTransactionRefundPage } from "./OrderManualTransactionRefund
 
 jest.mock("@dashboard/hooks/useNavigator", () => () => jest.fn);
 jest.mock("@dashboard/components/Savebar", () => {
-  const SavebarComponent = ({ onCancel, onSubmit, disabled }: SavebarProps) => (
-    <div>
-      <button onClick={onCancel}>cancel</button>
-      <button disabled={disabled} onClick={onSubmit}>
-        save
-      </button>
-    </div>
+  const SavebarComponent = ({ children }: SavebarProps) => <div>{children}</div>;
+
+  SavebarComponent.Spacer = () => <div />;
+  SavebarComponent.CancelButton = ({ children, ...props }: { children?: React.ReactNode }) => (
+    <button {...props}>cancel</button>
+  );
+  SavebarComponent.ConfirmButton = ({ children, ...props }: { children?: React.ReactNode }) => (
+    <button {...props}>save</button>
   );
 
-  return SavebarComponent;
+  return {
+    Savebar: SavebarComponent,
+  };
 });
 jest.mock("react-intl", () => ({
   useIntl: jest.fn(() => ({

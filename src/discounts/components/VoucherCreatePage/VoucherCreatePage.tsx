@@ -4,7 +4,7 @@ import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailability
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import {
   createChannelsChangeHandler,
   createDiscountTypeChangeHandler,
@@ -188,13 +188,16 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
             disabled={disabled}
             openModal={openChannelsModal}
           />
-        </DetailPageLayout.RightSidebar>
-        <Savebar
-          disabled={disabled}
-          onCancel={() => navigate(voucherListUrl())}
-          onSubmit={submit}
-          state={saveButtonBarState}
-        />
+        </DetailPageLayout.RightSidebar>{" "}
+        <Savebar>
+          <Savebar.Spacer />
+          <Savebar.CancelButton onClick={() => navigate(voucherListUrl())} />
+          <Savebar.ConfirmButton
+            transitionState={saveButtonBarState}
+            onClick={submit}
+            disabled={disabled}
+          />
+        </Savebar>
       </DetailPageLayout>
     </form>
   );

@@ -14,7 +14,7 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { MetadataFormData } from "@dashboard/components/Metadata/types";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import { customerAddressesUrl, customerListUrl } from "@dashboard/customers/urls";
 import CustomerGiftCardsCard from "@dashboard/giftCards/components/GiftCardCustomerCard/CustomerGiftCardsCard";
 import { AccountErrorFragment, CustomerDetailsQuery, PermissionEnum } from "@dashboard/graphql";
@@ -127,13 +127,17 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                 <CustomerGiftCardsCard />
               </RequirePermissions>
             </DetailPageLayout.RightSidebar>
-            <Savebar
-              disabled={isSaveDisabled}
-              state={saveButtonBar}
-              onSubmit={submit}
-              onCancel={() => navigate(customerListUrl())}
-              onDelete={onDelete}
-            />
+
+            <Savebar>
+              <Savebar.DeleteButton onClick={onDelete} />
+              <Savebar.Spacer />
+              <Savebar.CancelButton onClick={() => navigate(customerListUrl())} />
+              <Savebar.ConfirmButton
+                transitionState={saveButtonBar}
+                onClick={submit}
+                disabled={isSaveDisabled}
+              />
+            </Savebar>
           </DetailPageLayout>
         );
       }}

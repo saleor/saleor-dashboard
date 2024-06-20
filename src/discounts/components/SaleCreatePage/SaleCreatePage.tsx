@@ -5,7 +5,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata, MetadataFormData } from "@dashboard/components/Metadata";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import { createSaleChannelsChangeHandler } from "@dashboard/discounts/handlers";
 import { saleListUrl } from "@dashboard/discounts/urls";
 import { SALE_CREATE_FORM_ID } from "@dashboard/discounts/views/SaleCreate/consts";
@@ -129,12 +129,16 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
                 openModal={openChannelsModal}
               />
             </DetailPageLayout.RightSidebar>
-            <Savebar
-              disabled={disabled}
-              onCancel={onBack}
-              onSubmit={submit}
-              state={saveButtonBarState}
-            />
+
+            <Savebar>
+              <Savebar.Spacer />
+              <Savebar.CancelButton onClick={onBack} />
+              <Savebar.ConfirmButton
+                transitionState={saveButtonBarState}
+                onClick={submit}
+                disabled={disabled}
+              />
+            </Savebar>
           </DetailPageLayout>
         );
       }}

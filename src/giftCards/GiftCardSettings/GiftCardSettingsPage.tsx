@@ -3,7 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Form from "@dashboard/components/Form";
 import { Grid } from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import {
   GiftCardSettingsExpiryTypeEnum,
   TimePeriodTypeEnum,
@@ -70,12 +70,15 @@ const GiftCardSettingsPage: React.FC = () => {
                   />
                 </Grid>
               </Box>
-              <Savebar
-                onCancel={() => navigate(giftCardsListPath)}
-                onSubmit={submit}
-                disabled={formLoading}
-                state={updateGiftCardSettingsOpts?.status}
-              />
+              <Savebar>
+                <Savebar.Spacer />
+                <Savebar.CancelButton onClick={() => navigate(giftCardsListPath)} />
+                <Savebar.ConfirmButton
+                  transitionState={updateGiftCardSettingsOpts?.status}
+                  onClick={submit}
+                  disabled={formLoading}
+                />
+              </Savebar>
             </>
           )}
         </Form>
