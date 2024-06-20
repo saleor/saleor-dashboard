@@ -127,7 +127,6 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                 <CustomerGiftCardsCard />
               </RequirePermissions>
             </DetailPageLayout.RightSidebar>
-
             <Savebar>
               <Savebar.DeleteButton onClick={onDelete} />
               <Savebar.Spacer />

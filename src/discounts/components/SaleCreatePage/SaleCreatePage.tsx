@@ -129,7 +129,6 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
                 openModal={openChannelsModal}
               />
             </DetailPageLayout.RightSidebar>
-
             <Savebar>
               <Savebar.Spacer />
               <Savebar.CancelButton onClick={onBack} />

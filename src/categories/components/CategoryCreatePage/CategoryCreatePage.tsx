@@ -74,7 +74,6 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
               <Metadata data={data} onChange={handlers.changeMetadata} />
             </Box>
           </DetailPageLayout.Content>
-
           <Savebar>
             <Savebar.Spacer />
             <Savebar.CancelButton onClick={() => navigate(backUrl)} />

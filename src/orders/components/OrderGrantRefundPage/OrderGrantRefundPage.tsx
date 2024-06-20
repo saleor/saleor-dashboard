@@ -216,7 +216,6 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
       <Savebar>
         <Savebar.Spacer />
         <Savebar.CancelButton onClick={() => navigate(orderUrl(order?.id))} />
-
         <Savebar.ConfirmButton transitionState={submitState} onClick={submit} disabled={loading}>
           {isEdit
             ? intl.formatMessage(grantRefundPageMessages.editRefundBtn)

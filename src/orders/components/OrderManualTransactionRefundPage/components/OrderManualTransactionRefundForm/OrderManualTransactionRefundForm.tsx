@@ -79,7 +79,6 @@ export const OrderManualTransactionRefundForm = ({
         <Savebar>
           <Savebar.Spacer />
           <Savebar.CancelButton onClick={() => navigate(orderUrl(orderId))} />
-
           <Savebar.ConfirmButton
             transitionState={manualRefundOpts.status}
             onClick={methods.handleSubmit(handleSubmit)}

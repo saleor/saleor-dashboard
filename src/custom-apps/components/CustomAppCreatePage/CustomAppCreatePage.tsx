@@ -82,7 +82,6 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
               })}
             />
           </DetailPageLayout.RightSidebar>
-
           <Savebar>
             <Savebar.Spacer />
             <Savebar.CancelButton onClick={() => navigate(CustomAppUrls.resolveAppListUrl())} />

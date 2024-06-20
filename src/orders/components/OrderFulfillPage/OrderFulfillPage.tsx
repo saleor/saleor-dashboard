@@ -36,7 +36,7 @@ import {
   OrderFulfillLineFormData,
 } from "@dashboard/orders/utils/data";
 import { Card, CardContent, TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -254,15 +254,17 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                 <Savebar.CancelButton onClick={() => navigate(orderUrl(order?.id))} />
                 <Tooltip>
                   <Tooltip.Trigger>
-                    <Savebar.ConfirmButton
-                      transitionState={saveButtonBar}
-                      onClick={submit}
-                      disabled={shouldEnableSave()}
-                    >
-                      {shopSettings?.fulfillmentAutoApprove
-                        ? intl.formatMessage(messages.submitFulfillment)
-                        : intl.formatMessage(messages.submitPrepareFulfillment)}
-                    </Savebar.ConfirmButton>
+                    <Box>
+                      <Savebar.ConfirmButton
+                        transitionState={saveButtonBar}
+                        onClick={submit}
+                        disabled={!shouldEnableSave()}
+                      >
+                        {shopSettings?.fulfillmentAutoApprove
+                          ? intl.formatMessage(messages.submitFulfillment)
+                          : intl.formatMessage(messages.submitPrepareFulfillment)}
+                      </Savebar.ConfirmButton>
+                    </Box>
                   </Tooltip.Trigger>
                   <Tooltip.Content>
                     {notAllowedToFulfillUnpaid &&

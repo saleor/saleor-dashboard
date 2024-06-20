@@ -141,7 +141,7 @@ export const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps>
               <Savebar.ConfirmButton
                 transitionState={saveButtonBarState}
                 onClick={submit}
-                disabled={isSaveDisabled}
+                disabled={!!isSaveDisabled}
               />
             </Savebar>
           </DetailPageLayout>

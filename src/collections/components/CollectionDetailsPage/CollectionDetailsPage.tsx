@@ -135,7 +135,6 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
               />
             </div>
           </DetailPageLayout.RightSidebar>
-
           <Savebar>
             <Savebar.DeleteButton onClick={onCollectionRemove} />
             <Savebar.Spacer />

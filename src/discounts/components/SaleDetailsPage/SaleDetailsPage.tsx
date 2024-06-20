@@ -286,7 +286,6 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                 openModal={openChannelsModal}
               />
             </DetailPageLayout.RightSidebar>
-
             <Savebar>
               <Savebar.DeleteButton onClick={onRemove} />
               <Savebar.Spacer />

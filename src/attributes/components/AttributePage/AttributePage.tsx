@@ -204,7 +204,6 @@ const AttributePage: React.FC<AttributePageProps> = ({
                   onChange={change}
                 />
               </DetailPageLayout.RightSidebar>
-
               <Savebar>
                 {attribute !== null && <Savebar.DeleteButton onClick={onDelete} />}
                 <Savebar.Spacer />

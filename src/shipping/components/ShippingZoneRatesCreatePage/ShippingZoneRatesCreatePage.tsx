@@ -209,7 +209,7 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
             />
           </DetailPageLayout.RightSidebar>
           <Savebar>
-            <Savebar.DeleteButton onClick={onDelete} />
+            {onDelete && <Savebar.DeleteButton onClick={onDelete} />}
             <Savebar.Spacer />
             <Savebar.CancelButton onClick={() => navigate(backUrl)} />
             <Savebar.ConfirmButton

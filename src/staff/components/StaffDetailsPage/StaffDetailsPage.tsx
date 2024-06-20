@@ -134,6 +134,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                 </>
               )}
             </DetailPageLayout.Content>
+
             <DetailPageLayout.RightSidebar>
               {canEditPreferences && (
                 <StaffPreferences locale={locale} onLocaleChange={setLocale} />
@@ -179,7 +180,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                   </Card>
                 </>
               )}
-            </DetailPageLayout.RightSidebar>{" "}
+            </DetailPageLayout.RightSidebar>
             <Savebar>
               {canRemove && <Savebar.DeleteButton onClick={onDelete} />}
               <Savebar.Spacer />

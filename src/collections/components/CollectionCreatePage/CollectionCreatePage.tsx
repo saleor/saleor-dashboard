@@ -148,7 +148,6 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
               openModal={openChannelsModal}
             />
           </DetailPageLayout.RightSidebar>
-
           <Savebar>
             <Savebar.Spacer />
             <Savebar.CancelButton onClick={() => navigate(collectionListUrl())} />

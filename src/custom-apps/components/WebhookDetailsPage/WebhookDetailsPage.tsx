@@ -149,7 +149,6 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
                 <WebhookHeaders data={data} onChange={change} />
               </Box>
             </DetailPageLayout.Content>
-
             <Savebar>
               <Savebar.Spacer />
               <Savebar.CancelButton onClick={() => navigate(backUrl)} />

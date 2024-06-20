@@ -112,7 +112,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
                 onChange={change}
                 setData={set}
               />
-            </DetailPageLayout.RightSidebar>{" "}
+            </DetailPageLayout.RightSidebar>
             <Savebar>
               <Savebar.DeleteButton onClick={onDelete} />
               <Savebar.Spacer />

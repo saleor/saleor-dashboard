@@ -290,7 +290,6 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
               </RequirePermissions>
               <ChannelAllocationStrategy data={data} disabled={disabled} onChange={change} />
             </DetailPageLayout.RightSidebar>
-
             <Savebar>
               <Savebar.DeleteButton onClick={onDelete} />
               <Savebar.Spacer />

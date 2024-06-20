@@ -188,7 +188,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
             disabled={disabled}
             openModal={openChannelsModal}
           />
-        </DetailPageLayout.RightSidebar>{" "}
+        </DetailPageLayout.RightSidebar>
         <Savebar>
           <Savebar.Spacer />
           <Savebar.CancelButton onClick={() => navigate(voucherListUrl())} />
