@@ -17,8 +17,8 @@ export const MoneyDisplay = ({ label, money }: MoneyDisplayProps) => {
     <Box display="flex" flexDirection="column">
       <Text size={1}>{label}</Text>
       <Box as="span">
-        <Text fontWeight="bold">{money.currency}&nbsp;</Text>
-        <Text fontWeight="bold">{amount}</Text>
+        <Text size={1}>{money.currency}&nbsp;</Text>
+        <Text size={1}>{amount}</Text>
       </Box>
     </Box>
   );
