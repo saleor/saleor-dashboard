@@ -2,7 +2,6 @@ import { UserFragment } from "@dashboard/graphql";
 import { UserDetailsFragment } from "@saleor/sdk/dist/apollo/types";
 
 export const isSupported = !!window.PasswordCredential;
-// export const isSupported = window.PasswordCredential && window.PublicKeyCredential;
 
 export async function login<T>(
   loginFn: (id: string, password: string) => Promise<T>,
@@ -32,21 +31,21 @@ export async function checkIfCredentialsExist() {
   return true;
 }
 
-export function saveCredentials(
+export async function saveCredentials(
   user: UserFragment | UserDetailsFragment,
   password: string,
 ): Promise<CredentialType> | null {
-  let result: Promise<CredentialType> | null;
+  let result: CredentialType | null;
 
   if (isSupported) {
-    const cred = new PasswordCredential({
-      id: user.email,
-      name: user.firstName ? `${user.firstName} ${user.lastName}` : undefined,
-      password,
-    });
-
     try {
-      result = navigator.credentials.store(cred);
+      const cred = new PasswordCredential({
+        id: user.email,
+        name: user.firstName ? `${user.firstName} ${user.lastName}` : undefined,
+        password,
+      });
+
+      result = await navigator.credentials.store(cred);
     } catch {
       result = null;
     }
