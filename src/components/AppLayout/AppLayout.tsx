@@ -1,11 +1,11 @@
 import useAppState from "@dashboard/hooks/useAppState";
 import { LinearProgress } from "@material-ui/core";
+import { useActionBar } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { DevModePanel } from "../DevModePanel/DevModePanel";
 import NavigatorSearch from "../NavigatorSearch";
-import { useSavebarRef } from "../Savebar/SavebarRefContext";
 import { Sidebar } from "../Sidebar";
 import { useStyles } from "./styles";
 
@@ -16,7 +16,7 @@ interface AppLayoutProps {
 
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const classes = useStyles();
-  const { setAnchor } = useSavebarRef();
+  const { anchor: appActionAnchor } = useActionBar();
   const [appState] = useAppState();
 
   return (
@@ -45,7 +45,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             {children}
           </Box>
           <Box
-            ref={setAnchor}
+            ref={appActionAnchor}
             position="sticky"
             bottom={0}
             left={0}
