@@ -34,7 +34,7 @@ export async function checkIfCredentialsExist() {
 export async function saveCredentials(
   user: UserFragment | UserDetailsFragment,
   password: string,
-): Promise<CredentialType> | null {
+): Promise<CredentialType | null> {
   let result: CredentialType | null;
 
   if (isSupported) {
