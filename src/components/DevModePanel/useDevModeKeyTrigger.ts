@@ -1,14 +1,12 @@
 import { useEffect } from "react";
 
-type DevModeKeyTriggerCallback = ({ shift }: { shift: boolean }) => void;
+type DevModeKeyTriggerCallback = () => void;
 
 export const useDevModeKeyTrigger = (callbackHandler: DevModeKeyTriggerCallback) => {
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
-      if (event.metaKey && event.code === "Quote") {
-        callbackHandler({ shift: false });
-      } else if (event.ctrlKey && event.code === "Quote") {
-        callbackHandler({ shift: false });
+      if ((event.metaKey || event.ctrlKey) && event.code === "Quote") {
+        callbackHandler();
       }
     };
 
