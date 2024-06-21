@@ -1,17 +1,28 @@
 import { useEffect } from "react";
 
-type DevModeKeyTriggerCallback = () => void;
+type HandleOpen = () => void;
+type HandleClose = () => void;
 
-export const useDevModeKeyTrigger = (callbackHandler: DevModeKeyTriggerCallback) => {
+export const useDevModeKeyTrigger = (handleOpen: HandleOpen, handleClose: HandleClose) => {
   useEffect(() => {
-    const handler = (event: KeyboardEvent) => {
+    const keyDownHandler = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.code === "Quote") {
-        callbackHandler();
+        handleOpen();
       }
     };
 
-    document.addEventListener("keydown", handler);
+    const keyUpHandler = (event: KeyboardEvent) => {
+      if (event.code === "Escape") {
+        handleClose();
+      }
+    };
 
-    return () => document.removeEventListener("keydown", handler);
-  }, [callbackHandler]);
+    document.addEventListener("keydown", keyDownHandler);
+    document.addEventListener("keyup", keyUpHandler);
+
+    return () => {
+      document.removeEventListener("keydown", keyDownHandler);
+      document.removeEventListener("keyup", keyUpHandler);
+    };
+  }, [handleOpen, handleClose]);
 };
