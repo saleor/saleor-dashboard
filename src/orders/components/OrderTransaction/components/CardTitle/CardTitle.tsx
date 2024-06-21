@@ -35,6 +35,9 @@ export const OrderTransactionCardTitle: React.FC<CardTitleProps> = ({
     authorizedAmount,
   } = transaction;
 
+  const actions = transaction.actions.filter(action => action !== TransactionActionEnum.REFUND);
+  const showActionButtons = showActions && actions.length > 0;
+
   return (
     <Box width="100%" display="flex" justifyContent="space-between" alignItems="center">
       {transaction.externalUrl ? (
@@ -108,19 +111,22 @@ export const OrderTransactionCardTitle: React.FC<CardTitleProps> = ({
           <MoneyDisplay label={intl.formatMessage(messages.authorized)} money={authorizedAmount} />
         )}
 
-        {showActions &&
-          transaction.actions
-            .filter(action => action !== TransactionActionEnum.REFUND)
-            .map(action => (
-              <div key={`translation-action-${action}`}>
-                <Button
-                  variant="tertiary"
-                  onClick={() => onTransactionAction(transaction.id, action)}
-                >
-                  <FormattedMessage {...mapActionToMessage[action]} />
-                </Button>
-              </div>
-            ))}
+        {showActionButtons && (
+          <Box display="flex" flexDirection="row" gap={2}>
+            {actions
+              .filter(action => action !== TransactionActionEnum.REFUND)
+              .map(action => (
+                <div key={`transaction-action-${action}`}>
+                  <Button
+                    variant="secondary"
+                    onClick={() => onTransactionAction(transaction.id, action)}
+                  >
+                    <FormattedMessage {...mapActionToMessage[action]} />
+                  </Button>
+                </div>
+              ))}
+          </Box>
+        )}
       </Box>
     </Box>
   );
