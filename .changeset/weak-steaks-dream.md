@@ -2,4 +2,4 @@
 "saleor-dashboard": minor
 ---
 
-You can now see new buttons in savebar
+Savebar across the Dashboard has been updated to match the overall UI more closely, providing a more consistent user experience.
