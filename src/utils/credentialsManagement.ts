@@ -2,6 +2,7 @@ import { UserFragment } from "@dashboard/graphql";
 import { UserDetailsFragment } from "@saleor/sdk/dist/apollo/types";
 
 export const isSupported = !!window.PasswordCredential;
+// export const isSupported = window.PasswordCredential && window.PublicKeyCredential;
 
 export async function login<T>(
   loginFn: (id: string, password: string) => Promise<T>,
