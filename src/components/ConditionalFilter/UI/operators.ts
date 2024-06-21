@@ -1,4 +1,5 @@
 import {
+  BulkselectOperator,
   ComboboxOperator,
   DateOperator,
   DateTimeOperator,
@@ -17,6 +18,9 @@ export const isNumberInput = (value: SelectedOperator): value is InputOperator =
 
 export const isMultiselect = (value: SelectedOperator): value is MultiselectOperator =>
   value.conditionValue?.type === "multiselect";
+
+export const isBulkSelect = (value: SelectedOperator): value is BulkselectOperator =>
+  value.conditionValue?.type === "bulkselect";
 
 export const isCombobox = (value: SelectedOperator): value is ComboboxOperator =>
   value.conditionValue?.type === "combobox";

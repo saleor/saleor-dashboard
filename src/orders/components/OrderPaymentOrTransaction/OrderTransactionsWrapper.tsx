@@ -6,7 +6,9 @@ import {
   OrderDetailsQuery,
   TransactionActionEnum,
 } from "@dashboard/graphql/types.generated";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import OrderAddTransaction from "../OrderAddTransaction";
 import { useStyles } from "../OrderDetailsPage/styles";
@@ -44,6 +46,10 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
   const filteredPayments = React.useMemo(() => getFilteredPayments(order), [order]);
   const { enabled } = useFlag("improved_refunds");
 
+  const hasAnyTransactions = [order?.transactions, filteredPayments, order?.giftCards].some(
+    arr => arr?.length > 0,
+  );
+
   return (
     <>
       <div className={classes.cardGrid}>
@@ -65,7 +71,22 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
           </>
         )}
       </>
-      <div>
+
+      <Box paddingTop={6}>
+        <Box
+          as="header"
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="space-between"
+          paddingX={6}
+        >
+          <Text size={5} fontWeight="bold">
+            <FormattedMessage defaultMessage="Transactions" id="/jJLYy" />
+          </Text>
+          <OrderAddTransaction order={order} onAddTransaction={onAddManualTransaction} />
+        </Box>
+
         {order?.transactions?.map(transaction => (
           <OrderTransaction
             key={transaction.id}
@@ -85,8 +106,19 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
         {order?.giftCards?.map(giftCard => (
           <OrderTransactionGiftCard key={giftCard.id} order={order} giftCard={giftCard} />
         ))}
-      </div>
-      <OrderAddTransaction order={order} onAddTransaction={onAddManualTransaction} />
+
+        {!hasAnyTransactions && (
+          <Box display="flex" justifyContent="center" alignItems="center">
+            <Text size={2} color="default2">
+              <FormattedMessage
+                defaultMessage="No transactions made for this order."
+                description="empty state message"
+                id="7QPLu0"
+              />
+            </Text>
+          </Box>
+        )}
+      </Box>
     </>
   );
 };
