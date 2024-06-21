@@ -35,23 +35,17 @@ export async function saveCredentials(
   user: UserFragment | UserDetailsFragment,
   password: string,
 ): Promise<CredentialType | null> {
-  let result: CredentialType | null;
+  if (!isSupported) return null;
 
-  if (isSupported) {
-    try {
-      const cred = new PasswordCredential({
-        id: user.email,
-        name: user.firstName ? `${user.firstName} ${user.lastName}` : undefined,
-        password,
-      });
+  try {
+    const cred = new PasswordCredential({
+      id: user.email,
+      name: user.firstName ? `${user.firstName} ${user.lastName}` : undefined,
+      password,
+    });
 
-      result = await navigator.credentials.store(cred);
-    } catch {
-      result = null;
-    }
-  } else {
-    result = null;
+    return await navigator.credentials.store(cred);
+  } catch {
+    return null;
   }
-
-  return result;
 }

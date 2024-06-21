@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-You should not see credential error when running playwright tests
+An error is no longer raised and visible to the user when saving credential is not supported
