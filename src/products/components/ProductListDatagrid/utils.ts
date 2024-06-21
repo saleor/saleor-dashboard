@@ -5,6 +5,7 @@ export const getPriceClickSearchParams = (search: string): string => {
 
   const filtersIndices = Array.from(params.keys())
     .map(key => {
+      // We're checking for eg. "...&10=AND..."
       if (key.length === 1 || key.length === 2) {
         return parseInt(key);
       }
