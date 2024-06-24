@@ -20,7 +20,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { filter } from "fuzzaldrin";
+
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -72,6 +72,12 @@ const ShippingZoneCountriesAssignDialog: React.FC<
             restWorldCountries,
             change,
           );
+
+          const displayCountries = data.query.length
+            ? countries.filter(country =>
+                country.country.toLowerCase().includes(data.query.toLowerCase()),
+              )
+            : countries;
 
           return (
             <>
@@ -130,9 +136,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<
               <DialogContent className={scrollableDialogClasses.scrollArea}>
                 <ResponsiveTable className={classes.table}>
                   <TableBody>
-                    {filter(countries, data.query, {
-                      key: "country",
-                    }).map(country => {
+                    {displayCountries.map(country => {
                       const isChecked = countrySelectionMap[country.code];
 
                       return (
