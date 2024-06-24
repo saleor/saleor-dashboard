@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { LazyQueryResult } from "@apollo/client/react";
-import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
@@ -26,7 +25,6 @@ import { Item } from "@glideapps/glide-data-grid";
 import { Box, useTheme } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
-import { useHistory } from "react-router";
 
 import { getAttributeIdFromColumnValue, isAttributeColumnValue } from "../ProductListPage/utils";
 import {
@@ -41,7 +39,7 @@ import {
   productListStaticColumnAdapter,
 } from "./datagrid";
 import { messages } from "./messages";
-import { getPriceClickSearchParams } from "./utils";
+import { usePriceClick } from "./usePriceClick";
 
 interface ProductListDatagridProps
   extends ListProps<ProductListColumns>,
@@ -83,33 +81,25 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   rowAnchor,
 }) => {
   const isChannelSelected = !!selectedChannelId;
-  const history = useHistory();
   const intl = useIntl();
   const { theme } = useTheme();
   const datagrid = useDatagridChangeState();
   const { locale } = useLocale();
   const productsLength = getProductRowsLength(disabled, products, disabled);
-  const { filterWindow } = useConditionalFilterContext();
+  const onPriceClick = usePriceClick({ isChannelSelected });
+
   const handleColumnChange = useCallback(
     (picked: ProductListColumns[]) => {
       onUpdateListSettings("columns", picked.filter(Boolean));
     },
     [onUpdateListSettings],
   );
-
-  const handlePriceClick = (productId: string) => {
-    if (!productId) return;
-
-    history.replace({ search: getPriceClickSearchParams(history.location.search) });
-
-    filterWindow.setOpen(true);
-  };
   const memoizedStaticColumns = useMemo(
     () =>
       productListStaticColumnAdapter({
         intl,
         sort,
-        onPriceClick: !isChannelSelected && handlePriceClick,
+        onPriceClick,
       }),
     [intl, sort],
   );
