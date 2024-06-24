@@ -30,26 +30,23 @@ export async function checkIfCredentialsExist() {
   return true;
 }
 
-export function saveCredentials(
+export async function saveCredentials(
   user: UserFragment | UserDetailsFragment,
   password: string,
-): Promise<CredentialType> | null {
-  let result: Promise<CredentialType> | null;
+): Promise<CredentialType | null> {
+  if (!isSupported) {
+    return null;
+  }
 
-  if (isSupported) {
+  try {
     const cred = new PasswordCredential({
       id: user.email,
       name: user.firstName ? `${user.firstName} ${user.lastName}` : undefined,
       password,
     });
-    try {
-      result = navigator.credentials.store(cred);
-    } catch {
-      result = null;
-    }
-  } else {
-    result = null;
-  }
 
-  return result;
+    return await navigator.credentials.store(cred);
+  } catch {
+    return null;
+  }
 }
