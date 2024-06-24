@@ -18,6 +18,7 @@ export const useDevModeKeyTrigger = (handleOpen: HandleOpen, handleClose: Handle
     };
 
     document.addEventListener("keydown", keyDownHandler);
+    // GraphiQL Playground stops propagation of keydown event for Escape key
     document.addEventListener("keyup", keyUpHandler);
 
     return () => {
