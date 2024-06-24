@@ -7,7 +7,7 @@ import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import {
@@ -36,6 +36,7 @@ import {
   OrderFulfillLineFormData,
 } from "@dashboard/orders/utils/data";
 import { Card, CardContent, TableBody, TableCell, TableHead } from "@material-ui/core";
+import { Box, Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -248,22 +249,29 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                 </Card>
               )}
 
-              <Savebar
-                disabled={!shouldEnableSave()}
-                labels={{
-                  confirm: shopSettings?.fulfillmentAutoApprove
-                    ? intl.formatMessage(messages.submitFulfillment)
-                    : intl.formatMessage(messages.submitPrepareFulfillment),
-                }}
-                state={saveButtonBar}
-                tooltips={{
-                  confirm:
-                    notAllowedToFulfillUnpaid &&
-                    intl.formatMessage(commonMessages.cannotFullfillUnpaidOrder),
-                }}
-                onSubmit={submit}
-                onCancel={() => navigate(orderUrl(order?.id))}
-              />
+              <Savebar>
+                <Savebar.Spacer />
+                <Savebar.CancelButton onClick={() => navigate(orderUrl(order?.id))} />
+                <Tooltip>
+                  <Tooltip.Trigger>
+                    <Box>
+                      <Savebar.ConfirmButton
+                        transitionState={saveButtonBar}
+                        onClick={submit}
+                        disabled={!shouldEnableSave()}
+                      >
+                        {shopSettings?.fulfillmentAutoApprove
+                          ? intl.formatMessage(messages.submitFulfillment)
+                          : intl.formatMessage(messages.submitPrepareFulfillment)}
+                      </Savebar.ConfirmButton>
+                    </Box>
+                  </Tooltip.Trigger>
+                  <Tooltip.Content>
+                    {notAllowedToFulfillUnpaid &&
+                      intl.formatMessage(commonMessages.cannotFullfillUnpaidOrder)}
+                  </Tooltip.Content>
+                </Tooltip>
+              </Savebar>
               <OrderFulfillStockExceededDialog
                 open={displayStockExceededDialog}
                 lines={order?.lines}

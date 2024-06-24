@@ -5,7 +5,7 @@ import { ChannelPermission } from "@dashboard/components/ChannelPermission";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import {
   ChannelFragment,
   PermissionEnum,
@@ -172,13 +172,16 @@ export const PermissionGroupDetailsPage: React.FC<PermissonGroupDetailsPageProps
               />
             </DetailPageLayout.RightSidebar>
             <div>
-              <Savebar
-                onCancel={() => navigate(permissionGroupListUrl())}
-                onDelete={onDelete}
-                onSubmit={submit}
-                state={saveButtonBarState}
-                disabled={disabled}
-              />
+              <Savebar>
+                <Savebar.DeleteButton onClick={onDelete} />
+                <Savebar.Spacer />
+                <Savebar.CancelButton onClick={() => navigate(permissionGroupListUrl())} />
+                <Savebar.ConfirmButton
+                  transitionState={saveButtonBarState}
+                  onClick={submit}
+                  disabled={disabled}
+                />
+              </Savebar>
             </div>
           </DetailPageLayout>
         );

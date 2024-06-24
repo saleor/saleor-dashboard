@@ -3,7 +3,7 @@ import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import { ProductErrorFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -74,12 +74,15 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
               <Metadata data={data} onChange={handlers.changeMetadata} />
             </Box>
           </DetailPageLayout.Content>
-          <Savebar
-            onCancel={() => navigate(backUrl)}
-            onSubmit={submit}
-            state={saveButtonBarState}
-            disabled={!!isSaveDisabled}
-          />
+          <Savebar>
+            <Savebar.Spacer />
+            <Savebar.CancelButton onClick={() => navigate(backUrl)} />
+            <Savebar.ConfirmButton
+              transitionState={saveButtonBarState}
+              onClick={submit}
+              disabled={isSaveDisabled}
+            />
+          </Savebar>
         </DetailPageLayout>
       )}
     </CategoryCreateForm>
