@@ -4,7 +4,7 @@ import CardTitle from "@dashboard/components/CardTitle";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import Skeleton from "@dashboard/components/Skeleton";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { configurationMenuUrl } from "@dashboard/configuration";
@@ -179,12 +179,15 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                   </Card>
                 </Grid>
               </Box>
-              <Savebar
-                state={savebarState}
-                disabled={disabled}
-                onSubmit={submit}
-                onCancel={() => navigate(configurationMenuUrl)}
-              />
+              <Savebar>
+                <Savebar.Spacer />
+                <Savebar.CancelButton onClick={() => navigate(configurationMenuUrl)} />
+                <Savebar.ConfirmButton
+                  transitionState={savebarState}
+                  onClick={submit}
+                  disabled={disabled}
+                />
+              </Savebar>
             </DetailPageLayout.Content>
           </DetailPageLayout>
         );

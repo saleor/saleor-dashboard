@@ -6,7 +6,7 @@ import Grid from "@dashboard/components/Grid";
 import Hr from "@dashboard/components/Hr";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata, MetadataFormData } from "@dashboard/components/Metadata";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import { PageErrorFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
@@ -106,12 +106,15 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
                 <Metadata data={data} onChange={changeMetadata} />
               </Grid>
             </DetailPageLayout.Content>
-            <Savebar
-              onCancel={() => navigate(pageTypeListUrl())}
-              onSubmit={submit}
-              disabled={isSaveDisabled}
-              state={saveButtonBarState}
-            />
+            <Savebar>
+              <Savebar.Spacer />
+              <Savebar.CancelButton onClick={() => navigate(pageTypeListUrl())} />
+              <Savebar.ConfirmButton
+                transitionState={saveButtonBarState}
+                onClick={submit}
+                disabled={isSaveDisabled}
+              />
+            </Savebar>
           </DetailPageLayout>
         );
       }}
