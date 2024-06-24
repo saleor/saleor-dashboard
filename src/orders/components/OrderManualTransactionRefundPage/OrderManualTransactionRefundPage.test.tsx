@@ -1,7 +1,6 @@
 /* eslint-disable react/display-name */
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { mockResizeObserver } from "@dashboard/components/Datagrid/testUtils";
-import { SavebarProps } from "@dashboard/components/Savebar/Savebar";
 import {
   OrderTransactionRequestActionDocument,
   TransactionActionEnum,
@@ -18,21 +17,7 @@ import { BrowserRouter } from "react-router-dom";
 import { OrderManualTransactionRefundPage } from "./OrderManualTransactionRefundPage";
 
 jest.mock("@dashboard/hooks/useNavigator", () => () => jest.fn);
-jest.mock("@dashboard/components/Savebar", () => {
-  const SavebarComponent = ({ children }: SavebarProps) => <div>{children}</div>;
-
-  SavebarComponent.Spacer = () => <div />;
-  SavebarComponent.CancelButton = ({ children, ...props }: { children?: React.ReactNode }) => (
-    <button {...props}>cancel</button>
-  );
-  SavebarComponent.ConfirmButton = ({ children, ...props }: { children?: React.ReactNode }) => (
-    <button {...props}>save</button>
-  );
-
-  return {
-    Savebar: SavebarComponent,
-  };
-});
+jest.mock("@dashboard/components/Savebar");
 jest.mock("react-intl", () => ({
   useIntl: jest.fn(() => ({
     formatMessage: jest.fn(x => x.defaultMessage),
