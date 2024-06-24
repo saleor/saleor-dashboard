@@ -2,4 +2,4 @@
 "saleor-dashboard": minor
 ---
 
-Prepare new savebar component
+Now, the developer can access sidebar components on each page directly.
