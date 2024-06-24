@@ -33,7 +33,7 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
 }) => {
   const intl = useIntl();
   const { isReadyForMount, handleSubmit, defaultValue, handleChange, editorRef } =
-    useRichTextSubmit(initial, onSubmit);
+    useRichTextSubmit(initial, onSubmit, disabled);
 
   return edit ? (
     <form onSubmit={handleSubmit}>
