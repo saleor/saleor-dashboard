@@ -2,4 +2,4 @@
 "saleor-dashboard": minor
 ---
 
-Product list no longer show a dash instead of product's price when channel is not selected. Instead 'Select channel' shortcut was added meaning that you can now use it to open filters window with 'channel' already selected.
+You can now open channel selection by clicking "Select channel" within any price cell on the product list. This means the dash "-" sign is no longer displayed there
