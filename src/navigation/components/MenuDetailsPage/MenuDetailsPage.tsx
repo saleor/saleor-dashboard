@@ -5,7 +5,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import { MenuDetailsFragment, MenuErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -132,13 +132,16 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
                   />
                 </div>
               </Grid>
-              <Savebar
-                onCancel={() => navigate(menuListUrl())}
-                disabled={disabled || treeOperations.length === 0}
-                onDelete={onDelete}
-                onSubmit={submit}
-                state={saveButtonState}
-              />
+              <Savebar>
+                <Savebar.DeleteButton onClick={onDelete} />
+                <Savebar.Spacer />
+                <Savebar.CancelButton onClick={() => navigate(menuListUrl())} />
+                <Savebar.ConfirmButton
+                  transitionState={saveButtonState}
+                  onClick={submit}
+                  disabled={disabled || treeOperations.length === 0}
+                />
+              </Savebar>
             </Box>
           </DetailPageLayout.Content>
         </DetailPageLayout>

@@ -2,6 +2,7 @@ import "@glideapps/glide-data-grid/dist/index.css";
 
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { usePreventHistoryBack } from "@dashboard/hooks/usePreventHistoryBack";
+import { getCellAction } from "@dashboard/products/components/ProductListDatagrid/datagrid";
 import DataEditor, {
   CellClickedEventArgs,
   DataEditorProps,
@@ -146,6 +147,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const { rowAnchorRef, setRowAnchorRef, setAnchorPosition } = useRowAnchor({
     getRowAnchorUrl: rowAnchor,
     rowMarkers,
+    availableColumns,
   });
 
   const { handleRowHover, hoverRow } = useRowHover({
@@ -256,6 +258,10 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
       if (onRowClick) {
         onRowClick(item);
+      }
+
+      if (getCellAction(availableColumns, item[0])) {
+        return;
       }
 
       handleRowHover(args);

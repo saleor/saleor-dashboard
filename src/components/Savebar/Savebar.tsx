@@ -5,7 +5,7 @@ import React from "react";
 import { savebarHeight } from "../AppLayout/consts";
 import { useSavebarRef } from "./SavebarRefContext";
 
-interface SavebarProps {
+export interface SavebarProps {
   children: React.ReactNode;
 }
 

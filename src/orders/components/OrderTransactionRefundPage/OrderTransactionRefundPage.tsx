@@ -4,7 +4,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Pill } from "@dashboard/components/Pill";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import { OrderDetailsGrantRefundFragment, PermissionEnum } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -248,13 +248,19 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
             <OrderTransactionReason control={control} />
           </Box>
         </DetailPageLayout.RightSidebar>
-        <Savebar
-          onSubmit={handleSubmit(onSubmit)}
-          onCancel={() => navigate(orderUrl(order?.id ?? ""))}
-          disabled={disabled}
-          state={submitBehavior.submitState}
-          labels={submitBehavior.submitLabels}
-        />
+        <Savebar>
+          <Savebar.Spacer />
+          <Savebar.CancelButton onClick={() => navigate(orderUrl(order?.id ?? ""))}>
+            {submitBehavior.submitLabels.cancel}
+          </Savebar.CancelButton>
+          <Savebar.ConfirmButton
+            transitionState={submitBehavior.submitState}
+            onClick={handleSubmit(onSubmit)}
+            disabled={disabled}
+          >
+            {submitBehavior.submitLabels.confirm}
+          </Savebar.ConfirmButton>
+        </Savebar>
         <OrderTransactionReasonModal
           open={editedRefundLineIndex !== null}
           reason={linesToRefund[editedRefundLineIndex!]?.reason}

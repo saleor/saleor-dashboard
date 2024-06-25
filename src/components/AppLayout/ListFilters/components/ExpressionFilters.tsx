@@ -4,19 +4,18 @@ import {
   useConditionalFilterContext,
 } from "@dashboard/components/ConditionalFilter";
 import { Box, Button, CloseIcon, DropdownButton, Popover, Text } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
 export const ExpressionFilters = () => {
-  const [open, setOpen] = useState(false);
   const { formatMessage } = useIntl();
-  const { valueProvider, containerState } = useConditionalFilterContext();
+  const { valueProvider, containerState, filterWindow } = useConditionalFilterContext();
   const clickOutside = () => {
     containerState.clearEmpty();
   };
 
   return (
-    <Popover open={open} onOpenChange={open => setOpen(open)}>
+    <Popover open={filterWindow.isOpen} onOpenChange={open => filterWindow.setOpen(open)}>
       <Popover.Trigger>
         <DropdownButton data-test-id="filters-button">
           {formatMessage(conditionalFilterMessages.popoverTrigger, {
@@ -46,7 +45,7 @@ export const ExpressionFilters = () => {
               </Popover.Close>
             </Box>
           </Box>
-          <ConditionalFilters onClose={() => setOpen(false)} />
+          <ConditionalFilters onClose={() => filterWindow.setOpen(false)} />
         </Box>
       </Popover.Content>
     </Popover>

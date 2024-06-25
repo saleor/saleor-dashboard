@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { mockResizeObserver } from "@dashboard/components/Datagrid/testUtils";
 import {
@@ -6,7 +7,7 @@ import {
   TransactionItemFragment,
 } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
-import { SavebarProps, ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
+import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -16,18 +17,7 @@ import { BrowserRouter } from "react-router-dom";
 import { OrderManualTransactionRefundPage } from "./OrderManualTransactionRefundPage";
 
 jest.mock("@dashboard/hooks/useNavigator", () => () => jest.fn);
-jest.mock("@dashboard/components/Savebar", () => {
-  const SavebarComponent = ({ onCancel, onSubmit, disabled }: SavebarProps) => (
-    <div>
-      <button onClick={onCancel}>cancel</button>
-      <button disabled={disabled} onClick={onSubmit}>
-        save
-      </button>
-    </div>
-  );
-
-  return SavebarComponent;
-});
+jest.mock("@dashboard/components/Savebar");
 jest.mock("react-intl", () => ({
   useIntl: jest.fn(() => ({
     formatMessage: jest.fn(x => x.defaultMessage),

@@ -17,7 +17,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import {
   ProductErrorWithAttributesFragment,
   ProductVariantCreateDataQuery,
@@ -298,16 +298,17 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                   <Metadata data={data} onChange={handlers.changeMetadata} />
                 </div>
               </Grid>
-              <Savebar
-                disabled={isSaveDisabled}
-                labels={{
-                  confirm: intl.formatMessage(messages.saveVariant),
-                  delete: intl.formatMessage(messages.deleteVariant),
-                }}
-                state={saveButtonBarState}
-                onCancel={() => navigate(productUrl(productId))}
-                onSubmit={submit}
-              />
+              <Savebar>
+                <Savebar.Spacer />
+                <Savebar.CancelButton onClick={() => navigate(productUrl(productId))} />
+                <Savebar.ConfirmButton
+                  transitionState={saveButtonBarState}
+                  onClick={submit}
+                  disabled={isSaveDisabled}
+                >
+                  {intl.formatMessage(messages.saveVariant)}
+                </Savebar.ConfirmButton>
+              </Savebar>
               {canOpenAssignReferencesAttributeDialog && (
                 <AssignAttributeValueDialog
                   entityType={getReferenceAttributeEntityTypeFromAttribute(
