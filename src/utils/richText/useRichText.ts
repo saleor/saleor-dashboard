@@ -53,7 +53,7 @@ export function useRichText({
     } catch (e) {
       return undefined;
     }
-  }, [initial]);
+  }, [initial, loading]);
 
   return {
     editorRef,
