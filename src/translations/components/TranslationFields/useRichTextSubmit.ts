@@ -4,10 +4,15 @@ import useRichText from "@dashboard/utils/richText/useRichText";
 import { OutputData } from "@editorjs/editorjs";
 import React from "react";
 
-export function useRichTextSubmit(initial: string, onSubmit: (data: OutputData) => SubmitPromise) {
+export function useRichTextSubmit(
+  initial: string,
+  onSubmit: (data: OutputData) => SubmitPromise,
+  loading: boolean,
+) {
   const { setIsDirty, setExitDialogSubmitRef } = useExitFormDialog();
   const { defaultValue, editorRef, isReadyForMount, handleChange, getValue } = useRichText({
     initial,
+    loading,
     triggerChange: () => setIsDirty(true),
   });
   const handleSubmit = React.useCallback(async () => {

@@ -5,7 +5,7 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DateTime } from "@dashboard/components/Date";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import Skeleton from "@dashboard/components/Skeleton";
 import {
   ChannelUsabilityDataQuery,
@@ -154,19 +154,21 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           onShippingAddressEdit={onShippingAddressEdit}
         />
       </DetailPageLayout.RightSidebar>
-      <Savebar
-        state={saveButtonBarState}
-        disabled={loading}
-        onCancel={() => navigate(orderDraftListUrl())}
-        onSubmit={onDraftFinalize}
-        labels={{
-          confirm: intl.formatMessage({
+      <Savebar>
+        <Savebar.Spacer />
+        <Savebar.CancelButton onClick={() => navigate(orderDraftListUrl())} />
+        <Savebar.ConfirmButton
+          transitionState={saveButtonBarState}
+          onClick={onDraftFinalize}
+          disabled={loading}
+        >
+          {intl.formatMessage({
             id: "4Z14xW",
             defaultMessage: "Finalize",
             description: "button",
-          }),
-        }}
-      />
+          })}
+        </Savebar.ConfirmButton>
+      </Savebar>
     </DetailPageLayout>
   );
 };

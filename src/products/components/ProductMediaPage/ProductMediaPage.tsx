@@ -4,7 +4,7 @@ import CardTitle from "@dashboard/components/CardTitle";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import Skeleton from "@dashboard/components/Skeleton";
 import { ProductMediaType } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -151,13 +151,16 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
               </Card>
             </div>
           </Grid>
-          <Savebar
-            disabled={disabled || !onSubmit}
-            state={saveButtonBarState}
-            onCancel={() => navigate(productUrl(productId))}
-            onDelete={onDelete}
-            onSubmit={submit}
-          />
+          <Savebar>
+            <Savebar.DeleteButton onClick={onDelete} />
+            <Savebar.Spacer />
+            <Savebar.CancelButton onClick={() => navigate(productUrl(productId))} />
+            <Savebar.ConfirmButton
+              transitionState={saveButtonBarState}
+              onClick={submit}
+              disabled={disabled || !onSubmit}
+            />
+          </Savebar>
         </>
       )}
     </Form>

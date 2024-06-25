@@ -12,7 +12,7 @@ import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata, MetadataIdSchema } from "@dashboard/components/Metadata";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import {
   OrderDetailsFragment,
   OrderDetailsQuery,
@@ -285,13 +285,17 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               )}
               <OrderCustomerNote note={maybe(() => order.customerNote)} />
             </DetailPageLayout.RightSidebar>
-            <Savebar
-              labels={saveLabel}
-              onCancel={() => navigate(orderListUrl())}
-              onSubmit={submit}
-              state={saveButtonBarState}
-              disabled={allowSave()}
-            />
+            <Savebar>
+              <Savebar.Spacer />
+              <Savebar.CancelButton onClick={() => navigate(orderListUrl())} />
+              <Savebar.ConfirmButton
+                transitionState={saveButtonBarState}
+                onClick={submit}
+                disabled={allowSave()}
+              >
+                {saveLabel?.confirm}
+              </Savebar.ConfirmButton>
+            </Savebar>
           </DetailPageLayout>
         );
       }}
