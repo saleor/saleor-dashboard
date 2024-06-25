@@ -12,16 +12,11 @@ import { numberCellEmptyValue } from "@dashboard/components/Datagrid/customCells
 import { DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Choice } from "@dashboard/components/SingleSelectField";
-import {
-  ProductDetailsVariantFragment,
-  ProductFragment,
-  WarehouseFragment,
-} from "@dashboard/graphql";
+import { ProductDetailsVariantFragment } from "@dashboard/graphql";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { GridCell } from "@glideapps/glide-data-grid";
 import { MutableRefObject } from "react";
-import { IntlShape } from "react-intl";
 
 import {
   getColumnAttribute,
@@ -30,7 +25,6 @@ import {
   getColumnName,
   getColumnStock,
 } from "../../utils/datagrid";
-import messages from "./messages";
 
 function errorMatchesColumn(error: ProductVariantListError, columnId: string): boolean {
   if (error.type === "channel") {
@@ -172,68 +166,4 @@ export function getData({
       update: text => searchAttributeValues(getColumnAttribute(columnId), text),
     });
   }
-}
-
-export function getColumnData(
-  name: string,
-  channels: ChannelData[],
-  warehouses: WarehouseFragment[],
-  variantAttributes: ProductFragment["productType"]["variantAttributes"],
-  intl: IntlShape,
-): AvailableColumn {
-  const common = {
-    id: name,
-    width: 200,
-    // Now we don't weirdly merge top-left header with the frozen column (name),
-    // leaving rest unnamed group columns (sku in this case) unmerged
-    group: " ",
-  };
-
-  if (["name", "sku"].includes(name)) {
-    return {
-      ...common,
-      title: intl.formatMessage(messages[name]),
-    };
-  }
-
-  if (getColumnStock(name)) {
-    return {
-      ...common,
-      width: 100,
-      title: warehouses.find(warehouse => warehouse.id === getColumnStock(name))?.name,
-      group: intl.formatMessage(messages.warehouses),
-    };
-  }
-
-  if (getColumnChannel(name)) {
-    const channel = channels.find(channel => channel.id === getColumnChannel(name));
-
-    return {
-      ...common,
-      width: 150,
-      title: intl.formatMessage(messages.price),
-      group: channel.name,
-    };
-  }
-
-  if (getColumnChannelAvailability(name)) {
-    const channel = channels.find(channel => channel.id === getColumnChannelAvailability(name));
-
-    return {
-      ...common,
-      width: 80,
-      title: intl.formatMessage(messages.available),
-      group: channel.name,
-    };
-  }
-
-  if (getColumnAttribute(name)) {
-    return {
-      ...common,
-      title: variantAttributes.find(attribute => attribute.id === getColumnAttribute(name))?.name,
-      group: intl.formatMessage(messages.attributes),
-    };
-  }
-
-  throw new Error(`Unknown column: ${name}`);
 }
