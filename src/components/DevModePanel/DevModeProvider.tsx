@@ -12,14 +12,18 @@ export function DevModeProvider({ children }) {
   const [devModeContent, setDevModeContent] = useState("");
   const [isDevModeVisible, setDevModeVisibility] = useState(false);
 
-  const triggerHandler = () => {
+  const handleOpen = () => {
     setDevModeContent("");
     setVariables("");
 
     setDevModeVisibility(!isDevModeVisible);
   };
 
-  useDevModeKeyTrigger(triggerHandler);
+  const handleClose = () => {
+    setDevModeVisibility(false);
+  };
+
+  useDevModeKeyTrigger(handleOpen, handleClose);
 
   return (
     <DevModeContext.Provider
