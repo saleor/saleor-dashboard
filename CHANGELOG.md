@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.18.3
+
+### Patch Changes
+
+- ad6c8b7c0: Fixed flaky Cypress tests related to Discounts
+- cb22186e8: fixes e2e tests which fails on nightly run orders, apps, vouchers
+- deb6c1ea6: Add manual workflow for cypress tests
+- 6de7e067b: An error is no longer raised and visible to the user when saving translations
+- 28383b26a: Run cypress or playwright tests on release
+- 79a2c6d11: Fix action that configures login to staging Saleor Cloud for CLI
+- 8780d35e3: An error is no longer raised and visible to the user when saving credential is not supported
+
 ## 3.18.2
 
 ### Patch Changes
