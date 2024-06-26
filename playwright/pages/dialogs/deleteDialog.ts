@@ -12,9 +12,7 @@ export class DeleteDialog extends BasePage {
   }
 
   async clickDeleteButton() {
-    await this.waitForNetworkIdleAfterAction(async () => {
-      await this.deleteButton.first().click();
-    });
+    await this.deleteButton.first().click();
     await this.deleteButton.waitFor({ state: "hidden" });
   }
 
