@@ -13,24 +13,17 @@ import { messages } from "./messages";
 
 const authorizedFetch = createFetch();
 
-interface DevModePanelProps {
-  isDevModeVisible: boolean;
-  setDevModeVisibility: (value: boolean) => void;
-}
+export const DevModePanel: React.FC = () => {
+  const intl = useIntl();
+  const { rootStyle } = useDashboardTheme();
 
-export const DevModePanel: React.FC<DevModePanelProps> = ({
-  isDevModeVisible,
-  setDevModeVisibility,
-}) => {
+  const { isDevModeVisible, variables, devModeContent, setDevModeVisibility } =
+    useDevModeContext();
+
   const fetcher = createGraphiQLFetcher({
     url: process.env.API_URI,
     fetch: authorizedFetch,
   });
-
-  const intl = useIntl();
-  const { rootStyle } = useDashboardTheme();
-
-  const { devModeContent, variables } = useDevModeContext();
 
   const overwriteCodeMirrorCSSVariables = {
     __html: `

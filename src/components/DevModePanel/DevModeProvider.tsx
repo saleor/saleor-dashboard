@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 
 import { DevModeContext } from "./hooks";
+import { useDevModeKeyTrigger } from "./useDevModeKeyTrigger";
 
 export function DevModeProvider({ children }) {
   // stringified variables (as key/value) passed along with the query
@@ -10,6 +11,15 @@ export function DevModeProvider({ children }) {
   // dashboard to be passed to the dev mode panel
   const [devModeContent, setDevModeContent] = useState("");
   const [isDevModeVisible, setDevModeVisibility] = useState(false);
+
+  const triggerHandler = () => {
+    setDevModeContent("");
+    setVariables("");
+
+    setDevModeVisibility(!isDevModeVisible);
+  };
+
+  useDevModeKeyTrigger(triggerHandler);
 
   return (
     <DevModeContext.Provider
