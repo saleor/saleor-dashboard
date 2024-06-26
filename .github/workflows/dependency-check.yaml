@@ -5,7 +5,7 @@ jobs:
   current_state:
     runs-on: ubuntu-latest
     name: "Calculate current state"
-    outputs: 
+    outputs:
       main_statistics: ${{ steps.store_import_stats.outputs.MAIN_STATISTICS }}
     steps:
       - uses: actions/checkout@v3

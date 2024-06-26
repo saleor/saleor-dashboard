@@ -19,6 +19,7 @@ export const RuleSummaryChips = ({
       __color={color.text}
       __borderColor={color.border}
       marginRight={1.5}
+      data-test-id="rule-summary-chip"
     >
       {label}: {value}
     </Chip>

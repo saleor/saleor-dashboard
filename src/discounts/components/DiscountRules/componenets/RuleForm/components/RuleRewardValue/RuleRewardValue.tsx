@@ -54,6 +54,7 @@ export const RuleRewardValue = ({
           type="number"
           size="small"
           label={intl.formatMessage(messages.discountValue)}
+          data-test-id="reward-value-input"
         />
       </RuleInputWrapper>
     </Box>

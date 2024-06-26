@@ -177,7 +177,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
           })
         }
       >
-        <DialogContentText>
+        <DialogContentText data-test-id="delete-address-dialog-content">
           <FormattedMessage
             id="/kWzY1"
             defaultMessage="Are you sure you want to delete this address from users address book?"

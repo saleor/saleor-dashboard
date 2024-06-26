@@ -42,7 +42,7 @@ const InstalledAppList: React.FC<InstalledAppListProps> = ({
   }
 
   return (
-    <List>
+    <List data-test-id="apps-installed">
       {appInstallationList?.map(({ appInstallation, logo, isExternal }) => (
         <NotInstalledAppListRow
           key={appInstallation.id}

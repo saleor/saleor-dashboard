@@ -2,7 +2,7 @@ import { URL_LIST } from "@data/url";
 import { HomePage } from "@pages/homePage";
 import { expect, test } from "@playwright/test";
 
-test.use({ storageState: "playwright/.auth/admin.json" });
+test.use({ storageState: "./playwright/.auth/admin.json" });
 
 test("TC: SALEOR_29 Correct information on dashboard home page @e2e", async ({
   page,
@@ -10,6 +10,7 @@ test("TC: SALEOR_29 Correct information on dashboard home page @e2e", async ({
   const homePage = new HomePage(page);
 
   await page.goto(URL_LIST.homePage);
+  await homePage.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });
   await expect(homePage.channelSelect).toBeVisible({ timeout: 10000 });
 
   await homePage.expectHomePageElementsToBeVisible();

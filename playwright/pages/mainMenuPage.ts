@@ -1,9 +1,7 @@
-import type { Page } from "@playwright/test";
-import { expect } from "@playwright/test";
+import { expect,  Page } from "@playwright/test";
+import { BasePage } from "./basePage";
 
-export class MainMenuPage {
-  readonly page: Page;
-
+export class MainMenuPage extends BasePage {
   constructor(
     page: Page,
     readonly userMenu = page.getByTestId("userMenu"),
@@ -26,14 +24,19 @@ export class MainMenuPage {
     readonly listItem = page.getByTestId("menu-list-item"),
     readonly products = page.getByTestId("menu-item-label-products"),
     readonly menuItem = page.locator("[data-test-id*='menu-item-label-']"),
+    readonly featuresPreview = page.getByRole("menuitem").filter({ hasText: "Features preview" }),
   ) {
-    this.page = page;
+    super(page)
   }
 
   async gotoAccountSettings() {
     await this.userMenu.click();
     await this.accountSettings.click();
   }
+
+  async openFeaturesPreview() {
+    await this.userMenu.click();
+    await this.featuresPreview.click();  }
 
   async openDiscounts() {
     await this.discounts.click();

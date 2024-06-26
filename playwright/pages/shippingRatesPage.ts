@@ -1,14 +1,15 @@
 import { BasePage } from "@pages/basePage";
 import { AddPostalCodeDialog } from "@pages/dialogs/addPostalCodeDialog";
-import { AddProductsDialog } from "@pages/dialogs/addProductsDialog";
+import { AssignProductsDialog } from "@pages/dialogs/assignProductsDialog";
+
 import { RightSideDetailsPage } from "@pages/pageElements/rightSideDetailsSection";
 import type { Page } from "@playwright/test";
+import { expect } from "@playwright/test";
 
-export class ShippingRatesPage {
-  readonly page: Page;
+export class ShippingRatesPage extends BasePage {
   readonly basePage: BasePage;
   readonly rightSideDetailsPage: RightSideDetailsPage;
-  readonly addProductsDialog: AddProductsDialog;
+  readonly assignProductsDialog: AssignProductsDialog;
   readonly addPostalCodeDialog: AddPostalCodeDialog;
 
   constructor(
@@ -30,6 +31,7 @@ export class ShippingRatesPage {
     ),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly assignProductButton = page.getByTestId("assign-product-button"),
+    readonly assignExcludedProductsDialog = page.getByTestId("assign-products-dialog-content"),
     readonly priceInput = page.getByTestId("price-input"),
     readonly minValueInput = page.getByTestId("min-value-price-input"),
     readonly minWeightInput = page
@@ -41,22 +43,29 @@ export class ShippingRatesPage {
       .locator("input"),
     readonly excludedProductsRows = page.getByTestId("excluded-products-rows"),
     readonly includePostalCodesRadioButton = page.getByTestId("INCLUDE"),
-    readonly assignedPostalCodesRows = page.getByTestId(
-      "assigned-postal-codes-rows",
-    ),
+    readonly assignedPostalCodesRows = page.getByTestId("assigned-postal-codes-rows"),
+    readonly assignDialogProductList = page.getByTestId("assign-product-list"),
+    readonly assignDialogProductRow = page.getByTestId("product-row"),
   ) {
-    this.page = page;
+    super(page);
     this.basePage = new BasePage(page);
-    this.addProductsDialog = new AddProductsDialog(page);
+    this.assignProductsDialog = new AssignProductsDialog(page);
     this.addPostalCodeDialog = new AddPostalCodeDialog(page);
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
   }
 
-  async addFirstAvailableExcludedProduct() {
+  async addExcludedProduct(name:string) {
     await this.assignProductButton.click();
-    await this.addProductsDialog.productRowCheckbox.first().click();
-    await this.addProductsDialog.assignAndSaveButton.click();
-    await this.addProductsDialog.assignAndSaveButton.waitFor({
+    await this.assignProductsDialog.searchForProductInDialog(name);
+    await this.waitForDOMToFullyLoad();
+    await this.assignDialogProductList.waitFor({ state: "visible" });
+    await this.assignDialogProductRow.filter({ hasText: name }).waitFor({ state: "visible" });
+    await this.assignProductsDialog.selectProduct(name);
+    await expect(this.assignProductsDialog.assignAndSaveButton).toBeEnabled();
+    await this.waitForNetworkIdleAfterAction(() =>
+      this.assignProductsDialog.assignAndSaveButton.click(),
+    );
+    await this.assignProductsDialog.assignAndSaveButton.waitFor({
       state: "hidden",
       timeout: 5000,
     });

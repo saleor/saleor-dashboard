@@ -1,19 +1,22 @@
-import { URL_LIST } from "@data/url";
 import { ConfigurationPage } from "@pages/configurationPage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { PluginsPage } from "@pages/pluginsPage";
 import { expect, test } from "@playwright/test";
 
-test.use({ storageState: "playwright/.auth/plugins.json" });
+test.use({ storageState: "playwright/.auth/plugin.json" });
 
-test("TC: SALEOR_16 User should be able to navigate to plugin list as a staff member using PLUGINS permission @e2e", async ({
-  page,
-}) => {
-  const configurationPage = new ConfigurationPage(page);
-  const mainMenuPage = new MainMenuPage(page);
-  const pluginsPage = new PluginsPage(page);
+let configurationPage: ConfigurationPage;
+let mainMenuPage: MainMenuPage;
+let pluginsPage: PluginsPage;
 
-  await page.goto(URL_LIST.configuration);
+test.beforeEach(({ page }) => {
+  configurationPage = new ConfigurationPage(page);
+  mainMenuPage = new MainMenuPage(page);
+  pluginsPage = new PluginsPage(page);
+});
+
+test("TC: SALEOR_16 User should be able to navigate to plugin list as a staff member using PLUGINS permission @e2e", async () => {
+  await configurationPage.goToConfigurationView();
   await configurationPage.openPlugins();
   await expect(pluginsPage.pluginRow.first()).toBeVisible();
   await mainMenuPage.expectMenuItemsCount(3);

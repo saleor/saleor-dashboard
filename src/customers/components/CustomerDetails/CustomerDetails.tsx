@@ -79,6 +79,7 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
       />
       <CardContent className={classes.content}>
         <ControlledCheckbox
+          data-test-id="customer-active-checkbox"
           checked={data.isActive}
           className={classes.checkbox}
           disabled={disabled}
@@ -91,6 +92,7 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
           onChange={onChange}
         />
         <TextField
+          data-test-id="customer-note"
           disabled={disabled}
           error={!!formErrors.note}
           fullWidth

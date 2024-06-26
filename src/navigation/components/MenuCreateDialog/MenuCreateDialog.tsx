@@ -49,7 +49,7 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
 
   return (
     <Dialog onClose={onClose} maxWidth="sm" fullWidth open={open}>
-      <DialogTitle disableTypography>
+      <DialogTitle disableTypography data-test-id="create-menu-dialog-title">
         <FormattedMessage
           id="0OtaXa"
           defaultMessage="Create Menu"
@@ -61,6 +61,7 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
           <>
             <DialogContent>
               <TextField
+                data-test-id="menu-name-input"
                 disabled={disabled}
                 error={!!formErrors.name}
                 fullWidth

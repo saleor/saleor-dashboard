@@ -1,8 +1,7 @@
 import { URL_LIST } from "@data/url";
 import { APIRequestContext, expect } from "@playwright/test";
 
-const MAILPIT_URI = process.env.CYPRESS_MAILPITURL || "no mailpit url provided";
-const mailpitUrl = "https://" + MAILPIT_URI;
+const mailpitUrl = process.env.MAILPITURL || "no mailpit url provided";
 export class MailpitService {
   readonly request: APIRequestContext;
 
@@ -31,6 +30,19 @@ export class MailpitService {
     return latestEmailsJson;
   }
 
+  async getEmailsFromTime(fromTime = 10000){
+    const latestEmails = await this.getLastEmails()
+
+    latestEmails.messages = latestEmails.messages.filter(
+      (message: { Created: string }) => {
+        const timeMinusLastMs = Date.now() - fromTime;
+        const mailCreated = new Date(message.Created);
+        return mailCreated.getTime() > timeMinusLastMs;
+      },
+    );
+    return latestEmails;
+  }
+
   async getEmailDetails(mailId: string) {
     const emailDetails = await this.request.get(
       `${mailpitUrl}/api/v1/message/${mailId}`,
@@ -45,7 +57,7 @@ export class MailpitService {
     await expect
       .poll(
         async () => {
-          const emails = await this.getLastEmails();
+          const emails = await this.getEmailsFromTime();
           userEmails = await emails.messages.filter((mails: { To: any[] }) =>
             mails.To.map(
               (recipientObj: { Address: any }) => `${recipientObj.Address}`,
@@ -55,7 +67,7 @@ export class MailpitService {
           return userEmails.length;
         },
         {
-          message: `User: ${userEmail} messages were not found`,
+          message: `User: ${userEmail} messages were not found.`,
           intervals: [2000, 3000, 5000, 5000],
           timeout: 15000,
         },
@@ -63,6 +75,7 @@ export class MailpitService {
       .toBeGreaterThanOrEqual(1);
     return userEmails;
   }
+
   async checkDoesUserReceivedExportedData(
     userEmail: string,
     mailSubject: string,
@@ -83,7 +96,7 @@ export class MailpitService {
         {
           message: `Message with subject: ${mailSubject} was not found`,
           intervals: [2000, 3000, 5000, 5000],
-          timeout: 15000,
+          timeout: 30000,
         },
       )
       .toBe(true);

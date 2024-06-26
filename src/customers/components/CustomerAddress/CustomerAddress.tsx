@@ -88,8 +88,9 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card className={classes.card}>
+    <Card data-test-id="address-card" className={classes.card}>
       <CardTitle
+        data-test-id="address-type-title"
         title={
           address ? (
             <>

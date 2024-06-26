@@ -23,7 +23,7 @@ export class OrderCreateDialog {
 
   async completeOrderCreateDialogWithFirstChannel() {
     await this.expandChannelsSearchList();
-    await this.channelOption.first().click();
+    await this.channelOption.filter({hasText:"Channel-PLN"}).click();
     await this.clickConfirmButton();
   }
   async completeOrderCreateDialogWithTransactionChannel() {

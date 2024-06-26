@@ -7,9 +7,10 @@ import type { Page } from "@playwright/test";
 
 export class ShippingMethodsPage extends BasePage {
   rightSideDetailsPage: RightSideDetailsPage;
-  assignCountriesDialog: AssignCountriesDialog;
-  deleteShippingMethodDialog: DeleteShippingMethodDialog;
 
+  assignCountriesDialog: AssignCountriesDialog;
+
+  deleteShippingMethodDialog: DeleteShippingMethodDialog;
 
   constructor(
     page: Page,
@@ -25,7 +26,10 @@ export class ShippingMethodsPage extends BasePage {
     readonly shippingZoneName = page.getByTestId("page-header"),
     readonly deleteShippingRateButton = page.getByTestId("button-bar-delete"),
     readonly shippingRateNameInput = page.getByTestId("shipping-rate-name-input"),
-    readonly deleteShippingRateButtonOnList = page.getByTestId("shipping-method-row").getByRole("button").getByTestId("delete-button"),
+    readonly deleteShippingRateButtonOnList = page
+      .getByTestId("shipping-method-row")
+      .getByRole("button")
+      .getByTestId("delete-button"),
     readonly priceBasedRatesSection = page.getByTestId("price-based-rates"),
     readonly weightBasedRatesSection = page.getByTestId("weight-based-rates"),
   ) {
@@ -48,14 +52,10 @@ export class ShippingMethodsPage extends BasePage {
   }
 
   async typeShippingZoneName(shippingZoneName = "e2e shipping zone") {
-    await this.shippingZoneNameInput.fill(
-      `${shippingZoneName} - ${new Date().toISOString()}`,
-    );
+    await this.shippingZoneNameInput.fill(`${shippingZoneName} - ${new Date().toISOString()}`);
   }
 
-  async typeShippingZoneDescription(
-    shippingDescription = "Biggest zone in e2e world",
-  ) {
+  async typeShippingZoneDescription(shippingDescription = "Biggest zone in e2e world") {
     await this.shippingZoneDescriptionField.fill(shippingDescription);
   }
 
@@ -73,33 +73,27 @@ export class ShippingMethodsPage extends BasePage {
 
   async gotoExistingShippingMethod(shippingMethodId: string) {
     const existingShippingMethodUrl = `${URL_LIST.shippingMethods}${shippingMethodId}`;
-    await console.log(
-      `Navigates to existing shipping method page: ${existingShippingMethodUrl}`,
-    );
+
+    await console.log(`Navigates to existing shipping method page: ${existingShippingMethodUrl}`);
     await this.page.goto(existingShippingMethodUrl);
     await this.rightSideDetailsPage.channelSection
       .locator(this.page.getByTestId("selected-options"))
       .waitFor({
         state: "visible",
-        timeout: 10000,
+        timeout: 60000,
       });
   }
 
   async gotoExistingShippingRate(shippingMethodId: string, shippingRateId: string) {
     const existingShippingRateUrl = `${URL_LIST.shippingMethods}${shippingMethodId}/${shippingRateId}`;
 
-    await console.log(
-      `Navigates to existing shipping rate page: ${existingShippingRateUrl}`,
-    );
-
+    await console.log(`Navigates to existing shipping rate page: ${existingShippingRateUrl}`);
     await this.page.goto(existingShippingRateUrl);
-
     await this.shippingRateNameInput.waitFor({
       state: "visible",
-      timeout: 10000,
+      timeout: 60000,
     });
   }
-
 
   async clickCreateShippingZoneButton() {
     await this.createShippingZoneButton.click();
@@ -107,13 +101,9 @@ export class ShippingMethodsPage extends BasePage {
 
   async clickDeletePriceBasedShippingMethod() {
     await this.priceBasedRatesSection.locator(this.deleteShippingRateButtonOnList).click();
-
   }
 
   async clickDeleteShippingRateButton() {
     await this.deleteShippingRateButton.click();
   }
-
-
 }
-

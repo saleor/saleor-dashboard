@@ -2,7 +2,7 @@ import { WAREHOUSES } from "@data/e2eTestData";
 import { WarehousePage } from "@pages/warehousePage";
 import { expect, test } from "@playwright/test";
 
-test.use({ storageState: "playwright/.auth/admin.json" });
+test.use({ storageState: "./playwright/.auth/admin.json" });
 let warehousePage: WarehousePage;
 test.beforeEach(({ page }) => {
   warehousePage = new WarehousePage(page);

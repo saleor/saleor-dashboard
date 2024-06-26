@@ -104,7 +104,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
   const members = [...users].sort(sortMembers(sort?.sort, sort?.asc));
 
   return (
-    <Card>
+    <Card data-test-id="permission-group-members-section">
       <CardTitle
         title={intl.formatMessage({
           id: "lGlDEH",
@@ -127,7 +127,10 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
         }
       />
       {members?.length === 0 ? (
-        <CardContent className={classes.helperText}>
+        <CardContent
+          className={classes.helperText}
+          data-test-id="no-members-text"
+        >
           <Typography color="textSecondary">
             <FormattedMessage
               id="gVD1os"
@@ -185,7 +188,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
               <FormattedMessage id="wL7VAE" defaultMessage="Actions" />
             </TableCellHeader>
           </TableHead>
-          <TableBody>
+          <TableBody data-test-id="assigned-members-table">
             {renderCollection(
               members,
               user => {
@@ -193,6 +196,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
 
                 return (
                   <TableRowLink
+                    data-test-id="assigned-member-row"
                     className={clsx({
                       [classes.tableRow]: !!user,
                     })}
@@ -214,8 +218,10 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
                         url={user?.avatar?.url}
                       />
                       <Box display="flex" flexDirection="column">
-                        <Text>{getUserName(user) || <Skeleton />}</Text>
-                        <Text variant="caption" color="default2">
+                        <Text data-test-id="member-name">
+                          {getUserName(user) || <Skeleton />}
+                        </Text>
+                        <Text color="default2">
                           {!user ? (
                             <Skeleton />
                           ) : user.isActive ? (

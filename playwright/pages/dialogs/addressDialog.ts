@@ -1,6 +1,10 @@
 import type { Page } from "@playwright/test";
 
+import { AddressForm } from "../forms/addressForm";
+
 export class AddressDialog {
+  readonly addressForm: AddressForm;
+
   constructor(
     page: Page,
     readonly newAddressRadioButton = page
@@ -23,22 +27,14 @@ export class AddressDialog {
     readonly phoneInput = page.getByTestId("phone-input").locator("input"),
     readonly cityInput = page.getByTestId("city-input").locator("input"),
     readonly zipInput = page.getByTestId("zip-input").locator("input"),
-    readonly addressLine1Input = page
-      .getByTestId("address-line-1-input")
-      .locator("input"),
-    readonly addressLine2Input = page
-      .getByTestId("address-line-2-input")
-      .locator("input"),
-    readonly countrySelect = page.getByTestId(
-      "address-edit-country-select-field",
-    ),
-    readonly countryAreaSelect = page.getByTestId(
-      "address-edit-country-area-field",
-    ),
-    readonly selectOptions = page.getByTestId(
-      "single-autocomplete-select-option",
-    ),
-  ) {}
+    readonly addressLine1Input = page.getByTestId("address-line-1-input").locator("input"),
+    readonly addressLine2Input = page.getByTestId("address-line-2-input").locator("input"),
+    readonly countrySelect = page.getByTestId("address-edit-country-select-field"),
+    readonly countryAreaSelect = page.getByTestId("address-edit-country-area-field"),
+    readonly selectOptions = page.getByTestId("single-autocomplete-select-option"),
+  ) {
+    this.addressForm = new AddressForm(page);
+  }
 
   async clickConfirmButton() {
     await this.submitButton.click();

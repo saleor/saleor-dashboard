@@ -139,8 +139,12 @@ const ShippingMethodProductsAddDialog: React.FC<
         />
       </DialogTitle>
       <DialogContent>
-        <div className={classes.searchBar}>
+        <div
+          data-test-id="assign-products-dialog-content"
+          className={classes.searchBar}
+        >
           <TextField
+            data-test-id="search-bar"
             name="query"
             value={query}
             onChange={onQueryChange}
@@ -173,7 +177,7 @@ const ShippingMethodProductsAddDialog: React.FC<
             height={450}
           >
             <ResponsiveTable key="table">
-              <TableBody>
+              <TableBody data-test-id="assign-product-list">
                 {renderCollection(
                   products,
                   (product, productIndex) => {
@@ -184,7 +188,7 @@ const ShippingMethodProductsAddDialog: React.FC<
                       <React.Fragment
                         key={product ? product.id : `skeleton-${productIndex}`}
                       >
-                        <TableRowLink>
+                        <TableRowLink data-test-id="product-row">
                           <TableCell
                             padding="checkbox"
                             className={classes.productCheckboxCell}

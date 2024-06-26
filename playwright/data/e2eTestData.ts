@@ -1,4 +1,55 @@
-export const VOUCHERS_AND_DISCOUNTS = {
+export const ATTRIBUTES = {
+  productAttributeWithValuesToBeUpdated: {
+    id: "QXR0cmlidXRlOjczMg==",
+    name: "e2e product attribute to be updated",
+    valueToBeDeleted: "e2e product attribute value to be deleted",
+    valueToBeUpdated: "e2e product attribute value to be updated",
+  },
+  contentAttributeWithValuesToBeUpdated: {
+    id: "QXR0cmlidXRlOjczMw==",
+    name: "e2e content attribute to be updated",
+    valueToBeDeleted: "e2e content attribute value to be deleted",
+    valueToBeUpdated: "e2e content attribute value to be updated",
+  },
+  productAttributeToBeDeleted: {
+    id: "QXR0cmlidXRlOjczNA==",
+    name: "e2e product attribute to be deleted",
+  },
+  contentAttributeToBeDeleted: {
+    id: "QXR0cmlidXRlOjczNQ==",
+    name: "e2e content attribute to be deleted",
+  },
+  attributesToBeBulkDeleted: {
+    names: [
+      "e2e attribute to be bulk deleted 1/3",
+      "e2e attribute to be bulk deleted 2/3",
+      "e2e attribute to be bulk deleted 3/3",
+    ],
+  },
+  attributesToBeUpdated: [
+    {
+      name: "e2e product attribute to be updated 1",
+      id: "QXR0cmlidXRlOjczOQ==",
+    },
+    {
+      name: "e2e content attribute to be updated 2",
+      id: "QXR0cmlidXRlOjc0MA==",
+    },
+  ],
+  attributeTypesWithAbilityToAddValues: {
+    names: ["DROPDOWN", "MULTISELECT", "SWATCH"],
+  },
+  attributeTypesWithoutAbilityToAddValues: {
+    names: ["FILE", "NUMERIC", "RICH_TEXT", "PLAIN_TEXT", "BOOLEAN", "DATE", "DATE_TIME"],
+  },
+  attributeReferencesEntities: {
+    names: ["PAGE", "PRODUCT", "PRODUCT_VARIANT"],
+  },
+  attributeToBeAssignedToPageType: {
+    name: "Attribute to be assigned to page type",
+  },
+};
+export const VOUCHERS = {
   vouchers: {
     voucherToBeEditedWithFreeShipping: {
       id: "Vm91Y2hlcjoyMDI%3D",
@@ -22,6 +73,114 @@ export const VOUCHERS_AND_DISCOUNTS = {
     },
   },
 };
+export const DISCOUNTS = {
+  promotionToBeEdited: {
+    name: "e2e promotion to be edited",
+    type: "Catalog",
+    id: "UHJvbW90aW9uOjUwZmZjOTVmLWZlZGQtNDZmNS04ODdkLTAwNWJlMmVjNjZlNQ==",
+  },
+  promotionWithoutRulesToBeDeleted: {
+    id: "UHJvbW90aW9uOjdlNGZkYjA0LWNlZTQtNDM2ZC1iN2Q5LTExYWQxOTJiN2Q1OQ==",
+    name: "e2e Order predicate promotion without rules",
+    type: "Order",
+  },
+  catalogPromotionWithRulesToBeDeleted: {
+    id: "UHJvbW90aW9uOjEyZTQwY2ZiLTRiMTItNDFlNi1hMGZhLTQ4OTc4OTBiMjg1Yg==",
+    name: "e2e Catalog promo with rules to be deleted",
+    type: "Catalog",
+    rules: [
+      {
+        id: "UHJvbW90aW9uUnVsZTpkYTY1YzI0NS00NmZlLTQ4M2YtOThhNS1iNDY1ZDI2MWFiNTQ=",
+        name: "rule 1",
+      },
+
+      {
+        id: "UHJvbW90aW9uUnVsZTozNzgwODVjNy00MDdlLTQ4ZTktOGQxNC1hYjUwNTk4MDc3OGI=",
+        name: "rule 2",
+      },
+
+      {
+        id: "UHJvbW90aW9uUnVsZTplYzMxMzMwZS03NWNhLTQ2OTAtOTQwMy1hYjMzOTA3ZGQ1OWE=",
+        name: "rule 3",
+      },
+    ],
+  },
+  orderPromotionWithRulesToBeDeleted: {
+    id: "UHJvbW90aW9uOjlhZTZmOTM3LTRmODctNDk1ZS1iZjk4LTU1NjJkNDExZTI5MA==",
+    name: "e2e Order promo with rules to be deleted",
+    type: "Order",
+    rules: [
+      {
+        id: "UHJvbW90aW9uUnVsZToxMThkNmUzOS1kMjA4LTQ1NzUtODUwYy1lMTEzODhkM2Q0NmY=",
+        name: "rule #1",
+      },
+
+      {
+        id: "UHJvbW90aW9uUnVsZToxZmU4Mzk1Yi04MDM4LTQ5YWMtYTUzYy0wNDc3NDI3ZjhmNjg=",
+        name: "rule #2",
+      },
+
+      {
+        id: "UHJvbW90aW9uUnVsZToyZWRhNDI5Zi1lNTFhLTRlMTQtOGNlZC03MTZhMjdkMmExNDc=",
+        name: "rule #3",
+      },
+    ],
+  },
+  orderPromotionWithRulesToBeUpdated: {
+    id: "UHJvbW90aW9uOjk3ZWJiZWMzLTk1NTgtNDhkOS04NjI4LTE0ZDNhMWVlNDlmOA==",
+    name: "e2e Order promo with rules to be updated",
+    type: "Order",
+    rules: [
+      {
+        id: "UHJvbW90aW9uUnVsZTplNTY0NWI1OC0yOWJhLTRhMTYtOGE5NC0yYzVmM2YxNDA1MDg=",
+        name: "rule 1",
+        channel: "Channel-PLN",
+        channelCurrency: "PLN",
+      },
+
+      {
+        id: "UHJvbW90aW9uUnVsZTpkZTI1NWE4MC1hNjU0LTQ1NDUtODRkOC02ZTJiMjc0NjZmNmI=",
+        name: "rule 2",
+        channel: "Channel-PLN",
+        channelCurrency: "PLN",
+        giftRewardToBeDeleted: "UHJvZHVjdFZhcmlhbnQ6MjE0",
+      },
+    ],
+  },
+  catalogPromotionWithRulesToBeUpdated: {
+    id: "UHJvbW90aW9uOmY5MDU4NWRlLTFlYjUtNDFkZC1iNGQ2LWE4ZDI4ODljZTQyMg==",
+    name: "e2e Catalog promo with rules to be updated",
+    type: "Catalog",
+    rules: [
+      {
+        id: "UHJvbW90aW9uUnVsZTphMWRmMGM3OC1jYWY4LTQyNGQtYjdiYS03YTI1ZmE3NDJhMjc=",
+        name: "rule #1",
+        channel: "Channel-USD",
+        channelCurrency: "USD",
+      },
+
+      {
+        id: "UHJvbW90aW9uUnVsZTpkYzlmYThmZS04NmQxLTQ2NDUtYmM3My1mNjFkOTk0YTYyMzA=",
+        name: "rule 2",
+        channel: "Channel-USD",
+        channelCurrency: "USD",
+      },
+    ],
+  },
+  promotionWithRulesToBeDeleted: {
+    name: "e2e Catalog predicate promotion with rules",
+    id: "UHJvbW90aW9uOmE4MTY4NmZjLTg3ZTYtNGQ2MC1hYWJhLTM0MjhmNTRhMTM1Yw==",
+  },
+  cataloguePromotion: {
+    name: "e2e Catalog promotion for adding rules",
+    id: "UHJvbW90aW9uOmU3NjMyNjA5LWM5MTEtNGFhNC1iYmMzLWIyYTkzYTBhOGIzMQ==",
+  },
+  orderPromotion: {
+    name: "e2e Order promotion for adding rules",
+    id: "UHJvbW90aW9uOjhlYzczNmJmLWZjOWUtNDgzYS1hZDM1LWQxNzAwNzViODkyMg==",
+  },
+};
+
 export const CUSTOMER_ADDRESS = {
   changeBillingAddress: {
     firstName: "Change Billing Address",
@@ -52,10 +211,11 @@ export const CATEGORIES = {
     name: "a category to be updated",
   },
   categoriesToBeBulkDeleted: {
-    names: [
-      "a cateogry to be bulk deleted 1/2",
-      "a cateogry to be bulk deleted 2/2",
-    ],
+    names: ["a cateogry to be bulk deleted 1/2", "a cateogry to be bulk deleted 2/2"],
+  },
+  e2eCategory: {
+    id: "Q2F0ZWdvcnk6NTEx",
+    name: "e2e category",
   },
 };
 export const COLLECTIONS = {
@@ -65,6 +225,10 @@ export const COLLECTIONS = {
   },
   collectionsToBeBulkDeleted: {
     names: ["Collection to be deleted 1/2", "Collection to be deleted 2/2"],
+  },
+  e2eCollection: {
+    id: "Q29sbGVjdGlvbjoxNjc=",
+    name: "e2e collection",
   },
 };
 export const COUNTRIES = {
@@ -105,6 +269,7 @@ export const CHANNELS = {
   channelPLN: {
     id: "Q2hhbm5lbDoyMjQ0",
     name: "Channel-PLN",
+    currency: "PLN",
   },
 };
 export const GIFT_CARDS = {
@@ -114,6 +279,7 @@ export const GIFT_CARDS = {
   },
   giftCardsToBeDeleted: {
     names: ["to be deleted 1/2", "to be deleted 2/2"],
+    last4: ["5EE6", "9E39"],
   },
   giftCardToBeActivated: {
     id: "R2lmdENhcmQ6NTQ%3D",
@@ -163,6 +329,14 @@ export const PRODUCTS = {
     id: "UHJvZHVjdDo3NjE%3D",
     info: "Single product type to be updated",
   },
+  e2eProduct1: {
+    id: "UHJvZHVjdDo3OQ==",
+    name: "Bean Juice",
+  },
+  e2eProduct2: {
+    id: "UHJvZHVjdDoxMTU=",
+    name: "Black Hoodie",
+  },
   productAvailableOnlyInPlnChannel: {
     id: "UHJvZHVjdDo3NjM%3D",
     name: "a beer available only in pln channel",
@@ -177,6 +351,18 @@ export const PRODUCTS = {
     id: "UHJvZHVjdDo3Mjk%3D",
     name: "beer with variants",
     info: "Product that does not contain any variant yet",
+  },
+  e2eProductWithVariant1: {
+    id: "UHJvZHVjdDo4NQ==",
+    name: "Colored Parrot Cushion",
+    variantId: "UHJvZHVjdFZhcmlhbnQ6OTgy",
+    variantName: "70 / 70",
+  },
+  e2eProductWithVariant2: {
+    id: "UHJvZHVjdDoxMTY=",
+    name: "Blue Hoodie 2",
+    variantId: "UHJvZHVjdFZhcmlhbnQ6MzAx",
+    variantName: "S",
   },
   productWithOneVariant: {
     id: "UHJvZHVjdDo3MzM%3D",
@@ -250,7 +436,7 @@ export const ORDERS = {
 
 export const SHIPPING_METHODS = {
   shippingMethodWithoutRates: {
-    id: "U2hpcHBpbmdab25lOjIzOTA%3D",
+    id:"U2hpcHBpbmdab25lOjIzOTA=",
     info: "Shipping method that is used to add rates",
   },
   shippingMethodToBeUpdated: {
@@ -274,12 +460,12 @@ export const SHIPPING_METHODS = {
     name: "e2e-test-shippingZone-to-be-bulk-deleted-3",
   },
   shippingMethodWithRatesToBeDeleted: {
-    id: "U2hpcHBpbmdab25lOjIzODk%3D",
+    id: "U2hpcHBpbmdab25lOjIzODk=",
     info: "Shipping zone with methods to be deleted",
     name: "e2e-test-shippingZone-to-be-deleted",
     rates: {
       priceBasedRateToBeDeleted: {
-        id: "U2hpcHBpbmdNZXRob2RUeXBlOjIyMjA=",
+        id: "U2hpcHBpbmdNZXRob2RUeXBlOjIyMTk=",
         info: "Price based shipping rate",
         name: "shippingMEthod_to-be-deleted",
       },
@@ -315,5 +501,193 @@ export const USERS = {
     info: "User used in change password test",
     name: "change password",
     lastName: "user",
+  },
+  staffToBeEdited: {
+    id: "VXNlcjoxMzYx",
+    name: "e2e_staff_to_be_updated",
+    lastName: "DO NOT DELETE",
+    email: "test123@hotmail.com",
+    permission: "Apps management",
+  },
+  staffToBeDeleted: {
+    id: "VXNlcjoxMzYy",
+    name: "e2e_staff_to_be_deleted",
+    lastName: "DO NOT DELETE",
+  },
+};
+
+export const APPS = {
+  appToBeDeleted: {
+    id: "QXBwOjY2",
+    name: "Saleor QA App",
+    info: "App used in delete app test",
+  },
+};
+
+export const TRANSLATIONS = {
+  translationsToBeAdded: {
+    id: "Q2F0ZWdvcnk6NTEy",
+    name: "CategoryToTranslate",
+    info: "Category used to add translation test",
+  },
+  translationsToBeEdited: {
+    id: "UHJvZHVjdDo3OA==",
+    name: "Green Juice",
+    info: "Product used to edit translation test",
+  },
+  translationsToBeCleared: {
+    id: "Q29sbGVjdGlvbjox",
+    name: "Summer collection",
+    info: "Translation used in clear translation test",
+  },
+};
+
+export const NAVIGATION_ITEMS = {
+  navigationMenuToBeUpdated: {
+    name: "e2e-menu-to-be-updated",
+    id: "TWVudTozNQ==",
+    menuItems: [
+      { name: "e2e-menu-item-to-be-updated", link: "Groceries" },
+      { name: "e2e-menu-item-to-be-deleted", link: "Accessories" },
+    ],
+  },
+  navigationMenuToBeDeletedFromList: {
+    id: "TWVudTozNg==",
+    name: "e2e-menu-to-be-deleted-from-list",
+  },
+  navigationMenuToBeDeletedFromDetailsView: {
+    id: "TWVudTozNw==",
+    name: "e2e-menu-to-be-deleted-from-details-view",
+  },
+  navigationMenusToBeBulkDeleted: {
+    names: ["e2e-menu-to-be-bulk-deleted 1/2", "e2e-menu-to-be-bulk-deleted 2/2"],
+  },
+};
+
+export const PERMISSION_GROUPS = {
+  permissionGroupToBeEdited: {
+    id: "R3JvdXA6MTEw",
+    name: "e2e_permission_group_to_be_updated",
+    assignedMembers: {
+      names: [
+        "e2e_permission_group_member_1 test",
+        "e2e_permission_group_member_2 test",
+        "e2e_permission_group_member_3 test",
+      ],
+    },
+    assignedPermissions: {
+      names: ["MANAGE_PRODUCTS", "MANAGE_PLUGINS", "MANAGE_STAFF"],
+    },
+  },
+  permissionGroupToBeDeleted: {
+    id: "R3JvdXA6MTEx",
+    name: "e2e_permission_group_to_be_deleted",
+  },
+  permissionGroupMembers: [
+    {
+      name: "e2e_permission_group_member_1 test",
+      email: "e2e_permission_group_member_1@grr.la",
+    },
+    {
+      name: "e2e_permission_group_member_2 test",
+      email: "e2e_permission_group_member_2@grr.la",
+    },
+    {
+      name: "e2e_permission_group_member_3 test",
+      email: "e2e_permission_group_member_3@grr.la",
+    },
+  ],
+};
+
+export const PAGE_TYPES = {
+  pageTypeToBeEdited: {
+    id: "UGFnZVR5cGU6MzQ=",
+    name: "A page type to be edited",
+    info: "Page type used in edit page type test",
+  },
+  pageTypeToBeRemoved: {
+    id: "UGFnZVR5cGU6MzU=",
+    name: "A page type to be removed",
+    info: "Page type used in delete page type test",
+  },
+  pageTypesToBeBulkDeleted: {
+    names: ["a page type to be bulk deleted 1/2", "a page type to be bulk deleted 2/2"],
+    ids: ["UGFnZVR5cGU6MzY=", "UGFnZVR5cGU6Mzc="],
+  },
+};
+export const PRODUCT_TYPES = {
+  productTypeToBeEdited: {
+    id: "UHJvZHVjdFR5cGU6NzAw",
+    name: "A product type to be edited",
+    info: "Product type used in edit product type test",
+  },
+  productTypeToBeRemoved: {
+    id: "UHJvZHVjdFR5cGU6NzAx",
+    name: "A product type to be removed",
+    info: "Product type used in delete product type test",
+  },
+  productTypesToBeBulkDeleted: {
+    names: ["a product type to be bulk deleted 1/2", "a product type to be bulk deleted 2/2"],
+    ids: ["UHJvZHVjdFR5cGU6Njk4", "UHJvZHVjdFR5cGU6Njk5"],
+  },
+};
+export const CUSTOMERS = {
+  deleteCustomer: {
+    id: "VXNlcjoxMzU3",
+    email: "e2e_customer@delete.com",
+  },
+  editCustomer: {
+    id: "VXNlcjoxMzU4",
+    email: "e2e_customer_with_addresses@saleor.io",
+    note: "simple note",
+    initialShippingAddress: {
+      firstName: "e2e_customer_with_addresses",
+      lastName: "to-be-edited",
+      companyName: "Saleor",
+      phone: "+48225042123",
+      addressLine1: "Teczowa",
+      addressLine2: "7",
+      city: "WROCLAW",
+      zip: "53-601",
+      country: "Poland",
+    },
+    initialBillingAddress: {
+      firstName: "address",
+      lastName: "to-be-deleted",
+      companyName: "Saleor",
+      phone: "+48225042123",
+      addressLine1: "Teczowa",
+      addressLine2: "7",
+      city: "WROCLAW",
+      zip: "53-601",
+      country: "Poland",
+    },
+    additionalAddress: {
+      firstName: "Test",
+      lastName: "Test",
+      addressLine1: "Nowy Świat",
+      city: "WARSZAWA",
+      zip: "00-504",
+      country: "Poland",
+    },
+  },
+  customersToBeBulkDeleted: {
+    names: [
+      "e2e_customer_1 bulk-delete",
+      "e2e_customer_2 bulk-delete",
+      "e2e_customer_3 bulk-delete",
+    ],
+  },
+  customerToBeActivated: {
+    id: "VXNlcjoxMzU5",
+    email: "e2e-customer@activate.com",
+    firstName: "e2e-customer",
+    lastName: "to-be-activated",
+  },
+  customerToBeDeactivated: {
+    id: "VXNlcjoxMzYw",
+    email: "e2e-customer@deactivate.com",
+    firstName: "e2e-customer",
+    lastName: "to-be-deactivated",
   },
 };

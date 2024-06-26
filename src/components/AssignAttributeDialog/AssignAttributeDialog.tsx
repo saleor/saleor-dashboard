@@ -132,6 +132,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
       </DialogTitle>
       <DialogContent className={classes.searchArea}>
         <TextField
+          data-test-id="attribute-search-input"
           name="query"
           value={query}
           onChange={onQueryChange}
@@ -162,7 +163,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
           scrollableTarget={scrollableTargetId}
         >
           <ResponsiveTable key="table">
-            <TableBody>
+            <TableBody data-test-id="attributes-list">
               {renderCollection(
                 attributes,
                 attribute => {
@@ -225,6 +226,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
           transitionState={confirmButtonState}
           type="submit"
           onClick={onSubmit}
+          data-test-id="assign-and-save-button"
         >
           <FormattedMessage {...messages.assignButton} />
         </ConfirmButton>
