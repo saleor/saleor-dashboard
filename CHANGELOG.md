@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.16.3
+
+### Patch Changes
+
+- 338c9f82d: Add manual workflow for cypress tests
+- 27a792fbd: An error is no longer raised and visible to the user when saving translations
+- 5b8e9eaf5: Run cypress or playwright tests on release
+- 1d0b48551: Fix error related to can not read property of undefined in metadata and reading search page info
+- d9b0b5541: An error is no longer raised and visible to the user when focus combobox input
+- f9691181d: An error is no longer raised and visible to the user when saving credential is not supported
+
 ## 3.16.2
 
 ### Patch Changes
