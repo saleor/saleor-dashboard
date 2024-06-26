@@ -7,7 +7,7 @@ import { createFetch } from "@saleor/sdk";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import GraphiQL from "../GraphiQLPlain";
+import PlainGraphiQL from "../GraphiQLPlain";
 import { useDevModeContext } from "./hooks";
 import { messages } from "./messages";
 
@@ -50,7 +50,7 @@ export const DevModePanel: React.FC = () => {
         {intl.formatMessage(messages.title)}
       </DialogHeader>
       <DialogContent style={{ padding: 0, margin: 1, overflowY: "auto" }}>
-        <GraphiQL
+        <PlainGraphiQL
           query={devModeContent}
           variables={variables}
           fetcher={fetcher}
