@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.15.8
+
+### Patch Changes
+
+- 19875bcd1: An error is no longer raised and visible to the user when focus combobox input
+- 17fc34f7f: An error is no longer raised and visible to the user when saving translations
+- bf6a856d0: Fix error related to can not read property of undefined in metadata and reading search page info
+- c83972888: An error is no longer raised and visible to the user when saving credential is not supported
+
 ## 3.15.7
 
 ### Patch Changes
