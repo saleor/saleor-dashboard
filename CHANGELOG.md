@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.19.10
+
+### Patch Changes
+
+- 585c49588: Now you can execute e2e tests on release branches
+- 1c9b04655: An error is no longer raised and visible to the user when saving translations
+- 21a25d201: You can now close GraphiQL Playground with Escape key
+- 674f63231: The Polish translation has updated the term for GraphQL playground.
+- 8f98cc51f: GraphQL Playground now no longer uses additional variables when using `shift + cmd + '` keyboard shortcut as the shortcut was removed. You can now only use `cmd + '`, simplifying your workflow.
+- 44f2bb482: An error is no longer raised and visible to the user when saving credential is not supported
+- 6f91338a3: You can now run Playwright tests on the 3.19 version
+
 ## 3.19.9
 
 ### Patch Changes
