@@ -7,7 +7,7 @@ import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { MetadataFormData } from "@dashboard/components/Metadata/types";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import {
   ProductAttributeType,
   ProductTypeDetailsQuery,
@@ -223,13 +223,16 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                 onChange={change}
               />
             </DetailPageLayout.RightSidebar>
-            <Savebar
-              onCancel={() => navigate(productTypeListUrl())}
-              onDelete={onDelete}
-              onSubmit={submit}
-              disabled={isSaveDisabled}
-              state={saveButtonBarState}
-            />
+            <Savebar>
+              <Savebar.DeleteButton onClick={onDelete} />
+              <Savebar.Spacer />
+              <Savebar.CancelButton onClick={() => navigate(productTypeListUrl())} />
+              <Savebar.ConfirmButton
+                transitionState={saveButtonBarState}
+                onClick={submit}
+                disabled={isSaveDisabled}
+              />
+            </Savebar>
           </DetailPageLayout>
         );
       }}

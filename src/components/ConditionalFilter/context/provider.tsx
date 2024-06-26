@@ -12,6 +12,7 @@ import {
 } from "../constants";
 import { useContainerState } from "../useContainerState";
 import { useFilterLeftOperandsProvider } from "../useFilterLeftOperands";
+import { useFilterWindow } from "../useFilterWindow";
 import { useUrlValueProvider } from "../ValueProvider/useUrlValueProvider";
 import { ConditionalFilterContext } from "./context";
 
@@ -23,6 +24,7 @@ export const ConditionalProductFilterProvider: FC<{
   const valueProvider = useUrlValueProvider(locationSearch, "product", initialState);
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_PRODUCT_OPTIONS);
   const containerState = useContainerState(valueProvider);
+  const filterWindow = useFilterWindow();
 
   return (
     <ConditionalFilterContext.Provider
@@ -31,6 +33,7 @@ export const ConditionalProductFilterProvider: FC<{
         valueProvider,
         leftOperandsProvider,
         containerState,
+        filterWindow,
       }}
     >
       {children}
@@ -45,6 +48,7 @@ export const ConditionalDiscountFilterProvider: FC<{
   const valueProvider = useUrlValueProvider(locationSearch, "discount");
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_DISCOUNT_OPTIONS);
   const containerState = useContainerState(valueProvider);
+  const filterWindow = useFilterWindow();
 
   return (
     <ConditionalFilterContext.Provider
@@ -53,6 +57,7 @@ export const ConditionalDiscountFilterProvider: FC<{
         valueProvider,
         leftOperandsProvider,
         containerState,
+        filterWindow,
       }}
     >
       {children}
@@ -69,6 +74,7 @@ export const ConditionalOrderFilterProvider: FC<{
   const valueProvider = useUrlValueProvider(locationSearch, "order", initialState);
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_ORDER_OPTIONS);
   const containerState = useContainerState(valueProvider);
+  const filterWindow = useFilterWindow();
 
   return (
     <ConditionalFilterContext.Provider
@@ -77,6 +83,7 @@ export const ConditionalOrderFilterProvider: FC<{
         valueProvider,
         leftOperandsProvider,
         containerState,
+        filterWindow,
       }}
     >
       {children}

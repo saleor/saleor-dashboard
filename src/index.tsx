@@ -39,6 +39,7 @@ import { LocaleProvider } from "./components/Locale";
 import MessageManagerProvider from "./components/messages";
 import { NavigatorSearchProvider } from "./components/NavigatorSearch/NavigatorSearchProvider";
 import { ProductAnalytics } from "./components/ProductAnalytics";
+import { SavebarRefProvider } from "./components/Savebar/SavebarRefContext";
 import { ShopProvider } from "./components/Shop";
 import { WindowTitle } from "./components/WindowTitle";
 import { DEMO_MODE, getAppMountUri, GTM_ID } from "./config";
@@ -119,7 +120,9 @@ const App: React.FC = () => (
                               <DevModeProvider>
                                 <NavigatorSearchProvider>
                                   <ProductAnalytics>
-                                    <Routes />
+                                    <SavebarRefProvider>
+                                      <Routes />
+                                    </SavebarRefProvider>
                                   </ProductAnalytics>
                                 </NavigatorSearchProvider>
                               </DevModeProvider>

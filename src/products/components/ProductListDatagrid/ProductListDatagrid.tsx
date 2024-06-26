@@ -31,6 +31,7 @@ import {
   createGetCellContent,
   getAttributesFetchMoreProps,
   getAvailableAttributesData,
+  getCellAction,
   getColumnMetadata,
   getColumnSortIconName,
   getProductRowsLength,
@@ -38,6 +39,7 @@ import {
   productListStaticColumnAdapter,
 } from "./datagrid";
 import { messages } from "./messages";
+import { usePriceClick } from "./usePriceClick";
 
 interface ProductListDatagridProps
   extends ListProps<ProductListColumns>,
@@ -78,11 +80,14 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   hasRowHover,
   rowAnchor,
 }) => {
+  const isChannelSelected = !!selectedChannelId;
   const intl = useIntl();
   const { theme } = useTheme();
   const datagrid = useDatagridChangeState();
   const { locale } = useLocale();
   const productsLength = getProductRowsLength(disabled, products, disabled);
+  const onPriceClick = usePriceClick({ isChannelSelected });
+
   const handleColumnChange = useCallback(
     (picked: ProductListColumns[]) => {
       onUpdateListSettings("columns", picked.filter(Boolean));
@@ -90,7 +95,12 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     [onUpdateListSettings],
   );
   const memoizedStaticColumns = useMemo(
-    () => productListStaticColumnAdapter(intl, sort),
+    () =>
+      productListStaticColumnAdapter({
+        intl,
+        sort,
+        onPriceClick,
+      }),
     [intl, sort],
   );
   const [queryAvailableColumnsAttributes, availableColumnsAttributesData] =
@@ -166,8 +176,16 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     [visibleColumns, onSort, selectedChannelId],
   );
   const handleRowClick = useCallback(
-    ([_, row]: Item) => {
+    ([col, row]: Item) => {
       if (!onRowClick) {
+        return;
+      }
+
+      const action = getCellAction(visibleColumns, col);
+
+      if (action) {
+        action(products[row].id);
+
         return;
       }
 

@@ -19,7 +19,7 @@ import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { MetadataFormData } from "@dashboard/components/Metadata";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import {
   ProductChannelListingErrorFragment,
   ProductErrorWithAttributesFragment,
@@ -364,13 +364,16 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     <Metadata data={data} onChange={handlers.changeMetadata} />
                   </div>
                 </Grid>
-                <Savebar
-                  disabled={isSaveDisabled}
-                  state={saveButtonBarState}
-                  onCancel={() => navigate(productUrl(productId))}
-                  onDelete={onDelete}
-                  onSubmit={submit}
-                />
+                <Savebar>
+                  <Savebar.DeleteButton onClick={onDelete} />
+                  <Savebar.Spacer />
+                  <Savebar.CancelButton onClick={() => navigate(productUrl(productId))} />
+                  <Savebar.ConfirmButton
+                    transitionState={saveButtonBarState}
+                    onClick={submit}
+                    disabled={isSaveDisabled}
+                  />
+                </Savebar>
                 {canOpenAssignReferencesAttributeDialog && (
                   <AssignAttributeValueDialog
                     entityType={getReferenceAttributeEntityTypeFromAttribute(
