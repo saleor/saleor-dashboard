@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.17.3
+
+### Patch Changes
+
+- f34a2338e: An error is no longer raised and visible to the user when saving translations
+- d9bd91961: Fix error related to can not read property of undefined in metadata and reading search page info
+- 621b3ec96: An error is no longer raised and visible to the user when saving credential is not supported
+
 ## 3.17.2
 
 ### Patch Changes
