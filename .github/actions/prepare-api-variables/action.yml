@@ -28,6 +28,9 @@ outputs:
   BACKUP_NAMESPACE:
     description: "The backup namespace"
     value: ${{ steps.generate.outputs.BACKUP_NAMESPACE }}
+  SALEOR_CLOUD_SERVICE:
+    description: "Which saleor cloud service will be used"
+    value: ${{ steps.generate.outputs.SALEOR_CLOUD_SERVICE }}
 
 runs:
   using: "composite"
@@ -39,6 +42,7 @@ runs:
         MODE: ${{ inputs.MODE }}
         PULL_REQUEST_NUMBER: ${{ github.event.number }}
         PREFIX: pr-
+        DESTINATION_BRANCH: ${{ github.event.pull_request.base.ref }}
 
       run: |
         if [[ "$MODE" == 'pull-request' ]]; then
@@ -47,8 +51,17 @@ runs:
           echo "BASE_URL_DOMAIN=${PREFIX}${PULL_REQUEST_NUMBER}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
           echo "POOL_NAME=${PREFIX}${PULL_REQUEST_NUMBER}" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://${PREFIX}${PULL_REQUEST_NUMBER}.staging.saleor.cloud" >> $GITHUB_OUTPUT
-          echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
-          
+
+          if [[ "$DESTINATION_BRANCH" == 'main' ]]; then
+            echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
+            echo "SALEOR_CLOUD_SERVICE=saleor-master-staging" >> $GITHUB_OUTPUT
+          else
+            # it handles pull requests to the other branches than main, e.g. release branches
+            VERSION_SLUG=$(echo "${DESTINATION_BRANCH}" | sed "s/\.//")
+            echo "BACKUP_NAMESPACE=snapshot-automation-tests-${DESTINATION_BRANCH}" >> $GITHUB_OUTPUT
+            echo "SALEOR_CLOUD_SERVICE=saleor-staging-v${VERSION_SLUG}" >> $GITHUB_OUTPUT
+          fi
+
           exit 0
         fi
 
@@ -62,6 +75,7 @@ runs:
           echo "POOL_NAME=${CURRENT_BRANCH} Staging" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://v${VERSION_SLUG}.staging.saleor.cloud/" >> $GITHUB_OUTPUT
           echo "BACKUP_NAMESPACE=snapshot-automation-tests-${CURRENT_BRANCH}" >> $GITHUB_OUTPUT
+          echo "SALEOR_CLOUD_SERVICE=saleor-master-staging" >> $GITHUB_OUTPUT
 
           exit 0
         fi
@@ -73,6 +87,7 @@ runs:
           echo "POOL_NAME=automation-dashboard" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://automation-dashboard.staging.saleor.cloud" >> $GITHUB_OUTPUT
           echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
+          echo "SALEOR_CLOUD_SERVICE=saleor-master-staging" >> $GITHUB_OUTPUT
 
           exit 0
         fi
@@ -86,10 +101,10 @@ runs:
           echo "POOL_NAME=${VERSION} Staging" >> "$GITHUB_OUTPUT"
           echo "POOL_INSTANCE=https://v${VERSION_SLUG}.staging.saleor.cloud/" >> "$GITHUB_OUTPUT"
           echo "BACKUP_NAMESPACE=snapshot-automation-tests-${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "SALEOR_CLOUD_SERVICE=saleor-master-staging" >> $GITHUB_OUTPUT
 
           exit 0
         fi
 
         echo "Unknown mode: $MODE" >&2
         exit 1
-
