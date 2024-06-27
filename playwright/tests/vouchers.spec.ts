@@ -176,7 +176,7 @@ test("TC: SALEOR_93 Bulk delete voucher @vouchers @e2e", async () => {
     vouchersPage.deleteVoucherDialog.clickDeleteButton(),
   );
   await vouchersPage.expectSuccessBanner();
-  await vouchersPage.waitForGrid();
+  await vouchersPage.gotoVouchersListPage();
   await expect(
     await vouchersPage.findRowIndexBasedOnText(VOUCHERS.vouchers.voucherToBeBulkDeleted.names),
     `Given vouchers: ${VOUCHERS.vouchers.voucherToBeBulkDeleted.names} should be deleted from the list`,
