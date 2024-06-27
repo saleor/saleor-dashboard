@@ -156,15 +156,18 @@ jobs:
           export GITHUB_TOKEN=$( \
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
           )
-          gh api /repos/saleor/saleor-cloud-deployments/dispatches \
-            --input - <<< '{
-              "event_type": "open-release-pull-request",
-              "client_payload": {
-                "project": "DASHBOARD",
-                "environment": "SANDBOX",
-                "version": "${{ env.VERSION }}"
-              }
-            }'
+          
+          version=$(cat package.json | jq -r .version)
+          payload=$(jq --null-input --arg version "$version" '{
+            "event_type": "open-release-pull-request",
+            "client_payload": {
+              "project": "DASHBOARD",
+              "environment": "SANDBOX",
+              "version": $version
+            }
+          }')
+
+          gh api /repos/saleor/saleor-cloud-deployments/dispatches --input - <<< $payload
 
   run-tests-on-release:
     needs: [prepare-release, build]
