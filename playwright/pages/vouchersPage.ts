@@ -177,6 +177,7 @@ export class VouchersPage extends BasePage {
 
   async gotoVouchersListPage() {
     await this.page.goto(URL_LIST.vouchers);
+    await this.waitForDOMToFullyLoad();
   }
 
   async gotoExistingVoucherPage(voucherId: string) {
