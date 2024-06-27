@@ -31,6 +31,7 @@ for (const permission of permissionList) {
       appsPage.upcomingAppsList,
     ];
     for (const appList of appLists) {
+      await appsPage.waitForDOMToFullyLoad();
       await expect(appList).toBeVisible();
     }
     await appsPage.waitForNetworkIdleAfterAction(() => appsPage.installedAppRow.first().click());

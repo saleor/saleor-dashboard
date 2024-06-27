@@ -44,7 +44,7 @@ test("TC: SALEOR_104 Bulk delete categories @e2e @category", async () => {
   );
   await categoriesPage.clickBulkDeleteButton();
   await categoriesPage.deleteCategoriesDialog.clickDeleteButton();
-  await categoriesPage.waitForGrid();
+  await categoriesPage.gotoCategoryListView();
   expect(
     await categoriesPage.findRowIndexBasedOnText(
       CATEGORIES.categoriesToBeBulkDeleted.names,

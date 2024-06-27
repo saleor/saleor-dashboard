@@ -53,8 +53,10 @@ async clickEditMenuItemButton(name:string) {
 }
 async clickCreateNewMenuItem() {
     await this.createMenuItemButton.click();
-}
-async clickSaveButton() {
+    await this.waitForDOMToFullyLoad();
+  }
+
+  async clickSaveButton() {
     await this.saveButton.click();
     await this.waitForDOMToFullyLoad();
   }
