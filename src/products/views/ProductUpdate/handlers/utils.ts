@@ -35,28 +35,59 @@ export function getProductUpdateVariables(
     uploadFilesResult,
   );
 
-  return {
+  const variables = {
     id: product.id,
+    firstValues: VALUES_PAGINATE_BY,
     input: {
       attributes: prepareAttributesInput({
         attributes: data.attributes,
         prevAttributes: getAttributeInputFromProduct(product),
         updatedFileAttributes,
       }),
-      category: data.category,
-      collections: data.collections.map(collection => collection.value),
-      description: getParsedDataForJsonStringField(data.description),
-      name: data.name,
-      rating: data.rating,
-      seo: {
-        description: data.seoDescription,
-        title: data.seoTitle,
-      },
-      slug: data.slug,
-      taxClass: data.taxClassId,
     },
-    firstValues: VALUES_PAGINATE_BY,
   };
+
+  if (data.category) {
+    variables.input["category"] = data.category;
+  }
+
+  if (data.collections) {
+    variables.input["collections"] = data.collections.map(collection => collection.value);
+  }
+
+  if (data.description) {
+    variables.input["description"] = getParsedDataForJsonStringField(data.description);
+  }
+
+  if (data.name) {
+    variables.input["name"] = data.name;
+  }
+
+  if (data.rating) {
+    variables.input["rating"] = data.rating;
+  }
+
+  if (data.slug) {
+    variables.input["slug"] = data.slug;
+  }
+
+  if (data.taxClassId) {
+    variables.input["taxClass"] = data.taxClassId;
+  }
+
+  if (data.seoDescription || data.seoTitle) {
+    variables.input["seo"] = {};
+  }
+
+  if (data.seoDescription) {
+    variables.input["seo"].description = data.seoDescription;
+  }
+
+  if (data.seoTitle) {
+    variables.input["seo"].title = data.seoTitle;
+  }
+
+  return variables;
 }
 
 export function getCreateVariantInput(
