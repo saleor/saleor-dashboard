@@ -54,6 +54,9 @@ export class OrdersPage extends BasePage {
     readonly addRefundButton = page.getByTestId("add-new-refund-button"),
     readonly customerEmail = page.getByTestId("customer-email"),
     readonly orderRefundModal = page.getByTestId("order-refund-dialog"),
+    readonly orderRefundSection = page.getByTestId("order-refund-section"),
+    readonly orderRefundList = page.getByTestId("refund-list"),
+    readonly editRefundButton = page.getByTestId("edit-refund-button"),
   ) {
     super(page);
     this.markOrderAsPaidDialog = new MarkOrderAsPaidDialog(page);
@@ -116,5 +119,17 @@ export class OrdersPage extends BasePage {
   async clickAddRefundButton() {
     await this.addRefundButton.click();
     await this.orderRefundModal.waitFor({ state: "visible" });
+  }
+
+  async clickEditRefundButton(refundInfo: string) {
+    const refund = await this.orderRefundList.locator("tr").filter({ hasText: refundInfo });
+
+    await refund.locator(this.editRefundButton).click();
+  }
+
+  async assertRefundOnList(refundInfo: string) {
+    const refund = await this.orderRefundList.locator("tr").filter({ hasText: refundInfo });
+
+    await refund.waitFor({ state: "visible" });
   }
 }

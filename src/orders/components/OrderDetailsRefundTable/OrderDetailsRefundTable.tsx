@@ -32,7 +32,7 @@ export const OrderDetailsRefundTable: React.FC<OrderDetailsRefundTableProps> = (
   });
 
   return (
-    <DashboardCard>
+    <DashboardCard data-test-id="order-refund-section">
       <Box paddingTop={6} display="flex" justifyContent="space-between" paddingX={6}>
         <Text size={5} fontWeight="bold">
           <FormattedMessage {...refundGridMessages.refundSection} />
@@ -57,7 +57,7 @@ export const OrderDetailsRefundTable: React.FC<OrderDetailsRefundTableProps> = (
           )}
         </Tooltip>
       </Box>
-      <GridTable height="100%" paddingX={6}>
+      <GridTable data-test-id="refund-list" height="100%" paddingX={6}>
         <GridTable.Colgroup>
           <GridTable.Col __width="1%" />
           <GridTable.Col __width="10%" />

@@ -272,10 +272,19 @@ test("TC: SALEOR_191 Refund products from the fully paid order @e2e @refunds", a
     order.lineItems[0].quantity,
   );
 
+  const refundReason = "Expectations not met";
+
   await refundPage.inputProductLineQuantity(order.lineItems[1].name, "1");
   await refundPage.clickLineRefundReasonButton(order.lineItems[0].name);
   await refundPage.addLineRefundReasonDialog.provideLineRefundReason("Item is damaged");
   await refundPage.addLineRefundReasonDialog.submitLineRefundReason();
-  await refundPage.provideRefundReason("Expectations not met");
+  await refundPage.provideRefundReason(refundReason);
   await refundPage.saveDraft();
+  await refundPage.expectSuccessBanner();
+  await ordersPage.goToExistingOrderPage(order.id);
+  await ordersPage.orderRefundSection.waitFor({ state: "visible" });
+  await ordersPage.assertRefundOnList(refundReason);
+  await ordersPage.clickEditRefundButton(refundReason);
+  await refundPage.transferFunds();
+  await refundPage.expectSuccessBannerMessage("Refund has been sent");
 });

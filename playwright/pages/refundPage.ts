@@ -75,4 +75,10 @@ export class RefundPage extends OrdersPage {
     await this.clickSaveButton();
     await this.waitForDOMToFullyLoad();
   }
+
+  async transferFunds() {
+    await expect(this.saveButton).toHaveText("Transfer funds");
+    await this.clickSaveButton();
+    await this.waitForDOMToFullyLoad();
+  }
 }
