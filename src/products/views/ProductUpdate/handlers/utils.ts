@@ -35,8 +35,9 @@ export function getProductUpdateVariables(
     uploadFilesResult,
   );
 
-  const variables: ProductUpdateMutationVariables = {
+  const variables = {
     id: product.id,
+    firstValues: VALUES_PAGINATE_BY,
     input: {
       attributes: prepareAttributesInput({
         attributes: data.attributes,
@@ -78,11 +79,11 @@ export function getProductUpdateVariables(
     variables.input["seo"] = {};
   }
 
-  if (data.seoDescription && variables.input["seo"]) {
+  if (data.seoDescription) {
     variables.input["seo"].description = data.seoDescription;
   }
 
-  if (data.seoTitle && variables.input["seo"]) {
+  if (data.seoTitle) {
     variables.input["seo"].title = data.seoTitle;
   }
 
