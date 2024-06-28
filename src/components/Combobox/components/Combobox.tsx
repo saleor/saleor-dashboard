@@ -6,6 +6,7 @@ import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { useCombbobxCustomOption } from "../hooks/useCombbobxCustomOption";
+import { useComboboxEmptyOption } from "../hooks/useComboboxEmptyOption";
 import { useComboboxHandlers } from "../hooks/useComboboxHandlers";
 
 type HandleOnChangeValue = Option | null;
@@ -15,6 +16,7 @@ type ComboboxProps = Omit<DynamicComboboxProps<Option | null>, "value" | "onChan
   fetchOptions: (data: string) => void;
   allowCustomValues?: boolean;
   alwaysFetchOnFocus?: boolean;
+  allowEmptyValue?: boolean;
   fetchMore?: FetchMoreProps;
   value: Option | null;
   onChange: (event: ChangeEvent) => void;
@@ -27,6 +29,7 @@ const ComboboxRoot = ({
   options,
   alwaysFetchOnFocus = false,
   allowCustomValues = false,
+  allowEmptyValue = false,
   fetchMore,
   loading,
   children,
@@ -53,6 +56,9 @@ const ComboboxRoot = ({
     allowCustomValues,
     selectedValue,
   });
+
+  const { emptyOption } = useComboboxEmptyOption();
+
   const handleOnChange = (value: HandleOnChangeValue) => {
     onChange({
       target: { value: value?.value ?? null, name: rest.name ?? "" },
@@ -62,7 +68,9 @@ const ComboboxRoot = ({
   return (
     <DynamicCombobox
       value={selectedValue}
-      options={[...customValueOption, ...options] as Option[]}
+      options={
+        [...(allowEmptyValue ? [emptyOption] : []), ...customValueOption, ...options] as Option[]
+      }
       onChange={handleOnChange}
       onScrollEnd={handleFetchMore}
       onInputValueChange={value => {
