@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Fix release for 3.19
+Now you can see the test output on the release pull request
