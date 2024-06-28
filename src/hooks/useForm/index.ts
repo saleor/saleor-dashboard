@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   CheckIfSaveIsDisabledFnType,
   FormId,
@@ -11,7 +10,9 @@ import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";
 import React, { useEffect, useState } from "react";
 
-import useStateFromProps from "./useStateFromProps";
+import useStateFromProps from "./../useStateFromProps";
+import { FormData } from "./types";
+import { useChangedData } from "./useChangedData";
 
 export interface ChangeEvent<TData = any> {
   target: {
@@ -64,8 +65,6 @@ export interface CommonUseFormResultWithHandlers<TData, THandlers>
   handlers: THandlers;
 }
 
-type FormData = Record<string, any | any[]>;
-
 function merge<T extends FormData>(prevData: T, prevState: T, data: T): T {
   return Object.keys(prevState).reduce(
     (acc, key) => {
@@ -78,30 +77,6 @@ function merge<T extends FormData>(prevData: T, prevState: T, data: T): T {
     { ...prevState },
   );
 }
-
-const useChangedData = <T extends FormData>(formData: T) => {
-  const [dirtyFields, setDirtyFields] = useState<string[]>([]);
-
-  const add = (name: string) => {
-    setDirtyFields(fields => {
-      return Array.from(new Set(fields.concat(name)));
-    });
-  };
-
-  const clean = () => {
-    setDirtyFields([]);
-  };
-
-  const data = Object.entries(formData)
-    .filter(([key]) => dirtyFields.includes(key))
-    .reduce((p, [key, value]) => ({ ...p, [key]: value }), {} as T);
-
-  return {
-    add,
-    clean,
-    data,
-  };
-};
 
 function useForm<T extends FormData, TErrors>(
   initialData: T,
@@ -238,6 +213,8 @@ function useForm<T extends FormData, TErrors>(
 
       return result;
     }
+
+    return [];
   }
 
   const setError = (field: keyof T, error: string | React.ReactNode) =>
