@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { Combobox } from "@dashboard/components/Combobox";
 import {
   CustomCell,
   CustomRenderer,
@@ -6,13 +7,10 @@ import {
   GridCellKind,
   ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
-import { makeStyles } from "@saleor/macaw-ui";
 import pick from "lodash/pick";
 import React from "react";
 
-import SingleAutocompleteSelectField, {
-  SingleAutocompleteSelectFieldProps,
-} from "../../SingleAutocompleteSelectField";
+import { SingleAutocompleteSelectFieldProps } from "../../SingleAutocompleteSelectField";
 import { Choice } from "../../SingleSelectField";
 
 export type DropdownChoice = Choice<string, string>;
@@ -36,19 +34,6 @@ export const emptyDropdownCellValue: DropdownChoice = {
   value: null,
 };
 
-const useStyles = makeStyles(
-  {
-    root: {
-      "& > div": {
-        padding: 0,
-      },
-      "& input": {
-        height: "unset",
-      },
-    },
-  },
-  { name: "DropdownCell" },
-);
 const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
   value: cell,
   onFinishedEditing,
@@ -60,18 +45,29 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
     },
     [cell.data],
   );
-  const classes = useStyles();
   const userProps = pick(cell.data, ["allowCustomValues", "emptyOption"]);
   const props = cell.data.update
     ? { fetchOnFocus: true, fetchChoices: getChoices, choices: data }
     : { choices: cell.data.choices };
 
   return (
-    <SingleAutocompleteSelectField
-      {...userProps}
-      {...props}
-      className={classes.root}
-      nakedInput
+    <Combobox
+      allowCustomValues={userProps.allowCustomValues}
+      alwaysFetchOnFocus={cell.data.update ? true : false}
+      allowEmptyValue={userProps.emptyOption}
+      fetchMore={{
+        hasMore: false,
+        loading: false,
+        onFetchMore: () => undefined,
+      }}
+      options={cell.data.update ? data : cell.data.choices}
+      value={{
+        label: cell.data.value.label,
+        value: cell.data.value.value,
+      }}
+      fetchOptions={cell.data.update ? getChoices : undefined}
+      loading={false}
+      name=""
       onChange={event =>
         onFinishedEditing({
           ...cell,
@@ -84,9 +80,6 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
           },
         })
       }
-      name=""
-      displayValue={cell.data.value.label}
-      value={cell.data.value.value}
     />
   );
 };
