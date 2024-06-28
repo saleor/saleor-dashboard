@@ -5,9 +5,9 @@ import { customerAddUrl } from "@dashboard/customers/urls";
 import { voucherAddUrl } from "@dashboard/discounts/urls";
 import { OrderDraftCreateMutation } from "@dashboard/graphql";
 import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
+import { score } from "@dashboard/misc";
 import { permissionGroupAddUrl } from "@dashboard/permissionGroups/urls";
 import { productAddUrl } from "@dashboard/products/urls";
-import { score } from "fuzzaldrin";
 import { IntlShape } from "react-intl";
 
 import { QuickSearchActionInput, QuickSearchMode } from "../../types";

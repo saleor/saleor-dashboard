@@ -30,7 +30,7 @@ export function hasCatalog(actions: QuickSearchAction[]): boolean {
 }
 
 export function sortScores(a: QuickSearchActionInput, b: QuickSearchActionInput) {
-  return a.score <= b.score ? 1 : -1;
+  return a.score >= b.score ? 1 : -1;
 }
 
 export function getMode(command: string): QuickSearchMode {

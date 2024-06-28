@@ -3,9 +3,9 @@ import { categoryUrl } from "@dashboard/categories/urls";
 import { collectionUrl } from "@dashboard/collections/urls";
 import { SearchCatalogQuery } from "@dashboard/graphql";
 import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
+import { score } from "@dashboard/misc";
 import { productUrl } from "@dashboard/products/urls";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { score } from "fuzzaldrin";
 import { IntlShape } from "react-intl";
 
 import { QuickSearchAction, QuickSearchActionInput } from "../types";

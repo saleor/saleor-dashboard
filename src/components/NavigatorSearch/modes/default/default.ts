@@ -8,7 +8,6 @@ import { searchInCommands } from "../commands";
 import { sortScores } from "../utils";
 import searchInViews from "./views";
 
-const threshold = 0.05;
 const maxActions = 5;
 
 function getDefaultModeActions(
@@ -22,7 +21,7 @@ function getDefaultModeActions(
     ...searchInViews(query, intl, navigate),
     ...searchInCommands(query, intl, navigate, createOrder, setMode),
   ]
-    .filter(action => action.score >= threshold)
+    .filter(action => (query ? action.score !== 1 : true))
     .sort(sortScores)
     .slice(0, maxActions);
 }
