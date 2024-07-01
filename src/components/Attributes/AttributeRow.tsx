@@ -5,6 +5,8 @@ import ExtendedAttributeRow from "@dashboard/components/Attributes/ExtendedAttri
 import { attributeRowMessages } from "@dashboard/components/Attributes/messages";
 import { SwatchRow } from "@dashboard/components/Attributes/SwatchRow";
 import {
+  booleanAttrValueToValue,
+  getBooleanDropdownOptions,
   getErrorMessage,
   getFileChoice,
   getMultiChoices,
@@ -21,7 +23,7 @@ import SortableChipsField from "@dashboard/components/SortableChipsField";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { TextField } from "@material-ui/core";
-import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui/next";
+import { Box, Input, Select, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -200,24 +202,39 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       );
     case AttributeInputTypeEnum.BOOLEAN:
       return (
-        <Box as="li" display="flex" gap={2} alignItems="center" padding={1}>
-          <Box data-test-id="attribute-value">
-            <Box
-              display="flex"
-              gap={0.5}
-              flexDirection="column"
-              alignItems="flex-end"
-            >
-              <Checkbox
-                name={`attribute:${attribute.label}`}
-                onCheckedChange={checked => onChange(attribute.id, checked)}
-                checked={JSON.parse(attribute.value[0] ?? "false")}
-                error={!!error}
-                id={`attribute:${attribute.label}`}
-              />
-              <Text variant="caption" color="textCriticalDefault">
-                {getErrorMessage(error, intl)}
-              </Text>
+        <BasicAttributeRow label={attribute.label}>
+          <Box
+            as="li"
+            display="flex"
+            gap={2}
+            alignItems="center"
+            justifyContent="flex-end"
+            padding={1}
+          >
+            <Box data-test-id="attribute-value">
+              <Box
+                display="flex"
+                gap={0.5}
+                flexDirection="column"
+                alignItems="flex-end"
+              >
+                <Select
+                  name={`attribute:${attribute.label}`}
+                  value={booleanAttrValueToValue(attribute.value[0])}
+                  onChange={value =>
+                    onChange(
+                      attribute.id,
+                      value === "unset" ? undefined : value === "true",
+                    )
+                  }
+                  options={getBooleanDropdownOptions(intl)}
+                  id={`attribute:${attribute.label}`}
+                  disabled={disabled}
+                />
+                <Text fontSize="bodySmall" color="textCriticalDefault">
+                  {getErrorMessage(error, intl)}
+                </Text>
+              </Box>
             </Box>
           </Box>
           <Box
@@ -230,7 +247,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
           >
             <Text>{attribute.label}</Text>
           </Box>
-        </Box>
+        </BasicAttributeRow>
       );
     case AttributeInputTypeEnum.DATE:
       return (
