@@ -646,8 +646,5 @@ export const fuzzySearch = <T>(array: T[], query: string | undefined, keys: stri
     threshold: 0.3,
   });
 
-  return fuse
-    .search(query.toLocaleLowerCase())
-    .filter(({ score }) => score !== 1)
-    .map(({ item }) => item);
+  return fuse.search(query.toLocaleLowerCase()).map(({ item }) => item);
 };

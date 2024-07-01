@@ -3,14 +3,11 @@ import { useIntl } from "react-intl";
 import getCommandModeActions from "./actions";
 
 jest.mock("react-intl", () => {
-  const reactIntl = jest.requireActual("react-intl");
-  const intl = reactIntl.createIntl({
-    locale: "en",
-  });
-
   return {
-    ...reactIntl,
-    useIntl: () => intl,
+    useIntl: jest.fn(() => ({
+      formatMessage: jest.fn(x => x.defaultMessage),
+    })),
+    defineMessages: jest.fn(message => message),
   };
 });
 
