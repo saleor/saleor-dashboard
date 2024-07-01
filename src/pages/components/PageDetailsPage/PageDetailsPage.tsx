@@ -11,7 +11,7 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import VisibilityCard from "@dashboard/components/VisibilityCard";
 import {
@@ -211,13 +211,16 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 canChangeType={!page?.pageType}
               />
             </DetailPageLayout.RightSidebar>
-            <Savebar
-              disabled={loading}
-              state={saveButtonBarState}
-              onCancel={() => navigate(pageListUrl())}
-              onDelete={page === null ? undefined : onRemove}
-              onSubmit={submit}
-            />
+            <Savebar>
+              {page !== null && <Savebar.DeleteButton onClick={onRemove} />}
+              <Savebar.Spacer />
+              <Savebar.CancelButton onClick={() => navigate(pageListUrl())} />
+              <Savebar.ConfirmButton
+                transitionState={saveButtonBarState}
+                onClick={submit}
+                disabled={loading}
+              />
+            </Savebar>
             {canOpenAssignReferencesAttributeDialog && (
               <AssignAttributeValueDialog
                 entityType={getReferenceAttributeEntityTypeFromAttribute(

@@ -44,10 +44,15 @@ import { IntlShape } from "react-intl";
 import { getAttributeIdFromColumnValue } from "../ProductListPage/utils";
 import { categoryMetaGroups, columnsMessages } from "./messages";
 
-export const productListStaticColumnAdapter = (
-  intl: IntlShape,
-  sort: Sort<ProductListUrlSortField>,
-) =>
+export const productListStaticColumnAdapter = ({
+  intl,
+  sort,
+  onPriceClick,
+}: {
+  intl: IntlShape;
+  sort: Sort<ProductListUrlSortField>;
+  onPriceClick: ((productId: string) => void) | undefined;
+}) =>
   [
     {
       id: "name",
@@ -75,9 +80,15 @@ export const productListStaticColumnAdapter = (
       width: 300,
     },
     {
+      id: "created",
+      title: intl.formatMessage(columnsMessages.created),
+      width: 300,
+    },
+    {
       id: "price",
       title: intl.formatMessage(columnsMessages.price),
       width: 250,
+      action: onPriceClick,
     },
     {
       id: "productCategory",
@@ -204,9 +215,11 @@ export function createGetCellContent({
       case "name":
         return getNameCellContent(change, rowData);
       case "price":
-        return getPriceCellContent(channel);
+        return getPriceCellContent(intl, channel);
       case "date":
         return getDateCellContent(rowData);
+      case "created":
+        return getCreatedCellContent(rowData);
       case "productCategory":
         return getCategoryCellContent(theme, rowData);
       case "productCollections":
@@ -227,6 +240,10 @@ const COMMON_CELL_PROPS: Partial<GridCell> = { cursor: "pointer" };
 
 function getDateCellContent(rowData: RelayToFlat<ProductListQuery["products"]>[number]) {
   return dateCell(rowData?.updatedAt, COMMON_CELL_PROPS);
+}
+
+function getCreatedCellContent(rowData: RelayToFlat<ProductListQuery["products"]>[number]) {
+  return dateCell(rowData?.created, COMMON_CELL_PROPS);
 }
 
 function getProductTypeCellContent(
@@ -331,15 +348,28 @@ function getNameCellContent(
 }
 
 function getPriceCellContent(
+  intl: IntlShape,
   selectedChannnel?: RelayToFlat<ProductListQuery["products"]>[number]["channelListings"][number],
 ) {
   const from = selectedChannnel?.pricing?.priceRange?.start?.net;
   const to = selectedChannnel?.pricing?.priceRange?.stop?.net;
-  const price = from?.amount === to?.amount ? from?.amount : [from?.amount, to?.amount];
+  const priceValue = from?.amount === to?.amount ? from?.amount : [from?.amount, to?.amount];
 
-  return from
-    ? moneyCell(price, from?.currency || "", COMMON_CELL_PROPS)
-    : readonlyTextCell("–", true);
+  const price = from
+    ? moneyCell(priceValue, from?.currency || "", COMMON_CELL_PROPS)
+    : readonlyTextCell("-");
+
+  return selectedChannnel
+    ? price
+    : readonlyTextCell(
+        intl.formatMessage({
+          defaultMessage: "Select channel",
+          id: "jgURyO",
+          description: "product price",
+        }),
+        true,
+        "faded",
+      );
 }
 
 function getAttributeCellContent(
@@ -535,4 +565,10 @@ export const getAttributesFetchMoreProps = ({
     onNextPage,
     onPreviousPage,
   };
+};
+export const getCellAction = (
+  availableColumns: readonly AvailableColumn[] | undefined,
+  column: number,
+) => {
+  return availableColumns[column]?.action;
 };

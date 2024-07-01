@@ -1,7 +1,7 @@
 import { TopNav } from "@dashboard/components/AppLayout";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import { discountListUrl } from "@dashboard/discounts/discountsUrls";
 import { DiscoutFormData } from "@dashboard/discounts/types";
 import {
@@ -77,12 +77,15 @@ export const DiscountCreatePage = ({
                 deleteButtonState="default"
               />
 
-              <Savebar
-                disabled={disabled}
-                onCancel={onBack}
-                onSubmit={submitHandler}
-                state={submitButtonState}
-              />
+              <Savebar>
+                <Savebar.Spacer />
+                <Savebar.CancelButton onClick={onBack} />
+                <Savebar.ConfirmButton
+                  transitionState={submitButtonState}
+                  onClick={submitHandler}
+                  disabled={disabled}
+                />
+              </Savebar>
             </>
           )}
         </DiscountCreateForm>

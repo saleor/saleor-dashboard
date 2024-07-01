@@ -4,7 +4,7 @@ import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import { Tab, TabContainer } from "@dashboard/components/Tab";
 import { CategoryDetailsQuery, ProductErrorFragment } from "@dashboard/graphql";
@@ -175,13 +175,16 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               />
             )}
 
-            <Savebar
-              onCancel={() => navigate(backHref)}
-              onDelete={onDelete}
-              onSubmit={submit}
-              state={saveButtonBarState}
-              disabled={!!isSaveDisabled}
-            />
+            <Savebar>
+              <Savebar.DeleteButton onClick={onDelete} />
+              <Savebar.Spacer />
+              <Savebar.CancelButton onClick={() => navigate(backHref)} />
+              <Savebar.ConfirmButton
+                transitionState={saveButtonBarState}
+                onClick={submit}
+                disabled={!!isSaveDisabled}
+              />
+            </Savebar>
           </DetailPageLayout.Content>
         </DetailPageLayout>
       )}

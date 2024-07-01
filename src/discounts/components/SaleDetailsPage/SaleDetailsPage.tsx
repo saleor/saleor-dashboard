@@ -7,7 +7,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata, MetadataFormData } from "@dashboard/components/Metadata";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import { Tab, TabContainer } from "@dashboard/components/Tab";
 import {
   createSaleChannelsChangeHandler,
@@ -286,13 +286,16 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                 openModal={openChannelsModal}
               />
             </DetailPageLayout.RightSidebar>
-            <Savebar
-              disabled={disabled}
-              onCancel={() => navigate(saleListUrl())}
-              onDelete={onRemove}
-              onSubmit={() => handleSubmit(data)}
-              state={saveButtonBarState}
-            />
+            <Savebar>
+              <Savebar.DeleteButton onClick={onRemove} />
+              <Savebar.Spacer />
+              <Savebar.CancelButton onClick={() => navigate(saleListUrl())} />
+              <Savebar.ConfirmButton
+                transitionState={saveButtonBarState}
+                onClick={() => handleSubmit(data)}
+                disabled={disabled}
+              />
+            </Savebar>
           </DetailPageLayout>
         );
       }}

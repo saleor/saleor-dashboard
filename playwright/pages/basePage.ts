@@ -158,8 +158,8 @@ export class BasePage {
       .waitFor({ state: "attached", timeout: 50000 });
   }
 
-  private async findGridCellBounds(col: number, row: number) {
-    return this.gridCanvas.evaluate(
+  private async findGridCellBounds(col: number, row: number, nthChild = 0) {
+    return this.gridCanvas.nth(nthChild).evaluate(
       (node, { col, row }) => {
         const fiberKey = Object.keys(node).find(x => x && x.includes("__reactFiber"));
 
@@ -216,8 +216,8 @@ export class BasePage {
       await basePage.fillGridCell(1, 0, "New variant name")
   */
 
-  async fillGridCell(col: number, row: number, content: string) {
-    const bounds = await this.findGridCellBounds(col, row);
+  async fillGridCell(col: number, row: number, content: string, nthChild = 0) {
+    const bounds = await this.findGridCellBounds(col, row, nthChild);
 
     if (!bounds) throw new Error(`Unable to find cell, col: ${col}, row: ${row}`);
 
@@ -226,8 +226,8 @@ export class BasePage {
     await this.gridInput.fill(content);
   }
 
-  async clickGridCell(col: number, row: number) {
-    const bounds = await this.findGridCellBounds(col, row);
+  async clickGridCell(col: number, row: number, nthChild = 0) {
+    const bounds = await this.findGridCellBounds(col, row, nthChild);
 
     if (!bounds) throw new Error(`Unable to find cell, col: ${col}, row: ${row}`);
 

@@ -307,6 +307,7 @@ export const CollectionDetailsFragmentDoc = gql`
 ${MetadataFragmentDoc}`;
 export const ChannelListingProductWithoutPricingFragmentDoc = gql`
     fragment ChannelListingProductWithoutPricing on ProductChannelListing {
+  id
   isPublished
   publishedAt
   isAvailableForPurchase
@@ -13326,7 +13327,7 @@ export const PermissionGroupDetailsDocument = gql`
   permissionGroup(id: $id) {
     ...PermissionGroupDetails
   }
-  user(id: $userId) {
+  user: me {
     editableGroups {
       id
     }
@@ -15109,6 +15110,7 @@ export const ProductListDocument = gql`
       node {
         ...ProductWithChannelListings
         updatedAt
+        created
         description
         attributes {
           ...ProductListAttribute
@@ -16305,6 +16307,7 @@ export const SearchProductsDocument = gql`
           url
         }
         channelListings {
+          id
           channel {
             id
             name

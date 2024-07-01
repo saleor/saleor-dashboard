@@ -130,7 +130,7 @@
   },
   "0KmZCN": {
     "context": "button",
-    "string": "Otwórz plac zabaw"
+    "string": "Otwórz GraphQL Playground"
   },
   "0OAE9q": {
     "string": "Zamówienia i płatności"
@@ -144,7 +144,7 @@
     "string": "Wybierz kraj, który chcesz dodać"
   },
   "0VkxrS": {
-    "string": "Plac zabaw GraphQL"
+    "string": "GraphQL Playground"
   },
   "0XHXTZ": {
     "context": "column header",
@@ -715,7 +715,7 @@
   },
   "Cn6l5R": {
     "context": "playground shortcut",
-    "string": "Plac zabaw"
+    "string": "GraphQL Playground"
   },
   "CrY98m": {
     "context": "button, marks order as paid (legacy payments)",
@@ -1452,7 +1452,7 @@
     "string": "Utwórz transakcję ręczną dla płatności niestandardowych"
   },
   "TVR4E6": {
-    "string": "Otwórz plac zabaw"
+    "string": "Otwórz GraphQL Playground"
   },
   "TZtvTG": {
     "context": "table header required stock label",
@@ -1877,7 +1877,7 @@
     "string": "Wydarzenia"
   },
   "ckSjjv": {
-    "string": "Zbyt skomplikowane warunki do wyświetlenia, użyj placu zabaw, aby zobaczyć szczegóły."
+    "string": "Zbyt skomplikowane warunki do wyświetlenia, użyj GraphQL Playground, aby zobaczyć szczegóły."
   },
   "cnvyqW": {
     "context": "ChannelsSection select field placeholder",
@@ -2534,7 +2534,7 @@
   },
   "qa/dDe": {
     "context": "GraphiQL Playground in the dev mode panel",
-    "string": "Miejsce do zabawy"
+    "string": "GraphQL Playground"
   },
   "qbFKVI": {
     "context": "notification, form submitted",

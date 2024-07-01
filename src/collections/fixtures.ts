@@ -195,6 +195,7 @@ export const collection: (
           channelListings: [
             {
               __typename: "ProductChannelListing",
+              id: "UHJvZHVjdDoxNw==",
               availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
@@ -209,6 +210,7 @@ export const collection: (
             },
             {
               __typename: "ProductChannelListing",
+              id: "UHJvZHVjdDoxOA==",
               availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
@@ -239,6 +241,7 @@ export const collection: (
           channelListings: [
             {
               __typename: "ProductChannelListing",
+              id: "UHJvZHVjdDoyNw==",
               availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
@@ -253,6 +256,7 @@ export const collection: (
             },
             {
               __typename: "ProductChannelListing",
+              id: "UHJvZHVjdDoyOA==",
               availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
@@ -283,6 +287,7 @@ export const collection: (
           channelListings: [
             {
               __typename: "ProductChannelListing",
+              id: "UHJvZHVjdDoyOQ==",
               availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
@@ -297,6 +302,7 @@ export const collection: (
             },
             {
               __typename: "ProductChannelListing",
+              id: "UHJvZHVjdDoyOA==",
               availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
@@ -327,6 +333,7 @@ export const collection: (
           channelListings: [
             {
               __typename: "ProductChannelListing",
+              id: "UHJvZHVjdDo1Mw==",
               availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",
@@ -341,6 +348,7 @@ export const collection: (
             },
             {
               __typename: "ProductChannelListing",
+              id: "UHJvZHVjdDo1NA==",
               availableForPurchaseAt: null,
               channel: {
                 __typename: "Channel",

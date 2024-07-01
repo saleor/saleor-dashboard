@@ -21,7 +21,6 @@ test.beforeEach(({ page, request }) => {
 });
 test("TC: SALEOR_3 Create basic product with variants @e2e @product", async () => {
   await productPage.gotoProductListPage();
-  await productPage.waitForDOMToFullyLoad();
   await productPage.clickCreateProductButton();
   await productCreateDialog.selectProductTypeWithVariants();
   await productCreateDialog.clickConfirmButton();
@@ -100,12 +99,12 @@ test("TC: SALEOR_27 Create full info variant - via edit variant page @e2e @produ
 });
 test("TC: SALEOR_44 As an admin I should be able to delete a several products @basic-regression @product @e2e", async () => {
   await productPage.gotoProductListPage();
-  await productPage.waitForDOMToFullyLoad();
   await productPage.checkListRowsBasedOnContainingText(PRODUCTS.productsToBeBulkDeleted.names);
   await productPage.clickBulkDeleteButton();
   await productPage.deleteProductDialog.clickDeleteButton();
   await productPage.expectSuccessBanner();
-  await productPage.waitForGrid();
+  await productPage.gotoProductListPage();
+
   expect(
     await productPage.findRowIndexBasedOnText(PRODUCTS.productsToBeBulkDeleted.names),
     `Given products: ${PRODUCTS.productsToBeBulkDeleted.names} should be deleted from the list`,
@@ -139,10 +138,12 @@ test("TC: SALEOR_46 As an admin, I should be able to update a product by uploadi
   const preSaveTax = await productPage.rightSideDetailsPage.taxInput.locator("input").inputValue();
 
   await productPage.waitForGrid();
+  await productPage.clickDatagridFullscreenButton();
   await productPage.clickAddVariantButton();
   await productPage.editVariantButton.nth(1).scrollIntoViewIfNeeded();
-  await productPage.clickGridCell(1, 1);
-  await productPage.fillGridCell(1, 1, newVariantName);
+  await productPage.clickGridCell(1, 1, 1);
+  await productPage.fillGridCell(1, 1, newVariantName, 1);
+  await productPage.clickDatagridFullscreenButton(1);
   await productPage.clickSaveButton();
   await productPage.expectSuccessBanner();
 
@@ -163,7 +164,6 @@ test("TC: SALEOR_46 As an admin, I should be able to update a product by uploadi
 });
 test("TC: SALEOR_56 As an admin, I should be able to export products from single channel as CSV file @basic-regression @product @e2e", async () => {
   await productPage.gotoProductListPage();
-  await productPage.waitForDOMToFullyLoad();
   await productPage.clickCogShowMoreButtonButton();
   await productPage.clickExportButton();
   await productPage.exportProductsDialog.clickChannelsAccordion();
@@ -179,7 +179,6 @@ test("TC: SALEOR_56 As an admin, I should be able to export products from single
 });
 test("TC: SALEOR_57 As an admin, I should be able to search products on list view @basic-regression @product @e2e", async () => {
   await productPage.gotoProductListPage();
-  await productPage.waitForDOMToFullyLoad();
   await productPage.searchAndFindRowIndexes(PRODUCTS.productToAddVariants.name);
   await productPage.checkListRowsBasedOnContainingText([PRODUCTS.productToAddVariants.name]);
   expect(
@@ -189,7 +188,6 @@ test("TC: SALEOR_57 As an admin, I should be able to search products on list vie
 });
 test("TC: SALEOR_58 As an admin I should be able use pagination on product list view @basic-regression @product @e2e", async () => {
   await productPage.gotoProductListPage();
-  await productPage.waitForDOMToFullyLoad();
 
   const firstPageProductName = await productPage.getGridCellText(0, 0);
 

@@ -1,5 +1,5 @@
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import React from "react";
@@ -40,12 +40,15 @@ export const DiscountSavebar = ({
   };
 
   return (
-    <Savebar
-      disabled={disabled}
-      onCancel={onCancel}
-      onSubmit={handleSubmit}
-      onDelete={onDelete}
-      state={submitButtonState}
-    />
+    <Savebar>
+      <Savebar.DeleteButton onClick={onDelete} />
+      <Savebar.Spacer />
+      <Savebar.CancelButton onClick={onCancel} />
+      <Savebar.ConfirmButton
+        transitionState={submitButtonState}
+        onClick={handleSubmit}
+        disabled={disabled}
+      />
+    </Savebar>
   );
 };

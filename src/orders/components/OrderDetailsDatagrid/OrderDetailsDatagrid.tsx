@@ -44,6 +44,7 @@ export const OrderDetailsDatagrid = ({
   );
   const { handlers, visibleColumns, staticColumns, selectedColumns, recentlyAddedColumn } =
     useColumns({
+      gridName: "order_details_products",
       staticColumns: orderDetailsStaticColumns,
       selectedColumns: settings?.columns ?? [],
       onSave: handleColumnChange,

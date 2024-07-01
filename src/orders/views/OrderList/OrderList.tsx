@@ -65,7 +65,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     params,
     getUrl: orderListUrl,
     storageUtils,
-    reset: () => "",
+    reset: () => undefined,
   });
 
   usePaginationReset(orderListUrl, params, settings.rowNumber);
@@ -114,9 +114,9 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
       filter: filterVariables,
       sort: getSortQueryVariables(params),
     }),
-    [params, settings.rowNumber],
+    [params, settings.rowNumber, valueProvider.value, paginationState],
   );
-  const { data, loading } = useOrderListQuery({
+  const { data } = useOrderListQuery({
     displayLoader: true,
     variables: queryVariables,
   });
@@ -132,7 +132,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
       <OrderListPage
         settings={settings}
         currentTab={selectedPreset}
-        disabled={loading}
+        disabled={!data}
         filterOpts={getFilterOpts(params, channelOpts)}
         limits={limitOpts.data?.shop.limits}
         orders={mapEdgesToItems(data?.orders)}

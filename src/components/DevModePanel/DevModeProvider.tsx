@@ -1,10 +1,6 @@
 // @ts-strict-ignore
-import { DevModeQuery } from "@dashboard/orders/queries";
-import { getFilterVariables } from "@dashboard/orders/views/OrderList/filters";
 import React, { useState } from "react";
-import { useLocation } from "react-router";
 
-import { extractQueryParams } from "../AppLayout/util";
 import { DevModeContext } from "./hooks";
 import { useDevModeKeyTrigger } from "./useDevModeKeyTrigger";
 
@@ -16,29 +12,18 @@ export function DevModeProvider({ children }) {
   const [devModeContent, setDevModeContent] = useState("");
   const [isDevModeVisible, setDevModeVisibility] = useState(false);
 
-  const params = extractQueryParams(useLocation().search);
-  const triggerHandler = ({ shift }: { shift: boolean }) => {
-    if (shift) {
-      setDevModeContent(DevModeQuery);
-
-      const variables = JSON.stringify(
-        {
-          filter: getFilterVariables(params, [], false),
-        },
-        null,
-        2,
-      );
-
-      setVariables(variables);
-    } else {
-      setDevModeContent("");
-      setVariables("");
-    }
+  const handleOpen = () => {
+    setDevModeContent("");
+    setVariables("");
 
     setDevModeVisibility(!isDevModeVisible);
   };
 
-  useDevModeKeyTrigger(triggerHandler);
+  const handleClose = () => {
+    setDevModeVisibility(false);
+  };
+
+  useDevModeKeyTrigger(handleOpen, handleClose);
 
   return (
     <DevModeContext.Provider

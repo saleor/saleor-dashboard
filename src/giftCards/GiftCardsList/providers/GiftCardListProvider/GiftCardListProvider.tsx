@@ -118,7 +118,7 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
       });
     }
   };
-  const { data, loading } = useGiftCardListQuery({
+  const { data } = useGiftCardListQuery({
     displayLoader: true,
     variables: queryVariables,
     handleError: handleGiftCardListError,
@@ -129,7 +129,7 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
     sort: getSortParams(params),
     giftCards,
     totalCount: data?.giftCards?.totalCount || 0,
-    loading,
+    loading: !data,
     clearRowSelection,
     ...rowSelectionUtils,
     ...filterUtils,
