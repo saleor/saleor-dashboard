@@ -1,12 +1,12 @@
 // @ts-strict-ignore
 import Debounce, { DebounceProps } from "@dashboard/components/Debounce";
+import { fuzzySearch } from "@dashboard/misc";
 import { FetchMoreProps } from "@dashboard/types";
 import { Popper, PopperPlacementType, TextField, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { ChevronIcon, IconButton } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import Downshift, { ControllerStateAndHelpers } from "downshift";
-import { filter } from "fuzzaldrin";
 import React from "react";
 
 import MultiAutocompleteSelectFieldContent, {
@@ -264,9 +264,7 @@ const MultiAutocompleteSelectField: React.FC<MultiAutocompleteSelectFieldProps> 
   return (
     <MultiAutocompleteSelectFieldComponent
       fetchChoices={q => setQuery(q || "")}
-      choices={filter(choices, query, {
-        key: "label",
-      })}
+      choices={fuzzySearch(choices, query, ["label"])}
       {...props}
     />
   );
