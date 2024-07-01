@@ -6,6 +6,7 @@ import { customerListUrl } from "@dashboard/customers/urls";
 import { saleListUrl, voucherListUrl } from "@dashboard/discounts/urls";
 import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
+import { fuzzySearch } from "@dashboard/misc";
 import { menuListUrl } from "@dashboard/navigation/urls";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { pageListUrl } from "@dashboard/pages/urls";
@@ -19,7 +20,6 @@ import { staffListUrl } from "@dashboard/staff/urls";
 import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
 import { languageListUrl } from "@dashboard/translations/urls";
 import { warehouseListUrl } from "@dashboard/warehouses/urls";
-import { score } from "fuzzaldrin";
 import { IntlShape } from "react-intl";
 
 import { QuickSearchActionInput } from "../../types";
@@ -124,14 +124,13 @@ function searchInViews(
     },
   ];
 
-  return views.map(view => ({
+  return fuzzySearch(views, search, ["label"]).map(view => ({
     label: view.label,
     onClick: () => {
       navigate(view.url);
 
       return false;
     },
-    score: score(view.label, search),
     text: view.label,
     type: "view",
   }));

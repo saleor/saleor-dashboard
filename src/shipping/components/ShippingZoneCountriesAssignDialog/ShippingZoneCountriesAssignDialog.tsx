@@ -8,6 +8,7 @@ import Hr from "@dashboard/components/Hr";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { CountryWithCodeFragment } from "@dashboard/graphql";
+import { fuzzySearch } from "@dashboard/misc";
 import { getCountrySelectionMap, isRestWorldCountriesSelected } from "@dashboard/shipping/handlers";
 import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle";
 import {
@@ -20,7 +21,6 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { filter } from "fuzzaldrin";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -72,6 +72,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<
             restWorldCountries,
             change,
           );
+          const displayCountries = fuzzySearch(countries, data.query, ["country"]);
 
           return (
             <>
@@ -130,9 +131,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<
               <DialogContent className={scrollableDialogClasses.scrollArea}>
                 <ResponsiveTable className={classes.table}>
                   <TableBody>
-                    {filter(countries, data.query, {
-                      key: "country",
-                    }).map(country => {
+                    {displayCountries.map(country => {
                       const isChecked = countrySelectionMap[country.code];
 
                       return (

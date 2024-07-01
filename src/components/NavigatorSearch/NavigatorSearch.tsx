@@ -1,13 +1,13 @@
 // @ts-strict-ignore
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNotifier from "@dashboard/hooks/useNotifier";
-import { Divider, Fade, Modal, Paper } from "@material-ui/core";
-import { makeStyles, useTheme } from "@saleor/macaw-ui";
-import Downshift from "downshift";
+import { Box, Divider } from "@saleor/macaw-ui-next";
+import Downshift, { GetItemPropsOptions } from "downshift";
 import hotkeys from "hotkeys-js";
 import React from "react";
-import { useIntl } from "react-intl";
+import { IntlShape, useIntl } from "react-intl";
 
+import { DashboardModal } from "../Modal";
 import {
   getActions,
   getCatalog,
@@ -27,38 +27,75 @@ import useQuickSearch from "./useQuickSearch";
 const navigatorHotkey = "ctrl+k, command+k";
 const navigatorNotificationStorageKey = "notifiedAboutNavigator";
 
-function getItemOffset(actions: QuickSearchAction[], cbs: Array<typeof getViews>): number {
-  return cbs.reduce((acc, cb) => cb(actions).length + acc, 0);
-}
+const Sections = ({
+  actions,
+  intl,
+  getItemProps,
+  highlightedIndex,
+}: {
+  actions: QuickSearchAction[];
+  intl: IntlShape;
+  getItemProps: (options: GetItemPropsOptions<QuickSearchAction>) => any;
+  highlightedIndex: number;
+}) => {
+  const sectionsToRender = [
+    {
+      label: intl.formatMessage({
+        id: "YYkkhx",
+        defaultMessage: "Navigate to",
+        description: "navigator section header",
+      }),
+      check: hasViews,
+      fn: getViews,
+    },
+    {
+      label: intl.formatMessage({
+        id: "me585h",
+        defaultMessage: "Quick Actions",
+        description: "navigator section header",
+      }),
+      check: hasActions,
+      fn: getActions,
+    },
+    {
+      label: intl.formatMessage({
+        id: "4gT3eD",
+        defaultMessage: "Search in Customers",
+        description: "navigator section header",
+      }),
+      check: hasCustomers,
+      fn: getCustomers,
+    },
+    {
+      label: intl.formatMessage({
+        id: "7Oorx5",
+        defaultMessage: "Search in Catalog",
+        description: "navigator section header",
+      }),
+      check: hasCatalog,
+      fn: getCatalog,
+    },
+  ].filter(({ check }) => check(actions));
 
-const useStyles = makeStyles(
-  theme => ({
-    modal: {
-      alignItems: "center",
-      display: "flex",
-      justifyContent: "center",
-      padding: theme.spacing(3),
-    },
-    paper: {
-      overflow: "hidden",
-    },
-    root: {
-      [theme.breakpoints.down("sm")]: {
-        height: "auto",
-      },
-      height: 500,
-      maxWidth: 900,
-      outline: 0,
-      width: "100%",
-    },
-  }),
-  {
-    name: "NavigatorSearch",
-  },
-);
+  return (
+    <>
+      {sectionsToRender.map(({ label, fn }, index) => (
+        <NavigatorSection
+          label={label}
+          getItemProps={getItemProps}
+          highlightedIndex={highlightedIndex}
+          items={fn(actions)}
+          offset={index}
+          key={index}
+        />
+      ))}
+    </>
+  );
+};
+
 const NavigatorSearch: React.FC = () => {
   const { isNavigatorVisible, setNavigatorVisibility } = useNavigatorSearchContext();
-  const input = React.useRef(null);
+  const input = React.useRef<HTMLInputElement>(null);
   const [query, mode, change, actions] = useQuickSearch(isNavigatorVisible, input);
   const intl = useIntl();
   const notify = useNotifier();
@@ -66,8 +103,6 @@ const NavigatorSearch: React.FC = () => {
     navigatorNotificationStorageKey,
     false,
   );
-  const classes = useStyles({});
-  const theme = useTheme();
 
   React.useEffect(() => {
     hotkeys(navigatorHotkey, event => {
@@ -104,103 +139,65 @@ const NavigatorSearch: React.FC = () => {
     hasViews(actions) || hasActions(actions) || hasCustomers(actions) || hasCatalog(actions);
 
   return (
-    <Modal
-      className={classes.modal}
-      open={isNavigatorVisible}
-      onClose={() => setNavigatorVisibility(false)}
-    >
-      <Fade appear in={isNavigatorVisible} timeout={theme.transitions.duration.short}>
-        <div className={classes.root}>
-          <Paper className={classes.paper}>
-            <Downshift
-              itemToString={(item: QuickSearchAction) => (item ? item.label : "")}
-              onSelect={(item: QuickSearchAction) => {
-                const shouldRemainVisible = item?.onClick();
+    <DashboardModal open={isNavigatorVisible} onChange={setNavigatorVisibility}>
+      <DashboardModal.Content backgroundColor="default1" padding={0}>
+        <Box __height="500px" __width="640px">
+          <Downshift
+            itemToString={(item: QuickSearchAction) => (item ? item.label : "")}
+            onSelect={(item: QuickSearchAction) => {
+              const shouldRemainVisible = item?.onClick();
 
-                if (!shouldRemainVisible) {
-                  setNavigatorVisibility(false);
-                }
-              }}
-              onInputValueChange={value =>
-                change({
-                  target: {
-                    name: "query",
-                    value,
-                  },
-                })
+              if (!shouldRemainVisible) {
+                setNavigatorVisibility(false);
               }
-              defaultHighlightedIndex={0}
-            >
-              {({ getInputProps, getItemProps, highlightedIndex }) => (
-                <div>
+            }}
+            onInputValueChange={value =>
+              change({
+                target: {
+                  name: "query",
+                  value,
+                },
+              })
+            }
+            defaultHighlightedIndex={0}
+          >
+            {({ getInputProps, getItemProps, highlightedIndex, getRootProps }) => (
+              <Box
+                {...getRootProps()}
+                display="flex"
+                flexDirection="column"
+                flexGrow={1}
+                flexShrink={1}
+                overflow="hidden"
+                __maxHeight="100%"
+              >
+                <Box padding={4} paddingBottom={0}>
                   <NavigatorSearchInput
                     mode={mode}
                     value={query}
-                    {...(getInputProps({
+                    {...getInputProps({
                       value: query,
-                    }) as React.InputHTMLAttributes<HTMLInputElement>)}
+                    })}
                     ref={input}
                   />
-                  {hasAnything && <Divider />}
-                  {hasViews(actions) && (
-                    <NavigatorSection
-                      label={intl.formatMessage({
-                        id: "YYkkhx",
-                        defaultMessage: "Navigate to",
-                        description: "navigator section header",
-                      })}
-                      getItemProps={getItemProps}
-                      highlightedIndex={highlightedIndex}
-                      items={getViews(actions)}
-                      offset={0}
-                    />
-                  )}
-                  {hasActions(actions) && (
-                    <NavigatorSection
-                      label={intl.formatMessage({
-                        id: "me585h",
-                        defaultMessage: "Quick Actions",
-                        description: "navigator section header",
-                      })}
-                      getItemProps={getItemProps}
-                      highlightedIndex={highlightedIndex}
-                      items={getActions(actions)}
-                      offset={getItemOffset(actions, [getViews])}
-                    />
-                  )}
-                  {hasCustomers(actions) && (
-                    <NavigatorSection
-                      label={intl.formatMessage({
-                        id: "4gT3eD",
-                        defaultMessage: "Search in Customers",
-                        description: "navigator section header",
-                      })}
-                      getItemProps={getItemProps}
-                      highlightedIndex={highlightedIndex}
-                      items={getCustomers(actions)}
-                      offset={getItemOffset(actions, [getViews, getActions])}
-                    />
-                  )}
-                  {hasCatalog(actions) && (
-                    <NavigatorSection
-                      label={intl.formatMessage({
-                        id: "7Oorx5",
-                        defaultMessage: "Search in Catalog",
-                        description: "navigator section header",
-                      })}
-                      getItemProps={getItemProps}
-                      highlightedIndex={highlightedIndex}
-                      items={getCatalog(actions)}
-                      offset={0}
-                    />
-                  )}
-                </div>
-              )}
-            </Downshift>
-          </Paper>
-        </div>
-      </Fade>
-    </Modal>
+                </Box>
+
+                {hasAnything && <Divider marginBottom={0} />}
+
+                <Box padding={4} height="100%" overflowY="auto">
+                  <Sections
+                    actions={actions}
+                    intl={intl}
+                    getItemProps={getItemProps}
+                    highlightedIndex={highlightedIndex}
+                  />
+                </Box>
+              </Box>
+            )}
+          </Downshift>
+        </Box>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
