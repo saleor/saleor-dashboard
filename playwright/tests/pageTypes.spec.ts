@@ -13,10 +13,10 @@ test("TC: SALEOR_187 As an admin user I can create page type @e2e @page-type", a
   await pageTypePage.gotoPageTypeListPage();
   await pageTypePage.clickCreatePageTypeButton();
   await pageTypePage.typePageTypeName(pageTypeName);
-  await pageTypePage.waitForNetworkIdleAfterAction(() => pageTypePage.clickSaveButton());
+  await pageTypePage.clickSaveButton();
   await pageTypePage.expectSuccessBanner();
   await expect(pageTypePage.nameInput).toHaveValue(pageTypeName);
-  await pageTypePage.waitForNetworkIdleAfterAction(() => pageTypePage.gotoPageTypeListPage());
+  await pageTypePage.gotoPageTypeListPage();
   await expect(pageTypePage.pageTypeList).toContainText(pageTypeName);
 });
 test("TC: SALEOR_188 As an admin user I can update page type@e2e @page-type", async ({ page }) => {
@@ -26,12 +26,10 @@ test("TC: SALEOR_188 As an admin user I can update page type@e2e @page-type", as
 
   await pageTypePage.gotoExistingPageTypePage(PAGE_TYPES.pageTypeToBeEdited.id);
   await pageTypePage.updatePageTypeName(updatedPageTypeName);
-  await pageTypePage.waitForNetworkIdleAfterAction(() => pageTypePage.clickSaveButton());
+  await pageTypePage.clickSaveButton();
   await pageTypePage.expectSuccessBanner();
   await expect(pageTypePage.nameInput).toHaveValue(updatedPageTypeName);
-  await pageTypePage.waitForNetworkIdleAfterAction(() =>
-    pageTypePage.assignAttributes(attributeName),
-  );
+  await pageTypePage.assignAttributes(attributeName);
   await pageTypePage.expectSuccessBanner();
   await expect(pageTypePage.pageAttributes).toContainText(attributeName);
 });
@@ -45,9 +43,9 @@ test("TC: SALEOR_189 As an admin user I can delete page type with assigned conte
   await pageTypePage.clickDeleteButton();
   await pageTypePage.deletePageTypeDialog.waitForDOMToFullyLoad();
   await pageTypePage.deletePageTypeDialog.clickConfirmDeletionCheckbox();
-  await pageTypePage.waitForNetworkIdleAfterAction(() => pageTypePage.clickConfirmRemovalButton());
+  await pageTypePage.clickConfirmRemovalButton();
   await pageTypePage.expectSuccessBanner();
-  await pageTypePage.waitForNetworkIdleAfterAction(() => pageTypePage.gotoPageTypeListPage());
+  await pageTypePage.gotoPageTypeListPage();
   await expect(pageTypePage.pageTypeList).not.toContainText(pageType.name);
 });
 test("TC: SALEOR_190 As an admin user I can delete several page types@e2e @page-type", async ({
@@ -57,12 +55,12 @@ test("TC: SALEOR_190 As an admin user I can delete several page types@e2e @page-
   const rowsToBeDeleted = PAGE_TYPES.pageTypesToBeBulkDeleted.ids;
   const pageTypeNames = PAGE_TYPES.pageTypesToBeBulkDeleted.names;
 
-  await pageTypePage.waitForNetworkIdleAfterAction(() => pageTypePage.gotoPageTypeListPage());
+  await pageTypePage.gotoPageTypeListPage();
   await expect(pageTypePage.pageTypeList).toBeVisible();
   await pageTypePage.checkPageTypesOnList(rowsToBeDeleted);
   await pageTypePage.clickBulkDeleteButton();
   await pageTypePage.deletePageTypeDialog.waitForDOMToFullyLoad();
-  await pageTypePage.waitForNetworkIdleAfterAction(() => pageTypePage.clickConfirmRemovalButton());
+  await pageTypePage.clickConfirmRemovalButton();
   await pageTypePage.expectSuccessBanner();
   await expect(pageTypePage.pageTypeList).not.toContainText(pageTypeNames[0]);
   await expect(pageTypePage.pageTypeList).not.toContainText(pageTypeNames[1]);
