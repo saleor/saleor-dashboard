@@ -12,6 +12,7 @@ import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { CountryWithCodeFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { fuzzySearch } from "@dashboard/misc";
 import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle";
 import {
   Dialog,
@@ -23,7 +24,6 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { filter } from "fuzzaldrin";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -123,48 +123,49 @@ const DiscountCountrySelectDialog: React.FC<
               <DialogContent className={scrollableDialogClasses.scrollArea}>
                 <ResponsiveTable>
                   <TableBody>
-                    {filter(countries, data.query, {
-                      key: "country",
-                    }).map(country => {
-                      const isChecked = countrySelectionMap[country.code];
+                    {fuzzySearch(countries, data.query, ["country"]).map(
+                      country => {
+                        const isChecked = countrySelectionMap[country.code];
 
-                      return (
-                        <TableRowLink key={country.code}>
-                          <TableCell className={classes.wideCell}>
-                            {country.country}
-                          </TableCell>
-                          <TableCell
-                            padding="checkbox"
-                            className={classes.checkboxCell}
-                          >
-                            <Checkbox
-                              checked={isChecked}
-                              onChange={() =>
-                                isChecked
-                                  ? change({
-                                      target: {
-                                        name: "countries" as keyof FormData,
-                                        value: data.countries.filter(
-                                          selectedCountries =>
-                                            selectedCountries !== country.code,
-                                        ),
-                                      },
-                                    } as any)
-                                  : change({
-                                      target: {
-                                        name: "countries" as keyof FormData,
-                                        value: [
-                                          ...data.countries,
-                                          country.code,
-                                        ],
-                                      },
-                                    } as any)
-                              }
-                            />
-                          </TableCell>
-                        </TableRowLink>
-                      );
-                    })}
+                        return (
+                          <TableRowLink key={country.code}>
+                            <TableCell className={classes.wideCell}>
+                              {country.country}
+                            </TableCell>
+                            <TableCell
+                              padding="checkbox"
+                              className={classes.checkboxCell}
+                            >
+                              <Checkbox
+                                checked={isChecked}
+                                onChange={() =>
+                                  isChecked
+                                    ? change({
+                                        target: {
+                                          name: "countries" as keyof FormData,
+                                          value: data.countries.filter(
+                                            selectedCountries =>
+                                              selectedCountries !==
+                                              country.code,
+                                          ),
+                                        },
+                                      } as any)
+                                    : change({
+                                        target: {
+                                          name: "countries" as keyof FormData,
+                                          value: [
+                                            ...data.countries,
+                                            country.code,
+                                          ],
+                                        },
+                                      } as any)
+                                }
+                              />
+                            </TableCell>
+                          </TableRowLink>
+                        );
+                      },
+                    )}
                   </TableBody>
                 </ResponsiveTable>
               </DialogContent>

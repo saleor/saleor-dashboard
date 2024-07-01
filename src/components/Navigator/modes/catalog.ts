@@ -3,16 +3,13 @@ import { categoryUrl } from "@dashboard/categories/urls";
 import { collectionUrl } from "@dashboard/collections/urls";
 import { SearchCatalogQuery } from "@dashboard/graphql";
 import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
+import { fuzzySearch } from "@dashboard/misc";
 import { productUrl } from "@dashboard/products/urls";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { score } from "fuzzaldrin";
 import { IntlShape } from "react-intl";
 
 import { QuickSearchAction, QuickSearchActionInput } from "../types";
 import messages from "./messages";
-import { sortScores } from "./utils";
-
-const maxActions = 5;
 
 export function searchInCatalog(
   search: string,
@@ -22,65 +19,48 @@ export function searchInCatalog(
 ): QuickSearchAction[] {
   const categories: QuickSearchActionInput[] = (
     mapEdgesToItems(catalog?.categories) || []
-  )
-    .map<QuickSearchActionInput>(category => ({
-      caption: intl.formatMessage(messages.category),
-      label: category.name,
-      onClick: () => {
-        navigate(categoryUrl(category.id));
-        return false;
-      },
-      score: score(category.name, search),
-      text: category.name,
-      type: "catalog",
-    }))
-    .sort(sortScores);
+  ).map<QuickSearchActionInput>(category => ({
+    caption: intl.formatMessage(messages.category),
+    label: category.name,
+    onClick: () => {
+      navigate(categoryUrl(category.id));
 
+      return false;
+    },
+    text: category.name,
+    type: "catalog",
+  }));
   const collections: QuickSearchActionInput[] = (
     mapEdgesToItems(catalog?.collections) || []
-  )
-    .map<QuickSearchActionInput>(collection => ({
-      caption: intl.formatMessage(messages.collection),
-      label: collection.name,
-      onClick: () => {
-        navigate(collectionUrl(collection.id));
-        return false;
-      },
-      score: score(collection.name, search),
-      text: collection.name,
-      type: "catalog",
-    }))
-    .sort(sortScores);
+  ).map<QuickSearchActionInput>(collection => ({
+    caption: intl.formatMessage(messages.collection),
+    label: collection.name,
+    onClick: () => {
+      navigate(collectionUrl(collection.id));
 
+      return false;
+    },
+    text: collection.name,
+    type: "catalog",
+  }));
   const products: QuickSearchActionInput[] = (
     mapEdgesToItems(catalog?.products) || []
-  )
-    .map<QuickSearchActionInput>(product => ({
-      caption: intl.formatMessage(messages.product),
-      extraInfo: product.category.name,
-      label: product.name,
-      onClick: () => {
-        navigate(productUrl(product.id));
-        return false;
-      },
-      score: score(product.name, search),
-      text: product.name,
-      type: "catalog",
-    }))
-    .sort(sortScores);
+  ).map<QuickSearchActionInput>(product => ({
+    caption: intl.formatMessage(messages.product),
+    extraInfo: product.category.name,
+    label: product.name,
+    onClick: () => {
+      navigate(productUrl(product.id));
 
-  const baseActions = [
-    ...categories.slice(0, 1),
-    ...collections.slice(0, 1),
-    ...products.slice(0, 1),
-  ];
+      return false;
+    },
+    text: product.name,
+    type: "catalog",
+  }));
 
-  return [
-    ...baseActions,
-    ...[...categories.slice(1), ...collections.slice(1), ...products.slice(1)]
-      .sort(sortScores)
-      .slice(0, maxActions - baseActions.length),
-  ].sort(sortScores);
+  const searchableItems = [...categories, ...collections, ...products];
+
+  return fuzzySearch(searchableItems, search, ["label"]);
 }
 
 function getCatalogModeActions(

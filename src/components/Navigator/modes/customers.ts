@@ -26,7 +26,6 @@ export function searchInCustomers(
       navigate(customerUrl(customer.id));
       return false;
     },
-    score: 1,
     type: "customer",
   }));
 }

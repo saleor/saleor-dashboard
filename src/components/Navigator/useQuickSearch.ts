@@ -36,11 +36,11 @@ function useQuickSearch(
   const { result: customers, search: searchCustomers } = useCustomerSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
-      first: 5,
+      first: 10,
     },
     skip: !query,
   });
-  const [{ data: catalog }, searchCatalog] = useSearchCatalog(5);
+  const [{ data: catalog }, searchCatalog] = useSearchCatalog(10);
   const [createOrder] = useOrderDraftCreateMutation({
     onCompleted: result => {
       if (result.draftOrderCreate.errors.length === 0) {
