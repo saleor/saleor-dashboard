@@ -147,3 +147,40 @@ export function getErrorMessage(
       return getPageErrorMessage(err, intl);
   }
 }
+
+export function booleanAttrValueToValue(value: unknown | undefined): string {
+  if (typeof value !== "boolean") {
+    return "unset";
+  }
+
+  return value ? "true" : "false";
+}
+
+export function getBooleanDropdownOptions(intl: IntlShape) {
+  return [
+    {
+      label: intl.formatMessage({
+        defaultMessage: "True",
+        id: "7WEeNq",
+        description: "select label",
+      }),
+      value: "true",
+    },
+    {
+      label: intl.formatMessage({
+        defaultMessage: "False",
+        id: "b1j4K6",
+        description: "select label",
+      }),
+      value: "false",
+    },
+    {
+      label: intl.formatMessage({
+        defaultMessage: "Unset",
+        id: "k62BKw",
+        description: "select label",
+      }),
+      value: "unset",
+    },
+  ];
+}
