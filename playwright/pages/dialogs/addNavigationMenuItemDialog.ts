@@ -43,5 +43,6 @@ export class AddNavigationMenuItemDialog extends BasePage {
 
   async clickSaveButton() {
     await this.saveButton.click();
+    await this.waitForDOMToFullyLoad();
   }
 }

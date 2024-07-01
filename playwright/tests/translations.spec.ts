@@ -45,9 +45,15 @@ test("TC: SALEOR_122 Should be able to edit translation  @e2e @translations", as
   await expect(translationsPage.page.getByText("Brukselka, szpinak")).toBeVisible();
   await translationsPage.editTranslationDescriptionButton.click();
   await translationsPage.translationRichText.clear();
-  await translationsPage.translationRichText.type(newDescription);
+  await translationsPage.translationRichText.fill(newDescription);
   await translationsPage.saveButton.click();
   await expect(translationsPage.successBanner).toBeVisible();
+  await translationsPage.goToDirectTranslationPage(
+    "PL_PL",
+    "products",
+    TRANSLATIONS.translationsToBeEdited.id,
+  );
+  await translationsPage.waitForDOMToFullyLoad();
   await expect(translationsPage.page.getByText(newDescription)).toBeVisible();
 });
 test("TC: SALEOR_123 Should be able to clear translation  @e2e @translations", async () => {

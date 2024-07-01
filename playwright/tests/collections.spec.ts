@@ -52,7 +52,7 @@ test("TC: SALEOR_114 Bulk delete collections @collections @e2e", async () => {
   );
   await collectionsPage.clickBulkDeleteButton();
   await collectionsPage.deleteCollectionDialog.clickDeleteButton();
-  await collectionsPage.waitForGrid();
+  await collectionsPage.gotoCollectionsListView();
   expect(
     await collectionsPage.findRowIndexBasedOnText(COLLECTIONS.collectionsToBeBulkDeleted.names),
     `Given collections: ${COLLECTIONS.collectionsToBeBulkDeleted.names} should be deleted from the list`,
