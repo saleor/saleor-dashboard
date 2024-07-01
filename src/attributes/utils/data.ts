@@ -19,7 +19,6 @@ import {
   SearchProductsQuery,
   SelectedVariantAttributeFragment,
   UploadErrorFragment,
-  VariantAttributeFragment,
 } from "@dashboard/graphql";
 import { FormsetData } from "@dashboard/hooks/useFormset";
 import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
@@ -160,16 +159,6 @@ export function getAttributeData(
   }
 }
 
-export function getDefaultAttributeValues(attribute: VariantAttributeFragment) {
-  switch (attribute.inputType) {
-    case AttributeInputTypeEnum.BOOLEAN:
-      return ["false"];
-
-    default:
-      return [];
-  }
-}
-
 export function getSelectedAttributeValues(
   attribute:
     | PageSelectedAttributeFragment
@@ -190,7 +179,7 @@ export function getSelectedAttributeValues(
       return [attribute.values[0]?.name];
 
     case AttributeInputTypeEnum.BOOLEAN:
-      return [attribute.values[0]?.boolean ?? "false"];
+      return [attribute.values[0]?.boolean];
 
     case AttributeInputTypeEnum.DATE:
       return [attribute.values[0]?.date];
