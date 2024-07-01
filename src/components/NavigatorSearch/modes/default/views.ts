@@ -6,7 +6,7 @@ import { customerListUrl } from "@dashboard/customers/urls";
 import { saleListUrl, voucherListUrl } from "@dashboard/discounts/urls";
 import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { score } from "@dashboard/misc";
+import { fuzzySearch } from "@dashboard/misc";
 import { menuListUrl } from "@dashboard/navigation/urls";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { pageListUrl } from "@dashboard/pages/urls";
@@ -124,14 +124,13 @@ function searchInViews(
     },
   ];
 
-  return views.map(view => ({
+  return fuzzySearch(views, search, ["label"]).map(view => ({
     label: view.label,
     onClick: () => {
       navigate(view.url);
 
       return false;
     },
-    score: score(view.label, search),
     text: view.label,
     type: "view",
   }));

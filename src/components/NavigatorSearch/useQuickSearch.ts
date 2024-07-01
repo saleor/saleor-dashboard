@@ -28,7 +28,7 @@ function useQuickSearch(open: boolean, input: RefObject<HTMLInputElement>): UseQ
   const { result: customers, search: searchCustomers } = useCustomerSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
-      first: 5,
+      first: 10,
     },
     skip: !query,
   });

@@ -1,72 +1,23 @@
-// @ts-strict-ignore
-import { makeStyles, SearchLargeIcon } from "@saleor/macaw-ui";
+import { Box, InputProps, SearchIcon, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { QuickSearchMode } from "./types";
 
-const useStyles = makeStyles(
-  theme => {
-    const typography = {
-      ...theme.typography.body1,
-      color: theme.palette.saleor.main[1],
-      fontWeight: 500,
-      letterSpacing: "0.02rem",
-    };
-
-    return {
-      adornment: {
-        ...typography,
-        alignSelf: "center",
-        color: theme.palette.text.secondary,
-        marginRight: theme.spacing(1),
-        textAlign: "center",
-        width: 32,
-      },
-      input: {
-        "&::placeholder": {
-          color: theme.palette.saleor.main[3],
-        },
-        ...typography,
-        background: "transparent",
-        border: "none",
-        outline: 0,
-        padding: 0,
-        width: "100%",
-      },
-      root: {
-        background: theme.palette.background.paper,
-        display: "flex",
-        padding: theme.spacing(2, 3),
-        height: 72,
-      },
-      searchIcon: {
-        alignSelf: "center",
-        width: 32,
-        height: 32,
-        marginRight: theme.spacing(1),
-      },
-    };
-  },
-  {
-    name: "NavigatorInput",
-  },
-);
-
-interface NavigatorSearchInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface NavigatorSearchInputProps
+  extends Omit<InputProps, "size" | "height" | "width" | "label"> {
   mode: QuickSearchMode;
 }
 
 const NavigatorSearchInput = React.forwardRef<HTMLInputElement, NavigatorSearchInputProps>(
   (props, ref) => {
     const { mode, ...rest } = props;
-    const classes = useStyles(props);
     const intl = useIntl();
 
     return (
-      <div className={classes.root}>
+      <Box display="flex" padding={4} height={12}>
         {mode !== "default" ? (
-          <span className={classes.adornment}>
+          <Text width={4} alignSelf="center" marginRight={1} textAlign="center">
             {mode === "orders"
               ? "#"
               : mode === "customers"
@@ -76,14 +27,28 @@ const NavigatorSearchInput = React.forwardRef<HTMLInputElement, NavigatorSearchI
                   : mode === "help"
                     ? "?"
                     : ">"}
-          </span>
+          </Text>
         ) : (
-          <SearchLargeIcon className={classes.searchIcon} />
+          <SearchIcon
+            size="small"
+            className={sprinkles({
+              alignSelf: "center",
+              marginRight: 2,
+            })}
+          />
         )}
-        <input
+        <Box
+          as="input"
+          role="input"
           autoFocus
           autoComplete="off"
-          className={classes.input}
+          style={{
+            border: "none",
+            outline: "none",
+            width: "100%",
+            backgroundColor: "transparent",
+            padding: 0,
+          }}
           placeholder={
             mode === "orders"
               ? intl.formatMessage({
@@ -125,7 +90,7 @@ const NavigatorSearchInput = React.forwardRef<HTMLInputElement, NavigatorSearchI
           ref={ref}
           {...rest}
         />
-      </div>
+      </Box>
     );
   },
 );
