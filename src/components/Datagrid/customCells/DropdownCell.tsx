@@ -7,29 +7,23 @@ import {
   GridCellKind,
   ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
+import { Option } from "@saleor/macaw-ui-next";
 import pick from "lodash/pick";
 import React from "react";
 
-import { SingleAutocompleteSelectFieldProps } from "../../SingleAutocompleteSelectField";
-import { Choice } from "../../SingleSelectField";
-
-export type DropdownChoice = Choice<string, string>;
-export type DropdownCellContentProps = Pick<
-  SingleAutocompleteSelectFieldProps,
-  "allowCustomValues" | "emptyOption"
->;
-
-export type DropdownCellGetSuggestionsFn = (text: string) => Promise<DropdownChoice[]>;
-interface DropdownCellProps extends DropdownCellContentProps {
-  readonly choices?: DropdownChoice[];
+export type DropdownCellGetSuggestionsFn = (text: string) => Promise<Option[]>;
+interface DropdownCellProps {
+  readonly choices?: Option[];
   readonly update?: DropdownCellGetSuggestionsFn;
   readonly kind: "dropdown-cell";
-  readonly value: DropdownChoice | null;
+  readonly value: Option | null;
+  readonly allowCustomValues?: boolean;
+  readonly emptyOption?: boolean;
 }
 
 export type DropdownCell = CustomCell<DropdownCellProps>;
 
-export const emptyDropdownCellValue: DropdownChoice = {
+export const emptyDropdownCellValue: Option = {
   label: "",
   value: null,
 };
@@ -38,13 +32,15 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
   value: cell,
   onFinishedEditing,
 }) => {
-  const [data, setData] = React.useState<DropdownChoice[]>([]);
+  const [data, setData] = React.useState<Option[]>([]);
+
   const getChoices = React.useCallback(
     async (text: string) => {
       setData(await cell.data.update(text));
     },
     [cell.data],
   );
+
   const userProps = pick(cell.data, ["allowCustomValues", "emptyOption"]);
   const props = cell.data.update
     ? { fetchOnFocus: true, fetchChoices: getChoices, choices: data }
@@ -53,23 +49,20 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
   return (
     <Combobox
       allowCustomValues={userProps.allowCustomValues}
-      alwaysFetchOnFocus={cell.data.update ? true : false}
+      alwaysFetchOnFocus={props.fetchOnFocus}
       allowEmptyValue={userProps.emptyOption}
       fetchMore={{
         hasMore: false,
         loading: false,
         onFetchMore: () => undefined,
       }}
-      options={cell.data.update ? data : cell.data.choices}
-      value={{
-        label: cell.data.value.label,
-        value: cell.data.value.value,
-      }}
-      fetchOptions={cell.data.update ? getChoices : undefined}
+      options={props.choices}
+      value={cell.data.value}
+      fetchOptions={props.fetchChoices}
       loading={false}
       name=""
-      onChange={event =>
-        onFinishedEditing({
+      onChange={event => {
+        return onFinishedEditing({
           ...cell,
           data: {
             ...cell.data,
@@ -78,8 +71,8 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
               value: event.target.value,
             },
           },
-        })
-      }
+        });
+      }}
     />
   );
 };
