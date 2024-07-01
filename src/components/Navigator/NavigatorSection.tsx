@@ -1,11 +1,10 @@
-import { MenuItem, Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import { GetItemPropsOptions } from "downshift";
 import React from "react";
 
 import { QuickSearchAction } from "./types";
 
-interface NavigatorSectionProps {
+interface NavigatorSearchSectionProps {
   getItemProps: (options: GetItemPropsOptions<QuickSearchAction>) => any;
   highlightedIndex: number;
   label: string;
@@ -13,57 +12,20 @@ interface NavigatorSectionProps {
   offset: number;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    item: {
-      "&&&&": {
-        color: theme.palette.text.secondary,
-        fontWeight: 400,
-      },
-      display: "flex",
-      margin: theme.spacing(1, 0),
-    },
-    itemLabel: {
-      display: "inline-block",
-    },
-    label: {
-      paddingLeft: theme.spacing(2),
-      textTransform: "uppercase",
-    },
-    root: {
-      "&:last-child": {
-        marginBottom: 0,
-      },
-      margin: theme.spacing(2, 0),
-    },
-    spacer: {
-      flex: 1,
-    },
-    symbol: {
-      display: "inline-block",
-      fontWeight: 600,
-      width: theme.spacing(4),
-    },
-  }),
-  {
-    name: "NavigatorSection",
-  },
-);
-
-const NavigatorSection: React.FC<NavigatorSectionProps> = props => {
+const NavigatorSearchSection: React.FC<NavigatorSearchSectionProps> = props => {
   const { getItemProps, highlightedIndex, label, items, offset } = props;
 
-  const classes = useStyles(props);
-
   return (
-    <div className={classes.root}>
-      <Typography
-        className={classes.label}
-        variant="caption"
-        color="textSecondary"
+    <Box marginY={2} overflowY="hidden" __maxHeight="inherit">
+      <Text
+        paddingLeft={4}
+        textTransform="uppercase"
+        fontWeight="bodyStrongLarge"
+        fontSize="bodyEmpMedium"
       >
         {label}
-      </Typography>
+      </Text>
+
       {items.map((item, itemIndex) => {
         const index = offset + itemIndex;
         const itemProps = getItemProps({
@@ -72,29 +34,53 @@ const NavigatorSection: React.FC<NavigatorSectionProps> = props => {
         });
 
         return (
-          <MenuItem
+          <Box
             {...itemProps}
-            className={classes.item}
+            tabIndex={index}
+            role="button"
+            variant="secondary"
+            width="100%"
+            paddingX={4}
+            paddingY={2}
+            borderRadius={4}
+            backgroundColor={{
+              hover: "interactiveBrandSecondaryHovering",
+              active: "interactiveBrandSecondaryFocused",
+            }}
             selected={highlightedIndex === index}
             key={[item.label, item.type].join(":")}
+            cursor="pointer"
           >
-            <span className={classes.itemLabel}>
+            <Box as="span" display="inline-block">
               {item.symbol && (
-                <span className={classes.symbol}>{item.symbol}</span>
+                <Box
+                  as="span"
+                  display="inline-block"
+                  fontWeight="bodyStrongMedium"
+                  width={6}
+                >
+                  {item.symbol}
+                </Box>
               )}
-              <span>{item.label}</span>
+
+              <Text size="medium">{item.label}</Text>
+
               {item.caption && (
-                <Typography variant="caption">{item.caption}</Typography>
+                <Text size="small" marginLeft={2}>
+                  {item.caption}
+                </Text>
               )}
-            </span>
-            <span className={classes.spacer} />
+            </Box>
+
+            <Box __flex={1} />
+
             {item.extraInfo}
-          </MenuItem>
+          </Box>
         );
       })}
-    </div>
+    </Box>
   );
 };
 
-NavigatorSection.displayName = "NavigatorSection";
-export default NavigatorSection;
+NavigatorSearchSection.displayName = "NavigatorSection";
+export default NavigatorSearchSection;
