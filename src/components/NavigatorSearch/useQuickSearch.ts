@@ -32,7 +32,7 @@ function useQuickSearch(open: boolean, input: RefObject<HTMLInputElement>): UseQ
     },
     skip: !query,
   });
-  const [{ data: catalog }, searchCatalog] = useSearchCatalog(5);
+  const [{ data: catalog }, searchCatalog] = useSearchCatalog(10);
   const [createOrder] = useOrderDraftCreateMutation({
     onCompleted: result => {
       if (result.draftOrderCreate.errors.length === 0) {

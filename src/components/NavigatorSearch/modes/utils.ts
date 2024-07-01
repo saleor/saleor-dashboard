@@ -50,52 +50,58 @@ export function getMode(command: string): QuickSearchMode {
 }
 
 export const getModePlaceholder = (mode: QuickSearchMode, intl: IntlShape) => {
-  return mode === "orders"
-    ? intl.formatMessage({
+  switch (mode) {
+    case "orders":
+      return intl.formatMessage({
         id: "8B8E+3",
         defaultMessage: "Order Number",
         description: "navigator placeholder",
-      })
-    : mode === "commands"
-      ? intl.formatMessage({
-          id: "NqxvFh",
-          defaultMessage: "Type Command",
+      });
+    case "commands":
+      return intl.formatMessage({
+        id: "NqxvFh",
+        defaultMessage: "Type Command",
+        description: "navigator placeholder",
+      });
+    case "catalog":
+      return intl.formatMessage({
+        id: "AOI4LW",
+        defaultMessage: "Search in Catalog",
+        description: "navigator placeholder",
+      });
+    case "customers":
+      return intl.formatMessage({
+        id: "TpPx7V",
+        defaultMessage: "Search Customer",
+        description: "navigator placeholder",
+      });
+    case "default":
+      return intl.formatMessage(
+        {
+          id: "BooQvo",
+          defaultMessage: "Type {key} to see available actions",
           description: "navigator placeholder",
-        })
-      : mode === "catalog"
-        ? intl.formatMessage({
-            id: "AOI4LW",
-            defaultMessage: "Search in Catalog",
-            description: "navigator placeholder",
-          })
-        : mode === "customers"
-          ? intl.formatMessage({
-              id: "TpPx7V",
-              defaultMessage: "Search Customer",
-              description: "navigator placeholder",
-            })
-          : mode === "default"
-            ? intl.formatMessage(
-                {
-                  id: "BooQvo",
-                  defaultMessage: "Type {key} to see available actions",
-                  description: "navigator placeholder",
-                },
-                {
-                  key: "'?'",
-                },
-              )
-            : null;
+        },
+        {
+          key: "'?'",
+        },
+      );
+    default:
+      return null;
+  }
 };
 
 export const getModeSymbol = (mode: QuickSearchMode) => {
-  return mode === "orders"
-    ? "#"
-    : mode === "customers"
-      ? "@"
-      : mode === "catalog"
-        ? "$"
-        : mode === "help"
-          ? "?"
-          : ">";
+  switch (mode) {
+    case "orders":
+      return "#";
+    case "customers":
+      return "@";
+    case "catalog":
+      return "$";
+    case "help":
+      return "?";
+    default:
+      return ">";
+  }
 };

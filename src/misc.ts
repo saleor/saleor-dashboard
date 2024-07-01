@@ -648,6 +648,6 @@ export const fuzzySearch = <T>(array: T[], query: string | undefined, keys: stri
 
   return fuse
     .search(query.toLocaleLowerCase())
-    .filter(({ score }) => (query ? score !== 1 : 0))
+    .filter(({ score }) => score !== 1)
     .map(({ item }) => item);
 };
