@@ -2,6 +2,7 @@ import { Box, InputProps, SearchIcon, sprinkles, Text } from "@saleor/macaw-ui-n
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { getModePlaceholder, getModeSymbol } from "./modes/utils";
 import { QuickSearchMode } from "./types";
 
 interface NavigatorSearchInputProps
@@ -18,15 +19,7 @@ const NavigatorSearchInput = React.forwardRef<HTMLInputElement, NavigatorSearchI
       <Box display="flex" padding={4} height={12}>
         {mode !== "default" ? (
           <Text width={4} alignSelf="center" marginRight={1} textAlign="center">
-            {mode === "orders"
-              ? "#"
-              : mode === "customers"
-                ? "@"
-                : mode === "catalog"
-                  ? "$"
-                  : mode === "help"
-                    ? "?"
-                    : ">"}
+            {getModeSymbol(mode)}
           </Text>
         ) : (
           <SearchIcon
@@ -49,44 +42,7 @@ const NavigatorSearchInput = React.forwardRef<HTMLInputElement, NavigatorSearchI
             backgroundColor: "transparent",
             padding: 0,
           }}
-          placeholder={
-            mode === "orders"
-              ? intl.formatMessage({
-                  id: "8B8E+3",
-                  defaultMessage: "Order Number",
-                  description: "navigator placeholder",
-                })
-              : mode === "commands"
-                ? intl.formatMessage({
-                    id: "NqxvFh",
-                    defaultMessage: "Type Command",
-                    description: "navigator placeholder",
-                  })
-                : mode === "catalog"
-                  ? intl.formatMessage({
-                      id: "AOI4LW",
-                      defaultMessage: "Search in Catalog",
-                      description: "navigator placeholder",
-                    })
-                  : mode === "customers"
-                    ? intl.formatMessage({
-                        id: "TpPx7V",
-                        defaultMessage: "Search Customer",
-                        description: "navigator placeholder",
-                      })
-                    : mode === "default"
-                      ? intl.formatMessage(
-                          {
-                            id: "BooQvo",
-                            defaultMessage: "Type {key} to see available actions",
-                            description: "navigator placeholder",
-                          },
-                          {
-                            key: "'?'",
-                          },
-                        )
-                      : null
-          }
+          placeholder={getModePlaceholder(mode, intl) ?? undefined}
           ref={ref}
           {...rest}
         />
