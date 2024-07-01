@@ -173,8 +173,7 @@ const NavigatorSearch: React.FC = () => {
               >
                 <Box padding={4} paddingBottom={0}>
                   <NavigatorSearchInput
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore - seems like a TS bug
+                    // @ts-expect-error - seems like a TS bug, works in 5.0.4, doesn't in 5.4.x
                     ref={input}
                     mode={mode}
                     value={query}

@@ -651,19 +651,3 @@ export const fuzzySearch = <T>(array: T[], query: string | undefined, keys: stri
     .filter(({ score }) => (query ? score !== 1 : 0))
     .map(({ item }) => item);
 };
-
-export const score = (text: string, search: string): number => {
-  const fuse = new Fuse([text], {
-    includeScore: true,
-    threshold: 0.3,
-  });
-
-  const result = fuse.search(search);
-
-  if (result.length > 0) {
-    // includeScore:true, so score is always present
-    return result[0].score!;
-  }
-
-  return 1;
-};

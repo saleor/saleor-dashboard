@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Searching for countries and other items is now improved, making it easier to find what you are looking for. This enhancement comes from migrating the library and reimplementing the search scoring logic.
+Searching for countries and other items is now more efficient, making it easier to find what you need. Additionally, the Dashboard Navigator UI has been improved to match the rest of the application, providing a more consistent experience.
