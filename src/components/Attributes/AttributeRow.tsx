@@ -5,6 +5,8 @@ import ExtendedAttributeRow from "@dashboard/components/Attributes/ExtendedAttri
 import { attributeRowMessages } from "@dashboard/components/Attributes/messages";
 import { SwatchRow } from "@dashboard/components/Attributes/SwatchRow";
 import {
+  booleanAttrValueToValue,
+  getBooleanDropdownOptions,
   getErrorMessage,
   getFileChoice,
   getMultiChoices,
@@ -17,7 +19,7 @@ import FileUploadField from "@dashboard/components/FileUploadField";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import SortableChipsField from "@dashboard/components/SortableChipsField";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
-import { Box, Input, Text, Toggle } from "@saleor/macaw-ui-next";
+import { Box, Input, Select, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -195,14 +197,25 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
     case AttributeInputTypeEnum.BOOLEAN:
       return (
         <BasicAttributeRow label={attribute.label}>
-          <Box as="li" display="flex" gap={2} alignItems="center" padding={1}>
+          <Box
+            as="li"
+            display="flex"
+            gap={2}
+            alignItems="center"
+            justifyContent="flex-end"
+            padding={1}
+          >
             <Box data-test-id="attribute-value">
               <Box display="flex" gap={0.5} flexDirection="column" alignItems="flex-end">
-                <Toggle
+                <Select
                   name={`attribute:${attribute.label}`}
-                  onPressedChange={checked => onChange(attribute.id, checked)}
-                  pressed={JSON.parse(attribute.value[0] ?? "false")}
+                  value={booleanAttrValueToValue(attribute.value[0])}
+                  onChange={value =>
+                    onChange(attribute.id, value === "unset" ? undefined : value === "true")
+                  }
+                  options={getBooleanDropdownOptions(intl)}
                   id={`attribute:${attribute.label}`}
+                  disabled={disabled}
                 />
                 <Text size={2} color="critical1">
                   {getErrorMessage(error, intl)}

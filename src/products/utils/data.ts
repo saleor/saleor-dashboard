@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import {
-  getDefaultAttributeValues,
   getSelectedAttributeValues,
   mergeChoicesWithValues,
 } from "@dashboard/attributes/utils/data";
@@ -106,7 +105,7 @@ export function getAttributeInputFromAttributes(
     },
     id: attribute.id,
     label: attribute.name,
-    value: getDefaultAttributeValues(attribute),
+    value: [],
   }));
 }
 
