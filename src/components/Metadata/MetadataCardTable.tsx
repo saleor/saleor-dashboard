@@ -95,7 +95,7 @@ export const MetadataCardTable = ({ data, onChange, readonly = false }: Metadata
                   name={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
                   onChange={onChange}
                   value={field.value}
-                  style={{ color: vars.colors.text.default1 }}
+                  color="default1"
                 />
               </TableCell>
               {!readonly && (
