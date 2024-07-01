@@ -67,8 +67,8 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
           data: {
             ...cell.data,
             value: props.choices.find(c => c.value === event.target.value) ?? {
-              label: event.target.value,
-              value: event.target.value,
+              label: event.target.value ?? "",
+              value: event.target.value ?? "",
             },
           },
         });
