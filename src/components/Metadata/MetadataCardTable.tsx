@@ -74,7 +74,7 @@ export const MetadataCardTable = ({ data, onChange, readonly = false }: Metadata
                   onChange={onChange}
                   value={field.key}
                   readOnly={readonly}
-                  style={{ color: vars.colors.text.default1 }}
+                  color="default1"
                   fontWeight="bold"
                 />
               </TableCell>
