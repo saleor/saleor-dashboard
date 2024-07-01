@@ -6,7 +6,7 @@ import { getModePlaceholder, getModeSymbol } from "./modes/utils";
 import { QuickSearchMode } from "./types";
 
 interface NavigatorSearchInputProps
-  extends Omit<InputProps, "size" | "height" | "width" | "label"> {
+  extends Omit<InputProps, "size" | "height" | "width" | "label" | "as" | "type" | "color"> {
   mode: QuickSearchMode;
 }
 

@@ -27,7 +27,7 @@ import useQuickSearch from "./useQuickSearch";
 const navigatorHotkey = "ctrl+k, command+k";
 const navigatorNotificationStorageKey = "notifiedAboutNavigator";
 
-const Catalog = ({
+const Sections = ({
   actions,
   intl,
   getItemProps,
@@ -173,20 +173,19 @@ const NavigatorSearch: React.FC = () => {
               >
                 <Box padding={4} paddingBottom={0}>
                   <NavigatorSearchInput
-                    // @ts-expect-error - seems like a TS bug, works in 5.0.4, doesn't in 5.4.x
-                    ref={input}
                     mode={mode}
                     value={query}
                     {...getInputProps({
                       value: query,
                     })}
+                    ref={input}
                   />
                 </Box>
 
                 {hasAnything && <Divider marginBottom={0} />}
 
                 <Box padding={4} height="100%" overflowY="auto">
-                  <Catalog
+                  <Sections
                     actions={actions}
                     intl={intl}
                     getItemProps={getItemProps}
