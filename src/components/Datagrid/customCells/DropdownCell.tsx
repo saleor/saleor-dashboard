@@ -12,7 +12,7 @@ import pick from "lodash/pick";
 import React from "react";
 
 export type DropdownCellGetSuggestionsFn = (text: string) => Promise<Option[]>;
-interface DropdownCellProps {
+export interface DropdownCellProps {
   readonly choices?: Option[];
   readonly update?: DropdownCellGetSuggestionsFn;
   readonly kind: "dropdown-cell";
