@@ -11,7 +11,6 @@ export interface QuickSearchAction {
 }
 
 export interface QuickSearchActionInput extends QuickSearchAction {
-  score: number;
   text: string;
 }
 

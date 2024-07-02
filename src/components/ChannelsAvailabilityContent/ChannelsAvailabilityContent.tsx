@@ -1,8 +1,8 @@
 import { Channel } from "@dashboard/channels/utils";
 import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
 import Hr from "@dashboard/components/Hr";
+import { fuzzySearch } from "@dashboard/misc";
 import { TextField, Typography } from "@material-ui/core";
-import { filter } from "fuzzaldrin";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -35,7 +35,7 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
     defaultMessage: "Search through channels",
   });
   const [query, onQueryChange] = React.useState("");
-  const filteredChannels = filter(channels, query, { key: "name" });
+  const searchResults = fuzzySearch(channels, query, ["name"]);
 
   return (
     <div className={classes.content}>
@@ -82,8 +82,8 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
           className={classes.scrollArea}
           data-test-id="manage-products-channels-availiability-list"
         >
-          {filteredChannels?.length ? (
-            filteredChannels.map(option => (
+          {searchResults.length ? (
+            searchResults.map(option => (
               <div key={option.id} className={classes.option} data-test-id="channel-row">
                 <ControlledCheckbox
                   checked={isSelected(option)}

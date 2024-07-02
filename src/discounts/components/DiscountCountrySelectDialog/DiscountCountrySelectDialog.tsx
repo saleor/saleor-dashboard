@@ -9,6 +9,7 @@ import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { CountryWithCodeFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { fuzzySearch } from "@dashboard/misc";
 import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle";
 import {
   Dialog,
@@ -20,7 +21,6 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { filter } from "fuzzaldrin";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -111,9 +111,7 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
               <DialogContent className={scrollableDialogClasses.scrollArea}>
                 <ResponsiveTable>
                   <TableBody>
-                    {filter(countries, data.query, {
-                      key: "country",
-                    }).map(country => {
+                    {fuzzySearch(countries, data.query, ["country"]).map(country => {
                       const isChecked = countrySelectionMap[country.code];
 
                       return (
