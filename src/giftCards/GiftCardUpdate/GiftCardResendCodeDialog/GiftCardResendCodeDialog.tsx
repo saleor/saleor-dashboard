@@ -1,9 +1,9 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { useChannelsSearch } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
+import { Combobox } from "@dashboard/components/Combobox";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import { IMessage } from "@dashboard/components/messages";
-import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { useChannelsQuery, useGiftCardResendMutation } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
@@ -112,14 +112,16 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
         <>
           <Typography>{intl.formatMessage(messages.description)}</Typography>
           <VerticalSpacer />
-          <SingleAutocompleteSelectField
-            choices={mapSlugNodeToChoice(filteredChannels)}
-            name="channelSlug"
+          <Combobox
             label={intl.formatMessage(messages.sendToChannelSelectLabel)}
-            value={data?.channelSlug}
+            options={mapSlugNodeToChoice(filteredChannels)}
+            fetchOptions={onQueryChange}
+            name="channelSlug"
+            value={{
+              label: channels.find(getBySlug(data?.channelSlug))?.name,
+              value: data?.channelSlug,
+            }}
             onChange={change}
-            displayValue={channels.find(getBySlug(data?.channelSlug))?.name}
-            fetchChoices={onQueryChange}
           />
           <VerticalSpacer />
           <ControlledCheckbox
