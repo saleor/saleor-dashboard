@@ -1,7 +1,7 @@
 import CardTitle from "@dashboard/components/CardTitle";
+import { Combobox } from "@dashboard/components/Combobox";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { Locale, localeNames } from "@dashboard/components/Locale";
-import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
 import { capitalize } from "@dashboard/misc";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import React from "react";
@@ -35,12 +35,7 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleCha
         })}
       />
       <CardContent>
-        <SingleAutocompleteSelectField
-          choices={Object.values(Locale).map(locale => ({
-            label: capitalize(localeNames[locale]),
-            value: locale,
-          }))}
-          displayValue={localeNames[locale]}
+        <Combobox
           helperText={intl.formatMessage({
             id: "JJgJwi",
             defaultMessage: "Selecting this will change the language of your dashboard",
@@ -49,10 +44,19 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleCha
             id: "mr9jbO",
             defaultMessage: "Preferred Language",
           })}
+          options={Object.values(Locale).map(locale => ({
+            label: capitalize(localeNames[locale]),
+            value: locale,
+          }))}
+          fetchOptions={() => undefined}
           name="locale"
-          value={locale}
+          value={{
+            label: localeNames[locale],
+            value: locale,
+          }}
           onChange={event => handleLocaleChange(event.target.value)}
         />
+
         <FormSpacer />
         <Typography>
           <FormattedMessage
