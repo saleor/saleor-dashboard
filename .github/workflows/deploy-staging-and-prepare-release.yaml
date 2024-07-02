@@ -140,8 +140,8 @@ jobs:
         with:
           CHECK_ID: ${{ steps.create-check.outputs.CHECK_ID }}
           CHECK_NAME: "Deploy_staging"
-          STATUS: "${{ steps.deploy.outcome }}"
-          CONCLUSION: "completed"
+          STATUS: "completed"
+          CONCLUSION: "${{ steps.deploy.outcome }}" 
           TITLE: "Deploy staging"
           SUMMARY: "Deploy finished with status ${{ steps.deploy.outcome }}. To check details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
