@@ -51,8 +51,8 @@ runs:
       uses: ./.github/actions/prepare-api-variables
       with:
         MODE: ${{ inputs.MODE }}
-        VERSION: ${{ inputs.VERSION || ''}} 
-  
+        VERSION: ${{ inputs.VERSION || ''}}
+
     - name: Generate backup
       id: backup
       uses: ./.github/actions/prepare-backups-variables

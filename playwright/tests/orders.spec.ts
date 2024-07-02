@@ -6,6 +6,7 @@ import { DraftOrdersPage } from "@pages/draftOrdersPage";
 import { AddressForm } from "@pages/forms/addressForm";
 import { FulfillmentPage } from "@pages/fulfillmentPage";
 import { OrdersPage } from "@pages/ordersPage";
+import { RefundPage } from "@pages/refundPage";
 import { expect, test } from "@playwright/test";
 
 test.use({ storageState: "./playwright/.auth/admin.json" });
@@ -16,6 +17,7 @@ let fulfillmentPage: FulfillmentPage;
 let addressDialog: AddressDialog;
 let addressForm: AddressForm;
 let addressesListPage: AddressesListPage;
+let refundPage: RefundPage;
 
 test.beforeEach(({ page }) => {
   ordersPage = new OrdersPage(page);
@@ -24,6 +26,7 @@ test.beforeEach(({ page }) => {
   addressDialog = new AddressDialog(page);
   addressesListPage = new AddressesListPage(page);
   addressForm = new AddressForm(page);
+  refundPage = new RefundPage(page);
 });
 
 const variantSKU = PRODUCTS.productAvailableWithTransactionFlow.variant1sku;
@@ -251,4 +254,37 @@ test("TC: SALEOR_84 Create draft order @e2e @draft", async () => {
   await draftOrdersPage.expectSuccessBanner();
   await draftOrdersPage.clickFinalizeButton();
   await draftOrdersPage.expectSuccessBannerMessage("finalized");
+});
+
+test("TC: SALEOR_191 Refund products from the fully paid order @e2e @refunds", async () => {
+  const order = ORDERS.fullyPaidOrdersWithSingleTransaction.first;
+
+  await ordersPage.goToExistingOrderPage(order.id);
+  await ordersPage.clickAddRefundButton();
+  await ordersPage.orderRefundDialog.pickLineItemsRefund();
+  await ordersPage.orderRefundModal.waitFor({ state: "hidden" });
+  await refundPage.expectLineItemsRefundPageOpen(order.id);
+  await refundPage.pickAllProductQuantityToRefund(order.lineItems[0].name);
+
+  const productRow = await refundPage.getProductRow(order.lineItems[0].name);
+
+  expect(productRow.locator(refundPage.productQuantityInput)).toHaveValue(
+    order.lineItems[0].quantity,
+  );
+
+  const refundReason = "Expectations not met";
+
+  await refundPage.inputProductLineQuantity(order.lineItems[1].name, "1");
+  await refundPage.clickLineRefundReasonButton(order.lineItems[0].name);
+  await refundPage.addLineRefundReasonDialog.provideLineRefundReason("Item is damaged");
+  await refundPage.addLineRefundReasonDialog.submitLineRefundReason();
+  await refundPage.provideRefundReason(refundReason);
+  await refundPage.saveDraft();
+  await refundPage.expectSuccessBanner();
+  await ordersPage.goToExistingOrderPage(order.id);
+  await ordersPage.orderRefundSection.waitFor({ state: "visible" });
+  await ordersPage.assertRefundOnList(refundReason);
+  await ordersPage.clickEditRefundButton(refundReason);
+  await refundPage.transferFunds();
+  await refundPage.expectSuccessBannerMessage("Refund has been sent");
 });

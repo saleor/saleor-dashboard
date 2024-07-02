@@ -24,6 +24,7 @@ export const OrderTransactionReason: React.FC<OrderTransactionReasonProps> = ({
           <FormattedMessage {...transactionRefundReasonMessages.reasonForRefund} />
         </Text>
         <Textarea
+          data-test-id="refund-reason-input"
           placeholder={intl.formatMessage(transactionRefundReasonMessages.optionalPlaceholder)}
           size="medium"
           rows={4}
