@@ -10,6 +10,7 @@ import {
 import { Node, SlugNode } from "@dashboard/types";
 import { ThemeType } from "@saleor/macaw-ui";
 import { DefaultTheme, ThemeTokensValues } from "@saleor/macaw-ui-next";
+import Fuse from "fuse.js";
 import uniqBy from "lodash/uniqBy";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
@@ -633,3 +634,17 @@ const getAllRemovedRowsBeforeRowIndex = (rowIndex: number, removedRowsIndexs: nu
 
 export const getDatagridRowDataIndex = (rowIndex: number, removedRowsIndexs: number[]) =>
   rowIndex + getAllRemovedRowsBeforeRowIndex(rowIndex, removedRowsIndexs).length;
+
+export const fuzzySearch = <T>(array: T[], query: string | undefined, keys: string[]) => {
+  if (!query) {
+    return array;
+  }
+
+  const fuse = new Fuse(array, {
+    keys,
+    includeScore: true,
+    threshold: 0.3,
+  });
+
+  return fuse.search(query.toLocaleLowerCase()).map(({ item }) => item);
+};

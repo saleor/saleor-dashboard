@@ -5,16 +5,14 @@ import { customerAddUrl } from "@dashboard/customers/urls";
 import { voucherAddUrl } from "@dashboard/discounts/urls";
 import { OrderDraftCreateMutation } from "@dashboard/graphql";
 import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
+import { fuzzySearch } from "@dashboard/misc";
 import { permissionGroupAddUrl } from "@dashboard/permissionGroups/urls";
 import { productAddUrl } from "@dashboard/products/urls";
-import { score } from "fuzzaldrin";
 import { IntlShape } from "react-intl";
 
 import { QuickSearchActionInput, QuickSearchMode } from "../../types";
 import messages from "../messages";
-import { sortScores } from "../utils";
 
-const threshold = 0.05;
 const maxActions = 5;
 
 interface Command {
@@ -95,10 +93,9 @@ export function searchInCommands(
     },
   ];
 
-  return actions.map(action => ({
+  return fuzzySearch(actions, search, ["label"]).map(action => ({
     label: action.label,
     onClick: action.onClick,
-    score: score(action.label, search),
     text: action.label,
     type: "action",
   }));
@@ -111,10 +108,7 @@ function getCommandModeActions(
   createOrder: MutationFunction<OrderDraftCreateMutation, {}>,
   setMode: (mode: QuickSearchMode) => void,
 ): QuickSearchActionInput[] {
-  return [...searchInCommands(query, intl, navigate, createOrder, setMode)]
-    .filter(action => action.score >= threshold)
-    .sort(sortScores)
-    .slice(0, maxActions);
+  return [...searchInCommands(query, intl, navigate, createOrder, setMode)].slice(0, maxActions);
 }
 
 export default getCommandModeActions;

@@ -1455,6 +1455,10 @@
     "context": "checkbox gift cards label",
     "string": "Automatically fulfill non shippable gift cards"
   },
+  "7WEeNq": {
+    "context": "select label",
+    "string": "True"
+  },
   "7WzUxn": {
     "context": "staff member status",
     "string": "Inactive"
@@ -5974,6 +5978,10 @@
   "b088Xv": {
     "string": "App doesn't provide a description."
   },
+  "b1j4K6": {
+    "context": "select label",
+    "string": "False"
+  },
   "b1t9bM": {
     "context": "empty headers text",
     "string": "No custom request headers created for this webhook. Use the button below to add new custom request header."
@@ -7259,6 +7267,10 @@
   "k5lHFp": {
     "context": "app data privacy link",
     "string": "Learn more about data privacy"
+  },
+  "k62BKw": {
+    "context": "select label",
+    "string": "Unset"
   },
   "k6WDZl": {
     "context": "attribute is visible",
