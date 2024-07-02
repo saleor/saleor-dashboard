@@ -1,5 +1,5 @@
 import CardTitle from "@dashboard/components/CardTitle";
-import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
+import { Combobox } from "@dashboard/components/Combobox";
 import { TaxClassBaseFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { taxesMessages } from "@dashboard/taxes/messages";
@@ -8,8 +8,6 @@ import { Card, CardContent } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
-
-import { ProductTypeForm } from "../ProductTypeDetailsPage/ProductTypeDetailsPage";
 
 interface ProductTypeTaxesProps {
   data: {
@@ -39,22 +37,23 @@ const ProductTypeTaxes: React.FC<ProductTypeTaxesProps> = props => {
     <Card className={classes.root}>
       <CardTitle title={intl.formatMessage(sectionNames.taxes)} />
       <CardContent>
-        <SingleAutocompleteSelectField
-          emptyOption
+        <Combobox
+          // emptyOption
+          autoComplete="off"
           disabled={disabled}
-          displayValue={taxClassDisplayName}
           label={intl.formatMessage(taxesMessages.taxClass)}
-          name={"taxClassId" as keyof ProductTypeForm}
-          onChange={onChange}
-          value={data.taxClassId}
-          choices={taxClasses.map(choice => ({
+          options={taxClasses.map(choice => ({
             label: choice.name,
             value: choice.id,
           }))}
-          InputProps={{
-            autoComplete: "off",
+          fetchOptions={() => undefined}
+          fetchMore={onFetchMore}
+          name="taxClassId"
+          value={{
+            label: taxClassDisplayName,
+            value: data.taxClassId,
           }}
-          {...onFetchMore}
+          onChange={onChange}
         />
       </CardContent>
     </Card>
