@@ -27,7 +27,6 @@ export function searchInCustomers(
 
       return false;
     },
-    score: 1,
     type: "customer",
   }));
 }
