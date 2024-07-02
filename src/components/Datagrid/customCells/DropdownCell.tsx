@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Combobox } from "@dashboard/components/Combobox";
 import {
   CustomCell,
@@ -25,7 +24,7 @@ export type DropdownCell = CustomCell<DropdownCellProps>;
 
 export const emptyDropdownCellValue: Option = {
   label: "",
-  value: null,
+  value: "",
 };
 
 const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
@@ -36,7 +35,7 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
 
   const getChoices = React.useCallback(
     async (text: string) => {
-      setData(await cell.data.update(text));
+      setData((await cell.data?.update?.(text)) ?? []);
     },
     [cell.data],
   );
@@ -44,7 +43,7 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
   const userProps = pick(cell.data, ["allowCustomValues", "emptyOption"]);
   const props = cell.data.update
     ? { fetchOnFocus: true, fetchChoices: getChoices, choices: data }
-    : { choices: cell.data.choices };
+    : { fetchOnFocus: false, fetchChoices: () => Promise.resolve([]), choices: cell.data.choices };
 
   return (
     <Combobox
@@ -56,7 +55,7 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
         loading: false,
         onFetchMore: () => undefined,
       }}
-      options={props.choices}
+      options={props.choices ?? []}
       value={cell.data.value}
       fetchOptions={props.fetchChoices}
       loading={false}
@@ -66,7 +65,7 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
           ...cell,
           data: {
             ...cell.data,
-            value: props.choices.find(c => c.value === event.target.value) ?? {
+            value: props.choices?.find(c => c.value === event.target.value) ?? {
               label: event.target.value ?? "",
               value: event.target.value ?? "",
             },
@@ -86,7 +85,7 @@ export const dropdownCellRenderer: CustomRenderer<DropdownCell> = {
 
     ctx.fillStyle = theme.textDark;
     ctx.fillText(
-      value.label,
+      value?.label ?? "",
       rect.x + 8,
       rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
     );
