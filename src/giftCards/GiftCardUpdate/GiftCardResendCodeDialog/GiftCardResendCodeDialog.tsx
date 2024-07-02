@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import ActionDialog from "@dashboard/components/ActionDialog";
+import NewActionDialog from "@dashboard/components/ActionDialog";
 import { useChannelsSearch } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import { IMessage } from "@dashboard/components/messages";
@@ -94,7 +94,7 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
   useEffect(reset, [consentSelected]);
 
   return (
-    <ActionDialog
+    <NewActionDialog
       maxWidth="sm"
       open={open}
       onConfirm={submit}
@@ -121,7 +121,6 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
             displayValue={channels.find(getBySlug(data?.channelSlug))?.name}
             fetchChoices={onQueryChange}
           />
-          <VerticalSpacer />
           <ControlledCheckbox
             name="differentMailConsent"
             label={intl.formatMessage(messages.consentCheckboxLabel)}
@@ -130,7 +129,6 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
               setConsentSelected(!!event.target.value)
             }
           />
-          <VerticalSpacer />
           <TextField
             disabled={!consentSelected}
             error={!!formErrors?.email}
@@ -143,7 +141,7 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
           />
         </>
       )}
-    </ActionDialog>
+    </NewActionDialog>
   );
 };
 

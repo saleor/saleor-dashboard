@@ -7,7 +7,7 @@ import BackButton from "../BackButton";
 import { DashboardModal } from "../Modal";
 import { ActionDialogVariant, Size } from "./types";
 
-export interface ActionDialogProps extends DialogProps {
+export interface NewActionDialogProps extends DialogProps {
   children?: React.ReactNode;
   confirmButtonLabel?: string;
   confirmButtonState: ConfirmButtonTransitionState;
@@ -19,7 +19,7 @@ export interface ActionDialogProps extends DialogProps {
   onConfirm: () => any;
 }
 
-const ActionDialog: React.FC<ActionDialogProps> = props => {
+const NewActionDialog: React.FC<NewActionDialogProps> = props => {
   const { children, open, title, onClose, variant, maxWidth, ...rest } = props;
 
   return (
@@ -46,8 +46,8 @@ const ActionDialog: React.FC<ActionDialogProps> = props => {
   );
 };
 
-ActionDialog.defaultProps = {
+NewActionDialog.defaultProps = {
   maxWidth: "xs",
 };
-ActionDialog.displayName = "ActionDialog";
-export default ActionDialog;
+NewActionDialog.displayName = "ActionDialog";
+export default NewActionDialog;
