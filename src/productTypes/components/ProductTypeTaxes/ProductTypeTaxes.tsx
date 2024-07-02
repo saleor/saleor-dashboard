@@ -38,7 +38,7 @@ const ProductTypeTaxes: React.FC<ProductTypeTaxesProps> = props => {
       <CardTitle title={intl.formatMessage(sectionNames.taxes)} />
       <CardContent>
         <Combobox
-          // emptyOption
+          allowEmptyValue
           autoComplete="off"
           disabled={disabled}
           label={intl.formatMessage(taxesMessages.taxClass)}

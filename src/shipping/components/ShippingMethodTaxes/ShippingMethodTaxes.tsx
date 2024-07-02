@@ -36,7 +36,7 @@ const ShippingMethodTaxes: React.FC<ShippingMethodTaxesProps> = props => {
       <CardTitle title={intl.formatMessage(sectionNames.taxes)} />
       <CardContent>
         <Combobox
-          // emptyOption
+          allowEmptyValue
           autoComplete="off"
           data-test-id="taxes"
           disabled={disabled}
