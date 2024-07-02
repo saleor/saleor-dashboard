@@ -1,9 +1,9 @@
 // @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
+import { Combobox } from "@dashboard/components/Combobox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
 import { OrderErrorFragment, WarehouseFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
@@ -95,16 +95,19 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
                   className={classes.selectCcontainer}
                   data-test-id="cancel-fulfillment-select-field"
                 >
-                  <SingleAutocompleteSelectField
-                    choices={choices}
-                    displayValue={displayValue}
+                  <Combobox
                     label={intl.formatMessage({
                       id: "aHc89n",
                       defaultMessage: "Select Warehouse",
                       description: "select warehouse to restock items",
                     })}
+                    options={choices}
+                    fetchOptions={() => undefined}
                     name="warehouseId"
-                    value={formData.warehouseId}
+                    value={{
+                      label: displayValue,
+                      value: formData.warehouseId,
+                    }}
                     onChange={handleChange}
                   />
                 </div>
