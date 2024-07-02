@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import { ExtendedFormHelperTextProps } from "@dashboard/channels/components/ChannelForm/types";
 import { FetchMoreProps } from "@dashboard/types";
 import {
   InputBase,
@@ -41,7 +40,7 @@ export interface SingleAutocompleteSelectFieldProps extends Partial<FetchMorePro
   fetchChoices?: (value: string) => void;
   onChange: (event: React.ChangeEvent<any>) => void;
   fetchOnFocus?: boolean;
-  FormHelperTextProps?: ExtendedFormHelperTextProps;
+  FormHelperTextProps?: any;
   nakedInput?: boolean;
   onBlur?: () => void;
   popperPlacement?: PopperPlacementType;
