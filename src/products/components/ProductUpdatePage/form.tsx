@@ -67,13 +67,13 @@ export function useProductUpdateForm(
     confirmLeave: true,
     formId: PRODUCT_UPDATE_FORM_ID,
   });
-
   const {
     handleChange,
     triggerChange,
     toggleValues,
     data: formData,
     setIsSubmitDisabled,
+    cleanChanged,
   } = form;
   const { locale } = useLocale();
 
@@ -194,7 +194,7 @@ export function useProductUpdateForm(
   };
 
   const getSubmitData = async (): Promise<ProductUpdateSubmitData> => ({
-    ...data,
+    ...form.changedData,
     ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),
     attributes: mergeAttributes(
       attributes.data,
@@ -210,7 +210,7 @@ export function useProductUpdateForm(
         touchedChannels.current.includes(listing.channelId),
       ),
     },
-    description: await richText.getValue(),
+    description: richText.isDirty ? await richText.getValue() : undefined,
     variants: variants.current,
   });
 
@@ -231,6 +231,8 @@ export function useProductUpdateForm(
 
   const submit = useCallback(async () => {
     const result = await handleFormSubmit(await getSubmitData());
+
+    cleanChanged();
     await refetch();
 
     datagrid.setAdded(prevAdded =>

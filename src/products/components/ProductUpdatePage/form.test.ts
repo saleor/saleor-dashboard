@@ -19,30 +19,13 @@ jest.mock("@dashboard/utils/richText/useRichText", () => {
 const baseData = {
   attributes: [],
   attributesWithNewFileValue: [],
-  category: "",
   channels: {
     removeChannels: [],
     updateChannels: [],
   },
-  collections: [],
   description: undefined,
-  globalSoldUnits: 0,
-  globalThreshold: "",
-  hasPreorderEndDate: false,
-  isAvailable: false,
-  isPreorder: false,
   metadata: undefined,
-  name: "",
-  preorderEndDateTime: undefined,
   privateMetadata: undefined,
-  rating: null,
-  seoDescription: "",
-  seoTitle: "",
-  sku: "",
-  slug: "",
-  taxClassId: undefined,
-  trackInventory: false,
-  weight: "",
 };
 
 describe("useProductUpdateForm", () => {
@@ -96,6 +79,57 @@ describe("useProductUpdateForm", () => {
         removed: [],
         updates: [],
       },
+    });
+  });
+
+  it("submits form with the only data that was modified", async () => {
+    // Arrange
+    const mockOnSubmit = jest.fn();
+    const { result } = renderHook(() =>
+      useProductUpdateForm(
+        { variants: [], channelListings: [] } as unknown as ProductFragment,
+        mockOnSubmit,
+        false,
+        jest.fn(),
+        {} as UseProductUpdateFormOpts,
+      ),
+    );
+
+    // Act
+    await act(() => {
+      result.current.change({ target: { name: "slug", value: "test-slug-1" } });
+      result.current.change({ target: { name: "category", value: "test-category" } });
+      result.current.change({ target: { name: "collections", value: ["collection-1"] } });
+      result.current.change({ target: { name: "rating", value: 4 } });
+      result.current.change({ target: { name: "seoTitle", value: "seo-title-1" } });
+      result.current.change({ target: { name: "seoDescription", value: "seo-desc-1" } });
+    });
+
+    await act(async () => {
+      await result.current.submit();
+    });
+
+    expect(mockOnSubmit).toHaveBeenCalledWith({
+      attributes: [],
+      attributesWithNewFileValue: [],
+      channels: {
+        removeChannels: [],
+        updateChannels: [],
+      },
+      description: undefined,
+      metadata: undefined,
+      privateMetadata: undefined,
+      slug: "test-slug-1",
+      category: "test-category",
+      collections: ["collection-1"],
+      variants: {
+        added: [],
+        removed: [],
+        updates: [],
+      },
+      rating: 4,
+      seoTitle: "seo-title-1",
+      seoDescription: "seo-desc-1",
     });
   });
 });
