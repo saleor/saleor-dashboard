@@ -10,6 +10,8 @@ import { OrderCreateDialog } from "@pages/dialogs/orderCreateDialog";
 import { ShippingAddressDialog } from "@pages/dialogs/shippingMethodDialog";
 import { Page } from "@playwright/test";
 
+import { OrderRefundDialog } from "./dialogs/orderRefundDialog";
+
 export class OrdersPage extends BasePage {
   orderCreateDialog: OrderCreateDialog;
 
@@ -29,6 +31,8 @@ export class OrdersPage extends BasePage {
 
   rightSideDetailsPage: RightSideDetailsPage;
 
+  orderRefundDialog: OrderRefundDialog;
+
   constructor(
     page: Page,
     readonly createOrderButton = page.getByTestId("create-order-button"),
@@ -47,8 +51,12 @@ export class OrdersPage extends BasePage {
     readonly salesChannel = page.getByTestId("salesChannel"),
     readonly addShippingCarrierLink = page.getByTestId("add-shipping-carrier"),
     readonly finalizeButton = page.getByTestId("button-bar-confirm"),
-
+    readonly addRefundButton = page.getByTestId("add-new-refund-button"),
     readonly customerEmail = page.getByTestId("customer-email"),
+    readonly orderRefundModal = page.getByTestId("order-refund-dialog"),
+    readonly orderRefundSection = page.getByTestId("order-refund-section"),
+    readonly orderRefundList = page.getByTestId("refund-list"),
+    readonly editRefundButton = page.getByTestId("edit-refund-button"),
   ) {
     super(page);
     this.markOrderAsPaidDialog = new MarkOrderAsPaidDialog(page);
@@ -60,6 +68,7 @@ export class OrdersPage extends BasePage {
     this.manualTransactionDialog = new ManualTransactionDialog(page);
     this.addTrackingDialog = new AddTrackingDialog(page);
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
+    this.orderRefundDialog = new OrderRefundDialog(page);
   }
 
   async clickCreateOrderButton() {
@@ -104,6 +113,23 @@ export class OrdersPage extends BasePage {
 
     await console.log("Navigating to order details view: " + orderLink);
     await this.page.goto(orderLink);
-    await this.waitForGrid();
+    await this.waitForDOMToFullyLoad();
+  }
+
+  async clickAddRefundButton() {
+    await this.addRefundButton.click();
+    await this.orderRefundModal.waitFor({ state: "visible" });
+  }
+
+  async clickEditRefundButton(refundInfo: string) {
+    const refund = await this.orderRefundList.locator("tr").filter({ hasText: refundInfo });
+
+    await refund.locator(this.editRefundButton).click();
+  }
+
+  async assertRefundOnList(refundInfo: string) {
+    const refund = await this.orderRefundList.locator("tr").filter({ hasText: refundInfo });
+
+    await refund.waitFor({ state: "visible" });
   }
 }

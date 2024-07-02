@@ -27,7 +27,7 @@ export const OrderRefundDialog = ({
 
   return (
     <DashboardModal open={open} onChange={onClose}>
-      <DashboardModal.Content __width="400px">
+      <DashboardModal.Content __width="400px" data-test-id="order-refund-dialog">
         <DashboardModal.Title>
           {intl.formatMessage(orderRefundDialogMesages.title)}
         </DashboardModal.Title>
@@ -71,10 +71,13 @@ export const OrderRefundDialog = ({
           </Box>
         </RadioTiles>
         <DashboardModal.Actions>
-          <Button onClick={onClose} variant="secondary">
+          <Button onClick={onClose} variant="secondary" data-test-id="back-button">
             <Text fontWeight="medium">{intl.formatMessage(buttonMessages.back)}</Text>
           </Button>
-          <Button onClick={selectedRefundType === "standard" ? onStandardRefund : onManualRefund}>
+          <Button
+            onClick={selectedRefundType === "standard" ? onStandardRefund : onManualRefund}
+            data-test-id="proceed-button"
+          >
             <Text fontWeight="medium" color="buttonDefaultPrimary">
               {intl.formatMessage(buttonMessages.proceed)}
             </Text>

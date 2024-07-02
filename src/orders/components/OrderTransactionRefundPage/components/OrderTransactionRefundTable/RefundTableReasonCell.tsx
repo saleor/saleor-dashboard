@@ -21,6 +21,7 @@ export const RefundTableReasonCell: React.FC<RefundTableReasonCellProps> = ({
   return (
     <GridTable.Cell>
       <Button
+        data-test-id="line-refund-reason-button"
         variant="secondary"
         whiteSpace="nowrap"
         onClick={() => onEditReasonModal(index)}
