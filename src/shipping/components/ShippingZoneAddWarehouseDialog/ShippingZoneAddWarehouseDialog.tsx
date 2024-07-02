@@ -4,6 +4,7 @@ import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/componen
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Hr from "@dashboard/components/Hr";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { AddressTypeInput } from "@dashboard/customers/types";
 import { CountryWithCodeFragment, WarehouseErrorFragment } from "@dashboard/graphql";
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
@@ -15,8 +16,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { DialogProps } from "@dashboard/types";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
-import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { TextField } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -45,16 +45,7 @@ const initialForm: ShippingZoneAddWarehouseDialogSubmitData = {
   streetAddress1: "",
   streetAddress2: "",
 };
-const useStyles = makeStyles(
-  {
-    overflow: {
-      overflowY: "visible",
-    },
-  },
-  {
-    name: "ShippingZoneAddWarehouseDialog",
-  },
-);
+
 const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogProps> = ({
   confirmButtonState,
   countries,
@@ -64,7 +55,6 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
   onClose,
   onSubmit,
 }) => {
-  const classes = useStyles({});
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps("");
   const { errors: validationErrors, submit: handleSubmit } = useAddressValidation(onSubmit);
   const errors = useModalDialogErrors([...apiErrors, ...validationErrors], open);
@@ -75,31 +65,26 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
   const countryChoices = mapCountriesToChoices(countries);
 
   return (
-    <Dialog
-      classes={{ paper: classes.overflow }}
-      onClose={onClose}
-      open={open}
-      fullWidth
-      maxWidth="sm"
-    >
-      <DialogTitle disableTypography>
-        <FormattedMessage
-          id="yzYXW/"
-          defaultMessage="Create New Warehouse"
-          description="header, dialog"
-        />
-      </DialogTitle>
-      <Form initial={initialForm} onSubmit={handleSubmit}>
-        {({ change, data }) => {
-          const handleCountrySelect = createSingleAutocompleteSelectHandler(
-            change,
-            setCountryDisplayName,
-            countryChoices,
-          );
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content __maxWidth={600} __width="calc(100% - 64px)">
+        <DashboardModal.Title>
+          <FormattedMessage
+            id="yzYXW/"
+            defaultMessage="Create New Warehouse"
+            description="header, dialog"
+          />
+        </DashboardModal.Title>
 
-          return (
-            <>
-              <DialogContent className={classes.overflow}>
+        <Form initial={initialForm} onSubmit={handleSubmit}>
+          {({ change, data }) => {
+            const handleCountrySelect = createSingleAutocompleteSelectHandler(
+              change,
+              setCountryDisplayName,
+              countryChoices,
+            );
+
+            return (
+              <>
                 <TextField
                   fullWidth
                   label={intl.formatMessage({
@@ -122,18 +107,19 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
                   onChange={change}
                   onCountryChange={handleCountrySelect}
                 />
-              </DialogContent>
-              <DialogActions>
-                <BackButton onClick={onClose} />
-                <ConfirmButton transitionState={confirmButtonState} type="submit">
-                  <FormattedMessage {...buttonMessages.create} />
-                </ConfirmButton>
-              </DialogActions>
-            </>
-          );
-        }}
-      </Form>
-    </Dialog>
+              </>
+            );
+          }}
+        </Form>
+
+        <DashboardModal.Actions>
+          <BackButton onClick={onClose} />
+          <ConfirmButton transitionState={confirmButtonState} type="submit">
+            <FormattedMessage {...buttonMessages.create} />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
