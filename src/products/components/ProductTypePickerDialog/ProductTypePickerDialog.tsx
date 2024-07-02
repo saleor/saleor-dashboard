@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import ActionDialog from "@dashboard/components/ActionDialog";
+import NewActionDialog from "@dashboard/components/ActionDialog/NewActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType,
@@ -45,7 +45,7 @@ const ProductTypePickerDialog: React.FC<ProductTypePickerDialogProps> = ({
   });
 
   return (
-    <ActionDialog
+    <NewActionDialog
       confirmButtonState={confirmButtonState}
       open={open}
       onClose={onClose}
@@ -64,7 +64,7 @@ const ProductTypePickerDialog: React.FC<ProductTypePickerDialogProps> = ({
         data-test-id="dialog-product-type"
         {...fetchMoreProductTypes}
       />
-    </ActionDialog>
+    </NewActionDialog>
   );
 };
 
