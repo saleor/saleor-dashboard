@@ -7,6 +7,7 @@ import { FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import useGiftCardTagsSearch from "@dashboard/searches/useGiftCardTagsSearch";
 import { mapEdgesToItems, mapMultiValueNodeToChoice } from "@dashboard/utils/maps";
+import { Box } from "@saleor/macaw-ui-next";
 import compact from "lodash/compact";
 import uniq from "lodash/uniq";
 import React from "react";
@@ -46,21 +47,23 @@ const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
     : intl.formatMessage(messages.placeholder);
 
   return (
-    <MultiAutocompleteSelectField
-      error={!!error}
-      helperText={getGiftCardErrorMessage(error, intl)}
-      name={name || "giftCardTag"}
-      label={label}
-      data-test-id="gift-card-tag-select-field"
-      value={values}
-      displayValues={getMultiChoices(values)}
-      choices={choices}
-      fetchChoices={search}
-      onChange={toggleChange}
-      onFetchMore={loadMore}
-      loading={result?.loading || loading}
-      allowCustomValues
-    />
+    <Box>
+      <MultiAutocompleteSelectField
+        error={!!error}
+        helperText={getGiftCardErrorMessage(error, intl)}
+        name={name || "giftCardTag"}
+        label={label}
+        data-test-id="gift-card-tag-select-field"
+        value={values}
+        displayValues={getMultiChoices(values)}
+        choices={choices}
+        fetchChoices={search}
+        onChange={toggleChange}
+        onFetchMore={loadMore}
+        loading={result?.loading || loading}
+        allowCustomValues
+      />
+    </Box>
   );
 };
 

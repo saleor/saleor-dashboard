@@ -1,6 +1,5 @@
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
-import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import TimePeriodField from "@dashboard/giftCards/components/TimePeriodField";
 import {
   GiftCardBulkCreateFormErrors,
@@ -67,7 +66,6 @@ const GiftCardCreateExpirySelect: React.FC<GiftCardCreateExpirySelectProps> = ({
       />
       {expirySelected && (
         <>
-          <VerticalSpacer spacing={2} />
           <RadioGroupField
             innerContainerClassName={classes.radioGroupContainer}
             choices={translatedOptions}
@@ -76,7 +74,6 @@ const GiftCardCreateExpirySelect: React.FC<GiftCardCreateExpirySelectProps> = ({
             value={expiryType}
             variant="inline"
           />
-          <VerticalSpacer spacing={2} />
 
           {expiryType === "EXPIRY_DATE" && (
             <TextField
@@ -119,7 +116,6 @@ const GiftCardCreateExpirySelect: React.FC<GiftCardCreateExpirySelectProps> = ({
               </div>
             </div>
           )}
-          <VerticalSpacer spacing={2} />
         </>
       )}
     </>
