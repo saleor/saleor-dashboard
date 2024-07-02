@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   CheckIfSaveIsDisabledFnType,
   FormId,
@@ -11,7 +10,9 @@ import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";
 import React, { useEffect, useState } from "react";
 
-import useStateFromProps from "./useStateFromProps";
+import useStateFromProps from "./../useStateFromProps";
+import { FormData } from "./types";
+import { useChangedData } from "./useChangedData";
 
 export interface ChangeEvent<TData = any> {
   target: {
@@ -48,6 +49,8 @@ export interface UseFormResult<TData>
   setError: (name: keyof TData, error: string | React.ReactNode) => void;
   clearErrors: (name?: keyof TData | Array<keyof TData>) => void;
   setIsSubmitDisabled: (value: boolean) => void;
+  cleanChanged: () => void;
+  changedData: TData;
 }
 
 export interface CommonUseFormResult<TData> {
@@ -61,8 +64,6 @@ export interface CommonUseFormResultWithHandlers<TData, THandlers>
   extends CommonUseFormResult<TData> {
   handlers: THandlers;
 }
-
-type FormData = Record<string, any | any[]>;
 
 function merge<T extends FormData>(prevData: T, prevState: T, data: T): T {
   return Object.keys(prevState).reduce(
@@ -93,6 +94,9 @@ function useForm<T extends FormData, TErrors>(
   const [data, setData] = useStateFromProps(initialData, {
     mergeFunc: mergeData ? merge : undefined,
   });
+
+  const { add: addChanged, clean: cleanChanged, data: changed } = useChangedData<T>(data);
+
   const isSaveDisabled = () => {
     if (checkIfSaveIsDisabled) {
       return checkIfSaveIsDisabled(data);
@@ -137,6 +141,7 @@ function useForm<T extends FormData, TErrors>(
 
     if (Array.isArray(field)) {
       handleSetChanged(true);
+      addChanged(name);
       setData({
         ...data,
         [name]: toggle(value, field, isEqual),
@@ -154,6 +159,8 @@ function useForm<T extends FormData, TErrors>(
 
     if (Array.isArray(field)) {
       handleSetChanged(true);
+      addChanged(name);
+
       setData({
         ...data,
         [name]: value,
@@ -176,6 +183,8 @@ function useForm<T extends FormData, TErrors>(
     if (!(name in data)) {
       console.error(`Unknown form field: ${name}`);
     } else {
+      addChanged(name);
+
       if (data[name] !== value) {
         handleSetChanged(true);
       }
@@ -204,6 +213,8 @@ function useForm<T extends FormData, TErrors>(
 
       return result;
     }
+
+    return [];
   }
 
   const setError = (field: keyof T, error: string | React.ReactNode) =>
@@ -217,6 +228,8 @@ function useForm<T extends FormData, TErrors>(
   };
 
   return {
+    changedData: changed,
+    cleanChanged,
     formId,
     setError,
     errors,
