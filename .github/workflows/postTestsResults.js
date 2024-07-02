@@ -5,21 +5,14 @@ const { Octokit } = require("@octokit/core");
 
 program
   .name("Send tests results")
-  .description(
-    "Get tests results from testmo and post message to slack or on release PR",
-  )
+  .description("Get tests results from testmo and post message to slack or on release PR")
   .option("--run_id <run_id>", "Testmo run id")
-  .option(
-    "--testmo_token <testmo_token>",
-    "Bearer token for authorization in testmo",
-  )
-  .option(
-    "--slack_webhook_url <slack_webhook_url>",
-    "Should send notification on slack",
-  )
+  .option("--testmo_token <testmo_token>", "Bearer token for authorization in testmo")
+  .option("--slack_webhook_url <slack_webhook_url>", "Should send notification on slack")
   .option("--environment <environment>", "Environment")
   .option("--url_to_action <url_to_action>", "Url to enter github action")
   .option("--ref_name <ref_name>", "Ref to point where tests where run")
+  .option("--additional_title <additional_title>", "Additional title, not required")
   .action(async options => {
     const runId = options.run_id;
     const testmoAuthToken = options.testmo_token;
@@ -28,17 +21,14 @@ program
       testsResults,
       options.environment,
       options.ref_name,
+      option.additional_title,
     );
 
     core.setOutput("status", testsStatus.status.toLowerCase());
     core.setOutput("message", testsStatus.message.replaceAll(/\n/g, ""));
     core.setOutput("linkToResults", testsStatus.linkToResults);
 
-    await sendMessageOnSlack(
-      testsStatus,
-      options.slack_webhook_url,
-      options.url_to_action,
-    );
+    await sendMessageOnSlack(testsStatus, options.slack_webhook_url, options.url_to_action);
   })
   .parse();
 
@@ -54,7 +44,7 @@ async function getTestsStatus(runId, testmoToken) {
   return await runResult.json();
 }
 
-function convertResults(results, environment, refName) {
+function convertResults(results, environment, refName, additionalTitle) {
   let status = results?.result?.status === 2 ? "SUCCESS" : "FAILURE";
   let message = `Tests run on environment: \n${environment} \n`;
 
@@ -90,10 +80,12 @@ function convertResults(results, environment, refName) {
 
   message += `See results at ${linkToResults}`;
 
+  const title = additionalTitle ? additionalTitle : `Automation tests run on ${refName}`
+
   return {
     status,
     message,
-    title: `Playwright tests run on ${refName}`,
+    title,
     linkToResults,
   };
 }

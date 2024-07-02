@@ -41,6 +41,7 @@ jobs:
     with:
       VERSION: ${{needs.get-environment-variables.outputs.VERSION}}
       CUSTOM_VERSION: ${{github.event.client_payload.custom_version }}
+      ADDITIONAL_TITLE: "Core automation test. !!!\n If tests fail, release PR in cloud deployments will not be created !!!"
     secrets: inherit
   
   add-tests-status-to-release-PR:
