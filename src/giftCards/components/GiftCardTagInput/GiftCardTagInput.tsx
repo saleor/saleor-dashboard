@@ -1,5 +1,4 @@
 import MultiAutocompleteSelectField from "@dashboard/components/MultiAutocompleteSelectField";
-import { SingleAutocompleteSelectFieldProps } from "@dashboard/components/SingleAutocompleteSelectField";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { GiftCardBulkCreateFormError } from "@dashboard/giftCards/GiftCardBulkCreateDialog/types";
 import { getGiftCardErrorMessage } from "@dashboard/giftCards/GiftCardUpdate/messages";
@@ -15,7 +14,8 @@ import { useIntl } from "react-intl";
 import { giftCardTagInputMessages as messages } from "./messages";
 import { getMultiChoices } from "./utils";
 
-interface GiftCardTagInputProps extends Pick<SingleAutocompleteSelectFieldProps, "name"> {
+interface GiftCardTagInputProps {
+  name: string;
   toggleChange: FormChange;
   values: string[];
   error: GiftCardBulkCreateFormError;
