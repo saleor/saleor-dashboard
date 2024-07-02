@@ -3,6 +3,7 @@ import { createCountryHandler } from "@dashboard/components/AddressEdit/createCo
 import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
+import { DashboardModal } from "@dashboard/components/Modal";
 import {
   AccountErrorFragment,
   AddressFragment,
@@ -15,8 +16,6 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { buttonMessages } from "@dashboard/intl";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
-import { Dialog, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -33,14 +32,6 @@ export interface CustomerAddressDialogProps {
   onConfirm: (data: AddressInput) => void;
 }
 
-const useStyles = makeStyles(
-  {
-    overflow: {
-      overflowY: "visible",
-    },
-  },
-  { name: "CustomerAddressDialog" },
-);
 const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
   address,
   confirmButtonState,
@@ -51,7 +42,6 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
   onClose,
   onConfirm,
 }) => {
-  const classes = useStyles();
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
     address?.country.country || "",
   );
@@ -73,46 +63,37 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
   const countryChoices = mapCountriesToChoices(countries || []);
 
   return (
-    <Dialog
-      onClose={onClose}
-      open={open}
-      classes={{ paper: classes.overflow }}
-      fullWidth
-      maxWidth="sm"
-    >
-      <Form
-        initial={initialForm}
-        onSubmit={data => {
-          setCountryDisplayName("");
-          handleSubmit(data);
-        }}
-      >
-        {({ change, set, data }) => {
-          const countrySelect = createSingleAutocompleteSelectHandler(
-            change,
-            setCountryDisplayName,
-            countryChoices,
-          );
-          const handleCountrySelect = createCountryHandler(countrySelect, set);
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content __maxWidth={600} __width="calc(100% - 64px)">
+        <DashboardModal.Title>
+          {variant === "create" ? (
+            <FormattedMessage id="W0kQd+" defaultMessage="Add Address" description="dialog title" />
+          ) : (
+            <FormattedMessage
+              id="gQGUsN"
+              defaultMessage="Edit Address"
+              description="dialog title"
+            />
+          )}
+        </DashboardModal.Title>
 
-          return (
-            <>
-              <DialogTitle disableTypography>
-                {variant === "create" ? (
-                  <FormattedMessage
-                    id="W0kQd+"
-                    defaultMessage="Add Address"
-                    description="dialog title"
-                  />
-                ) : (
-                  <FormattedMessage
-                    id="gQGUsN"
-                    defaultMessage="Edit Address"
-                    description="dialog title"
-                  />
-                )}
-              </DialogTitle>
-              <DialogContent className={classes.overflow}>
+        <Form
+          initial={initialForm}
+          onSubmit={data => {
+            setCountryDisplayName("");
+            handleSubmit(data);
+          }}
+        >
+          {({ change, set, data }) => {
+            const countrySelect = createSingleAutocompleteSelectHandler(
+              change,
+              setCountryDisplayName,
+              countryChoices,
+            );
+            const handleCountrySelect = createCountryHandler(countrySelect, set);
+
+            return (
+              <>
                 <AddressEdit
                   countries={countryChoices}
                   data={data}
@@ -121,22 +102,19 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
                   onChange={change}
                   onCountryChange={handleCountrySelect}
                 />
-              </DialogContent>
-              <DialogActions>
-                <BackButton onClick={onClose} />
-                <ConfirmButton
-                  transitionState={confirmButtonState}
-                  type="submit"
-                  data-test-id="submit"
-                >
-                  <FormattedMessage {...buttonMessages.save} />
-                </ConfirmButton>
-              </DialogActions>
-            </>
-          );
-        }}
-      </Form>
-    </Dialog>
+              </>
+            );
+          }}
+        </Form>
+
+        <DashboardModal.Actions>
+          <BackButton onClick={onClose} />
+          <ConfirmButton transitionState={confirmButtonState} type="submit" data-test-id="submit">
+            <FormattedMessage {...buttonMessages.save} />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
