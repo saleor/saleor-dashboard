@@ -34,12 +34,13 @@ export const RefundTableInputCell: React.FC<RefundTableInputCellProps> = ({
           name={`linesToRefund.${index}`}
           render={({ field: inputField }) => (
             <Input
+              data-test-id="product-quantity-input"
               {...inputField}
               __minWidth="40px"
               width="100%"
               placeholder="0"
               endAdornment={
-                <Box whiteSpace="nowrap">
+                <Box whiteSpace="nowrap" data-test-id="max-line-refund-quantity">
                   <FormattedMessage
                     {...refundTableMessages.maxToRefund}
                     values={{ value: maxQtyToRefund.toString() }}
@@ -60,6 +61,7 @@ export const RefundTableInputCell: React.FC<RefundTableInputCellProps> = ({
         />
 
         <Button
+          data-test-id="all-button"
           variant="secondary"
           size="medium"
           onClick={handleMaxRefund}

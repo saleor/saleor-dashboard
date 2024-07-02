@@ -36,6 +36,7 @@ export const OrderTransactionReasonModal = ({
         </DashboardModal.Title>
 
         <Textarea
+          data-test-id="line-refund-reason-input"
           rows={5}
           value={tempReason}
           onChange={event => setTempReason(event.target.value)}
@@ -50,7 +51,7 @@ export const OrderTransactionReasonModal = ({
               onConfirm(tempReason);
               onClose();
             }}
-            data-test-id="edit-reason-button"
+            data-test-id="confirm-button"
           >
             <FormattedMessage {...buttonMessages.confirm} />
           </Button>
