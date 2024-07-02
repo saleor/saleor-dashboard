@@ -81,7 +81,7 @@ export const OrderDetailsRefundLine: React.FC<OrderDetailsRefundLineProps> = ({
         <Box display="flex" justifyContent="flex-end">
           {isEditable ? (
             <Link to={orderTransactionRefundEditUrl(orderId, refund.id)}>
-              <Button icon={<EditIcon />} variant="secondary" />
+              <Button data-test-id="edit-refund-button" icon={<EditIcon />} variant="secondary" />
             </Link>
           ) : (
             <Tooltip>
