@@ -19,7 +19,6 @@ import { buttonMessages } from "@dashboard/intl";
 import { getById, transformAddressToAddressInput } from "@dashboard/misc";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { Divider, FormControlLabel, Typography } from "@material-ui/core";
-import { DialogHeader } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
@@ -30,7 +29,6 @@ import OrderCustomerAddressesEditForm, {
 import { dialogMessages } from "./messages";
 import OrderCustomerAddressEdit from "./OrderCustomerAddressEdit";
 import OrderCustomerAddressesSearch from "./OrderCustomerAddressesSearch";
-import { useStyles } from "./styles";
 import {
   AddressEditDialogVariant,
   OrderCustomerAddressesEditDialogOutput,
@@ -75,7 +73,6 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     orderBillingAddress,
   } = props;
   const open = !loading && defaultOpen;
-  const classes = useStyles(props);
   const intl = useIntl();
   const hasCustomerChanged = variant === AddressEditDialogVariant.CHANGE_CUSTOMER;
   const { errors: shippingValidationErrors, submit: handleShippingSubmit } = useAddressValidation(
