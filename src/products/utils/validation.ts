@@ -13,7 +13,7 @@ export const validateCostPrice = (price: string) => price !== "" && parseInt(pri
 const toChannelPriceField = (id: string) => `${id}-channelListing-price`;
 const createRequiredError = (
   field: string,
-  message: string = null,
+  message: string | null = null,
 ): ProductErrorWithAttributesFragment => ({
   __typename: "ProductError",
   code: ProductErrorCode.REQUIRED,
@@ -79,7 +79,10 @@ const handleValidationError = (
     case "invalid_union":
     case "invalid_type":
       if (error.path.includes("price") && error.path.includes("channelListings")) {
-        const listing = data.channelListings[error.path[1]];
+        // Due to the way the form was written
+        // The path is in format "channelListing => {index} => price"
+        const index = error.path[1] as number;
+        const listing = data.channelListings[index];
 
         return createRequiredError(toChannelPriceField(listing.id), defaultMessage);
       }
