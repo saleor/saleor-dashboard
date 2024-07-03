@@ -47,14 +47,14 @@ describe("validateProductCreateData", () => {
         __typename: "ProductError",
         attributes: [],
         code: "REQUIRED",
-        field: "chann-1-channel-price",
+        field: "chann-1-channelListing-price",
         message: null,
       },
       {
         __typename: "ProductError",
         attributes: [],
         code: "REQUIRED",
-        field: "chann-2-channel-price",
+        field: "chann-2-channelListing-price",
         message: null,
       },
     ]);
