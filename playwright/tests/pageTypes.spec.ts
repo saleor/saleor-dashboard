@@ -18,7 +18,6 @@ test("TC: SALEOR_187 As an admin user I can create page type @e2e @page-type", a
   await pageTypePage.expectSuccessBanner();
   await expect(pageTypePage.nameInput).toHaveValue(pageTypeName);
   await pageTypePage.gotoPageTypeListPage();
-  await expect(pageTypePage.pageTypeList).toBeVisible({timeout:60000});
   await expect(pageTypePage.pageTypeList).toContainText(pageTypeName);
 });
 
@@ -52,7 +51,7 @@ test("TC: SALEOR_189 As an admin user I can delete page type with assigned conte
   await pageTypePage.deletePageTypeDialog.waitForDOMToFullyLoad();
   await pageTypePage.clickConfirmRemovalButton();
   await pageTypePage.expectSuccessBanner();
-  await  pageTypePage.gotoPageTypeListPage();
+  await pageTypePage.gotoPageTypeListPage();
   await expect(pageTypePage.pageTypeList).not.toContainText(pageType.name);
 });
 
@@ -65,6 +64,7 @@ test("TC: SALEOR_190 As an admin user I can delete several page types@e2e @page-
   const pageTypeNames = PAGE_TYPES.pageTypesToBeBulkDeleted.names;
 
   await pageTypePage.gotoPageTypeListPage();
+  await expect(pageTypePage.pageTypeList).toBeVisible();
   await pageTypePage.checkPageTypesOnList(rowsToBeDeleted);
   await pageTypePage.clickBulkDeleteButton();
   await pageTypePage.deletePageTypeDialog.waitForDOMToFullyLoad();
