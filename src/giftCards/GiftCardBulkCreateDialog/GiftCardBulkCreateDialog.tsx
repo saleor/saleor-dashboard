@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { IMessage } from "@dashboard/components/messages";
+import { DashboardModal } from "@dashboard/components/Modal";
 import {
   GiftCardBulkCreateInput,
   useChannelCurrenciesQuery,
@@ -9,7 +10,6 @@ import useCurrentDate from "@dashboard/hooks/useCurrentDate";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { DialogProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { Dialog, DialogTitle } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -103,19 +103,21 @@ const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
 
   return (
     <>
-      <Dialog open={open} maxWidth="sm" onClose={onClose}>
-        <DialogTitle disableTypography>{intl.formatMessage(messages.title)}</DialogTitle>
-        <ContentWithProgress>
-          {!loadingChannelCurrencies && (
-            <GiftCardBulkCreateDialogForm
-              opts={bulkCreateGiftCardOpts}
-              onClose={onClose}
-              formErrors={formErrors}
-              onSubmit={handleSubmit}
-            />
-          )}
-        </ContentWithProgress>
-      </Dialog>
+      <DashboardModal open={open} onChange={onClose}>
+        <DashboardModal.Content>
+          <DashboardModal.Title>{intl.formatMessage(messages.title)}</DashboardModal.Title>
+          <ContentWithProgress>
+            {!loadingChannelCurrencies && (
+              <GiftCardBulkCreateDialogForm
+                opts={bulkCreateGiftCardOpts}
+                onClose={onClose}
+                formErrors={formErrors}
+                onSubmit={handleSubmit}
+              />
+            )}
+          </ContentWithProgress>
+        </DashboardModal.Content>
+      </DashboardModal>
       <GiftCardBulkCreateSuccessDialog
         onClose={onIssueSuccessDialogClose}
         open={openIssueSuccessDialog}
