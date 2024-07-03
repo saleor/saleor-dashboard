@@ -134,12 +134,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
     <>
       <GiftCardCreateMoneyInput {...commonFormProps} set={set} />
 
-      <GiftCardTagInput
-        error={formErrors?.tags}
-        name="tags"
-        values={tags}
-        toggleChange={toggleValue}
-      />
+      <GiftCardTagInput error={formErrors?.tags} name="tags" values={tags} toggleChange={change} />
 
       <GiftCardSendToCustomer
         selectedChannelSlug={channelSlug}
