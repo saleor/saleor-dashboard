@@ -171,7 +171,7 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
       <Grid>
         <Combobox
           data-test-id="address-edit-country-select-field"
-          autoComplete="new-password"
+          autoComplete="off"
           spellCheck={false}
           disabled={disabled}
           error={!!formErrors.country}
@@ -193,7 +193,7 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
         {isFieldAllowed("countryArea") && (
           <Combobox
             data-test-id="address-edit-country-area-field"
-            autoComplete="new-password"
+            autoComplete="off"
             spellCheck={false}
             disabled={disabled}
             error={!!formErrors.countryArea}

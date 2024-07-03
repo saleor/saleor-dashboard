@@ -224,7 +224,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
         <div>
           <Combobox
             data-test-id="address-edit-country-select-field"
-            autoComplete="new-password"
+            autoComplete="off"
             spellCheck={false}
             disabled={disabled}
             error={!!formErrors.country}
@@ -247,7 +247,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
           {isFieldAllowed(PossibleFormFields.COUNTRY_AREA) && (
             <Combobox
               data-test-id="address-edit-country-area-field"
-              autoComplete="new-password"
+              autoComplete="off"
               spellCheck={false}
               disabled={disabled}
               error={!!formErrors.countryArea}
