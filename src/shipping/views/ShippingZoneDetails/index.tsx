@@ -142,7 +142,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({ id, params })
     );
     const channelsDiff = arrayDiff(
       data.shippingZone.channels.map(channel => channel.id),
-      submitData.channels,
+      submitData.channels.map(channel => channel.value),
     );
 
     return {

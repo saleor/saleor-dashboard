@@ -107,10 +107,6 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
     MultiAutocompleteChoiceType[]
   >(mapNodeToChoice(shippingZone?.warehouses));
   const warehouseChoices = warehouses.map(warehouseToChoice);
-  const channelChoices = mapNodeToChoice(allChannels);
-  const [channelsDisplayValues, setChannelDisplayValues] = useStateFromProps<
-    MultiAutocompleteChoiceType[]
-  >(mapNodeToChoice(shippingZone?.channels));
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
 
   return (
@@ -121,12 +117,6 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
           setWarehouseDisplayValues,
           warehouseDisplayValues,
           warehouseChoices,
-        );
-        const handleChannelChange = createMultiAutocompleteSelectHandler(
-          toggleValue,
-          setChannelDisplayValues,
-          channelsDisplayValues,
-          channelChoices,
         );
         const changeMetadata = makeMetadataChangeHandler(change);
 
@@ -187,8 +177,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                 onWarehouseAdd={onWarehouseAdd}
                 warehousesChoices={warehouseChoices}
                 allChannels={allChannels}
-                channelsDisplayValues={channelsDisplayValues}
-                onChannelChange={handleChannelChange}
+                onChannelChange={change}
               />
             </DetailPageLayout.RightSidebar>
             <Savebar>

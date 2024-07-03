@@ -27,7 +27,6 @@ export interface ShippingZoneSettingsCardProps {
   hasMoreWarehouses: boolean;
   onFetchMoreWarehouses: () => void;
   onWarehousesSearchChange: (query: string) => void;
-  channelsDisplayValues: MultiAutocompleteChoiceType[];
   onChannelChange: FormChange;
   allChannels?: ChannelFragment[];
   loading: boolean;
@@ -45,7 +44,6 @@ export const ShippingZoneSettingsCard: React.FC<ShippingZoneSettingsCardProps> =
   onWarehouseChange,
   allChannels,
   onChannelChange,
-  channelsDisplayValues,
 }) => {
   const intl = useIntl();
 
@@ -54,7 +52,6 @@ export const ShippingZoneSettingsCard: React.FC<ShippingZoneSettingsCardProps> =
       <CardTitle title={intl.formatMessage(messages.title)} />
       <CardContent data-test-id="channel-section">
         <ChannelsSection
-          channelsDisplayValues={channelsDisplayValues}
           onChange={onChannelChange}
           allChannels={allChannels}
           selectedChannels={formData.channels}
