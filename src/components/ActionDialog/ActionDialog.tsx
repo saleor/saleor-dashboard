@@ -1,10 +1,9 @@
-// @ts-strict-ignore
-import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DialogProps } from "@dashboard/types";
+import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
 import React from "react";
 
-import BackButton from "../BackButton";
-import { DashboardModal } from "../Modal";
+import DialogButtons from "./DialogButtons";
 import { ActionDialogVariant, Size } from "./types";
 
 export interface ActionDialogProps extends DialogProps {
@@ -23,26 +22,11 @@ const ActionDialog: React.FC<ActionDialogProps> = props => {
   const { children, open, title, onClose, variant, maxWidth, ...rest } = props;
 
   return (
-    <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content __maxWidth={600} __width="calc(100% - 64px)">
-        <DashboardModal.Title>{title}</DashboardModal.Title>
-
-        {children}
-
-        <DashboardModal.Actions>
-          <BackButton onClick={onClose}>{rest?.backButtonText}</BackButton>
-          <ConfirmButton
-            transitionState={rest?.confirmButtonState}
-            disabled={rest?.disabled}
-            onClick={rest?.onConfirm}
-            variant={variant === "delete" ? "error" : "primary"}
-            data-test-id="submit"
-          >
-            {rest?.confirmButtonLabel}
-          </ConfirmButton>
-        </DashboardModal.Actions>
-      </DashboardModal.Content>
-    </DashboardModal>
+    <Dialog fullWidth onClose={onClose} open={open} maxWidth={maxWidth}>
+      <DialogTitle disableTypography>{title}</DialogTitle>
+      <DialogContent>{children}</DialogContent>
+      <DialogButtons {...rest} onClose={onClose} variant={variant} />
+    </Dialog>
   );
 };
 

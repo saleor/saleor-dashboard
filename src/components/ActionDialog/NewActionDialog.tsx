@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DialogProps } from "@dashboard/types";
 import React from "react";
@@ -19,7 +18,7 @@ export interface NewActionDialogProps extends DialogProps {
   onConfirm: () => any;
 }
 
-// This is a temporary workaround to avoid migrating and changing all the components that use this dialog
+// This is a temporary workaround to avoid migrating and changing all the places where old dialog is used
 const NewActionDialog: React.FC<NewActionDialogProps> = props => {
   const { children, open, title, onClose, variant, maxWidth, ...rest } = props;
 
