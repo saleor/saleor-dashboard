@@ -15,6 +15,10 @@ interface StaffPreferencesProps {
 const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleChange }) => {
   const intl = useIntl();
   const handleLocaleChange = async (locale: Locale) => {
+    if (!locale) {
+      return;
+    }
+
     await onLocaleChange(locale);
     /*
       Workaround, after changing language we reload the page.

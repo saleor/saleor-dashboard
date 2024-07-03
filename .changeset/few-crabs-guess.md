@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Use new Combobox components instead of old one
+Tou can now see all options in the autocomplete select field
