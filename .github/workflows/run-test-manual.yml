@@ -1,6 +1,16 @@
 name: Run test manually
 
-on: [workflow_dispatch]
+on: 
+  workflow_dispatch:
+    inputs:
+      API_URI:
+        type: string
+        description: Type Api url if you want to run tests on other environment. Note that DB won't be restored for tests, you have to do it manually.
+        required: false
+      DASHBOARD_URL:
+        type: string
+        required: false
+        description: Type dashboard url if you want to run tests on other environment. Note that DB won't be restored for tests, you have to do it manually.
 
 concurrency:
   group: ${{ github.ref }}
@@ -8,6 +18,7 @@ concurrency:
 
 jobs:
   initialize-cloud:
+    if: (!${{inputs.API_URI}})
     runs-on: ubuntu-22.04
     outputs:
       POOL_NAME: ${{ steps.pool_variables.outputs.POOL_NAME }}
@@ -54,6 +65,7 @@ jobs:
   create-run-on-testmo:
     runs-on: ubuntu-22.04
     needs: initialize-cloud
+    if: always()
     outputs:
       testmo-run-id: ${{ steps.init-testmo.outputs.testmo-run-id }}
     steps:
@@ -68,6 +80,7 @@ jobs:
   run-tests:
     runs-on: ubuntu-22.04
     needs: ["initialize-cloud", "create-run-on-testmo"]
+    if: always()
     strategy:
       fail-fast: false
       matrix:
@@ -79,8 +92,8 @@ jobs:
         uses: ./.github/actions/run-pw-tests
         with:
           SHARD: ${{ matrix.shard }}
-          BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
-          API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
+          BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL || inputs.DASHBOARD_URL }}
+          API_URL: ${{ needs.initialize-cloud.outputs.API_URL || inputs.API_URI }}
           E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
           E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
