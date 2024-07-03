@@ -3,13 +3,13 @@ import { FetchResult } from "@apollo/client";
 import { getAttributesAfterFileAttributesUpdate } from "@dashboard/attributes/utils/data";
 import { prepareAttributesInput } from "@dashboard/attributes/utils/handlers";
 import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
   FileUploadMutation,
   ProductChannelListingAddInput,
   ProductChannelListingUpdateInput,
   ProductChannelListingUpdateMutationVariables,
   ProductFragment,
+  ProductUpdateMutationVariables,
   ProductVariantBulkUpdateInput,
   VariantAttributeFragment,
 } from "@dashboard/graphql";
@@ -42,7 +42,7 @@ export function getProductUpdateVariables(
     uploadFilesResult,
   );
 
-  return {
+  const variables: ProductUpdateMutationVariables = {
     id: product.id,
     input: {
       attributes: prepareAttributesInput({
@@ -50,20 +50,50 @@ export function getProductUpdateVariables(
         prevAttributes: getAttributeInputFromProduct(product),
         updatedFileAttributes,
       }),
-      category: data.category,
-      collections: data.collections.map(collection => collection.value),
-      description: getParsedDataForJsonStringField(data.description),
-      name: data.name,
-      rating: data.rating,
-      seo: {
-        description: data.seoDescription,
-        title: data.seoTitle,
-      },
-      slug: data.slug,
-      taxClass: data.taxClassId,
     },
-    firstValues: VALUES_PAGINATE_BY,
   };
+
+  if (data.category) {
+    variables.input["category"] = data.category;
+  }
+
+  if (data.collections) {
+    variables.input["collections"] = data.collections.map(collection => collection.value);
+  }
+
+  if (data.description) {
+    variables.input["description"] = getParsedDataForJsonStringField(data.description);
+  }
+
+  if (data.name) {
+    variables.input["name"] = data.name;
+  }
+
+  if (data.rating) {
+    variables.input["rating"] = data.rating;
+  }
+
+  if (data.slug) {
+    variables.input["slug"] = data.slug;
+  }
+
+  if (data.taxClassId) {
+    variables.input["taxClass"] = data.taxClassId;
+  }
+
+  if (data.seoDescription || data.seoTitle) {
+    variables.input["seo"] = {};
+  }
+
+  if (data.seoDescription && variables.input["seo"]) {
+    variables.input["seo"].description = data.seoDescription;
+  }
+
+  if (data.seoTitle && variables.input["seo"]) {
+    variables.input["seo"].title = data.seoTitle;
+  }
+
+  return variables;
 }
 
 export function getCreateVariantInput(

@@ -14,6 +14,7 @@ interface UseRichTextResult {
   getValue: () => Promise<OutputData>;
   defaultValue: OutputData | undefined;
   isReadyForMount: boolean;
+  isDirty: boolean;
 }
 
 export function useRichText({
@@ -23,13 +24,16 @@ export function useRichText({
 }: UseRichTextOptions): UseRichTextResult {
   const editorRef = useRef<EditorCore | null>(null);
   const [isReadyForMount, setIsReadyForMount] = useState(false);
-
+  const [isDirty, setIsDirty] = useState(false);
   const handleChange = () => {
+    setIsDirty(true);
     triggerChange();
   };
 
   const getValue = async () => {
     if (editorRef.current) {
+      setIsDirty(false);
+
       return editorRef.current.save();
     } else {
       throw new Error("Editor instance is not available");
@@ -43,11 +47,15 @@ export function useRichText({
 
     if (!initial) {
       setIsReadyForMount(true);
+      setIsDirty(false);
+
       return "";
     }
 
     try {
       const result = JSON.parse(initial);
+
+      setIsDirty(false);
       setIsReadyForMount(true);
       return result;
     } catch (e) {
@@ -56,6 +64,7 @@ export function useRichText({
   }, [initial, loading]);
 
   return {
+    isDirty,
     editorRef,
     handleChange,
     getValue,
