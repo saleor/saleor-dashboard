@@ -2,6 +2,7 @@ import { Combobox } from "@dashboard/components/Combobox";
 import CardAddItemsFooter from "@dashboard/products/components/ProductStocks/components/CardAddItemsFooter";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { ClickAwayListener } from "@material-ui/core";
+import { Box } from "@saleor/macaw-ui-next";
 import React, { useEffect, useRef, useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -56,18 +57,20 @@ const AssignmentListFooter: React.FC<AssignmentListFooterProps> = ({
 
   return isChoicesSelectShown ? (
     <ClickAwayListener onClickAway={handleFooterClickAway}>
-      <Combobox
-        data-test-id={`${dataTestId}-auto-complete-select`}
-        name={inputName}
-        onChange={handleChoice}
-        fetchOptions={searchItems}
-        options={mapNodeToChoice(itemsChoices)}
-        fetchMore={fetchMoreItems}
-        value={{
-          value: "",
-          label: "",
-        }}
-      />
+      <Box marginTop={3}>
+        <Combobox
+          data-test-id={`${dataTestId}-auto-complete-select`}
+          name={inputName}
+          onChange={handleChoice}
+          fetchOptions={searchItems}
+          options={mapNodeToChoice(itemsChoices)}
+          fetchMore={fetchMoreItems}
+          value={{
+            value: "",
+            label: "",
+          }}
+        />
+      </Box>
     </ClickAwayListener>
   ) : (
     <CardAddItemsFooter
