@@ -38,7 +38,7 @@ const ComboboxRoot = ({
 }: ComboboxProps) => {
   const intl = useIntl();
   const [selectedValue, setSelectedValue] = useState(value);
-  const inputValue = useRef("");
+  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
     if (value?.value !== selectedValue?.value) {
@@ -52,7 +52,7 @@ const ComboboxRoot = ({
     fetchMore,
   });
   const { customValueOption } = useCombbobxCustomOption({
-    query: inputValue.current,
+    query: inputValue,
     allowCustomValues,
     selectedValue,
   });
@@ -74,7 +74,7 @@ const ComboboxRoot = ({
       onChange={handleOnChange}
       onScrollEnd={handleFetchMore}
       onInputValueChange={value => {
-        inputValue.current = value;
+        setInputValue(value);
         handleInputChange(value);
       }}
       onFocus={handleFocus}
