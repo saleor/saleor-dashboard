@@ -138,7 +138,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({ id, params })
   ): ShippingZoneUpdateInput => {
     const warehouseDiff = diff(
       data.shippingZone.warehouses.map(warehouse => warehouse.id),
-      submitData.warehouses,
+      submitData.warehouses.map(warehouse => warehouse.value),
     );
     const channelsDiff = arrayDiff(
       data.shippingZone.channels.map(channel => channel.id),

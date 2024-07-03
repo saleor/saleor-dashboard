@@ -6,9 +6,7 @@ import CountryList from "@dashboard/components/CountryList";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import { Savebar } from "@dashboard/components/Savebar";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   ChannelFragment,
   ShippingErrorFragment,
@@ -18,11 +16,9 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { shippingZonesListUrl } from "@dashboard/shipping/urls";
-import createMultiAutocompleteSelectHandler from "@dashboard/utils/handlers/multiAutocompleteSelectChangeHandler";
-import { mapNodeToChoice } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
+import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -70,7 +66,7 @@ export interface ShippingZoneDetailsPageProps extends FetchMoreProps, SearchProp
   allChannels?: ChannelFragment[];
 }
 
-function warehouseToChoice(warehouse: Record<"id" | "name", string>): SingleAutocompleteChoiceType {
+function warehouseToChoice(warehouse: Record<"id" | "name", string>): Option {
   return {
     label: warehouse.name,
     value: warehouse.id,
@@ -103,21 +99,12 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   const intl = useIntl();
   const navigate = useNavigator();
   const initialForm = getInitialFormData(shippingZone);
-  const [warehouseDisplayValues, setWarehouseDisplayValues] = useStateFromProps<
-    MultiAutocompleteChoiceType[]
-  >(mapNodeToChoice(shippingZone?.warehouses));
   const warehouseChoices = warehouses.map(warehouseToChoice);
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit} confirmLeave disabled={disabled}>
-      {({ change, data, isSaveDisabled, submit, toggleValue }) => {
-        const handleWarehouseChange = createMultiAutocompleteSelectHandler(
-          toggleValue,
-          setWarehouseDisplayValues,
-          warehouseDisplayValues,
-          warehouseChoices,
-        );
+      {({ change, data, isSaveDisabled, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -168,10 +155,9 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
             <DetailPageLayout.RightSidebar>
               <ShippingZoneSettingsCard
                 formData={data}
-                warehousesDisplayValues={warehouseDisplayValues}
                 hasMoreWarehouses={hasMore}
                 loading={loading}
-                onWarehouseChange={handleWarehouseChange}
+                onWarehouseChange={change}
                 onFetchMoreWarehouses={onFetchMore}
                 onWarehousesSearchChange={onSearchChange}
                 onWarehouseAdd={onWarehouseAdd}

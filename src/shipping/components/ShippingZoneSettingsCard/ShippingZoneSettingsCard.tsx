@@ -1,8 +1,8 @@
 import CardTitle from "@dashboard/components/CardTitle";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import { ChannelFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { Card, CardContent, Divider } from "@material-ui/core";
+import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -20,8 +20,7 @@ const messages = defineMessages({
 
 export interface ShippingZoneSettingsCardProps {
   formData: ShippingZoneUpdateFormData;
-  warehousesDisplayValues: MultiAutocompleteChoiceType[];
-  warehousesChoices: MultiAutocompleteChoiceType[];
+  warehousesChoices: Option[];
   onWarehouseAdd: () => void;
   onWarehouseChange: FormChange;
   hasMoreWarehouses: boolean;
@@ -34,7 +33,6 @@ export interface ShippingZoneSettingsCardProps {
 
 export const ShippingZoneSettingsCard: React.FC<ShippingZoneSettingsCardProps> = ({
   formData,
-  warehousesDisplayValues,
   hasMoreWarehouses,
   loading,
   warehousesChoices,
@@ -64,7 +62,6 @@ export const ShippingZoneSettingsCard: React.FC<ShippingZoneSettingsCardProps> =
           onSearchChange={onWarehousesSearchChange}
           onChange={onWarehouseChange}
           onFetchMore={onFetchMoreWarehouses}
-          displayValues={warehousesDisplayValues}
           choices={warehousesChoices}
           selectedWarehouses={formData.warehouses}
           hasMore={hasMoreWarehouses}

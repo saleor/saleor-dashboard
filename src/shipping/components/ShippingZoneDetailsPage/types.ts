@@ -4,6 +4,6 @@ import { Option } from "@saleor/macaw-ui-next";
 export interface ShippingZoneUpdateFormData extends MetadataFormData {
   name: string;
   description: string;
-  warehouses: string[];
+  warehouses: Option[];
   channels: Option[];
 }
