@@ -54,7 +54,7 @@ import {
 import {
   validateCostPrice,
   validatePrice,
-  validateVariantData,
+  validateProductVariant,
 } from "@dashboard/products/utils/validation";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
 import { arrayDiff } from "@dashboard/utils/arrays";
@@ -347,12 +347,12 @@ function useProductVariantUpdateForm(
     updateStocks,
   });
   const handleSubmit = async (data: ProductVariantUpdateSubmitData) => {
-    const validationErrors = validateVariantData(data);
+    const validationProductErrors = validateProductVariant(data, intl);
 
-    setValidationErrors(validationErrors);
+    setValidationErrors(validationProductErrors);
 
-    if (validationErrors.length) {
-      return validationErrors;
+    if (validationProductErrors.length > 0) {
+      return validationProductErrors;
     }
 
     const apiErrors = await onSubmit(data);

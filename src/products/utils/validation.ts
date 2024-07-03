@@ -1,4 +1,6 @@
 import { ProductErrorCode, ProductErrorWithAttributesFragment } from "@dashboard/graphql";
+import { IntlShape } from "react-intl";
+import { z } from "zod";
 
 import { ProductCreateData } from "../components/ProductCreatePage";
 import { ProductVariantCreateData } from "../components/ProductVariantCreatePage/form";
@@ -8,11 +10,15 @@ export const validatePrice = (price: string) => price === "" || parseInt(price, 
 
 export const validateCostPrice = (price: string) => price !== "" && parseInt(price, 10) < 0;
 
-const createEmptyRequiredError = (field: string): ProductErrorWithAttributesFragment => ({
+const toChannelPriceField = (id: string) => `${id}-channelListing-price`;
+const createRequiredError = (
+  field: string,
+  message: string = null,
+): ProductErrorWithAttributesFragment => ({
   __typename: "ProductError",
   code: ProductErrorCode.REQUIRED,
   field,
-  message: null,
+  message,
   attributes: [],
 });
 
@@ -20,11 +26,11 @@ export const validateProductCreateData = (data: ProductCreateData) => {
   let errors: ProductErrorWithAttributesFragment[] = [];
 
   if (!data.productType) {
-    errors = [...errors, createEmptyRequiredError("productType")];
+    errors = [...errors, createRequiredError("productType")];
   }
 
   if (!data.name) {
-    errors = [...errors, createEmptyRequiredError("name")];
+    errors = [...errors, createRequiredError("name")];
   }
 
   const { productType, channelListings } = data;
@@ -32,7 +38,7 @@ export const validateProductCreateData = (data: ProductCreateData) => {
   if (!productType.hasVariants && channelListings) {
     const emptyPrices = data.channelListings
       .filter(channel => channel.price?.length === 0)
-      .map(({ id }) => createEmptyRequiredError(`${id}-channel-price`));
+      .map(({ id }) => createRequiredError(toChannelPriceField(id)));
 
     errors = [...errors, ...emptyPrices];
   }
@@ -40,7 +46,58 @@ export const validateProductCreateData = (data: ProductCreateData) => {
   return errors;
 };
 
+const channelListingValueSchema = z.object({
+  price: z.number().or(z.string()),
+});
+
+const channelListingSchema = z
+  .object({
+    channelListings: z.array(
+      z.object({
+        value: channelListingValueSchema,
+      }),
+    ),
+    variantName: z.string().min(1),
+  })
+  .partial();
+
+type ProductVariantType = ProductVariantCreateData | ProductVariantUpdateSubmitData;
+
 export const validateVariantData = (
-  data: ProductVariantCreateData | ProductVariantUpdateSubmitData,
+  data: ProductVariantType,
 ): ProductErrorWithAttributesFragment[] =>
-  !data.variantName ? [createEmptyRequiredError("variantName")] : [];
+  !data.variantName ? [createRequiredError("variantName")] : [];
+
+const handleValidationError = (
+  error: z.ZodIssue,
+  data: ProductVariantType,
+  defaultMessage: string,
+) => {
+  const defaultError = createRequiredError(error.path.join("-"), defaultMessage);
+
+  switch (error.code) {
+    case "invalid_union":
+    case "invalid_type":
+      if (error.path.includes("price") && error.path.includes("channelListings")) {
+        const listing = data.channelListings[error.path[1]];
+
+        return createRequiredError(toChannelPriceField(listing.id), defaultMessage);
+      }
+
+      return defaultError;
+    default:
+      return defaultError;
+  }
+};
+
+export const validateProductVariant = (data: ProductVariantType, intl: IntlShape) => {
+  const result = channelListingSchema.safeParse(data);
+  const defaultMessage = intl.formatMessage({
+    defaultMessage: "This field cannot be blank",
+    id: "8pVWve",
+  });
+
+  return result.success === true
+    ? []
+    : result.error.issues.map(error => handleValidationError(error, data, defaultMessage));
+};

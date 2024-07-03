@@ -39,8 +39,11 @@ export const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => 
     disabledMessage,
   } = props;
   const intl = useIntl();
-  const channelErrors = errors.filter(e => "channels" in e) as ProductChannelListingErrorFragment[];
-  const apiErrors = getFormChannelErrors(["price", "costPrice"], channelErrors);
+
+  const channelApiErrors = errors.filter(
+    e => "channels" in e,
+  ) as ProductChannelListingErrorFragment[];
+  const apiErrors = getFormChannelErrors(["price", "costPrice"], channelApiErrors);
 
   if (disabled || !productVariantChannelListings.length) {
     return (
@@ -113,9 +116,10 @@ export const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => 
           {renderCollection(
             productVariantChannelListings,
             (listing, index) => {
-              const fieldName = `${listing.id}-channel-price`;
+              const fieldName = `${listing.id}-channelListing-price`;
               const formErrors = getFormErrors([fieldName], errors);
-              const priceError =
+
+              const priceApiError =
                 getFormChannelError(apiErrors.price, listing.id) || formErrors[fieldName];
               const costPriceError = getFormChannelError(apiErrors.costPrice, listing.id);
 
@@ -130,7 +134,10 @@ export const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => 
                         className={sprinkles({
                           marginY: 2,
                         })}
-                        error={!!priceError}
+                        error={!!priceApiError}
+                        helperText={
+                          priceApiError ? getProductErrorMessage(priceApiError, intl) : ""
+                        }
                         name={fieldName}
                         value={listing.price || ""}
                         currencySymbol={listing.currency}
@@ -143,7 +150,6 @@ export const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => 
                         }
                         disabled={loading}
                         required
-                        hint={priceError && getProductErrorMessage(priceError, intl)}
                       />
                     ) : (
                       <Skeleton />
