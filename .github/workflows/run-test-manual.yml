@@ -18,7 +18,7 @@ concurrency:
 
 jobs:
   initialize-cloud:
-    if: (!${{github.event.inputs.API_URI}})
+    if: github.event.inputs.API_URI == ''
     runs-on: ubuntu-22.04
     outputs:
       POOL_NAME: ${{ steps.pool_variables.outputs.POOL_NAME }}
@@ -92,7 +92,7 @@ jobs:
         uses: ./.github/actions/run-pw-tests
         with:
           SHARD: ${{ matrix.shard }}
-          BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL || github.event.inputs.DASHBOARD_URL }}
+          BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL ||  github.event.inputs.DASHBOARD_URL }}
           API_URL: ${{ needs.initialize-cloud.outputs.API_URL || github.event.inputs.API_URI }}
           E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
           E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
