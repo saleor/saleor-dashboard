@@ -1,4 +1,5 @@
 import { Combobox } from "@dashboard/components/Combobox";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
 import CardAddItemsFooter from "@dashboard/products/components/ProductStocks/components/CardAddItemsFooter";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { ClickAwayListener } from "@material-ui/core";
@@ -42,7 +43,7 @@ const AssignmentListFooter: React.FC<AssignmentListFooterProps> = ({
     itemsRef.current = items;
   }, [items]);
 
-  const handleChoice = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChoice = ({ target }: ChangeEvent) => {
     if (!target.value) {
       return;
     }

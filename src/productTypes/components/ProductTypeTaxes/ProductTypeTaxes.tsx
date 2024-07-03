@@ -1,6 +1,7 @@
 import CardTitle from "@dashboard/components/CardTitle";
 import { Combobox } from "@dashboard/components/Combobox";
 import { TaxClassBaseFragment } from "@dashboard/graphql";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { sectionNames } from "@dashboard/intl";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { FetchMoreProps } from "@dashboard/types";
@@ -16,7 +17,7 @@ interface ProductTypeTaxesProps {
   taxClassDisplayName: string;
   taxClasses: TaxClassBaseFragment[];
   disabled: boolean;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent) => void;
   onFetchMore: FetchMoreProps;
 }
 

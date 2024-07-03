@@ -45,7 +45,7 @@ const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
 
     return {
       count: cardsAmount,
-      tags,
+      tags: tags.map(tag => tag.value),
       balance: {
         amount: balanceAmount,
         currency: balanceCurrency,

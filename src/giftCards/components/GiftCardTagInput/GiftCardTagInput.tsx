@@ -59,7 +59,7 @@ const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
         fetchMore={{
           loading: result?.loading,
           onFetchMore: loadMore,
-          hasMore: result?.data?.search?.pageInfo?.hasNextPage,
+          hasMore: result?.data?.search?.pageInfo?.hasNextPage ?? false,
         }}
         value={values}
         options={choices}
