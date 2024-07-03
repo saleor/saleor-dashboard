@@ -1,12 +1,12 @@
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import SingleSelectField from "@dashboard/components/SingleSelectField";
-import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import GiftCardCustomerSelectField from "@dashboard/giftCards/GiftCardCreateDialog/GiftCardCustomerSelectField";
 import { GiftCardCreateFormCustomer } from "@dashboard/giftCards/GiftCardCreateDialog/types";
 import { FormChange } from "@dashboard/hooks/useForm";
 import Label from "@dashboard/orders/components/OrderHistory/Label";
 import { mapSlugNodeToChoice } from "@dashboard/utils/maps";
+import { Box } from "@saleor/macaw-ui-next";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
@@ -38,7 +38,6 @@ const GiftCardSendToCustomer: React.FC<GiftCardSendToCustomerProps> = ({
 
   return (
     <>
-      <VerticalSpacer />
       <ControlledCheckbox
         data-test-id="send-to-customer-section"
         name={"sendToCustomerSelected"}
@@ -49,28 +48,27 @@ const GiftCardSendToCustomer: React.FC<GiftCardSendToCustomerProps> = ({
       />
       {sendToCustomerSelected && (
         <>
-          <VerticalSpacer />
-          <GiftCardCustomerSelectField
-            selectedCustomer={selectedCustomer}
-            setSelectedCustomer={setSelectedCustomer}
-            disabled={disabled}
-          />
-          <VerticalSpacer />
-          <Label text={intl.formatMessage(messages.customerSubtitle)} />
-          <VerticalSpacer />
-          <SingleSelectField
-            choices={channelsChoices}
-            name="channelSlug"
-            label={intl.formatMessage(messages.channelSelectLabel)}
-            value={selectedChannelSlug || channel?.slug}
-            onChange={change}
-          />
-          <VerticalSpacer />
-          <Label text={intl.formatMessage(messages.customerChannelSubtitle)} />
-          <VerticalSpacer />
+          <Box display="grid" gap={2}>
+            <GiftCardCustomerSelectField
+              selectedCustomer={selectedCustomer}
+              setSelectedCustomer={setSelectedCustomer}
+              disabled={disabled}
+            />
+            <Label text={intl.formatMessage(messages.customerSubtitle)} />
+          </Box>
+
+          <Box display="grid" gap={2}>
+            <SingleSelectField
+              choices={channelsChoices}
+              name="channelSlug"
+              label={intl.formatMessage(messages.channelSelectLabel)}
+              value={selectedChannelSlug || channel?.slug}
+              onChange={change}
+            />
+            <Label text={intl.formatMessage(messages.customerChannelSubtitle)} />
+          </Box>
         </>
       )}
-      <VerticalSpacer />
     </>
   );
 };

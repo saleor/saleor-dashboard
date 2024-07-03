@@ -10,7 +10,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { Combobox } from "../Combobox";
-import FormSpacer from "../FormSpacer";
 import { getErrorMessage } from "./getErrorMessage";
 import { useAddressValidation } from "./useAddressValidation";
 
@@ -101,7 +100,6 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
           />
         </div>
       </div>
-      <FormSpacer />
       <div className={classes.root}>
         <div>
           <TextField
@@ -144,7 +142,6 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
           />
         </div>
       </div>
-      <FormSpacer />
       <TextField
         disabled={disabled}
         data-test-id="address-line-1-input"
@@ -163,7 +160,6 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
           spellCheck: false,
         }}
       />
-      <FormSpacer />
       <TextField
         disabled={disabled}
         data-test-id="address-line-2-input"
@@ -182,7 +178,6 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
           spellCheck: false,
         }}
       />
-      <FormSpacer />
       <div className={classes.root}>
         <div>
           <TextField
@@ -225,7 +220,6 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
         </div>
       </div>
 
-      <FormSpacer />
       <div className={classes.root}>
         <div>
           <Combobox

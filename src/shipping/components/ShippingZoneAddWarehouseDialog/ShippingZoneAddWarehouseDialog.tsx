@@ -2,8 +2,8 @@ import BackButton from "@dashboard/components/BackButton";
 import CompanyAddressForm from "@dashboard/components/CompanyAddressInput/CompanyAddressForm";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
-import FormSpacer from "@dashboard/components/FormSpacer";
 import Hr from "@dashboard/components/Hr";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { AddressTypeInput } from "@dashboard/customers/types";
 import { CountryWithCodeFragment, WarehouseErrorFragment } from "@dashboard/graphql";
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
@@ -15,8 +15,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { DialogProps } from "@dashboard/types";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
-import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { TextField } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -45,16 +44,7 @@ const initialForm: ShippingZoneAddWarehouseDialogSubmitData = {
   streetAddress1: "",
   streetAddress2: "",
 };
-const useStyles = makeStyles(
-  {
-    overflow: {
-      overflowY: "visible",
-    },
-  },
-  {
-    name: "ShippingZoneAddWarehouseDialog",
-  },
-);
+
 const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogProps> = ({
   confirmButtonState,
   countries,
@@ -64,7 +54,6 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
   onClose,
   onSubmit,
 }) => {
-  const classes = useStyles({});
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps("");
   const { errors: validationErrors, submit: handleSubmit } = useAddressValidation(onSubmit);
   const errors = useModalDialogErrors([...apiErrors, ...validationErrors], open);
@@ -75,22 +64,9 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
   const countryChoices = mapCountriesToChoices(countries);
 
   return (
-    <Dialog
-      classes={{ paper: classes.overflow }}
-      onClose={onClose}
-      open={open}
-      fullWidth
-      maxWidth="sm"
-    >
-      <DialogTitle disableTypography>
-        <FormattedMessage
-          id="yzYXW/"
-          defaultMessage="Create New Warehouse"
-          description="header, dialog"
-        />
-      </DialogTitle>
+    <DashboardModal onChange={onClose} open={open}>
       <Form initial={initialForm} onSubmit={handleSubmit}>
-        {({ change, data }) => {
+        {({ change, data, submit }) => {
           const handleCountrySelect = createSingleAutocompleteSelectHandler(
             change,
             setCountryDisplayName,
@@ -98,42 +74,49 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
           );
 
           return (
-            <>
-              <DialogContent className={classes.overflow}>
-                <TextField
-                  fullWidth
-                  label={intl.formatMessage({
-                    id: "llBnr+",
-                    defaultMessage: "Warehouse Name",
-                  })}
-                  name="name"
-                  value={data.name}
-                  onChange={change}
+            <DashboardModal.Content __maxWidth={600} __width="calc(100% - 64px)">
+              <DashboardModal.Title>
+                <FormattedMessage
+                  id="yzYXW/"
+                  defaultMessage="Create New Warehouse"
+                  description="header, dialog"
                 />
-                <FormSpacer />
-                <Hr />
-                <FormSpacer />
-                <CompanyAddressForm
-                  countries={countryChoices}
-                  data={data}
-                  disabled={disabled}
-                  displayCountry={countryDisplayName}
-                  errors={errors}
-                  onChange={change}
-                  onCountryChange={handleCountrySelect}
-                />
-              </DialogContent>
-              <DialogActions>
+              </DashboardModal.Title>
+
+              <TextField
+                fullWidth
+                label={intl.formatMessage({
+                  id: "llBnr+",
+                  defaultMessage: "Warehouse Name",
+                })}
+                name="name"
+                value={data.name}
+                onChange={change}
+              />
+
+              <Hr />
+
+              <CompanyAddressForm
+                countries={countryChoices}
+                data={data}
+                disabled={disabled}
+                displayCountry={countryDisplayName}
+                errors={errors}
+                onChange={change}
+                onCountryChange={handleCountrySelect}
+              />
+
+              <DashboardModal.Actions>
                 <BackButton onClick={onClose} />
-                <ConfirmButton transitionState={confirmButtonState} type="submit">
+                <ConfirmButton transitionState={confirmButtonState} onClick={submit}>
                   <FormattedMessage {...buttonMessages.create} />
                 </ConfirmButton>
-              </DialogActions>
-            </>
+              </DashboardModal.Actions>
+            </DashboardModal.Content>
           );
         }}
       </Form>
-    </Dialog>
+    </DashboardModal>
   );
 };
 
