@@ -2,7 +2,7 @@
 import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
-import { DashboardModal } from "@dashboard/components/Modal";
+import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
 import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
 import { OrderErrorFragment, WarehouseFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
@@ -62,7 +62,7 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
           );
 
           return (
-            <DashboardModal.Content __maxWidth={600} __width="calc(100% - 64px)">
+            <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%">
               <DashboardModal.Title>
                 <FormattedMessage
                   id="bb4nSp"
