@@ -1,10 +1,9 @@
 // @ts-strict-ignore
-import NewActionDialog from "@dashboard/components/ActionDialog";
+import NewActionDialog from "@dashboard/components/ActionDialog/NewActionDialog";
 import { useChannelsSearch } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
 import { Combobox } from "@dashboard/components/Combobox";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import { IMessage } from "@dashboard/components/messages";
-import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { useChannelsQuery, useGiftCardResendMutation } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -111,7 +110,7 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
       ) : (
         <>
           <Typography>{intl.formatMessage(messages.description)}</Typography>
-          <VerticalSpacer />
+
           <Combobox
             label={intl.formatMessage(messages.sendToChannelSelectLabel)}
             options={mapSlugNodeToChoice(filteredChannels)}
