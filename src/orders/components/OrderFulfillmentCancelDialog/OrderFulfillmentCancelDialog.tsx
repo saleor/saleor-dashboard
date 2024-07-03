@@ -71,52 +71,50 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
                   description="dialog header"
                 />
               </DashboardModal.Title>
-              <>
+
+              <Text>
                 <FormattedMessage
                   id="xco5tZ"
                   defaultMessage="Are you sure you want to cancel fulfillment? Canceling a fulfillment will restock products at a selected warehouse."
                 />
-                <div
-                  className={classes.selectCcontainer}
-                  data-test-id="cancel-fulfillment-select-field"
+              </Text>
+
+              <div
+                className={classes.selectCcontainer}
+                data-test-id="cancel-fulfillment-select-field"
+              >
+                <SingleAutocompleteSelectField
+                  choices={choices}
+                  displayValue={displayValue}
+                  label={intl.formatMessage({
+                    id: "aHc89n",
+                    defaultMessage: "Select Warehouse",
+                    description: "select warehouse to restock items",
+                  })}
+                  name="warehouseId"
+                  value={formData.warehouseId}
+                  onChange={handleChange}
+                />
+              </div>
+
+              {errors.length > 0 &&
+                errors.map((err, index) => (
+                  <Text color="critical1" key={index}>
+                    {getOrderErrorMessage(err, intl)}
+                  </Text>
+                ))}
+
+              <DashboardModal.Actions>
+                <BackButton onClick={onClose} />
+                <ConfirmButton
+                  data-test-id="submit"
+                  disabled={formData.warehouseId === null}
+                  transitionState={confirmButtonState}
+                  onClick={submit}
                 >
-                  <SingleAutocompleteSelectField
-                    choices={choices}
-                    displayValue={displayValue}
-                    label={intl.formatMessage({
-                      id: "aHc89n",
-                      defaultMessage: "Select Warehouse",
-                      description: "select warehouse to restock items",
-                    })}
-                    name="warehouseId"
-                    value={formData.warehouseId}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                {errors.length > 0 && (
-                  <>
-                    <FormSpacer />
-                    {errors.map((err, index) => (
-                      <Text color="critical1" key={index}>
-                        {getOrderErrorMessage(err, intl)}
-                      </Text>
-                    ))}
-                  </>
-                )}
-
-                <DashboardModal.Actions>
-                  <BackButton onClick={onClose} />
-                  <ConfirmButton
-                    data-test-id="submit"
-                    disabled={formData.warehouseId === null}
-                    transitionState={confirmButtonState}
-                    onClick={submit}
-                  >
-                    <FormattedMessage {...buttonMessages.accept} />
-                  </ConfirmButton>
-                </DashboardModal.Actions>
-              </>
+                  <FormattedMessage {...buttonMessages.accept} />
+                </ConfirmButton>
+              </DashboardModal.Actions>
             </DashboardModal.Content>
           );
         }}
