@@ -60,7 +60,7 @@ export interface AttributePageFormData extends MetadataFormData {
   availableInGrid: boolean;
   filterableInDashboard: boolean;
   inputType: AttributeInputTypeEnum;
-  entityType: AttributeEntityTypeEnum | null;
+  entityType: AttributeEntityTypeEnum;
   filterableInStorefront: boolean;
   name: string;
   slug: string;
@@ -95,7 +95,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
   const initialForm: AttributePageFormData = !attribute
     ? {
         availableInGrid: true,
-        entityType: null,
+        entityType: AttributeEntityTypeEnum.PRODUCT,
         filterableInDashboard: true,
         filterableInStorefront: true,
         inputType: AttributeInputTypeEnum.DROPDOWN,
