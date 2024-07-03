@@ -19,6 +19,7 @@ export interface NewActionDialogProps extends DialogProps {
   onConfirm: () => any;
 }
 
+// This is a temporary workaround to avoid migrating and changing all the components that use this dialog
 const NewActionDialog: React.FC<NewActionDialogProps> = props => {
   const { children, open, title, onClose, variant, maxWidth, ...rest } = props;
 
