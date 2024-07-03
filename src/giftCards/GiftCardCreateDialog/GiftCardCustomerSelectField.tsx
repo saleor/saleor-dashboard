@@ -29,7 +29,7 @@ const GiftCardCustomerSelectField: React.FC<GiftCardCustomerSelectFieldProps> = 
   const customers = mapEdgesToItems(result?.data?.search);
   const choices = customers?.map(({ email, firstName, lastName }) => ({
     value: email,
-    label: getFullName({ firstName, lastName }),
+    label: getFullName({ firstName, lastName }) || email,
   }));
   const handleSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
