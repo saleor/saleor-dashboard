@@ -2,7 +2,6 @@ import BackButton from "@dashboard/components/BackButton";
 import CompanyAddressForm from "@dashboard/components/CompanyAddressInput/CompanyAddressForm";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
-import FormSpacer from "@dashboard/components/FormSpacer";
 import Hr from "@dashboard/components/Hr";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { AddressTypeInput } from "@dashboard/customers/types";
@@ -66,59 +65,57 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content __maxWidth={600} __width="calc(100% - 64px)">
-        <DashboardModal.Title>
-          <FormattedMessage
-            id="yzYXW/"
-            defaultMessage="Create New Warehouse"
-            description="header, dialog"
-          />
-        </DashboardModal.Title>
+      <Form initial={initialForm} onSubmit={handleSubmit}>
+        {({ change, data, submit }) => {
+          const handleCountrySelect = createSingleAutocompleteSelectHandler(
+            change,
+            setCountryDisplayName,
+            countryChoices,
+          );
 
-        <Form initial={initialForm} onSubmit={handleSubmit}>
-          {({ change, data }) => {
-            const handleCountrySelect = createSingleAutocompleteSelectHandler(
-              change,
-              setCountryDisplayName,
-              countryChoices,
-            );
-
-            return (
-              <>
-                <TextField
-                  fullWidth
-                  label={intl.formatMessage({
-                    id: "llBnr+",
-                    defaultMessage: "Warehouse Name",
-                  })}
-                  name="name"
-                  value={data.name}
-                  onChange={change}
+          return (
+            <DashboardModal.Content __maxWidth={600} __width="calc(100% - 64px)">
+              <DashboardModal.Title>
+                <FormattedMessage
+                  id="yzYXW/"
+                  defaultMessage="Create New Warehouse"
+                  description="header, dialog"
                 />
-                <FormSpacer />
-                <Hr />
-                <FormSpacer />
-                <CompanyAddressForm
-                  countries={countryChoices}
-                  data={data}
-                  disabled={disabled}
-                  displayCountry={countryDisplayName}
-                  errors={errors}
-                  onChange={change}
-                  onCountryChange={handleCountrySelect}
-                />
-              </>
-            );
-          }}
-        </Form>
+              </DashboardModal.Title>
 
-        <DashboardModal.Actions>
-          <BackButton onClick={onClose} />
-          <ConfirmButton transitionState={confirmButtonState} type="submit">
-            <FormattedMessage {...buttonMessages.create} />
-          </ConfirmButton>
-        </DashboardModal.Actions>
-      </DashboardModal.Content>
+              <TextField
+                fullWidth
+                label={intl.formatMessage({
+                  id: "llBnr+",
+                  defaultMessage: "Warehouse Name",
+                })}
+                name="name"
+                value={data.name}
+                onChange={change}
+              />
+
+              <Hr />
+
+              <CompanyAddressForm
+                countries={countryChoices}
+                data={data}
+                disabled={disabled}
+                displayCountry={countryDisplayName}
+                errors={errors}
+                onChange={change}
+                onCountryChange={handleCountrySelect}
+              />
+
+              <DashboardModal.Actions>
+                <BackButton onClick={onClose} />
+                <ConfirmButton transitionState={confirmButtonState} onClick={submit}>
+                  <FormattedMessage {...buttonMessages.create} />
+                </ConfirmButton>
+              </DashboardModal.Actions>
+            </DashboardModal.Content>
+          );
+        }}
+      </Form>
     </DashboardModal>
   );
 };
