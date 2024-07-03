@@ -9,6 +9,7 @@ const useRichTextMocked = ({
   getValue: async () => ({ blocks: [] }),
   handleChange: triggerChange,
   isReadyForMount: true,
+  isDirty: false,
 });
 
 export default useRichTextMocked;

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FormId, useExitFormDialog } from "@dashboard/components/Form";
 import { MessageContext } from "@dashboard/components/messages";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
@@ -6,7 +5,7 @@ import { useContext } from "react";
 
 interface UseHandleFormSubmitProps<TData, TError> {
   formId?: FormId;
-  onSubmit: (data: TData) => SubmitPromise<TError[]> | void;
+  onSubmit?: (data: TData) => SubmitPromise<TError[]> | void;
 }
 
 function useHandleFormSubmit<TData, TErrors>({
@@ -25,7 +24,7 @@ function useHandleFormSubmit<TData, TErrors>({
       messageContext.clearErrorNotifications();
     }
 
-    const result = onSubmit(data);
+    const result = onSubmit ? onSubmit(data) : null;
 
     if (!result) {
       return [];
