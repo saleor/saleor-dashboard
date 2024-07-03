@@ -2,7 +2,6 @@
 import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
-import FormSpacer from "@dashboard/components/FormSpacer";
 import { DashboardModal } from "@dashboard/components/Modal";
 import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
 import { OrderErrorFragment, WarehouseFragment } from "@dashboard/graphql";
