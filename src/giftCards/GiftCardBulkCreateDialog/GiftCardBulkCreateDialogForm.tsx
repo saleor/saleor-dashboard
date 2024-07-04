@@ -106,7 +106,7 @@ const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> 
         error={formErrors?.tags}
         name="tags"
         values={tags}
-        toggleChange={toggleValue}
+        toggleChange={change}
       />
 
       <Divider />

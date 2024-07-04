@@ -41,7 +41,7 @@ const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = 
 
     return {
       note: note || null,
-      addTags: tags || null,
+      addTags: tags?.map(tag => tag.value) || null,
       userEmail: (sendToCustomerSelected && selectedCustomer.email) || null,
       channel: (sendToCustomerSelected && channelSlug) || null,
       balance: {

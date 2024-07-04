@@ -6,6 +6,7 @@ import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutoco
 import { AccountErrorFragment } from "@dashboard/graphql";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -50,15 +51,17 @@ const CustomerCreateAddress: React.FC<CustomerCreateAddressProps> = props => {
           <FormattedMessage id="wNQzS/" defaultMessage="The primary address of this customer." />
         </Typography>
         <FormSpacer />
-        <AddressEdit
-          countries={countries}
-          data={data}
-          disabled={disabled}
-          countryDisplayValue={countryDisplayName}
-          errors={errors}
-          onChange={onChange}
-          onCountryChange={onCountryChange}
-        />
+        <Box display="grid" gap={5}>
+          <AddressEdit
+            countries={countries}
+            data={data}
+            disabled={disabled}
+            countryDisplayValue={countryDisplayName}
+            errors={errors}
+            onChange={onChange}
+            onCountryChange={onCountryChange}
+          />
+        </Box>
       </CardContent>
     </Card>
   );

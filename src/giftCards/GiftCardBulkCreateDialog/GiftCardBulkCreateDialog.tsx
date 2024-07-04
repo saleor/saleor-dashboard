@@ -38,6 +38,7 @@ const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
   const onIssueSuccessDialogClose = () => setOpenIssueSuccessDialog(false);
   const { loading: loadingChannelCurrencies } = useChannelCurrenciesQuery({});
   const currentDate = useCurrentDate();
+
   const getParsedSubmitInputData = (
     formData: GiftCardBulkCreateFormData,
   ): GiftCardBulkCreateInput => {
@@ -45,7 +46,7 @@ const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
 
     return {
       count: cardsAmount,
-      tags,
+      tags: tags.map(tag => tag.value),
       balance: {
         amount: balanceAmount,
         currency: balanceCurrency,
@@ -54,6 +55,7 @@ const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
       isActive: !requiresActivation,
     };
   };
+
   const [bulkCreateGiftCard, bulkCreateGiftCardOpts] = useGiftCardBulkCreateMutation({
     onCompleted: data => {
       const errors = data?.giftCardBulkCreate?.errors;
@@ -77,6 +79,7 @@ const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
     },
     refetchQueries: [GIFT_CARD_LIST_QUERY],
   });
+
   const handleSubmit = (data: GiftCardBulkCreateFormData) => {
     const formErrors = validateForm(data);
 
@@ -90,6 +93,7 @@ const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
       });
     }
   };
+
   const apiErrors = bulkCreateGiftCardOpts?.data?.giftCardBulkCreate?.errors;
   const handleSetSchemaErrors = () => {
     if (apiErrors?.length) {
@@ -104,7 +108,7 @@ const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
   return (
     <>
       <DashboardModal open={open} onChange={onClose}>
-        <DashboardModal.Content>
+        <DashboardModal.Content __maxWidth={600} __width="calc(100% - 64px)">
           <DashboardModal.Title>{intl.formatMessage(messages.title)}</DashboardModal.Title>
           <ContentWithProgress>
             {!loadingChannelCurrencies && (

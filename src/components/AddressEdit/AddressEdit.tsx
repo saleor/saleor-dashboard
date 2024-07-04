@@ -5,12 +5,11 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import SingleAutocompleteSelectField, {
-  SingleAutocompleteChoiceType,
-} from "../SingleAutocompleteSelectField";
+import { Combobox } from "../Combobox";
 import { getErrorMessage } from "./getErrorMessage";
 import { useAddressValidation } from "./useAddressValidation";
 
@@ -26,7 +25,7 @@ const useStyles = makeStyles(
 );
 
 interface AddressEditProps {
-  countries: SingleAutocompleteChoiceType[];
+  countries: Option[];
   countryDisplayValue: string;
   data: AddressTypeInput;
   disabled?: boolean;
@@ -49,6 +48,7 @@ const PossibleFormFields = {
   STREET_ADDRESS_2: "streetAddress2",
 } as const;
 const formFields: Array<keyof AddressTypeInput> = Object.values(PossibleFormFields);
+
 const AddressEdit: React.FC<AddressEditProps> = props => {
   const { countries, countryDisplayValue, data, disabled, errors, onChange, onCountryChange } =
     props;
@@ -222,46 +222,48 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
 
       <div className={classes.root}>
         <div>
-          <SingleAutocompleteSelectField
-            disabled={disabled}
-            autocomplete="new-password"
+          <Combobox
             data-test-id="address-edit-country-select-field"
-            displayValue={countryDisplayValue}
+            autoComplete="off"
+            spellCheck={false}
+            disabled={disabled}
             error={!!formErrors.country}
             helperText={getErrorMessage(formErrors.country, intl)}
             label={intl.formatMessage({
               id: "vONi+O",
               defaultMessage: "Country",
             })}
+            options={countries}
+            fetchOptions={() => undefined}
             name="country"
-            onChange={onCountryChange}
-            value={data.country}
-            choices={countries}
-            InputProps={{
-              spellCheck: false,
+            value={{
+              label: countryDisplayValue,
+              value: data.country,
             }}
+            onChange={onCountryChange}
           />
         </div>
         <div>
           {isFieldAllowed(PossibleFormFields.COUNTRY_AREA) && (
-            <SingleAutocompleteSelectField
-              disabled={disabled}
-              autocomplete="new-password"
+            <Combobox
               data-test-id="address-edit-country-area-field"
-              displayValue={getDisplayValue(data.countryArea)}
+              autoComplete="off"
+              spellCheck={false}
+              disabled={disabled}
               error={!!formErrors.countryArea}
               helperText={getErrorMessage(formErrors.countryArea, intl)}
               label={intl.formatMessage({
                 id: "AuwpCm",
                 defaultMessage: "Country area",
               })}
+              options={areas}
+              fetchOptions={() => undefined}
               name="countryArea"
-              onChange={onChange}
-              value={data.countryArea}
-              choices={areas}
-              InputProps={{
-                spellCheck: false,
+              value={{
+                label: getDisplayValue(data.countryArea),
+                value: data.countryArea,
               }}
+              onChange={onChange}
             />
           )}
         </div>
