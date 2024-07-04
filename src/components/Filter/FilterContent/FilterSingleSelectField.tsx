@@ -1,14 +1,10 @@
 // @ts-strict-ignore
 import { FilterFieldBaseProps, FilterType } from "@dashboard/components/Filter";
-import {
-  getIsFilterMultipleChoices,
-  useCommonStyles,
-} from "@dashboard/components/Filter/FilterContent/utils";
+import { getIsFilterMultipleChoices } from "@dashboard/components/Filter/FilterContent/utils";
 import FormSpacer from "@dashboard/components/FormSpacer";
+import { Select } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
-
-import SingleSelectField from "../../SingleSelectField/SingleSelectField";
 
 type FilterSingleSelectFieldProps = FilterFieldBaseProps<string>;
 
@@ -16,27 +12,21 @@ export const FilterSingleSelectField: React.FC<FilterSingleSelectFieldProps> = (
   filter,
   onFilterPropertyChange,
 }) => {
-  const classes = useCommonStyles({});
   const intl = useIntl();
 
   return (
     <>
-      <SingleSelectField
+      <Select
         data-test-id="filter-range-type-choice"
-        choices={getIsFilterMultipleChoices(intl)}
+        options={getIsFilterMultipleChoices(intl)}
         value={filter.multiple ? FilterType.MULTIPLE : FilterType.SINGULAR}
-        InputProps={{
-          classes: {
-            input: classes.input,
-          },
-        }}
-        onChange={event =>
+        onChange={value =>
           onFilterPropertyChange({
             payload: {
               name: filter.name,
               update: {
-                multiple: event.target.value === FilterType.MULTIPLE,
-                ...(event.target.value !== FilterType.MULTIPLE && {
+                multiple: value === FilterType.MULTIPLE,
+                ...(value !== FilterType.MULTIPLE && {
                   value: filter.value.slice(0, 1) as string[],
                 }),
               },
