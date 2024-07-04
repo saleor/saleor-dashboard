@@ -20,7 +20,7 @@ export class RightSideDetailsPage extends BasePage {
     readonly pickupAllWarehousesButton = page.getByTestId("ALL"),
     readonly categorySelectOption = page.locator("[data-test-id*='select-option']"),
     readonly taxSelectOption = page.locator("[data-test-id*='select-option']"),
-    readonly selectOption = page.getByTestId("multi-autocomplete-select-option"),
+    readonly selectOption = page.getByTestId("select-option"),
     readonly categoryInput = page.getByTestId("category"),
     readonly taxInput = page.getByTestId("taxes"),
     readonly categoryItem = page.getByTestId("single-autocomplete-select-option"),

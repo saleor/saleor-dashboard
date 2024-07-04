@@ -23,7 +23,7 @@ export class StaffMembersPage extends BasePage {
     readonly lastName = page.getByTestId("staffLastName"),
     readonly email = page.getByTestId("staffEmail"),
     readonly permissionsGroupSelectButton = page.getByTestId("permission-groups"),
-    readonly permissionGroupOptions = page.getByTestId("multi-autocomplete-select-option"),
+    readonly permissionGroupOptions = page.getByTestId("select-option"),
     readonly assignedPermissionGroups = page.getByTestId("assigned-permission-group"),
     readonly isActiveCheckbox = page.getByTestId("is-active-checkbox").locator("input"),
   ) {

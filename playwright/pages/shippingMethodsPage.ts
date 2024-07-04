@@ -77,7 +77,7 @@ export class ShippingMethodsPage extends BasePage {
     await console.log(`Navigates to existing shipping method page: ${existingShippingMethodUrl}`);
     await this.page.goto(existingShippingMethodUrl);
     await this.rightSideDetailsPage.channelSection
-      .locator(this.page.getByTestId("selected-options"))
+      .locator(this.page.getByTestId("[data-test-id*='selected-option']"))
       .waitFor({
         state: "visible",
         timeout: 60000,
