@@ -529,6 +529,7 @@ export const transactionItemFragment = gql`
     ...TransactionBaseItem
     pspReference
     externalUrl
+    createdAt
     events {
       ...TransactionEvent
     }

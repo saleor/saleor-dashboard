@@ -5,29 +5,26 @@ import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getStaffErrorMessage from "@dashboard/utils/errors/staff";
 import { Typography } from "@material-ui/core";
+import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import MultiAutocompleteSelectField, {
-  MultiAutocompleteChoiceType,
-} from "../MultiAutocompleteSelectField";
+import { Multiselect } from "../Combobox";
 
 export interface AccountPermissionGroupsProps extends FetchMoreProps, SearchPageProps {
   formData: {
-    permissionGroups: string[];
+    permissionGroups: Option[];
   };
   disabled: boolean;
   errors: StaffErrorFragment[];
   availablePermissionGroups: RelayToFlat<SearchPermissionGroupsQuery["search"]>;
   onChange: FormChange;
-  displayValues: MultiAutocompleteChoiceType[];
 }
 
 const AccountPermissionGroups: React.FC<AccountPermissionGroupsProps> = props => {
   const {
     availablePermissionGroups,
     disabled,
-    displayValues,
     errors,
     formData,
     hasMore,
@@ -46,21 +43,24 @@ const AccountPermissionGroups: React.FC<AccountPermissionGroupsProps> = props =>
 
   return (
     <>
-      <MultiAutocompleteSelectField
-        displayValues={displayValues}
+      <Multiselect
         label={intl.formatMessage({
           id: "C7eDb9",
           defaultMessage: "Permission groups",
         })}
-        choices={disabled ? [] : choices}
         name="permissionGroups"
+        options={disabled ? [] : choices}
         value={formData?.permissionGroups}
         onChange={onChange}
-        fetchChoices={onSearchChange}
+        fetchOptions={onSearchChange}
+        fetchMore={{
+          onFetchMore,
+          hasMore,
+          loading,
+        }}
         data-test-id="permission-groups"
-        onFetchMore={onFetchMore}
-        hasMore={hasMore}
-        loading={loading}
+        error={!!formErrors.addGroups}
+        helperText={getStaffErrorMessage(formErrors.addGroups, intl)}
       />
       {!!formErrors.addGroups && (
         <Typography color="error">{getStaffErrorMessage(formErrors.addGroups, intl)}</Typography>

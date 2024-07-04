@@ -62,6 +62,7 @@ const OrderTransactionGiftCard: React.FC<OrderTransactionGiftCardProps> = ({ ord
     pspReference: giftCard.last4CodeChars,
     externalUrl: null,
     chargedAmount: prepareMoney(amount, currency),
+    createdAt: fakeEvents[0].createdAt,
     // Fake amounts
     authorizedAmount: prepareMoney(0, currency),
     authorizePendingAmount: prepareMoney(0, currency),

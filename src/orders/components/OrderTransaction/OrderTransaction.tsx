@@ -1,15 +1,16 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import { TransactionActionEnum, TransactionItemFragment } from "@dashboard/graphql";
-import { FakeTransaction, TransactionFakeEvent } from "@dashboard/orders/types";
+import { TransactionActionEnum } from "@dashboard/graphql";
+import { TransactionFakeEvent } from "@dashboard/orders/types";
 import React from "react";
 
 import { OrderTransactionCardTitle } from "./components";
 import { TransactionEvents } from "./components/TransactionEvents";
+import { ExtendedOrderTransaction } from "./types";
 import { getTransactionEvents } from "./utils";
 
 export interface OrderTransactionProps {
-  transaction: TransactionItemFragment | FakeTransaction;
+  transaction: ExtendedOrderTransaction;
   fakeEvents?: TransactionFakeEvent[];
   onTransactionAction: (transactionId: string, actionType: TransactionActionEnum) => void;
   showActions?: boolean;
