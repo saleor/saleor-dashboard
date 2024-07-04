@@ -2,7 +2,7 @@
 import Checkbox from "@dashboard/components/Checkbox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import { DashboardModal } from "@dashboard/components/Modal";
+import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
 import { AddressTypeInput } from "@dashboard/customers/types";
 import {
   AddressFragment,
@@ -250,7 +250,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
           );
 
           return (
-            <DashboardModal.Content __maxWidth={600} __width="calc(100% - 64px)">
+            <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%">
               <DashboardModal.Title>
                 <FormattedMessage {...getDialogTitle()} />
               </DashboardModal.Title>

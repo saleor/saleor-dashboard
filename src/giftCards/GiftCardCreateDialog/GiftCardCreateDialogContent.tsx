@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { DashboardModal } from "@dashboard/components/Modal";
+import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
 import { GiftCardCreateInput, useGiftCardCreateMutation } from "@dashboard/graphql";
 import useCurrentDate from "@dashboard/hooks/useCurrentDate";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -76,7 +76,7 @@ const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = 
   };
 
   return (
-    <DashboardModal.Content __maxWidth={600} __width="calc(100% - 64px)">
+    <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%">
       <DashboardModal.Title>{intl.formatMessage(messages.title)}</DashboardModal.Title>
       {cardCode ? (
         <GiftCardCreateDialogCodeContent cardCode={cardCode} onClose={handleClose} />

@@ -3,7 +3,7 @@ import { DialogProps } from "@dashboard/types";
 import React from "react";
 
 import BackButton from "../BackButton";
-import { DashboardModal } from "../Modal";
+import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "../Modal";
 import { ActionDialogVariant, Size } from "./types";
 
 export interface NewActionDialogProps extends DialogProps {
@@ -24,7 +24,7 @@ const NewActionDialog: React.FC<NewActionDialogProps> = props => {
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content __maxWidth={600} __width="calc(100% - 64px)">
+      <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%">
         <DashboardModal.Title>{title}</DashboardModal.Title>
 
         {children}
