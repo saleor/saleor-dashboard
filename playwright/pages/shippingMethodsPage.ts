@@ -76,12 +76,17 @@ export class ShippingMethodsPage extends BasePage {
 
     await console.log(`Navigates to existing shipping method page: ${existingShippingMethodUrl}`);
     await this.page.goto(existingShippingMethodUrl);
-    await this.rightSideDetailsPage.channelSection
-      .locator(this.page.getByTestId("selected-options"))
-      .waitFor({
+
+    const channels = await this.rightSideDetailsPage.channelSection
+      .locator('[data-test-id*="selected-option-"]')
+      .all();
+
+    for (const channel of channels) {
+      await channel.waitFor({
         state: "visible",
         timeout: 60000,
       });
+    }
   }
 
   async gotoExistingShippingRate(shippingMethodId: string, shippingRateId: string) {
