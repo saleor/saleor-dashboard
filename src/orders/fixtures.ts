@@ -112,6 +112,7 @@ export const orderTransactions: TransactionItemFragment[] = [
     pspReference: "ord_3d41ih",
     actions: [],
     externalUrl: null,
+    createdAt: "2022-08-12T14:10:22.226875+00:00",
     events: [
       {
         id: "VHJhbnNhY3Rpb25FdmVudDox",
@@ -144,6 +145,7 @@ export const orderTransactions: TransactionItemFragment[] = [
     name: "test",
     pspReference: "123",
     externalUrl: null,
+    createdAt: "2022-08-12T14:10:22.226875+00:00",
     actions: [],
     events: [
       {
@@ -2647,6 +2649,7 @@ export const transactions: Record<
       pspReference: "ord_3d41ih",
       actions: [TransactionActionEnum.CANCEL, TransactionActionEnum.CHARGE],
       externalUrl: null,
+      createdAt: "2022-08-12T14:10:22.226875+00:00",
       events: [
         {
           id: "VHJhbnNhY3Rpb25FdmVudDox",
@@ -2682,6 +2685,7 @@ export const transactions: Record<
       pspReference: "ord_3d41ih",
       externalUrl: null,
       actions: [],
+      createdAt: "2022-08-12T14:10:22.226875+00:00",
       events: [
         {
           id: "VHJhbnNhY3Rpb25FdmVudDox",
@@ -2732,6 +2736,7 @@ export const transactions: Record<
       pspReference: "ord_3d41ih",
       actions: [TransactionActionEnum.REFUND],
       externalUrl: null,
+      createdAt: "2022-08-12T14:10:22.226875+00:00",
       events: [
         {
           id: "VHJhbnNhY3Rpb25FdmVudDox",
@@ -2797,6 +2802,7 @@ export const transactions: Record<
       pspReference: "ord_3d41ih",
       actions: [TransactionActionEnum.REFUND],
       externalUrl: null,
+      createdAt: "2022-08-12T14:10:22.226875+00:00",
       events: [
         {
           id: "VHJhbnNhY3Rpb25FdmVudDox",
@@ -2862,6 +2868,7 @@ export const transactions: Record<
       pspReference: "ord_3d41ih",
       actions: [TransactionActionEnum.CHARGE],
       externalUrl: null,
+      createdAt: "2022-08-12T14:10:22.226875+00:00",
       events: [
         {
           id: "VHJhbnNhY3Rpb25FdmVudDox",
@@ -2927,6 +2934,7 @@ export const transactions: Record<
       pspReference: "ord_3d41ih",
       actions: [],
       externalUrl: null,
+      createdAt: "2022-08-12T14:10:22.226875+00:00",
       events: [
         {
           id: "VHJhbnNhY3Rpb25FdmVudDox",
@@ -3007,6 +3015,7 @@ export const transactions: Record<
       pspReference: "ord_3d41ih",
       actions: [],
       externalUrl: null,
+      createdAt: "2022-08-12T14:10:22.226875+00:00",
       events: [
         {
           id: "VHJhbnNhY3Rpb25FdmVudDox",
@@ -3102,6 +3111,7 @@ export const transactions: Record<
       pspReference: "ord_3d41ih",
       actions: [],
       externalUrl: null,
+      createdAt: "2022-08-12T14:10:22.226875+00:00",
       events: [
         {
           id: "VHJhbnNhY3Rpb25FdmVudDox",
