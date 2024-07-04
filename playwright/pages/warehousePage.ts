@@ -67,10 +67,7 @@ export class WarehousePage extends BasePage {
     await this.companyZipInput.fill(zip);
     await this.typePhone(phone);
     await this.companyCountrySelect.click();
-    await this.page
-      .getByTestId("autocomplete-dropdown")
-      .getByRole("option", { name: country })
-      .click();
+    await this.page.getByTestId("select-option").filter({ hasText: country }).click();
   }
 
   async typeWarehouseName(warehouseName: string) {
