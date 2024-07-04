@@ -33,6 +33,8 @@ jest.mock("@saleor/macaw-ui", () => ({
 jest.mock("@saleor/macaw-ui-next", () => ({
   useTheme: jest.fn(() => () => ({})),
   Divider: jest.fn(() => <></>),
+  DynamicCombobox: jest.fn(() => <></>),
+  DynamicMultiselect: jest.fn(() => <></>),
   vars: {
     colors: {
       border: {
