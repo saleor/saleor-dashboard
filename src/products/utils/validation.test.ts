@@ -1,5 +1,18 @@
+import { useIntl } from "react-intl";
+
 import { ProductCreateData } from "../components/ProductCreatePage";
-import { validateProductCreateData } from "./validation";
+import {
+  ProductVariantType,
+  validateProductCreateData,
+  validateProductVariant,
+} from "./validation";
+
+jest.mock("react-intl", () => ({
+  useIntl: jest.fn(() => ({
+    formatMessage: jest.fn(x => x.defaultMessage),
+  })),
+  defineMessages: jest.fn(x => x),
+}));
 
 describe("validateProductCreateData", () => {
   it("returns errors when there is no productType or name", () => {
@@ -76,5 +89,47 @@ describe("validateProductCreateData", () => {
 
     // Assert
     expect(errors).toEqual([]);
+  });
+
+  it("returns 'required' errors on product variant form if price is not provided", () => {
+    const intl = useIntl();
+
+    // Arrange
+    const data = {
+      channelListings: [
+        {
+          id: "channel1",
+          value: {
+            price: "",
+          },
+        },
+        {
+          id: "channel2",
+          value: {
+            price: null,
+          },
+        },
+      ],
+      variantName: "variant name",
+    } as unknown as ProductVariantType;
+
+    // Act
+    const variantErrors = validateProductVariant(data, intl);
+
+    // Assert
+    expect(variantErrors[0]).toEqual({
+      __typename: "ProductError",
+      attributes: [],
+      code: "REQUIRED",
+      field: "channel1-channelListing-price",
+      message: "This field cannot be blank",
+    });
+    expect(variantErrors[1]).toEqual({
+      __typename: "ProductError",
+      attributes: [],
+      code: "REQUIRED",
+      field: "channel2-channelListing-price",
+      message: "This field cannot be blank",
+    });
   });
 });

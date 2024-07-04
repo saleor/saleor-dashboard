@@ -47,7 +47,7 @@ export const validateProductCreateData = (data: ProductCreateData) => {
 };
 
 const channelListingValueSchema = z.object({
-  price: z.number().or(z.string()),
+  price: z.number().or(z.string().min(1)),
 });
 
 const channelListingSchema = z
@@ -61,12 +61,7 @@ const channelListingSchema = z
   })
   .partial();
 
-type ProductVariantType = ProductVariantCreateData | ProductVariantUpdateSubmitData;
-
-export const validateVariantData = (
-  data: ProductVariantType,
-): ProductErrorWithAttributesFragment[] =>
-  !data.variantName ? [createRequiredError("variantName")] : [];
+export type ProductVariantType = ProductVariantCreateData | ProductVariantUpdateSubmitData;
 
 const handleValidationError = (
   error: z.ZodIssue,
@@ -76,6 +71,7 @@ const handleValidationError = (
   const defaultError = createRequiredError(error.path.join("-"), defaultMessage);
 
   switch (error.code) {
+    case "too_small":
     case "invalid_union":
     case "invalid_type":
       if (error.path.includes("price") && error.path.includes("channelListings")) {
@@ -95,6 +91,7 @@ const handleValidationError = (
 
 export const validateProductVariant = (data: ProductVariantType, intl: IntlShape) => {
   const result = channelListingSchema.safeParse(data);
+
   const defaultMessage = intl.formatMessage({
     defaultMessage: "This field cannot be blank",
     id: "8pVWve",
