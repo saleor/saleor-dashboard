@@ -76,7 +76,11 @@ const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = 
   };
 
   return (
-    <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%">
+    <DashboardModal.Content
+      __maxWidth={DASHBOARD_MODAL_WIDTH}
+      width="100%"
+      data-test-id="gift-card-dialog"
+    >
       <DashboardModal.Title>{intl.formatMessage(messages.title)}</DashboardModal.Title>
       {cardCode ? (
         <GiftCardCreateDialogCodeContent cardCode={cardCode} onClose={handleClose} />

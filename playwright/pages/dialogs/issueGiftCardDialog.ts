@@ -14,7 +14,7 @@ export class IssueGiftCardDialog extends BasePage {
       .getByTestId("send-to-customer-section")
       .locator('input[type="checkbox"]'),
     readonly sendExpireDateCheckbox = page.getByTestId("expiry-section").locator("input"),
-    readonly customerInput = page.getByTestId("customer-field").locator("input"),
+    readonly customerInput = page.getByTestId("customer-field"),
     readonly noteTextArea = page.getByTestId("note-field").locator('[name="note"]'),
     readonly requiresActivationCheckbox = page
       .getByTestId("requires-activation-section")
@@ -22,7 +22,6 @@ export class IssueGiftCardDialog extends BasePage {
     readonly issueButton = page.getByTestId("submit"),
     readonly okButton = page.getByTestId("submit"),
     readonly copyCodeButton = page.getByTestId("copy-code-button"),
-    readonly dropdown = page.getByTestId("autocomplete-dropdown"),
     readonly option = page.getByTestId("select-option"),
   ) {
     super(page);
@@ -46,7 +45,6 @@ export class IssueGiftCardDialog extends BasePage {
 
   async selectCustomer(customer: string) {
     await this.customerInput.fill(customer);
-    await this.dropdown.waitFor({ state: "attached" });
     await this.option.filter({ hasText: customer }).waitFor({ state: "visible" });
     await this.option.filter({ hasText: customer }).click();
     await this.waitForDOMToFullyLoad();
