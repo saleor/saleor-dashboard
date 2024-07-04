@@ -17,7 +17,7 @@ export class AddressForm extends BasePage {
     readonly countryAreaSelect = page
       .getByTestId("address-edit-country-area-field")
       .locator("input"),
-    readonly selectOptions = page.getByTestId("single-autocomplete-select-option"),
+    readonly selectOptions = page.getByTestId("select-option"),
   ) {
     super(page);
   }

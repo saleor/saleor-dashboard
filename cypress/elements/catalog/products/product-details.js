@@ -2,7 +2,7 @@ export const PRODUCT_DETAILS = {
   productNameInput: "[name='name']",
   productTypeInput: "[data-test-id='product-type']",
   categoryInput: "[data-test-id='category']",
-  categoryItem: "[data-test-id='single-autocomplete-select-option']",
+  categoryItem: "[data-test-id='select-option']",
   collectionInput: "[data-test-id='collections']",
   autocompleteDropdown: "[data-test-id='autocomplete-dropdown']",
   firstCategoryItem: "#downshift-0-item-0",

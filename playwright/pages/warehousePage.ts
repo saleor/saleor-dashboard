@@ -32,7 +32,7 @@ export class WarehousePage extends BasePage {
     readonly companyZipInput = page.getByTestId("company-zip-input").locator("input"),
     readonly companyPhoneInput = page.getByTestId("company-phone-input").locator("input"),
     readonly companyCountrySelect = page.getByTestId("address-edit-country-select-field"),
-    readonly companyCountryOptions = page.getByTestId("single-autocomplete-select-option"),
+    readonly companyCountryOptions = page.getByTestId("select-option"),
   ) {
     super(page);
     this.page = page;

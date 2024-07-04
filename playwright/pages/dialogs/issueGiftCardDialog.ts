@@ -22,7 +22,7 @@ export class IssueGiftCardDialog extends BasePage {
     readonly okButton = page.getByTestId("submit"),
     readonly copyCodeButton = page.getByTestId("copy-code-button"),
     readonly dropdown = page.getByTestId("autocomplete-dropdown"),
-    readonly option = page.getByTestId("single-autocomplete-select-option"),
+    readonly option = page.getByTestId("select-option"),
   ) {
     super(page);
   }
