@@ -3,22 +3,16 @@ import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
+import { DashboardModal } from "@dashboard/components/Modal";
 import Money from "@dashboard/components/Money";
 import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import { buttonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Typography,
-} from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Option, Select } from "@saleor/macaw-ui-next";
+import { Option, Select, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -110,23 +104,25 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
   };
 
   return (
-    <Dialog onClose={onClose} open={open} classes={{ paper: classes.dialog }}>
-      <DialogTitle disableTypography>
-        <FormattedMessage
-          id="V/YxJa"
-          defaultMessage="Edit Shipping Method"
-          description="dialog header"
-        />
-      </DialogTitle>
+    <DashboardModal onChange={onClose} open={open}>
       <Form initial={initialForm} onSubmit={onSubmit}>
-        {({ change, data }) => (
+        {({ change, data, submit }) => (
           <>
-            <DialogContent className={classes.root}>
+            <DashboardModal.Content __width={600}>
+              <DashboardModal.Title>
+                <FormattedMessage
+                  id="V/YxJa"
+                  defaultMessage="Edit Shipping Method"
+                  description="dialog header"
+                />
+              </DashboardModal.Title>
+
               <Select
                 options={choices as unknown as Option[]}
                 error={!!formErrors.shippingMethod}
                 helperText={getOrderErrorMessage(formErrors.shippingMethod, intl)}
                 name="shippingMethod"
+                data-test-id="shipping-method-select"
                 value={data.shippingMethod}
                 onChange={value => change({ target: { name: "shippingMethod", value } })}
               />
@@ -134,28 +130,32 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
                 <>
                   <FormSpacer />
                   {nonFieldErrors.map((err, index) => (
-                    <DialogContentText color="error" key={index}>
+                    <Text color="critical1" key={index}>
                       {getOrderErrorMessage(err, intl)}
-                    </DialogContentText>
+                    </Text>
                   ))}
                 </>
               )}
-            </DialogContent>
-            <DialogActions>
-              <BackButton onClick={onClose} />
-              <ConfirmButton
-                data-test-id="confirm-button"
-                transitionState={confirmButtonState}
-                type="submit"
-                disabled={!data.shippingMethod}
-              >
-                <FormattedMessage {...buttonMessages.confirm} />
-              </ConfirmButton>
-            </DialogActions>
+
+              <DashboardModal.Actions>
+                <BackButton onClick={onClose} />
+                <ConfirmButton
+                  data-test-id="confirm-button"
+                  transitionState={confirmButtonState}
+                  onClick={() => {
+                    submit();
+                    onClose();
+                  }}
+                  disabled={!data.shippingMethod}
+                >
+                  <FormattedMessage {...buttonMessages.confirm} />
+                </ConfirmButton>
+              </DashboardModal.Actions>
+            </DashboardModal.Content>
           </>
         )}
       </Form>
-    </Dialog>
+    </DashboardModal>
   );
 };
 

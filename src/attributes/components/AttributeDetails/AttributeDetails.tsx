@@ -151,14 +151,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
           onChange={onChange}
         />
         <FormSpacer />
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          gap={4}
-          data-test-id="attribute-type-select"
-        >
+        <Box display="flex" justifyContent="space-between" gap={4}>
           <Box width="100%">
             <Select
+              data-test-id="attribute-type-select"
               disabled={disabled || !canChangeType}
               error={!!formApiErrors.inputType}
               label={intl.formatMessage(messages.inputType)}
@@ -171,6 +167,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
           {data.inputType === AttributeInputTypeEnum.REFERENCE && (
             <Box width="100%">
               <Select
+                data-test-id="attribute-entity-type-select"
                 disabled={disabled || !canChangeType}
                 error={!!formApiErrors.entityType}
                 label={intl.formatMessage(messages.entityType)}
