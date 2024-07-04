@@ -1,18 +1,18 @@
 import { ButtonLink } from "@dashboard/components/ButtonLink";
-import { TransactionActionEnum, TransactionItemFragment } from "@dashboard/graphql";
-import { capitalize } from "@dashboard/misc";
-import { FakeTransaction } from "@dashboard/orders/types";
+import { TransactionActionEnum } from "@dashboard/graphql";
 import { Box, Button, ExternalLinkIcon, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderTransactionProps } from "../../OrderTransaction";
+import { ExtendedOrderTransaction } from "../../types";
 import { mapActionToMessage } from "../../utils";
+import { EventTime } from "../TransactionEvents/components/EventTime";
 import { messages } from "./messages";
 import { MoneyDisplay } from "./MoneyDisplay";
 
 interface CardTitleProps {
-  transaction: TransactionItemFragment | FakeTransaction;
+  transaction: ExtendedOrderTransaction;
   onTransactionAction: OrderTransactionProps["onTransactionAction"];
   showActions?: boolean;
 }
@@ -33,10 +33,22 @@ export const OrderTransactionCardTitle: React.FC<CardTitleProps> = ({
     canceledAmount,
     chargedAmount,
     authorizedAmount,
+    index = 0,
   } = transaction;
 
   const actions = transaction.actions.filter(action => action !== TransactionActionEnum.REFUND);
   const showActionButtons = showActions && actions.length > 0;
+
+  const transactionTitle = intl.formatMessage(
+    {
+      defaultMessage: "Transaction #{index} on {date}",
+      id: "nYD7NT",
+    },
+    {
+      date: <EventTime date={transaction.createdAt} />,
+      index: index + 1,
+    },
+  );
 
   return (
     <Box width="100%" display="flex" justifyContent="space-between" alignItems="center">
@@ -51,18 +63,11 @@ export const OrderTransactionCardTitle: React.FC<CardTitleProps> = ({
         >
           <ExternalLinkIcon size="small" />
 
-          {capitalize(transaction.name)}
+          {transactionTitle}
         </ButtonLink>
       ) : (
         <Text size={3} fontWeight="bold">
-          {transaction.name ? (
-            <FormattedMessage
-              {...messages.transactionCardTitleWithName}
-              values={{ name: transaction.name }}
-            />
-          ) : (
-            <FormattedMessage {...messages.transactionCardTitle} />
-          )}
+          {transactionTitle}
         </Text>
       )}
 

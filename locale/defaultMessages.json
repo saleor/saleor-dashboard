@@ -7809,6 +7809,9 @@
     "context": "window title",
     "string": "Create customer"
   },
+  "nYD7NT": {
+    "string": "Transaction #{index} on {date}"
+  },
   "nZDQbr": {
     "context": "column header",
     "string": "Customer name"
@@ -8042,6 +8045,10 @@
   "pGDYG5": {
     "context": "search label",
     "string": "Search Countries"
+  },
+  "pGfO2i": {
+    "context": "empty option",
+    "string": "None"
   },
   "pGwvpX": {
     "context": "status",
