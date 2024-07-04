@@ -77,7 +77,7 @@ export class RightSideDetailsPage extends BasePage {
   }
 
   async typeAndSelectSingleWarehouseShippingPage(warehouse = "Europe") {
-    await this.selectWarehouseShippingMethodButton.locator("input").fill(warehouse);
+    await this.selectWarehouseShippingMethodButton.fill(warehouse);
 
     await this.selectOption.filter({ hasText: warehouse }).first().click();
     // below click hides prompted options
@@ -86,7 +86,7 @@ export class RightSideDetailsPage extends BasePage {
 
   async typeAndSelectMultipleWarehousesShippingPage(warehouses: string[]) {
     for (const warehouse of warehouses) {
-      await this.selectWarehouseShippingMethodButton.locator("input").fill(warehouse);
+      await this.selectWarehouseShippingMethodButton.fill(warehouse);
 
       await this.selectOption.filter({ hasText: warehouse }).first().click();
     }
