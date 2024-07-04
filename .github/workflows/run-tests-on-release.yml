@@ -10,6 +10,10 @@ on:
         type: string
         required: true
         description: Version of run eg. "3.19.4-5a41d18"
+      ADDITIONAL_TITLE:
+        type: string
+        required: false
+        default: "Dashboard Automation test run "
 
     secrets:
       STAGING_TOKEN:
@@ -55,6 +59,7 @@ jobs:
       BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
       CHECK_ID: ${{ steps.create-check.outputs.CHECK_ID }}
       FRAMEWORK: ${{ steps.check-framework.outputs.result }}
+      IS_OLD_VERSION: ${{ steps.get-environment-variables.outputs.IS_OLD_VERSION }}
     steps:
       - uses: actions/checkout@v4
 
@@ -106,8 +111,20 @@ jobs:
         with:
           testmoUrl: ${{ secrets.TESTMO_URL }}
           testmoToken: ${{ secrets.TESTMO_TOKEN }}
-          testmoRunName: "Playwright run ${{ env.CUSTOM_VERSION }}"
+          testmoRunName: "${{ steps.check-framework.outputs.result }} run ${{ env.CUSTOM_VERSION }}"
         id: init-testmo
+
+      - name: get environment variables
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
+        id: get-environment-variables
+        run: |
+          node .github/workflows/cypressTestsHelpers/getEnvironmentVariables.js \
+            --version $CUSTOM_VERSION \
+            --token "$TOKEN" \
+            --repo_token "$REPO_TOKEN" \
+            --project "$PROJECT"
 
   run-cy-tests:
     if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"cypress"'
@@ -247,6 +264,7 @@ jobs:
           ENVIRONMENT: ${{ needs.add-check-and-prepare-instance.outputs.BASE_URL }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_QA_STATUSES_WEBHOOK_URL }}
           REF_NAME: ${{github.ref_name}}
+          ADDITIONAL_TITLE: "${{inputs.ADDITIONAL_TITLE}} ${{ needs.add-check-and-prepare-instance.outputs.VERSION }}"
         run: |
           node workflows/postTestsResults.js \
           --run_id "$RUN_ID" \
@@ -254,7 +272,8 @@ jobs:
           --slack_webhook_url "$SLACK_WEBHOOK_URL" \
           --environment "$ENVIRONMENT" \
           --url_to_action "$URL_TO_ACTION" \
-          --ref_name "$REF_NAME" 
+          --ref_name "$REF_NAME" \
+          --additional_title "$ADDITIONAL_TITLE" 
 
       - id: update-check
         if: always() && ${{ needs.add-check-and-prepare-instance.outputs.CHECK_ID }}
