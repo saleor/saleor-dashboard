@@ -20,9 +20,9 @@ export class StaffMembersPage extends BasePage {
     readonly lastName = page.getByTestId("staffLastName"),
     readonly email = page.getByTestId("staffEmail"),
     readonly permissionsGroupSelectButton = page.getByTestId("permission-groups"),
-    readonly permissionGroupOptions = page.getByTestId("multi-autocomplete-select-option"),
-    readonly assignedPermissionGroups = page.getByTestId("assigned-permission-group"),
+    readonly permissionGroupOptions = page.getByTestId("select-option"),
     readonly isActiveCheckbox = page.getByTestId("is-active-checkbox").locator("input"),
+    readonly selectedPermissions = page.locator("[data-test-id*='selected-option']"),
   ) {
     super(page);
     this.request = request;
@@ -60,7 +60,7 @@ export class StaffMembersPage extends BasePage {
   }
 
   async verifyAssignedPermission(permission: string) {
-    await expect(this.assignedPermissionGroups.filter({ hasText: permission })).toBeVisible();
+    await expect(this.selectedPermissions.filter({ hasText: permission })).toBeVisible();
   }
 
   async updateStaffInfo(name: string, lastName: string, email: string) {

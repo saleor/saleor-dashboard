@@ -1,8 +1,8 @@
 import CardTitle from "@dashboard/components/CardTitle";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import { ChannelFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { Card, CardContent, Divider } from "@material-ui/core";
+import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -20,14 +20,12 @@ const messages = defineMessages({
 
 export interface ShippingZoneSettingsCardProps {
   formData: ShippingZoneUpdateFormData;
-  warehousesDisplayValues: MultiAutocompleteChoiceType[];
-  warehousesChoices: MultiAutocompleteChoiceType[];
+  warehousesChoices: Option[];
   onWarehouseAdd: () => void;
   onWarehouseChange: FormChange;
   hasMoreWarehouses: boolean;
   onFetchMoreWarehouses: () => void;
   onWarehousesSearchChange: (query: string) => void;
-  channelsDisplayValues: MultiAutocompleteChoiceType[];
   onChannelChange: FormChange;
   allChannels?: ChannelFragment[];
   loading: boolean;
@@ -37,7 +35,6 @@ export const ShippingZoneSettingsCard: React.FC<
   ShippingZoneSettingsCardProps
 > = ({
   formData,
-  warehousesDisplayValues,
   hasMoreWarehouses,
   loading,
   warehousesChoices,
@@ -47,7 +44,6 @@ export const ShippingZoneSettingsCard: React.FC<
   onWarehouseChange,
   allChannels,
   onChannelChange,
-  channelsDisplayValues,
 }) => {
   const intl = useIntl();
 
@@ -56,7 +52,6 @@ export const ShippingZoneSettingsCard: React.FC<
       <CardTitle title={intl.formatMessage(messages.title)} />
       <CardContent data-test-id="channel-section">
         <ChannelsSection
-          channelsDisplayValues={channelsDisplayValues}
           onChange={onChannelChange}
           allChannels={allChannels}
           selectedChannels={formData.channels}
@@ -69,7 +64,6 @@ export const ShippingZoneSettingsCard: React.FC<
           onSearchChange={onWarehousesSearchChange}
           onChange={onWarehouseChange}
           onFetchMore={onFetchMoreWarehouses}
-          displayValues={warehousesDisplayValues}
           choices={warehousesChoices}
           selectedWarehouses={formData.warehouses}
           hasMore={hasMoreWarehouses}

@@ -36,9 +36,7 @@ export class VariantsPage {
     readonly booleanAttributeCheckbox = page.locator(
       "[name*='attribute'][type='checkbox']",
     ),
-    readonly selectOption = page.getByTestId(
-      "multi-autocomplete-select-option",
-    ),
+    readonly selectOption = page.getByTestId("select-option"),
     readonly manageChannels = page.getByTestId("manage-channels-button"),
     readonly allChannels = page.locator("[name='allChannels']"),
   ) {

@@ -33,7 +33,7 @@ const MultiselectRoot = forwardRef<HTMLInputElement, MultiselectProps>(
   (
     {
       disabled,
-      options,
+      options = [],
       onChange,
       fetchOptions,
       value,
