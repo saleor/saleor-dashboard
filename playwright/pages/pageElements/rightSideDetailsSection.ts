@@ -20,7 +20,7 @@ export class RightSideDetailsPage extends BasePage {
     readonly pickupAllWarehousesButton = page.getByTestId("ALL"),
     readonly categorySelectOption = page.locator("[data-test-id*='select-option']"),
     readonly taxSelectOption = page.locator("[data-test-id*='select-option']"),
-    readonly selectOption = page.getByTestId("multi-autocomplete-select-option"),
+    readonly selectOption = page.getByTestId("select-option"),
     readonly categoryInput = page.getByTestId("category"),
     readonly taxInput = page.getByTestId("taxes"),
     readonly categoryItem = page.getByTestId("select-option"),
@@ -77,7 +77,7 @@ export class RightSideDetailsPage extends BasePage {
   }
 
   async typeAndSelectSingleWarehouseShippingPage(warehouse = "Europe") {
-    await this.selectWarehouseShippingMethodButton.locator("input").fill(warehouse);
+    await this.selectWarehouseShippingMethodButton.fill(warehouse);
 
     await this.selectOption.filter({ hasText: warehouse }).first().click();
     // below click hides prompted options
@@ -86,7 +86,7 @@ export class RightSideDetailsPage extends BasePage {
 
   async typeAndSelectMultipleWarehousesShippingPage(warehouses: string[]) {
     for (const warehouse of warehouses) {
-      await this.selectWarehouseShippingMethodButton.locator("input").fill(warehouse);
+      await this.selectWarehouseShippingMethodButton.fill(warehouse);
 
       await this.selectOption.filter({ hasText: warehouse }).first().click();
     }
