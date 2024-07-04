@@ -33,9 +33,7 @@ export class ChannelPage extends BasePage {
       .locator("button")
       .first(),
     readonly slugNameInput = page.getByTestId("slug-name-input"),
-    readonly channelCurrencySelect = page
-      .getByTestId("channel-currency-select-input")
-      .locator("input"),
+    readonly channelCurrencySelect = page.getByTestId("channel-currency-select-input"),
     readonly countrySelect = page.getByTestId("country-select-input").locator("input"),
   ) {
     super(page);

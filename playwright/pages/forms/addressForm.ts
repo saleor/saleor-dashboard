@@ -13,7 +13,7 @@ export class AddressForm extends BasePage {
     readonly zipInput = page.getByTestId("zip-input").locator("input"),
     readonly addressLine1Input = page.getByTestId("address-line-1-input").locator("input"),
     readonly addressLine2Input = page.getByTestId("address-line-2-input").locator("input"),
-    readonly countrySelect = page.getByTestId("address-edit-country-select-field").locator("input"),
+    readonly countrySelect = page.getByTestId("address-edit-country-select-field"),
     readonly countryAreaSelect = page
       .getByTestId("address-edit-country-area-field")
       .locator("input"),
