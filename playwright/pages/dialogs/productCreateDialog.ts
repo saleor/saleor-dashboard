@@ -4,7 +4,7 @@ import type { Page } from "@playwright/test";
 export class ProductCreateDialog extends BasePage {
   constructor(
     page: Page,
-    readonly dialogProductTypeInput = page.locator("[data-test-id='dialog-product-type'] input"),
+    readonly dialogProductTypeInput = page.locator("[data-test-id='dialog-product-type']"),
     readonly promptedOptions = page.getByTestId("select-option"),
     readonly dropdown = page.getByTestId("autocomplete-dropdown"),
     readonly confirmButton = page.getByTestId("submit"),

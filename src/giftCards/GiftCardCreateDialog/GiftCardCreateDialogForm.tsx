@@ -167,6 +167,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
       <DashboardModal.Actions>
         <BackButton onClick={onClose} />
         <ConfirmButton
+          data-test-id="submit"
           disabled={!shouldEnableSubmitButton()}
           transitionState={opts?.status}
           onClick={submit}

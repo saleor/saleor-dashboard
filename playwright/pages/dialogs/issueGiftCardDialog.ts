@@ -6,7 +6,8 @@ export class IssueGiftCardDialog extends BasePage {
     page: Page,
     readonly enterAmountInput = page.locator('[name="balanceAmount"]'),
     readonly expiryPeriodAmountInput = page.locator('[name="expiryPeriodAmount"]'),
-    readonly tagsInput = page.getByTestId("gift-card-tag-select-field").locator("input"),
+    readonly tagsInput = page.getByTestId("gift-card-tag-select-field"),
+    readonly tagsInputOptions = page.locator('[data-test-id*="select-option"]'),
     readonly cardCode = page.getByTestId("cardCode"),
     readonly giftCardExpireFields = page.getByTestId("gift-card-expire-data-fields"),
     readonly sendToCustomerCheckbox = page
@@ -56,8 +57,9 @@ export class IssueGiftCardDialog extends BasePage {
     await this.expiryPeriodAmountInput.fill(expiryPeriodAmount);
   }
 
-  async typeTag(tag: string) {
+  async typeCustomTag(tag: string) {
     await this.tagsInput.fill(tag);
+    await this.tagsInputOptions.filter({ hasText: `Add new value: ${tag}` }).click();
   }
 
   async typeNote(tag: string) {
