@@ -7809,6 +7809,9 @@
     "context": "window title",
     "string": "Create customer"
   },
+  "nYD7NT": {
+    "string": "Transaction #{index} on {date}"
+  },
   "nZDQbr": {
     "context": "column header",
     "string": "Customer name"
