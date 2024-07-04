@@ -4,7 +4,6 @@ import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/componen
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Money from "@dashboard/components/Money";
-import { SingleSelectField } from "@dashboard/components/SingleSelectField";
 import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import { buttonMessages } from "@dashboard/intl";
@@ -19,6 +18,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Option, Select } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -122,13 +122,13 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
         {({ change, data }) => (
           <>
             <DialogContent className={classes.root}>
-              <SingleSelectField
-                choices={choices}
+              <Select
+                options={choices as unknown as Option[]}
                 error={!!formErrors.shippingMethod}
-                hint={getOrderErrorMessage(formErrors.shippingMethod, intl)}
+                helperText={getOrderErrorMessage(formErrors.shippingMethod, intl)}
                 name="shippingMethod"
                 value={data.shippingMethod}
-                onChange={change}
+                onChange={value => change({ target: { name: "shippingMethod", value } })}
               />
               {nonFieldErrors.length > 0 && (
                 <>

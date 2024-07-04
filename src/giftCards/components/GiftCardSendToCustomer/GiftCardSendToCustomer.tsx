@@ -1,12 +1,12 @@
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
-import SingleSelectField from "@dashboard/components/SingleSelectField";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import GiftCardCustomerSelectField from "@dashboard/giftCards/GiftCardCreateDialog/GiftCardCustomerSelectField";
 import { GiftCardCreateFormCustomer } from "@dashboard/giftCards/GiftCardCreateDialog/types";
 import { FormChange } from "@dashboard/hooks/useForm";
 import Label from "@dashboard/orders/components/OrderHistory/Label";
 import { mapSlugNodeToChoice } from "@dashboard/utils/maps";
+import { Select } from "@saleor/macaw-ui-next";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
@@ -58,12 +58,12 @@ const GiftCardSendToCustomer: React.FC<GiftCardSendToCustomerProps> = ({
           <VerticalSpacer />
           <Label text={intl.formatMessage(messages.customerSubtitle)} />
           <VerticalSpacer />
-          <SingleSelectField
-            choices={channelsChoices}
+          <Select
             name="channelSlug"
+            options={channelsChoices}
             label={intl.formatMessage(messages.channelSelectLabel)}
             value={selectedChannelSlug || channel?.slug}
-            onChange={change}
+            onChange={value => change({ target: { name: "channelSlug", value } })}
           />
           <VerticalSpacer />
           <Label text={intl.formatMessage(messages.customerChannelSubtitle)} />

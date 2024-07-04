@@ -23,10 +23,6 @@ export const useStyles = makeStyles(
         paddingTop: "2rem",
       },
     },
-    singleSelectField: {
-      // width: "275px",
-      // height: "32px",
-    },
     singleSelectWrapper: {
       display: "flex",
       flexDirection: "column",
