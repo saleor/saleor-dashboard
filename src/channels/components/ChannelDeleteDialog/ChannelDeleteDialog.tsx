@@ -1,9 +1,9 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { Choices, SingleSelectField } from "@dashboard/components/SingleSelectField";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { buttonMessages } from "@dashboard/intl";
 import { Typography } from "@material-ui/core";
+import { Option, Select } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -45,7 +45,7 @@ const messages = defineMessages({
 });
 
 export interface ChannelDeleteDialogProps {
-  channelsChoices: Choices;
+  channelsChoices: Option[];
   channelSlug: string;
   currency: string;
   hasOrders: boolean;
@@ -102,12 +102,12 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
                 {intl.formatMessage(messages.note)}
               </Typography>
               <div className={classes.select}>
-                <SingleSelectField
-                  choices={channelsChoices}
-                  name="channels"
+                <Select
                   label={intl.formatMessage(messages.selectChannel)}
+                  name="inputType"
+                  onChange={value => setChoice(value)}
                   value={choice}
-                  onChange={e => setChoice(e.target.value)}
+                  options={channelsChoices}
                 />
               </div>
             </>
