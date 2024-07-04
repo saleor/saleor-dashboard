@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-You can now see all options in the autocomplete select field
+The selected value is no longer filtering the options when using any select list
