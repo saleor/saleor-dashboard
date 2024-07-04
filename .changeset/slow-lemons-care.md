@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-You can now see all options to select in product variant sheet when selecting attribute value from select
+The selected value is no longer filtering the options when using any select list in product variant table
