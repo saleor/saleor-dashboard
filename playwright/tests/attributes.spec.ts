@@ -19,7 +19,7 @@ const attributeClasses = ["PRODUCT_TYPE", "PAGE_TYPE"];
 
 for (const attr of attributeClasses) {
   for (const type of ATTRIBUTES.attributeTypesWithAbilityToAddValues.names) {
-    const uniqueSlug = `${attr}-${type}-${SALEOR_124_uuid}`;
+    const uniqueSlug = `${attr}-${type.replace(" ", "-")}-${SALEOR_124_uuid}`;
 
     test(`TC: SALEOR_124 User should be able to create ${attr} ${type} attribute with ability to add values, required, public @e2e @attributes`, async ({
       page,
@@ -53,7 +53,7 @@ const SALEOR_125_uuid = faker.datatype.uuid();
 
 for (const attr of attributeClasses) {
   for (const type of ATTRIBUTES.attributeTypesWithoutAbilityToAddValues.names) {
-    const uniqueSlug = `${attr}-${type}-${SALEOR_125_uuid}`;
+    const uniqueSlug = `${attr}-${type.replace(" ", "-")}-${SALEOR_125_uuid}`;
 
     test(`TC: SALEOR_125 User should be able to create ${attr} ${type} attribute without ability to add values, NOT required, private @e2e @attributes`, async ({
       page,
