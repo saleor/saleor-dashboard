@@ -2,4 +2,4 @@
 "saleor-dashboard": minor
 ---
 
-Cypress tests are not longer possible to be executed
+Cypress tests are no longer possible to be executed
