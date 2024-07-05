@@ -288,3 +288,26 @@ test("TC: SALEOR_191 Refund products from the fully paid order @e2e @refunds", a
   await refundPage.transferFunds();
   await refundPage.expectSuccessBannerMessage("Refund has been sent");
 });
+
+test("TC: SALEOR_192 Should create a manual refund with a custom amount @e2e @refunds", async () => {
+  const order = ORDERS.fullyPaidOrderWithSeveralTransactions;
+
+  await ordersPage.goToExistingOrderPage(order.id);
+  await ordersPage.clickAddRefundButton();
+  await ordersPage.orderRefundDialog.pickManualRefund();
+  await ordersPage.orderRefundModal.waitFor({ state: "hidden" });
+  await refundPage.expectManualRefundPageOpen(order.id);
+  await refundPage.selectTransactionToRefund(order.transactionToRefundId);
+  await refundPage.transferFunds();
+  await refundPage.expectErrorMessage("You must provide amount value");
+  await refundPage.provideRefundAmount("1000");
+  await refundPage.expectErrorMessage(
+    "Provided amount cannot exceed charged amount for the selected transaction",
+  );
+  await refundPage.provideRefundAmount("10");
+  await refundPage.transferFunds();
+  await refundPage.expectSuccessBannerMessage("Transaction action requested successfully");
+  await ordersPage.goToExistingOrderPage(order.id);
+  await ordersPage.orderRefundSection.waitFor({ state: "visible" });
+  await ordersPage.assertRefundOnList("Manual refund");
+});
