@@ -1,4 +1,5 @@
 import { TaxCalculationStrategy, useTaxStrategyChoicesQuery } from "@dashboard/graphql";
+import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { FlatTaxRateLabel, PluginLabel, TaxAppLabel } from "../../components";
@@ -30,7 +31,11 @@ export const useTaxStrategyChoices = () => {
     })) ?? [];
 
   return {
-    taxStrategyChoices: [...taxAppsChoices, flatTaxRateChoice, legacyPluginTaxChoice],
+    taxStrategyChoices: [
+      ...taxAppsChoices,
+      flatTaxRateChoice,
+      legacyPluginTaxChoice,
+    ] as unknown as Option[],
     loading,
   };
 };

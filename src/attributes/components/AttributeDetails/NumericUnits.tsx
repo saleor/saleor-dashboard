@@ -139,8 +139,8 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
                 }));
               }}
               value={{
-                label: system ? systemChoices.find(c => c.value === system)?.label : "",
-                value: system,
+                label: system ? systemChoices.find(c => c.value === system)?.label ?? "" : "",
+                value: system ?? "",
               }}
               options={systemChoices}
             />
@@ -161,8 +161,8 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
                 }));
               }}
               value={{
-                label: type ? typeChoices.find(c => c.value === type)?.label : "",
-                value: type,
+                label: type ? typeChoices.find(c => c.value === type)?.label ?? "" : "",
+                value: type ?? "",
               }}
               options={typeChoices}
             />
@@ -187,7 +187,7 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
                   unit && type && system
                     ? (unitChoices[system][type].find(c => c.value === unit)?.label as string)
                     : "",
-                value: unit,
+                value: unit ?? "",
               }}
               options={(type && system ? unitChoices[system][type] ?? [] : []) as Option[]}
             />

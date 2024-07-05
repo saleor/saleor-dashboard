@@ -111,7 +111,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
       }
     : {
         availableInGrid: attribute.availableInGrid,
-        entityType: attribute.entityType,
+        entityType: attribute.entityType ?? AttributeEntityTypeEnum.PRODUCT,
         filterableInDashboard: attribute.filterableInDashboard,
         filterableInStorefront: attribute.filterableInStorefront,
         inputType: attribute?.inputType ?? AttributeInputTypeEnum.DROPDOWN,
