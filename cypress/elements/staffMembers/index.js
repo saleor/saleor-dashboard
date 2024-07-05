@@ -1,9 +1,0 @@
-import { INVITE_STAFF_MEMBER_FORM_SELECTORS } from "./inviteStaffMemberForm";
-import { STAFF_MEMBER_DETAILS_SELECTORS } from "./staffMemberDetails";
-import { STAFF_MEMBERS_LIST_SELECTORS } from "./staffMembersList";
-
-export {
-  INVITE_STAFF_MEMBER_FORM_SELECTORS,
-  STAFF_MEMBER_DETAILS_SELECTORS,
-  STAFF_MEMBERS_LIST_SELECTORS,
-};
