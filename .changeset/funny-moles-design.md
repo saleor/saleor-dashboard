@@ -2,4 +2,4 @@
 "saleor-dashboard": minor
 ---
 
-Removed all unnecessary cypress files
+Cypress tests are not longer possible to be executed
