@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { FetchMoreProps } from "@dashboard/types";
 import {
+  FormHelperTextProps,
   InputBase,
   OutlinedInputProps,
   Popper,
@@ -40,7 +41,9 @@ export interface SingleAutocompleteSelectFieldProps extends Partial<FetchMorePro
   fetchChoices?: (value: string) => void;
   onChange: (event: React.ChangeEvent<any>) => void;
   fetchOnFocus?: boolean;
-  FormHelperTextProps?: any;
+  FormHelperTextProps?: FormHelperTextProps & {
+    "data-test-id": string;
+  };
   nakedInput?: boolean;
   onBlur?: () => void;
   popperPlacement?: PopperPlacementType;
