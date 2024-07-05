@@ -125,6 +125,7 @@ export class OrdersPage extends BasePage {
     const refund = await this.orderRefundList.locator("tr").filter({ hasText: refundInfo });
 
     await refund.locator(this.editRefundButton).click();
+    await this.waitForDOMToFullyLoad();
   }
 
   async assertRefundOnList(refundInfo: string) {

@@ -39,7 +39,7 @@ export const OrderManualTransactionRefundAmount = ({
             </Box>
             {!!error && (
               <Box textAlign="right" paddingY={2}>
-                <Text color="critical1" size={1}>
+                <Text data-test-id="error-message" color="critical1" size={1}>
                   {error.message}
                 </Text>
               </Box>
