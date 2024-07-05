@@ -122,7 +122,7 @@ export class AttributesPage extends BasePage {
 
   async selectAttributeInputType(attributeType: string) {
     await this.attributeSelect.click();
-    await this.attributeSelectOption.filter({ hasText: attributeType }).first().click();
+    await this.attributeSelectOption.filter({ hasText: attributeType }).click();
   }
 
   async clickAssignAttributeValueButton() {

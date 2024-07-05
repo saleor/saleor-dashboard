@@ -37,10 +37,10 @@ export const ATTRIBUTES = {
     },
   ],
   attributeTypesWithAbilityToAddValues: {
-    names: ["DROPDOWN", "MULTISELECT", "SWATCH"],
+    names: ["Dropdown", "Multiple Select", "Swatch"],
   },
   attributeTypesWithoutAbilityToAddValues: {
-    names: ["FILE", "NUMERIC", "RICH_TEXT", "PLAIN_TEXT", "BOOLEAN", "DATE", "DATE_TIME"],
+    names: ["File", "Numeric", "Rich Text", "Plain Text", "Boolean", "Date", "Date Time"],
   },
   attributeReferencesEntities: {
     names: ["PAGE", "PRODUCT", "PRODUCT_VARIANT"],
