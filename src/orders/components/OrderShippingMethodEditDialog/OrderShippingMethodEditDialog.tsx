@@ -123,8 +123,13 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
                 helperText={getOrderErrorMessage(formErrors.shippingMethod, intl)}
                 name="shippingMethod"
                 data-test-id="shipping-method-select"
-                value={data.shippingMethod}
-                onChange={value => change({ target: { name: "shippingMethod", value } })}
+                value={{
+                  label: choices.find(choice => choice.value === data.shippingMethod)?.label as any,
+                  value: data.shippingMethod,
+                }}
+                onChange={(value: Option) =>
+                  change({ target: { name: "shippingMethod", value: value.value } })
+                }
               />
               {nonFieldErrors.length > 0 && (
                 <>
