@@ -20,6 +20,7 @@ export const OrderTransactionTileEvent = ({ event }: OrderTransactionTileEventPr
 
   return (
     <Box
+      data-test-id="transaction-event-row"
       backgroundColor="default1"
       display="grid"
       gridTemplateColumns={5}
