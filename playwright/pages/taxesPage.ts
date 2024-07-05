@@ -14,7 +14,7 @@ export class TaxesPage extends BasePage {
 
   constructor(
     page: Page,
-    readonly appOrFlatRateSelect = page.getByTestId("app-flat-select").locator("[role='button']"),
+    readonly appOrFlatRateSelect = page.getByTestId("tax-calculation-strategy-select"),
     readonly chanelListRow = page.getByTestId("channels-list-rows"),
     readonly countriesListRow = page.getByTestId("countries-list-rows"),
     readonly classListRow = page.getByTestId("class-list-rows"),
@@ -120,7 +120,7 @@ export class TaxesPage extends BasePage {
 
   async selectTaxCalculationMethod(method: "FLAT_RATES" | "saleor.app.dummy.tax") {
     await this.clickSelectMethodField();
-    await this.page.getByTestId(`select-field-option-${method}`).click();
+    await this.page.getByTestId("select-option").filter({ hasText: method }).first().click();
   }
 
   async selectPricesWithoutTaxes() {
