@@ -172,10 +172,7 @@ for (const attr of ATTRIBUTES.attributesToBeUpdated) {
     await attributesPage.fillMetadataFields("new key", "new value");
     await attributesPage.waitForNetworkIdleAfterAction(() => attributesPage.clickSaveButton());
     await attributesPage.expectSuccessBanner();
-    await expect(attributesPage.attributeSelect.getByRole("button")).toHaveAttribute(
-      "aria-disabled",
-      "true",
-    );
+    await expect(attributesPage.attributeSelect).toHaveAttribute("aria-disabled", "true");
     await expect(attributesPage.metadataKeyInput).toHaveValue("new key");
     await expect(attributesPage.metadataValueInput).toHaveValue("new value");
     await expect(attributesPage.attributeDefaultLabelInput).toHaveValue(`updated ${attr.name}`);

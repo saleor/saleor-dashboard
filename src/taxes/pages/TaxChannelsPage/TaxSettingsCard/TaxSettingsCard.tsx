@@ -60,6 +60,7 @@ export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = ({
               )}
             </span>
             <Select
+              size="large"
               data-test-id="tax-calculation-strategy-select"
               options={strategyChoices}
               disabled={strategyChoicesLoading || !values.chargeTaxes}

@@ -30,6 +30,27 @@ export const TaxAppLabel: React.FC<TaxAppLabelProps> = ({
   };
 
   return (
+    <Box display="flex" alignItems="center" gap={1}>
+      {name && (
+        <Text>
+          <FormattedMessage
+            defaultMessage="Use app: {name}"
+            id="W2OIhn"
+            values={{
+              name: (
+                <Text size={4} fontWeight="bold">
+                  {name}
+                </Text>
+              ),
+            }}
+          />
+        </Text>
+      )}
+      {version && <Text color="default2">{`v${version}`}</Text>}
+    </Box>
+  );
+
+  return (
     <Box gap={4} alignItems="center" display="grid" width="100%" __gridTemplateColumns="1fr auto">
       <Box display="flex" alignItems="center" gap={3}>
         <AppAvatar logo={logo} />

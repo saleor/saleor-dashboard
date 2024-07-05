@@ -155,6 +155,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
           <Box width="100%">
             <Select
               data-test-id="attribute-type-select"
+              aria-disabled={disabled || !canChangeType}
               disabled={disabled || !canChangeType}
               error={!!formApiErrors.inputType}
               label={intl.formatMessage(messages.inputType)}
@@ -167,6 +168,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
           {data.inputType === AttributeInputTypeEnum.REFERENCE && (
             <Box width="100%">
               <Select
+                aria-disabled={disabled || !canChangeType}
                 data-test-id="attribute-entity-type-select"
                 disabled={disabled || !canChangeType}
                 error={!!formApiErrors.entityType}
