@@ -43,7 +43,7 @@ export const ATTRIBUTES = {
     names: ["File", "Numeric", "Rich Text", "Plain Text", "Boolean", "Date", "Date Time"],
   },
   attributeReferencesEntities: {
-    names: ["PAGE", "PRODUCT", "PRODUCT_VARIANT"],
+    names: ["Page", "Product", "Product Variant"],
   },
   attributeToBeAssignedToPageType: {
     name: "Attribute to be assigned to page type",

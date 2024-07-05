@@ -88,7 +88,7 @@ const SALEOR_126_uuid = faker.datatype.uuid();
 
 for (const attr of attributeClasses) {
   for (const entity of ATTRIBUTES.attributeReferencesEntities.names) {
-    const uniqueSlug = `${attr}-${entity}-${SALEOR_126_uuid}`;
+    const uniqueSlug = `${attr}-${entity.replaceAll(" ", "-")}-${SALEOR_126_uuid}`;
 
     test(`TC: SALEOR_126 User should be able to create ${attr} References attribute for ${entity}, NOT required, public @e2e @attributes`, async ({
       page,
@@ -101,7 +101,7 @@ for (const attr of attributeClasses) {
       await attributesPage.selectAttributeType(attr);
       await attributesPage.typeAttributeDefaultLabel(`${attr} - REFERENCES for ${entity}`);
       await attributesPage.fillAttributeSlug(uniqueSlug);
-      await attributesPage.selectAttributeInputType("REFERENCE");
+      await attributesPage.selectAttributeInputType("Reference");
       await attributesPage.selectAttributeEntityType(entity);
       await attributesPage.clickValueRequiredCheckbox();
       await attributesPage.waitForNetworkIdleAfterAction(() => attributesPage.clickSaveButton());
