@@ -1,10 +1,10 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { Multiselect } from "@dashboard/components/Combobox";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import MultiSelectField from "@dashboard/components/MultiSelectField";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { Card, CardContent } from "@material-ui/core";
-import { Select } from "@saleor/macaw-ui-next";
+import { Option, Select } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -12,7 +12,7 @@ interface ProductCategoryAndCollectionsFormProps {
   categories?: Array<{ value: string; label: string }>;
   collections?: Array<{ value: string; label: string }>;
   errors: Record<string, string>;
-  productCollections?: string[];
+  productCollections?: Option[];
   category?: string;
   loading?: boolean;
   onChange: (event: ChangeEvent) => void;
@@ -54,15 +54,16 @@ const ProductCategoryAndCollectionsForm = ({
             onChange={value => onChange({ target: { name: "category", value } })}
           />
           <FormSpacer />
-          <MultiSelectField
+          <Multiselect
             disabled={loading}
             error={!!errors.collections}
-            hint={errors.collections}
+            helperText={errors.collections}
             label={intl.formatMessage({
               id: "ulh3kf",
               defaultMessage: "Collections",
             })}
-            choices={loading ? [] : collections}
+            fetchOptions={() => undefined}
+            options={loading ? [] : collections}
             name="collections"
             value={productCollections}
             onChange={onChange}
