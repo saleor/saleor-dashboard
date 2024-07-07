@@ -58,11 +58,11 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
   };
   const [typeChoices, systemChoices, unitChoices] = useMemo(
     () => [
-      unitTypeChoices.map(choice => ({
+      unitTypeChoices.map<Option>(choice => ({
         ...choice,
         label: formatMessage(choice.label),
       })),
-      unitSystemChoices.map(choice => ({
+      unitSystemChoices.map<Option>(choice => ({
         ...choice,
         label: formatMessage(choice.label),
       })),
@@ -132,16 +132,14 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
               disabled={disabled}
               label={formatMessage(M.messages.unitSystem)}
               name="system"
-              onChange={(value: Option) => {
+              onChange={value => {
                 setUnitData(data => ({
                   ...data,
-                  system: value.value as UnitSystem,
+                  system:
+                    typeof value === "string" ? value : ((value as Option)?.value as UnitSystem),
                 }));
               }}
-              value={{
-                label: system ? systemChoices.find(c => c.value === system)?.label ?? "" : "",
-                value: system ?? "",
-              }}
+              value={system ?? null}
               options={systemChoices}
             />
           </Box>
@@ -154,16 +152,13 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
               disabled={!system || disabled}
               label={formatMessage(M.messages.unitOf)}
               name="type"
-              onChange={(value: Option) => {
+              onChange={value => {
                 setUnitData(data => ({
                   ...data,
-                  type: value.value as UnitType,
+                  type: typeof value === "string" ? value : ((value as Option)?.value as UnitType),
                 }));
               }}
-              value={{
-                label: type ? typeChoices.find(c => c.value === type)?.label ?? "" : "",
-                value: type ?? "",
-              }}
+              value={type ?? null}
               options={typeChoices}
             />
           </Box>
@@ -176,20 +171,16 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
               disabled={!type || disabled}
               label={formatMessage(M.messages.unit)}
               name="type"
-              onChange={(value: Option) =>
+              onChange={value =>
                 setUnitData(data => ({
                   ...data,
-                  unit: value.value as MeasurementUnitsEnum,
+                  unit: (typeof value === "string"
+                    ? value
+                    : (value as Option)?.value) as MeasurementUnitsEnum,
                 }))
               }
-              value={{
-                label:
-                  unit && type && system
-                    ? (unitChoices[system][type].find(c => c.value === unit)?.label as string)
-                    : "",
-                value: unit ?? "",
-              }}
-              options={(type && system ? unitChoices[system][type] ?? [] : []) as Option[]}
+              value={unit as string}
+              options={(type && system ? unitChoices?.[system]?.[type] ?? [] : []) as Option[]}
             />
           </Box>
         </Box>
