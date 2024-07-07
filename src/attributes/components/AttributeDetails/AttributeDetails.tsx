@@ -12,7 +12,7 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
 import { Card, CardContent, TextField } from "@material-ui/core";
-import { Box, Select } from "@saleor/macaw-ui-next";
+import { Box, Option, Select } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 import slugify from "slugify";
@@ -158,6 +158,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
               aria-disabled={disabled || !canChangeType}
               disabled={disabled || !canChangeType}
               error={!!formApiErrors.inputType}
+              helperText={getAttributeErrorMessage(formApiErrors.inputType, intl)}
               label={intl.formatMessage(messages.inputType)}
               name="inputType"
               onChange={value => onChange({ target: { name: "inputType", value } })}
@@ -172,9 +173,18 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
                 data-test-id="attribute-entity-type-select"
                 disabled={disabled || !canChangeType}
                 error={!!formApiErrors.entityType}
+                helperText={getAttributeErrorMessage(formApiErrors.entityType, intl)}
                 label={intl.formatMessage(messages.entityType)}
                 name="entityType"
-                onChange={value => onChange({ target: { name: "entityType", value } })}
+                onChange={value =>
+                  onChange({
+                    target: {
+                      name: "entityType",
+                      // When Select initial value is null, onChange return Object instead of string
+                      value: typeof value === "string" ? value : (value as Option)?.value,
+                    },
+                  })
+                }
                 value={data.entityType}
                 options={entityTypeChoices}
               />
