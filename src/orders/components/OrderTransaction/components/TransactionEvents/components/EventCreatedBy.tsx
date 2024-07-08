@@ -1,12 +1,13 @@
 // @ts-strict-ignore
 import { AppUrls } from "@dashboard/apps/urls";
+import { UserAvatar } from "@dashboard/components/UserAvatar";
 import {
   AppAvatarFragment,
   StaffMemberAvatarFragment,
 } from "@dashboard/graphql";
 import { getUserInitials, getUserName } from "@dashboard/misc";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
-import { Avatar, makeStyles } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -14,24 +15,9 @@ interface EventCreatedByProps {
   createdBy: StaffMemberAvatarFragment | AppAvatarFragment | null;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    userWrapper: {
-      display: "inline-flex",
-      height: "100%",
-      gap: theme.spacing(1),
-      alignItems: "center",
-      justifyContent: "flex-end",
-    },
-  }),
-  { name: "EventCreatedBy" },
-);
-
 export const EventCreatedBy: React.FC<EventCreatedByProps> = ({
   createdBy,
 }) => {
-  const classes = useStyles();
-
   if (!createdBy) {
     return null;
   }
@@ -43,15 +29,21 @@ export const EventCreatedBy: React.FC<EventCreatedByProps> = ({
   }
 
   return (
-    <Link
+    <Box
+      as={Link}
+      // @ts-expect-error - Box inherits props from "Link" but it's not typed
       to={staffMemberDetailsUrl(createdBy.id)}
-      className={classes.userWrapper}
+      display="inline-flex"
+      height="100%"
+      gap={2}
+      alignItems="center"
+      justifyContent="flex-end"
     >
-      <Avatar
+      <UserAvatar
         initials={getUserInitials(createdBy)}
-        avatar={createdBy?.avatar?.url}
+        url={createdBy?.avatar?.url}
       />
       {getUserName(createdBy, true)}
-    </Link>
+    </Box>
   );
 };
