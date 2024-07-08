@@ -4,12 +4,15 @@ import fs from 'fs';
 import path from 'path';
 import { USER_PERMISSION, UserPermissionType, permissions } from "@data/userPermissions";
 
+setup.describe.configure({ mode: 'serial' });
+
 const authenticateAndSaveState = async (request: APIRequestContext, email: string, password: string, filePath: string) => {
 
     const basicApiService = new BasicApiService(request);
     await basicApiService.logInUserViaApi({ email, password });
 
     const loginJsonInfo = await request.storageState();
+
 
     loginJsonInfo.origins.push({
         origin: process.env.BASE_URL!,
