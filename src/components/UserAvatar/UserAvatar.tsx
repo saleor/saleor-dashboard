@@ -1,7 +1,7 @@
-import { Avatar } from "@saleor/macaw-ui-next";
+import { Avatar, UserAvatarProps as UserAvatarPropsBase } from "@saleor/macaw-ui-next";
 import React from "react";
 
-interface UserAvatarProps {
+interface UserAvatarProps extends UserAvatarPropsBase {
   url?: string;
   initials?: string;
   className?: string;
