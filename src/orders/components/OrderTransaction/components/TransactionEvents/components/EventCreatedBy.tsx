@@ -32,7 +32,7 @@ export const EventCreatedBy: React.FC<EventCreatedByProps> = ({ createdBy }) => 
       alignItems="center"
       justifyContent="flex-end"
     >
-      <UserAvatar initials={getUserInitials(createdBy)} src={createdBy?.avatar?.url} />
+      <UserAvatar initials={getUserInitials(createdBy)} url={createdBy?.avatar?.url} />
       {getUserName(createdBy, true)}
     </Box>
   );
