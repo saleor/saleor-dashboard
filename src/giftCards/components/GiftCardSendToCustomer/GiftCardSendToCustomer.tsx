@@ -6,7 +6,7 @@ import { GiftCardCreateFormCustomer } from "@dashboard/giftCards/GiftCardCreateD
 import { FormChange } from "@dashboard/hooks/useForm";
 import Label from "@dashboard/orders/components/OrderHistory/Label";
 import { mapSlugNodeToChoice } from "@dashboard/utils/maps";
-import { Select } from "@saleor/macaw-ui-next";
+import { Box, Select } from "@saleor/macaw-ui-next";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
@@ -49,25 +49,26 @@ const GiftCardSendToCustomer: React.FC<GiftCardSendToCustomerProps> = ({
       />
       {sendToCustomerSelected && (
         <>
-          <VerticalSpacer />
-          <GiftCardCustomerSelectField
-            selectedCustomer={selectedCustomer}
-            setSelectedCustomer={setSelectedCustomer}
-            disabled={disabled}
-          />
-          <VerticalSpacer />
-          <Label text={intl.formatMessage(messages.customerSubtitle)} />
-          <VerticalSpacer />
-          <Select
-            name="channelSlug"
-            options={channelsChoices}
-            label={intl.formatMessage(messages.channelSelectLabel)}
-            value={selectedChannelSlug || channel?.slug}
-            onChange={value => change({ target: { name: "channelSlug", value } })}
-          />
-          <VerticalSpacer />
-          <Label text={intl.formatMessage(messages.customerChannelSubtitle)} />
-          <VerticalSpacer />
+          <Box display="grid" gap={2}>
+            <GiftCardCustomerSelectField
+              selectedCustomer={selectedCustomer}
+              setSelectedCustomer={setSelectedCustomer}
+              disabled={disabled}
+            />
+            <Label text={intl.formatMessage(messages.customerSubtitle)} />
+          </Box>
+
+          <Box display="grid" gap={2}>
+            <Select
+              name="channelSlug"
+              options={channelsChoices}
+              label={intl.formatMessage(messages.channelSelectLabel)}
+              value={selectedChannelSlug || channel?.slug}
+              onChange={value => change({ target: { name: "channelSlug", value } })}
+            />
+
+            <Label text={intl.formatMessage(messages.customerChannelSubtitle)} />
+          </Box>
         </>
       )}
       <VerticalSpacer />
