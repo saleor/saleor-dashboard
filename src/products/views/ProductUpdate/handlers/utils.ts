@@ -54,43 +54,47 @@ export function getProductUpdateVariables(
   };
 
   if (data.category) {
-    variables.input["category"] = data.category;
+    variables.input.category = data.category;
   }
 
   if (data.collections) {
-    variables.input["collections"] = data.collections.map(collection => collection.value);
+    variables.input.collections = data.collections.map(
+      collection => collection.value,
+    );
   }
 
   if (data.description) {
-    variables.input["description"] = getParsedDataForJsonStringField(data.description);
+    variables.input.description = getParsedDataForJsonStringField(
+      data.description,
+    );
   }
 
   if (data.name) {
-    variables.input["name"] = data.name;
+    variables.input.name = data.name;
   }
 
   if (data.rating) {
-    variables.input["rating"] = data.rating;
+    variables.input.rating = data.rating;
   }
 
   if (data.slug) {
-    variables.input["slug"] = data.slug;
+    variables.input.slug = data.slug;
   }
 
   if (data.taxClassId) {
-    variables.input["taxClass"] = data.taxClassId;
+    variables.input.taxClass = data.taxClassId;
   }
 
   if (data.seoDescription || data.seoTitle) {
-    variables.input["seo"] = {};
+    variables.input.seo = {};
   }
 
-  if (data.seoDescription && variables.input["seo"]) {
-    variables.input["seo"].description = data.seoDescription;
+  if (data.seoDescription && variables.input.seo) {
+    variables.input.seo.description = data.seoDescription;
   }
 
-  if (data.seoTitle && variables.input["seo"]) {
-    variables.input["seo"].title = data.seoTitle;
+  if (data.seoTitle && variables.input.seo) {
+    variables.input.seo.title = data.seoTitle;
   }
 
   return variables;
