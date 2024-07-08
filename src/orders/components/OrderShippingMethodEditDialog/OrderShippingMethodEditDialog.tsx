@@ -100,7 +100,12 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
                     return;
                   }
 
-                  change({ target: { name: "shippingMethod", value } });
+                  change({
+                    target: {
+                      name: "shippingMethod",
+                      value: typeof value === "string" ? value : (value as Option)?.value,
+                    },
+                  });
                 }}
               />
               {nonFieldErrors.length > 0 && (
@@ -119,10 +124,7 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
                 <ConfirmButton
                   data-test-id="confirm-button"
                   transitionState={confirmButtonState}
-                  onClick={async () => {
-                    await submit();
-                    onClose();
-                  }}
+                  onClick={submit}
                   disabled={!data.shippingMethod}
                 >
                   <FormattedMessage {...buttonMessages.confirm} />
