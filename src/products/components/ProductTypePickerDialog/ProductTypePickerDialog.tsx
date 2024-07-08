@@ -1,12 +1,11 @@
 // @ts-strict-ignore
-import ActionDialog from "@dashboard/components/ActionDialog";
+import NewActionDialog from "@dashboard/components/ActionDialog/NewActionDialog";
+import { Combobox } from "@dashboard/components/Combobox";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import SingleAutocompleteSelectField, {
-  SingleAutocompleteChoiceType,
-} from "@dashboard/components/SingleAutocompleteSelectField";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { FetchMoreProps } from "@dashboard/types";
+import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -15,7 +14,7 @@ import { messages } from "./messages";
 export interface ProductTypePickerDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
-  productTypes?: SingleAutocompleteChoiceType[];
+  productTypes?: Option[];
   fetchProductTypes: (data: string) => void;
   fetchMoreProductTypes: FetchMoreProps;
   onClose: () => void;
@@ -45,7 +44,7 @@ const ProductTypePickerDialog: React.FC<ProductTypePickerDialogProps> = ({
   });
 
   return (
-    <ActionDialog
+    <NewActionDialog
       confirmButtonState={confirmButtonState}
       open={open}
       onClose={onClose}
@@ -53,18 +52,20 @@ const ProductTypePickerDialog: React.FC<ProductTypePickerDialogProps> = ({
       title={intl.formatMessage(messages.selectProductType)}
       disabled={!choice}
     >
-      <SingleAutocompleteSelectField
-        displayValue={productTypeDisplayValue}
-        name="productType"
-        label={intl.formatMessage(messages.productType)}
-        choices={productTypes}
-        value={choice}
-        onChange={e => setChoice(e.target.value)}
-        fetchChoices={fetchProductTypes}
+      <Combobox
         data-test-id="dialog-product-type"
-        {...fetchMoreProductTypes}
+        label={intl.formatMessage(messages.productType)}
+        options={productTypes}
+        fetchOptions={fetchProductTypes}
+        fetchMore={fetchMoreProductTypes}
+        name="productType"
+        value={{
+          label: productTypeDisplayValue,
+          value: choice,
+        }}
+        onChange={e => setChoice(e.target.value)}
       />
-    </ActionDialog>
+    </NewActionDialog>
   );
 };
 

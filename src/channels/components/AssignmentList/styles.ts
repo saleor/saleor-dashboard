@@ -69,9 +69,6 @@ export const useStyles = makeStyles(
     grabbing: {
       cursor: "grabbing",
     },
-    root: {
-      paddingRight: theme.spacing(1),
-    },
     infoMessage: {
       padding: theme.spacing(3),
     },

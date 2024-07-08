@@ -216,7 +216,7 @@ test("TC: SALEOR_207 Issue a new gift card for the customer @e2e @customer", asy
   await customersPage.gotoCustomerDetailsPage(CUSTOMERS.editCustomer.id);
   await customersPage.clickIssueNewGiftCard();
   await customersPage.issueGiftCardDialog.typeAmount(amount);
-  await customersPage.issueGiftCardDialog.typeTag(faker.lorem.word());
+  await customersPage.issueGiftCardDialog.typeCustomTag(faker.lorem.word());
   await customersPage.issueGiftCardDialog.typeNote(faker.lorem.sentences(3));
   await customersPage.issueGiftCardDialog.clickIssueButton();
   await customersPage.expectSuccessBanner();
