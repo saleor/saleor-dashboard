@@ -1,6 +1,5 @@
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
-import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import GiftCardCustomerSelectField from "@dashboard/giftCards/GiftCardCreateDialog/GiftCardCustomerSelectField";
 import { GiftCardCreateFormCustomer } from "@dashboard/giftCards/GiftCardCreateDialog/types";
 import { FormChange } from "@dashboard/hooks/useForm";
@@ -38,7 +37,6 @@ const GiftCardSendToCustomer: React.FC<GiftCardSendToCustomerProps> = ({
 
   return (
     <>
-      <VerticalSpacer />
       <ControlledCheckbox
         data-test-id="send-to-customer-section"
         name={"sendToCustomerSelected"}
@@ -71,7 +69,6 @@ const GiftCardSendToCustomer: React.FC<GiftCardSendToCustomerProps> = ({
           </Box>
         </>
       )}
-      <VerticalSpacer />
     </>
   );
 };

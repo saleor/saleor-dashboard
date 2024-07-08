@@ -1,9 +1,9 @@
 // @ts-strict-ignore
+import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
 import { GiftCardCreateInput, useGiftCardCreateMutation } from "@dashboard/graphql";
 import useCurrentDate from "@dashboard/hooks/useCurrentDate";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { DialogProps } from "@dashboard/types";
-import { DialogTitle } from "@material-ui/core";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -41,7 +41,7 @@ const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = 
 
     return {
       note: note || null,
-      addTags: tags || null,
+      addTags: tags?.map(tag => tag.value) || null,
       userEmail: (sendToCustomerSelected && selectedCustomer.email) || null,
       channel: (sendToCustomerSelected && channelSlug) || null,
       balance: {
@@ -76,8 +76,12 @@ const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = 
   };
 
   return (
-    <>
-      <DialogTitle disableTypography>{intl.formatMessage(messages.title)}</DialogTitle>
+    <DashboardModal.Content
+      __maxWidth={DASHBOARD_MODAL_WIDTH}
+      width="100%"
+      data-test-id="gift-card-dialog"
+    >
+      <DashboardModal.Title>{intl.formatMessage(messages.title)}</DashboardModal.Title>
       {cardCode ? (
         <GiftCardCreateDialogCodeContent cardCode={cardCode} onClose={handleClose} />
       ) : (
@@ -89,7 +93,7 @@ const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = 
           initialCustomer={initialCustomer}
         />
       )}
-    </>
+    </DashboardModal.Content>
   );
 };
 

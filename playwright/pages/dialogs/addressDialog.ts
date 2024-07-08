@@ -23,7 +23,7 @@ export class AddressDialog {
     readonly addressLine2Input = page.getByTestId("address-line-2-input").locator("input"),
     readonly countrySelect = page.getByTestId("address-edit-country-select-field"),
     readonly countryAreaSelect = page.getByTestId("address-edit-country-area-field"),
-    readonly selectOptions = page.getByTestId("single-autocomplete-select-option"),
+    readonly selectOptions = page.getByTestId("select-option"),
   ) {
     this.addressForm = new AddressForm(page);
   }

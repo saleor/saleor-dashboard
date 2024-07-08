@@ -72,7 +72,7 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
     const { tags, expiryDate, privateMetadata, metadata } = giftCard;
 
     return {
-      tags: tags.map(({ name }) => name),
+      tags: tags.map(({ name }) => ({ label: name, value: name })),
       expiryDate,
       privateMetadata: privateMetadata?.map(mapMetadataItemToInput),
       metadata: metadata?.map(mapMetadataItemToInput),
@@ -102,7 +102,7 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
           expiryDate,
           ...getGiftCardTagsAddRemoveData(
             giftCard.tags.map(el => el.name),
-            tags,
+            tags.map(el => el.value),
           ),
         },
       },
