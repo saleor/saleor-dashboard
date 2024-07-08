@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
 import { createOrderQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import { OrderFilterInput, OrderStatusFilter, PaymentChargeStatusEnum } from "@dashboard/graphql";
 import { findInEnum, findValueInEnum, parseBoolean } from "@dashboard/misc";
 import {
@@ -9,6 +8,7 @@ import {
   OrderFilterKeys,
   OrderListFilterOpts,
 } from "@dashboard/orders/components/OrderListPage/filters";
+import { Option } from "@saleor/macaw-ui-next";
 
 import {
   FilterElement,
@@ -38,7 +38,7 @@ export const ORDER_FILTERS_KEY = "orderFiltersPresets";
 
 export function getFilterOpts(
   params: OrderListUrlFilters,
-  channels: MultiAutocompleteChoiceType[],
+  channels: Option[],
 ): OrderListFilterOpts {
   return {
     clickAndCollect: {

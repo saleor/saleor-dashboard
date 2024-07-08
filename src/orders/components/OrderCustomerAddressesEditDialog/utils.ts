@@ -1,4 +1,3 @@
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   AccountErrorFragment,
   AddressFragment,
@@ -9,6 +8,7 @@ import {
 } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { flatten, getById } from "@dashboard/misc";
+import { Option } from "@saleor/macaw-ui-next";
 
 import { OrderCustomerAddressesEditData, OrderCustomerAddressesEditHandlers } from "./form";
 import { OrderCustomerAddressEditProps } from "./OrderCustomerAddressEdit";
@@ -17,7 +17,7 @@ import { OrderCustomerSearchAddressState } from "./types";
 interface AddressEditCommonProps {
   showCard: boolean;
   loading: boolean;
-  countryChoices: SingleAutocompleteChoiceType[];
+  countryChoices: Option[];
   customerAddresses: AddressFragment[];
 }
 

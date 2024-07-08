@@ -6,7 +6,6 @@ import ChannelsAvailabilityDialogContentWrapper from "@dashboard/components/Chan
 import Checkbox from "@dashboard/components/Checkbox";
 import Chip from "@dashboard/components/Chip";
 import Hr from "@dashboard/components/Hr";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import { ChannelFragment, ExportProductsInput, ProductFieldEnum } from "@dashboard/graphql";
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
@@ -21,6 +20,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -202,12 +202,12 @@ const FieldAccordion: React.FC<
 };
 
 export interface ProductExportDialogInfoProps extends FetchMoreProps {
-  attributes: MultiAutocompleteChoiceType[];
+  attributes: Option[];
   channels: ChannelFragment[];
   selectedChannels: ChannelFragment[];
-  warehouses: MultiAutocompleteChoiceType[];
+  warehouses: Option[];
   data: ExportProductsInput;
-  selectedAttributes: MultiAutocompleteChoiceType[];
+  selectedAttributes: Option[];
   onAttrtibuteSelect: FormChange;
   onWarehouseSelect: FormChange;
   onChange: FormChange;

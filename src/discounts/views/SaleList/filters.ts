@@ -1,9 +1,9 @@
 // @ts-strict-ignore
 import { FilterElement, FilterElementRegular } from "@dashboard/components/Filter";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import { SaleFilterKeys, SaleListFilterOpts } from "@dashboard/discounts/components/SaleListPage";
 import { DiscountStatusEnum, DiscountValueTypeEnum, SaleFilterInput } from "@dashboard/graphql";
 import { findValueInEnum, joinDateTime, maybe } from "@dashboard/misc";
+import { Option } from "@saleor/macaw-ui-next";
 
 import {
   createFilterTabUtils,
@@ -24,10 +24,7 @@ import {
 
 export const SALE_FILTERS_KEY = "saleFilters";
 
-export function getFilterOpts(
-  params: SaleListUrlFilters,
-  channels: SingleAutocompleteChoiceType[],
-): SaleListFilterOpts {
+export function getFilterOpts(params: SaleListUrlFilters, channels: Option[]): SaleListFilterOpts {
   return {
     channel: {
       active: params?.channel !== undefined,

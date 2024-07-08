@@ -4,7 +4,6 @@ import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/Column
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import Datagrid, { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { Choice } from "@dashboard/components/SingleSelectField";
 import {
   AttributeInputTypeEnum,
   ProductDetailsVariantFragment,
@@ -19,6 +18,7 @@ import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Item } from "@glideapps/glide-data-grid";
 import { Button } from "@saleor/macaw-ui";
+import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -41,7 +41,7 @@ interface ProductVariantsProps {
   variants: ProductDetailsVariantFragment[];
   productName: string;
   productId: string;
-  onAttributeValuesSearch: (id: string, query: string) => Promise<Array<Choice<string, string>>>;
+  onAttributeValuesSearch: (id: string, query: string) => Promise<Option[]>;
   onChange: (data: DatagridChangeOpts) => void;
   onRowClick: (id: string) => void;
 }

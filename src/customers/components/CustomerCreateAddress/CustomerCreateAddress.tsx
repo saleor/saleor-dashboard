@@ -2,11 +2,10 @@
 import AddressEdit from "@dashboard/components/AddressEdit";
 import CardTitle from "@dashboard/components/CardTitle";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import { AccountErrorFragment } from "@dashboard/graphql";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -22,7 +21,7 @@ const useStyles = makeStyles(
 );
 
 export interface CustomerCreateAddressProps {
-  countries: SingleAutocompleteChoiceType[];
+  countries: Option[];
   countryDisplayName: string;
   data: AddressTypeInput;
   disabled: boolean;
