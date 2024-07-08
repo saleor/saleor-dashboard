@@ -17,6 +17,7 @@ const AppChannelSelect: React.FC<AppChannelSelectProps> = ({
   return (
     <Box>
       <Select
+        __width={130}
         data-test-id="app-channel-select"
         size="large"
         onChange={value => onChannelSelect(value)}
