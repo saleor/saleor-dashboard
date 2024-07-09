@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { FormChange } from "@dashboard/hooks/useForm";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { fuzzySearch } from "@dashboard/misc";
 import { FetchMoreProps } from "@dashboard/types";
 import { ClickAwayListener, Grow, Popper } from "@material-ui/core";
 import {
@@ -10,8 +11,6 @@ import {
   makeStyles,
 } from "@saleor/macaw-ui";
 import { TableEditIcon } from "@saleor/macaw-ui/next";
-import { score } from "fuzzaldrin";
-import sortBy from "lodash/sortBy";
 import React from "react";
 
 import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
@@ -96,13 +95,7 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
     onSave(selectedColumns.current);
   };
 
-  const choices = sortBy(
-    availableColumns.map(column => ({
-      ...column,
-      score: -score(column.label, query),
-    })),
-    "score",
-  );
+  const choices = fuzzySearch(availableColumns, query, ["label"]);
 
   return (
     <ClickAwayListener onClickAway={() => setExpansionState(false)}>
