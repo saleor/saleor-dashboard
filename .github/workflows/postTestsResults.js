@@ -21,7 +21,7 @@ program
       testsResults,
       options.environment,
       options.ref_name,
-      option.additional_title,
+      options.additional_title,
     );
 
     core.setOutput("status", testsStatus.status.toLowerCase());
