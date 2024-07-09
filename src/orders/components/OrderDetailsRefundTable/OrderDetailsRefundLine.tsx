@@ -78,10 +78,10 @@ export const OrderDetailsRefundLine: React.FC<OrderDetailsRefundLineProps> = ({
         <EventTime date={refund.createdAt} />
       </GridTable.Cell>
       <GridTable.Cell textAlign="right" paddingRight={6}>
-        <Box display="flex" justifyContent="flex-end">
+        <Box data-test-id="edit-refund-button" display="flex" justifyContent="flex-end">
           {isEditable ? (
             <Link to={orderTransactionRefundEditUrl(orderId, refund.id)}>
-              <Button data-test-id="edit-refund-button" icon={<EditIcon />} variant="secondary" />
+              <Button icon={<EditIcon />} variant="secondary" />
             </Link>
           ) : (
             <Tooltip>
