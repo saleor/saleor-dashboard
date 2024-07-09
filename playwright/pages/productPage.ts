@@ -44,7 +44,7 @@ export class ProductPage extends BasePage {
     readonly productTypeInput = page.getByTestId("product-type"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly categoryInput = page.getByTestId("category"),
-    readonly categoryItem = page.getByTestId("single-autocomplete-select-option"),
+    readonly categoryItem = page.getByTestId("select-option"),
     readonly collectionInput = page.getByTestId("collections"),
     readonly autocompleteDropdown = page.getByTestId("autocomplete-dropdown"),
     readonly descriptionInput = page

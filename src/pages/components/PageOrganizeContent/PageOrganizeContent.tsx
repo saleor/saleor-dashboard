@@ -1,8 +1,6 @@
 // @ts-strict-ignore
 import CardTitle from "@dashboard/components/CardTitle";
-import SingleAutocompleteSelectField, {
-  SingleAutocompleteChoiceType,
-} from "@dashboard/components/SingleAutocompleteSelectField";
+import { Combobox } from "@dashboard/components/Combobox";
 import { PageDetailsFragment, PageErrorFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { FetchMoreProps } from "@dashboard/types";
@@ -10,6 +8,7 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -22,7 +21,7 @@ export interface PageOrganizeContentProps {
   pageTypeInputDisplayValue?: string;
   errors: PageErrorFragment[];
   disabled: boolean;
-  pageTypes: SingleAutocompleteChoiceType[];
+  pageTypes: Option[];
   onPageTypeChange?: FormChange;
   fetchPageTypes?: (data: string) => void;
   fetchMorePageTypes?: FetchMoreProps;
@@ -64,25 +63,25 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
       />
       <CardContent>
         {canChangeType ? (
-          <SingleAutocompleteSelectField
+          <Combobox
+            autoComplete="off"
             data-test-id="page-types-autocomplete-select"
             disabled={disabled}
-            displayValue={pageTypeInputDisplayValue}
+            error={!!formErrors.pageType}
+            helperText={getPageErrorMessage(formErrors.pageType, intl)}
             label={intl.formatMessage({
               id: "W5SK5c",
               defaultMessage: "Select content type",
             })}
-            error={!!formErrors.pageType}
-            helperText={getPageErrorMessage(formErrors.pageType, intl)}
-            name={"pageType" as keyof PageFormData}
-            onChange={onPageTypeChange}
-            value={data.pageType?.id}
-            choices={pageTypes}
-            InputProps={{
-              autoComplete: "off",
+            options={pageTypes}
+            fetchOptions={fetchPageTypes}
+            fetchMore={fetchMorePageTypes}
+            name="pageType"
+            value={{
+              label: pageTypeInputDisplayValue,
+              value: data.pageType?.id,
             }}
-            fetchChoices={fetchPageTypes}
-            {...fetchMorePageTypes}
+            onChange={onPageTypeChange}
           />
         ) : (
           <>

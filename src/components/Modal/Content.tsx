@@ -23,6 +23,8 @@ export const Content = ({ children, disableAutofocus, ...rest }: ContentProps) =
         padding={6}
         display="grid"
         gap={6}
+        __maxHeight="calc(100vh - 100px)"
+        overflowY="auto"
         {...rest}
       >
         {children}

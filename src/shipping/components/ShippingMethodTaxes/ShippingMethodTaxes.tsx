@@ -1,6 +1,7 @@
 import CardTitle from "@dashboard/components/CardTitle";
-import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
+import { Combobox } from "@dashboard/components/Combobox";
 import { TaxClassBaseFragment } from "@dashboard/graphql";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { sectionNames } from "@dashboard/intl";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { FetchMoreProps } from "@dashboard/types";
@@ -9,14 +10,12 @@ import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { ShippingZoneRateUpdateFormData } from "../ShippingZoneRatesPage/types";
-
 interface ShippingMethodTaxesProps {
   value: string;
   taxClassDisplayName: string;
   taxClasses: TaxClassBaseFragment[];
   disabled: boolean;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent) => void;
   onFetchMore: FetchMoreProps;
 }
 
@@ -37,23 +36,24 @@ const ShippingMethodTaxes: React.FC<ShippingMethodTaxesProps> = props => {
     <Card className={classes.root}>
       <CardTitle title={intl.formatMessage(sectionNames.taxes)} />
       <CardContent>
-        <SingleAutocompleteSelectField
+        <Combobox
+          allowEmptyValue
+          autoComplete="off"
           data-test-id="taxes"
-          emptyOption
           disabled={disabled}
-          displayValue={taxClassDisplayName}
           label={intl.formatMessage(taxesMessages.taxClass)}
-          name={"taxClassId" as keyof ShippingZoneRateUpdateFormData}
-          onChange={onChange}
-          value={value}
-          choices={taxClasses.map(choice => ({
+          options={taxClasses.map(choice => ({
             label: choice.name,
             value: choice.id,
           }))}
-          InputProps={{
-            autoComplete: "off",
+          fetchOptions={() => undefined}
+          fetchMore={onFetchMore}
+          name="taxClassId"
+          value={{
+            label: taxClassDisplayName,
+            value,
           }}
-          {...onFetchMore}
+          onChange={onChange}
         />
       </CardContent>
     </Card>
