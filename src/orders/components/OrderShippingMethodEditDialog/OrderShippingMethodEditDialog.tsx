@@ -48,7 +48,7 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
         .map(s => ({
           label: (
             <Box display="flex" width="100%" gap={3}>
-              <Box as="span" overflow="hidden" textOverflow="ellipsis">
+              <Box as="span" __flex={1} overflow="hidden" textOverflow="ellipsis">
                 {s.name}
               </Box>
 
