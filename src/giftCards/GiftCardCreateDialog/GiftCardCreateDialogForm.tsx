@@ -1,8 +1,7 @@
 // @ts-strict-ignore
-import DialogButtons from "@dashboard/components/ActionDialog/DialogButtons";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import VerticalSpacer from "@dashboard/components/VerticalSpacer";
+import BackButton from "@dashboard/components/BackButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
 import GiftCardTagInput from "@dashboard/giftCards/components/GiftCardTagInput";
 import {
   GiftCardErrorFragment,
@@ -14,7 +13,8 @@ import useForm from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import Label from "@dashboard/orders/components/OrderHistory/Label";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { DialogContent, Divider, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
+import { Box } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -56,6 +56,7 @@ interface GiftCardCreateDialogFormProps {
 }
 
 const defaultInitialCustomer = { email: "", name: "" };
+
 const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
   onSubmit,
   opts,
@@ -131,29 +132,22 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
 
   return (
     <>
-      <DialogContent className={classes.dialogContent} data-test-id="gift-card-dialog">
-        <GiftCardCreateMoneyInput {...commonFormProps} set={set} />
-        <CardSpacer />
-        <GiftCardTagInput
-          error={formErrors?.tags}
-          name="tags"
-          values={tags}
-          toggleChange={toggleValue}
-        />
-        <CardSpacer />
-        <Divider />
-        <GiftCardSendToCustomer
-          selectedChannelSlug={channelSlug}
-          change={change}
-          sendToCustomerSelected={sendToCustomerSelected}
-          selectedCustomer={selectedCustomer}
-          setSelectedCustomer={setSelectedCustomer}
-          disabled={!!initialCustomer}
-        />
-        <Divider />
-        <VerticalSpacer />
-        <GiftCardCreateExpirySelect {...commonFormProps} />
-        <VerticalSpacer />
+      <GiftCardCreateMoneyInput {...commonFormProps} set={set} />
+
+      <GiftCardTagInput error={formErrors?.tags} name="tags" values={tags} toggleChange={change} />
+
+      <GiftCardSendToCustomer
+        selectedChannelSlug={channelSlug}
+        change={change}
+        sendToCustomerSelected={sendToCustomerSelected}
+        selectedCustomer={selectedCustomer}
+        setSelectedCustomer={setSelectedCustomer}
+        disabled={!!initialCustomer}
+      />
+
+      <GiftCardCreateExpirySelect {...commonFormProps} />
+
+      <Box display="grid" gap={2}>
         <TextField
           data-test-id="note-field"
           name="note"
@@ -164,18 +158,23 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
             messages.noteLabel,
           )} *${intl.formatMessage(commonMessages.optionalField)}`}
         />
-        <VerticalSpacer />
+
         <Label text={intl.formatMessage(messages.noteSubtitle)} />
-        <VerticalSpacer spacing={2} />
-        <GiftCardCreateRequiresActivationSection onChange={change} checked={requiresActivation} />
-      </DialogContent>
-      <DialogButtons
-        disabled={!shouldEnableSubmitButton()}
-        onConfirm={submit}
-        confirmButtonLabel={intl.formatMessage(messages.issueButtonLabel)}
-        confirmButtonState={opts?.status}
-        onClose={onClose}
-      />
+      </Box>
+
+      <GiftCardCreateRequiresActivationSection onChange={change} checked={requiresActivation} />
+
+      <DashboardModal.Actions>
+        <BackButton onClick={onClose} />
+        <ConfirmButton
+          data-test-id="submit"
+          disabled={!shouldEnableSubmitButton()}
+          transitionState={opts?.status}
+          onClick={submit}
+        >
+          {intl.formatMessage(messages.issueButtonLabel)}
+        </ConfirmButton>
+      </DashboardModal.Actions>
     </>
   );
 };

@@ -1,5 +1,6 @@
 import { GiftCardErrorFragment, TimePeriodTypeEnum } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
+import { Option } from "@saleor/macaw-ui-next";
 
 import { GiftCardExpiryType } from "../GiftCardCreateDialog/types";
 
@@ -44,7 +45,7 @@ export interface GiftCardCreateCommonFormData {
   expiryPeriodType: TimePeriodTypeEnum;
   expiryPeriodAmount: number;
   requiresActivation: boolean;
-  tags: string[];
+  tags: Option[];
   balanceAmount: number;
   balanceCurrency: string;
   expiryDate: string;

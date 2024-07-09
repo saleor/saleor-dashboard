@@ -6,14 +6,15 @@ export class IssueGiftCardDialog extends BasePage {
     page: Page,
     readonly enterAmountInput = page.locator('[name="balanceAmount"]'),
     readonly expiryPeriodAmountInput = page.locator('[name="expiryPeriodAmount"]'),
-    readonly tagsInput = page.getByTestId("gift-card-tag-select-field").locator("input"),
+    readonly tagsInput = page.getByTestId("gift-card-tag-select-field"),
+    readonly tagsInputOptions = page.locator('[data-test-id*="select-option"]'),
     readonly cardCode = page.getByTestId("cardCode"),
     readonly giftCardExpireFields = page.getByTestId("gift-card-expire-data-fields"),
     readonly sendToCustomerCheckbox = page
       .getByTestId("send-to-customer-section")
       .locator('input[type="checkbox"]'),
     readonly sendExpireDateCheckbox = page.getByTestId("expiry-section").locator("input"),
-    readonly customerInput = page.getByTestId("customer-field").locator("input"),
+    readonly customerInput = page.getByTestId("customer-field"),
     readonly noteTextArea = page.getByTestId("note-field").locator('[name="note"]'),
     readonly requiresActivationCheckbox = page
       .getByTestId("requires-activation-section")
@@ -21,8 +22,7 @@ export class IssueGiftCardDialog extends BasePage {
     readonly issueButton = page.getByTestId("submit"),
     readonly okButton = page.getByTestId("submit"),
     readonly copyCodeButton = page.getByTestId("copy-code-button"),
-    readonly dropdown = page.getByTestId("autocomplete-dropdown"),
-    readonly option = page.getByTestId("single-autocomplete-select-option"),
+    readonly option = page.getByTestId("select-option"),
   ) {
     super(page);
   }
@@ -45,7 +45,6 @@ export class IssueGiftCardDialog extends BasePage {
 
   async selectCustomer(customer: string) {
     await this.customerInput.fill(customer);
-    await this.dropdown.waitFor({ state: "attached" });
     await this.option.filter({ hasText: customer }).waitFor({ state: "visible" });
     await this.option.filter({ hasText: customer }).click();
     await this.waitForDOMToFullyLoad();
@@ -56,8 +55,9 @@ export class IssueGiftCardDialog extends BasePage {
     await this.expiryPeriodAmountInput.fill(expiryPeriodAmount);
   }
 
-  async typeTag(tag: string) {
+  async typeCustomTag(tag: string) {
     await this.tagsInput.fill(tag);
+    await this.tagsInputOptions.filter({ hasText: `Add new value: ${tag}` }).click();
   }
 
   async typeNote(tag: string) {

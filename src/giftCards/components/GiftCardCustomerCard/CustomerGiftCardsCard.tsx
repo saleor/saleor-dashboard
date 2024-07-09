@@ -3,6 +3,7 @@ import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
 import Link from "@dashboard/components/Link";
+import { DashboardModal } from "@dashboard/components/Modal";
 import PreviewPill from "@dashboard/components/PreviewPill";
 import Skeleton from "@dashboard/components/Skeleton";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
@@ -13,7 +14,7 @@ import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import { useCustomerGiftCardListQuery } from "@dashboard/graphql";
 import { getFullName } from "@dashboard/misc";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Card, CardActions, Dialog } from "@material-ui/core";
+import { Card, CardActions } from "@material-ui/core";
 import * as React from "react";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -100,7 +101,7 @@ const CustomerGiftCardsCard: React.FC = () => {
           </Button>
         </CardActions>
       </Card>
-      <Dialog open={openCreateDialog} maxWidth="sm" onClose={closeCreateDialog}>
+      <DashboardModal open={openCreateDialog} onChange={closeCreateDialog}>
         <GiftCardCreateDialogContent
           onClose={closeCreateDialog}
           refetchQueries={[CUSTOMER_GIFT_CARD_LIST_QUERY]}
@@ -109,7 +110,7 @@ const CustomerGiftCardsCard: React.FC = () => {
             name: getFullName(customer),
           }}
         />
-      </Dialog>
+      </DashboardModal>
     </>
   );
 };

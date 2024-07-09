@@ -10,6 +10,7 @@ import { AccountErrorFragment, AddressFragment, OrderErrorFragment } from "@dash
 import { FormChange } from "@dashboard/hooks/useForm";
 import { getById } from "@dashboard/misc";
 import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -102,14 +103,16 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
         className={classes.optionLabel}
       />
       {addressInputOption === AddressInputOptionEnum.NEW_ADDRESS && (
-        <AddressEdit
-          countries={countryChoices}
-          countryDisplayValue={formAddressCountryDisplayName}
-          data={formAddress}
-          errors={formErrors}
-          onChange={onChangeFormAddress}
-          onCountryChange={onChangeFormAddressCountry}
-        />
+        <Box display="grid" gap={5}>
+          <AddressEdit
+            countries={countryChoices}
+            countryDisplayValue={formAddressCountryDisplayName}
+            data={formAddress}
+            errors={formErrors}
+            onChange={onChangeFormAddress}
+            onCountryChange={onChangeFormAddressCountry}
+          />
+        </Box>
       )}
     </RadioGroup>
   );
