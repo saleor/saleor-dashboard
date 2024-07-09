@@ -65,7 +65,7 @@ const SummaryLine: React.FC<SummaryLineProps> = ({
                 <span
                   aria-label={intl.formatMessage(orderSummaryMessages.negative)}
                 >
-                  –&nbsp;
+                  -&nbsp;
                 </span>
               )}
               <Money money={money} />
