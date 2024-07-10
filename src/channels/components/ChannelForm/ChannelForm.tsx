@@ -3,10 +3,8 @@ import {
   ChannelWarehouses,
 } from "@dashboard/channels/pages/ChannelDetailsPage/types";
 import { DashboardCard } from "@dashboard/components/Card";
+import { Combobox } from "@dashboard/components/Combobox";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import SingleAutocompleteSelectField, {
-  SingleAutocompleteChoiceType,
-} from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   ChannelErrorFragment,
   CountryCode,
@@ -19,7 +17,7 @@ import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
-import { Box, Button, CopyIcon, Input, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, CopyIcon, Input, Option, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -27,7 +25,6 @@ import { AllowUnpaidOrders } from "./AllowUnpaidOrders";
 import { DefaultTransactionFlowStrategy } from "./DefaultTransactionFlowStrategy";
 import { MarkAsPaid } from "./MarkAsPaid";
 import { messages } from "./messages";
-import { ExtendedFormHelperTextProps } from "./types";
 
 export interface FormData extends StockSettingsInput {
   name: string;
@@ -49,11 +46,11 @@ export interface FormData extends StockSettingsInput {
 export interface ChannelFormProps {
   data: FormData;
   disabled: boolean;
-  currencyCodes?: SingleAutocompleteChoiceType[];
+  currencyCodes?: Option[];
   errors: ChannelErrorFragment[];
   selectedCurrencyCode?: string;
   selectedCountryDisplayName: string;
-  countries: SingleAutocompleteChoiceType[];
+  countries: Option[];
   onChange: FormChange;
   onCurrencyCodeChange?: (event: ChangeEvent) => void;
   onDefaultCountryChange: (event: ChangeEvent) => void;
@@ -130,22 +127,20 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
         </Text>
         <Box paddingX={6}>
           {renderCurrencySelection ? (
-            <SingleAutocompleteSelectField
+            <Combobox
               data-test-id="channel-currency-select-input"
               allowCustomValues
-              error={!!formErrors.currencyCode}
-              FormHelperTextProps={
-                {
-                  "data-test-id": "currency-text-input-helper-text",
-                } as ExtendedFormHelperTextProps
-              }
-              helperText={getChannelsErrorMessage(formErrors?.currencyCode, intl)}
               disabled={disabled}
+              error={!!formErrors.currencyCode}
               label={intl.formatMessage(messages.channelCurrency)}
-              choices={currencyCodes}
+              helperText={getChannelsErrorMessage(formErrors?.currencyCode, intl)}
+              options={currencyCodes}
+              fetchOptions={() => undefined}
               name="currencyCode"
-              displayValue={selectedCurrencyCode ?? ""}
-              value={selectedCurrencyCode ?? ""}
+              value={{
+                label: selectedCurrencyCode ?? "",
+                value: selectedCurrencyCode ?? "",
+              }}
               onChange={onCurrencyCodeChange}
             />
           ) : (
@@ -161,21 +156,19 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
           <FormattedMessage {...messages.orderExpirationDescription} />
         </Text>
         <Box paddingX={6}>
-          <SingleAutocompleteSelectField
+          <Combobox
             data-test-id="country-select-input"
-            error={!!formErrors.defaultCountry}
-            FormHelperTextProps={
-              {
-                "data-test-id": "country-text-input-helper-text",
-              } as ExtendedFormHelperTextProps
-            }
-            helperText={getChannelsErrorMessage(formErrors?.defaultCountry, intl)}
             disabled={disabled}
+            error={!!formErrors.defaultCountry}
             label={intl.formatMessage(messages.defaultCountry)}
-            choices={countries}
+            helperText={getChannelsErrorMessage(formErrors?.defaultCountry, intl)}
+            options={countries}
+            fetchOptions={() => undefined}
             name="defaultCountry"
-            displayValue={selectedCountryDisplayName}
-            value={data.defaultCountry}
+            value={{
+              label: selectedCountryDisplayName,
+              value: data.defaultCountry,
+            }}
             onChange={onDefaultCountryChange}
           />
         </Box>

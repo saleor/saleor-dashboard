@@ -32,7 +32,7 @@ export default defineConfig({
       ]
     : [["html"], ["list"]],
   expect: { timeout: 5000 },
-  maxFailures: 2,
+  maxFailures: 10,
   timeout: 30000,
   use: {
     baseURL: env.BASE_URL || "",

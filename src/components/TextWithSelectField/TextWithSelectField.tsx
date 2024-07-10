@@ -1,7 +1,6 @@
-import SingleSelectField, { Choices } from "@dashboard/components/SingleSelectField";
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import { TextField } from "@material-ui/core";
-import { Box, Spinner } from "@saleor/macaw-ui-next";
+import { Box, Option, Select, Spinner } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 
@@ -16,7 +15,7 @@ interface CommonFieldProps {
 
 export interface TextWithSelectFieldProps {
   change: FormChange;
-  choices: Choices;
+  choices: Option[];
   helperText?: string;
   isError?: boolean;
   loading?: boolean;
@@ -51,17 +50,6 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
     value: selectFieldValue,
     className: selectFieldClassName,
   } = selectFieldProps;
-  const handleSelectChange = (event: ChangeEvent) => {
-    // in case one of the fields in the form is empty
-    // we need to save the other part of the field as well
-    const inputTarget = {
-      value: textFieldValue,
-      name: textFieldName,
-    };
-
-    change(event);
-    change({ target: inputTarget });
-  };
   const handleTextChange = (event: ChangeEvent) => {
     const { value } = event.target;
     const otherTarget = {
@@ -100,19 +88,12 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
               <Spinner />
             </Box>
           ) : (
-            <SingleSelectField
+            <Select
               name={selectFieldName}
-              onChange={handleSelectChange}
+              onChange={value => change({ target: { name: selectFieldName, value } })}
               value={selectFieldValue}
-              className={selectFieldClassName}
-              InputProps={{
-                classes: {
-                  input: classes.noBackground,
-                  root: classes.input,
-                  notchedOutline: classes.noBorder,
-                },
-              }}
-              choices={choices}
+              className={clsx("noBorder", selectFieldClassName)}
+              options={choices}
             />
           ),
         }}
