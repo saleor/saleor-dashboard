@@ -42,7 +42,7 @@ export const useTaxStrategyChoices = () => {
                 color="default2"
                 size={2}
                 ellipsis
-                __maxWidth="150px"
+                __maxWidth="100px"
                 textDecoration="underline"
               >
                 {app.identifier}
