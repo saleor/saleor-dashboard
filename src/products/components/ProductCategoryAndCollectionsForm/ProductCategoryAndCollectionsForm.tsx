@@ -2,9 +2,10 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Multiselect } from "@dashboard/components/Combobox";
 import FormSpacer from "@dashboard/components/FormSpacer";
+import { Select } from "@dashboard/components/Select";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { Card, CardContent } from "@material-ui/core";
-import { Option, Select } from "@saleor/macaw-ui-next";
+import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -51,7 +52,7 @@ const ProductCategoryAndCollectionsForm = ({
             options={loading ? [] : categories}
             name="category"
             value={category}
-            onChange={value => onChange({ target: { name: "category", value } })}
+            onChange={onChange}
           />
           <FormSpacer />
           <Multiselect

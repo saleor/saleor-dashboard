@@ -5,12 +5,13 @@ import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { DashboardModal } from "@dashboard/components/Modal";
 import Money from "@dashboard/components/Money";
+import { Select } from "@dashboard/components/Select";
 import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import { buttonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { Box, Option, Select, Text } from "@saleor/macaw-ui-next";
+import { Box, Option, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -93,7 +94,8 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
                 name="shippingMethod"
                 data-test-id="shipping-method-select"
                 value={data.shippingMethod}
-                onChange={value => {
+                onChange={({ target }) => {
+                  const value = target.value;
                   const isDisabled = choices.find(({ value }) => value === value)?.disabled;
 
                   if (isDisabled) {

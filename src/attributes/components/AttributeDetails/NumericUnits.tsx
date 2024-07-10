@@ -1,10 +1,11 @@
 import { AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import { Select } from "@dashboard/components/Select";
 import { MeasurementUnitsEnum } from "@dashboard/graphql";
 import { UseFormResult } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Option, Select } from "@saleor/macaw-ui-next";
+import { Box, Option } from "@saleor/macaw-ui-next";
 import React, { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -132,11 +133,10 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
               disabled={disabled}
               label={formatMessage(M.messages.unitSystem)}
               name="system"
-              onChange={value => {
+              onChange={({ target }) => {
                 setUnitData(data => ({
                   ...data,
-                  system:
-                    typeof value === "string" ? value : ((value as Option)?.value as UnitSystem),
+                  system: target.value as UnitSystem,
                 }));
               }}
               value={system ?? null}
@@ -152,10 +152,10 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
               disabled={!system || disabled}
               label={formatMessage(M.messages.unitOf)}
               name="type"
-              onChange={value => {
+              onChange={({ target }) => {
                 setUnitData(data => ({
                   ...data,
-                  type: typeof value === "string" ? value : ((value as Option)?.value as UnitType),
+                  type: target.value as UnitType,
                 }));
               }}
               value={type ?? null}
@@ -171,12 +171,10 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
               disabled={!type || disabled}
               label={formatMessage(M.messages.unit)}
               name="type"
-              onChange={value =>
+              onChange={({ target }) =>
                 setUnitData(data => ({
                   ...data,
-                  unit: (typeof value === "string"
-                    ? value
-                    : (value as Option)?.value) as MeasurementUnitsEnum,
+                  unit: target.value as MeasurementUnitsEnum,
                 }))
               }
               value={unit as string}

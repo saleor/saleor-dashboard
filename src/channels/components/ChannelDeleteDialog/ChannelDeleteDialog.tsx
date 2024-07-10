@@ -1,9 +1,10 @@
 import NewActionDialog from "@dashboard/components/ActionDialog/NewActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { Select } from "@dashboard/components/Select";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { buttonMessages } from "@dashboard/intl";
 import { Typography } from "@material-ui/core";
-import { Option, Select } from "@saleor/macaw-ui-next";
+import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -105,7 +106,7 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
                 <Select
                   label={intl.formatMessage(messages.selectChannel)}
                   name="channels"
-                  onChange={value => setChoice(value)}
+                  onChange={({ target }) => setChoice(target.value)}
                   value={choice}
                   options={channelsChoices}
                 />

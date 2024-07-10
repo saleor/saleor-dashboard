@@ -2,6 +2,7 @@ import { NumericUnits } from "@dashboard/attributes/components/AttributeDetails/
 import CardTitle from "@dashboard/components/CardTitle";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import FormSpacer from "@dashboard/components/FormSpacer";
+import { Select } from "@dashboard/components/Select";
 import {
   AttributeEntityTypeEnum,
   AttributeErrorFragment,
@@ -12,7 +13,7 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
 import { Card, CardContent, TextField } from "@material-ui/core";
-import { Box, Option, Select } from "@saleor/macaw-ui-next";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 import slugify from "slugify";
@@ -161,7 +162,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
               helperText={getAttributeErrorMessage(formApiErrors.inputType, intl)}
               label={intl.formatMessage(messages.inputType)}
               name="inputType"
-              onChange={value => onChange({ target: { name: "inputType", value } })}
+              onChange={onChange}
               value={data.inputType}
               options={inputTypeChoices}
             />
@@ -176,15 +177,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
                 helperText={getAttributeErrorMessage(formApiErrors.entityType, intl)}
                 label={intl.formatMessage(messages.entityType)}
                 name="entityType"
-                onChange={value =>
-                  onChange({
-                    target: {
-                      name: "entityType",
-                      // When Select initial value is null, onChange return Object instead of string
-                      value: typeof value === "string" ? value : (value as Option)?.value,
-                    },
-                  })
-                }
+                onChange={onChange}
                 value={data.entityType}
                 options={entityTypeChoices}
               />
