@@ -1,8 +1,10 @@
+import { DashboardCard } from "@dashboard/components/Card";
 import CardTitle from "@dashboard/components/CardTitle";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
 import { AttributeTypeEnum } from "@dashboard/graphql";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -48,15 +50,16 @@ const AttributeOrganization: React.FC<AttributeOrganizationProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
+    <DashboardCard>
+      <DashboardCard.Title>
+        {intl.formatMessage({
           id: "nwvQPg",
           defaultMessage: "Organization",
           description: "section header",
         })}
-      />
-      <CardContent>
+      </DashboardCard.Title>
+
+      <DashboardCard.Content>
         {canChangeType ? (
           <RadioGroupField
             choices={[
@@ -73,12 +76,12 @@ const AttributeOrganization: React.FC<AttributeOrganizationProps> = props => {
             label={
               <>
                 <FormattedMessage id="v1pNHW" defaultMessage="Attribute Class" />
-                <Typography variant="caption">
+                <Text fontWeight="light">
                   <FormattedMessage
                     id="ErNH3D"
                     defaultMessage="Define where this attribute should be used in Saleor system"
                   />
-                </Typography>
+                </Text>
               </>
             }
             name={"type" as keyof FormData}
@@ -97,8 +100,8 @@ const AttributeOrganization: React.FC<AttributeOrganizationProps> = props => {
             </Typography>
           </>
         )}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 
