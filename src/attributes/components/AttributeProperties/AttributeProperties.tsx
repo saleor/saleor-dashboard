@@ -1,5 +1,5 @@
 import { ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION } from "@dashboard/attributes/utils/data";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import ControlledSwitch from "@dashboard/components/ControlledSwitch";
 import FormSpacer from "@dashboard/components/FormSpacer";
@@ -7,7 +7,8 @@ import { AttributeErrorFragment, AttributeTypeEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
-import { Card, CardContent, TextField, Typography } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -87,9 +88,10 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
     data.type === AttributeTypeEnum.PRODUCT_TYPE;
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(commonMessages.properties)} />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Title>{intl.formatMessage(commonMessages.properties)}</DashboardCard.Title>
+
+      <DashboardCard.Content>
         {storefrontFacetedNavigationProperties && (
           <>
             <ControlledCheckbox
@@ -122,17 +124,17 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
           label={
             <>
               <FormattedMessage {...messages.visibleInStorefront} />
-              <Typography variant="caption">
+              <Text fontWeight="light">
                 <FormattedMessage {...messages.visibleInStorefrontCaption} />
-              </Typography>
+              </Text>
             </>
           }
           checked={data.visibleInStorefront}
           onChange={onChange}
           disabled={disabled}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

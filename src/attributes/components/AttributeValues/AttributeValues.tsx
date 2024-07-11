@@ -1,5 +1,5 @@
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
@@ -12,8 +12,9 @@ import {
 } from "@dashboard/graphql";
 import { renderCollection, stopPropagation } from "@dashboard/misc";
 import { ListProps, PaginateListProps, RelayToFlat, ReorderAction } from "@dashboard/types";
-import { Card, TableCell, TableFooter, TableHead } from "@material-ui/core";
-import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { TableCell, TableFooter, TableHead } from "@material-ui/core";
+import { IconButton, makeStyles } from "@saleor/macaw-ui";
+import { TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -91,28 +92,30 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
   const numberOfColumns = isSwatch ? 5 : 4;
 
   return (
-    <Card data-test-id="attribute-values-section">
-      <CardTitle
-        title={intl.formatMessage({
+    <DashboardCard data-test-id="attribute-values-section">
+      <DashboardCard.Title>
+        {intl.formatMessage({
           id: "J3uE0t",
           defaultMessage: "Attribute Values",
           description: "section header",
         })}
-        toolbar={
-          <Button
-            disabled={disabled}
-            variant="tertiary"
-            onClick={onValueAdd}
-            data-test-id="assign-value-button"
-          >
-            <FormattedMessage
-              id="+iVKR1"
-              defaultMessage="Assign value"
-              description="assign attribute value button"
-            />
-          </Button>
-        }
-      />
+      </DashboardCard.Title>
+
+      <DashboardCard.Toolbar>
+        <Button
+          disabled={disabled}
+          variant="tertiary"
+          onClick={onValueAdd}
+          data-test-id="assign-value-button"
+        >
+          <FormattedMessage
+            id="+iVKR1"
+            defaultMessage="Assign value"
+            description="assign attribute value button"
+          />
+        </Button>
+      </DashboardCard.Toolbar>
+
       <ResponsiveTable>
         <TableHead>
           <TableRowLink>
@@ -188,7 +191,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
                     disabled={disabled}
                     onClick={stopPropagation(() => onValueDelete(value?.id ?? ""))}
                   >
-                    <DeleteIcon />
+                    <TrashBinIcon />
                   </IconButton>
                 </TableCell>
               </SortableTableRow>
@@ -207,7 +210,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
           )}
         </SortableTableBody>
       </ResponsiveTable>
-    </Card>
+    </DashboardCard>
   );
 };
 
