@@ -6,8 +6,9 @@ import { AccountErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
-import { TextField, Typography } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -57,9 +58,9 @@ const CustomerInfo: React.FC<CustomerInfoProps> = props => {
         }
       />
       <DashboardCard.Content className={classes.content}>
-        <Typography className={classes.sectionHeader}>
+        <Text className={classes.sectionHeader}>
           <FormattedMessage {...commonMessages.generalInformations} />
-        </Typography>
+        </Text>
         <Grid variant="uniform">
           <TextField
             data-test-id="customer-first-name"
@@ -93,13 +94,13 @@ const CustomerInfo: React.FC<CustomerInfoProps> = props => {
           />
         </Grid>
         <Hr className={classes.hr} />
-        <Typography className={classes.sectionHeader}>
+        <Text className={classes.sectionHeader}>
           <FormattedMessage
             id="SMakqb"
             defaultMessage="Contact Information"
             description="customer contact section, header"
           />
-        </Typography>
+        </Text>
         <TextField
           data-test-id="customer-email"
           disabled={disabled}

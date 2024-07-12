@@ -2,10 +2,9 @@ import { DateTime } from "@dashboard/components/Date";
 import { Pill } from "@dashboard/components/Pill";
 import { OrderDetailsFragment } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
-import { Typography } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -51,9 +50,9 @@ const Title: React.FC<TitleProps> = props => {
 
       <div>
         {order && order.created ? (
-          <Typography variant="body2">
+          <Text size={3} fontWeight="regular">
             <DateTime date={order.created} plain />
-          </Typography>
+          </Text>
         ) : (
           <Skeleton style={{ width: "10em" }} />
         )}

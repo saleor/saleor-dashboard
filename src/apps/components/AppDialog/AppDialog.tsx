@@ -1,12 +1,6 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogProps,
-  DialogTitle,
-  IconButton,
-  Typography,
-} from "@material-ui/core";
+import { Dialog, DialogContent, DialogProps, DialogTitle, IconButton } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { useStyles } from "./styles";
@@ -21,9 +15,9 @@ export const AppDialog: React.FC<AppDialogProps> = ({ children, ...props }) => {
   return (
     <Dialog aria-labelledby="extension app dialog" {...props}>
       <DialogTitle disableTypography className={classes.header}>
-        <Typography variant="h6" component="h2">
+        <Text fontWeight="bold" lineHeight={2} as="h2">
           {props.title}
-        </Typography>
+        </Text>
         <IconButton color="inherit" onClick={props.onClose} aria-label="close">
           <CloseIcon />
         </IconButton>

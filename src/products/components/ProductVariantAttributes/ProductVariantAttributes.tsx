@@ -8,8 +8,7 @@ import { ProductErrorWithAttributesFragment, ProductVariantFragment } from "@das
 import { FormsetAtomicData, FormsetChange } from "@dashboard/hooks/useFormset";
 import { commonMessages } from "@dashboard/intl";
 import { getProductVariantAttributeErrorMessage } from "@dashboard/utils/errors/product";
-import { Typography } from "@material-ui/core";
-import { Option } from "@saleor/macaw-ui-next";
+import { Option, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -105,9 +104,9 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
             {errors
               .filter(error => error.field === "attributes" && error.attributes === null)
               .map(error => (
-                <Typography color="error" key={error.code}>
+                <Text color="critical1" key={error.code}>
                   {getProductVariantAttributeErrorMessage(error, intl)}
-                </Typography>
+                </Text>
               ))}
           </>
         )}

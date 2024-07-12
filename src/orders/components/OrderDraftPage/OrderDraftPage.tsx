@@ -19,8 +19,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSectionCard";
 import { orderDraftListUrl } from "@dashboard/orders/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
-import { Typography } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -90,9 +89,9 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
             <span>{order?.number ? "#" + order?.number : undefined}</span>
             <div>
               {order && order.created ? (
-                <Typography variant="body2">
+                <Text size={3} fontWeight="regular">
                   <DateTime date={order.created} plain />
-                </Typography>
+                </Text>
               ) : (
                 <Skeleton style={{ width: "10em" }} />
               )}

@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
-import { Typography } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -22,9 +22,9 @@ const AppStatus: React.FC<AppStatusProps> = ({ data, disabled, label, onChange }
     <DashboardCard>
       <DashboardCard.Title title={intl.formatMessage(messages.userStatus)} />
       <DashboardCard.Content>
-        <Typography variant="body2">
+        <Text size={3} fontWeight="regular">
           {intl.formatMessage(messages.userDisableInstruction)}
-        </Typography>
+        </Text>
         <ControlledCheckbox
           data-test-id="is-active-checkbox"
           checked={data.isActive}

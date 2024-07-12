@@ -8,7 +8,6 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  Typography,
 } from "@material-ui/core";
 import {
   Alert,
@@ -20,6 +19,7 @@ import {
   ListItem,
   ListItemCell,
 } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -77,7 +77,7 @@ const DryRun: React.FC<DryRunProps> = ({
         <DialogHeader onClose={closeDialog}>{intl.formatMessage(messages.header)}</DialogHeader>
         <DialogContent style={{ overflow: "scroll" }}>
           <Alert variant="error" close={false}>
-            <Typography>{intl.formatMessage(messages.unavailableSyncEvents)}</Typography>
+            <Text>{intl.formatMessage(messages.unavailableSyncEvents)}</Text>
           </Alert>
         </DialogContent>
       </Dialog>
@@ -92,11 +92,11 @@ const DryRun: React.FC<DryRunProps> = ({
 
         {!!unavailableObjects.length && (
           <Alert variant="warning" close={false} className="remove-icon-background">
-            <Typography>
+            <Text>
               {intl.formatMessage(messages.unavailableEvents)}
               <br />
               <strong>{unavailableObjects.join(", ")}</strong>
-            </Typography>
+            </Text>
           </Alert>
         )}
 
@@ -112,9 +112,7 @@ const DryRun: React.FC<DryRunProps> = ({
                 </ListItem>
               </ListHeader>
               <ListBody className={classes.listBody}>
-                {!availableObjects.length && (
-                  <Typography>{intl.formatMessage(messages.noObjects)}</Typography>
-                )}
+                {!availableObjects.length && <Text>{intl.formatMessage(messages.noObjects)}</Text>}
                 {availableObjects.map((object, idx) => (
                   <ListItem
                     key={idx}
@@ -143,7 +141,7 @@ const DryRun: React.FC<DryRunProps> = ({
                   </ListItem>
                 </ListHeader>
                 <ListBody className={classes.listBody}>
-                  <Typography>{intl.formatMessage(messages.itemsDefaultMessage)}</Typography>
+                  <Text>{intl.formatMessage(messages.itemsDefaultMessage)}</Text>
                 </ListBody>
               </>
             )}

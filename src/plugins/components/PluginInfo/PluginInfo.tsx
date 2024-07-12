@@ -5,8 +5,8 @@ import Hr from "@dashboard/components/Hr";
 import { PluginErrorCode, PluginErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import getPluginErrorMessage from "@dashboard/utils/errors/plugins";
-import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -47,31 +47,31 @@ const PluginInfo: React.FC<PluginInfoProps> = ({ data, description, errors, name
         })}
       />
       <DashboardCard.Content>
-        <Typography className={classes.title} variant="h6">
+        <Text className={classes.title} fontWeight="bold" lineHeight={2}>
           {intl.formatMessage({
             id: "IUeGzv",
             defaultMessage: "Plugin Name",
             description: "plugin name",
           })}
-        </Typography>
-        <Typography>{name}</Typography>
+        </Text>
+        <Text>{name}</Text>
         {description && (
           <>
-            <Typography className={classes.title} variant="h6">
+            <Text className={classes.title} fontWeight="bold" lineHeight={2}>
               <FormattedMessage {...commonMessages.description} />
-            </Typography>
-            <Typography>{description}</Typography>
+            </Text>
+            <Text>{description}</Text>
           </>
         )}
         <FormSpacer />
         <Hr />
-        <Typography className={classes.status}>
+        <Text className={classes.status}>
           {intl.formatMessage({
             id: "bL/Wrc",
             defaultMessage: "Status",
             description: "plugin status",
           })}
-        </Typography>
+        </Text>
         <ControlledCheckbox
           name={"active" as keyof PluginDetailsPageFormData}
           label={intl.formatMessage({
@@ -82,7 +82,7 @@ const PluginInfo: React.FC<PluginInfoProps> = ({ data, description, errors, name
           onChange={onChange}
         />
         {misconfiguredError && (
-          <Typography color="error">{getPluginErrorMessage(misconfiguredError, intl)}</Typography>
+          <Text color="critical1">{getPluginErrorMessage(misconfiguredError, intl)}</Text>
         )}
       </DashboardCard.Content>
     </DashboardCard>

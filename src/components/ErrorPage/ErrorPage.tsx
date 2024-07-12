@@ -2,8 +2,8 @@
 import notFoundImage from "@assets/images/what.svg";
 import useAppState from "@dashboard/hooks/useAppState";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { Typography } from "@material-ui/core";
 import { Button } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";
@@ -38,18 +38,20 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ onBack, onRefresh }) => {
         <SVG className={classes.notFoundImage} src={notFoundImage} />
         <div className={classes.innerContainer}>
           <div>
-            <Typography className={classes.header} variant="h1">
+            <Text className={classes.header} size={11} fontWeight="bold">
               <FormattedMessage {...messages.header} />
-            </Typography>
-            <Typography>
+            </Text>
+            <Text>
               <FormattedMessage {...messages.content} />
-            </Typography>
+            </Text>
             {!!errorTrackingId && (
               <div>
-                <Typography variant="caption" color="textSecondary" className={classes.errorId}>
+                <Text size={2} fontWeight="light" color="default2" className={classes.errorId}>
                   Error ID
-                </Typography>
-                <Typography variant="body1">{errorTrackingId}</Typography>
+                </Text>
+                <Text size={4} fontWeight="regular">
+                  {errorTrackingId}
+                </Text>
               </div>
             )}
           </div>

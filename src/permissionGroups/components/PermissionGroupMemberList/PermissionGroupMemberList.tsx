@@ -15,7 +15,7 @@ import { sortMembers } from "@dashboard/permissionGroups/sort";
 import { MembersListUrlSortField } from "@dashboard/permissionGroups/urls";
 import { ListActions, SortPage } from "@dashboard/types";
 import { getArrowDirection } from "@dashboard/utils/sort";
-import { TableBody, TableCell, Typography } from "@material-ui/core";
+import { TableBody, TableCell } from "@material-ui/core";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Box, Text, vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
@@ -109,20 +109,20 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
       </DashboardCard.Toolbar>
       {members?.length === 0 ? (
         <DashboardCard.Content className={classes.helperText} data-test-id="no-members-text">
-          <Typography color="textSecondary">
+          <Text color="default2">
             <FormattedMessage
               id="gVD1os"
               defaultMessage="You haven’t assigned any member to this permission group yet."
               description="empty list message"
             />
-          </Typography>
-          <Typography color="textSecondary">
+          </Text>
+          <Text color="default2">
             <FormattedMessage
               id="zD7/M6"
               defaultMessage="Please use Assign Members button to do so."
               description="empty list message"
             />
-          </Typography>
+          </Text>
         </DashboardCard.Content>
       ) : (
         <ResponsiveTable>

@@ -4,7 +4,8 @@ import { FormSpacer } from "@dashboard/components/FormSpacer";
 import { AccountErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
-import { TextField, Typography } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -37,12 +38,12 @@ const CustomerCreateNote: React.FC<CustomerCreateNoteProps> = ({
         })}
       />
       <DashboardCard.Content>
-        <Typography>
+        <Text>
           <FormattedMessage
             id="w3sGrD"
             defaultMessage="Enter any extra infotmation regarding this customer."
           />
-        </Typography>
+        </Text>
         <FormSpacer />
         <TextField
           data-test-id="customer-note"

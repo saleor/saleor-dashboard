@@ -1,8 +1,7 @@
 // @ts-strict-ignore
-import { Typography } from "@material-ui/core";
 import { alpha } from "@material-ui/core/styles";
 import { ImageIcon, makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui-next";
+import { Text, vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -92,13 +91,13 @@ export const ImageUpload: React.FC<ImageUploadProps> = props => {
               >
                 <input {...getInputProps()} className={classes.fileField} accept="image/*" />
                 <ImageIcon className={classes.photosIcon} />
-                <Typography className={classes.uploadText}>
+                <Text className={classes.uploadText}>
                   <FormattedMessage
                     id="NxeDbG"
                     defaultMessage="Drop here to upload"
                     description="image upload"
                   />
-                </Typography>
+                </Text>
               </div>
             )}
           </div>

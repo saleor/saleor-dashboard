@@ -8,8 +8,9 @@ import { renderCollection } from "@dashboard/misc";
 import { getPluginsWithAppReplacementsIds } from "@dashboard/plugins/plugins-with-app-replacements";
 import { PluginListUrlSortField, pluginUrl } from "@dashboard/plugins/urls";
 import { ListProps, SortPage } from "@dashboard/types";
-import { TableBody, TableCell, TableFooter, Typography } from "@material-ui/core";
+import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { EditIcon, makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -77,11 +78,11 @@ const PluginList: React.FC<PluginListProps> = props => {
                 key={plugin ? plugin.id : "skeleton"}
               >
                 <TableCell colSpan={5}>
-                  <Typography>{plugin.name}</Typography>
+                  <Text>{plugin.name}</Text>
                   {hasReplacement && isActive && (
-                    <Typography variant="caption" color="error">
+                    <Text size={2} fontWeight="light" color="critical1">
                       {intl.formatMessage(pluginsMiscMessages.appReplacementMessage)}
-                    </Typography>
+                    </Text>
                   )}
                 </TableCell>
                 <PluginChannelConfigurationCell plugin={plugin} />

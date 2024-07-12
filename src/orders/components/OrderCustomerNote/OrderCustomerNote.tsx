@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Skeleton from "@dashboard/components/Skeleton";
-import { Typography } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -24,11 +24,11 @@ export const OrderCustomerNote: React.FC<OrderCustomerNoteProps> = ({ note }) =>
         {note === undefined ? (
           <Skeleton />
         ) : note === "" ? (
-          <Typography color="textSecondary">
+          <Text color="default2">
             <FormattedMessage id="VrFy8e" defaultMessage="No notes from customer" />
-          </Typography>
+          </Text>
         ) : (
-          <Typography>{note}</Typography>
+          <Text>{note}</Text>
         )}
       </DashboardCard.Content>
     </DashboardCard>

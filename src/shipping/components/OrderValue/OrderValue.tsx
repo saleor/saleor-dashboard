@@ -9,7 +9,8 @@ import { ShippingChannelsErrorFragment } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { ChannelError, getFormChannelError, getFormChannelErrors } from "@dashboard/utils/errors";
 import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
-import { TableBody, TableCell, Typography } from "@material-ui/core";
+import { TableBody, TableCell } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -67,13 +68,13 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                   defaultMessage="Restrict order value"
                   description="checkbox label"
                 />
-                <Typography variant="caption">
+                <Text size={2} fontWeight="light">
                   {intl.formatMessage({
                     id: "aZDHYr",
                     defaultMessage: "This rate will apply to all orders",
                     description: "price rates info",
                   })}
-                </Typography>
+                </Text>
               </>
             }
             checked={orderValueRestricted}
@@ -120,7 +121,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                 return (
                   <TableRowLink key={channel.id}>
                     <TableCell>
-                      <Typography>{channel.name}</Typography>
+                      <Text>{channel.name}</Text>
                     </TableCell>
                     <TableCell className={classes.price}>
                       <PriceField

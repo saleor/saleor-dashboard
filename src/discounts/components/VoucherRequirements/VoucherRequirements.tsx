@@ -13,7 +13,8 @@ import { DiscountErrorFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
-import { TableBody, TableCell, TextField, Typography } from "@material-ui/core";
+import { TableBody, TableCell, TextField } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -124,7 +125,7 @@ const VoucherRequirements = ({
                           data-test-id={listing?.name}
                         >
                           <TableCell>
-                            <Typography>{listing?.name || <Skeleton />}</Typography>
+                            <Text>{listing?.name || <Skeleton />}</Text>
                           </TableCell>
                           <TableCell className={classes.colPrice}>
                             {listing ? (

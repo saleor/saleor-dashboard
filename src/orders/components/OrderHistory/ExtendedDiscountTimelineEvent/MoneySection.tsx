@@ -1,8 +1,8 @@
 // @ts-strict-ignore
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import { DiscountValueTypeEnum, MoneyFragment } from "@dashboard/graphql";
-import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -93,7 +93,7 @@ const MoneySection: React.FC<MoneySectionProps> = ({
     <div className={classes.container}>
       <Label text={intl.formatMessage(messages[sectionTitleMessageKey])} />
       <div className={classes.horizontalContainer}>
-        <Typography>{`${moneyData.amount} ${moneyData.currency}`}</Typography>
+        <Text>{`${moneyData.amount} ${moneyData.currency}`}</Text>
         <HorizontalSpacer />
         <Label text={getDiscountSubitle()} />
       </div>

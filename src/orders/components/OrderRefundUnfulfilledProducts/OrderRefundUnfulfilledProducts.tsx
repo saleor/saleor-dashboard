@@ -8,8 +8,9 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { OrderRefundDataQuery } from "@dashboard/graphql";
 import { FormsetChange } from "@dashboard/hooks/useFormset";
 import { renderCollection } from "@dashboard/misc";
-import { Table, TableBody, TableCell, TableHead, TextField, Typography } from "@material-ui/core";
+import { Table, TableBody, TableCell, TableHead, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -83,13 +84,13 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
         })}
       />
       <DashboardCard.Content className={classes.cartContent}>
-        <Typography variant="caption" color="textSecondary" className={classes.notice}>
+        <Text size={2} fontWeight="light" color="default2" className={classes.notice}>
           <FormattedMessage
             id="iUIn50"
             defaultMessage="Unfulfilled products will be restocked"
             description="section notice"
           />
-        </Typography>
+        </Text>
         <Button
           className={classes.setMaximalQuantityButton}
           onClick={onSetMaximalQuantities}

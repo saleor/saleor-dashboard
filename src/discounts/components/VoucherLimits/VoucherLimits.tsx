@@ -4,7 +4,8 @@ import { Grid } from "@dashboard/components/Grid";
 import { DiscountErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
-import { TextField, Typography } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -84,10 +85,10 @@ const VoucherLimits = ({
                 }}
               />
               <div className={classes.usesLeftLabelWrapper}>
-                <Typography variant="caption">
+                <Text size={2} fontWeight="light">
                   {intl.formatMessage(messages.usesLeftCaption)}
-                </Typography>
-                <Typography>{usesLeft >= 0 ? usesLeft : 0}</Typography>
+                </Text>
+                <Text>{usesLeft >= 0 ? usesLeft : 0}</Text>
               </div>
             </Grid>
           ))}

@@ -6,9 +6,8 @@ import { FormChange } from "@dashboard/hooks/useForm";
 import { FetchMoreProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
-import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Option } from "@saleor/macaw-ui-next";
+import { Option, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -85,10 +84,10 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
           />
         ) : (
           <>
-            <Typography className={classes.label} variant="caption">
+            <Text className={classes.label} size={2} fontWeight="light">
               <FormattedMessage id="ufD5Jr" defaultMessage="Content type" />
-            </Typography>
-            <Typography>{pageType?.name}</Typography>
+            </Text>
+            <Text>{pageType?.name}</Text>
           </>
         )}
       </DashboardCard.Content>

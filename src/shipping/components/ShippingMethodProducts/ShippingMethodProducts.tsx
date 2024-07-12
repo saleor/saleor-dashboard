@@ -11,8 +11,9 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { ShippingZoneQuery } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { ListActions, ListProps, RelayToFlat } from "@dashboard/types";
-import { TableBody, TableCell, TableFooter, Typography } from "@material-ui/core";
+import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -129,7 +130,9 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
                   </TableCell>
                   <TableCellAvatar className={classes.colName} thumbnail={product?.thumbnail?.url}>
                     {product?.name ? (
-                      <Typography variant="body2">{product.name}</Typography>
+                      <Text size={3} fontWeight="regular">
+                        {product.name}
+                      </Text>
                     ) : (
                       <Skeleton />
                     )}

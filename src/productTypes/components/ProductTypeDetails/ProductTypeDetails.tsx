@@ -6,8 +6,9 @@ import { ProductTypeKindEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
-import { Divider, TextField, Typography } from "@material-ui/core";
+import { Divider, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -81,16 +82,16 @@ const ProductTypeDetails: React.FC<ProductTypeDetailsProps> = props => {
                 className={classes.option}
                 data-test-id={`product-type-kind-option-${option.type}`}
               >
-                <Typography variant="body1">
+                <Text size={4} fontWeight="regular">
                   <FormattedMessage {...option.title} />
                   {option.type === ProductTypeKindEnum.GIFT_CARD && (
                     <PreviewPill className={classes.preview} />
                   )}
-                </Typography>
+                </Text>
                 {option.subtitle && (
-                  <Typography color="textSecondary" variant="caption">
+                  <Text color="default2" size={2} fontWeight="light">
                     <FormattedMessage {...option.subtitle} />
-                  </Typography>
+                  </Text>
                 )}
               </div>
             ),

@@ -3,7 +3,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import Skeleton from "@dashboard/components/Skeleton";
 import { ChannelFragment } from "@dashboard/graphql";
-import { Typography } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -27,11 +27,11 @@ export const OrderChannelSectionCard: React.FC<OrderChannelSectionCardProps> = (
         {!channel ? (
           <Skeleton />
         ) : (
-          <Typography>
+          <Text>
             <Link href={channelUrl(channel.id) ?? ""} disabled={!channel.id}>
               {channel.name ?? "..."}
             </Link>
-          </Typography>
+          </Text>
         )}
       </DashboardCard.Content>
     </DashboardCard>

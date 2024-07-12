@@ -10,7 +10,8 @@ import { getExpiryPeriodTerminationDate } from "@dashboard/giftCards/GiftCardCre
 import { getGiftCardErrorMessage } from "@dashboard/giftCards/GiftCardUpdate/messages";
 import useCurrentDate from "@dashboard/hooks/useCurrentDate";
 import { FormChange } from "@dashboard/hooks/useForm";
-import { TextField, Typography } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
@@ -103,16 +104,16 @@ const GiftCardCreateExpirySelect: React.FC<GiftCardCreateExpirySelectProps> = ({
                 typeFieldName={"expiryPeriodType"}
               />
               <div>
-                <Typography variant="caption">
+                <Text size={2} fontWeight="light">
                   <FormattedMessage {...messages.expiryOnLabel} />
-                </Typography>
-                <Typography>
+                </Text>
+                <Text>
                   {getExpiryPeriodTerminationDate(
                     currentDate,
                     expiryPeriodType,
                     expiryPeriodAmount,
                   )?.format("ll")}
-                </Typography>
+                </Text>
               </div>
             </div>
           )}

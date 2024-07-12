@@ -5,7 +5,7 @@ import Skeleton from "@dashboard/components/Skeleton";
 import Timeline, { TimelineAddNote, TimelineNote } from "@dashboard/components/Timeline";
 import { GiftCardEventsEnum, useGiftCardAddNoteMutation } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
-import { Typography } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -50,9 +50,9 @@ const GiftCardHistory: React.FC = () => {
 
   return (
     <div className={classes.root}>
-      <Typography className={classes.header} color="textSecondary">
+      <Text className={classes.header} color="default2">
         <FormattedMessage {...messages.historyHeaderTitle} />
-      </Typography>
+      </Text>
       <Hr />
       <Timeline>
         {events ? (

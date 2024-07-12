@@ -18,7 +18,6 @@ import {
   RadioGroup,
   TableCell,
   TextField,
-  Typography,
 } from "@material-ui/core";
 import {
   Button,
@@ -30,6 +29,7 @@ import {
   SearchIcon,
   useElementScroll,
 } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -137,9 +137,9 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
             }}
           </Debounce>
 
-          <Typography className={classes.supportHeader}>
+          <Text className={classes.supportHeader}>
             <FormattedMessage {...messages.warehouseListLabel} />
-          </Typography>
+          </Text>
         </DialogContent>
       </ScrollShadow>
 
@@ -162,21 +162,21 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
                       label={
                         <div className={classes.radioLabelContainer}>
                           <span className={classes.warehouseName}>{warehouse.name}</span>
-                          <Typography className={classes.supportText}>
+                          <Text className={classes.supportText}>
                             <FormattedMessage
                               {...messages.productAvailability}
                               values={{
                                 productCount: lineQuantityInWarehouse,
                               }}
                             />
-                          </Typography>
+                          </Text>
                         </div>
                       }
                     />
                     {currentWarehouseId === warehouse?.id && (
-                      <Typography className={classes.helpText}>
+                      <Text className={classes.helpText}>
                         <FormattedMessage {...messages.currentSelection} />
-                      </Typography>
+                      </Text>
                     )}
                   </TableCell>
                 </TableRowLink>

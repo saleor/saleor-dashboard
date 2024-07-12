@@ -11,7 +11,8 @@ import { getBySlug } from "@dashboard/misc";
 import { DialogProps } from "@dashboard/types";
 import commonErrorMessages from "@dashboard/utils/errors/common";
 import { mapSlugNodeToChoice } from "@dashboard/utils/maps";
-import { CircularProgress, TextField, Typography } from "@material-ui/core";
+import { CircularProgress, TextField } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -109,7 +110,7 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
         </div>
       ) : (
         <>
-          <Typography>{intl.formatMessage(messages.description)}</Typography>
+          <Text>{intl.formatMessage(messages.description)}</Text>
 
           <Combobox
             label={intl.formatMessage(messages.sendToChannelSelectLabel)}

@@ -16,9 +16,9 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -94,9 +94,9 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
                 <Money money={s.price} />
               </span>
               {!s.active && (
-                <Typography className={classes.message} variant="caption">
+                <Text className={classes.message} size={2} fontWeight="light">
                   {s.message}
-                </Typography>
+                </Text>
               )}
             </div>
           ),

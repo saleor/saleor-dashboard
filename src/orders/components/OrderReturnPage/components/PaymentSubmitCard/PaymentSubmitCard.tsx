@@ -5,8 +5,9 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Hr from "@dashboard/components/Hr";
 import { OrderDetailsFragment, OrderErrorFragment, OrderRefundDataQuery } from "@dashboard/graphql";
-import { FormControlLabel, Radio, RadioGroup, Typography } from "@material-ui/core";
+import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -305,11 +306,11 @@ export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
             intl.formatMessage(isReturn ? messages.returnButton : messages.refundButton)
           )}
         </Button>
-        <Typography variant="caption" color="textSecondary" className={classes.refundCaution}>
+        <Text size={2} fontWeight="light" color="default2" className={classes.refundCaution}>
           {intl.formatMessage(
             isReturn ? messages.returnCannotBeFulfilled : messages.refundCannotBeFulfilled,
           )}
-        </Typography>
+        </Text>
       </DashboardCard.Content>
     </DashboardCard>
   );

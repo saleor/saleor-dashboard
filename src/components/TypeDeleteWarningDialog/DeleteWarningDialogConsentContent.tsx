@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React, { ChangeEvent } from "react";
 
 import CardSpacer from "../CardSpacer";
@@ -23,14 +23,14 @@ const DeleteWarningDialogConsentContent: React.FC<DeleteWarningDialogConsentCont
 
   return (
     <>
-      <Typography>{description}</Typography>
+      <Text>{description}</Text>
       <CardSpacer />
       {consentLabel && (
         <ControlledCheckbox
           name="delete-assigned-items-consent"
           checked={isConsentChecked}
           onChange={handleConsentChange}
-          label={<Typography className={classes.consentLabel}>{consentLabel}</Typography>}
+          label={<Text className={classes.consentLabel}>{consentLabel}</Text>}
         />
       )}
     </>

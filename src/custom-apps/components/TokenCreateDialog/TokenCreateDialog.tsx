@@ -16,8 +16,8 @@ import {
   DialogTitle,
   Paper,
   TextField,
-  Typography,
 } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -70,12 +70,12 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
             <DialogContent>
               {step === "form" ? (
                 <>
-                  <Typography>
+                  <Text>
                     <FormattedMessage
                       id="k0rGBI"
                       defaultMessage="Access token is used to authenticate service accounts"
                     />
-                  </Typography>
+                  </Text>
                   <FormSpacer />
                   <TextField
                     label={intl.formatMessage({
@@ -90,20 +90,20 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                 </>
               ) : (
                 <>
-                  <Typography>
+                  <Text>
                     <FormattedMessage
                       id="4T/RzC"
                       defaultMessage="Make sure to save token, you won’t be able to see it again."
                     />
-                  </Typography>
+                  </Text>
                   <CardSpacer />
                   <Paper className={classes.paper} elevation={0}>
-                    <Typography variant="caption">
+                    <Text size={2} fontWeight="light">
                       <FormattedMessage id="5ZxAiY" defaultMessage="Token" />
-                    </Typography>
-                    <Typography data-test-id="generated-token">
+                    </Text>
+                    <Text data-test-id="generated-token">
                       <Mono className={classes.mono}>{token}</Mono>
-                    </Typography>
+                    </Text>
                     <Button className={classes.copy} onClick={() => handleCopy(token)}>
                       <FormattedMessage
                         id="HVFq//"
@@ -114,12 +114,12 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                   </Paper>
                   <CardSpacer />
                   <Paper className={classes.paper} elevation={0}>
-                    <Typography variant="caption">
+                    <Text size={2} fontWeight="light">
                       <FormattedMessage id="Wm+KUd" defaultMessage="Headers" />
-                    </Typography>
-                    <Typography data-test-id="generated-headers">
+                    </Text>
+                    <Text data-test-id="generated-headers">
                       <Mono className={classes.mono}>{headers}</Mono>
-                    </Typography>
+                    </Text>
                     <Button className={classes.copy} onClick={() => handleCopy(headers)}>
                       <FormattedMessage
                         id="ZhqH8J"

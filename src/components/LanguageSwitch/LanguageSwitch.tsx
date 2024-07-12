@@ -7,10 +7,10 @@ import {
   MenuList as Menu,
   Paper,
   Popper,
-  Typography,
 } from "@material-ui/core";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -69,7 +69,7 @@ const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
         className={classes.menuContainer}
         onClick={() => setExpandedState(!isExpanded)}
       >
-        <Typography>{currentLanguage}</Typography>
+        <Text>{currentLanguage}</Text>
         <ArrowDropDown
           className={clsx(classes.arrow, {
             [classes.rotate]: isExpanded,

@@ -6,8 +6,9 @@ import { getAppMountUri } from "@dashboard/config";
 import { AccountErrorCode } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
-import { TextField, Typography } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { ArrowRightIcon } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -34,16 +35,16 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
           <IconButton className={classes.backBtn} href={getAppMountUri()} variant="secondary">
             <ArrowRightIcon className={classes.arrow} />
           </IconButton>
-          <Typography variant="h3" className={classes.header}>
+          <Text size={6} fontWeight="bold" lineHeight={3} className={classes.header}>
             <FormattedMessage id="Yy/yDL" defaultMessage="Reset password" />
-          </Typography>
+          </Text>
           {!!error && <div className={classes.panel}>{error}</div>}
-          <Typography variant="caption" color="textSecondary">
+          <Text size={2} fontWeight="light" color="default2">
             <FormattedMessage
               id="54M0Gu"
               defaultMessage="Provide us with an email - if we find it in our database we will send you a link to reset your password. You should be able to find it in your inbox in the next couple of minutes."
             />
-          </Typography>
+          </Text>
           <FormSpacer />
           <TextField
             autoFocus

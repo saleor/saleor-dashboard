@@ -6,8 +6,9 @@ import { AccountErrorFragment, CustomerDetailsQuery } from "@dashboard/graphql";
 import { maybe } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
-import { TextField, Typography } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import moment from "moment-timezone";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -57,7 +58,7 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
           <>
             {maybe<React.ReactNode>(() => customer.email, <Skeleton />)}
             {customer && customer.dateJoined ? (
-              <Typography className={classes.subtitle} variant="caption" component="div">
+              <Text className={classes.subtitle} size={2} fontWeight="light">
                 <FormattedMessage
                   id="MjUyhA"
                   defaultMessage="Active member since {date}"
@@ -66,7 +67,7 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
                     date: moment(customer.dateJoined).format("MMM YYYY"),
                   }}
                 />
-              </Typography>
+              </Text>
             ) : (
               <Skeleton style={{ width: "10rem" }} />
             )}

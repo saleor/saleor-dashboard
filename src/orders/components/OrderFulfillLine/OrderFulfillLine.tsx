@@ -10,9 +10,9 @@ import {
   getWarehouseStock,
   OrderFulfillLineFormData,
 } from "@dashboard/orders/utils/data";
-import { TableCell, TextField, Typography } from "@material-ui/core";
+import { TableCell, TextField } from "@material-ui/core";
 import { ChevronIcon, IconButton, WarningIcon } from "@saleor/macaw-ui";
-import { Box, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -89,9 +89,9 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
         }
       >
         {line.productName}
-        <Typography color="textSecondary" variant="caption">
+        <Text color="default2" size={2} fontWeight="light">
           {getAttributesCaption(line.variant?.attributes)}
-        </Typography>
+        </Text>
       </TableCellAvatar>
       <TableCell className={classes.colSku}>{line.variant?.sku}</TableCell>
       {isPreorder ? (
@@ -152,9 +152,9 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
             data-test-id="select-warehouse-button"
           >
             <div className={classes.warehouseButtonContent}>
-              <Typography className={classes.warehouseButtonContentText}>
+              <Text className={classes.warehouseButtonContentText}>
                 {lineFormWarehouse?.name ?? intl.formatMessage(messages.selectWarehouse)}
-              </Typography>
+              </Text>
               <ChevronIcon />
             </div>
           </IconButton>

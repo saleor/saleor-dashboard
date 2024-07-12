@@ -12,9 +12,8 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { pageTypeListUrl } from "@dashboard/pageTypes/urls";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { sprinkles } from "@saleor/macaw-ui-next";
+import { sprinkles, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -79,13 +78,13 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
                 })}
               >
                 <div>
-                  <Typography>{intl.formatMessage(commonMessages.generalInformations)}</Typography>
-                  <Typography variant="body2">
+                  <Text>{intl.formatMessage(commonMessages.generalInformations)}</Text>
+                  <Text size={3} fontWeight="regular">
                     <FormattedMessage
                       id="kZfIl/"
                       defaultMessage="These are general information about this Content Type."
                     />
-                  </Typography>
+                  </Text>
                 </div>
                 <PageTypeDetails
                   data={data}
@@ -95,13 +94,13 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
                 />
                 <Hr className={classes.hr} />
                 <div>
-                  <Typography>
+                  <Text>
                     <FormattedMessage
                       id="OVOU1z"
                       defaultMessage="Metadata"
                       description="section header"
                     />
-                  </Typography>
+                  </Text>
                 </div>
                 <Metadata data={data} onChange={changeMetadata} />
               </Grid>

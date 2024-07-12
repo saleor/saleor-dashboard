@@ -8,8 +8,9 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { PostalCodeRuleInclusionTypeEnum, ShippingMethodTypeFragment } from "@dashboard/graphql";
 import ArrowDropdown from "@dashboard/icons/ArrowDropdown";
 import { renderCollection } from "@dashboard/misc";
-import { TableBody, TableCell, TableHead, Typography } from "@material-ui/core";
+import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -118,19 +119,19 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
             {
               label: (
                 <div className={classes.option}>
-                  <Typography variant="body1">
+                  <Text size={4} fontWeight="regular">
                     <FormattedMessage
                       id="YpLVVc"
                       defaultMessage="Exclude postal codes"
                       description="action"
                     />
-                  </Typography>
-                  <Typography color="textSecondary" variant="caption">
+                  </Text>
+                  <Text color="default2" size={2} fontWeight="light">
                     <FormattedMessage
                       id="ju8zHP"
                       defaultMessage="Added postal codes will be excluded from using this delivery methods. If none are added all postal codes will be able to use that shipping rate"
                     />
-                  </Typography>
+                  </Text>
                 </div>
               ),
               value: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
@@ -138,19 +139,19 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
             {
               label: (
                 <div className={classes.option}>
-                  <Typography variant="body1">
+                  <Text size={4} fontWeight="regular">
                     <FormattedMessage
                       id="7qsOwa"
                       defaultMessage="Include postal codes"
                       description="action"
                     />
-                  </Typography>
-                  <Typography color="textSecondary" variant="caption">
+                  </Text>
+                  <Text color="default2" size={2} fontWeight="light">
                     <FormattedMessage
                       id="/Zee1r"
                       defaultMessage="Only added postal codes will be able to use this shipping rate"
                     />
-                  </Typography>
+                  </Text>
                 </div>
               ),
               value: PostalCodeRuleInclusionTypeEnum.INCLUDE,
@@ -172,7 +173,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
               {postalCodes === undefined ? (
                 <Skeleton className={classes.skeleton} />
               ) : (
-                <Typography variant="caption">
+                <Text size={2} fontWeight="light">
                   <FormattedMessage
                     id="ud0w8h"
                     defaultMessage="{number} postal code ranges"
@@ -181,7 +182,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
                       number: postalCodes.length,
                     }}
                   />
-                </Typography>
+                </Text>
               )}
             </TableCell>
             <TableCell>
@@ -218,12 +219,12 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
               () => (
                 <TableRowLink>
                   <TableCell colSpan={2}>
-                    <Typography color="textSecondary">
+                    <Text color="default2">
                       <FormattedMessage
                         id="Pyjarj"
                         defaultMessage="This shipping rate has no postal codes assigned"
                       />
-                    </Typography>
+                    </Text>
                   </TableCell>
                 </TableRowLink>
               ),

@@ -1,8 +1,8 @@
 // @ts-strict-ignore
 import { isExternalURL } from "@dashboard/utils/urls";
-import { Typography } from "@material-ui/core";
 import { TypographyProps } from "@material-ui/core/Typography";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
@@ -109,9 +109,9 @@ const Link: React.FC<LinkProps> = props => {
           {children}
         </RouterLink>
       ) : (
-        <Typography component="a" href={disabled ? undefined : href} {...commonLinkProps}>
+        <Text as="a" href={disabled ? undefined : href} {...commonLinkProps}>
           {children}
-        </Typography>
+        </Text>
       )}
     </>
   );

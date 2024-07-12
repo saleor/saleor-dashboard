@@ -7,7 +7,8 @@ import { DiscountErrorFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
-import { TableBody, TableCell, TableHead, Typography } from "@material-ui/core";
+import { TableBody, TableCell, TableHead } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -73,7 +74,7 @@ const SaleValue: React.FC<SaleValueProps> = ({ data, disabled, errors, onChange 
               return (
                 <TableRowLink key={listing?.id || `skeleton-${index}`} className={classes.row}>
                   <TableCell>
-                    <Typography>{listing?.name || <Skeleton />}</Typography>
+                    <Text>{listing?.name || <Skeleton />}</Text>
                   </TableCell>
                   <TableCell>
                     {listing ? (

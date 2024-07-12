@@ -4,9 +4,8 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
 import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import { AccountErrorFragment } from "@dashboard/graphql";
-import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -47,9 +46,9 @@ const CustomerCreateAddress: React.FC<CustomerCreateAddressProps> = props => {
         })}
       />
       <DashboardCard.Content className={classes.overflow}>
-        <Typography>
+        <Text>
           <FormattedMessage id="wNQzS/" defaultMessage="The primary address of this customer." />
-        </Typography>
+        </Text>
         <FormSpacer />
         <Box display="grid" gap={5}>
           <AddressEdit

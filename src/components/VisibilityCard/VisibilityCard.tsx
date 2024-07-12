@@ -7,7 +7,6 @@ import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
-import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Checkbox, RadioGroup, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
@@ -219,7 +218,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
         {getFieldError(errors, "isPublished") && (
           <>
             <FormSpacer />
-            <Typography color="error">{getFieldError(errors, "isPublished")?.message}</Typography>
+            <Text color="critical1">{getFieldError(errors, "isPublished")?.message}</Text>
           </>
         )}
         {hasAvailableProps && (
@@ -286,9 +285,9 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
             {getFieldError(errors, "isAvailableForPurchase") && (
               <>
                 <FormSpacer />
-                <Typography color="error">
+                <Text color="critical1">
                   {getFieldError(errors, "isAvailableForPurchase")?.message}
-                </Typography>
+                </Text>
               </>
             )}
           </>

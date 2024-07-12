@@ -11,7 +11,7 @@ import {
 } from "@dashboard/components/Timeline";
 import { OrderEventFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
-import { Typography } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -53,9 +53,9 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
 
   return (
     <div className={classes.root}>
-      <Typography className={classes.header} color="textSecondary">
+      <Text className={classes.header} color="default2">
         <FormattedMessage id="XBfvKN" defaultMessage="Order History" />
-      </Typography>
+      </Text>
       <Hr />
       {history ? (
         <Timeline>

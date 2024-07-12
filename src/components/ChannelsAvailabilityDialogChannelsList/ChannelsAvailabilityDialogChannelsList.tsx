@@ -1,8 +1,8 @@
 import { Channel } from "@dashboard/channels/utils";
 import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
 import Hr from "@dashboard/components/Hr";
-import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 export const useStyles = makeStyles(
@@ -42,7 +42,7 @@ const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentProps> = 
           <ControlledCheckbox
             checked={isChannelSelected(option)}
             name={option.name}
-            label={<Typography className={classes.label}>{option.name}</Typography>}
+            label={<Text className={classes.label}>{option.name}</Text>}
             onChange={() => onChange(option)}
           />
           <Hr />

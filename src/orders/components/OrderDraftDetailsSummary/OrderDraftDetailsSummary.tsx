@@ -11,9 +11,8 @@ import { OrderDiscountContextConsumerProps } from "@dashboard/products/component
 import { OrderDiscountData } from "@dashboard/products/components/OrderDiscountProviders/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Popover, sprinkles } from "@saleor/macaw-ui-next";
+import { Box, Popover, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -113,7 +112,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
     if (calculationMode === DiscountValueTypeEnum.PERCENTAGE) {
       return (
         <div className={classes.percentDiscountLabelContainer}>
-          <Typography className={classes.subtitle}>{`(${discountValue}%)`}</Typography>
+          <Text className={classes.subtitle}>{`(${discountValue}%)`}</Text>
           <Money money={discountAmount} />
         </div>
       );
@@ -144,7 +143,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
           {shippingCarrierBase}
         </ButtonLink>
         <HorizontalSpacer />
-        <Typography variant="caption">{`(${addShippingAddressInfo})`}</Typography>
+        <Text size={2} fontWeight="light">{`(${addShippingAddressInfo})`}</Text>
       </div>
     );
   };
@@ -193,9 +192,9 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
             {!hasShippingMethods && intl.formatMessage(messages.noShippingCarriers)}
 
             {formErrors.shipping && (
-              <Typography variant="body2" className={classes.textError}>
+              <Text size={3} fontWeight="regular" className={classes.textError}>
                 {getOrderErrorMessage(formErrors.shipping, intl)}
-              </Typography>
+              </Text>
             )}
           </td>
 

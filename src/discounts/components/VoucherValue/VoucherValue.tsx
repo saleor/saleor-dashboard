@@ -13,7 +13,7 @@ import { DiscountErrorFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
-import { TableBody, TableCell, Typography } from "@material-ui/core";
+import { TableBody, TableCell } from "@material-ui/core";
 import { Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -166,12 +166,12 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
                 defaultMessage="Apply only to a single cheapest eligible product"
                 description="voucher application, switch button"
               />
-              <Typography variant="caption">
+              <Text size={2} fontWeight="light">
                 <FormattedMessage
                   id="ObRk1O"
                   defaultMessage="If this option is disabled, discount will be counted for every eligible product"
                 />
-              </Typography>
+              </Text>
             </>
           }
           checked={data.applyOncePerOrder}

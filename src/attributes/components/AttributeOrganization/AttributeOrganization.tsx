@@ -1,7 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
 import { AttributeTypeEnum } from "@dashboard/graphql";
-import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -89,14 +88,14 @@ const AttributeOrganization: React.FC<AttributeOrganizationProps> = props => {
           />
         ) : (
           <>
-            <Typography className={classes.label} variant="caption">
+            <Text className={classes.label} size={2} fontWeight="light">
               <FormattedMessage id="v1pNHW" defaultMessage="Attribute Class" />
-            </Typography>
-            <Typography>
+            </Text>
+            <Text>
               {data.type === AttributeTypeEnum.PRODUCT_TYPE
                 ? intl.formatMessage(messages.productAttribute)
                 : intl.formatMessage(messages.contentAttribute)}
-            </Typography>
+            </Text>
           </>
         )}
       </DashboardCard.Content>

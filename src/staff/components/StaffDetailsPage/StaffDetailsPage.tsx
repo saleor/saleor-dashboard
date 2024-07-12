@@ -21,8 +21,7 @@ import UserStatus from "@dashboard/staff/components/UserStatus";
 import { staffListUrl } from "@dashboard/staff/urls";
 import { getMemberPermissionGroups, isMemberActive } from "@dashboard/staff/utils";
 import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
-import { Typography } from "@material-ui/core";
-import { Option } from "@saleor/macaw-ui-next";
+import { Option, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -137,13 +136,13 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                       })}
                     />
                     <DashboardCard.Content>
-                      <Typography>
+                      <Text>
                         {intl.formatMessage({
                           id: "P+kVxW",
                           defaultMessage: "User is assigned to:",
                           description: "card description",
                         })}
-                      </Typography>
+                      </Text>
 
                       <AccountPermissionGroups
                         formData={formData}

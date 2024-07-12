@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { commonMessages } from "@dashboard/intl";
-import { Typography } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -19,9 +19,9 @@ export const ManualRefundCard: React.FC<OrderManualTransactionFormProps> = props
     <DashboardCard>
       <DashboardCard.Title title={<FormattedMessage {...manualRefundMessages.refundManual} />} />
       <DashboardCard.Content>
-        <Typography>
+        <Text>
           <FormattedMessage {...manualRefundMessages.refundManualDescription} />
-        </Typography>
+        </Text>
       </DashboardCard.Content>
       <OrderManualTransactionForm {...props}>
         <div className={classes.wrapper}>
@@ -42,7 +42,6 @@ export const ManualRefundCard: React.FC<OrderManualTransactionFormProps> = props
               <FormattedMessage {...manualRefundMessages.refund} />
             </OrderManualTransactionForm.SubmitButton>
           </OrderManualTransactionForm.Form>
-          <OrderManualTransactionForm.ErrorText />
         </div>
       </OrderManualTransactionForm>
     </DashboardCard>

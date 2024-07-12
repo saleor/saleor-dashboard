@@ -3,8 +3,9 @@ import { DashboardCard } from "@dashboard/components/Card";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { FormChange } from "@dashboard/hooks/useForm";
-import { CardActions, Table, TableCell, TableHead, Typography } from "@material-ui/core";
+import { CardActions, Table, TableCell, TableHead } from "@material-ui/core";
 import { ExpandIcon, IconButton } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React, { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -71,35 +72,35 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data: { customHeaders }
         <>
           <DashboardCard.Content className={classes.content}>
             {headers.length > 0 && (
-              <Typography color="textSecondary" variant="body2">
+              <Text color="default2" fontSize={3}>
                 <FormattedMessage
                   {...messages.headersCount}
                   values={{
                     number: headers.length,
                   }}
                 />
-              </Typography>
+              </Text>
             )}
           </DashboardCard.Content>
           {expanded && (
             <>
               {headers.length === 0 ? (
                 <DashboardCard.Content className={classes.emptyContainer}>
-                  <Typography variant="body2" color="textSecondary">
+                  <Text size={3} fontWeight="regular" color="default2">
                     <FormattedMessage {...messages.noHeaders} />
-                  </Typography>
+                  </Text>
                 </DashboardCard.Content>
               ) : (
                 <>
                   <DashboardCard.Content>
-                    <Typography variant="body2">
+                    <Text size={3} fontWeight="regular">
                       <FormattedMessage
                         {...messages.acceptedFormat}
                         values={{
                           code: (...chunks) => <code>{chunks}</code>,
                         }}
                       />
-                    </Typography>
+                    </Text>
                   </DashboardCard.Content>
 
                   <Table className={classes.table}>

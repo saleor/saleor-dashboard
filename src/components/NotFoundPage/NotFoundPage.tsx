@@ -1,7 +1,7 @@
 import notFoundImage from "@assets/images/not-found-404.svg";
 import { Button } from "@dashboard/components/Button";
-import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";
@@ -68,15 +68,15 @@ const NotFoundPage: React.FC<NotFoundPageProps> = props => {
       <div className={classes.container}>
         <div className={classes.innerContainer}>
           <div>
-            <Typography className={classes.header} variant="h3">
+            <Text className={classes.header} size={6} fontWeight="bold" lineHeight={3}>
               <FormattedMessage id="yH56V+" defaultMessage="Ooops!..." />
-            </Typography>
-            <Typography className={classes.header} variant="h4">
+            </Text>
+            <Text className={classes.header} size={4} fontWeight="bold" lineHeight={2}>
               <FormattedMessage id="bj6pTd" defaultMessage="Something's missing" />
-            </Typography>
-            <Typography>
+            </Text>
+            <Text>
               <FormattedMessage id="nRiOg+" defaultMessage="Sorry, the page was not found" />
-            </Typography>
+            </Text>
           </div>
           <div>
             <Button className={classes.button} variant="primary" onClick={onBack} href={backHref}>

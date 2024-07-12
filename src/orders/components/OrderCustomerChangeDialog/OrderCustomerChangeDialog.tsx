@@ -10,8 +10,8 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
-  Typography,
 } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -39,9 +39,9 @@ const OrderCustomerChangeDialog: React.FC<OrderCustomerChangeDialogProps> = prop
               <FormattedMessage {...messages.title} />
             </DialogTitle>
             <DialogContent className={classes.overflow}>
-              <Typography>
+              <Text>
                 <FormattedMessage {...messages.description} />
-              </Typography>
+              </Text>
               <FormSpacer />
               <RadioGroup
                 className={classes.container}
