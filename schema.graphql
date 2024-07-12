@@ -14,9 +14,9 @@ directive @webhookEventsInfo(
 ) on FIELD | FIELD_DEFINITION | INPUT_OBJECT | OBJECT
 
 """
-Create a new address for the customer. 
+Create a new address for the customer.
 
-Requires one of the following permissions: AUTHENTICATED_USER.
+Requires one of following set of permissions: AUTHENTICATED_USER or AUTHENTICATED_APP + IMPERSONATE_USER.
 
 Triggers the following webhook events:
 - CUSTOMER_UPDATED (async): A customer account was updated.
@@ -326,6 +326,7 @@ enum AccountErrorCode {
   JWT_MISSING_TOKEN
   JWT_SIGNATURE_EXPIRED
   LEFT_NOT_MANAGEABLE_PERMISSION
+  LOGIN_ATTEMPT_DELAYED
   MISSING_CHANNEL_SLUG
   NOT_FOUND
   OUT_OF_SCOPE_GROUP
@@ -338,6 +339,7 @@ enum AccountErrorCode {
   PASSWORD_TOO_SIMILAR
   REQUIRED
   UNIQUE
+  UNKNOWN_IP_ADDRESS
 }
 
 """Fields required to update the user."""
@@ -478,9 +480,9 @@ type AccountSetPasswordRequested implements Event {
 }
 
 """
-Updates the account of the logged-in user. 
+Updates the account of the logged-in user.
 
-Requires one of the following permissions: AUTHENTICATED_USER.
+Requires one of following set of permissions: AUTHENTICATED_USER or AUTHENTICATED_APP + IMPERSONATE_USER.
 
 Triggers the following webhook events:
 - CUSTOMER_UPDATED (async): A customer account was updated.
@@ -699,6 +701,15 @@ input AddressInput {
 
   """Postal code."""
   postalCode: String
+
+  """
+  Determine if the address should be validated. By default, Saleor accepts only address inputs matching ruleset from [Google Address Data]{https://chromium-i18n.appspot.com/ssl-address), using [i18naddress](https://github.com/mirumee/google-i18n-address) library. Some mutations may require additional permissions to use the the field. More info about permissions can be found in relevant mutation.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  skipValidation: Boolean = false
 
   """Address."""
   streetAddress1: String
@@ -4708,7 +4719,7 @@ type Checkout implements Node & ObjectWithMetadata {
   totalBalance: Money!
 
   """
-  The sum of the the checkout line prices, with all the taxes,shipping costs, and discounts included.
+  The sum of the checkout line prices, with all the taxes,shipping costs, and discounts included.
   
   Triggers the following webhook events:
   - CHECKOUT_CALCULATE_TAXES (sync): Optionally triggered when checkout prices are expired.
@@ -4894,6 +4905,8 @@ type CheckoutCountableEdge {
 """
 Create a new checkout.
 
+`skipValidation` field requires HANDLE_CHECKOUTS and AUTHENTICATED_APP permissions.
+
 Triggers the following webhook events:
 - CHECKOUT_CREATED (async): A checkout was created.
 """
@@ -4971,7 +4984,9 @@ enum CheckoutCreateFromOrderUnavailableVariantErrorCode {
 }
 
 input CheckoutCreateInput {
-  """Billing address of the customer."""
+  """
+  Billing address of the customer. `skipValidation` requires HANDLE_CHECKOUTS and AUTHENTICATED_APP permissions.
+  """
   billingAddress: AddressInput
 
   """Slug of a channel in which to create a checkout."""
@@ -4989,7 +5004,7 @@ input CheckoutCreateInput {
   lines: [CheckoutLineInput!]!
 
   """
-  The mailing address to where the checkout will be shipped. Note: the address will be ignored if the checkout doesn't contain shippable items.
+  The mailing address to where the checkout will be shipped. Note: the address will be ignored if the checkout doesn't contain shippable items. `skipValidation` requires HANDLE_CHECKOUTS and AUTHENTICATED_APP permissions.
   """
   shippingAddress: AddressInput
 
@@ -11773,15 +11788,22 @@ input MoveProductInput {
 
 type Mutation {
   """
-  Create a new address for the customer. 
+  Create a new address for the customer.
   
-  Requires one of the following permissions: AUTHENTICATED_USER.
+  Requires one of following set of permissions: AUTHENTICATED_USER or AUTHENTICATED_APP + IMPERSONATE_USER.
   
   Triggers the following webhook events:
   - CUSTOMER_UPDATED (async): A customer account was updated.
   - ADDRESS_CREATED (async): An address was created.
   """
   accountAddressCreate(
+    """
+    ID of customer the application is impersonating. The field can be used and is required by apps only. Requires IMPERSONATE_USER and AUTHENTICATED_APP permission.
+    
+    Added in Saleor 3.19.
+    """
+    customerId: ID
+
     """Fields required to create address."""
     input: AddressInput!
 
@@ -11882,15 +11904,22 @@ type Mutation {
   ): AccountSetDefaultAddress
 
   """
-  Updates the account of the logged-in user. 
+  Updates the account of the logged-in user.
   
-  Requires one of the following permissions: AUTHENTICATED_USER.
+  Requires one of following set of permissions: AUTHENTICATED_USER or AUTHENTICATED_APP + IMPERSONATE_USER.
   
   Triggers the following webhook events:
   - CUSTOMER_UPDATED (async): A customer account was updated.
   - CUSTOMER_METADATA_UPDATED (async): Optionally called when customer's metadata was updated.
   """
   accountUpdate(
+    """
+    ID of customer the application is impersonating. The field can be used and is required by apps only. Requires IMPERSONATE_USER and AUTHENTICATED_APP permission.
+    
+    Added in Saleor 3.19.
+    """
+    customerId: ID
+
     """Fields required to update the account of the logged-in user."""
     input: AccountInput!
   ): AccountUpdate
@@ -12672,6 +12701,8 @@ type Mutation {
 
   """
   Create a new checkout.
+  
+  `skipValidation` field requires HANDLE_CHECKOUTS and AUTHENTICATED_APP permissions.
   
   Triggers the following webhook events:
   - CHECKOUT_CREATED (async): A checkout was created.
@@ -18895,6 +18926,13 @@ type OrderLine implements Node & ObjectWithMetadata {
   """
   isGift: Boolean
 
+  """
+  Returns True, if the line unit price was overridden.
+  
+  Added in Saleor 3.14.
+  """
+  isPriceOverridden: Boolean
+
   """Whether the product variant requires shipping."""
   isShippingRequired: Boolean!
 
@@ -20903,6 +20941,7 @@ enum PaymentErrorCode {
   BALANCE_CHECK_ERROR
   BILLING_ADDRESS_NOT_SET
   CHANNEL_INACTIVE
+  CHECKOUT_COMPLETION_IN_PROGRESS
   CHECKOUT_EMAIL_NOT_SET
   GRAPHQL_ERROR
   INVALID
@@ -25382,13 +25421,9 @@ input PromotionCreateInput {
   """
   Defines the promotion type. Implicate the required promotion rules predicate type and whether the promotion rules will give the catalogue or order discount. 
   
-  The default value is `Catalogue`.
-  
-  This field will be required from Saleor 3.20.
-  
   Added in Saleor 3.19.
   """
-  type: PromotionTypeEnum
+  type: PromotionTypeEnum!
 }
 
 """
@@ -26784,7 +26819,7 @@ type Query {
   """
   Look up a checkout by id.
   
-  Requires one of the following permissions to query checkouts that belong to other users: MANAGE_CHECKOUTS, IMPERSONATE_USER. 
+  Requires one of the following permissions to query a checkout, if a checkout is in inactive channel: MANAGE_CHECKOUTS, IMPERSONATE_USER, HANDLE_PAYMENTS. 
   """
   checkout(
     """
@@ -26828,7 +26863,7 @@ type Query {
   """
   List of checkouts.
   
-  Requires one of the following permissions: MANAGE_CHECKOUTS.
+  Requires one of the following permissions: MANAGE_CHECKOUTS, HANDLE_PAYMENTS.
   """
   checkouts(
     """Return the elements in the list that come after the specified cursor."""
@@ -26919,7 +26954,7 @@ type Query {
   ): CollectionCountableConnection
 
   """
-  List of the shop's customers.
+  List of the shop's customers. This list includes all users who registered through the accountRegister mutation. Additionally, staff users who have placed an order using their account will also appear in this list.
   
   Requires one of the following permissions: MANAGE_ORDERS, MANAGE_USERS.
   """
@@ -27263,7 +27298,9 @@ type Query {
     """
     External ID of an order. 
     
-    Added in Saleor 3.10.
+    Added in Saleor 3.10..
+    
+    Requires one of the following permissions: MANAGE_ORDERS.
     """
     externalReference: String
 
@@ -27877,7 +27914,7 @@ type Query {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   stock(
-    """ID of an warehouse"""
+    """ID of a stock"""
     id: ID!
   ): Stock
 
@@ -31765,7 +31802,9 @@ type TaxableObject {
   """Determines if prices contain entered tax.."""
   pricesEnteredWithTax: Boolean!
 
-  """The price of shipping method."""
+  """
+  The price of shipping method, includes shipping voucher discount if applied.
+  """
   shippingPrice: Money!
 
   """The source object related to this tax object."""
@@ -31797,10 +31836,14 @@ type TaxableObjectLine {
   """The source line related to this tax line."""
   sourceLine: TaxSourceLine!
 
-  """Price of the order line."""
+  """
+  Price of the order line. The price includes catalogue promotions, specific product and applied once per order voucher discounts. The price does not include the entire order discount.
+  """
   totalPrice: Money!
 
-  """Price of the single item in the order line."""
+  """
+  Price of the single item in the order line. The price includes catalogue promotions, specific product and applied once per order voucher discounts. The price does not include the entire order discount.
+  """
   unitPrice: Money!
 
   """The variant name."""
@@ -32351,6 +32394,7 @@ type TransactionInitializeError {
 
 """An enumeration."""
 enum TransactionInitializeErrorCode {
+  CHECKOUT_COMPLETION_IN_PROGRESS
   GRAPHQL_ERROR
   INVALID
   NOT_FOUND
@@ -32651,6 +32695,7 @@ type TransactionProcessError {
 
 """An enumeration."""
 enum TransactionProcessErrorCode {
+  CHECKOUT_COMPLETION_IN_PROGRESS
   GRAPHQL_ERROR
   INVALID
   MISSING_PAYMENT_APP
@@ -34550,6 +34595,31 @@ type Warehouse implements Node & ObjectWithMetadata {
 
   """Warehouse slug."""
   slug: String!
+
+  """
+  Stocks that belong to this warehouse.
+  
+  Added in Saleor 3.20.
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS, MANAGE_ORDERS.
+  """
+  stocks(
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): StockCountableConnection
 }
 
 """An enumeration."""
@@ -34918,7 +34988,7 @@ input WebhookCreateInput {
   asyncEvents: [WebhookEventTypeAsyncEnum!]
 
   """
-  Custom headers, which will be added to HTTP request. There is a limitation of 5 headers per webhook and 998 characters per header.Only "X-*" and "Authorization*" keys are allowed.
+  Custom headers, which will be added to HTTP request. There is a limitation of 5 headers per webhook and 998 characters per header.Only `X-*`, `Authorization*`, and `BrokerProperties` keys are allowed.
   
   Added in Saleor 3.12.
   
@@ -36529,7 +36599,7 @@ input WebhookUpdateInput {
   asyncEvents: [WebhookEventTypeAsyncEnum!]
 
   """
-  Custom headers, which will be added to HTTP request. There is a limitation of 5 headers per webhook and 998 characters per header.Only "X-*" and "Authorization*" keys are allowed.
+  Custom headers, which will be added to HTTP request. There is a limitation of 5 headers per webhook and 998 characters per header.Only `X-*`, `Authorization*`, and `BrokerProperties` keys are allowed.
   
   Added in Saleor 3.12.
   
