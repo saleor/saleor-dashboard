@@ -1,5 +1,5 @@
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { Pill } from "@dashboard/components/Pill";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -11,7 +11,7 @@ import { isUnnamed } from "@dashboard/custom-apps/utils";
 import { WebhookFragment } from "@dashboard/graphql";
 import { commonMessages, commonStatusMessages, sectionNames } from "@dashboard/intl";
 import { renderCollection, stopPropagation } from "@dashboard/misc";
-import { Card, CardContent, TableBody, TableCell, TableHead } from "@material-ui/core";
+import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";
@@ -32,19 +32,18 @@ const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref, onRem
   const numberOfColumns = webhooks?.length === 0 ? 2 : 3;
 
   return (
-    <Card className={classes.card}>
-      <CardTitle
-        title={intl.formatMessage(sectionNames.webhooksAndEvents)}
-        className={classes.cardTitle}
-        toolbar={
-          !!createHref && (
-            <Button variant="secondary" href={createHref} data-test-id="create-webhook">
-              <FormattedMessage {...messages.createWebhook} />
-            </Button>
-          )
-        }
-      />
-      <CardContent>
+    <DashboardCard className={classes.card}>
+      <DashboardCard.Title className={classes.cardTitle}>
+        {intl.formatMessage(sectionNames.webhooksAndEvents)}
+      </DashboardCard.Title>
+      <DashboardCard.Toolbar>
+        {!!createHref && (
+          <Button variant="secondary" href={createHref} data-test-id="create-webhook">
+            <FormattedMessage {...messages.createWebhook} />
+          </Button>
+        )}
+      </DashboardCard.Toolbar>
+      <DashboardCard.Content>
         <ResponsiveTable className={classes.table}>
           <TableHead>
             <TableRowLink>
@@ -113,8 +112,8 @@ const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref, onRem
             )}
           </TableBody>
         </ResponsiveTable>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

@@ -1,12 +1,12 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import Grid from "@dashboard/components/Grid";
 import Hr from "@dashboard/components/Hr";
 import { Pill } from "@dashboard/components/Pill";
 import { WebhookEventTypeAsyncEnum, WebhookEventTypeSyncEnum } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { capitalize } from "@dashboard/misc";
-import { Card, CardContent, Checkbox, Typography } from "@material-ui/core";
+import { Checkbox, Typography } from "@material-ui/core";
 import {
   List,
   ListBody,
@@ -73,9 +73,9 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
 
   return (
     <>
-      <Card>
-        <CardTitle title={intl.formatMessage(messages.webhookEvents)} />
-        <CardContent className={classes.cardHeader}>
+      <DashboardCard>
+        <DashboardCard.Title>{intl.formatMessage(messages.webhookEvents)}</DashboardCard.Title>
+        <DashboardCard.Content className={classes.cardHeader}>
           <PageTabs value={tab} onChange={handleTabChange}>
             <PageTab label={intl.formatMessage(messages.asynchronous)} value="async" />
             <PageTab label={intl.formatMessage(messages.synchronous)} value="sync" />
@@ -89,7 +89,7 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
               <FormattedMessage {...messages.asynchronousDescription} />
             </PageTabPanel>
           </Typography>
-        </CardContent>
+        </DashboardCard.Content>
         <Hr />
         <Grid variant="uniform">
           <div className={classes.objectsWrapper}>
@@ -160,7 +160,7 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
           </div>
         </Grid>
         <Hr />
-      </Card>
+      </DashboardCard>
     </>
   );
 };

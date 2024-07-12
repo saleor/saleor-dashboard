@@ -1,12 +1,12 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
 import Skeleton from "@dashboard/components/Skeleton";
 import { AccountErrorFragment, CustomerDetailsQuery } from "@dashboard/graphql";
 import { maybe } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
-import { Card, CardContent, TextField, Typography } from "@material-ui/core";
+import { TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import moment from "moment-timezone";
 import React from "react";
@@ -50,8 +50,8 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
   const formErrors = getFormErrors(["note"], errors);
 
   return (
-    <Card>
-      <CardTitle
+    <DashboardCard>
+      <DashboardCard.Title
         className={classes.cardTitle}
         title={
           <>
@@ -73,7 +73,7 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
           </>
         }
       />
-      <CardContent className={classes.content}>
+      <DashboardCard.Content className={classes.content}>
         <ControlledCheckbox
           data-test-id="customer-active-checkbox"
           checked={data.isActive}
@@ -103,8 +103,8 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
           value={data.note}
           onChange={onChange}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

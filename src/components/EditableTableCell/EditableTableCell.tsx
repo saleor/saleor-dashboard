@@ -1,9 +1,11 @@
 import useForm from "@dashboard/hooks/useForm";
-import { Card, CardContent, TableCell, TextField, Typography } from "@material-ui/core";
+import { TableCell, TextField, Typography } from "@material-ui/core";
 import { TextFieldProps } from "@material-ui/core/TextField";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";
+
+import { DashboardCard } from "../Card";
 
 const useStyles = makeStyles(
   theme => ({
@@ -76,8 +78,8 @@ export const EditableTableCell: React.FC<EditableTableCellProps> = props => {
       </Typography>
       {opened && (
         <div className={classes.root}>
-          <Card className={classes.card}>
-            <CardContent>
+          <DashboardCard className={classes.card}>
+            <DashboardCard.Content>
               <TextField
                 name="value"
                 autoFocus
@@ -87,8 +89,8 @@ export const EditableTableCell: React.FC<EditableTableCellProps> = props => {
                 variant="standard"
                 {...InputProps}
               />
-            </CardContent>
-          </Card>
+            </DashboardCard.Content>
+          </DashboardCard>
         </div>
       )}
     </TableCell>

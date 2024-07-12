@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { ChannelShippingData } from "@dashboard/channels/utils";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import PriceField from "@dashboard/components/PriceField";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableHead from "@dashboard/components/TableHead";
@@ -8,7 +8,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { ShippingChannelsErrorFragment } from "@dashboard/graphql";
 import { getFormChannelError, getFormChannelErrors } from "@dashboard/utils/errors";
 import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
-import { Card, CardContent, TableBody, TableCell, Typography } from "@material-ui/core";
+import { TableBody, TableCell, Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -40,15 +40,15 @@ export const PricingCard: React.FC<PricingCardProps> = ({
   const formErrors = getFormChannelErrors(["price"], errors);
 
   return (
-    <Card>
-      <CardTitle
+    <DashboardCard>
+      <DashboardCard.Title
         title={intl.formatMessage({
           id: "TnTi/a",
           defaultMessage: "Pricing",
           description: "pricing card title",
         })}
       />
-      <CardContent className={classes.pricingContent}>
+      <DashboardCard.Content className={classes.pricingContent}>
         <ResponsiveTable className={classes.table}>
           <TableHead colSpan={numberOfColumns} disabled={disabled} items={[]}>
             <TableCell className={classes.colName}>
@@ -103,8 +103,8 @@ export const PricingCard: React.FC<PricingCardProps> = ({
             })}
           </TableBody>
         </ResponsiveTable>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

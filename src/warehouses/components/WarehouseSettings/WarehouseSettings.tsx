@@ -1,4 +1,4 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
 import Link from "@dashboard/components/Link";
 import PreviewPill from "@dashboard/components/PreviewPill";
@@ -12,7 +12,7 @@ import { sectionNames } from "@dashboard/intl";
 import { renderCollection } from "@dashboard/misc";
 import { shippingZoneUrl } from "@dashboard/shipping/urls";
 import { RelayToFlat } from "@dashboard/types";
-import { Card, CardContent, Divider, Typography } from "@material-ui/core";
+import { Divider, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -131,9 +131,9 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
   );
 
   return (
-    <Card>
-      <CardTitle title={<FormattedMessage {...sectionNames.shippingZones} />} />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Title title={<FormattedMessage {...sectionNames.shippingZones} />} />
+      <DashboardCard.Content>
         {renderCollection(
           zones,
           zone =>
@@ -152,10 +152,10 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
             </Typography>
           ),
         )}
-      </CardContent>
+      </DashboardCard.Content>
       <Divider />
-      <CardTitle title={<FormattedMessage {...messages.warehouseSettingsStockTitle} />} />
-      <CardContent data-test-id="stock-settings-section">
+      <DashboardCard.Title title={<FormattedMessage {...messages.warehouseSettingsStockTitle} />} />
+      <DashboardCard.Content data-test-id="stock-settings-section">
         <RadioGroupField
           disabled={disabled}
           choices={isPrivateChoices}
@@ -164,9 +164,9 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
           name="isPrivate"
           alignTop={true}
         />
-      </CardContent>
+      </DashboardCard.Content>
       <Divider />
-      <CardTitle
+      <DashboardCard.Title
         title={
           <>
             <FormattedMessage {...messages.warehouseSettingsPickupTitle} />
@@ -174,7 +174,7 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
           </>
         }
       />
-      <CardContent>
+      <DashboardCard.Content>
         <RadioGroupField
           disabled={disabled}
           choices={data.isPrivate ? clickAndCollectChoices : clickAndCollectChoicesPublic}
@@ -183,8 +183,8 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
           name="clickAndCollectOption"
           alignTop={true}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

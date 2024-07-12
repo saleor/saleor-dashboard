@@ -1,6 +1,6 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
-import { Card, CardContent } from "@material-ui/core";
+import {} from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -38,15 +38,15 @@ const OrderRefund: React.FC<OrderRefundProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card>
-      <CardTitle
+    <DashboardCard>
+      <DashboardCard.Title
         title={intl.formatMessage({
           id: "bqAJCT",
           defaultMessage: "Refund Order",
           description: "section header",
         })}
       />
-      <CardContent className={classes.cartContent}>
+      <DashboardCard.Content className={classes.cartContent}>
         <RadioGroupField
           choices={[
             {
@@ -64,8 +64,8 @@ const OrderRefund: React.FC<OrderRefundProps> = props => {
           onChange={onChange}
           variant="inline"
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

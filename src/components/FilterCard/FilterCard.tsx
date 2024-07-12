@@ -1,9 +1,11 @@
 // @ts-strict-ignore
-import { Card, CardContent, CardHeader } from "@material-ui/core";
+import { CardHeader } from "@material-ui/core";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import { IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
+
+import { DashboardCard } from "../Card";
 
 export interface FilterCardProps {
   handleClear: () => any;
@@ -13,7 +15,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ children, handleClear }) => {
   const intl = useIntl();
 
   return (
-    <Card>
+    <DashboardCard>
       <form>
         <CardHeader
           action={
@@ -26,9 +28,9 @@ const FilterCard: React.FC<FilterCardProps> = ({ children, handleClear }) => {
             defaultMessage: "Filters",
           })}
         />
-        <CardContent>{children}</CardContent>
+        <DashboardCard.Content>{children}</DashboardCard.Content>
       </form>
-    </Card>
+    </DashboardCard>
   );
 };
 

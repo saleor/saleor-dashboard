@@ -1,6 +1,6 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -19,9 +19,9 @@ const AppStatus: React.FC<AppStatusProps> = ({ data, disabled, label, onChange }
   const intl = useIntl();
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(messages.userStatus)} />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Title title={intl.formatMessage(messages.userStatus)} />
+      <DashboardCard.Content>
         <Typography variant="body2">
           {intl.formatMessage(messages.userDisableInstruction)}
         </Typography>
@@ -33,8 +33,8 @@ const AppStatus: React.FC<AppStatusProps> = ({ data, disabled, label, onChange }
           name="isActive"
           onChange={onChange}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
@@ -10,7 +10,7 @@ import { ProductMediaType } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { productUrl } from "@dashboard/products/urls";
-import { Card, CardContent, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -111,9 +111,9 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
                 highlighted={media ? mediaObj.id : undefined}
                 onRowClick={onRowClick}
               />
-              <Card>
-                <CardTitle title={intl.formatMessage(messages.mediaInformation)} />
-                <CardContent>
+              <DashboardCard>
+                <DashboardCard.Title title={intl.formatMessage(messages.mediaInformation)} />
+                <DashboardCard.Content>
                   <TextField
                     name="description"
                     label={intl.formatMessage(commonMessages.description)}
@@ -124,13 +124,13 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
                     multiline
                     fullWidth
                   />
-                </CardContent>
-              </Card>
+                </DashboardCard.Content>
+              </DashboardCard>
             </div>
             <div>
-              <Card>
-                <CardTitle title={intl.formatMessage(messages.mediaView)} />
-                <CardContent>
+              <DashboardCard>
+                <DashboardCard.Title title={intl.formatMessage(messages.mediaView)} />
+                <DashboardCard.Content>
                   {mediaObj ? (
                     mediaObj?.type === ProductMediaType.IMAGE ? (
                       <div className={classes.imageContainer}>
@@ -147,8 +147,8 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
                   ) : (
                     <Skeleton />
                   )}
-                </CardContent>
-              </Card>
+                </DashboardCard.Content>
+              </DashboardCard>
             </div>
           </Grid>
           <Savebar>

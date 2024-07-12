@@ -1,10 +1,9 @@
 // @ts-strict-ignore
 import AddressFormatter from "@dashboard/components/AddressFormatter";
+import { DashboardCard } from "@dashboard/components/Card";
 import CardMenu from "@dashboard/components/CardMenu";
-import CardTitle from "@dashboard/components/CardTitle";
 import Skeleton from "@dashboard/components/Skeleton";
 import { AddressFragment, AddressTypeEnum } from "@dashboard/graphql";
-import { Card, CardContent } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -88,56 +87,53 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card data-test-id="address-card" className={classes.card}>
-      <CardTitle
-        data-test-id="address-type-title"
-        title={
-          address ? (
-            <>
-              {isDefaultBillingAddress && isDefaultShippingAddress
-                ? intl.formatMessage(messages.defaultAddress)
-                : isDefaultShippingAddress
-                  ? intl.formatMessage(messages.defaultShippingAddress)
-                  : isDefaultBillingAddress
-                    ? intl.formatMessage(messages.defaultBillingAddress)
-                    : null}
-            </>
-          ) : (
-            <Skeleton />
-          )
-        }
-        toolbar={
-          <CardMenu
-            disabled={disabled}
-            menuItems={[
-              {
-                label: intl.formatMessage(messages.setDefaultShipping),
-                onSelect: () => onSetAsDefault(AddressTypeEnum.SHIPPING),
-                testId: "set-default-shipping-address",
-              },
-              {
-                label: intl.formatMessage(messages.setDefaultBilling),
-                onSelect: () => onSetAsDefault(AddressTypeEnum.BILLING),
-                testId: "set-default-billing-address",
-              },
-              {
-                label: intl.formatMessage(messages.editAddress),
-                onSelect: () => onEdit(),
-                testId: "edit-address",
-              },
-              {
-                label: intl.formatMessage(messages.deleteAddress),
-                onSelect: () => onRemove(),
-                testId: "delete-address",
-              },
-            ]}
-          />
-        }
-      />
-      <CardContent>
+    <DashboardCard data-test-id="address-card" className={classes.card}>
+      <DashboardCard.Title data-test-id="address-type-title">
+        {address ? (
+          <>
+            {isDefaultBillingAddress && isDefaultShippingAddress
+              ? intl.formatMessage(messages.defaultAddress)
+              : isDefaultShippingAddress
+                ? intl.formatMessage(messages.defaultShippingAddress)
+                : isDefaultBillingAddress
+                  ? intl.formatMessage(messages.defaultBillingAddress)
+                  : null}
+          </>
+        ) : (
+          <Skeleton />
+        )}
+      </DashboardCard.Title>
+      <DashboardCard.Toolbar>
+        <CardMenu
+          disabled={disabled}
+          menuItems={[
+            {
+              label: intl.formatMessage(messages.setDefaultShipping),
+              onSelect: () => onSetAsDefault(AddressTypeEnum.SHIPPING),
+              testId: "set-default-shipping-address",
+            },
+            {
+              label: intl.formatMessage(messages.setDefaultBilling),
+              onSelect: () => onSetAsDefault(AddressTypeEnum.BILLING),
+              testId: "set-default-billing-address",
+            },
+            {
+              label: intl.formatMessage(messages.editAddress),
+              onSelect: () => onEdit(),
+              testId: "edit-address",
+            },
+            {
+              label: intl.formatMessage(messages.deleteAddress),
+              onSelect: () => onRemove(),
+              testId: "delete-address",
+            },
+          ]}
+        />
+      </DashboardCard.Toolbar>
+      <DashboardCard.Content>
         <AddressFormatter address={address} />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

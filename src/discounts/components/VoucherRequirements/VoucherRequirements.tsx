@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
 import PriceField from "@dashboard/components/PriceField";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
@@ -13,7 +13,7 @@ import { DiscountErrorFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
-import { Card, CardContent, TableBody, TableCell, TextField, Typography } from "@material-ui/core";
+import { TableBody, TableCell, TextField, Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -69,15 +69,15 @@ const VoucherRequirements = ({
   ];
 
   return (
-    <Card data-test-id="minimum-requirements-section">
-      <CardTitle
+    <DashboardCard data-test-id="minimum-requirements-section">
+      <DashboardCard.Title
         title={intl.formatMessage({
           id: "yhv3HX",
           defaultMessage: "Minimum Requirements",
           description: "voucher requirements, header",
         })}
       />
-      <CardContent>
+      <DashboardCard.Content>
         <RadioGroupField
           choices={requirementsPickerChoices}
           disabled={disabled}
@@ -175,8 +175,8 @@ const VoucherRequirements = ({
             fullWidth
           />
         ) : null}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

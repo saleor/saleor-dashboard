@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import AddressFormatter from "@dashboard/components/AddressFormatter";
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { Combobox } from "@dashboard/components/Combobox";
 import ExternalLink from "@dashboard/components/ExternalLink";
 import Form from "@dashboard/components/Form";
@@ -22,7 +22,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { ff_orderListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -88,29 +88,29 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
   const { enabled: orderFiltersEnabled } = useFlag("order_filters");
 
   return (
-    <Card>
-      <CardTitle
+    <DashboardCard>
+      <DashboardCard.Title
         title={intl.formatMessage({
           id: "Y7M1YQ",
           defaultMessage: "Customer",
           description: "section header",
         })}
-        toolbar={
-          !!canEditCustomer && (
-            <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
-              <Button
-                data-test-id="edit-customer"
-                variant="tertiary"
-                disabled={!onCustomerEdit}
-                onClick={toggleEditMode}
-              >
-                {intl.formatMessage(buttonMessages.edit)}
-              </Button>
-            </RequirePermissions>
-          )
-        }
       />
-      <CardContent>
+      <DashboardCard.Toolbar>
+        {!!canEditCustomer && (
+          <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
+            <Button
+              data-test-id="edit-customer"
+              variant="tertiary"
+              disabled={!onCustomerEdit}
+              onClick={toggleEditMode}
+            >
+              {intl.formatMessage(buttonMessages.edit)}
+            </Button>
+          </RequirePermissions>
+        )}
+      </DashboardCard.Toolbar>
+      <DashboardCard.Content>
         {user === undefined ? (
           <Skeleton />
         ) : isInEditMode && canEditCustomer ? (
@@ -215,11 +215,11 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
               </div> */}
           </>
         )}
-      </CardContent>
+      </DashboardCard.Content>
       {!!user && (
         <>
           <Hr />
-          <CardContent>
+          <DashboardCard.Content>
             <div className={classes.sectionHeader}>
               <Typography className={classes.sectionHeaderTitle}>
                 <FormattedMessage
@@ -248,11 +248,11 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
                 {maybe(() => order.userEmail)}
               </ExternalLink>
             )}
-          </CardContent>
+          </DashboardCard.Content>
         </>
       )}
       <Hr />
-      <CardContent data-test-id="shipping-address-section">
+      <DashboardCard.Content data-test-id="shipping-address-section">
         <div className={classes.sectionHeader}>
           <Typography className={classes.sectionHeaderTitle}>
             <FormattedMessage id="DP5VOH" defaultMessage="Shipping Address" />
@@ -291,9 +291,9 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
             )}
           </>
         )}
-      </CardContent>
+      </DashboardCard.Content>
       <Hr />
-      <CardContent data-test-id="billing-address-section">
+      <DashboardCard.Content data-test-id="billing-address-section">
         <div className={classes.sectionHeader}>
           <Typography className={classes.sectionHeaderTitle}>
             <FormattedMessage id="c7/79+" defaultMessage="Billing Address" />
@@ -337,8 +337,8 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
             )}
           </>
         )}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

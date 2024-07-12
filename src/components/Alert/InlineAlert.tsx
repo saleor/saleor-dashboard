@@ -1,6 +1,7 @@
-import { Card } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
+
+import { DashboardCard } from "../Card";
 
 const useStyles = makeStyles(
   theme => ({
@@ -19,7 +20,7 @@ interface AlertCardProps {
 const AlertCard: React.FC<AlertCardProps> = ({ children }) => {
   const classes = useStyles({});
 
-  return <Card className={classes.container}>{children}</Card>;
+  return <DashboardCard className={classes.container}>{children}</DashboardCard>;
 };
 
 export default AlertCard;

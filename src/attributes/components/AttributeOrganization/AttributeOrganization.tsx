@@ -1,5 +1,4 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import CardTitle from "@dashboard/components/CardTitle";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
 import { AttributeTypeEnum } from "@dashboard/graphql";
 import { Typography } from "@material-ui/core";

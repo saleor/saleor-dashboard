@@ -1,10 +1,10 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import ControlledSwitch from "@dashboard/components/ControlledSwitch";
 import { ConfigurationItemFragment, ConfigurationTypeFieldEnum } from "@dashboard/graphql";
 import { UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
-import { Card, CardContent, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import InfoIcon from "@material-ui/icons/Info";
 import { Box, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -32,15 +32,15 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({
   const intl = useIntl();
 
   return (
-    <Card>
-      <CardTitle
+    <DashboardCard>
+      <DashboardCard.Title
         title={intl.formatMessage({
           id: "Egyh2T",
           defaultMessage: "Plugin Settings",
           description: "section header",
         })}
       />
-      <CardContent>
+      <DashboardCard.Content>
         {data.configuration.map(field => {
           const fieldData = fields.find(configField => configField.name === field.name);
 
@@ -94,8 +94,8 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({
             </div>
           );
         })}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

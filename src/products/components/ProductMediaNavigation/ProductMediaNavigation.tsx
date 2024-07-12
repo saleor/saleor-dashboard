@@ -1,7 +1,7 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import Skeleton from "@dashboard/components/Skeleton";
-import { Card, CardContent } from "@material-ui/core";
+import {} from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
@@ -68,9 +68,9 @@ const ProductMediaNavigation: React.FC<ProductMediaNavigationProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card className={classes.card}>
-      <CardTitle title={intl.formatMessage(messages.allMedia)} />
-      <CardContent>
+    <DashboardCard className={classes.card}>
+      <DashboardCard.Title title={intl.formatMessage(messages.allMedia)} />
+      <DashboardCard.Content>
         {!media ? (
           <Skeleton />
         ) : (
@@ -94,8 +94,8 @@ const ProductMediaNavigation: React.FC<ProductMediaNavigationProps> = props => {
             })}
           </div>
         )}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

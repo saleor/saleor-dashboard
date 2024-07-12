@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import CardTitle from "@dashboard/components/CardTitle";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Form from "@dashboard/components/Form";
@@ -35,7 +35,7 @@ import {
   getToFulfillOrderLines,
   OrderFulfillLineFormData,
 } from "@dashboard/orders/utils/data";
-import { Card, CardContent, TableBody, TableCell, TableHead } from "@material-ui/core";
+import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Box, Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
@@ -182,8 +182,8 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
         >
           {({ change, data, submit }) => (
             <>
-              <Card>
-                <CardTitle title={intl.formatMessage(messages.itemsReadyToShip)} />
+              <DashboardCard>
+                <DashboardCard.Title title={intl.formatMessage(messages.itemsReadyToShip)} />
                 {order ? (
                   <ResponsiveTable className={classes.table}>
                     <TableHead>
@@ -227,26 +227,26 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                     </TableBody>
                   </ResponsiveTable>
                 ) : (
-                  <CardContent>
+                  <DashboardCard.Content>
                     <Skeleton />
-                  </CardContent>
+                  </DashboardCard.Content>
                 )}
-              </Card>
+              </DashboardCard>
 
               <CardSpacer />
 
               {shopSettings?.fulfillmentAutoApprove && (
-                <Card>
-                  <CardTitle title={intl.formatMessage(messages.shipmentInformation)} />
-                  <CardContent>
+                <DashboardCard>
+                  <DashboardCard.Title title={intl.formatMessage(messages.shipmentInformation)} />
+                  <DashboardCard.Content>
                     <ControlledCheckbox
                       checked={data.sendInfo}
                       label={intl.formatMessage(messages.sentShipmentDetails)}
                       name="sendInfo"
                       onChange={change}
                     />
-                  </CardContent>
-                </Card>
+                  </DashboardCard.Content>
+                </DashboardCard>
               )}
 
               <Savebar>

@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { attributeUrl } from "@dashboard/attributes/urls";
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -12,7 +12,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { ProductAttributeType, ProductTypeDetailsQuery } from "@dashboard/graphql";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { ListActions, ReorderAction } from "@dashboard/types";
-import { Card, CardContent, TableCell } from "@material-ui/core";
+import { TableCell } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Tooltip } from "@saleor/macaw-ui-next";
@@ -119,24 +119,24 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
   }, []);
 
   return (
-    <Card data-test-id="variant-attributes">
-      <CardTitle
+    <DashboardCard data-test-id="variant-attributes">
+      <DashboardCard.Title
         title={intl.formatMessage({
           id: "skEK/i",
           defaultMessage: "Variant Attributes",
           description: "section header",
         })}
-        toolbar={
-          <Button
-            data-test-id={testId}
-            variant="tertiary"
-            onClick={() => onAttributeAssign(ProductAttributeType[type])}
-          >
-            <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
-          </Button>
-        }
       />
-      <CardContent>
+      <DashboardCard.Toolbar>
+        <Button
+          data-test-id={testId}
+          variant="tertiary"
+          onClick={() => onAttributeAssign(ProductAttributeType[type])}
+        >
+          <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
+        </Button>
+      </DashboardCard.Toolbar>
+      <DashboardCard.Content>
         <ResponsiveTable>
           <colgroup>
             <col className={classes.colGrab} />
@@ -282,8 +282,8 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
             )}
           </SortableTableBody>
         </ResponsiveTable>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

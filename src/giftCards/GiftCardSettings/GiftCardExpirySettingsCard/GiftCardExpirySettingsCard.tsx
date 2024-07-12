@@ -1,9 +1,9 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import GiftCardSettingsExpirySelect, {
   GiftCardSettingsExpirySelectProps,
 } from "@dashboard/giftCards/components/GiftCardSettingsExpirySelect";
-import { Card, CardContent } from "@material-ui/core";
+import {} from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -36,12 +36,12 @@ const GiftCardExpirySettingsCard: React.FC<GiftCardExpirySettingsCardProps> = ({
   const classes = useStyles({});
 
   return (
-    <Card data-test-id="gift-card-settings">
-      <CardTitle
+    <DashboardCard data-test-id="gift-card-settings">
+      <DashboardCard.Title
         title={intl.formatMessage(messages.expiryDateTitle)}
         className={classes.cardTitle}
       />
-      <CardContent>
+      <DashboardCard.Content>
         <GiftCardSettingsExpirySelect
           expiryPeriodActive={data.expiryPeriodActive}
           expiryPeriodType={data.expiryPeriodType}
@@ -50,8 +50,8 @@ const GiftCardExpirySettingsCard: React.FC<GiftCardExpirySettingsCardProps> = ({
           disabled={disabled}
           errors={errors}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 
