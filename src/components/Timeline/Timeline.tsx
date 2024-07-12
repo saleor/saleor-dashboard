@@ -2,12 +2,13 @@
 import { useUser } from "@dashboard/auth";
 import { Button } from "@dashboard/components/Button";
 import { getUserInitials } from "@dashboard/misc";
-import { CardContent, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { DashboardCard } from "../Card";
 import { UserAvatar } from "../UserAvatar";
 
 const useStyles = makeStyles(
@@ -90,7 +91,7 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
 
   return (
     <div className={classes.noteRoot}>
-      <CardContent className={classes.noteTitle}>
+      <DashboardCard.Content className={classes.noteTitle}>
         <UserAvatar
           url={user?.avatar?.url}
           initials={getUserInitials(user)}
@@ -121,7 +122,7 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
           }}
           variant="outlined"
         />
-      </CardContent>
+      </DashboardCard.Content>
     </div>
   );
 };

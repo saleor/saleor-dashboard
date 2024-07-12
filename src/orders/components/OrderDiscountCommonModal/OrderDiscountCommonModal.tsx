@@ -1,4 +1,5 @@
 import DialogButtons from "@dashboard/components/ActionDialog/DialogButtons";
+import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import PriceField from "@dashboard/components/PriceField";
@@ -7,7 +8,7 @@ import { DiscountValueTypeEnum, MoneyFragment } from "@dashboard/graphql";
 import { useUpdateEffect } from "@dashboard/hooks/useUpdateEffect";
 import { buttonMessages } from "@dashboard/intl";
 import { toFixed } from "@dashboard/utils/toFixed";
-import { Card, CardContent, TextField, Typography } from "@material-ui/core";
+import { TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -243,9 +244,9 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
   const isSubmitDisabled = !getParsedDiscountValue() || !!valueErrorMsg || isAmountTooLarge();
 
   return (
-    <Card>
+    <DashboardCard>
       <ModalTitle title={intl.formatMessage(dialogTitle)} onClose={onClose} />
-      <CardContent>
+      <DashboardCard.Content>
         <RadioGroupField
           innerContainerClassName={classes.radioContainer}
           choices={discountTypeChoices}
@@ -272,7 +273,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
           data-test-id="discount-reason"
           onChange={(event: ChangeEvent<HTMLInputElement>) => setReason(event.target.value)}
         />
-      </CardContent>
+      </DashboardCard.Content>
       <DialogButtons
         onConfirm={handleConfirm}
         onClose={onClose}
@@ -293,7 +294,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
           </div>
         )}
       </DialogButtons>
-    </Card>
+    </DashboardCard>
   );
 };
 

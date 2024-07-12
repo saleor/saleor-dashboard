@@ -16,7 +16,7 @@ import DataEditor, {
   Theme,
 } from "@glideapps/glide-data-grid";
 import { GetRowThemeCallback } from "@glideapps/glide-data-grid/dist/ts/data-grid/data-grid-render";
-import { Card, CardContent, CircularProgress } from "@material-ui/core";
+import { CircularProgress } from "@material-ui/core";
 import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import range from "lodash/range";
@@ -31,6 +31,7 @@ import React, {
   useState,
 } from "react";
 
+import { DashboardCard } from "../Card";
 import { CardMenuItem } from "../CardMenu";
 import { FullScreenContainer } from "./components/FullScreenContainer";
 import { RowActions } from "./components/RowActions";
@@ -401,14 +402,14 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   return (
     <FullScreenContainer open={isOpen} className={fullScreenClasses.fullScreenContainer}>
-      <Card className={classes.root}>
+      <DashboardCard className={classes.root}>
         {renderHeader?.({
           toggleFullscreen: toggle,
           addRowOnDatagrid: onRowAdded,
           isFullscreenOpen: isOpen,
           isAnimationOpenFinished,
         })}
-        <CardContent classes={{ root: classes.cardContentRoot }} data-test-id="list">
+        <DashboardCard.Content className={classes.cardContentRoot} data-test-id="list">
           {rowsTotal > 0 || showEmptyDatagrid ? (
             <>
               {selection?.rows && selection?.rows.length > 0 && selectionActionsComponent && (
@@ -506,8 +507,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
               </Text>
             </Box>
           )}
-        </CardContent>
-      </Card>
+        </DashboardCard.Content>
+      </DashboardCard>
       <TooltipContainer
         clearTooltip={clearTooltip}
         bounds={tooltip?.bounds}

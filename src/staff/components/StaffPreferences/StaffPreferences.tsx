@@ -1,9 +1,9 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { Combobox } from "@dashboard/components/Combobox";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { Locale, localeNames } from "@dashboard/components/Locale";
 import { capitalize } from "@dashboard/misc";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -30,15 +30,15 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleCha
   };
 
   return (
-    <Card>
-      <CardTitle
+    <DashboardCard>
+      <DashboardCard.Title
         title={intl.formatMessage({
           id: "CLeDae",
           defaultMessage: "Preferences",
           description: "section header",
         })}
       />
-      <CardContent>
+      <DashboardCard.Content>
         <Combobox
           helperText={intl.formatMessage({
             id: "JJgJwi",
@@ -68,8 +68,8 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleCha
             defaultMessage="Please note, while all currency and date adjustments are complete, language translations are at varying degrees of completion."
           />
         </Typography>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

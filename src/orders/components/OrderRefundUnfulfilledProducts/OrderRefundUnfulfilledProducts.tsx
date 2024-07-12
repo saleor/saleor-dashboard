@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import Money from "@dashboard/components/Money";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
@@ -8,16 +8,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { OrderRefundDataQuery } from "@dashboard/graphql";
 import { FormsetChange } from "@dashboard/hooks/useFormset";
 import { renderCollection } from "@dashboard/misc";
-import {
-  Card,
-  CardContent,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { Table, TableBody, TableCell, TableHead, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -83,15 +74,15 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
   const intl = useIntl();
 
   return (
-    <Card>
-      <CardTitle
+    <DashboardCard>
+      <DashboardCard.Title
         title={intl.formatMessage({
           id: "B/y6LC",
           defaultMessage: "Unfulfilled Products",
           description: "section header",
         })}
       />
-      <CardContent className={classes.cartContent}>
+      <DashboardCard.Content className={classes.cartContent}>
         <Typography variant="caption" color="textSecondary" className={classes.notice}>
           <FormattedMessage
             id="iUIn50"
@@ -110,7 +101,7 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
             description="button"
           />
         </Button>
-      </CardContent>
+      </DashboardCard.Content>
       <Table>
         <TableHead>
           <TableRowLink>
@@ -225,7 +216,7 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
           )}
         </TableBody>
       </Table>
-    </Card>
+    </DashboardCard>
   );
 };
 

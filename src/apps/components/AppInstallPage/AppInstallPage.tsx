@@ -54,7 +54,6 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
             <DashboardCard.Title data-test-id="app-installation-page-header">
               {loading ? <Skeleton /> : intl.formatMessage(messages.title, { name })}
             </DashboardCard.Title>
-            {/* @ts-expect-error - TODO: fix this while migrating away from makeStyles */}
             <DashboardCard.Content className={classes.installCard}>
               {loading ? (
                 <Spinner />

@@ -1,10 +1,10 @@
 import { GiftCardEventFragment, OrderEventFragment } from "@dashboard/graphql";
 import { getUserInitials, getUserName } from "@dashboard/misc";
-import { Card, CardContent } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text, vars } from "@saleor/macaw-ui-next";
 import React from "react";
 
+import { DashboardCard } from "../Card";
 import { DateTime } from "../Date";
 import { UserAvatar } from "../UserAvatar";
 
@@ -117,11 +117,11 @@ export const TimelineNote: React.FC<TimelineNoteProps> = ({
           <DateTime date={date} plain={hasPlainDate} />
         </Text>
       </div>
-      <Card className={classes.card} elevation={16}>
-        <CardContent className={classes.cardContent}>
+      <DashboardCard className={classes.card} boxShadow="defaultOverlay">
+        <DashboardCard.Content className={classes.cardContent}>
           <NoteMessage message={message} />
-        </CardContent>
-      </Card>
+        </DashboardCard.Content>
+      </DashboardCard>
     </div>
   );
 };

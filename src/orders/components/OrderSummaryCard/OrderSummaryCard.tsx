@@ -1,8 +1,8 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { OrderDetailsFragment } from "@dashboard/graphql";
 import { getDiscountTypeLabel } from "@dashboard/orders/utils/data";
-import { Card, CardContent } from "@material-ui/core";
+import {} from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -40,9 +40,9 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = ({ order }) => {
   const usedGiftcards = obtainUsedGifrcards(order);
 
   return (
-    <Card data-test-id="OrderSummaryCard">
-      <CardTitle title={<FormattedMessage {...orderSummaryMessages.orderSummary} />} />
-      <CardContent>
+    <DashboardCard data-test-id="OrderSummaryCard">
+      <DashboardCard.Title title={<FormattedMessage {...orderSummaryMessages.orderSummary} />} />
+      <DashboardCard.Content>
         <SummaryList className={classes.list}>
           <SummaryLine
             text={<FormattedMessage {...orderSummaryMessages.subtotal} />}
@@ -83,8 +83,8 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = ({ order }) => {
             money={order?.total?.gross}
           />
         </SummaryList>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

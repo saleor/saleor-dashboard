@@ -1,5 +1,5 @@
-import CardTitle from "@dashboard/components/CardTitle";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { DashboardCard } from "@dashboard/components/Card";
+import { Typography } from "@material-ui/core";
 import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -21,15 +21,16 @@ export const ChannelStatus: React.FC<ChannelStatusProps> = ({
   const classes = useStyles({});
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
+    <DashboardCard>
+      <DashboardCard.Title>
+        {intl.formatMessage({
           id: "TSJRiZ",
           defaultMessage: "Channel Status",
           description: "channel status title",
         })}
-      />
-      <CardContent>
+      </DashboardCard.Title>
+
+      <DashboardCard.Content>
         <Typography variant="caption" className={classes.label}>
           <FormattedMessage id="+tIkAe" defaultMessage="Status" description="status" />
         </Typography>
@@ -52,8 +53,8 @@ export const ChannelStatus: React.FC<ChannelStatusProps> = ({
             <FormattedMessage id="MQwT1W" defaultMessage="Activate" description="activate" />
           )}
         </Button>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

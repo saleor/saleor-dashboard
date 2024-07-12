@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import EventTime from "@dashboard/components/EventTime";
 import Money, { formatMoney } from "@dashboard/components/Money";
 import OverflowTooltip from "@dashboard/components/OverflowTooltip";
@@ -11,7 +11,7 @@ import useLocale from "@dashboard/hooks/useLocale";
 import { buttonMessages } from "@dashboard/intl";
 import { getUserInitials, renderCollection } from "@dashboard/misc";
 import { orderGrantRefundEditUrl } from "@dashboard/orders/urls";
-import { Card, TableCell, TableRow } from "@material-ui/core";
+import { TableCell, TableRow } from "@material-ui/core";
 import { Avatar } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -35,8 +35,8 @@ const OrderGrantedRefunds: React.FC<OrderGrantedRefundsProps> = ({ order }) => {
   const unsettled = order.totalRemainingGrant;
 
   return (
-    <Card>
-      <CardTitle
+    <DashboardCard>
+      <DashboardCard.Title
         className={classes.cardTitleWrapper}
         title={
           <div className={classes.cardTitleContent}>
@@ -55,7 +55,7 @@ const OrderGrantedRefunds: React.FC<OrderGrantedRefundsProps> = ({ order }) => {
             </div>
           </div>
         }
-      ></CardTitle>
+      />
       <ResponsiveTable className={classes.table}>
         {renderCollection(order?.grantedRefunds, grantedRefund => (
           <TableRow>
@@ -87,7 +87,7 @@ const OrderGrantedRefunds: React.FC<OrderGrantedRefundsProps> = ({ order }) => {
           </TableRow>
         ))}
       </ResponsiveTable>
-    </Card>
+    </DashboardCard>
   );
 };
 

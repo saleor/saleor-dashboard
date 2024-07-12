@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import IconButtonTableCell from "@dashboard/components/IconButtonTableCell";
 import Money from "@dashboard/components/Money";
 import MoneyRange from "@dashboard/components/MoneyRange";
@@ -11,7 +11,7 @@ import WeightRange from "@dashboard/components/WeightRange";
 import { ShippingZoneDetailsFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ChannelProps } from "@dashboard/types";
-import { Card, TableBody, TableCell, TableHead } from "@material-ui/core";
+import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import { Button, DeleteIcon, ICONBUTTON_SIZE, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -64,8 +64,8 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card data-test-id={variant === "price" ? "price-based-rates" : "weight-based-rates"}>
-      <CardTitle
+    <DashboardCard data-test-id={variant === "price" ? "price-based-rates" : "weight-based-rates"}>
+      <DashboardCard.Title
         title={
           variant === "price"
             ? intl.formatMessage({
@@ -79,12 +79,12 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                 description: "weight based shipping methods, section header",
               })
         }
-        toolbar={
-          <Button disabled={disabled} onClick={onRateAdd} data-test-id={testId}>
-            <FormattedMessage id="WR8rir" defaultMessage="Create rate" description="button" />
-          </Button>
-        }
       />
+      <DashboardCard.Toolbar>
+        <Button disabled={disabled} onClick={onRateAdd} data-test-id={testId}>
+          <FormattedMessage id="WR8rir" defaultMessage="Create rate" description="button" />
+        </Button>
+      </DashboardCard.Toolbar>
       <ResponsiveTable>
         <TableHead>
           <TableRowLink>
@@ -193,7 +193,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
           )}
         </TableBody>
       </ResponsiveTable>
-    </Card>
+    </DashboardCard>
   );
 };
 

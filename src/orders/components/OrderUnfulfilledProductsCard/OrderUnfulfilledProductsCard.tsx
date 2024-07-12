@@ -1,8 +1,9 @@
 import { Button } from "@dashboard/components/Button";
+import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { OrderLineFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { Card, CardActions, CardContent, Typography } from "@material-ui/core";
+import { CardActions, Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -35,9 +36,9 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
 
   return (
     <>
-      <Card>
+      <DashboardCard>
         <OrderCardTitle withStatus status="unfulfilled" className={classes.cardTitle} />
-        <CardContent>
+        <DashboardCard.Content>
           <OrderDetailsDatagrid lines={lines} loading={loading} onShowMetadata={onShowMetadata} />
           {showFulfillmentAction && (
             <CardActions className={classes.actions}>
@@ -56,8 +57,8 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
               )}
             </CardActions>
           )}
-        </CardContent>
-      </Card>
+        </DashboardCard.Content>
+      </DashboardCard>
       <CardSpacer />
     </>
   );

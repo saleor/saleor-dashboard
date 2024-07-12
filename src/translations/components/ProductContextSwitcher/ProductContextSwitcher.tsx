@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { DashboardCard } from "@dashboard/components/Card";
 import { useProductVariantListQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import {
@@ -7,7 +8,6 @@ import {
   TranslatableEntities,
 } from "@dashboard/translations/urls";
 import {
-  Card,
   ClickAwayListener,
   Grow,
   MenuItem,
@@ -103,14 +103,17 @@ const ProductContextSwitcher: React.FC<ProductContextSwitcherProps> = ({
         <FormattedMessage id="tUlsq+" defaultMessage="Translating" />:
       </Typography>
       <div ref={anchor}>
-        <Card className={classes.menuContainer} onClick={() => setExpandedState(!isExpanded)}>
+        <DashboardCard
+          className={classes.menuContainer}
+          onClick={() => setExpandedState(!isExpanded)}
+        >
           <Typography>{items.find(({ value }) => value === selectedId)?.label || "-"}</Typography>
           <ArrowDropDown
             className={clsx(classes.arrow, {
               [classes.rotate]: isExpanded,
             })}
           />
-        </Card>
+        </DashboardCard>
         <Popper
           className={classes.popover}
           open={isExpanded}

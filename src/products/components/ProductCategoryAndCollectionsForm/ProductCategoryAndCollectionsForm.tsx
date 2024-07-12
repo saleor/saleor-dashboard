@@ -1,9 +1,10 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import MultiSelectField from "@dashboard/components/MultiSelectField";
 import SingleSelectField from "@dashboard/components/SingleSelectField";
-import { Card, CardContent } from "@material-ui/core";
+import {} from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -30,7 +31,7 @@ const ProductCategoryAndCollectionsForm = ({
 
   return (
     <>
-      <Card>
+      <DashboardCard>
         <TopNav
           title={intl.formatMessage({
             id: "fyE8BN",
@@ -38,7 +39,7 @@ const ProductCategoryAndCollectionsForm = ({
             description: "product organization, header",
           })}
         />
-        <CardContent>
+        <DashboardCard.Content>
           <SingleSelectField
             disabled={loading}
             error={!!errors.category}
@@ -66,8 +67,8 @@ const ProductCategoryAndCollectionsForm = ({
             value={productCollections}
             onChange={onChange}
           />
-        </CardContent>
-      </Card>
+        </DashboardCard.Content>
+      </DashboardCard>
     </>
   );
 };

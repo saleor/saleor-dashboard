@@ -1,8 +1,8 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import RadioGroupField, { RadioGroupFieldChoice } from "@dashboard/components/RadioGroupField";
 import { SaleType as SaleTypeEnum } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
-import { Card, CardContent } from "@material-ui/core";
+import {} from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
@@ -56,15 +56,15 @@ const SaleType: React.FC<SaleTypeProps> = props => {
   const choices = createChoices(intl);
 
   return (
-    <Card>
-      <CardTitle
+    <DashboardCard>
+      <DashboardCard.Title
         title={intl.formatMessage({
           id: "WkxE8/",
           defaultMessage: "Discount Type",
           description: "percentage or fixed, header",
         })}
       />
-      <CardContent className={classes.root}>
+      <DashboardCard.Content className={classes.root}>
         <RadioGroupField
           choices={choices}
           disabled={disabled}
@@ -72,8 +72,8 @@ const SaleType: React.FC<SaleTypeProps> = props => {
           value={data.type}
           onChange={onChange}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

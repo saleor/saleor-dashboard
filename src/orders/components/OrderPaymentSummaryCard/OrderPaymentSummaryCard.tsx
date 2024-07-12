@@ -1,13 +1,13 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { Pill } from "@dashboard/components/Pill";
 import Skeleton from "@dashboard/components/Skeleton";
 import { useFlag } from "@dashboard/featureFlags";
 import { OrderAction, OrderDetailsFragment } from "@dashboard/graphql";
 import { transformPaymentStatus } from "@dashboard/misc";
 import { orderGrantRefundUrl, orderSendRefundUrl } from "@dashboard/orders/urls";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { Divider } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -44,35 +44,35 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkA
 
   if (!order) {
     return (
-      <Card>
-        <CardTitle
-          title={<FormattedMessage {...orderPaymentMessages.paymentTitle} />}
-          toolbar={<Skeleton />}
-        ></CardTitle>
-        <CardContent>
+      <DashboardCard>
+        <DashboardCard.Title title={<FormattedMessage {...orderPaymentMessages.paymentTitle} />} />
+        <DashboardCard.Toolbar>
           <Skeleton />
-        </CardContent>
-      </Card>
+        </DashboardCard.Toolbar>
+        <DashboardCard.Content>
+          <Skeleton />
+        </DashboardCard.Content>
+      </DashboardCard>
     );
   }
 
   return (
-    <Card className={classes.root}>
-      <CardTitle
-        toolbar={
-          <Pill
-            key={payment.status}
-            label={payment.localized}
-            color={payment.status}
-            className={classes.paymentStatus}
-            data-test-id="payment-status"
-          />
-        }
+    <DashboardCard className={classes.root}>
+      <DashboardCard.Title
         title={<FormattedMessage {...orderPaymentMessages.paymentTitle} />}
         subtitle={<FormattedMessage {...orderPaymentMessages.paymentSubtitle} />}
       />
+      <DashboardCard.Toolbar>
+        <Pill
+          key={payment.status}
+          label={payment.localized}
+          color={payment.status}
+          className={classes.paymentStatus}
+          data-test-id="payment-status"
+        />
+      </DashboardCard.Toolbar>
       {showHasNoPayment ? (
-        <CardContent className={classes.noPaymentContent} data-test-id="payment-section">
+        <DashboardCard.Content className={classes.noPaymentContent} data-test-id="payment-section">
           <Typography variant="h5" className={classes.noPaymentTitle}>
             <FormattedMessage {...orderPaymentMessages.noPayments} />
           </Typography>
@@ -85,44 +85,44 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkA
               <FormattedMessage {...orderPaymentActionButtonMessages.markAsPaid} />
             </Button>
           )}
-        </CardContent>
+        </DashboardCard.Content>
       ) : (
         <PaymentsSummary order={order} />
       )}
       {canAnyRefund && !enabled && (
         <>
           <Divider />
-          <CardTitle
-            toolbar={
-              <div className={classes.refundsButtons}>
-                {canGrantRefund && (
-                  <Button
-                    href={orderGrantRefundUrl(order.id)}
-                    variant="secondary"
-                    data-test-id="grantRefundButton"
-                  >
-                    <FormattedMessage {...orderPaymentActionButtonMessages.grantRefund} />
-                  </Button>
-                )}
-                {canSendRefund && (
-                  <Button
-                    variant="secondary"
-                    href={orderSendRefundUrl(order.id)}
-                    data-test-id="refund-button"
-                  >
-                    <FormattedMessage {...orderPaymentActionButtonMessages.sendRefund} />
-                  </Button>
-                )}
-              </div>
-            }
+          <DashboardCard.Title
             title={<FormattedMessage {...orderPaymentMessages.refundsTitle} />}
-          ></CardTitle>
-          <CardContent>
+          />
+          <DashboardCard.Toolbar>
+            <div className={classes.refundsButtons}>
+              {canGrantRefund && (
+                <Button
+                  href={orderGrantRefundUrl(order.id)}
+                  variant="secondary"
+                  data-test-id="grantRefundButton"
+                >
+                  <FormattedMessage {...orderPaymentActionButtonMessages.grantRefund} />
+                </Button>
+              )}
+              {canSendRefund && (
+                <Button
+                  variant="secondary"
+                  href={orderSendRefundUrl(order.id)}
+                  data-test-id="refund-button"
+                >
+                  <FormattedMessage {...orderPaymentActionButtonMessages.sendRefund} />
+                </Button>
+              )}
+            </div>
+          </DashboardCard.Toolbar>
+          <DashboardCard.Content>
             <RefundsSummary order={order} />
-          </CardContent>
+          </DashboardCard.Content>
         </>
       )}
-    </Card>
+    </DashboardCard>
   );
 };
 

@@ -1,9 +1,9 @@
 import { ChannelShippingZones } from "@dashboard/channels/pages/ChannelDetailsPage/types";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { SearchShippingZonesQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -35,11 +35,11 @@ const ShippingZones: React.FC<ShippingZonesProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card data-test-id="shipping-zones-section">
-      <CardTitle title={intl.formatMessage(sectionNames.shippingZones)} />
-      <CardContent>
+    <DashboardCard data-test-id="shipping-zones-section">
+      <DashboardCard.Title>{intl.formatMessage(sectionNames.shippingZones)}</DashboardCard.Title>
+      <DashboardCard.Content>
         <Typography>{intl.formatMessage(messages.subtitle)}</Typography>
-      </CardContent>
+      </DashboardCard.Content>
       <AssignmentList
         loading={loading}
         items={shippingZones!}
@@ -53,7 +53,7 @@ const ShippingZones: React.FC<ShippingZonesProps> = props => {
         inputName="shippingZone"
         itemsName={intl.formatMessage(sectionNames.shippingZones)}
       />
-    </Card>
+    </DashboardCard>
   );
 };
 

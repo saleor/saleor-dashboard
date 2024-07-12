@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { DateTime } from "@dashboard/components/Date";
 import Money from "@dashboard/components/Money";
 import { Pill } from "@dashboard/components/Pill";
@@ -10,7 +10,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { CustomerDetailsQuery } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
 import { RelayToFlat } from "@dashboard/types";
-import { Card, TableBody, TableCell, TableHead } from "@material-ui/core";
+import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -46,19 +46,19 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
     : undefined;
 
   return (
-    <Card>
-      <CardTitle
+    <DashboardCard>
+      <DashboardCard.Title
         title={intl.formatMessage({
           id: "1LiVhv",
           defaultMessage: "Recent Orders",
           description: "section header",
         })}
-        toolbar={
-          <Button variant="tertiary" href={viewAllHref}>
-            <FormattedMessage id="3+990c" defaultMessage="View all orders" description="button" />
-          </Button>
-        }
       />
+      <DashboardCard.Toolbar>
+        <Button variant="tertiary" href={viewAllHref}>
+          <FormattedMessage id="3+990c" defaultMessage="View all orders" description="button" />
+        </Button>
+      </DashboardCard.Toolbar>
       <ResponsiveTable>
         <TableHead>
           <TableRowLink>
@@ -139,7 +139,7 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
           )}
         </TableBody>
       </ResponsiveTable>
-    </Card>
+    </DashboardCard>
   );
 };
 

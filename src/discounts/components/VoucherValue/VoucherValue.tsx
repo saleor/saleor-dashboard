@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
@@ -13,7 +13,7 @@ import { DiscountErrorFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
-import { Card, CardContent, TableBody, TableCell, Typography } from "@material-ui/core";
+import { TableBody, TableCell, Typography } from "@material-ui/core";
 import { Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -49,15 +49,15 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
   }));
 
   return (
-    <Card data-test-id="value-section">
-      <CardTitle
+    <DashboardCard data-test-id="value-section">
+      <DashboardCard.Title
         title={intl.formatMessage({
           id: "/oaqFS",
           defaultMessage: "Value",
           description: "section header",
         })}
       />
-      <CardContent>
+      <DashboardCard.Content>
         <div className={classes.tableContainer}>
           <ResponsiveTable className={classes.table}>
             <TableHead colSpan={numberOfColumns} disabled={disabled} items={[]}>
@@ -178,8 +178,8 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
           onChange={onChange}
           disabled={disabled}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

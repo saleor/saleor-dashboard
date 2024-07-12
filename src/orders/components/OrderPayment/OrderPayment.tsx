@@ -1,12 +1,12 @@
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import Money from "@dashboard/components/Money";
 import { Pill } from "@dashboard/components/Pill";
 import Skeleton from "@dashboard/components/Skeleton";
 import { OrderAction, OrderDetailsFragment, OrderStatus } from "@dashboard/graphql";
 import { getDiscountTypeLabel } from "@dashboard/orders/utils/data";
-import { Card, CardContent } from "@material-ui/core";
+import {} from "@material-ui/core";
 import { Divider } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
@@ -64,8 +64,8 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
   };
 
   return (
-    <Card data-test-id="OrderPayment">
-      <CardTitle
+    <DashboardCard data-test-id="OrderPayment">
+      <DashboardCard.Title
         className={classes.payments}
         title={
           !order?.paymentStatus ? (
@@ -113,7 +113,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
           )
         }
       />
-      <CardContent className={classes.payments}>
+      <DashboardCard.Content className={classes.payments}>
         <div className={classes.root}>
           {order?.discounts?.map(discount => (
             <div key={discount.id}>
@@ -183,9 +183,9 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
             </div>
           </div>
         </div>
-      </CardContent>
+      </DashboardCard.Content>
       <Divider />
-      <CardContent className={classes.payments}>
+      <DashboardCard.Content className={classes.payments}>
         <div className={classes.root}>
           {!!usedGiftCardAmount && usedGiftcards && (
             <div>
@@ -240,8 +240,8 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
             </div>
           </div>
         </div>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

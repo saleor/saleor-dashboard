@@ -1,10 +1,10 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { AccountErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
-import { Card, CardContent, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -39,15 +39,15 @@ const CustomerCreateDetails: React.FC<CustomerCreateDetailsProps> = props => {
   const formErrors = getFormErrors(["customerFirstName", "customerLastName", "email"], errors);
 
   return (
-    <Card>
-      <CardTitle
+    <DashboardCard>
+      <DashboardCard.Title
         title={intl.formatMessage({
           id: "fjPWOA",
           defaultMessage: "Customer Overview",
           description: "header",
         })}
       />
-      <CardContent>
+      <DashboardCard.Content>
         <div className={classes.root}>
           <TextField
             data-test-id="customer-first-name"
@@ -95,8 +95,8 @@ const CustomerCreateDetails: React.FC<CustomerCreateDetailsProps> = props => {
             }}
           />
         </div>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

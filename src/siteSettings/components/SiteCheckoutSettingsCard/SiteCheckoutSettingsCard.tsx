@@ -1,8 +1,8 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { ShopErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { Card, CardContent, TextField, Typography } from "@material-ui/core";
+import { TextField, Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -33,9 +33,9 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
   );
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(messages.reservedStock)} />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Title title={intl.formatMessage(messages.reservedStock)} />
+      <DashboardCard.Content>
         <Typography variant="body2">
           <FormattedMessage {...messages.reservedStockDescription} />
         </Typography>
@@ -83,9 +83,9 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
             },
           }}
         />
-      </CardContent>
-      <CardTitle title={intl.formatMessage(messages.checkoutLimits)} />
-      <CardContent>
+      </DashboardCard.Content>
+      <DashboardCard.Title title={intl.formatMessage(messages.checkoutLimits)} />
+      <DashboardCard.Content>
         <TextField
           data-test-id="checkout-limits-input"
           disabled={disabled}
@@ -104,8 +104,8 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
             },
           }}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

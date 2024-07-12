@@ -1,10 +1,10 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
 import { Grid } from "@dashboard/components/Grid";
 import { DiscountErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
-import { Card, CardContent, TextField, Typography } from "@material-ui/core";
+import { TextField, Typography } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -37,9 +37,9 @@ const VoucherLimits = ({
   const usesLeft = data.usageLimit - data.used;
 
   return (
-    <Card data-test-id="usage-limit-section">
-      <CardTitle title={intl.formatMessage(messages.usageLimitsTitle)} />
-      <CardContent className={classes.cardContent}>
+    <DashboardCard data-test-id="usage-limit-section">
+      <DashboardCard.Title title={intl.formatMessage(messages.usageLimitsTitle)} />
+      <DashboardCard.Content className={classes.cardContent}>
         <ControlledCheckbox
           testId="has-usage-limit"
           checked={data.hasUsageLimit}
@@ -113,8 +113,8 @@ const VoucherLimits = ({
           name={"singleUse" satisfies keyof VoucherDetailsPageFormData}
           onChange={onChange}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

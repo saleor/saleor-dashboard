@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Hr from "@dashboard/components/Hr";
 import RadioSwitchField from "@dashboard/components/RadioSwitchField";
@@ -8,13 +7,14 @@ import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Checkbox, RadioGroup, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
+import { DashboardCard } from "../Card";
 import { DateTimeTimezoneField } from "../DateTimeTimezoneField";
 import FormSpacer from "../FormSpacer";
 import DateVisibilitySelector from "./DateVisibilitySelector";
@@ -135,9 +135,9 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
   };
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(visibilityCardMessages.title)} />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Title>{intl.formatMessage(visibilityCardMessages.title)}</DashboardCard.Title>
+      <DashboardCard.Content>
         <RadioGroup
           disabled={disabled}
           name="isPublished"
@@ -325,8 +325,8 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
           </>
         )}
         <div className={classes.children}>{children}</div>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 VisibilityCard.displayName = "VisibilityCard";

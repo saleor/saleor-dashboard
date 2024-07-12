@@ -2,10 +2,11 @@
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { getById } from "@dashboard/misc";
 import ModalTitle from "@dashboard/orders/components/OrderDiscountCommonModal/ModalTitle";
-import { Card, CardContent, CircularProgress, Modal } from "@material-ui/core";
+import { CircularProgress, Modal } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { DashboardCard } from "../Card";
 import { useTypeDeleteWarningDialogStyles as useStyles } from "./styles";
 import ProductTypeDeleteWarningDialogContent from "./TypeDeleteWarningDialogContent";
 import { CommonTypeDeleteWarningMessages, TypeDeleteWarningMessages } from "./types";
@@ -81,7 +82,7 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
   return (
     <Modal open={isOpen}>
       <div className={classes.centerContainer} data-test-id="warning-dialog">
-        <Card className={classes.content}>
+        <DashboardCard className={classes.content}>
           <ModalTitle
             title={intl.formatMessage(baseMessages.title, {
               selectedTypesCount: typesToDelete.length,
@@ -90,9 +91,9 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
             onClose={onClose}
           />
           {isLoading ? (
-            <CardContent className={classes.centerContainer}>
+            <DashboardCard.Content className={classes.centerContainer}>
               <CircularProgress size={16} />
-            </CardContent>
+            </DashboardCard.Content>
           ) : (
             <ProductTypeDeleteWarningDialogContent
               showViewAssignedItemsButton={showViewAssignedItemsButton}
@@ -106,7 +107,7 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
               viewAssignedItemsButtonLabel={baseMessages.viewAssignedItemsButtonLabel}
             />
           )}
-        </Card>
+        </DashboardCard>
       </div>
     </Modal>
   );

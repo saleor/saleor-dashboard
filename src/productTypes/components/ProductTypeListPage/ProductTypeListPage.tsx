@@ -1,13 +1,13 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
+import { DashboardCard } from "@dashboard/components/Card";
 import FilterBar from "@dashboard/components/FilterBar";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { ProductTypeFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import ProductTypeList from "@dashboard/productTypes/components/ProductTypeList/ProductTypeList";
 import { productTypeAddUrl, ProductTypeListUrlSortField } from "@dashboard/productTypes/urls";
-import { Card } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -52,7 +52,7 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
           <FormattedMessage id="gksZwp" defaultMessage="Create product type" description="button" />
         </Button>
       </TopNav>
-      <Card>
+      <DashboardCard>
         <FilterBar
           allTabLabel={intl.formatMessage({
             id: "1KSqnn",
@@ -75,7 +75,7 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
           onTabSave={onTabSave}
         />
         <ProductTypeList {...listProps} />
-      </Card>
+      </DashboardCard>
     </>
   );
 };
