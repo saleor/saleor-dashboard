@@ -1,7 +1,7 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
+import NewActionDialog from "@dashboard/components/ActionDialog/NewActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { getStringOrPlaceholder } from "@dashboard/misc";
-import { DialogContentText } from "@material-ui/core";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -35,7 +35,7 @@ const AppInProgressDeleteDialog = ({
   };
 
   return (
-    <ActionDialog
+    <NewActionDialog
       confirmButtonState={confirmButtonState}
       open={open}
       onClose={onClose}
@@ -43,8 +43,8 @@ const AppInProgressDeleteDialog = ({
       title={intl.formatMessage(msgs.header)}
       variant="delete"
     >
-      <DialogContentText data-test-id="dialog-content">{getMainText()}</DialogContentText>
-    </ActionDialog>
+      <Box data-test-id="dialog-content">{getMainText()}</Box>
+    </NewActionDialog>
   );
 };
 

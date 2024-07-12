@@ -1,5 +1,6 @@
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DialogProps } from "@dashboard/types";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import BackButton from "../BackButton";
@@ -27,7 +28,7 @@ const NewActionDialog: React.FC<NewActionDialogProps> = props => {
       <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%">
         <DashboardModal.Title>{title}</DashboardModal.Title>
 
-        {children}
+        <Text>{children}</Text>
 
         <DashboardModal.Actions>
           <BackButton onClick={onClose}>{rest?.backButtonText}</BackButton>

@@ -9,7 +9,7 @@ import {
   handleUploadMultipleFiles,
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
-import ActionDialog from "@dashboard/components/ActionDialog";
+import NewActionDialog from "@dashboard/components/ActionDialog/NewActionDialog";
 import { AttributeInput } from "@dashboard/components/Attributes";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
@@ -37,7 +37,6 @@ import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeV
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
-import { DialogContentText } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -218,7 +217,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
         onCloseDialog={() => navigate(pageUrl(id))}
         onAttributeSelectBlur={searchAttributeReset}
       />
-      <ActionDialog
+      <NewActionDialog
         open={params.action === "remove"}
         confirmButtonState={pageRemoveOpts.status}
         title={intl.formatMessage({
@@ -230,17 +229,15 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
         onConfirm={() => pageRemove({ variables: { id } })}
         variant="delete"
       >
-        <DialogContentText>
-          <FormattedMessage
-            id="4B32Ba"
-            defaultMessage="Are you sure you want to delete {title}?"
-            description="delete page"
-            values={{
-              title: <strong>{getStringOrPlaceholder(pageDetails.data?.page?.title)}</strong>,
-            }}
-          />
-        </DialogContentText>
-      </ActionDialog>
+        <FormattedMessage
+          id="4B32Ba"
+          defaultMessage="Are you sure you want to delete {title}?"
+          description="delete page"
+          values={{
+            title: <strong>{getStringOrPlaceholder(pageDetails.data?.page?.title)}</strong>,
+          }}
+        />
+      </NewActionDialog>
     </>
   );
 };

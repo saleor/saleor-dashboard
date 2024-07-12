@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
-import ActionDialog from "@dashboard/components/ActionDialog";
+import NewActionDialog from "@dashboard/components/ActionDialog/NewActionDialog";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -10,7 +10,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import usePermissionGroupSearch from "@dashboard/searches/usePermissionGroupSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { DialogContentText } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -151,7 +150,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         }}
         onSearchChange={searchPermissionGroups}
       />
-      <ActionDialog
+      <NewActionDialog
         open={params.action === "remove"}
         title={intl.formatMessage({
           id: "GhXwO/",
@@ -167,17 +166,15 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
           })
         }
       >
-        <DialogContentText>
-          <FormattedMessage
-            id="gxPjIQ"
-            defaultMessage="Are you sure you want to delete {email} from staff members?"
-            values={{
-              email: getStringOrPlaceholder(data?.user?.email),
-            }}
-          />
-        </DialogContentText>
-      </ActionDialog>
-      <ActionDialog
+        <FormattedMessage
+          id="gxPjIQ"
+          defaultMessage="Are you sure you want to delete {email} from staff members?"
+          values={{
+            email: getStringOrPlaceholder(data?.user?.email),
+          }}
+        />
+      </NewActionDialog>
+      <NewActionDialog
         open={params.action === "remove-avatar"}
         title={intl.formatMessage({
           id: "VKWPBf",
@@ -189,16 +186,14 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         onClose={closeModal}
         onConfirm={deleteUserAvatar}
       >
-        <DialogContentText>
-          <FormattedMessage
-            id="fzpXvv"
-            defaultMessage="Are you sure you want to remove {email} avatar?"
-            values={{
-              email: <strong>{getStringOrPlaceholder(data?.user?.email)}</strong>,
-            }}
-          />
-        </DialogContentText>
-      </ActionDialog>
+        <FormattedMessage
+          id="fzpXvv"
+          defaultMessage="Are you sure you want to remove {email} avatar?"
+          values={{
+            email: <strong>{getStringOrPlaceholder(data?.user?.email)}</strong>,
+          }}
+        />
+      </NewActionDialog>
       <StaffPasswordResetDialog
         confirmButtonState={changePasswordOpts.status}
         errors={changePasswordOpts?.data?.passwordChange?.errors || []}

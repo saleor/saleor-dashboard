@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import ActionDialog from "@dashboard/components/ActionDialog";
+import NewActionDialog from "@dashboard/components/ActionDialog/NewActionDialog";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
@@ -27,7 +27,6 @@ import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import { DialogContentText } from "@material-ui/core";
 import isEqual from "lodash/isEqual";
 import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -207,7 +206,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
         hasPresetsChanged={hasPresetsChanged}
         onFilterPresetsAll={resetFilters}
       />
-      <ActionDialog
+      <NewActionDialog
         open={params.action === "publish"}
         onClose={closeModal}
         confirmButtonState={bulkPagePublishOpts.status}
@@ -225,19 +224,17 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
           description: "dialog header",
         })}
       >
-        <DialogContentText>
-          <FormattedMessage
-            id="WRPQMM"
-            defaultMessage="{counter,plural,one{Are you sure you want to publish this page?} other{Are you sure you want to publish {displayQuantity} pages?}}"
-            description="dialog content"
-            values={{
-              counter: selectedRowIds.length,
-              displayQuantity: <strong>{selectedRowIds.length}</strong>,
-            }}
-          />
-        </DialogContentText>
-      </ActionDialog>
-      <ActionDialog
+        <FormattedMessage
+          id="WRPQMM"
+          defaultMessage="{counter,plural,one{Are you sure you want to publish this page?} other{Are you sure you want to publish {displayQuantity} pages?}}"
+          description="dialog content"
+          values={{
+            counter: selectedRowIds.length,
+            displayQuantity: <strong>{selectedRowIds.length}</strong>,
+          }}
+        />
+      </NewActionDialog>
+      <NewActionDialog
         open={params.action === "unpublish"}
         onClose={closeModal}
         confirmButtonState={bulkPagePublishOpts.status}
@@ -264,8 +261,8 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
             displayQuantity: <strong>{selectedRowIds.length}</strong>,
           }}
         />
-      </ActionDialog>
-      <ActionDialog
+      </NewActionDialog>
+      <NewActionDialog
         open={params.action === "remove"}
         onClose={closeModal}
         confirmButtonState={bulkPageRemoveOpts.status}
@@ -292,7 +289,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
             displayQuantity: <strong>{selectedRowIds.length}</strong>,
           }}
         />
-      </ActionDialog>
+      </NewActionDialog>
       <PageTypePickerDialog
         confirmButtonState="success"
         open={params.action === "create-page"}
