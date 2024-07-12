@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import Form from "@dashboard/components/Form";
 import Hr from "@dashboard/components/Hr";
-import Skeleton from "@dashboard/components/Skeleton";
 import {
   Timeline,
   TimelineAddNote,
@@ -11,7 +10,7 @@ import {
 } from "@dashboard/components/Timeline";
 import { OrderEventFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
-import { Text } from "@saleor/macaw-ui-next";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

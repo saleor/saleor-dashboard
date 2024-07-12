@@ -4,7 +4,6 @@ import IconButtonTableCell from "@dashboard/components/IconButtonTableCell";
 import Money from "@dashboard/components/Money";
 import MoneyRange from "@dashboard/components/MoneyRange";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import WeightRange from "@dashboard/components/WeightRange";
@@ -14,6 +13,7 @@ import { ChannelProps } from "@dashboard/types";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import { Button, DeleteIcon, ICONBUTTON_SIZE, makeStyles } from "@saleor/macaw-ui";
+import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

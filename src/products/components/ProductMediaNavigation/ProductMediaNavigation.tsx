@@ -1,9 +1,8 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import Skeleton from "@dashboard/components/Skeleton";
 import {} from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui-next";
+import { Skeleton, vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";

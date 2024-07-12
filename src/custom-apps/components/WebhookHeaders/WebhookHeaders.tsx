@@ -1,11 +1,10 @@
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
-import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { CardActions, Table, TableCell, TableHead } from "@material-ui/core";
 import { ExpandIcon, IconButton } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React, { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";

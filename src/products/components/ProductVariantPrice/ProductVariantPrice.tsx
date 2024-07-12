@@ -7,14 +7,13 @@ import {
 import { DashboardCard } from "@dashboard/components/Card";
 import PriceField from "@dashboard/components/PriceField";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { ProductChannelListingErrorFragment, ProductErrorFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { getFormChannelError, getFormChannelErrors, getFormErrors } from "@dashboard/utils/errors";
 import getProductErrorMessage from "@dashboard/utils/errors/product";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { sprinkles, Text, vars } from "@saleor/macaw-ui-next";
+import { Skeleton, sprinkles, Text, vars } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 

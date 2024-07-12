@@ -3,12 +3,11 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { Combobox } from "@dashboard/components/Combobox";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Grid from "@dashboard/components/Grid";
-import Skeleton from "@dashboard/components/Skeleton";
 import { ProductErrorWithAttributesFragment, ProductVariantFragment } from "@dashboard/graphql";
 import { FormsetAtomicData, FormsetChange } from "@dashboard/hooks/useFormset";
 import { commonMessages } from "@dashboard/intl";
 import { getProductVariantAttributeErrorMessage } from "@dashboard/utils/errors/product";
-import { Option, Text } from "@saleor/macaw-ui-next";
+import { Option, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 

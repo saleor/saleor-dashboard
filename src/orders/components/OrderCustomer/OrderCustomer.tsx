@@ -8,7 +8,6 @@ import Form from "@dashboard/components/Form";
 import Hr from "@dashboard/components/Hr";
 import Link from "@dashboard/components/Link";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
-import Skeleton from "@dashboard/components/Skeleton";
 import { useFlag } from "@dashboard/featureFlags";
 import {
   OrderDetailsFragment,
@@ -22,7 +21,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { ff_orderListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { Text } from "@saleor/macaw-ui-next";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

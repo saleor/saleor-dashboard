@@ -1,8 +1,7 @@
-import { Text } from "@saleor/macaw-ui-next";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { AddressType } from "../../customers/types";
-import Skeleton from "../Skeleton";
 
 interface AddressFormatterProps {
   address?: AddressType;

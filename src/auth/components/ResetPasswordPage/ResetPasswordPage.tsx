@@ -8,7 +8,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { TextField } from "@material-ui/core";
 import { ArrowRightIcon } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -31,7 +31,7 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
   return (
     <Form initial={{ email: "" }} onSubmit={onSubmit}>
       {({ change: handleChange, data, submit: handleSubmit }) => (
-        <>
+        <Box display="flex" flexDirection="column" alignItems="flex-start">
           <IconButton className={classes.backBtn} href={getAppMountUri()} variant="secondary">
             <ArrowRightIcon className={classes.arrow} />
           </IconButton>
@@ -75,7 +75,7 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
               description="password reset, button"
             />
           </Button>
-        </>
+        </Box>
       )}
     </Form>
   );

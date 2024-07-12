@@ -5,11 +5,10 @@ import FormSpacer from "@dashboard/components/FormSpacer";
 import Hr from "@dashboard/components/Hr";
 import Money from "@dashboard/components/Money";
 import Percent from "@dashboard/components/Percent";
-import Skeleton from "@dashboard/components/Skeleton";
 import { DiscountValueTypeEnum, VoucherDetailsFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { ChannelProps } from "@dashboard/types";
-import { Text } from "@saleor/macaw-ui-next";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

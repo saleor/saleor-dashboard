@@ -7,7 +7,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { CircularProgress, Divider, TextField } from "@material-ui/core";
 import { EyeIcon, IconButton } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -49,7 +49,7 @@ const LoginPage: React.FC<LoginCardProps> = props => {
   return (
     <LoginForm onSubmit={onSubmit}>
       {({ change: handleChange, data, submit }) => (
-        <>
+        <Box display="flex" flexDirection="column" alignItems="flex-start" width="100%">
           <Text size={6} fontWeight="bold" lineHeight={3} className={classes.header}>
             <FormattedMessage id="vzgZ3U" defaultMessage="Sign In" description="card header" />
           </Text>
@@ -156,7 +156,7 @@ const LoginPage: React.FC<LoginCardProps> = props => {
               </Button>
             </React.Fragment>
           ))}
-        </>
+        </Box>
       )}
     </LoginForm>
   );

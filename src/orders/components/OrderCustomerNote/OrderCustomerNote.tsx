@@ -1,6 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import Skeleton from "@dashboard/components/Skeleton";
-import { Text } from "@saleor/macaw-ui-next";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

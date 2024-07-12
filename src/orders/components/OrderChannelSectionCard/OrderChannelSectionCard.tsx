@@ -1,9 +1,8 @@
 import { channelUrl } from "@dashboard/channels/urls";
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
-import Skeleton from "@dashboard/components/Skeleton";
 import { ChannelFragment } from "@dashboard/graphql";
-import { Text } from "@saleor/macaw-ui-next";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 

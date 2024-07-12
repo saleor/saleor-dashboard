@@ -2,9 +2,8 @@ import { DateTime } from "@dashboard/components/Date";
 import { Pill } from "@dashboard/components/Pill";
 import { OrderDetailsFragment } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
-import { Skeleton } from "@material-ui/lab";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 

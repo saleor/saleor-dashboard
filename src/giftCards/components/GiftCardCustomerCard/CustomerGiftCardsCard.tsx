@@ -5,7 +5,6 @@ import CollectionWithDividers from "@dashboard/components/CollectionWithDividers
 import Link from "@dashboard/components/Link";
 import { DashboardModal } from "@dashboard/components/Modal";
 import PreviewPill from "@dashboard/components/PreviewPill";
-import Skeleton from "@dashboard/components/Skeleton";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { useCustomerDetails } from "@dashboard/customers/hooks/useCustomerDetails";
 import GiftCardCreateDialogContent from "@dashboard/giftCards/GiftCardCreateDialog/GiftCardCreateDialogContent";
@@ -15,6 +14,7 @@ import { useCustomerGiftCardListQuery } from "@dashboard/graphql";
 import { getFullName } from "@dashboard/misc";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { CardActions } from "@material-ui/core";
+import { Skeleton } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";

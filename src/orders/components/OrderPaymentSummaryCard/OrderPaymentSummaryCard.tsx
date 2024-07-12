@@ -2,12 +2,11 @@
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import { Pill } from "@dashboard/components/Pill";
-import Skeleton from "@dashboard/components/Skeleton";
 import { useFlag } from "@dashboard/featureFlags";
 import { OrderAction, OrderDetailsFragment } from "@dashboard/graphql";
 import { transformPaymentStatus } from "@dashboard/misc";
 import { orderGrantRefundUrl, orderSendRefundUrl } from "@dashboard/orders/urls";
-import { Divider, Text } from "@saleor/macaw-ui-next";
+import { Divider, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

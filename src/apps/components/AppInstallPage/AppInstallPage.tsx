@@ -6,12 +6,11 @@ import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Hr from "@dashboard/components/Hr";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Skeleton from "@dashboard/components/Skeleton";
 import { AppFetchMutation, AppInstallMutation } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
 import { useTheme } from "@dashboard/theme";
-import { Box, Button, Spinner, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton, Spinner, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

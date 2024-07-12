@@ -1,14 +1,13 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
-import Skeleton from "@dashboard/components/Skeleton";
 import { AccountErrorFragment, CustomerDetailsQuery } from "@dashboard/graphql";
 import { maybe } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import moment from "moment-timezone";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

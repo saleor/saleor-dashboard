@@ -1,12 +1,11 @@
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import Skeleton from "@dashboard/components/Skeleton";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import GiftCardTagInput from "@dashboard/giftCards/components/GiftCardTagInput";
 import GiftCardUpdateExpirySelect from "@dashboard/giftCards/GiftCardUpdate/GiftCardUpdateExpirySelect";
 import { Divider } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 

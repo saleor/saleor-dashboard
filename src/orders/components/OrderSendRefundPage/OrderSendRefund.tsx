@@ -4,13 +4,13 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Hr from "@dashboard/components/Hr";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Skeleton from "@dashboard/components/Skeleton";
 import {
   CreateManualTransactionRefundMutationVariables,
   OrderDetailsFragment,
 } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
 import {} from "@material-ui/core";
+import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

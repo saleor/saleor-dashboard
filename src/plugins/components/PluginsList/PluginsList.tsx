@@ -1,5 +1,4 @@
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { PluginBaseFragment } from "@dashboard/graphql";
@@ -10,7 +9,7 @@ import { PluginListUrlSortField, pluginUrl } from "@dashboard/plugins/urls";
 import { ListProps, SortPage } from "@dashboard/types";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { EditIcon, makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 

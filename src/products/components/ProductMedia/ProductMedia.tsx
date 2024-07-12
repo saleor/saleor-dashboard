@@ -2,11 +2,10 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import ImageUpload from "@dashboard/components/ImageUpload";
 import MediaTile from "@dashboard/components/MediaTile";
-import Skeleton from "@dashboard/components/Skeleton";
 import { ProductMediaFragment, ProductMediaType } from "@dashboard/graphql";
 import { ReorderAction } from "@dashboard/types";
 import createMultiFileUploadHandler from "@dashboard/utils/handlers/multiFileUploadHandler";
-import { Box, Button, Dropdown, List, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Dropdown, List, Skeleton, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";

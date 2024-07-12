@@ -4,9 +4,9 @@ import { FilterNumericField } from "@dashboard/components/Filter/FilterContent/F
 import { FilterSingleSelectField } from "@dashboard/components/Filter/FilterContent/FilterSingleSelectField";
 import { useCommonStyles } from "@dashboard/components/Filter/FilterContent/utils";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
-import Skeleton from "@dashboard/components/Skeleton";
 import { FormControlLabel, Radio, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Skeleton } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 

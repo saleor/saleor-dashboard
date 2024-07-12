@@ -3,7 +3,6 @@ import { FormSpacer } from "@dashboard/components/FormSpacer";
 import Link from "@dashboard/components/Link";
 import PreviewPill from "@dashboard/components/PreviewPill";
 import { RadioGroupField } from "@dashboard/components/RadioGroupField";
-import Skeleton from "@dashboard/components/Skeleton";
 import {
   WarehouseClickAndCollectOptionEnum,
   WarehouseWithShippingFragment,
@@ -14,7 +13,7 @@ import { shippingZoneUrl } from "@dashboard/shipping/urls";
 import { RelayToFlat } from "@dashboard/types";
 import { Divider } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

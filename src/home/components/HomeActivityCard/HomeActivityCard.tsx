@@ -41,9 +41,9 @@ export const HomeActivityCard = ({ activities, testId }: HomeActivityCardProps) 
         <DashboardCard.Title>{title}</DashboardCard.Title>
         <DashboardCard.Content>
           <Box display="flex" flexDirection="column" gap={5}>
-            <Skeleton />
-            <Skeleton __width="80%" />
-            <Skeleton />
+            <Skeleton height={3} />
+            <Skeleton __width="80%" height={3} />
+            <Skeleton height={3} />
           </Box>
         </DashboardCard.Content>
       </DashboardCard>
