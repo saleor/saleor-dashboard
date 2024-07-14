@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
+import ActionDialog from "@dashboard/components/ActionDialog";
 import { Combobox } from "@dashboard/components/Combobox";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";

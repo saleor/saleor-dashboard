@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
+import ActionDialog from "@dashboard/components/ActionDialog";
 import { useChannelsSearch } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
 import { Combobox } from "@dashboard/components/Combobox";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";

@@ -1,4 +1,4 @@
-import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
+import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { Box, Text } from "@saleor/macaw-ui-next";

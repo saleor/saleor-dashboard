@@ -1,4 +1,4 @@
-import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
+import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { buttonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";

@@ -9,7 +9,7 @@ import {
   handleUploadMultipleFiles,
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
-import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
+import ActionDialog from "@dashboard/components/ActionDialog";
 import { AttributeInput } from "@dashboard/components/Attributes";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";

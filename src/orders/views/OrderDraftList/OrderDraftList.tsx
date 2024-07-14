@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
 import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDialog";
-import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
+import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";

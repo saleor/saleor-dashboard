@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
-import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
+import ActionDialog from "@dashboard/components/ActionDialog";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
