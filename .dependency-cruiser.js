@@ -7,7 +7,7 @@ module.exports = {
       comment: "Macaw UI migration",
       from: {},
       to: {
-        path: "@saleor/macaw-ui/legacy",
+        path: "@saleor/macaw-ui",
       },
     },
     {
