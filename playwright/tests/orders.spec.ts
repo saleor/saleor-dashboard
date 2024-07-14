@@ -257,13 +257,13 @@ test("TC: SALEOR_84 Create draft order @e2e @draft", async () => {
 });
 
 test("TC: SALEOR_191 Refund products from the fully paid order @e2e @refunds", async () => {
-  const order = ORDERS.fullyPaidOrdersWithSingleTransaction.first;
+  const order = ORDERS.fullyPaidOrderWithSingleTransaction;
 
   await ordersPage.goToExistingOrderPage(order.id);
   await ordersPage.clickAddRefundButton();
   await ordersPage.orderRefundDialog.pickLineItemsRefund();
   await ordersPage.orderRefundModal.waitFor({ state: "hidden" });
-  await refundPage.expectLineItemsRefundPageOpen(order.id);
+  await refundPage.expectAddLineItemsRefundPageOpen(order.id);
   await refundPage.pickAllProductQuantityToRefund(order.lineItems[0].name);
 
   const productRow = await refundPage.getProductRow(order.lineItems[0].name);
@@ -311,3 +311,27 @@ test("TC: SALEOR_192 Should create a manual refund with a custom amount @e2e @re
   await ordersPage.orderRefundSection.waitFor({ state: "visible" });
   await ordersPage.assertRefundOnList("Manual refund");
 });
+
+const orderRefunds = ORDERS.orderWithRefundsInStatusOtherThanSuccess.refunds;
+
+for (const refund of orderRefunds) {
+  test(`TC: SALEOR_193 Update order with non-manual refund in ${refund.status} status @e2e @refunds`, async () => {
+    await ordersPage.goToExistingOrderPage(ORDERS.orderWithRefundsInStatusOtherThanSuccess.id);
+    await ordersPage.orderRefundList.scrollIntoViewIfNeeded();
+
+    const orderRefundListRow = await ordersPage.orderRefundList.locator("tr");
+    const pendingRefunds = await orderRefundListRow.filter({ hasText: "PENDING" }).all();
+
+    for (const pendingRefund of pendingRefunds) {
+      await expect(pendingRefund.locator(ordersPage.editRefundButton)).toBeDisabled();
+    }
+    await ordersPage.clickEditRefundButton(refund.status);
+    await refundPage.expectEditLineItemsRefundPageOpen(
+      ORDERS.orderWithRefundsInStatusOtherThanSuccess.id,
+      refund.id,
+    );
+    await refundPage.transferFunds();
+    await refundPage.expectSuccessBanner();
+    await expect(ordersPage.orderRefundList).not.toContainText(refund.status);
+  });
+}
