@@ -8,6 +8,7 @@ module.exports = {
       from: {},
       to: {
         path: "@saleor/macaw-ui",
+        pathNot: "@saleor/macaw-ui-next"
       },
     },
     {
