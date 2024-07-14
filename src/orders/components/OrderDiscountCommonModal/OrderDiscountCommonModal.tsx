@@ -1,6 +1,6 @@
-import DialogButtons from "@dashboard/components/ActionDialog/DialogButtons";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
 import PriceField from "@dashboard/components/PriceField";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
 import { DiscountValueTypeEnum, MoneyFragment } from "@dashboard/graphql";
@@ -272,27 +272,31 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
           data-test-id="discount-reason"
           onChange={(event: ChangeEvent<HTMLInputElement>) => setReason(event.target.value)}
         />
+
+        <DashboardModal.Actions marginTop={6}>
+          {existingDiscount && (
+            <div className={classes.buttonWrapper}>
+              <ConfirmButton
+                data-test-id="button-remove"
+                onClick={onRemove}
+                className={classes.removeButton}
+                transitionState={removeStatus}
+              >
+                {intl.formatMessage(buttonMessages.remove)}
+              </ConfirmButton>
+            </div>
+          )}
+          <ConfirmButton
+            disabled={isSubmitDisabled}
+            transitionState={confirmStatus}
+            onClick={handleConfirm}
+            variant="primary"
+            data-test-id="submit"
+          >
+            {intl.formatMessage(buttonMessages.confirm)}
+          </ConfirmButton>
+        </DashboardModal.Actions>
       </CardContent>
-      <DialogButtons
-        onConfirm={handleConfirm}
-        onClose={onClose}
-        disabled={isSubmitDisabled}
-        showBackButton={false}
-        confirmButtonState={confirmStatus}
-      >
-        {existingDiscount && (
-          <div className={classes.buttonWrapper}>
-            <ConfirmButton
-              data-test-id="button-remove"
-              onClick={onRemove}
-              className={classes.removeButton}
-              transitionState={removeStatus}
-            >
-              {intl.formatMessage(buttonMessages.remove)}
-            </ConfirmButton>
-          </div>
-        )}
-      </DialogButtons>
     </Card>
   );
 };

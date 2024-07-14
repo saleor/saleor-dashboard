@@ -1,4 +1,4 @@
-import NewActionDialog from "@dashboard/components/ActionDialog/NewActionDialog";
+import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { buttonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
@@ -38,7 +38,7 @@ const AppDeactivateDialog: React.FC<AppDeactivateDialogProps> = ({
   };
 
   return (
-    <NewActionDialog
+    <ActionDialog
       confirmButtonLabel={intl.formatMessage(buttonMessages.deactivate)}
       confirmButtonState={confirmButtonState}
       open={open}
@@ -56,7 +56,7 @@ const AppDeactivateDialog: React.FC<AppDeactivateDialogProps> = ({
           </>
         )}
       </Box>
-    </NewActionDialog>
+    </ActionDialog>
   );
 };
 

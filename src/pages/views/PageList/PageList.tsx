@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import NewActionDialog from "@dashboard/components/ActionDialog/NewActionDialog";
+import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
@@ -206,7 +206,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
         hasPresetsChanged={hasPresetsChanged}
         onFilterPresetsAll={resetFilters}
       />
-      <NewActionDialog
+      <ActionDialog
         open={params.action === "publish"}
         onClose={closeModal}
         confirmButtonState={bulkPagePublishOpts.status}
@@ -233,8 +233,8 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
             displayQuantity: <strong>{selectedRowIds.length}</strong>,
           }}
         />
-      </NewActionDialog>
-      <NewActionDialog
+      </ActionDialog>
+      <ActionDialog
         open={params.action === "unpublish"}
         onClose={closeModal}
         confirmButtonState={bulkPagePublishOpts.status}
@@ -261,8 +261,8 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
             displayQuantity: <strong>{selectedRowIds.length}</strong>,
           }}
         />
-      </NewActionDialog>
-      <NewActionDialog
+      </ActionDialog>
+      <ActionDialog
         open={params.action === "remove"}
         onClose={closeModal}
         confirmButtonState={bulkPageRemoveOpts.status}
@@ -289,7 +289,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
             displayQuantity: <strong>{selectedRowIds.length}</strong>,
           }}
         />
-      </NewActionDialog>
+      </ActionDialog>
       <PageTypePickerDialog
         confirmButtonState="success"
         open={params.action === "create-page"}

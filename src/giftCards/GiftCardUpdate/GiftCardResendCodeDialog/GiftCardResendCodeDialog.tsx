@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import NewActionDialog from "@dashboard/components/ActionDialog/NewActionDialog";
+import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
 import { useChannelsSearch } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
 import { Combobox } from "@dashboard/components/Combobox";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
@@ -93,8 +93,7 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
   useEffect(reset, [consentSelected]);
 
   return (
-    <NewActionDialog
-      maxWidth="sm"
+    <ActionDialog
       open={open}
       onConfirm={submit}
       confirmButtonLabel={intl.formatMessage(messages.submitButtonLabel)}
@@ -142,7 +141,7 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
           />
         </>
       )}
-    </NewActionDialog>
+    </ActionDialog>
   );
 };
 

@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
 import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDialog";
-import NewActionDialog from "@dashboard/components/ActionDialog/NewActionDialog";
+import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
@@ -186,7 +186,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         selectedOrderDraftIds={selectedRowIds}
         onSelectOrderDraftIds={handleSetSelectedOrderDraftIds}
       />
-      <NewActionDialog
+      <ActionDialog
         confirmButtonState={orderDraftBulkDeleteOpts.status}
         onClose={closeModal}
         onConfirm={() => onOrderDraftBulkDelete(selectedRowIds)}
@@ -207,7 +207,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
             displayQuantity: <strong>{maybe(() => selectedRowIds.length)}</strong>,
           }}
         />
-      </NewActionDialog>
+      </ActionDialog>
       <SaveFilterTabDialog
         open={params.action === "save-search"}
         confirmButtonState="default"

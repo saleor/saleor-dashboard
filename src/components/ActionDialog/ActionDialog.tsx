@@ -1,37 +1,57 @@
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DialogProps } from "@dashboard/types";
-import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
 import React from "react";
 
-import DialogButtons from "./DialogButtons";
-import { ActionDialogVariant, Size } from "./types";
+import BackButton from "../BackButton";
+import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "../Modal";
+import { ActionDialogVariant } from "./types";
 
 export interface ActionDialogProps extends DialogProps {
   children?: React.ReactNode;
   confirmButtonLabel?: string;
   confirmButtonState: ConfirmButtonTransitionState;
   disabled?: boolean;
-  maxWidth?: Size | false;
   title: string;
   variant?: ActionDialogVariant;
   backButtonText?: string;
   onConfirm: () => any;
 }
 
-const ActionDialog: React.FC<ActionDialogProps> = props => {
-  const { children, open, title, onClose, variant, maxWidth, ...rest } = props;
-
+const ActionDialog = ({
+  children,
+  open,
+  title,
+  onClose,
+  variant,
+  confirmButtonState,
+  backButtonText,
+  disabled,
+  onConfirm,
+  confirmButtonLabel,
+}: ActionDialogProps) => {
   return (
-    <Dialog fullWidth onClose={onClose} open={open} maxWidth={maxWidth}>
-      <DialogTitle disableTypography>{title}</DialogTitle>
-      <DialogContent>{children}</DialogContent>
-      <DialogButtons {...rest} onClose={onClose} variant={variant} />
-    </Dialog>
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%">
+        <DashboardModal.Title>{title}</DashboardModal.Title>
+
+        {children}
+
+        <DashboardModal.Actions>
+          <BackButton onClick={onClose}>{backButtonText}</BackButton>
+          <ConfirmButton
+            transitionState={confirmButtonState}
+            disabled={disabled}
+            onClick={onConfirm}
+            variant={variant === "delete" ? "error" : "primary"}
+            data-test-id="submit"
+          >
+            {confirmButtonLabel}
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
-ActionDialog.defaultProps = {
-  maxWidth: "xs",
-};
 ActionDialog.displayName = "ActionDialog";
 export default ActionDialog;

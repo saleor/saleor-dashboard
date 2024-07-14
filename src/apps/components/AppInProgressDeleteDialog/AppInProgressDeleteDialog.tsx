@@ -1,4 +1,4 @@
-import NewActionDialog from "@dashboard/components/ActionDialog/NewActionDialog";
+import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { Box } from "@saleor/macaw-ui-next";
@@ -35,7 +35,7 @@ const AppInProgressDeleteDialog = ({
   };
 
   return (
-    <NewActionDialog
+    <ActionDialog
       confirmButtonState={confirmButtonState}
       open={open}
       onClose={onClose}
@@ -44,7 +44,7 @@ const AppInProgressDeleteDialog = ({
       variant="delete"
     >
       <Box data-test-id="dialog-content">{getMainText()}</Box>
-    </NewActionDialog>
+    </ActionDialog>
   );
 };
 

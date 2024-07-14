@@ -1,4 +1,4 @@
-import NewActionDialog from "@dashboard/components/ActionDialog/NewActionDialog";
+import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { Box, Text } from "@saleor/macaw-ui-next";
@@ -48,7 +48,7 @@ const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
   };
 
   return (
-    <NewActionDialog
+    <ActionDialog
       confirmButtonState={confirmButtonState}
       open={open}
       onClose={onClose}
@@ -70,7 +70,7 @@ const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
         </Box>
         {getMainText()} <FormattedMessage {...msgs.deleteAppQuestion} />
       </Box>
-    </NewActionDialog>
+    </ActionDialog>
   );
 };
 

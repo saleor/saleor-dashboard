@@ -9,7 +9,7 @@ import {
   handleUploadMultipleFiles,
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
-import NewActionDialog from "@dashboard/components/ActionDialog/NewActionDialog";
+import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
 import { AttributeInput } from "@dashboard/components/Attributes";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
@@ -217,7 +217,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
         onCloseDialog={() => navigate(pageUrl(id))}
         onAttributeSelectBlur={searchAttributeReset}
       />
-      <NewActionDialog
+      <ActionDialog
         open={params.action === "remove"}
         confirmButtonState={pageRemoveOpts.status}
         title={intl.formatMessage({
@@ -237,7 +237,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
             title: <strong>{getStringOrPlaceholder(pageDetails.data?.page?.title)}</strong>,
           }}
         />
-      </NewActionDialog>
+      </ActionDialog>
     </>
   );
 };

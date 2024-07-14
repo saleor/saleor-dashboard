@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
-import NewActionDialog from "@dashboard/components/ActionDialog/NewActionDialog";
+import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -150,7 +150,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         }}
         onSearchChange={searchPermissionGroups}
       />
-      <NewActionDialog
+      <ActionDialog
         open={params.action === "remove"}
         title={intl.formatMessage({
           id: "GhXwO/",
@@ -173,8 +173,8 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
             email: getStringOrPlaceholder(data?.user?.email),
           }}
         />
-      </NewActionDialog>
-      <NewActionDialog
+      </ActionDialog>
+      <ActionDialog
         open={params.action === "remove-avatar"}
         title={intl.formatMessage({
           id: "VKWPBf",
@@ -193,7 +193,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
             email: <strong>{getStringOrPlaceholder(data?.user?.email)}</strong>,
           }}
         />
-      </NewActionDialog>
+      </ActionDialog>
       <StaffPasswordResetDialog
         confirmButtonState={changePasswordOpts.status}
         errors={changePasswordOpts?.data?.passwordChange?.errors || []}

@@ -1,4 +1,4 @@
-import NewActionDialog from "@dashboard/components/ActionDialog/NewActionDialog";
+import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { OrderErrorFragment } from "@dashboard/graphql";
@@ -32,7 +32,7 @@ const OrderMarkAsPaidDialog: React.FC<OrderMarkAsPaidDialogProps> = ({
   const errors = useModalDialogErrors(apiErrors, open);
 
   return (
-    <NewActionDialog
+    <ActionDialog
       confirmButtonState={confirmButtonState}
       open={open}
       title={intl.formatMessage({
@@ -71,7 +71,7 @@ const OrderMarkAsPaidDialog: React.FC<OrderMarkAsPaidDialogProps> = ({
           ))}
         </>
       )}
-    </NewActionDialog>
+    </ActionDialog>
   );
 };
 
