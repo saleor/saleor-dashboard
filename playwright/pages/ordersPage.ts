@@ -11,7 +11,6 @@ import { ShippingAddressDialog } from "@pages/dialogs/shippingMethodDialog";
 import { Page } from "@playwright/test";
 
 import { OrderRefundDialog } from "./dialogs/orderRefundDialog";
-import { DraftOrdersPage } from "./draftOrdersPage";
 
 export class OrdersPage extends BasePage {
   orderCreateDialog: OrderCreateDialog;
@@ -60,6 +59,9 @@ export class OrdersPage extends BasePage {
     readonly orderSummary = page.getByTestId("order-summary"),
     readonly editRefundButton = page.getByTestId("edit-refund-button").locator("button"),
     readonly totalPrice = page
+      .getByTestId("order-total-price")
+      .locator(page.getByTestId("money-value")),
+    readonly subTotalPrice = page
       .getByTestId("order-total-price")
       .locator(page.getByTestId("money-value")),
   ) {
@@ -124,6 +126,7 @@ export class OrdersPage extends BasePage {
     await console.log("Navigating to order details view: " + orderLink);
     await this.page.goto(orderLink);
     await this.waitForDOMToFullyLoad();
+    await this.waitForGrid();
     await this.waitForGrid();
   }
 
