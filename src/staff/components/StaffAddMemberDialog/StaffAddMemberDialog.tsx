@@ -61,7 +61,7 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
         initial={initialForm}
         onSubmit={onConfirm}
       >
-        {({ change, data: formData }) => (
+        {({ change, data: formData, submit }) => (
           <DashboardModal.Content __width={400} overflow="hidden">
             <DashboardModal.Title>
               <FormattedMessage
@@ -106,7 +106,7 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
               <BackButton onClick={onClose} />
               <ConfirmButton
                 data-test-id="submit"
-                type="submit"
+                onClick={submit}
                 transitionState={confirmButtonState}
               >
                 <FormattedMessage id="hw9Fah" defaultMessage="Send invite" description="button" />
