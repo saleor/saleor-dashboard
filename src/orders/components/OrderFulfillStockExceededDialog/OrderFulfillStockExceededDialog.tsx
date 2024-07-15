@@ -51,6 +51,7 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
         onClose={onClose}
         confirmButtonState={confirmButtonState}
         confirmButtonLabel={intl.formatMessage(messages.fulfillButton)}
+        size="lg"
       >
         <Typography>{intl.formatMessage(messages.infoLabel)}</Typography>
         <CardSpacer />

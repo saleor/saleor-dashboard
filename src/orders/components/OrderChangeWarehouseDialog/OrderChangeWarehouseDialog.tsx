@@ -68,7 +68,7 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
     variables: {
       after: null,
       channnelsId: null,
-      first: 15,
+      first: 20,
       query: "",
     },
   });

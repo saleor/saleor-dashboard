@@ -188,21 +188,23 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         })}
         variant="delete"
       >
-        <Box>
-          <FormattedMessage
-            id="Pp/7T7"
-            defaultMessage="{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
-            values={{
-              counter: params?.ids?.length,
-              displayQuantity: <strong>{params?.ids?.length}</strong>,
-            }}
-          />
-        </Box>
-        <Box>
-          <FormattedMessage
-            id="e+L+q3"
-            defaultMessage="Remember this will also delete all products assigned to this category."
-          />
+        <Box display="grid" gap={2}>
+          <Box>
+            <FormattedMessage
+              id="Pp/7T7"
+              defaultMessage="{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
+              values={{
+                counter: params?.ids?.length,
+                displayQuantity: <strong>{params?.ids?.length}</strong>,
+              }}
+            />
+          </Box>
+          <Box>
+            <FormattedMessage
+              id="e+L+q3"
+              defaultMessage="Remember this will also delete all products assigned to this category."
+            />
+          </Box>
         </Box>
       </ActionDialog>
 

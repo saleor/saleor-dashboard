@@ -21,7 +21,6 @@ export const ExternalAppProvider: React.FC = ({ children }) => {
   return (
     <ExternalAppContext.Provider value={{ open, appData, setOpen, setAppData }}>
       {children}
-
       <AppDialog open={open} onClose={handleClose} title={appData?.label}>
         {open && appData && (
           <AppFrame

@@ -12,6 +12,7 @@ import { DialogProps } from "@dashboard/types";
 import commonErrorMessages from "@dashboard/utils/errors/common";
 import { mapSlugNodeToChoice } from "@dashboard/utils/maps";
 import { CircularProgress, TextField, Typography } from "@material-ui/core";
+import { Box } from "@saleor/macaw-ui-next";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -101,13 +102,14 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
       title={intl.formatMessage(messages.title)}
       confirmButtonState={status}
       disabled={loading}
+      size="lg"
     >
       {loadingChannels ? (
         <div className={progressClasses.progressContainer}>
           <CircularProgress />
         </div>
       ) : (
-        <>
+        <Box display="grid" gap={2}>
           <Typography>{intl.formatMessage(messages.description)}</Typography>
 
           <Combobox
@@ -139,7 +141,7 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
             className={classes.inputContainer}
             label={intl.formatMessage(messages.emailInputPlaceholder)}
           />
-        </>
+        </Box>
       )}
     </ActionDialog>
   );

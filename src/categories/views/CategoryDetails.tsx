@@ -305,20 +305,22 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
         })}
         variant="delete"
       >
-        <Box>
-          <FormattedMessage
-            id="xRkj2h"
-            defaultMessage="Are you sure you want to delete {categoryName}?"
-            values={{
-              categoryName: <strong>{data?.category?.name || "..."}</strong>,
-            }}
-          />
-        </Box>
-        <Box>
-          <FormattedMessage
-            id="3DGvA/"
-            defaultMessage="Remember this will also unpin all products assigned to this category, making them unavailable in storefront."
-          />
+        <Box display="grid" gap={2}>
+          <Box>
+            <FormattedMessage
+              id="xRkj2h"
+              defaultMessage="Are you sure you want to delete {categoryName}?"
+              values={{
+                categoryName: <strong>{data?.category?.name || "..."}</strong>,
+              }}
+            />
+          </Box>
+          <Box>
+            <FormattedMessage
+              id="3DGvA/"
+              defaultMessage="Remember this will also unpin all products assigned to this category, making them unavailable in storefront."
+            />
+          </Box>
         </Box>
       </ActionDialog>
 
@@ -338,21 +340,23 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
         })}
         variant="delete"
       >
-        <Box>
-          <FormattedMessage
-            id="Pp/7T7"
-            defaultMessage="{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
-            values={{
-              counter: maybe(() => selectedCategoryRowIds.length),
-              displayQuantity: <strong>{maybe(() => selectedCategoryRowIds.length)}</strong>,
-            }}
-          />
-        </Box>
-        <Box>
-          <FormattedMessage
-            id="e+L+q3"
-            defaultMessage="Remember this will also delete all products assigned to this category."
-          />
+        <Box display="grid" gap={2}>
+          <Box>
+            <FormattedMessage
+              id="Pp/7T7"
+              defaultMessage="{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
+              values={{
+                counter: maybe(() => selectedCategoryRowIds.length),
+                displayQuantity: <strong>{maybe(() => selectedCategoryRowIds.length)}</strong>,
+              }}
+            />
+          </Box>
+          <Box>
+            <FormattedMessage
+              id="e+L+q3"
+              defaultMessage="Remember this will also delete all products assigned to this category."
+            />
+          </Box>
         </Box>
       </ActionDialog>
 
@@ -372,14 +376,16 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
         })}
         variant="delete"
       >
-        <FormattedMessage
-          id="7l5Bh9"
-          defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
-          values={{
-            counter: maybe(() => selectedProductRowIds.length),
-            displayQuantity: <strong>{maybe(() => selectedProductRowIds.length)}</strong>,
-          }}
-        />
+        <Box>
+          <FormattedMessage
+            id="7l5Bh9"
+            defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
+            values={{
+              counter: maybe(() => selectedProductRowIds.length),
+              displayQuantity: <strong>{maybe(() => selectedProductRowIds.length)}</strong>,
+            }}
+          />
+        </Box>
       </ActionDialog>
     </PaginatorContext.Provider>
   );
