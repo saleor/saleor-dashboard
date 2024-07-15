@@ -3,7 +3,6 @@ import React from "react";
 
 interface TitleProps {
   paddingX?: Sprinkles["paddingX"];
-  dataTestId?: string;
   // "title" is deprecated, use "children" instead
   title?: React.ReactNode;
   subtitle?: React.ReactNode;
@@ -13,12 +12,12 @@ interface TitleProps {
 export const Title: React.FC<TitleProps> = ({
   children,
   paddingX,
-  dataTestId,
   title,
   subtitle,
   className,
+  ...rest
 }) => (
-  <Box paddingX={paddingX ?? 6} paddingTop={6} data-test-id={dataTestId} className={className}>
+  <Box paddingX={paddingX ?? 6} paddingTop={6} className={className} {...rest}>
     <Text size={5} fontWeight="bold">
       {children ?? title}
     </Text>
