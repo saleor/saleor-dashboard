@@ -27,8 +27,16 @@ export class RefundPage extends OrdersPage {
     return await this.page.locator("table tr").filter({ hasText: productName });
   }
 
-  async expectLineItemsRefundPageOpen(orderId: string) {
+  async expectAddLineItemsRefundPageOpen(orderId: string) {
     const orderLink = `${URL_LIST.orders}${orderId}/refund`;
+
+    await expect(this.page).toHaveURL(orderLink);
+    await this.waitForDOMToFullyLoad();
+    await expect(this.pageHeader).toContainText("Create refund with line items");
+  }
+
+  async expectEditLineItemsRefundPageOpen(orderId: string, refundId: string) {
+    const orderLink = `${URL_LIST.orders}${orderId}/refund/${refundId}`;
 
     await expect(this.page).toHaveURL(orderLink);
     await this.waitForDOMToFullyLoad();

@@ -56,7 +56,7 @@ export class OrdersPage extends BasePage {
     readonly orderRefundModal = page.getByTestId("order-refund-dialog"),
     readonly orderRefundSection = page.getByTestId("order-refund-section"),
     readonly orderRefundList = page.getByTestId("refund-list"),
-    readonly editRefundButton = page.getByTestId("edit-refund-button"),
+    readonly editRefundButton = page.getByTestId("edit-refund-button").locator("button"),
   ) {
     super(page);
     this.markOrderAsPaidDialog = new MarkOrderAsPaidDialog(page);
