@@ -29,6 +29,8 @@ interface ProductVariantPriceProps {
 
 const numberOfColumns = 2;
 
+const COMMON_CELL_STYLES = { verticalAlign: "baseline" };
+
 export const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
   const {
     disabled = false,
@@ -125,14 +127,18 @@ export const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => 
 
               return (
                 <TableRowLink key={listing?.id || `skeleton-${index}`} data-test-id={listing?.name}>
-                  <TableCell style={{ paddingLeft: vars.spacing[6] }}>
+                  <TableCell
+                    style={{
+                      paddingLeft: vars.spacing[6],
+                    }}
+                  >
                     <Text>{listing?.name || <Skeleton />}</Text>
                   </TableCell>
-                  <TableCell>
+                  <TableCell style={COMMON_CELL_STYLES}>
                     {listing ? (
                       <PriceField
                         className={sprinkles({
-                          marginY: 2,
+                          [priceApiError ? "marginTop" : "marginY"]: 2,
                         })}
                         error={!!priceApiError}
                         helperText={
@@ -155,7 +161,7 @@ export const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => 
                       <Skeleton />
                     )}
                   </TableCell>
-                  <TableCell>
+                  <TableCell style={COMMON_CELL_STYLES}>
                     {listing ? (
                       <PriceField
                         className={sprinkles({
