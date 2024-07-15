@@ -1,10 +1,13 @@
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { buttonMessages } from "@dashboard/intl";
 import { DialogProps } from "@dashboard/types";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import BackButton from "../BackButton";
 import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "../Modal";
-import { ActionDialogVariant } from "./types";
+import { ActionDialogVariant, Size } from "./types";
 
 export interface ActionDialogProps extends DialogProps {
   children?: React.ReactNode;
@@ -15,7 +18,13 @@ export interface ActionDialogProps extends DialogProps {
   variant?: ActionDialogVariant;
   backButtonText?: string;
   onConfirm: () => any;
+  size?: Size;
 }
+
+const ACTION_DIALOG_SIZE: Record<Size, number> = {
+  sm: 444,
+  lg: DASHBOARD_MODAL_WIDTH,
+};
 
 const ActionDialog = ({
   children,
@@ -28,14 +37,15 @@ const ActionDialog = ({
   disabled,
   onConfirm,
   confirmButtonLabel,
+  size = "sm",
 }: ActionDialogProps) => {
+  const intl = useIntl();
+
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%">
+      <DashboardModal.Content __maxWidth={ACTION_DIALOG_SIZE[size]} width="100%" fontSize={3}>
         <DashboardModal.Title>{title}</DashboardModal.Title>
-
-        {children}
-
+        <Box>{children}</Box>
         <DashboardModal.Actions>
           <BackButton onClick={onClose}>{backButtonText}</BackButton>
           <ConfirmButton
@@ -45,7 +55,10 @@ const ActionDialog = ({
             variant={variant === "delete" ? "error" : "primary"}
             data-test-id="submit"
           >
-            {confirmButtonLabel}
+            {confirmButtonLabel ||
+              (variant === "delete"
+                ? intl.formatMessage(buttonMessages.delete)
+                : intl.formatMessage(buttonMessages.confirm))}
           </ConfirmButton>
         </DashboardModal.Actions>
       </DashboardModal.Content>
