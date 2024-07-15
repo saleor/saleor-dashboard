@@ -43,9 +43,9 @@ const ActionDialog = ({
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content __maxWidth={ACTION_DIALOG_SIZE[size]} width="100%" fontSize={3}>
+      <DashboardModal.Content __maxWidth={ACTION_DIALOG_SIZE[size]} width="100%" overflow="hidden">
         <DashboardModal.Title>{title}</DashboardModal.Title>
-        <Box>{children}</Box>
+        <Box fontSize={3}>{children}</Box>
         <DashboardModal.Actions>
           <BackButton onClick={onClose}>{backButtonText}</BackButton>
           <ConfirmButton
