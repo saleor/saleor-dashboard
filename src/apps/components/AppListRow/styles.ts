@@ -97,24 +97,6 @@ export const useIntegrationsStyles = makeStyles(
 
 export const useActionsStyles = makeStyles(
   theme => ({
-    cardActions: {
-      display: "flex",
-      justifyContent: "flex-end",
-      padding: theme.spacing(2, 4),
-      minHeight: theme.spacing(9),
-    },
-    cardActionsText: {
-      width: "100%",
-    },
-    cardActionsIssueText: {
-      width: "100%",
-      color: theme.palette.error.main,
-      whiteSpace: "nowrap",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "flex-end",
-      gap: theme.spacing(1),
-    },
     releaseDate: {
       color: theme.palette.saleor.main[3],
     },

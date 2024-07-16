@@ -402,14 +402,14 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   return (
     <FullScreenContainer open={isOpen} className={fullScreenClasses.fullScreenContainer}>
-      <DashboardCard className={classes.root}>
+      <DashboardCard position="relative">
         {renderHeader?.({
           toggleFullscreen: toggle,
           addRowOnDatagrid: onRowAdded,
           isFullscreenOpen: isOpen,
           isAnimationOpenFinished,
         })}
-        <DashboardCard.Content className={classes.cardContentRoot} data-test-id="list">
+        <DashboardCard.Content padding={0} __flex="1" data-test-id="list">
           {rowsTotal > 0 || showEmptyDatagrid ? (
             <>
               {selection?.rows && selection?.rows.length > 0 && selectionActionsComponent && (

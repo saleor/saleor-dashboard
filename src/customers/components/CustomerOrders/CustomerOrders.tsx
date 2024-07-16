@@ -53,12 +53,12 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
           defaultMessage: "Recent Orders",
           description: "section header",
         })}
+        toolbar={
+          <Button variant="tertiary" href={viewAllHref}>
+            <FormattedMessage id="3+990c" defaultMessage="View all orders" description="button" />
+          </Button>
+        }
       />
-      <DashboardCard.Toolbar>
-        <Button variant="tertiary" href={viewAllHref}>
-          <FormattedMessage id="3+990c" defaultMessage="View all orders" description="button" />
-        </Button>
-      </DashboardCard.Toolbar>
       <ResponsiveTable>
         <TableHead>
           <TableRowLink>

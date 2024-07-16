@@ -72,12 +72,12 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
           defaultMessage: "Excluded Products",
           description: "section header",
         })}
+        toolbar={
+          <Button data-test-id="assign-product-button" variant="tertiary" onClick={onProductAssign}>
+            <FormattedMessage id="U8eeLW" defaultMessage="Assign products" description="button" />
+          </Button>
+        }
       />
-      <DashboardCard.Toolbar>
-        <Button data-test-id="assign-product-button" variant="tertiary" onClick={onProductAssign}>
-          <FormattedMessage id="U8eeLW" defaultMessage="Assign products" description="button" />
-        </Button>
-      </DashboardCard.Toolbar>
       <ResponsiveTable className={classes.table}>
         {!!products?.length && (
           <>

@@ -95,21 +95,21 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
           defaultMessage: "Customer",
           description: "section header",
         })}
+        toolbar={
+          !!canEditCustomer && (
+            <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
+              <Button
+                data-test-id="edit-customer"
+                variant="tertiary"
+                disabled={!onCustomerEdit}
+                onClick={toggleEditMode}
+              >
+                {intl.formatMessage(buttonMessages.edit)}
+              </Button>
+            </RequirePermissions>
+          )
+        }
       />
-      <DashboardCard.Toolbar>
-        {!!canEditCustomer && (
-          <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
-            <Button
-              data-test-id="edit-customer"
-              variant="tertiary"
-              disabled={!onCustomerEdit}
-              onClick={toggleEditMode}
-            >
-              {intl.formatMessage(buttonMessages.edit)}
-            </Button>
-          </RequirePermissions>
-        )}
-      </DashboardCard.Toolbar>
       <DashboardCard.Content>
         {user === undefined ? (
           <Skeleton />

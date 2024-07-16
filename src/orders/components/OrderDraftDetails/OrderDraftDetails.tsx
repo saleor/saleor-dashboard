@@ -54,14 +54,15 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
           defaultMessage: "Order Details",
           description: "section header",
         })}
+        toolbar={
+          isChannelActive &&
+          areProductsInChannel && (
+            <Button variant="tertiary" onClick={onOrderLineAdd} data-test-id="add-products-button">
+              <FormattedMessage id="C50ahv" defaultMessage="Add products" description="button" />
+            </Button>
+          )
+        }
       />
-      <DashboardCard.Toolbar>
-        {isChannelActive && areProductsInChannel && (
-          <Button variant="tertiary" onClick={onOrderLineAdd} data-test-id="add-products-button">
-            <FormattedMessage id="C50ahv" defaultMessage="Add products" description="button" />
-          </Button>
-        )}
-      </DashboardCard.Toolbar>
       <OrderDraftDetailsProducts
         order={order}
         errors={errors}

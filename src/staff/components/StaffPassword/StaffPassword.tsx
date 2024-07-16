@@ -19,16 +19,16 @@ const StaffPassword: React.FC<StaffPasswordProps> = ({ onChangePassword }) => {
           defaultMessage: "Password",
           description: "header",
         })}
+        toolbar={
+          <Button onClick={onChangePassword} data-test-id="changePasswordBtn">
+            <FormattedMessage
+              id="N3Zot1"
+              defaultMessage="Change your password"
+              description="button"
+            />
+          </Button>
+        }
       />
-      <DashboardCard.Toolbar>
-        <Button onClick={onChangePassword} data-test-id="changePasswordBtn">
-          <FormattedMessage
-            id="N3Zot1"
-            defaultMessage="Change your password"
-            description="button"
-          />
-        </Button>
-      </DashboardCard.Toolbar>
       <DashboardCard.Content>
         <Typography>
           <FormattedMessage

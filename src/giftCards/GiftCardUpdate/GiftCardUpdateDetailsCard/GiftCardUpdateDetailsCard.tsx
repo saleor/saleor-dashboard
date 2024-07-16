@@ -27,14 +27,17 @@ const GiftCardUpdateDetailsCard: React.FC = () => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title title={intl.formatMessage(messages.title)} />
-      <DashboardCard.Toolbar>
-        {!loading && !giftCard?.isExpired && (
-          <Button data-test-id="set-balance-button" onClick={openSetBalanceDialog}>
-            {intl.formatMessage(messages.setBalanceButtonLabel)}
-          </Button>
-        )}
-      </DashboardCard.Toolbar>
+      <DashboardCard.Title
+        title={intl.formatMessage(messages.title)}
+        toolbar={
+          !loading &&
+          !giftCard?.isExpired && (
+            <Button data-test-id="set-balance-button" onClick={openSetBalanceDialog}>
+              {intl.formatMessage(messages.setBalanceButtonLabel)}
+            </Button>
+          )
+        }
+      />
       <DashboardCard.Content>
         {loading ? (
           <Skeleton />

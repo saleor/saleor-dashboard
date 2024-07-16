@@ -45,12 +45,14 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title title={intl.formatMessage(messages.discountVariantsHeader)} />
-      <DashboardCard.Toolbar>
-        <Button onClick={onVariantAssign} data-test-id="assign-variant">
-          <FormattedMessage {...messages.discountVariantsButton} />
-        </Button>
-      </DashboardCard.Toolbar>
+      <DashboardCard.Title
+        title={intl.formatMessage(messages.discountVariantsHeader)}
+        toolbar={
+          <Button onClick={onVariantAssign} data-test-id="assign-variant">
+            <FormattedMessage {...messages.discountVariantsButton} />
+          </Button>
+        }
+      />
       <ResponsiveTable>
         <colgroup>
           <col />

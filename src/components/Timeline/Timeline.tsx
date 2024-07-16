@@ -4,7 +4,7 @@ import { Button } from "@dashboard/components/Button";
 import { getUserInitials } from "@dashboard/misc";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui-next";
+import { sprinkles, vars } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -13,18 +13,10 @@ import { UserAvatar } from "../UserAvatar";
 
 const useStyles = makeStyles(
   theme => ({
-    avatar: {
-      left: -19,
-      position: "absolute",
-      top: 20,
-    },
     button: {
       padding: `7px`,
       borderTopLeftRadius: 0,
       borderBottomLeftRadius: 0,
-    },
-    cardActionsExpanded: {
-      maxHeight: theme.spacing(6),
     },
     input: {
       "& > div": {
@@ -39,7 +31,6 @@ const useStyles = makeStyles(
     },
     noteRoot: {
       marginBottom: theme.spacing(3),
-      // position: "absolute",
       top: 0,
       left: -19,
       right: 0,
@@ -91,11 +82,19 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
 
   return (
     <div className={classes.noteRoot}>
-      <DashboardCard.Content className={classes.noteTitle}>
+      <DashboardCard.Content
+        paddingLeft={0}
+        paddingRight={{ lastChild: 0 }}
+        paddingBottom={{ lastChild: 0 }}
+      >
         <UserAvatar
           url={user?.avatar?.url}
           initials={getUserInitials(user)}
-          className={classes.avatar}
+          className={sprinkles({
+            position: "absolute",
+            top: 0,
+          })}
+          style={{ left: -19 }}
         />
         <TextField
           disabled={disabled}

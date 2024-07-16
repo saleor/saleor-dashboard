@@ -124,7 +124,7 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
           label={
             <>
               <FormattedMessage {...messages.visibleInStorefront} />
-              <Text fontWeight="light">
+              <Text fontWeight="medium" fontSize={3}>
                 <FormattedMessage {...messages.visibleInStorefrontCaption} />
               </Text>
             </>

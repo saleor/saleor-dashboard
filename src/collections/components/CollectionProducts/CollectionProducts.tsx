@@ -76,7 +76,13 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
+      <DashboardCard.Title
+        toolbar={
+          <Button data-test-id="add-product" disabled={disabled} variant="tertiary" onClick={onAdd}>
+            <FormattedMessage id="scHVdW" defaultMessage="Assign product" description="button" />
+          </Button>
+        }
+      >
         {collection ? (
           intl.formatMessage(
             {
@@ -92,11 +98,6 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
           <Skeleton />
         )}
       </DashboardCard.Title>
-      <DashboardCard.Toolbar>
-        <Button data-test-id="add-product" disabled={disabled} variant="tertiary" onClick={onAdd}>
-          <FormattedMessage id="scHVdW" defaultMessage="Assign product" description="button" />
-        </Button>
-      </DashboardCard.Toolbar>
       <ResponsiveTable className={classes.table}>
         <TableHead
           colSpan={numberOfColumns}

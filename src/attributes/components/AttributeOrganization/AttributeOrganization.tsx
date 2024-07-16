@@ -75,7 +75,7 @@ const AttributeOrganization: React.FC<AttributeOrganizationProps> = props => {
             label={
               <>
                 <FormattedMessage id="v1pNHW" defaultMessage="Attribute Class" />
-                <Text fontWeight="light">
+                <Text fontWeight="medium" fontSize={3}>
                   <FormattedMessage
                     id="ErNH3D"
                     defaultMessage="Define where this attribute should be used in Saleor system"

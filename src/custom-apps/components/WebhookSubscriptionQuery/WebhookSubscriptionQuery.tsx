@@ -49,11 +49,11 @@ const WebhookSubscriptionQuery: React.FC<WebhookSubscriptionQueryProps> = ({
 
   return (
     <DashboardCard className={classes.card}>
-      <DashboardCard.Title className={clsx(formErrors.subscriptionQuery && classes.error)}>
+      <DashboardCard.Title color={formErrors.subscriptionQuery ? "critical1" : null}>
         {intl.formatMessage(messages.title)}
+
+        <DashboardCard.Subtitle>{formErrors.subscriptionQuery?.message}</DashboardCard.Subtitle>
       </DashboardCard.Title>
-      {/* TODO */}
-      {/* subtitle={formErrors.subscriptionQuery?.message} */}
       <DashboardCard.Content className={classes.cardContent}>
         <GraphiQL
           data-test-id="graphiql-webhook"

@@ -9,9 +9,6 @@ import { DashboardCard } from "../Card";
 
 const useStyles = makeStyles(
   theme => ({
-    card: {
-      border: `1px solid ${theme.palette.divider}`,
-    },
     container: {
       position: "relative",
     },
@@ -78,7 +75,7 @@ export const EditableTableCell: React.FC<EditableTableCellProps> = props => {
       </Typography>
       {opened && (
         <div className={classes.root}>
-          <DashboardCard className={classes.card}>
+          <DashboardCard borderColor="default1" borderWidth={1} borderStyle="solid">
             <DashboardCard.Content>
               <TextField
                 name="value"

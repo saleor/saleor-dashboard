@@ -96,17 +96,17 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
           defaultMessage: "Group members",
           description: "header",
         })}
+        toolbar={
+          <Button
+            data-test-id="assign-members"
+            color={disabled ? "secondary" : "primary"}
+            onClick={onAssign}
+            disabled={disabled}
+          >
+            <FormattedMessage id="OhFGpX" defaultMessage="Assign members" description="button" />
+          </Button>
+        }
       />
-      <DashboardCard.Toolbar>
-        <Button
-          data-test-id="assign-members"
-          color={disabled ? "secondary" : "primary"}
-          onClick={onAssign}
-          disabled={disabled}
-        >
-          <FormattedMessage id="OhFGpX" defaultMessage="Assign members" description="button" />
-        </Button>
-      </DashboardCard.Toolbar>
       {members?.length === 0 ? (
         <DashboardCard.Content className={classes.helperText} data-test-id="no-members-text">
           <Typography color="textSecondary">

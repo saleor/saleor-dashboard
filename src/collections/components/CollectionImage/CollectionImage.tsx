@@ -69,30 +69,33 @@ export const CollectionImage: React.FC<CollectionImageProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
+      <DashboardCard.Title
+        toolbar={
+          <>
+            <Button
+              variant="tertiary"
+              onClick={handleImageUploadButtonClick}
+              data-test-id="upload-image-button"
+            >
+              <FormattedMessage {...commonMessages.uploadImage} />
+            </Button>
+            <input
+              className={classes.fileField}
+              id="fileUpload"
+              onChange={event => onImageUpload(event.target.files[0])}
+              type="file"
+              ref={anchor}
+              accept="image/*"
+            />
+          </>
+        }
+      >
         {intl.formatMessage({
           id: "DP6b8U",
           defaultMessage: "Background Image (optional)",
           description: "section header",
         })}
       </DashboardCard.Title>
-      <DashboardCard.Toolbar>
-        <Button
-          variant="tertiary"
-          onClick={handleImageUploadButtonClick}
-          data-test-id="upload-image-button"
-        >
-          <FormattedMessage {...commonMessages.uploadImage} />
-        </Button>
-        <input
-          className={classes.fileField}
-          id="fileUpload"
-          onChange={event => onImageUpload(event.target.files[0])}
-          type="file"
-          ref={anchor}
-          accept="image/*"
-        />
-      </DashboardCard.Toolbar>
 
       {image === undefined ? (
         <DashboardCard.Content>

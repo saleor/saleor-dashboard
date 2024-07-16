@@ -1,10 +1,9 @@
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { FormChange } from "@dashboard/hooks/useForm";
-import { CardActions, Table, TableCell, TableHead, Typography } from "@material-ui/core";
-import { ExpandIcon, IconButton } from "@saleor/macaw-ui";
+import { Table, TableCell, TableHead, Typography } from "@material-ui/core";
+import { Button, ChervonDownIcon } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React, { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -46,31 +45,33 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data: { customHeaders }
 
   return (
     <DashboardCard data-test-id="webhook-headers-editor" data-test-expanded={expanded}>
-      <DashboardCard.Title className={classes.header}>
+      <DashboardCard.Title
+        paddingBottom={!expanded && 8}
+        display="flex"
+        flexDirection="row"
+        alignItems="center"
+        gap={2}
+      >
         {intl.formatMessage(messages.header)}
-      </DashboardCard.Title>
-
-      <DashboardCard.Toolbar>
-        <IconButton
-          className={clsx(classes.expandBtn, {
-            [classes.rotate]: expanded,
-          })}
-          hoverOutline={false}
-          variant="secondary"
+        <Button
+          variant="tertiary"
+          backgroundColor={{ hover: "transparent" }}
+          __transform={expanded ? "rotate(-180deg)" : "rotate(0)"}
           data-test-id="expand"
           onClick={() => setExpanded(!expanded)}
         >
-          <ExpandIcon />
-        </IconButton>
-      </DashboardCard.Toolbar>
+          <ChervonDownIcon />
+        </Button>
+      </DashboardCard.Title>
+
       {headers === undefined ? (
         <DashboardCard.Content>
           <Skeleton />
         </DashboardCard.Content>
       ) : (
         <>
-          <DashboardCard.Content className={classes.content}>
-            {headers.length > 0 && (
+          {headers.length > 0 && (
+            <DashboardCard.Content>
               <Typography color="textSecondary" variant="body2">
                 <FormattedMessage
                   {...messages.headersCount}
@@ -79,12 +80,12 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data: { customHeaders }
                   }}
                 />
               </Typography>
-            )}
-          </DashboardCard.Content>
+            </DashboardCard.Content>
+          )}
           {expanded && (
             <>
               {headers.length === 0 ? (
-                <DashboardCard.Content className={classes.emptyContainer}>
+                <DashboardCard.Content>
                   <Typography variant="body2" color="textSecondary">
                     <FormattedMessage {...messages.noHeaders} />
                   </Typography>
@@ -120,7 +121,7 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data: { customHeaders }
                   </Table>
                 </>
               )}
-              <CardActions className={classes.actions}>
+              <DashboardCard.Actions>
                 <Button
                   variant="secondary"
                   data-test-id="add-header"
@@ -129,7 +130,7 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data: { customHeaders }
                 >
                   <FormattedMessage {...messages.add} />
                 </Button>
-              </CardActions>
+              </DashboardCard.Actions>
             </>
           )}
         </>

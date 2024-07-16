@@ -5,7 +5,6 @@ import CollectionWithDividers from "@dashboard/components/CollectionWithDividers
 import Link from "@dashboard/components/Link";
 import { DashboardModal } from "@dashboard/components/Modal";
 import PreviewPill from "@dashboard/components/PreviewPill";
-import Skeleton from "@dashboard/components/Skeleton";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { useCustomerDetails } from "@dashboard/customers/hooks/useCustomerDetails";
 import GiftCardCreateDialogContent from "@dashboard/giftCards/GiftCardCreateDialog/GiftCardCreateDialogContent";
@@ -14,7 +13,7 @@ import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import { useCustomerGiftCardListQuery } from "@dashboard/graphql";
 import { getFullName } from "@dashboard/misc";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { CardActions } from "@material-ui/core";
+import { Skeleton } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -60,7 +59,19 @@ const CustomerGiftCardsCard: React.FC = () => {
   return (
     <>
       <DashboardCard>
-        <DashboardCard.Title title={intl.formatMessage(messages.customerGiftCardsCardTitle)}>
+        <DashboardCard.Title
+          title={intl.formatMessage(messages.customerGiftCardsCardTitle)}
+          toolbar={
+            <>
+              {!!giftCards?.length && (
+                <Button variant="tertiary" href={viewAllGiftCardsUrl} component={Link}>
+                  <FormattedMessage {...messages.customerGiftCardsViewAllButton} />
+                </Button>
+              )}
+              <PreviewPill className={classes.previewPill} />
+            </>
+          }
+        >
           <FormattedMessage
             {...(giftCards?.length
               ? messages.customerGiftCardsPresentSubtitle
@@ -68,16 +79,6 @@ const CustomerGiftCardsCard: React.FC = () => {
           />
           <VerticalSpacer spacing={2} />
         </DashboardCard.Title>
-        <DashboardCard.Toolbar>
-          <>
-            {!!giftCards?.length && (
-              <Button variant="tertiary" href={viewAllGiftCardsUrl} component={Link}>
-                <FormattedMessage {...messages.customerGiftCardsViewAllButton} />
-              </Button>
-            )}
-            <PreviewPill className={classes.previewPill} />
-          </>
-        </DashboardCard.Toolbar>
 
         {!loading && giftCards ? (
           <CollectionWithDividers
@@ -88,9 +89,9 @@ const CustomerGiftCardsCard: React.FC = () => {
             withOuterDividers
           />
         ) : (
-          <Skeleton />
+          <Skeleton height={2} marginX={6} />
         )}
-        <CardActions className={classes.cardActions}>
+        <DashboardCard.Actions className={classes.cardActions}>
           <Button
             variant="tertiary"
             onClick={handleCreateNewCardButton}
@@ -98,7 +99,7 @@ const CustomerGiftCardsCard: React.FC = () => {
           >
             <FormattedMessage {...messages.customerGiftCardsIssueNewCardButton} />
           </Button>
-        </CardActions>
+        </DashboardCard.Actions>
       </DashboardCard>
       <DashboardModal open={openCreateDialog} onChange={closeCreateDialog}>
         <GiftCardCreateDialogContent

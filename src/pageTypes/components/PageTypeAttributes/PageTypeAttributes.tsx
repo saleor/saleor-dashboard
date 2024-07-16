@@ -77,16 +77,16 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
           defaultMessage: "Content Attributes",
           description: "section header",
         })}
+        toolbar={
+          <Button
+            variant="tertiary"
+            onClick={() => onAttributeAssign(AttributeTypeEnum[type])}
+            data-test-id="assign-attributes"
+          >
+            <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
+          </Button>
+        }
       />
-      <DashboardCard.Toolbar>
-        <Button
-          variant="tertiary"
-          onClick={() => onAttributeAssign(AttributeTypeEnum[type])}
-          data-test-id="assign-attributes"
-        >
-          <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
-        </Button>
-      </DashboardCard.Toolbar>
       <DashboardCard.Content>
         <ResponsiveTable>
           <colgroup>

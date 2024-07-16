@@ -126,16 +126,16 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
           defaultMessage: "Variant Attributes",
           description: "section header",
         })}
+        toolbar={
+          <Button
+            data-test-id={testId}
+            variant="tertiary"
+            onClick={() => onAttributeAssign(ProductAttributeType[type])}
+          >
+            <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
+          </Button>
+        }
       />
-      <DashboardCard.Toolbar>
-        <Button
-          data-test-id={testId}
-          variant="tertiary"
-          onClick={() => onAttributeAssign(ProductAttributeType[type])}
-        >
-          <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
-        </Button>
-      </DashboardCard.Toolbar>
       <DashboardCard.Content>
         <ResponsiveTable>
           <colgroup>

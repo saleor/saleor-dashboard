@@ -80,7 +80,7 @@ const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
                   <FormattedMessage {...option.title} />
                 </Text>
                 {option.subtitle && (
-                  <Text fontWeight="light">
+                  <Text fontWeight="medium" fontSize={3} color="default2">
                     <FormattedMessage {...option.subtitle} />
                   </Text>
                 )}

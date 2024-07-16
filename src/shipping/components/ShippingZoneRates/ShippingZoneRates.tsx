@@ -79,12 +79,12 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                 description: "weight based shipping methods, section header",
               })
         }
+        toolbar={
+          <Button disabled={disabled} onClick={onRateAdd} data-test-id={testId}>
+            <FormattedMessage id="WR8rir" defaultMessage="Create rate" description="button" />
+          </Button>
+        }
       />
-      <DashboardCard.Toolbar>
-        <Button disabled={disabled} onClick={onRateAdd} data-test-id={testId}>
-          <FormattedMessage id="WR8rir" defaultMessage="Create rate" description="button" />
-        </Button>
-      </DashboardCard.Toolbar>
       <ResponsiveTable>
         <TableHead>
           <TableRowLink>

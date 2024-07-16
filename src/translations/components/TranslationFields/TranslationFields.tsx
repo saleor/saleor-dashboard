@@ -121,16 +121,18 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title title={title} />
-      <DashboardCard.Toolbar>
-        <IconButton variant="secondary" onClick={() => setExpandedState(!expanded)}>
-          <ArrowIcon
-            className={clsx({
-              [classes.rotate]: expanded,
-            })}
-          />
-        </IconButton>
-      </DashboardCard.Toolbar>
+      <DashboardCard.Title
+        title={title}
+        toolbar={
+          <IconButton variant="secondary" onClick={() => setExpandedState(!expanded)}>
+            <ArrowIcon
+              className={clsx({
+                [classes.rotate]: expanded,
+              })}
+            />
+          </IconButton>
+        }
+      />
       {expanded ? (
         <DashboardCard.Content className={classes.cardContent}>
           <Grid className={classes.grid} variant="uniform">

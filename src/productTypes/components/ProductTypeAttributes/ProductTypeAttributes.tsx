@@ -80,17 +80,17 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
           defaultMessage: "Product Attributes",
           description: "section header",
         })}
+        toolbar={
+          <Button
+            disabled={disabled}
+            data-test-id={testId}
+            variant="tertiary"
+            onClick={() => onAttributeAssign(ProductAttributeType[type])}
+          >
+            <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
+          </Button>
+        }
       />
-      <DashboardCard.Toolbar>
-        <Button
-          disabled={disabled}
-          data-test-id={testId}
-          variant="tertiary"
-          onClick={() => onAttributeAssign(ProductAttributeType[type])}
-        >
-          <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
-        </Button>
-      </DashboardCard.Toolbar>
       <DashboardCard.Content>
         <ResponsiveTable>
           <colgroup>

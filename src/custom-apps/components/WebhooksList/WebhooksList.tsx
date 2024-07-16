@@ -33,16 +33,18 @@ const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref, onRem
 
   return (
     <DashboardCard className={classes.card}>
-      <DashboardCard.Title className={classes.cardTitle}>
+      <DashboardCard.Title
+        className={classes.cardTitle}
+        toolbar={
+          !!createHref && (
+            <Button variant="secondary" href={createHref} data-test-id="create-webhook">
+              <FormattedMessage {...messages.createWebhook} />
+            </Button>
+          )
+        }
+      >
         {intl.formatMessage(sectionNames.webhooksAndEvents)}
       </DashboardCard.Title>
-      <DashboardCard.Toolbar>
-        {!!createHref && (
-          <Button variant="secondary" href={createHref} data-test-id="create-webhook">
-            <FormattedMessage {...messages.createWebhook} />
-          </Button>
-        )}
-      </DashboardCard.Toolbar>
       <DashboardCard.Content>
         <ResponsiveTable className={classes.table}>
           <TableHead>

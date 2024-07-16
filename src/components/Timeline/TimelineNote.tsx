@@ -1,7 +1,7 @@
 import { GiftCardEventFragment, OrderEventFragment } from "@dashboard/graphql";
 import { getUserInitials, getUserName } from "@dashboard/misc";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Text, vars } from "@saleor/macaw-ui-next";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { DashboardCard } from "../Card";
@@ -14,20 +14,6 @@ const useStyles = makeStyles(
       left: -40,
       position: "absolute",
       top: 0,
-    },
-    card: {
-      marginBottom: theme.spacing(3),
-      position: "relative",
-      boxShadow: "none",
-      background: vars.colors.background.default1,
-    },
-    cardContent: {
-      wordBreak: "break-all",
-      borderRadius: "4px",
-      border: `1px solid ${vars.colors.border.default1}`,
-      "&:last-child": {
-        padding: 16,
-      },
     },
     root: {
       position: "relative",
@@ -117,8 +103,23 @@ export const TimelineNote: React.FC<TimelineNoteProps> = ({
           <DateTime date={date} plain={hasPlainDate} />
         </Text>
       </div>
-      <DashboardCard className={classes.card} boxShadow="defaultOverlay">
-        <DashboardCard.Content className={classes.cardContent}>
+      <DashboardCard
+        marginBottom={6}
+        position="relative"
+        boxShadow="defaultOverlay"
+        backgroundColor="default1"
+      >
+        <DashboardCard.Content
+          wordBreak="break-all"
+          borderRadius={2}
+          borderStyle="solid"
+          borderWidth={1}
+          borderColor="default1"
+          paddingLeft={{ lastChild: 4 }}
+          paddingRight={{ lastChild: 4 }}
+          paddingTop={{ lastChild: 4 }}
+          paddingBottom={{ lastChild: 4 }}
+        >
           <NoteMessage message={message} />
         </DashboardCard.Content>
       </DashboardCard>

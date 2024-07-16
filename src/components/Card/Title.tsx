@@ -1,30 +1,48 @@
 import { Box, Sprinkles, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
-interface TitleProps {
-  paddingX?: Sprinkles["paddingX"];
-  // "title" is deprecated, use "children" instead
+interface TitleProps extends Sprinkles {
+  /**
+   * @deprecated "title" is deprecated, use "children" instead
+   */
   title?: React.ReactNode;
-  subtitle?: React.ReactNode;
+  toolbar?: React.ReactNode;
   className?: string;
 }
 
 export const Title: React.FC<TitleProps> = ({
   children,
-  paddingX,
   title,
-  subtitle,
   className,
+  toolbar,
+  color,
   ...rest
-}) => (
-  <Box paddingX={paddingX ?? 6} paddingTop={6} className={className} {...rest}>
-    <Text size={5} fontWeight="bold">
+}) => {
+  const CardTitle = () => (
+    <Text
+      size={5}
+      fontWeight="bold"
+      color={color ?? "default1"}
+      display="inline-block"
+      alignItems="center"
+      {...rest}
+    >
       {children ?? title}
     </Text>
-    {subtitle && (
-      <Text size={4} fontWeight="light">
-        {subtitle}
-      </Text>
-    )}
-  </Box>
-);
+  );
+
+  const WITH_TOOLBAR_STYLES = {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+  } as const;
+
+  return (
+    <Box paddingX={6} paddingTop={6} className={className} {...(toolbar && WITH_TOOLBAR_STYLES)}>
+      <CardTitle />
+
+      {toolbar}
+    </Box>
+  );
+};

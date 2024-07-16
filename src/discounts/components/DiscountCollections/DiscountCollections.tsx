@@ -45,12 +45,14 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
 
   return (
     <DashboardCard data-test-id="assign-collection-section">
-      <DashboardCard.Title title={intl.formatMessage(messages.discountCollectionsHeader)} />
-      <DashboardCard.Toolbar>
-        <Button onClick={onCollectionAssign} data-test-id="assign-collection-button">
-          <FormattedMessage {...messages.discountCollectionsButton} />
-        </Button>
-      </DashboardCard.Toolbar>
+      <DashboardCard.Title
+        title={intl.formatMessage(messages.discountCollectionsHeader)}
+        toolbar={
+          <Button onClick={onCollectionAssign} data-test-id="assign-collection-button">
+            <FormattedMessage {...messages.discountCollectionsButton} />
+          </Button>
+        }
+      />
       <ResponsiveTable>
         <colgroup>
           <col />
