@@ -1577,6 +1577,9 @@
   "8oIbMI": {
     "string": "Reached limit for this plan"
   },
+  "8pVWve": {
+    "string": "This field cannot be blank"
+  },
   "8qL/tV": {
     "context": "CannotDefineChannelsAvailabilityCard subtitle",
     "string": "You will be able to define availability of product after creating variants."
@@ -5387,9 +5390,6 @@
   "XFErUZ": {
     "context": "Refund pending status",
     "string": "Pending"
-  },
-  "XFKV5Z": {
-    "string": "Created at: {date}"
   },
   "XFtKV5": {
     "context": "input placeholder tag",
