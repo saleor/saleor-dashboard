@@ -82,11 +82,7 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
 
   return (
     <div className={classes.noteRoot}>
-      <DashboardCard.Content
-        paddingLeft={0}
-        paddingRight={{ lastChild: 0 }}
-        paddingBottom={{ lastChild: 0 }}
-      >
+      <DashboardCard.Content paddingX={0}>
         <UserAvatar
           url={user?.avatar?.url}
           initials={getUserInitials(user)}

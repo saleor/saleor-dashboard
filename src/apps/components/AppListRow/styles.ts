@@ -94,12 +94,3 @@ export const useIntegrationsStyles = makeStyles(
   }),
   { name: "AppListCardIntegrations" },
 );
-
-export const useActionsStyles = makeStyles(
-  theme => ({
-    releaseDate: {
-      color: theme.palette.saleor.main[3],
-    },
-  }),
-  { name: "AppListCardActions" },
-);

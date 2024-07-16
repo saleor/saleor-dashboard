@@ -115,10 +115,8 @@ export const TimelineNote: React.FC<TimelineNoteProps> = ({
           borderStyle="solid"
           borderWidth={1}
           borderColor="default1"
-          paddingLeft={{ lastChild: 4 }}
-          paddingRight={{ lastChild: 4 }}
-          paddingTop={{ lastChild: 4 }}
-          paddingBottom={{ lastChild: 4 }}
+          padding={4}
+          paddingX={2}
         >
           <NoteMessage message={message} />
         </DashboardCard.Content>
