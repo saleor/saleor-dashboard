@@ -2,8 +2,8 @@ import { defineMessages } from "react-intl";
 
 export const orderTransactionRefundMessages = defineMessages({
   editRefundTitle: {
-    defaultMessage: "Edit refund wiht line items",
-    id: "gF6ueC",
+    defaultMessage: "Edit refund with line items",
+    id: "5W3qxG",
     description: "edit refund title",
   },
   createRefundTitle: {
