@@ -46,7 +46,7 @@ jobs:
   
   add-tests-status-to-release-PR:
     needs: run-tests-on-release 
-    if: ${{ needs.run-tests-on-release.outputs.TESTS_CONCLUSION == 'success' && github.event.client_payload.project == 'CORE' }}
+    if: ${{ always() && github.event.client_payload.project == 'CORE' }}
     runs-on: ubuntu-22.04
     steps:
       - name: Open release PR
