@@ -13,7 +13,7 @@ import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import { useCustomerGiftCardListQuery } from "@dashboard/graphql";
 import { getFullName } from "@dashboard/misc";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Skeleton, sprinkles } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -21,7 +21,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import CustomerGiftCardsCardListItem from "./CustomerGiftCardsCardListItem";
 import { giftCardCustomerCardMessages as messages } from "./messages";
 import { CUSTOMER_GIFT_CARD_LIST_QUERY } from "./queries";
-import { useCardActionsStyles } from "./styles";
 
 const CustomerGiftCardsCard: React.FC = () => {
   const intl = useIntl();
@@ -44,10 +43,6 @@ const CustomerGiftCardsCard: React.FC = () => {
 
   const giftCards = mapEdgesToItems(data?.giftCards);
 
-  const classes = useCardActionsStyles({
-    buttonPosition: giftCards?.length > 0 ? "right" : "left",
-  });
-
   const viewAllGiftCardsUrl = giftCardListUrl({
     usedBy: [id],
   });
@@ -68,7 +63,7 @@ const CustomerGiftCardsCard: React.FC = () => {
                   <FormattedMessage {...messages.customerGiftCardsViewAllButton} />
                 </Button>
               )}
-              <PreviewPill className={classes.previewPill} />
+              <PreviewPill className={sprinkles({ marginLeft: 2 })} />
             </>
           }
         >
@@ -91,7 +86,7 @@ const CustomerGiftCardsCard: React.FC = () => {
         ) : (
           <Skeleton height={2} marginX={6} />
         )}
-        <DashboardCard.Actions className={classes.cardActions}>
+        <DashboardCard.Actions paddingX={6} paddingY={0}>
           <Button
             variant="tertiary"
             onClick={handleCreateNewCardButton}

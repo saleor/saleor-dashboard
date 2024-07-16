@@ -1,7 +1,12 @@
 import { Box, Sprinkles } from "@saleor/macaw-ui-next";
 import React from "react";
 
-export const Actions: React.FC<Sprinkles & { className?: string }> = ({ children, className }) => (
+export const Actions: React.FC<Sprinkles & { className?: string; style?: React.CSSProperties }> = ({
+  children,
+  className,
+  style,
+  ...rest
+}) => (
   <Box
     display="flex"
     flexDirection="row"
@@ -11,6 +16,8 @@ export const Actions: React.FC<Sprinkles & { className?: string }> = ({ children
     paddingX={6}
     paddingY={4}
     className={className}
+    style={style}
+    {...rest}
   >
     {children}
   </Box>
