@@ -5391,9 +5391,6 @@
     "context": "Refund pending status",
     "string": "Pending"
   },
-  "XFKV5Z": {
-    "string": "Created at: {date}"
-  },
   "XFtKV5": {
     "context": "input placeholder tag",
     "string": "Tag"
