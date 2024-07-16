@@ -1161,6 +1161,10 @@
   "5Vwnu+": {
     "string": "You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits."
   },
+  "5W3qxG": {
+    "context": "edit refund title",
+    "string": "Edit refund with line items"
+  },
   "5XG1CO": {
     "context": "acre-ft unit",
     "string": "acre-ft"
@@ -6721,10 +6725,6 @@
   "gAqkrG": {
     "context": "gift card history message",
     "string": "Gift card was deactivated by {deactivatedBy}"
-  },
-  "gF6ueC": {
-    "context": "edit refund title",
-    "string": "Edit refund wiht line items"
   },
   "gKdGxP": {
     "context": "error message",
