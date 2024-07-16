@@ -2,18 +2,18 @@ import { NumericUnits } from "@dashboard/attributes/components/AttributeDetails/
 import CardTitle from "@dashboard/components/CardTitle";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import SingleSelectField from "@dashboard/components/SingleSelectField";
+import { Select } from "@dashboard/components/Select";
 import {
   AttributeEntityTypeEnum,
   AttributeErrorFragment,
   AttributeInputTypeEnum,
 } from "@dashboard/graphql";
-import { UseFormResult } from "@dashboard/hooks/useForm";
+import { ChangeEvent, UseFormResult } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
 import { Card, CardContent, TextField } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 import slugify from "slugify";
@@ -39,19 +39,6 @@ const entityTypeMessages = defineMessages({
     description: "product variant attribute entity type",
   },
 });
-const useStyles = makeStyles(
-  theme => ({
-    inputTypeSection: {
-      columnGap: theme.spacing(2),
-      display: "flex",
-      [theme.breakpoints.down("md")]: {
-        flexFlow: "wrap",
-        rowGap: theme.spacing(3),
-      },
-    },
-  }),
-  { name: "AttributeDetails" },
-);
 
 export interface AttributeDetailsProps
   extends Pick<
@@ -61,13 +48,12 @@ export interface AttributeDetailsProps
   canChangeType: boolean;
   disabled: boolean;
   apiErrors: AttributeErrorFragment[];
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent) => void;
 }
 
 const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
   const { canChangeType, errors, clearErrors, setError, data, disabled, apiErrors, onChange, set } =
     props;
-  const classes = useStyles(props);
   const intl = useIntl();
   const inputTypeChoices = [
     {
@@ -166,30 +152,38 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
           onChange={onChange}
         />
         <FormSpacer />
-        <div className={classes.inputTypeSection} data-test-id="attribute-type-select">
-          <SingleSelectField
-            choices={inputTypeChoices}
-            disabled={disabled || !canChangeType}
-            error={!!formApiErrors.inputType}
-            hint={getAttributeErrorMessage(formApiErrors.inputType, intl)}
-            label={intl.formatMessage(messages.inputType)}
-            name="inputType"
-            onChange={onChange}
-            value={data.inputType}
-          />
-          {data.inputType === AttributeInputTypeEnum.REFERENCE && (
-            <SingleSelectField
-              choices={entityTypeChoices}
+        <Box display="flex" justifyContent="space-between" gap={4}>
+          <Box width="100%">
+            <Select
+              data-test-id="attribute-type-select"
+              aria-disabled={disabled || !canChangeType}
               disabled={disabled || !canChangeType}
-              error={!!formApiErrors.entityType}
-              hint={getAttributeErrorMessage(formApiErrors.entityType, intl)}
-              label={intl.formatMessage(messages.entityType)}
-              name="entityType"
+              error={!!formApiErrors.inputType}
+              helperText={getAttributeErrorMessage(formApiErrors.inputType, intl)}
+              label={intl.formatMessage(messages.inputType)}
+              name="inputType"
               onChange={onChange}
-              value={data.entityType ?? undefined}
+              value={data.inputType}
+              options={inputTypeChoices}
             />
+          </Box>
+          {data.inputType === AttributeInputTypeEnum.REFERENCE && (
+            <Box width="100%">
+              <Select
+                aria-disabled={disabled || !canChangeType}
+                data-test-id="attribute-entity-type-select"
+                disabled={disabled || !canChangeType}
+                error={!!formApiErrors.entityType}
+                helperText={getAttributeErrorMessage(formApiErrors.entityType, intl)}
+                label={intl.formatMessage(messages.entityType)}
+                name="entityType"
+                onChange={onChange}
+                value={data.entityType}
+                options={entityTypeChoices}
+              />
+            </Box>
           )}
-        </div>
+        </Box>
         <FormSpacer />
         <ControlledCheckbox
           name={"valueRequired" as keyof AttributePageFormData}
