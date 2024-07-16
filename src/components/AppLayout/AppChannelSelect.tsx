@@ -1,7 +1,8 @@
+import { Select } from "@dashboard/components/Select";
 import { ChannelFragment } from "@dashboard/graphql";
 import { ChannelProps } from "@dashboard/types";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
-import { Box, Select } from "@saleor/macaw-ui-next";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
 export interface AppChannelSelectProps extends ChannelProps {
@@ -20,7 +21,7 @@ const AppChannelSelect: React.FC<AppChannelSelectProps> = ({
         __width={130}
         data-test-id="app-channel-select"
         size="large"
-        onChange={value => onChannelSelect(value)}
+        onChange={({ target }) => onChannelSelect(target.value)}
         value={selectedChannelId}
         options={mapNodeToChoice(channels)}
       />

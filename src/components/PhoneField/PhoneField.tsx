@@ -1,8 +1,8 @@
 // @ts-strict-ignore
+import { Select } from "@dashboard/components/Select";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Select } from "@saleor/macaw-ui-next";
 import React from "react";
 
 const useStyles = makeStyles(
@@ -35,7 +35,7 @@ const PhoneField: React.FC<PhoneFieldProps> = props => {
       <Select
         name={nameWithPrefix}
         options={prefixes.map(p => ({ label: "+" + p, value: p }))}
-        onChange={value => onChange({ target: { name: nameWithPrefix, value } })}
+        onChange={onChange}
         value={prefix}
         label={label}
       />

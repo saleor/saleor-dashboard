@@ -1,6 +1,7 @@
 import CardTitle from "@dashboard/components/CardTitle";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Grid from "@dashboard/components/Grid";
+import { Select } from "@dashboard/components/Select";
 import { TaxConfigurationUpdateInput } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { LegacyFlowWarning } from "@dashboard/taxes/components";
@@ -14,7 +15,7 @@ import {
   RadioGroup,
   Typography,
 } from "@material-ui/core";
-import { Option, Select } from "@saleor/macaw-ui-next";
+import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -66,7 +67,7 @@ export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = ({
               disabled={strategyChoicesLoading || !values.chargeTaxes}
               value={values.taxCalculationStrategy}
               name={"taxCalculationStrategy" as keyof TaxConfigurationUpdateInput}
-              onChange={value => onChange({ target: { name: "taxCalculationStrategy", value } })}
+              onChange={onChange}
             />
           </div>
         </div>
