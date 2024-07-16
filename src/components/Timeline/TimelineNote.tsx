@@ -116,7 +116,6 @@ export const TimelineNote: React.FC<TimelineNoteProps> = ({
           borderWidth={1}
           borderColor="default1"
           padding={4}
-          paddingX={2}
         >
           <NoteMessage message={message} />
         </DashboardCard.Content>
