@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.21.0
+
+### Minor Changes
+
+- d4e284996: You can run e2e for updating order with non-manual refunds in status draft/failure
+
+### Patch Changes
+
+- 81d909bd1: You can now see macaw ui migration progress
+- 125883658: Product variant forms now show missing price and name errors when these fields are empty.
+- 55e72b855: Edit refund view no longer display title with typo when edit refund with line items
+- 27a47265a: The legacy selects are no longer present within the codebase, this means you should use the ones from new macaw when developing the UI
+
 ## 3.20.0
 
 ### Minor Changes
