@@ -46,7 +46,7 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data: { customHeaders }
   return (
     <DashboardCard data-test-id="webhook-headers-editor" data-test-expanded={expanded}>
       <DashboardCard.Title
-        paddingBottom={!expanded && 8}
+        paddingBottom={!expanded ? 8 : 0}
         display="flex"
         flexDirection="row"
         alignItems="center"
