@@ -21,7 +21,8 @@ const ProductVariantName: React.FC<ProductVariantNameProps> = ({
   errors,
 }) => {
   const intl = useIntl();
-  const formErrors = getFormErrors(["name"], errors);
+
+  const formErrors = getFormErrors(["variantName"], errors);
 
   return (
     <DashboardCard>
@@ -38,9 +39,9 @@ const ProductVariantName: React.FC<ProductVariantNameProps> = ({
           value={value}
           label={intl.formatMessage(commonMessages.name)}
           onChange={onChange}
-          error={!!formErrors.name}
+          error={!!formErrors.variantName}
           disabled={disabled}
-          helperText={getProductErrorMessage(formErrors.name, intl)}
+          helperText={getProductErrorMessage(formErrors.variantName, intl)}
           data-test-id="variant-name-input"
         />
       </DashboardCard.Content>
