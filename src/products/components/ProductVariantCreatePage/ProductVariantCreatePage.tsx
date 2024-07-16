@@ -274,7 +274,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                       ...channel.data,
                       ...channel.value,
                     }))}
-                    errors={[]}
+                    errors={errors}
                     loading={!product}
                     onChange={handlers.changeChannels}
                   />

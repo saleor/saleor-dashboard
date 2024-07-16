@@ -231,6 +231,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
             );
             const media = getSelectedMedia(productMedia, data.media);
             const errors = [...apiErrors, ...validationErrors];
+            const priceVariantErrors = [...channelErrors, ...validationErrors];
 
             return (
               <>
@@ -318,7 +319,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                         ...channel.data,
                         ...channel.value,
                       }))}
-                      errors={channelErrors}
+                      errors={priceVariantErrors}
                       loading={loading}
                       onChange={handlers.changeChannels}
                     />
