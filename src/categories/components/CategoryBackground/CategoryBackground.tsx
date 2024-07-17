@@ -1,6 +1,5 @@
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
-import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import Hr from "@dashboard/components/Hr";
 import ImageUpload from "@dashboard/components/ImageUpload";
 import MediaTile from "@dashboard/components/MediaTile";
@@ -58,7 +57,7 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header {...toolbarWrapperStyles}>
+      <DashboardCard.Header withToolbar>
         <DashboardCard.Title>
           {intl.formatMessage({
             id: "DP6b8U",

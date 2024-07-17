@@ -1,6 +1,5 @@
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
-import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Skeleton from "@dashboard/components/Skeleton";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
@@ -28,7 +27,7 @@ const GiftCardUpdateDetailsCard: React.FC = () => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header {...toolbarWrapperStyles}>
+      <DashboardCard.Header withToolbar>
         <DashboardCard.Title>{intl.formatMessage(messages.title)}</DashboardCard.Title>
         <DashboardCard.Toolbar>
           {!loading && !giftCard?.isExpired && (

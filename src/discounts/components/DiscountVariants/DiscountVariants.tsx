@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
-import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -46,7 +45,7 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header {...toolbarWrapperStyles}>
+      <DashboardCard.Header withToolbar>
         <DashboardCard.Title>
           {intl.formatMessage(messages.discountVariantsHeader)}
         </DashboardCard.Title>

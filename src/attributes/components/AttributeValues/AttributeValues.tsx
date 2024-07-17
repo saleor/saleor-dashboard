@@ -1,6 +1,5 @@
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
-import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
@@ -94,7 +93,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
 
   return (
     <DashboardCard data-test-id="attribute-values-section">
-      <DashboardCard.Header {...toolbarWrapperStyles}>
+      <DashboardCard.Header withToolbar>
         <DashboardCard.Title>
           {intl.formatMessage({
             id: "J3uE0t",

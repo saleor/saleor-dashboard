@@ -2,7 +2,6 @@
 import { attributeUrl } from "@dashboard/attributes/urls";
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
-import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -75,7 +74,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
 
   return (
     <DashboardCard data-test-id="product-attributes">
-      <DashboardCard.Header {...toolbarWrapperStyles}>
+      <DashboardCard.Header withToolbar>
         <DashboardCard.Title>
           {intl.formatMessage({
             id: "9scTQ0",

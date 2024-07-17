@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
-import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -28,7 +27,7 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header {...toolbarWrapperStyles}>
+      <DashboardCard.Header withToolbar>
         <DashboardCard.Title>
           {intl.formatMessage({
             id: "0Mg8o5",

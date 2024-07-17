@@ -2,7 +2,6 @@
 import AddressFormatter from "@dashboard/components/AddressFormatter";
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
-import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import { Combobox } from "@dashboard/components/Combobox";
 import ExternalLink from "@dashboard/components/ExternalLink";
 import Form from "@dashboard/components/Form";
@@ -90,7 +89,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header {...toolbarWrapperStyles}>
+      <DashboardCard.Header withToolbar>
         <DashboardCard.Title>
           {intl.formatMessage({
             id: "Y7M1YQ",

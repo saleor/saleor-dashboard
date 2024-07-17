@@ -1,6 +1,5 @@
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
-import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import { Pill } from "@dashboard/components/Pill";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -34,7 +33,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref, onRem
 
   return (
     <DashboardCard className={classes.card}>
-      <DashboardCard.Header {...toolbarWrapperStyles}>
+      <DashboardCard.Header withToolbar>
         <DashboardCard.Title className={classes.cardTitle}>
           {intl.formatMessage(sectionNames.webhooksAndEvents)}
         </DashboardCard.Title>

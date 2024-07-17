@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
-import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import { Pill } from "@dashboard/components/Pill";
 import Skeleton from "@dashboard/components/Skeleton";
 import { useFlag } from "@dashboard/featureFlags";
@@ -46,7 +45,7 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkA
   if (!order) {
     return (
       <DashboardCard>
-        <DashboardCard.Header {...toolbarWrapperStyles}>
+        <DashboardCard.Header withToolbar>
           <DashboardCard.Title>
             <FormattedMessage {...orderPaymentMessages.paymentTitle} />
           </DashboardCard.Title>
@@ -63,7 +62,7 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkA
 
   return (
     <DashboardCard className={classes.root}>
-      <DashboardCard.Header {...toolbarWrapperStyles}>
+      <DashboardCard.Header withToolbar>
         <DashboardCard.Title>
           <FormattedMessage {...orderPaymentMessages.paymentTitle} />
 
@@ -102,7 +101,7 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkA
       {canAnyRefund && !enabled && (
         <>
           <Divider />
-          <DashboardCard.Header {...toolbarWrapperStyles}>
+          <DashboardCard.Header withToolbar>
             <DashboardCard.Title>
               <FormattedMessage {...orderPaymentMessages.refundsTitle} />
             </DashboardCard.Title>

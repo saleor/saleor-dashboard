@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import AddressFormatter from "@dashboard/components/AddressFormatter";
 import { DashboardCard } from "@dashboard/components/Card";
-import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import CardMenu from "@dashboard/components/CardMenu";
 import Skeleton from "@dashboard/components/Skeleton";
 import { AddressFragment, AddressTypeEnum } from "@dashboard/graphql";
@@ -89,7 +88,7 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
 
   return (
     <DashboardCard data-test-id="address-card" className={classes.card}>
-      <DashboardCard.Header {...toolbarWrapperStyles}>
+      <DashboardCard.Header withToolbar>
         <DashboardCard.Title data-test-id="address-type-title">
           {address ? (
             <>

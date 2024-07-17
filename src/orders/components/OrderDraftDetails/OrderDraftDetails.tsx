@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
-import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import {
   ChannelUsabilityDataQuery,
   OrderDetailsFragment,
@@ -49,7 +48,7 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
 
   return (
     <DashboardCard>
-      <DashboardCard.Header {...toolbarWrapperStyles}>
+      <DashboardCard.Header withToolbar>
         <DashboardCard.Title>
           {intl.formatMessage({
             id: "18wvf7",

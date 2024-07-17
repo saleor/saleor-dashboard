@@ -2,7 +2,6 @@
 import AddressFormatter from "@dashboard/components/AddressFormatter";
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
-import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import { Hr } from "@dashboard/components/Hr";
 import { CustomerDetailsFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
@@ -36,7 +35,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header {...toolbarWrapperStyles}>
+      <DashboardCard.Header withToolbar>
         <DashboardCard.Title>
           {intl.formatMessage({
             id: "BfJGij",

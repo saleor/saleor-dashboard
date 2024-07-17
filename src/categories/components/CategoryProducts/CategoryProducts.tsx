@@ -1,6 +1,5 @@
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { DashboardCard } from "@dashboard/components/Card";
-import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import { InternalLink } from "@dashboard/components/InternalLink";
 import { CategoryDetailsQuery } from "@dashboard/graphql";
 import { productAddUrl, productListUrl } from "@dashboard/products/urls";
@@ -29,7 +28,7 @@ export const CategoryProducts = ({
   onSelectProductsIds,
 }: CategoryProductsProps) => (
   <DashboardCard>
-    <DashboardCard.Header {...toolbarWrapperStyles}>
+    <DashboardCard.Header withToolbar>
       <DashboardCard.Title>
         <FormattedMessage
           id="+43JV5"

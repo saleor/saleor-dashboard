@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import IconButtonTableCell from "@dashboard/components/IconButtonTableCell";
 import Money from "@dashboard/components/Money";
 import MoneyRange from "@dashboard/components/MoneyRange";
@@ -66,7 +65,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
 
   return (
     <DashboardCard data-test-id={variant === "price" ? "price-based-rates" : "weight-based-rates"}>
-      <DashboardCard.Header {...toolbarWrapperStyles}>
+      <DashboardCard.Header withToolbar>
         <DashboardCard.Title>
           {variant === "price"
             ? intl.formatMessage({

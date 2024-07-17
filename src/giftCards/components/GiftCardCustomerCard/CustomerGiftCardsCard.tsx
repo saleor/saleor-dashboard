@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
-import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
 import Link from "@dashboard/components/Link";
 import { DashboardModal } from "@dashboard/components/Modal";
@@ -55,7 +54,7 @@ const CustomerGiftCardsCard: React.FC = () => {
   return (
     <>
       <DashboardCard>
-        <DashboardCard.Header {...toolbarWrapperStyles}>
+        <DashboardCard.Header withToolbar>
           <DashboardCard.Title title={intl.formatMessage(messages.customerGiftCardsCardTitle)}>
             <FormattedMessage
               {...(giftCards?.length

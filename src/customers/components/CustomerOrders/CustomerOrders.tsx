@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
-import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import { DateTime } from "@dashboard/components/Date";
 import Money from "@dashboard/components/Money";
 import { Pill } from "@dashboard/components/Pill";
@@ -48,7 +47,7 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header {...toolbarWrapperStyles}>
+      <DashboardCard.Header withToolbar>
         <DashboardCard.Title>
           {intl.formatMessage({
             id: "1LiVhv",
