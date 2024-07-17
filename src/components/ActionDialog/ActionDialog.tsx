@@ -48,18 +48,20 @@ const ActionDialog = ({
         <Box fontSize={3}>{children}</Box>
         <DashboardModal.Actions>
           <BackButton onClick={onClose}>{backButtonText}</BackButton>
-          <ConfirmButton
-            transitionState={confirmButtonState}
-            disabled={disabled}
-            onClick={onConfirm}
-            variant={variant === "delete" ? "error" : "primary"}
-            data-test-id="submit"
-          >
-            {confirmButtonLabel ||
-              (variant === "delete"
-                ? intl.formatMessage(buttonMessages.delete)
-                : intl.formatMessage(buttonMessages.confirm))}
-          </ConfirmButton>
+          {variant !== "info" && (
+            <ConfirmButton
+              transitionState={confirmButtonState}
+              disabled={disabled}
+              onClick={onConfirm}
+              variant={variant === "delete" ? "error" : "primary"}
+              data-test-id="submit"
+            >
+              {confirmButtonLabel ||
+                (variant === "delete"
+                  ? intl.formatMessage(buttonMessages.delete)
+                  : intl.formatMessage(buttonMessages.confirm))}
+            </ConfirmButton>
+          )}
         </DashboardModal.Actions>
       </DashboardModal.Content>
     </DashboardModal>

@@ -404,11 +404,30 @@ export const PRODUCTS = {
       "a product to be deleted via bulk 3/3",
     ],
   },
+  productWithDiscountChannelPLN: {
+    id: "UHJvZHVjdDo3NzA=",
+    name: "e2e-do-not-touch",
+    rewardPercentageDiscountValue: 40,
+    variant: {
+      id: "UHJvZHVjdFZhcmlhbnQ6MTIzOQ==",
+      sku: "TEST-123",
+      undiscountedPrice: 100,
+      discountedPrice: 60,
+    },
+  },
 };
 
 export const ORDERS = {
   draftOrdersToBeDeleted: {
     ids: ["#3266", "#3265"],
+  },
+  draftOrderChannelPLN: {
+    id: "T3JkZXI6Zjg0NTk3N2EtM2Y3Yy00NDY3LWI3N2MtZDY0ZjhhMDU2MmQy",
+    productInBasket: {
+      name: "Black Hoodie",
+      price: 20,
+      variantId: "UHJvZHVjdFZhcmlhbnQ6Mjk3",
+    },
   },
   ordersWithinTransactionFlow: {
     markAsPaidOrder: {
