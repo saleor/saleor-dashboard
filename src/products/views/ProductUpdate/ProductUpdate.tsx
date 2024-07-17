@@ -28,7 +28,6 @@ import { getProductErrorMessage } from "@dashboard/utils/errors";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { DialogContentText } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -282,12 +281,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         variant="delete"
         title={intl.formatMessage(messages.deleteProductDialogTitle)}
       >
-        <DialogContentText>
-          <FormattedMessage
-            {...messages.deleteProductDialogSubtitle}
-            values={{ name: product?.name }}
-          />
-        </DialogContentText>
+        <FormattedMessage
+          {...messages.deleteProductDialogSubtitle}
+          values={{ name: product?.name }}
+        />
       </ActionDialog>
     </>
   );
