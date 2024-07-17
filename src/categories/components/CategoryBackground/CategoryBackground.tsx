@@ -1,5 +1,6 @@
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
+import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import Hr from "@dashboard/components/Hr";
 import ImageUpload from "@dashboard/components/ImageUpload";
 import MediaTile from "@dashboard/components/MediaTile";
@@ -57,30 +58,29 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header>
-        <DashboardCard.Title
-          toolbar={
-            <>
-              <Button variant="tertiary" onClick={handleImageUploadButtonClick}>
-                <FormattedMessage {...commonMessages.uploadImage} />
-              </Button>
-              <input
-                className={classes.fileField}
-                id="fileUpload"
-                onChange={({ target: { files } }) => onImageUpload(files && files[0])}
-                type="file"
-                ref={anchor}
-                accept="image/*"
-              />
-            </>
-          }
-        >
+      <DashboardCard.Header {...toolbarWrapperStyles}>
+        <DashboardCard.Title>
           {intl.formatMessage({
             id: "DP6b8U",
             defaultMessage: "Background Image (optional)",
             description: "section header",
           })}
         </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          <>
+            <Button variant="tertiary" onClick={handleImageUploadButtonClick}>
+              <FormattedMessage {...commonMessages.uploadImage} />
+            </Button>
+            <input
+              className={classes.fileField}
+              id="fileUpload"
+              onChange={({ target: { files } }) => onImageUpload(files && files[0])}
+              type="file"
+              ref={anchor}
+              accept="image/*"
+            />
+          </>
+        </DashboardCard.Toolbar>
       </DashboardCard.Header>
 
       {image === undefined ? (

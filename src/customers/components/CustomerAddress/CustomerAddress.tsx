@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import AddressFormatter from "@dashboard/components/AddressFormatter";
 import { DashboardCard } from "@dashboard/components/Card";
+import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import CardMenu from "@dashboard/components/CardMenu";
 import Skeleton from "@dashboard/components/Skeleton";
 import { AddressFragment, AddressTypeEnum } from "@dashboard/graphql";
@@ -88,37 +89,8 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
 
   return (
     <DashboardCard data-test-id="address-card" className={classes.card}>
-      <DashboardCard.Header>
-        <DashboardCard.Title
-          data-test-id="address-type-title"
-          toolbar={
-            <CardMenu
-              disabled={disabled}
-              menuItems={[
-                {
-                  label: intl.formatMessage(messages.setDefaultShipping),
-                  onSelect: () => onSetAsDefault(AddressTypeEnum.SHIPPING),
-                  testId: "set-default-shipping-address",
-                },
-                {
-                  label: intl.formatMessage(messages.setDefaultBilling),
-                  onSelect: () => onSetAsDefault(AddressTypeEnum.BILLING),
-                  testId: "set-default-billing-address",
-                },
-                {
-                  label: intl.formatMessage(messages.editAddress),
-                  onSelect: () => onEdit(),
-                  testId: "edit-address",
-                },
-                {
-                  label: intl.formatMessage(messages.deleteAddress),
-                  onSelect: () => onRemove(),
-                  testId: "delete-address",
-                },
-              ]}
-            />
-          }
-        >
+      <DashboardCard.Header {...toolbarWrapperStyles}>
+        <DashboardCard.Title data-test-id="address-type-title">
           {address ? (
             <>
               {isDefaultBillingAddress && isDefaultShippingAddress
@@ -133,6 +105,33 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
             <Skeleton />
           )}
         </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          <CardMenu
+            disabled={disabled}
+            menuItems={[
+              {
+                label: intl.formatMessage(messages.setDefaultShipping),
+                onSelect: () => onSetAsDefault(AddressTypeEnum.SHIPPING),
+                testId: "set-default-shipping-address",
+              },
+              {
+                label: intl.formatMessage(messages.setDefaultBilling),
+                onSelect: () => onSetAsDefault(AddressTypeEnum.BILLING),
+                testId: "set-default-billing-address",
+              },
+              {
+                label: intl.formatMessage(messages.editAddress),
+                onSelect: () => onEdit(),
+                testId: "edit-address",
+              },
+              {
+                label: intl.formatMessage(messages.deleteAddress),
+                onSelect: () => onRemove(),
+                testId: "delete-address",
+              },
+            ]}
+          />
+        </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content>
         <AddressFormatter address={address} />

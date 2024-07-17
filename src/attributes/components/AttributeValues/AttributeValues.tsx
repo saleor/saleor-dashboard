@@ -1,5 +1,6 @@
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
+import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
@@ -93,29 +94,28 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
 
   return (
     <DashboardCard data-test-id="attribute-values-section">
-      <DashboardCard.Header>
-        <DashboardCard.Title
-          toolbar={
-            <Button
-              disabled={disabled}
-              variant="tertiary"
-              onClick={onValueAdd}
-              data-test-id="assign-value-button"
-            >
-              <FormattedMessage
-                id="+iVKR1"
-                defaultMessage="Assign value"
-                description="assign attribute value button"
-              />
-            </Button>
-          }
-        >
+      <DashboardCard.Header {...toolbarWrapperStyles}>
+        <DashboardCard.Title>
           {intl.formatMessage({
             id: "J3uE0t",
             defaultMessage: "Attribute Values",
             description: "section header",
           })}
         </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          <Button
+            disabled={disabled}
+            variant="tertiary"
+            onClick={onValueAdd}
+            data-test-id="assign-value-button"
+          >
+            <FormattedMessage
+              id="+iVKR1"
+              defaultMessage="Assign value"
+              description="assign attribute value button"
+            />
+          </Button>
+        </DashboardCard.Toolbar>
       </DashboardCard.Header>
 
       <ResponsiveTable>

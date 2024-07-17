@@ -13,6 +13,7 @@ import { FormattedMessage } from "react-intl";
 
 import { getStringOrPlaceholder, maybe, renderCollection } from "../../misc";
 import { DashboardCard } from "../Card";
+import { toolbarWrapperStyles } from "../Card/Toolbar";
 
 export interface CountryListProps {
   countries: CountryFragment[];
@@ -83,20 +84,13 @@ const CountryList: React.FC<CountryListProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header>
-        <DashboardCard.Title
-          toolbar={
-            <Button disabled={disabled} onClick={onCountryAssign} data-test-id="assign-country">
-              <FormattedMessage
-                id="zZCCqz"
-                defaultMessage="Assign countries"
-                description="button"
-              />
-            </Button>
-          }
-        >
-          {title}
-        </DashboardCard.Title>
+      <DashboardCard.Header {...toolbarWrapperStyles}>
+        <DashboardCard.Title>{title}</DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          <Button disabled={disabled} onClick={onCountryAssign} data-test-id="assign-country">
+            <FormattedMessage id="zZCCqz" defaultMessage="Assign countries" description="button" />
+          </Button>
+        </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <ResponsiveTable>
         <TableBody>

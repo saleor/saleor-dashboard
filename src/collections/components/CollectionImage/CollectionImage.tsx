@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
+import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import Hr from "@dashboard/components/Hr";
 import ImageUpload from "@dashboard/components/ImageUpload";
 import MediaTile from "@dashboard/components/MediaTile";
@@ -69,34 +70,33 @@ export const CollectionImage: React.FC<CollectionImageProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header>
-        <DashboardCard.Title
-          toolbar={
-            <>
-              <Button
-                variant="tertiary"
-                onClick={handleImageUploadButtonClick}
-                data-test-id="upload-image-button"
-              >
-                <FormattedMessage {...commonMessages.uploadImage} />
-              </Button>
-              <input
-                className={classes.fileField}
-                id="fileUpload"
-                onChange={event => onImageUpload(event.target.files[0])}
-                type="file"
-                ref={anchor}
-                accept="image/*"
-              />
-            </>
-          }
-        >
+      <DashboardCard.Header {...toolbarWrapperStyles}>
+        <DashboardCard.Title>
           {intl.formatMessage({
             id: "DP6b8U",
             defaultMessage: "Background Image (optional)",
             description: "section header",
           })}
         </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          <>
+            <Button
+              variant="tertiary"
+              onClick={handleImageUploadButtonClick}
+              data-test-id="upload-image-button"
+            >
+              <FormattedMessage {...commonMessages.uploadImage} />
+            </Button>
+            <input
+              className={classes.fileField}
+              id="fileUpload"
+              onChange={event => onImageUpload(event.target.files[0])}
+              type="file"
+              ref={anchor}
+              accept="image/*"
+            />
+          </>
+        </DashboardCard.Toolbar>
       </DashboardCard.Header>
 
       {image === undefined ? (

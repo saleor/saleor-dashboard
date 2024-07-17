@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
+import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
 import Link from "@dashboard/components/Link";
 import { DashboardModal } from "@dashboard/components/Modal";
@@ -54,20 +55,8 @@ const CustomerGiftCardsCard: React.FC = () => {
   return (
     <>
       <DashboardCard>
-        <DashboardCard.Header>
-          <DashboardCard.Title
-            title={intl.formatMessage(messages.customerGiftCardsCardTitle)}
-            toolbar={
-              <>
-                {!!giftCards?.length && (
-                  <Button variant="tertiary" href={viewAllGiftCardsUrl} component={Link}>
-                    <FormattedMessage {...messages.customerGiftCardsViewAllButton} />
-                  </Button>
-                )}
-                <PreviewPill className={sprinkles({ marginLeft: 2 })} />
-              </>
-            }
-          >
+        <DashboardCard.Header {...toolbarWrapperStyles}>
+          <DashboardCard.Title title={intl.formatMessage(messages.customerGiftCardsCardTitle)}>
             <FormattedMessage
               {...(giftCards?.length
                 ? messages.customerGiftCardsPresentSubtitle
@@ -75,6 +64,16 @@ const CustomerGiftCardsCard: React.FC = () => {
             />
             <VerticalSpacer spacing={2} />
           </DashboardCard.Title>
+          <DashboardCard.Toolbar>
+            <>
+              {!!giftCards?.length && (
+                <Button variant="tertiary" href={viewAllGiftCardsUrl} component={Link}>
+                  <FormattedMessage {...messages.customerGiftCardsViewAllButton} />
+                </Button>
+              )}
+              <PreviewPill className={sprinkles({ marginLeft: 2 })} />
+            </>
+          </DashboardCard.Toolbar>
         </DashboardCard.Header>
 
         {!loading && giftCards ? (

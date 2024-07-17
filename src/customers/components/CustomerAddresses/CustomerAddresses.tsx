@@ -2,6 +2,7 @@
 import AddressFormatter from "@dashboard/components/AddressFormatter";
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
+import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import { Hr } from "@dashboard/components/Hr";
 import { CustomerDetailsFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
@@ -35,25 +36,24 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header>
-        <DashboardCard.Title
-          toolbar={
-            <Button
-              data-test-id="manage-addresses"
-              disabled={disabled}
-              variant="tertiary"
-              href={manageAddressHref}
-            >
-              <FormattedMessage {...buttonMessages.manage} />
-            </Button>
-          }
-        >
+      <DashboardCard.Header {...toolbarWrapperStyles}>
+        <DashboardCard.Title>
           {intl.formatMessage({
             id: "BfJGij",
             defaultMessage: "Address Information",
             description: "header",
           })}
         </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          <Button
+            data-test-id="manage-addresses"
+            disabled={disabled}
+            variant="tertiary"
+            href={manageAddressHref}
+          >
+            <FormattedMessage {...buttonMessages.manage} />
+          </Button>
+        </DashboardCard.Toolbar>
       </DashboardCard.Header>
       {maybe(() => customer.defaultBillingAddress.id) !==
       maybe(() => customer.defaultShippingAddress.id) ? (
