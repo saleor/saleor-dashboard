@@ -1,4 +1,4 @@
-import { Actions } from "./Actions";
+import { Actions as BottomActions } from "./Actions";
 import { Content } from "./Content";
 import { Header } from "./Header";
 import { Root } from "./Root";
@@ -9,7 +9,7 @@ import { Toolbar } from "./Toolbar";
 export const DashboardCard = Object.assign(Root, {
   Title,
   Content,
-  Actions,
+  BottomActions,
   Subtitle,
   Header,
   Toolbar,

@@ -41,7 +41,7 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
         <DashboardCard.Content paddingX={0}>
           <OrderDetailsDatagrid lines={lines} loading={loading} onShowMetadata={onShowMetadata} />
           {showFulfillmentAction && (
-            <DashboardCard.Actions justifyContent="flex-end">
+            <DashboardCard.BottomActions justifyContent="flex-end">
               <Button
                 data-test-id="fulfill-button"
                 variant="primary"
@@ -55,7 +55,7 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
                   <FormattedMessage {...commonMessages.cannotFullfillUnpaidOrder} />
                 </Typography>
               )}
-            </DashboardCard.Actions>
+            </DashboardCard.BottomActions>
           )}
         </DashboardCard.Content>
       </DashboardCard>

@@ -123,7 +123,7 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data: { customHeaders }
                   </Table>
                 </>
               )}
-              <DashboardCard.Actions>
+              <DashboardCard.BottomActions>
                 <Button
                   variant="secondary"
                   data-test-id="add-header"
@@ -132,7 +132,7 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data: { customHeaders }
                 >
                   <FormattedMessage {...messages.add} />
                 </Button>
-              </DashboardCard.Actions>
+              </DashboardCard.BottomActions>
             </>
           )}
         </>

@@ -87,7 +87,7 @@ const CustomerGiftCardsCard: React.FC = () => {
         ) : (
           <Skeleton height={2} marginX={6} />
         )}
-        <DashboardCard.Actions paddingX={6} paddingY={0}>
+        <DashboardCard.BottomActions paddingX={6} paddingY={0}>
           <Button
             variant="tertiary"
             onClick={handleCreateNewCardButton}
@@ -95,7 +95,7 @@ const CustomerGiftCardsCard: React.FC = () => {
           >
             <FormattedMessage {...messages.customerGiftCardsIssueNewCardButton} />
           </Button>
-        </DashboardCard.Actions>
+        </DashboardCard.BottomActions>
       </DashboardCard>
       <DashboardModal open={openCreateDialog} onChange={closeCreateDialog}>
         <GiftCardCreateDialogContent
