@@ -1,22 +1,13 @@
 // @ts-strict-ignore
-import VerticalSpacer from "@dashboard/components/VerticalSpacer";
+import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
 import { CountryFragment } from "@dashboard/graphql";
 import { useLocalSearch } from "@dashboard/hooks/useLocalSearch";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
 import { taxesMessages } from "@dashboard/taxes/messages";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  Divider,
-  FormControlLabel,
-  InputAdornment,
-  Radio,
-  TextField,
-} from "@material-ui/core";
-import { DialogHeader, SearchIcon } from "@saleor/macaw-ui";
-import { Button } from "@saleor/macaw-ui-next";
+import { Divider, FormControlLabel, InputAdornment, Radio, TextField } from "@material-ui/core";
+import { SearchIcon } from "@saleor/macaw-ui";
+import { Box, Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -53,11 +44,13 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
   } = useLocalSearch<CountryFragment>(countries, country => country.country);
 
   return (
-    <Dialog open={open} fullWidth onClose={onClose} className={classes.dialog}>
-      <DialogHeader onClose={onClose}>
-        <FormattedMessage {...taxesMessages.chooseCountryDialogTitle} />
-      </DialogHeader>
-      <DialogContent className={classes.wrapper}>
+    <DashboardModal open={open} onChange={onClose}>
+      <DashboardModal.Content __width={DASHBOARD_MODAL_WIDTH}>
+        <DashboardModal.Title display="flex" justifyContent="space-between" alignItems="center">
+          <FormattedMessage {...taxesMessages.chooseCountryDialogTitle} />
+          <DashboardModal.Close onClose={onClose} />
+        </DashboardModal.Title>
+
         <TextField
           data-test-id="search-country-input"
           value={query}
@@ -74,8 +67,15 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
           }}
           inputProps={{ className: classes.inputPadding }}
         />
-        <VerticalSpacer spacing={2} />
-        <div className={classes.scrollable}>
+
+        <Box
+          display="flex"
+          flexDirection="column"
+          overflowY="scroll"
+          __maxHeight="60vh"
+          __marginLeft={-15}
+          __paddingLeft={15}
+        >
           {filteredCountries.map(country => (
             <React.Fragment key={country.code}>
               <FormControlLabel
@@ -88,21 +88,22 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
               <Divider />
             </React.Fragment>
           ))}
-        </div>
-      </DialogContent>
-      <DialogActions>
-        <Button
-          data-test-id="add-button"
-          variant="primary"
-          onClick={() => {
-            onConfirm(selectedCountry);
-          }}
-          disabled={!selectedCountry}
-        >
-          <FormattedMessage {...buttonMessages.add} />
-        </Button>
-      </DialogActions>
-    </Dialog>
+        </Box>
+
+        <DashboardModal.Actions>
+          <Button
+            data-test-id="add-button"
+            variant="primary"
+            onClick={() => {
+              onConfirm(selectedCountry);
+            }}
+            disabled={!selectedCountry}
+          >
+            <FormattedMessage {...buttonMessages.add} />
+          </Button>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 

@@ -1,6 +1,5 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { DialogContentText } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -35,11 +34,9 @@ const ProductVariantEndPreorderDialog: React.FC<ProductVariantEndPreorderDialogP
       title={intl.formatMessage(productVariantEndPreorderDialogMessages.dialogTitle)}
       variant="default"
     >
-      <DialogContentText>
-        {intl.formatMessage(productVariantEndPreorderDialogMessages.dialogMessage, {
-          variantGlobalSoldUnits,
-        })}
-      </DialogContentText>
+      {intl.formatMessage(productVariantEndPreorderDialogMessages.dialogMessage, {
+        variantGlobalSoldUnits,
+      })}
     </ActionDialog>
   );
 };

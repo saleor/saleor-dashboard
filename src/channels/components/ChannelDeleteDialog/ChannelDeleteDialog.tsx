@@ -1,4 +1,4 @@
-import NewActionDialog from "@dashboard/components/ActionDialog/NewActionDialog";
+import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { Select } from "@dashboard/components/Select";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
@@ -77,7 +77,7 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
   const canBeDeleted = hasChannels || !hasOrders;
 
   return (
-    <NewActionDialog
+    <ActionDialog
       confirmButtonState={confirmButtonState}
       backButtonText={
         canBeDeleted ? buttonMessages.cancel.defaultMessage : buttonMessages.ok.defaultMessage
@@ -124,7 +124,7 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
           <Typography>{intl.formatMessage(messages.deletingAllProductData)}</Typography>
         )}
       </div>
-    </NewActionDialog>
+    </ActionDialog>
   );
 };
 

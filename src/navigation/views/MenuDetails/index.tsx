@@ -14,7 +14,6 @@ import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import usePageSearch from "@dashboard/searches/usePageSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { DialogContentText } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -206,15 +205,13 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
           description: "dialog header",
         })}
       >
-        <DialogContentText>
-          <FormattedMessage
-            id="G/SYtU"
-            defaultMessage="Are you sure you want to delete menu {menuName}?"
-            values={{
-              menuName: <strong>{maybe(() => data.menu.name, "...")}</strong>,
-            }}
-          />
-        </DialogContentText>
+        <FormattedMessage
+          id="G/SYtU"
+          defaultMessage="Are you sure you want to delete menu {menuName}?"
+          values={{
+            menuName: <strong>{maybe(() => data.menu.name, "...")}</strong>,
+          }}
+        />
       </ActionDialog>
 
       <MenuItemDialog
