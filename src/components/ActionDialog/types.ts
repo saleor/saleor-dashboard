@@ -1,3 +1,3 @@
-export type ActionDialogVariant = "default" | "delete" | "info";
+export type ActionDialogVariant = "default" | "delete";
 
-export type Size = "sm" | "lg";
+export type ActionDialogSize = "sm" | "lg";

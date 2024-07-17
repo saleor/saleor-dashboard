@@ -6,8 +6,8 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import BackButton from "../BackButton";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "../Modal";
-import { ActionDialogVariant, Size } from "./types";
+import { DASHBOARD_MODAL_WIDTH, DASHBOARD_MODAL_WIDTH_SMALL, DashboardModal } from "../Modal";
+import { ActionDialogSize, ActionDialogVariant } from "./types";
 
 export interface ActionDialogProps extends DialogProps {
   children?: React.ReactNode;
@@ -18,11 +18,11 @@ export interface ActionDialogProps extends DialogProps {
   variant?: ActionDialogVariant;
   backButtonText?: string;
   onConfirm: () => any;
-  size?: Size;
+  size?: ActionDialogSize;
 }
 
-const ACTION_DIALOG_SIZE: Record<Size, number> = {
-  sm: 444,
+const ACTION_DIALOG_SIZE: Record<ActionDialogSize, number> = {
+  sm: DASHBOARD_MODAL_WIDTH_SMALL,
   lg: DASHBOARD_MODAL_WIDTH,
 };
 
