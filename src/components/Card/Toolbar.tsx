@@ -1,11 +1,10 @@
-import { Box, BoxProps } from "@saleor/macaw-ui-next";
-import React, { PropsWithChildren } from "react";
+import { Box, PropsWithBox } from "@saleor/macaw-ui-next";
+import React from "react";
 
-type ToolbarProps = BoxProps;
-
-export const Toolbar: React.FC<PropsWithChildren<ToolbarProps>> = ({ children, ...rest }) => (
-  <Box {...rest}>{children}</Box>
-);
+export const Toolbar: React.FC<PropsWithBox<{ children: React.ReactNode }>> = ({
+  children,
+  ...rest
+}) => <Box {...rest}>{children}</Box>;
 
 export const toolbarWrapperStyles = {
   display: "flex",

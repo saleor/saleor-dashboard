@@ -51,7 +51,7 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
         {loading && transactions.length === 0 && (
           <>
             <DashboardCard>
-              <DashboardCard.Content className={classes.cardLoading} />
+              <DashboardCard.Content height={24} />
             </DashboardCard>
             <CardSpacer />
           </>

@@ -1,7 +1,7 @@
-import { Box, Sprinkles } from "@saleor/macaw-ui-next";
+import { Box, PropsWithBox } from "@saleor/macaw-ui-next";
 import React from "react";
 
-export const Actions: React.FC<Sprinkles & { className?: string; style?: React.CSSProperties }> = ({
+export const Actions: React.FC<PropsWithBox<{ children: React.ReactNode }>> = ({
   children,
   className,
   style,

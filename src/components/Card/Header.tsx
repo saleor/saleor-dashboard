@@ -1,9 +1,7 @@
-import { Box, BoxProps } from "@saleor/macaw-ui-next";
-import React, { PropsWithChildren } from "react";
+import { Box, PropsWithBox } from "@saleor/macaw-ui-next";
+import React from "react";
 
-type HeaderProps = BoxProps;
-
-export const Header: React.FC<PropsWithChildren<HeaderProps>> = ({
+export const Header: React.FC<PropsWithBox<{ children: React.ReactNode }>> = ({
   children,
   className,
   ...rest

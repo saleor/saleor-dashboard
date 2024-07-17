@@ -1,9 +1,10 @@
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, PropsWithBox } from "@saleor/macaw-ui-next";
 import React from "react";
 
-type ContentProps = React.ComponentProps<typeof Box>;
-
-export const Content: React.FC<ContentProps & { className?: string }> = ({ children, ...rest }) => (
+export const Content: React.FC<PropsWithBox<{ children?: React.ReactNode }>> = ({
+  children,
+  ...rest
+}) => (
   <Box paddingX={6} {...rest}>
     {children}
   </Box>
