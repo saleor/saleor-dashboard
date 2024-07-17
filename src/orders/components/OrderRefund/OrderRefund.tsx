@@ -39,13 +39,15 @@ const OrderRefund: React.FC<OrderRefundProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "bqAJCT",
-          defaultMessage: "Refund Order",
-          description: "section header",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "bqAJCT",
+            defaultMessage: "Refund Order",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content className={classes.cartContent}>
         <RadioGroupField
           choices={[

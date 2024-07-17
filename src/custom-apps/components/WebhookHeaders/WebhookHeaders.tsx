@@ -45,24 +45,26 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data: { customHeaders }
 
   return (
     <DashboardCard data-test-id="webhook-headers-editor" data-test-expanded={expanded}>
-      <DashboardCard.Title
-        paddingBottom={!expanded ? 8 : 0}
-        display="flex"
-        flexDirection="row"
-        alignItems="center"
-        gap={2}
-      >
-        {intl.formatMessage(messages.header)}
-        <Button
-          variant="tertiary"
-          backgroundColor={{ hover: "transparent" }}
-          __transform={expanded ? "rotate(-180deg)" : "rotate(0)"}
-          data-test-id="expand"
-          onClick={() => setExpanded(!expanded)}
+      <DashboardCard.Header>
+        <DashboardCard.Title
+          paddingBottom={!expanded ? 8 : 0}
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+          gap={2}
         >
-          <ChervonDownIcon />
-        </Button>
-      </DashboardCard.Title>
+          {intl.formatMessage(messages.header)}
+          <Button
+            variant="tertiary"
+            backgroundColor={{ hover: "transparent" }}
+            __transform={expanded ? "rotate(-180deg)" : "rotate(0)"}
+            data-test-id="expand"
+            onClick={() => setExpanded(!expanded)}
+          >
+            <ChervonDownIcon />
+          </Button>
+        </DashboardCard.Title>
+      </DashboardCard.Header>
 
       {headers === undefined ? (
         <DashboardCard.Content>

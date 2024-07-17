@@ -74,7 +74,9 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
   return (
     <>
       <DashboardCard>
-        <DashboardCard.Title>{intl.formatMessage(messages.webhookEvents)}</DashboardCard.Title>
+        <DashboardCard.Header>
+          <DashboardCard.Title>{intl.formatMessage(messages.webhookEvents)}</DashboardCard.Title>
+        </DashboardCard.Header>
         <DashboardCard.Content className={classes.cardHeader}>
           <PageTabs value={tab} onChange={handleTabChange}>
             <PageTab label={intl.formatMessage(messages.asynchronous)} value="async" />

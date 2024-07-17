@@ -122,9 +122,11 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        {intl.formatMessage(commonMessages.generalInformations)}
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
 
       <DashboardCard.Content>
         <TextField

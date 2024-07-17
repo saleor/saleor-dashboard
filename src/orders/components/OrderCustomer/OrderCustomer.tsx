@@ -2,6 +2,7 @@
 import AddressFormatter from "@dashboard/components/AddressFormatter";
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
+import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import { Combobox } from "@dashboard/components/Combobox";
 import ExternalLink from "@dashboard/components/ExternalLink";
 import Form from "@dashboard/components/Form";
@@ -89,14 +90,16 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "Y7M1YQ",
-          defaultMessage: "Customer",
-          description: "section header",
-        })}
-        toolbar={
-          !!canEditCustomer && (
+      <DashboardCard.Header {...toolbarWrapperStyles}>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "Y7M1YQ",
+            defaultMessage: "Customer",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          {!!canEditCustomer && (
             <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
               <Button
                 data-test-id="edit-customer"
@@ -107,9 +110,9 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
                 {intl.formatMessage(buttonMessages.edit)}
               </Button>
             </RequirePermissions>
-          )
-        }
-      />
+          )}
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>{" "}
       <DashboardCard.Content>
         {user === undefined ? (
           <Skeleton />

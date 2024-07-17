@@ -50,13 +50,15 @@ const AttributeOrganization: React.FC<AttributeOrganizationProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        {intl.formatMessage({
-          id: "nwvQPg",
-          defaultMessage: "Organization",
-          description: "section header",
-        })}
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "nwvQPg",
+            defaultMessage: "Organization",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
 
       <DashboardCard.Content>
         {canChangeType ? (

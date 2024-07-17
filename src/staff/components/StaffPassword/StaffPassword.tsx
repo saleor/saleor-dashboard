@@ -1,5 +1,6 @@
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
+import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import { Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -13,13 +14,15 @@ const StaffPassword: React.FC<StaffPasswordProps> = ({ onChangePassword }) => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "ZhDQel",
-          defaultMessage: "Password",
-          description: "header",
-        })}
-        toolbar={
+      <DashboardCard.Header {...toolbarWrapperStyles}>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "ZhDQel",
+            defaultMessage: "Password",
+            description: "header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <Button onClick={onChangePassword} data-test-id="changePasswordBtn">
             <FormattedMessage
               id="N3Zot1"
@@ -27,8 +30,8 @@ const StaffPassword: React.FC<StaffPasswordProps> = ({ onChangePassword }) => {
               description="button"
             />
           </Button>
-        }
-      />
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Typography>
           <FormattedMessage

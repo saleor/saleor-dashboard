@@ -22,7 +22,11 @@ const MenuProperties: React.FC<MenuPropertiesProps> = ({ data, disabled, errors,
 
   return (
     <DashboardCard>
-      <DashboardCard.Title title={intl.formatMessage(commonMessages.generalInformations)} />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <TextField
           data-test-id="menu-name"

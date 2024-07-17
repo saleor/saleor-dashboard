@@ -39,13 +39,15 @@ const PluginInfo: React.FC<PluginInfoProps> = ({ data, description, errors, name
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "w424P4",
-          defaultMessage: "Plugin Information and Status",
-          description: "section header",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "w424P4",
+            defaultMessage: "Plugin Information and Status",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Typography className={classes.title} variant="h6">
           {intl.formatMessage({

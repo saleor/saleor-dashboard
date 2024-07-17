@@ -17,7 +17,11 @@ export const ManualRefundCard: React.FC<OrderManualTransactionFormProps> = props
 
   return (
     <DashboardCard>
-      <DashboardCard.Title title={<FormattedMessage {...manualRefundMessages.refundManual} />} />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          <FormattedMessage {...manualRefundMessages.refundManual} />
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Typography>
           <FormattedMessage {...manualRefundMessages.refundManualDescription} />

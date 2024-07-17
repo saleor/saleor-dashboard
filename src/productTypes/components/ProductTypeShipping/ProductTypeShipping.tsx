@@ -24,13 +24,15 @@ const ProductTypeShipping: React.FC<ProductTypeShippingProps> = ({
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "/2OOMe",
-          defaultMessage: "Shipping",
-          description: "product type shipping settings, section header",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "/2OOMe",
+            defaultMessage: "Shipping",
+            description: "product type shipping settings, section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <ControlledCheckbox
           checked={data.isShippingRequired}

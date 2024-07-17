@@ -34,9 +34,11 @@ const CollectionDetails: React.FC<CollectionDetailsProps> = ({
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        {intl.formatMessage(commonMessages.generalInformations)}
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <TextField
           data-test-id="collection-name-input"

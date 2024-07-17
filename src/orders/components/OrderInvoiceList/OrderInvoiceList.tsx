@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
+import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import Date from "@dashboard/components/Date";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -55,14 +56,16 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
 
   return (
     <DashboardCard className={classes.card}>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "Gzg8hy",
-          defaultMessage: "Invoices",
-          description: "section header",
-        })}
-        toolbar={
-          onInvoiceGenerate && (
+      <DashboardCard.Header {...toolbarWrapperStyles}>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "Gzg8hy",
+            defaultMessage: "Invoices",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          {onInvoiceGenerate && (
             <Button onClick={onInvoiceGenerate} className={sprinkles({ marginRight: 0.5 })}>
               <FormattedMessage
                 id="e0RKe+"
@@ -70,9 +73,9 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
                 description="generate invoice button"
               />
             </Button>
-          )
-        }
-      />
+          )}
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         {!generatedInvoices ? (
           <Skeleton />

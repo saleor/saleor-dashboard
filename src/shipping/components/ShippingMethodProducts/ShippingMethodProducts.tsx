@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
+import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -66,18 +67,20 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "t3aiWF",
-          defaultMessage: "Excluded Products",
-          description: "section header",
-        })}
-        toolbar={
+      <DashboardCard.Header {...toolbarWrapperStyles}>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "t3aiWF",
+            defaultMessage: "Excluded Products",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <Button data-test-id="assign-product-button" variant="tertiary" onClick={onProductAssign}>
             <FormattedMessage id="U8eeLW" defaultMessage="Assign products" description="button" />
           </Button>
-        }
-      />
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       <ResponsiveTable className={classes.table}>
         {!!products?.length && (
           <>

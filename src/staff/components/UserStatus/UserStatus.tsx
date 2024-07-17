@@ -20,7 +20,9 @@ const AppStatus: React.FC<AppStatusProps> = ({ data, disabled, label, onChange }
 
   return (
     <DashboardCard>
-      <DashboardCard.Title title={intl.formatMessage(messages.userStatus)} />
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(messages.userStatus)}</DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Typography variant="body2">
           {intl.formatMessage(messages.userDisableInstruction)}

@@ -76,28 +76,35 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        toolbar={
-          <Button data-test-id="add-product" disabled={disabled} variant="tertiary" onClick={onAdd}>
-            <FormattedMessage id="scHVdW" defaultMessage="Assign product" description="button" />
-          </Button>
-        }
-      >
-        {collection ? (
-          intl.formatMessage(
-            {
-              id: "/dnWE8",
-              defaultMessage: "Products in {name}",
-              description: "products in collection",
-            },
-            {
-              name: maybe(() => collection.name, "..."),
-            },
-          )
-        ) : (
-          <Skeleton />
-        )}
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title
+          toolbar={
+            <Button
+              data-test-id="add-product"
+              disabled={disabled}
+              variant="tertiary"
+              onClick={onAdd}
+            >
+              <FormattedMessage id="scHVdW" defaultMessage="Assign product" description="button" />
+            </Button>
+          }
+        >
+          {collection ? (
+            intl.formatMessage(
+              {
+                id: "/dnWE8",
+                defaultMessage: "Products in {name}",
+                description: "products in collection",
+              },
+              {
+                name: maybe(() => collection.name, "..."),
+              },
+            )
+          ) : (
+            <Skeleton />
+          )}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <ResponsiveTable className={classes.table}>
         <TableHead
           colSpan={numberOfColumns}

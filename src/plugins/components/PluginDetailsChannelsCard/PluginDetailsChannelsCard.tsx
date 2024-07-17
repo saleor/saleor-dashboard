@@ -12,7 +12,9 @@ const PluginDetailsChannelsCard: React.FC<PluginDetailsChannelsCardProps> = prop
 
   return (
     <DashboardCard>
-      <DashboardCard.Title title={intl.formatMessage(sectionNames.channels)} />
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(sectionNames.channels)}</DashboardCard.Title>
+      </DashboardCard.Header>
       <PluginDetailsChannelsCardContent {...props} />
     </DashboardCard>
   );

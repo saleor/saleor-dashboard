@@ -50,13 +50,15 @@ const VoucherTypes = ({ data, disabled, errors, onChange }: VoucherTypesProps) =
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "6cq+c+",
-          defaultMessage: "Discount Type",
-          description: "header",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "6cq+c+",
+            defaultMessage: "Discount Type",
+            description: "header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Grid variant="uniform">
           <RadioGroupField

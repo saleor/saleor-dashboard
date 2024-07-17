@@ -54,13 +54,15 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "jU9GPX",
-          defaultMessage: "Organize Content",
-          description: "section header",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "jU9GPX",
+            defaultMessage: "Organize Content",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         {canChangeType ? (
           <Combobox

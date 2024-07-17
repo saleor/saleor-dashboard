@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
+import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -45,14 +46,16 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage(messages.discountVariantsHeader)}
-        toolbar={
+      <DashboardCard.Header {...toolbarWrapperStyles}>
+        <DashboardCard.Title>
+          {intl.formatMessage(messages.discountVariantsHeader)}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <Button onClick={onVariantAssign} data-test-id="assign-variant">
             <FormattedMessage {...messages.discountVariantsButton} />
           </Button>
-        }
-      />
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       <ResponsiveTable>
         <colgroup>
           <col />

@@ -26,12 +26,14 @@ const ProductVariantName: React.FC<ProductVariantNameProps> = ({
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        {intl.formatMessage({
-          id: "T1f2Yl",
-          defaultMessage: "Variant Name",
-        })}
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "T1f2Yl",
+            defaultMessage: "Variant Name",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Input
           width="100%"

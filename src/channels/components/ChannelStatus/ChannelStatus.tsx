@@ -22,13 +22,15 @@ export const ChannelStatus: React.FC<ChannelStatusProps> = ({
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        {intl.formatMessage({
-          id: "TSJRiZ",
-          defaultMessage: "Channel Status",
-          description: "channel status title",
-        })}
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "TSJRiZ",
+            defaultMessage: "Channel Status",
+            description: "channel status title",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
 
       <DashboardCard.Content>
         <Typography variant="caption" className={classes.label}>

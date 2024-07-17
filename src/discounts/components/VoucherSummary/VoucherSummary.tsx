@@ -29,7 +29,9 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({ selectedChannelId, vouc
 
   return (
     <DashboardCard>
-      <DashboardCard.Title title={intl.formatMessage(commonMessages.summary)} />
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(commonMessages.summary)}</DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Typography variant="caption">
           <FormattedMessage id="bcf60I" defaultMessage="Applies to" description="voucher" />

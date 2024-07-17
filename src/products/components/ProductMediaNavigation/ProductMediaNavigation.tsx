@@ -69,7 +69,9 @@ const ProductMediaNavigation: React.FC<ProductMediaNavigationProps> = props => {
 
   return (
     <DashboardCard className={classes.card}>
-      <DashboardCard.Title title={intl.formatMessage(messages.allMedia)} />
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(messages.allMedia)}</DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         {!media ? (
           <Skeleton />

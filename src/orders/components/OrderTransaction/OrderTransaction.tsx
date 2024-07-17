@@ -35,15 +35,17 @@ const OrderTransaction: React.FC<OrderTransactionProps> = ({
       __opacity={disabled ? "0.6" : "1"}
       data-test-id="orderTransactionsList"
     >
-      <DashboardCard.Title
-        toolbar={
-          <OrderTransactionCardTitle
-            transaction={transaction}
-            onTransactionAction={onTransactionAction}
-            showActions={showActions}
-          />
-        }
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {
+            <OrderTransactionCardTitle
+              transaction={transaction}
+              onTransactionAction={onTransactionAction}
+              showActions={showActions}
+            />
+          }
+        </DashboardCard.Title>
+      </DashboardCard.Header>
 
       <DashboardCard.Content paddingX={0}>
         <TransactionEvents events={events} />

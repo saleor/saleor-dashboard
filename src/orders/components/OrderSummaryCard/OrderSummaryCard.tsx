@@ -41,7 +41,11 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = ({ order }) => {
 
   return (
     <DashboardCard data-test-id="OrderSummaryCard">
-      <DashboardCard.Title title={<FormattedMessage {...orderSummaryMessages.orderSummary} />} />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          <FormattedMessage {...orderSummaryMessages.orderSummary} />
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <SummaryList className={classes.list}>
           <SummaryLine

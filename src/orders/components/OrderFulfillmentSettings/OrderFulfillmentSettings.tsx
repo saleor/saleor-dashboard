@@ -23,13 +23,15 @@ const OrderFulfillmentSettings: React.FC<OrderFulfillmentSettingsProps> = ({
 
   return (
     <DashboardCard data-test-id="order-fulfillment-settings">
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "G3ay2p",
-          defaultMessage: "Fulfillment settings",
-          description: "section header",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "G3ay2p",
+            defaultMessage: "Fulfillment settings",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <ControlledCheckbox
           name={"fulfillmentAutoApprove" as keyof OrderSettingsFormData}

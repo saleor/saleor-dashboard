@@ -34,38 +34,40 @@ export const ChannelsAvailabilityCardWrapper: React.FC<
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        <Box display="flex" justifyContent="space-between">
-          <Box display={"flex"} flexDirection={"column"} gap={1}>
-            <div>
-              {intl.formatMessage({
-                id: "5A6/2C",
-                defaultMessage: "Availability",
-                description: "section header",
-              })}
-            </div>
-            {!!channelsAvailabilityText && (
-              <Text size={2} color="default2" data-test-id="product-available-in-channels-text">
-                {channelsAvailabilityText}
-              </Text>
-            )}
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          <Box display="flex" justifyContent="space-between">
+            <Box display={"flex"} flexDirection={"column"} gap={1}>
+              <div>
+                {intl.formatMessage({
+                  id: "5A6/2C",
+                  defaultMessage: "Availability",
+                  description: "section header",
+                })}
+              </div>
+              {!!channelsAvailabilityText && (
+                <Text size={2} color="default2" data-test-id="product-available-in-channels-text">
+                  {channelsAvailabilityText}
+                </Text>
+              )}
+            </Box>
+            <RequirePermissions requiredPermissions={managePermissions}>
+              <Button
+                onClick={openModal}
+                data-test-id="channels-availability-manage-button"
+                type="button"
+                variant="secondary"
+              >
+                {intl.formatMessage({
+                  id: "2i81/P",
+                  defaultMessage: "Manage",
+                  description: "section header button",
+                })}
+              </Button>
+            </RequirePermissions>
           </Box>
-          <RequirePermissions requiredPermissions={managePermissions}>
-            <Button
-              onClick={openModal}
-              data-test-id="channels-availability-manage-button"
-              type="button"
-              variant="secondary"
-            >
-              {intl.formatMessage({
-                id: "2i81/P",
-                defaultMessage: "Manage",
-                description: "section header button",
-              })}
-            </Button>
-          </RequirePermissions>
-        </Box>
-      </DashboardCard.Title>
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content gap={1} display="flex" flexDirection="column">
         <Box display="flex" flexDirection="column" gap={5}>
           {children}

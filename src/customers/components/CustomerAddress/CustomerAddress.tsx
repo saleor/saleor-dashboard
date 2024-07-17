@@ -88,50 +88,52 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
 
   return (
     <DashboardCard data-test-id="address-card" className={classes.card}>
-      <DashboardCard.Title
-        data-test-id="address-type-title"
-        toolbar={
-          <CardMenu
-            disabled={disabled}
-            menuItems={[
-              {
-                label: intl.formatMessage(messages.setDefaultShipping),
-                onSelect: () => onSetAsDefault(AddressTypeEnum.SHIPPING),
-                testId: "set-default-shipping-address",
-              },
-              {
-                label: intl.formatMessage(messages.setDefaultBilling),
-                onSelect: () => onSetAsDefault(AddressTypeEnum.BILLING),
-                testId: "set-default-billing-address",
-              },
-              {
-                label: intl.formatMessage(messages.editAddress),
-                onSelect: () => onEdit(),
-                testId: "edit-address",
-              },
-              {
-                label: intl.formatMessage(messages.deleteAddress),
-                onSelect: () => onRemove(),
-                testId: "delete-address",
-              },
-            ]}
-          />
-        }
-      >
-        {address ? (
-          <>
-            {isDefaultBillingAddress && isDefaultShippingAddress
-              ? intl.formatMessage(messages.defaultAddress)
-              : isDefaultShippingAddress
-                ? intl.formatMessage(messages.defaultShippingAddress)
-                : isDefaultBillingAddress
-                  ? intl.formatMessage(messages.defaultBillingAddress)
-                  : null}
-          </>
-        ) : (
-          <Skeleton />
-        )}
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title
+          data-test-id="address-type-title"
+          toolbar={
+            <CardMenu
+              disabled={disabled}
+              menuItems={[
+                {
+                  label: intl.formatMessage(messages.setDefaultShipping),
+                  onSelect: () => onSetAsDefault(AddressTypeEnum.SHIPPING),
+                  testId: "set-default-shipping-address",
+                },
+                {
+                  label: intl.formatMessage(messages.setDefaultBilling),
+                  onSelect: () => onSetAsDefault(AddressTypeEnum.BILLING),
+                  testId: "set-default-billing-address",
+                },
+                {
+                  label: intl.formatMessage(messages.editAddress),
+                  onSelect: () => onEdit(),
+                  testId: "edit-address",
+                },
+                {
+                  label: intl.formatMessage(messages.deleteAddress),
+                  onSelect: () => onRemove(),
+                  testId: "delete-address",
+                },
+              ]}
+            />
+          }
+        >
+          {address ? (
+            <>
+              {isDefaultBillingAddress && isDefaultShippingAddress
+                ? intl.formatMessage(messages.defaultAddress)
+                : isDefaultShippingAddress
+                  ? intl.formatMessage(messages.defaultShippingAddress)
+                  : isDefaultBillingAddress
+                    ? intl.formatMessage(messages.defaultBillingAddress)
+                    : null}
+            </>
+          ) : (
+            <Skeleton />
+          )}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <AddressFormatter address={address} />
       </DashboardCard.Content>

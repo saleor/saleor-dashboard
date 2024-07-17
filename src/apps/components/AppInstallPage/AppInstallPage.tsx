@@ -51,9 +51,11 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
       <DetailPageLayout.Content>
         <Box paddingY={6}>
           <DashboardCard>
-            <DashboardCard.Title data-test-id="app-installation-page-header">
-              {loading ? <Skeleton /> : intl.formatMessage(messages.title, { name })}
-            </DashboardCard.Title>
+            <DashboardCard.Header>
+              <DashboardCard.Title data-test-id="app-installation-page-header">
+                {loading ? <Skeleton /> : intl.formatMessage(messages.title, { name })}
+              </DashboardCard.Title>
+            </DashboardCard.Header>
             <DashboardCard.Content className={classes.installCard}>
               {loading ? (
                 <Spinner />
@@ -88,9 +90,11 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
           <CardSpacer />
 
           <DashboardCard>
-            <DashboardCard.Title>
-              {loading ? <Skeleton /> : intl.formatMessage(messages.permissionsTitle)}
-            </DashboardCard.Title>
+            <DashboardCard.Header>
+              <DashboardCard.Title>
+                {loading ? <Skeleton /> : intl.formatMessage(messages.permissionsTitle)}
+              </DashboardCard.Title>
+            </DashboardCard.Header>
             <DashboardCard.Content>
               {loading ? (
                 <Skeleton />

@@ -34,7 +34,9 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
 
   return (
     <DashboardCard>
-      <DashboardCard.Title title={intl.formatMessage(messages.reservedStock)} />
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(messages.reservedStock)}</DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Typography variant="body2">
           <FormattedMessage {...messages.reservedStockDescription} />
@@ -84,7 +86,9 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
           }}
         />
       </DashboardCard.Content>
-      <DashboardCard.Title title={intl.formatMessage(messages.checkoutLimits)} />
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(messages.checkoutLimits)}</DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <TextField
           data-test-id="checkout-limits-input"

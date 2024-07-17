@@ -137,13 +137,15 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
 
   return (
     <DashboardCard className={className} data-test-id="staff-member-information">
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "VTITVe",
-          defaultMessage: "Staff Member Information",
-          description: "section header",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "VTITVe",
+            defaultMessage: "Staff Member Information",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <div className={classes.root}>
           <div>

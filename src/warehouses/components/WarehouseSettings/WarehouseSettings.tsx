@@ -132,7 +132,11 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
 
   return (
     <DashboardCard>
-      <DashboardCard.Title title={<FormattedMessage {...sectionNames.shippingZones} />} />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          <FormattedMessage {...sectionNames.shippingZones} />
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         {renderCollection(
           zones,
@@ -154,7 +158,11 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
         )}
       </DashboardCard.Content>
       <Divider />
-      <DashboardCard.Title title={<FormattedMessage {...messages.warehouseSettingsStockTitle} />} />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          <FormattedMessage {...messages.warehouseSettingsStockTitle} />
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content data-test-id="stock-settings-section">
         <RadioGroupField
           disabled={disabled}
@@ -166,14 +174,12 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
         />
       </DashboardCard.Content>
       <Divider />
-      <DashboardCard.Title
-        title={
-          <>
-            <FormattedMessage {...messages.warehouseSettingsPickupTitle} />
-            <PreviewPill className={classes.preview} />
-          </>
-        }
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          <FormattedMessage {...messages.warehouseSettingsPickupTitle} />
+          <PreviewPill className={classes.preview} />
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <RadioGroupField
           disabled={disabled}

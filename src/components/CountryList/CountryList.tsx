@@ -83,15 +83,21 @@ const CountryList: React.FC<CountryListProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        toolbar={
-          <Button disabled={disabled} onClick={onCountryAssign} data-test-id="assign-country">
-            <FormattedMessage id="zZCCqz" defaultMessage="Assign countries" description="button" />
-          </Button>
-        }
-      >
-        {title}
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title
+          toolbar={
+            <Button disabled={disabled} onClick={onCountryAssign} data-test-id="assign-country">
+              <FormattedMessage
+                id="zZCCqz"
+                defaultMessage="Assign countries"
+                description="button"
+              />
+            </Button>
+          }
+        >
+          {title}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <ResponsiveTable>
         <TableBody>
           <TableRowLink className={classes.pointer} onClick={toggleCollapse}>

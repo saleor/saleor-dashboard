@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
+import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import { Pill } from "@dashboard/components/Pill";
 import Skeleton from "@dashboard/components/Skeleton";
 import { useFlag } from "@dashboard/featureFlags";
@@ -45,10 +46,14 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkA
   if (!order) {
     return (
       <DashboardCard>
-        <DashboardCard.Title
-          title={<FormattedMessage {...orderPaymentMessages.paymentTitle} />}
-          toolbar={<Skeleton />}
-        />
+        <DashboardCard.Header {...toolbarWrapperStyles}>
+          <DashboardCard.Title>
+            <FormattedMessage {...orderPaymentMessages.paymentTitle} />
+          </DashboardCard.Title>
+          <DashboardCard.Toolbar>
+            <Skeleton />
+          </DashboardCard.Toolbar>
+        </DashboardCard.Header>
         <DashboardCard.Content>
           <Skeleton />
         </DashboardCard.Content>
@@ -58,8 +63,15 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkA
 
   return (
     <DashboardCard className={classes.root}>
-      <DashboardCard.Title
-        toolbar={
+      <DashboardCard.Header {...toolbarWrapperStyles}>
+        <DashboardCard.Title>
+          <FormattedMessage {...orderPaymentMessages.paymentTitle} />
+
+          <DashboardCard.Subtitle>
+            <FormattedMessage {...orderPaymentMessages.paymentSubtitle} />
+          </DashboardCard.Subtitle>
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <Pill
             key={payment.status}
             label={payment.localized}
@@ -67,14 +79,8 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkA
             className={classes.paymentStatus}
             data-test-id="payment-status"
           />
-        }
-      >
-        <FormattedMessage {...orderPaymentMessages.paymentTitle} />
-
-        <DashboardCard.Subtitle>
-          <FormattedMessage {...orderPaymentMessages.paymentSubtitle} />
-        </DashboardCard.Subtitle>
-      </DashboardCard.Title>
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       {showHasNoPayment ? (
         <DashboardCard.Content className={classes.noPaymentContent} data-test-id="payment-section">
           <Typography variant="h5" className={classes.noPaymentTitle}>
@@ -96,8 +102,11 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkA
       {canAnyRefund && !enabled && (
         <>
           <Divider />
-          <DashboardCard.Title
-            toolbar={
+          <DashboardCard.Header {...toolbarWrapperStyles}>
+            <DashboardCard.Title>
+              <FormattedMessage {...orderPaymentMessages.refundsTitle} />
+            </DashboardCard.Title>
+            <DashboardCard.Toolbar>
               <div className={classes.refundsButtons}>
                 {canGrantRefund && (
                   <Button
@@ -118,10 +127,8 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkA
                   </Button>
                 )}
               </div>
-            }
-          >
-            <FormattedMessage {...orderPaymentMessages.refundsTitle} />
-          </DashboardCard.Title>
+            </DashboardCard.Toolbar>
+          </DashboardCard.Header>
           <DashboardCard.Content>
             <RefundsSummary order={order} />
           </DashboardCard.Content>

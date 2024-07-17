@@ -24,13 +24,15 @@ const VoucherDates = ({ data, disabled, errors, onChange }: VoucherDatesProps) =
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "YjcN9w",
-          defaultMessage: "Active Dates",
-          description: "time during voucher is active, header",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "YjcN9w",
+            defaultMessage: "Active Dates",
+            description: "time during voucher is active, header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Grid variant="uniform">
           <TextField

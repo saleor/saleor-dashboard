@@ -16,13 +16,15 @@ export const OrderChannelSectionCard: React.FC<OrderChannelSectionCardProps> = (
 
   return (
     <DashboardCard data-test-id="order-sales-channel">
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "aY0HAT",
-          defaultMessage: "Sales channel",
-          description: "section header",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "aY0HAT",
+            defaultMessage: "Sales channel",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         {!channel ? (
           <Skeleton />

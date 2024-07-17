@@ -39,12 +39,14 @@ const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        <div className={classes.preview}>
-          <FormattedMessage {...messages.allocationStrategy} />
-          <PreviewPill />
-        </div>
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          <div className={classes.preview}>
+            <FormattedMessage {...messages.allocationStrategy} />
+            <PreviewPill />
+          </div>
+        </DashboardCard.Title>
+      </DashboardCard.Header>
 
       <DashboardCard.Content>
         <RadioGroupField

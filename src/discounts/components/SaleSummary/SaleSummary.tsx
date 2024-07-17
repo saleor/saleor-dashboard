@@ -27,7 +27,9 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannelId, sale }) =>
 
   return (
     <DashboardCard>
-      <DashboardCard.Title title={intl.formatMessage(commonMessages.summary)} />
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(commonMessages.summary)}</DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Typography variant="caption">
           <FormattedMessage id="F56hOz" defaultMessage="Name" description="sale name" />

@@ -57,13 +57,15 @@ const SaleType: React.FC<SaleTypeProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "WkxE8/",
-          defaultMessage: "Discount Type",
-          description: "percentage or fixed, header",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "WkxE8/",
+            defaultMessage: "Discount Type",
+            description: "percentage or fixed, header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content className={classes.root}>
         <RadioGroupField
           choices={choices}

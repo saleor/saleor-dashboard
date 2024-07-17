@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
+import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Grid from "@dashboard/components/Grid";
 import Hr from "@dashboard/components/Hr";
@@ -121,9 +122,9 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={title}
-        toolbar={
+      <DashboardCard.Header {...toolbarWrapperStyles}>
+        <DashboardCard.Title>{title}</DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <IconButton variant="secondary" onClick={() => setExpandedState(!expanded)}>
             <ArrowIcon
               className={clsx({
@@ -131,8 +132,8 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
               })}
             />
           </IconButton>
-        }
-      />
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       {expanded ? (
         <DashboardCard.Content className={classes.cardContent}>
           <Grid className={classes.grid} variant="uniform">

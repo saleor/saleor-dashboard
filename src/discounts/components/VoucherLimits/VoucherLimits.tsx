@@ -38,7 +38,9 @@ const VoucherLimits = ({
 
   return (
     <DashboardCard data-test-id="usage-limit-section">
-      <DashboardCard.Title title={intl.formatMessage(messages.usageLimitsTitle)} />
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(messages.usageLimitsTitle)}</DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content className={classes.cardContent}>
         <ControlledCheckbox
           testId="has-usage-limit"

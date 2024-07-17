@@ -39,13 +39,15 @@ const CustomAppInformation: React.FC<CustomAppInfoProps> = ({
 
   return (
     <DashboardCard>
-      <DashboardCard.Title className={classes.cardTitle}>
-        {intl.formatMessage({
-          id: "imYxM9",
-          defaultMessage: "App Information",
-          description: "header",
-        })}
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title className={classes.cardTitle}>
+          {intl.formatMessage({
+            id: "imYxM9",
+            defaultMessage: "App Information",
+            description: "header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <TextField
           disabled={disabled}

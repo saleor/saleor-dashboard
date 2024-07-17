@@ -136,7 +136,11 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>{intl.formatMessage(visibilityCardMessages.title)}</DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(visibilityCardMessages.title)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <RadioGroup
           disabled={disabled}

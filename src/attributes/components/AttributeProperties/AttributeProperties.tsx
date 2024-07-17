@@ -89,7 +89,9 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>{intl.formatMessage(commonMessages.properties)}</DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(commonMessages.properties)}</DashboardCard.Title>
+      </DashboardCard.Header>
 
       <DashboardCard.Content>
         {storefrontFacetedNavigationProperties && (

@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
+import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import { DateTime } from "@dashboard/components/Date";
 import Money from "@dashboard/components/Money";
 import { Pill } from "@dashboard/components/Pill";
@@ -47,18 +48,20 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "1LiVhv",
-          defaultMessage: "Recent Orders",
-          description: "section header",
-        })}
-        toolbar={
+      <DashboardCard.Header {...toolbarWrapperStyles}>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "1LiVhv",
+            defaultMessage: "Recent Orders",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <Button variant="tertiary" href={viewAllHref}>
             <FormattedMessage id="3+990c" defaultMessage="View all orders" description="button" />
           </Button>
-        }
-      />
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       <ResponsiveTable>
         <TableHead>
           <TableRowLink>

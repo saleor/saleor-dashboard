@@ -25,13 +25,15 @@ export const ProductShipping: React.FC<ProductShippingProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        {intl.formatMessage({
-          id: "3rIMq/",
-          defaultMessage: "Shipping",
-          description: "product shipping",
-        })}
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "3rIMq/",
+            defaultMessage: "Shipping",
+            description: "product shipping",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Box __width="25%">
           <Input

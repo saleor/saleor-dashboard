@@ -81,7 +81,11 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
       </DetailPageLayout.Content>
       <DetailPageLayout.RightSidebar>
         <DashboardCard>
-          <DashboardCard.Title title={<FormattedMessage {...refundPageMessages.refundBalance} />} />
+          <DashboardCard.Header>
+            <DashboardCard.Title>
+              <FormattedMessage {...refundPageMessages.refundBalance} />
+            </DashboardCard.Title>
+          </DashboardCard.Header>
           <DashboardCard.Content>
             <ul className={classes.dataList}>
               <DataLine label={<FormattedMessage {...refundPageMessages.totalCaptured} />}>
@@ -96,9 +100,11 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
             </ul>
           </DashboardCard.Content>
           <Hr />
-          <DashboardCard.Title
-            title={<FormattedMessage {...refundPageMessages.balanceAfterRequests} />}
-          />
+          <DashboardCard.Header>
+            <DashboardCard.Title>
+              <FormattedMessage {...refundPageMessages.balanceAfterRequests} />
+            </DashboardCard.Title>
+          </DashboardCard.Header>
           <DashboardCard.Content>
             {loading && <Skeleton />}
             <ul className={classes.dataList}>

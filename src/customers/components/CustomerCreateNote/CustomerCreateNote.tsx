@@ -29,13 +29,15 @@ const CustomerCreateNote: React.FC<CustomerCreateNoteProps> = ({
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "qNcoRY",
-          defaultMessage: "Notes",
-          description: "notes about customer header",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "qNcoRY",
+            defaultMessage: "Notes",
+            description: "notes about customer header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Typography>
           <FormattedMessage

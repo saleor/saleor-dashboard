@@ -93,28 +93,30 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
 
   return (
     <DashboardCard data-test-id="attribute-values-section">
-      <DashboardCard.Title
-        toolbar={
-          <Button
-            disabled={disabled}
-            variant="tertiary"
-            onClick={onValueAdd}
-            data-test-id="assign-value-button"
-          >
-            <FormattedMessage
-              id="+iVKR1"
-              defaultMessage="Assign value"
-              description="assign attribute value button"
-            />
-          </Button>
-        }
-      >
-        {intl.formatMessage({
-          id: "J3uE0t",
-          defaultMessage: "Attribute Values",
-          description: "section header",
-        })}
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title
+          toolbar={
+            <Button
+              disabled={disabled}
+              variant="tertiary"
+              onClick={onValueAdd}
+              data-test-id="assign-value-button"
+            >
+              <FormattedMessage
+                id="+iVKR1"
+                defaultMessage="Assign value"
+                description="assign attribute value button"
+              />
+            </Button>
+          }
+        >
+          {intl.formatMessage({
+            id: "J3uE0t",
+            defaultMessage: "Attribute Values",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
 
       <ResponsiveTable>
         <TableHead>

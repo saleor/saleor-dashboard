@@ -54,26 +54,28 @@ const CustomerGiftCardsCard: React.FC = () => {
   return (
     <>
       <DashboardCard>
-        <DashboardCard.Title
-          title={intl.formatMessage(messages.customerGiftCardsCardTitle)}
-          toolbar={
-            <>
-              {!!giftCards?.length && (
-                <Button variant="tertiary" href={viewAllGiftCardsUrl} component={Link}>
-                  <FormattedMessage {...messages.customerGiftCardsViewAllButton} />
-                </Button>
-              )}
-              <PreviewPill className={sprinkles({ marginLeft: 2 })} />
-            </>
-          }
-        >
-          <FormattedMessage
-            {...(giftCards?.length
-              ? messages.customerGiftCardsPresentSubtitle
-              : messages.customerGiftCardsAbsentSubtitle)}
-          />
-          <VerticalSpacer spacing={2} />
-        </DashboardCard.Title>
+        <DashboardCard.Header>
+          <DashboardCard.Title
+            title={intl.formatMessage(messages.customerGiftCardsCardTitle)}
+            toolbar={
+              <>
+                {!!giftCards?.length && (
+                  <Button variant="tertiary" href={viewAllGiftCardsUrl} component={Link}>
+                    <FormattedMessage {...messages.customerGiftCardsViewAllButton} />
+                  </Button>
+                )}
+                <PreviewPill className={sprinkles({ marginLeft: 2 })} />
+              </>
+            }
+          >
+            <FormattedMessage
+              {...(giftCards?.length
+                ? messages.customerGiftCardsPresentSubtitle
+                : messages.customerGiftCardsAbsentSubtitle)}
+            />
+            <VerticalSpacer spacing={2} />
+          </DashboardCard.Title>
+        </DashboardCard.Header>
 
         {!loading && giftCards ? (
           <CollectionWithDividers

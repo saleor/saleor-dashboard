@@ -41,13 +41,15 @@ const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "6aBkJm",
-          defaultMessage: "Authorization",
-          description: "section header",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "6aBkJm",
+            defaultMessage: "Authorization",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         {secretFields.map((field, fieldIndex) => (
           <React.Fragment key={field.name}>

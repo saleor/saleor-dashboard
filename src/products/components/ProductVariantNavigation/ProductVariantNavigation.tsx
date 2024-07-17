@@ -36,7 +36,9 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>{intl.formatMessage(sectionNames.variants)}</DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(sectionNames.variants)}</DashboardCard.Title>
+      </DashboardCard.Header>
       <SortableContainer onSortEnd={onReorder} data-test-id="variants-list">
         {variants?.length > 0 && <Divider />}
         {renderCollection(variants, (variant, variantIndex) => {

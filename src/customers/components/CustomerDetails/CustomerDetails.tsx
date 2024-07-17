@@ -51,28 +51,29 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        className={classes.cardTitle}
-        title={
-          <>
-            {maybe<React.ReactNode>(() => customer.email, <Skeleton />)}
-            {customer && customer.dateJoined ? (
-              <Typography className={classes.subtitle} variant="caption" component="div">
-                <FormattedMessage
-                  id="MjUyhA"
-                  defaultMessage="Active member since {date}"
-                  description="section subheader"
-                  values={{
-                    date: moment(customer.dateJoined).format("MMM YYYY"),
-                  }}
-                />
-              </Typography>
-            ) : (
-              <Skeleton style={{ width: "10rem" }} />
-            )}
-          </>
-        }
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title className={classes.cardTitle}>
+          {
+            <>
+              {maybe<React.ReactNode>(() => customer.email, <Skeleton />)}
+              {customer && customer.dateJoined ? (
+                <Typography className={classes.subtitle} variant="caption" component="div">
+                  <FormattedMessage
+                    id="MjUyhA"
+                    defaultMessage="Active member since {date}"
+                    description="section subheader"
+                    values={{
+                      date: moment(customer.dateJoined).format("MMM YYYY"),
+                    }}
+                  />
+                </Typography>
+              ) : (
+                <Skeleton style={{ width: "10rem" }} />
+              )}
+            </>
+          }
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content className={classes.content}>
         <ControlledCheckbox
           data-test-id="customer-active-checkbox"

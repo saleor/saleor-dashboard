@@ -17,9 +17,11 @@ const messages = defineMessages({
 });
 const CannotDefineChannelsAvailabilityCard: React.FC = () => (
   <DashboardCard gap={2}>
-    <DashboardCard.Title>
-      <FormattedMessage {...messages.title} />
-    </DashboardCard.Title>
+    <DashboardCard.Header>
+      <DashboardCard.Title>
+        <FormattedMessage {...messages.title} />
+      </DashboardCard.Title>
+    </DashboardCard.Header>
     <DashboardCard.Content>
       <Text size={2} color="default2">
         <FormattedMessage {...messages.subtitle} />

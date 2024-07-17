@@ -2,6 +2,7 @@
 import { attributeUrl } from "@dashboard/attributes/urls";
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
+import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -71,13 +72,15 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
 
   return (
     <DashboardCard data-test-id="page-attributes">
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "iQxjow",
-          defaultMessage: "Content Attributes",
-          description: "section header",
-        })}
-        toolbar={
+      <DashboardCard.Header {...toolbarWrapperStyles}>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "iQxjow",
+            defaultMessage: "Content Attributes",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <Button
             variant="tertiary"
             onClick={() => onAttributeAssign(AttributeTypeEnum[type])}
@@ -85,8 +88,8 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
           >
             <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
           </Button>
-        }
-      />
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <ResponsiveTable>
           <colgroup>

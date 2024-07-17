@@ -38,7 +38,9 @@ const Warehouses: React.FC<WarehousesProps> = props => {
 
   return (
     <DashboardCard data-test-id="warehouses-section">
-      <DashboardCard.Title>{intl.formatMessage(sectionNames.warehouses)}</DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(sectionNames.warehouses)}</DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Typography>{intl.formatMessage(messages.subtitle)}</Typography>
       </DashboardCard.Content>

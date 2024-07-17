@@ -14,7 +14,9 @@ const GiftCardUpdateInfoCard: React.FC = () => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title title={intl.formatMessage(messages.title)} />
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(messages.title)}</DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         {loading ? <Skeleton /> : <GiftCardUpdateInfoCardContent />}
       </DashboardCard.Content>

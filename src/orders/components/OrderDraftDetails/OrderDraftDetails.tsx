@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
+import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import {
   ChannelUsabilityDataQuery,
   OrderDetailsFragment,
@@ -48,21 +49,22 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "18wvf7",
-          defaultMessage: "Order Details",
-          description: "section header",
-        })}
-        toolbar={
-          isChannelActive &&
-          areProductsInChannel && (
+      <DashboardCard.Header {...toolbarWrapperStyles}>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "18wvf7",
+            defaultMessage: "Order Details",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          {isChannelActive && areProductsInChannel && (
             <Button variant="tertiary" onClick={onOrderLineAdd} data-test-id="add-products-button">
               <FormattedMessage id="C50ahv" defaultMessage="Add products" description="button" />
             </Button>
-          )
-        }
-      />
+          )}
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       <OrderDraftDetailsProducts
         order={order}
         errors={errors}

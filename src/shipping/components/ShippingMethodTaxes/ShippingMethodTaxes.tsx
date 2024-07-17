@@ -33,7 +33,9 @@ const ShippingMethodTaxes: React.FC<ShippingMethodTaxesProps> = props => {
 
   return (
     <DashboardCard className={classes.root}>
-      <DashboardCard.Title title={intl.formatMessage(sectionNames.taxes)} />
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(sectionNames.taxes)}</DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Combobox
           allowEmptyValue

@@ -2,6 +2,7 @@
 import { collectionUrl } from "@dashboard/collections/urls";
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
+import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -45,14 +46,16 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
 
   return (
     <DashboardCard data-test-id="assign-collection-section">
-      <DashboardCard.Title
-        title={intl.formatMessage(messages.discountCollectionsHeader)}
-        toolbar={
+      <DashboardCard.Header {...toolbarWrapperStyles}>
+        <DashboardCard.Title>
+          {intl.formatMessage(messages.discountCollectionsHeader)}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <Button onClick={onCollectionAssign} data-test-id="assign-collection-button">
             <FormattedMessage {...messages.discountCollectionsButton} />
           </Button>
-        }
-      />
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       <ResponsiveTable>
         <colgroup>
           <col />

@@ -65,10 +65,9 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
 
   return (
     <DashboardCard data-test-id="OrderPayment">
-      <DashboardCard.Title
-        className={classes.payments}
-        title={
-          !order?.paymentStatus ? (
+      <DashboardCard.Header>
+        <DashboardCard.Title className={classes.payments}>
+          {!order?.paymentStatus ? (
             <Skeleton />
           ) : (
             <div className={classes.titleContainer}>
@@ -110,9 +109,9 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                   </div>
                 )}
             </div>
-          )
-        }
-      />
+          )}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content className={classes.payments}>
         <div className={classes.root}>
           {order?.discounts?.map(discount => (

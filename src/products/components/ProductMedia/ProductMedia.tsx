@@ -106,54 +106,56 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        <Box display="flex" justifyContent="space-between" cursor="pointer">
-          <FormattedMessage {...messages.media} />
-          <Dropdown>
-            <Dropdown.Trigger>
-              <Button
-                variant="secondary"
-                type="button"
-                data-test-id="button-upload-image"
-                ref={anchor}
-              >
-                {intl.formatMessage(messages.upload)}
-              </Button>
-            </Dropdown.Trigger>
-            <Dropdown.Content align="end">
-              <List
-                padding={2}
-                borderRadius={4}
-                boxShadow="defaultOverlay"
-                backgroundColor="default1"
-              >
-                <Dropdown.Item>
-                  <List.Item
-                    borderRadius={4}
-                    paddingX={1.5}
-                    paddingY={2}
-                    onClick={() => imagesUpload.current.click()}
-                    data-test-id="upload-images"
-                  >
-                    <Text>{intl.formatMessage(messages.uploadImages)}</Text>
-                  </List.Item>
-                </Dropdown.Item>
-                <Dropdown.Item>
-                  <List.Item
-                    borderRadius={4}
-                    paddingX={1.5}
-                    paddingY={2}
-                    onClick={openMediaUrlModal}
-                    data-test-id="upload-media-url"
-                  >
-                    <Text>{intl.formatMessage(messages.uploadUrl)}</Text>
-                  </List.Item>
-                </Dropdown.Item>
-              </List>
-            </Dropdown.Content>
-          </Dropdown>
-        </Box>
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          <Box display="flex" justifyContent="space-between" cursor="pointer">
+            <FormattedMessage {...messages.media} />
+            <Dropdown>
+              <Dropdown.Trigger>
+                <Button
+                  variant="secondary"
+                  type="button"
+                  data-test-id="button-upload-image"
+                  ref={anchor}
+                >
+                  {intl.formatMessage(messages.upload)}
+                </Button>
+              </Dropdown.Trigger>
+              <Dropdown.Content align="end">
+                <List
+                  padding={2}
+                  borderRadius={4}
+                  boxShadow="defaultOverlay"
+                  backgroundColor="default1"
+                >
+                  <Dropdown.Item>
+                    <List.Item
+                      borderRadius={4}
+                      paddingX={1.5}
+                      paddingY={2}
+                      onClick={() => imagesUpload.current.click()}
+                      data-test-id="upload-images"
+                    >
+                      <Text>{intl.formatMessage(messages.uploadImages)}</Text>
+                    </List.Item>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <List.Item
+                      borderRadius={4}
+                      paddingX={1.5}
+                      paddingY={2}
+                      onClick={openMediaUrlModal}
+                      data-test-id="upload-media-url"
+                    >
+                      <Text>{intl.formatMessage(messages.uploadUrl)}</Text>
+                    </List.Item>
+                  </Dropdown.Item>
+                </List>
+              </Dropdown.Content>
+            </Dropdown>
+          </Box>
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Box>
           <Box

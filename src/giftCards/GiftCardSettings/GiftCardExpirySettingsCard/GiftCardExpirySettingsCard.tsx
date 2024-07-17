@@ -37,10 +37,11 @@ const GiftCardExpirySettingsCard: React.FC<GiftCardExpirySettingsCardProps> = ({
 
   return (
     <DashboardCard data-test-id="gift-card-settings">
-      <DashboardCard.Title
-        title={intl.formatMessage(messages.expiryDateTitle)}
-        className={classes.cardTitle}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title className={classes.cardTitle}>
+          {intl.formatMessage(messages.expiryDateTitle)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <GiftCardSettingsExpirySelect
           expiryPeriodActive={data.expiryPeriodActive}

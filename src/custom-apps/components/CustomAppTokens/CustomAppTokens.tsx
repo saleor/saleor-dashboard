@@ -27,20 +27,22 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        className={classes.cardTitle}
-        toolbar={
-          <Button variant="secondary" onClick={onCreate} data-test-id="create-token">
-            <FormattedMessage id="RMB6fU" defaultMessage="Create Token" description="button" />
-          </Button>
-        }
-      >
-        {intl.formatMessage({
-          id: "0Mg8o5",
-          defaultMessage: "Tokens",
-          description: "header",
-        })}
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title
+          className={classes.cardTitle}
+          toolbar={
+            <Button variant="secondary" onClick={onCreate} data-test-id="create-token">
+              <FormattedMessage id="RMB6fU" defaultMessage="Create Token" description="button" />
+            </Button>
+          }
+        >
+          {intl.formatMessage({
+            id: "0Mg8o5",
+            defaultMessage: "Tokens",
+            description: "header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
 
       <DashboardCard.Content>
         <ResponsiveTable>

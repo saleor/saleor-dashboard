@@ -82,8 +82,8 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={
+      <DashboardCard.Header>
+        <DashboardCard.Title>
           <>
             {getTitle(fulfillment.status, intl)}
             {fulfillment && (
@@ -92,8 +92,8 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
               </Typography>
             )}
           </>
-        }
-      />
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content className={classes.cartContent}>
         <Button
           className={classes.setMaximalQuantityButton}

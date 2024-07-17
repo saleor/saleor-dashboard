@@ -47,15 +47,15 @@ const CustomerInfo: React.FC<CustomerInfoProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={
+      <DashboardCard.Header>
+        <DashboardCard.Title>
           <FormattedMessage
             id="4v5gfh"
             defaultMessage="Account Information"
             description="account information, header"
           />
-        }
-      />
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content className={classes.content}>
         <Typography className={classes.sectionHeader}>
           <FormattedMessage {...commonMessages.generalInformations} />

@@ -22,7 +22,11 @@ const SaleInfo: React.FC<SaleInfoProps> = ({ data, disabled, errors, onChange })
 
   return (
     <DashboardCard>
-      <DashboardCard.Title title={intl.formatMessage(commonMessages.generalInformations)} />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <TextField
           disabled={disabled}

@@ -35,9 +35,11 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        {intl.formatMessage(commonMessages.generalInformations)}
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content display="grid" gap={2}>
         <Input
           label={intl.formatMessage({

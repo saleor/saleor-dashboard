@@ -2,6 +2,7 @@
 import { attributeUrl } from "@dashboard/attributes/urls";
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
+import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -120,13 +121,15 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
 
   return (
     <DashboardCard data-test-id="variant-attributes">
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "skEK/i",
-          defaultMessage: "Variant Attributes",
-          description: "section header",
-        })}
-        toolbar={
+      <DashboardCard.Header {...toolbarWrapperStyles}>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "skEK/i",
+            defaultMessage: "Variant Attributes",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <Button
             data-test-id={testId}
             variant="tertiary"
@@ -134,8 +137,8 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
           >
             <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
           </Button>
-        }
-      />
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <ResponsiveTable>
           <colgroup>

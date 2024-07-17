@@ -31,13 +31,15 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleCha
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "CLeDae",
-          defaultMessage: "Preferences",
-          description: "section header",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "CLeDae",
+            defaultMessage: "Preferences",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Combobox
           helperText={intl.formatMessage({

@@ -19,13 +19,15 @@ const OrderSettings: React.FC<OrderSettingsProps> = ({ data, disabled, onChange 
 
   return (
     <DashboardCard data-test-id="order-settings">
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "kn7jjd",
-          defaultMessage: "General settings",
-          description: "section header",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "kn7jjd",
+            defaultMessage: "General settings",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <ControlledCheckbox
           name="automaticallyConfirmAllNewOrders"

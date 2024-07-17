@@ -36,9 +36,8 @@ const OrderGrantedRefunds: React.FC<OrderGrantedRefundsProps> = ({ order }) => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        className={classes.cardTitleWrapper}
-        title={
+      <DashboardCard.Header>
+        <DashboardCard.Title className={classes.cardTitleWrapper}>
           <div className={classes.cardTitleContent}>
             <span>
               <FormattedMessage {...orderGrantedRefundsMessages.grantedRefunds} />
@@ -54,8 +53,8 @@ const OrderGrantedRefunds: React.FC<OrderGrantedRefundsProps> = ({ order }) => {
               )}
             </div>
           </div>
-        }
-      />
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <ResponsiveTable className={classes.table}>
         {renderCollection(order?.grantedRefunds, grantedRefund => (
           <TableRow>

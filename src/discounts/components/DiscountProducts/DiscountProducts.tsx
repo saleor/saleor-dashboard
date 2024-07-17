@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
+import { toolbarWrapperStyles } from "@dashboard/components/Card/Toolbar";
 import { ChannelsAvailabilityDropdown } from "@dashboard/components/ChannelsAvailabilityDropdown";
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
@@ -48,14 +49,16 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
 
   return (
     <DashboardCard data-test-id="assign-product-section">
-      <DashboardCard.Title
-        title={intl.formatMessage(messages.discountProductsHeader)}
-        toolbar={
+      <DashboardCard.Header {...toolbarWrapperStyles}>
+        <DashboardCard.Title>
+          {intl.formatMessage(messages.discountProductsHeader)}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <Button onClick={onProductAssign} data-test-id="assign-products">
             <FormattedMessage {...messages.discountProductsButton} />
           </Button>
-        }
-      />
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
 
       <ResponsiveTable>
         <colgroup>
