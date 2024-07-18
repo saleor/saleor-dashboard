@@ -8,17 +8,12 @@ const toolbarWrapperStyles = {
   justifyContent: "space-between",
 } as BoxProps;
 
-export const Header: React.FC<
-  PropsWithBox<{ withToolbar?: boolean; children: React.ReactNode }>
-> = ({ children, className, withToolbar = false, ...rest }) => (
-  <Box
-    paddingX={6}
-    paddingTop={6}
-    className={className}
-    // {...(withToolbar && toolbarWrapperStyles)}
-    {...toolbarWrapperStyles}
-    {...rest}
-  >
+export const Header: React.FC<PropsWithBox<{ children: React.ReactNode }>> = ({
+  children,
+  className,
+  ...rest
+}) => (
+  <Box paddingX={6} paddingTop={6} className={className} {...toolbarWrapperStyles} {...rest}>
     {children}
   </Box>
 );
