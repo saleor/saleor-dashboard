@@ -27,7 +27,7 @@ const GiftCardUpdateDetailsCard: React.FC = () => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title>{intl.formatMessage(messages.title)}</DashboardCard.Title>
         <DashboardCard.Toolbar>
           {!loading && !giftCard?.isExpired && (

@@ -47,7 +47,7 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title>
           {intl.formatMessage({
             id: "1LiVhv",

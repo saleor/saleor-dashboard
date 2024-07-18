@@ -120,7 +120,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
 
   return (
     <DashboardCard data-test-id="variant-attributes">
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title>
           {intl.formatMessage({
             id: "skEK/i",

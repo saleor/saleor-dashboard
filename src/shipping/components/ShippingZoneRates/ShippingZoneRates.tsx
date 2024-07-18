@@ -65,7 +65,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
 
   return (
     <DashboardCard data-test-id={variant === "price" ? "price-based-rates" : "weight-based-rates"}>
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title>
           {variant === "price"
             ? intl.formatMessage({

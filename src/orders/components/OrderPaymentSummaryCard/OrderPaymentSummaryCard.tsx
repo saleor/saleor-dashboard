@@ -45,7 +45,7 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkA
   if (!order) {
     return (
       <DashboardCard>
-        <DashboardCard.Header withToolbar>
+        <DashboardCard.Header>
           <DashboardCard.Title>
             <FormattedMessage {...orderPaymentMessages.paymentTitle} />
           </DashboardCard.Title>
@@ -62,7 +62,7 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkA
 
   return (
     <DashboardCard className={classes.root}>
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title>
           <FormattedMessage {...orderPaymentMessages.paymentTitle} />
 
@@ -101,7 +101,7 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkA
       {canAnyRefund && !enabled && (
         <>
           <Divider />
-          <DashboardCard.Header withToolbar>
+          <DashboardCard.Header>
             <DashboardCard.Title>
               <FormattedMessage {...orderPaymentMessages.refundsTitle} />
             </DashboardCard.Title>

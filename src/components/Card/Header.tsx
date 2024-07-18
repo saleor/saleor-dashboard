@@ -1,12 +1,12 @@
-import { Box, PropsWithBox } from "@saleor/macaw-ui-next";
+import { Box, BoxProps, PropsWithBox } from "@saleor/macaw-ui-next";
 import React from "react";
 
-export const toolbarWrapperStyles = {
+const toolbarWrapperStyles = {
   display: "flex",
   flexDirection: "row",
   alignItems: "center",
   justifyContent: "space-between",
-} as const;
+} as BoxProps;
 
 export const Header: React.FC<
   PropsWithBox<{ withToolbar?: boolean; children: React.ReactNode }>
@@ -15,7 +15,8 @@ export const Header: React.FC<
     paddingX={6}
     paddingTop={6}
     className={className}
-    {...(withToolbar && toolbarWrapperStyles)}
+    // {...(withToolbar && toolbarWrapperStyles)}
+    {...toolbarWrapperStyles}
     {...rest}
   >
     {children}

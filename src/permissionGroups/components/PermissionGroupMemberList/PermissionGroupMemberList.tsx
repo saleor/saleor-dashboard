@@ -90,7 +90,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
 
   return (
     <DashboardCard data-test-id="permission-group-members-section">
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title>
           {intl.formatMessage({
             id: "lGlDEH",

@@ -76,7 +76,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title>
           {collection ? (
             intl.formatMessage(

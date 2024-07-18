@@ -93,7 +93,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
 
   return (
     <DashboardCard data-test-id="attribute-values-section">
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title>
           {intl.formatMessage({
             id: "J3uE0t",

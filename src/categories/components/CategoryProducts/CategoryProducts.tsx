@@ -28,7 +28,7 @@ export const CategoryProducts = ({
   onSelectProductsIds,
 }: CategoryProductsProps) => (
   <DashboardCard>
-    <DashboardCard.Header withToolbar>
+    <DashboardCard.Header>
       <DashboardCard.Title>
         <FormattedMessage
           id="+43JV5"
@@ -37,7 +37,7 @@ export const CategoryProducts = ({
           values={{ categoryName: category?.name }}
         />
       </DashboardCard.Title>
-      <DashboardCard.Toolbar display="flex" flexDirection="row" gap={2}>
+      <DashboardCard.Toolbar>
         <InternalLink
           to={productListUrl({
             categories: [categoryId],

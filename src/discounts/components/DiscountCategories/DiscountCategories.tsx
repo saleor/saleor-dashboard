@@ -45,7 +45,7 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
 
   return (
     <DashboardCard data-test-id="assign-category-section">
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title>
           {intl.formatMessage(messages.discountCategoriesHeader)}
         </DashboardCard.Title>

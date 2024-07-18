@@ -32,8 +32,8 @@ const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref, onRem
   const numberOfColumns = webhooks?.length === 0 ? 2 : 3;
 
   return (
-    <DashboardCard className={classes.card}>
-      <DashboardCard.Header withToolbar>
+    <DashboardCard>
+      <DashboardCard.Header>
         <DashboardCard.Title className={classes.cardTitle}>
           {intl.formatMessage(sectionNames.webhooksAndEvents)}
         </DashboardCard.Title>
@@ -45,7 +45,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref, onRem
           )}
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
-      <DashboardCard.Content>
+      <DashboardCard.Content paddingX={0}>
         <ResponsiveTable className={classes.table}>
           <TableHead>
             <TableRowLink>

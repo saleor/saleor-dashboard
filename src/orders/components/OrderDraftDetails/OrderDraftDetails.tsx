@@ -48,7 +48,7 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
 
   return (
     <DashboardCard>
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title>
           {intl.formatMessage({
             id: "18wvf7",

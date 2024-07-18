@@ -31,10 +31,8 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({ data, disabled, errors, onCha
 
   return (
     <DashboardCard className={classes.card}>
-      <DashboardCard.Header>
-        <DashboardCard.Title className={classes.cardTitle}>
-          {intl.formatMessage(messages.webhookInformation)}
-        </DashboardCard.Title>
+      <DashboardCard.Header paddingLeft={0}>
+        <DashboardCard.Title>{intl.formatMessage(messages.webhookInformation)}</DashboardCard.Title>
       </DashboardCard.Header>
 
       <DashboardCard.Content className={classes.card}>

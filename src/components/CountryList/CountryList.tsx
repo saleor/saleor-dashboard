@@ -83,7 +83,7 @@ const CountryList: React.FC<CountryListProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title>{title}</DashboardCard.Title>
         <DashboardCard.Toolbar>
           <Button disabled={disabled} onClick={onCountryAssign} data-test-id="assign-country">

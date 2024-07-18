@@ -66,7 +66,7 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title>
           {intl.formatMessage({
             id: "t3aiWF",

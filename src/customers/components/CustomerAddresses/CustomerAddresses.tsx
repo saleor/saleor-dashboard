@@ -35,7 +35,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title>
           {intl.formatMessage({
             id: "BfJGij",

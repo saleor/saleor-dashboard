@@ -402,7 +402,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   return (
     <FullScreenContainer open={isOpen} className={fullScreenClasses.fullScreenContainer}>
-      <DashboardCard position="relative" height="100%" gap={0}>
+      <DashboardCard position="relative" __height={isOpen ? "100%" : "auto"} gap={0}>
         {renderHeader?.({
           toggleFullscreen: toggle,
           addRowOnDatagrid: onRowAdded,

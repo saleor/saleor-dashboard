@@ -54,7 +54,7 @@ const CustomerGiftCardsCard: React.FC = () => {
   return (
     <>
       <DashboardCard>
-        <DashboardCard.Header withToolbar>
+        <DashboardCard.Header>
           <DashboardCard.Title title={intl.formatMessage(messages.customerGiftCardsCardTitle)}>
             <FormattedMessage
               {...(giftCards?.length

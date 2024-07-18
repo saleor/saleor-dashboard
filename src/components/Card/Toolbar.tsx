@@ -4,4 +4,8 @@ import React from "react";
 export const Toolbar: React.FC<PropsWithBox<{ children: React.ReactNode }>> = ({
   children,
   ...rest
-}) => <Box {...rest}>{children}</Box>;
+}) => (
+  <Box display="flex" flexDirection="row" gap={2} {...rest}>
+    {children}
+  </Box>
+);

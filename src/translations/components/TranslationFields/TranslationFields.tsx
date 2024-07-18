@@ -121,7 +121,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title>{title}</DashboardCard.Title>
         <DashboardCard.Toolbar>
           <IconButton variant="secondary" onClick={() => setExpandedState(!expanded)}>

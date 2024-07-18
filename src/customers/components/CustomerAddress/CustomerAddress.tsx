@@ -88,7 +88,7 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
 
   return (
     <DashboardCard data-test-id="address-card" className={classes.card}>
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title data-test-id="address-type-title">
           {address ? (
             <>

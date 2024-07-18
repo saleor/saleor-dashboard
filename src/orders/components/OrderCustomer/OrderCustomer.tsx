@@ -89,7 +89,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title>
           {intl.formatMessage({
             id: "Y7M1YQ",

@@ -55,7 +55,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
 
   return (
     <DashboardCard className={classes.card}>
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title>
           {intl.formatMessage({
             id: "Gzg8hy",

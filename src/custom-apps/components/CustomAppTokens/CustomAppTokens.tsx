@@ -27,7 +27,7 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title>
           {intl.formatMessage({
             id: "0Mg8o5",
@@ -42,7 +42,7 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
 
-      <DashboardCard.Content>
+      <DashboardCard.Content paddingX={0}>
         <ResponsiveTable>
           <TableHead>
             <TableRowLink>

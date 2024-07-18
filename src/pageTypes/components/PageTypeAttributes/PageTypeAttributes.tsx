@@ -71,7 +71,7 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
 
   return (
     <DashboardCard data-test-id="page-attributes">
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title>
           {intl.formatMessage({
             id: "iQxjow",

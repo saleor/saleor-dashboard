@@ -45,7 +45,7 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title>
           {intl.formatMessage(messages.discountVariantsHeader)}
         </DashboardCard.Title>

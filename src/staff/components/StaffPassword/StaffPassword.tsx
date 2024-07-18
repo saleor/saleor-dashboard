@@ -13,7 +13,7 @@ const StaffPassword: React.FC<StaffPasswordProps> = ({ onChangePassword }) => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title>
           {intl.formatMessage({
             id: "ZhDQel",

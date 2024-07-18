@@ -45,7 +45,7 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
 
   return (
     <DashboardCard data-test-id="assign-collection-section">
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title>
           {intl.formatMessage(messages.discountCollectionsHeader)}
         </DashboardCard.Title>

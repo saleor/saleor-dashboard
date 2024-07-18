@@ -57,7 +57,7 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title>
           {intl.formatMessage({
             id: "DP6b8U",

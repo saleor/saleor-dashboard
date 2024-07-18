@@ -69,7 +69,7 @@ export const CollectionImage: React.FC<CollectionImageProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title>
           {intl.formatMessage({
             id: "DP6b8U",

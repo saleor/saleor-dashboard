@@ -32,23 +32,23 @@ export const CategorySubcategories = ({
     <DashboardCard>
       <DashboardCard.Header>
         <DashboardCard.Title>
-          <Box display="flex" justifyContent="space-between" alignItems="center">
-            <FormattedMessage
-              id="NivJal"
-              defaultMessage="All Subcategories"
-              description="section header"
-            />
-            <InternalLink to={categoryAddUrl(categoryId)}>
-              <Button variant="secondary" data-test-id="create-subcategory">
-                <FormattedMessage
-                  id="UycVMp"
-                  defaultMessage="Create subcategory"
-                  description="button"
-                />
-              </Button>
-            </InternalLink>
-          </Box>
+          <FormattedMessage
+            id="NivJal"
+            defaultMessage="All Subcategories"
+            description="section header"
+          />
         </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          <InternalLink to={categoryAddUrl(categoryId)}>
+            <Button variant="secondary" data-test-id="create-subcategory">
+              <FormattedMessage
+                id="UycVMp"
+                defaultMessage="Create subcategory"
+                description="button"
+              />
+            </Button>
+          </InternalLink>
+        </DashboardCard.Toolbar>
       </DashboardCard.Header>
 
       <CategoryListDatagrid

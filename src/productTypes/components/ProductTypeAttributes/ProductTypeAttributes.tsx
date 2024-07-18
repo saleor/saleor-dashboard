@@ -74,7 +74,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
 
   return (
     <DashboardCard data-test-id="product-attributes">
-      <DashboardCard.Header withToolbar>
+      <DashboardCard.Header>
         <DashboardCard.Title>
           {intl.formatMessage({
             id: "9scTQ0",
