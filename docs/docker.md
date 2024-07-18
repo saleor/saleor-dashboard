@@ -19,3 +19,27 @@ If you want to change `API_URL` in runtime, you can use (assuming you have a run
 ```shell
 docker exec -it -e API_URL=NEW_URL saleor-dashboard /docker-entrypoint.d/50-replace-api-url.sh
 ```
+
+The replacement is not limited to `API_URL` only. You can also replace other environment variables in the same way.
+
+```shell
+docker exec -it \
+  -e API_URL=NEW_URL \
+  -e APP_MOUNT_URI=NEW_APP_MOUNT_URI \
+  -e APPS_MARKETPLACE_API_URL=NEW_APPS_MARKETPLACE_API_URL \
+  -e APPS_TUNNEL_URL_KEYWORDS=NEW_APPS_TUNNEL_URL_KEYWORDS \
+  -e STATIC_URL=NEW_STATIC_URL \
+  saleor-dashboard /docker-entrypoint.d/50-replace-api-url.sh
+```
+
+Of course you can also provide all the environment variables at the `docker run` command:
+
+```shell
+docker run --publish 8080:80 \
+  --env "API_URL=NEW_URL" \
+  --env "APP_MOUNT_URI=NEW_APP_MOUNT_URI" \
+  --env "APPS_MARKETPLACE_API_URL=NEW_APPS_MARKETPLACE_API_URL" \
+  --env "APPS_TUNNEL_URL_KEYWORDS=NEW_APPS_TUNNEL_URL_KEYWORDS" \
+  --env "STATIC_URL=NEW_STATIC_URL" \
+  saleor-dashboard
+```
