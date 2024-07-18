@@ -1,8 +1,9 @@
 // @ts-strict-ignore
+import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { Pill } from "@dashboard/components/Pill";
 import { PluginBaseFragment } from "@dashboard/graphql";
-import { CardContent, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -18,7 +19,7 @@ const GlobalConfigPluginPopupBody: React.FC<GlobalConfigPluginPopupBodyProps> = 
 
   return (
     <>
-      <CardContent>
+      <DashboardCard.Content>
         <Typography>{intl.formatMessage(messages.title)}</Typography>
         <CardSpacer />
         <Typography variant="caption">{intl.formatMessage(messages.description)}</Typography>
@@ -29,7 +30,7 @@ const GlobalConfigPluginPopupBody: React.FC<GlobalConfigPluginPopupBodyProps> = 
             active ? pluginStatusMessages.active : pluginStatusMessages.deactivated,
           )}
         />
-      </CardContent>
+      </DashboardCard.Content>
     </>
   );
 };

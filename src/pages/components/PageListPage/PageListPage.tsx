@@ -1,6 +1,7 @@
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -13,7 +14,6 @@ import {
   pageUrl,
 } from "@dashboard/pages/urls";
 import { FilterPagePropsWithPresets, PageListProps, SortPage } from "@dashboard/types";
-import { Card } from "@material-ui/core";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -102,7 +102,7 @@ const PageListPage: React.FC<PageListPageProps> = ({
           </Box>
         </Box>
       </TopNav>
-      <Card>
+      <DashboardCard>
         <ListFilters
           filterStructure={structure}
           initialSearch={initialSearch}
@@ -131,7 +131,7 @@ const PageListPage: React.FC<PageListPageProps> = ({
           rowAnchor={pageUrl}
           onRowClick={id => navigate(pageUrl(id))}
         />
-      </Card>
+      </DashboardCard>
     </ListPageLayout>
   );
 };

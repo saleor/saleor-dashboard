@@ -50,13 +50,15 @@ export const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => 
   if (disabled || !productVariantChannelListings.length) {
     return (
       <DashboardCard>
-        <DashboardCard.Title>
-          {intl.formatMessage({
-            id: "Xm9qOu",
-            defaultMessage: "Pricing",
-            description: "product pricing, section header",
-          })}
-        </DashboardCard.Title>
+        <DashboardCard.Header>
+          <DashboardCard.Title>
+            {intl.formatMessage({
+              id: "Xm9qOu",
+              defaultMessage: "Pricing",
+              description: "product pricing, section header",
+            })}
+          </DashboardCard.Title>
+        </DashboardCard.Header>
         <DashboardCard.Content>
           <Text size={2}>
             {intl.formatMessage(
@@ -75,13 +77,15 @@ export const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => 
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        {intl.formatMessage({
-          id: "Xm9qOu",
-          defaultMessage: "Pricing",
-          description: "product pricing, section header",
-        })}
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "Xm9qOu",
+            defaultMessage: "Pricing",
+            description: "product pricing, section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <ResponsiveTable>
         <TableHead>
           <TableRowLink>

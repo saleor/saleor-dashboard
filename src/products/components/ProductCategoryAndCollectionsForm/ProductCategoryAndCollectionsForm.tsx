@@ -1,10 +1,10 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { DashboardCard } from "@dashboard/components/Card";
 import { Multiselect } from "@dashboard/components/Combobox";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { Select } from "@dashboard/components/Select";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
-import { Card, CardContent } from "@material-ui/core";
 import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -32,7 +32,7 @@ const ProductCategoryAndCollectionsForm = ({
 
   return (
     <>
-      <Card>
+      <DashboardCard>
         <TopNav
           title={intl.formatMessage({
             id: "fyE8BN",
@@ -40,7 +40,7 @@ const ProductCategoryAndCollectionsForm = ({
             description: "product organization, header",
           })}
         />
-        <CardContent>
+        <DashboardCard.Content>
           <Select
             disabled={loading}
             error={!!errors.category}
@@ -69,8 +69,8 @@ const ProductCategoryAndCollectionsForm = ({
             value={productCollections}
             onChange={onChange}
           />
-        </CardContent>
-      </Card>
+        </DashboardCard.Content>
+      </DashboardCard>
     </>
   );
 };

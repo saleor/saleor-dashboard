@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { ShippingErrorFragment } from "@dashboard/graphql";
@@ -7,7 +7,7 @@ import { ChangeEvent } from "@dashboard/hooks/useForm";
 import useShop from "@dashboard/hooks/useShop";
 import { getShippingWeightRateErrorMessage } from "@dashboard/shipping/errors";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { Card, CardContent, InputAdornment, TextField, Typography } from "@material-ui/core";
+import { InputAdornment, TextField, Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -37,15 +37,17 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
   const formErrors = getFormErrors(formFields, errors);
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "vWapBZ",
-          defaultMessage: "Order Weight",
-          description: "card title",
-        })}
-      />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "vWapBZ",
+            defaultMessage: "Order Weight",
+            description: "card title",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <ControlledCheckbox
           data-test-id="order-weight-checkbox"
           name="orderValueRestricted"
@@ -126,8 +128,8 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
             </div>
           </>
         )}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

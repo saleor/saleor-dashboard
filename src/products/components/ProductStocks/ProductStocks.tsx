@@ -88,7 +88,9 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>{intl.formatMessage(messages.title)}</DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(messages.title)}</DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Box __width="50%">
           <Input

@@ -1,5 +1,5 @@
+import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import CardTitle from "@dashboard/components/CardTitle";
 import Date from "@dashboard/components/Date";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Hr from "@dashboard/components/Hr";
@@ -9,7 +9,7 @@ import Skeleton from "@dashboard/components/Skeleton";
 import { SaleDetailsFragment, SaleType } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { ChannelProps } from "@dashboard/types";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -26,9 +26,11 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannelId, sale }) =>
   const channel = sale?.channelListings?.find(listing => listing.channel.id === selectedChannelId);
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(commonMessages.summary)} />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(commonMessages.summary)}</DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <Typography variant="caption">
           <FormattedMessage id="F56hOz" defaultMessage="Name" description="sale name" />
         </Typography>
@@ -85,8 +87,8 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannelId, sale }) =>
             <Skeleton />,
           )}
         </Typography>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

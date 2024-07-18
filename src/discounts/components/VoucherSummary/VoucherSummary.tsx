@@ -1,5 +1,5 @@
+import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import CardTitle from "@dashboard/components/CardTitle";
 import Date from "@dashboard/components/Date";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Hr from "@dashboard/components/Hr";
@@ -9,7 +9,7 @@ import Skeleton from "@dashboard/components/Skeleton";
 import { DiscountValueTypeEnum, VoucherDetailsFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { ChannelProps } from "@dashboard/types";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -28,9 +28,11 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({ selectedChannelId, vouc
   );
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(commonMessages.summary)} />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(commonMessages.summary)}</DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <Typography variant="caption">
           <FormattedMessage id="bcf60I" defaultMessage="Applies to" description="voucher" />
         </Typography>
@@ -118,8 +120,8 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({ selectedChannelId, vouc
           <FormattedMessage id="h65vZI" defaultMessage="Used" description="times voucher used" />
         </Typography>
         <Typography>{voucher?.used ?? <Skeleton />}</Typography>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

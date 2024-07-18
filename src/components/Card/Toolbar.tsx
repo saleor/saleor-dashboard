@@ -1,11 +1,11 @@
 import { Box, PropsWithBox } from "@saleor/macaw-ui-next";
 import React from "react";
 
-export const Content: React.FC<PropsWithBox<{ children?: React.ReactNode }>> = ({
+export const Toolbar: React.FC<PropsWithBox<{ children: React.ReactNode }>> = ({
   children,
   ...rest
 }) => (
-  <Box paddingX={6} {...rest}>
+  <Box display="flex" flexDirection="row" gap={2} {...rest}>
     {children}
   </Box>
 );

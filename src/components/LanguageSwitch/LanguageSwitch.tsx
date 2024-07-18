@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { LanguageCodeEnum, LanguageFragment } from "@dashboard/graphql";
 import {
-  Card,
   ClickAwayListener,
   Grow,
   MenuItem,
@@ -16,6 +15,8 @@ import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
+
+import { DashboardCard } from "../Card";
 
 export interface LanguageSwitchProps {
   currentLanguage: LanguageCodeEnum;
@@ -64,14 +65,17 @@ const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
 
   return (
     <div className={classes.container} ref={anchor}>
-      <Card className={classes.menuContainer} onClick={() => setExpandedState(!isExpanded)}>
+      <DashboardCard
+        className={classes.menuContainer}
+        onClick={() => setExpandedState(!isExpanded)}
+      >
         <Typography>{currentLanguage}</Typography>
         <ArrowDropDown
           className={clsx(classes.arrow, {
             [classes.rotate]: isExpanded,
           })}
         />
-      </Card>
+      </DashboardCard>
       <Popper
         className={classes.popover}
         open={isExpanded}
