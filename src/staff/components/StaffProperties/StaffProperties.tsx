@@ -1,12 +1,12 @@
 // @ts-strict-ignore
 import photoIcon from "@assets/images/photo-icon.svg";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { StaffErrorFragment, StaffMemberDetailsFragment, UserFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getUserInitials } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getStaffErrorMessage from "@dashboard/utils/errors/staff";
-import { Card, CardContent, TextField, Typography } from "@material-ui/core";
+import { TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -136,15 +136,17 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
   });
 
   return (
-    <Card className={className} data-test-id="staff-member-information">
-      <CardTitle
-        title={intl.formatMessage({
-          id: "VTITVe",
-          defaultMessage: "Staff Member Information",
-          description: "section header",
-        })}
-      />
-      <CardContent>
+    <DashboardCard className={className} data-test-id="staff-member-information">
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "VTITVe",
+            defaultMessage: "Staff Member Information",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <div className={classes.root}>
           <div>
             <div className={classes.avatar}>
@@ -225,13 +227,13 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
             </div>
           </div>
         </div>
-      </CardContent>
+      </DashboardCard.Content>
       {!!formErrors.id && (
-        <CardContent>
+        <DashboardCard.Content>
           <Typography color="error">{getStaffErrorMessage(formErrors.id, intl)}</Typography>
-        </CardContent>
+        </DashboardCard.Content>
       )}
-    </Card>
+    </DashboardCard>
   );
 };
 

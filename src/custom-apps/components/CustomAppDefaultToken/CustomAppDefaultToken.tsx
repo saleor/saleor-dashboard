@@ -1,7 +1,8 @@
 import { Button } from "@dashboard/components/Button";
+import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import useClipboard from "@dashboard/hooks/useClipboard";
-import { Card, CardContent, Paper, Typography } from "@material-ui/core";
+import { Paper, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { IconButton } from "@saleor/macaw-ui";
 import React from "react";
@@ -22,8 +23,8 @@ const CustomAppDefaultToken: React.FC<CustomAppDefaultTokenProps> = props => {
   const [copied, copy] = useClipboard();
 
   return (
-    <Card className={classes.root}>
-      <CardContent>
+    <DashboardCard className={classes.root}>
+      <DashboardCard.Content>
         <div className={classes.content}>
           <div>
             <Typography>
@@ -65,8 +66,8 @@ const CustomAppDefaultToken: React.FC<CustomAppDefaultTokenProps> = props => {
             )}
           </Button>
         </Paper>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -8,7 +8,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { PostalCodeRuleInclusionTypeEnum, ShippingMethodTypeFragment } from "@dashboard/graphql";
 import ArrowDropdown from "@dashboard/icons/ArrowDropdown";
 import { renderCollection } from "@dashboard/misc";
-import { Card, CardContent, TableBody, TableCell, TableHead, Typography } from "@material-ui/core";
+import { TableBody, TableCell, TableHead, Typography } from "@material-ui/core";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";
@@ -94,14 +94,16 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
   };
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "FcTTvh",
-          defaultMessage: "Postal codes",
-          description: "postal codes, header",
-        })}
-        toolbar={
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "FcTTvh",
+            defaultMessage: "Postal codes",
+            description: "postal codes, header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <Button onClick={onPostalCodeRangeAdd} data-test-id="add-postal-code-range">
             <FormattedMessage
               id="1lk/oS"
@@ -109,9 +111,9 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
               description="button"
             />
           </Button>
-        }
-      />
-      <CardContent className={clsx(classes.radioContainer)}>
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
+      <DashboardCard.Content className={clsx(classes.radioContainer)}>
         <RadioGroupField
           alignTop
           choices={[
@@ -160,7 +162,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
           value={getInclusionType()}
           onChange={onInclusionRadioChange}
         />
-      </CardContent>
+      </DashboardCard.Content>
       <ResponsiveTable>
         <colgroup>
           <col />
@@ -231,7 +233,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
           </TableBody>
         )}
       </ResponsiveTable>
-    </Card>
+    </DashboardCard>
   );
 };
 

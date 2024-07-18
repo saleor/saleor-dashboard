@@ -55,9 +55,11 @@ export const OrderManualTransactionRefundPage = ({
         <DetailPageLayout.RightSidebar>
           <Box __maxWidth={400} height="100%">
             <DashboardCard height="100%">
-              <DashboardCard.Title>
-                <FormattedMessage {...messages.refundAmount} />
-              </DashboardCard.Title>
+              <DashboardCard.Header>
+                <DashboardCard.Title>
+                  <FormattedMessage {...messages.refundAmount} />
+                </DashboardCard.Title>
+              </DashboardCard.Header>
               <DashboardCard.Content
                 display="flex"
                 flexDirection="column"

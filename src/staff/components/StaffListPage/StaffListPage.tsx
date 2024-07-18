@@ -1,5 +1,6 @@
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
@@ -10,7 +11,6 @@ import { StaffMembers } from "@dashboard/staff/types";
 import { StaffListUrlSortField } from "@dashboard/staff/urls";
 import { FilterPagePropsWithPresets, ListProps, SortPage } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
-import { Card } from "@material-ui/core";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -127,7 +127,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
           />
         </LimitReachedAlert>
       )}
-      <Card>
+      <DashboardCard>
         <ListFilters<StaffFilterKeys>
           currencySymbol={currencySymbol}
           initialSearch={initialSearch}
@@ -141,7 +141,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
         />
 
         <StaffListDatagrid {...listProps} />
-      </Card>
+      </DashboardCard>
     </ListPageLayout>
   );
 };

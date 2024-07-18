@@ -10,6 +10,7 @@ import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
+import { DashboardCard } from "@dashboard/components/Card";
 import { getByName } from "@dashboard/components/Filter/utils";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
@@ -34,7 +35,6 @@ import {
   SortPage,
 } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
-import { Card } from "@material-ui/core";
 import { Box, Button, ChevronRightIcon, Text } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -231,7 +231,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           />
         </LimitReachedAlert>
       )}
-      <Card>
+      <DashboardCard>
         <Box
           display="flex"
           flexDirection="column"
@@ -300,7 +300,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             }}
           />
         )}
-      </Card>
+      </DashboardCard>
     </ListPageLayout>
   );
 };

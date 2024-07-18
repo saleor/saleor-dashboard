@@ -41,9 +41,11 @@ export const OrderTransactionSummary: React.FC<OrderTransactionSummaryProps> = (
   return (
     <DashboardCard>
       <DashboardCard.Content display="flex" flexDirection="column" gap={5}>
-        <DashboardCard.Title paddingX={0}>
-          <FormattedMessage {...messages.amount} />
-        </DashboardCard.Title>
+        <DashboardCard.Header>
+          <DashboardCard.Title paddingX={0}>
+            <FormattedMessage {...messages.amount} />
+          </DashboardCard.Title>
+        </DashboardCard.Header>
         <Text as="p">
           <FormattedMessage {...messages.amountDescription} />
         </Text>

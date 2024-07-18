@@ -2,10 +2,10 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { CardContent } from "@material-ui/core";
 import React, { useState } from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 
+import { DashboardCard } from "../Card";
 import DeleteButton from "../DeleteButton";
 import DeleteWarningDialogConsentContent from "./DeleteWarningDialogConsentContent";
 import { useTypeDeleteWarningDialogStyles as useStyles } from "./styles";
@@ -43,7 +43,7 @@ const TypeDeleteWarningDialogContent: React.FC<TypeDeleteWarningDialogContentPro
   const shouldShowViewAssignedItemsButton = showViewAssignedItemsButton && hasAssignedItems;
 
   return (
-    <CardContent>
+    <DashboardCard.Content>
       <DeleteWarningDialogConsentContent
         description={intl.formatMessage(description, {
           typeName: singleItemSelectedName,
@@ -66,7 +66,7 @@ const TypeDeleteWarningDialogContent: React.FC<TypeDeleteWarningDialogContentPro
         )}
         <DeleteButton onClick={onDelete} disabled={isDisbled} testId="confirm-delete" />
       </div>
-    </CardContent>
+    </DashboardCard.Content>
   );
 };
 

@@ -1,8 +1,9 @@
 // @ts-strict-ignore
-import { Card, Popper } from "@material-ui/core";
+import { Popper } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { DashboardCard } from "../Card";
 import ChannelsAvailabilityMenuContent from "../ChannelsAvailabilityMenuContent";
 import { Pill } from "../Pill";
 import { messages } from "./messages";
@@ -44,9 +45,9 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
         />
       </div>
       <Popper anchorEl={anchor.current} open={isPopupOpen} placement={"left"}>
-        <Card elevation={8}>
+        <DashboardCard boxShadow="defaultModal">
           <ChannelsAvailabilityMenuContent pills={mapChannelsToPills(channels)} />
-        </Card>
+        </DashboardCard>
       </Popper>
     </div>
   );
