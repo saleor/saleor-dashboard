@@ -1,13 +1,13 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { Pill } from "@dashboard/components/Pill";
 import Skeleton from "@dashboard/components/Skeleton";
 import { useFlag } from "@dashboard/featureFlags";
 import { OrderAction, OrderDetailsFragment } from "@dashboard/graphql";
 import { transformPaymentStatus } from "@dashboard/misc";
 import { orderGrantRefundUrl, orderSendRefundUrl } from "@dashboard/orders/urls";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { Divider } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -44,22 +44,33 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkA
 
   if (!order) {
     return (
-      <Card>
-        <CardTitle
-          title={<FormattedMessage {...orderPaymentMessages.paymentTitle} />}
-          toolbar={<Skeleton />}
-        ></CardTitle>
-        <CardContent>
+      <DashboardCard>
+        <DashboardCard.Header>
+          <DashboardCard.Title>
+            <FormattedMessage {...orderPaymentMessages.paymentTitle} />
+          </DashboardCard.Title>
+          <DashboardCard.Toolbar>
+            <Skeleton />
+          </DashboardCard.Toolbar>
+        </DashboardCard.Header>
+        <DashboardCard.Content>
           <Skeleton />
-        </CardContent>
-      </Card>
+        </DashboardCard.Content>
+      </DashboardCard>
     );
   }
 
   return (
-    <Card className={classes.root}>
-      <CardTitle
-        toolbar={
+    <DashboardCard className={classes.root}>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          <FormattedMessage {...orderPaymentMessages.paymentTitle} />
+
+          <DashboardCard.Subtitle>
+            <FormattedMessage {...orderPaymentMessages.paymentSubtitle} />
+          </DashboardCard.Subtitle>
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <Pill
             key={payment.status}
             label={payment.localized}
@@ -67,12 +78,10 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkA
             className={classes.paymentStatus}
             data-test-id="payment-status"
           />
-        }
-        title={<FormattedMessage {...orderPaymentMessages.paymentTitle} />}
-        subtitle={<FormattedMessage {...orderPaymentMessages.paymentSubtitle} />}
-      />
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       {showHasNoPayment ? (
-        <CardContent className={classes.noPaymentContent} data-test-id="payment-section">
+        <DashboardCard.Content className={classes.noPaymentContent} data-test-id="payment-section">
           <Typography variant="h5" className={classes.noPaymentTitle}>
             <FormattedMessage {...orderPaymentMessages.noPayments} />
           </Typography>
@@ -85,15 +94,18 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkA
               <FormattedMessage {...orderPaymentActionButtonMessages.markAsPaid} />
             </Button>
           )}
-        </CardContent>
+        </DashboardCard.Content>
       ) : (
         <PaymentsSummary order={order} />
       )}
       {canAnyRefund && !enabled && (
         <>
           <Divider />
-          <CardTitle
-            toolbar={
+          <DashboardCard.Header>
+            <DashboardCard.Title>
+              <FormattedMessage {...orderPaymentMessages.refundsTitle} />
+            </DashboardCard.Title>
+            <DashboardCard.Toolbar>
               <div className={classes.refundsButtons}>
                 {canGrantRefund && (
                   <Button
@@ -114,15 +126,14 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkA
                   </Button>
                 )}
               </div>
-            }
-            title={<FormattedMessage {...orderPaymentMessages.refundsTitle} />}
-          ></CardTitle>
-          <CardContent>
+            </DashboardCard.Toolbar>
+          </DashboardCard.Header>
+          <DashboardCard.Content>
             <RefundsSummary order={order} />
-          </CardContent>
+          </DashboardCard.Content>
         </>
       )}
-    </Card>
+    </DashboardCard>
   );
 };
 

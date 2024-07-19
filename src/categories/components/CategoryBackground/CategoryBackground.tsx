@@ -1,12 +1,12 @@
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import Hr from "@dashboard/components/Hr";
 import ImageUpload from "@dashboard/components/ImageUpload";
 import MediaTile from "@dashboard/components/MediaTile";
 import Skeleton from "@dashboard/components/Skeleton";
 import { CategoryDetailsFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { Card, CardContent, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -56,14 +56,16 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
   const handleImageUploadButtonClick = () => anchor.current?.click();
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "DP6b8U",
-          defaultMessage: "Background Image (optional)",
-          description: "section header",
-        })}
-        toolbar={
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "DP6b8U",
+            defaultMessage: "Background Image (optional)",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <>
             <Button variant="tertiary" onClick={handleImageUploadButtonClick}>
               <FormattedMessage {...commonMessages.uploadImage} />
@@ -77,28 +79,29 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
               accept="image/*"
             />
           </>
-        }
-      />
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
+
       {image === undefined ? (
-        <CardContent>
+        <DashboardCard.Content>
           <div>
             <div className={classes.imageContainer}>
               <Skeleton />
             </div>
           </div>
-        </CardContent>
+        </DashboardCard.Content>
       ) : image === null ? (
         <ImageUpload onImageUpload={files => onImageUpload(files[0])} />
       ) : (
-        <CardContent>
+        <DashboardCard.Content>
           <MediaTile media={image} onDelete={onImageDelete} />
-        </CardContent>
+        </DashboardCard.Content>
       )}
 
       {image && (
         <>
           <Hr />
-          <CardContent>
+          <DashboardCard.Content>
             <TextField
               name="backgroundImageAlt"
               label={intl.formatMessage(commonMessages.description)}
@@ -112,10 +115,10 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
               fullWidth
               multiline
             />
-          </CardContent>
+          </DashboardCard.Content>
         </>
       )}
-    </Card>
+    </DashboardCard>
   );
 };
 

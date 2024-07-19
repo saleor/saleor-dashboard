@@ -1,11 +1,10 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { Combobox } from "@dashboard/components/Combobox";
 import { TaxClassBaseFragment } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { sectionNames } from "@dashboard/intl";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { FetchMoreProps } from "@dashboard/types";
-import { Card, CardContent } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -33,9 +32,11 @@ const ShippingMethodTaxes: React.FC<ShippingMethodTaxesProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card className={classes.root}>
-      <CardTitle title={intl.formatMessage(sectionNames.taxes)} />
-      <CardContent>
+    <DashboardCard className={classes.root}>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(sectionNames.taxes)}</DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <Combobox
           allowEmptyValue
           autoComplete="off"
@@ -55,8 +56,8 @@ const ShippingMethodTaxes: React.FC<ShippingMethodTaxesProps> = props => {
           }}
           onChange={onChange}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

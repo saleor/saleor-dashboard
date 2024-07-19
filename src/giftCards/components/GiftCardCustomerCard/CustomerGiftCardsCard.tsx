@@ -1,11 +1,10 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
 import Link from "@dashboard/components/Link";
 import { DashboardModal } from "@dashboard/components/Modal";
 import PreviewPill from "@dashboard/components/PreviewPill";
-import Skeleton from "@dashboard/components/Skeleton";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { useCustomerDetails } from "@dashboard/customers/hooks/useCustomerDetails";
 import GiftCardCreateDialogContent from "@dashboard/giftCards/GiftCardCreateDialog/GiftCardCreateDialogContent";
@@ -14,7 +13,7 @@ import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import { useCustomerGiftCardListQuery } from "@dashboard/graphql";
 import { getFullName } from "@dashboard/misc";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Card, CardActions } from "@material-ui/core";
+import { Skeleton, sprinkles } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -22,7 +21,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import CustomerGiftCardsCardListItem from "./CustomerGiftCardsCardListItem";
 import { giftCardCustomerCardMessages as messages } from "./messages";
 import { CUSTOMER_GIFT_CARD_LIST_QUERY } from "./queries";
-import { useCardActionsStyles } from "./styles";
 
 const CustomerGiftCardsCard: React.FC = () => {
   const intl = useIntl();
@@ -45,10 +43,6 @@ const CustomerGiftCardsCard: React.FC = () => {
 
   const giftCards = mapEdgesToItems(data?.giftCards);
 
-  const classes = useCardActionsStyles({
-    buttonPosition: giftCards?.length > 0 ? "right" : "left",
-  });
-
   const viewAllGiftCardsUrl = giftCardListUrl({
     usedBy: [id],
   });
@@ -59,27 +53,28 @@ const CustomerGiftCardsCard: React.FC = () => {
 
   return (
     <>
-      <Card>
-        <CardTitle
-          title={intl.formatMessage(messages.customerGiftCardsCardTitle)}
-          toolbar={
+      <DashboardCard>
+        <DashboardCard.Header>
+          <DashboardCard.Title title={intl.formatMessage(messages.customerGiftCardsCardTitle)}>
+            <FormattedMessage
+              {...(giftCards?.length
+                ? messages.customerGiftCardsPresentSubtitle
+                : messages.customerGiftCardsAbsentSubtitle)}
+            />
+            <VerticalSpacer spacing={2} />
+          </DashboardCard.Title>
+          <DashboardCard.Toolbar>
             <>
               {!!giftCards?.length && (
                 <Button variant="tertiary" href={viewAllGiftCardsUrl} component={Link}>
                   <FormattedMessage {...messages.customerGiftCardsViewAllButton} />
                 </Button>
               )}
-              <PreviewPill className={classes.previewPill} />
+              <PreviewPill className={sprinkles({ marginLeft: 2 })} />
             </>
-          }
-        >
-          <FormattedMessage
-            {...(giftCards?.length
-              ? messages.customerGiftCardsPresentSubtitle
-              : messages.customerGiftCardsAbsentSubtitle)}
-          />
-          <VerticalSpacer spacing={2} />
-        </CardTitle>
+          </DashboardCard.Toolbar>
+        </DashboardCard.Header>
+
         {!loading && giftCards ? (
           <CollectionWithDividers
             collection={giftCards}
@@ -89,9 +84,9 @@ const CustomerGiftCardsCard: React.FC = () => {
             withOuterDividers
           />
         ) : (
-          <Skeleton />
+          <Skeleton height={2} marginX={6} />
         )}
-        <CardActions className={classes.cardActions}>
+        <DashboardCard.BottomActions paddingX={6} paddingY={0}>
           <Button
             variant="tertiary"
             onClick={handleCreateNewCardButton}
@@ -99,8 +94,8 @@ const CustomerGiftCardsCard: React.FC = () => {
           >
             <FormattedMessage {...messages.customerGiftCardsIssueNewCardButton} />
           </Button>
-        </CardActions>
-      </Card>
+        </DashboardCard.BottomActions>
+      </DashboardCard>
       <DashboardModal open={openCreateDialog} onChange={closeCreateDialog}>
         <GiftCardCreateDialogContent
           onClose={closeCreateDialog}

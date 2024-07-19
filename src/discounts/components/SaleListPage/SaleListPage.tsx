@@ -1,6 +1,7 @@
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { DashboardCard } from "@dashboard/components/Card";
 import { getByName } from "@dashboard/components/Filter/utils";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
@@ -14,7 +15,6 @@ import {
   PageListProps,
   SortPage,
 } from "@dashboard/types";
-import { Card } from "@material-ui/core";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -103,7 +103,7 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
         </Box>
       </TopNav>
 
-      <Card>
+      <DashboardCard>
         <ListFilters<SaleFilterKeys>
           currencySymbol={currencySymbol}
           initialSearch={initialSearch}
@@ -131,7 +131,7 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
           filterDependency={filterDependency}
           onRowClick={handleRowClick}
         />
-      </Card>
+      </DashboardCard>
     </ListPageLayout>
   );
 };

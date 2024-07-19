@@ -9,6 +9,7 @@ import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
+import { DashboardCard } from "@dashboard/components/Card";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
@@ -21,7 +22,6 @@ import { OrderListUrlQueryParams, OrderListUrlSortField, orderUrl } from "@dashb
 import { getFilterVariables } from "@dashboard/orders/views/OrderList/filters";
 import { FilterPageProps, PageListProps, RelayToFlat, SortPage } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
-import { Card } from "@material-ui/core";
 import { Box, Button, ChevronRightIcon, Tooltip } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -206,7 +206,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
 
       {limitsReached && <OrderLimitReached />}
 
-      <Card>
+      <DashboardCard>
         <ListFilters
           initialSearch={initialSearch}
           onFilterChange={onFilterChange}
@@ -219,7 +219,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
           filtersEnabled={!!newOrdersFiltersEnabled}
         />
         <OrderListDatagrid {...listProps} hasRowHover={!isFilterPresetOpen} rowAnchor={orderUrl} />
-      </Card>
+      </DashboardCard>
     </ListPageLayout>
   );
 };

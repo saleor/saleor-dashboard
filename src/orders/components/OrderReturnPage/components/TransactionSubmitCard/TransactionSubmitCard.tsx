@@ -64,9 +64,11 @@ export const TransactionSubmitCard = ({
   return (
     <div>
       <DashboardCard>
-        <DashboardCard.Title>
-          {intl.formatMessage(submitCardMessages.cardTitle)}
-        </DashboardCard.Title>
+        <DashboardCard.Header>
+          <DashboardCard.Title>
+            {intl.formatMessage(submitCardMessages.cardTitle)}
+          </DashboardCard.Title>
+        </DashboardCard.Header>
         <DashboardCard.Content display="flex" flexDirection="column" gap={2} alignItems="start">
           <Box display="flex" gap={1} alignItems="center" marginBottom={4}>
             <InfoIcon color="default2" size="small" />

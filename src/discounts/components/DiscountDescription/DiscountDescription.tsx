@@ -23,9 +23,11 @@ export const DiscountDescription = ({
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        <FormattedMessage defaultMessage="Description" id="Q8Qw5B" />
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          <FormattedMessage defaultMessage="Description" id="Q8Qw5B" />
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         {isReadyForMount ? (
           <RichTextEditor

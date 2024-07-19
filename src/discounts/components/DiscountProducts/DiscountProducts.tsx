@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { ChannelsAvailabilityDropdown } from "@dashboard/components/ChannelsAvailabilityDropdown";
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
@@ -12,7 +12,7 @@ import { TablePaginationWithContext } from "@dashboard/components/TablePaginatio
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleDetailsFragment, VoucherDetailsFragment } from "@dashboard/graphql";
 import { productUrl } from "@dashboard/products/urls";
-import { Card, TableBody, TableCell, TableFooter } from "@material-ui/core";
+import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -47,15 +47,18 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card data-test-id="assign-product-section">
-      <CardTitle
-        title={intl.formatMessage(messages.discountProductsHeader)}
-        toolbar={
+    <DashboardCard data-test-id="assign-product-section">
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(messages.discountProductsHeader)}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <Button onClick={onProductAssign} data-test-id="assign-products">
             <FormattedMessage {...messages.discountProductsButton} />
           </Button>
-        }
-      />
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
+
       <ResponsiveTable>
         <colgroup>
           <col />
@@ -158,7 +161,7 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
           )}
         </TableBody>
       </ResponsiveTable>
-    </Card>
+    </DashboardCard>
   );
 };
 

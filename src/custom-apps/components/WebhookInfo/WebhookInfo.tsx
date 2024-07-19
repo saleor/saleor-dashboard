@@ -1,4 +1,4 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Hr from "@dashboard/components/Hr";
 import Link from "@dashboard/components/Link";
@@ -7,7 +7,7 @@ import { WebhookErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getWebhookErrorMessage from "@dashboard/utils/errors/webhooks";
-import { Card, CardContent, Popper, TextField, Typography } from "@material-ui/core";
+import { Popper, TextField, Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -30,12 +30,12 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({ data, disabled, errors, onCha
   const anchor = React.useRef<HTMLDivElement>(null);
 
   return (
-    <Card className={classes.card}>
-      <CardTitle
-        title={intl.formatMessage(messages.webhookInformation)}
-        className={classes.cardTitle}
-      />
-      <CardContent className={classes.card}>
+    <DashboardCard className={classes.card}>
+      <DashboardCard.Header paddingLeft={0}>
+        <DashboardCard.Title>{intl.formatMessage(messages.webhookInformation)}</DashboardCard.Title>
+      </DashboardCard.Header>
+
+      <DashboardCard.Content className={classes.card}>
         <Typography variant="caption">
           {intl.formatMessage(commonMessages.generalInformations)}
         </Typography>
@@ -93,7 +93,7 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({ data, disabled, errors, onCha
                   size="small"
                 />
                 <Popper anchorEl={anchor.current} open={isPopupOpen} placement={"top"}>
-                  <Card elevation={8} className={classes.toolbar}>
+                  <DashboardCard boxShadow="defaultModal" className={classes.toolbar}>
                     <Typography>
                       <FormattedMessage {...messages.useSignature} />
                     </Typography>
@@ -104,14 +104,14 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({ data, disabled, errors, onCha
                     >
                       <FormattedMessage {...messages.learnMore} />
                     </Link>
-                  </Card>
+                  </DashboardCard>
                 </Popper>
               </div>
             ),
           }}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

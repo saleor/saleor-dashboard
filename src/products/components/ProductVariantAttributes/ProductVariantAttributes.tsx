@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { Combobox } from "@dashboard/components/Combobox";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Grid from "@dashboard/components/Grid";
@@ -8,7 +8,7 @@ import { ProductErrorWithAttributesFragment, ProductVariantFragment } from "@das
 import { FormsetAtomicData, FormsetChange } from "@dashboard/hooks/useFormset";
 import { commonMessages } from "@dashboard/intl";
 import { getProductVariantAttributeErrorMessage } from "@dashboard/utils/errors/product";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -67,9 +67,13 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
   const intl = useIntl();
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <Grid variant="uniform">
           {attributes === undefined ? (
             <Skeleton />
@@ -111,8 +115,8 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
               ))}
           </>
         )}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

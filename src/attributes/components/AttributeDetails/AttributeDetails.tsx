@@ -1,5 +1,5 @@
 import { NumericUnits } from "@dashboard/attributes/components/AttributeDetails/NumericUnits";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { Select } from "@dashboard/components/Select";
@@ -12,7 +12,7 @@ import { ChangeEvent, UseFormResult } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
-import { Card, CardContent, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -121,9 +121,14 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
   );
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+
+      <DashboardCard.Content>
         <TextField
           data-test-id="attribute-default-label-input"
           disabled={disabled}
@@ -202,8 +207,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
             set={set}
           />
         )}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

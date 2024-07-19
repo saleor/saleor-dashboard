@@ -1,12 +1,12 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import Grid from "@dashboard/components/Grid";
 import Hr from "@dashboard/components/Hr";
 import { AccountErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
-import { Card, CardContent, TextField, Typography } from "@material-ui/core";
+import { TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -46,17 +46,17 @@ const CustomerInfo: React.FC<CustomerInfoProps> = props => {
   const formErrors = getFormErrors(["firstName", "lastName", "email"], errors);
 
   return (
-    <Card>
-      <CardTitle
-        title={
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
           <FormattedMessage
             id="4v5gfh"
             defaultMessage="Account Information"
             description="account information, header"
           />
-        }
-      />
-      <CardContent className={classes.content}>
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content className={classes.content}>
         <Typography className={classes.sectionHeader}>
           <FormattedMessage {...commonMessages.generalInformations} />
         </Typography>
@@ -115,8 +115,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = props => {
             spellCheck: false,
           }}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 
