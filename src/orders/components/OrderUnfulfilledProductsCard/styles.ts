@@ -2,12 +2,6 @@ import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
-    actions: {
-      flexDirection: "row-reverse",
-      paddingTop: theme.spacing(2),
-      paddingBottom: theme.spacing(2),
-      gap: theme.spacing(1),
-    },
     table: {
       "& td, & th": {
         "&:not(:first-child):not(:last-child)": {

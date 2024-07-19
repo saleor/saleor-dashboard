@@ -1,11 +1,11 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Hr from "@dashboard/components/Hr";
 import { PluginErrorCode, PluginErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import getPluginErrorMessage from "@dashboard/utils/errors/plugins";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -38,15 +38,17 @@ const PluginInfo: React.FC<PluginInfoProps> = ({ data, description, errors, name
   const misconfiguredError = errors.find(err => err.code === PluginErrorCode.PLUGIN_MISCONFIGURED);
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "w424P4",
-          defaultMessage: "Plugin Information and Status",
-          description: "section header",
-        })}
-      />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "w424P4",
+            defaultMessage: "Plugin Information and Status",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <Typography className={classes.title} variant="h6">
           {intl.formatMessage({
             id: "IUeGzv",
@@ -84,8 +86,8 @@ const PluginInfo: React.FC<PluginInfoProps> = ({ data, description, errors, name
         {misconfiguredError && (
           <Typography color="error">{getPluginErrorMessage(misconfiguredError, intl)}</Typography>
         )}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

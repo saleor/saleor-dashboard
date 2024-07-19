@@ -1,13 +1,13 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import Date from "@dashboard/components/Date";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { InvoiceFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
-import { Card, CardContent, TableBody, TableCell, Typography } from "@material-ui/core";
+import { TableBody, TableCell, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { sprinkles } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -54,15 +54,17 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
   const generatedInvoices = invoices?.filter(invoice => invoice.status === "SUCCESS");
 
   return (
-    <Card className={classes.card}>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "Gzg8hy",
-          defaultMessage: "Invoices",
-          description: "section header",
-        })}
-        toolbar={
-          onInvoiceGenerate && (
+    <DashboardCard className={classes.card}>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "Gzg8hy",
+            defaultMessage: "Invoices",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          {onInvoiceGenerate && (
             <Button onClick={onInvoiceGenerate} className={sprinkles({ marginRight: 0.5 })}>
               <FormattedMessage
                 id="e0RKe+"
@@ -70,10 +72,10 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
                 description="generate invoice button"
               />
             </Button>
-          )
-        }
-      />
-      <CardContent>
+          )}
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         {!generatedInvoices ? (
           <Skeleton />
         ) : !generatedInvoices?.length ? (
@@ -119,8 +121,8 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
             </TableBody>
           </ResponsiveTable>
         )}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

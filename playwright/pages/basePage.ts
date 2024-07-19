@@ -323,6 +323,7 @@ export class BasePage {
       state: "hidden",
       timeout: 30000,
     });
+    await this.waitForDOMToFullyLoad();
   }
 
   async waitForCanvasContainsText(text: string) {

@@ -180,9 +180,11 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                     description={intl.formatMessage(messages.sectionEmailConfirmationDescription)}
                   />
                   <DashboardCard>
-                    <DashboardCard.Title>
-                      {intl.formatMessage(messages.sectionEmailConfirmationHeader)}
-                    </DashboardCard.Title>
+                    <DashboardCard.Header>
+                      <DashboardCard.Title>
+                        {intl.formatMessage(messages.sectionEmailConfirmationHeader)}
+                      </DashboardCard.Title>
+                    </DashboardCard.Header>
                     <DashboardCard.Content>
                       <Checkbox
                         data-test-id="require-email-confirmation-checkbox"

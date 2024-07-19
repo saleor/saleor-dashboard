@@ -5,10 +5,6 @@ export const useStyles = makeStyles(
     container: {
       paddingTop: 0,
     },
-    searchBox: {
-      marginTop: theme.spacing(2),
-      marginBottom: theme.spacing(2),
-    },
     searchInput: {
       paddingTop: theme.spacing(2),
       paddingBottom: theme.spacing(2),

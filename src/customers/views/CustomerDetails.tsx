@@ -13,7 +13,6 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
-import { DialogContentText } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -132,16 +131,14 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({ id, para
         variant="delete"
         open={params.action === "remove"}
       >
-        <DialogContentText>
-          <FormattedMessage
-            id="2p0tZx"
-            defaultMessage="Are you sure you want to delete {email}?"
-            description="delete customer, dialog content"
-            values={{
-              email: <strong>{getStringOrPlaceholder(user?.email)}</strong>,
-            }}
-          />
-        </DialogContentText>
+        <FormattedMessage
+          id="2p0tZx"
+          defaultMessage="Are you sure you want to delete {email}?"
+          description="delete customer, dialog content"
+          values={{
+            email: <strong>{getStringOrPlaceholder(user?.email)}</strong>,
+          }}
+        />
       </ActionDialog>
     </>
   );

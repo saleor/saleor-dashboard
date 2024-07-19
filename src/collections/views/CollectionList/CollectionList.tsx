@@ -22,7 +22,6 @@ import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import { DialogContentText } from "@material-ui/core";
 import isEqual from "lodash/isEqual";
 import React, { useCallback, useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -208,16 +207,14 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
           description: "dialog title",
         })}
       >
-        <DialogContentText>
-          <FormattedMessage
-            id="yT5zvU"
-            defaultMessage="{counter,plural,one{Are you sure you want to delete this collection?} other{Are you sure you want to delete {displayQuantity} collections?}}"
-            values={{
-              counter: maybe(() => selectedRowIds.length),
-              displayQuantity: <strong>{maybe(() => selectedRowIds.length)}</strong>,
-            }}
-          />
-        </DialogContentText>
+        <FormattedMessage
+          id="yT5zvU"
+          defaultMessage="{counter,plural,one{Are you sure you want to delete this collection?} other{Are you sure you want to delete {displayQuantity} collections?}}"
+          values={{
+            counter: maybe(() => selectedRowIds.length),
+            displayQuantity: <strong>{maybe(() => selectedRowIds.length)}</strong>,
+          }}
+        />
       </ActionDialog>
       <SaveFilterTabDialog
         open={params.action === "save-search"}

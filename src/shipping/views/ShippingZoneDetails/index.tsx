@@ -35,7 +35,6 @@ import { arrayDiff } from "@dashboard/utils/arrays";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapCountriesToCountriesCodes, mapEdgesToItems } from "@dashboard/utils/maps";
-import { DialogContentText } from "@material-ui/core";
 import { diff } from "fast-array-diff";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -242,16 +241,14 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({ id, params })
         })}
         variant="delete"
       >
-        <DialogContentText>
-          <FormattedMessage
-            id="LsgHmZ"
-            defaultMessage="Are you sure you want to delete {name}?"
-            description="delete shipping zone"
-            values={{
-              name: <strong>{getStringOrPlaceholder(data?.shippingZone.name)}</strong>,
-            }}
-          />
-        </DialogContentText>
+        <FormattedMessage
+          id="LsgHmZ"
+          defaultMessage="Are you sure you want to delete {name}?"
+          description="delete shipping zone"
+          values={{
+            name: <strong>{getStringOrPlaceholder(data?.shippingZone.name)}</strong>,
+          }}
+        />
       </ActionDialog>
       <ShippingZoneCountriesAssignDialog
         confirmButtonState={updateShippingZoneOpts.status}
@@ -299,23 +296,21 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({ id, params })
           description: "remove country from shipping zone and save, button",
         })}
       >
-        <DialogContentText>
-          <FormattedMessage
-            id="1zuQ2P"
-            defaultMessage="Are you sure you want to remove {countryName} from this shipping zone?"
-            description="unassign country"
-            values={{
-              countryName: (
-                <strong>
-                  {getStringOrPlaceholder(
-                    data?.shippingZone?.countries.find(country => country.code === params.id)
-                      ?.country,
-                  )}
-                </strong>
-              ),
-            }}
-          />
-        </DialogContentText>
+        <FormattedMessage
+          id="1zuQ2P"
+          defaultMessage="Are you sure you want to remove {countryName} from this shipping zone?"
+          description="unassign country"
+          values={{
+            countryName: (
+              <strong>
+                {getStringOrPlaceholder(
+                  data?.shippingZone?.countries.find(country => country.code === params.id)
+                    ?.country,
+                )}
+              </strong>
+            ),
+          }}
+        />
       </ActionDialog>
       <ShippingZoneAddWarehouseDialog
         countries={shop?.countries || []}

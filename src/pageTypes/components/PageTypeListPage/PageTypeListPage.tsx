@@ -1,12 +1,12 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
+import { DashboardCard } from "@dashboard/components/Card";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import SearchBar from "@dashboard/components/SearchBar";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { PageTypeFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { pageTypeAddUrl, PageTypeListUrlSortField } from "@dashboard/pageTypes/urls";
-import { Card } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -48,7 +48,7 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
           <FormattedMessage id="6JlXeD" defaultMessage="Create page type" description="button" />
         </Button>
       </TopNav>
-      <Card>
+      <DashboardCard>
         <SearchBar
           allTabLabel={intl.formatMessage({
             id: "oVDZUb",
@@ -69,7 +69,7 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
           onTabSave={onTabSave}
         />
         <PageTypeList {...listProps} />
-      </Card>
+      </DashboardCard>
     </ListPageLayout>
   );
 };

@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { categoryUrl } from "@dashboard/categories/urls";
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -11,7 +11,7 @@ import { TablePaginationWithContext } from "@dashboard/components/TablePaginatio
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleDetailsFragment, VoucherDetailsFragment } from "@dashboard/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Card, TableBody, TableCell, TableFooter } from "@material-ui/core";
+import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -44,15 +44,17 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card data-test-id="assign-category-section">
-      <CardTitle
-        title={intl.formatMessage(messages.discountCategoriesHeader)}
-        toolbar={
+    <DashboardCard data-test-id="assign-category-section">
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(messages.discountCategoriesHeader)}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <Button onClick={onCategoryAssign} data-test-id="assign-category-button">
             <FormattedMessage {...messages.discountCategoriesButton} />
           </Button>
-        }
-      />
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       <ResponsiveTable>
         <colgroup>
           <col />
@@ -137,7 +139,7 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
           )}
         </TableBody>
       </ResponsiveTable>
-    </Card>
+    </DashboardCard>
   );
 };
 

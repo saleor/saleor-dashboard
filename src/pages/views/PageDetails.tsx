@@ -37,7 +37,6 @@ import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeV
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
-import { DialogContentText } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -230,16 +229,14 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
         onConfirm={() => pageRemove({ variables: { id } })}
         variant="delete"
       >
-        <DialogContentText>
-          <FormattedMessage
-            id="4B32Ba"
-            defaultMessage="Are you sure you want to delete {title}?"
-            description="delete page"
-            values={{
-              title: <strong>{getStringOrPlaceholder(pageDetails.data?.page?.title)}</strong>,
-            }}
-          />
-        </DialogContentText>
+        <FormattedMessage
+          id="4B32Ba"
+          defaultMessage="Are you sure you want to delete {title}?"
+          description="delete page"
+          values={{
+            title: <strong>{getStringOrPlaceholder(pageDetails.data?.page?.title)}</strong>,
+          }}
+        />
       </ActionDialog>
     </>
   );
