@@ -24,7 +24,9 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>{intl.formatMessage(sectionNames.taxes)}</DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(sectionNames.taxes)}</DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Box data-test-id="taxes">
           <Combobox

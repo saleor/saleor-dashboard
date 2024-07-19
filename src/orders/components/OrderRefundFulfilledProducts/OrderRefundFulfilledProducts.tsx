@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import Money from "@dashboard/components/Money";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
@@ -8,16 +8,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { OrderRefundDataQuery } from "@dashboard/graphql";
 import { FormsetChange } from "@dashboard/hooks/useFormset";
 import { renderCollection } from "@dashboard/misc";
-import {
-  Card,
-  CardContent,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { Table, TableBody, TableCell, TableHead, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -90,9 +81,9 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
   const intl = useIntl();
 
   return (
-    <Card>
-      <CardTitle
-        title={
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
           <>
             {getTitle(fulfillment.status, intl)}
             {fulfillment && (
@@ -101,9 +92,9 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
               </Typography>
             )}
           </>
-        }
-      />
-      <CardContent className={classes.cartContent}>
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content className={classes.cartContent}>
         <Button
           className={classes.setMaximalQuantityButton}
           onClick={onSetMaximalQuantities}
@@ -115,7 +106,7 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
             description="button"
           />
         </Button>
-      </CardContent>
+      </DashboardCard.Content>
       <Table>
         <TableHead>
           <TableRowLink>
@@ -233,7 +224,7 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
           )}
         </TableBody>
       </Table>
-    </Card>
+    </DashboardCard>
   );
 };
 

@@ -87,10 +87,13 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
           <OrderAddTransaction order={order} onAddTransaction={onAddManualTransaction} />
         </Box>
 
-        {order?.transactions?.map(transaction => (
+        {order?.transactions?.map((transaction, index) => (
           <OrderTransaction
             key={transaction.id}
-            transaction={transaction}
+            transaction={{
+              ...transaction,
+              index,
+            }}
             onTransactionAction={onTransactionAction}
           />
         ))}

@@ -14,6 +14,10 @@ export class RefundPage extends OrdersPage {
     readonly refundReasonInput = page.getByTestId("refund-reason-input"),
     readonly lineRefundReasonDialog = page.getByTestId("refund-reason-dialog"),
     readonly lineRefundReasonButton = page.getByTestId("line-refund-reason-button"),
+    readonly transactionCard = page.getByTestId("transaction-card"),
+    readonly transactionEventRow = page.getByTestId("transaction-event-row"),
+    readonly refundAmountInput = page.getByTestId("refund-amount"),
+    readonly amountErrorMessage = page.getByTestId("error-message"),
   ) {
     super(page);
     this.addLineRefundReasonDialog = new AddLineRefundReasonDialog(page);
@@ -23,8 +27,16 @@ export class RefundPage extends OrdersPage {
     return await this.page.locator("table tr").filter({ hasText: productName });
   }
 
-  async expectLineItemsRefundPageOpen(orderId: string) {
+  async expectAddLineItemsRefundPageOpen(orderId: string) {
     const orderLink = `${URL_LIST.orders}${orderId}/refund`;
+
+    await expect(this.page).toHaveURL(orderLink);
+    await this.waitForDOMToFullyLoad();
+    await expect(this.pageHeader).toContainText("Create refund with line items");
+  }
+
+  async expectEditLineItemsRefundPageOpen(orderId: string, refundId: string) {
+    const orderLink = `${URL_LIST.orders}${orderId}/refund/${refundId}`;
 
     await expect(this.page).toHaveURL(orderLink);
     await this.waitForDOMToFullyLoad();
@@ -76,9 +88,24 @@ export class RefundPage extends OrdersPage {
     await this.waitForDOMToFullyLoad();
   }
 
+  async selectTransactionToRefund(transactionId: string) {
+    await this.waitForDOMToFullyLoad();
+
+    await this.transactionCard.locator(`id=${transactionId}`).click();
+  }
+
+  async provideRefundAmount(amount: string) {
+    await this.refundAmountInput.fill("");
+    await this.refundAmountInput.fill(amount);
+  }
+
   async transferFunds() {
     await expect(this.saveButton).toHaveText("Transfer funds");
     await this.clickSaveButton();
     await this.waitForDOMToFullyLoad();
+  }
+
+  async expectErrorMessage(error: string) {
+    expect(this.amountErrorMessage).toHaveText(error);
   }
 }

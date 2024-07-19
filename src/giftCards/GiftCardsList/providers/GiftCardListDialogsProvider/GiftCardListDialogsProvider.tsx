@@ -1,3 +1,4 @@
+import { DashboardModal } from "@dashboard/components/Modal";
 import GiftCardListPageDeleteDialog from "@dashboard/giftCards/components/GiftCardDeleteDialog/GiftCardListPageDeleteDialog";
 import GiftCardBulkCreateDialog from "@dashboard/giftCards/GiftCardBulkCreateDialog";
 import GiftCardCreateDialogContent from "@dashboard/giftCards/GiftCardCreateDialog";
@@ -73,9 +74,9 @@ const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = 
   return (
     <GiftCardListDialogsContext.Provider value={providerValues}>
       {children}
-      <Dialog open={isDialogOpen(CREATE)} maxWidth="sm" onClose={onClose} fullWidth>
+      <DashboardModal open={isDialogOpen(CREATE)} onChange={onClose}>
         <GiftCardCreateDialogContent onClose={onClose} refetchQueries={[GIFT_CARD_LIST_QUERY]} />
-      </Dialog>
+      </DashboardModal>
       <GiftCardListPageDeleteDialog open={isDialogOpen(DELETE)} onClose={onClose} />
       <Dialog open={isDialogOpen(EXPORT)} maxWidth="sm" onClose={onClose} fullWidth>
         <GiftCardExportDialogContent onClose={onClose} />

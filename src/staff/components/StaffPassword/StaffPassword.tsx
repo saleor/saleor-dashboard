@@ -1,6 +1,6 @@
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { DashboardCard } from "@dashboard/components/Card";
+import { Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -12,14 +12,16 @@ const StaffPassword: React.FC<StaffPasswordProps> = ({ onChangePassword }) => {
   const intl = useIntl();
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "ZhDQel",
-          defaultMessage: "Password",
-          description: "header",
-        })}
-        toolbar={
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "ZhDQel",
+            defaultMessage: "Password",
+            description: "header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <Button onClick={onChangePassword} data-test-id="changePasswordBtn">
             <FormattedMessage
               id="N3Zot1"
@@ -27,17 +29,17 @@ const StaffPassword: React.FC<StaffPasswordProps> = ({ onChangePassword }) => {
               description="button"
             />
           </Button>
-        }
-      />
-      <CardContent>
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <Typography>
           <FormattedMessage
             id="mm0CXe"
             defaultMessage="You should change your password every month to avoid security issues."
           />
         </Typography>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

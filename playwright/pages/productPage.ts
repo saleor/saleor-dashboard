@@ -44,7 +44,7 @@ export class ProductPage extends BasePage {
     readonly productTypeInput = page.getByTestId("product-type"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly categoryInput = page.getByTestId("category"),
-    readonly categoryItem = page.getByTestId("single-autocomplete-select-option"),
+    readonly categoryItem = page.getByTestId("select-option"),
     readonly collectionInput = page.getByTestId("collections"),
     readonly autocompleteDropdown = page.getByTestId("autocomplete-dropdown"),
     readonly descriptionInput = page
@@ -72,7 +72,7 @@ export class ProductPage extends BasePage {
     readonly ratingInput = page.locator("[name='rating']"),
     readonly warehouseOption = page.locator("[role='menuitem']"),
     readonly costPriceInput = page.locator("[name*='costPrice']"),
-    readonly sellingPriceInput = page.locator("[name*='channel-price']"),
+    readonly sellingPriceInput = page.locator("[name*='channelListing-price']"),
     readonly firstRowDataGrid = page.locator("[data-testid='glide-cell-1-0']"),
     readonly searchInput = page.getByTestId("search-input"),
     readonly emptyDataGridListView = page.getByTestId("empty-data-grid-text"),

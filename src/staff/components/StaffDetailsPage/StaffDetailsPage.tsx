@@ -1,12 +1,11 @@
 // @ts-strict-ignore
 import AccountPermissionGroups from "@dashboard/components/AccountPermissionGroups";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import CardTitle from "@dashboard/components/CardTitle";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   SearchPermissionGroupsQuery,
@@ -17,14 +16,13 @@ import {
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { getUserName } from "@dashboard/misc";
 import UserStatus from "@dashboard/staff/components/UserStatus";
 import { staffListUrl } from "@dashboard/staff/urls";
 import { getMemberPermissionGroups, isMemberActive } from "@dashboard/staff/utils";
 import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
-import createMultiAutocompleteSelectHandler from "@dashboard/utils/handlers/multiAutocompleteSelectChangeHandler";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
+import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -38,7 +36,7 @@ export interface StaffDetailsFormData {
   firstName: string;
   isActive: boolean;
   lastName: string;
-  permissionGroups: string[];
+  permissionGroups: Option[];
 }
 
 export interface StaffDetailsPageProps extends SearchPageProps {
@@ -83,36 +81,18 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   const { locale, setLocale } = useLocale();
   const isActive = isMemberActive(staffMember);
   const permissionGroups = getMemberPermissionGroups(staffMember);
-  const [permissionGroupsDisplayValues, setPermissionGroupsDisplayValues] = useStateFromProps<
-    MultiAutocompleteChoiceType[]
-  >(
-    permissionGroups.map(group => ({
-      disabled: !group.userCanManage,
-      label: group.name,
-      value: group.id,
-    })) || [],
-  );
+
   const initialForm: StaffDetailsFormData = {
     email: staffMember?.email || "",
     firstName: staffMember?.firstName || "",
     isActive,
     lastName: staffMember?.lastName || "",
-    permissionGroups: permissionGroups.map(pg => pg.id),
+    permissionGroups: permissionGroups.map(pg => ({ label: pg.name, value: pg.id })),
   };
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit} disabled={disabled}>
-      {({ data: formData, change, isSaveDisabled, submit, toggleValue }) => {
-        const permissionGroupsChange = createMultiAutocompleteSelectHandler(
-          toggleValue,
-          setPermissionGroupsDisplayValues,
-          permissionGroupsDisplayValues,
-          availablePermissionGroups?.map(group => ({
-            label: group.name,
-            value: group.id,
-          })) || [],
-        );
-
+      {({ data: formData, change, isSaveDisabled, submit }) => {
         return (
           <DetailPageLayout>
             <TopNav href={staffListUrl()} title={getUserName(staffMember)} />
@@ -148,15 +128,17 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                     onChange={change}
                   />
                   <CardSpacer />
-                  <Card>
-                    <CardTitle
-                      title={intl.formatMessage({
-                        id: "Fbr4Vp",
-                        defaultMessage: "Permissions",
-                        description: "dialog header",
-                      })}
-                    />
-                    <CardContent>
+                  <DashboardCard>
+                    <DashboardCard.Header>
+                      <DashboardCard.Title>
+                        {intl.formatMessage({
+                          id: "Fbr4Vp",
+                          defaultMessage: "Permissions",
+                          description: "dialog header",
+                        })}
+                      </DashboardCard.Title>
+                    </DashboardCard.Header>
+                    <DashboardCard.Content>
                       <Typography>
                         {intl.formatMessage({
                           id: "P+kVxW",
@@ -171,13 +153,12 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                         errors={errors}
                         initialSearch={initialSearch}
                         availablePermissionGroups={availablePermissionGroups}
-                        onChange={permissionGroupsChange}
+                        onChange={change}
                         onSearchChange={onSearchChange}
-                        displayValues={permissionGroupsDisplayValues}
                         {...fetchMorePermissionGroups}
                       />
-                    </CardContent>
-                  </Card>
+                    </DashboardCard.Content>
+                  </DashboardCard>
                 </>
               )}
             </DetailPageLayout.RightSidebar>

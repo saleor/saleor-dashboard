@@ -1,9 +1,9 @@
 import { ChannelWarehouses } from "@dashboard/channels/pages/ChannelDetailsPage/types";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { SearchWarehousesQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -37,11 +37,13 @@ const Warehouses: React.FC<WarehousesProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card data-test-id="warehouses-section">
-      <CardTitle title={intl.formatMessage(sectionNames.warehouses)} />
-      <CardContent>
+    <DashboardCard data-test-id="warehouses-section">
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(sectionNames.warehouses)}</DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <Typography>{intl.formatMessage(messages.subtitle)}</Typography>
-      </CardContent>
+      </DashboardCard.Content>
       <AssignmentList
         loading={loading}
         items={warehouses}
@@ -56,7 +58,7 @@ const Warehouses: React.FC<WarehousesProps> = props => {
         inputName="warehouse"
         itemsName={intl.formatMessage(sectionNames.warehouses)}
       />
-    </Card>
+    </DashboardCard>
   );
 };
 

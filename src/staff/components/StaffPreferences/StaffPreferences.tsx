@@ -1,9 +1,9 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
+import { Combobox } from "@dashboard/components/Combobox";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { Locale, localeNames } from "@dashboard/components/Locale";
-import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
 import { capitalize } from "@dashboard/misc";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -15,6 +15,10 @@ interface StaffPreferencesProps {
 const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleChange }) => {
   const intl = useIntl();
   const handleLocaleChange = async (locale: Locale) => {
+    if (!locale) {
+      return;
+    }
+
     await onLocaleChange(locale);
     /*
       Workaround, after changing language we reload the page.
@@ -26,21 +30,18 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleCha
   };
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "CLeDae",
-          defaultMessage: "Preferences",
-          description: "section header",
-        })}
-      />
-      <CardContent>
-        <SingleAutocompleteSelectField
-          choices={Object.values(Locale).map(locale => ({
-            label: capitalize(localeNames[locale]),
-            value: locale,
-          }))}
-          displayValue={localeNames[locale]}
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "CLeDae",
+            defaultMessage: "Preferences",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
+        <Combobox
           helperText={intl.formatMessage({
             id: "JJgJwi",
             defaultMessage: "Selecting this will change the language of your dashboard",
@@ -49,10 +50,19 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleCha
             id: "mr9jbO",
             defaultMessage: "Preferred Language",
           })}
+          options={Object.values(Locale).map(locale => ({
+            label: capitalize(localeNames[locale]),
+            value: locale,
+          }))}
+          fetchOptions={() => undefined}
           name="locale"
-          value={locale}
+          value={{
+            label: localeNames[locale],
+            value: locale,
+          }}
           onChange={event => handleLocaleChange(event.target.value)}
         />
+
         <FormSpacer />
         <Typography>
           <FormattedMessage
@@ -60,8 +70,8 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleCha
             defaultMessage="Please note, while all currency and date adjustments are complete, language translations are at varying degrees of completion."
           />
         </Typography>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

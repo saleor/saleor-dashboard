@@ -21,9 +21,11 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({ data, disabled, errors, o
 
   return (
     <DashboardCard data-test-id="general-information-section" paddingTop={9}>
-      <DashboardCard.Title>
-        {intl.formatMessage(commonMessages.generalInformations)}
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <TextField
           data-test-id="warehouse-name-input"

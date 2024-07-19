@@ -1,8 +1,8 @@
-import CardTitle from "@dashboard/components/CardTitle";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
+import { DashboardCard } from "@dashboard/components/Card";
 import { ChannelFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
-import { Card, CardContent, Divider } from "@material-ui/core";
+import { Divider } from "@material-ui/core";
+import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -20,14 +20,12 @@ const messages = defineMessages({
 
 export interface ShippingZoneSettingsCardProps {
   formData: ShippingZoneUpdateFormData;
-  warehousesDisplayValues: MultiAutocompleteChoiceType[];
-  warehousesChoices: MultiAutocompleteChoiceType[];
+  warehousesChoices: Option[];
   onWarehouseAdd: () => void;
   onWarehouseChange: FormChange;
   hasMoreWarehouses: boolean;
   onFetchMoreWarehouses: () => void;
   onWarehousesSearchChange: (query: string) => void;
-  channelsDisplayValues: MultiAutocompleteChoiceType[];
   onChannelChange: FormChange;
   allChannels?: ChannelFragment[];
   loading: boolean;
@@ -35,7 +33,6 @@ export interface ShippingZoneSettingsCardProps {
 
 export const ShippingZoneSettingsCard: React.FC<ShippingZoneSettingsCardProps> = ({
   formData,
-  warehousesDisplayValues,
   hasMoreWarehouses,
   loading,
   warehousesChoices,
@@ -45,36 +42,35 @@ export const ShippingZoneSettingsCard: React.FC<ShippingZoneSettingsCardProps> =
   onWarehouseChange,
   allChannels,
   onChannelChange,
-  channelsDisplayValues,
 }) => {
   const intl = useIntl();
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(messages.title)} />
-      <CardContent data-test-id="channel-section">
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(messages.title)}</DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content data-test-id="channel-section">
         <ChannelsSection
-          channelsDisplayValues={channelsDisplayValues}
           onChange={onChannelChange}
           allChannels={allChannels}
           selectedChannels={formData.channels}
         />
-      </CardContent>
+      </DashboardCard.Content>
       <Divider />
-      <CardContent data-test-id="warehouse-section">
+      <DashboardCard.Content data-test-id="warehouse-section">
         <WarehousesSection
           onAdd={onWarehouseAdd}
           onSearchChange={onWarehousesSearchChange}
           onChange={onWarehouseChange}
           onFetchMore={onFetchMoreWarehouses}
-          displayValues={warehousesDisplayValues}
           choices={warehousesChoices}
           selectedWarehouses={formData.warehouses}
           hasMore={hasMoreWarehouses}
           loading={loading}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

@@ -1,11 +1,10 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
+import { Combobox } from "@dashboard/components/Combobox";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { Choice } from "@dashboard/components/SingleSelectField";
 import useChoiceSearch from "@dashboard/hooks/useChoiceSearch";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { MenuItem } from "@material-ui/core";
-import { Autocomplete } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -49,28 +48,18 @@ const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
       onConfirm={() => onConfirm(choice)}
       title={intl.formatMessage(messages.selectChannel)}
     >
-      <Autocomplete
-        choices={result}
-        fullWidth
-        label={intl.formatMessage(messages.channelName)}
+      <Combobox
         data-test-id="channel-autocomplete"
-        value={choice}
+        label={intl.formatMessage(messages.channelName)}
+        options={result}
+        fetchOptions={search}
+        name="channel-autocomplete"
+        value={{
+          value: choice,
+          label: result.find(res => res.value === choice)?.label ?? choice,
+        }}
         onChange={e => setChoice(e.target.value)}
-        onInputChange={search}
-      >
-        {({ getItemProps, highlightedIndex }) =>
-          result.map((choice, choiceIndex) => (
-            <MenuItem
-              data-test-id="select-field-option"
-              selected={highlightedIndex === choiceIndex}
-              key={choice.value}
-              {...getItemProps({ item: choice, index: choiceIndex })}
-            >
-              {choice.label}
-            </MenuItem>
-          ))
-        }
-      </Autocomplete>
+      />
     </ActionDialog>
   );
 };

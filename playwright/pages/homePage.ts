@@ -7,7 +7,7 @@ export class HomePage {
   constructor(
     page: Page,
     readonly channelSelect = page.getByTestId("app-channel-select"),
-    readonly channelOptions = page.locator("[data-test-id*='select-field-option']"),
+    readonly channelOptions = page.getByTestId("select-option"),
     readonly welcomeMessage = page.getByTestId("home-header"),
     readonly sales = page.getByTestId("sales-analytics"),
     readonly orders = page.getByTestId("orders-analytics"),

@@ -1,5 +1,5 @@
+import { DashboardCard } from "@dashboard/components/Card";
 import { OrderDetailsFragment } from "@dashboard/graphql";
-import { CardContent } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -18,7 +18,7 @@ export const PaymentsSummary: React.FC<PaymentsSummaryProps> = ({ order }) => {
   const shouldDisplay = getShouldDisplayAmounts(order);
 
   return (
-    <CardContent>
+    <DashboardCard.Content>
       <SummaryList className={classes.amountGrid}>
         <SummaryLine
           text={<FormattedMessage {...orderPaymentMessages.authorized} />}
@@ -59,6 +59,6 @@ export const PaymentsSummary: React.FC<PaymentsSummaryProps> = ({ order }) => {
           />
         )}
       </SummaryList>
-    </CardContent>
+    </DashboardCard.Content>
   );
 };

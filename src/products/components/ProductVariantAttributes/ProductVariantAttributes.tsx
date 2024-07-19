@@ -1,16 +1,15 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
+import { Combobox } from "@dashboard/components/Combobox";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Grid from "@dashboard/components/Grid";
-import SingleAutocompleteSelectField, {
-  SingleAutocompleteChoiceType,
-} from "@dashboard/components/SingleAutocompleteSelectField";
 import Skeleton from "@dashboard/components/Skeleton";
 import { ProductErrorWithAttributesFragment, ProductVariantFragment } from "@dashboard/graphql";
 import { FormsetAtomicData, FormsetChange } from "@dashboard/hooks/useFormset";
 import { commonMessages } from "@dashboard/intl";
 import { getProductVariantAttributeErrorMessage } from "@dashboard/utils/errors/product";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
+import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -50,10 +49,7 @@ function getAttributeValue(id: string, attributes: VariantAttributeInput[]): str
   return attribute?.value === null ? undefined : attribute.value;
 }
 
-function getAttributeValueChoices(
-  id: string,
-  attributes: VariantAttributeInput[],
-): SingleAutocompleteChoiceType[] {
+function getAttributeValueChoices(id: string, attributes: VariantAttributeInput[]): Option[] {
   const attribute = attributes.find(attr => attr.id === id);
 
   return attribute.data.values.map(attributeValue => ({
@@ -71,9 +67,13 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
   const intl = useIntl();
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <Grid variant="uniform">
           {attributes === undefined ? (
             <Skeleton />
@@ -82,19 +82,22 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
               const error = errors.find(err => err.attributes?.includes(attribute.id));
 
               return (
-                <SingleAutocompleteSelectField
+                <Combobox
                   key={attribute.id}
+                  allowCustomValues
                   disabled={disabled}
-                  displayValue={getAttributeDisplayValue(attribute.id, attribute.value, attributes)}
+                  data-test-id="variant-attribute-input"
                   error={!!error}
                   helperText={getProductVariantAttributeErrorMessage(error, intl)}
                   label={attribute.label}
+                  options={getAttributeValueChoices(attribute.id, attributes)}
+                  fetchOptions={() => undefined}
                   name={`attribute:${attribute.id}`}
+                  value={{
+                    label: getAttributeDisplayValue(attribute.id, attribute.value, attributes),
+                    value: getAttributeValue(attribute.id, attributes),
+                  }}
                   onChange={event => onChange(attribute.id, event.target.value)}
-                  value={getAttributeValue(attribute.id, attributes)}
-                  choices={getAttributeValueChoices(attribute.id, attributes)}
-                  allowCustomValues
-                  data-test-id="variant-attribute-input"
                 />
               );
             })
@@ -112,8 +115,8 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
               ))}
           </>
         )}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

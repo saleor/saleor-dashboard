@@ -1,6 +1,5 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { DialogContentText } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -34,16 +33,14 @@ const TokenDeleteDialog: React.FC<TokenDeleteDialogProps> = ({
         description: "dialog title",
       })}
     >
-      <DialogContentText>
-        <FormattedMessage
-          id="2VSP8C"
-          defaultMessage="Are you sure you want to delete token {token}?"
-          description="delete token"
-          values={{
-            token: <strong>{name}</strong>,
-          }}
-        />
-      </DialogContentText>
+      <FormattedMessage
+        id="2VSP8C"
+        defaultMessage="Are you sure you want to delete token {token}?"
+        description="delete token"
+        values={{
+          token: <strong>{name}</strong>,
+        }}
+      />
     </ActionDialog>
   );
 };

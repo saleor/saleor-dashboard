@@ -3,18 +3,13 @@ import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
+import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
 import { OrderErrorFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  TextField,
-} from "@material-ui/core";
+import { TextField } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -44,7 +39,7 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
   const formErrors = getFormErrors(formFields, errors);
 
   return (
-    <Dialog onClose={onClose} open={open} fullWidth maxWidth="xs">
+    <DashboardModal onChange={onClose} open={open}>
       <Form
         initial={{
           amount: initial,
@@ -52,55 +47,56 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
         onSubmit={onSubmit}
       >
         {({ data, change, submit }) => (
-          <>
-            <DialogTitle disableTypography>
+          <DashboardModal.Content __width={DASHBOARD_MODAL_WIDTH}>
+            <DashboardModal.Title>
               {intl.formatMessage({
                 id: "+PbHKD",
                 defaultMessage: "Capture Payment",
                 description: "dialog header",
               })}
-            </DialogTitle>
-            <DialogContent>
-              <TextField
-                error={!!formErrors.payment}
-                fullWidth
-                helperText={getOrderErrorMessage(formErrors.payment, intl)}
-                label={intl.formatMessage({
-                  id: "OhdPS1",
-                  defaultMessage: "Amount",
-                  description: "amount of refunded money",
-                })}
-                name="amount"
-                onChange={change}
-                inputProps={{
-                  step: "0.01",
-                }}
-                type="number"
-                value={data.amount}
-              />
-              {errors.length > 0 && (
-                <>
-                  <FormSpacer />
-                  {errors
-                    .filter(err => !formFields.includes(err.field))
-                    .map((err, index) => (
-                      <DialogContentText color="error" key={index}>
-                        {getOrderErrorMessage(err, intl)}
-                      </DialogContentText>
-                    ))}
-                </>
-              )}
-            </DialogContent>
-            <DialogActions>
+            </DashboardModal.Title>
+
+            <TextField
+              error={!!formErrors.payment}
+              fullWidth
+              helperText={getOrderErrorMessage(formErrors.payment, intl)}
+              label={intl.formatMessage({
+                id: "OhdPS1",
+                defaultMessage: "Amount",
+                description: "amount of refunded money",
+              })}
+              name="amount"
+              onChange={change}
+              inputProps={{
+                step: "0.01",
+              }}
+              type="number"
+              value={data.amount}
+            />
+
+            {errors.length > 0 && (
+              <>
+                <FormSpacer />
+                {errors
+                  .filter(err => !formFields.includes(err.field))
+                  .map((err, index) => (
+                    <Text color="critical1" key={index}>
+                      {getOrderErrorMessage(err, intl)}
+                    </Text>
+                  ))}
+              </>
+            )}
+
+            <DashboardModal.Actions>
               <BackButton onClick={onClose} />
               <ConfirmButton transitionState={confirmButtonState} onClick={submit}>
                 <FormattedMessage {...buttonMessages.confirm} />
               </ConfirmButton>
-            </DialogActions>
-          </>
+            </DashboardModal.Actions>
+          </DashboardModal.Content>
         )}
       </Form>
-    </Dialog>
+    </DashboardModal>
   );
 };
 

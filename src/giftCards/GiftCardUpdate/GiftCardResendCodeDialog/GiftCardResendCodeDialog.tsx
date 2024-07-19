@@ -1,10 +1,9 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { useChannelsSearch } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
+import { Combobox } from "@dashboard/components/Combobox";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import { IMessage } from "@dashboard/components/messages";
-import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
-import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { useChannelsQuery, useGiftCardResendMutation } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -13,6 +12,7 @@ import { DialogProps } from "@dashboard/types";
 import commonErrorMessages from "@dashboard/utils/errors/common";
 import { mapSlugNodeToChoice } from "@dashboard/utils/maps";
 import { CircularProgress, TextField, Typography } from "@material-ui/core";
+import { Box } from "@saleor/macaw-ui-next";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -95,7 +95,6 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
 
   return (
     <ActionDialog
-      maxWidth="sm"
       open={open}
       onConfirm={submit}
       confirmButtonLabel={intl.formatMessage(messages.submitButtonLabel)}
@@ -103,25 +102,27 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
       title={intl.formatMessage(messages.title)}
       confirmButtonState={status}
       disabled={loading}
+      size="lg"
     >
       {loadingChannels ? (
         <div className={progressClasses.progressContainer}>
           <CircularProgress />
         </div>
       ) : (
-        <>
+        <Box display="grid" gap={2}>
           <Typography>{intl.formatMessage(messages.description)}</Typography>
-          <VerticalSpacer />
-          <SingleAutocompleteSelectField
-            choices={mapSlugNodeToChoice(filteredChannels)}
-            name="channelSlug"
+
+          <Combobox
             label={intl.formatMessage(messages.sendToChannelSelectLabel)}
-            value={data?.channelSlug}
+            options={mapSlugNodeToChoice(filteredChannels)}
+            fetchOptions={onQueryChange}
+            name="channelSlug"
+            value={{
+              label: channels.find(getBySlug(data?.channelSlug))?.name,
+              value: data?.channelSlug,
+            }}
             onChange={change}
-            displayValue={channels.find(getBySlug(data?.channelSlug))?.name}
-            fetchChoices={onQueryChange}
           />
-          <VerticalSpacer />
           <ControlledCheckbox
             name="differentMailConsent"
             label={intl.formatMessage(messages.consentCheckboxLabel)}
@@ -130,7 +131,6 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
               setConsentSelected(!!event.target.value)
             }
           />
-          <VerticalSpacer />
           <TextField
             disabled={!consentSelected}
             error={!!formErrors?.email}
@@ -141,7 +141,7 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
             className={classes.inputContainer}
             label={intl.formatMessage(messages.emailInputPlaceholder)}
           />
-        </>
+        </Box>
       )}
     </ActionDialog>
   );

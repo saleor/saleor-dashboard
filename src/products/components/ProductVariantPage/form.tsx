@@ -51,11 +51,7 @@ import {
   createPreorderEndDateChangeHandler,
   getChannelsInput,
 } from "@dashboard/products/utils/handlers";
-import {
-  validateCostPrice,
-  validatePrice,
-  validateVariantData,
-} from "@dashboard/products/utils/validation";
+import { validateProductVariant } from "@dashboard/products/utils/validation";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
 import { arrayDiff } from "@dashboard/utils/arrays";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
@@ -327,12 +323,7 @@ function useProductVariantUpdateForm(
     channelListings: channels.data,
     stocks: stocks.data,
   };
-  const disabled =
-    channels?.data.some(
-      channelData =>
-        validatePrice(channelData.value.price) || validateCostPrice(channelData.value.costPrice),
-    ) ||
-    (data.isPreorder && data.hasPreorderEndDate && !!form.errors.preorderEndDateTime);
+  const disabled = data.isPreorder && data.hasPreorderEndDate && !!form.errors.preorderEndDateTime;
   const getSubmitData = async (): Promise<ProductVariantUpdateSubmitData> => ({
     ...formData,
     ...getMetadata(formData, isMetadataModified, isPrivateMetadataModified),
@@ -347,12 +338,12 @@ function useProductVariantUpdateForm(
     updateStocks,
   });
   const handleSubmit = async (data: ProductVariantUpdateSubmitData) => {
-    const validationErrors = validateVariantData(data);
+    const validationProductErrors = validateProductVariant(data, intl);
 
-    setValidationErrors(validationErrors);
+    setValidationErrors(validationProductErrors);
 
-    if (validationErrors.length) {
-      return validationErrors;
+    if (validationProductErrors.length > 0) {
+      return validationProductErrors;
     }
 
     const apiErrors = await onSubmit(data);

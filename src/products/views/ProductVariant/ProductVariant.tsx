@@ -120,6 +120,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, produc
   });
   const [deleteAttributeValue, deleteAttributeValueOpts] = useAttributeValueDeleteMutation({});
   const { handleSubmitChannels, updateChannelsOpts } = useSubmitChannels();
+
   const variant = data?.productVariant;
   const channels = createVariantChannels(variant);
 
