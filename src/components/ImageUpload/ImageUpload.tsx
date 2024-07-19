@@ -49,12 +49,6 @@ const useStyles = makeStyles(
       padding: theme.spacing(5, 0),
       textAlign: "center",
     },
-    uploadText: {
-      color: theme.typography.body1.color,
-      fontSize: 12,
-      fontWeight: 600,
-      textTransform: "uppercase",
-    },
   }),
   { name: "ImageUpload" },
 );
@@ -91,7 +85,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = props => {
               >
                 <input {...getInputProps()} className={classes.fileField} accept="image/*" />
                 <ImageIcon className={classes.photosIcon} />
-                <Text className={classes.uploadText}>
+                <Text display="block" fontWeight="bold" textTransform="uppercase" fontSize={3}>
                   <FormattedMessage
                     id="NxeDbG"
                     defaultMessage="Drop here to upload"

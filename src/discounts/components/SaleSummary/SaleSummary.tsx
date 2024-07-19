@@ -30,18 +30,18 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannelId, sale }) =>
         <DashboardCard.Title>{intl.formatMessage(commonMessages.summary)}</DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <Text fontWeight="medium" fontSize={3}>
+        <Text fontWeight="bold" fontSize={3}>
           <FormattedMessage id="F56hOz" defaultMessage="Name" description="sale name" />
         </Text>
-        <Text className={classes.ellipsis}>
+        <Text className={classes.ellipsis} display="block">
           {maybe<React.ReactNode>(() => sale.name, <Skeleton />)}
         </Text>
         <FormSpacer />
 
-        <Text size={2} fontWeight="light">
+        <Text fontWeight="bold" fontSize={3}>
           <FormattedMessage id="XZR590" defaultMessage="Value" description="sale value" />
         </Text>
-        <Text>
+        <Text display="block">
           {sale ? (
             sale.type === SaleType.FIXED && channel?.discountValue ? (
               <Money
@@ -64,10 +64,10 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannelId, sale }) =>
         <Hr />
         <CardSpacer />
 
-        <Text size={2} fontWeight="light">
+        <Text fontWeight="bold" fontSize={3}>
           <FormattedMessage {...commonMessages.startDate} />
         </Text>
-        <Text>
+        <Text display="block">
           {maybe<React.ReactNode>(
             () => (
               <Date date={sale.startDate} plain />
@@ -77,10 +77,10 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannelId, sale }) =>
         </Text>
         <FormSpacer />
 
-        <Text size={2} fontWeight="light">
+        <Text fontWeight="bold" fontSize={3}>
           <FormattedMessage {...commonMessages.endDate} />
         </Text>
-        <Text>
+        <Text display="block">
           {maybe<React.ReactNode>(
             () => (sale.endDate === null ? "-" : <Date date={sale.endDate} plain />),
             <Skeleton />,

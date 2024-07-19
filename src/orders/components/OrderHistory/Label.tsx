@@ -12,7 +12,7 @@ interface LabelProps {
 }
 
 const Label: React.FC<LabelProps> = ({ text, size = 12 }) => (
-  <Text size={2} fontWeight="light" color="default2" style={{ fontSize: size }}>
+  <Text size={2} fontWeight="light" color="default2" display="block" style={{ fontSize: size }}>
     {text}
   </Text>
 );

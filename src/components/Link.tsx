@@ -109,7 +109,7 @@ const Link: React.FC<LinkProps> = props => {
           {children}
         </RouterLink>
       ) : (
-        <Text as="a" href={disabled ? undefined : href} {...commonLinkProps}>
+        <Text as="a" href={disabled ? undefined : href} display="block" {...commonLinkProps}>
           {children}
         </Text>
       )}

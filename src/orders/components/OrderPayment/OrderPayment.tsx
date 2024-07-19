@@ -5,7 +5,7 @@ import Money from "@dashboard/components/Money";
 import { Pill } from "@dashboard/components/Pill";
 import { OrderAction, OrderDetailsFragment, OrderStatus } from "@dashboard/graphql";
 import { getDiscountTypeLabel } from "@dashboard/orders/utils/data";
-import { Divider, Skeleton } from "@saleor/macaw-ui-next";
+import { Divider, Skeleton, sprinkles } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -64,19 +64,24 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
   return (
     <DashboardCard data-test-id="OrderPayment">
       <DashboardCard.Header>
-        <DashboardCard.Title className={classes.payments}>
+        <DashboardCard.Title>
+          <FormattedMessage {...orderPaymentMessages.paymentTitle} />
+          <Pill
+            className={sprinkles({
+              marginLeft: 2,
+              marginRight: "auto",
+            })}
+            label={payment.localized}
+            color={payment.status}
+            data-test-id="payment-status"
+          />
+        </DashboardCard.Title>
+
+        <DashboardCard.Toolbar>
           {!order?.paymentStatus ? (
             <Skeleton />
           ) : (
             <div className={classes.titleContainer}>
-              <FormattedMessage {...orderPaymentMessages.paymentTitle} />
-              <HorizontalSpacer spacing={2} />
-              <Pill
-                className={classes.rightmostLeftAlignedElement}
-                label={payment.localized}
-                color={payment.status}
-                data-test-id="payment-status"
-              />
               {order?.status !== OrderStatus.CANCELED &&
                 (canCapture || canRefund || canVoid || canMarkAsPaid) && (
                   <div className={classes.actions}>
@@ -108,7 +113,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                 )}
             </div>
           )}
-        </DashboardCard.Title>
+        </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content className={classes.payments}>
         <div className={classes.root}>

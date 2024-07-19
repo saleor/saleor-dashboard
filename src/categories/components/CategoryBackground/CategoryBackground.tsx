@@ -65,19 +65,17 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
           })}
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
-          <>
-            <Button variant="tertiary" onClick={handleImageUploadButtonClick}>
-              <FormattedMessage {...commonMessages.uploadImage} />
-            </Button>
-            <input
-              className={classes.fileField}
-              id="fileUpload"
-              onChange={({ target: { files } }) => onImageUpload(files && files[0])}
-              type="file"
-              ref={anchor}
-              accept="image/*"
-            />
-          </>
+          <Button variant="tertiary" onClick={handleImageUploadButtonClick}>
+            <FormattedMessage {...commonMessages.uploadImage} />
+          </Button>
+          <input
+            className={classes.fileField}
+            id="fileUpload"
+            onChange={({ target: { files } }) => onImageUpload(files && files[0])}
+            type="file"
+            ref={anchor}
+            accept="image/*"
+          />
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
 

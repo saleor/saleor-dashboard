@@ -26,14 +26,6 @@ export interface PageOrganizeContentProps {
   fetchMorePageTypes?: FetchMoreProps;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    label: {
-      marginBottom: theme.spacing(0.5),
-    },
-  }),
-  { name: "PageOrganizeContent" },
-);
 const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
   const {
     canChangeType,
@@ -47,7 +39,6 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
     fetchPageTypes,
     fetchMorePageTypes,
   } = props;
-  const classes = useStyles(props);
   const intl = useIntl();
   const formErrors = getFormErrors(["pageType"], errors);
 
@@ -86,7 +77,7 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
           />
         ) : (
           <>
-            <Text className={classes.label} size={2} fontWeight="light">
+            <Text size={2} fontWeight="light" display="block">
               <FormattedMessage id="ufD5Jr" defaultMessage="Content type" />
             </Text>
             <Text>{pageType?.name}</Text>
