@@ -105,9 +105,11 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        <Box display="flex" justifyContent="space-between" cursor="pointer">
+      <DashboardCard.Header>
+        <DashboardCard.Title>
           <FormattedMessage {...messages.media} />
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <Dropdown>
             <Dropdown.Trigger>
               <Button
@@ -151,8 +153,8 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
               </List>
             </Dropdown.Content>
           </Dropdown>
-        </Box>
-      </DashboardCard.Title>
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Box>
           <Box

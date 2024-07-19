@@ -66,7 +66,11 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
 
   return (
     <DashboardCard>
-      <DashboardCard.Title title={intl.formatMessage(commonMessages.generalInformations)} />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Grid variant="uniform">
           {attributes === undefined ? (

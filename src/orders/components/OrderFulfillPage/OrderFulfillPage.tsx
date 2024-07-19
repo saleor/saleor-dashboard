@@ -182,7 +182,11 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
           {({ change, data, submit }) => (
             <>
               <DashboardCard>
-                <DashboardCard.Title title={intl.formatMessage(messages.itemsReadyToShip)} />
+                <DashboardCard.Header>
+                  <DashboardCard.Title>
+                    {intl.formatMessage(messages.itemsReadyToShip)}
+                  </DashboardCard.Title>
+                </DashboardCard.Header>
                 {order ? (
                   <ResponsiveTable className={classes.table}>
                     <TableHead>
@@ -236,7 +240,11 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
 
               {shopSettings?.fulfillmentAutoApprove && (
                 <DashboardCard>
-                  <DashboardCard.Title title={intl.formatMessage(messages.shipmentInformation)} />
+                  <DashboardCard.Header>
+                    <DashboardCard.Title>
+                      {intl.formatMessage(messages.shipmentInformation)}
+                    </DashboardCard.Title>
+                  </DashboardCard.Header>
                   <DashboardCard.Content>
                     <ControlledCheckbox
                       checked={data.sendInfo}

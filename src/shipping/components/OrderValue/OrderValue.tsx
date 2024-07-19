@@ -49,13 +49,15 @@ export const OrderValue: React.FC<OrderValueProps> = ({
 
   return (
     <DashboardCard data-test-id="order-value">
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "yatGsm",
-          defaultMessage: "Order Value",
-          description: "card title",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "yatGsm",
+            defaultMessage: "Order Value",
+            description: "card title",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <div className={classes.content}>
         <div className={classes.subheader}>
           <ControlledCheckbox

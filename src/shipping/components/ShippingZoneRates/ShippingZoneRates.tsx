@@ -65,9 +65,9 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
 
   return (
     <DashboardCard data-test-id={variant === "price" ? "price-based-rates" : "weight-based-rates"}>
-      <DashboardCard.Title
-        title={
-          variant === "price"
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {variant === "price"
             ? intl.formatMessage({
                 id: "FjrExY",
                 defaultMessage: "Price Based Rates",
@@ -77,14 +77,14 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                 id: "foB6wx",
                 defaultMessage: "Weight Based Rates",
                 description: "weight based shipping methods, section header",
-              })
-        }
-      />
-      <DashboardCard.Toolbar>
-        <Button disabled={disabled} onClick={onRateAdd} data-test-id={testId}>
-          <FormattedMessage id="WR8rir" defaultMessage="Create rate" description="button" />
-        </Button>
-      </DashboardCard.Toolbar>
+              })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          <Button disabled={disabled} onClick={onRateAdd} data-test-id={testId}>
+            <FormattedMessage id="WR8rir" defaultMessage="Create rate" description="button" />
+          </Button>
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       <ResponsiveTable>
         <TableHead>
           <TableRowLink>

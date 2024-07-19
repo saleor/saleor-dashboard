@@ -16,13 +16,15 @@ const CustomerStats: React.FC<CustomerStatsProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        {intl.formatMessage({
-          id: "e7Nyu7",
-          defaultMessage: "Customer History",
-          description: "section header",
-        })}
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "e7Nyu7",
+            defaultMessage: "Customer History",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content display="flex" flexDirection="column">
         <Text size={2}>
           <FormattedMessage id="FNAZoh" defaultMessage="Last login" />

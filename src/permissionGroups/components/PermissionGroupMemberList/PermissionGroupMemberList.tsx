@@ -89,23 +89,26 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
 
   return (
     <DashboardCard data-test-id="permission-group-members-section">
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "lGlDEH",
-          defaultMessage: "Group members",
-          description: "header",
-        })}
-      />
-      <DashboardCard.Toolbar>
-        <Button
-          data-test-id="assign-members"
-          color={disabled ? "secondary" : "primary"}
-          onClick={onAssign}
-          disabled={disabled}
-        >
-          <FormattedMessage id="OhFGpX" defaultMessage="Assign members" description="button" />
-        </Button>
-      </DashboardCard.Toolbar>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "lGlDEH",
+            defaultMessage: "Group members",
+            description: "header",
+          })}
+        </DashboardCard.Title>
+
+        <DashboardCard.Toolbar>
+          <Button
+            data-test-id="assign-members"
+            color={disabled ? "secondary" : "primary"}
+            onClick={onAssign}
+            disabled={disabled}
+          >
+            <FormattedMessage id="OhFGpX" defaultMessage="Assign members" description="button" />
+          </Button>
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       {members?.length === 0 ? (
         <DashboardCard.Content className={classes.helperText} data-test-id="no-members-text">
           <Text color="default2">

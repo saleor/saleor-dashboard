@@ -3,7 +3,6 @@ import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { OrderLineFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { CardActions } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -39,10 +38,10 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
     <>
       <DashboardCard>
         <OrderCardTitle withStatus status="unfulfilled" className={classes.cardTitle} />
-        <DashboardCard.Content>
+        <DashboardCard.Content paddingX={0}>
           <OrderDetailsDatagrid lines={lines} loading={loading} onShowMetadata={onShowMetadata} />
           {showFulfillmentAction && (
-            <CardActions className={classes.actions}>
+            <DashboardCard.BottomActions justifyContent="flex-end">
               <Button
                 data-test-id="fulfill-button"
                 variant="primary"
@@ -56,7 +55,7 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
                   <FormattedMessage {...commonMessages.cannotFullfillUnpaidOrder} />
                 </Text>
               )}
-            </CardActions>
+            </DashboardCard.BottomActions>
           )}
         </DashboardCard.Content>
       </DashboardCard>

@@ -22,7 +22,6 @@ import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import { DialogContentText } from "@material-ui/core";
 import isEqual from "lodash/isEqual";
 import React, { useCallback, useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -198,17 +197,15 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
         })}
         variant="delete"
       >
-        <DialogContentText>
-          <FormattedMessage
-            id="O9QPe1"
-            defaultMessage="{counter,plural,one{Are you sure you want to delete this voucher?} other{Are you sure you want to delete {displayQuantity} vouchers?}}"
-            description="dialog content"
-            values={{
-              counter: selectedRowIds.length,
-              displayQuantity: <strong>{selectedRowIds.length}</strong>,
-            }}
-          />
-        </DialogContentText>
+        <FormattedMessage
+          id="O9QPe1"
+          defaultMessage="{counter,plural,one{Are you sure you want to delete this voucher?} other{Are you sure you want to delete {displayQuantity} vouchers?}}"
+          description="dialog content"
+          values={{
+            counter: selectedRowIds.length,
+            displayQuantity: <strong>{selectedRowIds.length}</strong>,
+          }}
+        />
       </ActionDialog>
       <SaveFilterTabDialog
         open={params.action === "save-search"}

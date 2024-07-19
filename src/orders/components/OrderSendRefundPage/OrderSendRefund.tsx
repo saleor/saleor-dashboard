@@ -9,7 +9,6 @@ import {
   OrderDetailsFragment,
 } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
-import {} from "@material-ui/core";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -51,7 +50,7 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
         {loading && transactions.length === 0 && (
           <>
             <DashboardCard>
-              <DashboardCard.Content className={classes.cardLoading} />
+              <DashboardCard.Content height={24} />
             </DashboardCard>
             <CardSpacer />
           </>
@@ -81,7 +80,11 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
       </DetailPageLayout.Content>
       <DetailPageLayout.RightSidebar>
         <DashboardCard>
-          <DashboardCard.Title title={<FormattedMessage {...refundPageMessages.refundBalance} />} />
+          <DashboardCard.Header>
+            <DashboardCard.Title>
+              <FormattedMessage {...refundPageMessages.refundBalance} />
+            </DashboardCard.Title>
+          </DashboardCard.Header>
           <DashboardCard.Content>
             <ul className={classes.dataList}>
               <DataLine label={<FormattedMessage {...refundPageMessages.totalCaptured} />}>
@@ -96,9 +99,11 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
             </ul>
           </DashboardCard.Content>
           <Hr />
-          <DashboardCard.Title
-            title={<FormattedMessage {...refundPageMessages.balanceAfterRequests} />}
-          />
+          <DashboardCard.Header>
+            <DashboardCard.Title>
+              <FormattedMessage {...refundPageMessages.balanceAfterRequests} />
+            </DashboardCard.Title>
+          </DashboardCard.Header>
           <DashboardCard.Content>
             {loading && <Skeleton />}
             <ul className={classes.dataList}>

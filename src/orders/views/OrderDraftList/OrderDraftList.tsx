@@ -24,7 +24,6 @@ import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import { DialogContentText } from "@material-ui/core";
 import isEqual from "lodash/isEqual";
 import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -199,17 +198,15 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         })}
         variant="delete"
       >
-        <DialogContentText>
-          <FormattedMessage
-            id="Q6VRrE"
-            defaultMessage="{counter,plural,one{Are you sure you want to delete this order draft?} other{Are you sure you want to delete {displayQuantity} order drafts?}}"
-            description="dialog content"
-            values={{
-              counter: maybe(() => selectedRowIds.length),
-              displayQuantity: <strong>{maybe(() => selectedRowIds.length)}</strong>,
-            }}
-          />
-        </DialogContentText>
+        <FormattedMessage
+          id="Q6VRrE"
+          defaultMessage="{counter,plural,one{Are you sure you want to delete this order draft?} other{Are you sure you want to delete {displayQuantity} order drafts?}}"
+          description="dialog content"
+          values={{
+            counter: maybe(() => selectedRowIds.length),
+            displayQuantity: <strong>{maybe(() => selectedRowIds.length)}</strong>,
+          }}
+        />
       </ActionDialog>
       <SaveFilterTabDialog
         open={params.action === "save-search"}

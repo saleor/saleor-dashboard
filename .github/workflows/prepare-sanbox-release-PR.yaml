@@ -16,6 +16,8 @@ jobs:
     env:
       VERSION: ${{ github.event.inputs.git_ref || github.ref_name }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v3

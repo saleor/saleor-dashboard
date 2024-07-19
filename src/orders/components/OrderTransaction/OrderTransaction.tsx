@@ -29,19 +29,18 @@ const OrderTransaction: React.FC<OrderTransactionProps> = ({
   const events = getTransactionEvents(transaction, fakeEvents);
 
   return (
-    <DashboardCard
-      // @ts-expect-error - there seems to be a TS bug when
-      // `DashboardCard.Root` prop type is extended with `BoxProps`
-      __opacity={disabled ? "0.6" : "1"}
-      data-test-id="orderTransactionsList"
-    >
-      <DashboardCard.Title>
-        <OrderTransactionCardTitle
-          transaction={transaction}
-          onTransactionAction={onTransactionAction}
-          showActions={showActions}
-        />
-      </DashboardCard.Title>
+    <DashboardCard __opacity={disabled ? "0.6" : "1"} data-test-id="orderTransactionsList">
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {
+            <OrderTransactionCardTitle
+              transaction={transaction}
+              onTransactionAction={onTransactionAction}
+              showActions={showActions}
+            />
+          }
+        </DashboardCard.Title>
+      </DashboardCard.Header>
 
       <DashboardCard.Content paddingX={0}>
         <TransactionEvents events={events} />

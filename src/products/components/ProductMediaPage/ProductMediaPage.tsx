@@ -111,7 +111,11 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
                 onRowClick={onRowClick}
               />
               <DashboardCard>
-                <DashboardCard.Title title={intl.formatMessage(messages.mediaInformation)} />
+                <DashboardCard.Header>
+                  <DashboardCard.Title>
+                    {intl.formatMessage(messages.mediaInformation)}
+                  </DashboardCard.Title>
+                </DashboardCard.Header>
                 <DashboardCard.Content>
                   <TextField
                     name="description"
@@ -128,7 +132,11 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
             </div>
             <div>
               <DashboardCard>
-                <DashboardCard.Title title={intl.formatMessage(messages.mediaView)} />
+                <DashboardCard.Header>
+                  <DashboardCard.Title>
+                    {intl.formatMessage(messages.mediaView)}
+                  </DashboardCard.Title>
+                </DashboardCard.Header>
                 <DashboardCard.Content>
                   {mediaObj ? (
                     mediaObj?.type === ProductMediaType.IMAGE ? (

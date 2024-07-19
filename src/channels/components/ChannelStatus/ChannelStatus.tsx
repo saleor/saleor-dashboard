@@ -3,8 +3,6 @@ import { Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { useStyles } from "../styles";
-
 export interface ChannelStatusProps {
   isActive: boolean;
   disabled: boolean;
@@ -17,20 +15,21 @@ export const ChannelStatus: React.FC<ChannelStatusProps> = ({
   updateChannelStatus,
 }) => {
   const intl = useIntl();
-  const classes = useStyles({});
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        {intl.formatMessage({
-          id: "TSJRiZ",
-          defaultMessage: "Channel Status",
-          description: "channel status title",
-        })}
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "TSJRiZ",
+            defaultMessage: "Channel Status",
+            description: "channel status title",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
 
       <DashboardCard.Content>
-        <Text size={2} fontWeight="light" className={classes.label}>
+        <Text fontWeight="medium" fontSize={3} color="default2">
           <FormattedMessage id="+tIkAe" defaultMessage="Status" description="status" />
         </Text>
         <Text>

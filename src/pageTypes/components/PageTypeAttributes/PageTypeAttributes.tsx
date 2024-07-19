@@ -71,22 +71,24 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
 
   return (
     <DashboardCard data-test-id="page-attributes">
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "iQxjow",
-          defaultMessage: "Content Attributes",
-          description: "section header",
-        })}
-      />
-      <DashboardCard.Toolbar>
-        <Button
-          variant="tertiary"
-          onClick={() => onAttributeAssign(AttributeTypeEnum[type])}
-          data-test-id="assign-attributes"
-        >
-          <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
-        </Button>
-      </DashboardCard.Toolbar>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "iQxjow",
+            defaultMessage: "Content Attributes",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          <Button
+            variant="tertiary"
+            onClick={() => onAttributeAssign(AttributeTypeEnum[type])}
+            data-test-id="assign-attributes"
+          >
+            <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
+          </Button>
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <ResponsiveTable>
           <colgroup>

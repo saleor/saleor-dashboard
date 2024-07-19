@@ -38,12 +38,14 @@ const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        <div className={classes.preview}>
-          <FormattedMessage {...messages.allocationStrategy} />
-          <PreviewPill />
-        </div>
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          <div className={classes.preview}>
+            <FormattedMessage {...messages.allocationStrategy} />
+            <PreviewPill />
+          </div>
+        </DashboardCard.Title>
+      </DashboardCard.Header>
 
       <DashboardCard.Content>
         <RadioGroupField
@@ -79,7 +81,7 @@ const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
                   <FormattedMessage {...option.title} />
                 </Text>
                 {option.subtitle && (
-                  <Text fontWeight="light">
+                  <Text fontWeight="medium" fontSize={3} color="default2">
                     <FormattedMessage {...option.subtitle} />
                   </Text>
                 )}

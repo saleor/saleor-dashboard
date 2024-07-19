@@ -6,7 +6,6 @@ import { WebhookErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { useExplorerPlugin } from "@graphiql/plugin-explorer";
 import { createGraphiQLFetcher } from "@graphiql/toolkit";
-import clsx from "clsx";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -49,11 +48,13 @@ const WebhookSubscriptionQuery: React.FC<WebhookSubscriptionQueryProps> = ({
 
   return (
     <DashboardCard className={classes.card}>
-      <DashboardCard.Title className={clsx(formErrors.subscriptionQuery && classes.error)}>
-        {intl.formatMessage(messages.title)}
-      </DashboardCard.Title>
-      {/* TODO */}
-      {/* subtitle={formErrors.subscriptionQuery?.message} */}
+      <DashboardCard.Header>
+        <DashboardCard.Title color={formErrors.subscriptionQuery ? "critical1" : null}>
+          {intl.formatMessage(messages.title)}
+
+          <DashboardCard.Subtitle>{formErrors.subscriptionQuery?.message}</DashboardCard.Subtitle>
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content className={classes.cardContent}>
         <GraphiQL
           data-test-id="graphiql-webhook"

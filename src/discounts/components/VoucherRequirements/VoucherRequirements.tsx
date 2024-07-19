@@ -70,13 +70,15 @@ const VoucherRequirements = ({
 
   return (
     <DashboardCard data-test-id="minimum-requirements-section">
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "yhv3HX",
-          defaultMessage: "Minimum Requirements",
-          description: "voucher requirements, header",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "yhv3HX",
+            defaultMessage: "Minimum Requirements",
+            description: "voucher requirements, header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <RadioGroupField
           choices={requirementsPickerChoices}

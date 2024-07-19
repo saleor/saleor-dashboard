@@ -28,18 +28,20 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        <Box display="flex" justifyContent="space-between">
-          {intl.formatMessage({
-            id: "dEUZg2",
-            defaultMessage: "Menu Items",
-            description: "header",
-          })}
-          <Button disabled={!canUndo} onClick={onUndo} data-test-id="undo-button">
-            <FormattedMessage {...buttonMessages.undo} />
-          </Button>
-        </Box>
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          <Box display="flex" justifyContent="space-between">
+            {intl.formatMessage({
+              id: "dEUZg2",
+              defaultMessage: "Menu Items",
+              description: "header",
+            })}
+            <Button disabled={!canUndo} onClick={onUndo} data-test-id="undo-button">
+              <FormattedMessage {...buttonMessages.undo} />
+            </Button>
+          </Box>
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Box data-test-id="menu-items-list" backgroundColor="default1" marginBottom={4}>
           {items === undefined ? (

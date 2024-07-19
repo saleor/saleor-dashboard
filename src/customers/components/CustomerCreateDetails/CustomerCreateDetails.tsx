@@ -40,13 +40,15 @@ const CustomerCreateDetails: React.FC<CustomerCreateDetailsProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "fjPWOA",
-          defaultMessage: "Customer Overview",
-          description: "header",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "fjPWOA",
+            defaultMessage: "Customer Overview",
+            description: "header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <div className={classes.root}>
           <TextField

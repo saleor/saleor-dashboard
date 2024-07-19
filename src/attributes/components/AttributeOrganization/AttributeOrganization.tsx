@@ -49,13 +49,15 @@ const AttributeOrganization: React.FC<AttributeOrganizationProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        {intl.formatMessage({
-          id: "nwvQPg",
-          defaultMessage: "Organization",
-          description: "section header",
-        })}
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "nwvQPg",
+            defaultMessage: "Organization",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
 
       <DashboardCard.Content>
         {canChangeType ? (
@@ -74,7 +76,7 @@ const AttributeOrganization: React.FC<AttributeOrganizationProps> = props => {
             label={
               <>
                 <FormattedMessage id="v1pNHW" defaultMessage="Attribute Class" />
-                <Text fontWeight="light">
+                <Text fontWeight="medium" fontSize={3}>
                   <FormattedMessage
                     id="ErNH3D"
                     defaultMessage="Define where this attribute should be used in Saleor system"

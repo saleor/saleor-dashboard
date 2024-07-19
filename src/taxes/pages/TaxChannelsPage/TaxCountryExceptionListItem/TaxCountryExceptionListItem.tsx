@@ -1,12 +1,12 @@
 // @ts-strict-ignore
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
-import SingleSelectField, { Choice } from "@dashboard/components/SingleSelectField";
+import { Select } from "@dashboard/components/Select";
 import { TaxConfigurationUpdateInput } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { LegacyFlowWarning } from "@dashboard/taxes/components";
 import { Divider } from "@material-ui/core";
 import { ListItem, ListItemCell } from "@saleor/macaw-ui";
-import { Box, Button, TrashBinIcon } from "@saleor/macaw-ui-next";
+import { Box, Button, Option, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { useStyles } from "../styles";
@@ -17,7 +17,7 @@ interface TaxCountryExceptionListItemProps {
   onDelete: () => void;
   onChange: FormChange;
   divider: boolean;
-  strategyChoices: Choice[];
+  strategyChoices: Option[];
   strategyChoicesLoading: boolean;
 }
 
@@ -46,8 +46,8 @@ export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemPr
               name={"chargeTaxes" as keyof TaxConfigurationUpdateInput}
               onChange={onChange}
             />
-            <SingleSelectField
-              choices={strategyChoices}
+            <Select
+              options={strategyChoices}
               disabled={!country.chargeTaxes || strategyChoicesLoading}
               value={country.taxCalculationStrategy}
               name={"taxCalculationStrategy" as keyof TaxConfigurationUpdateInput}

@@ -49,13 +49,15 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
 
   return (
     <DashboardCard data-test-id="value-section">
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "/oaqFS",
-          defaultMessage: "Value",
-          description: "section header",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "/oaqFS",
+            defaultMessage: "Value",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <div className={classes.tableContainer}>
           <ResponsiveTable className={classes.table}>

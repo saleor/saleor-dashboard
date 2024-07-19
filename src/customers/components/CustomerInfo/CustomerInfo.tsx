@@ -20,9 +20,6 @@ const useStyles = makeStyles(
     hr: {
       margin: theme.spacing(3, 0),
     },
-    sectionHeader: {
-      marginBottom: theme.spacing(),
-    },
   }),
   { name: "CustomerInfo" },
 );
@@ -48,17 +45,17 @@ const CustomerInfo: React.FC<CustomerInfoProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={
+      <DashboardCard.Header>
+        <DashboardCard.Title>
           <FormattedMessage
             id="4v5gfh"
             defaultMessage="Account Information"
             description="account information, header"
           />
-        }
-      />
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content className={classes.content}>
-        <Text className={classes.sectionHeader}>
+        <Text>
           <FormattedMessage {...commonMessages.generalInformations} />
         </Text>
         <Grid variant="uniform">
@@ -94,7 +91,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = props => {
           />
         </Grid>
         <Hr className={classes.hr} />
-        <Text className={classes.sectionHeader}>
+        <Text>
           <FormattedMessage
             id="SMakqb"
             defaultMessage="Contact Information"

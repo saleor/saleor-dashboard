@@ -35,23 +35,25 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        {intl.formatMessage({
-          id: "BfJGij",
-          defaultMessage: "Address Information",
-          description: "header",
-        })}
-      </DashboardCard.Title>
-      <DashboardCard.Toolbar>
-        <Button
-          data-test-id="manage-addresses"
-          disabled={disabled}
-          variant="tertiary"
-          href={manageAddressHref}
-        >
-          <FormattedMessage {...buttonMessages.manage} />
-        </Button>
-      </DashboardCard.Toolbar>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "BfJGij",
+            defaultMessage: "Address Information",
+            description: "header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          <Button
+            data-test-id="manage-addresses"
+            disabled={disabled}
+            variant="tertiary"
+            href={manageAddressHref}
+          >
+            <FormattedMessage {...buttonMessages.manage} />
+          </Button>
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       {maybe(() => customer.defaultBillingAddress.id) !==
       maybe(() => customer.defaultShippingAddress.id) ? (
         <>

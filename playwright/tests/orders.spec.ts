@@ -257,13 +257,13 @@ test("TC: SALEOR_84 Create draft order @e2e @draft", async () => {
 });
 
 test("TC: SALEOR_191 Refund products from the fully paid order @e2e @refunds", async () => {
-  const order = ORDERS.fullyPaidOrdersWithSingleTransaction.first;
+  const order = ORDERS.fullyPaidOrderWithSingleTransaction;
 
   await ordersPage.goToExistingOrderPage(order.id);
   await ordersPage.clickAddRefundButton();
   await ordersPage.orderRefundDialog.pickLineItemsRefund();
   await ordersPage.orderRefundModal.waitFor({ state: "hidden" });
-  await refundPage.expectLineItemsRefundPageOpen(order.id);
+  await refundPage.expectAddLineItemsRefundPageOpen(order.id);
   await refundPage.pickAllProductQuantityToRefund(order.lineItems[0].name);
 
   const productRow = await refundPage.getProductRow(order.lineItems[0].name);
@@ -310,4 +310,68 @@ test("TC: SALEOR_192 Should create a manual refund with a custom amount @e2e @re
   await ordersPage.goToExistingOrderPage(order.id);
   await ordersPage.orderRefundSection.waitFor({ state: "visible" });
   await ordersPage.assertRefundOnList("Manual refund");
+});
+
+const orderRefunds = ORDERS.orderWithRefundsInStatusOtherThanSuccess.refunds;
+
+for (const refund of orderRefunds) {
+  test(`TC: SALEOR_193 Update order with non-manual refund in ${refund.status} status @e2e @refunds`, async () => {
+    await ordersPage.goToExistingOrderPage(ORDERS.orderWithRefundsInStatusOtherThanSuccess.id);
+    await ordersPage.orderRefundList.scrollIntoViewIfNeeded();
+
+    const orderRefundListRow = await ordersPage.orderRefundList.locator("tr");
+    const pendingRefunds = await orderRefundListRow.filter({ hasText: "PENDING" }).all();
+
+    for (const pendingRefund of pendingRefunds) {
+      await expect(pendingRefund.locator(ordersPage.editRefundButton)).toBeDisabled();
+    }
+    await ordersPage.clickEditRefundButton(refund.status);
+    await refundPage.expectEditLineItemsRefundPageOpen(
+      ORDERS.orderWithRefundsInStatusOtherThanSuccess.id,
+      refund.id,
+    );
+    await refundPage.transferFunds();
+    await refundPage.expectSuccessBanner();
+    await expect(ordersPage.orderRefundList).not.toContainText(refund.status);
+  });
+}
+test(`TC: SALEOR_215 Inline discount is applied in a draft order @draft @discounts @e2e`, async page => {
+  test.slow();
+
+  const discountedProduct = PRODUCTS.productWithDiscountChannelPLN;
+  const productAlreadyInBasket = ORDERS.draftOrderChannelPLN.productInBasket;
+
+  await ordersPage.goToExistingOrderPage(ORDERS.draftOrderChannelPLN.id);
+  await draftOrdersPage.basketProductList.waitFor({ state: "visible" });
+
+  const initialTotal = await ordersPage.orderSummary.locator(ordersPage.totalPrice).innerText();
+
+  expect(initialTotal).toContain(productAlreadyInBasket.price.toString());
+  await draftOrdersPage.clickAddProductsButton();
+  await draftOrdersPage.addProductsDialog.searchForProductInDialog(discountedProduct.name);
+  await draftOrdersPage.addProductsDialog.selectVariantBySKU(discountedProduct.variant.sku);
+  await draftOrdersPage.addProductsDialog.clickConfirmButton();
+  await draftOrdersPage.expectElementIsHidden(draftOrdersPage.dialog);
+  await draftOrdersPage.expectElementIsHidden(draftOrdersPage.successBanner);
+
+  const calculatedDiscountForAddedProduct =
+    (await discountedProduct.variant.undiscountedPrice) -
+    (discountedProduct.variant.undiscountedPrice *
+      discountedProduct.rewardPercentageDiscountValue) /
+      100;
+
+  expect(discountedProduct.variant.discountedPrice).toEqual(calculatedDiscountForAddedProduct);
+
+  const undiscountedTotal =
+    productAlreadyInBasket.price + discountedProduct.variant.undiscountedPrice;
+
+  await ordersPage.totalPrice.waitFor({ state: "visible" });
+
+  const finalTotal = await ordersPage.orderSummary.locator(ordersPage.totalPrice).innerText();
+
+  expect(finalTotal.slice(3)).not.toContain(undiscountedTotal.toString());
+
+  const discountedTotal = productAlreadyInBasket.price + discountedProduct.variant.discountedPrice;
+
+  expect(finalTotal.slice(3)).toContain(discountedTotal.toString());
 });

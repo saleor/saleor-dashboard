@@ -13,22 +13,24 @@ const StaffPassword: React.FC<StaffPasswordProps> = ({ onChangePassword }) => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "ZhDQel",
-          defaultMessage: "Password",
-          description: "header",
-        })}
-      />
-      <DashboardCard.Toolbar>
-        <Button onClick={onChangePassword} data-test-id="changePasswordBtn">
-          <FormattedMessage
-            id="N3Zot1"
-            defaultMessage="Change your password"
-            description="button"
-          />
-        </Button>
-      </DashboardCard.Toolbar>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "ZhDQel",
+            defaultMessage: "Password",
+            description: "header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          <Button onClick={onChangePassword} data-test-id="changePasswordBtn">
+            <FormattedMessage
+              id="N3Zot1"
+              defaultMessage="Change your password"
+              description="button"
+            />
+          </Button>
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Text>
           <FormattedMessage

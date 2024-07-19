@@ -145,13 +145,15 @@ export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "0oo+BT",
-          defaultMessage: "Refunded Amount",
-          description: "section header",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "0oo+BT",
+            defaultMessage: "Refunded Amount",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content className={classes.content}>
         {type === OrderRefundType.PRODUCTS && (
           <RadioGroup

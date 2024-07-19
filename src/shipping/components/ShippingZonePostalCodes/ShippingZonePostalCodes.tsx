@@ -95,22 +95,24 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "FcTTvh",
-          defaultMessage: "Postal codes",
-          description: "postal codes, header",
-        })}
-      />
-      <DashboardCard.Toolbar>
-        <Button onClick={onPostalCodeRangeAdd} data-test-id="add-postal-code-range">
-          <FormattedMessage
-            id="1lk/oS"
-            defaultMessage="Add postal code range"
-            description="button"
-          />
-        </Button>
-      </DashboardCard.Toolbar>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "FcTTvh",
+            defaultMessage: "Postal codes",
+            description: "postal codes, header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          <Button onClick={onPostalCodeRangeAdd} data-test-id="add-postal-code-range">
+            <FormattedMessage
+              id="1lk/oS"
+              defaultMessage="Add postal code range"
+              description="button"
+            />
+          </Button>
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       <DashboardCard.Content className={clsx(classes.radioContainer)}>
         <RadioGroupField
           alignTop

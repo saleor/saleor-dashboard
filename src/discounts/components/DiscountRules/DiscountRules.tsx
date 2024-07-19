@@ -92,12 +92,14 @@ export const DiscountRules = <ErrorCode,>({
       disabled={disabled}
     >
       <DashboardCard marginBottom={20}>
-        <DashboardCard.Title>
-          <Box display="flex" justifyContent="space-between" alignItems="center">
-            {intl.formatMessage(messages.title)}
-            <AddButton onClick={() => setIsModalOpen(true)} />
-          </Box>
-        </DashboardCard.Title>
+        <DashboardCard.Header>
+          <DashboardCard.Title>
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+              {intl.formatMessage(messages.title)}
+              <AddButton onClick={() => setIsModalOpen(true)} />
+            </Box>
+          </DashboardCard.Title>
+        </DashboardCard.Header>
         <DashboardCard.Content data-test-id="rule-list">
           <RulesList
             loading={!isLoaded || ruleConditionsValues.loading}

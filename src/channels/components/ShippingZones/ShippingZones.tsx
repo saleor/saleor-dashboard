@@ -36,7 +36,9 @@ const ShippingZones: React.FC<ShippingZonesProps> = props => {
 
   return (
     <DashboardCard data-test-id="shipping-zones-section">
-      <DashboardCard.Title>{intl.formatMessage(sectionNames.shippingZones)}</DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(sectionNames.shippingZones)}</DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Text>{intl.formatMessage(messages.subtitle)}</Text>
       </DashboardCard.Content>

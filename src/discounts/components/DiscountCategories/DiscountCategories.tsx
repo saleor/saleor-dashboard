@@ -45,12 +45,16 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
 
   return (
     <DashboardCard data-test-id="assign-category-section">
-      <DashboardCard.Title title={intl.formatMessage(messages.discountCategoriesHeader)} />
-      <DashboardCard.Toolbar>
-        <Button onClick={onCategoryAssign} data-test-id="assign-category-button">
-          <FormattedMessage {...messages.discountCategoriesButton} />
-        </Button>
-      </DashboardCard.Toolbar>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(messages.discountCategoriesHeader)}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          <Button onClick={onCategoryAssign} data-test-id="assign-category-button">
+            <FormattedMessage {...messages.discountCategoriesButton} />
+          </Button>
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       <ResponsiveTable>
         <colgroup>
           <col />

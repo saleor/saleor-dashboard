@@ -33,13 +33,15 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "Egyh2T",
-          defaultMessage: "Plugin Settings",
-          description: "section header",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "Egyh2T",
+            defaultMessage: "Plugin Settings",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         {data.configuration.map(field => {
           const fieldData = fields.find(configField => configField.name === field.name);

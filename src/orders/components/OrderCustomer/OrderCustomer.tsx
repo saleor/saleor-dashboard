@@ -88,27 +88,29 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "Y7M1YQ",
-          defaultMessage: "Customer",
-          description: "section header",
-        })}
-      />
-      <DashboardCard.Toolbar>
-        {!!canEditCustomer && (
-          <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
-            <Button
-              data-test-id="edit-customer"
-              variant="tertiary"
-              disabled={!onCustomerEdit}
-              onClick={toggleEditMode}
-            >
-              {intl.formatMessage(buttonMessages.edit)}
-            </Button>
-          </RequirePermissions>
-        )}
-      </DashboardCard.Toolbar>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "Y7M1YQ",
+            defaultMessage: "Customer",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          {!!canEditCustomer && (
+            <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
+              <Button
+                data-test-id="edit-customer"
+                variant="tertiary"
+                disabled={!onCustomerEdit}
+                onClick={toggleEditMode}
+              >
+                {intl.formatMessage(buttonMessages.edit)}
+              </Button>
+            </RequirePermissions>
+          )}
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         {user === undefined ? (
           <Skeleton />

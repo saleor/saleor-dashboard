@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import {} from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
@@ -68,7 +67,9 @@ const ProductMediaNavigation: React.FC<ProductMediaNavigationProps> = props => {
 
   return (
     <DashboardCard className={classes.card}>
-      <DashboardCard.Title title={intl.formatMessage(messages.allMedia)} />
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(messages.allMedia)}</DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         {!media ? (
           <Skeleton />

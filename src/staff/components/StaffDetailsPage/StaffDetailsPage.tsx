@@ -128,13 +128,15 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                   />
                   <CardSpacer />
                   <DashboardCard>
-                    <DashboardCard.Title
-                      title={intl.formatMessage({
-                        id: "Fbr4Vp",
-                        defaultMessage: "Permissions",
-                        description: "dialog header",
-                      })}
-                    />
+                    <DashboardCard.Header>
+                      <DashboardCard.Title>
+                        {intl.formatMessage({
+                          id: "Fbr4Vp",
+                          defaultMessage: "Permissions",
+                          description: "dialog header",
+                        })}
+                      </DashboardCard.Title>
+                    </DashboardCard.Header>
                     <DashboardCard.Content>
                       <Text>
                         {intl.formatMessage({

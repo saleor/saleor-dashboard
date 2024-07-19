@@ -1,6 +1,5 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { DialogContentText } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -36,15 +35,13 @@ const AttributeUnassignDialog: React.FC<AttributeUnassignDialogProps> = ({
       title={title}
       confirmButtonLabel={intl.formatMessage(messages.confirmBtn)}
     >
-      <DialogContentText>
-        <FormattedMessage
-          {...messages.content}
-          values={{
-            attributeName: <strong>{attributeName}</strong>,
-            itemTypeName: <strong>{itemTypeName}</strong>,
-          }}
-        />
-      </DialogContentText>
+      <FormattedMessage
+        {...messages.content}
+        values={{
+          attributeName: <strong>{attributeName}</strong>,
+          itemTypeName: <strong>{itemTypeName}</strong>,
+        }}
+      />
     </ActionDialog>
   );
 };

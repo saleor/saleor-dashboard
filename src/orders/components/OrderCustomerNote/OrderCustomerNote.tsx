@@ -12,13 +12,15 @@ export const OrderCustomerNote: React.FC<OrderCustomerNoteProps> = ({ note }) =>
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "puALFo",
-          defaultMessage: "Notes",
-          description: "notes about customer, header",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "puALFo",
+            defaultMessage: "Notes",
+            description: "notes about customer, header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         {note === undefined ? (
           <Skeleton />

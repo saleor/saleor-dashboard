@@ -51,9 +51,13 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        className={classes.cardTitle}
-        title={
+      <DashboardCard.Header>
+        <DashboardCard.Title
+          className={classes.cardTitle}
+          display="flex"
+          flexDirection="column"
+          gap={2}
+        >
           <>
             {maybe<React.ReactNode>(() => customer.email, <Skeleton />)}
             {customer && customer.dateJoined ? (
@@ -71,8 +75,8 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
               <Skeleton style={{ width: "10rem" }} />
             )}
           </>
-        }
-      />
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content className={classes.content}>
         <ControlledCheckbox
           data-test-id="customer-active-checkbox"

@@ -1,5 +1,4 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import {} from "@material-ui/core";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -14,7 +13,9 @@ const GiftCardUpdateInfoCard: React.FC = () => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title title={intl.formatMessage(messages.title)} />
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(messages.title)}</DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         {loading ? <Skeleton /> : <GiftCardUpdateInfoCardContent />}
       </DashboardCard.Content>

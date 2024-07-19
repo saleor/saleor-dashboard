@@ -42,13 +42,15 @@ export const PricingCard: React.FC<PricingCardProps> = ({
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "TnTi/a",
-          defaultMessage: "Pricing",
-          description: "pricing card title",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "TnTi/a",
+            defaultMessage: "Pricing",
+            description: "pricing card title",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content className={classes.pricingContent}>
         <ResponsiveTable className={classes.table}>
           <TableHead colSpan={numberOfColumns} disabled={disabled} items={[]}>

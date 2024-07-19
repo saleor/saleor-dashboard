@@ -47,7 +47,9 @@ export const ShippingZoneSettingsCard: React.FC<ShippingZoneSettingsCardProps> =
 
   return (
     <DashboardCard>
-      <DashboardCard.Title title={intl.formatMessage(messages.title)} />
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(messages.title)}</DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content data-test-id="channel-section">
         <ChannelsSection
           onChange={onChannelChange}

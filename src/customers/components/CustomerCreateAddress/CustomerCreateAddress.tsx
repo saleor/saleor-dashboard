@@ -38,13 +38,15 @@ const CustomerCreateAddress: React.FC<CustomerCreateAddressProps> = props => {
 
   return (
     <DashboardCard className={classes.overflow}>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "jGGnSZ",
-          defaultMessage: "Primary Address",
-          description: "page header",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "jGGnSZ",
+            defaultMessage: "Primary Address",
+            description: "page header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content className={classes.overflow}>
         <Text>
           <FormattedMessage id="wNQzS/" defaultMessage="The primary address of this customer." />

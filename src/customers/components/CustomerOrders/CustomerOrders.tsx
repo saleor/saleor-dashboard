@@ -47,18 +47,20 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "1LiVhv",
-          defaultMessage: "Recent Orders",
-          description: "section header",
-        })}
-      />
-      <DashboardCard.Toolbar>
-        <Button variant="tertiary" href={viewAllHref}>
-          <FormattedMessage id="3+990c" defaultMessage="View all orders" description="button" />
-        </Button>
-      </DashboardCard.Toolbar>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "1LiVhv",
+            defaultMessage: "Recent Orders",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          <Button variant="tertiary" href={viewAllHref}>
+            <FormattedMessage id="3+990c" defaultMessage="View all orders" description="button" />
+          </Button>
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       <ResponsiveTable>
         <TableHead>
           <TableRowLink>

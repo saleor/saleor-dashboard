@@ -48,12 +48,17 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
 
   return (
     <DashboardCard data-test-id="assign-product-section">
-      <DashboardCard.Title title={intl.formatMessage(messages.discountProductsHeader)} />
-      <DashboardCard.Toolbar>
-        <Button onClick={onProductAssign} data-test-id="assign-products">
-          <FormattedMessage {...messages.discountProductsButton} />
-        </Button>
-      </DashboardCard.Toolbar>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(messages.discountProductsHeader)}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          <Button onClick={onProductAssign} data-test-id="assign-products">
+            <FormattedMessage {...messages.discountProductsButton} />
+          </Button>
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
+
       <ResponsiveTable>
         <colgroup>
           <col />

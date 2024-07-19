@@ -59,7 +59,11 @@ const ProductTypeDetails: React.FC<ProductTypeDetailsProps> = props => {
 
   return (
     <DashboardCard className={classes.root}>
-      <DashboardCard.Title title={intl.formatMessage(commonMessages.generalInformations)} />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <TextField
           disabled={disabled}

@@ -39,13 +39,15 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "vWapBZ",
-          defaultMessage: "Order Weight",
-          description: "card title",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "vWapBZ",
+            defaultMessage: "Order Weight",
+            description: "card title",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <ControlledCheckbox
           data-test-id="order-weight-checkbox"

@@ -49,7 +49,7 @@ import {
   createPreorderEndDateChangeHandler,
   getChannelsInput,
 } from "@dashboard/products/utils/handlers";
-import { validateVariantData } from "@dashboard/products/utils/validation";
+import { validateProductVariant } from "@dashboard/products/utils/validation";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
@@ -263,12 +263,12 @@ function useProductVariantCreateForm(
     ),
   });
   const handleSubmit = async (data: ProductVariantCreateData) => {
-    const errors = validateVariantData(data);
+    const validationProductErrors = validateProductVariant(data, intl);
 
-    setValidationErrors(errors);
+    setValidationErrors(validationProductErrors);
 
-    if (errors.length) {
-      return errors;
+    if (validationProductErrors.length > 0) {
+      return validationProductErrors;
     }
 
     return onSubmit(data);

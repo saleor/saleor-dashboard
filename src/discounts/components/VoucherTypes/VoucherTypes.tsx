@@ -5,7 +5,6 @@ import { DiscountTypeEnum } from "@dashboard/discounts/types";
 import { DiscountErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
-import {} from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -50,13 +49,15 @@ const VoucherTypes = ({ data, disabled, errors, onChange }: VoucherTypesProps) =
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "6cq+c+",
-          defaultMessage: "Discount Type",
-          description: "header",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "6cq+c+",
+            defaultMessage: "Discount Type",
+            description: "header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Grid variant="uniform">
           <RadioGroupField

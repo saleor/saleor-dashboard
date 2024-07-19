@@ -24,7 +24,11 @@ const PageTypeDetails: React.FC<PageTypeDetailsProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title title={intl.formatMessage(commonMessages.generalInformations)} />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <TextField
           disabled={disabled}

@@ -32,13 +32,15 @@ const SaleValue: React.FC<SaleValueProps> = ({ data, disabled, errors, onChange 
 
   return (
     <DashboardCard>
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "wHdMAX",
-          defaultMessage: "Value",
-          description: "sale value, header",
-        })}
-      />
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "wHdMAX",
+            defaultMessage: "Value",
+            description: "sale value, header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <ResponsiveTable className={classes.table}>
         <colgroup>
           <col />

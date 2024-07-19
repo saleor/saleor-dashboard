@@ -3,59 +3,21 @@ import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
+import { DashboardModal } from "@dashboard/components/Modal";
 import Money from "@dashboard/components/Money";
-import { SingleSelectField } from "@dashboard/components/SingleSelectField";
+import { Select } from "@dashboard/components/Select";
 import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import { buttonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Box, Option, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface FormData {
   shippingMethod: string;
 }
-
-const useStyles = makeStyles(
-  theme => ({
-    dialog: {
-      overflowY: "visible",
-    },
-    menuItem: {
-      display: "flex",
-      width: "100%",
-      flexWrap: "wrap",
-    },
-    price: {
-      marginRight: theme.spacing(3),
-    },
-    root: {
-      overflowY: "visible",
-      width: theme.breakpoints.values.sm,
-      margin: 0,
-      padding: theme.spacing(3),
-    },
-    shippingMethodName: {
-      flex: 1,
-      overflowX: "hidden",
-      textOverflow: "ellipsis",
-    },
-    message: {
-      width: "100%",
-    },
-  }),
-  { name: "OrderShippingMethodEditDialog" },
-);
 
 export interface OrderShippingMethodEditDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -77,7 +39,6 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
     onClose,
     onSubmit,
   } = props;
-  const classes = useStyles(props);
   const errors = useModalDialogErrors(apiErrors, open);
   const intl = useIntl();
   const formFields = ["shippingMethod"];
@@ -87,18 +48,21 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
     ? shippingMethods
         .map(s => ({
           label: (
-            <div className={classes.menuItem}>
-              <span className={classes.shippingMethodName}>{s.name}</span>
-              &nbsp;
-              <span className={classes.price}>
+            <Box display="flex" width="100%" gap={3}>
+              <Box as="span" __flex={1} overflow="hidden" textOverflow="ellipsis">
+                {s.name}
+              </Box>
+
+              <Box>
                 <Money money={s.price} />
-              </span>
+              </Box>
+
               {!s.active && (
-                <Text className={classes.message} size={2} fontWeight="light">
+                <Text color="defaultDisabled" size={2} fontWeight="light">
                   {s.message}
                 </Text>
               )}
-            </div>
+            </Box>
           ),
           disabled: !s.active,
           value: s.id,
@@ -110,52 +74,69 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
   };
 
   return (
-    <Dialog onClose={onClose} open={open} classes={{ paper: classes.dialog }}>
-      <DialogTitle disableTypography>
-        <FormattedMessage
-          id="V/YxJa"
-          defaultMessage="Edit Shipping Method"
-          description="dialog header"
-        />
-      </DialogTitle>
+    <DashboardModal onChange={onClose} open={open}>
       <Form initial={initialForm} onSubmit={onSubmit}>
-        {({ change, data }) => (
+        {({ change, data, submit }) => (
           <>
-            <DialogContent className={classes.root}>
-              <SingleSelectField
-                choices={choices}
+            <DashboardModal.Content __width={600}>
+              <DashboardModal.Title>
+                <FormattedMessage
+                  id="V/YxJa"
+                  defaultMessage="Edit Shipping Method"
+                  description="dialog header"
+                />
+              </DashboardModal.Title>
+
+              <Select
+                options={choices as unknown as Option[]}
                 error={!!formErrors.shippingMethod}
-                hint={getOrderErrorMessage(formErrors.shippingMethod, intl)}
+                helperText={getOrderErrorMessage(formErrors.shippingMethod, intl)}
                 name="shippingMethod"
+                data-test-id="shipping-method-select"
                 value={data.shippingMethod}
-                onChange={change}
+                onChange={({ target }) => {
+                  const value = target.value;
+                  const isDisabled = choices.find(({ value }) => value === value)?.disabled;
+
+                  if (isDisabled) {
+                    return;
+                  }
+
+                  change({
+                    target: {
+                      name: "shippingMethod",
+                      value: typeof value === "string" ? value : (value as Option)?.value,
+                    },
+                  });
+                }}
               />
               {nonFieldErrors.length > 0 && (
                 <>
                   <FormSpacer />
                   {nonFieldErrors.map((err, index) => (
-                    <DialogContentText color="error" key={index}>
+                    <Text color="critical1" key={index}>
                       {getOrderErrorMessage(err, intl)}
-                    </DialogContentText>
+                    </Text>
                   ))}
                 </>
               )}
-            </DialogContent>
-            <DialogActions>
-              <BackButton onClick={onClose} />
-              <ConfirmButton
-                data-test-id="confirm-button"
-                transitionState={confirmButtonState}
-                type="submit"
-                disabled={!data.shippingMethod}
-              >
-                <FormattedMessage {...buttonMessages.confirm} />
-              </ConfirmButton>
-            </DialogActions>
+
+              <DashboardModal.Actions>
+                <BackButton onClick={onClose} />
+                <ConfirmButton
+                  data-test-id="confirm-button"
+                  transitionState={confirmButtonState}
+                  onClick={submit}
+                  disabled={!data.shippingMethod}
+                >
+                  <FormattedMessage {...buttonMessages.confirm} />
+                </ConfirmButton>
+              </DashboardModal.Actions>
+            </DashboardModal.Content>
           </>
         )}
       </Form>
-    </Dialog>
+    </DashboardModal>
   );
 };
 

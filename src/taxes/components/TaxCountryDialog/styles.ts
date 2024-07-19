@@ -9,17 +9,6 @@ export const useStyles = makeStyles(
       overflowX: "visible",
       padding: 0,
     },
-    scrollable: {
-      display: "flex",
-      flexDirection: "column",
-      overflowY: "scroll",
-      maxHeight: "60vh",
-      marginLeft: -15,
-      paddingLeft: 15,
-    },
-    dialog: {
-      maxHeight: "unset",
-    },
   }),
   { name: "TaxCountryDialog" },
 );

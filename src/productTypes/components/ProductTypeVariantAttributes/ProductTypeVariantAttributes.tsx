@@ -119,22 +119,24 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
 
   return (
     <DashboardCard data-test-id="variant-attributes">
-      <DashboardCard.Title
-        title={intl.formatMessage({
-          id: "skEK/i",
-          defaultMessage: "Variant Attributes",
-          description: "section header",
-        })}
-      />
-      <DashboardCard.Toolbar>
-        <Button
-          data-test-id={testId}
-          variant="tertiary"
-          onClick={() => onAttributeAssign(ProductAttributeType[type])}
-        >
-          <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
-        </Button>
-      </DashboardCard.Toolbar>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "skEK/i",
+            defaultMessage: "Variant Attributes",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          <Button
+            data-test-id={testId}
+            variant="tertiary"
+            onClick={() => onAttributeAssign(ProductAttributeType[type])}
+          >
+            <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
+          </Button>
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <ResponsiveTable>
           <colgroup>

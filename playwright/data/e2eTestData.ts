@@ -37,13 +37,13 @@ export const ATTRIBUTES = {
     },
   ],
   attributeTypesWithAbilityToAddValues: {
-    names: ["DROPDOWN", "MULTISELECT", "SWATCH"],
+    names: ["Dropdown", "Multiple Select", "Swatch"],
   },
   attributeTypesWithoutAbilityToAddValues: {
-    names: ["FILE", "NUMERIC", "RICH_TEXT", "PLAIN_TEXT", "BOOLEAN", "DATE", "DATE_TIME"],
+    names: ["File", "Numeric", "Rich Text", "Plain Text", "Boolean", "Date", "Date Time"],
   },
   attributeReferencesEntities: {
-    names: ["PAGE", "PRODUCT", "PRODUCT_VARIANT"],
+    names: ["Page", "Product", "Product Variant"],
   },
   attributeToBeAssignedToPageType: {
     name: "Attribute to be assigned to page type",
@@ -404,11 +404,30 @@ export const PRODUCTS = {
       "a product to be deleted via bulk 3/3",
     ],
   },
+  productWithDiscountChannelPLN: {
+    id: "UHJvZHVjdDo3NzA=",
+    name: "e2e-do-not-touch",
+    rewardPercentageDiscountValue: 40,
+    variant: {
+      id: "UHJvZHVjdFZhcmlhbnQ6MTIzOQ==",
+      sku: "TEST-123",
+      undiscountedPrice: 100,
+      discountedPrice: 60,
+    },
+  },
 };
 
 export const ORDERS = {
   draftOrdersToBeDeleted: {
     ids: ["#3266", "#3265"],
+  },
+  draftOrderChannelPLN: {
+    id: "T3JkZXI6Zjg0NTk3N2EtM2Y3Yy00NDY3LWI3N2MtZDY0ZjhhMDU2MmQy",
+    productInBasket: {
+      name: "Black Hoodie",
+      price: 20,
+      variantId: "UHJvZHVjdFZhcmlhbnQ6Mjk3",
+    },
   },
   ordersWithinTransactionFlow: {
     markAsPaidOrder: {
@@ -432,21 +451,15 @@ export const ORDERS = {
   orderNotFulfilledToChangeShippingAddress: {
     id: "T3JkZXI6ZWFhZjA0MzgtNzkyYi00ZTdlLWIyODUtMTBkMjViMjM0MzRk",
   },
-  fullyPaidOrdersWithSingleTransaction: {
-    first: {
-      id: "T3JkZXI6ZjZjZWUxMzItNDk2Zi00MWUyLWJkNTItYTk1MDM1YTVlZmVm",
-      lineItems: [
-        {
-          name: "Bean Juice",
-          quantity: "1",
-        },
-        { name: "Lake Tunes", quantity: "2" },
-      ],
-    },
-    second: {
-      id: "T3JkZXI6YzI4YjFmYmEtZWU1NS00YmU5LTg5MjktNTMyYzk5MDlkZGVk",
-      lineItems: ["Blue Hoodie 2", "Black Hoodie", "Mustard Hoodie", "White Hoodie"],
-    },
+  fullyPaidOrderWithSingleTransaction: {
+    id: "T3JkZXI6ZjZjZWUxMzItNDk2Zi00MWUyLWJkNTItYTk1MDM1YTVlZmVm",
+    lineItems: [
+      {
+        name: "Bean Juice",
+        quantity: "1",
+      },
+      { name: "Lake Tunes", quantity: "2" },
+    ],
   },
   fullyPaidOrderWithSeveralTransactions: {
     id: "T3JkZXI6MTVhYTEwMzYtZWE3OS00MzJiLTliODctNDhlYTMwYmU1NmNl",
@@ -455,6 +468,25 @@ export const ORDERS = {
   },
   partiallyPaidOrder: {
     id: "T3JkZXI6NmVlMDMwMTctZTViOS00OGNmLWFkYTQtODg4YTQ5MDI3ZjNk",
+  },
+  orderWithRefundsInStatusOtherThanSuccess: {
+    id: "T3JkZXI6YzI4YjFmYmEtZWU1NS00YmU5LTg5MjktNTMyYzk5MDlkZGVk",
+    lineItems: [
+      { name: "Blue Hoodie 2", quantity: "1" },
+      { name: "Black Hoodie", quantity: "1" },
+      { name: "Mustard Hoodie", quantity: "1" },
+      { name: "White Hoodie", quantity: "1" },
+    ],
+    refunds: [
+      {
+        id: "T3JkZXJHcmFudGVkUmVmdW5kOjEw",
+        status: "FAILURE",
+      },
+      {
+        id: "T3JkZXJHcmFudGVkUmVmdW5kOjg%3D",
+        status: "DRAFT",
+      },
+    ],
   },
   orderWithRefunds: {
     id: "T3JkZXI6Y2YyY2EwNWYtZmQ3Yy00ODk5LThjZTktMzQ4NjYxYThjZDkx",
