@@ -67,6 +67,9 @@ jobs:
 
           aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev-load-test2/static/"
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev-load-test2/"
+
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev-data-test/static/"
+          aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev-data-test/"
         env:
           DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_DEV_DEPLOYMENT_BUCKET }}
 
