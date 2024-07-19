@@ -6,7 +6,6 @@ import { FormChange } from "@dashboard/hooks/useForm";
 import { FetchMoreProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
-import { makeStyles } from "@saleor/macaw-ui";
 import { Option, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
