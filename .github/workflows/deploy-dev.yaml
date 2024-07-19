@@ -4,7 +4,9 @@ on:
     inputs:
       git_ref:
         description: Git ref (tag, branch or commit hash) to deploy
+        type: string
         required: true
+        default: main
 
 jobs:
   build:
@@ -27,6 +29,9 @@ jobs:
       IS_CLOUD_INSTANCE: true
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.git_ref }}
+
       - name: Set custom version
         run: |
           HASH=$(git rev-parse --short HEAD)
