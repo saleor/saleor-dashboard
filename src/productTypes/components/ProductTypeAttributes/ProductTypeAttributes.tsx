@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { attributeUrl } from "@dashboard/attributes/urls";
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -12,7 +12,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { AttributeFragment, ProductAttributeType } from "@dashboard/graphql";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { ListActions, ReorderAction } from "@dashboard/types";
-import { Card, CardContent, TableCell } from "@material-ui/core";
+import { TableCell } from "@material-ui/core";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -73,14 +73,16 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card data-test-id="product-attributes">
-      <CardTitle
-        title={intl.formatMessage({
-          id: "9scTQ0",
-          defaultMessage: "Product Attributes",
-          description: "section header",
-        })}
-        toolbar={
+    <DashboardCard data-test-id="product-attributes">
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "9scTQ0",
+            defaultMessage: "Product Attributes",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <Button
             disabled={disabled}
             data-test-id={testId}
@@ -89,9 +91,9 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
           >
             <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
           </Button>
-        }
-      />
-      <CardContent>
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <ResponsiveTable>
           <colgroup>
             <col className={classes.colGrab} />
@@ -178,8 +180,8 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
             )}
           </SortableTableBody>
         </ResponsiveTable>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

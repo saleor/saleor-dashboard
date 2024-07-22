@@ -4,7 +4,9 @@ on:
     inputs:
       git_ref:
         description: Git ref (tag, branch or commit hash) to deploy
+        type: string
         required: true
+        default: main
 
 jobs:
   build:
@@ -27,6 +29,9 @@ jobs:
       IS_CLOUD_INSTANCE: true
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.git_ref }}
+
       - name: Set custom version
         run: |
           HASH=$(git rev-parse --short HEAD)
@@ -61,6 +66,15 @@ jobs:
 
           aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev2/static/"
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev2/"
+
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev-load-test/static/"
+          aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev-load-test/"
+
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev-load-test2/static/"
+          aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev-load-test2/"
+
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev-data-test/static/"
+          aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev-data-test/"
         env:
           DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_DEV_DEPLOYMENT_BUCKET }}
 

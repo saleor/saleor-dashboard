@@ -1,9 +1,9 @@
 // @ts-strict-ignore
 import AddressEdit from "@dashboard/components/AddressEdit";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
 import { AccountErrorFragment } from "@dashboard/graphql";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Option } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -37,15 +37,17 @@ const CustomerCreateAddress: React.FC<CustomerCreateAddressProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card className={classes.overflow}>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "jGGnSZ",
-          defaultMessage: "Primary Address",
-          description: "page header",
-        })}
-      />
-      <CardContent className={classes.overflow}>
+    <DashboardCard className={classes.overflow}>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "jGGnSZ",
+            defaultMessage: "Primary Address",
+            description: "page header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content className={classes.overflow}>
         <Typography>
           <FormattedMessage id="wNQzS/" defaultMessage="The primary address of this customer." />
         </Typography>
@@ -61,8 +63,8 @@ const CustomerCreateAddress: React.FC<CustomerCreateAddressProps> = props => {
             onCountryChange={onCountryChange}
           />
         </Box>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

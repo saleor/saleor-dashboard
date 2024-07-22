@@ -1,12 +1,12 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
 import Skeleton from "@dashboard/components/Skeleton";
 import { AccountErrorFragment, CustomerDetailsQuery } from "@dashboard/graphql";
 import { maybe } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
-import { Card, CardContent, TextField, Typography } from "@material-ui/core";
+import { TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import moment from "moment-timezone";
 import React from "react";
@@ -50,30 +50,31 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
   const formErrors = getFormErrors(["note"], errors);
 
   return (
-    <Card>
-      <CardTitle
-        className={classes.cardTitle}
-        title={
-          <>
-            {maybe<React.ReactNode>(() => customer.email, <Skeleton />)}
-            {customer && customer.dateJoined ? (
-              <Typography className={classes.subtitle} variant="caption" component="div">
-                <FormattedMessage
-                  id="MjUyhA"
-                  defaultMessage="Active member since {date}"
-                  description="section subheader"
-                  values={{
-                    date: moment(customer.dateJoined).format("MMM YYYY"),
-                  }}
-                />
-              </Typography>
-            ) : (
-              <Skeleton style={{ width: "10rem" }} />
-            )}
-          </>
-        }
-      />
-      <CardContent className={classes.content}>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title className={classes.cardTitle}>
+          {
+            <>
+              {maybe<React.ReactNode>(() => customer.email, <Skeleton />)}
+              {customer && customer.dateJoined ? (
+                <Typography className={classes.subtitle} variant="caption" component="div">
+                  <FormattedMessage
+                    id="MjUyhA"
+                    defaultMessage="Active member since {date}"
+                    description="section subheader"
+                    values={{
+                      date: moment(customer.dateJoined).format("MMM YYYY"),
+                    }}
+                  />
+                </Typography>
+              ) : (
+                <Skeleton style={{ width: "10rem" }} />
+              )}
+            </>
+          }
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content className={classes.content}>
         <ControlledCheckbox
           data-test-id="customer-active-checkbox"
           checked={data.isActive}
@@ -103,8 +104,8 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
           value={data.note}
           onChange={onChange}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

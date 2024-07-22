@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import IconButtonTableCell from "@dashboard/components/IconButtonTableCell";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
@@ -13,7 +14,7 @@ import { maybe, renderCollection } from "@dashboard/misc";
 import { MenuListUrlSortField, menuUrl } from "@dashboard/navigation/urls";
 import { ListActions, ListProps, SortPage } from "@dashboard/types";
 import { getArrowDirection } from "@dashboard/utils/sort";
-import { Card, TableBody, TableCell, TableFooter } from "@material-ui/core";
+import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -65,7 +66,7 @@ const MenuList: React.FC<MenuListProps> = props => {
   const classes = useStyles(props);
 
   return (
-    <Card>
+    <DashboardCard>
       <ResponsiveTable>
         <TableHead
           colSpan={numberOfColumns}
@@ -161,7 +162,7 @@ const MenuList: React.FC<MenuListProps> = props => {
           )}
         </TableBody>
       </ResponsiveTable>
-    </Card>
+    </DashboardCard>
   );
 };
 

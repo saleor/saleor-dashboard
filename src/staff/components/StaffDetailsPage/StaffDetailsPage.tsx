@@ -1,8 +1,8 @@
 // @ts-strict-ignore
 import AccountPermissionGroups from "@dashboard/components/AccountPermissionGroups";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import CardTitle from "@dashboard/components/CardTitle";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -21,7 +21,7 @@ import UserStatus from "@dashboard/staff/components/UserStatus";
 import { staffListUrl } from "@dashboard/staff/urls";
 import { getMemberPermissionGroups, isMemberActive } from "@dashboard/staff/utils";
 import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -128,15 +128,17 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                     onChange={change}
                   />
                   <CardSpacer />
-                  <Card>
-                    <CardTitle
-                      title={intl.formatMessage({
-                        id: "Fbr4Vp",
-                        defaultMessage: "Permissions",
-                        description: "dialog header",
-                      })}
-                    />
-                    <CardContent>
+                  <DashboardCard>
+                    <DashboardCard.Header>
+                      <DashboardCard.Title>
+                        {intl.formatMessage({
+                          id: "Fbr4Vp",
+                          defaultMessage: "Permissions",
+                          description: "dialog header",
+                        })}
+                      </DashboardCard.Title>
+                    </DashboardCard.Header>
+                    <DashboardCard.Content>
                       <Typography>
                         {intl.formatMessage({
                           id: "P+kVxW",
@@ -155,8 +157,8 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                         onSearchChange={onSearchChange}
                         {...fetchMorePermissionGroups}
                       />
-                    </CardContent>
-                  </Card>
+                    </DashboardCard.Content>
+                  </DashboardCard>
                 </>
               )}
             </DetailPageLayout.RightSidebar>

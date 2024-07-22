@@ -1,9 +1,9 @@
 // @ts-strict-ignore
+import { DashboardCard } from "@dashboard/components/Card";
 import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
 import TrashIcon from "@dashboard/icons/Trash";
 import { orderHasTransactions } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
-import { CardContent } from "@material-ui/core";
 import { IconButton } from "@saleor/macaw-ui";
 import { Box, Divider } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -90,10 +90,10 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
           </Box>
         }
       />
-      <CardContent>
+      <DashboardCard.Content>
         <OrderDetailsDatagrid lines={getLines()} loading={false} onShowMetadata={onShowMetadata} />
         <ExtraInfoLines fulfillment={fulfillment} />
-      </CardContent>
+      </DashboardCard.Content>
       {props.children}
       <Divider />
     </Box>

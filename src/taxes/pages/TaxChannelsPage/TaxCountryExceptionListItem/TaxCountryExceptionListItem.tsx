@@ -39,20 +39,22 @@ export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemPr
           {!strategyChoicesLoading && (
             <LegacyFlowWarning taxCalculationStrategy={country.taxCalculationStrategy} />
           )}
-          <Box display="flex">
+          <Box display="flex" alignItems="center">
             <ControlledCheckbox
               className={classes.center}
               checked={country.chargeTaxes}
               name={"chargeTaxes" as keyof TaxConfigurationUpdateInput}
               onChange={onChange}
             />
-            <Select
-              options={strategyChoices}
-              disabled={!country.chargeTaxes || strategyChoicesLoading}
-              value={country.taxCalculationStrategy}
-              name={"taxCalculationStrategy" as keyof TaxConfigurationUpdateInput}
-              onChange={onChange}
-            />
+            <Box width="100%">
+              <Select
+                options={strategyChoices}
+                disabled={!country.chargeTaxes || strategyChoicesLoading}
+                value={country.taxCalculationStrategy}
+                name={"taxCalculationStrategy" as keyof TaxConfigurationUpdateInput}
+                onChange={onChange}
+              />
+            </Box>
           </Box>
         </ListItemCell>
         <ListItemCell className={classes.center} data-test-id="display-gross-prices-checkbox">

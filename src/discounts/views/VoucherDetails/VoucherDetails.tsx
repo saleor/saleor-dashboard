@@ -55,7 +55,6 @@ import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
-import { DialogContentText } from "@material-ui/core";
 import React, { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -504,17 +503,15 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
         })}
       >
         {canOpenBulkActionDialog && (
-          <DialogContentText>
-            <FormattedMessage
-              id="GiJm1v"
-              defaultMessage="{counter,plural,one{Are you sure you want to unassign this category?} other{Are you sure you want to unassign {displayQuantity} categories?}}"
-              description="dialog content"
-              values={{
-                counter: params.ids.length,
-                displayQuantity: <strong>{params.ids.length}</strong>,
-              }}
-            />
-          </DialogContentText>
+          <FormattedMessage
+            id="GiJm1v"
+            defaultMessage="{counter,plural,one{Are you sure you want to unassign this category?} other{Are you sure you want to unassign {displayQuantity} categories?}}"
+            description="dialog content"
+            values={{
+              counter: params.ids.length,
+              displayQuantity: <strong>{params.ids.length}</strong>,
+            }}
+          />
         )}
       </ActionDialog>
       <ActionDialog
@@ -534,17 +531,15 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
         })}
       >
         {canOpenBulkActionDialog && (
-          <DialogContentText>
-            <FormattedMessage
-              id="UjoSZB"
-              defaultMessage="{counter,plural,one{Are you sure you want to unassign this collection?} other{Are you sure you want to unassign {displayQuantity} collections?}}"
-              description="dialog content"
-              values={{
-                counter: params.ids.length,
-                displayQuantity: <strong>{params.ids.length}</strong>,
-              }}
-            />
-          </DialogContentText>
+          <FormattedMessage
+            id="UjoSZB"
+            defaultMessage="{counter,plural,one{Are you sure you want to unassign this collection?} other{Are you sure you want to unassign {displayQuantity} collections?}}"
+            description="dialog content"
+            values={{
+              counter: params.ids.length,
+              displayQuantity: <strong>{params.ids.length}</strong>,
+            }}
+          />
         )}
       </ActionDialog>
       <ActionDialog
@@ -564,17 +559,15 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
         })}
       >
         {canOpenBulkActionDialog && (
-          <DialogContentText>
-            <FormattedMessage
-              id="AHK0K9"
-              defaultMessage="{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
-              description="dialog content"
-              values={{
-                counter: params.ids.length,
-                displayQuantity: <strong>{params.ids.length}</strong>,
-              }}
-            />
-          </DialogContentText>
+          <FormattedMessage
+            id="AHK0K9"
+            defaultMessage="{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
+            description="dialog content"
+            values={{
+              counter: params.ids.length,
+              displayQuantity: <strong>{params.ids.length}</strong>,
+            }}
+          />
         )}
       </ActionDialog>
       <ActionDialog
@@ -593,16 +586,14 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
           })
         }
       >
-        <DialogContentText>
-          <FormattedMessage
-            id="NEJo1I"
-            defaultMessage="Are you sure you want to delete {voucherCode}?"
-            description="dialog content"
-            values={{
-              voucherCode: <strong>{maybe(() => data.voucher.name, "...")}</strong>,
-            }}
-          />
-        </DialogContentText>
+        <FormattedMessage
+          id="NEJo1I"
+          defaultMessage="Are you sure you want to delete {voucherCode}?"
+          description="dialog content"
+          values={{
+            voucherCode: <strong>{maybe(() => data.voucher.name, "...")}</strong>,
+          }}
+        />
       </ActionDialog>
     </PaginatorContext.Provider>
   );

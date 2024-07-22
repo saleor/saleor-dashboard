@@ -150,7 +150,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
   };
 
   return (
-    <table className={classes.root}>
+    <table data-test-id="order-summary" className={classes.root}>
       <tbody>
         <tr className={classes.relativeRow}>
           <td>

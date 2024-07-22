@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import Debounce from "@dashboard/components/Debounce";
+import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { OrderFulfillLineFragment, WarehouseFragment } from "@dashboard/graphql";
@@ -9,9 +10,6 @@ import { getLineAvailableQuantityInWarehouse } from "@dashboard/orders/utils/dat
 import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import {
-  Dialog,
-  DialogActions,
-  DialogContent,
   FormControlLabel,
   InputAdornment,
   Radio,
@@ -22,14 +20,12 @@ import {
 } from "@material-ui/core";
 import {
   Button,
-  DialogHeader,
   DialogTable,
   isScrolledToBottom,
-  isScrolledToTop,
-  ScrollShadow,
   SearchIcon,
   useElementScroll,
 } from "@saleor/macaw-ui";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -54,7 +50,6 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
   const classes = useStyles();
   const intl = useIntl();
   const { anchor, position, setAnchor } = useElementScroll();
-  const topShadow = !isScrolledToTop(anchor, position, 20);
   const bottomShadow = !isScrolledToBottom(anchor, position, 20);
   const [query, setQuery] = React.useState<string>("");
   const [selectedWarehouseId, setSelectedWarehouseId] = React.useState<string | null>(null);
@@ -94,101 +89,106 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
   }, [bottomShadow]);
 
   return (
-    <Dialog fullWidth open={open} onClose={onClose}>
-      <ScrollShadow variant="top" show={topShadow}>
-        <DialogHeader onClose={onClose}>
-          <FormattedMessage {...messages.dialogTitle} />
-        </DialogHeader>
+    <DashboardModal open={open} onChange={onClose}>
+      <DashboardModal.Content __width={DASHBOARD_MODAL_WIDTH}>
+        <DashboardModal.Title>
+          <Box display="flex" justifyContent="space-between">
+            <FormattedMessage {...messages.dialogTitle} />
+            <DashboardModal.Close onClose={onClose} />
+          </Box>
 
-        <DialogContent className={classes.container}>
-          <FormattedMessage
-            {...messages.dialogDescription}
-            values={{
-              productName: line?.productName,
-            }}
-          />
-          <Debounce debounceFn={search}>
-            {debounceSearchChange => {
-              const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-                const value = event.target.value;
+          <Text size={3}>
+            <FormattedMessage
+              {...messages.dialogDescription}
+              values={{
+                productName: line?.productName,
+              }}
+            />
+          </Text>
+        </DashboardModal.Title>
 
-                setQuery(value);
-                debounceSearchChange(value);
-              };
+        <Debounce debounceFn={search}>
+          {debounceSearchChange => {
+            const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+              const value = event.target.value;
 
-              return (
-                <TextField
-                  className={classes.searchBox}
-                  value={query}
-                  variant="outlined"
-                  onChange={handleSearchChange}
-                  placeholder={intl.formatMessage(messages.searchFieldPlaceholder)}
-                  fullWidth
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                  inputProps={{ className: classes.searchInput }}
-                />
-              );
-            }}
-          </Debounce>
+              setQuery(value);
+              debounceSearchChange(value);
+            };
 
-          <Typography className={classes.supportHeader}>
-            <FormattedMessage {...messages.warehouseListLabel} />
-          </Typography>
-        </DialogContent>
-      </ScrollShadow>
+            return (
+              <TextField
+                value={query}
+                variant="outlined"
+                onChange={handleSearchChange}
+                placeholder={intl.formatMessage(messages.searchFieldPlaceholder)}
+                fullWidth
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                }}
+                inputProps={{ className: classes.searchInput }}
+              />
+            );
+          }}
+        </Debounce>
 
-      <DialogTable ref={setAnchor}>
-        {filteredWarehouses ? (
-          <RadioGroup
-            value={selectedWarehouseId}
-            onChange={handleChange}
-            className={classes.tableBody}
-          >
-            {filteredWarehouses.map(warehouse => {
-              const lineQuantityInWarehouse = getLineAvailableQuantityInWarehouse(line, warehouse);
+        <Typography className={classes.supportHeader}>
+          <FormattedMessage {...messages.warehouseListLabel} />
+        </Typography>
 
-              return (
-                <TableRowLink key={warehouse.id}>
-                  <TableCell className={classes.tableCell}>
-                    <FormControlLabel
-                      value={warehouse.id}
-                      control={<Radio color="primary" />}
-                      label={
-                        <div className={classes.radioLabelContainer}>
-                          <span className={classes.warehouseName}>{warehouse.name}</span>
-                          <Typography className={classes.supportText}>
-                            <FormattedMessage
-                              {...messages.productAvailability}
-                              values={{
-                                productCount: lineQuantityInWarehouse,
-                              }}
-                            />
-                          </Typography>
-                        </div>
-                      }
-                    />
-                    {currentWarehouseId === warehouse?.id && (
-                      <Typography className={classes.helpText}>
-                        <FormattedMessage {...messages.currentSelection} />
-                      </Typography>
-                    )}
-                  </TableCell>
-                </TableRowLink>
-              );
-            })}
-          </RadioGroup>
-        ) : (
-          <Skeleton />
-        )}
-      </DialogTable>
-      <ScrollShadow variant="bottom" show={bottomShadow}>
-        <DialogActions>
+        <DialogTable ref={setAnchor}>
+          {filteredWarehouses ? (
+            <RadioGroup
+              value={selectedWarehouseId}
+              onChange={handleChange}
+              className={classes.tableBody}
+            >
+              {filteredWarehouses.map(warehouse => {
+                const lineQuantityInWarehouse = getLineAvailableQuantityInWarehouse(
+                  line,
+                  warehouse,
+                );
+
+                return (
+                  <TableRowLink key={warehouse.id}>
+                    <TableCell className={classes.tableCell}>
+                      <FormControlLabel
+                        value={warehouse.id}
+                        control={<Radio color="primary" />}
+                        label={
+                          <div className={classes.radioLabelContainer}>
+                            <span className={classes.warehouseName}>{warehouse.name}</span>
+                            <Typography className={classes.supportText}>
+                              <FormattedMessage
+                                {...messages.productAvailability}
+                                values={{
+                                  productCount: lineQuantityInWarehouse,
+                                }}
+                              />
+                            </Typography>
+                          </div>
+                        }
+                      />
+                      {currentWarehouseId === warehouse?.id && (
+                        <Typography className={classes.helpText}>
+                          <FormattedMessage {...messages.currentSelection} />
+                        </Typography>
+                      )}
+                    </TableCell>
+                  </TableRowLink>
+                );
+              })}
+            </RadioGroup>
+          ) : (
+            <Skeleton />
+          )}
+        </DialogTable>
+
+        <DashboardModal.Actions>
           <Button
             onClick={handleSubmit}
             color="primary"
@@ -197,9 +197,9 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
           >
             {intl.formatMessage(buttonMessages.select)}
           </Button>
-        </DialogActions>
-      </ScrollShadow>
-    </Dialog>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 OrderChangeWarehouseDialog.displayName = "OrderChangeWarehouseDialog";

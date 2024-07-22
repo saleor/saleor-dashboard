@@ -86,13 +86,15 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        {intl.formatMessage({
-          id: "JjeZEG",
-          defaultMessage: "Organize Product",
-          description: "section header",
-        })}
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "JjeZEG",
+            defaultMessage: "Organize Product",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content gap={2} display="flex" flexDirection="column">
         {canChangeType ? (
           <Combobox

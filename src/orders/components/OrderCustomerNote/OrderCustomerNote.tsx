@@ -1,6 +1,6 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import Skeleton from "@dashboard/components/Skeleton";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -12,15 +12,17 @@ export const OrderCustomerNote: React.FC<OrderCustomerNoteProps> = ({ note }) =>
   const intl = useIntl();
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "puALFo",
-          defaultMessage: "Notes",
-          description: "notes about customer, header",
-        })}
-      />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "puALFo",
+            defaultMessage: "Notes",
+            description: "notes about customer, header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         {note === undefined ? (
           <Skeleton />
         ) : note === "" ? (
@@ -30,8 +32,8 @@ export const OrderCustomerNote: React.FC<OrderCustomerNoteProps> = ({ note }) =>
         ) : (
           <Typography>{note}</Typography>
         )}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 export default OrderCustomerNote;

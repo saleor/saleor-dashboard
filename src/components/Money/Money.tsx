@@ -32,7 +32,7 @@ export const Money: React.FC<MoneyProps> = props => {
   }
 
   return (
-    <span className={classes.root} {...rest}>
+    <span data-test-id="money-value" className={classes.root} {...rest}>
       <span className={classes.currency}>{money.currency}</span>
       {formatMoneyAmount(money, locale)}
     </span>

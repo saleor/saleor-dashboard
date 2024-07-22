@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Grid from "@dashboard/components/Grid";
 import Hr from "@dashboard/components/Hr";
@@ -10,7 +10,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { TranslationField, TranslationFieldType } from "@dashboard/translations/types";
 import { ListProps } from "@dashboard/types";
 import { OutputData } from "@editorjs/editorjs";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import ArrowIcon from "@material-ui/icons/ArrowDropDown";
 import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
@@ -120,10 +120,10 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
   const [expanded, setExpandedState] = React.useState(initialState);
 
   return (
-    <Card>
-      <CardTitle
-        title={title}
-        toolbar={
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{title}</DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <IconButton variant="secondary" onClick={() => setExpandedState(!expanded)}>
             <ArrowIcon
               className={clsx({
@@ -131,10 +131,10 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
               })}
             />
           </IconButton>
-        }
-      />
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       {expanded ? (
-        <CardContent className={classes.cardContent}>
+        <DashboardCard.Content className={classes.cardContent}>
           <Grid className={classes.grid} variant="uniform">
             <Typography className={classes.columnHeader} variant="body1">
               <FormattedMessage id="Xtd0AT" defaultMessage="Original String" />
@@ -238,9 +238,9 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
               component="div"
             />
           )}
-        </CardContent>
+        </DashboardCard.Content>
       ) : (
-        <CardContent>
+        <DashboardCard.Content>
           <Typography className={classes.cardCaption} variant="caption">
             <FormattedMessage
               id="bh+Keo"
@@ -254,9 +254,9 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
               }}
             />
           </Typography>
-        </CardContent>
+        </DashboardCard.Content>
       )}
-    </Card>
+    </DashboardCard>
   );
 };
 

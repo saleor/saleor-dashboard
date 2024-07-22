@@ -1,10 +1,10 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
 import { AccountErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
-import { Card, CardContent, TextField, Typography } from "@material-ui/core";
+import { TextField, Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -28,15 +28,17 @@ const CustomerCreateNote: React.FC<CustomerCreateNoteProps> = ({
   const formErrors = getFormErrors(["note"], errors);
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "qNcoRY",
-          defaultMessage: "Notes",
-          description: "notes about customer header",
-        })}
-      />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "qNcoRY",
+            defaultMessage: "Notes",
+            description: "notes about customer header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <Typography>
           <FormattedMessage
             id="w3sGrD"
@@ -60,8 +62,8 @@ const CustomerCreateNote: React.FC<CustomerCreateNoteProps> = ({
           value={data.note}
           onChange={onChange}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

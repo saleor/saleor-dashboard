@@ -1,18 +1,11 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
+import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import CardTitle from "@dashboard/components/CardTitle";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Hr from "@dashboard/components/Hr";
 import { OrderDetailsFragment, OrderErrorFragment, OrderRefundDataQuery } from "@dashboard/graphql";
-import {
-  Card,
-  CardContent,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  Typography,
-} from "@material-ui/core";
+import { FormControlLabel, Radio, RadioGroup, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
@@ -150,15 +143,17 @@ export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
   const disableRefundButton = shouldRefundButtonBeDisabled();
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "0oo+BT",
-          defaultMessage: "Refunded Amount",
-          description: "section header",
-        })}
-      />
-      <CardContent className={classes.content}>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "0oo+BT",
+            defaultMessage: "Refunded Amount",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content className={classes.content}>
         {type === OrderRefundType.PRODUCTS && (
           <RadioGroup
             value={data.amountCalculationMode}
@@ -317,8 +312,8 @@ export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
             isReturn ? messages.returnCannotBeFulfilled : messages.refundCannotBeFulfilled,
           )}
         </Typography>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 PaymentSubmitCard.displayName = "PaymentSubmitCard";

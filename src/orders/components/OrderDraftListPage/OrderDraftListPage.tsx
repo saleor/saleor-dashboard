@@ -1,11 +1,11 @@
 // @ts-strict-ignore
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { DashboardCard } from "@dashboard/components/Card";
 import { OrderDraftListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
 import { OrderDraftListUrlSortField } from "@dashboard/orders/urls";
 import { FilterPagePropsWithPresets, PageListProps, RelayToFlat, SortPage } from "@dashboard/types";
 import { isLimitReached } from "@dashboard/utils/limits";
-import { Card } from "@material-ui/core";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
@@ -75,7 +75,7 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
 
       {limitsReached && <OrderLimitReached />}
 
-      <Card>
+      <DashboardCard>
         <Box
           display="flex"
           flexDirection="column"
@@ -114,7 +114,7 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
           hasRowHover={!isFilterPresetOpen}
           {...listProps}
         />
-      </Card>
+      </DashboardCard>
     </>
   );
 };

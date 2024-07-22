@@ -1,9 +1,10 @@
 // @ts-strict-ignore
+import { DashboardCard } from "@dashboard/components/Card";
 import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
 import Skeleton from "@dashboard/components/Skeleton";
 import { PluginsDetailsFragment } from "@dashboard/graphql";
 import { isPluginGlobal } from "@dashboard/plugins/views/utils";
-import { CardContent, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -42,17 +43,17 @@ const PluginDetailsChannelsCardContent: React.FC<PluginDetailsChannelsCardProps>
 
   if (!plugin) {
     return (
-      <CardContent>
+      <DashboardCard.Content>
         <Skeleton />
-      </CardContent>
+      </DashboardCard.Content>
     );
   }
 
   if (isPluginGlobal(plugin.globalConfiguration)) {
     return (
-      <CardContent>
+      <DashboardCard.Content>
         <FormattedMessage {...messages.noChannelsSubtitle} />
-      </CardContent>
+      </DashboardCard.Content>
     );
   }
 
@@ -70,9 +71,9 @@ const PluginDetailsChannelsCardContent: React.FC<PluginDetailsChannelsCardProps>
             onClick={() => setSelectedChannelId(channel.id)}
           >
             {isChannelSelected(channel.id) && <div className={classes.itemActiveIndicator}></div>}
-            <CardContent>
+            <DashboardCard.Content>
               <Typography>{channel.name}</Typography>
-            </CardContent>
+            </DashboardCard.Content>
           </div>
         )}
       />

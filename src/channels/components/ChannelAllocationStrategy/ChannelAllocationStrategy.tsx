@@ -1,10 +1,10 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import PreviewPill from "@dashboard/components/PreviewPill";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
 import { AllocationStrategyEnum, StockSettingsInput } from "@dashboard/graphql";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
-import { Tooltip } from "@saleor/macaw-ui-next";
+import { Text, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -38,16 +38,17 @@ const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
   const classes = useStyles();
 
   return (
-    <Card>
-      <CardTitle
-        title={
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
           <div className={classes.preview}>
             <FormattedMessage {...messages.allocationStrategy} />
             <PreviewPill />
           </div>
-        }
-      />
-      <CardContent>
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+
+      <DashboardCard.Content>
         <RadioGroupField
           label={
             <Typography>
@@ -77,13 +78,13 @@ const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
                 className={classes.option}
                 data-test-id={`channel-allocation-strategy-option-${option.type}`}
               >
-                <Typography variant="body1">
+                <Text>
                   <FormattedMessage {...option.title} />
-                </Typography>
+                </Text>
                 {option.subtitle && (
-                  <Typography color="textSecondary" variant="caption">
+                  <Text fontWeight="medium" fontSize={3} color="default2">
                     <FormattedMessage {...option.subtitle} />
-                  </Typography>
+                  </Text>
                 )}
               </div>
             ),
@@ -94,8 +95,8 @@ const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
           value={data?.allocationStrategy!}
           onChange={onChange}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 
