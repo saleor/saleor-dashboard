@@ -3,6 +3,7 @@ import { permissions } from "@data/userPermissions";
 import { AppDetailsPage } from "@pages/appDetailsPage";
 import { AppPage } from "@pages/appPageThirdparty";
 import { AppsPage } from "@pages/appsPage";
+import { HomePage } from "@pages/homePage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { expect, test } from "@playwright/test";
 
@@ -14,14 +15,16 @@ for (const permission of permissionList) {
   test(`TC: SALEOR_131 User with ${permission} permissions should have readonly access to Apps @e2e @appp`, async ({
     page,
   }) => {
+    const home = new HomePage(page);
     const mainMenuPage = new MainMenuPage(page);
     const appsPage = new AppsPage(page);
     const appPage = new AppPage(page);
     const appDetailsPage = new AppDetailsPage(page);
 
-    await page.goto(URL_LIST.homePage);
-    await mainMenuPage.waitForNetworkIdleAfterAction(() => mainMenuPage.openApps());
-    await mainMenuPage.waitForDOMToFullyLoad();
+    await home.goto();
+    await home.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });
+    await mainMenuPage.openApps();
+
     await expect(appsPage.installExternalAppButton).not.toBeVisible();
 
     const appLists = [
@@ -34,9 +37,9 @@ for (const permission of permissionList) {
       await appsPage.waitForDOMToFullyLoad();
       await expect(appList).toBeVisible();
     }
-    await appsPage.waitForNetworkIdleAfterAction(() => appsPage.installedAppRow.first().click());
+    await appsPage.installedAppRow.first().click();
     await expect(appPage.appSettingsButton).toBeVisible();
-    await appsPage.waitForNetworkIdleAfterAction(() => appPage.appSettingsButton.click());
+    await appPage.appSettingsButton.click();
     await expect(appDetailsPage.appDetailsSection).toBeVisible();
 
     const buttons = [

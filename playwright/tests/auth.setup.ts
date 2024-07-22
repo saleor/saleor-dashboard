@@ -14,19 +14,22 @@ const authenticateAndSaveState = async (
 ) => {
   const basicApiService = new BasicApiService(request);
 
-  await basicApiService.logInUserViaApi({ email, password });
+  const loginResponse = await basicApiService.logInUserViaApi({ email, password });
 
   const loginJsonInfo = await request.storageState();
 
-  loginJsonInfo.origins.push({
-    origin: process.env.BASE_URL!,
-    localStorage: [
-      {
-        name: "_saleorRefreshToken",
-        value: loginJsonInfo.cookies[0].value,
-      },
-    ],
-  });
+  loginJsonInfo.origins = [
+    {
+      origin: process.env.BASE_URL!,
+      localStorage: [
+        {
+          name: "_saleorRefreshToken",
+          value: loginResponse.data.tokenCreate.refreshToken,
+        },
+      ],
+    },
+  ];
+
   fs.writeFileSync(filePath, JSON.stringify(loginJsonInfo, null, 2));
 };
 const authSetup = async (
@@ -43,9 +46,7 @@ const authSetup = async (
 
   const tempFilePath = path.join(tempDir, fileName);
 
-  if (!fs.existsSync(tempFilePath)) {
-    await authenticateAndSaveState(request, email, password, tempFilePath);
-  }
+  await authenticateAndSaveState(request, email, password, tempFilePath);
 };
 
 setup("Authenticate as admin via API", async ({ request }) => {
@@ -57,11 +58,12 @@ setup("Authenticate as admin via API", async ({ request }) => {
   );
 });
 
-const user: UserPermissionType = USER_PERMISSION;
-const password: string = process.env.E2E_PERMISSIONS_USERS_PASSWORD!;
+setup("Authenticate permission users via API", async ({ request }) => {
+  for (const permission of permissions) {
+    const email = USER_PERMISSION[permission];
+    const password = process.env.E2E_PERMISSIONS_USERS_PASSWORD!;
+    const fileName = `${permission}.json`;
 
-for (const permission of permissions) {
-  setup(`Authenticate as ${permission} user via API`, async ({ request }) => {
-    await authSetup(request, user[permission], password, `${permission}.json`);
-  });
-}
+    await authSetup(request, email, password, fileName);
+  }
+});
