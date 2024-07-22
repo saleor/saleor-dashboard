@@ -20,6 +20,7 @@ export const SentryAdapter = (config: Config): TrackerMethods => {
           "ResizeObserver loop completed with undelivered notifications",
           // TODO: rmoeve after Cypress migation
           "ResizeObserver loop limit exceeded",
+          "Cannot read properties of undefined (reading 'holder')",
         ],
       });
 
