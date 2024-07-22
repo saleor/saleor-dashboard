@@ -1,10 +1,10 @@
 // @ts-strict-ignore
-import { Typography, TypographyProps } from "@material-ui/core";
+import { Text, TextProps } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { useManualTransactionContext } from "../context";
 
-export const ErrorText: React.FC<TypographyProps> = props => {
+export const ErrorText: React.FC<TextProps> = props => {
   const { error } = useManualTransactionContext();
 
   if (!error) {
@@ -12,8 +12,8 @@ export const ErrorText: React.FC<TypographyProps> = props => {
   }
 
   return (
-    <Typography color="error" variant="body2" {...props}>
+    <Text color="critical1" fontSize={3} {...props}>
       {error}
-    </Typography>
+    </Text>
   );
 };

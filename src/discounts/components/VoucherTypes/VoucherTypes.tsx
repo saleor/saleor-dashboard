@@ -5,7 +5,6 @@ import { DiscountTypeEnum } from "@dashboard/discounts/types";
 import { DiscountErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
-import {} from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 

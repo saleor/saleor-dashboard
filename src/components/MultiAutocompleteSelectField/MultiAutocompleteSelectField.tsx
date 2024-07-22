@@ -2,9 +2,10 @@
 import Debounce, { DebounceProps } from "@dashboard/components/Debounce";
 import { fuzzySearch } from "@dashboard/misc";
 import { FetchMoreProps } from "@dashboard/types";
-import { Popper, PopperPlacementType, TextField, Typography } from "@material-ui/core";
+import { Popper, PopperPlacementType, TextField } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { ChevronIcon, IconButton } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import Downshift, { ControllerStateAndHelpers } from "downshift";
 import React from "react";
@@ -223,7 +224,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<
             id={`selected-option-${value.label}`}
           >
             <div className={!value.disabled ? classes.chipInner : classes.disabledChipInner}>
-              <Typography className={classes.chipLabel}>{value.label}</Typography>
+              <Text className={classes.chipLabel}>{value.label}</Text>
 
               <IconButton
                 hoverOutline={false}

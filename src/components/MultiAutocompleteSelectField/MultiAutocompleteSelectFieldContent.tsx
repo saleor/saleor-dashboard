@@ -4,9 +4,10 @@ import Checkbox from "@dashboard/components/Checkbox";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import useElementScroll, { isScrolledToBottom } from "@dashboard/hooks/useElementScroll";
 import { FetchMoreProps } from "@dashboard/types";
-import { CircularProgress, MenuItem, Paper, Typography } from "@material-ui/core";
+import { CircularProgress, MenuItem, Paper } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { GetItemPropsOptions } from "downshift";
 import React, { ReactNode } from "react";
@@ -209,7 +210,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<
                 onClick={add.onClick}
               >
                 <AddIcon color="primary" className={classes.addIcon} />
-                <Typography color="primary">{add.label}</Typography>
+                <Text color="default1">{add.label}</Text>
               </MenuItem>
             )}
             {displayCustomValue && (

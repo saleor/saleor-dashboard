@@ -1,7 +1,6 @@
-import Skeleton from "@dashboard/components/Skeleton";
 import { PermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage";
 import { Checkbox, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 

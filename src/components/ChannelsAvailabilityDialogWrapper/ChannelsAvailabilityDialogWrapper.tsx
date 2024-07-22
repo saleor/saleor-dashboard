@@ -1,8 +1,9 @@
 import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
 import Hr from "@dashboard/components/Hr";
 import Label from "@dashboard/orders/components/OrderHistory/Label";
-import { TextField, Typography } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -105,9 +106,9 @@ export const ChannelsAvailabilityContentWrapper: React.FC<ChannelsAvailabilityCo
   return (
     <div className={classes.content}>
       {!!contentType && (
-        <Typography className={classes.text} variant="caption">
+        <Text className={classes.text} size={2} fontWeight="light">
           <FormattedMessage {...messages.selectTitle} />
-        </Typography>
+        </Text>
       )}
       <TextField
         name="query"
@@ -134,9 +135,9 @@ export const ChannelsAvailabilityContentWrapper: React.FC<ChannelsAvailabilityCo
             <Hr />
           </>
         )}
-        <Typography className={classes.contentTitle}>
+        <Text className={classes.contentTitle}>
           <FormattedMessage {...messages.channelsAlphabeticallyTitle} />
-        </Typography>
+        </Text>
         <div
           className={classes.scrollArea}
           data-test-id="manage-products-channels-availiability-list"

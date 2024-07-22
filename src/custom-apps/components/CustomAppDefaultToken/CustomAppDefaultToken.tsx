@@ -2,9 +2,10 @@ import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import useClipboard from "@dashboard/hooks/useClipboard";
-import { Paper, Typography } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { IconButton } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -27,13 +28,13 @@ const CustomAppDefaultToken: React.FC<CustomAppDefaultTokenProps> = props => {
       <DashboardCard.Content>
         <div className={classes.content}>
           <div>
-            <Typography>
+            <Text>
               <FormattedMessage
                 id="ixjvkM"
                 defaultMessage="We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
               />
-            </Typography>
-            <Typography>
+            </Text>
+            <Text>
               <FormattedMessage
                 id="DGCzal"
                 defaultMessage="This token gives you access to your shop's API, which you'll find here: {url}"
@@ -45,7 +46,7 @@ const CustomAppDefaultToken: React.FC<CustomAppDefaultTokenProps> = props => {
                   ),
                 }}
               />
-            </Typography>
+            </Text>
           </div>
           <div className={classes.closeContainer}>
             <IconButton variant="secondary" onClick={onTokenClose}>
@@ -54,10 +55,10 @@ const CustomAppDefaultToken: React.FC<CustomAppDefaultTokenProps> = props => {
           </div>
         </div>
         <Paper className={classes.paper} elevation={0}>
-          <Typography variant="caption">
+          <Text size={2} fontWeight="light">
             <FormattedMessage id="Kxiige" defaultMessage="Generated Token" />
-          </Typography>
-          <Typography>{token}</Typography>
+          </Text>
+          <Text>{token}</Text>
           <Button className={classes.copy} onClick={() => copy(token)}>
             {copied ? (
               <FormattedMessage id="r86alc" defaultMessage="Copied" description="button" />

@@ -1,7 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
 import { AttributeTypeEnum } from "@dashboard/graphql";
-import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -77,7 +76,7 @@ const AttributeOrganization: React.FC<AttributeOrganizationProps> = props => {
             label={
               <>
                 <FormattedMessage id="v1pNHW" defaultMessage="Attribute Class" />
-                <Text fontWeight="medium" fontSize={3}>
+                <Text fontWeight="medium" fontSize={3} display="block">
                   <FormattedMessage
                     id="ErNH3D"
                     defaultMessage="Define where this attribute should be used in Saleor system"
@@ -91,14 +90,14 @@ const AttributeOrganization: React.FC<AttributeOrganizationProps> = props => {
           />
         ) : (
           <>
-            <Typography className={classes.label} variant="caption">
+            <Text className={classes.label} size={2} fontWeight="light" display="block">
               <FormattedMessage id="v1pNHW" defaultMessage="Attribute Class" />
-            </Typography>
-            <Typography>
+            </Text>
+            <Text>
               {data.type === AttributeTypeEnum.PRODUCT_TYPE
                 ? intl.formatMessage(messages.productAttribute)
                 : intl.formatMessage(messages.contentAttribute)}
-            </Typography>
+            </Text>
           </>
         )}
       </DashboardCard.Content>

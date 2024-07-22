@@ -8,7 +8,6 @@ import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import { Savebar } from "@dashboard/components/Savebar";
-import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import {
   FulfillOrderMutation,
@@ -36,7 +35,7 @@ import {
   OrderFulfillLineFormData,
 } from "@dashboard/orders/utils/data";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Box, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

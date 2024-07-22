@@ -2,8 +2,8 @@
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import { CollectionFragment } from "@dashboard/graphql";
 import ScrollableContent from "@dashboard/plugins/components/PluginsList/PluginAvailabilityStatusPopup/ScrollableContent";
-import { Typography } from "@material-ui/core";
 import { PillColor } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 
@@ -29,17 +29,17 @@ export const ChannelsAvailabilityMenuContent: React.FC<ChannelsAvailabilityMenuC
   return (
     <div className={classes.menuContainer}>
       <div className={classes.row}>
-        <Typography variant="caption" className={classes.caption}>
+        <Text size={2} fontWeight="light" className={classes.caption}>
           {intl.formatMessage(messages.channel)}
-        </Typography>
-        <Typography variant="caption" className={classes.caption}>
+        </Text>
+        <Text size={2} fontWeight="light" className={classes.caption}>
           {intl.formatMessage(messages.status)}
-        </Typography>
+        </Text>
       </div>
       <ScrollableContent>
         {pills.map(pill => (
           <div key={pill.channel.id} className={classes.row}>
-            <Typography>{pill.channel.name}</Typography>
+            <Text>{pill.channel.name}</Text>
             <HorizontalSpacer spacing={4} />
             <Pill label={intl.formatMessage(pill.label)} color={pill.color} />
           </div>

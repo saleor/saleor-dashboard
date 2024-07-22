@@ -1,5 +1,4 @@
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
@@ -13,6 +12,7 @@ import { WarehouseListUrlSortField, warehouseUrl } from "@dashboard/warehouses/u
 import { TableBody, TableCell, TableFooter, TableHead } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

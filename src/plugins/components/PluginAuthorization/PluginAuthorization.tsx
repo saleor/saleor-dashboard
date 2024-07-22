@@ -4,8 +4,8 @@ import Hr from "@dashboard/components/Hr";
 import { ConfigurationItemFragment, ConfigurationTypeFieldEnum } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { isSecretField } from "@dashboard/plugins/utils";
-import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -57,11 +57,15 @@ const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
               {field.type === ConfigurationTypeFieldEnum.SECRET ||
               field.type === ConfigurationTypeFieldEnum.SECRETMULTILINE ? (
                 <div>
-                  <Typography variant="body1">{field.label}</Typography>
-                  {field.value !== null && <Typography>**** {field.value}</Typography>}
+                  <Text size={4} fontWeight="regular">
+                    {field.label}
+                  </Text>
+                  {field.value !== null && <Text>**** {field.value}</Text>}
                 </div>
               ) : (
-                <Typography variant="body1">{field.label}</Typography>
+                <Text size={4} fontWeight="regular">
+                  {field.label}
+                </Text>
               )}
               <div className={classes.spacer} />
               {field.value === null ? (

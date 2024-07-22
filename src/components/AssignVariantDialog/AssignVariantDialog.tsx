@@ -18,8 +18,8 @@ import {
   TableBody,
   TableCell,
   TextField,
-  Typography,
 } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -199,11 +199,11 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                   </React.Fragment>
                 ),
                 () => (
-                  <Typography className={classes.noContentText}>
+                  <Text className={classes.noContentText}>
                     {query
                       ? intl.formatMessage(messages.noProductsInQuery)
                       : intl.formatMessage(messages.noProductsInChannel)}
-                  </Typography>
+                  </Text>
                 ),
               )}
             </TableBody>

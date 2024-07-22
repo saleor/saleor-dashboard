@@ -3,7 +3,7 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import useClipboard from "@dashboard/hooks/useClipboard";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { buttonMessages } from "@dashboard/intl";
-import { Typography } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -31,10 +31,10 @@ const GiftCardCreateDialogCodeContent: React.FC<GiftCardCreateDialogCodeContentP
 
   return (
     <>
-      <Typography>{intl.formatMessage(messages.createdGiftCardLabel)}</Typography>
-      <Typography variant="h6" color="textSecondary" data-test-id="cardCode">
+      <Text>{intl.formatMessage(messages.createdGiftCardLabel)}</Text>
+      <Text fontWeight="bold" lineHeight={2} color="default2" data-test-id="cardCode">
         {cardCode}
-      </Typography>
+      </Text>
 
       <DashboardModal.Actions>
         <Button onClick={onCopyCode} data-test-id="copy-code-button">
