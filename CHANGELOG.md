@@ -1,5 +1,21 @@
 # Changelog
 
+## 3.20.2
+
+### Patch Changes
+
+- fd36e8e08: From now dashboard will be deployed to load test services in dev cloud
+- 6f45d4435: Drop legacy Dialog and replace it with new macaw Dialog component in action dialogs,
+  order change warehouse dialog, order payment dialog, add staff member dialog,
+  staff user password restart dialog, tax select country dialog.
+- 5b8262d72: Button for adding new refund now has a shorter label
+- a565113e6: Fix custom ref checkout in dev deployment CI workflow
+- 9f10e1bdb: Dashboard no longer uses Typography and Skeleton from Material. These components were replaced with MacawUI ones
+- 088842b70: You can run E2E tests for inline discounts in draft orders
+- a77ff9f9e: You can now see tax dropdown taking full width
+- 15d5b8747: Saleor Dashboard no longer uses MUI Card component, it uses DashboardCard instead.
+- 5a1025570: Add new service to dev deployment CI workflow
+
 ## 3.20.1
 
 ### Patch Changes
