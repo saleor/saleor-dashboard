@@ -2,8 +2,8 @@ import { defineMessages } from "react-intl";
 
 export const refundGridMessages = defineMessages({
   addNewRefund: {
-    defaultMessage: "Add new refund",
-    id: "4XRIV5",
+    defaultMessage: "New refund",
+    id: "QslFl8",
     description: "add new refund button",
   },
   refundSection: {
