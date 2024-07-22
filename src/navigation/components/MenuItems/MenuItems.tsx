@@ -1,9 +1,8 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import Skeleton from "@dashboard/components/Skeleton";
 import { buttonMessages } from "@dashboard/intl";
 import { RecursiveMenuItem } from "@dashboard/navigation/types";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton } from "@saleor/macaw-ui-next";
 import React, { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

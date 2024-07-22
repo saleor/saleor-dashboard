@@ -2,8 +2,8 @@ import DefaultCardTitle from "@dashboard/components/CardTitle";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import { FulfillmentStatus } from "@dashboard/graphql";
 import { StatusType } from "@dashboard/types";
-import { Typography } from "@material-ui/core";
 import { CircleIndicator } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -71,18 +71,16 @@ const OrderCardTitle: React.FC<OrderCardTitleProps> = ({
             </div>
           )}
           <HorizontalSpacer spacing={2} />
-          <Typography className={classes.cardHeader}>
-            {intl.formatMessage(messageForStatus)}
-          </Typography>
+          <Text className={classes.cardHeader}>{intl.formatMessage(messageForStatus)}</Text>
           {!!warehouseName && (
-            <Typography className={classes.warehouseName} variant="caption">
+            <Text className={classes.warehouseName} size={2} fontWeight="light">
               <FormattedMessage
                 {...orderTitleMessages.fulfilledFrom}
                 values={{
                   warehouseName,
                 }}
               />
-            </Typography>
+            </Text>
           )}
         </div>
       }

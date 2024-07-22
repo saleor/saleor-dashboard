@@ -11,7 +11,6 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import OrderAddTransaction from "../OrderAddTransaction";
-import { useStyles } from "../OrderDetailsPage/styles";
 import { OrderDetailsRefundTable } from "../OrderDetailsRefundTable/OrderDetailsRefundTable";
 import OrderGrantedRefunds from "../OrderGrantedRefunds";
 import OrderPaymentSummaryCard from "../OrderPaymentSummaryCard";
@@ -42,7 +41,6 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
   onAddManualTransaction,
   onRefundAdd,
 }) => {
-  const classes = useStyles();
   const filteredPayments = React.useMemo(() => getFilteredPayments(order), [order]);
   const { enabled } = useFlag("improved_refunds");
 
@@ -52,10 +50,10 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
 
   return (
     <>
-      <div className={classes.cardGrid}>
+      <Box display="grid" __gridTemplateColumns="repeat(2, 1fr)" gap={2}>
         <OrderSummaryCard order={order} />
         <OrderPaymentSummaryCard order={order} onMarkAsPaid={onMarkAsPaid} />
-      </div>
+      </Box>
       <CardSpacer />
       <>
         {enabled && (

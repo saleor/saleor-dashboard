@@ -1,7 +1,7 @@
 import ControlledCheckbox, {
   ControlledCheckboxProps,
 } from "@dashboard/components/ControlledCheckbox";
-import { Typography } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -21,9 +21,9 @@ const GiftCardCreateRequiresActivationSection: React.FC<
     label={
       <>
         <FormattedMessage {...messages.requiresActivationLabel} />
-        <Typography variant="caption">
+        <Text size={2} fontWeight="light">
           <FormattedMessage {...messages.requiresActivationCaption} />
-        </Typography>
+        </Text>
       </>
     }
     checked={checked}

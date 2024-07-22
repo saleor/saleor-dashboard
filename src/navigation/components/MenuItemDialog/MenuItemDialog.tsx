@@ -17,14 +17,8 @@ import { RelayToFlat } from "@dashboard/types";
 import { getFieldError, getFormErrors } from "@dashboard/utils/errors";
 import getMenuErrorMessage from "@dashboard/utils/errors/menu";
 import { getMenuItemByValue, IMenu } from "@dashboard/utils/menu";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import isUrl from "is-url";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -282,9 +276,9 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
           <>
             <FormSpacer />
             {mutationErrors.map(err => (
-              <Typography key={err.code} color="error">
+              <Text key={err.code} color="critical1">
                 {getMenuErrorMessage(err, intl)}
-              </Typography>
+              </Text>
             ))}
           </>
         )}

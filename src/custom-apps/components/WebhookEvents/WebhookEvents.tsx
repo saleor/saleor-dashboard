@@ -6,7 +6,7 @@ import { Pill } from "@dashboard/components/Pill";
 import { WebhookEventTypeAsyncEnum, WebhookEventTypeSyncEnum } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { capitalize } from "@dashboard/misc";
-import { Checkbox, Typography } from "@material-ui/core";
+import { Checkbox } from "@material-ui/core";
 import {
   List,
   ListBody,
@@ -18,6 +18,7 @@ import {
   PageTabs,
   useListWidths,
 } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -83,14 +84,14 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
             <PageTab label={intl.formatMessage(messages.synchronous)} value="sync" />
           </PageTabs>
 
-          <Typography variant="subtitle2" style={{ padding: "1rem 0" }}>
+          <Text fontSize={2} style={{ padding: "1rem 0" }}>
             <PageTabPanel show={tab === "sync"}>
               <FormattedMessage {...messages.synchronousDescription} />
             </PageTabPanel>
             <PageTabPanel show={tab === "async"}>
               <FormattedMessage {...messages.asynchronousDescription} />
             </PageTabPanel>
-          </Typography>
+          </Text>
         </DashboardCard.Content>
         <Hr />
         <Grid variant="uniform">

@@ -4,8 +4,7 @@ import { FormChange } from "@dashboard/hooks/useForm";
 import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getStaffErrorMessage from "@dashboard/utils/errors/staff";
-import { Typography } from "@material-ui/core";
-import { Option } from "@saleor/macaw-ui-next";
+import { Option, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -63,10 +62,10 @@ const AccountPermissionGroups: React.FC<AccountPermissionGroupsProps> = props =>
         helperText={getStaffErrorMessage(formErrors.addGroups, intl)}
       />
       {!!formErrors.addGroups && (
-        <Typography color="error">{getStaffErrorMessage(formErrors.addGroups, intl)}</Typography>
+        <Text color="critical1">{getStaffErrorMessage(formErrors.addGroups, intl)}</Text>
       )}
       {!!formErrors.removeGroups && (
-        <Typography color="error">{getStaffErrorMessage(formErrors.removeGroups, intl)}</Typography>
+        <Text color="critical1">{getStaffErrorMessage(formErrors.removeGroups, intl)}</Text>
       )}
     </>
   );

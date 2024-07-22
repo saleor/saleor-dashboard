@@ -24,7 +24,6 @@ import {
   TableBody,
   TableCell,
   TextField,
-  Typography,
 } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -222,11 +221,11 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                   </React.Fragment>
                 ),
                 () => (
-                  <Typography className={classes.noContentText}>
+                  <Text className={classes.noContentText}>
                     {query
                       ? intl.formatMessage(messages.noProductsInQuery)
                       : intl.formatMessage(messages.noProductsInChannel)}
-                  </Typography>
+                  </Text>
                 ),
               )}
             </TableBody>

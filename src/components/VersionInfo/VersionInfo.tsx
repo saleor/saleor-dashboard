@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { useStyles } from "./styles";
@@ -16,10 +16,10 @@ const VersionInfo: React.FC<VersionInfoProps> = ({ dashboardVersion, coreVersion
   }
 
   return (
-    <Typography variant="caption" className={classes.container}>
+    <Text size={2} fontWeight="light" className={classes.container}>
       <div className={classes.versionItem}>{`dashboard ${dashboardVersion}`}</div>
       <div className={classes.versionItem}>{`core v${coreVersion}`}</div>
-    </Typography>
+    </Text>
   );
 };
 

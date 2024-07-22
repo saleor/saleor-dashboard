@@ -9,7 +9,7 @@ import { AppListItemFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { renderCollection } from "@dashboard/misc";
-import { TableBody, TableCell, Typography } from "@material-ui/core";
+import { TableBody, TableCell } from "@material-ui/core";
 import { DeleteIcon, IconButton, ResponsiveTable } from "@saleor/macaw-ui";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -101,13 +101,13 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
               () => (
                 <TableRowLink className={classes.tableRow}>
                   <TableCell className={classes.colName}>
-                    <Typography className={classes.text} variant="body2">
+                    <Text className={classes.text} fontSize={3}>
                       <FormattedMessage
                         id="voRaz3"
                         defaultMessage="Your custom-created apps will be shown here."
                         description="custom apps content"
                       />
-                    </Typography>
+                    </Text>
                   </TableCell>
                 </TableRowLink>
               ),

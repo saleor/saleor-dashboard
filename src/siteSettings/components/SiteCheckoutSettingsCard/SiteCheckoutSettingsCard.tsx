@@ -2,7 +2,8 @@ import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { ShopErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { TextField, Typography } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -38,9 +39,9 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
         <DashboardCard.Title>{intl.formatMessage(messages.reservedStock)}</DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <Typography variant="body2">
+        <Text fontSize={3}>
           <FormattedMessage {...messages.reservedStockDescription} />
-        </Typography>
+        </Text>
         <FormSpacer />
         <TextField
           data-test-id="reserve-stock-duration-for-auth-user-input"

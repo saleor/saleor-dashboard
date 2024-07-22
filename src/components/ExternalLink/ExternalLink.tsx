@@ -1,5 +1,3 @@
-import { Typography } from "@material-ui/core";
-import { TypographyProps } from "@material-ui/core/Typography";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text, TextProps } from "@saleor/macaw-ui-next";
 import React, { HTMLAttributes } from "react";
@@ -16,14 +14,13 @@ const useStyles = makeStyles(
 interface ExternalLinkProps extends React.HTMLProps<HTMLAnchorElement> {
   href: string;
   className?: string;
-  typographyProps?: TypographyProps;
 }
 
 /**
  * @deprecated use ExternalLinkNext
  */
 const ExternalLink: React.FC<ExternalLinkProps> = props => {
-  const { className, children, href, typographyProps, target, rel, ...rest } = props;
+  const { className, children, href, target, rel, ...rest } = props;
   const classes = useStyles(props);
   const opensNewTab = target === "_blank";
 
@@ -35,9 +32,9 @@ const ExternalLink: React.FC<ExternalLinkProps> = props => {
       rel={rel ?? opensNewTab ? "noopener noreferer" : ""}
       {...rest}
     >
-      <Typography className={className} color="primary" {...typographyProps}>
+      <Text className={className} color="default1">
         {children}
-      </Typography>
+      </Text>
     </a>
   );
 };

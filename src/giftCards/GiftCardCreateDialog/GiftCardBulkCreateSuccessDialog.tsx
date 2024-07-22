@@ -1,6 +1,7 @@
 import { Button } from "@dashboard/components/Button";
 import { DialogProps } from "@dashboard/types";
-import { Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@material-ui/core";
+import { Dialog, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -30,7 +31,7 @@ const GiftCardBulkCreateSuccessDialog: React.FC<GiftCardBulkCreateSuccessDialogP
           {intl.formatMessage(messages.bulkCreateIssuedTitle)}
         </DialogTitle>
         <DialogContent>
-          <Typography>{intl.formatMessage(messages.bulkCreateIssuedExplanation)}</Typography>
+          <Text>{intl.formatMessage(messages.bulkCreateIssuedExplanation)}</Text>
         </DialogContent>
         <DialogActions>
           <Button variant="secondary" onClick={() => setOpenEmailExport(true)}>

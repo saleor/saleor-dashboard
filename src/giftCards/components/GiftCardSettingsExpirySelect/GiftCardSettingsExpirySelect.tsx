@@ -3,7 +3,7 @@ import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { getGiftCardSettingsErrorMessage } from "@dashboard/giftCards/GiftCardSettings/messages";
 import { GiftCardSettingsErrorFragment, TimePeriodTypeEnum } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
-import { Typography } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -36,9 +36,9 @@ const GiftCardSettingsExpirySelect: React.FC<GiftCardSettingsExpirySelectProps> 
         label={
           <>
             <FormattedMessage {...messages.setExpirationPeriodTitle} />
-            <Typography variant="caption">
+            <Text size={2} fontWeight="light">
               <FormattedMessage {...messages.setExpirationPeriodDescription} />
-            </Typography>
+            </Text>
           </>
         }
         checked={expiryPeriodActive}

@@ -1,7 +1,8 @@
 // @ts-strict-ignore
 import { toggle } from "@dashboard/utils/lists";
-import { FormControlLabel, TextField, Typography } from "@material-ui/core";
+import { FormControlLabel, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -129,13 +130,13 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
       ))}
       {displayHr && <Hr className={classes.hr} />}
       {displayNoResults && (
-        <Typography
+        <Text
           data-test-id="filter-field-autocomplete-no-results"
           className={classes.noResults}
-          color="textSecondary"
+          color="default2"
         >
           <FormattedMessage id="HnVtSS" defaultMessage="No results" description="search" />
-        </Typography>
+        </Text>
       )}
       {filteredValuesUnchecked.map(option => (
         <div className={classes.option} key={option.value} data-test-id="filter-option">

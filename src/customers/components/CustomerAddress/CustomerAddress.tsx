@@ -2,9 +2,9 @@
 import AddressFormatter from "@dashboard/components/AddressFormatter";
 import { DashboardCard } from "@dashboard/components/Card";
 import CardMenu from "@dashboard/components/CardMenu";
-import Skeleton from "@dashboard/components/Skeleton";
 import { AddressFragment, AddressTypeEnum } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 

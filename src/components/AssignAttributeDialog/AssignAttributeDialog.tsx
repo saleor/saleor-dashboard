@@ -20,9 +20,9 @@ import {
   TableBody,
   TableCell,
   TextField,
-  Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -172,7 +172,9 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
                       </TableCell>
                       <TableCell className={classes.wideCell}>
                         {attribute.name}
-                        <Typography variant="caption">{attribute.slug}</Typography>
+                        <Text size={2} fontWeight="light">
+                          {attribute.slug}
+                        </Text>
                       </TableCell>
                     </TableRowLink>
                   );

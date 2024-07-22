@@ -1,13 +1,12 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { Divider } from "@dashboard/components/Divider";
-import Skeleton from "@dashboard/components/Skeleton";
 import { ProductVariantCreateDataQuery, ProductVariantDetailsQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { productVariantAddUrl, productVariantEditUrl } from "@dashboard/products/urls";
 import { ReorderAction } from "@dashboard/types";
-import { Box, Button, GripIcon, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, GripIcon, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";

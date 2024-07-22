@@ -3,13 +3,12 @@ import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import Date from "@dashboard/components/Date";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { InvoiceFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
-import { TableBody, TableCell, Typography } from "@material-ui/core";
+import { TableBody, TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { sprinkles } from "@saleor/macaw-ui-next";
+import { Skeleton, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -79,9 +78,9 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
         {!generatedInvoices ? (
           <Skeleton />
         ) : !generatedInvoices?.length ? (
-          <Typography color="textSecondary">
+          <Text color="default2">
             <FormattedMessage id="hPB89Y" defaultMessage="No invoices to be shown" />
-          </Typography>
+          </Text>
         ) : (
           <ResponsiveTable className={classes.invoicesTable}>
             <TableBody className={classes.invoicesTableBody}>
@@ -97,14 +96,14 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
                       description="invoice number prefix"
                     />{" "}
                     {invoice.number}
-                    <Typography variant="caption">
+                    <Text size={2} fontWeight="light">
                       <FormattedMessage
                         id="F0AXNs"
                         defaultMessage="created"
                         description="invoice create date prefix"
                       />{" "}
                       <Date date={invoice.createdAt} plain />
-                    </Typography>
+                    </Text>
                   </TableCell>
                   {onInvoiceSend && (
                     <TableCell

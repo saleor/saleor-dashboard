@@ -1,5 +1,5 @@
 import { IMoney } from "@dashboard/utils/intl";
-import { Typography } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import Money from "../Money";
@@ -15,9 +15,9 @@ const DiscountedPrice: React.FC<DiscountedPriceProps> = ({ regularPrice, discoun
 
   return (
     <>
-      <Typography className={classes.strike}>
+      <Text className={classes.strike}>
         <Money money={regularPrice} />
-      </Typography>
+      </Text>
       <Money money={discountedPrice} />
     </>
   );

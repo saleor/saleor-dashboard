@@ -1,6 +1,6 @@
 import { Button } from "@dashboard/components/Button";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import { Typography } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -19,15 +19,15 @@ const ResetPasswordSuccessPage: React.FC<ResetPasswordSuccessPageProps> = props 
 
   return (
     <>
-      <Typography variant="h3" className={classes.header}>
+      <Text size={6} fontWeight="bold" lineHeight={3} className={classes.header}>
         <FormattedMessage id="Yy/yDL" defaultMessage="Reset password" />
-      </Typography>
-      <Typography>
+      </Text>
+      <Text>
         <FormattedMessage
           id="2ob30/"
           defaultMessage="Success! In a few minutes you’ll receive a message with instructions on how to reset your password."
         />
-      </Typography>
+      </Text>
       <FormSpacer />
       <Button
         className={classes.submit}

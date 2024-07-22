@@ -1,6 +1,6 @@
-import Skeleton from "@dashboard/components/Skeleton";
 import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { OrderDraftDetailsDatagrid } from "../OrderDraftDetailsDatagrid/OrderDraftDetailsDatagrid";

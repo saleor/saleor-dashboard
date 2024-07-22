@@ -1,7 +1,8 @@
 import useForm from "@dashboard/hooks/useForm";
-import { TableCell, TextField, Typography } from "@material-ui/core";
+import { TableCell, TextField } from "@material-ui/core";
 import { TextFieldProps } from "@material-ui/core/TextField";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 
@@ -70,9 +71,9 @@ export const EditableTableCell: React.FC<EditableTableCellProps> = props => {
   return (
     <TableCell className={clsx(classes.container, className)}>
       {opened && <div className={classes.overlay} onClick={disable} />}
-      <Typography variant="caption" onClick={enable} className={classes.text}>
+      <Text size={2} fontWeight="light" onClick={enable} className={classes.text}>
         {value || defaultValue}
-      </Typography>
+      </Text>
       {opened && (
         <div className={classes.root}>
           <DashboardCard borderColor="default1" borderWidth={1} borderStyle="solid">

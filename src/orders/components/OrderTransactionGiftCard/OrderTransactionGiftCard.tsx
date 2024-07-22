@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import Skeleton from "@dashboard/components/Skeleton";
+
 import {
   OrderDetailsFragment,
   OrderGiftCardFragment,
@@ -7,6 +7,7 @@ import {
 } from "@dashboard/graphql";
 import { FakeTransaction, TransactionFakeEvent } from "@dashboard/orders/types";
 import { prepareMoney } from "@dashboard/orders/utils/data";
+import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 

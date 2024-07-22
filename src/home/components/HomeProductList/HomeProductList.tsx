@@ -128,7 +128,7 @@ export default HomeProductList;
 function ProductListSkeleton() {
   return (
     <Box borderColor="default1" borderWidth={1} borderBottomStyle="solid" paddingX={3} paddingY={6}>
-      <Skeleton />
+      <Skeleton height={3} />
     </Box>
   );
 }
