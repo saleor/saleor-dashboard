@@ -265,14 +265,12 @@ export class BasePage {
     return await this.findRowIndexBasedOnText([searchItem]);
   }
 
-  // check row on grid list view
   async checkListRowsBasedOnContainingText(searchText: string[]) {
     const rowIndexes = await this.findRowIndexBasedOnText(searchText);
 
     for (const rowIndex of rowIndexes) {
       await this.clickGridCell(0, rowIndex);
     }
-    // make sure all searched texts were found and checked
     await expect(searchText.length).toEqual(rowIndexes.length);
   }
 
