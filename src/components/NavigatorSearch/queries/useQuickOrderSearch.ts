@@ -19,7 +19,7 @@ export function useQuickOrderSearch(): [
   const result = useSearchOrdersByNumberQuery({
     skip: query === "",
     variables: {
-      first: 10,
+      first: 1,
       query,
     },
   });
