@@ -26,7 +26,7 @@ function getOrdersModeActions(
   }
 
   return orders.map(order => {
-    const orderNumber = maybe(() => order.number, "");
+    const orderNumber = order?.number ?? ""
 
     return {
       extraInfo: transformOrderStatus(order.status, intl).localized,
