@@ -11,7 +11,6 @@ import {
   OrderDiscountContext,
   OrderDiscountContextConsumerProps,
 } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
-import {} from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

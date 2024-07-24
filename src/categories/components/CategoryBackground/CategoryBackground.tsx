@@ -3,12 +3,11 @@ import { DashboardCard } from "@dashboard/components/Card";
 import Hr from "@dashboard/components/Hr";
 import ImageUpload from "@dashboard/components/ImageUpload";
 import MediaTile from "@dashboard/components/MediaTile";
-import Skeleton from "@dashboard/components/Skeleton";
 import { CategoryDetailsFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui-next";
+import { Skeleton, vars } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -66,19 +65,17 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
           })}
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
-          <>
-            <Button variant="tertiary" onClick={handleImageUploadButtonClick}>
-              <FormattedMessage {...commonMessages.uploadImage} />
-            </Button>
-            <input
-              className={classes.fileField}
-              id="fileUpload"
-              onChange={({ target: { files } }) => onImageUpload(files && files[0])}
-              type="file"
-              ref={anchor}
-              accept="image/*"
-            />
-          </>
+          <Button variant="tertiary" onClick={handleImageUploadButtonClick}>
+            <FormattedMessage {...commonMessages.uploadImage} />
+          </Button>
+          <input
+            className={classes.fileField}
+            id="fileUpload"
+            onChange={({ target: { files } }) => onImageUpload(files && files[0])}
+            type="file"
+            ref={anchor}
+            accept="image/*"
+          />
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
 

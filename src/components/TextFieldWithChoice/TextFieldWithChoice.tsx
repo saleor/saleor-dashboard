@@ -7,11 +7,11 @@ import {
   Paper,
   Popper,
   TextField,
-  Typography,
 } from "@material-ui/core";
 import { TextFieldProps } from "@material-ui/core/TextField";
 import DropdownIcon from "@material-ui/icons/ArrowDropDown";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import MenuToggle from "../MenuToggle";
@@ -71,9 +71,9 @@ const TextFieldWithChoice: React.FC<TextFieldWithChoiceProps> = props => {
                     ref={anchor}
                     onClick={!menuOpen ? openMenu : undefined}
                   >
-                    <Typography component="span" variant="caption">
+                    <Text as="span" size={2} fontWeight="light">
                       {ChoiceProps.label}
-                    </Typography>
+                    </Text>
                     {ChoiceProps.values ? <DropdownIcon /> : null}
                   </div>
                   <Popper

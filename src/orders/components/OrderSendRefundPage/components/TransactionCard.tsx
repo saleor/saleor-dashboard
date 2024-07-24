@@ -11,9 +11,9 @@ import {
   TransactionItemFragment,
   useOrderSendRefundMutation,
 } from "@dashboard/graphql";
-import { Typography } from "@material-ui/core";
 import { useId } from "@reach/auto-id";
 import { Button, makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -131,9 +131,9 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
               </ConfirmButton>
             </form>
             {submitError && (
-              <Typography id={errorId} color="error" variant="body2">
+              <Text id={errorId} color="critical1" fontSize={3}>
                 {submitError.message}
-              </Typography>
+              </Text>
             )}
           </div>
         )

@@ -2,8 +2,8 @@
 import Money from "@dashboard/components/Money";
 import { TimelineEvent } from "@dashboard/components/Timeline";
 import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
-import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import camelCase from "lodash/camelCase";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -233,16 +233,14 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
               />
             </>
           )}
-          {shippingCostsIncluded && (
-            <Typography>{intl.formatMessage(messages.refundedShipment)}</Typography>
-          )}
+          {shippingCostsIncluded && <Text>{intl.formatMessage(messages.refundedShipment)}</Text>}
         </>
       )}
 
       {!!transactionReference && (
         <>
           <Label text={intl.formatMessage(messages.transactionReference)} />
-          <Typography>{transactionReference}</Typography>
+          <Text>{transactionReference}</Text>
         </>
       )}
     </TimelineEvent>

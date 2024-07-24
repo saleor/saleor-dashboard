@@ -1,7 +1,6 @@
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
 import TablePagination from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -14,7 +13,7 @@ import { renderCollection, stopPropagation } from "@dashboard/misc";
 import { ListProps, PaginateListProps, RelayToFlat, ReorderAction } from "@dashboard/types";
 import { TableCell, TableFooter, TableHead } from "@material-ui/core";
 import { IconButton, makeStyles } from "@saleor/macaw-ui";
-import { TrashBinIcon } from "@saleor/macaw-ui-next";
+import { Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

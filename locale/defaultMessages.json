@@ -1012,10 +1012,6 @@
     "context": "modal button",
     "string": "Upload URL"
   },
-  "4XRIV5": {
-    "context": "add new refund button",
-    "string": "Add new refund"
-  },
   "4XhJY+": {
     "context": "dialog header",
     "string": "Add product from {channelName}"
@@ -4409,6 +4405,10 @@
   },
   "QqnNUm": {
     "string": "Visible in listing"
+  },
+  "QslFl8": {
+    "context": "add new refund button",
+    "string": "New refund"
   },
   "QzseV7": {
     "context": "dialog header",

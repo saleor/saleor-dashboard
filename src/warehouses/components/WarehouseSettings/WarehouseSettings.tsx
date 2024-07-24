@@ -3,7 +3,6 @@ import { FormSpacer } from "@dashboard/components/FormSpacer";
 import Link from "@dashboard/components/Link";
 import PreviewPill from "@dashboard/components/PreviewPill";
 import { RadioGroupField } from "@dashboard/components/RadioGroupField";
-import Skeleton from "@dashboard/components/Skeleton";
 import {
   WarehouseClickAndCollectOptionEnum,
   WarehouseWithShippingFragment,
@@ -12,8 +11,9 @@ import { sectionNames } from "@dashboard/intl";
 import { renderCollection } from "@dashboard/misc";
 import { shippingZoneUrl } from "@dashboard/shipping/urls";
 import { RelayToFlat } from "@dashboard/types";
-import { Divider, Typography } from "@material-ui/core";
+import { Divider } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -69,9 +69,9 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
       label: (
         <>
           <FormattedMessage {...messages.warehouseSettingsPrivateStock} />
-          <Typography variant="caption" color="textSecondary">
+          <Text size={2} fontWeight="light" color="default2">
             <FormattedMessage {...messages.warehouseSettingsPrivateStockDescription} />
-          </Typography>
+          </Text>
           <FormSpacer />
         </>
       ),
@@ -81,9 +81,9 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
       label: (
         <>
           <FormattedMessage {...messages.warehouseSettingsPublicStock} />
-          <Typography variant="caption" color="textSecondary">
+          <Text size={2} fontWeight="light" color="default2">
             <FormattedMessage {...messages.warehouseSettingsPublicStockDescription} />
-          </Typography>
+          </Text>
         </>
       ),
       value: "false",
@@ -94,9 +94,9 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
       label: (
         <>
           <FormattedMessage {...messages.warehouseSettingsDisabled} />
-          <Typography variant="caption" color="textSecondary">
+          <Text size={2} fontWeight="light" color="default2">
             <FormattedMessage {...messages.warehouseSettingsDisabledDescription} />
-          </Typography>
+          </Text>
           <FormSpacer />
         </>
       ),
@@ -106,9 +106,9 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
       label: (
         <>
           <FormattedMessage {...messages.warehouseSettingsLocal} />
-          <Typography variant="caption" color="textSecondary">
+          <Text size={2} fontWeight="light" color="default2">
             <FormattedMessage {...messages.warehouseSettingsLocalDescription} />
-          </Typography>
+          </Text>
           <FormSpacer />
         </>
       ),
@@ -118,9 +118,9 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
       label: (
         <>
           <FormattedMessage {...messages.warehouseSettingsAllWarehouses} />
-          <Typography variant="caption" color="textSecondary">
+          <Text size={2} fontWeight="light" color="default2">
             <FormattedMessage {...messages.warehouseSettingsAllWarehousesDescription} />
-          </Typography>
+          </Text>
         </>
       ),
       value: WarehouseClickAndCollectOptionEnum.ALL,
@@ -151,9 +151,9 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
               <Skeleton />
             ),
           () => (
-            <Typography color="textSecondary">
+            <Text color="default2">
               <FormattedMessage {...messages.warehouseSettingsNoShippingZonesAssigned} />
-            </Typography>
+            </Text>
           ),
         )}
       </DashboardCard.Content>

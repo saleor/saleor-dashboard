@@ -31,15 +31,11 @@ const OrderTransaction: React.FC<OrderTransactionProps> = ({
   return (
     <DashboardCard __opacity={disabled ? "0.6" : "1"} data-test-id="orderTransactionsList">
       <DashboardCard.Header>
-        <DashboardCard.Title>
-          {
-            <OrderTransactionCardTitle
-              transaction={transaction}
-              onTransactionAction={onTransactionAction}
-              showActions={showActions}
-            />
-          }
-        </DashboardCard.Title>
+        <OrderTransactionCardTitle
+          transaction={transaction}
+          onTransactionAction={onTransactionAction}
+          showActions={showActions}
+        />
       </DashboardCard.Header>
 
       <DashboardCard.Content paddingX={0}>

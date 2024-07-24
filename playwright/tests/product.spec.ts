@@ -99,7 +99,11 @@ test("TC: SALEOR_27 Create full info variant - via edit variant page @e2e @produ
 });
 test("TC: SALEOR_44 As an admin I should be able to delete a several products @basic-regression @product @e2e", async () => {
   await productPage.gotoProductListPage();
+
+  await productPage.searchAndFindRowIndexes("a product to be deleted via bulk");
   await productPage.checkListRowsBasedOnContainingText(PRODUCTS.productsToBeBulkDeleted.names);
+
+  await productPage.clickBulkDeleteGridRowsButton();
   await productPage.clickBulkDeleteButton();
   await productPage.deleteProductDialog.clickDeleteButton();
   await productPage.expectSuccessBanner();

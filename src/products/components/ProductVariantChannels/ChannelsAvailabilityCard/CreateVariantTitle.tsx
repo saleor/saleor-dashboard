@@ -30,30 +30,26 @@ export const CreateVariantTitle: React.FC<CreateVariantTitleProps> = ({
   return (
     <DashboardCard.Header>
       <DashboardCard.Title>
-        <Box display="flex" justifyContent="space-between" alignItems="center" marginBottom={4}>
-          <Accordion.Trigger>
-            <Box display="grid" gap={2}>
-              {intl.formatMessage(messages.title)}
-              <Text size={2} color="default2">
-                {getCaptionText()}
-              </Text>
-            </Box>
-          </Accordion.Trigger>
-          <Box display="flex" gap={3}>
-            <Button
-              variant="secondary"
-              disabled={disabled}
-              data-test-id="manage-channels-button"
-              onClick={onManageClick}
-            >
-              {intl.formatMessage(messages.manageButtonText)}
-            </Button>
-            <Accordion.Trigger>
-              <Accordion.TriggerButton dataTestId="expand-icon" />
-            </Accordion.Trigger>
-          </Box>
+        <Box display="grid" gap={2}>
+          {intl.formatMessage(messages.title)}
+          <Text size={2} color="default2">
+            {getCaptionText()}
+          </Text>
         </Box>
       </DashboardCard.Title>
+      <DashboardCard.Toolbar>
+        <Button
+          variant="secondary"
+          disabled={disabled}
+          data-test-id="manage-channels-button"
+          onClick={onManageClick}
+        >
+          {intl.formatMessage(messages.manageButtonText)}
+        </Button>
+        <Accordion.Trigger>
+          <Accordion.TriggerButton dataTestId="expand-icon" />
+        </Accordion.Trigger>
+      </DashboardCard.Toolbar>
     </DashboardCard.Header>
   );
 };

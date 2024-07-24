@@ -5,9 +5,8 @@ import { ListPageLayout } from "@dashboard/components/Layouts";
 import { customerUrl } from "@dashboard/customers/urls";
 import { AddressTypeEnum, CustomerAddressesFragment } from "@dashboard/graphql";
 import { getStringOrPlaceholder, renderCollection } from "@dashboard/misc";
-import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -117,10 +116,12 @@ const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props =>
           padding={6}
           flexDirection="column"
         >
-          <Typography variant="h5">{intl.formatMessage(messages.noAddressToShow)}</Typography>
-          <Typography className={classes.description}>
+          <Text size={3} fontWeight="bold" lineHeight={2}>
+            {intl.formatMessage(messages.noAddressToShow)}
+          </Text>
+          <Text className={classes.description}>
             {intl.formatMessage(messages.doesntHaveAddresses)}
-          </Typography>
+          </Text>
           <Button className={classes.addButton} variant="primary" onClick={onAdd}>
             {intl.formatMessage(messages.addAddress)}
           </Button>

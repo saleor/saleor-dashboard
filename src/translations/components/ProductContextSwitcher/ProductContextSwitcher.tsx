@@ -14,10 +14,10 @@ import {
   MenuList as Menu,
   Paper,
   Popper,
-  Typography,
 } from "@material-ui/core";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -99,15 +99,15 @@ const ProductContextSwitcher: React.FC<ProductContextSwitcherProps> = ({
 
   return (
     <div className={classes.container}>
-      <Typography className={classes.label}>
+      <Text className={classes.label}>
         <FormattedMessage id="tUlsq+" defaultMessage="Translating" />:
-      </Typography>
+      </Text>
       <div ref={anchor}>
         <DashboardCard
           className={classes.menuContainer}
           onClick={() => setExpandedState(!isExpanded)}
         >
-          <Typography>{items.find(({ value }) => value === selectedId)?.label || "-"}</Typography>
+          <Text>{items.find(({ value }) => value === selectedId)?.label || "-"}</Text>
           <ArrowDropDown
             className={clsx(classes.arrow, {
               [classes.rotate]: isExpanded,

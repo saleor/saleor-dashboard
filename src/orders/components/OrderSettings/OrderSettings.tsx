@@ -1,7 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
-import {} from "@material-ui/core";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

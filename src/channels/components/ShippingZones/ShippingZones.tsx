@@ -3,7 +3,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { SearchShippingZonesQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
-import { Typography } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -40,7 +40,7 @@ const ShippingZones: React.FC<ShippingZonesProps> = props => {
         <DashboardCard.Title>{intl.formatMessage(sectionNames.shippingZones)}</DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <Typography>{intl.formatMessage(messages.subtitle)}</Typography>
+        <Text>{intl.formatMessage(messages.subtitle)}</Text>
       </DashboardCard.Content>
       <AssignmentList
         loading={loading}

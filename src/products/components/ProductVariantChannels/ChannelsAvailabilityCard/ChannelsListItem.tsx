@@ -42,6 +42,7 @@ export const ChannelsListItem: React.FC<ChannelsListItemProps> = ({
           size={3}
           fontWeight="bold"
           data-test-id={`channels-variant-availability-item-title-${id}`}
+          display="block"
         >
           {name}
         </Text>

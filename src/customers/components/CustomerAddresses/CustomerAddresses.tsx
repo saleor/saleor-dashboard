@@ -5,8 +5,8 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { Hr } from "@dashboard/components/Hr";
 import { CustomerDetailsFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
-import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -59,26 +59,26 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
         <>
           {maybe(() => customer.defaultBillingAddress) !== null && (
             <DashboardCard.Content>
-              <Typography className={classes.label}>
+              <Text className={classes.label}>
                 <FormattedMessage
                   id="biVFKU"
                   defaultMessage="Billing Address"
                   description="subsection header"
                 />
-              </Typography>
+              </Text>
               <AddressFormatter address={maybe(() => customer.defaultBillingAddress)} />
             </DashboardCard.Content>
           )}
           {maybe(() => customer.defaultBillingAddress && customer.defaultShippingAddress) && <Hr />}
           {maybe(() => customer.defaultShippingAddress) && (
             <DashboardCard.Content>
-              <Typography className={classes.label}>
+              <Text className={classes.label}>
                 <FormattedMessage
                   id="Zd3Eew"
                   defaultMessage="Shipping Address"
                   description="subsection header"
                 />
-              </Typography>
+              </Text>
               <AddressFormatter address={maybe(() => customer.defaultShippingAddress)} />
             </DashboardCard.Content>
           )}
@@ -86,19 +86,19 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
       ) : maybe(() => customer.defaultBillingAddress) === null &&
         maybe(() => customer.defaultShippingAddress) === null ? (
         <DashboardCard.Content>
-          <Typography>
+          <Text>
             <FormattedMessage id="3d1RXL" defaultMessage="This customer has no addresses yet" />
-          </Typography>
+          </Text>
         </DashboardCard.Content>
       ) : (
         <DashboardCard.Content>
-          <Typography className={classes.label}>
+          <Text className={classes.label}>
             <FormattedMessage
               id="bHdFph"
               defaultMessage="Address"
               description="subsection header"
             />
-          </Typography>
+          </Text>
           <AddressFormatter address={maybe(() => customer.defaultBillingAddress)} />
         </DashboardCard.Content>
       )}

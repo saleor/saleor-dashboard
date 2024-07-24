@@ -1,5 +1,5 @@
-import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 
@@ -62,9 +62,9 @@ function makeCreatorSteps<T extends string | number>() {
               onClick={visitedStep ? () => onStepClick(step.value) : undefined}
               key={step.value}
             >
-              <Typography className={classes.label} variant="caption">
+              <Text className={classes.label} size={2} fontWeight="light">
                 {step.label}
-              </Typography>
+              </Text>
             </div>
           );
         })}

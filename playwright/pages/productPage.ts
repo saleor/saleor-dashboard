@@ -136,7 +136,7 @@ export class ProductPage extends BasePage {
   }
 
   async clickBulkDeleteButton() {
-    await this.bulkDeleteButton.click();
+    await this.submitButton.click();
   }
 
   async addSeo() {
@@ -211,7 +211,7 @@ export class ProductPage extends BasePage {
 
   async gotoProductListPage() {
     await this.page.goto(URL_LIST.products);
-    await this.waitForDOMToFullyLoad();
+    await this.waitForGrid();
   }
 
   async uploadProductImage(fileName: string) {
