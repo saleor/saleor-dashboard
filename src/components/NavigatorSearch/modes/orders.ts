@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
-import { maybe, transformOrderStatus } from "@dashboard/misc";
+import { transformOrderStatus } from "@dashboard/misc";
 import { orderUrl } from "@dashboard/orders/urls";
 import { IntlShape } from "react-intl";
 
@@ -26,7 +26,7 @@ function getOrdersModeActions(
   }
 
   return orders.map(order => {
-    const orderNumber = order?.number ?? ""
+    const orderNumber = order?.number ?? "";
 
     return {
       extraInfo: transformOrderStatus(order.status, intl).localized,
