@@ -1,47 +1,24 @@
 // @ts-strict-ignore
-import { gql } from "@apollo/client";
-import { FieldNode, parse, SelectionNode, visit } from "graphql";
+import {
+  buildClientSchema,
+  DocumentNode,
+  GraphQLObjectType,
+  GraphQLSchema,
+  IntrospectionQuery,
+  parse,
+  visit,
+} from "graphql";
+import { TypeMap } from "graphql/type/schema";
 
-interface IntrospectionNode {
-  kind: string;
-  name: string;
-  description: string;
-  fields: Array<{
-    name: string;
-    description: string;
-  }>;
-}
+const tokenTree = (token: DocumentNode["loc"]["startToken"], tokens: string[] = []) => {
+  if (token.next) {
+    tokens.push(token.value);
 
-interface PermissionChildNode {
-  permissions: string[];
-  children: string[];
-}
-
-interface PermissionNode {
-  permissions: string[];
-  children: Record<string, PermissionChildNode>;
-}
-
-type PermissionMap = Record<string, PermissionNode>;
-
-// cannot be in `queries.ts` as codegen cannot handle `__schema`
-export const IntrospectionQuery = gql`
-  query PermissionIntrospection {
-    __schema {
-      types {
-        kind
-        name
-        description
-        fields(includeDeprecated: false) {
-          name
-          description
-        }
-      }
-    }
+    return tokenTree(token.next, tokens);
   }
-`;
 
-const uniq = <T>(value: T, index: number, self: T[]) => self.indexOf(value) === index;
+  return tokens;
+};
 
 // Right now, permissions are appended at the end of `description`
 // for each field in the result of the introspection query. The format
@@ -55,87 +32,99 @@ export const extractPermissions = (description?: string) => {
   return permissions;
 };
 
-export const getPermissions = (query: string, permissionMapping: PermissionMap) => {
-  const cursors = extractCursorsFromQuery(query);
-
-  return cursors.map(findPermission(permissionMapping)).flat().filter(uniq);
+export const getPermissions = (query: string, schema: IntrospectionQuery) => {
+  return extractPermissionsFromQuery(query, schema);
 };
 
-export const buildPermissionMap = (elements: IntrospectionNode[]): PermissionMap =>
-  elements
-    .filter(({ kind }) => kind === "OBJECT")
-    .filter(({ name }) => !/(Created|Create|Delete|Deleted|Update|Updated)$/.test(name))
-    .reduce((saved, { name, description, fields }) => {
-      const permissions = extractPermissions(description);
-      const children = fields.reduce((prev, { name, description }) => {
-        const permissions = extractPermissions(description);
+const extractSubscriptions = (
+  subscriptions: GraphQLObjectType[],
+  tokens: string[],
+): GraphQLObjectType[] =>
+  tokens.reduce((acc, token) => {
+    const subscription = subscriptions.find(({ name }) => name === token);
 
-        return {
-          ...prev,
-          [name.toLowerCase()]: { permissions },
-        };
-      }, {});
+    if (subscription) {
+      return [...acc, subscription];
+    }
 
-      return {
-        ...saved,
-        [name.toLowerCase()]: {
-          permissions,
-          children,
-        },
-      };
-    }, {});
+    return acc as GraphQLObjectType[];
+  }, []);
 
-const byKind = (name: string) => (element: SelectionNode) => element.kind === name;
-const extractValue = (element: FieldNode) => element.name.value;
-const isNotEvent = (value: string) => value !== "event";
+const getSubscriptions = (typeMap: TypeMap) => {
+  return Object.keys(typeMap).reduce((acc, key) => {
+    const type = typeMap[key] as GraphQLObjectType;
 
-export const extractCursorsFromQuery = (query: string) => {
-  const cursors: string[][] = [];
+    if (type instanceof GraphQLObjectType) {
+      const interfaces = type.getInterfaces();
+      const hasEvent = interfaces.some(({ name }) => name === "Event");
 
-  try {
-    const ast = parse(query);
+      if (hasEvent) {
+        return [...acc, type];
+      }
+    }
 
-    visit(ast, {
-      Field(node, _key, _parent, _path, ancestors) {
-        if (node.name.value !== "__typename") {
-          const cursor = ancestors.filter(byKind("Field")).map(extractValue).filter(isNotEvent);
+    return acc;
+  }, []);
+};
 
-          if (cursor.length > 0) {
-            cursors.push([...cursor, node.name.value]);
+// Function to get descriptions of tokens in the query
+function getDescriptionsFromQuery(query: string, schema: GraphQLSchema) {
+  const descriptions: { [key: string]: string } = {};
+  const ast = parse(query);
+  const tree = tokenTree(ast.loc.startToken, []);
+  const subscriptions = getSubscriptions(schema.getTypeMap());
+  const subscriptionsFromQuery = extractSubscriptions(subscriptions, tree);
+
+  visit(ast, {
+    Field(node, _key, _parent, _path, ancestors) {
+      for (const _type in subscriptionsFromQuery) {
+        const fieldPath = ancestors
+          .filter((ancestor: any) => ancestor.kind === "Field")
+          .map((ancestor: any) => ancestor.name.value)
+          .concat(node.name.value);
+        let type = subscriptionsFromQuery[_type];
+
+        for (const fieldName of fieldPath.slice(1, -1)) {
+          if (type) {
+            const field = type.getFields()[fieldName];
+
+            type = field ? (field.type as GraphQLObjectType) : undefined;
           }
         }
-      },
-    });
+
+        if (type) {
+          const field = type.getFields()[node.name.value];
+
+          if (field) {
+            descriptions[fieldPath.join(".")] = field.description || "No description available";
+          }
+        }
+      }
+    },
+  });
+
+  return descriptions;
+}
+
+const extractPermissionsFromQuery = (query: string, _schema: IntrospectionQuery) => {
+  let permissions: string[] = [];
+
+  try {
+    const schema = buildClientSchema(_schema);
+    const descriptions = getDescriptionsFromQuery(query, schema);
+
+    permissions = Object.keys(descriptions).reduce((acc, key) => {
+      const permission = extractPermissions(descriptions[key]);
+
+      if (permission.length > 0) {
+        return [...acc, ...permission];
+      }
+
+      return acc;
+    }, []);
   } catch (error) {
     // explicit silent
   }
 
-  return cursors;
-};
-
-const groupBy = <T>(list: T[], groupSize = 2) =>
-  list.slice(groupSize - 1).map((_, index) => list.slice(index, index + groupSize));
-
-// Permission Map is a tree like nested structure. As we want to
-// visit each level, we split the cursor provided by the user
-// into chunks (groups) to check if there are permissions for
-// each element between root and leafs
-// e.g.
-//   ['query', 'order', 'invoices', 'name']
-// becomes
-//   [['query', 'order'], ['order', 'invoices'], ['invoices', 'name']]
-// so we can check first ir `order` contains permission, then `invoices`
-// and then `name`
-export const findPermission = (permissions: PermissionMap) => (cursor: string[]) => {
-  const groups = groupBy(["query", ...cursor]);
-
-  return groups.reduce(
-    (saved, [parent, child]) => [
-      ...saved,
-      ...(permissions[parent] && permissions[parent].children[child]
-        ? permissions[parent].children[child].permissions
-        : []),
-    ],
-    [],
-  );
+  return permissions;
 };

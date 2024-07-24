@@ -1,10 +1,11 @@
-import { useQuery } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 import { Alert } from "@saleor/macaw-ui";
 import { Box, Chip, Text } from "@saleor/macaw-ui-next";
+import { getIntrospectionQuery } from "graphql";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { buildPermissionMap, getPermissions, IntrospectionQuery } from "./utils";
+import { getPermissions } from "./utils";
 
 export interface PermissionAlertProps {
   query: string;
@@ -12,12 +13,11 @@ export interface PermissionAlertProps {
 
 const PermissionAlert: React.FC<PermissionAlertProps> = ({ query }) => {
   const intl = useIntl();
-  const { data } = useQuery(IntrospectionQuery, {
+  const introQuery = getIntrospectionQuery();
+  const { data } = useQuery(gql(introQuery), {
     fetchPolicy: "network-only",
   });
-  const elements = data?.__schema?.types || [];
-  const permissionMapping = buildPermissionMap(elements);
-  const permissions = getPermissions(query, permissionMapping);
+  const permissions = getPermissions(query, data);
 
   return (
     <div data-test-id="permission-alert">
