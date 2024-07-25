@@ -29,7 +29,7 @@ export const ChannelStatus: React.FC<ChannelStatusProps> = ({
       </DashboardCard.Header>
 
       <DashboardCard.Content>
-        <Text fontWeight="medium" fontSize={3} color="default2">
+        <Text fontWeight="medium" fontSize={3} color="default2" display="block">
           <FormattedMessage id="+tIkAe" defaultMessage="Status" description="status" />
         </Text>
         <Text>

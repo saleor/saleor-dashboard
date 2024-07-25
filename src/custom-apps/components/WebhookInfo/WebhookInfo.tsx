@@ -37,7 +37,7 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({ data, disabled, errors, onCha
       </DashboardCard.Header>
 
       <DashboardCard.Content className={classes.card}>
-        <Text fontWeight="medium" fontSize={3}>
+        <Text fontWeight="medium" fontSize={3} display="block">
           {intl.formatMessage(commonMessages.generalInformations)}
         </Text>
         <FormSpacer />

@@ -12,7 +12,6 @@ import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe } from "../../../misc";
 import { translateVoucherTypes } from "../../translations";
 
 export interface VoucherSummaryProps extends ChannelProps {
@@ -35,15 +34,15 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({ selectedChannelId, vouc
         <Text fontWeight="medium" fontSize={3}>
           <FormattedMessage id="bcf60I" defaultMessage="Applies to" description="voucher" />
         </Text>
-        <Text>
-          {maybe<React.ReactNode>(() => translatedVoucherTypes[voucher.type], <Skeleton />)}
+        <Text display="block">
+          {voucher?.type ? translatedVoucherTypes[voucher.type] : <Skeleton />}
         </Text>
         <FormSpacer />
 
         <Text size={2} fontWeight="light">
           <FormattedMessage id="JV+EiM" defaultMessage="Value" description="voucher value" />
         </Text>
-        <Text>
+        <Text display="block">
           {voucher ? (
             voucher.discountValueType === DiscountValueTypeEnum.FIXED && channel?.discountValue ? (
               <Money
@@ -69,24 +68,16 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({ selectedChannelId, vouc
         <Text size={2} fontWeight="light">
           {intl.formatMessage(commonMessages.startDate)}
         </Text>
-        <Text>
-          {maybe<React.ReactNode>(
-            () => (
-              <Date date={voucher.startDate} plain />
-            ),
-            <Skeleton />,
-          )}
+        <Text display="block">
+          {voucher?.startDate ? <Date date={voucher.startDate} plain /> : <Skeleton />}
         </Text>
         <FormSpacer />
 
         <Text size={2} fontWeight="light">
           {intl.formatMessage(commonMessages.endDate)}
         </Text>
-        <Text>
-          {maybe<React.ReactNode>(
-            () => (voucher.endDate === null ? "-" : <Date date={voucher.endDate} plain />),
-            <Skeleton />,
-          )}
+        <Text display="block">
+          {voucher?.endDate ? <Date date={voucher.endDate} plain /> : "-"}
         </Text>
 
         <CardSpacer />
@@ -100,7 +91,7 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({ selectedChannelId, vouc
             description="voucher value requirement"
           />
         </Text>
-        <Text>
+        <Text display="block">
           {voucher ? channel?.minSpent ? <Money money={channel.minSpent} /> : "-" : <Skeleton />}
         </Text>
         <FormSpacer />
@@ -112,17 +103,12 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({ selectedChannelId, vouc
             description="voucher value requirement"
           />
         </Text>
-        <Text>
-          {maybe<React.ReactNode>(
-            () => (voucher.usageLimit === null ? "-" : voucher.usageLimit),
-            <Skeleton />,
-          )}
-        </Text>
+        <Text display="block">{voucher?.usageLimit ? voucher.usageLimit : "-"}</Text>
         <FormSpacer />
         <Text size={2} fontWeight="light">
           <FormattedMessage id="h65vZI" defaultMessage="Used" description="times voucher used" />
         </Text>
-        <Text>{voucher?.used ?? <Skeleton />}</Text>
+        <Text display="block">{voucher?.used ?? <Skeleton />}</Text>
       </DashboardCard.Content>
     </DashboardCard>
   );
