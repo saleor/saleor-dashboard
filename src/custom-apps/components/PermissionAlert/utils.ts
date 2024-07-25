@@ -47,9 +47,9 @@ export const extractPermissions = (description?: string) => {
 
 export const getPermissions = (
   query: string,
-  schema: IntrospectionQuery,
+  introspectionQuery: IntrospectionQuery,
 ): SubscriptionQueryPermission => {
-  return extractPermissionsFromQuery(query, schema);
+  return extractPermissionsFromQuery(query, introspectionQuery);
 };
 
 const extractSubscriptions = (
@@ -66,8 +66,8 @@ const extractSubscriptions = (
     return acc as GraphQLObjectType[];
   }, []);
 
-const getSubscriptions = (typeMap: TypeMap) => {
-  return Object.keys(typeMap).reduce((acc, key) => {
+const getSubscriptions = (typeMap: TypeMap) =>
+  Object.keys(typeMap).reduce((acc, key) => {
     const type = typeMap[key] as GraphQLObjectType;
 
     if (type instanceof GraphQLObjectType) {
@@ -81,7 +81,6 @@ const getSubscriptions = (typeMap: TypeMap) => {
 
     return acc;
   }, []);
-};
 
 function getDescriptionsFromQuery(query: string, schema: GraphQLSchema) {
   const descriptions: { [key: string]: string } = {};
@@ -123,12 +122,12 @@ function getDescriptionsFromQuery(query: string, schema: GraphQLSchema) {
 
 const extractPermissionsFromQuery = (
   query: string,
-  _schema: IntrospectionQuery,
+  introspectionQuery: IntrospectionQuery,
 ): SubscriptionQueryPermission => {
   let permissions: SubscriptionQueryPermission;
 
   try {
-    const schema = buildClientSchema(_schema);
+    const schema = buildClientSchema(introspectionQuery);
     const descriptions = getDescriptionsFromQuery(query, schema);
 
     const _permissions = Object.keys(descriptions).reduce((acc, key) => {

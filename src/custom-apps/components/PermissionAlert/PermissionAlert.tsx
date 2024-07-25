@@ -60,12 +60,12 @@ const PermissionAlert: React.FC<PermissionAlertProps> = ({ query }) => {
                           description: "alert message",
                         })}
                   </Text>
-                  {permissions.map(_permission => (
+                  {permissions.map(permission => (
                     <Chip
-                      key={_permission}
+                      key={permission}
                       backgroundColor={isOneOfRequired ? "warning1" : "critical1"}
                     >
-                      {_permission}
+                      {permission}
                     </Chip>
                   ))}
                 </Box>
