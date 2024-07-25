@@ -14,9 +14,10 @@ describe("useQuickOrderSearch", () => {
   it("invokes search query", () => {
     // Arrange
     const { result } = renderHook(() => useQuickOrderSearch());
+    const [, setQueryDebounced] = result.current;
 
     // Act
-    act(() => result.current[1]("1234"));
+    act(() => setQueryDebounced("1234"));
 
     // Assert
     expect(useSearchOrdersByNumberQuery).toHaveBeenCalledWith({
