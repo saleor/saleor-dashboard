@@ -93,7 +93,7 @@ const ProductTypeDetails: React.FC<ProductTypeDetailsProps> = props => {
                   )}
                 </Text>
                 {option.subtitle && (
-                  <Text color="default2" size={2} fontWeight="light">
+                  <Text color="default2" size={2} fontWeight="light" display="block">
                     <FormattedMessage {...option.subtitle} />
                   </Text>
                 )}

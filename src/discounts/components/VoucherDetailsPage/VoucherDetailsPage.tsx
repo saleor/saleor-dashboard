@@ -349,7 +349,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                         defaultMessage: "Countries",
                         description: "voucher country range",
                       })}
-                      <Text size={2} fontWeight="light">
+                      <Text size={2} fontWeight="light" display="block">
                         <FormattedMessage
                           id="glT6fm"
                           defaultMessage="Voucher is limited to these countries"
