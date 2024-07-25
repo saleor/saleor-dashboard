@@ -21,10 +21,12 @@ export class AppPage extends BasePage {
         this.deleteAppDialog = new DeleteDialog(page);
     }
 
-    async goToExistingAppPage(appId: string) {
-        const appUrl = URL_LIST.apps + appId;
-        await this.page.goto(appUrl);
-    }
+  async goToExistingAppPage(appId: string) {
+    const appUrl = URL_LIST.apps + appId;
+
+    await this.page.goto(appUrl);
+    await this.pageHeader.waitFor({ state: "visible", timeout: 10000 });
+  }
 
     async clickAppSettingsButton() {
         await this.appSettingsButton.click();

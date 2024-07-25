@@ -1,29 +1,59 @@
-import { APIRequestContext, test as setup } from "@playwright/test";
 import { BasicApiService } from "@api/basics";
-import fs from 'fs';
-import path from 'path';
-import { USER_PERMISSION, UserPermissionType, permissions } from "@data/userPermissions";
+import { permissions, USER_PERMISSION } from "@data/userPermissions";
+import { APIRequestContext, expect, test as setup } from "@playwright/test";
+import fs from "fs";
+import path from "path";
 
-setup.describe.configure({ mode: 'serial' });
+setup.describe.configure({ mode: "serial" });
 
-const authenticateAndSaveState = async (request: APIRequestContext, email: string, password: string, filePath: string) => {
+const removeAuthFolder = () => {
+  const authDir = path.join(__dirname, "../.auth");
 
-    const basicApiService = new BasicApiService(request);
-    await basicApiService.logInUserViaApi({ email, password });
+  if (fs.existsSync(authDir)) {
+    fs.rmSync(authDir, { recursive: true });
+    console.log(".auth folder removed");
+  }
+};
 
-    const loginJsonInfo = await request.storageState();
+setup.beforeAll(() => {
+  removeAuthFolder();
+});
 
+const authenticateAndSaveState = async (
+  request: APIRequestContext,
+  email: string,
+  password: string,
+  filePath: string,
+) => {
+  const basicApiService = new BasicApiService(request);
 
-    loginJsonInfo.origins.push({
-        origin: process.env.BASE_URL!,
-        localStorage: [
-            {
-                name: "_saleorRefreshToken",
-                value: loginJsonInfo.cookies[0].value,
-            }
-        ]
-    });
-    fs.writeFileSync(filePath, JSON.stringify(loginJsonInfo, null, 2));
+  const loginResponse = await basicApiService.logInUserViaApi({ email, password });
+  const errors = loginResponse.data.tokenCreate.errors;
+
+  if (
+    setup.info().title ===
+    "TC: SALEOR_137 Admin User should be able to deactivate other user @e2e @staff-members"
+  ) {
+    await expect(errors[0].code).toEqual("INACTIVE");
+  } else {
+    await expect(errors).toEqual([]);
+  }
+
+  const loginJsonInfo = await request.storageState();
+
+  loginJsonInfo.origins = [
+    {
+      origin: process.env.BASE_URL!,
+      localStorage: [
+        {
+          name: "_saleorRefreshToken",
+          value: loginResponse.data.tokenCreate.refreshToken,
+        },
+      ],
+    },
+  ];
+
+  fs.writeFileSync(filePath, JSON.stringify(loginJsonInfo, null, 2));
 };
 
 const authSetup = async (request: APIRequestContext, email: string, password: string, fileName: string) => {
@@ -42,11 +72,12 @@ setup("Authenticate as admin via API", async ({ request }) => {
     await authSetup(request, process.env.E2E_USER_NAME!, process.env.E2E_USER_PASSWORD!, 'admin.json');
 });
 
-const user: UserPermissionType = USER_PERMISSION;
-const password: string = process.env.E2E_PERMISSIONS_USERS_PASSWORD!;
+setup("Authenticate permission users via API", async ({ request }) => {
+  for (const permission of permissions) {
+    const email = USER_PERMISSION[permission];
+    const password = process.env.E2E_PERMISSIONS_USERS_PASSWORD!;
+    const fileName = `${permission}.json`;
 
-for (const permission of permissions) {
-    setup(`Authenticate as ${permission} user via API`, async ({ request }) => {
-        await authSetup(request, user[permission], password, `${permission}.json`);
-    });
-}
+    await authSetup(request, email, password, fileName);
+  }
+});

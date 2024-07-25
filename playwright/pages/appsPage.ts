@@ -33,6 +33,7 @@ export class AppsPage extends BasePage {
 
   async gotoAppsList() {
     await this.page.goto(URL_LIST.apps);
+    await this.waitForDOMToFullyLoad();
   }
 
   async typeManifestUrl(manifestUrl: string) {
