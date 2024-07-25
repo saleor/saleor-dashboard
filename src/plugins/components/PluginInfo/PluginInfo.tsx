@@ -5,7 +5,7 @@ import Hr from "@dashboard/components/Hr";
 import { PluginErrorCode, PluginErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import getPluginErrorMessage from "@dashboard/utils/errors/plugins";
-import { Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -35,25 +35,27 @@ const PluginInfo: React.FC<PluginInfoProps> = ({ data, description, errors, name
         </DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <Text lineHeight={2} fontSize={3} color="default2">
-          {intl.formatMessage({
-            id: "IUeGzv",
-            defaultMessage: "Plugin Name",
-            description: "plugin name",
-          })}
-        </Text>
-        <Text display="block" fontWeight="bold" fontSize={4}>
-          {name}
-        </Text>
+        <Box>
+          <Text lineHeight={2} fontSize={3} color="default2">
+            {intl.formatMessage({
+              id: "IUeGzv",
+              defaultMessage: "Plugin Name",
+              description: "plugin name",
+            })}
+          </Text>
+          <Text display="block" fontWeight="bold" fontSize={4}>
+            {name}
+          </Text>
+        </Box>
         {description && (
-          <>
+          <Box marginTop={4}>
             <Text fontSize={3} color="default2">
               <FormattedMessage {...commonMessages.description} />
             </Text>
             <Text display="block" fontSize={4}>
               {description}
             </Text>
-          </>
+          </Box>
         )}
         <FormSpacer />
         <Hr />
