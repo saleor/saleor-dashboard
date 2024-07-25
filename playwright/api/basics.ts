@@ -1,4 +1,4 @@
-import { APIRequestContext, expect } from "@playwright/test";
+import { APIRequestContext } from "@playwright/test";
 
 interface User {
   email: string;
@@ -50,8 +50,6 @@ export class BasicApiService {
       data: { query },
     });
     const loginResponseJson = await loginResponse.json();
-
-    expect(loginResponseJson.data.tokenCreate.errors).toEqual([]);
 
     return loginResponseJson;
   }

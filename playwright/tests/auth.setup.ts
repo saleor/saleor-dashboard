@@ -1,6 +1,6 @@
 import { BasicApiService } from "@api/basics";
-import { permissions, USER_PERMISSION, UserPermissionType } from "@data/userPermissions";
-import { APIRequestContext, test as setup } from "@playwright/test";
+import { permissions, USER_PERMISSION } from "@data/userPermissions";
+import { APIRequestContext, expect, test as setup } from "@playwright/test";
 import fs from "fs";
 import path from "path";
 
@@ -28,6 +28,16 @@ const authenticateAndSaveState = async (
   const basicApiService = new BasicApiService(request);
 
   const loginResponse = await basicApiService.logInUserViaApi({ email, password });
+  const errors = loginResponse.data.tokenCreate.errors;
+
+  if (
+    setup.info().title ===
+    "TC: SALEOR_137 Admin User should be able to deactivate other user @e2e @staff-members"
+  ) {
+    await expect(errors[0].code).toEqual("INACTIVE");
+  } else {
+    await expect(errors).toEqual([]);
+  }
 
   const loginJsonInfo = await request.storageState();
 
