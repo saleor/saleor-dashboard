@@ -19,8 +19,8 @@ import {
   TableBody,
   TableCell,
   TextField,
-  Typography,
 } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -80,9 +80,9 @@ const ShippingZoneCountriesAssignDialog: React.FC<
                 <FormattedMessage {...messages.assignCountriesTitle} />
               </DialogTitle>
               <DialogContent>
-                <Typography>
+                <Text>
                   <FormattedMessage {...messages.assignCountriesDescription} />
-                </Typography>
+                </Text>
                 <FormSpacer />
                 <TextField
                   name="query"
@@ -98,9 +98,9 @@ const ShippingZoneCountriesAssignDialog: React.FC<
                 <FormSpacer />
                 {restWorldCountries.length > 0 && (
                   <>
-                    <Typography variant="subtitle1">
+                    <Text fontSize={3}>
                       <FormattedMessage {...messages.quickPickSubtitle} />
-                    </Typography>
+                    </Text>
                     <FormSpacer />
                     <ResponsiveTable className={classes.table}>
                       <TableBody>
@@ -111,9 +111,9 @@ const ShippingZoneCountriesAssignDialog: React.FC<
                         >
                           <TableCell className={classes.wideCell}>
                             <FormattedMessage {...messages.restOfTheWorldCheckbox} />
-                            <Typography variant="caption">
+                            <Text size={2} fontWeight="light">
                               <FormattedMessage {...messages.restOfTheWorldCheckboxDescription} />
-                            </Typography>
+                            </Text>
                           </TableCell>
                           <TableCell padding="checkbox" className={classes.checkboxCell}>
                             <Checkbox name="restOfTheWorld" checked={isRestOfTheWorldSelected} />
@@ -124,9 +124,9 @@ const ShippingZoneCountriesAssignDialog: React.FC<
                     <FormSpacer />
                   </>
                 )}
-                <Typography variant="subtitle1">
+                <Text fontSize={3}>
                   <FormattedMessage {...messages.countriesSubtitle} />
-                </Typography>
+                </Text>
               </DialogContent>
               <DialogContent className={scrollableDialogClasses.scrollArea}>
                 <ResponsiveTable className={classes.table}>

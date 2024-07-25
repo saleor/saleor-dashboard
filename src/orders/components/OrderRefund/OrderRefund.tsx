@@ -1,6 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
-import {} from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";

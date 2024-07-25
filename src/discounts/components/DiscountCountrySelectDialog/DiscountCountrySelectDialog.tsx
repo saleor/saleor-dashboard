@@ -19,8 +19,8 @@ import {
   TableBody,
   TableCell,
   TextField,
-  Typography,
 } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -74,12 +74,12 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
                 />
               </DialogTitle>
               <DialogContent>
-                <Typography>
+                <Text>
                   <FormattedMessage
                     id="dWK/Ck"
                     defaultMessage="Choose countries, you want voucher to be limited to, from the list below"
                   />
-                </Typography>
+                </Text>
                 <FormSpacer />
                 <TextField
                   name="query"
@@ -100,13 +100,13 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
                 <FormSpacer />
                 <Hr />
                 <FormSpacer />
-                <Typography variant="subtitle1">
+                <Text fontSize={3}>
                   <FormattedMessage
                     id="wgA48T"
                     defaultMessage="Countries A to Z"
                     description="country selection"
                   />
-                </Typography>
+                </Text>
               </DialogContent>
               <DialogContent className={scrollableDialogClasses.scrollArea}>
                 <ResponsiveTable>

@@ -2,8 +2,7 @@ import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { PermissionGroupErrorCode, PermissionGroupErrorFragment } from "@dashboard/graphql";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
-import { Typography } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -61,7 +60,7 @@ const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
           }}
         />
       </Box>
-      {!!errorMessage && <Typography color="error">{errorMessage}</Typography>}
+      {!!errorMessage && <Text color="critical1">{errorMessage}</Text>}
     </ActionDialog>
   );
 };

@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import Debounce from "@dashboard/components/Debounce";
 import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
-import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { OrderFulfillLineFragment, WarehouseFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
@@ -16,7 +15,6 @@ import {
   RadioGroup,
   TableCell,
   TextField,
-  Typography,
 } from "@material-ui/core";
 import {
   Button,
@@ -25,7 +23,7 @@ import {
   SearchIcon,
   useElementScroll,
 } from "@saleor/macaw-ui";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -136,9 +134,9 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
           }}
         </Debounce>
 
-        <Typography className={classes.supportHeader}>
+        <Text textTransform="uppercase" fontWeight="medium" lineHeight={2}>
           <FormattedMessage {...messages.warehouseListLabel} />
-        </Typography>
+        </Text>
 
         <DialogTable ref={setAnchor}>
           {filteredWarehouses ? (
@@ -162,21 +160,21 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
                         label={
                           <div className={classes.radioLabelContainer}>
                             <span className={classes.warehouseName}>{warehouse.name}</span>
-                            <Typography className={classes.supportText}>
+                            <Text>
                               <FormattedMessage
                                 {...messages.productAvailability}
                                 values={{
                                   productCount: lineQuantityInWarehouse,
                                 }}
                               />
-                            </Typography>
+                            </Text>
                           </div>
                         }
                       />
                       {currentWarehouseId === warehouse?.id && (
-                        <Typography className={classes.helpText}>
+                        <Text display="inline-block" fontSize={3}>
                           <FormattedMessage {...messages.currentSelection} />
-                        </Typography>
+                        </Text>
                       )}
                     </TableCell>
                   </TableRowLink>

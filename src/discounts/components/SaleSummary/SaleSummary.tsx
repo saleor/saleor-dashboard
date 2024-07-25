@@ -5,11 +5,10 @@ import FormSpacer from "@dashboard/components/FormSpacer";
 import Hr from "@dashboard/components/Hr";
 import Money from "@dashboard/components/Money";
 import Percent from "@dashboard/components/Percent";
-import Skeleton from "@dashboard/components/Skeleton";
 import { SaleDetailsFragment, SaleType } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { ChannelProps } from "@dashboard/types";
-import { Typography } from "@material-ui/core";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -31,18 +30,18 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannelId, sale }) =>
         <DashboardCard.Title>{intl.formatMessage(commonMessages.summary)}</DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <Typography variant="caption">
+        <Text fontWeight="bold" fontSize={3}>
           <FormattedMessage id="F56hOz" defaultMessage="Name" description="sale name" />
-        </Typography>
-        <Typography className={classes.ellipsis}>
+        </Text>
+        <Text className={classes.ellipsis} display="block">
           {maybe<React.ReactNode>(() => sale.name, <Skeleton />)}
-        </Typography>
+        </Text>
         <FormSpacer />
 
-        <Typography variant="caption">
+        <Text fontWeight="bold" fontSize={3}>
           <FormattedMessage id="XZR590" defaultMessage="Value" description="sale value" />
-        </Typography>
-        <Typography>
+        </Text>
+        <Text display="block">
           {sale ? (
             sale.type === SaleType.FIXED && channel?.discountValue ? (
               <Money
@@ -59,34 +58,34 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannelId, sale }) =>
           ) : (
             <Skeleton />
           )}
-        </Typography>
+        </Text>
 
         <CardSpacer />
         <Hr />
         <CardSpacer />
 
-        <Typography variant="caption">
+        <Text fontWeight="bold" fontSize={3}>
           <FormattedMessage {...commonMessages.startDate} />
-        </Typography>
-        <Typography>
+        </Text>
+        <Text display="block">
           {maybe<React.ReactNode>(
             () => (
               <Date date={sale.startDate} plain />
             ),
             <Skeleton />,
           )}
-        </Typography>
+        </Text>
         <FormSpacer />
 
-        <Typography variant="caption">
+        <Text fontWeight="bold" fontSize={3}>
           <FormattedMessage {...commonMessages.endDate} />
-        </Typography>
-        <Typography>
+        </Text>
+        <Text display="block">
           {maybe<React.ReactNode>(
             () => (sale.endDate === null ? "-" : <Date date={sale.endDate} plain />),
             <Skeleton />,
           )}
-        </Typography>
+        </Text>
       </DashboardCard.Content>
     </DashboardCard>
   );

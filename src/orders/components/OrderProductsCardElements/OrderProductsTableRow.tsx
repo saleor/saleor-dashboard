@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import Money from "@dashboard/components/Money";
-import Skeleton from "@dashboard/components/Skeleton";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@dashboard/components/TableCellAvatar/Avatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -8,6 +7,7 @@ import { OrderDetailsFragment, OrderLineFragment } from "@dashboard/graphql";
 import { maybe } from "@dashboard/misc";
 import { TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 
 const useStyles = makeStyles(

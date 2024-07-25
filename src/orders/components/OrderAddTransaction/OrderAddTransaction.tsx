@@ -1,6 +1,5 @@
-import Skeleton from "@dashboard/components/Skeleton";
 import { OrderDetailsFragment } from "@dashboard/graphql";
-import { Box, Button, PlusIcon } from "@saleor/macaw-ui-next";
+import { Box, Button, PlusIcon, Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

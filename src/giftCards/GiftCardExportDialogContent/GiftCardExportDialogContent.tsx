@@ -11,7 +11,8 @@ import {
   exportSettingsInitialFormDataWithIds,
 } from "@dashboard/products/components/ProductExportDialog/types";
 import { DialogProps } from "@dashboard/types";
-import { DialogActions, DialogContent, DialogTitle, Typography } from "@material-ui/core";
+import { DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -117,9 +118,9 @@ const GiftCardExportDialog: React.FC<
                   all: allGiftCardsCount,
                 }}
               />
-              <Typography className={classes.note} variant="body2">
+              <Text className={classes.note} fontSize={3}>
                 {intl.formatMessage(messages.exportNote)}
-              </Typography>
+              </Text>
             </>
           )}
         </ContentWithProgress>

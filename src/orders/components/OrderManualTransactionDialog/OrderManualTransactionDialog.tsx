@@ -48,7 +48,6 @@ export const OrderManualTransactionDialog: React.FC<OrderManualTransactionDialog
               <OrderManualTransactionForm.PriceInputField
                 label={intl.formatMessage(manualTransactionMessages.transactionAmount)}
               />
-              <OrderManualTransactionForm.ErrorText />
 
               <DashboardModal.Actions>
                 <BackButton onClick={onClose} />

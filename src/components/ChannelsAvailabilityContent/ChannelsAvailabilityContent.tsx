@@ -2,7 +2,8 @@ import { Channel } from "@dashboard/channels/utils";
 import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
 import Hr from "@dashboard/components/Hr";
 import { fuzzySearch } from "@dashboard/misc";
-import { TextField, Typography } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -40,13 +41,13 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
   return (
     <div className={classes.content}>
       {!!contentType && (
-        <Typography className={classes.text} variant="caption">
+        <Text className={classes.text} size={2} fontWeight="light">
           <FormattedMessage
             id="tQuE1q"
             defaultMessage="Select channels you want for {contentType} to be available on"
             values={{ contentType }}
           />
-        </Typography>
+        </Text>
       )}
       <TextField
         name="query"
@@ -65,9 +66,9 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
               name="allChannels"
               label={
                 toggleAllText || (
-                  <Typography className={classes.label}>
+                  <Text className={classes.label}>
                     <FormattedMessage id="2/L4zZ" defaultMessage="Select all channels" />
-                  </Typography>
+                  </Text>
                 )
               }
               onChange={() => toggleAll(channels, selected)}
@@ -75,9 +76,9 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
             <Hr />
           </>
         )}
-        <Typography className={classes.contentTitle}>
+        <Text className={classes.contentTitle}>
           <FormattedMessage id="EWCUdP" defaultMessage="Channels A to Z" />
-        </Typography>
+        </Text>
         <div
           className={classes.scrollArea}
           data-test-id="manage-products-channels-availiability-list"
@@ -88,7 +89,7 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
                 <ControlledCheckbox
                   checked={isSelected(option)}
                   name={option.name}
-                  label={<Typography className={classes.label}>{option.name}</Typography>}
+                  label={<Text className={classes.label}>{option.name}</Text>}
                   onChange={() => onChange(option)}
                 />
                 <Hr />

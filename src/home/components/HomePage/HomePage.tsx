@@ -51,7 +51,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                 ) : !analitics.loading ? (
                   <Money money={analitics.data.sales} />
                 ) : (
-                  <Skeleton style={{ width: "5em" }} />
+                  <Skeleton width={10} height={3} />
                 )}
               </HomeAnalyticsCard>
               <HomeAnalyticsCard
@@ -63,7 +63,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                 ) : !notifications.loading ? (
                   notifications.data.productsOutOfStock
                 ) : (
-                  <Skeleton style={{ width: "5em" }} />
+                  <Skeleton width={16} height={3} />
                 )}
               </HomeAnalyticsCard>
             </Box>

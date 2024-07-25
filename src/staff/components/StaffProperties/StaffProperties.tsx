@@ -6,9 +6,9 @@ import { commonMessages } from "@dashboard/intl";
 import { getUserInitials } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getStaffErrorMessage from "@dashboard/utils/errors/staff";
-import { TextField, Typography } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui-next";
+import { Text, vars } from "@saleor/macaw-ui-next";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -154,28 +154,28 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
                 <img className={classes.avatarImage} src={staffMember.avatar.url} />
               ) : (
                 <div className={classes.avatarDefault}>
-                  <Typography>{getUserInitials(data)}</Typography>
+                  <Text>{getUserInitials(data)}</Text>
                 </div>
               )}
               {canEditAvatar && (
                 <div className={classes.avatarHover}>
                   <SVG src={photoIcon} />
-                  <Typography onClick={clickImgInput} className={classes.avatarActionText}>
+                  <Text onClick={clickImgInput} className={classes.avatarActionText}>
                     <FormattedMessage
                       id="+2VzH4"
                       defaultMessage="Change"
                       description="avatar change button"
                     />
-                  </Typography>
+                  </Text>
                   {hasAvatar && (
                     <>
-                      <Typography onClick={onImageDelete} className={classes.avatarActionText}>
+                      <Text onClick={onImageDelete} className={classes.avatarActionText}>
                         <FormattedMessage
                           id="11lR5V"
                           defaultMessage="Delete"
                           description="avatar delete button"
                         />
-                      </Typography>
+                      </Text>
                     </>
                   )}
                   <input
@@ -230,7 +230,7 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
       </DashboardCard.Content>
       {!!formErrors.id && (
         <DashboardCard.Content>
-          <Typography color="error">{getStaffErrorMessage(formErrors.id, intl)}</Typography>
+          <Text color="critical1">{getStaffErrorMessage(formErrors.id, intl)}</Text>
         </DashboardCard.Content>
       )}
     </DashboardCard>

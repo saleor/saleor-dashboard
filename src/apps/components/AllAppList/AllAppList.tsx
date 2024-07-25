@@ -1,7 +1,6 @@
 import { AppstoreApi } from "@dashboard/apps/appstore.types";
 import { AppInstallationFragment } from "@dashboard/graphql";
-import { Skeleton } from "@material-ui/lab";
-import { Box, useTheme } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import AppListRow from "../AppListRow";

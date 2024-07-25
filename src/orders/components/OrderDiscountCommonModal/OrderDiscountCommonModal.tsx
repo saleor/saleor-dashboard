@@ -8,8 +8,9 @@ import { DiscountValueTypeEnum, MoneyFragment } from "@dashboard/graphql";
 import { useUpdateEffect } from "@dashboard/hooks/useUpdateEffect";
 import { buttonMessages } from "@dashboard/intl";
 import { toFixed } from "@dashboard/utils/toFixed";
-import { TextField, Typography } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -265,7 +266,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
           currencySymbol={valueFieldSymbol}
         />
         <CardSpacer />
-        <Typography>{intl.formatMessage(messages.discountReasonLabel)}</Typography>
+        <Text>{intl.formatMessage(messages.discountReasonLabel)}</Text>
         <TextField
           className={classes.reasonInput}
           label={intl.formatMessage(messages.discountReasonLabel)}
