@@ -41,12 +41,12 @@ jobs:
     with:
       VERSION: ${{needs.get-environment-variables.outputs.VERSION}}
       CUSTOM_VERSION: ${{github.event.client_payload.custom_version }}
-      ADDITIONAL_TITLE: "Core automation test. !!!\n If tests fail, release PR in cloud deployments will not be created !!!"
+      ADDITIONAL_TITLE: "Core automation test"
     secrets: inherit
   
   add-tests-status-to-release-PR:
     needs: run-tests-on-release 
-    if: ${{ github.event.client_payload.project == 'CORE' }}
+    if: ${{ always() && github.event.client_payload.project == 'CORE' }}
     runs-on: ubuntu-22.04
     steps:
       - name: Open release PR
