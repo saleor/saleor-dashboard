@@ -11,6 +11,7 @@ const useStyles = makeStyles(
     buttonContainer: {
       display: "flex",
       justifyContent: "flex-end",
+      width: "100%",
     },
     header: {
       fontWeight: 700,
@@ -45,6 +46,7 @@ const useStyles = makeStyles(
     },
     passwordWrapper: {
       position: "relative",
+      width: "100%",
     },
     showPasswordBtn: {
       position: "absolute",

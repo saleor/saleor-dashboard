@@ -1,6 +1,5 @@
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
-import { Typography } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 interface PageSectionHeaderProps {
@@ -13,9 +12,17 @@ const PageSectionHeader: React.FC<PageSectionHeaderProps> = props => {
 
   return (
     <Box paddingTop={6}>
-      {title && <Typography variant="h5">{title}</Typography>}
+      {title && (
+        <Text size={3} fontWeight="bold" lineHeight={2}>
+          {title}
+        </Text>
+      )}
       {title && description && <VerticalSpacer />}
-      {description && <Typography variant="body2">{description}</Typography>}
+      {description && (
+        <Text size={3} fontWeight="regular">
+          {description}
+        </Text>
+      )}
     </Box>
   );
 };

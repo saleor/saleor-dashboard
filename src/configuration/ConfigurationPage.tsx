@@ -3,11 +3,10 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { UserFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
-import { Typography } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { makeStyles, NavigationCard } from "@saleor/macaw-ui";
-import { Box, vars } from "@saleor/macaw-ui-next";
+import { Box, Text, vars } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -103,7 +102,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
             .map((menu, menuIndex) => (
               <div className={classes.configurationCategory} key={menuIndex}>
                 <div className={classes.configurationLabel}>
-                  <Typography>{menu.label}</Typography>
+                  <Text>{menu.label}</Text>
                 </div>
                 <div className={classes.configurationItem}>
                   {menu.menuItems

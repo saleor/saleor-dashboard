@@ -4,15 +4,9 @@ import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
 import { commonMessages } from "@dashboard/intl";
 import { DialogProps, MinMax } from "@dashboard/types";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -57,12 +51,12 @@ const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDia
         {({ change, data }) => (
           <>
             <DialogContent>
-              <Typography className={classes.info}>
+              <Text className={classes.info}>
                 <FormattedMessage
                   id="8InCjD"
                   defaultMessage="Please provide range of postal codes you want to add to the include/exclude list."
                 />
-              </Typography>
+              </Text>
               <Grid variant="uniform">
                 <TextField
                   data-test-id="zip-code-starts-with-input"

@@ -1,5 +1,4 @@
-import Skeleton from "@dashboard/components/Skeleton";
-import { Box, BoxProps, Text } from "@saleor/macaw-ui-next";
+import { Box, BoxProps, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 

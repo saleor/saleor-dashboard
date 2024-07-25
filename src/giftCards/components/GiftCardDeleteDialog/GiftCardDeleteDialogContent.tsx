@@ -4,7 +4,8 @@ import { GiftCardsListConsumerProps } from "@dashboard/giftCards/GiftCardsList/p
 import { ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
 import { GiftCardDataFragment } from "@dashboard/graphql";
 import { getById } from "@dashboard/misc";
-import { CircularProgress, Typography } from "@material-ui/core";
+import { CircularProgress, DialogContentText } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -92,11 +93,13 @@ function GiftCardDeleteDialogContent<TGiftCard extends DeleteDialogContentGiftCa
           })}
         />
       ) : (
-        <Typography>
-          {intl.formatMessage(messages.defaultDescription, {
-            selectedItemsCount,
-          })}
-        </Typography>
+        <DialogContentText>
+          <Text>
+            {intl.formatMessage(messages.defaultDescription, {
+              selectedItemsCount,
+            })}
+          </Text>
+        </DialogContentText>
       )}
     </ActionDialog>
   );

@@ -15,9 +15,8 @@ import { pageTypeListUrl } from "@dashboard/pageTypes/urls";
 import { ListActions, ReorderEvent } from "@dashboard/types";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Option, sprinkles } from "@saleor/macaw-ui-next";
+import { Box, Option, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -115,13 +114,13 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
                 })}
               >
                 <Box paddingTop={6}>
-                  <Typography>{intl.formatMessage(commonMessages.generalInformations)}</Typography>
-                  <Typography variant="body2">
+                  <Text>{intl.formatMessage(commonMessages.generalInformations)}</Text>
+                  <Text size={3} fontWeight="regular">
                     <FormattedMessage
                       id="kZfIl/"
                       defaultMessage="These are general information about this Content Type."
                     />
-                  </Typography>
+                  </Text>
                 </Box>
                 <PageTypeDetails
                   data={data}
@@ -131,19 +130,19 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
                 />
                 <Hr className={classes.hr} />
                 <div>
-                  <Typography>
+                  <Text>
                     <FormattedMessage
                       id="iQxjow"
                       defaultMessage="Content Attributes"
                       description="section header"
                     />
-                  </Typography>
-                  <Typography variant="body2">
+                  </Text>
+                  <Text size={3} fontWeight="regular">
                     <FormattedMessage
                       id="lct0qd"
                       defaultMessage="This list shows all attributes that will be assigned to pages that have this page type assigned."
                     />
-                  </Typography>
+                  </Text>
                 </div>
                 <PageTypeAttributes
                   attributes={pageType?.attributes}
@@ -158,13 +157,13 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
                 />
                 <Hr className={classes.hr} />
                 <div>
-                  <Typography>
+                  <Text>
                     <FormattedMessage
                       id="OVOU1z"
                       defaultMessage="Metadata"
                       description="section header"
                     />
-                  </Typography>
+                  </Text>
                 </div>
                 <Metadata data={data} onChange={changeMetadata} />
               </Grid>

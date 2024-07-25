@@ -7,9 +7,9 @@ import {
   MenuList,
   Paper,
   Popper,
-  Typography,
 } from "@material-ui/core";
 import { IconButtonProps, makeStyles, SettingsIcon } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
@@ -185,15 +185,15 @@ const CardMenu: React.FC<CardMenuProps> = props => {
                       >
                         {menuItem.loading ? (
                           <>
-                            <Typography variant="subtitle1">
+                            <Text fontSize={3}>
                               <FormattedMessage {...messages.cardMenuItemLoading} />
-                            </Typography>
+                            </Text>
                             <CircularProgress size={24} />
                           </>
                         ) : (
-                          <Typography>
+                          <Text>
                             {showMenuIcon && menuItem.Icon} {menuItem.label}
-                          </Typography>
+                          </Text>
                         )}
                       </div>
                     </MenuItem>

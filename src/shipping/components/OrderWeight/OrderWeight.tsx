@@ -7,7 +7,8 @@ import { ChangeEvent } from "@dashboard/hooks/useForm";
 import useShop from "@dashboard/hooks/useShop";
 import { getShippingWeightRateErrorMessage } from "@dashboard/shipping/errors";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { InputAdornment, TextField, Typography } from "@material-ui/core";
+import { InputAdornment, TextField } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -58,13 +59,13 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
                 defaultMessage="Restrict order weight"
                 description="checkbox label"
               />
-              <Typography variant="caption">
+              <Text size={2} fontWeight="light">
                 <FormattedMessage
                   id="7v8suW"
                   defaultMessage="This rate will apply to all orders"
                   description="info text"
                 />
-              </Typography>
+              </Text>
             </>
           }
           checked={orderValueRestricted}
@@ -95,7 +96,7 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
                   inputProps: { min: 0 },
                   endAdornment: (
                     <InputAdornment position="end">
-                      <Typography>{shop?.defaultWeightUnit}</Typography>
+                      <Text>{shop?.defaultWeightUnit}</Text>
                     </InputAdornment>
                   ),
                 }}
@@ -118,7 +119,7 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
                   inputProps: { min: minValue },
                   endAdornment: (
                     <InputAdornment position="end">
-                      <Typography>{shop?.defaultWeightUnit}</Typography>
+                      <Text>{shop?.defaultWeightUnit}</Text>
                     </InputAdornment>
                   ),
                 }}

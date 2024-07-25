@@ -1,8 +1,9 @@
 // @ts-strict-ignore
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { TableCell, TableHead as MuiTableHead, Typography } from "@material-ui/core";
+import { TableCell, TableHead as MuiTableHead } from "@material-ui/core";
 import { TableHeadProps as MuiTableHeadProps } from "@material-ui/core/TableHead";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -107,7 +108,7 @@ const TableHead: React.FC<TableHeadProps> = props => {
             >
               <div className={classes.container}>
                 {selected && (
-                  <Typography data-test-id="SelectedText">
+                  <Text data-test-id="SelectedText">
                     <FormattedMessage
                       id="qu/hXD"
                       defaultMessage="Selected {number} items"
@@ -115,7 +116,7 @@ const TableHead: React.FC<TableHeadProps> = props => {
                         number: selected,
                       }}
                     />
-                  </Typography>
+                  </Text>
                 )}
                 <div className={classes.spacer} />
                 {toolbar && (

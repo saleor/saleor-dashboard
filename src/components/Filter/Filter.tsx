@@ -1,8 +1,8 @@
 // @ts-strict-ignore
-import { ClickAwayListener, Grow, Popper, Typography } from "@material-ui/core";
+import { ClickAwayListener, Grow, Popper } from "@material-ui/core";
 import { alpha } from "@material-ui/core/styles";
 import { Button, makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui-next";
+import { Text, vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React, { useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";
@@ -127,9 +127,9 @@ const Filter: React.FC<FilterProps> = props => {
           data-test-id="show-filters-button"
           variant="secondary"
         >
-          <Typography className={classes.addFilterText}>
+          <Text className={classes.addFilterText}>
             <FormattedMessage id="FNpv6K" defaultMessage="Filters" description="button" />
-          </Typography>
+          </Text>
           {isFilterActive && selectedFilterAmount > 0 && <>({selectedFilterAmount})</>}
         </Button>
         <Popper

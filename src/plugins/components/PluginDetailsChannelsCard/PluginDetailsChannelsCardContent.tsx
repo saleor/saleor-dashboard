@@ -1,11 +1,10 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
-import Skeleton from "@dashboard/components/Skeleton";
 import { PluginsDetailsFragment } from "@dashboard/graphql";
 import { isPluginGlobal } from "@dashboard/plugins/views/utils";
-import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -72,7 +71,7 @@ const PluginDetailsChannelsCardContent: React.FC<PluginDetailsChannelsCardProps>
           >
             {isChannelSelected(channel.id) && <div className={classes.itemActiveIndicator}></div>}
             <DashboardCard.Content>
-              <Typography>{channel.name}</Typography>
+              <Text>{channel.name}</Text>
             </DashboardCard.Content>
           </div>
         )}

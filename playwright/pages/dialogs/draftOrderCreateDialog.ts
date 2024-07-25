@@ -25,4 +25,10 @@ export class DraftOrderCreateDialog {
     await this.channelOption.first().click();
     await this.clickConfirmButton();
   }
+
+  async completeDraftOrderCreateDialogWithSpecificChannel(channel: string) {
+    await this.expandChannelsSearchList();
+    await this.channelOption.filter({ hasText: channel }).first().click();
+    await this.clickConfirmButton();
+  }
 }

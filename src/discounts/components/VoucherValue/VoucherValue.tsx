@@ -4,7 +4,6 @@ import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
 import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { ChannelInput } from "@dashboard/discounts/handlers";
@@ -13,8 +12,8 @@ import { DiscountErrorFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
-import { TableBody, TableCell, Typography } from "@material-ui/core";
-import { Input, Text } from "@saleor/macaw-ui-next";
+import { TableBody, TableCell } from "@material-ui/core";
+import { Input, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -168,12 +167,12 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
                 defaultMessage="Apply only to a single cheapest eligible product"
                 description="voucher application, switch button"
               />
-              <Typography variant="caption">
+              <Text size={2} fontWeight="light">
                 <FormattedMessage
                   id="ObRk1O"
                   defaultMessage="If this option is disabled, discount will be counted for every eligible product"
                 />
-              </Typography>
+              </Text>
             </>
           }
           checked={data.applyOncePerOrder}

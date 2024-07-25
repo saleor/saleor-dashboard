@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import Skeleton from "@dashboard/components/Skeleton";
+
 import { useStyles } from "@dashboard/custom-apps/components/WebhookEvents/styles";
 import { useQuery } from "@dashboard/hooks/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -12,6 +12,7 @@ import {
   ListItemCell,
   useListWidths,
 } from "@saleor/macaw-ui";
+import { Skeleton } from "@saleor/macaw-ui-next";
 import camelCase from "lodash/camelCase";
 import React from "react";
 import { useIntl } from "react-intl";

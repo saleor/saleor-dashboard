@@ -18,8 +18,8 @@ import { DialogProps, FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import getExportErrorMessage from "@dashboard/utils/errors/export";
 import { toggle } from "@dashboard/utils/lists";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
-import { Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@material-ui/core";
-import { Option } from "@saleor/macaw-ui-next";
+import { Dialog, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
+import { Option, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -250,9 +250,9 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
         {notFormErrors.length > 0 && (
           <DialogContent>
             {notFormErrors.map(err => (
-              <Typography color="error" key={err.field + err.code}>
+              <Text color="critical1" key={err.field + err.code}>
                 {getExportErrorMessage(err, intl)}
-              </Typography>
+              </Text>
             ))}
           </DialogContent>
         )}

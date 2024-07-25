@@ -11,7 +11,8 @@ import {
   getOrderLineAvailableQuantity,
   OrderFulfillStockFormsetData,
 } from "@dashboard/orders/utils/data";
-import { TableBody, TableCell, TableHead, Typography } from "@material-ui/core";
+import { TableBody, TableCell, TableHead } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -53,7 +54,7 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
         confirmButtonLabel={intl.formatMessage(messages.fulfillButton)}
         size="lg"
       >
-        <Typography>{intl.formatMessage(messages.infoLabel)}</Typography>
+        <Text>{intl.formatMessage(messages.infoLabel)}</Text>
         <CardSpacer />
         <div className={classes.scrollable}>
           <ResponsiveTable className={classes.table}>
@@ -91,7 +92,7 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
           </ResponsiveTable>
         </div>
         <CardSpacer />
-        <Typography>{intl.formatMessage(messages.questionLabel)}</Typography>
+        <Text>{intl.formatMessage(messages.questionLabel)}</Text>
       </ActionDialog>
     </>
   );
