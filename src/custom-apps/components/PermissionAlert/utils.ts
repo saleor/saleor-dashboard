@@ -13,7 +13,7 @@ import { TypeMap } from "graphql/type/schema";
 type SubscriptionQueryPermission = Record<
   string,
   {
-    isOptional: boolean;
+    isOneOfRequired: boolean;
     permissions: string[];
   }
 >;
@@ -35,11 +35,12 @@ const tokenTree = (token: DocumentNode["loc"]["startToken"], tokens: string[] = 
 // separated and independant, yet easily accessible
 export const extractPermissions = (description?: string) => {
   const match = (description || "").match(/following permissions(.*): (.*?)\./);
-  const isOptional = (description || "").includes("one of");
+  // We're assuming that if there is no "one of" then all permissions are required
+  const isOneOfRequired = (description || "").includes("one of");
   const permissions = match ? match[2].split(",") : [];
 
   return {
-    isOptional,
+    isOneOfRequired,
     permissions: permissions.map(permission => permission.trim()),
   };
 };
@@ -131,10 +132,10 @@ const extractPermissionsFromQuery = (
     const descriptions = getDescriptionsFromQuery(query, schema);
 
     const _permissions = Object.keys(descriptions).reduce((acc, key) => {
-      const { isOptional, permissions } = extractPermissions(descriptions[key]);
+      const { isOneOfRequired, permissions } = extractPermissions(descriptions[key]);
 
       if (permissions.length > 0) {
-        acc[key] = { isOptional, permissions };
+        acc[key] = { isOneOfRequired, permissions };
       }
 
       return acc;

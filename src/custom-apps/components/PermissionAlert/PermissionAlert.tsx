@@ -34,38 +34,43 @@ const PermissionAlert: React.FC<PermissionAlertProps> = ({ query }) => {
           className="remove-icon-background"
         >
           <Box display="flex" flexDirection="column" gap={2}>
-            {Object.entries(permissionInfo).map(([subscription, { isOptional, permissions }]) => (
-              <Box key={subscription} display="flex" gap={1}>
-                <Text>
-                  {intl.formatMessage({
-                    id: "0YjGFG",
-                    defaultMessage: "For subscription",
-                    description: "alert message",
-                  })}
-                </Text>
-                <Chip color="info1" backgroundColor="info1">
-                  {subscription}
-                </Chip>
-                <Text>
-                  {isOptional
-                    ? intl.formatMessage({
-                        id: "I/y4IU",
-                        defaultMessage: "one of",
-                        description: "alert message",
-                      })
-                    : intl.formatMessage({
-                        defaultMessage: "all of",
-                        id: "C+WD8j",
-                        description: "alert message",
-                      })}
-                </Text>
-                {permissions.map(_permission => (
-                  <Chip key={_permission} backgroundColor={isOptional ? "warning1" : "critical1"}>
-                    {_permission}
+            {Object.entries(permissionInfo).map(
+              ([subscription, { isOneOfRequired, permissions }]) => (
+                <Box key={subscription} display="flex" gap={1}>
+                  <Text>
+                    {intl.formatMessage({
+                      id: "0YjGFG",
+                      defaultMessage: "For subscription",
+                      description: "alert message",
+                    })}
+                  </Text>
+                  <Chip color="info1" backgroundColor="info1">
+                    {subscription}
                   </Chip>
-                ))}
-              </Box>
-            ))}
+                  <Text>
+                    {isOneOfRequired
+                      ? intl.formatMessage({
+                          id: "I/y4IU",
+                          defaultMessage: "one of",
+                          description: "alert message",
+                        })
+                      : intl.formatMessage({
+                          defaultMessage: "all of",
+                          id: "C+WD8j",
+                          description: "alert message",
+                        })}
+                  </Text>
+                  {permissions.map(_permission => (
+                    <Chip
+                      key={_permission}
+                      backgroundColor={isOneOfRequired ? "warning1" : "critical1"}
+                    >
+                      {_permission}
+                    </Chip>
+                  ))}
+                </Box>
+              ),
+            )}
           </Box>
         </Alert>
       )}
