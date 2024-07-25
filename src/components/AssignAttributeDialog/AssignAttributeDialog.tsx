@@ -172,7 +172,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
                       </TableCell>
                       <TableCell className={classes.wideCell}>
                         {attribute.name}
-                        <Text size={2} fontWeight="light">
+                        <Text size={2} fontWeight="light" display="block">
                           {attribute.slug}
                         </Text>
                       </TableCell>
