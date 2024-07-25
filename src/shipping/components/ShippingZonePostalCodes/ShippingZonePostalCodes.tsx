@@ -147,7 +147,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
                       description="action"
                     />
                   </Text>
-                  <Text color="default2" size={2} fontWeight="light">
+                  <Text color="default2" size={2} fontWeight="light" display="block">
                     <FormattedMessage
                       id="/Zee1r"
                       defaultMessage="Only added postal codes will be able to use this shipping rate"
