@@ -35,7 +35,7 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({ selectedChannelId, vouc
           <FormattedMessage id="bcf60I" defaultMessage="Applies to" description="voucher" />
         </Text>
         <Text display="block">
-          {(voucher && translatedVoucherTypes[voucher.type]) ?? <Skeleton />}
+          {voucher?.type ? translatedVoucherTypes[voucher.type] : <Skeleton />}
         </Text>
         <FormSpacer />
 
