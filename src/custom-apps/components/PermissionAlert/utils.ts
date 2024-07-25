@@ -10,6 +10,14 @@ import {
 } from "graphql";
 import { TypeMap } from "graphql/type/schema";
 
+type SubscriptionQueryPermission = Record<
+  string,
+  {
+    isOptional: boolean;
+    permissions: string[];
+  }
+>;
+
 const tokenTree = (token: DocumentNode["loc"]["startToken"], tokens: string[] = []) => {
   if (token.next) {
     tokens.push(token.value);
@@ -27,12 +35,19 @@ const tokenTree = (token: DocumentNode["loc"]["startToken"], tokens: string[] = 
 // separated and independant, yet easily accessible
 export const extractPermissions = (description?: string) => {
   const match = (description || "").match(/following permissions(.*): (.*?)\./);
+  const isOptional = (description || "").includes("one of");
   const permissions = match ? match[2].split(",") : [];
 
-  return permissions;
+  return {
+    isOptional,
+    permissions: permissions.map(permission => permission.trim()),
+  };
 };
 
-export const getPermissions = (query: string, schema: IntrospectionQuery) => {
+export const getPermissions = (
+  query: string,
+  schema: IntrospectionQuery,
+): SubscriptionQueryPermission => {
   return extractPermissionsFromQuery(query, schema);
 };
 
@@ -67,7 +82,6 @@ const getSubscriptions = (typeMap: TypeMap) => {
   }, []);
 };
 
-// Function to get descriptions of tokens in the query
 function getDescriptionsFromQuery(query: string, schema: GraphQLSchema) {
   const descriptions: { [key: string]: string } = {};
   const ast = parse(query);
@@ -106,22 +120,27 @@ function getDescriptionsFromQuery(query: string, schema: GraphQLSchema) {
   return descriptions;
 }
 
-const extractPermissionsFromQuery = (query: string, _schema: IntrospectionQuery) => {
-  let permissions: string[] = [];
+const extractPermissionsFromQuery = (
+  query: string,
+  _schema: IntrospectionQuery,
+): SubscriptionQueryPermission => {
+  let permissions: SubscriptionQueryPermission;
 
   try {
     const schema = buildClientSchema(_schema);
     const descriptions = getDescriptionsFromQuery(query, schema);
 
-    permissions = Object.keys(descriptions).reduce((acc, key) => {
-      const permission = extractPermissions(descriptions[key]);
+    const _permissions = Object.keys(descriptions).reduce((acc, key) => {
+      const { isOptional, permissions } = extractPermissions(descriptions[key]);
 
-      if (permission.length > 0) {
-        return [...acc, ...permission];
+      if (permissions.length > 0) {
+        acc[key] = { isOptional, permissions };
       }
 
       return acc;
-    }, []);
+    }, {});
+
+    permissions = _permissions;
   } catch (error) {
     // explicit silent
   }

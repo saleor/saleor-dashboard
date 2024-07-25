@@ -17,11 +17,12 @@ const PermissionAlert: React.FC<PermissionAlertProps> = ({ query }) => {
   const { data } = useQuery(gql(introQuery), {
     fetchPolicy: "network-only",
   });
-  const permissions = getPermissions(query, data);
+  const permissionInfo = getPermissions(query, data);
+  const hasPermissions = permissionInfo && Object.entries(permissionInfo);
 
   return (
     <div data-test-id="permission-alert">
-      {permissions.length > 0 && (
+      {hasPermissions && (
         <Alert
           title={intl.formatMessage({
             id: "ngSJ7N",
@@ -32,11 +33,38 @@ const PermissionAlert: React.FC<PermissionAlertProps> = ({ query }) => {
           close={false}
           className="remove-icon-background"
         >
-          <Box display="flex" gap={2}>
-            {permissions.map(permission => (
-              <Chip size="small" key={permission}>
-                <Text size={1}>{permission}</Text>
-              </Chip>
+          <Box display="flex" flexDirection="column" gap={2}>
+            {Object.entries(permissionInfo).map(([subscription, { isOptional, permissions }]) => (
+              <Box key={subscription} display="flex" gap={1}>
+                <Text>
+                  {intl.formatMessage({
+                    id: "0YjGFG",
+                    defaultMessage: "For subscription",
+                    description: "alert message",
+                  })}
+                </Text>
+                <Chip color="info1" backgroundColor="info1">
+                  {subscription}
+                </Chip>
+                <Text>
+                  {isOptional
+                    ? intl.formatMessage({
+                        id: "I/y4IU",
+                        defaultMessage: "one of",
+                        description: "alert message",
+                      })
+                    : intl.formatMessage({
+                        defaultMessage: "all of",
+                        id: "C+WD8j",
+                        description: "alert message",
+                      })}
+                </Text>
+                {permissions.map(_permission => (
+                  <Chip key={_permission} backgroundColor={isOptional ? "warning1" : "critical1"}>
+                    {_permission}
+                  </Chip>
+                ))}
+              </Box>
             ))}
           </Box>
         </Alert>
