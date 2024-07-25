@@ -5,7 +5,6 @@ import Hr from "@dashboard/components/Hr";
 import { PluginErrorCode, PluginErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import getPluginErrorMessage from "@dashboard/utils/errors/plugins";
-import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -20,20 +19,7 @@ interface PluginInfoProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const useStyles = makeStyles(
-  () => ({
-    status: {
-      paddingTop: 20,
-    },
-    title: {
-      fontSize: 14,
-      paddingTop: 10,
-    },
-  }),
-  { name: "PluginInfo" },
-);
 const PluginInfo: React.FC<PluginInfoProps> = ({ data, description, errors, name, onChange }) => {
-  const classes = useStyles({});
   const intl = useIntl();
   const misconfiguredError = errors.find(err => err.code === PluginErrorCode.PLUGIN_MISCONFIGURED);
 
@@ -49,25 +35,29 @@ const PluginInfo: React.FC<PluginInfoProps> = ({ data, description, errors, name
         </DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <Text className={classes.title} fontWeight="bold" lineHeight={2}>
+        <Text lineHeight={2} fontSize={3} color="default2">
           {intl.formatMessage({
             id: "IUeGzv",
             defaultMessage: "Plugin Name",
             description: "plugin name",
           })}
         </Text>
-        <Text>{name}</Text>
+        <Text display="block" fontWeight="bold" fontSize={4}>
+          {name}
+        </Text>
         {description && (
           <>
-            <Text className={classes.title} fontWeight="bold" lineHeight={2}>
+            <Text fontSize={3} color="default2">
               <FormattedMessage {...commonMessages.description} />
             </Text>
-            <Text>{description}</Text>
+            <Text display="block" fontSize={4}>
+              {description}
+            </Text>
           </>
         )}
         <FormSpacer />
         <Hr />
-        <Text className={classes.status}>
+        <Text display="block" paddingTop={4}>
           {intl.formatMessage({
             id: "bL/Wrc",
             defaultMessage: "Status",

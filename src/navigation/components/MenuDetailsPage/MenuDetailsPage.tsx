@@ -94,7 +94,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
                   <Text size={3} fontWeight="bold" lineHeight={2}>
                     {intl.formatMessage(sectionNames.navigation)}
                   </Text>
-                  <Text>
+                  <Text display="block">
                     <FormattedMessage
                       id="E54eoT"
                       defaultMessage="Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy"
