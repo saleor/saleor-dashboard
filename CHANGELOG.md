@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.20.3
+
+### Patch Changes
+
+- bd8fc8757: You can run e2e test for an order type discount in a draft order
+- b39b04c50: Text in Dashboard now is aligned and is displayed correctly
+
 ## 3.20.2
 
 ### Patch Changes
