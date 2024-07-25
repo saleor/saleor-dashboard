@@ -6,6 +6,19 @@ import path from "path";
 
 setup.describe.configure({ mode: "serial" });
 
+const removeAuthFolder = () => {
+  const authDir = path.join(__dirname, "../.auth");
+
+  if (fs.existsSync(authDir)) {
+    fs.rmSync(authDir, { recursive: true });
+    console.log(".auth folder removed");
+  }
+};
+
+setup.beforeAll(() => {
+  removeAuthFolder();
+});
+
 const authenticateAndSaveState = async (
   request: APIRequestContext,
   email: string,
@@ -46,7 +59,9 @@ const authSetup = async (
 
   const tempFilePath = path.join(tempDir, fileName);
 
-  await authenticateAndSaveState(request, email, password, tempFilePath);
+  if (!fs.existsSync(tempFilePath)) {
+    await authenticateAndSaveState(request, email, password, tempFilePath);
+  }
 };
 
 setup("Authenticate as admin via API", async ({ request }) => {

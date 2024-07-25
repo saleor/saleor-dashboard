@@ -1,4 +1,3 @@
-import { URL_LIST } from "@data/url";
 import { permissions } from "@data/userPermissions";
 import { AppDetailsPage } from "@pages/appDetailsPage";
 import { AppPage } from "@pages/appPageThirdparty";
@@ -12,7 +11,7 @@ const permissionList = permissions.filter(item => item !== permissionToExclude);
 
 for (const permission of permissionList) {
   test.use({ storageState: `playwright/.auth/${permission}.json` });
-  test(`TC: SALEOR_131 User with ${permission} permissions should have readonly access to Apps @e2e @appp`, async ({
+  test(`TC: SALEOR_131 User with ${permission} permissions should have readonly access to Apps @e2e @app`, async ({
     page,
   }) => {
     const home = new HomePage(page);

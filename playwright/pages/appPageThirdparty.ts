@@ -26,6 +26,7 @@ export class AppPage extends BasePage {
     const appUrl = URL_LIST.apps + appId;
 
     await this.page.goto(appUrl);
+    await this.pageHeader.waitFor({ state: "visible", timeout: 10000 });
   }
 
   async clickAppSettingsButton() {
