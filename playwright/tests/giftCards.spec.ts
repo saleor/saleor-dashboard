@@ -134,3 +134,4 @@ test("TC: SALEOR_183 Export gift card codes in CSV file @e2e @gift", async () =>
     "Your exported gift cards data is ready",
   );
 });
+});

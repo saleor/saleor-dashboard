@@ -372,6 +372,7 @@ const promotionsWithRules = [
   DISCOUNTS.orderPromotionWithRulesToBeDeleted,
   DISCOUNTS.catalogPromotionWithRulesToBeDeleted,
 ];
+
 for (const promotion of promotionsWithRules) {
   for (const rule of promotion.rules) {
     test(`TC: SALEOR_167 Delete promotion ${rule.name} from ${promotion.type} promotion @discounts @e2e`, async () => {
@@ -394,5 +395,6 @@ for (const promotion of promotionsWithRules) {
         `${promotion.type}: ${rule.name}`,
       );
     });
-  }
-}
+  };
+};
+});

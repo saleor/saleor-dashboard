@@ -115,7 +115,7 @@ export class RightSideDetailsPage extends BasePage {
     this.clickWarehouseSelectShippingPage();
   }
   async clickChannelsSelectShippingPage() {
-    await this.selectChannelShippingPageButton.click();
+    await this.selectChannelShippingPageButton.click({force: true});
   }
   async selectSingleChannelShippingPage(channel = "PLN") {
     await this.selectOption.filter({ hasText: `Channel-${channel}` }).click();
