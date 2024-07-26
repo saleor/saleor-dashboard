@@ -102,7 +102,6 @@ test("TC: SALEOR_111 Bulk delete gift cards @e2e @gift", async () => {
   }
 });
 test("TC: SALEOR_181 Set gift card balance @e2e @gift", async () => {
-test("TC: SALEOR_181 Set gift card balance @e2e @gift", async () => {
   await giftCardsPage.gotoExistingGiftCardView(GIFT_CARDS.giftCardToBeEdited.id);
   await giftCardsPage.clickSetBalance();
   await giftCardsPage.setGiftCardsBalanceDialog.setBalance("34");
@@ -133,5 +132,4 @@ test("TC: SALEOR_183 Export gift card codes in CSV file @e2e @gift", async () =>
     process.env.E2E_USER_NAME!,
     "Your exported gift cards data is ready",
   );
-});
 });

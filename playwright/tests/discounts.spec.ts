@@ -43,7 +43,6 @@ for (const type of discountType) {
 }
 
 test(`TC: SALEOR_151 Update existing promotion @discounts @e2e`, async () => {
-test(`TC: SALEOR_151 Update existing promotion @discounts @e2e`, async () => {
   const newDiscountName = `${faker.lorem.word()}`;
 
   await discounts.waitForNetworkIdleAfterAction(() =>
@@ -397,4 +396,3 @@ for (const promotion of promotionsWithRules) {
     });
   };
 };
-});

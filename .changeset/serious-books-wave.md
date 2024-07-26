@@ -1,5 +1,5 @@
 ---
-"saleor-dashboard": minor
+"saleor-dashboard": patch
 ---
 
-Changed e2e test case ids to remove duplicate case ids and fix inconsistencies between repo and Testmo. Thanks to this, our QA reports will be more accurate
+You can now run E2E tests on 3.19 with no issues
