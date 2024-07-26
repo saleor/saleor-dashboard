@@ -1,6 +1,6 @@
 import { FieldType, FilterElementGeneric } from "@dashboard/components/Filter";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import { FetchMoreProps, KeyValue, MinMax, SearchPageProps } from "@dashboard/types";
+import { Option } from "@saleor/macaw-ui-next";
 
 export function createPriceField<K extends string = string>(
   name: K,
@@ -82,7 +82,7 @@ export function createOptionsField<K extends string>(
   label: string,
   defaultValue: string[],
   multiple: boolean,
-  options: MultiAutocompleteChoiceType[],
+  options: Option[],
 ): FilterElementGeneric<K, FieldType.options> {
   return {
     active: false,
@@ -99,9 +99,9 @@ export function createAutocompleteField<K extends string>(
   name: K,
   label: string,
   defaultValue: string[] = [],
-  displayValues: MultiAutocompleteChoiceType[],
+  displayValues: Option[],
   multiple: boolean,
-  options: MultiAutocompleteChoiceType[],
+  options: Option[],
   opts: FetchMoreProps & SearchPageProps,
   id?: string,
 ): FilterElementGeneric<K, FieldType.autocomplete> {

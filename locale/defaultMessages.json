@@ -934,9 +934,6 @@
     "context": "Transaction capture button - charge preauthorized transaction amount",
     "string": "Capture"
   },
-  "450Fty": {
-    "string": "None"
-  },
   "45aV8u": {
     "context": "gift card bulk create modal bottom explanation",
     "string": "After creation Saleor will create a list of gift card codes that you will be able to download."

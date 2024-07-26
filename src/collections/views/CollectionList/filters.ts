@@ -4,9 +4,9 @@ import {
   CollectionListFilterOpts,
 } from "@dashboard/collections/components/CollectionListPage";
 import { FilterElement, FilterElementRegular } from "@dashboard/components/Filter";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import { CollectionFilterInput, CollectionPublished } from "@dashboard/graphql";
 import { findValueInEnum, maybe } from "@dashboard/misc";
+import { Option } from "@saleor/macaw-ui-next";
 
 import {
   createFilterTabUtils,
@@ -24,7 +24,7 @@ export const COLLECTION_FILTERS_KEY = "collectionFilters";
 
 export function getFilterOpts(
   params: CollectionListUrlFilters,
-  channels: SingleAutocompleteChoiceType[],
+  channels: Option[],
 ): CollectionListFilterOpts {
   return {
     channel: {

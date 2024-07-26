@@ -2,17 +2,17 @@
 import { FormChange } from "@dashboard/hooks/useForm";
 import ArrowDropdown from "@dashboard/icons/ArrowDropdown";
 import { ClickAwayListener, MenuItem, Paper, Popper } from "@material-ui/core";
+import { Option } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { codes } from "keycode";
 import React from "react";
 
 import Link from "../Link";
-import { SingleAutocompleteChoiceType } from "../SingleAutocompleteSelectField";
 import { useStyles } from "./styles";
 
 export interface LinkChoiceProps {
   className?: string;
-  choices: SingleAutocompleteChoiceType[];
+  choices: Option[];
   name?: string;
   value: string;
   onChange: FormChange;

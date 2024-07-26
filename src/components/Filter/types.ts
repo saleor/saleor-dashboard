@@ -1,8 +1,8 @@
 import { PermissionEnum } from "@dashboard/graphql";
 import { FetchMoreProps, KeyValue, SearchPageProps } from "@dashboard/types";
+import { Option } from "@saleor/macaw-ui-next";
 import { MessageDescriptor } from "react-intl";
 
-import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
 import { FilterDispatchFunction } from "./useFilter";
 
 export enum FieldType {
@@ -20,7 +20,7 @@ export enum FieldType {
 interface FilterElementCommonData {
   active: boolean;
   multiple: boolean;
-  options?: MultiAutocompleteChoiceType[];
+  options?: Option[];
 }
 
 export interface KeyValueFilterElementData {
@@ -48,7 +48,7 @@ export type IFilterElementMutableDataGeneric<T extends FieldType> = T extends Fi
 
 type FilterElementCommon<K extends string = string> = {
   autocomplete?: boolean;
-  displayValues?: MultiAutocompleteChoiceType[];
+  displayValues?: Option[];
   group?: K;
   label: string;
   name: K;
