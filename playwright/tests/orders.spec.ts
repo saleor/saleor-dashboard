@@ -335,7 +335,7 @@ for (const refund of orderRefunds) {
     await expect(ordersPage.orderRefundList).not.toContainText(refund.status);
   });
 }
-test(`TC: SALEOR_215 Inline discount is applied in a draft order @draft @discounts @e2e`, async page => {
+test(`TC: SALEOR_215 Inline discount is applied in a draft order @draft @discounts @e2e`, async () => {
   test.slow();
 
   const discountedProduct = PRODUCTS.productWithDiscountChannelPLN;
