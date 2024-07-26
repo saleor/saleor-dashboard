@@ -405,7 +405,7 @@ export const PRODUCTS = {
     ],
   },
   productWithPriceHigherThan20: {
-    id: "HJvZHVjdDo2NA==",
+    id: "UHJvZHVjdDoxMjE=",
     name: "Ocean Poems",
     variantSKU: "ocean-poems-mp3",
     price: 22,
@@ -419,7 +419,7 @@ export const PRODUCTS = {
     name: "Power Juice",
   },
   productWithDiscountChannelPLN: {
-    id: "UHJvZHVjdDo3NzA=",
+    id: "UHJvZHVjdDo3NzE=",
     name: "e2e-do-not-touch",
     rewardPercentageDiscountValue: 40,
     variant: {
@@ -436,7 +436,7 @@ export const ORDERS = {
     ids: ["#3266", "#3265"],
   },
   draftOrderChannelPLN: {
-    id: "T3JkZXI6Zjg0NTk3N2EtM2Y3Yy00NDY3LWI3N2MtZDY0ZjhhMDU2MmQy",
+    id: "T3JkZXI6ZGZjMDRjOTEtNDYyNy00Y2FhLWE5MzAtYTA5ZTE1MTlkODI1",
     productInBasket: {
       productName: "Black Hoodie",
       price: 20,
