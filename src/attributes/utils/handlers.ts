@@ -234,7 +234,7 @@ export const prepareAttributesInput = ({
   return attributes.reduce((attrInput: AttributeValueInput[], attr) => {
     const prevAttrValue = prevAttributesMap.get(attr.id);
 
-    if (isEqual(attr.value, prevAttrValue)) {
+    if (isEqual(attr.value, prevAttrValue) && !attr.data.isRequired) {
       return attrInput;
     }
 
@@ -243,7 +243,7 @@ export const prepareAttributesInput = ({
     if (inputType === AttributeInputTypeEnum.FILE) {
       const fileInput = getFileInput(attr, updatedFileAttributes);
 
-      if (fileInput.file) {
+      if (fileInput.file || attr.data.isRequired) {
         attrInput.push(fileInput);
       }
 
@@ -254,7 +254,7 @@ export const prepareAttributesInput = ({
       const booleanInput = getBooleanInput(attr);
 
       // previous comparison doesn't work because value was string
-      if (isEqual([booleanInput.boolean], prevAttrValue)) {
+      if (isEqual([booleanInput.boolean], prevAttrValue) && !attr.data.isRequired) {
         return attrInput;
       }
 
