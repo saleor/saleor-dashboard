@@ -11,7 +11,6 @@ import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { Savebar } from "@dashboard/components/Savebar";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   AllocationStrategyEnum,
   ChannelDetailsFragment,
@@ -35,6 +34,7 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
+import { Option } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -51,7 +51,7 @@ import { ChannelShippingZones, ChannelWarehouses } from "./types";
 
 export interface ChannelDetailsPageProps<TErrors extends ChannelErrorFragment[]> {
   channel?: ChannelDetailsFragment;
-  currencyCodes?: SingleAutocompleteChoiceType[];
+  currencyCodes?: Option[];
   disabled: boolean;
   disabledStatus?: boolean;
   errors: ChannelErrorFragment[];

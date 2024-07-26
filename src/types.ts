@@ -1,9 +1,9 @@
 import { FetchResult, MutationResult } from "@apollo/client";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { UserPermissionFragment } from "@dashboard/graphql";
+import { Option } from "@saleor/macaw-ui-next";
 
 import { FilterElement, IFilter } from "./components/Filter";
-import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
 
 export interface UserError {
   field: string | null;
@@ -237,8 +237,8 @@ export interface FilterOpts<T> {
 }
 
 export interface AutocompleteFilterOpts extends Partial<FetchMoreProps>, Partial<SearchPageProps> {
-  choices: MultiAutocompleteChoiceType[];
-  displayValues: MultiAutocompleteChoiceType[];
+  choices: Option[];
+  displayValues: Option[];
 }
 
 export type Ids = string[];
