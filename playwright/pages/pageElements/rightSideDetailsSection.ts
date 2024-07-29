@@ -92,7 +92,8 @@ export class RightSideDetailsPage extends BasePage {
     await this.editShippingAddressButton.click();
   }
   async clickWarehouseSelectShippingPage() {
-    await this.selectWarehouseShippingMethodButton.click();
+    await this.selectWarehouseShippingMethodButton.waitFor({ state: "visible" });
+    await this.selectWarehouseShippingMethodButton.click({ force: true });
   }
   async expectOptionsSelected(section: Locator, names: string[]) {
     for (const name of names) {
@@ -115,11 +116,11 @@ export class RightSideDetailsPage extends BasePage {
     this.clickWarehouseSelectShippingPage();
   }
   async clickChannelsSelectShippingPage() {
-    await this.selectChannelShippingPageButton.click();
+    await this.selectChannelShippingPageButton.waitFor({ state: "visible" });
+    await this.selectChannelShippingPageButton.click({ force: true });
   }
   async selectSingleChannelShippingPage(channel = "PLN") {
     await this.selectOption.filter({ hasText: `Channel-${channel}` }).click();
-    // below click hides prompted options
     this.clickChannelsSelectShippingPage();
   }
   async openChannelsDialog() {
@@ -189,6 +190,7 @@ export class RightSideDetailsPage extends BasePage {
     await this.channelSelectDialog.clickAllChannelsCheckbox();
     await this.channelSelectDialog.selectChannel(channel);
     await this.channelSelectDialog.clickConfirmButton();
+    await this.waitForDOMToFullyLoad();
   }
   async selectOneChannelAsAvailableWhenNoneSelected(channel: string) {
     await this.manageChannelsButton.click();
