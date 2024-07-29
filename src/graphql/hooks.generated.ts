@@ -6419,42 +6419,48 @@ export function useChannelListLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type ChannelListQueryHookResult = ReturnType<typeof useChannelListQuery>;
 export type ChannelListLazyQueryHookResult = ReturnType<typeof useChannelListLazyQuery>;
 export type ChannelListQueryResult = Apollo.QueryResult<Types.ChannelListQuery, Types.ChannelListQueryVariables>;
-export const CheckIfOrderExistsDocument = gql`
-    query CheckIfOrderExists($id: ID!) {
-  order(id: $id) {
-    id
-    status
+export const SearchOrdersByNumberDocument = gql`
+    query SearchOrdersByNumber($first: Int!, $query: [String!]) {
+  orders(first: $first, filter: {numbers: $query}) {
+    edges {
+      node {
+        id
+        number
+        status
+      }
+    }
   }
 }
     `;
 
 /**
- * __useCheckIfOrderExistsQuery__
+ * __useSearchOrdersByNumberQuery__
  *
- * To run a query within a React component, call `useCheckIfOrderExistsQuery` and pass it any options that fit your needs.
- * When your component renders, `useCheckIfOrderExistsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useSearchOrdersByNumberQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchOrdersByNumberQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useCheckIfOrderExistsQuery({
+ * const { data, loading, error } = useSearchOrdersByNumberQuery({
  *   variables: {
- *      id: // value for 'id'
+ *      first: // value for 'first'
+ *      query: // value for 'query'
  *   },
  * });
  */
-export function useCheckIfOrderExistsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.CheckIfOrderExistsQuery, Types.CheckIfOrderExistsQueryVariables>) {
+export function useSearchOrdersByNumberQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchOrdersByNumberQuery, Types.SearchOrdersByNumberQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.CheckIfOrderExistsQuery, Types.CheckIfOrderExistsQueryVariables>(CheckIfOrderExistsDocument, options);
+        return ApolloReactHooks.useQuery<Types.SearchOrdersByNumberQuery, Types.SearchOrdersByNumberQueryVariables>(SearchOrdersByNumberDocument, options);
       }
-export function useCheckIfOrderExistsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CheckIfOrderExistsQuery, Types.CheckIfOrderExistsQueryVariables>) {
+export function useSearchOrdersByNumberLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchOrdersByNumberQuery, Types.SearchOrdersByNumberQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.CheckIfOrderExistsQuery, Types.CheckIfOrderExistsQueryVariables>(CheckIfOrderExistsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SearchOrdersByNumberQuery, Types.SearchOrdersByNumberQueryVariables>(SearchOrdersByNumberDocument, options);
         }
-export type CheckIfOrderExistsQueryHookResult = ReturnType<typeof useCheckIfOrderExistsQuery>;
-export type CheckIfOrderExistsLazyQueryHookResult = ReturnType<typeof useCheckIfOrderExistsLazyQuery>;
-export type CheckIfOrderExistsQueryResult = Apollo.QueryResult<Types.CheckIfOrderExistsQuery, Types.CheckIfOrderExistsQueryVariables>;
+export type SearchOrdersByNumberQueryHookResult = ReturnType<typeof useSearchOrdersByNumberQuery>;
+export type SearchOrdersByNumberLazyQueryHookResult = ReturnType<typeof useSearchOrdersByNumberLazyQuery>;
+export type SearchOrdersByNumberQueryResult = Apollo.QueryResult<Types.SearchOrdersByNumberQuery, Types.SearchOrdersByNumberQueryVariables>;
 export const SearchCatalogDocument = gql`
     query SearchCatalog($first: Int!, $query: String!) {
   categories(first: $first, filter: {search: $query}) {
