@@ -4,7 +4,6 @@ import {
   mergeChoicesWithValues,
 } from "@dashboard/attributes/utils/data";
 import { AttributeInput, VariantAttributeScope } from "@dashboard/components/Attributes";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   ProductDetailsVariantFragment,
   ProductFragment,
@@ -19,6 +18,7 @@ import {
 import { FormsetAtomicData } from "@dashboard/hooks/useFormset";
 import { maybe } from "@dashboard/misc";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
+import { Option } from "@saleor/macaw-ui-next";
 import moment from "moment";
 
 import { ProductStockInput } from "../components/ProductStocks";
@@ -183,7 +183,7 @@ export function getCollectionInput(
   );
 }
 
-export function getChoices(nodes: Node[]): SingleAutocompleteChoiceType[] {
+export function getChoices(nodes: Node[]): Option[] {
   return maybe(
     () =>
       nodes.map(node => ({

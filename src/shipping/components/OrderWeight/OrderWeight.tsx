@@ -59,7 +59,7 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
                 defaultMessage="Restrict order weight"
                 description="checkbox label"
               />
-              <Text size={2} fontWeight="light">
+              <Text size={2} fontWeight="light" display="block">
                 <FormattedMessage
                   id="7v8suW"
                   defaultMessage="This rate will apply to all orders"

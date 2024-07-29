@@ -1,5 +1,4 @@
 import { IFilter } from "@dashboard/components/Filter";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import { OrderStatusFilter, PaymentChargeStatusEnum } from "@dashboard/graphql";
 import {
   commonMessages,
@@ -15,6 +14,7 @@ import {
   createOptionsField,
   createTextField,
 } from "@dashboard/utils/filters/fields";
+import { Option } from "@saleor/macaw-ui-next";
 import { defineMessages, IntlShape } from "react-intl";
 
 export enum OrderFilterKeys {
@@ -39,7 +39,7 @@ export interface OrderListFilterOpts {
   customer: FilterOpts<string>;
   status: FilterOpts<OrderStatusFilter[]>;
   paymentStatus: FilterOpts<PaymentChargeStatusEnum[]>;
-  channel: FilterOpts<string[]> & { choices: SingleAutocompleteChoiceType[] };
+  channel: FilterOpts<string[]> & { choices: Option[] };
   clickAndCollect: FilterOpts<boolean>;
   preorder: FilterOpts<boolean>;
   giftCard: FilterOpts<OrderFilterGiftCard[]>;
