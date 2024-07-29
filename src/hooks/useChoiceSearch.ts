@@ -1,8 +1,8 @@
-import { Choice } from "@dashboard/components/SingleSelectField";
 import { fuzzySearch } from "@dashboard/misc";
+import { Option } from "@saleor/macaw-ui-next";
 import { useMemo, useState } from "react";
 
-function useChoiceSearch(choices: Array<Choice<string, string>>) {
+function useChoiceSearch(choices: Option[]) {
   const [query, setQuery] = useState("");
   const sortedChoices = useMemo(
     () => fuzzySearch(choices, query, ["label"]) || [],

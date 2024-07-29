@@ -70,7 +70,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                   defaultMessage="Restrict order value"
                   description="checkbox label"
                 />
-                <Text size={2} fontWeight="light">
+                <Text size={2} fontWeight="light" display="block">
                   {intl.formatMessage({
                     id: "aZDHYr",
                     defaultMessage: "This rate will apply to all orders",

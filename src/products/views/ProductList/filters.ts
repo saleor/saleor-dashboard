@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
 import { createProductQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import { FlagValue } from "@dashboard/featureFlags/FlagContent";
 import {
   AttributeFragment,
@@ -30,6 +29,7 @@ import {
 } from "@dashboard/products/components/ProductListPage";
 import { RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems, mapNodeToChoice, mapSlugNodeToChoice } from "@dashboard/utils/maps";
+import { Option } from "@saleor/macaw-ui-next";
 
 import {
   FilterElement,
@@ -121,8 +121,8 @@ export function getFilterOpts(
     initial: RelayToFlat<InitialProductFilterProductTypesQuery["productTypes"]>;
     search: UseSearchResult<SearchProductTypesQuery, SearchProductTypesQueryVariables>;
   },
-  productKind: SingleAutocompleteChoiceType[],
-  channels: SingleAutocompleteChoiceType[],
+  productKind: Option[],
+  channels: Option[],
 ): ProductListFilterOpts {
   return {
     attributes: mapAttributeParamsToFilterOpts(attributes, params),

@@ -167,7 +167,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
                 defaultMessage="Apply only to a single cheapest eligible product"
                 description="voucher application, switch button"
               />
-              <Text size={2} fontWeight="light">
+              <Text size={2} fontWeight="light" display="block" color="default2">
                 <FormattedMessage
                   id="ObRk1O"
                   defaultMessage="If this option is disabled, discount will be counted for every eligible product"

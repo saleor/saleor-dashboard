@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import { AddressTypeInput } from "@dashboard/customers/types";
 import { AddressFragment, CountryWithCodeFragment, Node } from "@dashboard/graphql";
 import useForm, {
@@ -10,6 +9,7 @@ import useForm, {
 } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
+import { Option } from "@saleor/macaw-ui-next";
 import React, { useEffect, useState } from "react";
 
 export enum AddressInputOptionEnum {
@@ -54,7 +54,7 @@ interface UseOrderCustomerAddressesEditFormResult
 }
 
 interface UseOrderCustomerAddressesEditFormOpts {
-  countryChoices: SingleAutocompleteChoiceType[];
+  countryChoices: Option[];
   countries: CountryWithCodeFragment[];
   defaultShippingAddress: Node;
   defaultBillingAddress: Node;

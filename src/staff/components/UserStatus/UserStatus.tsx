@@ -24,7 +24,9 @@ const AppStatus: React.FC<AppStatusProps> = ({ data, disabled, label, onChange }
         <DashboardCard.Title>{intl.formatMessage(messages.userStatus)}</DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <Text fontSize={3}>{intl.formatMessage(messages.userDisableInstruction)}</Text>
+        <Text fontSize={3} display="block">
+          {intl.formatMessage(messages.userDisableInstruction)}
+        </Text>
         <ControlledCheckbox
           data-test-id="is-active-checkbox"
           checked={data.isActive}
