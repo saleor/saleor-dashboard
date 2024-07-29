@@ -11,11 +11,11 @@ import { emptyDropdownCellValue } from "@dashboard/components/Datagrid/customCel
 import { numberCellEmptyValue } from "@dashboard/components/Datagrid/customCells/NumberCell";
 import { DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { Choice } from "@dashboard/components/SingleSelectField";
 import { ProductDetailsVariantFragment } from "@dashboard/graphql";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { GridCell } from "@glideapps/glide-data-grid";
+import { Option } from "@saleor/macaw-ui-next";
 import { MutableRefObject } from "react";
 
 import {
@@ -77,7 +77,7 @@ interface GetDataOrError {
   channels: ChannelData[];
   added: number[];
   removed: number[];
-  searchAttributeValues: (id: string, text: string) => Promise<Array<Choice<string, string>>>;
+  searchAttributeValues: (id: string, text: string) => Promise<Option[]>;
   getChangeIndex: (column: string, row: number) => number;
 }
 
