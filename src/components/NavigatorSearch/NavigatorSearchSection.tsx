@@ -56,7 +56,7 @@ const NavigatorSearchSection: React.FC<NavigatorSearchSectionProps> = props => {
               <Text size={3}>{item.label}</Text>
 
               {item.caption && (
-                <Text size={2} marginLeft={2}>
+                <Text size={2} marginLeft={2} color="default2">
                   {item.caption}
                 </Text>
               )}
