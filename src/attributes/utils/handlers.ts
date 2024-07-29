@@ -319,6 +319,17 @@ export const prepareAttributesInput = ({
       return attrInput;
     }
 
+    if (inputType === AttributeInputTypeEnum.NUMERIC) {
+      const isEmpty = attr.value[0] === undefined || attr.value[0] === null;
+
+      attrInput.push({
+        id: attr.id,
+        values: isEmpty ? [] : attr.value,
+      });
+
+      return attrInput;
+    }
+
     attrInput.push({
       id: attr.id,
       values: attr.value,
