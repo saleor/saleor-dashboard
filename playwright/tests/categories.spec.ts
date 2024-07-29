@@ -9,7 +9,6 @@ let categoriesPage: CategoriesPage;
 test.beforeEach(({ page }) => {
   categoriesPage = new CategoriesPage(page);
 });
-
 test("TC: SALEOR_102 Create basic category @e2e @category", async () => {
   await categoriesPage.gotoCategoryListView();
   await categoriesPage.waitForDOMToFullyLoad();
@@ -21,7 +20,6 @@ test("TC: SALEOR_102 Create basic category @e2e @category", async () => {
   await categoriesPage.clickSaveButton();
   await categoriesPage.expectSuccessBanner();
 });
-
 test("TC: SALEOR_103 Edit category @e2e @category", async () => {
   await categoriesPage.gotoExistingCategoriesPage(
     CATEGORIES.categoryToBeUpdated.id,
@@ -35,7 +33,6 @@ test("TC: SALEOR_103 Edit category @e2e @category", async () => {
     "beer to be updated",
   );
 });
-
 test("TC: SALEOR_104 Bulk delete categories @e2e @category", async () => {
   await categoriesPage.gotoCategoryListView();
   await categoriesPage.waitForDOMToFullyLoad();
@@ -52,3 +49,4 @@ test("TC: SALEOR_104 Bulk delete categories @e2e @category", async () => {
     `Given categories: ${CATEGORIES.categoriesToBeBulkDeleted.names} should be deleted from the list`,
   ).toEqual([]);
 });
+

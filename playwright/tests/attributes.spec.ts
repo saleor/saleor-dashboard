@@ -1,5 +1,5 @@
-import { AttributesPage } from "@pages/attributesPage";
 import { ATTRIBUTES } from "@data/e2eTestData";
+import { AttributesPage } from "@pages/attributesPage";
 import { ConfigurationPage } from "@pages/configurationPage";
 import { BrowserContext, expect, test } from "@playwright/test";
 import faker from "faker";
@@ -21,6 +21,7 @@ test.beforeEach(async ({ browser }) => {
 
 const SALEOR_124_uuid = faker.datatype.uuid();
 const attributeClasses = ["PRODUCT_TYPE", "PAGE_TYPE"];
+
 for (const attr of attributeClasses) {
   for (const type of ATTRIBUTES.attributeTypesWithAbilityToAddValues.names) {
     const uniqueSlug = `${attr}-${type.replace(" ", "-")}-${SALEOR_124_uuid}`;
@@ -51,6 +52,7 @@ for (const attr of attributeClasses) {
 }
 
 const SALEOR_125_uuid = faker.datatype.uuid();
+
 for (const attr of attributeClasses) {
   for (const type of ATTRIBUTES.attributeTypesWithoutAbilityToAddValues.names) {
     const uniqueSlug = `${attr}-${type.replace(" ", "-")}-${SALEOR_125_uuid}`;
@@ -75,15 +77,14 @@ for (const attr of attributeClasses) {
         timeout: 10000,
       });
       await expect(attributesPage.valueRequiredCheckbox).toBeEnabled();
-      await expect(
-        attributesPage.attrVisibleInStorefrontSwitch,
-      ).not.toBeChecked();
+      await expect(attributesPage.attrVisibleInStorefrontSwitch).not.toBeChecked();
       await expect(attributesPage.valueRequiredCheckbox).not.toBeChecked();
     });
   }
 }
 
 const SALEOR_126_uuid = faker.datatype.uuid();
+
 for (const attr of attributeClasses) {
   for (const entity of ATTRIBUTES.attributeReferencesEntities.names) {
     const uniqueSlug = `${attr}-${entity.replaceAll(" ", "-")}-${SALEOR_126_uuid}`;
@@ -94,11 +95,9 @@ for (const attr of attributeClasses) {
       await attributesPage.waitForDOMToFullyLoad();
       await attributesPage.clickCreateAttributeButton();
       await attributesPage.selectAttributeType(attr);
-      await attributesPage.typeAttributeDefaultLabel(
-        `${attr} - REFERENCES for ${entity}`,
-      );
+      await attributesPage.typeAttributeDefaultLabel(`${attr} - REFERENCES for ${entity}`);
       await attributesPage.fillAttributeSlug(uniqueSlug);
-      await attributesPage.selectAttributeInputType("REFERENCE");
+      await attributesPage.selectAttributeInputType("Reference");
       await attributesPage.selectAttributeEntityType(entity);
       await attributesPage.clickValueRequiredCheckbox();
       await attributesPage.waitForNetworkIdleAfterAction(() => attributesPage.clickSaveButton());
@@ -117,23 +116,17 @@ for (const attr of attributeClasses) {
 const productAttrWithValues = {
   id: ATTRIBUTES.productAttributeWithValuesToBeUpdated.id,
   name: ATTRIBUTES.productAttributeWithValuesToBeUpdated.name,
-  valueToBeDeleted:
-    ATTRIBUTES.productAttributeWithValuesToBeUpdated.valueToBeDeleted,
-  valueToBeUpdated:
-    ATTRIBUTES.productAttributeWithValuesToBeUpdated.valueToBeUpdated,
+  valueToBeDeleted: ATTRIBUTES.productAttributeWithValuesToBeUpdated.valueToBeDeleted,
+  valueToBeUpdated: ATTRIBUTES.productAttributeWithValuesToBeUpdated.valueToBeUpdated,
 };
 const contentAttrWithValues = {
   id: ATTRIBUTES.contentAttributeWithValuesToBeUpdated.id,
   name: ATTRIBUTES.contentAttributeWithValuesToBeUpdated.name,
-  valueToBeDeleted:
-    ATTRIBUTES.contentAttributeWithValuesToBeUpdated.valueToBeDeleted,
-  valueToBeUpdated:
-    ATTRIBUTES.contentAttributeWithValuesToBeUpdated.valueToBeUpdated,
+  valueToBeDeleted: ATTRIBUTES.contentAttributeWithValuesToBeUpdated.valueToBeDeleted,
+  valueToBeUpdated: ATTRIBUTES.contentAttributeWithValuesToBeUpdated.valueToBeUpdated,
 };
-const attributesWithValuesToBeUpdated = [
-  productAttrWithValues,
-  contentAttrWithValues,
-];
+const attributesWithValuesToBeUpdated = [productAttrWithValues, contentAttrWithValues];
+
 for (const attribute of attributesWithValuesToBeUpdated) {
   test(`TC: SALEOR_127 User should be able to update attribute values in existing ${attribute.name} attribute @e2e @attributes`, async () => {
     await attributesPage.gotoExistingAttributePage(attribute.id, attribute.name);
@@ -157,9 +150,7 @@ for (const attribute of attributesWithValuesToBeUpdated) {
     await expect(attributesPage.attrValuesSection).toContainText(
       `updated value for ${attribute.name}`,
     );
-    await expect(attributesPage.attrValuesSection).toContainText(
-      `new value for ${attribute.name}`,
-    );
+    await expect(attributesPage.attrValuesSection).toContainText(`new value for ${attribute.name}`);
   });
 }
 
@@ -173,15 +164,10 @@ for (const attr of ATTRIBUTES.attributesToBeUpdated) {
     await attributesPage.fillMetadataFields("new key", "new value");
     await attributesPage.clickSaveButton();
     await attributesPage.expectSuccessBanner();
-    await expect(attributesPage.attributeSelect.getByRole("button")).toHaveAttribute(
-      "aria-disabled",
-      "true",
-    );
+    await expect(attributesPage.attributeSelect).toHaveAttribute("aria-disabled", "true");
     await expect(attributesPage.metadataKeyInput).toHaveValue("new key");
     await expect(attributesPage.metadataValueInput).toHaveValue("new value");
-    await expect(attributesPage.attributeDefaultLabelInput).toHaveValue(
-      `updated ${attr.name}`,
-    );
+    await expect(attributesPage.attributeDefaultLabelInput).toHaveValue(`updated ${attr.name}`);
   });
 }
 
@@ -194,12 +180,10 @@ const contentAttribute = {
   name: ATTRIBUTES.contentAttributeToBeDeleted.name,
 };
 const attributesToBeDeleted = [productAttribute, contentAttribute];
+
 for (const attribute of attributesToBeDeleted) {
   test(`TC: SALEOR_129 Delete a single ${attribute.name} @e2e @attributes`, async () => {
-    await attributesPage.gotoExistingAttributePage(
-      attribute.id,
-      attribute.name,
-    );
+    await attributesPage.gotoExistingAttributePage(attribute.id, attribute.name);
     await attributesPage.clickDeleteButton();
     await attributesPage.dialog.waitFor({
       state: "visible",

@@ -6,7 +6,7 @@ import { HomePage } from "@pages/homePage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { expect, test } from "@playwright/test";
 
-let permissionToExclude = "app";
+const permissionToExclude = "app";
 const permissionList = permissions.filter(item => item !== permissionToExclude);
 
 for (const permission of permissionList) {
@@ -31,6 +31,7 @@ for (const permission of permissionList) {
       appsPage.availableAppsList,
       appsPage.upcomingAppsList,
     ];
+
     for (const appList of appLists) {
       await appsPage.waitForDOMToFullyLoad();
       await expect(appList).toBeVisible();
@@ -45,6 +46,7 @@ for (const permission of permissionList) {
       appDetailsPage.appActivateButton,
       appDetailsPage.appEditPermissionsButton,
     ];
+
     for (const button of buttons) {
       await button.waitFor({
         state: "visible",
@@ -54,3 +56,4 @@ for (const permission of permissionList) {
     }
   });
 }
+
