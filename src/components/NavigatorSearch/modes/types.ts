@@ -1,13 +1,11 @@
 // @ts-strict-ignore
-import {
-  CheckIfOrderExistsQuery,
-  SearchCatalogQuery,
-  SearchCustomersQuery,
-} from "@dashboard/graphql";
+import { SearchCatalogQuery, SearchCustomersQuery } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
+
+import { QuickOrderSearchResult } from "../queries/useQuickOrderSearch";
 
 export interface ActionQueries {
   catalog: SearchCatalogQuery;
   customers: RelayToFlat<SearchCustomersQuery["search"]>;
-  order: CheckIfOrderExistsQuery["order"];
+  orders: QuickOrderSearchResult;
 }
