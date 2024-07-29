@@ -41,7 +41,7 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ onBack, onRefresh }) => {
             <Text className={classes.header} size={11} fontWeight="bold">
               <FormattedMessage {...messages.header} />
             </Text>
-            <Text>
+            <Text display="block">
               <FormattedMessage {...messages.content} />
             </Text>
             {!!errorTrackingId && (

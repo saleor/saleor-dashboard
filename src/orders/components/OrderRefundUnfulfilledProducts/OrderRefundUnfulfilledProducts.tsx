@@ -85,7 +85,13 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
         </DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content className={classes.cartContent}>
-        <Text fontWeight="medium" fontSize={3} color="default2" className={classes.notice}>
+        <Text
+          fontWeight="medium"
+          fontSize={3}
+          color="default2"
+          className={classes.notice}
+          display="block"
+        >
           <FormattedMessage
             id="iUIn50"
             defaultMessage="Unfulfilled products will be restocked"

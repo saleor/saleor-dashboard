@@ -79,7 +79,7 @@ const PluginList: React.FC<PluginListProps> = props => {
                 <TableCell colSpan={5}>
                   <Text>{plugin.name}</Text>
                   {hasReplacement && isActive && (
-                    <Text size={2} fontWeight="light" color="critical1">
+                    <Text size={2} fontWeight="light" color="critical1" display="block">
                       {intl.formatMessage(pluginsMiscMessages.appReplacementMessage)}
                     </Text>
                   )}

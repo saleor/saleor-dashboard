@@ -9462,12 +9462,13 @@ export type ChannelListQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ChannelListQuery = { __typename: 'Query', channels: Array<{ __typename: 'Channel', id: string, name: string }> | null };
 
-export type CheckIfOrderExistsQueryVariables = Exact<{
-  id: Scalars['ID'];
+export type SearchOrdersByNumberQueryVariables = Exact<{
+  first: Scalars['Int'];
+  query?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
 }>;
 
 
-export type CheckIfOrderExistsQuery = { __typename: 'Query', order: { __typename: 'Order', id: string, status: OrderStatus } | null };
+export type SearchOrdersByNumberQuery = { __typename: 'Query', orders: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, number: string, status: OrderStatus } }> } | null };
 
 export type SearchCatalogQueryVariables = Exact<{
   first: Scalars['Int'];

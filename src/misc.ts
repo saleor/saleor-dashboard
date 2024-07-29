@@ -11,7 +11,6 @@ import { Node, SlugNode } from "@dashboard/types";
 import { ThemeType } from "@saleor/macaw-ui";
 import { DefaultTheme, ThemeTokensValues } from "@saleor/macaw-ui-next";
 import Fuse from "fuse.js";
-import uniqBy from "lodash/uniqBy";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
 
@@ -20,7 +19,6 @@ import {
   hueToPillColorDark,
   hueToPillColorLight,
 } from "./components/Datagrid/customCells/PillCell";
-import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
 import { DotStatus } from "./components/StatusDot/StatusDot";
 import { AddressType, AddressTypeInput } from "./customers/types";
 import {
@@ -557,11 +555,6 @@ export function PromiseQueue() {
 
   return { queue, add };
 }
-
-export const combinedMultiAutocompleteChoices = (
-  selected: MultiAutocompleteChoiceType[],
-  choices: MultiAutocompleteChoiceType[],
-) => uniqBy([...selected, ...choices], "value");
 
 export type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
