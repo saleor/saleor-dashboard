@@ -18,7 +18,7 @@ const PermissionAlert: React.FC<PermissionAlertProps> = ({ query }) => {
     fetchPolicy: "network-only",
   });
   const permissionInfo = getPermissions(query, data);
-  const hasPermissions = permissionInfo && Object.entries(permissionInfo);
+  const hasPermissions = permissionInfo && Object.entries(permissionInfo).length > 0;
 
   return (
     <div data-test-id="permission-alert">

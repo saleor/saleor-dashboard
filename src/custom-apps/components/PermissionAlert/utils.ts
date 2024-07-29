@@ -2,8 +2,11 @@
 import {
   buildClientSchema,
   DocumentNode,
+  GraphQLList,
+  GraphQLNonNull,
   GraphQLObjectType,
   GraphQLSchema,
+  GraphQLType,
   IntrospectionQuery,
   parse,
   visit,
@@ -26,6 +29,14 @@ const tokenTree = (token: DocumentNode["loc"]["startToken"], tokens: string[] = 
   }
 
   return tokens;
+};
+
+const unwrapType = (type: GraphQLType) => {
+  if (type instanceof GraphQLNonNull || type instanceof GraphQLList) {
+    return unwrapType(type.ofType);
+  }
+
+  return type;
 };
 
 // Right now, permissions are appended at the end of `description`
@@ -100,9 +111,10 @@ function getDescriptionsFromQuery(query: string, schema: GraphQLSchema) {
 
         for (const fieldName of fieldPath.slice(1, -1)) {
           if (type) {
-            const field = type.getFields()[fieldName];
+            const field = (unwrapType(type) as GraphQLObjectType).getFields()[fieldName];
 
-            type = field ? (field.type as GraphQLObjectType) : undefined;
+            // Some types can have multiple nested fields eg. lists
+            type = field ? (unwrapType(field.type) as GraphQLObjectType) : undefined;
           }
         }
 
