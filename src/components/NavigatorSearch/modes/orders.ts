@@ -1,10 +1,10 @@
 // @ts-strict-ignore
-import { CheckIfOrderExistsQuery } from "@dashboard/graphql";
 import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
-import { maybe, transformOrderStatus } from "@dashboard/misc";
+import { transformOrderStatus } from "@dashboard/misc";
 import { orderUrl } from "@dashboard/orders/urls";
 import { IntlShape } from "react-intl";
 
+import { QuickOrderSearchResult } from "../queries/useQuickOrderSearch";
 import { QuickSearchAction } from "../types";
 import messages from "./messages";
 
@@ -17,31 +17,30 @@ export function getGqlOrderId(orderNumber: string): string {
 }
 
 function getOrdersModeActions(
-  query: string,
   intl: IntlShape,
   navigate: UseNavigatorResult,
-  order: CheckIfOrderExistsQuery["order"],
+  orders: QuickOrderSearchResult,
 ): QuickSearchAction[] {
-  const gqlId = getGqlOrderId(query);
-
-  if (isQueryValidOrderNumber(query) && maybe(() => order.id === gqlId)) {
-    return [
-      {
-        extraInfo: transformOrderStatus(order.status, intl).localized,
-        label: intl.formatMessage(messages.goToOrder, {
-          orderNumber: query,
-        }),
-        onClick: () => {
-          navigate(orderUrl(gqlId));
-
-          return false;
-        },
-        type: "action",
-      },
-    ];
+  if (!orders) {
+    return [];
   }
 
-  return [];
+  return orders.map(order => {
+    const orderNumber = order?.number ?? "";
+
+    return {
+      extraInfo: transformOrderStatus(order.status, intl).localized,
+      label: intl.formatMessage(messages.goToOrder, {
+        orderNumber,
+      }),
+      onClick: () => {
+        navigate(orderUrl(order.id));
+
+        return false;
+      },
+      type: "action",
+    };
+  });
 }
 
 export default getOrdersModeActions;

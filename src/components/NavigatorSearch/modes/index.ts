@@ -33,7 +33,7 @@ function getModeActions(
     case "help":
       return getHelpModeActions(query, intl, cbs.setMode);
     case "orders":
-      return getOrdersModeActions(query, intl, cbs.navigate, queries.order);
+      return getOrdersModeActions(intl, cbs.navigate, queries.orders);
     default:
       return getDefaultModeActions(query, intl, cbs.navigate, cbs.createOrder, cbs.setMode);
   }
