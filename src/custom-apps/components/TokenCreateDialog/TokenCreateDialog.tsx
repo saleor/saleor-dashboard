@@ -8,20 +8,12 @@ import { getApiUrl } from "@dashboard/config";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Paper,
-  TextField,
-} from "@material-ui/core";
+import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { Mono } from "./Mono";
-import { useStyles } from "./styles";
 
 export interface TokenCreateDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -37,12 +29,18 @@ function handleCopy(token: string) {
   navigator.clipboard.writeText(token);
 }
 
+const tokenPaperStyles = {
+  padding: 4,
+  backgroundColor: "default2",
+  borderRadius: 4,
+  __whiteSpace: "pre-wrap",
+} as const;
+
 const createHeadersString = (token: string) => `{\n  "authorization": "Bearer ${token}"\n}`;
 const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
   const { confirmButtonState, open, token, onClose, onCreate } = props;
   const [step, setStep] = React.useState<TokenCreateStep>("form");
   const intl = useIntl();
-  const classes = useStyles(props);
   const headers = createHeadersString(token);
 
   React.useEffect(() => {
@@ -96,7 +94,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                     />
                   </Text>
                   <CardSpacer />
-                  <Paper className={classes.paper} elevation={0}>
+                  <Box {...tokenPaperStyles}>
                     <Text size={4} fontWeight="medium">
                       <FormattedMessage id="5ZxAiY" defaultMessage="Token" />
                     </Text>
@@ -110,9 +108,9 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                         description="button"
                       />
                     </Button>
-                  </Paper>
+                  </Box>
                   <CardSpacer />
-                  <Paper className={classes.paper} elevation={0}>
+                  <Box {...tokenPaperStyles}>
                     <Text size={4} fontWeight="medium">
                       <FormattedMessage id="Wm+KUd" defaultMessage="Headers" />
                     </Text>
@@ -141,7 +139,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                         />
                       </Button>
                     </Box>
-                  </Paper>
+                  </Box>
                   <CardSpacer />
                 </>
               )}
