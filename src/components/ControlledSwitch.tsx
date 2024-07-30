@@ -37,7 +37,7 @@ export const ControlledSwitch: React.FC<ControlledSwitchProps> = props => {
               uncheckedLabel
             )
           ) : typeof label === "string" ? (
-            <Text fontSize={4}>{label}</Text>
+            <Text>{label}</Text>
           ) : (
             label
           )}
