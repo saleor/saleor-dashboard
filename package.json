@@ -185,7 +185,8 @@
     "typescript-strict-plugin": "^2.1.0",
     "vite": "^3.2.7",
     "vite-plugin-html": "^3.2.0",
-    "vite-plugin-pwa": "^0.20.1"
+    "vite-plugin-pwa": "^0.20.1",
+    "workbox-core": "^7.1.0"
   },
   "optionalDependencies": {
     "@swc/core-darwin-arm64": "1.3.40",
