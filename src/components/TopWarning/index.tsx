@@ -8,10 +8,8 @@ import { YouAreOffline } from "./YouAreOffline";
 export const TopWarning = () => {
   const {
     needRefresh: [needRefresh],
+    updateServiceWorker,
   } = useRegisterSW();
-
-  // eslint-disable-next-line no-console
-  console.log("Has new version", needRefresh);
 
   const isOnline = useNavigatorOnLine();
 
@@ -20,7 +18,7 @@ export const TopWarning = () => {
   }
 
   if (needRefresh) {
-    return <NewVersionAvailable />;
+    return <NewVersionAvailable onUpdate={() => updateServiceWorker(true)} />;
   }
 
   return null;
