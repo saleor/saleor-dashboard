@@ -95,7 +95,9 @@ export default defineConfig(({ command, mode }) => {
       },
     }),
     copyOgImage(),
-    VitePWA({ registerType: "autoUpdate" }),
+    VitePWA({
+      registerType: "prompt",
+    }),
   ];
 
   if (!isDev) {
