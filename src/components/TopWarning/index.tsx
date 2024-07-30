@@ -10,9 +10,6 @@ export const TopWarning = () => {
     needRefresh: [needRefresh],
   } = useRegisterSW();
 
-  // eslint-disable-next-line no-console
-  console.log("needRefresh", needRefresh);
-
   const isOnline = useNavigatorOnLine();
 
   if (!isOnline) {
