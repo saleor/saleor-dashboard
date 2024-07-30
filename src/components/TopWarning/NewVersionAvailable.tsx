@@ -1,27 +1,18 @@
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { useRegisterSW } from "virtual:pwa-register/react";
+import { Container } from "./Container";
 
-export const NewVersionBar = () => {
-  const {
-    needRefresh: [needRefresh],
-    updateServiceWorker,
-  } = useRegisterSW();
+export const NewVersionAvailable = () => {
+  const { updateServiceWorker } = useRegisterSW();
 
-  if (!needRefresh) {
-    return null;
-  }
+  const handleReloadClick = () => {
+    updateServiceWorker()
+  };
 
   return (
-    <Box
-      backgroundColor="warning1"
-      paddingX={3}
-      paddingY={0.5}
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-    >
+    <Container>
       <Text size={1} fontWeight="medium">
         <FormattedMessage
           id="sngdVO"
@@ -30,7 +21,7 @@ export const NewVersionBar = () => {
         />
       </Text>
       <Button
-        onClick={() => updateServiceWorker(true)}
+        onClick={handleReloadClick}
         size="small"
         variant="tertiary"
         color="accent1"
@@ -44,6 +35,6 @@ export const NewVersionBar = () => {
           description="Click here to reload."
         />
       </Button>
-    </Box>
+    </Container>
   );
 };

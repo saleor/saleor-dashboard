@@ -38,10 +38,10 @@ import ExitFormDialogProvider from "./components/Form/ExitFormDialogProvider";
 import { LocaleProvider } from "./components/Locale";
 import MessageManagerProvider from "./components/messages";
 import { NavigatorSearchProvider } from "./components/NavigatorSearch/NavigatorSearchProvider";
-import { NewVersionBar } from "./components/NewVersionBar";
 import { ProductAnalytics } from "./components/ProductAnalytics";
 import { SavebarRefProvider } from "./components/Savebar/SavebarRefContext";
 import { ShopProvider } from "./components/Shop";
+import { TopWarning } from "./components/TopWarning";
 import { WindowTitle } from "./components/WindowTitle";
 import { DEMO_MODE, getAppMountUri, GTM_ID } from "./config";
 import ConfigurationSection from "./configuration";
@@ -122,7 +122,7 @@ const App: React.FC = () => (
                                 <NavigatorSearchProvider>
                                   <ProductAnalytics>
                                     <SavebarRefProvider>
-                                      <NewVersionBar />
+                                      <TopWarning />
                                       <Routes />
                                     </SavebarRefProvider>
                                   </ProductAnalytics>
