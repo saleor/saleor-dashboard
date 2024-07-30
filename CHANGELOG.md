@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.20.4
+
+### Patch Changes
+
+- 55d49ee01: You can now run all e2e tests without attributes.spec interference
+- e094fa61e: The migrated dropdown components and there types no longer exist within the codebase
+- e14df76d8: You can now run E2E tests locally with no issues
+- 54b212460: Rich text editor errors related to 'holder' no longer are sent to Sentry.
+- 4a593993c: You can run order e2e tests with updated test data
+- e635bc153: You can now view channel and product details pages on tablets
+- f29141acc: You can now search by order number in Navigator search.
+- a711406f2: Components that show app token now display text in multiple lines instead of one.
+
 ## 3.20.3
 
 ### Patch Changes
