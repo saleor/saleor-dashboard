@@ -97,6 +97,19 @@ export default defineConfig(({ command, mode }) => {
     copyOgImage(),
     VitePWA({
       registerType: "prompt",
+      injectRegister: false,
+      workbox: {
+        globPatterns: ["**/*.{js,css,html,svg,png,ico}"],
+        cleanupOutdatedCaches: true,
+        clientsClaim: true,
+      },
+
+      devOptions: {
+        enabled: false,
+        navigateFallback: "index.html",
+        suppressWarnings: true,
+        type: "module",
+      },
     }),
   ];
 
