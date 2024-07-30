@@ -115,7 +115,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
               >
                 <Box paddingTop={6}>
                   <Text>{intl.formatMessage(commonMessages.generalInformations)}</Text>
-                  <Text size={3} fontWeight="regular">
+                  <Text size={3} fontWeight="regular" display="block">
                     <FormattedMessage
                       id="kZfIl/"
                       defaultMessage="These are general information about this Content Type."
@@ -137,7 +137,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
                       description="section header"
                     />
                   </Text>
-                  <Text size={3} fontWeight="regular">
+                  <Text size={3} fontWeight="regular" display="block">
                     <FormattedMessage
                       id="lct0qd"
                       defaultMessage="This list shows all attributes that will be assigned to pages that have this page type assigned."
