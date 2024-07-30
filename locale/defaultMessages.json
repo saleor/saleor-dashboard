@@ -836,6 +836,10 @@
   "3PVGWj": {
     "string": "Filter preset"
   },
+  "3RBwU7": {
+    "context": "Click here to update",
+    "string": "Click here to update"
+  },
   "3SVI5p": {
     "string": "Warning"
   },
@@ -8217,6 +8221,10 @@
   "qT6YYk": {
     "context": "order line total price",
     "string": "Total"
+  },
+  "qXh9AY": {
+    "context": "New version available.",
+    "string": "New version available."
   },
   "qZHHed": {
     "context": "stock exceeded dialog title",

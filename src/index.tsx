@@ -38,6 +38,7 @@ import ExitFormDialogProvider from "./components/Form/ExitFormDialogProvider";
 import { LocaleProvider } from "./components/Locale";
 import MessageManagerProvider from "./components/messages";
 import { NavigatorSearchProvider } from "./components/NavigatorSearch/NavigatorSearchProvider";
+import { NewVersionBar } from "./components/NewVersionBar";
 import { ProductAnalytics } from "./components/ProductAnalytics";
 import { SavebarRefProvider } from "./components/Savebar/SavebarRefContext";
 import { ShopProvider } from "./components/Shop";
@@ -121,6 +122,7 @@ const App: React.FC = () => (
                                 <NavigatorSearchProvider>
                                   <ProductAnalytics>
                                     <SavebarRefProvider>
+                                      <NewVersionBar />
                                       <Routes />
                                     </SavebarRefProvider>
                                   </ProductAnalytics>
