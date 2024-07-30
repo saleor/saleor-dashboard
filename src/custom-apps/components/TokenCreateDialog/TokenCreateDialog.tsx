@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
-import { Button } from "@dashboard/components/Button";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
@@ -9,19 +8,12 @@ import { getApiUrl } from "@dashboard/config";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Paper,
-  TextField,
-} from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { useStyles } from "./styles";
+import { Mono } from "./Mono";
 
 export interface TokenCreateDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -37,13 +29,18 @@ function handleCopy(token: string) {
   navigator.clipboard.writeText(token);
 }
 
-const Mono = ({ children, className }) => <span className={className}>{children}</span>;
+const tokenPaperStyles = {
+  padding: 4,
+  backgroundColor: "default2",
+  borderRadius: 4,
+  __whiteSpace: "pre-wrap",
+} as const;
+
 const createHeadersString = (token: string) => `{\n  "authorization": "Bearer ${token}"\n}`;
 const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
   const { confirmButtonState, open, token, onClose, onCreate } = props;
   const [step, setStep] = React.useState<TokenCreateStep>("form");
   const intl = useIntl();
-  const classes = useStyles(props);
   const headers = createHeadersString(token);
 
   React.useEffect(() => {
@@ -97,44 +94,52 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                     />
                   </Text>
                   <CardSpacer />
-                  <Paper className={classes.paper} elevation={0}>
-                    <Text size={2} fontWeight="light">
+                  <Box {...tokenPaperStyles}>
+                    <Text size={4} fontWeight="medium">
                       <FormattedMessage id="5ZxAiY" defaultMessage="Token" />
                     </Text>
-                    <Text data-test-id="generated-token">
-                      <Mono className={classes.mono}>{token}</Mono>
+                    <Text data-test-id="generated-token" display="block">
+                      <Mono>{token}</Mono>
                     </Text>
-                    <Button className={classes.copy} onClick={() => handleCopy(token)}>
+                    <Button variant="secondary" marginTop={2} onClick={() => handleCopy(token)}>
                       <FormattedMessage
                         id="HVFq//"
                         defaultMessage="Copy token"
                         description="button"
                       />
                     </Button>
-                  </Paper>
+                  </Box>
                   <CardSpacer />
-                  <Paper className={classes.paper} elevation={0}>
-                    <Text size={2} fontWeight="light">
+                  <Box {...tokenPaperStyles}>
+                    <Text size={4} fontWeight="medium">
                       <FormattedMessage id="Wm+KUd" defaultMessage="Headers" />
                     </Text>
-                    <Text data-test-id="generated-headers">
-                      <Mono className={classes.mono}>{headers}</Mono>
+                    <Text data-test-id="generated-headers" display="block">
+                      <Mono>{headers}</Mono>
                     </Text>
-                    <Button className={classes.copy} onClick={() => handleCopy(headers)}>
-                      <FormattedMessage
-                        id="ZhqH8J"
-                        defaultMessage="Copy headers"
-                        description="button"
-                      />
-                    </Button>
-                    <Button className={classes.copy} onClick={openPlayground}>
-                      <FormattedMessage
-                        id="0KmZCN"
-                        defaultMessage="Open playground"
-                        description="button"
-                      />
-                    </Button>
-                  </Paper>
+                    <Box
+                      display="flex"
+                      flexDirection="row"
+                      alignItems="center"
+                      gap={2}
+                      marginTop={2}
+                    >
+                      <Button variant="secondary" onClick={() => handleCopy(headers)}>
+                        <FormattedMessage
+                          id="ZhqH8J"
+                          defaultMessage="Copy headers"
+                          description="button"
+                        />
+                      </Button>
+                      <Button variant="secondary" onClick={openPlayground}>
+                        <FormattedMessage
+                          id="0KmZCN"
+                          defaultMessage="Open playground"
+                          description="button"
+                        />
+                      </Button>
+                    </Box>
+                  </Box>
                   <CardSpacer />
                 </>
               )}
@@ -142,7 +147,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
             <DialogActions>
               {step === "form" ? (
                 <>
-                  <BackButton className={classes.cancel} onClick={onClose} />
+                  <BackButton marginRight={1} onClick={onClose} />
                   <ConfirmButton
                     data-test-id="submit"
                     transitionState={confirmButtonState}
