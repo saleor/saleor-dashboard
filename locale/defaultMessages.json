@@ -836,10 +836,6 @@
   "3PVGWj": {
     "string": "Filter preset"
   },
-  "3RBwU7": {
-    "context": "Click here to update",
-    "string": "Click here to update"
-  },
   "3SVI5p": {
     "string": "Warning"
   },
@@ -6205,6 +6201,10 @@
   "cLcy6F": {
     "string": "Number of products"
   },
+  "cLnkZn": {
+    "context": "You are currently offline. Some features may not be available.",
+    "string": "You are currently offline. Some features may not be available."
+  },
   "cMFlOp": {
     "context": "input label",
     "string": "New Password"
@@ -8222,10 +8222,6 @@
     "context": "order line total price",
     "string": "Total"
   },
-  "qXh9AY": {
-    "context": "New version available.",
-    "string": "New version available."
-  },
   "qZHHed": {
     "context": "stock exceeded dialog title",
     "string": "Not enough stock"
@@ -8550,6 +8546,10 @@
     "context": "header",
     "string": "Unnamed Webhook Details"
   },
+  "sngdVO": {
+    "context": "New dashboard version available.",
+    "string": "New dashboard version available."
+  },
   "stjHjY": {
     "context": "error message",
     "string": "Promo code already exists"
@@ -8568,6 +8568,10 @@
   "t/R8nK": {
     "context": "ShippingZoneSettingsCard title",
     "string": "Settings"
+  },
+  "t1Qs2z": {
+    "context": "Click here to reload.",
+    "string": "Click here to reload."
   },
   "t1UYU6": {
     "context": "install app privacy",
