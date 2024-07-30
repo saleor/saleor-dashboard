@@ -14,6 +14,8 @@ export const Container = ({ children }: ContainerProps) => {
       display="flex"
       justifyContent="center"
       alignItems="center"
-    >{children}</Box>
-  )
-}
+    >
+      {children}
+    </Box>
+  );
+};

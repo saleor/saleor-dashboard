@@ -2,13 +2,14 @@ import { Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { useRegisterSW } from "virtual:pwa-register/react";
+
 import { Container } from "./Container";
 
 export const NewVersionAvailable = () => {
   const { updateServiceWorker } = useRegisterSW();
 
   const handleReloadClick = () => {
-    updateServiceWorker()
+    updateServiceWorker();
   };
 
   return (

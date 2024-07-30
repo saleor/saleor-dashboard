@@ -1,7 +1,8 @@
 import React from "react";
-import { YouAreOffline } from "./YouAreOffline";
 import { useRegisterSW } from "virtual:pwa-register/react";
+
 import { NewVersionAvailable } from "./NewVersionAvailable";
+import { YouAreOffline } from "./YouAreOffline";
 
 export const TopWarning = () => {
   const {
@@ -9,16 +10,13 @@ export const TopWarning = () => {
     offlineReady: [offlineReady],
   } = useRegisterSW();
 
-  
   if (offlineReady) {
-    return <YouAreOffline />
+    return <YouAreOffline />;
   }
 
   if (needRefresh) {
-    return <NewVersionAvailable />
+    return <NewVersionAvailable />;
   }
 
-  return null
+  return null;
 };
-
-
