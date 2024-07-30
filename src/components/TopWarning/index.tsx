@@ -1,3 +1,4 @@
+import { useNavigatorOnLine } from "@dashboard/hooks/useNavigatorOnLine";
 import React from "react";
 import { useRegisterSW } from "virtual:pwa-register/react";
 
@@ -7,10 +8,11 @@ import { YouAreOffline } from "./YouAreOffline";
 export const TopWarning = () => {
   const {
     needRefresh: [needRefresh],
-    offlineReady: [offlineReady],
   } = useRegisterSW();
 
-  if (offlineReady) {
+  const isOnline = useNavigatorOnLine();
+
+  if (!isOnline) {
     return <YouAreOffline />;
   }
 
