@@ -1,14 +1,16 @@
-// @ts-strict-ignore
 import {
   buildClientSchema,
   DocumentNode,
+  GraphQLField,
   GraphQLList,
   GraphQLNonNull,
   GraphQLObjectType,
   GraphQLSchema,
   GraphQLType,
   IntrospectionQuery,
+  Location,
   parse,
+  Token,
   visit,
 } from "graphql";
 import { TypeMap } from "graphql/type/schema";
@@ -21,9 +23,17 @@ type SubscriptionQueryPermission = Record<
   }
 >;
 
-const tokenTree = (token: DocumentNode["loc"]["startToken"], tokens: string[] = []) => {
-  if (token.next) {
-    tokens.push(token.value);
+const getStartToken = (documentNode: DocumentNode) => {
+  const loc = documentNode.loc as Location | undefined;
+
+  return loc?.startToken;
+};
+
+const tokenTree = (token: Token | undefined, tokens: string[] = []): string[] => {
+  if (token && token.next) {
+    if (typeof token.value === "string") {
+      tokens.push(token.value);
+    }
 
     return tokenTree(token.next, tokens);
   }
@@ -31,7 +41,7 @@ const tokenTree = (token: DocumentNode["loc"]["startToken"], tokens: string[] = 
   return tokens;
 };
 
-const unwrapType = (type: GraphQLType) => {
+const unwrapType = (type: GraphQLType): GraphQLType => {
   if (type instanceof GraphQLNonNull || type instanceof GraphQLList) {
     return unwrapType(type.ofType);
   }
@@ -75,9 +85,9 @@ const extractSubscriptions = (
     }
 
     return acc as GraphQLObjectType[];
-  }, []);
+  }, [] as GraphQLObjectType[]);
 
-const getSubscriptions = (typeMap: TypeMap) =>
+const getSubscriptions = (typeMap: TypeMap): GraphQLObjectType[] =>
   Object.keys(typeMap).reduce((acc, key) => {
     const type = typeMap[key] as GraphQLObjectType;
 
@@ -91,12 +101,13 @@ const getSubscriptions = (typeMap: TypeMap) =>
     }
 
     return acc;
-  }, []);
+  }, [] as GraphQLObjectType[]);
 
 function getDescriptionsFromQuery(query: string, schema: GraphQLSchema) {
   const descriptions: { [key: string]: string } = {};
   const ast = parse(query);
-  const tree = tokenTree(ast.loc.startToken, []);
+  const startToken = getStartToken(ast);
+  const tree = tokenTree(startToken, []);
   const subscriptions = getSubscriptions(schema.getTypeMap());
   const subscriptionsFromQuery = extractSubscriptions(subscriptions, tree);
 
@@ -107,14 +118,16 @@ function getDescriptionsFromQuery(query: string, schema: GraphQLSchema) {
           .filter((ancestor: any) => ancestor.kind === "Field")
           .map((ancestor: any) => ancestor.name.value)
           .concat(node.name.value);
-        let type = subscriptionsFromQuery[_type];
+        let type: GraphQLObjectType | undefined = subscriptionsFromQuery[_type];
 
         for (const fieldName of fieldPath.slice(1, -1)) {
           if (type) {
-            const field = (unwrapType(type) as GraphQLObjectType).getFields()[fieldName];
+            const field: GraphQLField<any, any, any> = (
+              unwrapType(type) as GraphQLObjectType
+            ).getFields()[fieldName];
 
             // Some types can have multiple nested fields eg. lists
-            type = field ? (unwrapType(field.type) as GraphQLObjectType) : undefined;
+            type = field && field.type ? (unwrapType(field.type) as GraphQLObjectType) : undefined;
           }
         }
 
@@ -136,7 +149,7 @@ const extractPermissionsFromQuery = (
   query: string,
   introspectionQuery: IntrospectionQuery,
 ): SubscriptionQueryPermission => {
-  let permissions: SubscriptionQueryPermission;
+  let permissions: SubscriptionQueryPermission = {};
 
   try {
     const schema = buildClientSchema(introspectionQuery);
@@ -150,7 +163,7 @@ const extractPermissionsFromQuery = (
       }
 
       return acc;
-    }, {});
+    }, {} as SubscriptionQueryPermission);
 
     permissions = _permissions;
   } catch (error) {
