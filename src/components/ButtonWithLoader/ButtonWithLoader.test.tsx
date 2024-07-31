@@ -11,7 +11,7 @@ jest.mock("react-intl", () => ({
   FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
 }));
 
-describe("ConfirmButton", () => {
+describe("ButtonWithLoader", () => {
   it("should render a button with confirm label", () => {
     // Arrange & Act
     render(<ButtonWithLoader transitionState="default">Confirm</ButtonWithLoader>);
