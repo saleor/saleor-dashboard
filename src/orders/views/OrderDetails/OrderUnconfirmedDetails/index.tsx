@@ -347,10 +347,12 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
         open={params.action === "transaction-action"}
         action={params.type}
         onSubmit={() =>
-          orderTransactionAction.mutate({
-            action: params.type,
-            transactionId: params.id,
-          })
+          orderTransactionAction
+            .mutate({
+              action: params.type,
+              transactionId: params.id,
+            })
+            .finally(() => closeModal())
         }
       />
       <OrderMetadataDialog
