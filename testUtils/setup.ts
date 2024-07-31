@@ -1,6 +1,7 @@
 import "@testing-library/jest-dom";
-
 import { configure } from "@testing-library/react";
+
+jest.mock("@sentry/react");
 
 document.getElementById = () => document.createElement("div");
 
@@ -41,6 +42,8 @@ configure({ testIdAttribute: "data-test-id" });
 import { TextDecoder, TextEncoder } from "util";
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder as typeof global.TextDecoder;
+
+global.Sentry = null
 
 global.CSS = {
   supports: () => false,
