@@ -3,6 +3,7 @@ import "./index.css";
 
 import { ApolloProvider } from "@apollo/client";
 import DemoBanner from "@dashboard/components/DemoBanner";
+import { history, Route, Router } from "@dashboard/components/Router";
 import { PermissionEnum } from "@dashboard/graphql";
 import useAppState from "@dashboard/hooks/useAppState";
 import { ThemeProvider } from "@dashboard/theme";
@@ -13,7 +14,7 @@ import { render } from "react-dom";
 import { ErrorBoundary } from "react-error-boundary";
 import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Switch } from "react-router-dom";
 
 import { AppsSectionRoot } from "./apps";
 import { ExternalAppProvider } from "./apps/components/ExternalAppContext";
@@ -82,7 +83,7 @@ if (GTM_ID) {
   TagManager.initialize({ gtmId: GTM_ID });
 }
 
-errorTracker.init();
+errorTracker.init(history);
 
 /*
   Handle legacy theming toggle. Since we use new and old macaw,
@@ -105,7 +106,7 @@ handleLegacyTheming();
 const App: React.FC = () => (
   <SaleorProvider client={saleorClient}>
     <ApolloProvider client={apolloClient}>
-      <BrowserRouter basename={getAppMountUri()}>
+      <Router>
         <LegacyThemeProvider overrides={themeOverrides} palettes={paletteOverrides}>
           <ThemeProvider>
             <DateProvider>
@@ -137,7 +138,7 @@ const App: React.FC = () => (
             </DateProvider>
           </ThemeProvider>
         </LegacyThemeProvider>
-      </BrowserRouter>
+      </Router>
     </ApolloProvider>
   </SaleorProvider>
 );
