@@ -74,7 +74,3 @@ body {
 .noBorder {
   border: none;
 }
-
-.staff-avatar:hover .avatar-hover {
-  opacity: 1;
-}

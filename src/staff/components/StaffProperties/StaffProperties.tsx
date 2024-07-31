@@ -76,7 +76,6 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
               position="relative"
               __height="120px"
               __width="120px"
-              className="staff-avatar"
             >
               {hasAvatar ? (
                 <Box as="img" pointerEvents="none" width="100%" src={staffMember.avatar.url} />
@@ -101,9 +100,11 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
               )}
               {canEditAvatar && (
                 <Box
-                  className="avatar-hover"
                   borderRadius="100%"
-                  opacity="0"
+                  opacity={{
+                    hover: "1",
+                    default: "0",
+                  }}
                   position="absolute"
                   padding={4}
                   __height="120px"
