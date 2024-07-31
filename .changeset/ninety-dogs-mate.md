@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Now avatar component in staff user details display initials and actions in white color with proper font styles. 
+Now you can see initials in your account details when there is no avatar image set for your account. 
