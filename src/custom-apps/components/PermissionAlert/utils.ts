@@ -29,16 +29,25 @@ const getStartToken = (documentNode: DocumentNode) => {
   return loc?.startToken;
 };
 
-const tokenTree = (token: Token | undefined, tokens: string[] = []): string[] => {
-  if (token && token.next) {
-    if (typeof token.value === "string") {
-      tokens.push(token.value);
-    }
+type FlattenedTokenArray = (string | undefined)[];
 
-    return tokenTree(token.next, tokens);
+const toFlattenedTokenArray = (
+  token: Token | undefined,
+  tokens: FlattenedTokenArray = [],
+): FlattenedTokenArray => {
+  if (token && token.next) {
+    tokens.push(token.value);
+
+    return toFlattenedTokenArray(token.next, tokens);
   }
 
   return tokens;
+};
+
+const flattenedTokenArray = (token: Token | undefined, tokens: string[] = []): string[] => {
+  const flattened = toFlattenedTokenArray(token, tokens);
+
+  return flattened.filter(Boolean) as string[];
 };
 
 const unwrapType = (type: GraphQLType): GraphQLType => {
@@ -103,11 +112,11 @@ const getSubscriptions = (typeMap: TypeMap): GraphQLObjectType[] =>
     return acc;
   }, [] as GraphQLObjectType[]);
 
-function getDescriptionsFromQuery(query: string, schema: GraphQLSchema) {
+function getDescriptionsFromQuery(query: string, schema: GraphQLSchema): { [key: string]: string } {
   const descriptions: { [key: string]: string } = {};
   const ast = parse(query);
   const startToken = getStartToken(ast);
-  const tree = tokenTree(startToken, []);
+  const tree = flattenedTokenArray(startToken, []);
   const subscriptions = getSubscriptions(schema.getTypeMap());
   const subscriptionsFromQuery = extractSubscriptions(subscriptions, tree);
 
@@ -145,6 +154,18 @@ function getDescriptionsFromQuery(query: string, schema: GraphQLSchema) {
   return descriptions;
 }
 
+const extractSubscriptionQueryPermissions = (descriptions: { [key: string]: string }) => {
+  return Object.keys(descriptions).reduce((acc, key) => {
+    const { isOneOfRequired, permissions } = extractPermissions(descriptions[key]);
+
+    if (permissions.length > 0) {
+      acc[key] = { isOneOfRequired, permissions };
+    }
+
+    return acc;
+  }, {} as SubscriptionQueryPermission);
+};
+
 const extractPermissionsFromQuery = (
   query: string,
   introspectionQuery: IntrospectionQuery,
@@ -155,17 +176,7 @@ const extractPermissionsFromQuery = (
     const schema = buildClientSchema(introspectionQuery);
     const descriptions = getDescriptionsFromQuery(query, schema);
 
-    const _permissions = Object.keys(descriptions).reduce((acc, key) => {
-      const { isOneOfRequired, permissions } = extractPermissions(descriptions[key]);
-
-      if (permissions.length > 0) {
-        acc[key] = { isOneOfRequired, permissions };
-      }
-
-      return acc;
-    }, {} as SubscriptionQueryPermission);
-
-    permissions = _permissions;
+    permissions = extractSubscriptionQueryPermissions(descriptions);
   } catch (error) {
     // explicit silent
   }
