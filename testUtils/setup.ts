@@ -1,6 +1,7 @@
 import "@testing-library/jest-dom";
-
 import { configure } from "@testing-library/react";
+
+jest.mock("@sentry/react");
 
 document.getElementById = () => document.createElement("div");
 

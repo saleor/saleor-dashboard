@@ -28,6 +28,7 @@ import {
 } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
+import { getMutationErrors } from "@dashboard/misc";
 import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
@@ -211,7 +212,7 @@ export function useProductUpdateHandler(
 
     return errors;
   };
-  const errors = updateProductOpts.data?.productUpdate.errors ?? [];
+  const errors = getMutationErrors(updateProductOpts) as ProductErrorWithAttributesFragment[];
   const channelsErrors = updateChannelsOpts?.data?.productChannelListingUpdate?.errors ?? [];
 
   return [
