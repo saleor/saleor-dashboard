@@ -1,13 +1,12 @@
 import { UserContextError } from "@dashboard/auth/types";
 import { passwordResetUrl } from "@dashboard/auth/urls";
-import { Button } from "@dashboard/components/Button";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
 import { AvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { CircularProgress, Divider, TextField } from "@material-ui/core";
 import { EyeIcon, IconButton } from "@saleor/macaw-ui";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -50,13 +49,21 @@ const LoginPage: React.FC<LoginCardProps> = props => {
     <LoginForm onSubmit={onSubmit}>
       {({ change: handleChange, data, submit }) => (
         <Box display="flex" flexDirection="column" alignItems="flex-start" width="100%">
-          <Text size={6} fontWeight="bold" lineHeight={3} className={classes.header}>
+          <Text size={6} fontWeight="bold" lineHeight={3} marginBottom={2}>
             <FormattedMessage id="vzgZ3U" defaultMessage="Sign In" description="card header" />
           </Text>
           {errors.map(error => (
-            <div className={classes.panel} key={error} data-test-id="login-error-message">
-              {getErrorMessage(error, intl)}
-            </div>
+            <Box
+              borderRadius={4}
+              padding={4}
+              backgroundColor="critical1"
+              width="100%"
+              marginBottom={2}
+              key={error}
+              data-test-id="login-error-message"
+            >
+              <Text>{getErrorMessage(error, intl)}</Text>
+            </Box>
           ))}
           <TextField
             autoFocus
@@ -118,7 +125,7 @@ const LoginPage: React.FC<LoginCardProps> = props => {
           </Text>
           <div className={classes.buttonContainer}>
             <Button
-              className={classes.loginButton}
+              width="100%"
               disabled={disabled}
               variant="primary"
               onClick={submit}
@@ -146,7 +153,7 @@ const LoginPage: React.FC<LoginCardProps> = props => {
             <React.Fragment key={externalAuthentication.id}>
               <FormSpacer />
               <Button
-                fullWidth
+                width="100%"
                 variant="secondary"
                 onClick={() => onExternalAuthentication(externalAuthentication.id)}
                 data-test-id="external-authentication"
