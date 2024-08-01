@@ -71,10 +71,16 @@ const NotFoundPage: React.FC<NotFoundPageProps> = props => {
             <Text className={classes.header} size={6} fontWeight="bold" lineHeight={3}>
               <FormattedMessage id="yH56V+" defaultMessage="Ooops!..." />
             </Text>
-            <Text className={classes.header} size={4} fontWeight="bold" lineHeight={2}>
+            <Text
+              className={classes.header}
+              size={4}
+              fontWeight="bold"
+              lineHeight={2}
+              display="block"
+            >
               <FormattedMessage id="bj6pTd" defaultMessage="Something's missing" />
             </Text>
-            <Text>
+            <Text display="block">
               <FormattedMessage id="nRiOg+" defaultMessage="Sorry, the page was not found" />
             </Text>
           </div>

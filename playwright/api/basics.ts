@@ -51,6 +51,6 @@ export class BasicApiService {
     });
     const loginResponseJson = await loginResponse.json();
 
-    return loginResponseJson;
+    return loginResponseJson as ApiResponse<TokenCreateResponse>;
   }
 }

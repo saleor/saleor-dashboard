@@ -51,7 +51,9 @@ const PluginDetailsChannelsCardContent: React.FC<PluginDetailsChannelsCardProps>
   if (isPluginGlobal(plugin.globalConfiguration)) {
     return (
       <DashboardCard.Content>
-        <FormattedMessage {...messages.noChannelsSubtitle} />
+        <Text>
+          <FormattedMessage {...messages.noChannelsSubtitle} />
+        </Text>
       </DashboardCard.Content>
     );
   }
@@ -70,7 +72,7 @@ const PluginDetailsChannelsCardContent: React.FC<PluginDetailsChannelsCardProps>
             onClick={() => setSelectedChannelId(channel.id)}
           >
             {isChannelSelected(channel.id) && <div className={classes.itemActiveIndicator}></div>}
-            <DashboardCard.Content>
+            <DashboardCard.Content padding={4}>
               <Text>{channel.name}</Text>
             </DashboardCard.Content>
           </div>
