@@ -76,7 +76,7 @@ export class ShippingMethodsPage extends BasePage {
 
     await console.log(`Navigates to existing shipping method page: ${existingShippingMethodUrl}`);
     await this.page.goto(existingShippingMethodUrl);
-    await this.page.getByText(shippingMethodName).waitFor({
+    await this.page.getByText(shippingMethodName).first().waitFor({
       state: "visible",
       timeout: 60000,
     });
