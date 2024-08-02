@@ -521,6 +521,7 @@ export const SHIPPING_METHODS = {
   shippingMethodWithoutRates: {
     id: "U2hpcHBpbmdab25lOjIzOTA%3D",
     info: "Shipping method that is used to add rates",
+    name: "Shipping method that is used to add rates",
   },
   shippingMethodToBeUpdated: {
     id: "U2hpcHBpbmdab25lOjIzOTI=",
