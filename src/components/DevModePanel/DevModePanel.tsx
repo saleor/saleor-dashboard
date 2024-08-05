@@ -1,8 +1,8 @@
 // @ts-strict-ignore
 import { useDashboardTheme } from "@dashboard/components/GraphiQL/styles";
+import { DASHBOARD_MODAL_WIDTH_XL, DashboardModal } from "@dashboard/components/Modal";
 import { createGraphiQLFetcher } from "@graphiql/toolkit";
-import { Dialog, DialogContent } from "@material-ui/core";
-import { DialogHeader } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui-next";
 import { createFetch } from "@saleor/sdk";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -34,20 +34,24 @@ export const DevModePanel: React.FC = () => {
   };
 
   return (
-    <Dialog
-      maxWidth="xl"
-      fullWidth
-      open={isDevModeVisible}
-      style={{ zIndex: 5 }}
-      PaperProps={{ style: { height: "100%" } }}
-    >
-      <style dangerouslySetInnerHTML={overwriteCodeMirrorCSSVariables}></style>
-      <DialogHeader onClose={() => setDevModeVisibility(false)}>
-        {intl.formatMessage(messages.title)}
-      </DialogHeader>
-      <DialogContent style={{ padding: 0, margin: 1, overflowY: "auto" }}>
-        <PlainGraphiQL query={devModeContent} variables={variables} fetcher={fetcher} />
-      </DialogContent>
-    </Dialog>
+    <DashboardModal open={isDevModeVisible} onChange={() => setDevModeVisibility(false)}>
+      <DashboardModal.Content
+        __maxWidth={DASHBOARD_MODAL_WIDTH_XL}
+        __width="calc(100% - 64px)"
+        __gridTemplateRows="auto 1fr"
+        height="100%"
+        overflowX="hidden"
+      >
+        <style dangerouslySetInnerHTML={overwriteCodeMirrorCSSVariables}></style>
+        <DashboardModal.Title display="flex" justifyContent="space-between">
+          {intl.formatMessage(messages.title)}
+          <DashboardModal.Close onClose={() => setDevModeVisibility(false)} />
+        </DashboardModal.Title>
+
+        <Box height="100%">
+          <PlainGraphiQL query={devModeContent} variables={variables} fetcher={fetcher} />
+        </Box>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
