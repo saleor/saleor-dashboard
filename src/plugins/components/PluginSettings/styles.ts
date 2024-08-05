@@ -8,13 +8,6 @@ export const useStyles = makeStyles(
     button: {
       marginRight: theme.spacing(),
     },
-    item: {
-      "&:not(:last-child)": {
-        marginBottom: theme.spacing(3),
-      },
-      alignItems: "center",
-      display: "flex",
-    },
     itemLabel: {
       fontWeight: 500,
     },

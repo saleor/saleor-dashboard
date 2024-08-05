@@ -32,6 +32,7 @@ test("TC: SALEOR_31 Create basic shipping method @shipping-method @e2e", async (
 test("TC: SALEOR_32 Add price rate to shipping method - with excluded zip codes and excluded product @shipping-method @e2e", async () => {
   await shippingMethodsPage.gotoExistingShippingMethod(
     SHIPPING_METHODS.shippingMethodWithoutRates.id,
+    SHIPPING_METHODS.shippingMethodWithoutRates.name,
   );
   await shippingMethodsPage.clickAddPriceRateButton();
   await shippingMethodsPage.rightSideDetailsPage.selectTaxIndex(1);
@@ -53,6 +54,7 @@ test("TC: SALEOR_32 Add price rate to shipping method - with excluded zip codes 
 test("TC: SALEOR_33 Add weight rate to shipping method - with included zip codes and excluded product @shipping-method @e2e", async () => {
   await shippingMethodsPage.gotoExistingShippingMethod(
     SHIPPING_METHODS.shippingMethodWithoutRates.id,
+    SHIPPING_METHODS.shippingMethodWithoutRates.name,
   );
   await shippingMethodsPage.clickAddWeightRateButton();
   await shippingMethodsPage.rightSideDetailsPage.selectTaxIndex(1);
@@ -74,6 +76,7 @@ test("TC: SALEOR_33 Add weight rate to shipping method - with included zip codes
 test("TC: SALEOR_34 Delete a single shipping rate from the shipping zone details page @shipping-method @e2e", async () => {
   await shippingMethodsPage.gotoExistingShippingMethod(
     SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.id,
+    SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.name,
   );
   await expect(shippingMethodsPage.pageHeader).toBeVisible();
 
@@ -134,7 +137,9 @@ test("TC: SALEOR_37 Update a shipping method @shipping-method @e2e", async () =>
 
   await shippingMethodsPage.gotoExistingShippingMethod(
     SHIPPING_METHODS.shippingMethodToBeUpdated.id,
+    SHIPPING_METHODS.shippingMethodToBeUpdated.name,
   );
+
   await shippingMethodsPage.rightSideDetailsPage.clickChannelsSelectShippingPage();
   await shippingMethodsPage.rightSideDetailsPage.selectSingleChannelShippingPage();
   await shippingMethodsPage.rightSideDetailsPage.clickWarehouseSelectShippingPage();
