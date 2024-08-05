@@ -1,21 +1,15 @@
-// @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
+import { DASHBOARD_MODAL_WIDTH_SMALL, DashboardModal } from "@dashboard/components/Modal";
 import { OrderErrorFragment } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import { buttonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  TextField,
-} from "@material-ui/core";
+import { TextField } from "@material-ui/core";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -49,18 +43,19 @@ const OrderFulfillmentTrackingDialog: React.FC<OrderFulfillmentTrackingDialogPro
   };
 
   return (
-    <Dialog onClose={onClose} open={open} fullWidth maxWidth="xs">
-      <Form initial={initialData} onSubmit={onConfirm}>
-        {({ change, data, submit }) => (
-          <>
-            <DialogTitle disableTypography>
-              <FormattedMessage
-                id="/BJQIq"
-                defaultMessage="Add Tracking Code"
-                description="dialog header"
-              />
-            </DialogTitle>
-            <DialogContent>
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content __width={DASHBOARD_MODAL_WIDTH_SMALL} overflow="hidden">
+        <Form initial={initialData} onSubmit={onConfirm}>
+          {({ change, data, submit }) => (
+            <Box display="grid" gap={6}>
+              <DashboardModal.Title>
+                <FormattedMessage
+                  id="/BJQIq"
+                  defaultMessage="Add Tracking Code"
+                  description="dialog header"
+                />
+              </DashboardModal.Title>
+
               <TextField
                 error={!!formErrors.trackingNumber}
                 helperText={getOrderErrorMessage(formErrors.trackingNumber, intl)}
@@ -74,33 +69,35 @@ const OrderFulfillmentTrackingDialog: React.FC<OrderFulfillmentTrackingDialogPro
                 fullWidth
                 data-test-id="tracking-number-input"
               />
+
               {errors.length > 0 && (
                 <>
                   <FormSpacer />
                   {errors
-                    .filter(err => !formFields.includes(err.field))
+                    .filter(err => err.field && !formFields.includes(err.field))
                     .map((err, index) => (
-                      <DialogContentText color="error" key={index}>
+                      <Text display="block" color="critical1" key={index}>
                         {getOrderErrorMessage(err, intl)}
-                      </DialogContentText>
+                      </Text>
                     ))}
                 </>
               )}
-            </DialogContent>
-            <DialogActions>
-              <BackButton onClick={onClose} />
-              <ConfirmButton
-                data-test-id="confirm-tracking-number-button"
-                transitionState={confirmButtonState}
-                onClick={submit}
-              >
-                <FormattedMessage {...buttonMessages.confirm} />
-              </ConfirmButton>
-            </DialogActions>
-          </>
-        )}
-      </Form>
-    </Dialog>
+
+              <DashboardModal.Actions>
+                <BackButton onClick={onClose} />
+                <ConfirmButton
+                  data-test-id="confirm-tracking-number-button"
+                  transitionState={confirmButtonState}
+                  onClick={submit}
+                >
+                  <FormattedMessage {...buttonMessages.confirm} />
+                </ConfirmButton>
+              </DashboardModal.Actions>
+            </Box>
+          )}
+        </Form>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
