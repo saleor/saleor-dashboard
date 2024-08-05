@@ -154,7 +154,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
               <DashboardModal.Actions>
                 {step === "form" ? (
                   <>
-                    <BackButton marginRight={1} onClick={onClose} />
+                    <BackButton onClick={onClose} />
                     <ConfirmButton
                       data-test-id="submit"
                       transitionState={confirmButtonState}
