@@ -24,7 +24,7 @@ export const SentryAdapter = (config: Config): TrackerMethods => {
           "Cannot read properties of undefined (reading 'holder')",
         ],
         integrations: [Sentry.reactRouterV5BrowserTracingIntegration({ history })],
-        tracesSampleRate: 0.4,
+        tracesSampleRate: 0.1,
       });
 
       return true;
