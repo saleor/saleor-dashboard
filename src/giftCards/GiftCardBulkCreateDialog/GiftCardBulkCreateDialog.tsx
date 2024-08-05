@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { IMessage } from "@dashboard/components/messages";
-import { DashboardModal } from "@dashboard/components/Modal";
+import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
 import {
   GiftCardBulkCreateInput,
   useChannelCurrenciesQuery,
@@ -108,7 +108,7 @@ const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
   return (
     <>
       <DashboardModal open={open} onChange={onClose}>
-        <DashboardModal.Content __maxWidth={600} __width="calc(100% - 64px)">
+        <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} __width="calc(100% - 64px)">
           <DashboardModal.Title>{intl.formatMessage(messages.title)}</DashboardModal.Title>
           <ContentWithProgress>
             {!loadingChannelCurrencies && (
