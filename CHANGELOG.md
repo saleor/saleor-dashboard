@@ -1,5 +1,22 @@
 # Changelog
 
+## 3.20.5
+
+### Patch Changes
+
+- 0b9296f1c: You can now replace all environment variables instead of only API_URL in Docker and nginx
+- d29c3f89d: Tests for shipping methods now wait to content load to start test
+- fd29d47cb: Now developer can see the traces within Sentry
+- f89484cc4: Plugin details view now displays channel list with proper padding and text with proper size.
+- b464ee243: Now sentry sample rate sents only 10% of the traffic
+- cfe015ab2: You can now see errors when required attributes are empty during product or page edition
+- a1420b2c4: Page type page now displays section description in multiple lines.
+- 8b345e605: Transaction capture modal no longer shows "Error" text when API error occurs. This means that the modal closes when mutation finishes so that result is visible.
+- cf2eb131f: Now you can see initials in your account details when there is no avatar image set for your account.
+- ef1c9cba5: Subscription query editor no longer shows incorrect required permissions for inserted query.
+- 5098f2674: You can now assign more than 22 attribute for product and page type
+- 508e53e6f: Category input in product page is no longer collapsed when empty
+
 ## 3.20.4
 
 ### Patch Changes
