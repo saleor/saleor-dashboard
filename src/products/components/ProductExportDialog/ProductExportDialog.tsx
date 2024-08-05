@@ -2,7 +2,6 @@
 import { Button } from "@dashboard/components/Button";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import makeCreatorSteps, { Step } from "@dashboard/components/CreatorSteps";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import {
   ChannelFragment,
   ExportErrorFragment,
@@ -20,7 +19,7 @@ import getExportErrorMessage from "@dashboard/utils/errors/export";
 import { toggle } from "@dashboard/utils/lists";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { Dialog, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Option, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -104,9 +103,7 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
   const dialogErrors = useModalDialogErrors(errors, open);
   const notFormErrors = dialogErrors.filter(err => !err.field);
   const intl = useIntl();
-  const [selectedAttributes, setSelectedAttributes] = React.useState<MultiAutocompleteChoiceType[]>(
-    [],
-  );
+  const [selectedAttributes, setSelectedAttributes] = React.useState<Option[]>([]);
   const [selectedChannels, setSelectedChannels] = React.useState([]);
   const { change, data, reset, submit } = useForm(initialForm, onSubmit);
 

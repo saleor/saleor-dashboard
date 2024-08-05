@@ -20,8 +20,6 @@ import { ChannelData, ChannelPriceArgs } from "@dashboard/channels/utils";
 import { AttributeInput, AttributeInputData } from "@dashboard/components/Attributes";
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@dashboard/components/Metadata";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   ProductErrorWithAttributesFragment,
   ProductTypeQuery,
@@ -138,12 +136,12 @@ export interface UseProductCreateFormOutput
 export type UseProductCreateFormRenderProps = Omit<UseProductCreateFormOutput, "richText">;
 
 export interface UseProductCreateFormOpts
-  extends Record<"categories" | "collections" | "taxClasses", SingleAutocompleteChoiceType[]> {
+  extends Record<"categories" | "collections" | "taxClasses", Option[]> {
   setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
-  setSelectedCollections: React.Dispatch<React.SetStateAction<MultiAutocompleteChoiceType[]>>;
+  setSelectedCollections: React.Dispatch<React.SetStateAction<Option[]>>;
   setSelectedTaxClass: React.Dispatch<React.SetStateAction<string>>;
   setChannels: (channels: ChannelData[]) => void;
-  selectedCollections: MultiAutocompleteChoiceType[];
+  selectedCollections: Option[];
   productTypes: RelayToFlat<SearchProductTypesQuery["search"]>;
   currentChannels: ChannelData[];
   referencePages: RelayToFlat<SearchPagesQuery["search"]>;
