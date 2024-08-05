@@ -44,34 +44,3 @@ jobs:
       ADDITIONAL_TITLE: "Core automation test"
     secrets: inherit
   
-  add-tests-status-to-release-PR:
-    needs: run-tests-on-release 
-    if: ${{ always() && github.event.client_payload.project == 'CORE' }}
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Open release PR
-        env:
-          VERSION: "${{github.event.client_payload.custom_version }}"
-          DETAILS_URL_TO_TEST_RUN: "${{needs.run-tests-on-release.outputs.RUN_URL}}"
-          TEST_STATUS: "${{needs.run-tests-on-release.outputs.TESTS_CONCLUSION}}"
-        run: |
-          export GITHUB_TOKEN=$( \
-            curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
-          )
-
-          payload=$(jq --null-input \
-          --arg version "$VERSION" \
-          --arg details_url_to_test_run "$DETAILS_URL_TO_TEST_RUN" \
-          --arg test_status "$TEST_STATUS" \
-          '{
-            "event_type": "open-release-pull-request",
-            "client_payload": {
-              "project": "CORE",
-              "environment": "SANDBOX",
-              "version": $version,
-              "details_url_to_test_run": $details_url_to_test_run,
-              "test_status": $test_status
-            }
-          }')
-
-          gh api /repos/saleor/saleor-cloud-deployments/dispatches --input - <<< $payload
