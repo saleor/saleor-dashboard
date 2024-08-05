@@ -1,15 +1,17 @@
-import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { TransactionActionEnum } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
-import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from "@material-ui/core";
-import { Button } from "@saleor/macaw-ui";
+import { Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { mapActionToMessage } from "../OrderTransaction/utils";
 import { messages } from "./messages";
 
-export interface OrderTransactionActionDialogProps extends DialogProps {
+export interface OrderTransactionActionDialogProps {
+  open: boolean;
   confirmButtonState: ConfirmButtonTransitionState;
   onClose: () => void;
   onSubmit: () => void;
@@ -28,29 +30,31 @@ export const OrderTransactionActionDialog: React.FC<OrderTransactionActionDialog
   const actionType = actionIntl.toLowerCase();
 
   return (
-    <Dialog open={open} onClose={onClose}>
-      <DialogTitle>
-        <FormattedMessage
-          {...messages.title}
-          values={{
-            actionType,
-          }}
-        />
-      </DialogTitle>
-      <DialogContent>
-        <FormattedMessage {...messages.warningText} values={{ actionType }} />
-      </DialogContent>
-      <DialogActions>
-        <Button data-test-id="back" variant="secondary" color="text" onClick={onClose}>
-          <FormattedMessage {...buttonMessages.back} />
-        </Button>
-        <ConfirmButton
-          onClick={onSubmit}
-          labels={{ confirm: actionIntl }}
-          transitionState={confirmButtonState}
-          type="submit"
-        />
-      </DialogActions>
-    </Dialog>
+    <DashboardModal open={open} onChange={onClose}>
+      <DashboardModal.Content>
+        <DashboardModal.Title>
+          <FormattedMessage
+            {...messages.title}
+            values={{
+              actionType,
+            }}
+          />
+        </DashboardModal.Title>
+
+        <Text>
+          <FormattedMessage {...messages.warningText} values={{ actionType }} />
+        </Text>
+
+        <DashboardModal.Actions>
+          <Button data-test-id="back" variant="secondary" onClick={onClose}>
+            <FormattedMessage {...buttonMessages.back} />
+          </Button>
+
+          <ButtonWithLoader onClick={onSubmit} transitionState={confirmButtonState} type="submit">
+            {actionIntl}
+          </ButtonWithLoader>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
