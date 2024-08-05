@@ -1,29 +1,9 @@
-// @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { DASHBOARD_MODAL_WIDTH_SMALL, DashboardModal } from "@dashboard/components/Modal";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-
-const useStyles = makeStyles(
-  theme => ({
-    deleteButton: {
-      "&:hover": {
-        backgroundColor: theme.palette.error.main,
-      },
-      backgroundColor: theme.palette.error.main,
-      color: theme.palette.error.contrastText,
-    },
-  }),
-  { name: "ProductVariantDeleteDialog" },
-);
 
 export interface ProductVariantDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -35,15 +15,19 @@ export interface ProductVariantDeleteDialogProps {
 
 const ProductVariantDeleteDialog: React.FC<ProductVariantDeleteDialogProps> = props => {
   const { confirmButtonState, name, open, onConfirm, onClose } = props;
-  const classes = useStyles(props);
 
   return (
-    <Dialog onClose={onClose} open={open}>
-      <DialogTitle disableTypography>
-        <FormattedMessage id="GFJabu" defaultMessage="Delete Variant" description="dialog header" />
-      </DialogTitle>
-      <DialogContent>
-        <DialogContentText>
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content __width={DASHBOARD_MODAL_WIDTH_SMALL}>
+        <DashboardModal.Title>
+          <FormattedMessage
+            id="GFJabu"
+            defaultMessage="Delete Variant"
+            description="dialog header"
+          />
+        </DashboardModal.Title>
+
+        <Text>
           <FormattedMessage
             id="WwNtFn"
             defaultMessage="Are you sure you want to delete {name}?"
@@ -52,20 +36,21 @@ const ProductVariantDeleteDialog: React.FC<ProductVariantDeleteDialogProps> = pr
               name,
             }}
           />
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <BackButton onClick={onClose} />
-        <ConfirmButton
-          transitionState={confirmButtonState}
-          className={classes.deleteButton}
-          onClick={onConfirm}
-          data-test-id="delete-variant-button"
-        >
-          <FormattedMessage id="rbkmfG" defaultMessage="Delete variant" description="button" />
-        </ConfirmButton>
-      </DialogActions>
-    </Dialog>
+        </Text>
+
+        <DashboardModal.Actions>
+          <BackButton onClick={onClose} />
+          <ConfirmButton
+            transitionState={confirmButtonState}
+            variant="error"
+            onClick={onConfirm}
+            data-test-id="delete-variant-button"
+          >
+            <FormattedMessage id="rbkmfG" defaultMessage="Delete variant" description="button" />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
