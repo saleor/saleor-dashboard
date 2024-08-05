@@ -1,17 +1,8 @@
-// @ts-strict-ignore
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
-import FormSpacer from "@dashboard/components/FormSpacer";
+import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-} from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -31,18 +22,17 @@ const OrderCustomerChangeDialog: React.FC<OrderCustomerChangeDialogProps> = prop
   const intl = useIntl();
 
   return (
-    <Dialog onClose={onClose} open={open}>
-      <OrderCustomerChangeForm onSubmit={onConfirm}>
-        {({ change, data }) => (
-          <>
-            <DialogTitle disableTypography>
-              <FormattedMessage {...messages.title} />
-            </DialogTitle>
-            <DialogContent className={classes.overflow}>
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content __width={DASHBOARD_MODAL_WIDTH}>
+        <OrderCustomerChangeForm onSubmit={onConfirm}>
+          {({ change, data }) => (
+            <Box display="grid" gap={6}>
+              <DashboardModal.Title>
+                <FormattedMessage {...messages.title} />
+              </DashboardModal.Title>
               <Text>
                 <FormattedMessage {...messages.description} />
               </Text>
-              <FormSpacer />
               <RadioGroup
                 className={classes.container}
                 value={data.changeActionOption}
@@ -62,16 +52,16 @@ const OrderCustomerChangeDialog: React.FC<OrderCustomerChangeDialogProps> = prop
                   className={classes.optionLabel}
                 />
               </RadioGroup>
-            </DialogContent>
-            <DialogActions>
-              <ConfirmButton transitionState="default" type="submit">
-                <FormattedMessage {...buttonMessages.continue} />
-              </ConfirmButton>
-            </DialogActions>
-          </>
-        )}
-      </OrderCustomerChangeForm>
-    </Dialog>
+              <DashboardModal.Actions>
+                <ConfirmButton transitionState="default" type="submit">
+                  <FormattedMessage {...buttonMessages.continue} />
+                </ConfirmButton>
+              </DashboardModal.Actions>
+            </Box>
+          )}
+        </OrderCustomerChangeForm>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
