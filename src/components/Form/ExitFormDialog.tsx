@@ -1,33 +1,10 @@
-import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
-import { Button, Dialog, DialogContent, makeStyles } from "@material-ui/core";
-import { DialogHeader } from "@saleor/macaw-ui";
+import BackButton from "@dashboard/components/BackButton";
+import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { exitFormPromptMessages as messages } from "./messages";
-
-const useStyles = makeStyles(
-  () => ({
-    container: {
-      width: "100vw",
-      height: "100vh",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    buttonsContainer: {
-      display: "flex",
-      justifyContent: "flex-end",
-    },
-    dialogContent: {
-      "@media (min-width: 800px)": {
-        minWidth: 500,
-      },
-      paddingTop: 0,
-    },
-  }),
-  { name: "ExitFormPrompt" },
-);
 
 interface ExitFormDialogProps {
   onClose: () => void;
@@ -36,31 +13,24 @@ interface ExitFormDialogProps {
 }
 
 const ExitFormDialog: React.FC<ExitFormDialogProps> = ({ onLeave, onClose, isOpen }) => {
-  const classes = useStyles();
   const intl = useIntl();
 
   return (
-    <Dialog className={classes.container} open={isOpen} onClose={onClose}>
-      <DialogHeader onClose={onClose}>
-        {intl.formatMessage(messages.unableToSaveTitle)}
-      </DialogHeader>
-      <DialogContent className={classes.dialogContent}>
-        <div className={classes.buttonsContainer}>
-          <Button onClick={onClose} data-test-id="keep-editing">
-            {intl.formatMessage(messages.keepEditing)}
-          </Button>
-          <HorizontalSpacer />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={onLeave}
-            data-test-id="ignore-changes"
-          >
+    <DashboardModal open={isOpen} onChange={onClose}>
+      <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%" overflowX="hidden">
+        <DashboardModal.Title display="flex" justifyContent="space-between">
+          {intl.formatMessage(messages.unableToSaveTitle)}
+          <DashboardModal.Close onClose={onClose} />
+        </DashboardModal.Title>
+
+        <DashboardModal.Actions>
+          <BackButton onClick={onClose}>{intl.formatMessage(messages.keepEditing)}</BackButton>
+          <Button variant="primary" onClick={onLeave} data-test-id="ignore-changes">
             {intl.formatMessage(messages.ignoreChanges)}
           </Button>
-        </div>
-      </DialogContent>
-    </Dialog>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
