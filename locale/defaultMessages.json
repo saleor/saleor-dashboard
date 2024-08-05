@@ -422,6 +422,10 @@
     "context": "column header",
     "string": "Title"
   },
+  "0YjGFG": {
+    "context": "alert message",
+    "string": "For subscription"
+  },
   "0a0fLZ": {
     "context": "countries list menu label when no countries are assigned",
     "string": "There are no countries assigned"
@@ -2064,6 +2068,10 @@
   "ByYtFB": {
     "string": "Invalid or expired token. Please check your token in URL"
   },
+  "C+WD8j": {
+    "context": "alert message",
+    "string": "all of"
+  },
   "C035fF": {
     "context": "grant refund, refund card explanation next to submit button",
     "string": "Funds will be returned in a separate step"
@@ -3043,6 +3051,10 @@
   "I+UwqI": {
     "context": "is filter range or value",
     "string": "equal to"
+  },
+  "I/y4IU": {
+    "context": "alert message",
+    "string": "one of"
   },
   "I1Mz7h": {
     "string": "Manage Collection Channel Availability"
