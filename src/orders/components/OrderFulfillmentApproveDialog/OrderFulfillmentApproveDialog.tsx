@@ -3,16 +3,11 @@ import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/componen
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
+import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
 import { OrderErrorFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@material-ui/core";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -30,58 +25,64 @@ export interface OrderFulfillmentAcceptDialogProps {
   onConfirm: (data: OrderFulfillmentAcceptDialogFormData) => void;
 }
 
-const OrderFulfillmentAcceptDialog: React.FC<OrderFulfillmentAcceptDialogProps> = props => {
+const OrderFulfillmentApproveDialog: React.FC<OrderFulfillmentAcceptDialogProps> = props => {
   const { confirmButtonState, errors, open, onConfirm, onClose } = props;
   const intl = useIntl();
 
   return (
-    <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
-      <Form initial={{ notifyCustomer: true }} onSubmit={onConfirm}>
-        {({ change, data, submit }) => (
-          <>
-            <DialogTitle disableTypography>
-              <FormattedMessage {...messages.title} />
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText>
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content __width={DASHBOARD_MODAL_WIDTH}>
+        <Form initial={{ notifyCustomer: true }} onSubmit={onConfirm}>
+          {({ change, data, submit }) => (
+            <Box display="grid" gap={6}>
+              <DashboardModal.Title>
+                <FormattedMessage {...messages.title} />
+              </DashboardModal.Title>
+
+              <Text>
                 <FormattedMessage {...messages.description} />
-              </DialogContentText>
-              <ControlledCheckbox
-                data-test-id="notify-customer"
-                name={"notifyCustomer" as keyof OrderFulfillmentAcceptDialogFormData}
-                label={intl.formatMessage(messages.notifyCustomer)}
-                checked={data.notifyCustomer}
-                onChange={change}
-              />
-              {errors.length > 0 && (
-                <>
-                  <FormSpacer />
-                  {errors.map((err, index) => (
-                    <DialogContentText color="error" key={index}>
-                      {getOrderErrorMessage(err, intl)}
-                    </DialogContentText>
-                  ))}
-                </>
-              )}
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={onClose}>
-                <FormattedMessage {...buttonMessages.cancel} />
-              </Button>
-              <ConfirmButton
-                data-test-id="submit"
-                transitionState={confirmButtonState}
-                onClick={submit}
-              >
-                <FormattedMessage {...buttonMessages.approve} />
-              </ConfirmButton>
-            </DialogActions>
-          </>
-        )}
-      </Form>
-    </Dialog>
+              </Text>
+
+              <Box>
+                <ControlledCheckbox
+                  data-test-id="notify-customer"
+                  name={"notifyCustomer" as keyof OrderFulfillmentAcceptDialogFormData}
+                  label={intl.formatMessage(messages.notifyCustomer)}
+                  checked={data.notifyCustomer}
+                  onChange={change}
+                />
+
+                {errors.length > 0 && (
+                  <>
+                    <FormSpacer />
+                    {errors.map((err, index) => (
+                      <Text display="block" color="critical1" key={index}>
+                        {getOrderErrorMessage(err, intl)}
+                      </Text>
+                    ))}
+                  </>
+                )}
+              </Box>
+
+              <DashboardModal.Actions>
+                <Button onClick={onClose}>
+                  <FormattedMessage {...buttonMessages.cancel} />
+                </Button>
+                <ConfirmButton
+                  data-test-id="submit"
+                  transitionState={confirmButtonState}
+                  onClick={submit}
+                >
+                  <FormattedMessage {...buttonMessages.approve} />
+                </ConfirmButton>
+              </DashboardModal.Actions>
+            </Box>
+          )}
+        </Form>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
-OrderFulfillmentAcceptDialog.displayName = "OrderFulfillmentAcceptDialog";
-export default OrderFulfillmentAcceptDialog;
+OrderFulfillmentApproveDialog.displayName = "OrderFulfillmentApproveDialog";
+export default OrderFulfillmentApproveDialog;
