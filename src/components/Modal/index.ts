@@ -5,6 +5,7 @@ import { Root } from "./Root";
 import { Title } from "./Title";
 
 export const DASHBOARD_MODAL_WIDTH_XL = 1920;
+export const DASHBOARD_MODAL_WIDTH_MD = 1280;
 export const DASHBOARD_MODAL_WIDTH = 600;
 export const DASHBOARD_MODAL_WIDTH_SMALL = 444;
 
