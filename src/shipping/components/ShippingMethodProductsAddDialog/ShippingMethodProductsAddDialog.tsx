@@ -4,6 +4,7 @@ import { Channel, isAvailableInChannel } from "@dashboard/channels/utils";
 import BackButton from "@dashboard/components/BackButton";
 import Checkbox from "@dashboard/components/Checkbox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -11,43 +12,21 @@ import { SearchProductsQuery, ShippingPriceExcludeProductMutation } from "@dashb
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { renderCollection } from "@dashboard/misc";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
-import {
-  CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TableBody,
-  TableCell,
-  TextField,
-} from "@material-ui/core";
+import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
-  theme => ({
+  () => ({
     avatar: {
       paddingLeft: 0,
       width: 64,
     },
     colName: {
       paddingLeft: 0,
-    },
-    searchBar: {
-      marginBottom: theme.spacing(3),
-    },
-    loadMoreLoaderContainer: {
-      alignItems: "center",
-      display: "flex",
-      height: theme.spacing(3),
-      justifyContent: "center",
-      marginTop: theme.spacing(3),
-    },
-    overflow: {
-      overflowY: "visible",
     },
     productCheckboxCell: {
       "&:first-child": {
@@ -114,16 +93,17 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
   };
 
   return (
-    <Dialog onClose={handleClose} open={open} fullWidth maxWidth="sm">
-      <DialogTitle disableTypography>
-        <FormattedMessage
-          id="xZhxBJ"
-          defaultMessage="Assign Products"
-          description="dialog header"
-        />
-      </DialogTitle>
-      <DialogContent>
-        <div data-test-id="assign-products-dialog-content" className={classes.searchBar}>
+    <DashboardModal onChange={handleClose} open={open}>
+      <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%" overflowX="hidden">
+        <DashboardModal.Title>
+          <FormattedMessage
+            id="xZhxBJ"
+            defaultMessage="Assign Products"
+            description="dialog header"
+          />
+        </DashboardModal.Title>
+
+        <Box data-test-id="assign-products-dialog-content">
           <TextField
             data-test-id="search-bar"
             name="query"
@@ -143,17 +123,25 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
               endAdornment: loading && <CircularProgress size={16} />,
             }}
           />
-        </div>
-        <div>
+        </Box>
+
+        <Box>
           <InfiniteScroll
             dataLength={products?.length ?? 0}
             next={onFetchMore}
             hasMore={hasMore}
             scrollThreshold="100px"
             loader={
-              <div key="loader" className={classes.loadMoreLoaderContainer}>
+              <Box
+                alignItems="center"
+                display="flex"
+                height={5}
+                justifyContent="center"
+                marginTop={5}
+                key="loader"
+              >
                 <CircularProgress size={16} />
-              </div>
+              </Box>
             }
             height={450}
           >
@@ -228,25 +216,26 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
               </TableBody>
             </ResponsiveTable>
           </InfiniteScroll>
-        </div>
-      </DialogContent>
-      <DialogActions>
-        <BackButton onClick={handleClose} />
-        <ConfirmButton
-          data-test-id="assign-and-save-button"
-          transitionState={confirmButtonState}
-          type="submit"
-          disabled={loading || !selectedProducts?.length}
-          onClick={handleSubmit}
-        >
-          <FormattedMessage
-            id="FzEew9"
-            defaultMessage="Assign and save"
-            description="assign products to shipping rate and save, button"
-          />
-        </ConfirmButton>
-      </DialogActions>
-    </Dialog>
+        </Box>
+
+        <DashboardModal.Actions>
+          <BackButton onClick={handleClose} />
+          <ConfirmButton
+            data-test-id="assign-and-save-button"
+            transitionState={confirmButtonState}
+            type="submit"
+            disabled={loading || !selectedProducts?.length}
+            onClick={handleSubmit}
+          >
+            <FormattedMessage
+              id="FzEew9"
+              defaultMessage="Assign and save"
+              description="assign products to shipping rate and save, button"
+            />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
