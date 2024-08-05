@@ -279,24 +279,25 @@ export function getCountrySelectionMap(
   countries?: CountryFragment[],
   countriesSelected?: string[],
 ) {
-  return (
-    countriesSelected &&
-    countries?.reduce(
-      (acc, country) => {
-        acc[country.code] = !!countriesSelected.find(
-          selectedCountries => selectedCountries === country.code,
-        );
+  if (!countriesSelected || !countries) {
+    return {} as Record<string, boolean>;
+  }
 
-        return acc;
-      },
-      {} as Map<string, boolean>,
-    )
+  return countries.reduce(
+    (acc, country) => {
+      acc[country.code] = !!countriesSelected.find(
+        selectedCountries => selectedCountries === country.code,
+      );
+
+      return acc;
+    },
+    {} as Record<string, boolean>,
   );
 }
 
 export function isRestWorldCountriesSelected(
   restWorldCountries?: string[],
-  countrySelectionMap?: Map<string, boolean>,
+  countrySelectionMap?: Record<string, boolean>,
 ) {
   return (
     countrySelectionMap &&
