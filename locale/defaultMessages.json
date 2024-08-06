@@ -6357,10 +6357,6 @@
   "dHAwu8": {
     "string": "Code already exists"
   },
-  "dJQxHt": {
-    "context": "delete category",
-    "string": "Are you sure you want to delete {categoryName}?"
-  },
   "dJVXIb": {
     "context": "vat included in order price",
     "string": "VAT included"
