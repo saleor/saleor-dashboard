@@ -74,7 +74,7 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
           );
 
           return (
-            <DashboardModal.Content size="md">
+            <DashboardModal.Content size="sm">
               <DashboardModal.Title>
                 <FormattedMessage
                   id="yzYXW/"

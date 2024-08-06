@@ -80,7 +80,7 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
           const handleCountrySelect = createCountryHandler(countrySelect, set);
 
           return (
-            <DashboardModal.Content size="md">
+            <DashboardModal.Content size="sm">
               <DashboardModal.Title>
                 {variant === "create" ? (
                   <FormattedMessage

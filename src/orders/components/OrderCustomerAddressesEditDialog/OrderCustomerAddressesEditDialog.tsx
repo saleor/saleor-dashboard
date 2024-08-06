@@ -218,7 +218,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
 
   return (
     <DashboardModal onChange={exitModal} open={open}>
-      <DashboardModal.Content size="md">
+      <DashboardModal.Content size="sm">
         <OrderCustomerAddressesEditForm
           countryChoices={countryChoices}
           countries={countries}

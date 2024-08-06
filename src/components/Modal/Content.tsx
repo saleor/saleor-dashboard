@@ -1,7 +1,7 @@
 import { Box, Modal, PropsWithBox } from "@saleor/macaw-ui-next";
 import React, { ReactNode } from "react";
 
-export type ContentSize = "sm" | "md" | "lg" | "xlg";
+export type ContentSize = "xs" | "sm" | "md" | "lg" | "xl";
 
 type ContentProps = PropsWithBox<{
   children: ReactNode;
@@ -10,10 +10,11 @@ type ContentProps = PropsWithBox<{
 }>;
 
 const sizes: Record<ContentSize, number> = {
-  sm: 444,
-  md: 600,
+  xs: 444,
+  sm: 600,
+  md: 960,
   lg: 1280,
-  xlg: 1920,
+  xl: 1920,
 };
 
 export const Content = ({ children, disableAutofocus, size, ...rest }: ContentProps) => {

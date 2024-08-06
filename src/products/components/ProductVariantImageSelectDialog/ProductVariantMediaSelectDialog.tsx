@@ -41,7 +41,7 @@ const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogP
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="md" overflowY="visible">
+      <DashboardModal.Content size="sm" overflowY="visible">
         <DashboardModal.Title>
           <FormattedMessage
             id="iPk640"

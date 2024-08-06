@@ -40,7 +40,7 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="sm">
+      <DashboardModal.Content size="xs">
         <Form initial={initialForm} onSubmit={onConfirm}>
           {({ change, data, submit }) => (
             <Box display="grid" gap={6}>

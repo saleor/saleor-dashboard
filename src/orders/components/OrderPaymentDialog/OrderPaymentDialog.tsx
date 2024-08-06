@@ -47,7 +47,7 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
         onSubmit={onSubmit}
       >
         {({ data, change, submit }) => (
-          <DashboardModal.Content size="md">
+          <DashboardModal.Content size="sm">
             <DashboardModal.Title>
               {intl.formatMessage({
                 id: "+PbHKD",

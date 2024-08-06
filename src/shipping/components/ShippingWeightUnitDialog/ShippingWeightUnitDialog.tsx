@@ -24,7 +24,7 @@ export const ShippingWeightUnitDialog: React.FC<ShippingWeightUnitDialogProps> =
 }) => {
   return (
     <DashboardModal open={open} onChange={onClose}>
-      <DashboardModal.Content size="sm">
+      <DashboardModal.Content size="xs">
         <Box alignItems="center" display="flex" gap={3} justifyContent="space-between">
           <DashboardModal.Title>
             <FormattedMessage

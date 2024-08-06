@@ -140,7 +140,7 @@ const NavigatorSearch: React.FC = () => {
 
   return (
     <DashboardModal open={isNavigatorVisible} onChange={setNavigatorVisibility}>
-      <DashboardModal.Content size="md" backgroundColor="default1" padding={0}>
+      <DashboardModal.Content size="sm" backgroundColor="default1" padding={0}>
         <Box __height="500px" width="100%">
           <Downshift
             itemToString={(item: QuickSearchAction) => (item ? item.label : "")}

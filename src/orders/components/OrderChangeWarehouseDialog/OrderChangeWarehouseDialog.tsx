@@ -88,7 +88,7 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
 
   return (
     <DashboardModal open={open} onChange={onClose}>
-      <DashboardModal.Content size="md">
+      <DashboardModal.Content size="sm">
         <DashboardModal.Title>
           <Box display="flex" justifyContent="space-between">
             <FormattedMessage {...messages.dialogTitle} />

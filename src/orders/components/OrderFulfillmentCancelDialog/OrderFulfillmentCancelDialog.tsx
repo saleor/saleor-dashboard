@@ -62,7 +62,7 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
           );
 
           return (
-            <DashboardModal.Content size="md">
+            <DashboardModal.Content size="sm">
               <DashboardModal.Title>
                 <FormattedMessage
                   id="bb4nSp"

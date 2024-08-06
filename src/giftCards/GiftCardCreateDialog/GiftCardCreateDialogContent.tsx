@@ -76,7 +76,7 @@ const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = 
   };
 
   return (
-    <DashboardModal.Content size="md" data-test-id="gift-card-dialog">
+    <DashboardModal.Content size="sm" data-test-id="gift-card-dialog">
       <DashboardModal.Title>{intl.formatMessage(messages.title)}</DashboardModal.Title>
       {cardCode ? (
         <GiftCardCreateDialogCodeContent cardCode={cardCode} onClose={handleClose} />

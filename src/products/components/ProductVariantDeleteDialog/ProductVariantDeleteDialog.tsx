@@ -18,7 +18,7 @@ const ProductVariantDeleteDialog: React.FC<ProductVariantDeleteDialogProps> = pr
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="md">
+      <DashboardModal.Content size="sm">
         <DashboardModal.Title>
           <FormattedMessage
             id="GFJabu"

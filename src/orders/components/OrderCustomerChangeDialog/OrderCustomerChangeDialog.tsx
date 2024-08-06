@@ -23,7 +23,7 @@ const OrderCustomerChangeDialog: React.FC<OrderCustomerChangeDialogProps> = prop
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="md">
+      <DashboardModal.Content size="sm">
         <OrderCustomerChangeForm onSubmit={onConfirm}>
           {({ change, data }) => (
             <Box display="grid" gap={6}>

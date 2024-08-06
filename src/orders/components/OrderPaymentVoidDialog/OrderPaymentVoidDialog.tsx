@@ -29,7 +29,7 @@ const OrderPaymentVoidDialog: React.FC<OrderPaymentVoidDialogProps> = ({
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="md">
+      <DashboardModal.Content size="sm">
         <DashboardModal.Title>
           <FormattedMessage id="KszPFx" defaultMessage="Void Payment" description="dialog header" />
         </DashboardModal.Title>

@@ -94,7 +94,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
 
   return (
     <DashboardModal onChange={handleClose} open={open}>
-      <DashboardModal.Content size="md">
+      <DashboardModal.Content size="sm">
         <DashboardModal.Title>
           <FormattedMessage
             id="xZhxBJ"

@@ -44,7 +44,7 @@ const OrderFulfillmentTrackingDialog: React.FC<OrderFulfillmentTrackingDialogPro
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="sm">
+      <DashboardModal.Content size="xs">
         <Form initial={initialData} onSubmit={onConfirm}>
           {({ change, data, submit }) => (
             <DashboardModal.Grid>

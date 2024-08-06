@@ -33,7 +33,7 @@ export const OrderCancelDialog: React.FC<OrderCancelDialogProps> = props => {
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="md">
+      <DashboardModal.Content size="sm">
         <DashboardModal.Title data-test-id="dialog-title">
           <FormattedMessage {...cancelOrderDialogMessages.dialogTitle} values={{ orderNumber }} />
         </DashboardModal.Title>

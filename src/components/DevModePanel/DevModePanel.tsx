@@ -35,7 +35,7 @@ export const DevModePanel: React.FC = () => {
 
   return (
     <DashboardModal open={isDevModeVisible} onChange={() => setDevModeVisibility(false)}>
-      <DashboardModal.Content size="xlg" __gridTemplateRows="auto 1fr" height="100%">
+      <DashboardModal.Content size="xl" __gridTemplateRows="auto 1fr" height="100%">
         <style dangerouslySetInnerHTML={overwriteCodeMirrorCSSVariables}></style>
         <DashboardModal.Title display="flex" justifyContent="space-between">
           {intl.formatMessage(messages.title)}

@@ -62,7 +62,7 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
         onSubmit={onConfirm}
       >
         {({ change, data: formData, submit }) => (
-          <DashboardModal.Content size="sm">
+          <DashboardModal.Content size="xs">
             <DashboardModal.Title>
               <FormattedMessage
                 id="23g7PY"

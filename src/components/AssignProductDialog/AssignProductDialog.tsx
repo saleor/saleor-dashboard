@@ -106,7 +106,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
 
   return (
     <DashboardModal onChange={handleClose} open={open}>
-      <DashboardModal.Content size="md" __gridTemplateRows="auto auto 1fr auto">
+      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr auto">
         <DashboardModal.Title>
           <FormattedMessage {...messages.assignVariantDialogHeader} />
         </DashboardModal.Title>

@@ -29,7 +29,7 @@ const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDia
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="md">
+      <DashboardModal.Content size="sm">
         <Form initial={initial} onSubmit={onSubmit}>
           {({ change, data }) => (
             <DashboardModal.Grid>

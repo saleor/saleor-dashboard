@@ -8,7 +8,7 @@ import { FormattedMessage } from "react-intl";
 const OrderCannotCancelOrderDialog: React.FC<DialogProps> = ({ open, onClose }) => {
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="md">
+      <DashboardModal.Content size="sm">
         <DashboardModal.Title>
           <FormattedMessage
             id="NhQboB"

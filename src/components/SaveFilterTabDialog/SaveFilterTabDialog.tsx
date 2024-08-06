@@ -43,7 +43,7 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="sm">
+      <DashboardModal.Content size="xs">
         <Form initial={initialForm} onSubmit={handleErrors}>
           {({ change, data, submit }) => (
             <DashboardModal.Grid>

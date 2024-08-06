@@ -34,7 +34,7 @@ const PluginSecretFieldDialog: React.FC<PluginSecretFieldDialogProps> = ({
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="md">
+      <DashboardModal.Content size="sm">
         <Form initial={initialForm} onSubmit={onConfirm}>
           {({ change, data, submit }) => (
             <DashboardModal.Grid>

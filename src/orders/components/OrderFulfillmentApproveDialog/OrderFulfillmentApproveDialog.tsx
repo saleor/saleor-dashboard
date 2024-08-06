@@ -31,7 +31,7 @@ const OrderFulfillmentApproveDialog: React.FC<OrderFulfillmentAcceptDialogProps>
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="md">
+      <DashboardModal.Content size="sm">
         <Form initial={{ notifyCustomer: true }} onSubmit={onConfirm}>
           {({ change, data, submit }) => (
             <DashboardModal.Grid>

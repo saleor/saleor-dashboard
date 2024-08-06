@@ -74,7 +74,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
 
   return (
     <DashboardModal onChange={handleClose} open={open}>
-      <DashboardModal.Content size="md" __gridTemplateRows="auto auto 1fr auto">
+      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr auto">
         <DashboardModal.Title>{labels.title}</DashboardModal.Title>
 
         <TextField

@@ -57,7 +57,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="md">
+      <DashboardModal.Content size="sm">
         <Form initial={{ name: "" }} onSubmit={data => onCreate(data.name)}>
           {({ change, data, submit }) => (
             <DashboardModal.Grid>

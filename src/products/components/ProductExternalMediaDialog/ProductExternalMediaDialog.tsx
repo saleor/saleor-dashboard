@@ -41,7 +41,7 @@ const ProductExternalMediaDialog: React.FC<ProductExternalMediaDialogProps> = ({
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="md">
+      <DashboardModal.Content size="sm">
         <Form initial={initialValues} onSubmit={handleOnSubmit}>
           {({ change, data, submit }) => (
             <DashboardModal.Grid>

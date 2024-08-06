@@ -48,7 +48,7 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
 
   return (
     <DashboardModal onChange={onClose} open={open} data-test-id="edit-attribute-value-dialog">
-      <DashboardModal.Content size="md">
+      <DashboardModal.Content size="sm">
         <Form initial={initialForm} onSubmit={onSubmit}>
           {({ errors, set, change, clearErrors, setError, data, submit }) => (
             <DashboardModal.Grid>

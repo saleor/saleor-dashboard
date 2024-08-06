@@ -20,7 +20,7 @@ export const DiscountDeleteModal = ({
 }: DiscountDeleteModalProps) => {
   return (
     <DashboardModal open={open} onChange={onChange}>
-      <DashboardModal.Content size="sm">
+      <DashboardModal.Content size="xs">
         <DashboardModal.Title>
           <FormattedMessage defaultMessage="Delete discount" id="ZrIt1W" />
         </DashboardModal.Title>
