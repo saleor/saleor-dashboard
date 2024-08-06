@@ -2,11 +2,11 @@ import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { commonMessages } from "@dashboard/intl";
 import { DialogProps, MinMax } from "@dashboard/types";
 import { TextField } from "@material-ui/core";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -29,10 +29,10 @@ const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDia
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH}>
+      <DashboardModal.Content size="md">
         <Form initial={initial} onSubmit={onSubmit}>
           {({ change, data }) => (
-            <Box display="grid" gap={6}>
+            <DashboardModal.Grid>
               <DashboardModal.Title>
                 <FormattedMessage
                   id="2Xt+sw"
@@ -89,7 +89,7 @@ const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDia
                   />
                 </ConfirmButton>
               </DashboardModal.Actions>
-            </Box>
+            </DashboardModal.Grid>
           )}
         </Form>
       </DashboardModal.Content>

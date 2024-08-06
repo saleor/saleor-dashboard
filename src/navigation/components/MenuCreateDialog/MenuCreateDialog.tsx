@@ -1,7 +1,7 @@
 import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
-import { DASHBOARD_MODAL_WIDTH_SMALL, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { MenuErrorFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
@@ -40,7 +40,7 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH_SMALL} width="100%">
+      <DashboardModal.Content size="sm">
         <Form initial={initialForm} onSubmit={onConfirm}>
           {({ change, data, submit }) => (
             <Box display="grid" gap={6}>

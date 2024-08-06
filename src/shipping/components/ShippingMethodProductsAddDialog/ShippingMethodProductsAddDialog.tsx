@@ -4,7 +4,7 @@ import { Channel, isAvailableInChannel } from "@dashboard/channels/utils";
 import BackButton from "@dashboard/components/BackButton";
 import Checkbox from "@dashboard/components/Checkbox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -94,7 +94,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
 
   return (
     <DashboardModal onChange={handleClose} open={open}>
-      <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%" overflowX="hidden">
+      <DashboardModal.Content size="md">
         <DashboardModal.Title>
           <FormattedMessage
             id="xZhxBJ"

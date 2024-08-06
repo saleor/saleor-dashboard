@@ -1,8 +1,7 @@
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { DASHBOARD_MODAL_WIDTH_SMALL, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
 import { TextField } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -44,14 +43,10 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content
-        __maxWidth={DASHBOARD_MODAL_WIDTH_SMALL}
-        width="100%"
-        overflowX="hidden"
-      >
+      <DashboardModal.Content size="sm">
         <Form initial={initialForm} onSubmit={handleErrors}>
           {({ change, data, submit }) => (
-            <Box display="grid" gap={6}>
+            <DashboardModal.Grid>
               <DashboardModal.Title>
                 <FormattedMessage
                   id="P9YktI"
@@ -88,7 +83,7 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
                   <FormattedMessage {...buttonMessages.save} />
                 </ConfirmButton>
               </DashboardModal.Actions>
-            </Box>
+            </DashboardModal.Grid>
           )}
         </Form>
       </DashboardModal.Content>

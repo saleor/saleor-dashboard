@@ -1,5 +1,5 @@
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import { useExportGiftCardsMutation, useGiftCardTotalCountQuery } from "@dashboard/graphql";
 import useBackgroundTask from "@dashboard/hooks/useBackgroundTask";
@@ -98,7 +98,7 @@ const GiftCardExportDialog: React.FC<
   };
 
   return (
-    <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%">
+    <DashboardModal.Content size="md">
       <DashboardModal.Title>
         <FormattedMessage {...messages.title} />
       </DashboardModal.Title>

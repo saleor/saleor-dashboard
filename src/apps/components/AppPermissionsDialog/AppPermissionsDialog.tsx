@@ -3,7 +3,7 @@ import { AppPermissionsDialogPermissionPicker } from "@dashboard/apps/components
 import { useAppPermissionsDialogState } from "@dashboard/apps/components/AppPermissionsDialog/AppPermissionsDialogState";
 import { AppPermissionsDialogMessages } from "@dashboard/apps/components/AppPermissionsDialog/messages";
 import { useGetAvailableAppPermissions } from "@dashboard/apps/hooks/useGetAvailableAppPermissions";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { PermissionEnum, useAppQuery, useAppUpdatePermissionsMutation } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
@@ -110,7 +110,7 @@ export const AppPermissionsDialog = ({
 
   return (
     <DashboardModal open={true} onChange={onClose}>
-      <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%" overflowX="hidden">
+      <DashboardModal.Content size="md">
         <DashboardModal.Title>{formatMessage(messages.heading)}</DashboardModal.Title>
         <Box display={"grid"} gridAutoFlow={"row"}>
           <Text as={"p"}>{formatMessage(messages.info)}</Text>

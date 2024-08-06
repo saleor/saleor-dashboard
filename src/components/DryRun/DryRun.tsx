@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import Grid from "@dashboard/components/Grid";
-import { DASHBOARD_MODAL_WIDTH_MD, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { useStyles } from "@dashboard/custom-apps/components/WebhookEvents/styles";
 import { useTriggerWebhookDryRunMutation, WebhookEventTypeSyncEnum } from "@dashboard/graphql";
 import { capitalize } from "@material-ui/core";
@@ -68,7 +68,7 @@ const DryRun: React.FC<DryRunProps> = ({
   if (syncEvents.length > 0) {
     return (
       <DashboardModal onChange={closeDialog} open={showDialog}>
-        <DashboardModal.Content data-test-id="dry-run">
+        <DashboardModal.Content size="lg" data-test-id="dry-run">
           <DashboardModal.Title display="flex" justifyContent="space-between">
             {intl.formatMessage(messages.header)}
             <DashboardModal.Close onClose={closeDialog} />
@@ -84,12 +84,7 @@ const DryRun: React.FC<DryRunProps> = ({
 
   return (
     <DashboardModal onChange={closeDialog} open={showDialog}>
-      <DashboardModal.Content
-        __maxWidth={DASHBOARD_MODAL_WIDTH_MD}
-        width="100%"
-        overflowX="hidden"
-        data-test-id="dry-run"
-      >
+      <DashboardModal.Content size="lg" data-test-id="dry-run">
         <DashboardModal.Title display="flex" justifyContent="space-between">
           {intl.formatMessage(messages.header)}
           <DashboardModal.Close onClose={closeDialog} />

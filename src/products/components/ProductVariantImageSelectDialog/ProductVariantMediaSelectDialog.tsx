@@ -1,6 +1,6 @@
 import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { ProductMediaFragment } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
@@ -41,7 +41,7 @@ const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogP
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%" overflowY="visible">
+      <DashboardModal.Content size="md" overflowY="visible">
         <DashboardModal.Title>
           <FormattedMessage
             id="iPk640"

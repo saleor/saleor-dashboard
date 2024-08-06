@@ -1,7 +1,7 @@
 import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { getApiUrl } from "@dashboard/config";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
@@ -57,10 +57,10 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%" overflowX="hidden">
+      <DashboardModal.Content size="md">
         <Form initial={{ name: "" }} onSubmit={data => onCreate(data.name)}>
           {({ change, data, submit }) => (
-            <Box display="grid" gap={6}>
+            <DashboardModal.Grid>
               <DashboardModal.Title>
                 <FormattedMessage id="T5nU7u" defaultMessage="Create Token" description="header" />
               </DashboardModal.Title>
@@ -173,7 +173,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                   </Button>
                 )}
               </DashboardModal.Actions>
-            </Box>
+            </DashboardModal.Grid>
           )}
         </Form>
       </DashboardModal.Content>

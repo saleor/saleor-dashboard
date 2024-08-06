@@ -2,7 +2,7 @@
 import { Button } from "@dashboard/components/Button";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import makeCreatorSteps, { Step } from "@dashboard/components/CreatorSteps";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import {
   ChannelFragment,
   ExportErrorFragment,
@@ -212,7 +212,7 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content __width={DASHBOARD_MODAL_WIDTH}>
+      <DashboardModal.Content size="md">
         <DashboardModal.Title>
           <FormattedMessage {...messages.title} />
         </DashboardModal.Title>

@@ -1,6 +1,6 @@
 import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { DASHBOARD_MODAL_WIDTH_SMALL, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -18,7 +18,7 @@ const ProductVariantDeleteDialog: React.FC<ProductVariantDeleteDialogProps> = pr
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content __width={DASHBOARD_MODAL_WIDTH_SMALL}>
+      <DashboardModal.Content size="md">
         <DashboardModal.Title>
           <FormattedMessage
             id="GFJabu"

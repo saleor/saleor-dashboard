@@ -78,7 +78,7 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
       <Form initial={initialForm} onSubmit={onSubmit}>
         {({ change, data, submit }) => (
           <>
-            <DashboardModal.Content __width={600}>
+            <DashboardModal.Content size="md">
               <DashboardModal.Title>
                 <FormattedMessage
                   id="V/YxJa"

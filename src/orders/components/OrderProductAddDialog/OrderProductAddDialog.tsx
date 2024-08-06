@@ -3,7 +3,7 @@ import BackButton from "@dashboard/components/BackButton";
 import Checkbox from "@dashboard/components/Checkbox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -89,7 +89,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content __width={DASHBOARD_MODAL_WIDTH} height="100%">
+      <DashboardModal.Content size="md">
         <DashboardModal.Title>
           <FormattedMessage
             {...messages.title}

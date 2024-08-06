@@ -3,7 +3,7 @@ import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/componen
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { OrderErrorFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
@@ -31,10 +31,10 @@ const OrderFulfillmentApproveDialog: React.FC<OrderFulfillmentAcceptDialogProps>
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content __width={DASHBOARD_MODAL_WIDTH}>
+      <DashboardModal.Content size="md">
         <Form initial={{ notifyCustomer: true }} onSubmit={onConfirm}>
           {({ change, data, submit }) => (
-            <Box display="grid" gap={6}>
+            <DashboardModal.Grid>
               <DashboardModal.Title>
                 <FormattedMessage {...messages.title} />
               </DashboardModal.Title>
@@ -76,7 +76,7 @@ const OrderFulfillmentApproveDialog: React.FC<OrderFulfillmentAcceptDialogProps>
                   <FormattedMessage {...buttonMessages.approve} />
                 </ConfirmButton>
               </DashboardModal.Actions>
-            </Box>
+            </DashboardModal.Grid>
           )}
         </Form>
       </DashboardModal.Content>

@@ -2,7 +2,7 @@
 import BackButton from "@dashboard/components/BackButton";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { UserAvatar } from "@dashboard/components/UserAvatar";
@@ -126,7 +126,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%" overflowX="hidden">
+      <DashboardModal.Content size="md">
         <DashboardModal.Title>
           <FormattedMessage {...messages.title} />
         </DashboardModal.Title>

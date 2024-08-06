@@ -3,7 +3,7 @@ import { createCountryHandler } from "@dashboard/components/AddressEdit/createCo
 import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import {
   AccountErrorFragment,
   AddressFragment,
@@ -80,7 +80,7 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
           const handleCountrySelect = createCountryHandler(countrySelect, set);
 
           return (
-            <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%">
+            <DashboardModal.Content size="md">
               <DashboardModal.Title>
                 {variant === "create" ? (
                   <FormattedMessage

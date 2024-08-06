@@ -2,14 +2,14 @@ import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import { DASHBOARD_MODAL_WIDTH_SMALL, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { OrderErrorFragment } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import { buttonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { TextField } from "@material-ui/core";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -44,10 +44,10 @@ const OrderFulfillmentTrackingDialog: React.FC<OrderFulfillmentTrackingDialogPro
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content __width={DASHBOARD_MODAL_WIDTH_SMALL} overflow="hidden">
+      <DashboardModal.Content size="sm">
         <Form initial={initialData} onSubmit={onConfirm}>
           {({ change, data, submit }) => (
-            <Box display="grid" gap={6}>
+            <DashboardModal.Grid>
               <DashboardModal.Title>
                 <FormattedMessage
                   id="/BJQIq"
@@ -93,7 +93,7 @@ const OrderFulfillmentTrackingDialog: React.FC<OrderFulfillmentTrackingDialogPro
                   <FormattedMessage {...buttonMessages.confirm} />
                 </ConfirmButton>
               </DashboardModal.Actions>
-            </Box>
+            </DashboardModal.Grid>
           )}
         </Form>
       </DashboardModal.Content>

@@ -1,5 +1,5 @@
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
@@ -74,12 +74,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
 
   return (
     <DashboardModal onChange={handleClose} open={open}>
-      <DashboardModal.Content
-        __maxWidth={DASHBOARD_MODAL_WIDTH}
-        width="100%"
-        overflowX="hidden"
-        __gridTemplateRows="auto auto 1fr auto"
-      >
+      <DashboardModal.Content size="md" __gridTemplateRows="auto auto 1fr auto">
         <DashboardModal.Title>{labels.title}</DashboardModal.Title>
 
         <TextField

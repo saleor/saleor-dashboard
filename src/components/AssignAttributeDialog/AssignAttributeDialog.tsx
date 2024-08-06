@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import Checkbox from "@dashboard/components/Checkbox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { AvailableAttributeFragment } from "@dashboard/graphql";
@@ -81,12 +81,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content
-        __maxWidth={DASHBOARD_MODAL_WIDTH}
-        width="100%"
-        overflowX="hidden"
-        __gridTemplateRows="auto auto 1fr auto auto"
-      >
+      <DashboardModal.Content size="md" __gridTemplateRows="auto auto 1fr auto auto">
         <DashboardModal.Title>
           <FormattedMessage {...messages.title} />
         </DashboardModal.Title>

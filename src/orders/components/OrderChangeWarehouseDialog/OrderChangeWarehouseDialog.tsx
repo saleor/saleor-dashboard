@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import Debounce from "@dashboard/components/Debounce";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { OrderFulfillLineFragment, WarehouseFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
@@ -88,7 +88,7 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
 
   return (
     <DashboardModal open={open} onChange={onClose}>
-      <DashboardModal.Content __width={DASHBOARD_MODAL_WIDTH}>
+      <DashboardModal.Content size="md">
         <DashboardModal.Title>
           <Box display="flex" justifyContent="space-between">
             <FormattedMessage {...messages.dialogTitle} />

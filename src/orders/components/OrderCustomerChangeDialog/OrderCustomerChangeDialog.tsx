@@ -1,5 +1,5 @@
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
 import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import { Box, Text } from "@saleor/macaw-ui-next";
@@ -23,7 +23,7 @@ const OrderCustomerChangeDialog: React.FC<OrderCustomerChangeDialogProps> = prop
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content __width={DASHBOARD_MODAL_WIDTH}>
+      <DashboardModal.Content size="md">
         <OrderCustomerChangeForm onSubmit={onConfirm}>
           {({ change, data }) => (
             <Box display="grid" gap={6}>

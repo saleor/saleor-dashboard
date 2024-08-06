@@ -2,13 +2,12 @@ import { getAttributeValueErrorMessage } from "@dashboard/attributes/errors";
 import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { AttributeErrorFragment, AttributeInputTypeEnum } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import { buttonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { TextField } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -49,10 +48,10 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
 
   return (
     <DashboardModal onChange={onClose} open={open} data-test-id="edit-attribute-value-dialog">
-      <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%" overflowX="hidden">
+      <DashboardModal.Content size="md">
         <Form initial={initialForm} onSubmit={onSubmit}>
           {({ errors, set, change, clearErrors, setError, data, submit }) => (
-            <Box display="grid" gap={6}>
+            <DashboardModal.Grid>
               <DashboardModal.Title>
                 {attributeValue === null ? (
                   <FormattedMessage
@@ -107,7 +106,7 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
                   <FormattedMessage {...buttonMessages.save} />
                 </ConfirmButton>
               </DashboardModal.Actions>
-            </Box>
+            </DashboardModal.Grid>
           )}
         </Form>
       </DashboardModal.Content>

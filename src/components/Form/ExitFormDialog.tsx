@@ -1,5 +1,5 @@
 import BackButton from "@dashboard/components/BackButton";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -17,7 +17,7 @@ const ExitFormDialog: React.FC<ExitFormDialogProps> = ({ onLeave, onClose, isOpe
 
   return (
     <DashboardModal open={isOpen} onChange={onClose}>
-      <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%" overflowX="hidden">
+      <DashboardModal.Content size="md">
         <DashboardModal.Title display="flex" justifyContent="space-between">
           {intl.formatMessage(messages.unableToSaveTitle)}
           <DashboardModal.Close onClose={onClose} />

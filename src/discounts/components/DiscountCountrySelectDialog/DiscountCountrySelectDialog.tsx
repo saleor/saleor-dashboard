@@ -3,7 +3,7 @@ import Checkbox from "@dashboard/components/Checkbox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import Hr from "@dashboard/components/Hr";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { CountryWithCodeFragment } from "@dashboard/graphql";
@@ -43,7 +43,7 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%" overflowX="hidden">
+      <DashboardModal.Content size="md">
         <Form initial={initialForm} onSubmit={onConfirm}>
           {({ data, change }) => {
             const countrySelectionMap = countries.reduce(
@@ -58,7 +58,7 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
             );
 
             return (
-              <Box display="grid" gap={6}>
+              <DashboardModal.Grid>
                 <DashboardModal.Title>
                   <FormattedMessage
                     id="cvVIV/"
@@ -149,7 +149,7 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
                     />
                   </ConfirmButton>
                 </DashboardModal.Actions>
-              </Box>
+              </DashboardModal.Grid>
             );
           }}
         </Form>

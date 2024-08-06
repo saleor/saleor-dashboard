@@ -1,5 +1,5 @@
 import { Button } from "@dashboard/components/Button";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { DialogProps } from "@dashboard/types";
 import { Text } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
@@ -27,7 +27,7 @@ const GiftCardBulkCreateSuccessDialog: React.FC<GiftCardBulkCreateSuccessDialogP
   return (
     <>
       <DashboardModal open={open} onChange={onClose}>
-        <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%">
+        <DashboardModal.Content size="md">
           <DashboardModal.Title>
             {intl.formatMessage(messages.bulkCreateIssuedTitle)}
           </DashboardModal.Title>

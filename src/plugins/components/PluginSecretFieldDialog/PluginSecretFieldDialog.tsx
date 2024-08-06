@@ -1,13 +1,13 @@
 import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { ConfigurationItemFragment, ConfigurationTypeFieldEnum } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { maybe } from "@dashboard/misc";
 import { DialogProps } from "@dashboard/types";
 import { TextField } from "@material-ui/core";
-import { Box, Skeleton } from "@saleor/macaw-ui-next";
+import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -34,10 +34,10 @@ const PluginSecretFieldDialog: React.FC<PluginSecretFieldDialogProps> = ({
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%" overflowX="hidden">
+      <DashboardModal.Content size="md">
         <Form initial={initialForm} onSubmit={onConfirm}>
           {({ change, data, submit }) => (
-            <Box display="grid" gap={6}>
+            <DashboardModal.Grid>
               <DashboardModal.Title>
                 {field ? (
                   field.value === null ? (
@@ -79,7 +79,7 @@ const PluginSecretFieldDialog: React.FC<PluginSecretFieldDialogProps> = ({
                   <FormattedMessage {...buttonMessages.confirm} />
                 </ConfirmButton>
               </DashboardModal.Actions>
-            </Box>
+            </DashboardModal.Grid>
           )}
         </Form>
       </DashboardModal.Content>

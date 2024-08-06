@@ -1,9 +1,9 @@
 import Form from "@dashboard/components/Form";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { ProductFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
+import { Button, Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -41,10 +41,10 @@ const ProductExternalMediaDialog: React.FC<ProductExternalMediaDialogProps> = ({
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content __width={DASHBOARD_MODAL_WIDTH}>
+      <DashboardModal.Content size="md">
         <Form initial={initialValues} onSubmit={handleOnSubmit}>
           {({ change, data, submit }) => (
-            <Box display="grid" gap={6}>
+            <DashboardModal.Grid>
               <DashboardModal.Title>
                 <Text size={5} fontWeight="bold">
                   {intl.formatMessage(messages.buttonMessage)}
@@ -75,7 +75,7 @@ const ProductExternalMediaDialog: React.FC<ProductExternalMediaDialogProps> = ({
                 </Button>
                 <Button onClick={submit}>{intl.formatMessage(messages.buttonMessage)}</Button>
               </DashboardModal.Actions>
-            </Box>
+            </DashboardModal.Grid>
           )}
         </Form>
       </DashboardModal.Content>

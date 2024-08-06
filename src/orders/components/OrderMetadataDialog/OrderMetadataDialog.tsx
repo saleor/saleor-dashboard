@@ -15,13 +15,7 @@ interface OrderMetadataDialogProps {
 export const OrderMetadataDialog = ({ onClose, open, data }: OrderMetadataDialogProps) => {
   return (
     <DashboardModal open={open} onChange={onClose}>
-      <DashboardModal.Content
-        __maxHeight="90vh"
-        __width="min(850px, 90vw)"
-        overflowY="auto"
-        gap={0}
-        paddingX={0}
-      >
+      <DashboardModal.Content size="lg">
         <DashboardModal.Title paddingX={6}>
           <FormattedMessage {...commonMessages.metadata} />: {data?.productName ?? ""}
         </DashboardModal.Title>
