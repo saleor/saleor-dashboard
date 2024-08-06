@@ -127,3 +127,12 @@ export function mapPersonNodeToChoice<T extends Person>(nodes: T[]): Option[] {
     label: getFullName({ firstName, lastName }),
   }));
 }
+
+export function getLoadableList<T>(data: Connection<T> | undefined | null): T[] | undefined {
+  // "undefined" is a loading state
+  if (typeof data === "undefined") {
+    return undefined;
+  }
+
+  return mapEdgesToItems(data) ?? [];
+}
