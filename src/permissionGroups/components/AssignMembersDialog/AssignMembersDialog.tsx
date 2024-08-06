@@ -2,29 +2,18 @@
 import BackButton from "@dashboard/components/BackButton";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { SearchStaffMembersQuery } from "@dashboard/graphql";
-import useElementScroll, { isScrolledToBottom } from "@dashboard/hooks/useElementScroll";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { buttonMessages } from "@dashboard/intl";
 import { getUserInitials, getUserName, renderCollection } from "@dashboard/misc";
 import { DialogProps, FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
-import {
-  Checkbox,
-  CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TableBody,
-  TableCell,
-  TextField,
-} from "@material-ui/core";
+import { Checkbox, CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import clsx from "clsx";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -134,24 +123,14 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
   const [selectedMembers, setSelectedMembers] = React.useState<
     RelayToFlat<SearchStaffMembersQuery["search"]>
   >([]);
-  const anchor = React.useRef<HTMLDivElement>();
-  const scrollPosition = useElementScroll(anchor);
-  const dropShadow = !isScrolledToBottom(anchor, scrollPosition);
 
   return (
-    <Dialog
-      onClose={onClose}
-      open={open}
-      maxWidth="sm"
-      fullWidth
-      classes={{
-        paper: classes.dialogPaper,
-      }}
-    >
-      <DialogTitle disableTypography>
-        <FormattedMessage {...messages.title} />
-      </DialogTitle>
-      <DialogContent className={classes.inputContainer}>
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%" overflowX="hidden">
+        <DashboardModal.Title>
+          <FormattedMessage {...messages.title} />
+        </DashboardModal.Title>
+
         <TextField
           data-test-id="search-members-input"
           name="query"
@@ -166,8 +145,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
           }}
           disabled={disabled}
         />
-      </DialogContent>
-      <DialogContent ref={anchor}>
+
         <InfiniteScroll
           dataLength={staffMembers?.length || 0}
           next={onFetchMore}
@@ -246,25 +224,22 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
             </TableBody>
           </ResponsiveTable>
         </InfiniteScroll>
-      </DialogContent>
-      <DialogActions
-        className={clsx({
-          [classes.dropShadow]: dropShadow,
-        })}
-      >
-        <BackButton onClick={onClose} />
-        <ConfirmButton
-          data-test-id="submit"
-          type="submit"
-          transitionState={confirmButtonState}
-          onClick={() => {
-            onSubmit(selectedMembers);
-          }}
-        >
-          <FormattedMessage {...buttonMessages.assign} />
-        </ConfirmButton>
-      </DialogActions>
-    </Dialog>
+
+        <DashboardModal.Actions>
+          <BackButton onClick={onClose} />
+          <ConfirmButton
+            data-test-id="submit"
+            type="submit"
+            transitionState={confirmButtonState}
+            onClick={() => {
+              onSubmit(selectedMembers);
+            }}
+          >
+            <FormattedMessage {...buttonMessages.assign} />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
