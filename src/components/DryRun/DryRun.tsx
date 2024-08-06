@@ -67,8 +67,8 @@ const DryRun: React.FC<DryRunProps> = ({
 
   if (syncEvents.length > 0) {
     return (
-      <DashboardModal onChange={closeDialog} open={showDialog} data-test-id="dry-run">
-        <DashboardModal.Content>
+      <DashboardModal onChange={closeDialog} open={showDialog}>
+        <DashboardModal.Content data-test-id="dry-run">
           <DashboardModal.Title display="flex" justifyContent="space-between">
             {intl.formatMessage(messages.header)}
             <DashboardModal.Close onClose={closeDialog} />
@@ -83,8 +83,13 @@ const DryRun: React.FC<DryRunProps> = ({
   }
 
   return (
-    <DashboardModal onChange={closeDialog} open={showDialog} data-test-id="dry-run">
-      <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH_MD} width="100%" overflowX="hidden">
+    <DashboardModal onChange={closeDialog} open={showDialog}>
+      <DashboardModal.Content
+        __maxWidth={DASHBOARD_MODAL_WIDTH_MD}
+        width="100%"
+        overflowX="hidden"
+        data-test-id="dry-run"
+      >
         <DashboardModal.Title display="flex" justifyContent="space-between">
           {intl.formatMessage(messages.header)}
           <DashboardModal.Close onClose={closeDialog} />
