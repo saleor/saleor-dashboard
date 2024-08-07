@@ -62,7 +62,7 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
         onSubmit={onConfirm}
       >
         {({ change, data: formData, submit }) => (
-          <DashboardModal.Content size="xs">
+          <DashboardModal.Content size="sm">
             <DashboardModal.Title>
               <FormattedMessage
                 id="23g7PY"
@@ -78,6 +78,7 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
                 type="text"
                 value={formData.firstName}
                 onChange={change}
+                fullWidth
               />
               <TextField
                 data-test-id="last-name-input"
@@ -85,6 +86,7 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
                 type="text"
                 value={formData.lastName}
                 onChange={change}
+                fullWidth
               />
             </Box>
 

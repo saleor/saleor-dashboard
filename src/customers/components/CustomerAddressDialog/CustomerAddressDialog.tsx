@@ -64,62 +64,64 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <Form
-        initial={initialForm}
-        onSubmit={data => {
-          setCountryDisplayName("");
-          handleSubmit(data);
-        }}
-      >
-        {({ change, set, data, submit }) => {
-          const countrySelect = createSingleAutocompleteSelectHandler(
-            change,
-            setCountryDisplayName,
-            countryChoices,
-          );
-          const handleCountrySelect = createCountryHandler(countrySelect, set);
+      <DashboardModal.Content size="sm">
+        <Form
+          initial={initialForm}
+          onSubmit={data => {
+            setCountryDisplayName("");
+            handleSubmit(data);
+          }}
+        >
+          {({ change, set, data, submit }) => {
+            const countrySelect = createSingleAutocompleteSelectHandler(
+              change,
+              setCountryDisplayName,
+              countryChoices,
+            );
+            const handleCountrySelect = createCountryHandler(countrySelect, set);
 
-          return (
-            <DashboardModal.Content size="sm">
-              <DashboardModal.Title>
-                {variant === "create" ? (
-                  <FormattedMessage
-                    id="W0kQd+"
-                    defaultMessage="Add Address"
-                    description="dialog title"
-                  />
-                ) : (
-                  <FormattedMessage
-                    id="gQGUsN"
-                    defaultMessage="Edit Address"
-                    description="dialog title"
-                  />
-                )}
-              </DashboardModal.Title>
+            return (
+              <DashboardModal.Grid>
+                <DashboardModal.Title>
+                  {variant === "create" ? (
+                    <FormattedMessage
+                      id="W0kQd+"
+                      defaultMessage="Add Address"
+                      description="dialog title"
+                    />
+                  ) : (
+                    <FormattedMessage
+                      id="gQGUsN"
+                      defaultMessage="Edit Address"
+                      description="dialog title"
+                    />
+                  )}
+                </DashboardModal.Title>
 
-              <AddressEdit
-                countries={countryChoices}
-                data={data}
-                countryDisplayValue={countryDisplayName}
-                errors={dialogErrors}
-                onChange={change}
-                onCountryChange={handleCountrySelect}
-              />
+                <AddressEdit
+                  countries={countryChoices}
+                  data={data}
+                  countryDisplayValue={countryDisplayName}
+                  errors={dialogErrors}
+                  onChange={change}
+                  onCountryChange={handleCountrySelect}
+                />
 
-              <DashboardModal.Actions>
-                <BackButton onClick={onClose} />
-                <ConfirmButton
-                  transitionState={confirmButtonState}
-                  onClick={submit}
-                  data-test-id="submit"
-                >
-                  <FormattedMessage {...buttonMessages.save} />
-                </ConfirmButton>
-              </DashboardModal.Actions>
-            </DashboardModal.Content>
-          );
-        }}
-      </Form>
+                <DashboardModal.Actions>
+                  <BackButton onClick={onClose} />
+                  <ConfirmButton
+                    transitionState={confirmButtonState}
+                    onClick={submit}
+                    data-test-id="submit"
+                  >
+                    <FormattedMessage {...buttonMessages.save} />
+                  </ConfirmButton>
+                </DashboardModal.Actions>
+              </DashboardModal.Grid>
+            );
+          }}
+        </Form>
+      </DashboardModal.Content>
     </DashboardModal>
   );
 };

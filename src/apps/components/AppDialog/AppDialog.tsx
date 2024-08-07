@@ -11,7 +11,7 @@ interface AppDialogProps {
 export const AppDialog: React.FC<AppDialogProps> = ({ children, title, onClose, ...props }) => {
   return (
     <DashboardModal aria-labelledby="extension app dialog" {...props} onChange={onClose}>
-      <DashboardModal.Content size="sm">
+      <DashboardModal.Content size="lg">
         <DashboardModal.Title
           display="flex"
           justifyContent="space-between"

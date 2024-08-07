@@ -2,7 +2,6 @@
 import { useDashboardTheme } from "@dashboard/components/GraphiQL/styles";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { createGraphiQLFetcher } from "@graphiql/toolkit";
-import { Box } from "@saleor/macaw-ui-next";
 import { createFetch } from "@saleor/sdk";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -42,9 +41,7 @@ export const DevModePanel: React.FC = () => {
           <DashboardModal.Close onClose={() => setDevModeVisibility(false)} />
         </DashboardModal.Title>
 
-        <Box height="100%">
-          <PlainGraphiQL query={devModeContent} variables={variables} fetcher={fetcher} />
-        </Box>
+        <PlainGraphiQL query={devModeContent} variables={variables} fetcher={fetcher} />
       </DashboardModal.Content>
     </DashboardModal>
   );

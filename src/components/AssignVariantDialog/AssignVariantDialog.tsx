@@ -104,7 +104,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
         <Box
           className={scrollableDialogClasses.scrollArea}
           id={scrollableTargetId}
-          __maxHeight={465}
+          __maxHeight={465} // Calculated from previous total dialog height 700px
         >
           <InfiniteScroll
             dataLength={variants?.length}
