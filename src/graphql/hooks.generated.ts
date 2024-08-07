@@ -367,7 +367,6 @@ export const AddressFragmentDoc = gql`
 export const CustomerDetailsFragmentDoc = gql`
     fragment CustomerDetails on User {
   ...Customer
-  ...Metadata
   dateJoined
   lastLogin
   defaultShippingAddress {
@@ -380,7 +379,6 @@ export const CustomerDetailsFragmentDoc = gql`
   isActive
 }
     ${CustomerFragmentDoc}
-${MetadataFragmentDoc}
 ${AddressFragmentDoc}`;
 export const CustomerAddressesFragmentDoc = gql`
     fragment CustomerAddresses on User {
@@ -7250,9 +7248,15 @@ export type ListCustomersQueryHookResult = ReturnType<typeof useListCustomersQue
 export type ListCustomersLazyQueryHookResult = ReturnType<typeof useListCustomersLazyQuery>;
 export type ListCustomersQueryResult = Apollo.QueryResult<Types.ListCustomersQuery, Types.ListCustomersQueryVariables>;
 export const CustomerDetailsDocument = gql`
-    query CustomerDetails($id: ID!, $PERMISSION_MANAGE_ORDERS: Boolean!) {
+    query CustomerDetails($id: ID!, $PERMISSION_MANAGE_ORDERS: Boolean!, $PERMISSION_MANAGE_STAFF: Boolean!) {
   user(id: $id) {
     ...CustomerDetails
+    metadata {
+      ...MetadataItem
+    }
+    privateMetadata @include(if: $PERMISSION_MANAGE_STAFF) {
+      ...MetadataItem
+    }
     orders(last: 5) @include(if: $PERMISSION_MANAGE_ORDERS) {
       edges {
         node {
@@ -7279,7 +7283,8 @@ export const CustomerDetailsDocument = gql`
     }
   }
 }
-    ${CustomerDetailsFragmentDoc}`;
+    ${CustomerDetailsFragmentDoc}
+${MetadataItemFragmentDoc}`;
 
 /**
  * __useCustomerDetailsQuery__
@@ -7295,6 +7300,7 @@ export const CustomerDetailsDocument = gql`
  *   variables: {
  *      id: // value for 'id'
  *      PERMISSION_MANAGE_ORDERS: // value for 'PERMISSION_MANAGE_ORDERS'
+ *      PERMISSION_MANAGE_STAFF: // value for 'PERMISSION_MANAGE_STAFF'
  *   },
  * });
  */
