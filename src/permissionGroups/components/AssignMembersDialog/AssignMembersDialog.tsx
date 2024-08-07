@@ -105,6 +105,8 @@ function handleStaffMemberAssign(
   }
 }
 
+const scrollableTargetId = "assignMemberScrollableDialog";
+
 const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
   confirmButtonState,
   disabled,
@@ -126,7 +128,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="sm">
+      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr">
         <DashboardModal.Title>
           <FormattedMessage {...messages.title} />
         </DashboardModal.Title>
@@ -146,84 +148,89 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
           disabled={disabled}
         />
 
-        <InfiniteScroll
-          dataLength={staffMembers?.length || 0}
-          next={onFetchMore}
-          hasMore={hasMore}
-          scrollThreshold="100px"
-          loader={
-            <>
-              {staffMembers?.length > 0 && <CardSpacer />}
-              <div className={classes.loadMoreLoaderContainer}>
-                <CircularProgress size={24} />
-              </div>
-            </>
-          }
-          height={400}
-        >
-          <ResponsiveTable className={classes.table}>
-            <TableBody data-test-id="search-results">
-              {renderCollection(
-                staffMembers,
-                member => {
-                  if (!member) {
-                    return null;
-                  }
+        <Box id={scrollableTargetId} overflowY="auto">
+          <InfiniteScroll
+            dataLength={staffMembers?.length || 0}
+            next={onFetchMore}
+            hasMore={hasMore}
+            scrollThreshold="100px"
+            scrollableTarget={scrollableTargetId}
+            loader={
+              <>
+                {staffMembers?.length > 0 && <CardSpacer />}
+                <div className={classes.loadMoreLoaderContainer}>
+                  <CircularProgress size={24} />
+                </div>
+              </>
+            }
+          >
+            <ResponsiveTable className={classes.table}>
+              <TableBody data-test-id="search-results">
+                {renderCollection(
+                  staffMembers,
+                  member => {
+                    if (!member) {
+                      return null;
+                    }
 
-                  const isSelected = selectedMembers.some(
-                    selectedMember => selectedMember.id === member.id,
-                  );
+                    const isSelected = selectedMembers.some(
+                      selectedMember => selectedMember.id === member.id,
+                    );
 
-                  return (
-                    <TableRowLink key={member.id} data-test-id="user-row">
-                      <TableCell padding="checkbox" className={classes.checkboxCell}>
-                        <Checkbox
-                          color="primary"
-                          checked={isSelected}
-                          onChange={() =>
-                            handleStaffMemberAssign(
-                              member,
-                              isSelected,
-                              selectedMembers,
-                              setSelectedMembers,
-                            )
-                          }
-                        />
-                      </TableCell>
-                      <TableCell className={classes.avatarCell}>
-                        <UserAvatar url={member?.avatar?.url} initials={getUserInitials(member)} />
-                      </TableCell>
-                      <TableCell className={classes.colName}>
-                        <Box display="flex" flexDirection="column" justifyContent="center">
-                          <Text>{getUserName(member) || <Skeleton />}</Text>
-                          <Text size={2} color="default2">
-                            {member ? (
-                              member.isActive ? (
-                                intl.formatMessage(messages.staffActive)
-                              ) : (
-                                intl.formatMessage(messages.staffInactive)
+                    return (
+                      <TableRowLink key={member.id} data-test-id="user-row">
+                        <TableCell padding="checkbox" className={classes.checkboxCell}>
+                          <Checkbox
+                            color="primary"
+                            checked={isSelected}
+                            onChange={() =>
+                              handleStaffMemberAssign(
+                                member,
+                                isSelected,
+                                selectedMembers,
+                                setSelectedMembers,
                               )
-                            ) : (
-                              <Skeleton />
-                            )}
-                          </Text>
-                        </Box>
-                      </TableCell>
-                    </TableRowLink>
-                  );
-                },
-                () =>
-                  !loading && (
-                    <TableRowLink>
-                      <TableCell colSpan={2}>
-                        <FormattedMessage {...messages.noMembersFound} />
-                      </TableCell>
-                    </TableRowLink>
-                  ),
-              )}
-            </TableBody>
-          </ResponsiveTable>
-        </InfiniteScroll>
+                            }
+                          />
+                        </TableCell>
+                        <TableCell className={classes.avatarCell}>
+                          <UserAvatar
+                            url={member?.avatar?.url}
+                            initials={getUserInitials(member)}
+                          />
+                        </TableCell>
+                        <TableCell className={classes.colName}>
+                          <Box display="flex" flexDirection="column" justifyContent="center">
+                            <Text>{getUserName(member) || <Skeleton />}</Text>
+                            <Text size={2} color="default2">
+                              {member ? (
+                                member.isActive ? (
+                                  intl.formatMessage(messages.staffActive)
+                                ) : (
+                                  intl.formatMessage(messages.staffInactive)
+                                )
+                              ) : (
+                                <Skeleton />
+                              )}
+                            </Text>
+                          </Box>
+                        </TableCell>
+                      </TableRowLink>
+                    );
+                  },
+                  () =>
+                    !loading && (
+                      <TableRowLink>
+                        <TableCell colSpan={2}>
+                          <FormattedMessage {...messages.noMembersFound} />
+                        </TableCell>
+                      </TableRowLink>
+                    ),
+                )}
+              </TableBody>
+            </ResponsiveTable>
+          </InfiniteScroll>
+        </Box>
 
         <DashboardModal.Actions>
           <BackButton onClick={onClose} />

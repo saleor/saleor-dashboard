@@ -58,7 +58,10 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
             );
 
             return (
-              <DashboardModal.Grid>
+              <DashboardModal.Grid
+                __gridTemplateRows="auto auto auto auto auto 1fr auto"
+                height="100%"
+              >
                 <DashboardModal.Title>
                   <FormattedMessage
                     id="cvVIV/"
@@ -101,7 +104,7 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
                   />
                 </Text>
 
-                <Box overflowY="auto" __maxHeight="calc(100vh - 470px)">
+                <Box height="100%" overflowY="auto">
                   <ResponsiveTable>
                     <TableBody>
                       {fuzzySearch(countries, data.query, ["country"]).map(country => {

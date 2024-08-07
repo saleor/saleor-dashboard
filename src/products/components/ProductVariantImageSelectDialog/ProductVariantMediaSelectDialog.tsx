@@ -41,7 +41,7 @@ const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogP
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="sm" overflowY="visible">
+      <DashboardModal.Content size="md" __gridTemplateRows="auto 1fr">
         <DashboardModal.Title>
           <FormattedMessage
             id="iPk640"
@@ -51,16 +51,15 @@ const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogP
         </DashboardModal.Title>
 
         <Box
-          overflowY="scroll"
+          overflowY="auto"
           display="grid"
           gap={2}
           gridTemplateColumns={{
-            desktop: 3,
+            desktop: 4,
+            tablet: 3,
             mobile: 2,
-            tablet: 2,
           }}
           width="100%"
-          __maxHeight="calc(100vh - 250px)"
         >
           {media
             ?.sort((prev, next) => (prev.sortOrder! > next.sortOrder! ? 1 : -1))

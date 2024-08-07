@@ -62,6 +62,9 @@ const handleProductAssign = (
     setSelectedProducts([...selectedProducts, product]);
   }
 };
+
+const scrollableTargetId = "shippingMethodProductsAddScrollableDialog";
+
 const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogProps> = ({
   confirmButtonState,
   open,
@@ -94,7 +97,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
 
   return (
     <DashboardModal onChange={handleClose} open={open}>
-      <DashboardModal.Content size="sm">
+      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr">
         <DashboardModal.Title>
           <FormattedMessage
             id="xZhxBJ"
@@ -125,12 +128,13 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
           />
         </Box>
 
-        <Box>
+        <Box id={scrollableTargetId} overflowY="auto">
           <InfiniteScroll
             dataLength={products?.length ?? 0}
             next={onFetchMore}
             hasMore={hasMore}
             scrollThreshold="100px"
+            scrollableTarget={scrollableTargetId}
             loader={
               <Box
                 alignItems="center"
@@ -143,7 +147,6 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
                 <CircularProgress size={16} />
               </Box>
             }
-            height={450}
           >
             <ResponsiveTable key="table">
               <TableBody data-test-id="assign-product-list">

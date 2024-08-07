@@ -100,7 +100,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
           }}
         />
 
-        <Box id={scrollableTargetId} ref={anchor} __maxHeight={700} overflowY="auto">
+        <Box id={scrollableTargetId} ref={anchor} overflowY="auto">
           <InfiniteScroll
             dataLength={attributes?.length || 0}
             next={onFetchMore}

@@ -89,7 +89,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="sm">
+      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto auto 1fr">
         <DashboardModal.Title>
           <FormattedMessage
             {...messages.title}
@@ -118,13 +118,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
           />
         </Box>
 
-        <Box
-          overflowY="auto"
-          paddingTop={0}
-          __height="100%"
-          marginBottom={3}
-          id={scrollableTargetId}
-        >
+        <Box overflowY="auto" id={scrollableTargetId}>
           <InfiniteScroll
             dataLength={productChoicesWithValidVariants?.length}
             next={onFetchMore}

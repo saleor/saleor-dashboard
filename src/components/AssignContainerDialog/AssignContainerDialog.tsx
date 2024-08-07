@@ -90,11 +90,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
           }}
         />
 
-        <Box
-          className={scrollableDialogClasses.scrollArea}
-          id={scrollableTargetId}
-          __maxHeight={465}
-        >
+        <Box className={scrollableDialogClasses.scrollArea} id={scrollableTargetId}>
           <InfiniteScroll
             dataLength={containers?.length}
             next={onFetchMore}
