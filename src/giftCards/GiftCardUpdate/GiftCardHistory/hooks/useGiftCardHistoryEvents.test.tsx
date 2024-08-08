@@ -1,4 +1,3 @@
-import { MockedProvider } from "@apollo/client/testing";
 import { renderHook } from "@testing-library/react-hooks";
 import React from "react";
 
@@ -46,15 +45,56 @@ mockUseGiftCardEventsQuery.mockImplementation(value => {
   };
 });
 
+describe("useGiftCardEventsQuery (mock implementation)", () => {
+  it("should return gift card events", () => {
+    // Arrange & Act
+    const { result } = renderHook(() =>
+      useGiftCardEventsQuery({
+        variables: { id: "giftCardId", canSeeApp: true, canSeeUser: true },
+        skip: false,
+      }),
+    );
+
+    // Assert
+    expect(result.current.data).toEqual({
+      giftCard: { events: [{ id: "event1" }, { id: "event2" }] },
+    });
+  });
+
+  it("should return undefined without permissions", () => {
+    // Arrange & Act
+    const { result } = renderHook(() =>
+      useGiftCardEventsQuery({
+        variables: { id: "giftCardId", canSeeApp: false, canSeeUser: false },
+        skip: false,
+      }),
+    );
+
+    // Assert
+    expect(result.current.data).toBeUndefined();
+  });
+
+  it("should return undefined when it is skipped", () => {
+    // Arrange & Act
+    const { result } = renderHook(() =>
+      useGiftCardEventsQuery({
+        variables: { id: "giftCardId", canSeeApp: true, canSeeUser: true },
+        skip: true,
+      }),
+    );
+
+    // Assert
+    expect(result.current.data).toBeUndefined();
+  });
+});
+
 describe("useGiftCardHistoryEvents", () => {
   it("should return gift card events", () => {
     // Arrange
     const wrapper = ({ children }: { children: React.ReactNode }) => (
-      <MockedProvider>
-        <GiftCardDetailsContext.Provider value={{ giftCard: mockGiftCard, loading: false }}>
-          {children}
-        </GiftCardDetailsContext.Provider>
-      </MockedProvider>
+      <GiftCardDetailsContext.Provider value={{ giftCard: mockGiftCard, loading: false }}>
+        {children}
+      </GiftCardDetailsContext.Provider>
     );
 
     // Act
@@ -68,11 +108,9 @@ describe("useGiftCardHistoryEvents", () => {
   it("should return undefined when there is no gift card", () => {
     // Arrange
     const wrapper = ({ children }: { children: React.ReactNode }) => (
-      <MockedProvider>
-        <GiftCardDetailsContext.Provider value={{ giftCard: undefined, loading: false }}>
-          {children}
-        </GiftCardDetailsContext.Provider>
-      </MockedProvider>
+      <GiftCardDetailsContext.Provider value={{ giftCard: undefined, loading: false }}>
+        {children}
+      </GiftCardDetailsContext.Provider>
     );
 
     // Act
@@ -88,11 +126,9 @@ describe("useGiftCardHistoryEvents", () => {
     mockUseUser.mockReturnValue({ user: { userPermissions: [] } });
 
     const wrapper = ({ children }: { children: React.ReactNode }) => (
-      <MockedProvider>
-        <GiftCardDetailsContext.Provider value={{ giftCard: mockGiftCard, loading: false }}>
-          {children}
-        </GiftCardDetailsContext.Provider>
-      </MockedProvider>
+      <GiftCardDetailsContext.Provider value={{ giftCard: mockGiftCard, loading: false }}>
+        {children}
+      </GiftCardDetailsContext.Provider>
     );
 
     // Act
