@@ -2,6 +2,7 @@ import { MockedProvider } from "@apollo/client/testing";
 import { renderHook } from "@testing-library/react-hooks";
 import React from "react";
 
+import { giftCardsMocks } from "../../../../../testUtils/mocks/giftCards";
 import { useUser } from "../../../../auth";
 import { useGiftCardEventsQuery } from "../../../../graphql";
 import { GiftCardDetailsContext } from "../../providers/GiftCardDetailsProvider";
@@ -14,7 +15,10 @@ jest.mock("@dashboard/graphql");
 const mockUseUser = useUser as jest.Mock;
 const mockUseGiftCardEventsQuery = useGiftCardEventsQuery as jest.Mock;
 
-const mockGiftCard = { id: "giftCardId" };
+const mockGiftCard = {
+  ...giftCardsMocks[0],
+  id: "giftCardId",
+};
 const mockUser = {
   userPermissions: [{ code: "MANAGE_USERS" }, { code: "MANAGE_APPS" }],
 };
@@ -45,7 +49,7 @@ mockUseGiftCardEventsQuery.mockImplementation(value => {
 describe("useGiftCardHistoryEvents", () => {
   it("should return gift card events", () => {
     // Arrange
-    const wrapper = ({ children }) => (
+    const wrapper = ({ children }: { children: React.ReactNode }) => (
       <MockedProvider>
         <GiftCardDetailsContext.Provider value={{ giftCard: mockGiftCard, loading: false }}>
           {children}
@@ -63,9 +67,9 @@ describe("useGiftCardHistoryEvents", () => {
 
   it("should return undefined when there is no gift card", () => {
     // Arrange
-    const wrapper = ({ children }) => (
+    const wrapper = ({ children }: { children: React.ReactNode }) => (
       <MockedProvider>
-        <GiftCardDetailsContext.Provider value={{ giftCard: null, loading: false }}>
+        <GiftCardDetailsContext.Provider value={{ giftCard: undefined, loading: false }}>
           {children}
         </GiftCardDetailsContext.Provider>
       </MockedProvider>
@@ -83,7 +87,7 @@ describe("useGiftCardHistoryEvents", () => {
     // Arrange
     mockUseUser.mockReturnValue({ user: { userPermissions: [] } });
 
-    const wrapper = ({ children }) => (
+    const wrapper = ({ children }: { children: React.ReactNode }) => (
       <MockedProvider>
         <GiftCardDetailsContext.Provider value={{ giftCard: mockGiftCard, loading: false }}>
           {children}
