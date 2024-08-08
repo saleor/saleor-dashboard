@@ -22,11 +22,13 @@ const useGiftCardHistoryEvents = (): GiftCardHistoryEvents => {
 
   const { giftCard } = useContext(GiftCardDetailsContext);
   const { data } = useGiftCardEventsQuery({
-    variables: {
-      canSeeApp,
-      canSeeUser,
-      id: giftCard!.id,
-    },
+    variables: giftCard
+      ? {
+          canSeeApp,
+          canSeeUser,
+          id: giftCard.id,
+        }
+      : undefined,
     skip: !giftCard?.id,
   });
 
