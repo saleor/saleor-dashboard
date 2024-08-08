@@ -36,6 +36,7 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
+        siteSettings.refetch();
       }
     },
   });
@@ -70,6 +71,7 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
             reserveStockDurationAuthenticatedUser:
               data.reserveStockDurationAuthenticatedUser || null,
             enableAccountConfirmationByEmail: data.emailConfirmation,
+            limitQuantityPerCheckout: data.limitQuantityPerCheckout || null,
           },
         },
       }),
