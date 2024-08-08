@@ -1,6 +1,5 @@
-import { Button } from "@dashboard/components/Button";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import { Text } from "@saleor/macaw-ui-next";
+import { Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -31,7 +30,7 @@ const ResetPasswordSuccessPage: React.FC<ResetPasswordSuccessPageProps> = props 
         onClick={onBack}
         type="submit"
         data-test-id="back-to-login-button"
-        fullWidth
+        width="100%"
       >
         <FormattedMessage id="2oyWT9" defaultMessage="Back to login" description="button" />
       </Button>
