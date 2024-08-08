@@ -49,7 +49,7 @@ const LoginPage: React.FC<LoginCardProps> = props => {
     <LoginForm onSubmit={onSubmit}>
       {({ change: handleChange, data, submit }) => (
         <Box display="flex" flexDirection="column" alignItems="flex-start" width="100%">
-          <Text size={6} fontWeight="bold" lineHeight={3} marginBottom={2}>
+          <Text size={6} fontWeight="bold" lineHeight={3} marginBottom={4}>
             <FormattedMessage id="vzgZ3U" defaultMessage="Sign In" description="card header" />
           </Text>
           {errors.map(error => (
