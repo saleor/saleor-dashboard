@@ -118,7 +118,7 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
             fetchOptions={onQueryChange}
             name="channelSlug"
             value={{
-              label: channels.find(getBySlug(data?.channelSlug))?.name,
+              label: channels?.find(getBySlug(data?.channelSlug))?.name,
               value: data?.channelSlug,
             }}
             onChange={change}
