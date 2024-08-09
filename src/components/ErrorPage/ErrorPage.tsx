@@ -2,8 +2,7 @@
 import notFoundImage from "@assets/images/what.svg";
 import useAppState from "@dashboard/hooks/useAppState";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { Button } from "@saleor/macaw-ui";
-import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";
@@ -78,7 +77,7 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ onBack, onRefresh }) => {
               </Box>
             )}
           </div>
-          <Box marginTop={4}>
+          <Box marginTop={4} display="flex" flexDirection="row" alignItems="center" gap={2}>
             <Button variant="primary" onClick={handleOnBack}>
               <FormattedMessage {...messages.btnDashboard} />
             </Button>
