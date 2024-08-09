@@ -207,6 +207,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
   const handleSubmit = () => onSubmit(data);
 
   return (
+    // TODO: MERX-813 Replace Dialog and AutocompleteSelectMenu
     <Dialog
       onClose={onClose}
       open={open}

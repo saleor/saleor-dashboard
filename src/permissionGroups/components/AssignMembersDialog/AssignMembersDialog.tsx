@@ -2,29 +2,18 @@
 import BackButton from "@dashboard/components/BackButton";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { SearchStaffMembersQuery } from "@dashboard/graphql";
-import useElementScroll, { isScrolledToBottom } from "@dashboard/hooks/useElementScroll";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { buttonMessages } from "@dashboard/intl";
 import { getUserInitials, getUserName, renderCollection } from "@dashboard/misc";
 import { DialogProps, FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
-import {
-  Checkbox,
-  CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TableBody,
-  TableCell,
-  TextField,
-} from "@material-ui/core";
+import { Checkbox, CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import clsx from "clsx";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -116,6 +105,8 @@ function handleStaffMemberAssign(
   }
 }
 
+const scrollableTargetId = "assignMemberScrollableDialog";
+
 const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
   confirmButtonState,
   disabled,
@@ -134,24 +125,14 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
   const [selectedMembers, setSelectedMembers] = React.useState<
     RelayToFlat<SearchStaffMembersQuery["search"]>
   >([]);
-  const anchor = React.useRef<HTMLDivElement>();
-  const scrollPosition = useElementScroll(anchor);
-  const dropShadow = !isScrolledToBottom(anchor, scrollPosition);
 
   return (
-    <Dialog
-      onClose={onClose}
-      open={open}
-      maxWidth="sm"
-      fullWidth
-      classes={{
-        paper: classes.dialogPaper,
-      }}
-    >
-      <DialogTitle disableTypography>
-        <FormattedMessage {...messages.title} />
-      </DialogTitle>
-      <DialogContent className={classes.inputContainer}>
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr">
+        <DashboardModal.Title>
+          <FormattedMessage {...messages.title} />
+        </DashboardModal.Title>
+
         <TextField
           data-test-id="search-members-input"
           name="query"
@@ -166,105 +147,106 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
           }}
           disabled={disabled}
         />
-      </DialogContent>
-      <DialogContent ref={anchor}>
-        <InfiniteScroll
-          dataLength={staffMembers?.length || 0}
-          next={onFetchMore}
-          hasMore={hasMore}
-          scrollThreshold="100px"
-          loader={
-            <>
-              {staffMembers?.length > 0 && <CardSpacer />}
-              <div className={classes.loadMoreLoaderContainer}>
-                <CircularProgress size={24} />
-              </div>
-            </>
-          }
-          height={400}
-        >
-          <ResponsiveTable className={classes.table}>
-            <TableBody data-test-id="search-results">
-              {renderCollection(
-                staffMembers,
-                member => {
-                  if (!member) {
-                    return null;
-                  }
 
-                  const isSelected = selectedMembers.some(
-                    selectedMember => selectedMember.id === member.id,
-                  );
+        <Box id={scrollableTargetId} overflowY="auto">
+          <InfiniteScroll
+            dataLength={staffMembers?.length || 0}
+            next={onFetchMore}
+            hasMore={hasMore}
+            scrollThreshold="100px"
+            scrollableTarget={scrollableTargetId}
+            loader={
+              <>
+                {staffMembers?.length > 0 && <CardSpacer />}
+                <div className={classes.loadMoreLoaderContainer}>
+                  <CircularProgress size={24} />
+                </div>
+              </>
+            }
+          >
+            <ResponsiveTable className={classes.table}>
+              <TableBody data-test-id="search-results">
+                {renderCollection(
+                  staffMembers,
+                  member => {
+                    if (!member) {
+                      return null;
+                    }
 
-                  return (
-                    <TableRowLink key={member.id} data-test-id="user-row">
-                      <TableCell padding="checkbox" className={classes.checkboxCell}>
-                        <Checkbox
-                          color="primary"
-                          checked={isSelected}
-                          onChange={() =>
-                            handleStaffMemberAssign(
-                              member,
-                              isSelected,
-                              selectedMembers,
-                              setSelectedMembers,
-                            )
-                          }
-                        />
-                      </TableCell>
-                      <TableCell className={classes.avatarCell}>
-                        <UserAvatar url={member?.avatar?.url} initials={getUserInitials(member)} />
-                      </TableCell>
-                      <TableCell className={classes.colName}>
-                        <Box display="flex" flexDirection="column" justifyContent="center">
-                          <Text>{getUserName(member) || <Skeleton />}</Text>
-                          <Text size={2} color="default2">
-                            {member ? (
-                              member.isActive ? (
-                                intl.formatMessage(messages.staffActive)
-                              ) : (
-                                intl.formatMessage(messages.staffInactive)
+                    const isSelected = selectedMembers.some(
+                      selectedMember => selectedMember.id === member.id,
+                    );
+
+                    return (
+                      <TableRowLink key={member.id} data-test-id="user-row">
+                        <TableCell padding="checkbox" className={classes.checkboxCell}>
+                          <Checkbox
+                            color="primary"
+                            checked={isSelected}
+                            onChange={() =>
+                              handleStaffMemberAssign(
+                                member,
+                                isSelected,
+                                selectedMembers,
+                                setSelectedMembers,
                               )
-                            ) : (
-                              <Skeleton />
-                            )}
-                          </Text>
-                        </Box>
-                      </TableCell>
-                    </TableRowLink>
-                  );
-                },
-                () =>
-                  !loading && (
-                    <TableRowLink>
-                      <TableCell colSpan={2}>
-                        <FormattedMessage {...messages.noMembersFound} />
-                      </TableCell>
-                    </TableRowLink>
-                  ),
-              )}
-            </TableBody>
-          </ResponsiveTable>
-        </InfiniteScroll>
-      </DialogContent>
-      <DialogActions
-        className={clsx({
-          [classes.dropShadow]: dropShadow,
-        })}
-      >
-        <BackButton onClick={onClose} />
-        <ConfirmButton
-          data-test-id="submit"
-          type="submit"
-          transitionState={confirmButtonState}
-          onClick={() => {
-            onSubmit(selectedMembers);
-          }}
-        >
-          <FormattedMessage {...buttonMessages.assign} />
-        </ConfirmButton>
-      </DialogActions>
-    </Dialog>
+                            }
+                          />
+                        </TableCell>
+                        <TableCell className={classes.avatarCell}>
+                          <UserAvatar
+                            url={member?.avatar?.url}
+                            initials={getUserInitials(member)}
+                          />
+                        </TableCell>
+                        <TableCell className={classes.colName}>
+                          <Box display="flex" flexDirection="column" justifyContent="center">
+                            <Text>{getUserName(member) || <Skeleton />}</Text>
+                            <Text size={2} color="default2">
+                              {member ? (
+                                member.isActive ? (
+                                  intl.formatMessage(messages.staffActive)
+                                ) : (
+                                  intl.formatMessage(messages.staffInactive)
+                                )
+                              ) : (
+                                <Skeleton />
+                              )}
+                            </Text>
+                          </Box>
+                        </TableCell>
+                      </TableRowLink>
+                    );
+                  },
+                  () =>
+                    !loading && (
+                      <TableRowLink>
+                        <TableCell colSpan={2}>
+                          <FormattedMessage {...messages.noMembersFound} />
+                        </TableCell>
+                      </TableRowLink>
+                    ),
+                )}
+              </TableBody>
+            </ResponsiveTable>
+          </InfiniteScroll>
+        </Box>
+
+        <DashboardModal.Actions>
+          <BackButton onClick={onClose} />
+          <ConfirmButton
+            data-test-id="submit"
+            type="submit"
+            transitionState={confirmButtonState}
+            onClick={() => {
+              onSubmit(selectedMembers);
+            }}
+          >
+            <FormattedMessage {...buttonMessages.assign} />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 

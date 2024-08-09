@@ -2,7 +2,7 @@
 import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { AccountErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
@@ -43,7 +43,7 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
     <DashboardModal onChange={onClose} open={open}>
       <Form initial={initialForm} onSubmit={onSubmit}>
         {({ change, data }) => (
-          <DashboardModal.Content __width={DASHBOARD_MODAL_WIDTH}>
+          <DashboardModal.Content size="sm">
             <DashboardModal.Title>
               <FormattedMessage
                 id="+kb2lM"

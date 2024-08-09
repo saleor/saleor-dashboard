@@ -1,26 +1,16 @@
-// @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
 import Checkbox from "@dashboard/components/Checkbox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
-import FormSpacer from "@dashboard/components/FormSpacer";
 import Hr from "@dashboard/components/Hr";
+import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { CountryWithCodeFragment } from "@dashboard/graphql";
 import { fuzzySearch } from "@dashboard/misc";
 import { getCountrySelectionMap, isRestWorldCountriesSelected } from "@dashboard/shipping/handlers";
-import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TableBody,
-  TableCell,
-  TextField,
-} from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { TableBody, TableCell, TextField } from "@material-ui/core";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -49,7 +39,6 @@ const ShippingZoneCountriesAssignDialog: React.FC<
   const { confirmButtonState, onClose, countries, restWorldCountries, open, initial, onConfirm } =
     props;
   const classes = useStyles(props);
-  const scrollableDialogClasses = useScrollableDialogStyle();
   const intl = useIntl();
   const initialForm: FormData = {
     countries: initial,
@@ -57,33 +46,34 @@ const ShippingZoneCountriesAssignDialog: React.FC<
   };
 
   return (
-    <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
-      <Form initial={initialForm} onSubmit={onConfirm} className={scrollableDialogClasses.form}>
-        {({ data, change }) => {
-          const countrySelectionMap = getCountrySelectionMap(countries, data.countries);
-          const isRestOfTheWorldSelected = isRestWorldCountriesSelected(
-            restWorldCountries,
-            countrySelectionMap,
-          );
-          const handleCountryChange = createCountryChangeHandler(data.countries, change);
-          const handleRestOfTheWorldChange = createRestOfTheWorldChangeHandler(
-            countrySelectionMap,
-            data.countries,
-            restWorldCountries,
-            change,
-          );
-          const displayCountries = fuzzySearch(countries, data.query, ["country"]);
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content size="sm">
+        <Form initial={initialForm} onSubmit={onConfirm}>
+          {({ data, change }) => {
+            const countrySelectionMap = getCountrySelectionMap(countries, data.countries);
+            const isRestOfTheWorldSelected = isRestWorldCountriesSelected(
+              restWorldCountries,
+              countrySelectionMap,
+            );
+            const handleCountryChange = createCountryChangeHandler(data.countries, change);
+            const handleRestOfTheWorldChange = createRestOfTheWorldChangeHandler(
+              countrySelectionMap,
+              data.countries,
+              restWorldCountries,
+              change,
+            );
+            const displayCountries = fuzzySearch(countries, data.query, ["country"]);
 
-          return (
-            <>
-              <DialogTitle disableTypography>
-                <FormattedMessage {...messages.assignCountriesTitle} />
-              </DialogTitle>
-              <DialogContent>
+            return (
+              <DashboardModal.Grid>
+                <DashboardModal.Title>
+                  <FormattedMessage {...messages.assignCountriesTitle} />
+                </DashboardModal.Title>
+
                 <Text>
                   <FormattedMessage {...messages.assignCountriesDescription} />
                 </Text>
-                <FormSpacer />
+
                 <TextField
                   name="query"
                   data-test-id="search-country-input"
@@ -93,15 +83,15 @@ const ShippingZoneCountriesAssignDialog: React.FC<
                   placeholder={intl.formatMessage(messages.searchCountriesPlaceholder)}
                   fullWidth
                 />
-                <FormSpacer />
+
                 <Hr />
-                <FormSpacer />
+
                 {restWorldCountries.length > 0 && (
                   <>
                     <Text fontSize={3}>
                       <FormattedMessage {...messages.quickPickSubtitle} />
                     </Text>
-                    <FormSpacer />
+
                     <ResponsiveTable className={classes.table}>
                       <TableBody>
                         <TableRowLink
@@ -121,51 +111,53 @@ const ShippingZoneCountriesAssignDialog: React.FC<
                         </TableRowLink>
                       </TableBody>
                     </ResponsiveTable>
-                    <FormSpacer />
                   </>
                 )}
+
                 <Text fontSize={3}>
                   <FormattedMessage {...messages.countriesSubtitle} />
                 </Text>
-              </DialogContent>
-              <DialogContent className={scrollableDialogClasses.scrollArea}>
-                <ResponsiveTable className={classes.table}>
-                  <TableBody>
-                    {displayCountries.map(country => {
-                      const isChecked = countrySelectionMap[country.code];
 
-                      return (
-                        <TableRowLink
-                          data-test-id="country-row"
-                          className={classes.clickableRow}
-                          onClick={() => handleCountryChange(country.code, !isChecked)}
-                          key={country.code}
-                        >
-                          <TableCell className={classes.wideCell}>{country.country}</TableCell>
-                          <TableCell padding="checkbox" className={classes.checkboxCell}>
-                            <Checkbox checked={isChecked} />
-                          </TableCell>
-                        </TableRowLink>
-                      );
-                    })}
-                  </TableBody>
-                </ResponsiveTable>
-              </DialogContent>
-              <DialogActions>
-                <BackButton onClick={onClose} data-test-id="back-button" />
-                <ConfirmButton
-                  transitionState={confirmButtonState}
-                  type="submit"
-                  data-test-id="assign-and-save-button"
-                >
-                  <FormattedMessage {...messages.assignCountriesButton} />
-                </ConfirmButton>
-              </DialogActions>
-            </>
-          );
-        }}
-      </Form>
-    </Dialog>
+                <Box overflowY="auto" __maxHeight="calc(100vh - 580px)">
+                  <ResponsiveTable className={classes.table}>
+                    <TableBody>
+                      {displayCountries.map(country => {
+                        const isChecked = countrySelectionMap[country.code];
+
+                        return (
+                          <TableRowLink
+                            data-test-id="country-row"
+                            className={classes.clickableRow}
+                            onClick={() => handleCountryChange(country.code, !isChecked)}
+                            key={country.code}
+                          >
+                            <TableCell className={classes.wideCell}>{country.country}</TableCell>
+                            <TableCell padding="checkbox" className={classes.checkboxCell}>
+                              <Checkbox checked={isChecked} />
+                            </TableCell>
+                          </TableRowLink>
+                        );
+                      })}
+                    </TableBody>
+                  </ResponsiveTable>
+                </Box>
+
+                <DashboardModal.Actions>
+                  <BackButton onClick={onClose} data-test-id="back-button" />
+                  <ConfirmButton
+                    transitionState={confirmButtonState}
+                    type="submit"
+                    data-test-id="assign-and-save-button"
+                  >
+                    <FormattedMessage {...messages.assignCountriesButton} />
+                  </ConfirmButton>
+                </DashboardModal.Actions>
+              </DashboardModal.Grid>
+            );
+          }}
+        </Form>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 

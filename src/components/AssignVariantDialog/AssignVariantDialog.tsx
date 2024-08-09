@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
 import Money from "@dashboard/components/Money";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
@@ -9,17 +10,8 @@ import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { maybe, renderCollection } from "@dashboard/misc";
 import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle";
 import { DialogProps, FetchMoreProps, RelayToFlat } from "@dashboard/types";
-import {
-  CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TableBody,
-  TableCell,
-  TextField,
-} from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -90,17 +82,12 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
   };
 
   return (
-    <Dialog
-      onClose={handleClose}
-      open={open}
-      classes={{ paper: scrollableDialogClasses.dialog }}
-      fullWidth
-      maxWidth="sm"
-    >
-      <DialogTitle disableTypography>
-        <FormattedMessage {...messages.assignVariantDialogHeader} />
-      </DialogTitle>
-      <DialogContent>
+    <DashboardModal onChange={handleClose} open={open}>
+      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr auto">
+        <DashboardModal.Title>
+          <FormattedMessage {...messages.assignVariantDialogHeader} />
+        </DashboardModal.Title>
+
         <TextField
           name="query"
           value={query}
@@ -113,115 +100,117 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
             endAdornment: loading && <CircularProgress size={16} />,
           }}
         />
-      </DialogContent>
-      <DialogContent className={scrollableDialogClasses.scrollArea} id={scrollableTargetId}>
-        <InfiniteScroll
-          dataLength={variants?.length}
-          next={onFetchMore}
-          hasMore={hasMore}
-          scrollThreshold="100px"
-          loader={
-            <div className={scrollableDialogClasses.loadMoreLoaderContainer}>
-              <CircularProgress size={16} />
-            </div>
-          }
-          scrollableTarget={scrollableTargetId}
-        >
-          <ResponsiveTable key="table">
-            <TableBody>
-              {renderCollection(
-                productChoices,
-                (product, productIndex) => (
-                  <React.Fragment key={product ? product.id : "skeleton"}>
-                    <TableRowLink>
-                      <TableCell padding="checkbox" className={classes.productCheckboxCell}>
-                        <Checkbox
-                          checked={productsWithAllVariantsSelected[productIndex]}
-                          disabled={loading}
-                          onChange={() =>
-                            handleProductAssign(
-                              product,
-                              productIndex,
-                              productsWithAllVariantsSelected,
-                              variants,
-                              setVariants,
-                            )
-                          }
-                        />
-                      </TableCell>
-                      <TableCellAvatar
-                        className={classes.avatar}
-                        thumbnail={maybe(() => product.thumbnail.url)}
-                      />
-                      <TableCell className={classes.colName} colSpan={2}>
-                        {maybe(() => product.name)}
-                      </TableCell>
-                    </TableRowLink>
-                    {maybe(() => product.variants, []).map((variant, variantIndex) => (
-                      <TableRowLink key={variant.id} data-test-id="assign-variant-table-row">
-                        <TableCell />
-                        <TableCell className={classes.colVariantCheckbox}>
+
+        <Box className={scrollableDialogClasses.scrollArea} id={scrollableTargetId}>
+          <InfiniteScroll
+            dataLength={variants?.length}
+            next={onFetchMore}
+            hasMore={hasMore}
+            scrollThreshold="100px"
+            loader={
+              <div className={scrollableDialogClasses.loadMoreLoaderContainer}>
+                <CircularProgress size={16} />
+              </div>
+            }
+            scrollableTarget={scrollableTargetId}
+          >
+            <ResponsiveTable key="table">
+              <TableBody>
+                {renderCollection(
+                  productChoices,
+                  (product, productIndex) => (
+                    <React.Fragment key={product ? product.id : "skeleton"}>
+                      <TableRowLink>
+                        <TableCell padding="checkbox" className={classes.productCheckboxCell}>
                           <Checkbox
-                            className={classes.variantCheckbox}
-                            checked={selectedVariantsToProductsMap[productIndex][variantIndex]}
+                            checked={productsWithAllVariantsSelected[productIndex]}
                             disabled={loading}
                             onChange={() =>
-                              handleVariantAssign(
-                                variant,
+                              handleProductAssign(
                                 product,
-                                variantIndex,
                                 productIndex,
+                                productsWithAllVariantsSelected,
                                 variants,
-                                selectedVariantsToProductsMap,
                                 setVariants,
                               )
                             }
                           />
                         </TableCell>
-                        <TableCell className={classes.colName}>
-                          <div>{variant.name}</div>
-                          <div className={classes.grayText}>
-                            <FormattedMessage
-                              {...messages.assignVariantDialogSKU}
-                              values={{
-                                sku: variant.sku,
-                              }}
-                            />
-                          </div>
-                        </TableCell>
-                        <TableCell className={classes.textRight}>
-                          {variant?.channelListings[0]?.price && (
-                            <Money money={variant.channelListings[0].price} />
-                          )}
+                        <TableCellAvatar
+                          className={classes.avatar}
+                          thumbnail={maybe(() => product.thumbnail.url)}
+                        />
+                        <TableCell className={classes.colName} colSpan={2}>
+                          {maybe(() => product.name)}
                         </TableCell>
                       </TableRowLink>
-                    ))}
-                  </React.Fragment>
-                ),
-                () => (
-                  <Text className={classes.noContentText}>
-                    {query
-                      ? intl.formatMessage(messages.noProductsInQuery)
-                      : intl.formatMessage(messages.noProductsInChannel)}
-                  </Text>
-                ),
-              )}
-            </TableBody>
-          </ResponsiveTable>
-        </InfiniteScroll>
-      </DialogContent>
-      <DialogActions>
-        <BackButton onClick={onClose} />
-        <ConfirmButton
-          data-test-id="submit"
-          transitionState={confirmButtonState}
-          type="submit"
-          onClick={handleSubmit}
-        >
-          <FormattedMessage {...messages.assignVariantDialogButton} />
-        </ConfirmButton>
-      </DialogActions>
-    </Dialog>
+                      {maybe(() => product.variants, []).map((variant, variantIndex) => (
+                        <TableRowLink key={variant.id} data-test-id="assign-variant-table-row">
+                          <TableCell />
+                          <TableCell className={classes.colVariantCheckbox}>
+                            <Checkbox
+                              className={classes.variantCheckbox}
+                              checked={selectedVariantsToProductsMap[productIndex][variantIndex]}
+                              disabled={loading}
+                              onChange={() =>
+                                handleVariantAssign(
+                                  variant,
+                                  product,
+                                  variantIndex,
+                                  productIndex,
+                                  variants,
+                                  selectedVariantsToProductsMap,
+                                  setVariants,
+                                )
+                              }
+                            />
+                          </TableCell>
+                          <TableCell className={classes.colName}>
+                            <div>{variant.name}</div>
+                            <div className={classes.grayText}>
+                              <FormattedMessage
+                                {...messages.assignVariantDialogSKU}
+                                values={{
+                                  sku: variant.sku,
+                                }}
+                              />
+                            </div>
+                          </TableCell>
+                          <TableCell className={classes.textRight}>
+                            {variant?.channelListings[0]?.price && (
+                              <Money money={variant.channelListings[0].price} />
+                            )}
+                          </TableCell>
+                        </TableRowLink>
+                      ))}
+                    </React.Fragment>
+                  ),
+                  () => (
+                    <Text className={classes.noContentText}>
+                      {query
+                        ? intl.formatMessage(messages.noProductsInQuery)
+                        : intl.formatMessage(messages.noProductsInChannel)}
+                    </Text>
+                  ),
+                )}
+              </TableBody>
+            </ResponsiveTable>
+          </InfiniteScroll>
+        </Box>
+
+        <DashboardModal.Actions>
+          <BackButton onClick={onClose} />
+          <ConfirmButton
+            data-test-id="submit"
+            transitionState={confirmButtonState}
+            type="submit"
+            onClick={handleSubmit}
+          >
+            <FormattedMessage {...messages.assignVariantDialogButton} />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 

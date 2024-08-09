@@ -6,7 +6,6 @@ import GiftCardExportDialogContent from "@dashboard/giftCards/GiftCardExportDial
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import { Dialog } from "@material-ui/core";
 import React, { createContext, useContext } from "react";
 
 import { GIFT_CARD_LIST_QUERY } from "../../queries";
@@ -78,9 +77,9 @@ const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = 
         <GiftCardCreateDialogContent onClose={onClose} refetchQueries={[GIFT_CARD_LIST_QUERY]} />
       </DashboardModal>
       <GiftCardListPageDeleteDialog open={isDialogOpen(DELETE)} onClose={onClose} />
-      <Dialog open={isDialogOpen(EXPORT)} maxWidth="sm" onClose={onClose} fullWidth>
+      <DashboardModal open={isDialogOpen(EXPORT)} onChange={onClose}>
         <GiftCardExportDialogContent onClose={onClose} />
-      </Dialog>
+      </DashboardModal>
       <GiftCardBulkCreateDialog open={isDialogOpen(BULK_CREATE)} onClose={onClose} />
     </GiftCardListDialogsContext.Provider>
   );

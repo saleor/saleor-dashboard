@@ -1,7 +1,7 @@
-// @ts-strict-ignore
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
-import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -32,7 +32,7 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
 }) => {
   const intl = useIntl();
   const [errors, setErrors] = React.useState(false);
-  const handleErrors = data => {
+  const handleErrors = (data: SaveFilterTabDialogFormData) => {
     if (data.name.trim().length) {
       onSubmit(data);
       setErrors(false);
@@ -42,18 +42,19 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
   };
 
   return (
-    <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
-      <DialogTitle disableTypography>
-        <FormattedMessage
-          id="P9YktI"
-          defaultMessage="Save view preset"
-          description="save preset, header"
-        />
-      </DialogTitle>
-      <Form initial={initialForm} onSubmit={handleErrors}>
-        {({ change, data, submit }) => (
-          <>
-            <DialogContent>
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content size="xs">
+        <Form initial={initialForm} onSubmit={handleErrors}>
+          {({ change, data, submit }) => (
+            <DashboardModal.Grid>
+              <DashboardModal.Title>
+                <FormattedMessage
+                  id="P9YktI"
+                  defaultMessage="Save view preset"
+                  description="save preset, header"
+                />
+              </DashboardModal.Title>
+
               <TextField
                 autoFocus
                 fullWidth
@@ -69,23 +70,24 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
                 data-test-id="preset-name-text-field"
                 helperText={errors ? "This field is required" : null}
               />
-            </DialogContent>
-            <DialogActions>
-              <BackButton onClick={onClose} data-test-id="cancel-preset-button">
-                <FormattedMessage {...buttonMessages.cancel} />
-              </BackButton>
-              <ConfirmButton
-                transitionState={confirmButtonState}
-                onClick={submit}
-                data-test-id="save-preset-button"
-              >
-                <FormattedMessage {...buttonMessages.save} />
-              </ConfirmButton>
-            </DialogActions>
-          </>
-        )}
-      </Form>
-    </Dialog>
+
+              <DashboardModal.Actions>
+                <BackButton onClick={onClose} data-test-id="cancel-preset-button">
+                  <FormattedMessage {...buttonMessages.cancel} />
+                </BackButton>
+                <ConfirmButton
+                  transitionState={confirmButtonState}
+                  onClick={submit}
+                  data-test-id="save-preset-button"
+                >
+                  <FormattedMessage {...buttonMessages.save} />
+                </ConfirmButton>
+              </DashboardModal.Actions>
+            </DashboardModal.Grid>
+          )}
+        </Form>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 

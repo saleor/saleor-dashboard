@@ -1,7 +1,10 @@
 import { AppPermissionsDialogMessages } from "@dashboard/apps/components/AppPermissionsDialog/messages";
 import { AppPermission } from "@dashboard/apps/components/AppPermissionsDialog/types";
+import BackButton from "@dashboard/components/BackButton";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { PermissionEnum } from "@dashboard/graphql";
-import { Box, Button, Checkbox, List, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, List, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -44,7 +47,7 @@ export const AppPermissionsDialogPermissionPicker = ({
         onChange(values);
       }}
     >
-      <Box overflow={"scroll"} __maxHeight={LIST_MAX_HEIGHT}>
+      <Box overflow={"scroll"} __maxHeight={LIST_MAX_HEIGHT} marginBottom={6}>
         <List>
           {allPermissions.map(perm => {
             const isAssigned = Boolean(selected.find(p => p === perm.code));
@@ -66,12 +69,13 @@ export const AppPermissionsDialogPermissionPicker = ({
           })}
         </List>
       </Box>
-      <Box display={"flex"} justifyContent={"flex-end"} gap={2} marginTop={2}>
-        <Button onClick={onClose} type={"button"} variant={"tertiary"}>
-          {intl.formatMessage(messages.closeButton)}
-        </Button>
-        <Button type={"submit"}>{intl.formatMessage(messages.saveButton)}</Button>
-      </Box>
+
+      <DashboardModal.Actions>
+        <BackButton onClick={onClose}>{intl.formatMessage(messages.closeButton)}</BackButton>
+        <ConfirmButton data-test-id="submit" transitionState="default" type="submit">
+          {intl.formatMessage(messages.saveButton)}
+        </ConfirmButton>
+      </DashboardModal.Actions>
     </form>
   );
 };

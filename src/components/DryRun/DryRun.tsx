@@ -1,18 +1,12 @@
 // @ts-strict-ignore
 import Grid from "@dashboard/components/Grid";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { useStyles } from "@dashboard/custom-apps/components/WebhookEvents/styles";
 import { useTriggerWebhookDryRunMutation, WebhookEventTypeSyncEnum } from "@dashboard/graphql";
-import {
-  capitalize,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-} from "@material-ui/core";
+import { capitalize } from "@material-ui/core";
 import {
   Alert,
   Button,
-  DialogHeader,
   List,
   ListBody,
   ListHeader,
@@ -73,22 +67,30 @@ const DryRun: React.FC<DryRunProps> = ({
 
   if (syncEvents.length > 0) {
     return (
-      <Dialog open={showDialog} fullWidth maxWidth="md" data-test-id="dry-run">
-        <DialogHeader onClose={closeDialog}>{intl.formatMessage(messages.header)}</DialogHeader>
-        <DialogContent style={{ overflow: "scroll" }}>
+      <DashboardModal onChange={closeDialog} open={showDialog}>
+        <DashboardModal.Content size="lg" data-test-id="dry-run">
+          <DashboardModal.Title display="flex" justifyContent="space-between">
+            {intl.formatMessage(messages.header)}
+            <DashboardModal.Close onClose={closeDialog} />
+          </DashboardModal.Title>
+
           <Alert variant="error" close={false}>
             <Text>{intl.formatMessage(messages.unavailableSyncEvents)}</Text>
           </Alert>
-        </DialogContent>
-      </Dialog>
+        </DashboardModal.Content>
+      </DashboardModal>
     );
   }
 
   return (
-    <Dialog open={showDialog} fullWidth maxWidth="md" data-test-id="dry-run">
-      <DialogHeader onClose={closeDialog}>{intl.formatMessage(messages.header)}</DialogHeader>
-      <DialogContent style={{ overflow: "scroll" }}>
-        <DialogContentText>{intl.formatMessage(messages.selectObject)}</DialogContentText>
+    <DashboardModal onChange={closeDialog} open={showDialog}>
+      <DashboardModal.Content size="lg" data-test-id="dry-run">
+        <DashboardModal.Title display="flex" justifyContent="space-between">
+          {intl.formatMessage(messages.header)}
+          <DashboardModal.Close onClose={closeDialog} />
+        </DashboardModal.Title>
+
+        <Text>{intl.formatMessage(messages.selectObject)}</Text>
 
         {!!unavailableObjects.length && (
           <Alert variant="warning" close={false} className="remove-icon-background">
@@ -147,13 +149,14 @@ const DryRun: React.FC<DryRunProps> = ({
             )}
           </div>
         </Grid>
-      </DialogContent>
-      <DialogActions>
-        <Button color="primary" variant="primary" onClick={dryRun} disabled={!object}>
-          {intl.formatMessage(messages.run)}
-        </Button>
-      </DialogActions>
-    </Dialog>
+
+        <DashboardModal.Actions>
+          <Button color="primary" variant="primary" onClick={dryRun} disabled={!object}>
+            {intl.formatMessage(messages.run)}
+          </Button>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 

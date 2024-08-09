@@ -27,7 +27,7 @@ export const OrderTransactionReasonModal = ({
 
   return (
     <DashboardModal open={open} onChange={onClose}>
-      <DashboardModal.Content data-test-id="refund-reason-dialog" __minWidth="400px">
+      <DashboardModal.Content data-test-id="refund-reason-dialog" size="xs">
         <DashboardModal.Title display="flex" justifyContent="space-between" alignItems="center">
           <FormattedMessage
             {...(reason ? refundTableMessages.editReason : refundTableMessages.addReason)}

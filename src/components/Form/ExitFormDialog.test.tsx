@@ -43,7 +43,7 @@ describe("ExitFormDialog", () => {
     // Act
     const { getByTestId } = render(<ExitFormDialog {...props} />);
 
-    await user.click(getByTestId("keep-editing"));
+    await user.click(getByTestId("back"));
     // Assert
     expect(props.onClose).toHaveBeenCalled();
   });

@@ -1,14 +1,12 @@
-// @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
-import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
-import FormSpacer from "@dashboard/components/FormSpacer";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { getApiUrl } from "@dashboard/config";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
-import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -37,11 +35,12 @@ const tokenPaperStyles = {
 } as const;
 
 const createHeadersString = (token: string) => `{\n  "authorization": "Bearer ${token}"\n}`;
+
 const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
   const { confirmButtonState, open, token, onClose, onCreate } = props;
   const [step, setStep] = React.useState<TokenCreateStep>("form");
   const intl = useIntl();
-  const headers = createHeadersString(token);
+  const headers = createHeadersString(token ?? "");
 
   React.useEffect(() => {
     if (token !== undefined) {
@@ -57,14 +56,15 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
   };
 
   return (
-    <Dialog open={open} fullWidth maxWidth="sm">
-      <Form initial={{ name: "" }} onSubmit={data => onCreate(data.name)}>
-        {({ change, data, submit }) => (
-          <>
-            <DialogTitle disableTypography>
-              <FormattedMessage id="T5nU7u" defaultMessage="Create Token" description="header" />
-            </DialogTitle>
-            <DialogContent>
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content size="sm">
+        <Form initial={{ name: "" }} onSubmit={data => onCreate(data.name)}>
+          {({ change, data, submit }) => (
+            <DashboardModal.Grid>
+              <DashboardModal.Title>
+                <FormattedMessage id="T5nU7u" defaultMessage="Create Token" description="header" />
+              </DashboardModal.Title>
+
               {step === "form" ? (
                 <>
                   <Text>
@@ -73,7 +73,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                       defaultMessage="Access token is used to authenticate service accounts"
                     />
                   </Text>
-                  <FormSpacer />
+
                   <TextField
                     label={intl.formatMessage({
                       id: "0DRBjg",
@@ -93,15 +93,21 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                       defaultMessage="Make sure to save token, you won’t be able to see it again."
                     />
                   </Text>
-                  <CardSpacer />
+
                   <Box {...tokenPaperStyles}>
                     <Text size={4} fontWeight="medium">
                       <FormattedMessage id="5ZxAiY" defaultMessage="Token" />
                     </Text>
+
                     <Text data-test-id="generated-token" display="block">
                       <Mono>{token}</Mono>
                     </Text>
-                    <Button variant="secondary" marginTop={2} onClick={() => handleCopy(token)}>
+
+                    <Button
+                      variant="secondary"
+                      marginTop={2}
+                      onClick={() => handleCopy(token ?? "")}
+                    >
                       <FormattedMessage
                         id="HVFq//"
                         defaultMessage="Copy token"
@@ -109,14 +115,16 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                       />
                     </Button>
                   </Box>
-                  <CardSpacer />
+
                   <Box {...tokenPaperStyles}>
                     <Text size={4} fontWeight="medium">
                       <FormattedMessage id="Wm+KUd" defaultMessage="Headers" />
                     </Text>
+
                     <Text data-test-id="generated-headers" display="block">
                       <Mono>{headers}</Mono>
                     </Text>
+
                     <Box
                       display="flex"
                       flexDirection="row"
@@ -140,36 +148,36 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                       </Button>
                     </Box>
                   </Box>
-                  <CardSpacer />
                 </>
               )}
-            </DialogContent>
-            <DialogActions>
-              {step === "form" ? (
-                <>
-                  <BackButton marginRight={1} onClick={onClose} />
-                  <ConfirmButton
-                    data-test-id="submit"
-                    transitionState={confirmButtonState}
-                    onClick={submit}
-                  >
-                    <FormattedMessage
-                      id="isM94c"
-                      defaultMessage="Create"
-                      description="create service token, button"
-                    />
-                  </ConfirmButton>
-                </>
-              ) : (
-                <Button variant="primary" onClick={onClose} data-test-id="done">
-                  <FormattedMessage {...buttonMessages.done} />
-                </Button>
-              )}
-            </DialogActions>
-          </>
-        )}
-      </Form>
-    </Dialog>
+
+              <DashboardModal.Actions>
+                {step === "form" ? (
+                  <>
+                    <BackButton onClick={onClose} />
+                    <ConfirmButton
+                      data-test-id="submit"
+                      transitionState={confirmButtonState}
+                      onClick={submit}
+                    >
+                      <FormattedMessage
+                        id="isM94c"
+                        defaultMessage="Create"
+                        description="create service token, button"
+                      />
+                    </ConfirmButton>
+                  </>
+                ) : (
+                  <Button variant="primary" onClick={onClose} data-test-id="done">
+                    <FormattedMessage {...buttonMessages.done} />
+                  </Button>
+                )}
+              </DashboardModal.Actions>
+            </DashboardModal.Grid>
+          )}
+        </Form>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 

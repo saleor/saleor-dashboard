@@ -1,6 +1,6 @@
 import { Button } from "@dashboard/components/Button";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { DialogProps } from "@dashboard/types";
-import { Dialog, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -26,25 +26,28 @@ const GiftCardBulkCreateSuccessDialog: React.FC<GiftCardBulkCreateSuccessDialogP
 
   return (
     <>
-      <Dialog open={open} maxWidth="sm">
-        <DialogTitle disableTypography>
-          {intl.formatMessage(messages.bulkCreateIssuedTitle)}
-        </DialogTitle>
-        <DialogContent>
+      <DashboardModal open={open} onChange={onClose}>
+        <DashboardModal.Content size="sm">
+          <DashboardModal.Title>
+            {intl.formatMessage(messages.bulkCreateIssuedTitle)}
+          </DashboardModal.Title>
+
           <Text>{intl.formatMessage(messages.bulkCreateIssuedExplanation)}</Text>
-        </DialogContent>
-        <DialogActions>
-          <Button variant="secondary" onClick={() => setOpenEmailExport(true)}>
-            <FormattedMessage {...messages.bulkCreateIssuedExportToEmail} />
-          </Button>
-          <Button variant="primary" onClick={onClose}>
-            <FormattedMessage {...messages.bulkCreateIssuedAccept} />
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog open={openEmailExport} maxWidth="sm">
+
+          <DashboardModal.Actions>
+            <Button variant="secondary" onClick={() => setOpenEmailExport(true)}>
+              <FormattedMessage {...messages.bulkCreateIssuedExportToEmail} />
+            </Button>
+            <Button variant="primary" onClick={onClose}>
+              <FormattedMessage {...messages.bulkCreateIssuedAccept} />
+            </Button>
+          </DashboardModal.Actions>
+        </DashboardModal.Content>
+      </DashboardModal>
+
+      <DashboardModal onChange={onExportDialogClose} open={openEmailExport}>
         <GiftCardExportDialogContent idsToExport={idsToExport} onClose={onExportDialogClose} />
-      </Dialog>
+      </DashboardModal>
     </>
   );
 };
