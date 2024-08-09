@@ -422,6 +422,10 @@
     "context": "column header",
     "string": "Title"
   },
+  "0YjGFG": {
+    "context": "alert message",
+    "string": "For subscription"
+  },
   "0a0fLZ": {
     "context": "countries list menu label when no countries are assigned",
     "string": "There are no countries assigned"
@@ -934,9 +938,6 @@
     "context": "Transaction capture button - charge preauthorized transaction amount",
     "string": "Capture"
   },
-  "450Fty": {
-    "string": "None"
-  },
   "45aV8u": {
     "context": "gift card bulk create modal bottom explanation",
     "string": "After creation Saleor will create a list of gift card codes that you will be able to download."
@@ -1011,10 +1012,6 @@
   "4W/CKn": {
     "context": "modal button",
     "string": "Upload URL"
-  },
-  "4XRIV5": {
-    "context": "add new refund button",
-    "string": "Add new refund"
   },
   "4XhJY+": {
     "context": "dialog header",
@@ -2071,6 +2068,10 @@
   "ByYtFB": {
     "string": "Invalid or expired token. Please check your token in URL"
   },
+  "C+WD8j": {
+    "context": "alert message",
+    "string": "all of"
+  },
   "C035fF": {
     "context": "grant refund, refund card explanation next to submit button",
     "string": "Funds will be returned in a separate step"
@@ -3050,6 +3051,10 @@
   "I+UwqI": {
     "context": "is filter range or value",
     "string": "equal to"
+  },
+  "I/y4IU": {
+    "context": "alert message",
+    "string": "one of"
   },
   "I1Mz7h": {
     "string": "Manage Collection Channel Availability"
@@ -4409,6 +4414,10 @@
   },
   "QqnNUm": {
     "string": "Visible in listing"
+  },
+  "QslFl8": {
+    "context": "add new refund button",
+    "string": "New refund"
   },
   "QzseV7": {
     "context": "dialog header",

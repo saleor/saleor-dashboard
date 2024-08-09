@@ -1,9 +1,8 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import Skeleton from "@dashboard/components/Skeleton";
 import { buttonMessages } from "@dashboard/intl";
 import { RecursiveMenuItem } from "@dashboard/navigation/types";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton } from "@saleor/macaw-ui-next";
 import React, { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -37,11 +36,13 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
               defaultMessage: "Menu Items",
               description: "header",
             })}
-            <Button disabled={!canUndo} onClick={onUndo} data-test-id="undo-button">
-              <FormattedMessage {...buttonMessages.undo} />
-            </Button>
           </Box>
         </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          <Button disabled={!canUndo} onClick={onUndo} data-test-id="undo-button">
+            <FormattedMessage {...buttonMessages.undo} />
+          </Button>
+        </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content>
         <Box data-test-id="menu-items-list" backgroundColor="default1" marginBottom={4}>

@@ -4,7 +4,8 @@ import FormSpacer from "@dashboard/components/FormSpacer";
 import { AccountErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
-import { TextField, Typography } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -36,24 +37,24 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
 
         return (
           <>
-            <Typography variant="h3" className={classes.header}>
+            <Text size={6} fontWeight="bold" lineHeight={3} className={classes.header}>
               <FormattedMessage
                 id="WhKGPA"
                 defaultMessage="Set up new password"
                 description="page title"
               />
-            </Typography>
+            </Text>
             {errors.map(error => (
               <div className={classes.panel} key={`${error.code}-${error.field}`}>
                 {getAccountErrorMessage(error, intl)}
               </div>
             ))}
-            <Typography variant="caption" color="textSecondary">
+            <Text size={2} fontWeight="light" color="default2">
               <FormattedMessage
                 id="m0Dz+2"
                 defaultMessage="Please set up a new password for your account. Repeat your new password to make sure you will be able to remember it."
               />
-            </Typography>
+            </Text>
             <FormSpacer />
             <TextField
               autoFocus

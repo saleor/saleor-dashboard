@@ -11,8 +11,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { menuListUrl } from "@dashboard/navigation/urls";
-import { Typography } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -92,15 +91,15 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
               </Backlink>
               <Grid variant="inverted">
                 <div>
-                  <Typography variant="h5">
+                  <Text size={3} fontWeight="bold" lineHeight={2}>
                     {intl.formatMessage(sectionNames.navigation)}
-                  </Typography>
-                  <Typography>
+                  </Text>
+                  <Text display="block">
                     <FormattedMessage
                       id="E54eoT"
                       defaultMessage="Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy"
                     />
-                  </Typography>
+                  </Text>
                 </div>
                 <div>
                   <MenuProperties

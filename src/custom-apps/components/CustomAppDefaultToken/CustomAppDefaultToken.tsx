@@ -1,14 +1,12 @@
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import useClipboard from "@dashboard/hooks/useClipboard";
-import { Paper, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import { IconButton } from "@saleor/macaw-ui";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { useStyles } from "./styles";
+import { Mono } from "../TokenCreateDialog/Mono";
 
 export interface CustomAppDefaultTokenProps {
   apiUrl: string;
@@ -19,21 +17,20 @@ export interface CustomAppDefaultTokenProps {
 
 const CustomAppDefaultToken: React.FC<CustomAppDefaultTokenProps> = props => {
   const { apiUrl, token, onApiUrlClick, onTokenClose } = props;
-  const classes = useStyles(props);
   const [copied, copy] = useClipboard();
 
   return (
-    <DashboardCard className={classes.root}>
-      <DashboardCard.Content>
-        <div className={classes.content}>
+    <DashboardCard boxShadow="defaultModal" position="relative">
+      <DashboardCard.Content padding={4}>
+        <Box display="flex" flexDirection="row" gap={2}>
           <div>
-            <Typography>
+            <Text>
               <FormattedMessage
                 id="ixjvkM"
                 defaultMessage="We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
               />
-            </Typography>
-            <Typography>
+            </Text>
+            <Text display="block">
               <FormattedMessage
                 id="DGCzal"
                 defaultMessage="This token gives you access to your shop's API, which you'll find here: {url}"
@@ -45,27 +42,29 @@ const CustomAppDefaultToken: React.FC<CustomAppDefaultTokenProps> = props => {
                   ),
                 }}
               />
-            </Typography>
+            </Text>
           </div>
-          <div className={classes.closeContainer}>
-            <IconButton variant="secondary" onClick={onTokenClose}>
-              <CloseIcon />
-            </IconButton>
-          </div>
-        </div>
-        <Paper className={classes.paper} elevation={0}>
-          <Typography variant="caption">
+
+          <Button variant="secondary" onClick={onTokenClose}>
+            <CloseIcon />
+          </Button>
+        </Box>
+
+        <Box marginTop={4} backgroundColor="default2" padding={4} borderRadius={8}>
+          <Text size={3} fontWeight="medium">
             <FormattedMessage id="Kxiige" defaultMessage="Generated Token" />
-          </Typography>
-          <Typography>{token}</Typography>
-          <Button className={classes.copy} onClick={() => copy(token)}>
+          </Text>
+
+          <Mono>{token}</Mono>
+
+          <Button marginTop={4} variant="secondary" onClick={() => copy(token)}>
             {copied ? (
               <FormattedMessage id="r86alc" defaultMessage="Copied" description="button" />
             ) : (
               <FormattedMessage id="HVFq//" defaultMessage="Copy token" description="button" />
             )}
           </Button>
-        </Paper>
+        </Box>
       </DashboardCard.Content>
     </DashboardCard>
   );

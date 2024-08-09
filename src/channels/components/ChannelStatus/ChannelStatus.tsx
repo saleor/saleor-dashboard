@@ -1,10 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { Typography } from "@material-ui/core";
-import { Button } from "@saleor/macaw-ui-next";
+import { Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { useStyles } from "../styles";
 
 export interface ChannelStatusProps {
   isActive: boolean;
@@ -18,7 +15,6 @@ export const ChannelStatus: React.FC<ChannelStatusProps> = ({
   updateChannelStatus,
 }) => {
   const intl = useIntl();
-  const classes = useStyles({});
 
   return (
     <DashboardCard>
@@ -33,16 +29,16 @@ export const ChannelStatus: React.FC<ChannelStatusProps> = ({
       </DashboardCard.Header>
 
       <DashboardCard.Content>
-        <Typography variant="caption" className={classes.label}>
+        <Text fontWeight="medium" fontSize={3} color="default2" display="block">
           <FormattedMessage id="+tIkAe" defaultMessage="Status" description="status" />
-        </Typography>
-        <Typography>
+        </Text>
+        <Text>
           {isActive ? (
             <FormattedMessage id="QiN4hv" defaultMessage="Active" description="active" />
           ) : (
             <FormattedMessage id="X8qjg3" defaultMessage="Inactive" description="inactive" />
           )}
-        </Typography>
+        </Text>
         <Button
           variant="secondary"
           disabled={disabled}

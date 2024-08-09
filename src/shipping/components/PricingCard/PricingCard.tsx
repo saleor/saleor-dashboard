@@ -8,7 +8,8 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { ShippingChannelsErrorFragment } from "@dashboard/graphql";
 import { getFormChannelError, getFormChannelErrors } from "@dashboard/utils/errors";
 import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
-import { TableBody, TableCell, Typography } from "@material-ui/core";
+import { TableBody, TableCell } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -75,7 +76,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
               return (
                 <TableRowLink key={channel.id} data-test-id={channel.name}>
                   <TableCell>
-                    <Typography>{channel.name}</Typography>
+                    <Text>{channel.name}</Text>
                   </TableCell>
                   <TableCell>
                     <PriceField

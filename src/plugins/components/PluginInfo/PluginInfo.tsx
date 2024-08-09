@@ -5,8 +5,7 @@ import Hr from "@dashboard/components/Hr";
 import { PluginErrorCode, PluginErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import getPluginErrorMessage from "@dashboard/utils/errors/plugins";
-import { Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -20,20 +19,7 @@ interface PluginInfoProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const useStyles = makeStyles(
-  () => ({
-    status: {
-      paddingTop: 20,
-    },
-    title: {
-      fontSize: 14,
-      paddingTop: 10,
-    },
-  }),
-  { name: "PluginInfo" },
-);
 const PluginInfo: React.FC<PluginInfoProps> = ({ data, description, errors, name, onChange }) => {
-  const classes = useStyles({});
   const intl = useIntl();
   const misconfiguredError = errors.find(err => err.code === PluginErrorCode.PLUGIN_MISCONFIGURED);
 
@@ -49,42 +35,50 @@ const PluginInfo: React.FC<PluginInfoProps> = ({ data, description, errors, name
         </DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <Typography className={classes.title} variant="h6">
-          {intl.formatMessage({
-            id: "IUeGzv",
-            defaultMessage: "Plugin Name",
-            description: "plugin name",
-          })}
-        </Typography>
-        <Typography>{name}</Typography>
+        <Box>
+          <Text lineHeight={2} fontSize={3} color="default2">
+            {intl.formatMessage({
+              id: "IUeGzv",
+              defaultMessage: "Plugin Name",
+              description: "plugin name",
+            })}
+          </Text>
+          <Text display="block" fontWeight="bold">
+            {name}
+          </Text>
+        </Box>
         {description && (
-          <>
-            <Typography className={classes.title} variant="h6">
+          <Box marginTop={4}>
+            <Text fontSize={3} color="default2">
               <FormattedMessage {...commonMessages.description} />
-            </Typography>
-            <Typography>{description}</Typography>
-          </>
+            </Text>
+            <Text display="block">{description}</Text>
+          </Box>
         )}
         <FormSpacer />
         <Hr />
-        <Typography className={classes.status}>
+        <Text lineHeight={2} fontSize={3} color="default2" display="block" paddingTop={4}>
           {intl.formatMessage({
             id: "bL/Wrc",
             defaultMessage: "Status",
             description: "plugin status",
           })}
-        </Typography>
+        </Text>
         <ControlledCheckbox
           name={"active" as keyof PluginDetailsPageFormData}
-          label={intl.formatMessage({
-            id: "FA+MRz",
-            defaultMessage: "Set plugin as active",
-          })}
+          label={
+            <Text>
+              {intl.formatMessage({
+                id: "FA+MRz",
+                defaultMessage: "Set plugin as active",
+              })}
+            </Text>
+          }
           checked={data.active}
           onChange={onChange}
         />
         {misconfiguredError && (
-          <Typography color="error">{getPluginErrorMessage(misconfiguredError, intl)}</Typography>
+          <Text color="critical1">{getPluginErrorMessage(misconfiguredError, intl)}</Text>
         )}
       </DashboardCard.Content>
     </DashboardCard>

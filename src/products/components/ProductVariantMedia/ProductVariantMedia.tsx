@@ -1,9 +1,8 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import MediaTile from "@dashboard/components/MediaTile";
-import Skeleton from "@dashboard/components/Skeleton";
 import { ProductMediaFragment } from "@dashboard/graphql";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -39,19 +38,17 @@ export const ProductVariantMedia: React.FC<ProductVariantMediaProps> = props => 
   return (
     <DashboardCard>
       <DashboardCard.Header>
-        <DashboardCard.Title>
-          <Box display="flex" justifyContent="space-between" alignItems="center">
-            {intl.formatMessage(messages.media)}
-            <Button
-              data-test-id="choose-media-button"
-              variant="secondary"
-              disabled={disabled}
-              onClick={onImageAdd}
-            >
-              {intl.formatMessage(messages.chooseMedia)}
-            </Button>
-          </Box>
-        </DashboardCard.Title>
+        <DashboardCard.Title>{intl.formatMessage(messages.media)}</DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          <Button
+            data-test-id="choose-media-button"
+            variant="secondary"
+            disabled={disabled}
+            onClick={onImageAdd}
+          >
+            {intl.formatMessage(messages.chooseMedia)}
+          </Button>
+        </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content>
         <Box display="flex" flexWrap="wrap" gap={5}>

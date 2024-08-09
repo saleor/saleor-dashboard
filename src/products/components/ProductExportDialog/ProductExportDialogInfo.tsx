@@ -6,21 +6,15 @@ import ChannelsAvailabilityDialogContentWrapper from "@dashboard/components/Chan
 import Checkbox from "@dashboard/components/Checkbox";
 import Chip from "@dashboard/components/Chip";
 import Hr from "@dashboard/components/Hr";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import { ChannelFragment, ExportProductsInput, ProductFieldEnum } from "@dashboard/graphql";
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { sectionNames } from "@dashboard/intl";
 import { FetchMoreProps } from "@dashboard/types";
 import { toggle } from "@dashboard/utils/lists";
-import {
-  Button,
-  CircularProgress,
-  FormControlLabel,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { Button, CircularProgress, FormControlLabel, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Option, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -164,7 +158,7 @@ const FieldAccordion: React.FC<
               />
             ))}
             {selectedFields.length > maxChips && (
-              <Typography className={classes.moreLabel} variant="caption">
+              <Text className={classes.moreLabel} size={2} fontWeight="light">
                 <FormattedMessage
                   id="ve/Sph"
                   defaultMessage="and {number} more"
@@ -173,7 +167,7 @@ const FieldAccordion: React.FC<
                     number: selectedFields.length - maxChips,
                   }}
                 />
-              </Typography>
+              </Text>
             )}
           </div>
         )
@@ -202,12 +196,12 @@ const FieldAccordion: React.FC<
 };
 
 export interface ProductExportDialogInfoProps extends FetchMoreProps {
-  attributes: MultiAutocompleteChoiceType[];
+  attributes: Option[];
   channels: ChannelFragment[];
   selectedChannels: ChannelFragment[];
-  warehouses: MultiAutocompleteChoiceType[];
+  warehouses: Option[];
   data: ExportProductsInput;
-  selectedAttributes: MultiAutocompleteChoiceType[];
+  selectedAttributes: Option[];
   onAttrtibuteSelect: FormChange;
   onWarehouseSelect: FormChange;
   onChange: FormChange;
@@ -277,13 +271,13 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
 
   return (
     <>
-      <Typography className={classes.dialogLabel}>
+      <Text className={classes.dialogLabel}>
         <FormattedMessage
           id="Jwuu4X"
           defaultMessage="Information exported:"
           description="select product informations to be exported"
         />
-      </Typography>
+      </Text>
       <div className={classes.scrollArea}>
         <Accordion
           dataTestId="channel-expand-button"
@@ -301,7 +295,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
                   />
                 ))}
                 {selectedChannels.length > maxChips && (
-                  <Typography className={classes.moreLabel} variant="caption">
+                  <Text className={classes.moreLabel} size={2} fontWeight="light">
                     <FormattedMessage
                       id="ve/Sph"
                       defaultMessage="and {number} more"
@@ -310,7 +304,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
                         number: selectedChannels.length - maxChips,
                       }}
                     />
-                  </Typography>
+                  </Text>
                 )}
               </div>
             )
@@ -372,7 +366,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
                   />
                 ))}
                 {selectedAttributes.length > maxChips && (
-                  <Typography className={classes.moreLabel} variant="caption">
+                  <Text className={classes.moreLabel} size={2} fontWeight="light">
                     <FormattedMessage
                       id="ve/Sph"
                       defaultMessage="and {number} more"
@@ -381,7 +375,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
                         number: selectedAttributes.length - maxChips,
                       }}
                     />
-                  </Typography>
+                  </Text>
                 )}
               </div>
             )
@@ -486,7 +480,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
                     />
                   ))}
                 {data.exportInfo.warehouses.length + selectedInventoryFields.length > maxChips && (
-                  <Typography className={classes.moreLabel} variant="caption">
+                  <Text className={classes.moreLabel} size={2} fontWeight="light">
                     <FormattedMessage
                       id="ve/Sph"
                       defaultMessage="and {number} more"
@@ -498,7 +492,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
                           maxChips,
                       }}
                     />
-                  </Typography>
+                  </Text>
                 )}
               </div>
             )
@@ -529,9 +523,9 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
             ))}
           </div>
           <Hr className={classes.hrWarehouses} />
-          <Typography>
+          <Text>
             <FormattedMessage id="ZRz3hM" defaultMessage="Export Product Stock Quantity to CSV" />
-          </Typography>
+          </Text>
           <div>
             <Option
               checked={warehouses.every(warehouse =>
@@ -548,13 +542,13 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
             </Option>
           </div>
           <Hr className={classes.hrWarehouses} />
-          <Typography className={classes.warehousesLabel} variant="subtitle1">
+          <Text className={classes.warehousesLabel} fontSize={3}>
             <FormattedMessage
               id="WQMTKI"
               defaultMessage="Warehouses A to Z"
               description="list of warehouses"
             />
-          </Typography>
+          </Text>
           {warehouses.map(warehouse => (
             <Option
               checked={data.exportInfo.warehouses.includes(warehouse.value)}

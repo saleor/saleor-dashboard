@@ -2,15 +2,13 @@
 import AddressEdit from "@dashboard/components/AddressEdit";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
-import Skeleton from "@dashboard/components/Skeleton";
 import CustomerAddressChoiceCard from "@dashboard/customers/components/CustomerAddressChoiceCard";
 import { AddressTypeInput } from "@dashboard/customers/types";
 import { AccountErrorFragment, AddressFragment, OrderErrorFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { getById } from "@dashboard/misc";
 import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Option, Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -21,7 +19,7 @@ import { useStyles } from "./styles";
 export interface OrderCustomerAddressEditProps {
   loading: boolean;
   customerAddresses: AddressFragment[];
-  countryChoices: SingleAutocompleteChoiceType[];
+  countryChoices: Option[];
   addressInputOption: AddressInputOptionEnum;
   addressInputName: string;
   onChangeAddressInputOption: FormChange;

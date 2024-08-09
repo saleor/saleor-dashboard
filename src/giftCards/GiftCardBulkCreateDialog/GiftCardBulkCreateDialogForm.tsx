@@ -9,7 +9,8 @@ import {
   useGiftCardSettingsQuery,
 } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
-import { Divider, TextField, Typography } from "@material-ui/core";
+import { Divider, TextField } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -117,7 +118,7 @@ const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> 
 
       <GiftCardCreateRequiresActivationSection onChange={change} checked={requiresActivation} />
 
-      <Typography>{intl.formatMessage(messages.bulkCreateExplanation)}</Typography>
+      <Text>{intl.formatMessage(messages.bulkCreateExplanation)}</Text>
 
       <DashboardModal.Actions>
         <BackButton onClick={onClose} />

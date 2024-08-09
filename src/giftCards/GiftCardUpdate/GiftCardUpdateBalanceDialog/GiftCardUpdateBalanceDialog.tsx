@@ -7,7 +7,8 @@ import useForm from "@dashboard/hooks/useForm";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { DialogProps } from "@dashboard/types";
 import commonErrorMessages from "@dashboard/utils/errors/common";
-import { TextField, Typography } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -87,7 +88,7 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({ open, onClose }) =
       disabled={loading}
       size="lg"
     >
-      <Typography>{intl.formatMessage(messages.subtitle)}</Typography>
+      <Text>{intl.formatMessage(messages.subtitle)}</Text>
       <CardSpacer />
       <TextField
         inputProps={{ min: 0 }}
@@ -102,7 +103,9 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({ open, onClose }) =
         InputProps={{
           startAdornment: (
             <div className={classes.currencyCodeContainer}>
-              <Typography variant="caption">{currency}</Typography>
+              <Text size={2} fontWeight="light">
+                {currency}
+              </Text>
             </div>
           ),
         }}

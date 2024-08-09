@@ -1,4 +1,5 @@
-import { Grow, Paper, Popper, Typography } from "@material-ui/core";
+import { Grow, Paper, Popper } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -38,9 +39,7 @@ export const PreviewPill: React.FC<PreviewPillProps> = ({ className }) => {
         {({ TransitionProps }) => (
           <Grow {...TransitionProps}>
             <Paper elevation={16} className={classes.tooltip}>
-              <Typography className={classes.tooltipText}>
-                {intl.formatMessage(messages.tooltip)}
-              </Typography>
+              <Text className={classes.tooltipText}>{intl.formatMessage(messages.tooltip)}</Text>
             </Paper>
           </Grow>
         )}

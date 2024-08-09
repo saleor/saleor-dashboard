@@ -7,7 +7,8 @@ import { WebhookErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getWebhookErrorMessage from "@dashboard/utils/errors/webhooks";
-import { Popper, TextField, Typography } from "@material-ui/core";
+import { Popper, TextField } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -36,9 +37,9 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({ data, disabled, errors, onCha
       </DashboardCard.Header>
 
       <DashboardCard.Content className={classes.card}>
-        <Typography variant="caption">
+        <Text fontWeight="medium" fontSize={3} display="block">
           {intl.formatMessage(commonMessages.generalInformations)}
-        </Typography>
+        </Text>
         <FormSpacer />
         <TextField
           disabled={disabled}
@@ -94,9 +95,9 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({ data, disabled, errors, onCha
                 />
                 <Popper anchorEl={anchor.current} open={isPopupOpen} placement={"top"}>
                   <DashboardCard boxShadow="defaultModal" className={classes.toolbar}>
-                    <Typography>
+                    <Text>
                       <FormattedMessage {...messages.useSignature} />
-                    </Typography>
+                    </Text>
                     <Link
                       target="_blank"
                       rel="noopener noreferrer"

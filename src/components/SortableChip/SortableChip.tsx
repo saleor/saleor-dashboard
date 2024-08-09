@@ -1,6 +1,6 @@
-import { Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { SortableElement, SortableElementProps } from "react-sortable-hoc";
@@ -70,7 +70,7 @@ const SortableChip = SortableElement((props: SortableChipProps) => {
           })}
           data-test-id="button-drag-handle"
         />
-        <Typography data-test-id="chip-label">{label}</Typography>
+        <Text data-test-id="chip-label">{label}</Text>
         {onClose && (
           <button
             className={clsx(classes.closeButton, {

@@ -1,7 +1,8 @@
 import errorImg from "@assets/images/app-install-error.svg";
 import { Button } from "@dashboard/components/Button";
 import Container from "@dashboard/components/Container";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -22,12 +23,12 @@ export const AppInstallErrorPage: React.FC<AppInstallErrorPageProps> = ({ onBack
           <img src={errorImg} alt="" />
         </Grid>
         <Grid xs={12} sm={6} item>
-          <Typography variant="h3" component="h3">
+          <Text size={6} fontWeight="bold" lineHeight={3} as="h3">
             <FormattedMessage {...messages.title} />
-          </Typography>
-          <Typography variant="body2">
+          </Text>
+          <Text size={3} fontWeight="regular">
             <FormattedMessage {...messages.content} />
-          </Typography>
+          </Text>
           <Button className={classes.button} variant="primary" onClick={onBack}>
             <FormattedMessage {...messages.backButton} />
           </Button>

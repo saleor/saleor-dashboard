@@ -1,17 +1,17 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { Combobox } from "@dashboard/components/Combobox";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { Choice } from "@dashboard/components/SingleSelectField";
 import useChoiceSearch from "@dashboard/hooks/useChoiceSearch";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
 export interface ChannelPickerDialogProps {
-  channelsChoices: Array<Choice<string, string>>;
+  channelsChoices: Option[];
   confirmButtonState: ConfirmButtonTransitionState;
   defaultChoice: string;
   open: boolean;

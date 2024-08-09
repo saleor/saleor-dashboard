@@ -20,12 +20,14 @@ export const RootLayout: React.FC<DetailPageLayoutProps> = ({
     if (gridTemplateColumns instanceof Object) {
       return {
         mobile: gridTemplateColumns.mobile ?? 1,
+        tablet: gridTemplateColumns.tablet,
         ...gridTemplateColumns,
       };
     }
 
     return {
       mobile: 1,
+      tablet: gridTemplateColumns,
       desktop: gridTemplateColumns,
     };
   }, [gridTemplateColumns]);

@@ -12,7 +12,12 @@ export const AppDialog: React.FC<AppDialogProps> = ({ children, title, onClose, 
   return (
     <DashboardModal aria-labelledby="extension app dialog" {...props} onChange={onClose}>
       <DashboardModal.Content>
-        <DashboardModal.Title display="flex" justifyContent="space-between" alignItems="center">
+        <DashboardModal.Title
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          as="h2"
+        >
           {title}
           <DashboardModal.Close onClose={onClose}></DashboardModal.Close>
         </DashboardModal.Title>

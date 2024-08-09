@@ -2,7 +2,6 @@ import { DashboardCard } from "@dashboard/components/Card";
 import PreviewPill from "@dashboard/components/PreviewPill";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
 import { AllocationStrategyEnum, StockSettingsInput } from "@dashboard/graphql";
-import { Typography } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
 import { Text, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -51,7 +50,7 @@ const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
       <DashboardCard.Content>
         <RadioGroupField
           label={
-            <Typography>
+            <Text>
               <FormattedMessage {...messages.allocationStrategyDescription} />
               <Tooltip>
                 <Tooltip.Trigger>
@@ -70,7 +69,7 @@ const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
                   </ul>
                 </Tooltip.Content>
               </Tooltip>
-            </Typography>
+            </Text>
           }
           choices={strategyOptions.map(option => ({
             label: (
@@ -82,7 +81,7 @@ const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
                   <FormattedMessage {...option.title} />
                 </Text>
                 {option.subtitle && (
-                  <Text fontWeight="medium" fontSize={3} color="default2">
+                  <Text fontWeight="medium" fontSize={3} color="default2" display="block">
                     <FormattedMessage {...option.subtitle} />
                   </Text>
                 )}

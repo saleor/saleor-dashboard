@@ -18,7 +18,8 @@ import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import { buttonMessages } from "@dashboard/intl";
 import { getById, transformAddressToAddressInput } from "@dashboard/misc";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
-import { Divider, FormControlLabel, Typography } from "@material-ui/core";
+import { Divider, FormControlLabel } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
@@ -278,9 +279,9 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                 />
               ) : (
                 <>
-                  <Typography>
+                  <Text>
                     <FormattedMessage {...getDialogDescription()} />
-                  </Typography>
+                  </Text>
 
                   {hasCustomerChanged && (
                     <>
@@ -306,7 +307,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                       />
                       {!data.cloneAddress && (
                         <>
-                          <Typography>
+                          <Text>
                             {customerAddresses.length > 0 ? (
                               <FormattedMessage
                                 {...dialogMessages.customerChangeBillingDescription}
@@ -314,7 +315,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                             ) : (
                               <FormattedMessage {...dialogMessages.noAddressBillingDescription} />
                             )}
-                          </Typography>
+                          </Text>
                           <OrderCustomerAddressEdit {...billingAddressEditProps} />
                         </>
                       )}

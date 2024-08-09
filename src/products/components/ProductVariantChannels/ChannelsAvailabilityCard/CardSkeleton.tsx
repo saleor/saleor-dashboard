@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import Skeleton from "@dashboard/components/Skeleton";
+import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 
 export const CardSkeleton: React.FC = () => (
