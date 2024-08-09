@@ -9,7 +9,7 @@ let siteSettingsPage: SiteSettingsPage;
 test.beforeEach(({ page }) => {
   siteSettingsPage = new SiteSettingsPage(page);
 });
-test("TC: SALEOR_132 Should be able to update site settings", async () => {
+test("TC: SALEOR_132 Should be able to update site settings @e2e", async () => {
   const companyName = faker.company.companyName();
 
   await siteSettingsPage.gotoSiteSettings();
