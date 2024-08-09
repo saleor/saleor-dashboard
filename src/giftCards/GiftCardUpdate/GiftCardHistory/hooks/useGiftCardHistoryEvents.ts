@@ -1,12 +1,8 @@
-import { useUser } from "@dashboard/auth";
-import { hasOneOfPermissions } from "@dashboard/components/RequirePermissions";
-import { GiftCardEventsQuery, PermissionEnum, useGiftCardEventsQuery } from "@dashboard/graphql";
+import { useGiftCardPermissions } from "@dashboard/giftCards/hooks/useGiftCardPermissions";
+import { GiftCardEventsQuery, useGiftCardEventsQuery } from "@dashboard/graphql";
 import { useContext } from "react";
 
 import { GiftCardDetailsContext } from "../../providers/GiftCardDetailsProvider";
-
-const APP_PERMISSIONS = [PermissionEnum.MANAGE_APPS];
-const USER_PERMISSIONS = [PermissionEnum.MANAGE_USERS, PermissionEnum.MANAGE_STAFF];
 
 interface GiftCardHistoryEvents {
   id: string | undefined;
@@ -14,10 +10,7 @@ interface GiftCardHistoryEvents {
 }
 
 const useGiftCardHistoryEvents = (): GiftCardHistoryEvents => {
-  const { user } = useUser();
-
-  const canSeeApp = hasOneOfPermissions(user?.userPermissions ?? [], APP_PERMISSIONS);
-  const canSeeUser = hasOneOfPermissions(user?.userPermissions ?? [], USER_PERMISSIONS);
+  const { canSeeApp, canSeeUser } = useGiftCardPermissions();
 
   const { giftCard } = useContext(GiftCardDetailsContext);
   const { data } = useGiftCardEventsQuery({

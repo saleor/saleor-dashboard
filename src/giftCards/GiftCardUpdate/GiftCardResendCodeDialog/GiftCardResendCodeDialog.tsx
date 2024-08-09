@@ -4,6 +4,7 @@ import { useChannelsSearch } from "@dashboard/components/ChannelsAvailabilityDia
 import { Combobox } from "@dashboard/components/Combobox";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import { IMessage } from "@dashboard/components/messages";
+import { useGiftCardPermissions } from "@dashboard/giftCards/hooks/useGiftCardPermissions";
 import { useChannelsQuery, useGiftCardResendMutation } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -36,8 +37,11 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
   const {
     giftCard: { boughtInChannel: initialChannelSlug },
   } = useGiftCardDetails();
+  const { canManageChannels } = useGiftCardPermissions();
   const [consentSelected, setConsentSelected] = useState(false);
-  const { data: channelsData, loading: loadingChannels } = useChannelsQuery({});
+  const { data: channelsData, loading: loadingChannels } = useChannelsQuery({
+    skip: !canManageChannels,
+  });
   const channels = channelsData?.channels;
   const activeChannels = channels?.filter(({ isActive }) => isActive);
   const { onQueryChange, filteredChannels } = useChannelsSearch(activeChannels);

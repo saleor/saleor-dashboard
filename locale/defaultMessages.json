@@ -1476,6 +1476,10 @@
     "context": "button",
     "string": "Delete Variant"
   },
+  "7jD9T4": {
+    "context": "gift card history message",
+    "string": "Gift card balance was reset"
+  },
   "7l5Bh9": {
     "string": "{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
   },

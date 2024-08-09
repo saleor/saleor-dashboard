@@ -9133,13 +9133,16 @@ export type GiftCardDeactivateMutationHookResult = ReturnType<typeof useGiftCard
 export type GiftCardDeactivateMutationResult = Apollo.MutationResult<Types.GiftCardDeactivateMutation>;
 export type GiftCardDeactivateMutationOptions = Apollo.BaseMutationOptions<Types.GiftCardDeactivateMutation, Types.GiftCardDeactivateMutationVariables>;
 export const GiftCardUpdateDocument = gql`
-    mutation GiftCardUpdate($id: ID!, $input: GiftCardUpdateInput!) {
+    mutation GiftCardUpdate($id: ID!, $input: GiftCardUpdateInput!, $showCreatedBy: Boolean!) {
   giftCardUpdate(id: $id, input: $input) {
     errors {
       ...GiftCardError
     }
     giftCard {
       ...GiftCardData
+      createdBy @include(if: $showCreatedBy) {
+        ...UserBase
+      }
       events {
         ...GiftCardEvent
       }
@@ -9148,6 +9151,7 @@ export const GiftCardUpdateDocument = gql`
 }
     ${GiftCardErrorFragmentDoc}
 ${GiftCardDataFragmentDoc}
+${UserBaseFragmentDoc}
 ${GiftCardEventFragmentDoc}`;
 export type GiftCardUpdateMutationFn = Apollo.MutationFunction<Types.GiftCardUpdateMutation, Types.GiftCardUpdateMutationVariables>;
 
@@ -9166,6 +9170,7 @@ export type GiftCardUpdateMutationFn = Apollo.MutationFunction<Types.GiftCardUpd
  *   variables: {
  *      id: // value for 'id'
  *      input: // value for 'input'
+ *      showCreatedBy: // value for 'showCreatedBy'
  *   },
  * });
  */
