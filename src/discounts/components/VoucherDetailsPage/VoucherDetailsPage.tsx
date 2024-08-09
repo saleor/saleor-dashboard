@@ -28,7 +28,7 @@ import {
 import { UseListSettings } from "@dashboard/hooks/useListSettings";
 import { LocalPagination } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
+import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -324,7 +324,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                       disabled={disabled}
                       onProductAssign={onProductAssign}
                       onProductUnassign={onProductUnassign}
-                      products={mapEdgesToItems(voucher?.products)}
+                      discount={voucher}
                       isChecked={isChecked}
                       selected={selected}
                       toggle={toggle}
