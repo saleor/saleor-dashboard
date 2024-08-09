@@ -15,6 +15,7 @@ import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 
+import useGiftCardHistoryEvents from "../GiftCardHistory/hooks/useGiftCardHistoryEvents";
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import { PLACEHOLDER } from "../types";
 import { giftCardUpdateInfoCardMessages as messages } from "./messages";
@@ -23,9 +24,12 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
   const { giftCard } = useGiftCardDetails();
-  const { created, createdByEmail, createdBy, usedByEmail, usedBy, product, events } = giftCard;
-  const cardIssuedEvent = events.find(getByType(GiftCardEventsEnum.ISSUED));
-  const cardBoughtEvent = events.find(getByType(GiftCardEventsEnum.BOUGHT));
+  const { created, createdByEmail, createdBy, usedByEmail, usedBy, product } = giftCard;
+
+  const { events } = useGiftCardHistoryEvents();
+  const cardIssuedEvent = events?.find(getByType(GiftCardEventsEnum.ISSUED));
+  const cardBoughtEvent = events?.find(getByType(GiftCardEventsEnum.BOUGHT));
+
   const getBuyerFieldData = (): {
     label: MessageDescriptor;
     name: string;

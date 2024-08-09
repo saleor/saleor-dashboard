@@ -1,4 +1,4 @@
-import { GiftCardEventFragment, OrderEventFragment } from "@dashboard/graphql";
+import { GiftCardEventsQuery, OrderEventFragment } from "@dashboard/graphql";
 import { getUserInitials, getUserName } from "@dashboard/misc";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
@@ -31,11 +31,15 @@ const useStyles = makeStyles(
   { name: "TimelineNote" },
 );
 
+type TimelineAppType =
+  | NonNullable<GiftCardEventsQuery["giftCard"]>["events"][0]["app"]
+  | OrderEventFragment["app"];
+
 interface TimelineNoteProps {
   date: string;
   message: string | null;
   user: OrderEventFragment["user"];
-  app: OrderEventFragment["app"] | GiftCardEventFragment["app"];
+  app: TimelineAppType;
   hasPlainDate?: boolean;
 }
 
@@ -61,7 +65,7 @@ const TimelineAvatar = ({
   className,
 }: {
   user: OrderEventFragment["user"];
-  app: OrderEventFragment["app"] | GiftCardEventFragment["app"];
+  app: TimelineAppType;
   className: string;
 }) => {
   if (user) {

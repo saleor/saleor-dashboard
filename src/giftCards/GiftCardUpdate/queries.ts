@@ -6,9 +6,6 @@ export const giftCardDetails = gql`
   query GiftCardDetails($id: ID!) {
     giftCard(id: $id) {
       ...GiftCardData
-      events {
-        ...GiftCardEvent
-      }
     }
   }
 `;

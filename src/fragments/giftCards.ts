@@ -17,22 +17,6 @@ export const giftCardEventsFragment = gql`
     id
     date
     type
-    user {
-      ...UserBase
-      email
-      avatar(size: 128) {
-        url
-      }
-    }
-    app {
-      id
-      name
-      brand {
-        logo {
-          default(size: 128)
-        }
-      }
-    }
     message
     email
     orderId
@@ -76,10 +60,6 @@ export const giftCardDataFragment = gql`
     }
     usedByEmail
     createdByEmail
-    app {
-      id
-      name
-    }
     created
     expiryDate
     lastUsedOn
@@ -90,7 +70,6 @@ export const giftCardDataFragment = gql`
     currentBalance {
       ...Money
     }
-
     id
     tags {
       name

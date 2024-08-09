@@ -2605,6 +2605,10 @@
   "FTYkgw": {
     "string": "Delete collections"
   },
+  "FWaL+x": {
+    "context": "gift card history message",
+    "string": "Gift card balance was reset"
+  },
   "FWbv/u": {
     "context": "page header",
     "string": "Create Discount"

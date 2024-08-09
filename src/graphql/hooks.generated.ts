@@ -367,7 +367,6 @@ export const AddressFragmentDoc = gql`
 export const CustomerDetailsFragmentDoc = gql`
     fragment CustomerDetails on User {
   ...Customer
-  ...Metadata
   dateJoined
   lastLogin
   defaultShippingAddress {
@@ -380,7 +379,6 @@ export const CustomerDetailsFragmentDoc = gql`
   isActive
 }
     ${CustomerFragmentDoc}
-${MetadataFragmentDoc}
 ${AddressFragmentDoc}`;
 export const CustomerAddressesFragmentDoc = gql`
     fragment CustomerAddresses on User {
@@ -1273,13 +1271,6 @@ export const GiftCardsSettingsFragmentDoc = gql`
   }
 }
     `;
-export const UserBaseFragmentDoc = gql`
-    fragment UserBase on User {
-  id
-  firstName
-  lastName
-}
-    `;
 export const MoneyFragmentDoc = gql`
     fragment Money on Money {
   amount
@@ -1293,22 +1284,6 @@ export const GiftCardEventFragmentDoc = gql`
   id
   date
   type
-  user {
-    ...UserBase
-    email
-    avatar(size: 128) {
-      url
-    }
-  }
-  app {
-    id
-    name
-    brand {
-      logo {
-        default(size: 128)
-      }
-    }
-  }
   message
   email
   orderId
@@ -1330,8 +1305,14 @@ export const GiftCardEventFragmentDoc = gql`
     }
   }
 }
-    ${UserBaseFragmentDoc}
-${MoneyFragmentDoc}`;
+    ${MoneyFragmentDoc}`;
+export const UserBaseFragmentDoc = gql`
+    fragment UserBase on User {
+  id
+  firstName
+  lastName
+}
+    `;
 export const GiftCardDataFragmentDoc = gql`
     fragment GiftCardData on GiftCard {
   ...Metadata
@@ -1352,10 +1333,6 @@ export const GiftCardDataFragmentDoc = gql`
   }
   usedByEmail
   createdByEmail
-  app {
-    id
-    name
-  }
   created
   expiryDate
   lastUsedOn
@@ -7250,9 +7227,15 @@ export type ListCustomersQueryHookResult = ReturnType<typeof useListCustomersQue
 export type ListCustomersLazyQueryHookResult = ReturnType<typeof useListCustomersLazyQuery>;
 export type ListCustomersQueryResult = Apollo.QueryResult<Types.ListCustomersQuery, Types.ListCustomersQueryVariables>;
 export const CustomerDetailsDocument = gql`
-    query CustomerDetails($id: ID!, $PERMISSION_MANAGE_ORDERS: Boolean!) {
+    query CustomerDetails($id: ID!, $PERMISSION_MANAGE_ORDERS: Boolean!, $PERMISSION_MANAGE_STAFF: Boolean!) {
   user(id: $id) {
     ...CustomerDetails
+    metadata {
+      ...MetadataItem
+    }
+    privateMetadata @include(if: $PERMISSION_MANAGE_STAFF) {
+      ...MetadataItem
+    }
     orders(last: 5) @include(if: $PERMISSION_MANAGE_ORDERS) {
       edges {
         node {
@@ -7279,7 +7262,8 @@ export const CustomerDetailsDocument = gql`
     }
   }
 }
-    ${CustomerDetailsFragmentDoc}`;
+    ${CustomerDetailsFragmentDoc}
+${MetadataItemFragmentDoc}`;
 
 /**
  * __useCustomerDetailsQuery__
@@ -7295,6 +7279,7 @@ export const CustomerDetailsDocument = gql`
  *   variables: {
  *      id: // value for 'id'
  *      PERMISSION_MANAGE_ORDERS: // value for 'PERMISSION_MANAGE_ORDERS'
+ *      PERMISSION_MANAGE_STAFF: // value for 'PERMISSION_MANAGE_STAFF'
  *   },
  * });
  */
@@ -8974,6 +8959,62 @@ export function useGiftCardSettingsLazyQuery(baseOptions?: ApolloReactHooks.Lazy
 export type GiftCardSettingsQueryHookResult = ReturnType<typeof useGiftCardSettingsQuery>;
 export type GiftCardSettingsLazyQueryHookResult = ReturnType<typeof useGiftCardSettingsLazyQuery>;
 export type GiftCardSettingsQueryResult = Apollo.QueryResult<Types.GiftCardSettingsQuery, Types.GiftCardSettingsQueryVariables>;
+export const GiftCardEventsDocument = gql`
+    query GiftCardEvents($id: ID!, $canSeeApp: Boolean!, $canSeeUser: Boolean!) {
+  giftCard(id: $id) {
+    events {
+      ...GiftCardEvent
+      app @include(if: $canSeeApp) {
+        id
+        name
+        brand {
+          logo {
+            default(size: 128)
+          }
+        }
+      }
+      user @include(if: $canSeeUser) {
+        ...UserBase
+        email
+        avatar(size: 128) {
+          url
+        }
+      }
+    }
+  }
+}
+    ${GiftCardEventFragmentDoc}
+${UserBaseFragmentDoc}`;
+
+/**
+ * __useGiftCardEventsQuery__
+ *
+ * To run a query within a React component, call `useGiftCardEventsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGiftCardEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGiftCardEventsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      canSeeApp: // value for 'canSeeApp'
+ *      canSeeUser: // value for 'canSeeUser'
+ *   },
+ * });
+ */
+export function useGiftCardEventsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.GiftCardEventsQuery, Types.GiftCardEventsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.GiftCardEventsQuery, Types.GiftCardEventsQueryVariables>(GiftCardEventsDocument, options);
+      }
+export function useGiftCardEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GiftCardEventsQuery, Types.GiftCardEventsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.GiftCardEventsQuery, Types.GiftCardEventsQueryVariables>(GiftCardEventsDocument, options);
+        }
+export type GiftCardEventsQueryHookResult = ReturnType<typeof useGiftCardEventsQuery>;
+export type GiftCardEventsLazyQueryHookResult = ReturnType<typeof useGiftCardEventsLazyQuery>;
+export type GiftCardEventsQueryResult = Apollo.QueryResult<Types.GiftCardEventsQuery, Types.GiftCardEventsQueryVariables>;
 export const GiftCardResendDocument = gql`
     mutation GiftCardResend($input: GiftCardResendInput!) {
   giftCardResend(input: $input) {
@@ -9092,13 +9133,16 @@ export type GiftCardDeactivateMutationHookResult = ReturnType<typeof useGiftCard
 export type GiftCardDeactivateMutationResult = Apollo.MutationResult<Types.GiftCardDeactivateMutation>;
 export type GiftCardDeactivateMutationOptions = Apollo.BaseMutationOptions<Types.GiftCardDeactivateMutation, Types.GiftCardDeactivateMutationVariables>;
 export const GiftCardUpdateDocument = gql`
-    mutation GiftCardUpdate($id: ID!, $input: GiftCardUpdateInput!) {
+    mutation GiftCardUpdate($id: ID!, $input: GiftCardUpdateInput!, $showCreatedBy: Boolean!) {
   giftCardUpdate(id: $id, input: $input) {
     errors {
       ...GiftCardError
     }
     giftCard {
       ...GiftCardData
+      createdBy @include(if: $showCreatedBy) {
+        ...UserBase
+      }
       events {
         ...GiftCardEvent
       }
@@ -9107,6 +9151,7 @@ export const GiftCardUpdateDocument = gql`
 }
     ${GiftCardErrorFragmentDoc}
 ${GiftCardDataFragmentDoc}
+${UserBaseFragmentDoc}
 ${GiftCardEventFragmentDoc}`;
 export type GiftCardUpdateMutationFn = Apollo.MutationFunction<Types.GiftCardUpdateMutation, Types.GiftCardUpdateMutationVariables>;
 
@@ -9125,6 +9170,7 @@ export type GiftCardUpdateMutationFn = Apollo.MutationFunction<Types.GiftCardUpd
  *   variables: {
  *      id: // value for 'id'
  *      input: // value for 'input'
+ *      showCreatedBy: // value for 'showCreatedBy'
  *   },
  * });
  */
@@ -9255,13 +9301,9 @@ export const GiftCardDetailsDocument = gql`
     query GiftCardDetails($id: ID!) {
   giftCard(id: $id) {
     ...GiftCardData
-    events {
-      ...GiftCardEvent
-    }
   }
 }
-    ${GiftCardDataFragmentDoc}
-${GiftCardEventFragmentDoc}`;
+    ${GiftCardDataFragmentDoc}`;
 
 /**
  * __useGiftCardDetailsQuery__

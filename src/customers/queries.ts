@@ -37,9 +37,19 @@ export const customerList = gql`
 `;
 
 export const customerDetails = gql`
-  query CustomerDetails($id: ID!, $PERMISSION_MANAGE_ORDERS: Boolean!) {
+  query CustomerDetails(
+    $id: ID!
+    $PERMISSION_MANAGE_ORDERS: Boolean!
+    $PERMISSION_MANAGE_STAFF: Boolean!
+  ) {
     user(id: $id) {
       ...CustomerDetails
+      metadata {
+        ...MetadataItem
+      }
+      privateMetadata @include(if: $PERMISSION_MANAGE_STAFF) {
+        ...MetadataItem
+      }
       orders(last: 5) @include(if: $PERMISSION_MANAGE_ORDERS) {
         edges {
           node {

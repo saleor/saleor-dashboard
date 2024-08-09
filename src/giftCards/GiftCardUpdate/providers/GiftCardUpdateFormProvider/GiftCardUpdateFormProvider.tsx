@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { MetadataFormData } from "@dashboard/components/Metadata";
 import { giftCardUpdateFormMessages } from "@dashboard/giftCards/GiftCardsList/messages";
+import { useGiftCardPermissions } from "@dashboard/giftCards/hooks/useGiftCardPermissions";
 import {
   GiftCardErrorFragment,
   GiftCardUpdateMutation,
@@ -61,6 +62,7 @@ const getGiftCardTagsAddRemoveData = (initTags: string[], changedTags: string[])
 const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({ children }) => {
   const notify = useNotifier();
   const intl = useIntl();
+  const { canSeeCreatedBy } = useGiftCardPermissions();
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const { loading: loadingGiftCard, giftCard } = useGiftCardDetails();
@@ -105,6 +107,7 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
             tags.map(el => el.value),
           ),
         },
+        showCreatedBy: canSeeCreatedBy,
       },
     });
 

@@ -70,7 +70,9 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
     lastName: customer?.lastName || "",
     metadata: customer?.metadata.map(mapMetadataItemToInput),
     note: customer?.note || "",
-    privateMetadata: customer?.privateMetadata.map(mapMetadataItemToInput),
+    privateMetadata: customer?.privateMetadata
+      ? customer?.privateMetadata.map(mapMetadataItemToInput)
+      : [],
   };
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const { CUSTOMER_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.CUSTOMER_DETAILS);
