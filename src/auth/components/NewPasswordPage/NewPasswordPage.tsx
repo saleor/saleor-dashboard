@@ -1,15 +1,12 @@
-import { Button } from "@dashboard/components/Button";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { AccountErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import { TextField } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import useStyles from "../styles";
 
 export interface NewPasswordPageFormData {
   password: string;
@@ -27,7 +24,6 @@ const initialForm: NewPasswordPageFormData = {
 };
 const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
   const { loading, errors, onSubmit } = props;
-  const classes = useStyles(props);
   const intl = useIntl();
 
   return (
@@ -37,7 +33,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
 
         return (
           <>
-            <Text size={6} fontWeight="bold" lineHeight={3} className={classes.header}>
+            <Text size={6} fontWeight="bold" lineHeight={3} marginBottom={2}>
               <FormattedMessage
                 id="WhKGPA"
                 defaultMessage="Set up new password"
@@ -45,9 +41,16 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               />
             </Text>
             {errors.map(error => (
-              <div className={classes.panel} key={`${error.code}-${error.field}`}>
+              <Box
+                borderRadius={4}
+                padding={4}
+                backgroundColor="critical1"
+                width="100%"
+                marginBottom={2}
+                key={`${error.code}-${error.field}`}
+              >
                 {getAccountErrorMessage(error, intl)}
-              </div>
+              </Box>
             ))}
             <Text size={2} fontWeight="light" color="default2">
               <FormattedMessage
@@ -105,7 +108,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
             <FormSpacer />
             <Button
               data-test-id="button-bar-confirm"
-              className={classes.submit}
+              width="100%"
               disabled={loading || data.password.length === 0 || passwordError}
               variant="primary"
               onClick={handleSubmit}
