@@ -36,7 +36,6 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
-        siteSettings.refetch();
       }
     },
   });
