@@ -32,7 +32,7 @@ import VoucherValue from "../VoucherValue";
 import { initialForm } from "./const";
 import { useVoucherCodesPagination } from "./hooks/useVoucherCodesPagination";
 import { useVoucherCodesSelection } from "./hooks/useVoucherCodesSelection";
-import { generateMultipleIds, voucherCodeExists } from "./utils";
+import { generateDraftVoucherCode, generateMultipleVoucherCodes, voucherCodeExists } from "./utils";
 
 export interface FormData extends VoucherDetailsPageFormData {
   value: number;
@@ -95,7 +95,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     clearRowSelection();
     triggerChange(true);
     set({
-      codes: [...generateMultipleIds(quantity, prefix), ...data.codes],
+      codes: [...generateMultipleVoucherCodes(quantity, prefix), ...data.codes],
     });
   };
   const handleDeleteVoucherCodes = () => {
@@ -111,7 +111,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
 
     triggerChange(true);
     set({
-      codes: [{ code }, ...data.codes],
+      codes: [generateDraftVoucherCode(code), ...data.codes],
     });
   };
   const { pagination, paginatedCodes, settings, onSettingsChange } = useVoucherCodesPagination(
