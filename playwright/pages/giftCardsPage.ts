@@ -41,6 +41,8 @@ export class GiftCardsPage extends BasePage {
     readonly exportGiftCardsBanner = page.getByText(
       "We are currently exporting your gift card codes. As soon as your file is available it will be sent to your email address",
     ),
+    readonly tagsInput = page.getByTestId("gift-card-tag-select-field"),
+    readonly tagsInputOptions = page.locator('[data-test-id*="select-option"]'),
   ) {
     super(page);
     this.page = page;
@@ -93,6 +95,11 @@ export class GiftCardsPage extends BasePage {
 
   async clickShowMoreMenu() {
     await this.showMoreMenuButton.click();
+  }
+
+  async addTag() {
+    await this.tagsInput.click();
+    await this.tagsInputOptions.first().click();
   }
 
   async gotoGiftCardsListView() {
