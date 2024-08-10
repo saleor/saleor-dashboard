@@ -46,6 +46,8 @@ const useStyles = makeStyles(
       position: "absolute",
       right: 0,
       zIndex: 2,
+      overflow: "auto",
+      maxHeight: "300px",
     },
     root: {},
   }),
