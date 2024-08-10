@@ -16,7 +16,7 @@ import { giftCardTagInputMessages as messages } from "./messages";
 
 interface GiftCardTagInputProps {
   name: string;
-  toggleChange: FormChange;
+  onChange: FormChange;
   values: Option[];
   error: GiftCardBulkCreateFormError;
   optional?: boolean;
@@ -24,7 +24,7 @@ interface GiftCardTagInputProps {
 }
 
 const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
-  toggleChange,
+  onChange,
   name,
   values,
   error,
@@ -63,7 +63,7 @@ const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
         }}
         value={values}
         options={choices}
-        onChange={toggleChange}
+        onChange={onChange}
         fetchOptions={search}
       />
     </Box>
