@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.20.6
+
+### Patch Changes
+
+- c8a6d86d0: Login, password reset and error pages now use new Macaw buttons, text and styles.
+- 5e3cc3fa0: You can now see a message instead of a loading animation when there are no categories, collections, products or variants assigned in Discounts
+- 48b4146a0: You can now add and remove tags for gift cards without any application crash
+- edaf42b95: Gift card details page and customer details page no longer crash when you have only some required permissions. This means that you can now view gift card details page if you have only gift card permissions and customer details page if you have only customer permissions.
+- e73034386: You can click save button on voucher creation page to trigger validation
+- 6289fbde4: You can now delete draft voucher codes during creation of new voucher
+- 061412866: You can now update quantity per checkout in site settings
+- 9434aea16: Make MenuItems' container scrollable in navigation section
+
 ## 3.20.5
 
 ### Patch Changes
