@@ -17,7 +17,12 @@ export class SiteSettingsPage extends BasePage {
     readonly addressLine2Input = page.getByTestId("company-address-line-2-input").locator("input"),
     readonly city = page.getByTestId("company-city-input").locator("input"),
     readonly countryInput = page.getByTestId("address-edit-country-select-field"),
-    readonly autocompleteDropdown = page.getByTestId("autocomplete-dropdown"),
+    readonly autocompleteDropdownCountry = page.locator(
+      '[data-portal-for="autocomplete-dropdown-country"]',
+    ),
+    readonly autocompleteDropdownCountryArea = page.locator(
+      '[data-portal-for="autocomplete-dropdown-country-area"]',
+    ),
     readonly countryAreaDropdown = page.getByTestId("address-edit-country-area-field"),
     readonly zipInput = page.getByTestId("company-zip-input").locator("input"),
     readonly phoneInput = page.getByTestId("company-phone-input").locator("input"),
@@ -58,9 +63,11 @@ export class SiteSettingsPage extends BasePage {
     await this.addressLine2Input.fill(addressLine2);
     await this.city.fill(city);
     await this.countryInput.click();
-    await this.autocompleteDropdown.getByText(country, { exact: true }).click();
+    await this.autocompleteDropdownCountry.getByText(country, { exact: true }).click();
+    await this.autocompleteDropdownCountry.blur();
     await this.countryAreaDropdown.fill(countryArea);
-    await this.autocompleteDropdown.getByText(countryArea, { exact: true }).click();
+    await this.autocompleteDropdownCountryArea.getByText(countryArea, { exact: true }).click();
+    await this.autocompleteDropdownCountryArea.blur();
     await this.zipInput.fill(zip);
     await this.phoneInput.fill(phone);
   }
