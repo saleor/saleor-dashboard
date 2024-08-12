@@ -24,7 +24,7 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
+import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { sprinkles } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -249,7 +249,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   disabled={disabled}
                   onProductAssign={onProductAssign}
                   onProductUnassign={onProductUnassign}
-                  products={mapEdgesToItems(sale?.products)}
+                  discount={sale}
                   isChecked={isChecked}
                   selected={selected}
                   toggle={toggle}
@@ -261,7 +261,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   disabled={disabled}
                   onVariantAssign={onVariantAssign}
                   onVariantUnassign={onVariantUnassign}
-                  variants={mapEdgesToItems(sale?.variants)}
+                  discount={sale}
                   isChecked={isChecked}
                   selected={selected}
                   toggle={toggle}
