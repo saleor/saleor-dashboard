@@ -12,7 +12,6 @@ export const customerFragment = gql`
 export const customerDetailsFragment = gql`
   fragment CustomerDetails on User {
     ...Customer
-    ...Metadata
     dateJoined
     lastLogin
     defaultShippingAddress {

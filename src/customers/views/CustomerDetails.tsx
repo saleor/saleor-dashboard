@@ -87,7 +87,10 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({ id, para
     );
 
   const handleSubmit = createMetadataUpdateHandler(
-    user,
+    {
+      ...user,
+      privateMetadata: user?.privateMetadata || [],
+    },
     updateData,
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables }),
