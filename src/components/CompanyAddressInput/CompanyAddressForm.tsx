@@ -170,6 +170,7 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
       <FormSpacer />
       <Grid>
         <Combobox
+          id="autocomplete-dropdown-country"
           data-test-id="address-edit-country-select-field"
           autoComplete="off"
           spellCheck={false}
@@ -192,6 +193,7 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
 
         {isFieldAllowed("countryArea") && (
           <Combobox
+            id="autocomplete-dropdown-country-area"
             data-test-id="address-edit-country-area-field"
             autoComplete="off"
             spellCheck={false}
