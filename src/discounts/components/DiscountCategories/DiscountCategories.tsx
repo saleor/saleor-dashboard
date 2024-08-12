@@ -9,14 +9,14 @@ import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleDetailsFragment, VoucherDetailsFragment } from "@dashboard/graphql";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { getLoadableList, mapEdgesToItems } from "@dashboard/utils/maps";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe, renderCollection } from "../../../misc";
+import { renderCollection } from "../../../misc";
 import { ListActions, ListProps } from "../../../types";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
@@ -87,7 +87,7 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
         </TableFooter>
         <TableBody data-test-id="assigned-specific-products-table">
           {renderCollection(
-            mapEdgesToItems(discount?.categories),
+            getLoadableList(discount?.categories),
             category => {
               const isSelected = category ? isChecked(category.id) : false;
 
@@ -108,10 +108,8 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
                       onChange={() => toggle(category.id)}
                     />
                   </TableCell>
-                  <TableCell>{maybe<React.ReactNode>(() => category.name, <Skeleton />)}</TableCell>
-                  <TableCell className={classes.colProducts}>
-                    {maybe<React.ReactNode>(() => category.products.totalCount, <Skeleton />)}
-                  </TableCell>
+                  <TableCell>{category ? category.name : <Skeleton />}</TableCell>
+                  <TableCell>{category ? category.products.totalCount : <Skeleton />}</TableCell>
                   <TableCell className={classes.colActions}>
                     <TableButtonWrapper>
                       <IconButton

@@ -11,6 +11,7 @@ import { TablePaginationWithContext } from "@dashboard/components/TablePaginatio
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleDetailsFragment, VoucherDetailsFragment } from "@dashboard/graphql";
 import { productUrl } from "@dashboard/products/urls";
+import { getLoadableList, mapEdgesToItems } from "@dashboard/utils/maps";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
@@ -18,14 +19,12 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
-import { ListActions, ListProps, RelayToFlat } from "../../../types";
+import { ListActions, ListProps } from "../../../types";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
 export interface SaleProductsProps extends ListProps, ListActions {
-  products:
-    | RelayToFlat<SaleDetailsFragment["products"]>
-    | RelayToFlat<VoucherDetailsFragment["products"]>;
+  discount: SaleDetailsFragment | VoucherDetailsFragment;
   onProductAssign: () => void;
   onProductUnassign: (id: string) => void;
 }
@@ -33,7 +32,7 @@ export interface SaleProductsProps extends ListProps, ListActions {
 const numberOfColumns = 5;
 const DiscountProducts: React.FC<SaleProductsProps> = props => {
   const {
-    products,
+    discount,
     disabled,
     onProductAssign,
     onProductUnassign,
@@ -45,6 +44,8 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
+
+  const productsList = mapEdgesToItems(discount?.products);
 
   return (
     <DashboardCard data-test-id="assign-product-section">
@@ -71,12 +72,12 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
           colSpan={numberOfColumns}
           selected={selected}
           disabled={disabled}
-          items={products}
+          items={productsList}
           toggleAll={toggleAll}
           toolbar={toolbar}
         >
           <TableCell className={classes.colName}>
-            <span className={products?.length > 0 && classes.colNameLabel}>
+            <span className={productsList?.length > 0 && classes.colNameLabel}>
               <FormattedMessage {...messages.discountProductsTableProductHeader} />
             </span>
           </TableCell>
@@ -95,7 +96,7 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
         </TableFooter>
         <TableBody data-test-id="assigned-specific-products-table">
           {renderCollection(
-            products,
+            getLoadableList(discount?.products),
             product => {
               const isSelected = product ? isChecked(product.id) : false;
 
