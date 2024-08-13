@@ -1,12 +1,12 @@
-// @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { ConfigurationItemFragment, ConfigurationTypeFieldEnum } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { maybe } from "@dashboard/misc";
 import { DialogProps } from "@dashboard/types";
-import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -33,51 +33,57 @@ const PluginSecretFieldDialog: React.FC<PluginSecretFieldDialogProps> = ({
   };
 
   return (
-    <Dialog fullWidth onClose={onClose} open={open} maxWidth="sm">
-      <DialogTitle disableTypography>
-        {field ? (
-          field.value === null ? (
-            intl.formatMessage({
-              id: "qCH2eZ",
-              defaultMessage: "Add Value to Authorization Field",
-              description: "header",
-            })
-          ) : (
-            intl.formatMessage({
-              id: "Xy2T+y",
-              defaultMessage: "Edit Authorization Field",
-              description: "header",
-            })
-          )
-        ) : (
-          <Skeleton />
-        )}
-      </DialogTitle>
-      <Form initial={initialForm} onSubmit={onConfirm}>
-        {({ change, data, submit }) => (
-          <>
-            <DialogContent>
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content size="sm">
+        <Form initial={initialForm} onSubmit={onConfirm}>
+          {({ change, data, submit }) => (
+            <DashboardModal.Grid>
+              <DashboardModal.Title>
+                {field ? (
+                  field.value === null ? (
+                    intl.formatMessage({
+                      id: "qCH2eZ",
+                      defaultMessage: "Add Value to Authorization Field",
+                      description: "header",
+                    })
+                  ) : (
+                    intl.formatMessage({
+                      id: "Xy2T+y",
+                      defaultMessage: "Edit Authorization Field",
+                      description: "header",
+                    })
+                  )
+                ) : (
+                  <Skeleton />
+                )}
+              </DashboardModal.Title>
+
               <TextField
                 multiline={field?.type === ConfigurationTypeFieldEnum.SECRETMULTILINE}
                 autoComplete="off"
                 fullWidth
                 label={field && field.label}
                 name="value"
-                type={maybe(() => field.type) === ConfigurationTypeFieldEnum.PASSWORD && "password"}
+                type={
+                  maybe(() => field.type) === ConfigurationTypeFieldEnum.PASSWORD
+                    ? "password"
+                    : "text"
+                }
                 value={data.value || ""}
                 onChange={change}
               />
-            </DialogContent>
-            <DialogActions>
-              <BackButton onClick={onClose} />
-              <ConfirmButton transitionState={confirmButtonState} onClick={submit}>
-                <FormattedMessage {...buttonMessages.confirm} />
-              </ConfirmButton>
-            </DialogActions>
-          </>
-        )}
-      </Form>
-    </Dialog>
+
+              <DashboardModal.Actions>
+                <BackButton onClick={onClose} />
+                <ConfirmButton transitionState={confirmButtonState} onClick={submit}>
+                  <FormattedMessage {...buttonMessages.confirm} />
+                </ConfirmButton>
+              </DashboardModal.Actions>
+            </DashboardModal.Grid>
+          )}
+        </Form>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 

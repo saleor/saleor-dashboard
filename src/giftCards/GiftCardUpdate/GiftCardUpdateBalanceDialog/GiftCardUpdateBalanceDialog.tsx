@@ -89,7 +89,6 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({ open, onClose }) =
       title={intl.formatMessage(messages.title)}
       confirmButtonState={status}
       disabled={loading}
-      size="lg"
     >
       <Text>{intl.formatMessage(messages.subtitle)}</Text>
       <CardSpacer />

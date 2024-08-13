@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import Debounce from "@dashboard/components/Debounce";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { OrderFulfillLineFragment, WarehouseFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
@@ -13,16 +13,11 @@ import {
   InputAdornment,
   Radio,
   RadioGroup,
+  Table,
   TableCell,
   TextField,
 } from "@material-ui/core";
-import {
-  Button,
-  DialogTable,
-  isScrolledToBottom,
-  SearchIcon,
-  useElementScroll,
-} from "@saleor/macaw-ui";
+import { Button, isScrolledToBottom, SearchIcon, useElementScroll } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -88,7 +83,7 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
 
   return (
     <DashboardModal open={open} onChange={onClose}>
-      <DashboardModal.Content __width={DASHBOARD_MODAL_WIDTH}>
+      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto auto auto 1fr">
         <DashboardModal.Title>
           <Box display="flex" justifyContent="space-between">
             <FormattedMessage {...messages.dialogTitle} />
@@ -138,53 +133,55 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
           <FormattedMessage {...messages.warehouseListLabel} />
         </Text>
 
-        <DialogTable ref={setAnchor}>
-          {filteredWarehouses ? (
-            <RadioGroup
-              value={selectedWarehouseId}
-              onChange={handleChange}
-              className={classes.tableBody}
-            >
-              {filteredWarehouses.map(warehouse => {
-                const lineQuantityInWarehouse = getLineAvailableQuantityInWarehouse(
-                  line,
-                  warehouse,
-                );
+        <Box ref={setAnchor} overflowY="auto">
+          <Table>
+            {filteredWarehouses ? (
+              <RadioGroup
+                value={selectedWarehouseId}
+                onChange={handleChange}
+                className={classes.tableBody}
+              >
+                {filteredWarehouses.map(warehouse => {
+                  const lineQuantityInWarehouse = getLineAvailableQuantityInWarehouse(
+                    line,
+                    warehouse,
+                  );
 
-                return (
-                  <TableRowLink key={warehouse.id}>
-                    <TableCell className={classes.tableCell}>
-                      <FormControlLabel
-                        value={warehouse.id}
-                        control={<Radio color="primary" />}
-                        label={
-                          <div className={classes.radioLabelContainer}>
-                            <span className={classes.warehouseName}>{warehouse.name}</span>
-                            <Text>
-                              <FormattedMessage
-                                {...messages.productAvailability}
-                                values={{
-                                  productCount: lineQuantityInWarehouse,
-                                }}
-                              />
-                            </Text>
-                          </div>
-                        }
-                      />
-                      {currentWarehouseId === warehouse?.id && (
-                        <Text display="inline-block" fontSize={3}>
-                          <FormattedMessage {...messages.currentSelection} />
-                        </Text>
-                      )}
-                    </TableCell>
-                  </TableRowLink>
-                );
-              })}
-            </RadioGroup>
-          ) : (
-            <Skeleton />
-          )}
-        </DialogTable>
+                  return (
+                    <TableRowLink key={warehouse.id}>
+                      <TableCell className={classes.tableCell}>
+                        <FormControlLabel
+                          value={warehouse.id}
+                          control={<Radio color="primary" />}
+                          label={
+                            <div className={classes.radioLabelContainer}>
+                              <span className={classes.warehouseName}>{warehouse.name}</span>
+                              <Text>
+                                <FormattedMessage
+                                  {...messages.productAvailability}
+                                  values={{
+                                    productCount: lineQuantityInWarehouse,
+                                  }}
+                                />
+                              </Text>
+                            </div>
+                          }
+                        />
+                        {currentWarehouseId === warehouse?.id && (
+                          <Text display="inline-block" fontSize={3}>
+                            <FormattedMessage {...messages.currentSelection} />
+                          </Text>
+                        )}
+                      </TableCell>
+                    </TableRowLink>
+                  );
+                })}
+              </RadioGroup>
+            ) : (
+              <Skeleton />
+            )}
+          </Table>
+        </Box>
 
         <DashboardModal.Actions>
           <Button

@@ -1,17 +1,12 @@
 import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import FormSpacer from "@dashboard/components/FormSpacer";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { InvoiceErrorFragment, InvoiceFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { DialogProps } from "@dashboard/types";
 import getInvoiceErrorMessage from "@dashboard/utils/errors/invoice";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -33,16 +28,17 @@ const OrderInvoiceEmailSendDialog: React.FC<OrderInvoiceEmailSendDialogProps> = 
   const intl = useIntl();
 
   return (
-    <Dialog onClose={onClose} open={open} fullWidth maxWidth="xs">
-      <DialogTitle disableTypography>
-        {intl.formatMessage({
-          id: "5JT4v2",
-          defaultMessage: "Send Invoice",
-          description: "dialog header",
-        })}
-      </DialogTitle>
-      <DialogContent>
-        <DialogContentText>
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content size="sm">
+        <DashboardModal.Title>
+          {intl.formatMessage({
+            id: "5JT4v2",
+            defaultMessage: "Send Invoice",
+            description: "dialog header",
+          })}
+        </DashboardModal.Title>
+
+        <Text>
           <FormattedMessage
             id="MPfyne"
             defaultMessage="Are you sure you want to send this invoice: {invoiceNumber} to the customer?"
@@ -50,25 +46,27 @@ const OrderInvoiceEmailSendDialog: React.FC<OrderInvoiceEmailSendDialogProps> = 
               invoiceNumber: <strong>{invoice?.number}</strong>,
             }}
           />
-        </DialogContentText>
+        </Text>
+
         {errors.length > 0 && (
           <>
             <FormSpacer />
             {errors.map((err, idx) => (
-              <DialogContentText key={idx} color="error">
+              <Text key={idx} display="block" color="critical1">
                 {getInvoiceErrorMessage(err, intl)}
-              </DialogContentText>
+              </Text>
             ))}
           </>
         )}
-      </DialogContent>
-      <DialogActions>
-        <BackButton onClick={onClose} />
-        <ConfirmButton transitionState={confirmButtonState} onClick={onSend}>
-          <FormattedMessage {...buttonMessages.send} />
-        </ConfirmButton>
-      </DialogActions>
-    </Dialog>
+
+        <DashboardModal.Actions>
+          <BackButton onClick={onClose} />
+          <ConfirmButton transitionState={confirmButtonState} onClick={onSend}>
+            <FormattedMessage {...buttonMessages.send} />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 

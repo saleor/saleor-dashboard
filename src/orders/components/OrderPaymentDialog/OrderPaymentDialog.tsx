@@ -3,7 +3,7 @@ import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { OrderErrorFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
@@ -47,7 +47,7 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
         onSubmit={onSubmit}
       >
         {({ data, change, submit }) => (
-          <DashboardModal.Content __width={DASHBOARD_MODAL_WIDTH}>
+          <DashboardModal.Content size="sm">
             <DashboardModal.Title>
               {intl.formatMessage({
                 id: "+PbHKD",
