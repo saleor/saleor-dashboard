@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { CountryFragment } from "@dashboard/graphql";
 import { useLocalSearch } from "@dashboard/hooks/useLocalSearch";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
@@ -45,7 +45,7 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
 
   return (
     <DashboardModal open={open} onChange={onClose}>
-      <DashboardModal.Content __width={DASHBOARD_MODAL_WIDTH}>
+      <DashboardModal.Content size="sm">
         <DashboardModal.Title display="flex" justifyContent="space-between" alignItems="center">
           <FormattedMessage {...taxesMessages.chooseCountryDialogTitle} />
           <DashboardModal.Close onClose={onClose} />

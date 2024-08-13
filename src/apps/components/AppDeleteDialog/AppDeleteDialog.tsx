@@ -55,7 +55,6 @@ const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
       onConfirm={onConfirm}
       title={intl.formatMessage(msgs.deleteAppTitle)}
       variant="delete"
-      size="lg"
     >
       <Box data-test-id="dialog-content">
         <Box

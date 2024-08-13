@@ -1,7 +1,10 @@
 import { AppPermissionsDialogMessages } from "@dashboard/apps/components/AppPermissionsDialog/messages";
 import { useGetAvailableAppPermissions } from "@dashboard/apps/hooks/useGetAvailableAppPermissions";
+import BackButton from "@dashboard/components/BackButton";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { PermissionEnum } from "@dashboard/graphql";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -30,6 +33,7 @@ export const AppPermissionsDialogConfirmation = ({
       <Text marginBottom={2} as={"p"}>
         {intl.formatMessage(messages.summaryText)}
       </Text>
+
       {isPermissionsRemoved && (
         <Box marginBottom={4}>
           <Text size={4} fontWeight="bold">
@@ -42,6 +46,7 @@ export const AppPermissionsDialogConfirmation = ({
           ))}
         </Box>
       )}
+
       {isPermissionsAdded && (
         <Box>
           <Text size={4} fontWeight="bold">
@@ -54,23 +59,15 @@ export const AppPermissionsDialogConfirmation = ({
           ))}
         </Box>
       )}
-      <Box display={"flex"} justifyContent={"flex-end"} gap={2} marginTop={6}>
-        <Button
-          variant={"tertiary"}
-          onClick={() => {
-            onBack();
-          }}
-        >
-          {intl.formatMessage(messages.backButton)}
-        </Button>
-        <Button
-          onClick={() => {
-            onApprove();
-          }}
-        >
+
+      <Box marginBottom={6} />
+
+      <DashboardModal.Actions>
+        <BackButton onClick={onBack}>{intl.formatMessage(messages.backButton)}</BackButton>
+        <ConfirmButton data-test-id="submit" transitionState="default" onClick={onApprove}>
           {intl.formatMessage(messages.confirmButton)}
-        </Button>
-      </Box>
+        </ConfirmButton>
+      </DashboardModal.Actions>
     </Box>
   );
 };

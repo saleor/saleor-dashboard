@@ -2,6 +2,7 @@
 import { Button } from "@dashboard/components/Button";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import makeCreatorSteps, { Step } from "@dashboard/components/CreatorSteps";
+import { DashboardModal } from "@dashboard/components/Modal";
 import {
   ChannelFragment,
   ExportErrorFragment,
@@ -18,8 +19,7 @@ import { DialogProps, FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import getExportErrorMessage from "@dashboard/utils/errors/export";
 import { toggle } from "@dashboard/utils/lists";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
-import { Dialog, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
-import { Option, Text } from "@saleor/macaw-ui-next";
+import { Box, Option, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -211,53 +211,52 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
   };
 
   return (
-    <Dialog onClose={onClose} open={open} maxWidth="sm" fullWidth>
-      <>
-        <DialogTitle disableTypography>
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content size="sm">
+        <DashboardModal.Title>
           <FormattedMessage {...messages.title} />
-        </DialogTitle>
-        <DialogContent>
-          <ProductExportSteps currentStep={step} steps={steps} onStepClick={setStep} />
-          {step === ProductExportStep.INFO && (
-            <ProductExportDialogInfo
-              attributes={attributeChoices}
-              channels={channels}
-              data={data}
-              selectedChannels={selectedChannels}
-              selectedAttributes={selectedAttributes}
-              onAttrtibuteSelect={handleAttributeSelect}
-              onWarehouseSelect={handleWarehouseSelect}
-              onChange={change}
-              warehouses={warehouseChoices}
-              onChannelSelect={handleChannelSelect}
-              onSelectAllChannels={handleToggleAllChannels}
-              onSelectAllWarehouses={handleToggleAllWarehouses}
-              {...fetchMoreProps}
-            />
-          )}
-          {step === ProductExportStep.SETTINGS && (
-            <ExportDialogSettings
-              data={data}
-              errors={dialogErrors}
-              onChange={change}
-              itemsQuantity={productQuantity}
-              selectedItems={selectedProducts}
-              exportScopeLabels={exportScopeLabels}
-            />
-          )}
-        </DialogContent>
+        </DashboardModal.Title>
+
+        <ProductExportSteps currentStep={step} steps={steps} onStepClick={setStep} />
+        {step === ProductExportStep.INFO && (
+          <ProductExportDialogInfo
+            attributes={attributeChoices}
+            channels={channels}
+            data={data}
+            selectedChannels={selectedChannels}
+            selectedAttributes={selectedAttributes}
+            onAttrtibuteSelect={handleAttributeSelect}
+            onWarehouseSelect={handleWarehouseSelect}
+            onChange={change}
+            warehouses={warehouseChoices}
+            onChannelSelect={handleChannelSelect}
+            onSelectAllChannels={handleToggleAllChannels}
+            onSelectAllWarehouses={handleToggleAllWarehouses}
+            {...fetchMoreProps}
+          />
+        )}
+        {step === ProductExportStep.SETTINGS && (
+          <ExportDialogSettings
+            data={data}
+            errors={dialogErrors}
+            onChange={change}
+            itemsQuantity={productQuantity}
+            selectedItems={selectedProducts}
+            exportScopeLabels={exportScopeLabels}
+          />
+        )}
 
         {notFormErrors.length > 0 && (
-          <DialogContent>
+          <Box>
             {notFormErrors.map(err => (
-              <Text color="critical1" key={err.field + err.code}>
+              <Text display="block" color="critical1" key={err.field + err.code}>
                 {getExportErrorMessage(err, intl)}
               </Text>
             ))}
-          </DialogContent>
+          </Box>
         )}
 
-        <DialogActions>
+        <DashboardModal.Actions>
           {step === ProductExportStep.INFO && (
             <Button variant="secondary" color="text" onClick={onClose} data-test-id="cancel">
               <FormattedMessage {...buttonMessages.cancel} />
@@ -283,9 +282,9 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
               <FormattedMessage {...messages.confirmButtonLabel} />
             </ConfirmButton>
           )}
-        </DialogActions>
-      </>
-    </Dialog>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 

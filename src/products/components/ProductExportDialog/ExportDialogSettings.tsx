@@ -9,23 +9,10 @@ import {
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getExportErrorMessage from "@dashboard/utils/errors/export";
-import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { ExportSettingsInput } from "./types";
-
-const useStyles = makeStyles(
-  theme => ({
-    hr: {
-      marginBottom: theme.spacing(3),
-      marginTop: theme.spacing(3),
-    },
-  }),
-  {
-    name: "ExportDialogSettings",
-  },
-);
 
 export type ExportItemsQuantity = Record<"all" | "filter", number>;
 
@@ -54,7 +41,6 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
   exportScopeLabels,
   allowScopeSelection = true,
 }) => {
-  const classes = useStyles({});
   const intl = useIntl();
   const formErrors = getFormErrors(formFields, errors);
   const productExportTypeChoices: Array<RadioGroupFieldChoice<FileTypesEnum>> = [
@@ -117,7 +103,7 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
             onChange={onChange}
             value={data.scope}
           />
-          <Hr className={classes.hr} />
+          <Hr />
         </>
       )}
       <RadioGroupField
