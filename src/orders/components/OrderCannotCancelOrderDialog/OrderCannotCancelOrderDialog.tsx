@@ -1,53 +1,36 @@
-import { Button } from "@dashboard/components/Button";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
 import { DialogProps } from "@dashboard/types";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-const useStyles = makeStyles(
-  theme => ({
-    button: {
-      backgroundColor: theme.palette.error.main,
-    },
-  }),
-  {
-    name: "OrderCannotCancelOrderDialog",
-  },
-);
 const OrderCannotCancelOrderDialog: React.FC<DialogProps> = ({ open, onClose }) => {
-  const classes = useStyles({});
-
   return (
-    <Dialog onClose={onClose} open={open} maxWidth="sm">
-      <DialogTitle disableTypography>
-        <FormattedMessage
-          id="NhQboB"
-          defaultMessage="Saleor couldn’t cancel order"
-          description="dialog header"
-        />
-      </DialogTitle>
-      <DialogContent>
-        <DialogContentText>
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content size="sm">
+        <DashboardModal.Title>
+          <FormattedMessage
+            id="NhQboB"
+            defaultMessage="Saleor couldn’t cancel order"
+            description="dialog header"
+          />
+        </DashboardModal.Title>
+
+        <Text>
           <FormattedMessage
             id="b+jcaN"
             defaultMessage="There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order."
           />
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button variant="primary" className={classes.button} onClick={onClose}>
-          <FormattedMessage {...buttonMessages.ok} />
-        </Button>
-      </DialogActions>
-    </Dialog>
+        </Text>
+
+        <DashboardModal.Actions>
+          <Button variant="error" onClick={onClose}>
+            <FormattedMessage {...buttonMessages.ok} />
+          </Button>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 

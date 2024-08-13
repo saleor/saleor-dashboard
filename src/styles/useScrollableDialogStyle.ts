@@ -20,7 +20,7 @@ const useScrollableDialogStyle = makeStyles(
       marginTop: theme.spacing(3),
     },
     scrollArea: {
-      overflowY: "scroll",
+      overflowY: "auto",
       paddingTop: 0,
       height: "inherit",
       marginBottom: theme.spacing(3),

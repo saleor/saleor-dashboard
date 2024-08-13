@@ -1,15 +1,12 @@
-// @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { ProductMediaFragment } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
-import { Dialog, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
-import clsx from "clsx";
+import { Box } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
-
-import { useStyles } from "./styles";
 
 interface ProductVariantImageSelectDialogProps {
   media?: ProductMediaFragment[];
@@ -21,7 +18,6 @@ interface ProductVariantImageSelectDialogProps {
 
 const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogProps> = props => {
   const { media, open, selectedMedia: initialMedia, onClose, onConfirm } = props;
-  const classes = useStyles(props);
   const [selectedMedia, setSelectedMedia] = useState(initialMedia);
 
   useModalDialogOpen(open, {
@@ -30,60 +26,87 @@ const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogP
   });
 
   const handleMediaSelect = (id: string) => {
-    const isMediaAssigned = selectedMedia.includes(id);
+    const isMediaAssigned = selectedMedia?.includes(id);
 
     if (isMediaAssigned) {
-      setSelectedMedia(selectedMedia => selectedMedia.filter(mediaId => mediaId !== id));
+      setSelectedMedia(selectedMedia => selectedMedia?.filter(mediaId => mediaId !== id));
     } else {
-      setSelectedMedia(selectedMedia => [...selectedMedia, id]);
+      setSelectedMedia(selectedMedia => [...(selectedMedia ?? []), id]);
     }
   };
   const handleConfirm = () => {
-    onConfirm(selectedMedia);
+    onConfirm(selectedMedia ?? []);
     onClose();
   };
 
   return (
-    <Dialog onClose={onClose} open={open}>
-      <DialogTitle disableTypography>
-        <FormattedMessage
-          id="iPk640"
-          defaultMessage="Media Selection"
-          description="dialog header"
-        />
-      </DialogTitle>
-      <DialogContent className={classes.content}>
-        <div className={classes.root}>
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content size="md" __gridTemplateRows="auto 1fr">
+        <DashboardModal.Title>
+          <FormattedMessage
+            id="iPk640"
+            defaultMessage="Media Selection"
+            description="dialog header"
+          />
+        </DashboardModal.Title>
+
+        <Box
+          overflowY="auto"
+          display="grid"
+          gap={2}
+          gridTemplateColumns={{
+            desktop: 4,
+            tablet: 3,
+            mobile: 2,
+          }}
+          width="100%"
+        >
           {media
-            .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1))
+            ?.sort((prev, next) => (prev.sortOrder! > next.sortOrder! ? 1 : -1))
             .map(mediaObj => {
               const parsedMediaOembedData = JSON.parse(mediaObj?.oembedData);
               const mediaUrl = parsedMediaOembedData?.thumbnail_url || mediaObj.url;
+              const isSelected = selectedMedia?.includes(mediaObj.id);
 
               return (
-                <div
-                  className={clsx([
-                    classes.imageContainer,
-                    {
-                      [classes.selectedImageContainer]: selectedMedia.includes(mediaObj.id),
-                    },
-                  ])}
+                <Box
+                  backgroundColor="transparent"
+                  borderStyle="solid"
+                  __borderWidth={isSelected ? 2 : 1}
+                  borderColor={isSelected ? "info1" : "default1"}
+                  cursor="pointer"
+                  __height={140}
+                  overflow="hidden"
+                  padding={3}
+                  position="relative"
+                  borderRadius={2}
                   onClick={() => handleMediaSelect(mediaObj.id)}
                   key={mediaObj.id}
                 >
-                  <img className={classes.image} src={mediaUrl} alt={mediaObj.alt} />
-                </div>
+                  <Box
+                    width="100%"
+                    height="100%"
+                    objectFit="contain"
+                    as="img"
+                    src={mediaUrl}
+                    alt={mediaObj.alt}
+                    style={{
+                      userSelect: "none",
+                    }}
+                  />
+                </Box>
               );
             })}
-        </div>
-      </DialogContent>
-      <DialogActions>
-        <BackButton onClick={onClose} />
-        <ConfirmButton transitionState="default" onClick={handleConfirm} data-test-id="submit">
-          <FormattedMessage {...buttonMessages.confirm} />
-        </ConfirmButton>
-      </DialogActions>
-    </Dialog>
+        </Box>
+
+        <DashboardModal.Actions>
+          <BackButton onClick={onClose} />
+          <ConfirmButton transitionState="default" onClick={handleConfirm} data-test-id="submit">
+            <FormattedMessage {...buttonMessages.confirm} />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 

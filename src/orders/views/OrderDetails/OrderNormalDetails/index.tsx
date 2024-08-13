@@ -165,6 +165,10 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
 
   const errors = orderUpdate.opts.data?.orderUpdate.errors || [];
 
+  const hasOrderFulfillmentsFulfilled = order?.fulfillments.some(
+    fulfillment => fulfillment.status === FulfillmentStatus.FULFILLED,
+  );
+
   return (
     <>
       <WindowTitle
@@ -265,18 +269,13 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
       />
       <OrderCannotCancelOrderDialog
         onClose={closeModal}
-        open={
-          params.action === "cancel" &&
-          order?.fulfillments.some(
-            fulfillment => fulfillment.status === FulfillmentStatus.FULFILLED,
-          )
-        }
+        open={params.action === "cancel" && hasOrderFulfillmentsFulfilled}
       />
       <OrderCancelDialog
         confirmButtonState={orderCancel.opts.status}
         errors={orderCancel.opts.data?.orderCancel.errors || []}
         number={order?.number}
-        open={params.action === "cancel"}
+        open={params.action === "cancel" && !hasOrderFulfillmentsFulfilled}
         onClose={closeModal}
         onSubmit={() =>
           orderCancel.mutate({
