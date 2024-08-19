@@ -1,5 +1,3 @@
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
-import RadioGroupField from "@dashboard/components/RadioGroupField";
 import TimePeriodField from "@dashboard/giftCards/components/TimePeriodField";
 import {
   GiftCardBulkCreateFormErrors,
@@ -10,13 +8,11 @@ import { getExpiryPeriodTerminationDate } from "@dashboard/giftCards/GiftCardCre
 import { getGiftCardErrorMessage } from "@dashboard/giftCards/GiftCardUpdate/messages";
 import useCurrentDate from "@dashboard/hooks/useCurrentDate";
 import { FormChange } from "@dashboard/hooks/useForm";
-import { TextField } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Input, RadioGroup, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
 import { giftCardCreateExpirySelectMessages as messages } from "./messages";
-import { useGiftCardCreateExpirySelectStyles as useStyles } from "./styles";
 
 interface UntranslatedOption {
   label: MessageDescriptor;
@@ -49,7 +45,6 @@ const GiftCardCreateExpirySelect: React.FC<GiftCardCreateExpirySelectProps> = ({
   data: { expirySelected, expiryPeriodType, expiryPeriodAmount, expiryType, expiryDate },
 }) => {
   const intl = useIntl();
-  const classes = useStyles({});
   const translatedOptions = options.map(({ label, value }) => ({
     value,
     label: intl.formatMessage(label),
@@ -58,42 +53,54 @@ const GiftCardCreateExpirySelect: React.FC<GiftCardCreateExpirySelectProps> = ({
 
   return (
     <>
-      <ControlledCheckbox
+      <Checkbox
         data-test-id="expiry-section"
         name={"expirySelected"}
-        label={intl.formatMessage(messages.expirySelectedLabel)}
         checked={expirySelected}
-        onChange={change}
-      />
+        onCheckedChange={value => change({ target: { name: "expirySelected", value } })}
+      >
+        <Text>
+          <FormattedMessage {...messages.expirySelectedLabel} />
+        </Text>
+      </Checkbox>
       {expirySelected && (
         <>
-          <RadioGroupField
-            innerContainerClassName={classes.radioGroupContainer}
-            choices={translatedOptions}
-            onChange={change}
-            name={"expiryType"}
+          <RadioGroup
+            size="large"
             value={expiryType}
-            variant="inline"
-          />
+            name="expiryType"
+            onValueChange={value => change({ target: { name: "expiryType", value } })}
+            display="flex"
+            gap={2}
+            flexDirection="column"
+          >
+            {translatedOptions.map(({ label, value }) => (
+              <RadioGroup.Item id={value} key={value} value={value}>
+                <Text>{label}</Text>
+              </RadioGroup.Item>
+            ))}
+          </RadioGroup>
 
           {expiryType === "EXPIRY_DATE" && (
-            <TextField
+            <Input
               error={!!errors?.expiryDate}
               helperText={getGiftCardErrorMessage(errors?.expiryDate, intl)}
               onChange={change}
               name={"expiryDate"}
-              className={classes.dateField}
               label={intl.formatMessage(messages.expiryDateLabel)}
               value={expiryDate}
-              InputLabelProps={{
-                shrink: true,
-              }}
               type="date"
             />
           )}
 
           {expiryType === "EXPIRY_PERIOD" && (
-            <div data-test-id="gift-card-expire-data-fields" className={classes.periodField}>
+            <Box
+              data-test-id="gift-card-expire-data-fields"
+              display="flex"
+              flexDirection="row"
+              gap={4}
+              alignItems={errors?.expiryDate ? "flex-start" : "center"}
+            >
               <TimePeriodField
                 isError={!!errors?.expiryDate}
                 helperText={getGiftCardErrorMessage(errors?.expiryDate, intl)}
@@ -102,20 +109,20 @@ const GiftCardCreateExpirySelect: React.FC<GiftCardCreateExpirySelectProps> = ({
                 periodAmount={expiryPeriodAmount}
                 amountFieldName={"expiryPeriodAmount"}
                 typeFieldName={"expiryPeriodType"}
+                // containerClassName={sprinkles({ width: "100%" })}
               />
-              <div>
-                <Text size={2} fontWeight="light">
+              <Text style={{ textWrap: "nowrap" }}>
+                <Text size={2} fontWeight="light" display="block">
                   <FormattedMessage {...messages.expiryOnLabel} />
                 </Text>
-                <Text>
-                  {getExpiryPeriodTerminationDate(
-                    currentDate,
-                    expiryPeriodType,
-                    expiryPeriodAmount,
-                  )?.format("ll")}
-                </Text>
-              </div>
-            </div>
+
+                {getExpiryPeriodTerminationDate(
+                  currentDate,
+                  expiryPeriodType,
+                  expiryPeriodAmount,
+                )?.format("ll")}
+              </Text>
+            </Box>
           )}
         </>
       )}

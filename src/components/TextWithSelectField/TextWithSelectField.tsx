@@ -1,10 +1,7 @@
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
-import { TextField } from "@material-ui/core";
-import { Box, Option, Select, Spinner } from "@saleor/macaw-ui-next";
+import { Box, Input, Option, Select, Spinner, sprinkles } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
-
-import { useStyles } from "./styles";
 
 interface CommonFieldProps {
   name: string;
@@ -37,7 +34,6 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
   helperText,
   isError,
 }) => {
-  const classes = useStyles();
   const {
     name: textFieldName,
     value: textFieldValue,
@@ -68,22 +64,18 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
   };
 
   return (
-    <div className={containerClassName || classes.container}>
-      <TextField
+    <div className={clsx(sprinkles({ width: "100%" }), containerClassName)}>
+      <Input
         error={isError}
         helperText={helperText}
         type="number"
-        className={classes.innerContainer}
         name={textFieldName}
         label={textFieldLabel}
-        inputProps={{
-          min: textFieldMinValue,
-        }}
-        InputProps={{
-          className: clsx(classes.textField, {
-            [classes.textFieldCentered]: !textFieldLabel,
-          }),
-          endAdornment: loading ? (
+        min={textFieldMinValue}
+        onChange={handleTextChange}
+        value={textFieldValue}
+        endAdornment={
+          loading ? (
             <Box paddingTop={1} paddingRight={4}>
               <Spinner />
             </Box>
@@ -95,10 +87,8 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
               className={clsx("noBorder", selectFieldClassName)}
               options={choices}
             />
-          ),
-        }}
-        onChange={handleTextChange}
-        value={textFieldValue}
+          )
+        }
       />
     </div>
   );

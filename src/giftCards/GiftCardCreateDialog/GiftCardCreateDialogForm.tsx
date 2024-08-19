@@ -13,8 +13,7 @@ import useForm from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import Label from "@dashboard/orders/components/OrderHistory/Label";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { TextField } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Textarea } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -148,11 +147,11 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
       <GiftCardCreateExpirySelect {...commonFormProps} />
 
       <Box display="grid" gap={2}>
-        <TextField
+        <Textarea
           data-test-id="note-field"
           name="note"
           onChange={change}
-          multiline
+          rows={3}
           className={classes.noteField}
           label={`${intl.formatMessage(
             messages.noteLabel,
