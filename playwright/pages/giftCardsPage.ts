@@ -95,7 +95,7 @@ export class GiftCardsPage extends BasePage {
     await this.setBalanceButton.click();
   }
 
-   async clickShowMoreMenu() {
+  async clickShowMoreMenu() {
     await this.showMoreMenuButton.click();
   }
 
