@@ -1,5 +1,23 @@
 # Changelog
 
+## 3.19.11
+
+### Patch Changes
+
+- 6b2892cd7: Product edition no longer change the others work when changing different fields simultaneously. This means UI sends only form fields that were changed.
+- b594e00f4: The legacy multiselect are not longer present within the codebase. this means you should use the ones from new macaw when developing the UI
+- 592979ae2: Login via API in order to setup playwright tests is working in serial mode
+- 1b7126bdd: You can now run e2e tests without flakiness
+- c999eb3d4: Read-only metadata keys and values will now be displayed as regular inputs, making them easier to read and preventing them from looking disabled.
+- f5dc06de8: Now you can see the test output on the release pull request
+- c0c2d7b1b: App and User avatars in order details now all have the same color.
+- 116b4dfc5: The boolean attribute has been changed from a toggle to a select. This change helps visualize when the attribute has not been set.
+- 00e178b84: Searching for countries and other items is now more efficient, making it easier to find what you need. Additionally, the Dashboard Navigator UI has been improved to match the rest of the application, providing a more consistent experience.
+- 51e293b16: Updates package-lock.json file meaning that `npm ci` no longer fails
+- df9ace642: Increase playwright maxFailures to 10 (how many allowed failures, if exceeding skip remaining tests)
+- d121d196d: You can now run E2E tests on 3.19 with no issues
+- 3c714aeff: The selected value is no longer filtering the options when using any select list in product variant table
+
 ## 3.19.10
 
 ### Patch Changes
