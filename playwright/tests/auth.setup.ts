@@ -13,22 +13,50 @@ const authenticateAndSaveState = async (
   filePath: string,
 ) => {
   const basicApiService = new BasicApiService(request);
+  let retries = 0;
+  const maxRetries = 3;
 
-  await basicApiService.logInUserViaApi({ email, password });
+  while (retries < maxRetries) {
+    try {
+      const loginResponse = await basicApiService.logInUserViaApi({ email, password });
 
-  const loginJsonInfo = await request.storageState();
+      if (loginResponse.data.tokenCreate?.errors?.length > 0) {
+        loginResponse.data.tokenCreate.errors.forEach(error => {
+          console.error(`Login error (code: ${error.code}): ${error.message}`);
+        });
+      } else {
+        const loginJsonInfo = await request.storageState();
 
-  loginJsonInfo.origins.push({
-    origin: process.env.BASE_URL!,
-    localStorage: [
-      {
-        name: "_saleorRefreshToken",
-        value: loginJsonInfo.cookies[0].value,
-      },
-    ],
-  });
-  fs.writeFileSync(filePath, JSON.stringify(loginJsonInfo, null, 2));
+        if (loginJsonInfo.cookies?.[0]) {
+          loginJsonInfo.origins.push({
+            origin: process.env.BASE_URL!,
+            localStorage: [
+              {
+                name: "_saleorRefreshToken",
+                value: loginJsonInfo.cookies[0].value,
+              },
+            ],
+          });
+          fs.writeFileSync(filePath, JSON.stringify(loginJsonInfo, null, 2));
+
+          return;
+        } else {
+          console.warn("No valid cookies found in the storage state.");
+        }
+      }
+    } catch (error) {
+      console.error(
+        `An error occurred during authentication: ${error instanceof Error ? error.message : String(error)}`,
+      );
+    }
+
+    retries += 1;
+    console.warn(`Authentication failed, retrying ${retries}/${maxRetries}...`);
+  }
+
+  throw new Error("Failed to authenticate after 3 attempts");
 };
+
 const authSetup = async (
   request: APIRequestContext,
   email: string,
