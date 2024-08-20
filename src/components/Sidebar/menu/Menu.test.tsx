@@ -36,7 +36,7 @@ describe("Sidebar menu", () => {
   it("renders link to the cloud environment on staging", async () => {
     // Arrange
     const stagingHref =
-      "https://staging-cloud.saleor.io/env/test.staging.com?utm_source=dashboard&utm_content=sidebar_button";
+      "https://cloud.staging.saleor.io/env/test.staging.com?utm_source=dashboard&utm_content=sidebar_button";
     delete (window as { location?: unknown }).location;
     // @ts-expect-error
     window.location = { hostname: "test.staging.com" };
