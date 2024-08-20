@@ -44,6 +44,7 @@ const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
       onClose={onClose}
       onConfirm={() => onConfirm(choice)}
       title={intl.formatMessage(messages.selectChannel)}
+      size="xs"
     >
       <Combobox
         data-test-id="channel-autocomplete"
