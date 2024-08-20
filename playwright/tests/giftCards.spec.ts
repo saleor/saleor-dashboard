@@ -19,6 +19,7 @@ test("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
   await giftCardsPage.clickIssueCardButton();
   await giftCardsPage.issueGiftCardDialog.typeAmount("50");
   await giftCardsPage.issueGiftCardDialog.typeCustomTag("super ultra automation discount");
+  await giftCardsPage.issueGiftCardDialog.blur();
   await giftCardsPage.issueGiftCardDialog.clickRequiresActivationCheckbox();
   await giftCardsPage.issueGiftCardDialog.clickIssueButton();
   await expect(giftCardsPage.issueGiftCardDialog.cardCode).toBeVisible();

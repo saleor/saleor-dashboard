@@ -18,7 +18,7 @@ export class IssueGiftCardDialog extends BasePage {
     readonly noteTextArea = page.getByTestId("note-field").locator('[name="note"]'),
     readonly requiresActivationCheckbox = page
       .getByTestId("requires-activation-section")
-      .locator('button[type="checkbox"]'),
+      .locator('button[role="checkbox"]'),
     readonly issueButton = page.getByTestId("submit"),
     readonly okButton = page.getByTestId("submit"),
     readonly copyCodeButton = page.getByTestId("copy-code-button"),
@@ -93,5 +93,9 @@ export class IssueGiftCardDialog extends BasePage {
     const allTexts = await this.cardCode.allTextContents();
 
     return allTexts[0];
+  }
+
+  async blur() {
+    await this.page.click("[data-test-id='gift-card-dialog']");
   }
 }
