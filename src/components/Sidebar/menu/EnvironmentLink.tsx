@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 const UTM_PARAMS = "?utm_source=dashboard&utm_content=sidebar_button";
 
 const stagingLink = (hostname: string) =>
-  `https://staging-cloud.saleor.io/env/${hostname}${UTM_PARAMS}`;
+  `https://cloud.staging.saleor.io/env/${hostname}${UTM_PARAMS}`;
 
 const prodLink = (hostname: string) =>
   `https://cloud.saleor.io/env/${hostname}${UTM_PARAMS}`;
