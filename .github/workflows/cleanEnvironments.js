@@ -3,7 +3,7 @@ const fetch = require("node-fetch");
 
 const program = new Command();
 
-const pathToCloudAPI = "https://staging-cloud.saleor.io/platform/api/";
+const pathToCloudAPI = "https://cloud.staging.saleor.io/platform/api/";
 
 program
   .name("cleanEnvironments")

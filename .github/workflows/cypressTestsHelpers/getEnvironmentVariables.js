@@ -58,7 +58,7 @@ program
 
 async function createEnvironment(version, token, versionBefore, snapshot) {
   const response = await fetch(
-    `https://staging-cloud.saleor.io/api/organizations/saleor/environments/`,
+    `https://cloud.staging.saleor.io/api/organizations/saleor/environments/`,
     {
       method: "POST",
       body: `{ 
@@ -99,7 +99,7 @@ async function updateEnvironment(environmentId, version, token) {
     `{ "service": "saleor-staging-v${getFormattedVersion(version)}" }`,
   );
   const response = await fetch(
-    `https://staging-cloud.saleor.io/api/organizations/saleor/environments/${environmentId}/upgrade/`,
+    `https://cloud.staging.saleor.io/api/organizations/saleor/environments/${environmentId}/upgrade/`,
     {
       method: "PUT",
       body: `{ "service": "saleor-staging-v${getFormattedVersion(version)}" }`,
@@ -128,7 +128,7 @@ async function updateEnvironment(environmentId, version, token) {
 
 async function waitUntilTaskInProgress(taskId, token) {
   const response = await fetch(
-    `https://staging-cloud.saleor.io/api/service/task-status/${taskId}/`,
+    `https://cloud.staging.saleor.io/api/service/task-status/${taskId}/`,
     {
       method: "GET",
       headers: {
@@ -171,7 +171,7 @@ function getFormattedVersion(version) {
 
 async function getDomainForUpdatedEnvironment(environmentId, token) {
   const response = await fetch(
-    `https://staging-cloud.saleor.io/api/organizations/saleor/environments/${environmentId}`,
+    `https://cloud.staging.saleor.io/api/organizations/saleor/environments/${environmentId}`,
     {
       method: "GET",
       json: true,
@@ -211,7 +211,7 @@ async function getTheNewestVersion(token) {
 async function getServices(token) {
   // us-east-1
   const response = await fetch(
-    `https://staging-cloud.saleor.io/api/regions/us-east-1/services`,
+    `https://cloud.staging.saleor.io/api/regions/us-east-1/services`,
     {
       method: "GET",
       headers: {
