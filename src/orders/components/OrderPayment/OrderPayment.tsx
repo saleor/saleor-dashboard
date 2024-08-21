@@ -17,6 +17,7 @@ import { useStyles } from "./styles";
 import {
   extractOrderGiftCardUsedAmount,
   extractRefundedAmount,
+  getDiscountAmount,
   obtainUsedGifrcards,
 } from "./utils";
 
@@ -133,7 +134,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               </span>
               <HorizontalSpacer spacing={2} />
               <div className={classes.supportText}>
-                -<Money money={discount.amount} />
+                <Money money={getDiscountAmount(discount.amount)} />
               </div>
             </div>
           ))}
