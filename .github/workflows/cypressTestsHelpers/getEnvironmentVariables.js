@@ -50,7 +50,7 @@ async function getTheNewestVersion(token) {
 async function getServices(token) {
   // us-east-1
   const response = await fetch(
-    `https://staging-cloud.saleor.io/platform/api/regions/us-east-1/services`,
+    `https://cloud.staging.saleor.io/platform/api/regions/us-east-1/services`,
     {
       method: "GET",
       headers: {
