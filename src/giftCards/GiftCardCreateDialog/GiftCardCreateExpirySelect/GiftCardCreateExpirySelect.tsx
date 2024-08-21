@@ -76,7 +76,7 @@ const GiftCardCreateExpirySelect: React.FC<GiftCardCreateExpirySelectProps> = ({
           >
             {translatedOptions.map(({ label, value }) => (
               <RadioGroup.Item id={value} key={value} value={value}>
-                <Text>{label}</Text>
+                <Text style={{ verticalAlign: "middle" }}>{label}</Text>
               </RadioGroup.Item>
             ))}
           </RadioGroup>
