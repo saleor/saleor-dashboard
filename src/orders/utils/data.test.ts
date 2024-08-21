@@ -2754,7 +2754,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
     ).toBe(2);
   });
 });
-describe("Get discount type lable", () => {
+describe("Get discount type label", () => {
   it("should return Staff added for manual discount", () => {
     // Arrange
     const discount = {
@@ -2790,15 +2790,38 @@ describe("Get discount type lable", () => {
     // Assert
     expect(result).toBe("-");
   });
-  it("should return voucher when voucher discount type", () => {
+  it("should return voucher name formatting when voucher discount type", () => {
     // Arrange
     const discount = {
       type: OrderDiscountType.VOUCHER,
+      name: "Big sale",
     } as OrderDiscountFragment;
     // Act
     const result = getDiscountTypeLabel(discount, intlMock);
 
     // Assert
-    expect(result).toBe("Voucher");
+    expect(result).toContain("Voucher:");
+  });
+  it("should return Sale discount for sale discount type", () => {
+    // Arrange
+    const discount = {
+      type: OrderDiscountType.SALE,
+    } as OrderDiscountFragment;
+    // Act
+    const result = getDiscountTypeLabel(discount, intlMock);
+
+    // Assert
+    expect(result).toBe("Sale");
+  });
+  it("should return Promotion when promotion discount type", () => {
+    // Arrange
+    const discount = {
+      type: OrderDiscountType.PROMOTION,
+    } as OrderDiscountFragment;
+    // Act
+    const result = getDiscountTypeLabel(discount, intlMock);
+
+    // Assert
+    expect(result).toBe("Promotion");
   });
 });
