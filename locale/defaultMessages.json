@@ -5831,6 +5831,10 @@
     "context": "select option, button",
     "string": "Select"
   },
+  "a/JR9Y": {
+    "context": "sale type order discount",
+    "string": "Sale"
+  },
   "a/QJBx": {
     "context": "user action bar",
     "string": "Action"
@@ -7463,6 +7467,10 @@
     "context": "transaction event type, transaction was refunded to client",
     "string": "Refund"
   },
+  "l4o0ar": {
+    "context": "voucher type order discount",
+    "string": "Voucher: {voucherName}"
+  },
   "l5V0QT": {
     "context": "boolean attribute type",
     "string": "Boolean"
@@ -8457,10 +8465,6 @@
   "s9sOcC": {
     "context": "button",
     "string": "OK"
-  },
-  "sEjRyz": {
-    "context": "voucher type order discount",
-    "string": "Voucher"
   },
   "sFynTT": {
     "context": "grant refund, refund card title",
