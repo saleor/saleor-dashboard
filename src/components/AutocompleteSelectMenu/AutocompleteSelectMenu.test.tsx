@@ -64,9 +64,10 @@ describe("AutocompleteSelectMenu", () => {
     testIds: ["1", "2", "3", "4"],
   };
 
+  const { container } = render(<AutocompleteSelectMenu {...defaultProps} />);
+
   it("renders without crashing", () => {
     // Arrange & Act
-    const { container } = render(<AutocompleteSelectMenu {...defaultProps} />);
 
     // Assert
     expect(container).toBeInTheDocument();
@@ -97,7 +98,7 @@ describe("AutocompleteSelectMenu", () => {
 
   it("shows inner list when option is selected", async () => {
     // Arrange
-    const { getByPlaceholderText, getByText } = render(
+    const { getByPlaceholderText, getByText, getByTestId } = render(
       <IntlProvider locale="en">
         <AutocompleteSelectMenu {...defaultProps} />
       </IntlProvider>,
@@ -109,11 +110,18 @@ describe("AutocompleteSelectMenu", () => {
 
     const option = getByText("Option 1");
 
+    const scrollableContainer = getByTestId("menu-link-options");
+
+    scrollableContainer.scrollTop = option.offsetTop;
+
     fireEvent.click(option);
 
     // Assert
     await waitFor(() => {
-      expect(getByText("Option 1 Child")).toBeInTheDocument();
+      const childOption = getByText("Option 1 Child");
+
+      scrollableContainer.scrollTop = childOption.offsetTop;
+      expect(childOption).toBeInTheDocument();
     });
   });
 });

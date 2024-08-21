@@ -60,7 +60,6 @@ import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 import {
   concatChannelsBySelection,
   createChannelsWithPreorderInfo,
-  validateChannels,
 } from "../ProductVariantChannels/formOpretations";
 
 export interface ProductVariantCreateFormData extends MetadataFormData {
@@ -281,11 +280,9 @@ function useProductVariantCreateForm(
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
-  const invalidChannels = validateChannels(channels?.data);
   const invalidPreorder =
     data.isPreorder && data.hasPreorderEndDate && !!form.errors.preorderEndDateTime;
-  const formDisabled = invalidPreorder || invalidChannels;
-  const isSaveDisabled = disabled || formDisabled || !data.variantName || !onSubmit;
+  const isSaveDisabled = disabled || invalidPreorder || !onSubmit;
 
   setIsSubmitDisabled(isSaveDisabled);
 

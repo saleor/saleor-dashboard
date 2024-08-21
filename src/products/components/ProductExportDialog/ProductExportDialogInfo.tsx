@@ -89,7 +89,7 @@ const useStyles = makeStyles(
       marginBottom: theme.spacing(2),
     },
     scrollArea: {
-      maxHeight: "calc(100vh - 350px)",
+      maxHeight: "calc(100vh - 390px)",
       minHeight: "auto",
       "@media (min-height: 800px)": {
         minHeight: 440,

@@ -2605,6 +2605,10 @@
   "FTYkgw": {
     "string": "Delete collections"
   },
+  "FWaL+x": {
+    "context": "gift card history message",
+    "string": "Gift card balance was reset"
+  },
   "FWbv/u": {
     "context": "page header",
     "string": "Create Discount"
@@ -6356,10 +6360,6 @@
   },
   "dHAwu8": {
     "string": "Code already exists"
-  },
-  "dJQxHt": {
-    "context": "delete category",
-    "string": "Are you sure you want to delete {categoryName}?"
   },
   "dJVXIb": {
     "context": "vat included in order price",

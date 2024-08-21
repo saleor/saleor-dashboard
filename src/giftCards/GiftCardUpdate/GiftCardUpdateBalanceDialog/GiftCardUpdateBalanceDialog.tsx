@@ -2,6 +2,7 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { IMessage } from "@dashboard/components/messages";
+import { useGiftCardPermissions } from "@dashboard/giftCards/hooks/useGiftCardPermissions";
 import { useGiftCardUpdateMutation } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -27,6 +28,7 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({ open, onClose }) =
   const intl = useIntl();
   const classes = useStyles({});
   const notify = useNotifier();
+  const { canSeeCreatedBy } = useGiftCardPermissions();
   const {
     giftCard: {
       id,
@@ -63,6 +65,7 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({ open, onClose }) =
         input: {
           balanceAmount,
         },
+        showCreatedBy: canSeeCreatedBy,
       },
     });
 
@@ -86,7 +89,6 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({ open, onClose }) =
       title={intl.formatMessage(messages.title)}
       confirmButtonState={status}
       disabled={loading}
-      size="lg"
     >
       <Text>{intl.formatMessage(messages.subtitle)}</Text>
       <CardSpacer />
