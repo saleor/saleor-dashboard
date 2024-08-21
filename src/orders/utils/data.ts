@@ -468,7 +468,15 @@ export const getDiscountTypeLabel = (discount: OrderDiscountFragment, intl: Intl
       return intl.formatMessage(orderDiscountTypeLabelMessages.staffAdded);
     case OrderDiscountType.ORDER_PROMOTION:
       return getDiscountNameLabel(discount.name);
-    default:
-      return intl.formatMessage(orderDiscountTypeLabelMessages.voucher);
+    case OrderDiscountType.VOUCHER:
+      return intl.formatMessage(orderDiscountTypeLabelMessages.voucher, {
+        voucherName: discount.name,
+      });
+
+    case OrderDiscountType.PROMOTION:
+      return intl.formatMessage(orderDiscountTypeLabelMessages.promotion);
+
+    case OrderDiscountType.SALE:
+      return intl.formatMessage(orderDiscountTypeLabelMessages.sale);
   }
 };
