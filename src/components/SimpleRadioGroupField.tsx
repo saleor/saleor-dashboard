@@ -41,6 +41,7 @@ export const SimpleRadioGroupField: React.FC<SimpleRadioGroupFieldProps> = ({
             id={value}
             disabled={disabled}
             marginBottom={2}
+            data-test-id={value}
           >
             <Text color={disabled ? "defaultDisabled" : "default1"}>{label}</Text>
           </RadioGroup.Item>
