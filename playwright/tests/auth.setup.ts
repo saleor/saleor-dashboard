@@ -6,6 +6,8 @@ import path from "path";
 
 setup.describe.configure({ mode: "serial" });
 
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 const authenticateAndSaveState = async (
   request: APIRequestContext,
   email: string,
@@ -15,6 +17,7 @@ const authenticateAndSaveState = async (
   const basicApiService = new BasicApiService(request);
   let retries = 0;
   const maxRetries = 3;
+  const delayBetweenRetries = 3000;
 
   while (retries < maxRetries) {
     try {
@@ -52,6 +55,10 @@ const authenticateAndSaveState = async (
 
     retries += 1;
     console.warn(`Authentication failed, retrying ${retries}/${maxRetries}...`);
+
+    if (retries < maxRetries) {
+      await sleep(delayBetweenRetries);
+    }
   }
 
   throw new Error("Failed to authenticate after 3 attempts");
