@@ -55,12 +55,11 @@ export const AppPermissionsDialogPermissionPicker = ({
             return (
               <List.Item
                 key={perm.code}
-                paddingY={1}
-                paddingX={2}
-                display={"flex"}
-                alignItems={"center"}
-                as={"label"}
-                backgroundColor={isAssigned ? "accent1" : undefined}
+                padding={4}
+                display="flex"
+                alignItems="center"
+                as="label"
+                active={isAssigned}
               >
                 <Checkbox name={perm.code} defaultChecked={isAssigned} marginRight={4} />
                 <Text fontWeight={isAssigned ? "bold" : "regular"}>{perm.name}</Text>
