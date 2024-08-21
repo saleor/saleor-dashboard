@@ -97,8 +97,15 @@ export class GiftCardsPage extends BasePage {
     await this.showMoreMenuButton.click();
   }
 
-  async addTag() {
+  async openTagInput() {
     await this.tagsInput.click();
+  }
+
+  async closeTagInput() {
+    await this.tagsInput.blur();
+  }
+
+  async selectFirstTag() {
     await this.tagsInputOptions.first().click();
   }
 
