@@ -122,7 +122,6 @@ export class VariantsPage {
 
   async selectLastAttributeValue() {
     await this.attributeSelector.locator("input").clear();
-    await this.attributeSelector.click();
     await this.attributeOption.last().click();
   }
 
