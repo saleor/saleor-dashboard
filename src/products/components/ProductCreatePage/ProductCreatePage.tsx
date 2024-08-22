@@ -277,6 +277,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                     onWarehouseStockAdd={handlers.addStock}
                     onWarehouseStockDelete={handlers.deleteStock}
                     onWarehouseConfigure={onWarehouseConfigure}
+                    isCreate={true}
                   />
                 </>
               )}

@@ -45,7 +45,54 @@ export interface ProductStocksProps {
   onWarehouseConfigure: () => void;
   fetchMoreWarehouses: () => void;
   hasMoreWarehouses: boolean;
+  isCreate: boolean;
 }
+
+const WarehouseInformationMessage = ({
+  isCreate,
+  hasVariants,
+  hasWarehouses,
+  onWarehouseConfigure,
+}: {
+  isCreate: boolean;
+  hasVariants: boolean;
+  hasWarehouses: boolean;
+  onWarehouseConfigure: () => void;
+}) => {
+  if (isCreate) {
+    const message = hasVariants
+      ? messages.warehouseMessageVariantOnCreate
+      : messages.warehouseMessageProductOnCreate;
+
+    return (
+      <Text color="default2">
+        <FormattedMessage {...message} />
+      </Text>
+    );
+  }
+
+  return (
+    !hasWarehouses && (
+      <Text color="default2">
+        {hasVariants ? (
+          <FormattedMessage
+            {...messages.configureWarehouseForVariant}
+            values={{
+              a: chunks => <Link onClick={onWarehouseConfigure}>{chunks}</Link>,
+            }}
+          />
+        ) : (
+          <FormattedMessage
+            {...messages.configureWarehouseForProduct}
+            values={{
+              a: chunks => <Link onClick={onWarehouseConfigure}>{chunks}</Link>,
+            }}
+          />
+        )}
+      </Text>
+    )
+  );
+};
 
 export const ProductStocks: React.FC<ProductStocksProps> = ({
   data,
@@ -62,6 +109,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
   onWarehouseStockDelete,
   onWarehouseConfigure,
   fetchMoreWarehouses,
+  isCreate,
 }) => {
   const intl = useIntl();
   const [lastStockRowFocus, setLastStockRowFocus] = React.useState(false);
@@ -138,25 +186,12 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
                 </Text>
               )}
             </Box>
-            {!warehouses?.length && (
-              <Text color="default2">
-                {hasVariants ? (
-                  <FormattedMessage
-                    {...messages.configureWarehouseForVariant}
-                    values={{
-                      a: chunks => <Link onClick={onWarehouseConfigure}>{chunks}</Link>,
-                    }}
-                  />
-                ) : (
-                  <FormattedMessage
-                    {...messages.configureWarehouseForProduct}
-                    values={{
-                      a: chunks => <Link onClick={onWarehouseConfigure}>{chunks}</Link>,
-                    }}
-                  />
-                )}
-              </Text>
-            )}
+            <WarehouseInformationMessage
+              isCreate={isCreate}
+              hasVariants={hasVariants}
+              hasWarehouses={warehouses?.length > 0}
+              onWarehouseConfigure={onWarehouseConfigure}
+            />
           </Box>
         </Box>
         {productVariantChannelListings?.length > 0 &&

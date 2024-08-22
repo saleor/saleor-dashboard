@@ -573,6 +573,10 @@
     "context": "Order summary payment header",
     "string": "Payments summary"
   },
+  "1Q6Z9A": {
+    "context": "variant stocks section subtitle",
+    "string": "Assigning the stocks will be possible after the variant is saved."
+  },
   "1T1fP8": {
     "context": "range input label",
     "string": "Postal codes (start)"
@@ -1370,6 +1374,10 @@
   },
   "6uy2gU": {
     "string": "Manually change permission for the app."
+  },
+  "6v4X1c": {
+    "context": "variant stocks section subtitle",
+    "string": "Assigning the stocks will be possible after the product is saved."
   },
   "6xC/Ls": {
     "context": "informations about product seo, header",
