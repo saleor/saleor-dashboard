@@ -94,6 +94,7 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
                 name="shippingMethod"
                 data-test-id="shipping-method-select"
                 value={data.shippingMethod}
+                className="select-full-width"
                 onChange={({ target }) => {
                   const value = target.value;
                   const isDisabled = choices.find(({ value }) => value === value)?.disabled;
