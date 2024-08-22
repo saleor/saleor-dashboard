@@ -573,10 +573,6 @@
     "context": "Order summary payment header",
     "string": "Payments summary"
   },
-  "1Q6Z9A": {
-    "context": "variant stocks section subtitle",
-    "string": "Assigning the stocks will be possible after the variant is saved."
-  },
   "1T1fP8": {
     "context": "range input label",
     "string": "Postal codes (start)"
@@ -1375,10 +1371,6 @@
   "6uy2gU": {
     "string": "Manually change permission for the app."
   },
-  "6v4X1c": {
-    "context": "variant stocks section subtitle",
-    "string": "Assigning the stocks will be possible after the product is saved."
-  },
   "6xC/Ls": {
     "context": "informations about product seo, header",
     "string": "SEO Information"
@@ -2023,6 +2015,10 @@
   "BanAhF": {
     "context": "sale status",
     "string": "Scheduled"
+  },
+  "BaxGjT": {
+    "context": "variant stocks section subtitle",
+    "string": "Assigning the stocks will be possible after the variant is saved."
   },
   "BbP+k3": {
     "context": "variant availability in channel",
@@ -7584,6 +7580,10 @@
   },
   "lfXze9": {
     "string": "Delete vouchers"
+  },
+  "lhfPkc": {
+    "context": "variant stocks section subtitle",
+    "string": "Assigning the stocks will be possible after the product is saved."
   },
   "li1BBk": {
     "context": "export items as csv file",
