@@ -51,6 +51,7 @@ const ProductTypePickerDialog: React.FC<ProductTypePickerDialogProps> = ({
       onConfirm={() => onConfirm(choice)}
       title={intl.formatMessage(messages.selectProductType)}
       disabled={!choice}
+      size="xs"
     >
       <Combobox
         data-test-id="dialog-product-type"
