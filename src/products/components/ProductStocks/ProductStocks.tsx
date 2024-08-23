@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { ChannelData } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
-import Link from "@dashboard/components/Link";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { ProductErrorFragment, WarehouseFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
@@ -16,6 +15,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductStocksAssignWarehouses } from "./components/ProductStocksAssignWarehouses";
 import { messages } from "./messages";
+import { WarehouseInformationMessage } from "./WarehouseInformationMessage";
 
 export interface ProductStockFormsetData {
   quantityAllocated: number;
@@ -47,52 +47,6 @@ export interface ProductStocksProps {
   hasMoreWarehouses: boolean;
   isCreate: boolean;
 }
-
-const WarehouseInformationMessage = ({
-  isCreate,
-  hasVariants,
-  hasWarehouses,
-  onWarehouseConfigure,
-}: {
-  isCreate: boolean;
-  hasVariants: boolean;
-  hasWarehouses: boolean;
-  onWarehouseConfigure: () => void;
-}) => {
-  if (isCreate) {
-    const message = hasVariants
-      ? messages.warehouseMessageVariantOnCreate
-      : messages.warehouseMessageProductOnCreate;
-
-    return (
-      <Text color="default2">
-        <FormattedMessage {...message} />
-      </Text>
-    );
-  }
-
-  return (
-    !hasWarehouses && (
-      <Text color="default2">
-        {hasVariants ? (
-          <FormattedMessage
-            {...messages.configureWarehouseForVariant}
-            values={{
-              a: chunks => <Link onClick={onWarehouseConfigure}>{chunks}</Link>,
-            }}
-          />
-        ) : (
-          <FormattedMessage
-            {...messages.configureWarehouseForProduct}
-            values={{
-              a: chunks => <Link onClick={onWarehouseConfigure}>{chunks}</Link>,
-            }}
-          />
-        )}
-      </Text>
-    )
-  );
-};
 
 export const ProductStocks: React.FC<ProductStocksProps> = ({
   data,
