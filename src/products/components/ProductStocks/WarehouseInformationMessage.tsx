@@ -30,7 +30,11 @@ export const WarehouseInformationMessage: React.FC<WarehouseInformationMessagePr
     );
   }
 
-  return !hasWarehouses ? (
+  if (hasWarehouses) {
+    return null;
+  }
+
+  return (
     <Text color="default2">
       {hasVariants ? (
         <FormattedMessage
@@ -48,5 +52,5 @@ export const WarehouseInformationMessage: React.FC<WarehouseInformationMessagePr
         />
       )}
     </Text>
-  ) : null;
+  );
 };
