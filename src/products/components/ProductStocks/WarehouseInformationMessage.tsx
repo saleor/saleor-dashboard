@@ -5,16 +5,18 @@ import { FormattedMessage } from "react-intl";
 
 import { messages } from "./messages";
 
-export const WarehouseInformationMessage = ({
-  isCreate,
-  hasVariants,
-  hasWarehouses,
-  onWarehouseConfigure,
-}: {
+interface WarehouseInformationMessageProps {
   isCreate: boolean;
   hasVariants: boolean;
   hasWarehouses: boolean;
   onWarehouseConfigure: () => void;
+}
+
+export const WarehouseInformationMessage: React.FC<WarehouseInformationMessageProps> = ({
+  isCreate,
+  hasVariants,
+  hasWarehouses,
+  onWarehouseConfigure,
 }) => {
   if (isCreate) {
     const message = hasVariants
@@ -28,25 +30,23 @@ export const WarehouseInformationMessage = ({
     );
   }
 
-  return (
-    !hasWarehouses && (
-      <Text color="default2">
-        {hasVariants ? (
-          <FormattedMessage
-            {...messages.configureWarehouseForVariant}
-            values={{
-              a: chunks => <Link onClick={onWarehouseConfigure}>{chunks}</Link>,
-            }}
-          />
-        ) : (
-          <FormattedMessage
-            {...messages.configureWarehouseForProduct}
-            values={{
-              a: chunks => <Link onClick={onWarehouseConfigure}>{chunks}</Link>,
-            }}
-          />
-        )}
-      </Text>
-    )
-  );
+  return !hasWarehouses ? (
+    <Text color="default2">
+      {hasVariants ? (
+        <FormattedMessage
+          {...messages.configureWarehouseForVariant}
+          values={{
+            a: chunks => <Link onClick={onWarehouseConfigure}>{chunks}</Link>,
+          }}
+        />
+      ) : (
+        <FormattedMessage
+          {...messages.configureWarehouseForProduct}
+          values={{
+            a: chunks => <Link onClick={onWarehouseConfigure}>{chunks}</Link>,
+          }}
+        />
+      )}
+    </Text>
+  ) : null;
 };
