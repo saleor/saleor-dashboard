@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.20.7
+
+### Patch Changes
+
+- ce05ffba2: Order details page now displays the name of the applied voucher.
+- f8e6049fe: Now staging environments have changed domain, that means "staging-cloud.saleor.io" is no longer referenced in our pipelines
+- b428bcd9f: Legacy Dialog component is no longer used
+- e5bfa1218: You can now navigate on dropdown list. Dropdown stays close on focus.
+- bbba0d2dc: You can now see permission edit list use default list color instead of accent blue color.
+- 642e9f7cb: Showing negative amount in order details has been aligned
+- efbca2b00: Now, missing translations are properly added to the order details.
+- 037c67cb2: The stock settings no longer show a message that you need to create a warehouse when warehouses are already configured.
+- f879d525a: App install error page now uses macaw-ui-next styles meaning that MaterialUI is no longer used in this view.
+
 ## 3.20.6
 
 ### Patch Changes
