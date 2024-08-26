@@ -85,8 +85,10 @@ test("TC: SALEOR_109 Activate gift card @e2e @gift", async () => {
 });
 test("TC: SALEOR_110 Edit gift card @e2e @gift", async () => {
   await giftCardsPage.gotoExistingGiftCardView(GIFT_CARDS.giftCardToBeEdited.id);
-  await giftCardsPage.addTag();
-  await giftCardsPage.addTag();
+  await giftCardsPage.openTagInput();
+  await giftCardsPage.selectFirstTag();
+  await giftCardsPage.selectFirstTag();
+  await giftCardsPage.closeTagInput();
   await giftCardsPage.clickCardExpiresCheckbox();
   await giftCardsPage.metadataSeoPage.expandAndAddAllMetadata();
   await giftCardsPage.clickSaveButton();
