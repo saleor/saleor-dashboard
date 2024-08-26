@@ -1,39 +1,65 @@
 import errorImg from "@assets/images/app-install-error.svg";
-import { Button } from "@dashboard/components/Button";
-import Container from "@dashboard/components/Container";
-import { Grid } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Box, Button, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React from "react";
+import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";
 
 import messages from "./messages";
-import { useStyles } from "./styles";
 
 interface AppInstallErrorPageProps {
   onBack: () => void;
 }
 
 export const AppInstallErrorPage: React.FC<AppInstallErrorPageProps> = ({ onBack }) => {
-  const classes = useStyles();
-
   return (
-    <Container className={classes.root}>
-      <Grid spacing={3} alignItems="center" container>
-        <Grid xs={12} sm={6} item>
-          <img src={errorImg} alt="" />
-        </Grid>
-        <Grid xs={12} sm={6} item>
-          <Text size={6} fontWeight="bold" lineHeight={3} as="h3">
-            <FormattedMessage {...messages.title} />
-          </Text>
-          <Text size={3} fontWeight="regular">
-            <FormattedMessage {...messages.content} />
-          </Text>
-          <Button className={classes.button} variant="primary" onClick={onBack}>
-            <FormattedMessage {...messages.backButton} />
-          </Button>
-        </Grid>
-      </Grid>
-    </Container>
+    <Box alignItems="center" display="flex" height="100vh">
+      <Box
+        display="grid"
+        gridTemplateColumns={{
+          mobile: 1,
+          tablet: 1,
+          desktop: 2,
+        }}
+        __margin="0 auto"
+        gap={4}
+        padding={4}
+      >
+        <SVG className={sprinkles({ width: "100%" })} src={errorImg} />
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          textAlign={{
+            mobile: "center",
+            tablet: "center",
+            desktop: "left",
+          }}
+          gap={10}
+        >
+          <Box>
+            <Text size={11} fontWeight="bold">
+              <FormattedMessage {...messages.title} />
+            </Text>
+            <Text display="block" marginTop={4}>
+              <FormattedMessage {...messages.content} />
+            </Text>
+          </Box>
+          <Box
+            display="flex"
+            flexDirection="row"
+            alignItems="flex-start"
+            justifyContent={{
+              mobile: "center",
+              tablet: "center",
+              desktop: "flex-start",
+            }}
+          >
+            <Button variant="primary" onClick={onBack}>
+              <FormattedMessage {...messages.backButton} />
+            </Button>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 };
