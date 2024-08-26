@@ -2016,6 +2016,10 @@
     "context": "sale status",
     "string": "Scheduled"
   },
+  "BaxGjT": {
+    "context": "variant stocks section subtitle",
+    "string": "Assigning the stocks will be possible after the variant is saved."
+  },
   "BbP+k3": {
     "context": "variant availability in channel",
     "string": "Available"
@@ -7576,6 +7580,10 @@
   },
   "lfXze9": {
     "string": "Delete vouchers"
+  },
+  "lhfPkc": {
+    "context": "variant stocks section subtitle",
+    "string": "Assigning the stocks will be possible after the product is saved."
   },
   "li1BBk": {
     "context": "export items as csv file",
