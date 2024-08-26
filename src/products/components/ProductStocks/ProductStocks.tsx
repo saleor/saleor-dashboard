@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { ChannelData } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
-import Link from "@dashboard/components/Link";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { ProductErrorFragment, WarehouseFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
@@ -16,6 +15,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductStocksAssignWarehouses } from "./components/ProductStocksAssignWarehouses";
 import { messages } from "./messages";
+import { WarehouseInformationMessage } from "./WarehouseInformationMessage";
 
 export interface ProductStockFormsetData {
   quantityAllocated: number;
@@ -45,6 +45,7 @@ export interface ProductStocksProps {
   onWarehouseConfigure: () => void;
   fetchMoreWarehouses: () => void;
   hasMoreWarehouses: boolean;
+  isCreate: boolean;
 }
 
 export const ProductStocks: React.FC<ProductStocksProps> = ({
@@ -62,6 +63,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
   onWarehouseStockDelete,
   onWarehouseConfigure,
   fetchMoreWarehouses,
+  isCreate,
 }) => {
   const intl = useIntl();
   const [lastStockRowFocus, setLastStockRowFocus] = React.useState(false);
@@ -138,25 +140,12 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
                 </Text>
               )}
             </Box>
-            {!warehouses?.length && (
-              <Text color="default2">
-                {hasVariants ? (
-                  <FormattedMessage
-                    {...messages.configureWarehouseForVariant}
-                    values={{
-                      a: chunks => <Link onClick={onWarehouseConfigure}>{chunks}</Link>,
-                    }}
-                  />
-                ) : (
-                  <FormattedMessage
-                    {...messages.configureWarehouseForProduct}
-                    values={{
-                      a: chunks => <Link onClick={onWarehouseConfigure}>{chunks}</Link>,
-                    }}
-                  />
-                )}
-              </Text>
-            )}
+            <WarehouseInformationMessage
+              isCreate={isCreate}
+              hasVariants={hasVariants}
+              hasWarehouses={warehouses?.length > 0}
+              onWarehouseConfigure={onWarehouseConfigure}
+            />
           </Box>
         </Box>
         {productVariantChannelListings?.length > 0 &&

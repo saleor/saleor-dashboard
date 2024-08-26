@@ -121,4 +121,14 @@ export const messages = defineMessages({
     defaultMessage: "Channel threshold",
     description: "table column header",
   },
+  warehouseMessageVariantOnCreate: {
+    id: "BaxGjT",
+    defaultMessage: "Assigning the stocks will be possible after the variant is saved.",
+    description: "variant stocks section subtitle",
+  },
+  warehouseMessageProductOnCreate: {
+    id: "lhfPkc",
+    defaultMessage: "Assigning the stocks will be possible after the product is saved.",
+    description: "variant stocks section subtitle",
+  },
 });
