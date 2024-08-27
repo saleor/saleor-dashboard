@@ -23,7 +23,6 @@ import GiftCardCreateExpirySelect from "./GiftCardCreateExpirySelect";
 import GiftCardCreateMoneyInput from "./GiftCardCreateMoneyInput";
 import GiftCardCreateRequiresActivationSection from "./GiftCardCreateRequiresActivationSection";
 import { giftCardCreateMessages as messages } from "./messages";
-import { useGiftCardCreateFormStyles as useStyles } from "./styles";
 import { GiftCardCreateFormCommonProps, GiftCardCreateFormCustomer } from "./types";
 
 export interface GiftCardCreateFormData extends GiftCardCreateCommonFormData {
@@ -64,7 +63,6 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
   initialCustomer,
 }) => {
   const intl = useIntl();
-  const classes = useStyles({});
   const { data: settingsData, loading: loadingSettings } = useGiftCardSettingsQuery();
   const [selectedCustomer, setSelectedCustomer] = useState<GiftCardCreateFormCustomer>(
     initialCustomer || defaultInitialCustomer,
@@ -152,7 +150,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
           name="note"
           onChange={change}
           rows={3}
-          className={classes.noteField}
+          width="100%"
           label={`${intl.formatMessage(
             messages.noteLabel,
           )} *${intl.formatMessage(commonMessages.optionalField)}`}

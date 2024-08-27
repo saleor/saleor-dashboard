@@ -18,12 +18,6 @@ export const useGiftCardCreateDialogCodeContentStyles = makeStyles(
 
 export const useGiftCardCreateFormStyles = makeStyles(
   () => ({
-    noteField: {
-      width: "100%",
-    },
-    currencySelectField: {
-      width: 100,
-    },
     dialogContent: {
       ...contentStyles,
     },

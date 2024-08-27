@@ -1,12 +1,10 @@
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import { Box, Input, Option, Select, Spinner } from "@saleor/macaw-ui-next";
-import clsx from "clsx";
 import React from "react";
 
 interface CommonFieldProps {
   name: string;
   type?: string;
-  className?: string;
   label?: string;
 }
 
@@ -39,11 +37,7 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
     type: textFieldType,
     minValue: textFieldMinValue,
   } = textFieldProps;
-  const {
-    name: selectFieldName,
-    value: selectFieldValue,
-    className: selectFieldClassName,
-  } = selectFieldProps;
+  const { name: selectFieldName, value: selectFieldValue } = selectFieldProps;
   const handleTextChange = (event: ChangeEvent) => {
     const { value } = event.target;
     const otherTarget = {
@@ -82,7 +76,8 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
               name={selectFieldName}
               onChange={value => change({ target: { name: selectFieldName, value } })}
               value={selectFieldValue}
-              className={clsx("noBorder", selectFieldClassName)}
+              className="noBorder"
+              __width="50px"
               options={choices}
             />
           )
