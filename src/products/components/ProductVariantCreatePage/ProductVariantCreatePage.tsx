@@ -293,6 +293,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                     onWarehouseStockAdd={handlers.addStock}
                     onWarehouseStockDelete={handlers.deleteStock}
                     onWarehouseConfigure={onWarehouseConfigure}
+                    isCreate={true}
                   />
                   <CardSpacer />
                   <Metadata data={data} onChange={handlers.changeMetadata} />
