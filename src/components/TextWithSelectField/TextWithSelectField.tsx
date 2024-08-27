@@ -1,5 +1,5 @@
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
-import { Box, Input, Option, Select, Spinner, sprinkles } from "@saleor/macaw-ui-next";
+import { Box, Input, Option, Select, Spinner } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 
@@ -21,14 +21,12 @@ export interface TextWithSelectFieldProps {
     minValue?: number;
   };
   selectFieldProps: CommonFieldProps & { value: string };
-  containerClassName?: string;
 }
 
 const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
   change,
   choices,
   loading,
-  containerClassName,
   textFieldProps,
   selectFieldProps,
   helperText,
@@ -64,7 +62,7 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
   };
 
   return (
-    <div className={clsx(sprinkles({ width: "100%" }), containerClassName)}>
+    <Box width="100%">
       <Input
         error={isError}
         helperText={helperText}
@@ -90,7 +88,7 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
           )
         }
       />
-    </div>
+    </Box>
   );
 };
 

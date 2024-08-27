@@ -1,5 +1,5 @@
 import { ChangeEvent } from "@dashboard/hooks/useForm";
-import { RadioGroup, Text } from "@saleor/macaw-ui-next";
+import { RadioGroup, RadioGroupRootProps, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 type RadioGroupFieldChoice = {
@@ -14,6 +14,7 @@ interface SimpleRadioGroupFieldProps {
   error: boolean;
   onChange: (event: ChangeEvent) => void;
   choices: RadioGroupFieldChoice[];
+  size?: RadioGroupRootProps["size"];
   errorMessage?: string;
 }
 
@@ -23,14 +24,15 @@ export const SimpleRadioGroupField: React.FC<SimpleRadioGroupFieldProps> = ({
   error,
   onChange,
   choices,
+  size = "large",
   errorMessage,
 }) => {
   return (
     <>
       <RadioGroup
-        size="large"
+        size={size}
         value={value}
-        name="scope"
+        name={name}
         error={error}
         onValueChange={value => onChange({ target: { value, name } })}
       >

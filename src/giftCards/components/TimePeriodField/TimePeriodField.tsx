@@ -12,7 +12,6 @@ interface TimePeriodFieldProps {
   periodType: TimePeriodTypeEnum;
   amountFieldName: string;
   typeFieldName: string;
-  containerClassName?: string;
   helperText?: string;
   isError?: boolean;
 }
@@ -23,7 +22,6 @@ const TimePeriodField: React.FC<TimePeriodFieldProps> = ({
   periodType,
   amountFieldName,
   typeFieldName,
-  containerClassName,
   helperText,
   isError,
 }) => {
@@ -63,7 +61,6 @@ const TimePeriodField: React.FC<TimePeriodFieldProps> = ({
         name: typeFieldName,
         value: periodType,
       }}
-      containerClassName={containerClassName}
     />
   );
 };

@@ -24,7 +24,6 @@ export const useGiftCardCreateFormStyles = makeStyles(
     currencySelectField: {
       width: 100,
     },
-    fullWidthContainer: { width: "100%" },
     dialogContent: {
       ...contentStyles,
     },

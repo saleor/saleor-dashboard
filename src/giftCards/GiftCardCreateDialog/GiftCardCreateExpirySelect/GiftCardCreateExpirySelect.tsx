@@ -1,3 +1,4 @@
+import { SimpleRadioGroupField } from "@dashboard/components/SimpleRadioGroupField";
 import TimePeriodField from "@dashboard/giftCards/components/TimePeriodField";
 import {
   GiftCardBulkCreateFormErrors,
@@ -8,7 +9,7 @@ import { getExpiryPeriodTerminationDate } from "@dashboard/giftCards/GiftCardCre
 import { getGiftCardErrorMessage } from "@dashboard/giftCards/GiftCardUpdate/messages";
 import useCurrentDate from "@dashboard/hooks/useCurrentDate";
 import { FormChange } from "@dashboard/hooks/useForm";
-import { Box, Checkbox, Input, RadioGroup, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
@@ -65,21 +66,13 @@ const GiftCardCreateExpirySelect: React.FC<GiftCardCreateExpirySelectProps> = ({
       </Checkbox>
       {expirySelected && (
         <>
-          <RadioGroup
-            size="large"
-            value={expiryType}
+          <SimpleRadioGroupField
             name="expiryType"
-            onValueChange={value => change({ target: { name: "expiryType", value } })}
-            display="flex"
-            gap={2}
-            flexDirection="column"
-          >
-            {translatedOptions.map(({ label, value }) => (
-              <RadioGroup.Item id={value} key={value} value={value}>
-                <Text style={{ verticalAlign: "middle" }}>{label}</Text>
-              </RadioGroup.Item>
-            ))}
-          </RadioGroup>
+            value={expiryType}
+            error={false}
+            onChange={change}
+            choices={translatedOptions}
+          />
 
           {expiryType === "EXPIRY_DATE" && (
             <Input
@@ -109,7 +102,6 @@ const GiftCardCreateExpirySelect: React.FC<GiftCardCreateExpirySelectProps> = ({
                 periodAmount={expiryPeriodAmount}
                 amountFieldName={"expiryPeriodAmount"}
                 typeFieldName={"expiryPeriodType"}
-                // containerClassName={sprinkles({ width: "100%" })}
               />
               <Text style={{ textWrap: "nowrap" }}>
                 <Text size={2} fontWeight="light" display="block">

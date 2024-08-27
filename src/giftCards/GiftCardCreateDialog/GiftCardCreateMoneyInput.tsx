@@ -75,7 +75,6 @@ const GiftCardCreateMoneyInput: React.FC<GiftCardCreateMoneyInputProps> = ({
       helperText={getGiftCardErrorMessage(errors?.balance, intl)}
       change={handleInputChange}
       choices={mapSingleValueNodeToChoice(channelCurrencies ?? [])}
-      containerClassName={classes.fullWidthContainer}
       textFieldProps={{
         type: "float",
         label: intl.formatMessage(messages.amountLabel),
