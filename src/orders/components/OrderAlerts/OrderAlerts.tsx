@@ -27,7 +27,7 @@ export const OrderAlerts: React.FC<OrderAlertsProps> = ({ alertsHeader, alerts, 
 
   if (formattedAlerts.length === 1) {
     return (
-      <Text size={2} fontWeight="bold">
+      <Text size={3} fontWeight="bold">
         {formattedAlerts[0].text}
       </Text>
     );
@@ -35,7 +35,11 @@ export const OrderAlerts: React.FC<OrderAlertsProps> = ({ alertsHeader, alerts, 
 
   return (
     <>
-      {!!alertsHeader && alertsHeader}
+      {!!alertsHeader && (
+        <Text size={4} fontWeight="bold">
+          {alertsHeader}
+        </Text>
+      )}
       <ul>
         {formattedAlerts.map(alert => (
           <li key={alert.id}>{alert.text}</li>
