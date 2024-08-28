@@ -5,7 +5,6 @@ import Timeline, { TimelineAddNote, TimelineNote } from "@dashboard/components/T
 import { GiftCardEventsEnum, useGiftCardAddNoteMutation } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { HistoryComponentLoader } from "@dashboard/orders/components/OrderHistory/HistoryComponentLoader";
-import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -49,9 +48,9 @@ const GiftCardHistory: React.FC = () => {
   return (
     <DashboardCard>
       <DashboardCard.Header>
-        <Text size={5} fontWeight="bold" display="block">
+        <DashboardCard.Title>
           <FormattedMessage {...messages.historyHeaderTitle} />
-        </Text>
+        </DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
         {events ? (
