@@ -8,10 +8,9 @@ type RadioGroupFieldChoice = {
   disabled?: boolean;
 };
 
-interface SimpleRadioGroupFieldProps {
+interface SimpleRadioGroupFieldProps
+  extends Omit<RadioGroupRootProps, "onChange" | "children" | "name"> {
   name: string;
-  value: string;
-  error: boolean;
   onChange: (event: ChangeEvent) => void;
   choices: RadioGroupFieldChoice[];
   size?: RadioGroupRootProps["size"];
@@ -26,6 +25,7 @@ export const SimpleRadioGroupField: React.FC<SimpleRadioGroupFieldProps> = ({
   choices,
   size = "large",
   errorMessage,
+  ...props
 }) => {
   return (
     <>
@@ -35,6 +35,7 @@ export const SimpleRadioGroupField: React.FC<SimpleRadioGroupFieldProps> = ({
         name={name}
         error={error}
         onValueChange={value => onChange({ target: { value, name } })}
+        {...props}
       >
         {choices.map(({ label, value, disabled }) => (
           <RadioGroup.Item
