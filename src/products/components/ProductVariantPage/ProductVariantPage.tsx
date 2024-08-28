@@ -360,6 +360,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                       onWarehouseStockAdd={handlers.addStock}
                       onWarehouseStockDelete={handlers.deleteStock}
                       onWarehouseConfigure={onWarehouseConfigure}
+                      isCreate={false}
                     />
                     <CardSpacer />
                     <Metadata data={data} onChange={handlers.changeMetadata} />

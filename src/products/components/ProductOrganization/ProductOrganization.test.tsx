@@ -138,7 +138,7 @@ describe("Products ProductOrganization", () => {
       expanded: false,
     })[0]; // get the first combobox - categories
 
-    fireEvent.focus(labelElement!);
+    fireEvent.click(labelElement!);
 
     // Assert
     expect(labelElement).toBeInTheDocument();
@@ -182,7 +182,7 @@ describe("Products ProductOrganization", () => {
       expanded: false,
     })[0]; // get the first combobox - categories
 
-    fireEvent.focus(labelElement!);
+    fireEvent.click(labelElement!);
 
     // Assert
     expect(labelElement).toBeInTheDocument();

@@ -2016,6 +2016,10 @@
     "context": "sale status",
     "string": "Scheduled"
   },
+  "BaxGjT": {
+    "context": "variant stocks section subtitle",
+    "string": "Assigning the stocks will be possible after the variant is saved."
+  },
   "BbP+k3": {
     "context": "variant availability in channel",
     "string": "Available"
@@ -5831,6 +5835,10 @@
     "context": "select option, button",
     "string": "Select"
   },
+  "a/JR9Y": {
+    "context": "sale type order discount",
+    "string": "Sale"
+  },
   "a/QJBx": {
     "context": "user action bar",
     "string": "Action"
@@ -7463,6 +7471,10 @@
     "context": "transaction event type, transaction was refunded to client",
     "string": "Refund"
   },
+  "l4o0ar": {
+    "context": "voucher type order discount",
+    "string": "Voucher: {voucherName}"
+  },
   "l5V0QT": {
     "context": "boolean attribute type",
     "string": "Boolean"
@@ -7568,6 +7580,10 @@
   },
   "lfXze9": {
     "string": "Delete vouchers"
+  },
+  "lhfPkc": {
+    "context": "variant stocks section subtitle",
+    "string": "Assigning the stocks will be possible after the product is saved."
   },
   "li1BBk": {
     "context": "export items as csv file",
@@ -8457,10 +8473,6 @@
   "s9sOcC": {
     "context": "button",
     "string": "OK"
-  },
-  "sEjRyz": {
-    "context": "voucher type order discount",
-    "string": "Voucher"
   },
   "sFynTT": {
     "context": "grant refund, refund card title",
