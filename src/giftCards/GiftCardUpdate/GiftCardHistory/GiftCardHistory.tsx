@@ -1,10 +1,11 @@
 // @ts-strict-ignore
+import { DashboardCard } from "@dashboard/components/Card";
 import Form from "@dashboard/components/Form";
-import Hr from "@dashboard/components/Hr";
 import Timeline, { TimelineAddNote, TimelineNote } from "@dashboard/components/Timeline";
 import { GiftCardEventsEnum, useGiftCardAddNoteMutation } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
-import { Skeleton, Text } from "@saleor/macaw-ui-next";
+import { HistoryComponentLoader } from "@dashboard/orders/components/OrderHistory/HistoryComponentLoader";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -12,7 +13,6 @@ import { GIFT_CARD_DETAILS_QUERY } from "../queries";
 import GiftCardTimelineEvent from "./GiftCardTimelineEvent";
 import useGiftCardHistoryEvents from "./hooks/useGiftCardHistoryEvents";
 import { giftCardHistoryMessages as messages } from "./messages";
-import useStyles from "./styles";
 
 interface FormData {
   message: string;
@@ -22,7 +22,6 @@ const GiftCardHistory: React.FC = () => {
   const intl = useIntl();
   const notify = useNotifier();
   const { id, events } = useGiftCardHistoryEvents();
-  const classes = useStyles();
   const [addTimelineNote, { loading }] = useGiftCardAddNoteMutation({
     refetchQueries: [GIFT_CARD_DETAILS_QUERY],
     onCompleted: ({ giftCardAddNote }) => {
@@ -48,14 +47,15 @@ const GiftCardHistory: React.FC = () => {
   };
 
   return (
-    <div className={classes.root}>
-      <Text className={classes.header} color="default2">
-        <FormattedMessage {...messages.historyHeaderTitle} />
-      </Text>
-      <Hr />
-      <Timeline>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <Text size={5} fontWeight="bold" display="block">
+          <FormattedMessage {...messages.historyHeaderTitle} />
+        </Text>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         {events ? (
-          <>
+          <Timeline>
             <Form initial={{ message: "" }} onSubmit={onNoteAdd} resetOnSubmit>
               {({ change, data, reset, submit }) => (
                 <TimelineAddNote
@@ -88,12 +88,12 @@ const GiftCardHistory: React.FC = () => {
 
                 return <GiftCardTimelineEvent key={id} date={date} event={event} />;
               })}
-          </>
+          </Timeline>
         ) : (
-          <Skeleton />
+          <HistoryComponentLoader />
         )}
-      </Timeline>
-    </div>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 
