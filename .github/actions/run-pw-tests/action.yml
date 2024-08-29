@@ -68,7 +68,7 @@ runs:
         WORKERS: ${{ inputs.PW_WORKERS }}
         RETRIES: ${{ inputs.PW_RETRIES }}
         PROJECT: ${{ inputs.PROJECT }}
-      run: npx playwright test --grep @e2e --project="$PROJECT" --shard "$SHARD_NUMBER"
+      run: npx playwright test --project="$PROJECT" --shard "$SHARD_NUMBER"
 
     - name: Upload blob report to GitHub Actions Artifacts
       uses: actions/upload-artifact@v3

@@ -54,7 +54,7 @@ export default defineConfig({
       testIgnore: "playwright/tests/apps.spec.ts"
     },
     {
-      name: "app-tests",
+      name: "apps-e2e",
       dependencies: ["setup"],
       use: { ...devices["Desktop Chrome"] },
       testMatch: "playwright/tests/apps.spec.ts",
