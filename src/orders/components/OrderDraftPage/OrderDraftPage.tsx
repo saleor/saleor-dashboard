@@ -112,10 +112,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
         />
       </TopNav>
       <DetailPageLayout.Content>
-        <OrderDraftAlert
-          order={order as OrderDetailsFragment}
-          channelUsabilityData={channelUsabilityData}
-        />
+        <OrderDraftAlert order={order} channelUsabilityData={channelUsabilityData} />
         <OrderDraftDetails
           order={order as OrderDetailsFragment}
           channelUsabilityData={channelUsabilityData}
