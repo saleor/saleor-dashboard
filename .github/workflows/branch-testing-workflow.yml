@@ -1,9 +1,7 @@
-name: Run test by cron
+name: Run All tests 
 
 on:
-  schedule:
-    # At 2:00 AM UTC on Monday, Wednesday, and Friday
-    - cron: "00 2 * * 1,3,5"
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.ref }}
