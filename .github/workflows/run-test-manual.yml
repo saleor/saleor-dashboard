@@ -110,9 +110,9 @@ jobs:
           PW_WORKERS: ${{ vars.PW_WORKERS }}
           PW_RETRIES: ${{ vars.PW_RETRIES }}
           URL_TO_RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          PROJECT: "app-tests"
+          PROJECT: "apps-e2e"
 
-      - name: submit-results-to-testmo
+      - name: submit-results-to-testmo for apps
         if: always()
         uses: ./.github/actions/testmo/testmo-threads-submit-playwright
         with:
