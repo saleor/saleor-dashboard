@@ -88,6 +88,7 @@ jobs:
           PW_WORKERS: ${{ vars.PW_WORKERS }}
           PW_RETRIES: ${{ vars.PW_RETRIES }}
           URL_TO_RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          PROJECT: "e2e apps-e2e"
 
       - name: submit-results-to-testmo
         if: always()
@@ -97,28 +98,6 @@ jobs:
           testmoToken: ${{ secrets.TESTMO_TOKEN }}
           testmoRunId: ${{ needs.create-run-on-testmo.outputs.testmo-run-id }}
 
-      - name: Run playwright tests for apps
-        uses: ./.github/actions/run-pw-tests
-        with:
-          SHARD: ${{ matrix.shard }}
-          BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
-          API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
-          E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
-          E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
-          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
-          MAILPITURL: ${{ secrets.MAILPITURL }}
-          PW_WORKERS: ${{ vars.PW_WORKERS }}
-          PW_RETRIES: ${{ vars.PW_RETRIES }}
-          URL_TO_RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          PROJECT: "apps-e2e"
-
-      - name: submit-results-to-testmo for apps
-        if: always()
-        uses: ./.github/actions/testmo/testmo-threads-submit-playwright
-        with:
-          testmoUrl: ${{ secrets.TESTMO_URL }}
-          testmoToken: ${{ secrets.TESTMO_TOKEN }}
-          testmoRunId: ${{ needs.create-run-on-testmo.outputs.testmo-run-id }}
   tests-complete:
     if: '!cancelled()'
     needs: ["initialize-cloud", "run-tests", "create-run-on-testmo"]
