@@ -222,7 +222,6 @@ jobs:
           testmoToken: ${{ secrets.TESTMO_TOKEN }}
           testmoRunId: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
 
-
   tests-complete:
     if: |
       !cancelled() && always()
