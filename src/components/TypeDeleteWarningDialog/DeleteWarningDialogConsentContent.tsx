@@ -21,7 +21,7 @@ const DeleteWarningDialogConsentContent: React.FC<DeleteWarningDialogConsentCont
       <Checkbox
         name="delete-assigned-items-consent"
         checked={isConsentChecked}
-        onCheckedChange={onConsentChange}
+        onCheckedChange={value => onConsentChange(!!value)}
       >
         <Text>{consentLabel}</Text>
       </Checkbox>
