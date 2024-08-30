@@ -16,19 +16,19 @@ export function getMenuItemInputData(data: MenuItemDialogFormData): MenuItemInpu
 
   switch (data.linkType) {
     case "category":
-      variables.category = data.id;
+      variables.category = data.linkValue;
       break;
 
     case "collection":
-      variables.collection = data.id;
+      variables.collection = data.linkValue;
       break;
 
     case "page":
-      variables.page = data.id;
+      variables.page = data.linkValue;
       break;
 
     case "link":
-      variables.url = data.id;
+      variables.url = data.linkValue;
       break;
 
     default:
@@ -49,19 +49,19 @@ export function getMenuItemCreateInputData(
 
   switch (data.linkType) {
     case "category":
-      variables.category = data.id;
+      variables.category = data.linkValue;
       break;
 
     case "collection":
-      variables.collection = data.id;
+      variables.collection = data.linkValue;
       break;
 
     case "page":
-      variables.page = data.id;
+      variables.page = data.linkValue;
       break;
 
     case "link":
-      variables.url = data.id;
+      variables.url = data.linkValue;
       break;
 
     default:
