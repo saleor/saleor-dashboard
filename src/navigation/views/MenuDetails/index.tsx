@@ -23,10 +23,8 @@ import { extractMutationErrors, maybe } from "../../../misc";
 import { pageUrl } from "../../../pages/urls";
 import MenuDetailsPage, { MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
 import { findNode, getNode } from "../../components/MenuDetailsPage/tree";
-import MenuItemDialog, {
-  MenuItemDialogFormData,
-  MenuItemType,
-} from "../../components/MenuItemDialog";
+import MenuItemDialog from "../../components/MenuItemDialog";
+import { MenuItemDialogFormData, MenuItemType } from "../../components/MenuItemDialog/types";
 import {
   getItemId,
   getItemType,
@@ -35,7 +33,7 @@ import {
 import { menuUrl, MenuUrlQueryParams } from "../../urls";
 import { handleDelete, handleItemCreate, handleItemUpdate, handleUpdate } from "./successHandlers";
 import {
-  getInitialDisplayValue,
+  getInitialMenutItemValue,
   getMenuItemCreateInputData,
   getMenuItemInputData,
   getMoves,
@@ -135,7 +133,8 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
   const initialMenuItemUpdateFormData: MenuItemDialogFormData = {
     id: maybe(() => getItemId(menuItem)),
     name: maybe(() => menuItem.name, "..."),
-    type: maybe<MenuItemType>(() => getItemType(menuItem), "category"),
+    linkType: maybe<MenuItemType>(() => getItemType(menuItem), "category"),
+    linkValue: getInitialMenutItemValue(menuItem),
   };
   // This is a workaround to let know <MenuDetailsPage />
   // that it should clean operation stack if mutations
@@ -234,7 +233,6 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
         errors={maybe(() => menuItemUpdateOpts.data.menuItemUpdate.errors, [])}
         pages={pages}
         initial={initialMenuItemUpdateFormData}
-        initialDisplayValue={getInitialDisplayValue(menuItem)}
         loading={categorySearch.result.loading || collectionSearch.result.loading}
         confirmButtonState={menuItemUpdateOpts.status}
         disabled={menuItemUpdateOpts.loading}

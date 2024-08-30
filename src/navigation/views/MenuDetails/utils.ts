@@ -6,7 +6,7 @@ import {
 } from "@dashboard/graphql";
 
 import { MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
-import { MenuItemDialogFormData } from "../../components/MenuItemDialog";
+import { MenuItemDialogFormData } from "../../components/MenuItemDialog/types";
 import { unknownTypeError } from "../../components/MenuItemsSortableTree/utils";
 
 export function getMenuItemInputData(data: MenuItemDialogFormData): MenuItemInput {
@@ -14,7 +14,7 @@ export function getMenuItemInputData(data: MenuItemDialogFormData): MenuItemInpu
     name: data.name,
   };
 
-  switch (data.type) {
+  switch (data.linkType) {
     case "category":
       variables.category = data.id;
       break;
@@ -47,7 +47,7 @@ export function getMenuItemCreateInputData(
     name: data.name,
   };
 
-  switch (data.type) {
+  switch (data.linkType) {
     case "category":
       variables.category = data.id;
       break;
@@ -71,17 +71,17 @@ export function getMenuItemCreateInputData(
   return variables;
 }
 
-export function getInitialDisplayValue(item: MenuItemFragment): string {
+export function getInitialMenutItemValue(item: MenuItemFragment): string {
   if (!item) {
     return "...";
   }
 
   if (item.category) {
-    return item.category.name;
+    return item.category.id;
   } else if (item.collection) {
-    return item.collection.name;
+    return item.collection.id;
   } else if (item.page) {
-    return item.page.title;
+    return item.page.id;
   } else if (item.url) {
     return item.url;
   } else {

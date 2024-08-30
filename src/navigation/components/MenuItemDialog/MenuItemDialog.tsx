@@ -1,8 +1,8 @@
 // @ts-strict-ignore
-import AutocompleteSelectMenu from "@dashboard/components/AutocompleteSelectMenu";
 import BackButton from "@dashboard/components/BackButton";
+import { Combobox } from "@dashboard/components/Combobox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import FormSpacer from "@dashboard/components/FormSpacer";
+import { DashboardModal } from "@dashboard/components/Modal";
 import {
   MenuErrorFragment,
   SearchCategoriesQuery,
@@ -11,75 +11,46 @@ import {
 } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
-import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { buttonMessages, sectionNames } from "@dashboard/intl";
+import { buttonMessages } from "@dashboard/intl";
 import { RelayToFlat } from "@dashboard/types";
-import { getFieldError, getFormErrors } from "@dashboard/utils/errors";
+import { getFormErrors } from "@dashboard/utils/errors";
 import getMenuErrorMessage from "@dashboard/utils/errors/menu";
-import { getMenuItemByValue, IMenu } from "@dashboard/utils/menu";
-import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
-import isUrl from "is-url";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
+import { Controller, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export type MenuItemType = "category" | "collection" | "link" | "page";
-export interface MenuItemData {
-  id: string;
-  type: MenuItemType;
-}
-
-export interface MenuItemDialogFormData extends MenuItemData {
-  name: string;
-}
+import { useOptions } from "./options";
+import { MenuItemDialogFormData } from "./types";
+import { getValidationSchema } from "./validationSchema";
 
 export interface MenuItemDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   disabled: boolean;
   errors: MenuErrorFragment[];
   initial?: MenuItemDialogFormData;
-  initialDisplayValue?: string;
   loading: boolean;
   open: boolean;
   collections: RelayToFlat<SearchCollectionsQuery["search"]>;
   categories: RelayToFlat<SearchCategoriesQuery["search"]>;
   pages: RelayToFlat<SearchPagesQuery["search"]>;
   onClose: () => void;
-  onSubmit: (data: MenuItemDialogFormData) => void;
+  onSubmit: (data: any) => void;
   onQueryChange: (query: string) => void;
 }
 
 const defaultInitial: MenuItemDialogFormData = {
-  id: "",
   name: "",
-  type: "category",
+  linkType: null,
+  linkValue: "",
 };
-
-function getMenuItemData(value: string): MenuItemData {
-  const [type, ...idParts] = value.split(":");
-
-  return {
-    id: idParts.join(":"),
-    type: type as MenuItemType,
-  };
-}
-
-function getDisplayValue(menu: IMenu, value: string): string {
-  const menuItemData = getMenuItemData(value);
-
-  if (menuItemData.type === "link") {
-    return menuItemData.id;
-  }
-
-  return getMenuItemByValue(menu, value).label.toString();
-}
 
 const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
   confirmButtonState,
   disabled,
   errors: apiErrors,
   initial,
-  initialDisplayValue,
   loading,
   onClose,
   onSubmit,
@@ -90,211 +61,184 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
   pages,
 }) => {
   const intl = useIntl();
-  const errors = useModalDialogErrors(apiErrors, open);
-  const [displayValue, setDisplayValue] = React.useState(initialDisplayValue || "");
-  const [data, setData] = useStateFromProps<MenuItemDialogFormData>(initial || defaultInitial);
-  const [url, setUrl] = React.useState<string>(undefined);
+
+  const { handleSubmit, control, watch, setValue, reset, clearErrors, formState } =
+    useForm<MenuItemDialogFormData>({
+      defaultValues: defaultInitial,
+      resolver: zodResolver(getValidationSchema(intl)),
+    });
+
+  const linkType = watch("linkType");
 
   // Reset input state after closing dialog
   useModalDialogOpen(open, {
     onClose: () => {
-      setData(initial || defaultInitial);
-      setDisplayValue(initialDisplayValue);
-      setUrl(undefined);
+      reset(defaultInitial);
+      clearErrors();
     },
   });
-  // Refresh initial display value if changed
-  React.useEffect(() => setDisplayValue(initialDisplayValue), [initialDisplayValue]);
 
+  // Refresh initial display value if changed
+  React.useEffect(() => reset(initial), [initial]);
+
+  const errors = useModalDialogErrors(apiErrors, open);
   const mutationErrors = errors.filter(err => err.field === null);
   const formErrors = getFormErrors(["name"], errors);
-  const testIds = ["category", "collection", "page", "url"];
-  const idError = ["category", "collection", "page", "url"]
-    .map(field => getFieldError(errors, field))
-    .reduce((acc, err) => acc || err);
 
-  let options: IMenu = [];
-
-  if (categories.length > 0) {
-    options = [
-      ...options,
-      {
-        children: categories.map(category => ({
-          children: [],
-          data: {},
-          label: category.name,
-          value: "category:" + category.id,
-        })),
-        data: {},
-        label: intl.formatMessage(sectionNames.categories),
-      },
-    ];
-  }
-
-  if (collections.length > 0) {
-    options = [
-      ...options,
-      {
-        children: collections.map(collection => ({
-          children: [],
-          data: {},
-          label: collection.name,
-          value: "collection:" + collection.id,
-        })),
-        data: {},
-        label: intl.formatMessage(sectionNames.collections),
-      },
-    ];
-  }
-
-  if (pages.length > 0) {
-    options = [
-      ...options,
-      {
-        children: pages.map(page => ({
-          children: [],
-          data: {},
-          label: page.title,
-          value: "page:" + page.id,
-        })),
-        data: {},
-        label: intl.formatMessage(sectionNames.pages),
-      },
-    ];
-  }
-
-  if (url) {
-    options = [
-      {
-        children: [],
-        data: {},
-        label: (
-          <FormattedMessage
-            id="fzDI3A"
-            defaultMessage="Link to: {url}"
-            description="add link to navigation"
-            values={{
-              url: <strong>{url}</strong>,
-            }}
-          />
-        ),
-        value: "link:" + url,
-      },
-    ];
-  }
-
-  const handleQueryChange = (query: string) => {
-    if (isUrl(query)) {
-      setUrl(query);
-    } else if (isUrl("http://" + query)) {
-      setUrl("http://" + query);
-    } else if (url) {
-      setUrl(undefined);
-    }
-
-    onQueryChange(query);
-  };
-  const handleSelectChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    const menuItemData = getMenuItemData(value);
-
-    setData(value => ({
-      ...value,
-      ...menuItemData,
-    }));
-    setDisplayValue(getDisplayValue(options, value));
-  };
-  const handleSubmit = () => onSubmit(data);
+  const { baseOptions, subOptions } = useOptions({ pages, categories, collections });
 
   return (
-    // TODO: MERX-813 Replace Dialog and AutocompleteSelectMenu
-    <Dialog
-      onClose={onClose}
-      open={open}
-      maxWidth="sm"
-      fullWidth
-      PaperProps={{
-        style: { overflowY: "visible" },
-      }}
-    >
-      <DialogTitle disableTypography data-test-id="add-menu-item-dialog-title">
-        {initial
-          ? intl.formatMessage({
-              id: "KKQUMK",
-              defaultMessage: "Edit Item",
-              description: "edit menu item, header",
-            })
-          : intl.formatMessage({
-              id: "H3Uirw",
-              defaultMessage: "Add Item",
-              description: "create new menu item, header",
-            })}
-      </DialogTitle>
-      <DialogContent style={{ overflow: "visible" }}>
-        <TextField
-          data-test-id="menu-item-name-input"
-          disabled={disabled}
-          label={intl.formatMessage({
-            id: "0Vyr8h",
-            defaultMessage: "Name",
-            description: "menu item name",
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content size="sm">
+        <form
+          onSubmit={handleSubmit(data => {
+            onSubmit(data);
           })}
-          fullWidth
-          value={data.name}
-          onChange={event =>
-            setData(value => ({
-              ...value,
-              name: event.target.value,
-            }))
-          }
-          name="name"
-          error={!!formErrors.name}
-          helperText={getMenuErrorMessage(formErrors.name, intl)}
-        />
-        <FormSpacer />
-        <AutocompleteSelectMenu
-          disabled={disabled}
-          onChange={handleSelectChange}
-          name="id"
-          label={intl.formatMessage({
-            id: "Urh2N3",
-            defaultMessage: "Link",
-            description: "label",
-          })}
-          displayValue={displayValue}
-          loading={loading}
-          options={options}
-          testIds={testIds}
-          error={!!idError}
-          helperText={getMenuErrorMessage(idError, intl)}
-          placeholder={intl.formatMessage({
-            id: "28GZnc",
-            defaultMessage: "Start typing to begin search...",
-          })}
-          onInputChange={handleQueryChange}
-        />
-        {mutationErrors.length > 0 && (
-          <>
-            <FormSpacer />
-            {mutationErrors.map(err => (
-              <Text key={err.code} color="critical1">
-                {getMenuErrorMessage(err, intl)}
-              </Text>
-            ))}
-          </>
-        )}
-      </DialogContent>
-      <DialogActions>
-        <BackButton onClick={onClose} />
-        <ConfirmButton
-          data-test-id="submit"
-          transitionState={confirmButtonState}
-          onClick={handleSubmit}
         >
-          <FormattedMessage {...buttonMessages.confirm} />
-        </ConfirmButton>
-      </DialogActions>
-    </Dialog>
+          <DashboardModal.Grid>
+            <DashboardModal.Title data-test-id="add-menu-item-dialog-title">
+              {initial
+                ? intl.formatMessage({
+                    id: "KKQUMK",
+                    defaultMessage: "Edit Item",
+                    description: "edit menu item, header",
+                  })
+                : intl.formatMessage({
+                    id: "H3Uirw",
+                    defaultMessage: "Add Item",
+                    description: "create new menu item, header",
+                  })}
+            </DashboardModal.Title>
+
+            <Controller
+              control={control}
+              name="name"
+              render={({ field: { value, onChange, ...field }, fieldState: { error } }) => (
+                <Input
+                  {...field}
+                  data-test-id="menu-item-name-input"
+                  disabled={disabled}
+                  label={intl.formatMessage({
+                    id: "0Vyr8h",
+                    defaultMessage: "Name",
+                    description: "menu item name",
+                  })}
+                  value={value}
+                  onChange={onChange}
+                  error={!!formErrors.name || !!error}
+                  helperText={formErrors.name || error?.message}
+                />
+              )}
+            />
+
+            <Box display="flex" gap={3}>
+              <Box width="100%">
+                <Controller
+                  name="linkType"
+                  control={control}
+                  render={({ field: { value, onChange, ...field }, fieldState: { error } }) => {
+                    return (
+                      <Combobox
+                        {...field}
+                        disabled={disabled}
+                        label={intl.formatMessage({
+                          id: "aasX8r",
+                          defaultMessage: "Link type",
+                          description: "label",
+                        })}
+                        options={baseOptions}
+                        onChange={e => {
+                          onChange(e);
+                          setValue("linkValue", "");
+                          clearErrors("linkValue");
+                        }}
+                        value={baseOptions.find(o => o.value === value) || null}
+                        name="linkType"
+                        error={!!error}
+                        helperText={error?.message}
+                        fetchOptions={() => undefined}
+                      />
+                    );
+                  }}
+                />
+              </Box>
+
+              <Box width="100%">
+                {linkType !== "link" ? (
+                  <Controller
+                    name="linkValue"
+                    control={control}
+                    render={({ field: { value, onChange, ...field }, fieldState: { error } }) => {
+                      return (
+                        <Combobox
+                          {...field}
+                          disabled={disabled}
+                          label={intl.formatMessage({
+                            id: "WDrC7e",
+                            defaultMessage: "Link value",
+                            description: "label",
+                          })}
+                          options={subOptions[linkType] ?? []}
+                          onChange={onChange}
+                          value={subOptions[linkType]?.find(o => o.value === value) || null}
+                          name="linkValue"
+                          error={!!error}
+                          helperText={error?.message}
+                          fetchOptions={() => undefined}
+                          loading={loading}
+                          onInputValueChange={onQueryChange}
+                        />
+                      );
+                    }}
+                  />
+                ) : (
+                  <Controller
+                    control={control}
+                    name="linkValue"
+                    render={({ field: { value, onChange, ...field }, fieldState: { error } }) => (
+                      <Input
+                        {...field}
+                        data-test-id="menu-item-input-value"
+                        disabled={disabled}
+                        label={intl.formatMessage({
+                          id: "WDrC7e",
+                          defaultMessage: "Link value",
+                          description: "label",
+                        })}
+                        value={value}
+                        onChange={onChange}
+                        error={!!formErrors.name || !!error}
+                        helperText={formErrors.name || error?.message}
+                      />
+                    )}
+                  />
+                )}
+              </Box>
+            </Box>
+
+            {mutationErrors.length > 0 && (
+              <Box>
+                {mutationErrors.map(err => (
+                  <Text key={err.code} color="critical1" display="block">
+                    {getMenuErrorMessage(err, intl)}
+                  </Text>
+                ))}
+              </Box>
+            )}
+            <DashboardModal.Actions>
+              <BackButton onClick={onClose} />
+              <ConfirmButton
+                data-test-id="submit"
+                transitionState={confirmButtonState}
+                type="submit"
+              >
+                <FormattedMessage {...buttonMessages.confirm} />
+              </ConfirmButton>
+            </DashboardModal.Actions>
+          </DashboardModal.Grid>
+        </form>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
