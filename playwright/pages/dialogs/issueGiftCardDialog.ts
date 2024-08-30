@@ -12,13 +12,13 @@ export class IssueGiftCardDialog extends BasePage {
     readonly giftCardExpireFields = page.getByTestId("gift-card-expire-data-fields"),
     readonly sendToCustomerCheckbox = page
       .getByTestId("send-to-customer-section")
-      .locator('input[type="checkbox"]'),
-    readonly sendExpireDateCheckbox = page.getByTestId("expiry-section").locator("input"),
+      .locator('button[role="checkbox"]'),
+    readonly sendExpireDateCheckbox = page.getByTestId("expiry-section").locator("button"),
     readonly customerInput = page.getByTestId("customer-field"),
-    readonly noteTextArea = page.getByTestId("note-field").locator('[name="note"]'),
+    readonly noteTextArea = page.getByTestId("note-field"),
     readonly requiresActivationCheckbox = page
       .getByTestId("requires-activation-section")
-      .locator("input"),
+      .locator('button[role="checkbox"]'),
     readonly issueButton = page.getByTestId("submit"),
     readonly okButton = page.getByTestId("submit"),
     readonly copyCodeButton = page.getByTestId("copy-code-button"),
@@ -93,5 +93,9 @@ export class IssueGiftCardDialog extends BasePage {
     const allTexts = await this.cardCode.allTextContents();
 
     return allTexts[0];
+  }
+
+  async blur() {
+    await this.page.click("[data-test-id='gift-card-dialog']");
   }
 }
