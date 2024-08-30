@@ -4,7 +4,7 @@ import {
   SearchPagesQuery,
 } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
-import { MenuItemType } from "@dashboard/navigation/components/MenuItemDialog/types";
+import { MenuItemType } from "@dashboard/navigation/components/MenuItemDialog";
 import { RelayToFlat } from "@dashboard/types";
 import { Option } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";

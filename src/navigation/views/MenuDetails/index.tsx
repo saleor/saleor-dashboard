@@ -23,8 +23,10 @@ import { extractMutationErrors, maybe } from "../../../misc";
 import { pageUrl } from "../../../pages/urls";
 import MenuDetailsPage, { MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
 import { findNode, getNode } from "../../components/MenuDetailsPage/tree";
-import MenuItemDialog from "../../components/MenuItemDialog";
-import { MenuItemDialogFormData, MenuItemType } from "../../components/MenuItemDialog/types";
+import MenuItemDialog, {
+  MenuItemDialogFormData,
+  MenuItemType,
+} from "../../components/MenuItemDialog";
 import {
   getItemId,
   getItemType,
