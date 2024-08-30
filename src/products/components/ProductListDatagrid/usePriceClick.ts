@@ -12,6 +12,8 @@ export const usePriceClick = ({ isChannelSelected }: { isChannelSelected: boolea
 
     history.replace({ search: getPriceClickSearchParams(history.location.search) });
 
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
     filterWindow.setOpen(true);
   };
 
