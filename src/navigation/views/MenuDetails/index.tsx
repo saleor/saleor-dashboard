@@ -35,6 +35,7 @@ import {
 import { menuUrl, MenuUrlQueryParams } from "../../urls";
 import { handleDelete, handleItemCreate, handleItemUpdate, handleUpdate } from "./successHandlers";
 import {
+  getInitialMenuItemLabel,
   getInitialMenuItemValue,
   getMenuItemCreateInputData,
   getMenuItemInputData,
@@ -235,6 +236,7 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
         errors={maybe(() => menuItemUpdateOpts.data.menuItemUpdate.errors, [])}
         pages={pages}
         initial={initialMenuItemUpdateFormData}
+        initialDisplayValue={getInitialMenuItemLabel(menuItem)}
         loading={categorySearch.result.loading || collectionSearch.result.loading}
         confirmButtonState={menuItemUpdateOpts.status}
         disabled={menuItemUpdateOpts.loading}

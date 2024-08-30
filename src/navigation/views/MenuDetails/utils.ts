@@ -89,6 +89,24 @@ export function getInitialMenuItemValue(item: MenuItemFragment): string {
   }
 }
 
+export function getInitialMenuItemLabel(item: MenuItemFragment): string {
+  if (!item) {
+    return "...";
+  }
+
+  if (item.category) {
+    return item.category.name;
+  } else if (item.collection) {
+    return item.collection.name;
+  } else if (item.page) {
+    return item.page.title;
+  } else if (item.url) {
+    return item.url;
+  } else {
+    return "";
+  }
+}
+
 export function getMoves(data: MenuDetailsSubmitData): MenuItemMoveInput[] {
   return data.operations
     .filter(operation => operation.type === "move")

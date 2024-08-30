@@ -16,7 +16,7 @@ import { RelayToFlat } from "@dashboard/types";
 import { getFieldError, getFormErrors } from "@dashboard/utils/errors";
 import getMenuErrorMessage from "@dashboard/utils/errors/menu";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Input, Text } from "@saleor/macaw-ui-next";
+import { Box, Input, Option, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -30,6 +30,7 @@ export interface MenuItemDialogProps {
   disabled: boolean;
   errors: MenuErrorFragment[];
   initial?: MenuItemDialogFormData;
+  initialDisplayValue?: string;
   loading: boolean;
   open: boolean;
   collections: RelayToFlat<SearchCollectionsQuery["search"]>;
@@ -51,6 +52,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
   disabled,
   errors: apiErrors,
   initial,
+  initialDisplayValue,
   loading,
   onClose,
   onSubmit,
@@ -62,7 +64,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
 }) => {
   const intl = useIntl();
 
-  const { handleSubmit, control, watch, setValue, reset, clearErrors } =
+  const { handleSubmit, control, watch, formState, setValue, reset, clearErrors } =
     useForm<MenuItemDialogFormData>({
       defaultValues: defaultInitial,
       resolver: zodResolver(getValidationSchema(intl)),
@@ -89,6 +91,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
     .reduce((acc, err) => acc || err);
 
   const { baseOptions, subOptions } = useOptions({ pages, categories, collections });
+  const subOptionsList: Option[] | undefined = subOptions[linkType];
 
   return (
     <DashboardModal onChange={onClose} open={open}>
@@ -169,6 +172,8 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
                     name="linkValue"
                     control={control}
                     render={({ field: { value, onChange, ...field }, fieldState: { error } }) => {
+                      const subOptionsListValue = subOptionsList?.find(o => o.value === value);
+
                       return (
                         <Combobox
                           {...field}
@@ -180,7 +185,15 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
                           })}
                           options={subOptions[linkType] ?? []}
                           onChange={onChange}
-                          value={subOptions[linkType]?.find(o => o.value === value) || null}
+                          value={
+                            // Show initial value with label in case initial options list from API does not contain it
+                            initial && !formState.isDirty
+                              ? {
+                                  value,
+                                  label: initialDisplayValue,
+                                }
+                              : subOptionsListValue || null
+                          }
                           name="linkValue"
                           error={!!error}
                           helperText={error?.message}
