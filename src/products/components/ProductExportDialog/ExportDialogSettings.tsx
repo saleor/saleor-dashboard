@@ -1,14 +1,13 @@
 import Hr from "@dashboard/components/Hr";
-import RadioGroupField, { RadioGroupFieldChoice } from "@dashboard/components/RadioGroupField";
 import {
-  ExportErrorFragment,
-  ExportProductsInput,
-  ExportScope,
-  FileTypesEnum,
-} from "@dashboard/graphql";
+  NewRadioGroupField as RadioGroupField,
+  RadioGroupFieldChoice,
+} from "@dashboard/components/RadioGroupField";
+import { ExportErrorFragment, ExportScope, FileTypesEnum } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getExportErrorMessage from "@dashboard/utils/errors/export";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -90,34 +89,41 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
     <>
       {allowScopeSelection && (
         <>
-          <RadioGroupField
-            choices={exportScopeChoices}
-            error={!!formErrors.scope}
-            hint={getExportErrorMessage(formErrors.scope, intl)}
-            label={intl.formatMessage({
+          <Text>
+            {intl.formatMessage({
               id: "g6yuk2",
               defaultMessage: "Export information for:",
               description: "export items to csv file, choice field label",
             })}
-            name={"scope" as keyof ExportProductsInput}
-            onChange={onChange}
+          </Text>
+
+          <RadioGroupField
+            name="scope"
             value={data.scope}
+            error={!!formErrors.scope}
+            onChange={onChange}
+            choices={exportScopeChoices}
+            errorMessage={getExportErrorMessage(formErrors.scope, intl)}
           />
           <Hr />
         </>
       )}
-      <RadioGroupField
-        choices={productExportTypeChoices}
-        error={!!formErrors.fileType}
-        hint={getExportErrorMessage(formErrors.fileType, intl)}
-        label={intl.formatMessage({
+
+      <Text>
+        {intl.formatMessage({
           id: "z1puMb",
           defaultMessage: "Export as:",
           description: "export items as csv or spreadsheet file",
         })}
-        name={"fileType" as keyof ExportProductsInput}
-        onChange={onChange}
+      </Text>
+
+      <RadioGroupField
+        name="fileType"
         value={data.fileType}
+        error={!!formErrors.fileType}
+        onChange={onChange}
+        choices={productExportTypeChoices}
+        errorMessage={getExportErrorMessage(formErrors.fileType, intl)}
       />
     </>
   );

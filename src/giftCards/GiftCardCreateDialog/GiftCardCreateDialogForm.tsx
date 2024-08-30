@@ -13,8 +13,7 @@ import useForm from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import Label from "@dashboard/orders/components/OrderHistory/Label";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { TextField } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Textarea } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -24,7 +23,6 @@ import GiftCardCreateExpirySelect from "./GiftCardCreateExpirySelect";
 import GiftCardCreateMoneyInput from "./GiftCardCreateMoneyInput";
 import GiftCardCreateRequiresActivationSection from "./GiftCardCreateRequiresActivationSection";
 import { giftCardCreateMessages as messages } from "./messages";
-import { useGiftCardCreateFormStyles as useStyles } from "./styles";
 import { GiftCardCreateFormCommonProps, GiftCardCreateFormCustomer } from "./types";
 
 export interface GiftCardCreateFormData extends GiftCardCreateCommonFormData {
@@ -65,7 +63,6 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
   initialCustomer,
 }) => {
   const intl = useIntl();
-  const classes = useStyles({});
   const { data: settingsData, loading: loadingSettings } = useGiftCardSettingsQuery();
   const [selectedCustomer, setSelectedCustomer] = useState<GiftCardCreateFormCustomer>(
     initialCustomer || defaultInitialCustomer,
@@ -148,12 +145,12 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
       <GiftCardCreateExpirySelect {...commonFormProps} />
 
       <Box display="grid" gap={2}>
-        <TextField
+        <Textarea
           data-test-id="note-field"
           name="note"
           onChange={change}
-          multiline
-          className={classes.noteField}
+          rows={3}
+          width="100%"
           label={`${intl.formatMessage(
             messages.noteLabel,
           )} *${intl.formatMessage(commonMessages.optionalField)}`}

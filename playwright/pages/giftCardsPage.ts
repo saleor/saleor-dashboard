@@ -30,7 +30,9 @@ export class GiftCardsPage extends BasePage {
     readonly resendCodeButton = page.getByTestId("resend-code"),
     readonly deactivateButton = page.getByTestId("enable-button"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
-    readonly cardExpiresCheckboxOnModal = page.getByTestId("expiry-section").locator("input"),
+    readonly cardExpiresCheckboxOnModal = page
+      .getByTestId("expiry-section")
+      .locator('button[role="checkbox"]'),
     readonly giftCardExpiresCheckbox = page
       .getByTestId("gift-card-expire-section")
       .locator("input"),

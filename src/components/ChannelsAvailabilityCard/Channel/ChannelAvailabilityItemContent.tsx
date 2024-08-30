@@ -1,11 +1,11 @@
 // @ts-strict-ignore
 import { ChannelData } from "@dashboard/channels/utils";
 import { DateTimeTimezoneField } from "@dashboard/components/DateTimeTimezoneField";
-import { RadioGroup } from "@dashboard/components/RadioGroup";
+import { StopPropagation } from "@dashboard/components/StopPropagation";
 import useCurrentDate from "@dashboard/hooks/useCurrentDate";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
-import { Box, Checkbox, Divider, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Divider, RadioGroup, Text } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -56,41 +56,48 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
 
   return (
     <Box display="flex" gap={3} paddingTop={3} flexDirection="column">
-      <RadioGroup
-        value={String(isPublished)}
-        onValueChange={value => {
-          onChange(id, {
-            ...formData,
-            isPublished: value === "true",
-            publishedAt: value === "false" ? null : publishedAt,
-          });
-        }}
-        disabled={disabled}
-        display="flex"
-        flexDirection="column"
-        gap={3}
-      >
-        <RadioGroup.Item id={`${id}-isPublished-true`} value="true" name="isPublished">
-          <Box display="flex" alignItems="baseline" gap={2}>
-            <Text>{messages.visibleLabel}</Text>
-            {isPublished && publishedAt && Date.parse(publishedAt) < dateNow && (
-              <Text size={2} color="default2">
-                {messages.visibleSecondLabel || visibleMessage(publishedAt)}
-              </Text>
-            )}
-          </Box>
-        </RadioGroup.Item>
-        <RadioGroup.Item id={`${id}-isPublished-false`} value="false" name="isPublished">
-          <Box display="flex" alignItems="baseline" gap={2}>
-            <Text>{messages.hiddenLabel}</Text>
-            {publishedAt && !isPublished && Date.parse(publishedAt) >= dateNow && (
-              <Text size={2} color="default2">
-                {messages.hiddenSecondLabel}
-              </Text>
-            )}
-          </Box>
-        </RadioGroup.Item>
-      </RadioGroup>
+      {/**
+       * StopPropagation is used here to block onClick events from RadioGroup that cause throw error in datagrid
+       * Datagrid listing for all on click event but RadioGroup emitted couple of events at once
+       * Radix issue: https://github.com/radix-ui/primitives/issues/1982
+       */}
+      <StopPropagation>
+        <RadioGroup
+          value={String(isPublished)}
+          onValueChange={value => {
+            onChange(id, {
+              ...formData,
+              isPublished: value === "true",
+              publishedAt: value === "false" ? null : publishedAt,
+            });
+          }}
+          disabled={disabled}
+          display="flex"
+          flexDirection="column"
+          gap={3}
+        >
+          <RadioGroup.Item id={`${id}-isPublished-true`} value="true" name="isPublished">
+            <Box display="flex" alignItems="baseline" gap={2}>
+              <Text>{messages.visibleLabel}</Text>
+              {isPublished && publishedAt && Date.parse(publishedAt) < dateNow && (
+                <Text size={2} color="default2">
+                  {messages.visibleSecondLabel || visibleMessage(publishedAt)}
+                </Text>
+              )}
+            </Box>
+          </RadioGroup.Item>
+          <RadioGroup.Item id={`${id}-isPublished-false`} value="false" name="isPublished">
+            <Box display="flex" alignItems="baseline" gap={2}>
+              <Text>{messages.hiddenLabel}</Text>
+              {publishedAt && !isPublished && Date.parse(publishedAt) >= dateNow && (
+                <Text size={2} color="default2">
+                  {messages.hiddenSecondLabel}
+                </Text>
+              )}
+            </Box>
+          </RadioGroup.Item>
+        </RadioGroup>
+      </StopPropagation>
       {!isPublished && (
         <Box display="flex" flexDirection="column" alignItems="start" gap={1}>
           <Checkbox

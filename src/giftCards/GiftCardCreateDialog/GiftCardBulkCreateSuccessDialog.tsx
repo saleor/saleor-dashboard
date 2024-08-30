@@ -1,7 +1,6 @@
-import { Button } from "@dashboard/components/Button";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { DialogProps } from "@dashboard/types";
-import { Text } from "@saleor/macaw-ui-next";
+import { Button, Text } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
