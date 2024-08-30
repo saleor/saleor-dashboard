@@ -1,13 +1,12 @@
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import GiftCardCustomerSelectField from "@dashboard/giftCards/GiftCardCreateDialog/GiftCardCustomerSelectField";
 import { GiftCardCreateFormCustomer } from "@dashboard/giftCards/GiftCardCreateDialog/types";
 import { FormChange } from "@dashboard/hooks/useForm";
 import Label from "@dashboard/orders/components/OrderHistory/Label";
 import { mapSlugNodeToChoice } from "@dashboard/utils/maps";
-import { Box, Select } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Select, Text } from "@saleor/macaw-ui-next";
 import React, { useEffect } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { giftCardSendToCustomerMessages as messages } from "./messages";
 
@@ -37,14 +36,17 @@ const GiftCardSendToCustomer: React.FC<GiftCardSendToCustomerProps> = ({
 
   return (
     <>
-      <ControlledCheckbox
+      <Checkbox
         data-test-id="send-to-customer-section"
-        name={"sendToCustomerSelected"}
-        label={intl.formatMessage(messages.sendToCustomerSelectedLabel)}
+        name="sendToCustomerSelected"
         checked={sendToCustomerSelected}
-        onChange={change}
+        onCheckedChange={value => change({ target: { name: "sendToCustomerSelected", value } })}
         disabled={disabled}
-      />
+      >
+        <Text>
+          <FormattedMessage {...messages.sendToCustomerSelectedLabel} />
+        </Text>
+      </Checkbox>
       {sendToCustomerSelected && (
         <>
           <Box display="grid" gap={2}>

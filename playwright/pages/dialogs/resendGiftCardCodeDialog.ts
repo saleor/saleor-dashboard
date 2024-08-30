@@ -10,6 +10,10 @@ export class ResendGiftCardCodeDialog {
     this.page = page;
   }
 
+  async blur() {
+    await this.page.keyboard.press("Tab");
+  }
+
   async clickResendButton() {
     await this.resendButton.click();
     await this.resendButton.waitFor({ state: "hidden" });

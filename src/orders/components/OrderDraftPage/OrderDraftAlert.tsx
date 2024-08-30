@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelUsabilityDataQuery, OrderDetailsFragment } from "@dashboard/graphql";
 import { Alert, AlertProps } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui-next";
@@ -17,7 +16,7 @@ const getAlerts = (
   const canDetermineShippingMethods =
     order?.shippingAddress?.country.code && !!order?.lines?.length;
   const isChannelInactive = order && !order.channel.isActive;
-  const noProductsInChannel = channelUsabilityData?.products.totalCount === 0;
+  const noProductsInChannel = channelUsabilityData?.products?.totalCount === 0;
   const noShippingMethodsInChannel =
     canDetermineShippingMethods && order?.shippingMethods.length === 0;
 
@@ -64,7 +63,7 @@ const OrderDraftAlert: React.FC<OrderDraftAlertProps> = props => {
         alerts={alerts}
         alertsHeader={intl.formatMessage(alertMessages.manyAlerts)}
         values={{
-          country: order.shippingAddress.country.country,
+          country: order?.shippingAddress?.country.country,
           configLink: (
             <Box as="a" textDecoration="underline" href="/shipping" color="accent1" target="_blank">
               <FormattedMessage

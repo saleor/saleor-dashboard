@@ -14,7 +14,6 @@ import {
 } from "../GiftCardBulkCreateDialog/types";
 import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
 import { giftCardCreateMessages as messages } from "./messages";
-import { useGiftCardCreateFormStyles as useStyles } from "./styles";
 
 interface GiftCardCreateMoneyInputProps {
   change: FormChange;
@@ -30,7 +29,6 @@ const GiftCardCreateMoneyInput: React.FC<GiftCardCreateMoneyInputProps> = ({
   set,
 }) => {
   const intl = useIntl();
-  const classes = useStyles({});
   const { data: channelCurrenciesData } = useChannelCurrenciesQuery({});
   const { channelCurrencies } = channelCurrenciesData?.shop ?? {};
   const [savedCurrency, setCurrency] = useLocalStorage("giftCardCreateCurrency", undefined);
@@ -75,7 +73,6 @@ const GiftCardCreateMoneyInput: React.FC<GiftCardCreateMoneyInputProps> = ({
       helperText={getGiftCardErrorMessage(errors?.balance, intl)}
       change={handleInputChange}
       choices={mapSingleValueNodeToChoice(channelCurrencies ?? [])}
-      containerClassName={classes.fullWidthContainer}
       textFieldProps={{
         type: "float",
         label: intl.formatMessage(messages.amountLabel),
@@ -86,7 +83,6 @@ const GiftCardCreateMoneyInput: React.FC<GiftCardCreateMoneyInputProps> = ({
       selectFieldProps={{
         name: "balanceCurrency",
         value: balanceCurrency,
-        className: classes.currencySelectField,
       }}
     />
   );

@@ -19,7 +19,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import ContentWithProgress from "../GiftCardCreateDialog/ContentWithProgress";
 import { useGiftCardList } from "../GiftCardsList/providers/GiftCardListProvider";
 import { giftCardExportDialogMessages as messages } from "./messages";
-import useStyles from "./styles";
 import { getExportGiftCardsInput } from "./utils";
 
 type IdsToExport = string[] | null;
@@ -32,7 +31,6 @@ const GiftCardExportDialog: React.FC<
   const intl = useIntl();
   const notify = useNotifier();
   const { queue } = useBackgroundTask();
-  const classes = useStyles();
   const hasIdsToExport = !!idsToExport?.length;
   const {
     loading: loadingGiftCardList,
@@ -119,9 +117,7 @@ const GiftCardExportDialog: React.FC<
               }}
             />
 
-            <Text className={classes.note} fontSize={3}>
-              {intl.formatMessage(messages.exportNote)}
-            </Text>
+            <Text>{intl.formatMessage(messages.exportNote)}</Text>
           </>
         )}
       </ContentWithProgress>
