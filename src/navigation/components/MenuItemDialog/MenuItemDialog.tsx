@@ -13,7 +13,7 @@ import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
 import { RelayToFlat } from "@dashboard/types";
-import { getFormErrors } from "@dashboard/utils/errors";
+import { getFieldError, getFormErrors } from "@dashboard/utils/errors";
 import getMenuErrorMessage from "@dashboard/utils/errors/menu";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
@@ -36,7 +36,7 @@ export interface MenuItemDialogProps {
   categories: RelayToFlat<SearchCategoriesQuery["search"]>;
   pages: RelayToFlat<SearchPagesQuery["search"]>;
   onClose: () => void;
-  onSubmit: (data: any) => void;
+  onSubmit: (data: MenuItemDialogFormData) => void;
   onQueryChange: (query: string) => void;
 }
 
@@ -62,7 +62,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
 }) => {
   const intl = useIntl();
 
-  const { handleSubmit, control, watch, setValue, reset, clearErrors, formState } =
+  const { handleSubmit, control, watch, setValue, reset, clearErrors } =
     useForm<MenuItemDialogFormData>({
       defaultValues: defaultInitial,
       resolver: zodResolver(getValidationSchema(intl)),
@@ -84,6 +84,9 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
   const errors = useModalDialogErrors(apiErrors, open);
   const mutationErrors = errors.filter(err => err.field === null);
   const formErrors = getFormErrors(["name"], errors);
+  const idError = ["category", "collection", "page", "url"]
+    .map(field => getFieldError(errors, field))
+    .reduce((acc, err) => acc || err);
 
   const { baseOptions, subOptions } = useOptions({ pages, categories, collections });
 
@@ -126,7 +129,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
                   value={value}
                   onChange={onChange}
                   error={!!formErrors.name || !!error}
-                  helperText={formErrors.name || error?.message}
+                  helperText={getMenuErrorMessage(formErrors.name, intl) || error?.message}
                 />
               )}
             />
@@ -154,8 +157,8 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
                         }}
                         value={baseOptions.find(o => o.value === value) || null}
                         name="linkType"
-                        error={!!error}
-                        helperText={error?.message}
+                        error={!!idError || !!error}
+                        helperText={getMenuErrorMessage(idError, intl) || error?.message}
                         fetchOptions={() => undefined}
                       />
                     );
