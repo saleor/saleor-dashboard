@@ -1,6 +1,8 @@
 import Hr from "@dashboard/components/Hr";
-import { RadioGroupFieldChoice } from "@dashboard/components/RadioGroupField";
-import { SimpleRadioGroupField } from "@dashboard/components/SimpleRadioGroupField";
+import {
+  NewRadioGroupField as RadioGroupField,
+  RadioGroupFieldChoice,
+} from "@dashboard/components/RadioGroupField";
 import { ExportErrorFragment, ExportScope, FileTypesEnum } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { getFormErrors } from "@dashboard/utils/errors";
@@ -95,7 +97,7 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
             })}
           </Text>
 
-          <SimpleRadioGroupField
+          <RadioGroupField
             name="scope"
             value={data.scope}
             error={!!formErrors.scope}
@@ -115,7 +117,7 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
         })}
       </Text>
 
-      <SimpleRadioGroupField
+      <RadioGroupField
         name="fileType"
         value={data.fileType}
         error={!!formErrors.fileType}
