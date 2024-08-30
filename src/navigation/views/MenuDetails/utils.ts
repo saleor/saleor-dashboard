@@ -71,7 +71,7 @@ export function getMenuItemCreateInputData(
   return variables;
 }
 
-export function getInitialMenutItemValue(item: MenuItemFragment): string {
+export function getInitialMenuItemValue(item: MenuItemFragment): string {
   if (!item) {
     return "...";
   }

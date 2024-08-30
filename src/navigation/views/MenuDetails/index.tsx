@@ -35,7 +35,7 @@ import {
 import { menuUrl, MenuUrlQueryParams } from "../../urls";
 import { handleDelete, handleItemCreate, handleItemUpdate, handleUpdate } from "./successHandlers";
 import {
-  getInitialMenutItemValue,
+  getInitialMenuItemValue,
   getMenuItemCreateInputData,
   getMenuItemInputData,
   getMoves,
@@ -136,7 +136,7 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
     id: maybe(() => getItemId(menuItem)),
     name: maybe(() => menuItem.name, "..."),
     linkType: maybe<MenuItemType>(() => getItemType(menuItem), "category"),
-    linkValue: getInitialMenutItemValue(menuItem),
+    linkValue: getInitialMenuItemValue(menuItem),
   };
   // This is a workaround to let know <MenuDetailsPage />
   // that it should clean operation stack if mutations

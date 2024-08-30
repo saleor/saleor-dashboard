@@ -93,11 +93,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
   return (
     <DashboardModal onChange={onClose} open={open}>
       <DashboardModal.Content size="sm">
-        <form
-          onSubmit={handleSubmit(data => {
-            onSubmit(data);
-          })}
-        >
+        <form onSubmit={handleSubmit(onSubmit)}>
           <DashboardModal.Grid>
             <DashboardModal.Title data-test-id="add-menu-item-dialog-title">
               {initial
@@ -160,6 +156,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
                         error={!!idError || !!error}
                         helperText={getMenuErrorMessage(idError, intl) || error?.message}
                         fetchOptions={() => undefined}
+                        data-test-id="menu-item-link-type-input"
                       />
                     );
                   }}
@@ -190,6 +187,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
                           fetchOptions={() => undefined}
                           loading={loading}
                           onInputValueChange={onQueryChange}
+                          data-test-id="menu-item-link-value-input"
                         />
                       );
                     }}
@@ -201,7 +199,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
                     render={({ field: { value, onChange, ...field }, fieldState: { error } }) => (
                       <Input
                         {...field}
-                        data-test-id="menu-item-input-value"
+                        data-test-id="menu-item-link-value-input"
                         disabled={disabled}
                         label={intl.formatMessage({
                           id: "WDrC7e",
@@ -210,8 +208,8 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
                         })}
                         value={value}
                         onChange={onChange}
-                        error={!!formErrors.name || !!error}
-                        helperText={formErrors.name || error?.message}
+                        error={!!error}
+                        helperText={error?.message}
                       />
                     )}
                   />
