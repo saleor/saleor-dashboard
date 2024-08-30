@@ -18,7 +18,6 @@ import GiftCardCreateExpirySelect from "../GiftCardCreateDialog/GiftCardCreateEx
 import GiftCardCreateMoneyInput from "../GiftCardCreateDialog/GiftCardCreateMoneyInput";
 import GiftCardCreateRequiresActivationSection from "../GiftCardCreateDialog/GiftCardCreateRequiresActivationSection";
 import { giftCardCreateMessages as messages } from "../GiftCardCreateDialog/messages";
-import { useGiftCardCreateFormStyles as useStyles } from "../GiftCardCreateDialog/styles";
 import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
 import {
   GiftCardBulkCreateFormCommonProps,
@@ -53,7 +52,6 @@ const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> 
   formErrors = {},
 }) => {
   const intl = useIntl();
-  const classes = useStyles({});
   const { data: settingsData, loading: loadingSettings } = useGiftCardSettingsQuery();
   const getInitialExpirySettingsData = (): Partial<GiftCardBulkCreateFormData> => {
     if (loadingSettings) {
@@ -94,7 +92,7 @@ const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> 
         error={!!formErrors?.count}
         name="cardsAmount"
         onChange={change}
-        className={classes.fullWidthContainer}
+        fullWidth
         label={intl.formatMessage(messages.giftCardsAmountLabel)}
         value={cardsAmount}
         helperText={getGiftCardErrorMessage(formErrors?.count, intl)}

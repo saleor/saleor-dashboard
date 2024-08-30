@@ -73,6 +73,7 @@ const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = 
   };
   const handleClose = () => {
     onClose();
+    setCardCode(null);
   };
 
   return (

@@ -1,15 +1,10 @@
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
-import { TextField } from "@material-ui/core";
-import { Box, Option, Select, Spinner } from "@saleor/macaw-ui-next";
-import clsx from "clsx";
+import { Box, Input, Option, Select, Spinner } from "@saleor/macaw-ui-next";
 import React from "react";
-
-import { useStyles } from "./styles";
 
 interface CommonFieldProps {
   name: string;
   type?: string;
-  className?: string;
   label?: string;
 }
 
@@ -24,20 +19,17 @@ export interface TextWithSelectFieldProps {
     minValue?: number;
   };
   selectFieldProps: CommonFieldProps & { value: string };
-  containerClassName?: string;
 }
 
 const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
   change,
   choices,
   loading,
-  containerClassName,
   textFieldProps,
   selectFieldProps,
   helperText,
   isError,
 }) => {
-  const classes = useStyles();
   const {
     name: textFieldName,
     value: textFieldValue,
@@ -45,11 +37,7 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
     type: textFieldType,
     minValue: textFieldMinValue,
   } = textFieldProps;
-  const {
-    name: selectFieldName,
-    value: selectFieldValue,
-    className: selectFieldClassName,
-  } = selectFieldProps;
+  const { name: selectFieldName, value: selectFieldValue } = selectFieldProps;
   const handleTextChange = (event: ChangeEvent) => {
     const { value } = event.target;
     const otherTarget = {
@@ -68,22 +56,18 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
   };
 
   return (
-    <div className={containerClassName || classes.container}>
-      <TextField
+    <Box width="100%">
+      <Input
         error={isError}
         helperText={helperText}
         type="number"
-        className={classes.innerContainer}
         name={textFieldName}
         label={textFieldLabel}
-        inputProps={{
-          min: textFieldMinValue,
-        }}
-        InputProps={{
-          className: clsx(classes.textField, {
-            [classes.textFieldCentered]: !textFieldLabel,
-          }),
-          endAdornment: loading ? (
+        min={textFieldMinValue}
+        onChange={handleTextChange}
+        value={textFieldValue}
+        endAdornment={
+          loading ? (
             <Box paddingTop={1} paddingRight={4}>
               <Spinner />
             </Box>
@@ -92,15 +76,14 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
               name={selectFieldName}
               onChange={value => change({ target: { name: selectFieldName, value } })}
               value={selectFieldValue}
-              className={clsx("noBorder", selectFieldClassName)}
+              className="noBorder"
+              __width="50px"
               options={choices}
             />
-          ),
-        }}
-        onChange={handleTextChange}
-        value={textFieldValue}
+          )
+        }
       />
-    </div>
+    </Box>
   );
 };
 
