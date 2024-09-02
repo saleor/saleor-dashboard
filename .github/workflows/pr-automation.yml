@@ -2,7 +2,7 @@ name: PR automation
 
 on:
   pull_request:
-    types: [labeled]
+    types: [opened, reopened, synchronize, labeled]
   workflow_dispatch:
     inputs:
       shards:
