@@ -3,7 +3,7 @@ import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/componen
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { buttonMessages } from "@dashboard/intl";
 import { getById } from "@dashboard/misc";
-import { CircularProgress } from "@material-ui/core";
+import { Box, Spinner } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -95,7 +95,9 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
         </DashboardModal.Title>
 
         {isLoading ? (
-          <CircularProgress size={16} />
+          <Box display="flex" width="100%" justifyContent="center" paddingY={10}>
+            <Spinner />
+          </Box>
         ) : (
           <>
             <DeleteWarningDialogConsentContent
