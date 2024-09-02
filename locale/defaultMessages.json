@@ -3507,6 +3507,10 @@
     "context": "product field",
     "string": "Category"
   },
+  "Kv58Rx": {
+    "context": "default gift card delete description",
+    "string": "{selectedItemsCount,plural,one{Are you sure you want to delete this gift card?} other{Are you sure you want to delete {selectedItemsCount} gift cards?}}"
+  },
   "Kw0jHS": {
     "context": "created products counter",
     "string": "{count}/{max} SKUs used"
@@ -4582,10 +4586,6 @@
   "S5/nSq": {
     "context": "grant refund table, column header",
     "string": "Quantity"
-  },
-  "S52JMl": {
-    "context": "default gift card delete description",
-    "string": "{selectedItemsCount,plural,one{Are you sure you want to delete this gift card?} other{Are you sure you want to delete {selectedItemsCount} gift cards?}}"
   },
   "S7Rwl0": {
     "context": "stock exceeded action question label",
