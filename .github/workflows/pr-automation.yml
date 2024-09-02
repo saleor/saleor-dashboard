@@ -2,6 +2,7 @@ name: PR automation
 
 on:
   pull_request:
+    types: [labeled]
   workflow_dispatch:
     inputs:
       shards:
@@ -151,7 +152,7 @@ jobs:
           env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
 
   run-tests:
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'run e2e') }}
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'run pw-e2e') }}
     runs-on: ubuntu-22.04
     needs: [initialize-cloud, deploy-dashboard]
     strategy:
@@ -175,7 +176,7 @@ jobs:
           PW_RETRIES: ${{ vars.PW_RETRIES }}
 
   merge-reports:
-    if: "!cancelled()"
+    if: "!cancelled() && github.event.pull_request.labels.*.name == 'run pw-e2e'"
     needs: run-tests
     runs-on: ubuntu-22.04
     steps:
