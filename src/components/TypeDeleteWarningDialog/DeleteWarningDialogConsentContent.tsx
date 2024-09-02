@@ -20,6 +20,7 @@ const DeleteWarningDialogConsentContent: React.FC<DeleteWarningDialogConsentCont
     {consentLabel && (
       <Checkbox
         name="delete-assigned-items-consent"
+        data-test-id="delete-assigned-items-consent"
         checked={isConsentChecked}
         onCheckedChange={value => onConsentChange(!!value)}
       >

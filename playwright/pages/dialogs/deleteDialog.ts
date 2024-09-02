@@ -5,7 +5,7 @@ export class DeleteDialog extends BasePage {
   constructor(
     page: Page,
     readonly deleteButton = page.getByTestId("submit"),
-    readonly confirmDeletionCheckbox = page.locator("[name='delete-assigned-items-consent']"),
+    readonly confirmDeletionCheckbox = page.getByTestId("delete-assigned-items-consent"),
     readonly confirmDeleteButton = page.getByTestId("confirm-delete"),
   ) {
     super(page);
