@@ -31,6 +31,10 @@ inputs:
   PW_RETRIES:
     description: "Playwright retries"
     required: true
+  PROJECT:
+    description: "Project name form playwright config"
+    required: false
+    default: "e2e"
 
 runs:
   using: "composite"
@@ -63,7 +67,8 @@ runs:
         URL_TO_RUN: ${{ inputs.URL_TO_RUN }}
         WORKERS: ${{ inputs.PW_WORKERS }}
         RETRIES: ${{ inputs.PW_RETRIES }}
-      run: npm run qa:pw-e2e -- --shard "$SHARD_NUMBER"
+        PROJECT: ${{ inputs.PROJECT }}
+      run: npx playwright test --grep @e2e --project="$PROJECT" --shard "$SHARD_NUMBER"
 
     - name: Upload blob report to GitHub Actions Artifacts
       uses: actions/upload-artifact@v3
