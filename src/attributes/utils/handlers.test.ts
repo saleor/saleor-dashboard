@@ -155,7 +155,7 @@ const createReferenceAttribute = (value: string, isRequired?: boolean) =>
     value,
     isRequired,
   });
-const createBooleanAttribute = (value: string, isRequired?: boolean) => ({
+const createBooleanAttribute = (value: string, isRequired = false) => ({
   data: {
     entityType: undefined,
     inputType: AttributeInputTypeEnum.BOOLEAN,
