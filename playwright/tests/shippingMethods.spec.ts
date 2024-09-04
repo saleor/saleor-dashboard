@@ -140,6 +140,7 @@ test("TC: SALEOR_37 Update a shipping method @shipping-method @e2e", async () =>
     SHIPPING_METHODS.shippingMethodToBeUpdated.name,
   );
 
+  await shippingMethodsPage.rightSideDetailsPage.waitForDOMToFullyLoad();
   await shippingMethodsPage.rightSideDetailsPage.clickChannelsSelectShippingPage();
   await shippingMethodsPage.rightSideDetailsPage.selectSingleChannelShippingPage();
   await shippingMethodsPage.rightSideDetailsPage.clickWarehouseSelectShippingPage();

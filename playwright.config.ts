@@ -4,14 +4,13 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const env = process.env;
-const DEFAULT_RETRIES = "1";
 const DEFAULT_WORKERS = "2";
 
 export default defineConfig({
   testDir: "playwright/tests",
   fullyParallel: true,
   forbidOnly: !!env.CI,
-  retries: parseInt(env.RETRIES || DEFAULT_RETRIES),
+  retries: 0,
   workers: parseInt(env.WORKERS || DEFAULT_WORKERS),
   reporter: process.env.CI
     ? [
