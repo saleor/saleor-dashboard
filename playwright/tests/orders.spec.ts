@@ -285,6 +285,7 @@ test("TC: SALEOR_191 Refund products from the fully paid order @e2e @refunds", a
   await ordersPage.orderRefundSection.waitFor({ state: "visible" });
   await ordersPage.assertRefundOnList(refundReason);
   await ordersPage.clickEditRefundButton(refundReason);
+  await refundPage.waitForDOMToFullyLoad();
   await refundPage.transferFunds();
   await refundPage.expectSuccessBannerMessage("Refund has been sent");
 });
