@@ -41,7 +41,7 @@ test("TC: SALEOR_194 Should create a new menu navigation with menu item @navigat
   const menuItemName = faker.random.word();
 
   await addNavigationMenuItemDialog.typeMenuItemName(menuItemName);
-  await addNavigationMenuItemDialog.selectLinkOption("category", "Polo Shirts");
+  await addNavigationMenuItemDialog.selectLinkOption("Categories", "Polo Shirts");
   await addNavigationMenuItemDialog.clickSaveButton();
   await expect(navigationDetailsPage.addMenuItemDialog).not.toBeVisible();
   await navigationDetailsPage.expectSuccessBanner();
@@ -58,7 +58,7 @@ test("TC: SALEOR_198 Should update existing menu @navigation @e2e", async () => 
 
   await navigationDetailsPage.clickEditMenuItemButton(menuItemToBeUpdated.name);
   await addNavigationMenuItemDialog.typeMenuItemName(newItemName);
-  await addNavigationMenuItemDialog.selectLinkOption("category", "Polo Shirts");
+  await addNavigationMenuItemDialog.selectLinkOption("Categories", "Polo Shirts");
   await addNavigationMenuItemDialog.clickSaveButton();
   await expect(navigationDetailsPage.addMenuItemDialog).not.toBeVisible();
   await navigationDetailsPage.clickDeleteMenuItemButton(menuItemToBeDeleted.name);
@@ -68,7 +68,7 @@ test("TC: SALEOR_198 Should update existing menu @navigation @e2e", async () => 
   const menuItemName = faker.random.word();
 
   await addNavigationMenuItemDialog.typeMenuItemName(menuItemName);
-  await addNavigationMenuItemDialog.selectLinkOption("category", "Polo Shirts");
+  await addNavigationMenuItemDialog.selectLinkOption("Categories", "Polo Shirts");
   await addNavigationMenuItemDialog.clickSaveButton();
   await expect(navigationDetailsPage.menuItemList).toContainText(menuItemName);
   await navigationDetailsPage.clickDeleteMenuItemButton(menuItemName);
