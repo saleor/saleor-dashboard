@@ -68,7 +68,13 @@ runs:
         WORKERS: ${{ inputs.PW_WORKERS }}
         RETRIES: ${{ inputs.PW_RETRIES }}
         PROJECT: ${{ inputs.PROJECT }}
-      run: npx playwright test --grep @e2e --project="$PROJECT" --shard "$SHARD_NUMBER"
+      run: |
+        PROJECTS=($PROJECT)
+        PROJECT_PARAMS=""
+        for PROJECT in "${PROJECTS[@]}"; do
+          PROJECT_PARAMS+="--project=${PROJECT} "
+        done
+        npx playwright test --grep @e2e $PROJECT_PARAMS --shard "$SHARD_NUMBER"
 
     - name: Upload blob report to GitHub Actions Artifacts
       uses: actions/upload-artifact@v3
