@@ -5,7 +5,7 @@ dotenv.config();
 
 const env = process.env;
 const DEFAULT_WORKERS = "2";
-const DEFAULT_RETRIES = "1";
+// const DEFAULT_RETRIES = "1";
 
 export default defineConfig({
   testDir: "playwright/tests",
