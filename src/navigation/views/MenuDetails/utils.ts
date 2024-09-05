@@ -14,21 +14,21 @@ export function getMenuItemInputData(data: MenuItemDialogFormData): MenuItemInpu
     name: data.name,
   };
 
-  switch (data.type) {
+  switch (data.linkType) {
     case "category":
-      variables.category = data.id;
+      variables.category = data.linkValue;
       break;
 
     case "collection":
-      variables.collection = data.id;
+      variables.collection = data.linkValue;
       break;
 
     case "page":
-      variables.page = data.id;
+      variables.page = data.linkValue;
       break;
 
     case "link":
-      variables.url = data.id;
+      variables.url = data.linkValue;
       break;
 
     default:
@@ -47,21 +47,21 @@ export function getMenuItemCreateInputData(
     name: data.name,
   };
 
-  switch (data.type) {
+  switch (data.linkType) {
     case "category":
-      variables.category = data.id;
+      variables.category = data.linkValue;
       break;
 
     case "collection":
-      variables.collection = data.id;
+      variables.collection = data.linkValue;
       break;
 
     case "page":
-      variables.page = data.id;
+      variables.page = data.linkValue;
       break;
 
     case "link":
-      variables.url = data.id;
+      variables.url = data.linkValue;
       break;
 
     default:
@@ -71,7 +71,25 @@ export function getMenuItemCreateInputData(
   return variables;
 }
 
-export function getInitialDisplayValue(item: MenuItemFragment): string {
+export function getInitialMenuItemValue(item: MenuItemFragment): string {
+  if (!item) {
+    return "...";
+  }
+
+  if (item.category) {
+    return item.category.id;
+  } else if (item.collection) {
+    return item.collection.id;
+  } else if (item.page) {
+    return item.page.id;
+  } else if (item.url) {
+    return item.url;
+  } else {
+    return "";
+  }
+}
+
+export function getInitialMenuItemLabel(item: MenuItemFragment): string {
   if (!item) {
     return "...";
   }

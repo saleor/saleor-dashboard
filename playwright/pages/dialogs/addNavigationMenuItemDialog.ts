@@ -5,36 +5,30 @@ import { BasePage } from "../basePage";
 export class AddNavigationMenuItemDialog extends BasePage {
   constructor(
     page: Page,
-    readonly menuNameInput = page.getByTestId("menu-item-name-input").locator("input"),
-    readonly linkSelect = page.getByTestId("container-autocomplete-select").locator("input"),
-    readonly backButton = page.getByTestId("back"),
+    readonly menuNameInput = page.getByTestId("menu-item-name-input"),
+    readonly menuLinkType = page.getByTestId("menu-item-link-type-input"),
+    readonly menuLinkValue = page.getByTestId("menu-item-link-value-input"),
     readonly saveButton = page.getByTestId("submit"),
-    readonly menuLinkOptions = page.getByTestId("menu-link-options"),
+    readonly menuLinkOptions = page.getByTestId("select-option"),
   ) {
     super(page);
   }
 
   async selectLinkOption(option: string, optionName: string) {
-    await this.linkSelect.click();
+    await this.menuLinkType.click();
     await this.waitForDOMToFullyLoad();
-    await this.menuLinkOptions.waitFor({ state: "attached" });
-    await this.menuLinkOptions
-      .getByRole("option", { name: "Categories" })
-      .waitFor({ state: "visible" });
-    await this.menuLinkOptions
-      .getByRole("option", { name: "Collections" })
-      .waitFor({ state: "visible" });
-    await this.menuLinkOptions.getByRole("option", { name: "Pages" }).waitFor({ state: "visible" });
-    await expect(this.menuLinkOptions.getByRole("option", { name: "Categories" })).toBeEnabled();
-    await this.menuLinkOptions.getByTestId(option).click({ force: true });
+    await this.menuLinkOptions.filter({ hasText: "Categories" }).waitFor({ state: "visible" });
+    await this.menuLinkOptions.filter({ hasText: "Collections" }).waitFor({ state: "visible" });
+    await this.menuLinkOptions.filter({ hasText: "Pages" }).waitFor({ state: "visible" });
+    await expect(this.menuLinkOptions.filter({ hasText: option })).toBeEnabled();
+    await this.menuLinkOptions.filter({ hasText: option }).click({ force: true });
     await this.waitForDOMToFullyLoad();
-    await this.menuLinkOptions
-      .getByRole("option", { name: optionName })
-      .waitFor({ state: "visible" });
-    expect(this.menuLinkOptions.getByRole("option", { name: optionName })).toBeEnabled();
-    await this.menuLinkOptions.getByRole("option", { name: optionName }).click({ force: true });
+    await this.menuLinkValue.click();
+    await this.menuLinkOptions.filter({ hasText: optionName }).waitFor({ state: "visible" });
+    await expect(this.menuLinkOptions.filter({ hasText: optionName })).toBeEnabled();
+    await this.menuLinkOptions.filter({ hasText: optionName }).click({ force: true });
     await this.waitForDOMToFullyLoad();
-    await expect(this.linkSelect).toHaveValue(optionName);
+    await expect(this.menuLinkValue).toHaveValue(optionName);
   }
 
   async typeMenuItemName(name: string) {
