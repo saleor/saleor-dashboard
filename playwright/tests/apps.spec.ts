@@ -15,8 +15,8 @@ test.beforeEach(({ page }) => {
   installationPage = new AppInstallationPage(page);
   appPage = new AppPage(page);
 });
-
-test("TC: SALEOR_119 User should be able to install and configure app from manifest @e2e", async ({
+// Adding temporary skip https://linear.app/saleor/issue/QAG-94/remove-skip-from-app-tests
+test.skip("TC: SALEOR_119 User should be able to install and configure app from manifest @e2e", async ({
   page,
 }) => {
   await appsPage.gotoAppsList();

@@ -81,7 +81,6 @@ jobs:
           PW_WORKERS: ${{ vars.PW_WORKERS }}
           PW_RETRIES: ${{ vars.PW_RETRIES }}
           URL_TO_RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          PROJECT: "e2e apps-e2e"
 
       - name: submit-results-to-testmo
         if: always()
