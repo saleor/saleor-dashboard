@@ -172,7 +172,6 @@ jobs:
           MAILPITURL: ${{ secrets.MAILPITURL }}
           PW_WORKERS: ${{ vars.PW_WORKERS }}
           PW_RETRIES: ${{ vars.PW_RETRIES }}
-          PROJECT: "e2e apps-e2e"
 
   merge-reports:
     if: "!cancelled()"
