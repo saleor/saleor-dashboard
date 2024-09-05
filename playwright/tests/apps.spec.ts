@@ -16,6 +16,11 @@ test.beforeEach(({ page }) => {
   appPage = new AppPage(page);
 });
 
+const PRE_INSTALLATION_TIMEOUT = 20 * 1000;
+const INSTALLATION_PENDING_TIMEOUT = 50 * 1000;
+const APP_LISTED_TIMEOUT = 15 * 1000;
+const APP_INSTALLED_TIMEOUT = 50 * 1000;
+
 test("TC: SALEOR_119 User should be able to install and configure app from manifest @e2e", async ({
   page,
 }) => {
@@ -30,7 +35,7 @@ test("TC: SALEOR_119 User should be able to install and configure app from manif
   await expect(installationPage.appInstallationPageHeader).toHaveText(
     "You are about to install Klaviyo",
     {
-      timeout: 20 * 1000,
+      timeout: PRE_INSTALLATION_TIMEOUT,
     },
   );
   await installationPage.installAppButton.click();
@@ -38,15 +43,15 @@ test("TC: SALEOR_119 User should be able to install and configure app from manif
   await expect(appsPage.installedAppRow.first()).toBeVisible();
   await appsPage.installationPendingLabel.waitFor({
     state: "hidden",
-    timeout: 50 * 1000,
+    timeout: INSTALLATION_PENDING_TIMEOUT,
   });
   await expect(appsPage.appKlaviyo).toContainText("Klaviyo", {
-    timeout: 15 * 1000,
+    timeout: APP_LISTED_TIMEOUT,
   });
   await appsPage.installedAppRow
     .filter({ hasText: "Klaviyo" })
     .first()
-    .waitFor({ state: "visible", timeout: 50 * 1000 });
+    .waitFor({ state: "visible", timeout: APP_INSTALLED_TIMEOUT });
   await appsPage.appKlaviyo.click();
 
   const iframeLocator = page.frameLocator("iframe");
