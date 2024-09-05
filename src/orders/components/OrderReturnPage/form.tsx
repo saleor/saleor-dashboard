@@ -229,7 +229,7 @@ function useOrderReturnForm(
     fulfiledItemsQuatities.data.some(({ value }) => !!value) ||
     waitingItemsQuantities.data.some(({ value }) => !!value) ||
     unfulfiledItemsQuantites.data.some(({ value }) => !!value);
-  const isSaveDisabled = !hasAnyItemsSelected;
+  const isSaveDisabled = !hasAnyItemsSelected && !data.refundShipmentCosts && !data.amount;
 
   setIsSubmitDisabled(isSaveDisabled);
 
