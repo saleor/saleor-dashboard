@@ -1,5 +1,22 @@
 # Changelog
 
+## 3.20.8
+
+### Patch Changes
+
+- 640d5f6f5: SALEOR_119 now has increased timeouts for app instalation. This means the test should fail less.
+- 09cf2adaf: SALEOR_191 now waits for the refund page to fully load
+- 0eb90df03: Menu item dialog now use components form new Macaw
+- bef2cbde2: Docker images will be automatically tag with with both the full version and just the minor
+- 331af3943: You can now see draft order alert messages when channel is inactive or has no products
+- ba5d47e8e: Modals for adding discounts and confirming deletion now use new MacawUI styles
+- 942bb01db: Now you can set proper attribute value when editting content page.
+- 762463819: Dashboard now scrolls the product list page to the top when you click on "Select channel" so that you can see the filter window
+- ece769a9a: The gift card modals now use new macaw-ui components.
+- 330012e11: MacawUI in Dashboard is now the newest available version. Dashboard no longer shows an error while installing packages. Price in shipping method select component now aligns to the right.
+- f1b06f8e8: Remove skip from installing app tests and update workflow to run it only on releases or manual
+- c052612f6: Now manual tests and tests on release can run on multiple projects
+
 ## 3.20.7
 
 ### Patch Changes
