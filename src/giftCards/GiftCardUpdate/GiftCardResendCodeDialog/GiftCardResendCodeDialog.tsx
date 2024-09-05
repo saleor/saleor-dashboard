@@ -12,12 +12,11 @@ import { getBySlug } from "@dashboard/misc";
 import { DialogProps } from "@dashboard/types";
 import commonErrorMessages from "@dashboard/utils/errors/common";
 import { mapSlugNodeToChoice } from "@dashboard/utils/maps";
-import { CircularProgress, TextField } from "@material-ui/core";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { TextField } from "@material-ui/core";
+import { Box, Spinner, Text } from "@saleor/macaw-ui-next";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { useGiftCardDeleteDialogContentStyles as useProgressStyles } from "../../components/GiftCardDeleteDialog/styles";
 import { useUpdateBalanceDialogStyles as useStyles } from "../GiftCardUpdateBalanceDialog/styles";
 import { getGiftCardErrorMessage } from "../messages";
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
@@ -33,7 +32,6 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
   const intl = useIntl();
   const notify = useNotifier();
   const classes = useStyles();
-  const progressClasses = useProgressStyles();
   const {
     giftCard: { boughtInChannel: initialChannelSlug },
   } = useGiftCardDetails();
@@ -108,9 +106,9 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
       disabled={loading}
     >
       {loadingChannels ? (
-        <div className={progressClasses.progressContainer}>
-          <CircularProgress />
-        </div>
+        <Box display="flex" width="100%" justifyContent="center">
+          <Spinner />
+        </Box>
       ) : (
         <Box display="grid" gap={2}>
           <Text>{intl.formatMessage(messages.description)}</Text>
