@@ -25,21 +25,28 @@ test("TC: SALEOR_119 User should be able to install and configure app from manif
   await appsPage.installExternalAppButton.click();
   await appsPage.typeManifestUrl("https://klaviyo.saleor.app/api/manifest");
   await appsPage.installAppFromManifestButton.click();
+  // Klaviyo app can take a while to respond with manifest if it's
+  // cold-starting
   await expect(installationPage.appInstallationPageHeader).toHaveText(
     "You are about to install Klaviyo",
+    {
+      timeout: 20 * 1000,
+    },
   );
   await installationPage.installAppButton.click();
   await appsPage.expectSuccessBanner();
   await expect(appsPage.installedAppRow.first()).toBeVisible();
   await appsPage.installationPendingLabel.waitFor({
     state: "hidden",
-    timeout: 50000,
+    timeout: 50 * 1000,
   });
-  await expect(appsPage.appKlaviyo).toContainText("Klaviyo");
+  await expect(appsPage.appKlaviyo).toContainText("Klaviyo", {
+    timeout: 15 * 1000,
+  });
   await appsPage.installedAppRow
     .filter({ hasText: "Klaviyo" })
     .first()
-    .waitFor({ state: "visible", timeout: 50000 });
+    .waitFor({ state: "visible", timeout: 50 * 1000 });
   await appsPage.appKlaviyo.click();
 
   const iframeLocator = page.frameLocator("iframe");
