@@ -153,7 +153,14 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
       <tbody>
         <tr className={classes.relativeRow}>
           <td>
-            <Popover open={isDialogOpen}>
+            <Popover
+              onOpenChange={val => {
+                if (!val) {
+                  closeDialog();
+                }
+              }}
+              open={isDialogOpen}
+            >
               <Popover.Trigger>
                 <Box>
                   <ButtonLink onClick={isDialogOpen ? closeDialog : openDialog}>

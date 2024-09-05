@@ -1,52 +1,21 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { DashboardModal } from "@dashboard/components/Modal";
 import PriceField from "@dashboard/components/PriceField";
-import RadioGroupField from "@dashboard/components/RadioGroupField";
+import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField";
 import { DiscountValueTypeEnum, MoneyFragment } from "@dashboard/graphql";
 import { useUpdateEffect } from "@dashboard/hooks/useUpdateEffect";
 import { buttonMessages } from "@dashboard/intl";
 import { toFixed } from "@dashboard/utils/toFixed";
-import { TextField } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Button, CloseIcon, Input, Text } from "@saleor/macaw-ui-next";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import ModalTitle from "./ModalTitle";
 import { ORDER_LINE_DISCOUNT, OrderDiscountCommonInput, OrderDiscountType } from "./types";
 
 type GetErrorMessageReturn = string | null;
 
 const numbersRegex = /([0-9]+\.?[0-9]*)$/;
-const useStyles = makeStyles(
-  theme => ({
-    removeButton: {
-      "&:hover": {
-        backgroundColor: theme.palette.error.main,
-      },
-      backgroundColor: theme.palette.error.main,
-      color: theme.palette.error.contrastText,
-    },
-    radioContainer: {
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
-    },
-    reasonInput: {
-      marginTop: theme.spacing(1),
-      width: "100%",
-    },
-    buttonWrapper: {
-      display: "flex",
-      flexDirection: "row",
-      flex: 1,
-    },
-  }),
-  { name: "OrderLineDiscountModal" },
-);
 const messages = defineMessages({
   buttonLabel: {
     id: "QSnh4Y",
@@ -152,7 +121,6 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
     initialData.calculationMode,
   );
   const previousCalculationMode = useRef(calculationMode);
-  const classes = useStyles({});
   const intl = useIntl();
   const discountTypeChoices = [
     {
@@ -245,14 +213,22 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
   const isSubmitDisabled = !getParsedDiscountValue() || !!valueErrorMsg || isAmountTooLarge();
 
   return (
-    <DashboardCard>
-      <ModalTitle title={intl.formatMessage(dialogTitle)} onClose={onClose} />
-      <DashboardCard.Content>
+    <DashboardCard borderRadius={3} gap={0}>
+      <DashboardCard.Header>
+        <Text display="block" fontWeight="bold" marginBottom={2}>
+          {intl.formatMessage(dialogTitle)}
+        </Text>
+        <DashboardCard.Toolbar>
+          <Button variant="tertiary" onClick={onClose}>
+            <CloseIcon />
+          </Button>
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
+
+      <DashboardCard.Content borderRadius={6} __width={300}>
         <RadioGroupField
-          innerContainerClassName={classes.radioContainer}
           choices={discountTypeChoices}
           name="discountType"
-          variant="inlineJustify"
           value={calculationMode}
           onChange={event => setCalculationMode(event.target.value)}
         />
@@ -266,27 +242,23 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
           currencySymbol={valueFieldSymbol}
         />
         <CardSpacer />
-        <Text>{intl.formatMessage(messages.discountReasonLabel)}</Text>
-        <TextField
-          className={classes.reasonInput}
+        <Input
           label={intl.formatMessage(messages.discountReasonLabel)}
           value={reason}
           data-test-id="discount-reason"
           onChange={(event: ChangeEvent<HTMLInputElement>) => setReason(event.target.value)}
         />
 
-        <DashboardModal.Actions marginTop={6}>
+        <DashboardCard.BottomActions justifyContent="flex-end" paddingX={0}>
           {existingDiscount && (
-            <div className={classes.buttonWrapper}>
-              <ConfirmButton
-                data-test-id="button-remove"
-                onClick={onRemove}
-                className={classes.removeButton}
-                transitionState={removeStatus}
-              >
-                {intl.formatMessage(buttonMessages.remove)}
-              </ConfirmButton>
-            </div>
+            <ConfirmButton
+              data-test-id="button-remove"
+              onClick={onRemove}
+              variant="error"
+              transitionState={removeStatus}
+            >
+              {intl.formatMessage(buttonMessages.remove)}
+            </ConfirmButton>
           )}
           <ConfirmButton
             disabled={isSubmitDisabled}
@@ -297,7 +269,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
           >
             {intl.formatMessage(buttonMessages.confirm)}
           </ConfirmButton>
-        </DashboardModal.Actions>
+        </DashboardCard.BottomActions>
       </DashboardCard.Content>
     </DashboardCard>
   );
