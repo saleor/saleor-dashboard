@@ -8,12 +8,12 @@ import { getById } from "@dashboard/misc";
 import React, { useEffect } from "react";
 
 import { OrderRefundAmountCalculationMode } from "../OrderRefundPage/form";
+import { useFulfillmentFormset } from "./useFulfillmentFormset";
 import {
   getLineItem,
   getOrderUnfulfilledLines,
   getParsedLineData,
   getParsedLineDataForFulfillmentStatus,
-  useRefundItems,
 } from "./utils";
 
 export interface LineItemOptions<T> {
@@ -100,7 +100,7 @@ function useOrderReturnForm(
     waitingItemsQuantities,
     unfulfiledItemsQuantites,
     disabled: isSaveDisabled,
-  } = useRefundItems({
+  } = useFulfillmentFormset({
     order,
     formData,
   });

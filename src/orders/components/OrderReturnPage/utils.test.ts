@@ -1,9 +1,8 @@
 import { TransactionActionEnum } from "@dashboard/graphql";
 import { orderTransactions } from "@dashboard/orders/fixtures";
-import { renderHook } from "@testing-library/react-hooks";
 
 import { submitCardMessages } from "./components/TransactionSubmitCard/messages";
-import { canSendRefundDuringReturn, getReturnRefundValue, useRefundItems } from "./utils";
+import { canSendRefundDuringReturn, getReturnRefundValue } from "./utils";
 
 describe("getReturnRefundValue", () => {
   it("should return empty string if autoGrantRefund is false", () => {
@@ -174,103 +173,5 @@ describe("canSendRefundDuringReturn", () => {
       value: true,
       reason: null,
     });
-  });
-});
-describe("useRefundItems", () => {
-  it("should be disabled when no items are returned, no shipping and no amount", () => {
-    // Arrange & Act
-    const { result } = renderHook(() =>
-      useRefundItems({
-        order: {
-          fulfillments: [],
-          lines: [],
-        } as any,
-        formData: {
-          amount: 0,
-          refundShipmentCosts: false,
-        },
-      }),
-    );
-
-    // Assert
-    expect(result.current.disabled).toBe(true);
-  });
-
-  it("should not disabled when no items are returned, but with shipping and no amount", () => {
-    // Arrange & Act
-    const { result } = renderHook(() =>
-      useRefundItems({
-        order: {
-          fulfillments: [],
-          lines: [],
-        } as any,
-        formData: {
-          amount: 0,
-          refundShipmentCosts: true,
-        },
-      }),
-    );
-
-    // Assert
-    expect(result.current.disabled).toBe(false);
-  });
-
-  it("should not disabled when no items are returned, but with shipping and amount", () => {
-    // Arrange & Act
-    const { result } = renderHook(() =>
-      useRefundItems({
-        order: {
-          fulfillments: [],
-          lines: [],
-        } as any,
-        formData: {
-          amount: 21.37,
-          refundShipmentCosts: true,
-        },
-      }),
-    );
-
-    // Assert
-    expect(result.current.disabled).toBe(false);
-  });
-
-  it("should not disabled when there are items selected with value, but with no shipping and no amount", () => {
-    // Arrange & Act
-    const { result } = renderHook(() =>
-      useRefundItems({
-        order: {
-          fulfillments: [
-            {
-              status: "FULFILLED",
-              lines: [
-                {
-                  id: "id",
-                  quantity: 1,
-                  orderLine: {
-                    id: "id",
-                  },
-                },
-              ],
-            } as any,
-          ],
-          lines: [
-            {
-              id: "id",
-              quantity: 1,
-            } as any,
-          ],
-        } as any,
-        formData: {
-          amount: 0,
-          refundShipmentCosts: false,
-        },
-      }),
-    );
-
-    result.current.fulfiledItemsQuatities.change("id", 21.37);
-
-    // Assert
-    expect(result.current.fulfiledItemsQuatities.data.length).toBe(1);
-    expect(result.current.disabled).toBe(false);
   });
 });
