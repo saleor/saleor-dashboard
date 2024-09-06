@@ -1,12 +1,9 @@
-// @ts-strict-ignore
-import { alpha } from "@material-ui/core/styles";
-import { ImageIcon, makeStyles } from "@saleor/macaw-ui";
-import { Text, vars } from "@saleor/macaw-ui-next";
+import { ImageIcon } from "@saleor/macaw-ui";
+import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
+import Dropzone from "react-dropzone";
 import { FormattedMessage } from "react-intl";
-
-import Dropzone from "../Dropzone";
 
 interface ImageUploadProps {
   children?: (props: { isDragActive: boolean }) => React.ReactNode;
@@ -16,42 +13,8 @@ interface ImageUploadProps {
   iconContainerClassName?: string;
   iconContainerActiveClassName?: string;
   hideUploadIcon?: boolean;
-  onImageUpload: (file: FileList) => void;
+  onImageUpload: (files: FileList) => void;
 }
-
-const useStyles = makeStyles(
-  theme => ({
-    backdrop: {
-      background: alpha(theme.palette.primary.main, 0.1),
-      color: theme.palette.primary.main,
-    },
-    fileField: {
-      display: "none",
-    },
-    imageContainer: {
-      background: "#ffffff",
-      border: `1px solid ${vars.colors.border.default1}`,
-      borderRadius: theme.spacing(),
-      height: 148,
-      justifySelf: "start",
-      overflow: "hidden",
-      padding: theme.spacing(2),
-      position: "relative",
-      transition: theme.transitions.duration.standard + "s",
-      width: 148,
-    },
-    photosIcon: {
-      height: 32,
-      margin: "0 auto",
-      width: 32,
-    },
-    photosIconContainer: {
-      padding: theme.spacing(5, 0),
-      textAlign: "center",
-    },
-  }),
-  { name: "ImageUpload" },
-);
 
 export const ImageUpload: React.FC<ImageUploadProps> = props => {
   const {
@@ -64,18 +27,31 @@ export const ImageUpload: React.FC<ImageUploadProps> = props => {
     hideUploadIcon,
     onImageUpload,
   } = props;
-  const classes = useStyles(props);
+
+  const handleDrop = (acceptedFiles: File[]) => {
+    const fileList: FileList = {
+      length: acceptedFiles.length,
+      item: (index: number) => acceptedFiles[index] || null,
+      ...acceptedFiles,
+    };
+
+    onImageUpload(fileList);
+  };
 
   return (
-    <Dropzone disableClick={disableClick} onDrop={onImageUpload}>
+    <Dropzone disabled={disableClick} onDrop={handleDrop}>
       {({ isDragActive, getInputProps, getRootProps }) => (
         <>
-          <div
+          <Box
             {...getRootProps()}
-            className={clsx(className, classes.photosIconContainer, {
-              [classes.backdrop]: isDragActive,
+            color="default1"
+            className={clsx(className, {
               [isActiveClassName]: isDragActive,
             })}
+            paddingY={12}
+            textAlign="center"
+            backgroundColor={isDragActive ? "default1Focused" : "default1"}
+            cursor={isDragActive ? "auto" : "pointer"}
           >
             {!hideUploadIcon && (
               <div
@@ -83,8 +59,13 @@ export const ImageUpload: React.FC<ImageUploadProps> = props => {
                   [iconContainerActiveClassName]: isDragActive,
                 })}
               >
-                <input {...getInputProps()} className={classes.fileField} accept="image/*" />
-                <ImageIcon className={classes.photosIcon} />
+                <input {...getInputProps()} style={{ display: "none" }} accept="image/*" />
+                <ImageIcon
+                  className={sprinkles({
+                    color: "default1",
+                  })}
+                  style={{ margin: "0 auto", width: "32px", height: "32px" }}
+                />
                 <Text display="block" fontWeight="bold" textTransform="uppercase" fontSize={3}>
                   <FormattedMessage
                     id="NxeDbG"
@@ -94,7 +75,8 @@ export const ImageUpload: React.FC<ImageUploadProps> = props => {
                 </Text>
               </div>
             )}
-          </div>
+          </Box>
+
           {children && children({ isDragActive })}
         </>
       )}

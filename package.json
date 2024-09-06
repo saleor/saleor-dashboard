@@ -82,7 +82,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-draggable": "^4.4.5",
-    "react-dropzone": "^11.2.4",
+    "react-dropzone": "^14.2.3",
     "react-editor-js": "^2.0.6",
     "react-error-boundary": "^3.1.4",
     "react-github-btn": "^1.4.0",
