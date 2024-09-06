@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.20.9
+
+### Patch Changes
+
+- 069e6cc2c: You can now make a refund with shipping costs or custom shipping amount. This means you can make a refund without selecting line items.
+
 ## 3.20.8
 
 ### Patch Changes
