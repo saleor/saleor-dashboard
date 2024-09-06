@@ -42,6 +42,9 @@ export const getAllOrderWaitingLines = (order?: OrderDetailsFragment) =>
     [],
   );
 
+// TODO: Migrate this utils file to strict mode
+export type LineItem<T> = ReturnType<typeof getLineItem<T>>;
+
 export function getLineItem<T>(
   line: FulfillmentLine | ParsedFulfillmentLine | OrderLine,
   { initialValue, isFulfillment = false, isRefunded = false }: LineItemOptions<T>,

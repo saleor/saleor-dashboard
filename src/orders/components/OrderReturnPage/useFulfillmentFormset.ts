@@ -7,7 +7,10 @@ import {
   getItemsWaiting,
   getOrderUnfulfilledLines,
   getParsedLineData,
+  LineItem,
 } from "./utils";
+
+const mapWithLabel = (line: LineItem<number>) => ({ ...line, label: line.label ?? "" });
 
 export const useFulfillmentFormset = ({
   order,
@@ -16,10 +19,16 @@ export const useFulfillmentFormset = ({
   order: OrderDetailsFragment;
   formData: { refundShipmentCosts: boolean; amount: number };
 }) => {
-  const fulfiledItemsQuatities = useFormset<LineItemData, number>(getItemsFulfilled(order));
-  const waitingItemsQuantities = useFormset<LineItemData, number>(getItemsWaiting(order));
+  const fulfiledItemsQuatities = useFormset<LineItemData, number>(
+    getItemsFulfilled(order).map(mapWithLabel),
+  );
+  const waitingItemsQuantities = useFormset<LineItemData, number>(
+    getItemsWaiting(order).map(mapWithLabel),
+  );
   const unfulfiledItemsQuantites = useFormset<LineItemData, number>(
-    getOrderUnfulfilledLines(order).map(getParsedLineData({ initialValue: 0 })),
+    getOrderUnfulfilledLines(order)
+      .map(getParsedLineData({ initialValue: 0 }))
+      .map(mapWithLabel),
   );
 
   const hasAnyItemsSelected =
