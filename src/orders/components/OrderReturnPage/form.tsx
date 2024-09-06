@@ -13,6 +13,7 @@ import {
   getOrderUnfulfilledLines,
   getParsedLineData,
   getParsedLineDataForFulfillmentStatus,
+  useRefundItems,
 } from "./utils";
 
 export interface LineItemOptions<T> {
@@ -93,41 +94,17 @@ function useOrderReturnForm(
   const { setExitDialogSubmitRef } = useExitFormDialog({
     formId,
   });
-  const unfulfiledItemsQuantites = useFormset<LineItemData, number>(
-    getOrderUnfulfilledLines(order).map(getParsedLineData({ initialValue: 0 })),
-  );
-  const getItemsFulfilled = () => {
-    const commonOptions = {
-      initialValue: 0,
-      isFulfillment: true,
-    };
-    const refundedFulfilmentsItems = getParsedLineDataForFulfillmentStatus(
-      order,
-      FulfillmentStatus.REFUNDED,
-      { ...commonOptions, isRefunded: true },
-    );
-    const fulfilledFulfillmentsItems = getParsedLineDataForFulfillmentStatus(
-      order,
-      FulfillmentStatus.FULFILLED,
-      commonOptions,
-    );
 
-    return refundedFulfilmentsItems.concat(fulfilledFulfillmentsItems);
-  };
-  const getItemsWaiting = () => {
-    const commonOptions = {
-      initialValue: 0,
-      isFulfillment: true,
-    };
+  const {
+    fulfiledItemsQuatities,
+    waitingItemsQuantities,
+    unfulfiledItemsQuantites,
+    disabled: isSaveDisabled,
+  } = useRefundItems({
+    order,
+    formData,
+  });
 
-    return getParsedLineDataForFulfillmentStatus(
-      order,
-      FulfillmentStatus.WAITING_FOR_APPROVAL,
-      commonOptions,
-    );
-  };
-  const fulfiledItemsQuatities = useFormset<LineItemData, number>(getItemsFulfilled());
-  const waitingItemsQuantities = useFormset<LineItemData, number>(getItemsWaiting());
   const getItemsToBeReplaced = () => {
     if (!order) {
       return [];
@@ -224,12 +201,6 @@ function useOrderReturnForm(
       callback(id, value);
     };
   }
-
-  const hasAnyItemsSelected =
-    fulfiledItemsQuatities.data.some(({ value }) => !!value) ||
-    waitingItemsQuantities.data.some(({ value }) => !!value) ||
-    unfulfiledItemsQuantites.data.some(({ value }) => !!value);
-  const isSaveDisabled = !hasAnyItemsSelected && !data.refundShipmentCosts && !data.amount;
 
   setIsSubmitDisabled(isSaveDisabled);
 

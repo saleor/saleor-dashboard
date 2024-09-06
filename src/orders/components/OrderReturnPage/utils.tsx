@@ -1,13 +1,14 @@
 // @ts-strict-ignore
 import { getCurrencyDecimalPoints } from "@dashboard/components/PriceField/utils";
 import { FulfillmentStatus, OrderDetailsFragment, TransactionActionEnum } from "@dashboard/graphql";
+import useFormset from "@dashboard/hooks/useFormset";
 import { getById } from "@dashboard/misc";
 import { Node } from "@dashboard/types";
 import { MessageDescriptor } from "react-intl";
 
 import { PaymentSubmitCardValuesProps } from "./components/PaymentSubmitCard/PaymentSubmitCardValues";
 import { submitCardMessages } from "./components/TransactionSubmitCard/messages";
-import { FormsetQuantityData, FormsetReplacementData, LineItemOptions } from "./form";
+import { FormsetQuantityData, FormsetReplacementData, LineItemData, LineItemOptions } from "./form";
 
 type OrderLine = OrderDetailsFragment["lines"][0];
 type FulfillmentLine = OrderDetailsFragment["fulfillments"][0]["lines"][0];
@@ -217,4 +218,63 @@ export const getReturnRefundValue = ({
       .toFixed(getCurrencyDecimalPoints(amountData?.refundTotalAmount?.currency) ?? 2)
       .toString() ?? ""
   );
+};
+
+const getItemsFulfilled = (order: OrderDetailsFragment) => {
+  const commonOptions = {
+    initialValue: 0,
+    isFulfillment: true,
+  };
+  const refundedFulfilmentsItems = getParsedLineDataForFulfillmentStatus(
+    order,
+    FulfillmentStatus.REFUNDED,
+    { ...commonOptions, isRefunded: true },
+  );
+  const fulfilledFulfillmentsItems = getParsedLineDataForFulfillmentStatus(
+    order,
+    FulfillmentStatus.FULFILLED,
+    commonOptions,
+  );
+
+  return refundedFulfilmentsItems.concat(fulfilledFulfillmentsItems);
+};
+
+const getItemsWaiting = (order: OrderDetailsFragment) => {
+  const commonOptions = {
+    initialValue: 0,
+    isFulfillment: true,
+  };
+
+  return getParsedLineDataForFulfillmentStatus(
+    order,
+    FulfillmentStatus.WAITING_FOR_APPROVAL,
+    commonOptions,
+  );
+};
+
+export const useRefundItems = ({
+  order,
+  formData,
+}: {
+  order: OrderDetailsFragment;
+  formData: { refundShipmentCosts: boolean; amount: number };
+}) => {
+  const fulfiledItemsQuatities = useFormset<LineItemData, number>(getItemsFulfilled(order));
+  const waitingItemsQuantities = useFormset<LineItemData, number>(getItemsWaiting(order));
+  const unfulfiledItemsQuantites = useFormset<LineItemData, number>(
+    getOrderUnfulfilledLines(order).map(getParsedLineData({ initialValue: 0 })),
+  );
+
+  const hasAnyItemsSelected =
+    fulfiledItemsQuatities.data.some(({ value }) => !!value) ||
+    waitingItemsQuantities.data.some(({ value }) => !!value) ||
+    unfulfiledItemsQuantites.data.some(({ value }) => !!value);
+  const disabled = !hasAnyItemsSelected && !formData.refundShipmentCosts && !formData.amount;
+
+  return {
+    fulfiledItemsQuatities,
+    waitingItemsQuantities,
+    unfulfiledItemsQuantites,
+    disabled,
+  };
 };
