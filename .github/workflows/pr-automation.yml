@@ -176,7 +176,8 @@ jobs:
           PW_RETRIES: ${{ vars.PW_RETRIES }}
 
   merge-reports:
-    if: "!cancelled() && github.event.pull_request.labels.*.name == 'run pw-e2e'"
+    if: "!cancelled() && contains(github.event.pull_request.labels.*.name, 'run pw-e2e')"
+
     needs: run-tests
     runs-on: ubuntu-22.04
     steps:
