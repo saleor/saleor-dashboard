@@ -1,10 +1,11 @@
 import { ChannelUsabilityDataQuery, OrderDetailsFragment } from "@dashboard/graphql";
 import { shippingZonesListPath } from "@dashboard/shipping/urls";
 import { Alert, AlertProps } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui-next";
+import { sprinkles } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
+import { Link } from "react-router-dom";
 import urlJoin from "url-join";
 
 import OrderAlerts from "../OrderAlerts";
@@ -67,19 +68,20 @@ const OrderDraftAlert: React.FC<OrderDraftAlertProps> = props => {
         values={{
           country: order?.shippingAddress?.country.country,
           configLink: (
-            <Box
-              as="a"
-              textDecoration="underline"
-              href={urlJoin(shippingZonesListPath)}
-              color="accent1"
+            <Link
+              to={urlJoin(shippingZonesListPath)}
               target="_blank"
+              className={sprinkles({
+                textDecoration: "underline",
+                color: "accent1",
+              })}
             >
               <FormattedMessage
                 defaultMessage="shipping zones configuration"
                 id="T3cLGs"
                 description="alert link message"
               />
-            </Box>
+            </Link>
           ),
         }}
       />
