@@ -1,5 +1,5 @@
-import { getAppMountUri } from "@dashboard/config";
 import { ChannelUsabilityDataQuery, OrderDetailsFragment } from "@dashboard/graphql";
+import { shippingZonesListPath } from "@dashboard/shipping/urls";
 import { Alert, AlertProps } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
@@ -70,7 +70,7 @@ const OrderDraftAlert: React.FC<OrderDraftAlertProps> = props => {
             <Box
               as="a"
               textDecoration="underline"
-              href={urlJoin(getAppMountUri(), "shipping")}
+              href={urlJoin(shippingZonesListPath)}
               color="accent1"
               target="_blank"
             >
