@@ -6,7 +6,6 @@ import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
-import urlJoin from "url-join";
 
 import OrderAlerts from "../OrderAlerts";
 import { alertMessages } from "./messages";
@@ -69,7 +68,7 @@ const OrderDraftAlert: React.FC<OrderDraftAlertProps> = props => {
           country: order?.shippingAddress?.country.country,
           configLink: (
             <Link
-              to={urlJoin(shippingZonesListPath)}
+              to={shippingZonesListPath}
               target="_blank"
               className={sprinkles({
                 textDecoration: "underline",
