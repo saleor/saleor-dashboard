@@ -140,9 +140,17 @@ test("TC: SALEOR_37 Update a shipping method @shipping-method @e2e", async () =>
     SHIPPING_METHODS.shippingMethodToBeUpdated.name,
   );
 
-  await shippingMethodsPage.rightSideDetailsPage.waitForDOMToFullyLoad();
+  await shippingMethodsPage.rightSideDetailsPage.expectOptionsSelected(
+    channelSection,
+    alreadyAssignedChannels,
+  );
   await shippingMethodsPage.rightSideDetailsPage.clickChannelsSelectShippingPage();
   await shippingMethodsPage.rightSideDetailsPage.selectSingleChannelShippingPage();
+  await shippingMethodsPage.rightSideDetailsPage.expectOptionsSelected(
+    warehouseSection,
+    alreadyAssignedWarehouses,
+  );
+
   await shippingMethodsPage.rightSideDetailsPage.clickWarehouseSelectShippingPage();
   await shippingMethodsPage.rightSideDetailsPage.typeAndSelectMultipleWarehousesShippingPage(
     warehousesToBeAssigned,
