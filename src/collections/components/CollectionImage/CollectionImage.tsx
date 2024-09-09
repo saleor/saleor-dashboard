@@ -1,53 +1,11 @@
-// @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
-import Hr from "@dashboard/components/Hr";
 import ImageUpload from "@dashboard/components/ImageUpload";
 import MediaTile from "@dashboard/components/MediaTile";
 import { CollectionDetailsFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { TextField } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Skeleton, vars } from "@saleor/macaw-ui-next";
+import { Box, Button, Divider, Skeleton, sprinkles, Textarea } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-const useStyles = makeStyles(
-  theme => ({
-    PhotosIcon: {
-      height: "64px",
-      margin: "0 auto",
-      width: "64px",
-    },
-    PhotosIconContainer: {
-      margin: theme.spacing(5, 0),
-      textAlign: "center",
-    },
-    fileField: {
-      display: "none",
-    },
-    image: {
-      height: "100%",
-      objectFit: "contain",
-      userSelect: "none",
-      width: "100%",
-    },
-    imageContainer: {
-      background: "#ffffff",
-      border: `1px solid ${vars.colors.border.default1}`,
-      borderRadius: theme.spacing(),
-      height: 148,
-      justifySelf: "start",
-      overflow: "hidden",
-      padding: theme.spacing(2),
-      position: "relative",
-      width: 148,
-    },
-  }),
-  {
-    name: "CollectionImage",
-  },
-);
 
 export interface CollectionImageProps {
   data: {
@@ -61,10 +19,9 @@ export interface CollectionImageProps {
 
 export const CollectionImage: React.FC<CollectionImageProps> = props => {
   const { data, onImageUpload, image, onChange, onImageDelete } = props;
-  const anchor = React.useRef<HTMLInputElement>();
-  const classes = useStyles(props);
+  const anchor = React.useRef<HTMLInputElement | null>(null);
   const intl = useIntl();
-  const handleImageUploadButtonClick = () => anchor.current.click();
+  const handleImageUploadButtonClick = () => anchor.current?.click();
 
   return (
     <DashboardCard>
@@ -77,33 +34,41 @@ export const CollectionImage: React.FC<CollectionImageProps> = props => {
           })}
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
-          <>
-            <Button
-              variant="tertiary"
-              onClick={handleImageUploadButtonClick}
-              data-test-id="upload-image-button"
-            >
-              <FormattedMessage {...commonMessages.uploadImage} />
-            </Button>
-            <input
-              className={classes.fileField}
-              id="fileUpload"
-              onChange={event => onImageUpload(event.target.files[0])}
-              type="file"
-              ref={anchor}
-              accept="image/*"
-            />
-          </>
+          <Button
+            variant="secondary"
+            onClick={handleImageUploadButtonClick}
+            data-test-id="upload-image-button"
+          >
+            <FormattedMessage {...commonMessages.uploadImage} />
+          </Button>
+          <input
+            className={sprinkles({ display: "none" })}
+            id="fileUpload"
+            onChange={event => event.target.files && onImageUpload(event.target.files[0])}
+            type="file"
+            ref={anchor}
+            accept="image/*"
+          />
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
 
       {image === undefined ? (
         <DashboardCard.Content>
-          <div>
-            <div className={classes.imageContainer}>
-              <Skeleton />
-            </div>
-          </div>
+          <Box
+            backgroundColor="default1"
+            borderStyle="solid"
+            borderWidth={1}
+            borderColor="default1"
+            __height="150px"
+            __width="150px"
+            padding={2}
+            position="relative"
+            justifySelf="start"
+            overflow="hidden"
+            borderRadius={4}
+          >
+            <Skeleton height="100%" />
+          </Box>
         </DashboardCard.Content>
       ) : image === null ? (
         <ImageUpload onImageUpload={files => onImageUpload(files[0])} />
@@ -114,9 +79,10 @@ export const CollectionImage: React.FC<CollectionImageProps> = props => {
       )}
       {image && (
         <>
-          <Hr />
+          <Divider />
+
           <DashboardCard.Content>
-            <TextField
+            <Textarea
               name="backgroundImageAlt"
               label={intl.formatMessage(commonMessages.description)}
               helperText={intl.formatMessage({
@@ -126,8 +92,8 @@ export const CollectionImage: React.FC<CollectionImageProps> = props => {
               })}
               value={data.backgroundImageAlt}
               onChange={onChange}
-              fullWidth
-              multiline
+              width="100%"
+              rows={2}
             />
           </DashboardCard.Content>
         </>

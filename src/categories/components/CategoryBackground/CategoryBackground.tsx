@@ -1,43 +1,13 @@
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
-import Hr from "@dashboard/components/Hr";
 import ImageUpload from "@dashboard/components/ImageUpload";
 import MediaTile from "@dashboard/components/MediaTile";
 import { CategoryDetailsFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { TextField } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Skeleton, vars } from "@saleor/macaw-ui-next";
+import { Box, Button, Divider, Skeleton, sprinkles, Textarea } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CategoryUpdateData } from "../CategoryUpdatePage/form";
-
-const useStyles = makeStyles(
-  theme => ({
-    fileField: {
-      display: "none",
-    },
-    image: {
-      height: "100%",
-      objectFit: "contain",
-      userSelect: "none",
-      width: "100%",
-    },
-    imageContainer: {
-      background: "#ffffff",
-      border: `1px solid ${vars.colors.border.default1}`,
-      borderRadius: theme.spacing(),
-      height: 148,
-      justifySelf: "start",
-      overflow: "hidden",
-      padding: theme.spacing(2),
-      position: "relative",
-      width: 148,
-    },
-  }),
-  { name: "CategoryBackground" },
-);
 
 export interface CategoryBackgroundProps {
   data: CategoryUpdateData;
@@ -48,7 +18,6 @@ export interface CategoryBackgroundProps {
 }
 
 const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
-  const classes = useStyles(props);
   const intl = useIntl();
   const anchor = React.useRef<HTMLInputElement>(null);
   const { data, onImageUpload, image, onChange, onImageDelete } = props;
@@ -65,13 +34,19 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
           })}
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
-          <Button variant="tertiary" onClick={handleImageUploadButtonClick}>
+          <Button variant="secondary" onClick={handleImageUploadButtonClick}>
             <FormattedMessage {...commonMessages.uploadImage} />
           </Button>
           <input
-            className={classes.fileField}
+            className={sprinkles({ display: "none" })}
             id="fileUpload"
-            onChange={({ target: { files } }) => onImageUpload(files && files[0])}
+            onChange={event => {
+              const files = event.target.files;
+
+              if (files) {
+                onImageUpload(files[0]);
+              }
+            }}
             type="file"
             ref={anchor}
             accept="image/*"
@@ -82,9 +57,21 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
       {image === undefined ? (
         <DashboardCard.Content>
           <div>
-            <div className={classes.imageContainer}>
-              <Skeleton />
-            </div>
+            <Box
+              backgroundColor="default1"
+              borderStyle="solid"
+              borderWidth={1}
+              borderColor="default1"
+              __height="150px"
+              __width="150px"
+              padding={2}
+              position="relative"
+              justifySelf="start"
+              overflow="hidden"
+              borderRadius={4}
+            >
+              <Skeleton height="100%" />
+            </Box>
           </div>
         </DashboardCard.Content>
       ) : image === null ? (
@@ -97,9 +84,10 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
 
       {image && (
         <>
-          <Hr />
+          <Divider />
+
           <DashboardCard.Content>
-            <TextField
+            <Textarea
               name="backgroundImageAlt"
               label={intl.formatMessage(commonMessages.description)}
               helperText={intl.formatMessage({
@@ -109,8 +97,8 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
               })}
               value={data.backgroundImageAlt}
               onChange={onChange}
-              fullWidth
-              multiline
+              width="100%"
+              rows={2}
             />
           </DashboardCard.Content>
         </>

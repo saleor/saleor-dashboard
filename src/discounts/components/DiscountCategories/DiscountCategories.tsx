@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { categoryUrl } from "@dashboard/categories/urls";
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
@@ -11,8 +10,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleDetailsFragment, VoucherDetailsFragment } from "@dashboard/graphql";
 import { getLoadableList, mapEdgesToItems } from "@dashboard/utils/maps";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Button, Skeleton, sprinkles, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -43,6 +41,8 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
 
+  const categoryList = mapEdgesToItems(discount?.categories);
+
   return (
     <DashboardCard data-test-id="assign-category-section">
       <DashboardCard.Header>
@@ -50,7 +50,11 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
           {intl.formatMessage(messages.discountCategoriesHeader)}
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
-          <Button onClick={onCategoryAssign} data-test-id="assign-category-button">
+          <Button
+            onClick={onCategoryAssign}
+            variant="secondary"
+            data-test-id="assign-category-button"
+          >
             <FormattedMessage {...messages.discountCategoriesButton} />
           </Button>
         </DashboardCard.Toolbar>
@@ -66,7 +70,7 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
           colSpan={numberOfColumns}
           selected={selected}
           disabled={disabled}
-          items={mapEdgesToItems(discount?.categories)}
+          items={categoryList}
           toggleAll={toggleAll}
           toolbar={toolbar}
         >
@@ -109,19 +113,20 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
                     />
                   </TableCell>
                   <TableCell>{category ? category.name : <Skeleton />}</TableCell>
-                  <TableCell>{category ? category.products.totalCount : <Skeleton />}</TableCell>
+                  <TableCell className={sprinkles({})}>
+                    {category ? category.products.totalCount : <Skeleton />}
+                  </TableCell>
                   <TableCell className={classes.colActions}>
                     <TableButtonWrapper>
-                      <IconButton
+                      <Button
+                        icon={<TrashBinIcon />}
                         variant="secondary"
                         disabled={!category || disabled}
                         onClick={event => {
                           event.stopPropagation();
                           onCategoryUnassign(category.id);
                         }}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
+                      />
                     </TableButtonWrapper>
                   </TableCell>
                 </TableRowLink>

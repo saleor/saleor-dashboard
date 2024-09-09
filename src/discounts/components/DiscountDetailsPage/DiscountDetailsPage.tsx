@@ -3,7 +3,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { discountListUrl } from "@dashboard/discounts/discountsUrls";
 import { Rule } from "@dashboard/discounts/models";
-import { DiscoutFormData } from "@dashboard/discounts/types";
+import { DiscountFormData } from "@dashboard/discounts/types";
 import {
   ChannelFragment,
   PromotionDetailsFragment,
@@ -29,7 +29,7 @@ export interface DiscountDetailsPageProps {
   disabled: boolean;
   errors: PromotionUpdateErrorFragment[];
   submitButtonState: ConfirmButtonTransitionState;
-  onSubmit: (data: DiscoutFormData) => void;
+  onSubmit: (data: DiscountFormData) => void;
   onDelete: () => void;
   onRuleUpdateSubmit: (data: Rule) => Promise<Array<CommonError<PromotionRuleUpdateErrorFragment>>>;
   ruleUpdateButtonState: ConfirmButtonTransitionState;

@@ -19,14 +19,14 @@ export const ChannelAvailabilityItemWrapper: React.FC<ChannelContentWrapperProps
 }) => (
   <Accordion data-test-id="channel-availability-item">
     <Accordion.Item value="channel-availability-item" gap={9}>
-      <Accordion.Trigger>
+      <Accordion.Trigger paddingX={6}>
         <Text size={4} fontWeight="medium">
           {name}
         </Text>
         <Label text={messages.availableDateText} />
         <Accordion.TriggerButton dataTestId="expand-icon" />
       </Accordion.Trigger>
-      <Accordion.Content paddingLeft={3}>{children}</Accordion.Content>
+      <Accordion.Content>{children}</Accordion.Content>
     </Accordion.Item>
   </Accordion>
 );

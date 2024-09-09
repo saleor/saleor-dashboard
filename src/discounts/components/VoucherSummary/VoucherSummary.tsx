@@ -8,7 +8,7 @@ import Percent from "@dashboard/components/Percent";
 import { DiscountValueTypeEnum, VoucherDetailsFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { ChannelProps } from "@dashboard/types";
-import { Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -30,85 +30,92 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({ selectedChannelId, vouc
       <DashboardCard.Header>
         <DashboardCard.Title>{intl.formatMessage(commonMessages.summary)}</DashboardCard.Title>
       </DashboardCard.Header>
-      <DashboardCard.Content>
-        <Text fontWeight="medium" fontSize={3}>
-          <FormattedMessage id="bcf60I" defaultMessage="Applies to" description="voucher" />
-        </Text>
-        <Text display="block">
-          {voucher?.type ? translatedVoucherTypes[voucher.type] : <Skeleton />}
-        </Text>
-        <FormSpacer />
+      <DashboardCard.Content paddingX={0}>
+        <Box paddingX={6}>
+          <Text fontWeight="medium" fontSize={3}>
+            <FormattedMessage id="bcf60I" defaultMessage="Applies to" description="voucher" />
+          </Text>
+          <Text display="block">
+            {voucher?.type ? translatedVoucherTypes[voucher.type] : <Skeleton />}
+          </Text>
 
-        <Text size={2} fontWeight="light">
-          <FormattedMessage id="JV+EiM" defaultMessage="Value" description="voucher value" />
-        </Text>
-        <Text display="block">
-          {voucher ? (
-            voucher.discountValueType === DiscountValueTypeEnum.FIXED && channel?.discountValue ? (
-              <Money
-                money={{
-                  amount: channel?.discountValue,
-                  currency: channel?.channel.currencyCode,
-                }}
-              />
-            ) : channel?.discountValue ? (
-              <Percent amount={channel?.discountValue} />
+          <FormSpacer />
+
+          <Text size={2} fontWeight="light">
+            <FormattedMessage id="JV+EiM" defaultMessage="Value" description="voucher value" />
+          </Text>
+          <Text display="block">
+            {voucher ? (
+              voucher.discountValueType === DiscountValueTypeEnum.FIXED &&
+              channel?.discountValue ? (
+                <Money
+                  money={{
+                    amount: channel?.discountValue,
+                    currency: channel?.channel.currencyCode,
+                  }}
+                />
+              ) : channel?.discountValue ? (
+                <Percent amount={channel?.discountValue} />
+              ) : (
+                "-"
+              )
             ) : (
-              "-"
-            )
-          ) : (
-            <Skeleton />
-          )}
-        </Text>
-
+              <Skeleton />
+            )}
+          </Text>
+        </Box>
         <CardSpacer />
         <Hr />
         <CardSpacer />
+        <Box paddingX={6}>
+          <Text size={2} fontWeight="light">
+            {intl.formatMessage(commonMessages.startDate)}
+          </Text>
+          <Text display="block">
+            {voucher?.startDate ? <Date date={voucher.startDate} plain /> : <Skeleton />}
+          </Text>
+          <FormSpacer />
 
-        <Text size={2} fontWeight="light">
-          {intl.formatMessage(commonMessages.startDate)}
-        </Text>
-        <Text display="block">
-          {voucher?.startDate ? <Date date={voucher.startDate} plain /> : <Skeleton />}
-        </Text>
-        <FormSpacer />
-
-        <Text size={2} fontWeight="light">
-          {intl.formatMessage(commonMessages.endDate)}
-        </Text>
-        <Text display="block">
-          {voucher?.endDate ? <Date date={voucher.endDate} plain /> : "-"}
-        </Text>
-
+          <Text size={2} fontWeight="light">
+            {intl.formatMessage(commonMessages.endDate)}
+          </Text>
+          <Text display="block">
+            {voucher?.endDate ? <Date date={voucher.endDate} plain /> : "-"}
+          </Text>
+        </Box>
         <CardSpacer />
         <Hr />
         <CardSpacer />
+        <Box paddingX={6}>
+          <Text size={2} fontWeight="light">
+            <FormattedMessage
+              id="FOa+Xd"
+              defaultMessage="Min. Order Value"
+              description="voucher value requirement"
+            />
+          </Text>
+          <Text display="block">
+            {voucher ? channel?.minSpent ? <Money money={channel.minSpent} /> : "-" : <Skeleton />}
+          </Text>
+          <FormSpacer />
 
-        <Text size={2} fontWeight="light">
-          <FormattedMessage
-            id="FOa+Xd"
-            defaultMessage="Min. Order Value"
-            description="voucher value requirement"
-          />
-        </Text>
-        <Text display="block">
-          {voucher ? channel?.minSpent ? <Money money={channel.minSpent} /> : "-" : <Skeleton />}
-        </Text>
-        <FormSpacer />
+          <Text size={2} fontWeight="light">
+            <FormattedMessage
+              id="HLqWXA"
+              defaultMessage="Usage Limit"
+              description="voucher value requirement"
+            />
+          </Text>
+          <Text display="block">{voucher?.usageLimit ? voucher.usageLimit : "-"}</Text>
+          <FormSpacer />
+          <Text size={2} fontWeight="light">
+            <FormattedMessage id="h65vZI" defaultMessage="Used" description="times voucher used" />
+          </Text>
+          <Text display="block">{voucher?.used ?? <Skeleton />}</Text>
+        </Box>
 
-        <Text size={2} fontWeight="light">
-          <FormattedMessage
-            id="HLqWXA"
-            defaultMessage="Usage Limit"
-            description="voucher value requirement"
-          />
-        </Text>
-        <Text display="block">{voucher?.usageLimit ? voucher.usageLimit : "-"}</Text>
-        <FormSpacer />
-        <Text size={2} fontWeight="light">
-          <FormattedMessage id="h65vZI" defaultMessage="Used" description="times voucher used" />
-        </Text>
-        <Text display="block">{voucher?.used ?? <Skeleton />}</Text>
+        <CardSpacer />
+        <Hr />
       </DashboardCard.Content>
     </DashboardCard>
   );

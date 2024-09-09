@@ -1,7 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
-import { DiscoutFormData } from "@dashboard/discounts/types";
+import { DiscountFormData } from "@dashboard/discounts/types";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import React from "react";
 import { useController } from "react-hook-form";
@@ -17,7 +17,7 @@ export const DiscountDescription = ({
   error = false,
 }: DiscountDescriptionProps) => {
   const { defaultValue, editorRef, isReadyForMount, handleChange } = useRichTextContext();
-  const { field } = useController<DiscoutFormData, "description">({
+  const { field } = useController<DiscountFormData, "description">({
     name: "description",
   });
 

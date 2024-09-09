@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { DiscoutFormData } from "@dashboard/discounts/types";
+import { DiscountFormData } from "@dashboard/discounts/types";
 import { PromotionTypeEnum } from "@dashboard/graphql";
 import { Box, Input, Select } from "@saleor/macaw-ui-next";
 import React, { useMemo } from "react";
@@ -14,11 +14,11 @@ interface DiscountNameProps {
 
 export const DiscountGeneralInfo = ({ disabled, typeDisabled, error }: DiscountNameProps) => {
   const intl = useIntl();
-  const { formState } = useFormContext<DiscoutFormData>();
-  const { field: nameField } = useController<DiscoutFormData, "name">({
+  const { formState } = useFormContext<DiscountFormData>();
+  const { field: nameField } = useController<DiscountFormData, "name">({
     name: "name",
   });
-  const { field: typeField } = useController<DiscoutFormData, "type">({
+  const { field: typeField } = useController<DiscountFormData, "type">({
     name: "type",
   });
   const discountTypes = useMemo(

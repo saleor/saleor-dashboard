@@ -1,5 +1,4 @@
-import { makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
 export interface TabContainerProps {
@@ -7,19 +6,20 @@ export interface TabContainerProps {
   className?: string;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    root: {
-      borderBottom: `1px solid ${theme.palette.divider}`,
-    },
-  }),
-  { name: "TabContainer" },
-);
 const TabContainer: React.FC<TabContainerProps> = props => {
   const { children } = props;
-  const classes = useStyles(props);
 
-  return <div className={clsx(classes.root, props.className)}>{children}</div>;
+  return (
+    <Box
+      className={props.className}
+      borderBottomStyle="solid"
+      borderBottomWidth={1}
+      borderColor="default1"
+      marginTop={6}
+    >
+      {children}
+    </Box>
+  );
 };
 
 TabContainer.displayName = "TabContainer";

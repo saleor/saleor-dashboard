@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { collectionUrl } from "@dashboard/collections/urls";
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
@@ -11,8 +10,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleDetailsFragment, VoucherDetailsFragment } from "@dashboard/graphql";
 import { getLoadableList, mapEdgesToItems } from "@dashboard/utils/maps";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Button, Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -43,6 +41,8 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
 
+  const collectionList = mapEdgesToItems(sale?.collections);
+
   return (
     <DashboardCard data-test-id="assign-collection-section">
       <DashboardCard.Header>
@@ -50,7 +50,11 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
           {intl.formatMessage(messages.discountCollectionsHeader)}
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
-          <Button onClick={onCollectionAssign} data-test-id="assign-collection-button">
+          <Button
+            onClick={onCollectionAssign}
+            variant="secondary"
+            data-test-id="assign-collection-button"
+          >
             <FormattedMessage {...messages.discountCollectionsButton} />
           </Button>
         </DashboardCard.Toolbar>
@@ -66,7 +70,7 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
           colSpan={numberOfColumns}
           selected={selected}
           disabled={disabled}
-          items={mapEdgesToItems(sale?.collections)}
+          items={collectionList}
           toggleAll={toggleAll}
           toolbar={toolbar}
         >
@@ -114,16 +118,15 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
                   </TableCell>
                   <TableCell className={classes.colActions}>
                     <TableButtonWrapper>
-                      <IconButton
+                      <Button
+                        icon={<TrashBinIcon />}
                         variant="secondary"
                         disabled={!collection || disabled}
                         onClick={event => {
                           event.stopPropagation();
                           onCollectionUnassign(collection.id);
                         }}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
+                      />
                     </TableButtonWrapper>
                   </TableCell>
                 </TableRowLink>

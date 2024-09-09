@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { commonMessages } from "@dashboard/intl";
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import moment from "moment";
@@ -6,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 interface DateTimeFieldProps {
-  onChange: (value: string) => void;
+  onChange: (value: string | null) => void;
   error?: string | React.ReactNode;
   setError?: () => void;
   futureDatesOnly?: boolean;
@@ -16,6 +15,7 @@ interface DateTimeFieldProps {
   name: string;
   label?: string;
   helperText?: string;
+  onBlur?: () => void;
 }
 
 const convertToDateTimeLocal = (date: string) => {
@@ -42,6 +42,7 @@ export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
   label,
   helperText,
   value: initialValue,
+  onBlur,
 }) => {
   const intl = useIntl();
   const [value, setValue] = useState<string>(
@@ -77,6 +78,10 @@ export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
           onBlur={() => {
             if (!isInputValid(value)) {
               setValue("");
+            }
+
+            if (onBlur) {
+              onBlur();
             }
           }}
         />

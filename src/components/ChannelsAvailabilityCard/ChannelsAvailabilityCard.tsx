@@ -77,7 +77,7 @@ const ChannelsAvailability: React.FC<ChannelsAvailabilityCardProps> = props => {
         : channelsList
           ? channelsList.map(data => (
               <React.Fragment key={data.id}>
-                <Box>
+                <Box paddingX={6}>
                   <Text>{data.name}</Text>
                 </Box>
                 <Divider />

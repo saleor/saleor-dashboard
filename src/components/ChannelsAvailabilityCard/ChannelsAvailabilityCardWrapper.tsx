@@ -67,7 +67,7 @@ export const ChannelsAvailabilityCardWrapper: React.FC<
           </RequirePermissions>
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
-      <DashboardCard.Content gap={1} display="flex" flexDirection="column">
+      <DashboardCard.Content gap={1} display="flex" flexDirection="column" paddingX={0}>
         <Box display="flex" flexDirection="column" gap={5}>
           {children}
         </Box>

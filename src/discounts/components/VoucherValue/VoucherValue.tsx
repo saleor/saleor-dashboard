@@ -1,19 +1,19 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
-import RadioGroupField from "@dashboard/components/RadioGroupField";
+import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { ChannelInput } from "@dashboard/discounts/handlers";
 import { DiscountTypeEnum } from "@dashboard/discounts/types";
 import { DiscountErrorFragment } from "@dashboard/graphql";
+import { FormChange } from "@dashboard/hooks/useForm";
 import { renderCollection } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
 import { TableBody, TableCell } from "@material-ui/core";
-import { Input, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Input, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -26,7 +26,7 @@ interface VoucherValueProps {
   errors: DiscountErrorFragment[];
   disabled: boolean;
   variant: string;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: FormChange;
   onChannelChange: (channelId: string, input: ChannelInput) => void;
 }
 
@@ -146,11 +146,15 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
               choices={voucherTypeChoices}
               disabled={disabled}
               error={!!formErrors.type}
-              hint={getDiscountErrorMessage(formErrors.type, intl)}
-              label={intl.formatMessage({
-                id: "9UHfux",
-                defaultMessage: "Voucher Specific Information",
-              })}
+              errorMessage={getDiscountErrorMessage(formErrors.type, intl)}
+              label={
+                <Text marginBottom={2} display="block">
+                  {intl.formatMessage({
+                    id: "9UHfux",
+                    defaultMessage: "Voucher Specific Information",
+                  })}
+                </Text>
+              }
               name={"type" as keyof VoucherDetailsPageFormData}
               value={data.type}
               onChange={onChange}
@@ -158,27 +162,30 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
           </>
         )}
         <FormSpacer />
-        <ControlledCheckbox
+        <Checkbox
           name={"applyOncePerOrder" as keyof VoucherDetailsPageFormData}
-          label={
-            <>
+          checked={data.applyOncePerOrder}
+          onCheckedChange={value =>
+            onChange({ target: { name: "applyOncePerOrder", value: value } })
+          }
+          disabled={disabled}
+        >
+          <Box display="flex" flexDirection="column">
+            <Text>
               <FormattedMessage
                 id="Y3zr/B"
                 defaultMessage="Apply only to a single cheapest eligible product"
                 description="voucher application, switch button"
               />
-              <Text size={2} fontWeight="light" display="block" color="default2">
-                <FormattedMessage
-                  id="ObRk1O"
-                  defaultMessage="If this option is disabled, discount will be counted for every eligible product"
-                />
-              </Text>
-            </>
-          }
-          checked={data.applyOncePerOrder}
-          onChange={onChange}
-          disabled={disabled}
-        />
+            </Text>
+            <Text size={2} fontWeight="light" display="block" color="default2">
+              <FormattedMessage
+                id="ObRk1O"
+                defaultMessage="If this option is disabled, discount will be counted for every eligible product"
+              />
+            </Text>
+          </Box>
+        </Checkbox>
       </DashboardCard.Content>
     </DashboardCard>
   );

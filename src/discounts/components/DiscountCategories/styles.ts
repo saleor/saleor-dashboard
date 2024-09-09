@@ -9,7 +9,7 @@ export const useStyles = makeStyles(
       width: "auto",
     },
     colProducts: {
-      textAlign: "right",
+      textAlign: "left",
       width: 140,
     },
     tableRow: {

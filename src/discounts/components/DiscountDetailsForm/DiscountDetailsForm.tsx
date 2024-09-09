@@ -1,5 +1,5 @@
 import { Rule } from "@dashboard/discounts/models";
-import { DiscoutFormData } from "@dashboard/discounts/types";
+import { DiscountFormData } from "@dashboard/discounts/types";
 import { useLabelMapsContext } from "@dashboard/discounts/views/DiscountDetails/context/context";
 import {
   PromotionDetailsFragment,
@@ -32,7 +32,7 @@ interface DiscountDetailsFormProps {
   children: (renderProps: DiscountDetailsFormRenderProps) => ReactNode;
   disabled: boolean;
   data: PromotionDetailsFragment | undefined | null;
-  onSubmit: (data: DiscoutFormData) => void;
+  onSubmit: (data: DiscountFormData) => void;
   onRuleUpdateSubmit: (data: Rule) => Promise<Array<CommonError<PromotionRuleUpdateErrorFragment>>>;
   onRuleCreateSubmit: (data: Rule) => Promise<Array<CommonError<PromotionRuleCreateErrorFragment>>>;
   onRuleDeleteSubmit: (id: string) => void;
@@ -48,7 +48,7 @@ export const DiscountDetailsForm = ({
   onRuleUpdateSubmit,
 }: DiscountDetailsFormProps) => {
   const intl = useIntl();
-  const methods = useForm<DiscoutFormData>({
+  const methods = useForm<DiscountFormData>({
     mode: "onBlur",
     values: {
       type: data?.type ?? PromotionTypeEnum.CATALOGUE,

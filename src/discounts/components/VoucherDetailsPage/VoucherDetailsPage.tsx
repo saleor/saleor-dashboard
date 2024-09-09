@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { ChannelVoucherData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import CountryList from "@dashboard/components/CountryList";
@@ -28,13 +27,13 @@ import {
 import { UseListSettings } from "@dashboard/hooks/useListSettings";
 import { LocalPagination } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { splitDateTime } from "@dashboard/misc";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { Text } from "@saleor/macaw-ui-next";
+import { sprinkles, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { splitDateTime } from "../../../misc";
 import { ChannelProps, ListProps, TabListActions } from "../../../types";
 import DiscountCategories from "../DiscountCategories";
 import DiscountCollections from "../DiscountCollections";
@@ -265,7 +264,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
               {data.type === VoucherTypeEnum.SPECIFIC_PRODUCT &&
               data.discountType.toString() !== "SHIPPING" ? (
                 <>
-                  <TabContainer>
+                  <TabContainer className={sprinkles({ paddingX: 9 })}>
                     <CategoriesTab
                       isActive={activeTab === VoucherDetailsPageTab.categories}
                       changeTab={onTabClick}
@@ -294,7 +293,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                       })}
                     </ProductsTab>
                   </TabContainer>
-                  <CardSpacer />
                   {activeTab === VoucherDetailsPageTab.categories ? (
                     <DiscountCategories
                       disabled={disabled}

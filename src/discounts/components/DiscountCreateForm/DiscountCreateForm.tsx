@@ -1,5 +1,5 @@
 import { Rule } from "@dashboard/discounts/models";
-import { DiscoutFormData } from "@dashboard/discounts/types";
+import { DiscountFormData } from "@dashboard/discounts/types";
 import { PromotionTypeEnum } from "@dashboard/graphql";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
@@ -22,12 +22,12 @@ interface CreateFormRenderProps {
 
 interface DiscountCreateFormProps {
   children: (renderProps: CreateFormRenderProps) => ReactNode;
-  onSubmit: (data: DiscoutFormData) => void;
+  onSubmit: (data: DiscountFormData) => void;
 }
 
 export const DiscountCreateForm = ({ children, onSubmit }: DiscountCreateFormProps) => {
   const intl = useIntl();
-  const methods = useForm<DiscoutFormData>({
+  const methods = useForm<DiscountFormData>({
     mode: "onBlur",
     values: initialFormValues,
     resolver: zodResolver(getValidationSchema(intl)),
@@ -39,7 +39,7 @@ export const DiscountCreateForm = ({ children, onSubmit }: DiscountCreateFormPro
     triggerChange: methods.trigger,
   });
   const { rules, onDeleteRule, onRuleSubmit } = useRulesHandlers(discountType);
-  const handleSubmit: SubmitHandler<DiscoutFormData> = data => {
+  const handleSubmit: SubmitHandler<DiscountFormData> = data => {
     onSubmit({
       ...data,
       rules,

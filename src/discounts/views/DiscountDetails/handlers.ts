@@ -15,7 +15,7 @@ import { getMutationErrors, joinDateTime } from "@dashboard/misc";
 import { CommonError } from "@dashboard/utils/errors/common";
 import difference from "lodash/difference";
 
-import { DiscoutFormData } from "../../types";
+import { DiscountFormData } from "../../types";
 
 export const createUpdateHandler = (
   promotion: PromotionDetailsFragment | undefined | null,
@@ -23,7 +23,7 @@ export const createUpdateHandler = (
     varaibles: PromotionUpdateMutationVariables,
   ) => Promise<FetchResult<PromotionUpdateMutation>>,
 ) => {
-  return async (data: DiscoutFormData) => {
+  return async (data: DiscountFormData) => {
     if (!promotion) {
       return;
     }

@@ -1,6 +1,6 @@
 import { FetchResult } from "@apollo/client";
 import { toAPI } from "@dashboard/discounts/models";
-import { DiscoutFormData } from "@dashboard/discounts/types";
+import { DiscountFormData } from "@dashboard/discounts/types";
 import { PromotionCreateMutation, PromotionCreateMutationVariables } from "@dashboard/graphql";
 import { getMutationErrors, joinDateTime } from "@dashboard/misc";
 
@@ -9,7 +9,7 @@ export const useDiscountCreate = (
     varaibles: PromotionCreateMutationVariables,
   ) => Promise<FetchResult<PromotionCreateMutation>>,
 ) => {
-  return async (data: DiscoutFormData) => {
+  return async (data: DiscountFormData) => {
     const response = await create({
       input: {
         name: data.name,

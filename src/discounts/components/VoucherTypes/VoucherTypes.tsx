@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Grid from "@dashboard/components/Grid";
-import RadioGroupField from "@dashboard/components/RadioGroupField";
+import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField";
 import { DiscountTypeEnum } from "@dashboard/discounts/types";
 import { DiscountErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
@@ -64,7 +64,7 @@ const VoucherTypes = ({ data, disabled, errors, onChange }: VoucherTypesProps) =
             choices={voucherTypeChoices}
             disabled={disabled}
             error={!!formErrors.discountType}
-            hint={getDiscountErrorMessage(formErrors.discountType, intl)}
+            errorMessage={getDiscountErrorMessage(formErrors.discountType, intl)}
             name={"discountType" as keyof VoucherDetailsPageFormData}
             value={data.discountType}
             onChange={onChange}

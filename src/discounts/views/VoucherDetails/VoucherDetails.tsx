@@ -9,7 +9,6 @@ import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import AssignCategoriesDialog from "@dashboard/components/AssignCategoryDialog";
 import AssignCollectionDialog from "@dashboard/components/AssignCollectionDialog";
 import AssignProductDialog from "@dashboard/components/AssignProductDialog";
-import { Button } from "@dashboard/components/Button";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
@@ -55,6 +54,7 @@ import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import { Button } from "@saleor/macaw-ui-next";
 import React, { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -367,6 +367,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
                 ids: listElements,
               })
             }
+            variant="secondary"
           >
             <FormattedMessage id="Gkip05" defaultMessage="Unassign" description="button" />
           </Button>
@@ -378,6 +379,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
                 ids: listElements,
               })
             }
+            variant="secondary"
           >
             <FormattedMessage id="Gkip05" defaultMessage="Unassign" description="button" />
           </Button>
@@ -389,6 +391,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
                 ids: listElements,
               })
             }
+            variant="secondary"
           >
             <FormattedMessage id="Gkip05" defaultMessage="Unassign" description="button" />
           </Button>

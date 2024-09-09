@@ -3,7 +3,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import { discountListUrl } from "@dashboard/discounts/discountsUrls";
-import { DiscoutFormData } from "@dashboard/discounts/types";
+import { DiscountFormData } from "@dashboard/discounts/types";
 import {
   ChannelFragment,
   PromotionCreateErrorCode,
@@ -26,7 +26,7 @@ export interface DiscountCreatePageProps {
   errors: PromotionCreateErrorFragment[];
   submitButtonState: ConfirmButtonTransitionState;
   onBack: () => void;
-  onSubmit: (data: DiscoutFormData) => void;
+  onSubmit: (data: DiscountFormData) => void;
 }
 
 export const DiscountCreatePage = ({

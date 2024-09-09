@@ -1,7 +1,7 @@
-import { DiscoutFormData } from "@dashboard/discounts/types";
+import { DiscountFormData } from "@dashboard/discounts/types";
 import { PromotionTypeEnum } from "@dashboard/graphql";
 
-export const initialFormValues: DiscoutFormData = {
+export const initialFormValues: DiscountFormData = {
   type: PromotionTypeEnum.CATALOGUE,
   name: "",
   description: "",

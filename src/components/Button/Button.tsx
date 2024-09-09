@@ -14,4 +14,7 @@ const _Button: React.FC<any> = React.forwardRef(({ href, ...props }, ref) => {
 
 _Button.displayName = "Button";
 
+/**
+ * @deprecated - use macaw-ui-next Button instead
+ */
 export const Button = _Button as OverridableComponent<ButtonTypeMap>;

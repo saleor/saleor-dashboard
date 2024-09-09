@@ -21,7 +21,7 @@ export type SearchCategoriesOpts = ReturnType<typeof useCategorySearch>["result"
 export type SearchCollectionOpts = ReturnType<typeof useCollectionSearch>["result"];
 export type SearchProductsOpts = ReturnType<typeof useProductSearch>["result"];
 
-export interface DiscoutFormData {
+export interface DiscountFormData {
   type: PromotionTypeEnum;
   name: string;
   description: string;
