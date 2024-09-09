@@ -654,9 +654,6 @@
     "context": "order status",
     "string": "Partially returned"
   },
-  "28GZnc": {
-    "string": "Start typing to begin search..."
-  },
   "29L5Yq": {
     "context": "gift card not found message",
     "string": "Couldn't find gift card"
@@ -2911,6 +2908,10 @@
     "context": "VariantDetailsChannelsAvailabilityCard item subtitle published",
     "string": "Published since {getPublishedAt}"
   },
+  "H1L1cc": {
+    "context": "url",
+    "string": "URL"
+  },
   "H27/Gy": {
     "context": "error message",
     "string": "Maximum weight cannot be lower than minimum"
@@ -3506,6 +3507,10 @@
   "KupNHw": {
     "context": "product field",
     "string": "Category"
+  },
+  "Kv58Rx": {
+    "context": "default gift card delete description",
+    "string": "{selectedItemsCount,plural,one{Are you sure you want to delete this gift card?} other{Are you sure you want to delete {selectedItemsCount} gift cards?}}"
   },
   "Kw0jHS": {
     "context": "created products counter",
@@ -4583,10 +4588,6 @@
     "context": "grant refund table, column header",
     "string": "Quantity"
   },
-  "S52JMl": {
-    "context": "default gift card delete description",
-    "string": "{selectedItemsCount,plural,one{Are you sure you want to delete this gift card?} other{Are you sure you want to delete {selectedItemsCount} giftCards?}}"
-  },
   "S7Rwl0": {
     "context": "stock exceeded action question label",
     "string": "Are you sure you want to fulfill those products anyway?"
@@ -4987,10 +4988,6 @@
     "context": "product field",
     "string": "Variant Images"
   },
-  "Urh2N3": {
-    "context": "label",
-    "string": "Link"
-  },
   "Us9cA1": {
     "context": "profit margin",
     "string": "Margin"
@@ -5220,6 +5217,10 @@
   "WCg2GZ": {
     "context": "change warehouse dialog search placeholder",
     "string": "Search warehouses"
+  },
+  "WDrC7e": {
+    "context": "label",
+    "string": "Link value"
   },
   "WDy0tF": {
     "context": "section header",
@@ -5938,6 +5939,10 @@
   "aZDHYr": {
     "context": "price rates info",
     "string": "This rate will apply to all orders"
+  },
+  "aasX8r": {
+    "context": "label",
+    "string": "Link type"
   },
   "abTH5q": {
     "context": "error message",
@@ -6701,10 +6706,6 @@
     "context": "product organization, header",
     "string": "Organization"
   },
-  "fzDI3A": {
-    "context": "add link to navigation",
-    "string": "Link to: {url}"
-  },
   "fzk04H": {
     "context": "dialog title",
     "string": "Delete image"
@@ -7173,9 +7174,6 @@
   "jGGnSZ": {
     "context": "page header",
     "string": "Primary Address"
-  },
-  "jHJmjf": {
-    "string": "No results"
   },
   "jMzyU8": {
     "context": "tax classes card header",
@@ -8302,6 +8300,10 @@
   "quV5zH": {
     "context": "dialog title",
     "string": "Delete Token"
+  },
+  "qzDwLa": {
+    "context": "Invalid url value",
+    "string": "Invalid URL"
   },
   "r+8q4B": {
     "context": "error message",

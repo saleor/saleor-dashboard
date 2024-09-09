@@ -123,7 +123,7 @@ export class OrdersPage extends BasePage {
   async goToExistingOrderPage(orderId: string) {
     const orderLink = URL_LIST.orders + orderId;
 
-    await console.log("Navigating to order details view: " + orderLink);
+    console.log("Navigating to order details view: " + orderLink);
     await this.page.goto(orderLink);
     await this.waitForDOMToFullyLoad();
     await this.waitForGrid();
@@ -136,14 +136,14 @@ export class OrdersPage extends BasePage {
   }
 
   async clickEditRefundButton(refundInfo: string) {
-    const refund = await this.orderRefundList.locator("tr").filter({ hasText: refundInfo });
+    const refund = this.orderRefundList.locator("tr").filter({ hasText: refundInfo });
 
     await refund.locator(this.editRefundButton).click();
     await this.waitForDOMToFullyLoad();
   }
 
   async assertRefundOnList(refundInfo: string) {
-    const refund = await this.orderRefundList.locator("tr").filter({ hasText: refundInfo });
+    const refund = this.orderRefundList.locator("tr").filter({ hasText: refundInfo });
 
     await refund.waitFor({ state: "visible" });
   }

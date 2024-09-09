@@ -1,14 +1,15 @@
 // @ts-strict-ignore
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { buttonMessages } from "@dashboard/intl";
 import { getById } from "@dashboard/misc";
-import ModalTitle from "@dashboard/orders/components/OrderDiscountCommonModal/ModalTitle";
-import { CircularProgress, Modal } from "@material-ui/core";
-import React from "react";
+import { Box, Spinner } from "@saleor/macaw-ui-next";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { DashboardCard } from "../Card";
-import { useTypeDeleteWarningDialogStyles as useStyles } from "./styles";
-import ProductTypeDeleteWarningDialogContent from "./TypeDeleteWarningDialogContent";
+import DeleteButton from "../DeleteButton";
+import { DashboardModal } from "../Modal";
+import DeleteWarningDialogConsentContent from "./DeleteWarningDialogConsentContent";
 import { CommonTypeDeleteWarningMessages, TypeDeleteWarningMessages } from "./types";
 
 export interface TypeBaseData {
@@ -55,7 +56,9 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
   showViewAssignedItemsButton = true,
 }: TypeDeleteWarningDialogProps<T>) {
   const intl = useIntl();
-  const classes = useStyles({});
+  const navigate = useNavigator();
+  const [isConsentChecked, setIsConsentChecked] = useState(false);
+
   const showMultiple = typesToDelete.length > 1;
   const hasAssignedItems = !!assignedItemsCount;
   const selectMessages = () => {
@@ -78,38 +81,57 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
   const { description, consentLabel } = selectMessages();
   const singleItemSelectedId = typesToDelete[0];
   const singleItemSelectedName = typesData.find(getById(singleItemSelectedId))?.name;
+  const shouldShowViewAssignedItemsButton = showViewAssignedItemsButton && hasAssignedItems;
 
   return (
-    <Modal open={isOpen}>
-      <div className={classes.centerContainer} data-test-id="warning-dialog">
-        <DashboardCard className={classes.content}>
-          <ModalTitle
-            title={intl.formatMessage(baseMessages.title, {
-              selectedTypesCount: typesToDelete.length,
-            })}
-            withBorder
-            onClose={onClose}
-          />
-          {isLoading ? (
-            <DashboardCard.Content className={classes.centerContainer}>
-              <CircularProgress size={16} />
-            </DashboardCard.Content>
-          ) : (
-            <ProductTypeDeleteWarningDialogContent
-              showViewAssignedItemsButton={showViewAssignedItemsButton}
-              assignedItemsCount={assignedItemsCount}
-              hasAssignedItems={hasAssignedItems}
-              singleItemSelectedName={singleItemSelectedName}
-              viewAssignedItemsUrl={viewAssignedItemsUrl}
-              onDelete={onDelete}
-              description={description}
-              consentLabel={consentLabel}
-              viewAssignedItemsButtonLabel={baseMessages.viewAssignedItemsButtonLabel}
+    <DashboardModal open={isOpen} onChange={onClose}>
+      <DashboardModal.Content size="sm">
+        <DashboardModal.Title display="flex" justifyContent="space-between" alignItems="center">
+          {intl.formatMessage(baseMessages.title, {
+            selectedTypesCount: typesToDelete.length,
+          })}
+
+          <DashboardModal.Close onClose={onClose} />
+        </DashboardModal.Title>
+
+        {isLoading ? (
+          <Box display="flex" width="100%" justifyContent="center" paddingY={10}>
+            <Spinner />
+          </Box>
+        ) : (
+          <>
+            <DeleteWarningDialogConsentContent
+              description={intl.formatMessage(description, {
+                typeName: singleItemSelectedName,
+                assignedItemsCount,
+                b: (...chunks) => <b>{chunks}</b>,
+              })}
+              consentLabel={consentLabel && intl.formatMessage(consentLabel)}
+              isConsentChecked={isConsentChecked}
+              onConsentChange={setIsConsentChecked}
             />
-          )}
-        </DashboardCard>
-      </div>
-    </Modal>
+
+            <DashboardModal.Actions>
+              {shouldShowViewAssignedItemsButton && (
+                <ConfirmButton
+                  onClick={() => navigate(viewAssignedItemsUrl)}
+                  transitionState="default"
+                >
+                  {intl.formatMessage(baseMessages.viewAssignedItemsButtonLabel)}
+                </ConfirmButton>
+              )}
+              <DeleteButton
+                onClick={onDelete}
+                disabled={hasAssignedItems ? !isConsentChecked : false}
+                testId="confirm-delete"
+              >
+                {intl.formatMessage(buttonMessages.delete)}
+              </DeleteButton>
+            </DashboardModal.Actions>
+          </>
+        )}
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 }
 

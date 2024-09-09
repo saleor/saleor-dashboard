@@ -35,7 +35,8 @@ import {
 import { menuUrl, MenuUrlQueryParams } from "../../urls";
 import { handleDelete, handleItemCreate, handleItemUpdate, handleUpdate } from "./successHandlers";
 import {
-  getInitialDisplayValue,
+  getInitialMenuItemLabel,
+  getInitialMenuItemValue,
   getMenuItemCreateInputData,
   getMenuItemInputData,
   getMoves,
@@ -135,7 +136,8 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
   const initialMenuItemUpdateFormData: MenuItemDialogFormData = {
     id: maybe(() => getItemId(menuItem)),
     name: maybe(() => menuItem.name, "..."),
-    type: maybe<MenuItemType>(() => getItemType(menuItem), "category"),
+    linkType: maybe<MenuItemType>(() => getItemType(menuItem), "category"),
+    linkValue: getInitialMenuItemValue(menuItem),
   };
   // This is a workaround to let know <MenuDetailsPage />
   // that it should clean operation stack if mutations
@@ -234,7 +236,7 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
         errors={maybe(() => menuItemUpdateOpts.data.menuItemUpdate.errors, [])}
         pages={pages}
         initial={initialMenuItemUpdateFormData}
-        initialDisplayValue={getInitialDisplayValue(menuItem)}
+        initialDisplayValue={getInitialMenuItemLabel(menuItem)}
         loading={categorySearch.result.loading || collectionSearch.result.loading}
         confirmButtonState={menuItemUpdateOpts.status}
         disabled={menuItemUpdateOpts.loading}
