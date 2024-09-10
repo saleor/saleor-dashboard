@@ -176,7 +176,7 @@ jobs:
           PW_RETRIES: ${{ vars.PW_RETRIES }}
 
   merge-reports:
-    if: !cancelled()
+    if: "!cancelled()"
 
     needs: run-tests
     runs-on: ubuntu-22.04
