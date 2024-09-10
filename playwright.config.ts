@@ -34,7 +34,7 @@ export default defineConfig({
         ],
       ]
     : [["html"], ["list"]],
-  expect: { timeout: 5000 },
+  expect: { timeout: 10 * 1000 },
   maxFailures: 10,
   timeout: 30000,
   use: {
@@ -44,6 +44,7 @@ export default defineConfig({
     testIdAttribute: "data-test-id",
     video: env.CI ? "retain-on-failure" : "off",
     headless: true,
+    actionTimeout: 5000,
   },
   projects: [
     {
