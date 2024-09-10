@@ -44,7 +44,6 @@ export default defineConfig({
     testIdAttribute: "data-test-id",
     video: env.CI ? "retain-on-failure" : "off",
     headless: true,
-    actionTimeout: 5000,
   },
   projects: [
     {
