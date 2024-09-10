@@ -56,15 +56,15 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
   const intl = useIntl();
   const id = useId();
   const user = useUser();
-  const isStaffUser = hasPermissions(user?.user?.userPermissions ?? [], [
-    PermissionEnum.MANAGE_STAFF,
+  const hasManageProducts = hasPermissions(user?.user?.userPermissions ?? [], [
+    PermissionEnum.MANAGE_PRODUCTS,
   ]);
   const [value, setValue] = React.useState<number | undefined>();
   const [sendRefund, { status, loading, error, data }] = useOrderSendRefundMutation({
     refetchQueries: [
       {
         query: OrderDetailsWithMetadataDocument,
-        variables: { id: orderId, isStaffUser },
+        variables: { id: orderId, hasManageProducts },
       },
     ],
     variables: {

@@ -43,8 +43,8 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   const { queue } = useBackgroundTask();
   const intl = useIntl();
   const user = useUser();
-  const isStaffUser = hasPermissions(user?.user?.userPermissions ?? [], [
-    PermissionEnum.MANAGE_STAFF,
+  const hasManageProducts = hasPermissions(user?.user?.userPermissions ?? [], [
+    PermissionEnum.MANAGE_PRODUCTS,
   ]);
   const [updateMetadata, updateMetadataOpts] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata, updatePrivateMetadataOpts] = useUpdatePrivateMetadataMutation({});
@@ -69,7 +69,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   });
   const { data, loading } = useOrderDetailsWithMetadataQuery({
     displayLoader: true,
-    variables: { id, isStaffUser },
+    variables: { id, hasManageProducts },
   });
   const order = data?.order;
 
