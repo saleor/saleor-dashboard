@@ -23,6 +23,7 @@ export class IssueGiftCardDialog extends BasePage {
     readonly okButton = page.getByTestId("submit"),
     readonly copyCodeButton = page.getByTestId("copy-code-button"),
     readonly option = page.getByTestId("select-option"),
+    readonly issueGiftCardDialog = page.getByTestId("gift-card-dialog"),
   ) {
     super(page);
   }
@@ -57,6 +58,7 @@ export class IssueGiftCardDialog extends BasePage {
 
   async typeCustomTag(tag: string) {
     await this.tagsInput.fill(tag);
+    await expect(this.issueGiftCardDialog.getByText("Loading...")).not.toBeVisible();
     await this.tagsInputOptions.filter({ hasText: `Add new value: ${tag}` }).click();
   }
 
@@ -96,6 +98,6 @@ export class IssueGiftCardDialog extends BasePage {
   }
 
   async blur() {
-    await this.page.click("[data-test-id='gift-card-dialog']");
+    await this.issueGiftCardDialog.click();
   }
 }
