@@ -1,17 +1,13 @@
 // @ts-strict-ignore
 import { useApolloClient } from "@apollo/client";
-import { useUser } from "@dashboard/auth";
 import { MetadataIdSchema } from "@dashboard/components/Metadata";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
-import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
   JobStatusEnum,
   OrderDetailsWithMetadataDocument,
   OrderStatus,
-  PermissionEnum,
   useOrderConfirmMutation,
-  useOrderDetailsWithMetadataQuery,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
@@ -32,6 +28,7 @@ import { OrderDetailsMessages } from "./OrderDetailsMessages";
 import { OrderDraftDetails } from "./OrderDraftDetails";
 import { OrderNormalDetails } from "./OrderNormalDetails";
 import { OrderUnconfirmedDetails } from "./OrderUnconfirmedDetails";
+import { useOrderDetails } from "./useOrderDetails";
 
 interface OrderDetailsProps {
   id: string;
@@ -42,10 +39,6 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const { queue } = useBackgroundTask();
   const intl = useIntl();
-  const user = useUser();
-  const hasManageProducts = hasPermissions(user?.user?.userPermissions ?? [], [
-    PermissionEnum.MANAGE_PRODUCTS,
-  ]);
   const [updateMetadata, updateMetadataOpts] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata, updatePrivateMetadataOpts] = useUpdatePrivateMetadataMutation({});
   const notify = useNotifier();
@@ -67,10 +60,9 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
       });
     },
   });
-  const { data, loading } = useOrderDetailsWithMetadataQuery({
-    displayLoader: true,
-    variables: { id, hasManageProducts },
-  });
+
+  const { data, loading } = useOrderDetails(id);
+
   const order = data?.order;
 
   if (order === null) {
