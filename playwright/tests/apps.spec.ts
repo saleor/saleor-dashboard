@@ -20,6 +20,7 @@ const PRE_INSTALLATION_TIMEOUT = 20 * 1000;
 const INSTALLATION_PENDING_TIMEOUT = 50 * 1000;
 const APP_LISTED_TIMEOUT = 15 * 1000;
 const APP_INSTALLED_TIMEOUT = 50 * 1000;
+const APP_EXPECT_TIMEOUT = 15 * 1000;
 
 test("TC: SALEOR_119 User should be able to install and configure app from manifest @e2e", async ({
   page,
@@ -40,7 +41,9 @@ test("TC: SALEOR_119 User should be able to install and configure app from manif
   );
   await installationPage.installAppButton.click();
   await appsPage.expectSuccessBanner();
-  await expect(appsPage.installedAppRow.first()).toBeVisible();
+  await expect(appsPage.installedAppRow.first()).toBeVisible({
+    timeout: APP_LISTED_TIMEOUT,
+  });
   await appsPage.installationPendingLabel.waitFor({
     state: "hidden",
     timeout: INSTALLATION_PENDING_TIMEOUT,
@@ -56,7 +59,10 @@ test("TC: SALEOR_119 User should be able to install and configure app from manif
 
   const iframeLocator = page.frameLocator("iframe");
 
-  await expect(iframeLocator.getByLabel("PUBLIC_TOKEN")).toBeVisible();
+  await expect(iframeLocator.getByLabel("PUBLIC_TOKEN")).toBeVisible({
+    // Klavyio's UI can take a while to load initially
+    timeout: APP_EXPECT_TIMEOUT,
+  });
   await iframeLocator.getByLabel("PUBLIC_TOKEN").fill("test_token");
   await iframeLocator.getByText("Save").click();
   await appsPage.expectSuccessBanner();
