@@ -6,6 +6,10 @@ import * as React from "react";
 
 import OrderDraftAlert, { OrderDraftAlertProps } from "./OrderDraftAlert";
 
+jest.mock("react-router-dom", () => ({
+  Link: jest.fn(({ to, ...props }) => <a href={to} {...props} />),
+}));
+
 describe("OrderDraftAlert", () => {
   const alertProps: OrderDraftAlertProps = {
     order: order("--url--"),
