@@ -62,6 +62,10 @@ export const Metadata: React.FC<MetadataProps> = memo(({ data, onChange, readonl
     });
   };
 
+  // If metadata is an array and privateMetadata doesn't exist it means
+  // that user doesn't have access to private metadata
+  const isPrivateMetadataVisible = data?.metadata ? data.metadata && data?.privateMetadata : true;
+
   return (
     <Box display="grid" gap={2} paddingBottom={6}>
       <MetadataCard
@@ -70,12 +74,14 @@ export const Metadata: React.FC<MetadataProps> = memo(({ data, onChange, readonl
         readonly={readonly}
         onChange={event => change(event, false)}
       />
-      <MetadataCard
-        data={data?.privateMetadata}
-        isPrivate={true}
-        readonly={readonly}
-        onChange={event => change(event, true)}
-      />
+      {isPrivateMetadataVisible && (
+        <MetadataCard
+          data={data?.privateMetadata}
+          isPrivate={true}
+          readonly={readonly}
+          onChange={event => change(event, true)}
+        />
+      )}
     </Box>
   );
 }, propsCompare);

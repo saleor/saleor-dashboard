@@ -25,7 +25,7 @@ export const OrderMetadataDialog = ({ onClose, open, data }: OrderMetadataDialog
           onChange={() => undefined}
           data={{
             metadata: data?.variant?.metadata ?? [],
-            privateMetadata: data?.variant?.privateMetadata ?? [],
+            privateMetadata: data?.variant?.privateMetadata,
           }}
         />
 
