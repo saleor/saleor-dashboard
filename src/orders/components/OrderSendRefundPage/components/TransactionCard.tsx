@@ -1,15 +1,10 @@
 // @ts-strict-ignore
-import { useUser } from "@dashboard/auth";
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import PriceField from "@dashboard/components/PriceField";
-import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import {
   OrderDetailsFragment,
-  OrderDetailsWithMetadataDocument,
-  PermissionEnum,
   TransactionActionEnum,
   TransactionItemFragment,
-  useOrderSendRefundMutation,
 } from "@dashboard/graphql";
 import { useId } from "@reach/auto-id";
 import { Button, makeStyles } from "@saleor/macaw-ui";
@@ -19,6 +14,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderTransaction from "../../OrderTransaction";
 import { refundPageMessages } from "../messages";
+import { useOrderSendRefund } from "./useOrderSendRefund";
 
 interface TransactionCardProps {
   transaction: TransactionItemFragment;
@@ -55,23 +51,15 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
   const classes = useStyles();
   const intl = useIntl();
   const id = useId();
-  const user = useUser();
-  const hasManageProducts = hasPermissions(user?.user?.userPermissions ?? [], [
-    PermissionEnum.MANAGE_PRODUCTS,
-  ]);
+
   const [value, setValue] = React.useState<number | undefined>();
-  const [sendRefund, { status, loading, error, data }] = useOrderSendRefundMutation({
-    refetchQueries: [
-      {
-        query: OrderDetailsWithMetadataDocument,
-        variables: { id: orderId, hasManageProducts },
-      },
-    ],
-    variables: {
-      transactionId: transaction.id,
-      amount: value,
-    },
+
+  const { data, error, loading, status, sendRefund } = useOrderSendRefund({
+    transactionId: transaction.id,
+    orderId,
+    amount: value,
   });
+
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async e => {
     e.preventDefault();
 
