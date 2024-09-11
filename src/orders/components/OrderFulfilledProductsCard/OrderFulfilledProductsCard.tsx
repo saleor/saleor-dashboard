@@ -90,7 +90,7 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
           </Box>
         }
       />
-      <DashboardCard.Content>
+      <DashboardCard.Content paddingX={0}>
         <OrderDetailsDatagrid lines={getLines()} loading={false} onShowMetadata={onShowMetadata} />
         <ExtraInfoLines fulfillment={fulfillment} />
       </DashboardCard.Content>

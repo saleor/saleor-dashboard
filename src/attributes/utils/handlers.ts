@@ -206,7 +206,7 @@ function getFileInput(attribute: AttributeInput, updatedFileAttributes: Attribut
 function getBooleanInput(attribute: AttributeInput) {
   return {
     id: attribute.id,
-    boolean: attribute.value[0] ? JSON.parse(attribute.value[0]) : null,
+    boolean: attribute.value[0] != null ? JSON.parse(attribute.value[0]) : null,
   };
 }
 
