@@ -17,6 +17,7 @@ export interface MetadataProps extends Omit<MetadataCardProps, "data" | "isPriva
   };
   isLoading?: boolean;
   readonly?: boolean;
+  // This props is used to hide the private metadata section when user doesn't have enough permissions.
   hidePrivateMetadata?: boolean;
 }
 
@@ -34,6 +35,8 @@ const propsCompare = (_, newProps: MetadataProps) => {
   return false;
 };
 
+// TODO: Refactor loading state logic
+// TODO: Split "Metadata" component into "Metadata" and "PrivateMetadata" components
 export const Metadata: React.FC<MetadataProps> = memo(
   ({ data, onChange, isLoading, readonly = false, hidePrivateMetadata = false }) => {
     const change = (event: ChangeEvent, isPrivate: boolean) => {
