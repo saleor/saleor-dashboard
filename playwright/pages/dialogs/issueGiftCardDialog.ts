@@ -24,6 +24,7 @@ export class IssueGiftCardDialog extends BasePage {
     readonly copyCodeButton = page.getByTestId("copy-code-button"),
     readonly option = page.getByTestId("select-option"),
     readonly issueGiftCardDialog = page.getByTestId("gift-card-dialog"),
+    readonly amountDropdown = page.locator('div[name="balanceCurrency"]'),
   ) {
     super(page);
   }
@@ -97,7 +98,7 @@ export class IssueGiftCardDialog extends BasePage {
     return allTexts[0];
   }
 
-  async blur() {
-    await this.issueGiftCardDialog.click();
+  async tagsInputBlur() {
+    await this.tagsInput.blur();
   }
 }
