@@ -10,9 +10,10 @@ interface OrderMetadataDialogProps {
   open: boolean;
   onClose: () => void;
   data?: OrderLineWithMetadataFragment;
+  loading?: boolean;
 }
 
-export const OrderMetadataDialog = ({ onClose, open, data }: OrderMetadataDialogProps) => {
+export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetadataDialogProps) => {
   return (
     <DashboardModal open={open} onChange={onClose}>
       <DashboardModal.Content size="md">
@@ -23,6 +24,7 @@ export const OrderMetadataDialog = ({ onClose, open, data }: OrderMetadataDialog
         <Metadata
           readonly={true}
           onChange={() => undefined}
+          isLoading={loading}
           data={{
             metadata: data?.variant?.metadata ?? [],
             privateMetadata: data?.variant?.privateMetadata,

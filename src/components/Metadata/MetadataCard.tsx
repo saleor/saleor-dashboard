@@ -7,6 +7,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { DashboardCard } from "../Card";
 import { MetadataCardTable } from "./MetadataCardTable";
 import { EventDataAction } from "./types";
+import { getMetadataTitle } from "./utils";
 
 export interface MetadataCardProps {
   data: MetadataInput[];
@@ -23,17 +24,6 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
 }) => {
   const intl = useIntl();
   const [expanded, setExpanded] = useState(readonly ? "metadata-accordion" : undefined);
-  const title = isPrivate
-    ? {
-        id: "ETHnjq",
-        defaultMessage: "Private Metadata",
-        description: "header",
-      }
-    : {
-        id: "VcI+Zh",
-        defaultMessage: "Metadata",
-        description: "header",
-      };
 
   return (
     <DashboardCard paddingTop={6} data-test-id="metadata-editor" data-test-is-private={isPrivate}>
@@ -43,7 +33,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
             <Accordion.Trigger>
               <Box display="flex" flexDirection="column" gap={2}>
                 <Text size={5} fontWeight="bold">
-                  {intl.formatMessage(title)}
+                  {intl.formatMessage(getMetadataTitle(isPrivate))}
                 </Text>
 
                 {data?.length > 0 && (
