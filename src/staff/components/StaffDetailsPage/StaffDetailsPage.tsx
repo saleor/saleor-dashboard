@@ -138,7 +138,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                       </DashboardCard.Title>
                     </DashboardCard.Header>
                     <DashboardCard.Content>
-                      <Text>
+                      <Text marginBottom={1}>
                         {intl.formatMessage({
                           id: "P+kVxW",
                           defaultMessage: "User is assigned to:",

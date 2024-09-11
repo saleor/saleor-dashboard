@@ -358,6 +358,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
         onClose={closeModal}
         open={params.action === "view-metadata"}
         data={order?.lines?.find(orderLine => orderLine.id === params.id)}
+        loading={updateMetadataOpts.loading || updatePrivateMetadataOpts.loading}
       />
 
       <OrderPaymentVoidDialog
