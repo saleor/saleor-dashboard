@@ -17,6 +17,7 @@ export interface MetadataProps extends Omit<MetadataCardProps, "data" | "isPriva
   };
   isLoading?: boolean;
   readonly?: boolean;
+  hidePrivateMetadata?: boolean;
 }
 
 const propsCompare = (_, newProps: MetadataProps) => {
@@ -34,7 +35,7 @@ const propsCompare = (_, newProps: MetadataProps) => {
 };
 
 export const Metadata: React.FC<MetadataProps> = memo(
-  ({ data, onChange, isLoading, readonly = false }) => {
+  ({ data, onChange, isLoading, readonly = false, hidePrivateMetadata = false }) => {
     const change = (event: ChangeEvent, isPrivate: boolean) => {
       const { action, field, fieldIndex, value } = parseEventData(event);
       const key = getDataKey(isPrivate);
@@ -72,7 +73,7 @@ export const Metadata: React.FC<MetadataProps> = memo(
         {isLoading ? (
           <>
             <MetadataLoadingCard />
-            <MetadataLoadingCard isPrivate />
+            {!hidePrivateMetadata && <MetadataLoadingCard isPrivate />}
           </>
         ) : (
           <>
@@ -82,7 +83,7 @@ export const Metadata: React.FC<MetadataProps> = memo(
               readonly={readonly}
               onChange={event => change(event, false)}
             />
-            {data?.privateMetadata && (
+            {(data?.privateMetadata || !hidePrivateMetadata) && (
               <MetadataCard
                 data={data?.privateMetadata}
                 isPrivate={true}

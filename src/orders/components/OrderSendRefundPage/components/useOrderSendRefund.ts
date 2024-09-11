@@ -1,10 +1,5 @@
-import { useUser } from "@dashboard/auth";
-import { hasPermissions } from "@dashboard/components/RequirePermissions";
-import {
-  OrderDetailsWithMetadataDocument,
-  PermissionEnum,
-  useOrderSendRefundMutation,
-} from "@dashboard/graphql";
+import { OrderDetailsWithMetadataDocument, useOrderSendRefundMutation } from "@dashboard/graphql";
+import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 
 interface OrderSendRefundProps {
   transactionId: string;
@@ -13,10 +8,7 @@ interface OrderSendRefundProps {
 }
 
 export const useOrderSendRefund = ({ transactionId, orderId, amount }: OrderSendRefundProps) => {
-  const user = useUser();
-  const hasManageProducts = hasPermissions(user?.user?.userPermissions ?? [], [
-    PermissionEnum.MANAGE_PRODUCTS,
-  ]);
+  const hasManageProducts = useHasManageProductsPermission();
   const [sendRefund, { status, loading, error, data }] = useOrderSendRefundMutation({
     refetchQueries: [
       {

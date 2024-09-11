@@ -18,8 +18,6 @@ export const MetadataLoadingCard: React.FC<{ isPrivate?: boolean }> = ({ isPriva
         <Box display="flex" flexDirection="row" gap={20}>
           <Skeleton height={6} />
           <Skeleton height={6} />
-
-          <Skeleton height={6} __width="70px" />
         </Box>
       </DashboardCard.Content>
     </DashboardCard>

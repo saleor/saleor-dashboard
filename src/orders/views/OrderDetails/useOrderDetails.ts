@@ -1,13 +1,8 @@
-import { useUser } from "@dashboard/auth";
-import { hasPermissions } from "@dashboard/components/RequirePermissions";
-import { PermissionEnum, useOrderDetailsWithMetadataQuery } from "@dashboard/graphql";
+import { useOrderDetailsWithMetadataQuery } from "@dashboard/graphql";
+import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 
 export const useOrderDetails = (id: string) => {
-  const user = useUser();
-
-  const hasManageProducts = hasPermissions(user?.user?.userPermissions ?? [], [
-    PermissionEnum.MANAGE_PRODUCTS,
-  ]);
+  const hasManageProducts = useHasManageProductsPermission();
   const { data, loading } = useOrderDetailsWithMetadataQuery({
     displayLoader: true,
     variables: { id, hasManageProducts },
