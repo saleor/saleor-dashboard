@@ -10,7 +10,10 @@ import { EventDataAction, EventDataField } from "./types";
 import { getDataKey, parseEventData } from "./utils";
 
 export interface MetadataProps extends Omit<MetadataCardProps, "data" | "isPrivate"> {
-  data: Record<"metadata" | "privateMetadata", MetadataInput[]>;
+  data: {
+    metadata: MetadataInput[];
+    privateMetadata: MetadataInput[] | undefined;
+  };
   isLoading?: boolean;
   readonly?: boolean;
 }
