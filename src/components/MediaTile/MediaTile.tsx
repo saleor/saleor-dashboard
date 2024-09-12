@@ -1,6 +1,7 @@
 import { Box, Button, EditIcon, Spinner, TrashBinIcon } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
+import { Link } from "react-router-dom";
 
 interface MediaTileBaseProps {
   media: {
@@ -81,11 +82,17 @@ const MediaTile: React.FC<MediaTileProps> = props => {
         __cursor={draggable ? "move" : "default"}
       >
         {loading ? (
-          <Spinner />
+          <Box display="flex" alignItems="center" justifyContent="center" height="100%" gap={2}>
+            <Spinner />
+          </Box>
         ) : (
           <Box display="flex" alignItems="center" justifyContent="center" height="100%" gap={2}>
             {(onEdit || editHref) && (
-              <Button icon={<EditIcon />} variant="tertiary" onClick={onEdit} />
+              <Button
+                icon={<EditIcon />}
+                variant="tertiary"
+                {...(editHref ? { href: editHref, as: Link } : { onClick: onEdit })}
+              />
             )}
             {onDelete && <Button icon={<TrashBinIcon />} variant="tertiary" onClick={onDelete} />}
           </Box>
