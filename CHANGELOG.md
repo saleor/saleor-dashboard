@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.20.10
+
+### Patch Changes
+
+- 73387c130: History timeline sections now have a bolded, dark header without a line separating them from the events.
+- e91e592f7: E2E tests are no longer executed on every commit, this means performing e2e tests happens only when you add a label "run pw-e2e"
+- 660f6c119: Users with "MANAGE_STAFF" permission no longer get an error when entering order details. This means that to access `privateMetadata` in variant "MANAGE_PRODUCTS" permission is required.
+- 55d5a5f44: Shipping destination alert when creating a new order now has a correct link to shipping settings.
+- 3dc1c6d9b: Grid no longer crashes when removing row.
+
 ## 3.20.9
 
 ### Patch Changes
