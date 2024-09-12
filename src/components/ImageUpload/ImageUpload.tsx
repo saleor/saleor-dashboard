@@ -1,5 +1,5 @@
 import { ImageIcon } from "@saleor/macaw-ui";
-import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { sprinkles, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import Dropzone from "react-dropzone";
@@ -30,28 +30,32 @@ export const ImageUpload: React.FC<ImageUploadProps> = props => {
 
   const handleDrop = (acceptedFiles: File[]) => {
     const fileList: FileList = {
+      ...acceptedFiles,
       length: acceptedFiles.length,
       item: (index: number) => acceptedFiles[index] || null,
-      ...acceptedFiles,
     };
 
     onImageUpload(fileList);
   };
 
   return (
-    <Dropzone disabled={disableClick} onDrop={handleDrop}>
+    <Dropzone noClick={disableClick} onDrop={handleDrop}>
       {({ isDragActive, getInputProps, getRootProps }) => (
         <>
-          <Box
+          <div
             {...getRootProps()}
-            color="default1"
-            className={clsx(className, {
-              [isActiveClassName]: isDragActive,
-            })}
-            paddingY={12}
-            textAlign="center"
-            backgroundColor={isDragActive ? "default1Focused" : "default1"}
-            cursor={isDragActive ? "auto" : "pointer"}
+            className={clsx(
+              className,
+              {
+                [isActiveClassName]: isDragActive,
+              },
+              sprinkles({
+                color: "default1",
+                paddingY: 12,
+                textAlign: "center",
+                backgroundColor: isDragActive ? "default1Focused" : "default1",
+              }),
+            )}
           >
             {!hideUploadIcon && (
               <div
@@ -59,7 +63,11 @@ export const ImageUpload: React.FC<ImageUploadProps> = props => {
                   [iconContainerActiveClassName]: isDragActive,
                 })}
               >
-                <input {...getInputProps()} style={{ display: "none" }} accept="image/*" />
+                <input
+                  {...getInputProps()}
+                  className={sprinkles({ display: "none" })}
+                  accept="image/*"
+                />
                 <ImageIcon
                   className={sprinkles({
                     color: "default1",
@@ -75,7 +83,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = props => {
                 </Text>
               </div>
             )}
-          </Box>
+          </div>
 
           {children && children({ isDragActive })}
         </>
