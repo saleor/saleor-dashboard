@@ -11068,7 +11068,7 @@ export type OrderDetailsQuery = { __typename: 'Query', order: { __typename: 'Ord
 
 export type OrderDetailsWithMetadataQueryVariables = Exact<{
   id: Scalars['ID'];
-  isStaffUser: Scalars['Boolean'];
+  hasManageProducts: Scalars['Boolean'];
 }>;
 
 
