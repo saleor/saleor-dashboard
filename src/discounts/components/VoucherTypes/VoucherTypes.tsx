@@ -3,6 +3,7 @@ import Grid from "@dashboard/components/Grid";
 import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField";
 import { DiscountTypeEnum } from "@dashboard/discounts/types";
 import { DiscountErrorFragment } from "@dashboard/graphql";
+import { FormChange } from "@dashboard/hooks/useForm";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
 import React from "react";
@@ -14,7 +15,7 @@ interface VoucherTypesProps {
   data: VoucherDetailsPageFormData;
   errors: DiscountErrorFragment[];
   disabled: boolean;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: FormChange;
 }
 
 const VoucherTypes = ({ data, disabled, errors, onChange }: VoucherTypesProps) => {

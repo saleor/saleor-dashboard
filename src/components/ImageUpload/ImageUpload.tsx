@@ -46,7 +46,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = props => {
             {...getRootProps()}
             className={clsx(
               className,
-              {
+              isActiveClassName && {
                 [isActiveClassName]: isDragActive,
               },
               sprinkles({
@@ -59,9 +59,12 @@ export const ImageUpload: React.FC<ImageUploadProps> = props => {
           >
             {!hideUploadIcon && (
               <div
-                className={clsx(iconContainerClassName, {
-                  [iconContainerActiveClassName]: isDragActive,
-                })}
+                className={clsx(
+                  iconContainerClassName,
+                  iconContainerActiveClassName && {
+                    [iconContainerActiveClassName]: isDragActive,
+                  },
+                )}
               >
                 <input
                   {...getInputProps()}
