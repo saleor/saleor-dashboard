@@ -1,26 +1,6 @@
 import { Channel } from "@dashboard/channels/utils";
-import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
-import Hr from "@dashboard/components/Hr";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Divider, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-
-export const useStyles = makeStyles(
-  theme => ({
-    label: {
-      fontSize: 14,
-    },
-    option: {
-      "&:last-child": {
-        "& hr": {
-          display: "none",
-        },
-      },
-      margin: theme.spacing(1, 0),
-    },
-  }),
-  { name: "ChannelsAvailabilityContent" },
-);
 
 export interface ChannelsAvailabilityContentProps {
   isChannelSelected: (channel: Channel) => boolean;
@@ -33,20 +13,22 @@ const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentProps> = 
   channels,
   onChange,
 }) => {
-  const classes = useStyles({});
-
   return (
     <>
-      {channels.map(option => (
-        <div key={option.id} className={classes.option} data-test-id="channel-row">
-          <ControlledCheckbox
+      {channels.map((option, index) => (
+        <Box key={option.id} data-test-id="channel-row">
+          <Checkbox
             checked={isChannelSelected(option)}
             name={option.name}
-            label={<Text className={classes.label}>{option.name}</Text>}
-            onChange={() => onChange(option)}
-          />
-          <Hr />
-        </div>
+            onCheckedChange={() => onChange(option)}
+            paddingY={3}
+          >
+            <Text size={4}>{option.name}</Text>
+          </Checkbox>
+          {index < channels.length - 1 && (
+            <Divider __marginLeft="-24px" __width="calc(100% + 48px)" />
+          )}
+        </Box>
       ))}
     </>
   );

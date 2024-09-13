@@ -1,56 +1,7 @@
-import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
-import Hr from "@dashboard/components/Hr";
 import Label from "@dashboard/orders/components/OrderHistory/Label";
-import { TextField } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Divider, Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
-
-export const useStyles = makeStyles(
-  theme => ({
-    content: {
-      "& hr": {
-        left: -24,
-        position: "relative",
-        width: "calc(100% + 48px)",
-      },
-    },
-    contentTitle: {
-      margin: theme.spacing(1, 0),
-    },
-    dialog: {
-      marginBottom: -30,
-      marginTop: theme.spacing(2),
-    },
-    input: {
-      "& label": {
-        overflowX: "inherit",
-      },
-    },
-    notFound: {
-      paddingBottom: theme.spacing(2),
-    },
-    scrollArea: {
-      maxHeight: "calc(100vh - 400px)",
-      "@media (min-height: 800px)": {
-        maxHeight: 400,
-      },
-      overflowY: "scroll",
-      overflowX: "hidden",
-      // overflowX can't be "visible" when overflowY is "scroll"
-      // workaround for visible button ripples:
-      marginLeft: -15,
-      paddingLeft: 15,
-
-      marginBottom: theme.spacing(3),
-    },
-    text: {
-      marginBottom: 5,
-    },
-  }),
-  { name: "ChannelsAvailabilityContent" },
-);
 
 const messages = defineMessages({
   selectTitle: {
@@ -96,7 +47,6 @@ export const ChannelsAvailabilityContentWrapper: React.FC<ChannelsAvailabilityCo
   onQueryChange,
   hasAllSelected,
 }) => {
-  const classes = useStyles({});
   const intl = useIntl();
   const searchText = intl.formatMessage({
     id: "ybaLoZ",
@@ -104,54 +54,58 @@ export const ChannelsAvailabilityContentWrapper: React.FC<ChannelsAvailabilityCo
   });
 
   return (
-    <div className={classes.content}>
+    <Box __maxHeight="calc(-260px + 100vh)">
       {!!contentType && (
-        <Text className={classes.text} size={2} fontWeight="light">
+        <Text marginBottom={5} size={2} fontWeight="light">
           <FormattedMessage {...messages.selectTitle} />
         </Text>
       )}
-      <TextField
+      <Input
         name="query"
         value={query}
-        className={classes.input}
         onChange={e => onQueryChange(e.target.value)}
         label={searchText}
         placeholder={searchText}
-        fullWidth
+        width="100%"
       />
-      <div className={classes.dialog}>
+      <div>
         {!!toggleAll && (
           <>
-            <ControlledCheckbox
+            <Checkbox
               checked={hasAllSelected}
               name="allChannels"
-              label={
-                toggleAllLabel || (
-                  <Label text={intl.formatMessage(messages.selectAllChannelsLabel)} />
-                )
-              }
-              onChange={toggleAll}
-            />
-            <Hr />
+              onCheckedChange={toggleAll}
+              paddingY={4}
+            >
+              {toggleAllLabel ?? (
+                <Label text={intl.formatMessage(messages.selectAllChannelsLabel)} />
+              )}
+            </Checkbox>
+            <Divider __marginLeft="-24px" __width="calc(100% + 48px)" />
           </>
         )}
-        <Text className={classes.contentTitle}>
+        <Text marginTop={2} marginBottom={3} fontWeight="bold" display="block">
           <FormattedMessage {...messages.channelsAlphabeticallyTitle} />
         </Text>
-        <div
-          className={classes.scrollArea}
+        <Box
           data-test-id="manage-products-channels-availiability-list"
+          __marginLeft="-24px"
+          __marginRight="-24px"
+          __paddingLeft="24px"
+          overflowY="scroll"
+          overflowX="hidden"
+          __maxHeight="calc(100vh - 400px)"
         >
           {hasAnyChannelsToDisplay ? (
             children
           ) : (
-            <div className={classes.notFound}>
+            <Box paddingBottom={4}>
               <FormattedMessage {...messages.notFoundTitle} />
-            </div>
+            </Box>
           )}
-        </div>
+        </Box>
       </div>
-    </div>
+    </Box>
   );
 };
 
