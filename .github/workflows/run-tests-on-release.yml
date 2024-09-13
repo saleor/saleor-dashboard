@@ -37,13 +37,14 @@ on:
       TESTS_CONCLUSION:
         value: ${{ jobs.tests-complete.outputs.TESTS_CONCLUSION }}
         description: conclusion of tests
-      RUN_URL: 
+      RUN_URL:
         value: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
         description: Url to job run
-        
+
 jobs:
   add-check-and-prepare-instance:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     env:
       VERSION: ${{inputs.VERSION}}
       CUSTOM_VERSION: ${{inputs.CUSTOM_VERSION}}
@@ -130,9 +131,10 @@ jobs:
     if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"cypress"'
     needs: add-check-and-prepare-instance
     runs-on: ubuntu-22.04
-    container: 
+    timeout-minutes: 30
+    container:
       image: cypress/browsers:node18.12.0-chrome106-ff106
-      options: --user 1001  
+      options: --user 1001
     strategy:
       fail-fast: false
       matrix:
@@ -172,7 +174,7 @@ jobs:
           mailpitUrl: ${{ secrets.CYPRESS_MAILPITURL }}
           stripeSecretKey: ${{ secrets.STRIPE_SECRET_KEY }}
           stripePublicKey: ${{ secrets.STRIPE_PUBLIC_KEY }}
-          cypressGrepTags:  ${{steps.set-tag-for-tests.outputs.result}}
+          cypressGrepTags: ${{steps.set-tag-for-tests.outputs.result}}
           split: ${{ strategy.job-total }}
           splitIndex: ${{ strategy.job-index }}
           commitInfoMessage: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
@@ -189,6 +191,7 @@ jobs:
   run-pw-tests:
     runs-on: ubuntu-22.04
     needs: "add-check-and-prepare-instance"
+    timeout-minutes: 30
     if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"playwright"'
     strategy:
       fail-fast: false
@@ -211,7 +214,7 @@ jobs:
           MAILPITURL: ${{ secrets.MAILPITURL }}
           URL_TO_RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           PW_WORKERS: ${{ vars.PW_WORKERS }}
-          PW_RETRIES: ${{ vars.PW_RETRIES }} 
+          PW_RETRIES: ${{ vars.PW_RETRIES }}
           PROJECT: "e2e apps-e2e"
 
       - name: submit-results-to-testmo
@@ -227,6 +230,7 @@ jobs:
       !cancelled() && always()
     needs: ["add-check-and-prepare-instance", "run-cy-tests", "run-pw-tests"]
     runs-on: ubuntu-22.04
+    timeout-minutes: 30
     outputs:
       TESTS_CONCLUSION: "${{ steps.send-slack-message.outputs.status }}"
     steps:
@@ -274,7 +278,7 @@ jobs:
           --environment "$ENVIRONMENT" \
           --url_to_action "$URL_TO_ACTION" \
           --ref_name "$REF_NAME" \
-          --additional_title "$ADDITIONAL_TITLE" 
+          --additional_title "$ADDITIONAL_TITLE"
 
       - id: update-check
         if: always() && ${{ needs.add-check-and-prepare-instance.outputs.CHECK_ID }}
