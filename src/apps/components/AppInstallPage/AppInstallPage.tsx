@@ -73,7 +73,9 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
                 </Box>
                 <img src={plusIcon} alt="" />
                 {loading ? (
-                  <Skeleton width={12} height={12} />
+                  <Box width={12} height={12} backgroundColor="default1">
+                    <Skeleton width={12} height={12} />
+                  </Box>
                 ) : (
                   <AppAvatar
                     size={12}
