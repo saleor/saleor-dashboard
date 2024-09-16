@@ -3,7 +3,7 @@ import ImageUpload from "@dashboard/components/ImageUpload";
 import MediaTile from "@dashboard/components/MediaTile";
 import { CollectionDetailsFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { Box, Button, Divider, Skeleton, sprinkles, Textarea } from "@saleor/macaw-ui-next";
+import { Box, Button, Divider, Skeleton, Textarea } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -42,7 +42,7 @@ export const CollectionImage: React.FC<CollectionImageProps> = props => {
             <FormattedMessage {...commonMessages.uploadImage} />
           </Button>
           <input
-            className={sprinkles({ display: "none" })}
+            style={{ display: "none" }}
             id="fileUpload"
             onChange={event => event.target.files && onImageUpload(event.target.files[0])}
             type="file"

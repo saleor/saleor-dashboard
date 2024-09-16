@@ -10,7 +10,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleDetailsFragment, VoucherDetailsFragment } from "@dashboard/graphql";
 import { getLoadableList, mapEdgesToItems } from "@dashboard/utils/maps";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
-import { Button, Skeleton, sprinkles, TrashBinIcon } from "@saleor/macaw-ui-next";
+import { Button, Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -113,9 +113,7 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
                     />
                   </TableCell>
                   <TableCell>{category ? category.name : <Skeleton />}</TableCell>
-                  <TableCell className={sprinkles({})}>
-                    {category ? category.products.totalCount : <Skeleton />}
-                  </TableCell>
+                  <TableCell>{category ? category.products.totalCount : <Skeleton />}</TableCell>
                   <TableCell className={classes.colActions}>
                     <TableButtonWrapper>
                       <Button

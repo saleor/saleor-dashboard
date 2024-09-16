@@ -12,10 +12,12 @@ const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentProps> = 
   isChannelSelected,
   channels,
   onChange,
-}) => {
-  return (
-    <>
-      {channels.map((option, index) => (
+}) => (
+  <>
+    {channels.map((option, index) => {
+      const hasMoreChannels = index < channels.length - 1;
+
+      return (
         <Box key={option.id} data-test-id="channel-row">
           <Checkbox
             checked={isChannelSelected(option)}
@@ -25,13 +27,11 @@ const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentProps> = 
           >
             <Text size={4}>{option.name}</Text>
           </Checkbox>
-          {index < channels.length - 1 && (
-            <Divider __marginLeft="-24px" __width="calc(100% + 48px)" />
-          )}
+          {hasMoreChannels && <Divider __marginLeft="-24px" __width="calc(100% + 48px)" />}
         </Box>
-      ))}
-    </>
-  );
-};
+      );
+    })}
+  </>
+);
 
 export default ChannelsAvailabilityContent;
