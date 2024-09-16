@@ -3,8 +3,11 @@ import React from "react";
 
 import { EventDeliveryItem } from "./EventDeliveryItem";
 
-export type EventDelivery =
-  AppWebhookDeliveriesQuery["app"]["webhooks"][0]["eventDeliveries"]["edges"][0];
+type App = NonNullable<AppWebhookDeliveriesQuery["app"]>;
+type Webhook = NonNullable<App["webhooks"]>[0];
+type WebhookEventDelivery = NonNullable<Webhook["eventDeliveries"]>["edges"][0];
+
+export type EventDelivery = WebhookEventDelivery;
 
 interface EventDeliveriesListProps {
   eventDeliveries: EventDelivery[];
