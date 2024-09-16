@@ -36,7 +36,7 @@ export default defineConfig({
     : [["html"], ["list"]],
   expect: { timeout: 10 * 1000 },
   maxFailures: 10,
-  timeout: 30000,
+  timeout: 30 * 1000,
   use: {
     baseURL: env.BASE_URL || "",
     trace: env.CI ? "retain-on-failure" : "on",
