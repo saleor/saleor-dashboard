@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-SALEOR_37 now waits for expected options to appear, preventing fails in some test runs. Playwright retires has been set to 0. SALEOR_191 has been marked as a slow test meaning PW shouldn't fail due to timeout. SALEOR_119 now waits for app's UI to load. 
+Some end-to-end Playwright tests now have extended timeouts for UI elements to load. This means that automation tests should fail less. Playwright retires value has been set to 0.
