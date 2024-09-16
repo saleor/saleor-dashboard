@@ -4119,6 +4119,7 @@ export const AppWebhookDeliveriesDocument = gql`
       eventDeliveries(first: 10) {
         edges {
           node {
+            id
             createdAt
             status
             eventType

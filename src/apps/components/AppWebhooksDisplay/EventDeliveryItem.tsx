@@ -14,6 +14,7 @@ interface EventDeliveryItemProps {
   attempts: EventDeliveryAttemptFragment[];
   lastAttemptDate: string;
   hasMore: boolean;
+  dataTestId?: string;
 }
 
 export const EventDeliveryItem: React.FC<EventDeliveryItemProps> = ({
@@ -23,11 +24,12 @@ export const EventDeliveryItem: React.FC<EventDeliveryItemProps> = ({
   attempts,
   lastAttemptDate,
   hasMore,
+  dataTestId,
 }) => {
   const intl = useIntl();
 
   return (
-    <Box key={createdAt} marginBottom={4}>
+    <Box key={createdAt} marginBottom={4} data-test-id={dataTestId}>
       <Box display="grid" __gridTemplateColumns={"1fr 1fr"} paddingX={4}>
         <Text as="p" size={4} fontWeight="bold">
           <DateTime plain date={createdAt} />
