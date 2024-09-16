@@ -110,8 +110,7 @@ export const appWebhookDeliveries = gql`
               attempts(first: 10) {
                 edges {
                   node {
-                    createdAt
-                    status
+                    ...EventDeliveryAttempt
                   }
                 }
               }

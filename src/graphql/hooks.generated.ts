@@ -117,6 +117,15 @@ export const AppListItemFragmentDoc = gql`
   }
 }
     ${AppPermissionFragmentDoc}`;
+export const EventDeliveryAttemptFragmentDoc = gql`
+    fragment EventDeliveryAttempt on EventDeliveryAttempt {
+  id
+  createdAt
+  status
+  response
+  responseStatusCode
+}
+    `;
 export const AttributeFragmentDoc = gql`
     fragment Attribute on Attribute {
   id
@@ -4116,8 +4125,7 @@ export const AppWebhookDeliveriesDocument = gql`
             attempts(first: 10) {
               edges {
                 node {
-                  createdAt
-                  status
+                  ...EventDeliveryAttempt
                 }
               }
             }
@@ -4127,7 +4135,7 @@ export const AppWebhookDeliveriesDocument = gql`
     }
   }
 }
-    `;
+    ${EventDeliveryAttemptFragmentDoc}`;
 
 /**
  * __useAppWebhookDeliveriesQuery__

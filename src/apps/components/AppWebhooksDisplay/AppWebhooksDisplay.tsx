@@ -1,17 +1,10 @@
-import { DateTime } from "@dashboard/components/Date";
-import { EventDeliveryStatusEnum, useAppWebhookDeliveriesQuery } from "@dashboard/graphql";
+import { useAppWebhookDeliveriesQuery } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
-import {
-  Accordion,
-  Box,
-  BoxProps,
-  Chip,
-  Skeleton,
-  Text,
-  ThemeTokensValues,
-} from "@saleor/macaw-ui-next";
+import { Accordion, Box, BoxProps, Chip, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
+
+import { EventDeliveriesList } from "./EventDeliveriesList";
 
 interface AppWebhooksDisplayProps extends BoxProps {
   appId: string;
@@ -39,53 +32,7 @@ const Wrapper = (boxProps: BoxProps) => {
     </Box>
   );
 };
-const mapDeliveryStatusToTextColor = (
-  status: EventDeliveryStatusEnum,
-): keyof ThemeTokensValues["colors"]["text"] => {
-  switch (status) {
-    case EventDeliveryStatusEnum.FAILED:
-      return "critical1";
-    case EventDeliveryStatusEnum.PENDING:
-      return "accent1";
-    case EventDeliveryStatusEnum.SUCCESS:
-      return "success1";
-  }
-};
-const mapDeliveryStatusToBackgroundColor = (
-  status: EventDeliveryStatusEnum,
-): keyof ThemeTokensValues["colors"]["background"] => {
-  switch (status) {
-    case EventDeliveryStatusEnum.FAILED:
-      return "default2";
-    case EventDeliveryStatusEnum.PENDING:
-      return "default1";
-    case EventDeliveryStatusEnum.SUCCESS:
-      return "accent1";
-  }
-};
-const DeliveryStatusDisplay = ({ status }: { status: EventDeliveryStatusEnum }) => {
-  const { formatMessage } = useIntl();
 
-  switch (status) {
-    case EventDeliveryStatusEnum.FAILED:
-      return <>{formatMessage({ defaultMessage: "Failed", id: "vXCeIi" })}</>;
-    case EventDeliveryStatusEnum.PENDING:
-      return <>{formatMessage({ defaultMessage: "Pending", id: "eKEL/g" })}</>;
-    case EventDeliveryStatusEnum.SUCCESS:
-      return <>{formatMessage({ defaultMessage: "Success", id: "xrKHS6" })} </>;
-    default:
-      throw new Error("Invalid EventDeliveryStatusEnum value");
-  }
-};
-const StatusChip = ({ status }: { status: EventDeliveryStatusEnum }) => {
-  return (
-    <Chip backgroundColor={mapDeliveryStatusToBackgroundColor(status)}>
-      <Text color={mapDeliveryStatusToTextColor(status)}>
-        <DeliveryStatusDisplay status={status} />
-      </Text>
-    </Chip>
-  );
-};
 const DisabledWebhookChip = () => {
   const { formatMessage } = useIntl();
 
@@ -127,7 +74,7 @@ export const AppWebhooksDisplay = ({ appId, ...boxProps }: AppWebhooksDisplayPro
   if (webhooksData?.app?.webhooks) {
     return (
       <Wrapper {...boxProps}>
-        <Accordion>
+        <Accordion __marginLeft="-24px" __width="calc(100% + 48px)">
           {webhooksData.app.webhooks.map((wh, index) => {
             const isLastWebhook = index === (webhooksData?.app?.webhooks ?? []).length - 1;
             const events = [...wh.asyncEvents, ...wh.syncEvents].flatMap(e => e.name).join(", ");
@@ -137,6 +84,7 @@ export const AppWebhooksDisplay = ({ appId, ...boxProps }: AppWebhooksDisplayPro
               <Box
                 key={wh.id}
                 padding={4}
+                paddingLeft={6}
                 borderBottomWidth={isLastWebhook ? 0 : 1}
                 borderColor="default1"
                 borderBottomStyle="solid"
@@ -156,10 +104,9 @@ export const AppWebhooksDisplay = ({ appId, ...boxProps }: AppWebhooksDisplayPro
                     borderWidth={1}
                     borderStyle="solid"
                     paddingY={2}
-                    paddingX={4}
                     borderRadius={4}
                   >
-                    <Accordion.Trigger alignItems="center">
+                    <Accordion.Trigger alignItems="center" paddingX={4}>
                       <Text size={4} fontWeight="bold" as="h2">
                         {formatMessage({
                           defaultMessage: "Pending & failed deliveries (last 10)",
@@ -169,45 +116,7 @@ export const AppWebhooksDisplay = ({ appId, ...boxProps }: AppWebhooksDisplayPro
                       <Accordion.TriggerButton />
                     </Accordion.Trigger>
                     <Accordion.Content marginTop={6}>
-                      {eventDeliveries.map(ed => {
-                        const { createdAt } = ed.node;
-                        const attempts = ed.node.attempts?.edges ?? [];
-                        const attemptsCount = attempts.length;
-                        const lastAttemptDate = attempts[attemptsCount - 1]?.node.createdAt;
-
-                        return (
-                          <Box key={createdAt} marginBottom={4}>
-                            <Box paddingLeft={0} display="grid" __gridTemplateColumns={"1fr 1fr"}>
-                              <Text as="p" size={4} fontWeight="bold">
-                                <DateTime plain date={createdAt} />
-                              </Text>
-                              <Box marginLeft="auto">
-                                <StatusChip status={ed.node.status} />
-                              </Box>
-                            </Box>
-                            {attempts.length > 0 && (
-                              <Box>
-                                <Text>
-                                  {formatMessage({
-                                    defaultMessage: "Attempts:",
-                                    id: "OFTsI1",
-                                  })}{" "}
-                                  <Text size={4} fontWeight="bold">
-                                    {attemptsCount} / 6
-                                  </Text>
-                                </Text>
-                                <Text as="p">
-                                  {formatMessage({
-                                    defaultMessage: "Last delivery attempt:",
-                                    id: "EY/jqC",
-                                  })}{" "}
-                                  <DateTime plain date={lastAttemptDate} />
-                                </Text>
-                              </Box>
-                            )}
-                          </Box>
-                        );
-                      })}
+                      <EventDeliveriesList eventDeliveries={eventDeliveries} />
                     </Accordion.Content>
                   </Accordion.Item>
                 )}
