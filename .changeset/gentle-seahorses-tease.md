@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-You can now see now changes in URL when click "Select channel" in product list
+Selecting channel from product list does not trigger URL change, so that clicking "Select channel" button without selecting channel will not be saved in URL.
