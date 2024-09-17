@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Test for readonly access to apps are more stably, so that should wait to content to be loaded before check anything
+Test for readonly access to apps are more table, so that should not check anything before content load.
