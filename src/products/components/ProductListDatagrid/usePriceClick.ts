@@ -1,6 +1,5 @@
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
-import { Condition, FilterElement } from "@dashboard/components/ConditionalFilter/FilterElement";
-import { ExpressionValue } from "@dashboard/components/ConditionalFilter/FilterElement/FilterElement";
+import { FilterElement } from "@dashboard/components/ConditionalFilter/FilterElement";
 
 export const usePriceClick = ({ isChannelSelected }: { isChannelSelected: boolean }) => {
   const { filterWindow, containerState } = useConditionalFilterContext();
@@ -8,11 +7,7 @@ export const usePriceClick = ({ isChannelSelected }: { isChannelSelected: boolea
   return (productId: string) => {
     if (!productId || isChannelSelected) return;
 
-    const channelFilterElement = new FilterElement(
-      ExpressionValue.fromSlug("channel"),
-      Condition.emptyFromSlug("channel"),
-      false,
-    );
+    const channelFilterElement = FilterElement.createStaticBySlug("channel");
 
     channelFilterElement.clearConstraint();
 
