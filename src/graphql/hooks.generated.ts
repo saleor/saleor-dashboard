@@ -2023,7 +2023,7 @@ export const OrderLineWithMetadataFragmentDoc = gql`
     metadata {
       ...MetadataItem
     }
-    privateMetadata @include(if: $isStaffUser) {
+    privateMetadata @include(if: $hasManageProducts) {
       ...MetadataItem
     }
   }
@@ -11987,7 +11987,7 @@ export type OrderDetailsQueryHookResult = ReturnType<typeof useOrderDetailsQuery
 export type OrderDetailsLazyQueryHookResult = ReturnType<typeof useOrderDetailsLazyQuery>;
 export type OrderDetailsQueryResult = Apollo.QueryResult<Types.OrderDetailsQuery, Types.OrderDetailsQueryVariables>;
 export const OrderDetailsWithMetadataDocument = gql`
-    query OrderDetailsWithMetadata($id: ID!, $isStaffUser: Boolean!) {
+    query OrderDetailsWithMetadata($id: ID!, $hasManageProducts: Boolean!) {
   order(id: $id) {
     ...OrderDetailsWithMetadata
   }
@@ -12020,7 +12020,7 @@ ${PaymentGatewayFragmentDoc}`;
  * const { data, loading, error } = useOrderDetailsWithMetadataQuery({
  *   variables: {
  *      id: // value for 'id'
- *      isStaffUser: // value for 'isStaffUser'
+ *      hasManageProducts: // value for 'hasManageProducts'
  *   },
  * });
  */

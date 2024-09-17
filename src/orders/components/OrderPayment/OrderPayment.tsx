@@ -67,15 +67,18 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
       <DashboardCard.Header>
         <DashboardCard.Title>
           <FormattedMessage {...orderPaymentMessages.paymentTitle} />
-          <Pill
-            className={sprinkles({
-              marginLeft: 2,
-              marginRight: "auto",
-            })}
-            label={payment.localized}
-            color={payment.status}
-            data-test-id="payment-status"
-          />
+
+          {order?.paymentStatus && (
+            <Pill
+              className={sprinkles({
+                marginLeft: 2,
+                marginRight: "auto",
+              })}
+              label={payment.localized}
+              color={payment.status}
+              data-test-id="payment-status"
+            />
+          )}
         </DashboardCard.Title>
 
         <DashboardCard.Toolbar>

@@ -118,7 +118,7 @@ export const orderDetailsQuery = gql`
 `;
 
 export const orderDetailsWithMetadataQuery = gql`
-  query OrderDetailsWithMetadata($id: ID!, $isStaffUser: Boolean!) {
+  query OrderDetailsWithMetadata($id: ID!, $hasManageProducts: Boolean!) {
     order(id: $id) {
       ...OrderDetailsWithMetadata
     }
