@@ -40,6 +40,6 @@ export class ExportProductsDialog {
   }
 
   async checkChannelCheckbox(channel = "PLN") {
-    await this.page.locator(`[name="Channel-${channel}"]`).click();
+    await this.page.locator(`[data-test-id="checkbox-Channel-${channel}"]`).click();
   }
 }

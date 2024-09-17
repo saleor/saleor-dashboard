@@ -24,6 +24,7 @@ const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentProps> = 
             name={option.name}
             onCheckedChange={() => onChange(option)}
             paddingY={3}
+            data-test-id={`checkbox-${option.name}`}
           >
             <Text size={4}>{option.name}</Text>
           </Checkbox>

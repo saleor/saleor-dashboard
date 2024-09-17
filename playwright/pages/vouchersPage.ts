@@ -27,16 +27,14 @@ export class VouchersPage extends BasePage {
     readonly bulkDeleteButton = page.getByTestId("bulk-delete-button"),
     readonly deleteButton = page.getByTestId("button-bar-delete"),
     readonly addCodeButton = page.getByTestId("add-code-button"),
-    readonly usageLimitCheckbox = page
-      .getByTestId("has-usage-limit")
-      .locator('input[type="checkbox"]'),
+    readonly usageLimitCheckbox = page.getByTestId("has-usage-limit"),
     readonly oncePerCustomerLimitCheckbox = page.getByTestId("apply-once-per-customer"),
     readonly onlyForStaffLimitCheckbox = page.getByTestId("only-for-staff"),
     readonly singleUseLimitCheckbox = page.getByTestId("single-use"),
     readonly usageLimitSection = page.getByTestId("usage-limit-section"),
     readonly valueSection = page.getByTestId("value-section"),
     readonly minimumRequirementsSection = page.getByTestId("minimum-requirements-section"),
-    readonly usageLimitInput = page.getByTestId("usage-limit").locator("input"),
+    readonly usageLimitInput = page.locator("input[data-test-id='usage-limit']"),
     readonly assignedSpecificProductsTable = page.getByTestId("assigned-specific-products-table"),
     readonly assignedSpecificProductRow = page.getByTestId("assigned-specific-product"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),

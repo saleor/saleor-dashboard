@@ -212,6 +212,7 @@ test("TC:SALEOR_95  Edit voucher - assign voucher to specific collection @vouche
   await vouchersPage.gotoExistingVoucherPage(
     VOUCHERS.vouchers.voucherToBeEditedAssignCategoryProductCollection.id,
   );
+  await expect(vouchersPage.specificProductsButton).not.toBeDisabled();
   await vouchersPage.clickSpecificProductsButton();
   await vouchersPage.clickCollectionsTab();
   await vouchersPage.clickAssignCollectionButton();
@@ -236,6 +237,7 @@ test("TC: SALEOR_96 Edit voucher - assign voucher to specific product @vouchers 
   await vouchersPage.gotoExistingVoucherPage(
     VOUCHERS.vouchers.voucherToBeEditedAssignCategoryProductCollection.id,
   );
+  await expect(vouchersPage.specificProductsButton).not.toBeDisabled();
   await vouchersPage.clickSpecificProductsButton();
   await vouchersPage.clickProductsTab();
   await vouchersPage.clickAssignProductButton();
