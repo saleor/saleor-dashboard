@@ -74,6 +74,7 @@ export const ChannelsAvailabilityContentWrapper: React.FC<ChannelsAvailabilityCo
             <Checkbox
               checked={hasAllSelected}
               name="allChannels"
+              data-test-id="all-channels"
               onCheckedChange={toggleAll}
               paddingY={4}
             >

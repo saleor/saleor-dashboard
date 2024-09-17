@@ -5,7 +5,7 @@ export class ChannelSelectDialog {
 
   constructor(
     page: Page,
-    readonly allChannelsCheckbox = page.locator("[name='allChannels']"),
+    readonly allChannelsCheckbox = page.getByTestId("all-channels"),
     readonly displayedChannels = page.getByTestId("channel-row"),
     readonly displayedChannelsCheckboxes = page.locator('button[role="checkbox"]'),
     readonly confirmButton = page.getByTestId("submit"),
