@@ -31,7 +31,6 @@ export const ImageUpload: React.FC<ImageUploadProps> = props => {
   const handleDrop = (acceptedFiles: File[]) => {
     const fileList: FileList = {
       ...acceptedFiles,
-      length: acceptedFiles.length,
       item: (index: number) => acceptedFiles[index] || null,
     };
 
