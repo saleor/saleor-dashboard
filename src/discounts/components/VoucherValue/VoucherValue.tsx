@@ -45,6 +45,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
   const voucherTypeChoices = Object.values(VoucherType).map(type => ({
     label: translatedVoucherTypes[type],
     value: type,
+    disabled: disabled,
   }));
 
   return (

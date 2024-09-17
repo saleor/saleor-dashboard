@@ -47,6 +47,7 @@ export const SimpleRadioGroupField: React.FC<SimpleRadioGroupFieldProps> = ({
             disabled={disabled}
             marginBottom={2}
             data-test-id={value}
+            __width="fit-content"
           >
             <Text
               color={disabled ? "defaultDisabled" : "default1"}

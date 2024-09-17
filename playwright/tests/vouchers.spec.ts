@@ -185,9 +185,10 @@ test("TC: SALEOR_93 Bulk delete voucher @vouchers @e2e", async () => {
 test("TC: SALEOR_94 Edit voucher - assign voucher to specific category @vouchers @e2e", async () => {
   const categoryToBeAssigned = "Accessories";
 
-  await vouchersPage.gotoExistingVoucherPage(
-    VOUCHERS.vouchers.voucherToBeEditedAssignCategoryProductCollection.id,
-  );
+  const voucher = VOUCHERS.vouchers.voucherToBeEditedAssignCategoryProductCollection;
+
+  await vouchersPage.gotoExistingVoucherPage(voucher.id);
+  await expect(vouchersPage.specificProductsButton).not.toBeDisabled();
   await vouchersPage.clickSpecificProductsButton();
   await vouchersPage.clickAssignCategoryButton();
   await vouchersPage.waitForNetworkIdleAfterAction(() =>
