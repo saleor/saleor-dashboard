@@ -636,9 +636,6 @@
     "context": "number of metadata fields in model",
     "string": "{number,plural,one{{number} string} other{{number} strings}}"
   },
-  "2/L4zZ": {
-    "string": "Select all channels"
-  },
   "22x9tu": {
     "context": "header",
     "string": "Translation Product \"{productName}\" - {languageCode}"
@@ -1950,9 +1947,6 @@
     "context": "dialog header",
     "string": "Unassign Categories From Sale"
   },
-  "B9yrkK": {
-    "string": "No Channels found"
-  },
   "BCPrmK": {
     "context": "order history message",
     "string": "Shipping details was sent to customer"
@@ -2425,9 +2419,6 @@
   },
   "ESDTC/": {
     "string": "Manage Sales Channel Availability"
-  },
-  "EWCUdP": {
-    "string": "Channels A to Z"
   },
   "EWD/wU": {
     "context": "delete app",
@@ -8614,9 +8605,6 @@
   "tKxCld": {
     "context": "set balance dialog title label",
     "string": "Set balance"
-  },
-  "tQuE1q": {
-    "string": "Select channels you want for {contentType} to be available on"
   },
   "tQxBXs": {
     "context": "PageTypeDeleteWarningDialog single assigned items description",
