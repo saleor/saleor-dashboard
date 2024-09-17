@@ -52,7 +52,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
                 {getAccountErrorMessage(error, intl)}
               </Box>
             ))}
-            <Text size={2} fontWeight="light" color="default2">
+            <Text size={4} fontWeight="light" color="default2" display="block" marginTop={2}>
               <FormattedMessage
                 id="m0Dz+2"
                 defaultMessage="Please set up a new password for your account. Repeat your new password to make sure you will be able to remember it."

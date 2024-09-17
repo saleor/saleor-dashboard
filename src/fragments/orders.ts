@@ -155,7 +155,7 @@ export const fragmentOrderLineWithMetadata = gql`
       metadata {
         ...MetadataItem
       }
-      privateMetadata @include(if: $isStaffUser) {
+      privateMetadata @include(if: $hasManageProducts) {
         ...MetadataItem
       }
     }

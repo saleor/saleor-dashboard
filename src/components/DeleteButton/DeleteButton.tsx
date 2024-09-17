@@ -1,5 +1,5 @@
-import { Button } from "@dashboard/components/Button";
 import { buttonMessages } from "@dashboard/intl";
+import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -20,8 +20,7 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({
 
   return (
     <Button
-      error
-      variant="primary"
+      variant="error"
       onClick={onClick}
       data-test-id={testId ? "confirm-delete" : "button-bar-delete"}
       disabled={disabled}
