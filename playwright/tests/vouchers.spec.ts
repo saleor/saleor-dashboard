@@ -111,7 +111,7 @@ test("TC: SALEOR_87 Edit voucher Usage Limits: used in total, per customer, staf
   await vouchersPage.waitForGrid();
   await vouchersPage.expectSuccessBanner();
   expect(
-    await vouchersPage.usageLimitSection.locator('[class*="Mui-checked"]').count(),
+    await vouchersPage.usageLimitSection.locator('[data-state="checked"]').count(),
     "All usage limit checkboxes should be checked",
   ).toEqual(4);
 });
