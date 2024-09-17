@@ -20,7 +20,7 @@ const InstalledAppList: React.FC<InstalledAppListProps> = ({ appList, appInstall
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
 
   if (appsAreLoading({ appList, appInstallationList, hasManagedAppsPermission })) {
-    return <Skeleton />;
+    return <Skeleton data-test-id="installed-apps-loader" />;
   }
 
   if (hasEmptyAppList({ appList, appInstallationList, hasManagedAppsPermission })) {

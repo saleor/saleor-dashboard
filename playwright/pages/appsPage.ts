@@ -1,6 +1,6 @@
 import { URL_LIST } from "@data/url";
 import { BasePage } from "@pages/basePage";
-import type { Page } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
 export class AppsPage extends BasePage {
   readonly page: Page;
@@ -22,6 +22,9 @@ export class AppsPage extends BasePage {
     readonly appAdyen = page.getByTestId("app-adyen"),
     readonly appQA = page.getByTestId("app-saleorqa app"),
     readonly installationPendingLabel = page.getByTestId("app-pending-label").first(),
+    readonly installedAppsLoader = page.getByTestId("installed-apps-loader"),
+    readonly availableAppsLoader = page.getByTestId("available-apps-loader"),
+    readonly upcomingAppsLoader = page.getByTestId("upcoming-apps-loader"),
   ) {
     super(page);
     this.page = page;
@@ -34,5 +37,15 @@ export class AppsPage extends BasePage {
 
   async typeManifestUrl(manifestUrl: string) {
     await this.appManifestUrlInput.fill(manifestUrl);
+  }
+
+  async waitForLoaders() {
+    await expect(this.installedAppsLoader).toBeVisible();
+    await expect(this.availableAppsLoader).toBeVisible();
+    await expect(this.upcomingAppsLoader).toBeVisible();
+
+    await this.installedAppsLoader.waitFor({ state: "hidden" });
+    await this.availableAppsLoader.waitFor({ state: "hidden" });
+    await this.upcomingAppsLoader.waitFor({ state: "hidden" });
   }
 }
