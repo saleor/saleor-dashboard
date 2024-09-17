@@ -40,12 +40,16 @@ export class AppsPage extends BasePage {
   }
 
   async waitForLoaders() {
-    await expect(this.installedAppsLoader).toBeVisible();
-    await expect(this.availableAppsLoader).toBeVisible();
-    await expect(this.upcomingAppsLoader).toBeVisible();
+    await Promise.all([
+      expect(this.installedAppsLoader).toBeVisible(),
+      expect(this.availableAppsLoader).toBeVisible(),
+      expect(this.upcomingAppsLoader).toBeVisible(),
+    ]);
 
-    await this.installedAppsLoader.waitFor({ state: "hidden" });
-    await this.availableAppsLoader.waitFor({ state: "hidden" });
-    await this.upcomingAppsLoader.waitFor({ state: "hidden" });
+    await Promise.all([
+      this.installedAppsLoader.waitFor({ state: "hidden" }),
+      this.availableAppsLoader.waitFor({ state: "hidden" }),
+      this.upcomingAppsLoader.waitFor({ state: "hidden" }),
+    ]);
   }
 }
