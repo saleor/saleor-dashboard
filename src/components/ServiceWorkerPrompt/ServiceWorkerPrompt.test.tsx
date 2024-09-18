@@ -5,7 +5,7 @@ import { useRegisterSW } from "virtual:pwa-register/react";
 import { ServiceWorkerPrompt } from "./index";
 import { useNavigatorOnline } from "./useNavigatorOnline";
 
-jest.mock("./useRegisterPW");
+jest.mock("virtual:pwa-register/react");
 jest.mock("./useNavigatorOnline");
 jest.mock("react-intl", () => ({
   FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
@@ -42,7 +42,7 @@ describe("ServiceWorkerPrompt", () => {
     expect(screen.getByText(/New dashboard version available/i)).toBeInTheDocument();
   });
 
-  it("calls updateServiceWorker and reloads the window on update", async () => {
+  it("calls updateServiceWorker and reloads the page on update", async () => {
     // Arrange
     render(<ServiceWorkerPrompt />);
 
