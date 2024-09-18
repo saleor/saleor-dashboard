@@ -3,7 +3,7 @@ import ImageUpload from "@dashboard/components/ImageUpload";
 import MediaTile from "@dashboard/components/MediaTile";
 import { CategoryDetailsFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { Box, Button, Divider, Skeleton, sprinkles, Textarea } from "@saleor/macaw-ui-next";
+import { Box, Button, Divider, Skeleton, Textarea } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -38,7 +38,7 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
             <FormattedMessage {...commonMessages.uploadImage} />
           </Button>
           <input
-            className={sprinkles({ display: "none" })}
+            style={{ display: "none" }}
             id="fileUpload"
             onChange={event => {
               const files = event.target.files;

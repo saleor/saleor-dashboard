@@ -65,11 +65,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = props => {
                   },
                 )}
               >
-                <input
-                  {...getInputProps()}
-                  className={sprinkles({ display: "none" })}
-                  accept="image/*"
-                />
+                <input {...getInputProps()} style={{ display: "none" }} accept="image/*" />
                 <ImageIcon
                   className={sprinkles({
                     color: "default1",

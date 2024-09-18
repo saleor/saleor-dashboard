@@ -74,7 +74,3 @@ body {
 .noBorder {
   border: none;
 }
-
-.show-on-hover:hover > .show-on-hover {
-  display: block !important;
-}

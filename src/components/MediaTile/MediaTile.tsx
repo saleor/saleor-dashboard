@@ -1,6 +1,5 @@
 import { Box, Button, EditIcon, Spinner, TrashBinIcon } from "@saleor/macaw-ui-next";
-import clsx from "clsx";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 interface MediaTileBaseProps {
@@ -42,11 +41,10 @@ const MediaTile: React.FC<MediaTileProps> = props => {
   const parsedMediaOembedData = media?.oembedData ? JSON.parse(media.oembedData) : null;
   const mediaUrl = parsedMediaOembedData?.thumbnail_url || media.url;
 
+  const [isWrapperHover, setIsWrapperHover] = useState(false);
+
   return (
     <Box
-      className={clsx({
-        ["show-on-hover"]: !disableOverlay,
-      })}
       data-test-id="product-image"
       backgroundColor="default1"
       borderRadius={4}
@@ -57,6 +55,8 @@ const MediaTile: React.FC<MediaTileProps> = props => {
       borderStyle="solid"
       borderWidth={1}
       borderColor="default1"
+      onMouseEnter={() => !disableOverlay && setIsWrapperHover(true)}
+      onMouseLeave={() => !disableOverlay && setIsWrapperHover(false)}
     >
       <Box
         backgroundColor="default1"
@@ -67,8 +67,7 @@ const MediaTile: React.FC<MediaTileProps> = props => {
         top={0}
         __width="148px"
         __height="148px"
-        display="none"
-        className="show-on-hover"
+        display={isWrapperHover ? "block" : "none"}
         __cursor={draggable ? "move" : "default"}
       />
       <Box
@@ -78,7 +77,7 @@ const MediaTile: React.FC<MediaTileProps> = props => {
         top={0}
         __width="148px"
         __height="148px"
-        display="none"
+        display={isWrapperHover ? "block" : "none"}
         __cursor={draggable ? "move" : "default"}
       >
         {loading ? (
