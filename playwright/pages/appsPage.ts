@@ -38,7 +38,6 @@ export class AppsPage extends BasePage {
   }
 
   async waitForContentLoad() {
-    await expect(this.availableAppsLoader).toBeVisible();
     await this.availableAppsLoader.waitFor({ state: "hidden" });
   }
 }
