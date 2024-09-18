@@ -80,7 +80,14 @@ const MediaTile: React.FC<MediaTileProps> = props => {
         __cursor={draggable ? "move" : "default"}
       >
         {loading ? (
-          <Box display="flex" alignItems="center" justifyContent="center" height="100%" gap={2}>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            height="100%"
+            gap={2}
+            data-test-id="spinner"
+          >
             <Spinner />
           </Box>
         ) : (
@@ -89,10 +96,19 @@ const MediaTile: React.FC<MediaTileProps> = props => {
               <Button
                 icon={<EditIcon />}
                 variant="tertiary"
+                name="edit"
+                data-test-id={`edit-${editHref ? "link" : "button"}`}
                 {...(editHref ? { to: editHref, as: Link } : { onClick: onEdit })}
               />
             )}
-            {onDelete && <Button icon={<TrashBinIcon />} variant="tertiary" onClick={onDelete} />}
+            {onDelete && (
+              <Button
+                data-test-id="delete-button"
+                icon={<TrashBinIcon />}
+                variant="tertiary"
+                onClick={onDelete}
+              />
+            )}
           </Box>
         )}
       </Box>
