@@ -2,6 +2,12 @@ import "@testing-library/jest-dom";
 import { configure } from "@testing-library/react";
 
 jest.mock("@sentry/react");
+jest.mock("virtual:pwa-register/react", () => ({
+  useRegisterSW: jest.fn(() => ({
+    needRefresh: [false, jest.fn()],
+    updateServiceWorker: jest.fn()
+  }))
+}))
 
 document.getElementById = () => document.createElement("div");
 

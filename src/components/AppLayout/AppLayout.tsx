@@ -6,6 +6,7 @@ import React from "react";
 import { DevModePanel } from "../DevModePanel/DevModePanel";
 import NavigatorSearch from "../NavigatorSearch";
 import { useSavebarRef } from "../Savebar/SavebarRefContext";
+import { ServiceWorkerPrompt } from "../ServiceWorkerPrompt";
 import { Sidebar } from "../Sidebar";
 import { useStyles } from "./styles";
 
@@ -24,10 +25,16 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       <DevModePanel />
       <NavigatorSearch />
 
-      <Box display="grid" __gridTemplateColumns="auto 1fr">
+      <Box
+        display="grid"
+        height="100vh"
+        __gridTemplateColumns="auto 1fr"
+        __gridTemplateRows="auto 1fr"
+      >
         {appState.loading && <LinearProgress className={classes.appLoader} color="primary" />}
+        <ServiceWorkerPrompt />
         <Box
-          height="100vh"
+          height="100%"
           borderColor="default1"
           borderRightWidth={1}
           backgroundColor="default2"

@@ -22,7 +22,6 @@ export const Menu = () => {
           <MenuItem menuItem={menuItem} key={menuItem.id} />
         ))}
       </List>
-
       <Shortcusts />
     </Box>
   );
