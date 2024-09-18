@@ -33,7 +33,7 @@ export class AppPage extends BasePage {
     await this.appSettingsButton.click();
   }
 
-  async waitForLoader() {
+  async waitContentLoad() {
     await expect(this.appPageLoader).toBeVisible();
     await this.appPageLoader.waitFor({ state: "hidden" });
   }

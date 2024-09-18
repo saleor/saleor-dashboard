@@ -22,9 +22,7 @@ export class AppsPage extends BasePage {
     readonly appAdyen = page.getByTestId("app-adyen"),
     readonly appQA = page.getByTestId("app-saleorqa app"),
     readonly installationPendingLabel = page.getByTestId("app-pending-label").first(),
-    readonly installedAppsLoader = page.getByTestId("installed-apps-loader"),
     readonly availableAppsLoader = page.getByTestId("available-apps-loader"),
-    readonly upcomingAppsLoader = page.getByTestId("upcoming-apps-loader"),
   ) {
     super(page);
     this.page = page;
@@ -39,17 +37,8 @@ export class AppsPage extends BasePage {
     await this.appManifestUrlInput.fill(manifestUrl);
   }
 
-  async waitForLoaders() {
-    await Promise.all([
-      expect(this.installedAppsLoader).toBeVisible(),
-      expect(this.availableAppsLoader).toBeVisible(),
-      expect(this.upcomingAppsLoader).toBeVisible(),
-    ]);
-
-    await Promise.all([
-      this.installedAppsLoader.waitFor({ state: "hidden" }),
-      this.availableAppsLoader.waitFor({ state: "hidden" }),
-      this.upcomingAppsLoader.waitFor({ state: "hidden" }),
-    ]);
+  async waitForContentLoad() {
+    await expect(this.availableAppsLoader).toBeVisible();
+    await this.availableAppsLoader.waitFor({ state: "hidden" });
   }
 }

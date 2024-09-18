@@ -21,7 +21,7 @@ for (const permission of permissionList) {
 
     await page.goto(URL_LIST.homePage);
     await mainMenuPage.openApps();
-    await appsPage.waitForLoaders();
+    await appsPage.waitForContentLoad();
 
     await expect(appsPage.installExternalAppButton).not.toBeVisible();
 
@@ -38,7 +38,7 @@ for (const permission of permissionList) {
     await appsPage.installedAppRow.first().click();
     await expect(appPage.appSettingsButton).toBeVisible();
     await appPage.appSettingsButton.click();
-    await appPage.waitForLoader();
+    await appPage.waitContentLoad();
     await expect(appDetailsPage.appDetailsSection).toBeVisible();
 
     const buttons = [
