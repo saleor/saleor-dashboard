@@ -12,8 +12,8 @@ import { DiscountErrorFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
-import { TableBody, TableCell, TextField } from "@material-ui/core";
-import { Skeleton, Text } from "@saleor/macaw-ui-next";
+import { TableBody, TableCell } from "@material-ui/core";
+import { Input, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -165,7 +165,7 @@ const VoucherRequirements = ({
             </div>
           </>
         ) : data.requirementsPicker === RequirementsPicker.ITEM ? (
-          <TextField
+          <Input
             data-test-id="minimum-quantity-of-items-input"
             disabled={disabled}
             error={!!formErrors.minCheckoutItemsQuantity}
@@ -174,7 +174,7 @@ const VoucherRequirements = ({
             name={"minCheckoutItemsQuantity" as keyof VoucherDetailsPageFormData}
             value={data.minCheckoutItemsQuantity}
             onChange={onChange}
-            fullWidth
+            width="100%"
           />
         ) : null}
       </DashboardCard.Content>

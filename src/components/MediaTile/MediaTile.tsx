@@ -71,7 +71,6 @@ const MediaTile: React.FC<MediaTileProps> = props => {
         __cursor={draggable ? "move" : "default"}
       />
       <Box
-        className="show-on-hover"
         position="absolute"
         left={0}
         top={0}
@@ -90,7 +89,7 @@ const MediaTile: React.FC<MediaTileProps> = props => {
               <Button
                 icon={<EditIcon />}
                 variant="tertiary"
-                {...(editHref ? { href: editHref, as: Link } : { onClick: onEdit })}
+                {...(editHref ? { to: editHref, as: Link } : { onClick: onEdit })}
               />
             )}
             {onDelete && <Button icon={<TrashBinIcon />} variant="tertiary" onClick={onDelete} />}
