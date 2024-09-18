@@ -8,7 +8,7 @@ import { useNavigatorOnline } from "./useNavigatorOnline";
 jest.mock("./useRegisterPW");
 jest.mock("./useNavigatorOnline");
 jest.mock("react-intl", () => ({
-  FormattedMessage: ({ defaultMessage }) => <>{defaultMessage}</>,
+  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
 }));
 
 describe("ServiceWorkerPrompt", () => {
