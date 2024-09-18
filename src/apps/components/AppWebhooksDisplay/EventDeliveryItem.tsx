@@ -17,6 +17,8 @@ interface EventDeliveryItemProps {
   dataTestId?: string;
 }
 
+const MAX_ATTEMPTS = 6;
+
 export const EventDeliveryItem: React.FC<EventDeliveryItemProps> = ({
   createdAt,
   status,
@@ -30,7 +32,7 @@ export const EventDeliveryItem: React.FC<EventDeliveryItemProps> = ({
 
   return (
     <Box key={createdAt} marginBottom={4} data-test-id={dataTestId}>
-      <Box display="grid" __gridTemplateColumns={"1fr 1fr"} paddingX={4}>
+      <Box display="grid" __gridTemplateColumns="1fr 1fr" paddingX={4}>
         <Text as="p" size={4} fontWeight="bold">
           <DateTime plain date={createdAt} />
         </Text>
@@ -46,7 +48,7 @@ export const EventDeliveryItem: React.FC<EventDeliveryItemProps> = ({
               id: "OFTsI1",
             })}{" "}
             <Text size={4} fontWeight="bold">
-              {attemptsCount} / 6
+              {attemptsCount} / {MAX_ATTEMPTS}
             </Text>
           </Text>
           <Text as="p">

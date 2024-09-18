@@ -1,3 +1,4 @@
+import { DateTime } from "@dashboard/components/Date";
 import { EventDeliveryAttemptFragment } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -44,7 +45,7 @@ export const AppWebhooksAttemptDetails: React.FC<AppWebhooksAttemptDetailsProps>
           </Text>
         </Text>
         <Text display="block" size={3} marginLeft="auto" fontWeight="bold">
-          {new Date(createdAt).toLocaleString()}
+          <DateTime plain date={createdAt} />
         </Text>
       </Box>
 
