@@ -40,9 +40,7 @@ export class VouchersPage extends BasePage {
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly voucherNameInput = page.getByTestId("voucher-name-input"),
     readonly discountValueInput = page.getByTestId("discount-value-input"),
-    readonly minimumQuantityOfItemsInput = page
-      .getByTestId("minimum-quantity-of-items-input")
-      .locator("input"),
+    readonly minimumQuantityOfItemsInput = page.getByTestId("minimum-quantity-of-items-input"),
     readonly minRequirementsValueInput = page.getByTestId("price-field"),
     readonly startDateInput = page.getByTestId("start-date-input"),
     readonly endDateInput = page.getByTestId("end-date-input"),
