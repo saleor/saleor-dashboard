@@ -6,6 +6,8 @@ interface FadeProps {
   show: boolean;
 }
 
+const INFO_CONTAINER_HEIGHT = 24;
+
 export const Animated = ({ children, show }: FadeProps) => {
   const [shouldRender, setShouldRender] = useState(show);
   const [isVisible, setIsVisible] = useState(show);
@@ -29,7 +31,7 @@ export const Animated = ({ children, show }: FadeProps) => {
     <Box
       __transition="opacity 0.3s ease-in-out, margin-top 0.3s ease-in-out"
       __opacity={isVisible ? 1 : 0}
-      __marginTop={isVisible ? 0 : -24}
+      __marginTop={isVisible ? 0 : -INFO_CONTAINER_HEIGHT}
       onTransitionEnd={onTransitionEnd}
     >
       {children}
