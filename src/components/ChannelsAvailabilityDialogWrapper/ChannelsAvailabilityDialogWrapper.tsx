@@ -95,7 +95,7 @@ export const ChannelsAvailabilityContentWrapper: React.FC<ChannelsAvailabilityCo
           __paddingLeft="24px"
           overflowY="scroll"
           overflowX="hidden"
-          __maxHeight="calc(100vh - 400px)"
+          className="channel-availability-dialog-list"
         >
           {hasAnyChannelsToDisplay ? (
             children

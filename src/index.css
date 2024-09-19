@@ -74,3 +74,17 @@ body {
 .noBorder {
   border: none;
 }
+
+/*
+  TODO: Remove it when macaw will handle media queries in custom properties
+  https://github.com/saleor/macaw-ui/issues/498
+*/
+@media screen and (max-height: 800px) {
+  .channel-availability-dialog-list {
+    max-height: calc(100vh - 400px) !important;
+  }
+}
+
+.channel-availability-dialog-list {
+  max-height: 400px;
+}
