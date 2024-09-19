@@ -269,7 +269,7 @@ jobs:
           ENVIRONMENT: ${{ needs.add-check-and-prepare-instance.outputs.BASE_URL }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_QA_STATUSES_WEBHOOK_URL }}
           REF_NAME: ${{github.ref_name}}
-          ADDITIONAL_TITLE: "${{inputs.ADDITIONAL_TITLE}} ${{ needs.add-check-and-prepare-instance.outputs.VERSION }}"
+          ADDITIONAL_TITLE: "${{inputs.ADDITIONAL_TITLE}} ${{inputs.CUSTOM_VERSION}}"
         run: |
           node workflows/postTestsResults.js \
           --run_id "$RUN_ID" \
