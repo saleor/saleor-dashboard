@@ -2965,6 +2965,10 @@
     "context": "staff member's account",
     "string": "Active"
   },
+  "HRXLYk": {
+    "context": "cta button label",
+    "string": "Get in touch"
+  },
   "HSmg1/": {
     "context": "gift cards section name",
     "string": "Gift Cards"
@@ -3242,6 +3246,10 @@
   "J4NBVR": {
     "context": "link",
     "string": "View Orders"
+  },
+  "J5R1SI": {
+    "context": "home get in touch card title",
+    "string": "Need technical help?"
   },
   "J7mFhU": {
     "context": "currency code select",
@@ -8716,6 +8724,10 @@
   },
   "u0V06N": {
     "string": "Max. Order Weight"
+  },
+  "u0hKaa": {
+    "context": "home get in touch card description",
+    "string": "Save hours of evaluating Saleor on your own by speaking with our solution engineer."
   },
   "u24Ppd": {
     "string": "This attribute cannot be assigned to this product type"
