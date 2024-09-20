@@ -236,7 +236,7 @@ jobs:
     timeout-minutes: 30
     outputs:
       TESTS_CONCLUSION: "${{ steps.send-slack-message.outputs.status }}"
-      PR_COMMENT: "${{ steps.send-slack-message.outputs.message }}. Run details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+      PR_COMMENT: "${{ steps.send-slack-message.outputs.status }} - run details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
     steps:
       - uses: actions/checkout@v4
 
