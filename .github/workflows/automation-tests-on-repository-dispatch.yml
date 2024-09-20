@@ -1,7 +1,8 @@
 name: Execute automation tests
-run-name: Run tests on ${{github.event.client_payload.version}} ${{github.event.client_payload.project}}
+run-name: Run tests on ${{github.event.client_payload.version || '3.15.61-dae11d0' }} ${{github.event.client_payload.project || 'CORE'}}
 
 on:
+  push:
   repository_dispatch:
     types: [automation-tests-event]
 
@@ -13,7 +14,7 @@ jobs:
       VERSION: ${{ steps.get-environment-variables.outputs.version }}
     env:
       REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      CUSTOM_VERSION: ${{github.event.client_payload.custom_version }}
+      CUSTOM_VERSION: ${{github.event.client_payload.custom_version || '3.15.61-dae11d0' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -37,10 +38,24 @@ jobs:
 
   run-tests-on-release:
     needs: get-environment-variables
-    uses: ./.github/workflows/run-tests-on-release.yml
+    uses: ./.github/workflows/run-tests-on-release.yml@qag-236-add-detailed-version-number-to-tests-results-on-slack
     with:
       VERSION: ${{needs.get-environment-variables.outputs.VERSION}}
-      CUSTOM_VERSION: ${{github.event.client_payload.custom_version }}
+      CUSTOM_VERSION: ${{github.event.client_payload.custom_version || '3.15.61-dae11d0'}}
       ADDITIONAL_TITLE: "Core automation test"
     secrets: inherit
+
+  add-comment-to-release-pr:
+    needs: run-tests-on-release
+    runs-on: ubuntu-22.04
+    steps:
+      - name: add-comment-to-release-pr
+        env:
+          PR_NUMBER: ${{github.event.client_payload.release_pr || 5083 }}
+          PR_COMMENT: ${{needs.run-tests-on-release.outputs.PR_COMMENT}}
+        run: |
+          export GITHUB_TOKEN=$( \
+            curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
+            )
+          gh pr comment $PR_NUMBER --body "$PR_COMMENT" -R github.com/saleor/saleor-cloud-deployments
   
