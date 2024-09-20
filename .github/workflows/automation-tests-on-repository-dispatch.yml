@@ -38,7 +38,7 @@ jobs:
 
   run-tests-on-release:
     needs: get-environment-variables
-    uses: ./.github/workflows/run-tests-on-release.yml@qag-236-add-detailed-version-number-to-tests-results-on-slack
+    uses: ./.github/workflows/run-tests-on-release.yml
     with:
       VERSION: ${{needs.get-environment-variables.outputs.VERSION}}
       CUSTOM_VERSION: ${{github.event.client_payload.custom_version || '3.15.61-dae11d0'}}
