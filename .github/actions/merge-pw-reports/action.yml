@@ -13,19 +13,16 @@ runs:
       run: npm ci
 
     - name: Download blob reports from GitHub Actions Artifacts
-      if: contains(github.event.pull_request.labels.*.name, 'run pw-e2e')
       uses: actions/download-artifact@v3
       with:
         name: all-blob-reports
         path: all-blob-reports
 
     - name: Merge into HTML Report
-      if: contains(github.event.pull_request.labels.*.name, 'run pw-e2e')
       shell: bash
       run: npx playwright merge-reports --reporter html ./all-blob-reports
 
     - name: Upload HTML report
-      if: contains(github.event.pull_request.labels.*.name, 'run pw-e2e')
       uses: actions/upload-artifact@v3
       with:
         name: html-report--attempt-${{ github.run_attempt }}
