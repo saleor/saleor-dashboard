@@ -1,8 +1,7 @@
 name: Execute automation tests
-run-name: Run tests on ${{github.event.client_payload.version || '3.15.61-dae11d0' }} ${{github.event.client_payload.project || 'CORE'}}
+run-name: Run tests on ${{github.event.client_payload.version }} ${{github.event.client_payload.project }}
 
 on:
-  push:
   repository_dispatch:
     types: [automation-tests-event]
 
@@ -14,7 +13,7 @@ jobs:
       VERSION: ${{ steps.get-environment-variables.outputs.version }}
     env:
       REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      CUSTOM_VERSION: ${{github.event.client_payload.custom_version || '3.15.61-dae11d0' }}
+      CUSTOM_VERSION: ${{github.event.client_payload.custom_version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -41,7 +40,7 @@ jobs:
     uses: ./.github/workflows/run-tests-on-release.yml
     with:
       VERSION: ${{needs.get-environment-variables.outputs.VERSION}}
-      CUSTOM_VERSION: ${{github.event.client_payload.custom_version || '3.15.61-dae11d0'}}
+      CUSTOM_VERSION: ${{github.event.client_payload.custom_version }}
       ADDITIONAL_TITLE: "Core automation test"
     secrets: inherit
 
@@ -51,7 +50,7 @@ jobs:
     steps:
       - name: add-comment-to-release-pr
         env:
-          PR_NUMBER: ${{github.event.client_payload.release_pr || 5083 }}
+          PR_NUMBER: ${{github.event.client_payload.release_pr }}
           PR_COMMENT: ${{needs.run-tests-on-release.outputs.PR_COMMENT}}
         run: |
           export GITHUB_TOKEN=$( \
