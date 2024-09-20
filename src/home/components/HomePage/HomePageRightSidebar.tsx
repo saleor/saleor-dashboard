@@ -9,15 +9,11 @@ import { HomeGetInTouchCard } from "./HomeGetInTouch";
 
 export interface HomePageRightSidebarProps {
   activities?: HomeData<Activities>;
-  technicalHelpUrl: string;
 }
 
-export const HomePageRightSidebar: React.FC<HomePageRightSidebarProps> = ({
-  technicalHelpUrl,
-  activities,
-}) => (
+export const HomePageRightSidebar: React.FC<HomePageRightSidebarProps> = ({ activities }) => (
   <DetailPageLayout.RightSidebar>
-    <HomeGetInTouchCard externalHref={technicalHelpUrl} />
+    <HomeGetInTouchCard />
 
     {activities && (
       <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>

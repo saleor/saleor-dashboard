@@ -11,7 +11,6 @@ import {
   Notifications,
   ProductTopToday,
 } from "@dashboard/home/types";
-import { TECHNICAL_HELP_CTA_URL } from "@dashboard/links";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -81,7 +80,7 @@ const HomePage: React.FC<HomePageProps> = props => {
         </Box>
       </DetailPageLayout.Content>
 
-      <HomePageRightSidebar activities={activities} technicalHelpUrl={TECHNICAL_HELP_CTA_URL} />
+      <HomePageRightSidebar activities={activities} />
     </DetailPageLayout>
   );
 };

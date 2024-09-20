@@ -1,13 +1,10 @@
 import { DashboardCard } from "@dashboard/components/Card";
+import { TECHNICAL_HELP_CTA_URL } from "@dashboard/links";
 import { Button, HelpIcon, Text } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
-interface HomeGetInTouchCardProps {
-  externalHref: string;
-}
-
-export const HomeGetInTouchCard: React.FC<HomeGetInTouchCardProps> = ({ externalHref }) => (
+export const HomeGetInTouchCard: React.FC = () => (
   <DashboardCard
     backgroundColor="default2"
     borderStyle="solid"
@@ -41,7 +38,13 @@ export const HomeGetInTouchCard: React.FC<HomeGetInTouchCardProps> = ({ external
     </DashboardCard.Content>
 
     <DashboardCard.BottomActions paddingTop={2}>
-      <Button as="a" target="_blank" href={externalHref} variant="secondary" alignSelf="start">
+      <Button
+        as="a"
+        target="_blank"
+        href={TECHNICAL_HELP_CTA_URL}
+        variant="secondary"
+        alignSelf="start"
+      >
         <FormattedMessage
           defaultMessage="Get in touch"
           id="HRXLYk"
