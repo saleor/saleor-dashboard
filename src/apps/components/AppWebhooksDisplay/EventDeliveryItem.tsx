@@ -1,6 +1,6 @@
 import { DateTime } from "@dashboard/components/Date";
 import { EventDeliveryAttemptFragment, EventDeliveryStatusEnum } from "@dashboard/graphql";
-import { Box, Divider, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
