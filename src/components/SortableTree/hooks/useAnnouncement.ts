@@ -50,14 +50,13 @@ export const useAnnouncement = <T extends DataTypePlaceholder>({
       const activeIndex = clonedItems.findIndex(({ id }) => id === activeId);
       const sortedItems = arrayMove(clonedItems, activeIndex, overIndex);
       const previousItem = sortedItems[overIndex - 1];
+      const nextItem = sortedItems[overIndex + 1];
 
       let announcement;
       const movedVerb = eventName === "onDragEnd" ? "dropped" : "moved";
       const nestedVerb = eventName === "onDragEnd" ? "dropped" : "nested";
 
-      if (!previousItem) {
-        const nextItem = sortedItems[overIndex + 1];
-
+      if (!previousItem && nextItem) {
         announcement = `${activeId} was ${movedVerb} before ${nextItem.id}.`;
       } else if (projected.depth > previousItem.depth) {
         announcement = `${activeId} was ${nestedVerb} under ${previousItem.id}.`;
