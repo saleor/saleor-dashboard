@@ -16,7 +16,8 @@ import { getStorageState } from "./auth";
  */
 export function testWithPermission(permission: UserPermission): typeof base {
   return base.extend({
-    storageState: async (_, use) => {
+    // eslint-disable-next-line no-empty-pattern
+    storageState: async ({}, use) => {
       const storageStatePath = await getStorageState(permission);
 
       await use(storageStatePath);
