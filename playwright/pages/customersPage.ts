@@ -27,6 +27,7 @@ export class CustomersPage extends BasePage {
     readonly issueNewGiftCardButton = page.getByTestId("issue-new-gift-card"),
     readonly emailPageTitleText = page.getByTestId("user-email-title"),
     readonly customerActiveCheckbox = page.getByTestId("customer-active-checkbox").locator("input"),
+    readonly amountDropdown = page.locator('div[name="balanceCurrency"]'),
   ) {
     super(page);
     this.addressForm = new AddressForm(page);

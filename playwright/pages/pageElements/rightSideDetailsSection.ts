@@ -72,7 +72,9 @@ export class RightSideDetailsPage extends BasePage {
 
   async expectOptionsSelected(section: Locator, names: string[]) {
     for (const name of names) {
-      await expect(section.getByText(name)).toBeVisible({ timeout: 30000 });
+      await expect(section.getByText(name)).toBeVisible({
+        timeout: 30 * 1000, // 30 seconds
+      });
     }
   }
 
