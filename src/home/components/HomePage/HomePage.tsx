@@ -15,10 +15,10 @@ import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { HomeActivityCard } from "../HomeActivityCard";
 import { HomeAnalyticsCard } from "../HomeAnalyticsCard";
 import { HomeHeader } from "../HomeHeader";
 import { HomeProductList } from "../HomeProductList";
+import { HomePageRightSidebar } from "./HomePageRightSidebar";
 import { homePageMessages } from "./messages";
 
 export interface HomePageProps {
@@ -79,13 +79,8 @@ const HomePage: React.FC<HomePageProps> = props => {
           )}
         </Box>
       </DetailPageLayout.Content>
-      {activities && (
-        <DetailPageLayout.RightSidebar>
-          <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
-            <HomeActivityCard activities={activities} testId="activity-card" />
-          </RequirePermissions>
-        </DetailPageLayout.RightSidebar>
-      )}
+
+      <HomePageRightSidebar activities={activities} />
     </DetailPageLayout>
   );
 };

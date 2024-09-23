@@ -13,7 +13,7 @@ export const AboutCard: React.FC<AboutCardProps> = ({ aboutApp, loading, ...boxP
   const intl = useIntl();
   const renderContent = () => {
     if (loading) {
-      return <Skeleton />;
+      return <Skeleton data-test-id="app-page-loader" />;
     }
 
     if (aboutApp) {
