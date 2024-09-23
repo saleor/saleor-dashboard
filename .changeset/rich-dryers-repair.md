@@ -2,4 +2,4 @@
 "saleor-dashboard": minor
 ---
 
-More datailed version in tests rusults message on slack is displayed
+Tests results slack message now show detailed version of saleor
