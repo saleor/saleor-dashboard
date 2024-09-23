@@ -59,6 +59,14 @@ describe("getCustomerCellContent", () => {
     expect(result.data).toEqual("-");
     expect(result.displayData).toEqual("-");
   });
+  it("should return - when no data", () => {
+    // Arrange & Act
+    const result = getCustomerCellContent(undefined);
+
+    // Assert
+    expect(result.data).toEqual("-");
+    expect(result.displayData).toEqual("-");
+  });
 });
 
 describe("useGetCellContent", () => {
