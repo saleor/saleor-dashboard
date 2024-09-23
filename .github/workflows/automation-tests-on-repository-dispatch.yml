@@ -56,5 +56,5 @@ jobs:
           export GITHUB_TOKEN=$( \
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
             )
-          gh pr comment $PR_NUMBER --body "$PR_COMMENT" -R github.com/saleor/saleor-cloud-deployments
+          gh pr comment "$PR_NUMBER" --body "$PR_COMMENT" -R github.com/saleor/saleor-cloud-deployments
   
