@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.20.11
+
+### Patch Changes
+
+- 9fb5665f1: Test for readonly access to apps are more table, so that should not check anything before content load.
+- 858439dd7: You can now see a new card in home page that can redirect you to Saleor solution engineers contact information if you need technical advice.
+- e831f9b95: Selecting channel from product list does not trigger URL change, so that clicking "Select channel" button without selecting channel will not be saved in URL.
+- cce3b2cba: Adds conditional logic to the Merge Playwright Reports workflow, ensuring that the merge and upload steps are only triggered when the pull request has the run pw-e2e label applied.
+- a5b84712a: Implementing timeouts ensures the workflow automatically terminates jobs taking too long, improving resource utilization and avoiding potential workflow hangs.
+- 7e1e6a10d: Some end-to-end Playwright tests now have extended timeouts for UI elements to load. This means that automation tests should fail less. Playwright retires value has been set to 0.
+- bd54e6b54: Fix a group of errors caused by reading property of undefined
+
 ## 3.20.10
 
 ### Patch Changes
