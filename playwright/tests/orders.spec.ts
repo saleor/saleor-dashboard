@@ -257,6 +257,10 @@ test("TC: SALEOR_84 Create draft order @e2e @draft", async () => {
 });
 
 test("TC: SALEOR_191 Refund products from the fully paid order @e2e @refunds", async () => {
+  // All steps of this test pass (including after hooks), but Playwright
+  // marks it as failed because of exceeding 30s timeout
+  test.slow();
+
   const order = ORDERS.fullyPaidOrderWithSingleTransaction;
 
   await ordersPage.goToExistingOrderPage(order.id);
@@ -268,7 +272,7 @@ test("TC: SALEOR_191 Refund products from the fully paid order @e2e @refunds", a
 
   const productRow = await refundPage.getProductRow(order.lineItems[0].name);
 
-  expect(productRow.locator(refundPage.productQuantityInput)).toHaveValue(
+  await expect(productRow.locator(refundPage.productQuantityInput)).toHaveValue(
     order.lineItems[0].quantity,
   );
 
