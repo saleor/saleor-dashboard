@@ -1,9 +1,10 @@
 import { AppsPage } from "@pages/appsPage";
 import { HomePage } from "@pages/homePage";
 import { MainMenuPage } from "@pages/mainMenuPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
+import { testWithPermission } from "utils/testWithPermission";
 
-test.use({ storageState: "playwright/.auth/app.json" });
+const test = testWithPermission("app");
 
 let mainMenuPage: MainMenuPage;
 let appsPage: AppsPage;
@@ -14,6 +15,7 @@ test.beforeEach(async ({ page }) => {
   appsPage = new AppsPage(page);
   home = new HomePage(page);
 });
+
 test("TC: SALEOR_10 User should be able to navigate to apps list as a staff member using APP permission @e2e", async () => {
   await home.goto();
   await home.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });

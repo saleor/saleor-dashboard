@@ -1,9 +1,11 @@
 import { URL_LIST } from "@data/url";
 import { BasePage } from "@pages/basePage";
 import { MainMenuPage } from "@pages/mainMenuPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
+import { testWithPermission } from "utils/testWithPermission";
 
-test.use({ storageState: "playwright/.auth/translations.json" });
+const test = testWithPermission("translations");
+
 test("TC: SALEOR_22 User should be able to navigate to translations page as a staff member using TRANSLATION permission @e2e", async ({
   page,
 }) => {

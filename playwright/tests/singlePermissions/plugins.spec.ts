@@ -1,9 +1,10 @@
 import { ConfigurationPage } from "@pages/configurationPage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { PluginsPage } from "@pages/pluginsPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
+import { testWithPermission } from "utils/testWithPermission";
 
-test.use({ storageState: "playwright/.auth/plugin.json" });
+const test = testWithPermission("plugin");
 
 let configurationPage: ConfigurationPage;
 let mainMenuPage: MainMenuPage;

@@ -4,9 +4,10 @@ import { ContentPage } from "@pages/contentPage";
 import { HomePage } from "@pages/homePage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { PageTypesPage } from "@pages/pageTypesPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
+import { testWithPermission } from "utils/testWithPermission";
 
-test.use({ storageState: "playwright/.auth/page.json" });
+const test = testWithPermission("page");
 
 let basePage: BasePage;
 let mainMenuPage: MainMenuPage;

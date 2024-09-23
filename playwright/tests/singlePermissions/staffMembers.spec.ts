@@ -2,9 +2,10 @@ import { ConfigurationPage } from "@pages/configurationPage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { PermissionGroupsPage } from "@pages/permissionGroupsPage";
 import { StaffMembersPage } from "@pages/staffMembersPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
+import { testWithPermission } from "utils/testWithPermission";
 
-test.use({ storageState: "playwright/.auth/staff.json" });
+const test = testWithPermission("staff");
 
 let staffMembersPage: StaffMembersPage;
 let mainMenuPage: MainMenuPage;
