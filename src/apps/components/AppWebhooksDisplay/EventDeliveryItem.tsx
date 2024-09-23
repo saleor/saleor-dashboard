@@ -31,7 +31,7 @@ export const EventDeliveryItem: React.FC<EventDeliveryItemProps> = ({
   const intl = useIntl();
 
   return (
-    <Box key={createdAt} marginBottom={4} data-test-id={dataTestId}>
+    <Box key={createdAt} marginBottom={hasMore ? 4 : undefined} data-test-id={dataTestId}>
       <Box display="grid" __gridTemplateColumns="1fr 1fr" paddingX={4}>
         <Text as="p" size={4} fontWeight="bold">
           <DateTime plain date={createdAt} />
@@ -61,11 +61,21 @@ export const EventDeliveryItem: React.FC<EventDeliveryItemProps> = ({
         </Box>
       )}
 
-      {attempts.map(attempt => (
-        <AppWebhooksAttemptDetails attempt={attempt} key={`attempt-details-${attempt.id}`} />
-      ))}
-
-      {hasMore && <Divider />}
+      <Box
+        borderStyle="solid"
+        borderWidth={1}
+        borderColor={{
+          default: "default1",
+          hover: "default1Hovered",
+        }}
+        margin={4}
+        padding={2}
+        borderRadius={4}
+      >
+        {attempts.map(attempt => (
+          <AppWebhooksAttemptDetails attempt={attempt} key={`attempt-details-${attempt.id}`} />
+        ))}
+      </Box>
     </Box>
   );
 };
