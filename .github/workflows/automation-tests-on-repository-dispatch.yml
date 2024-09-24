@@ -1,5 +1,5 @@
 name: Execute automation tests
-run-name: Run tests on ${{github.event.client_payload.version}} ${{github.event.client_payload.project}}
+run-name: Run tests on ${{github.event.client_payload.custom_version }} ${{github.event.client_payload.project}} 
 
 on:
   repository_dispatch:
