@@ -1,10 +1,15 @@
 // @ts-strict-ignore
+import { ChannelData } from "@dashboard/channels/utils";
 import {
   DatagridChange,
   DatagridChangeOpts,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { Locale } from "@dashboard/components/Locale";
-import { ProductFragment } from "@dashboard/graphql";
+import {
+  ChannelFragment,
+  ProductChannelListingAddInput,
+  ProductFragment,
+} from "@dashboard/graphql";
 
 const getFractionDigits = (locale: Locale, currency: string) => {
   try {
@@ -73,4 +78,17 @@ function getChannelCurrencyCodeById(
   }
 
   return "";
+}
+
+export function mapByChannel(channels?: ChannelFragment[]) {
+  return (listing: ProductChannelListingAddInput): ChannelData => {
+    const channel = channels?.find(ac => ac.id === listing.channelId);
+
+    return {
+      ...channel,
+      ...listing,
+      id: listing.channelId,
+      currency: channel?.currencyCode,
+    };
+  };
 }

@@ -1,21 +1,16 @@
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
-import { useHistory } from "react-router";
-
-import { getPriceClickSearchParams } from "./utils";
+import { createChannelFilterElement } from "@dashboard/products/components/ProductListDatagrid/utils";
 
 export const usePriceClick = ({ isChannelSelected }: { isChannelSelected: boolean }) => {
-  const history = useHistory();
-  const { filterWindow } = useConditionalFilterContext();
+  const { filterWindow, containerState } = useConditionalFilterContext();
 
-  const handlePriceClick = (productId: string) => {
+  return (productId: string) => {
     if (!productId || isChannelSelected) return;
 
-    history.replace({ search: getPriceClickSearchParams(history.location.search) });
+    containerState.create(createChannelFilterElement());
 
     window.scrollTo({ top: 0, behavior: "smooth" });
 
     filterWindow.setOpen(true);
   };
-
-  return handlePriceClick;
 };
