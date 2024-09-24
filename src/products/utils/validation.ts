@@ -22,8 +22,12 @@ const createRequiredError = (
   attributes: [],
 });
 
-export const validateProductCreateData = (data: ProductCreateData) => {
+export const validateProductCreateData = (data?: ProductCreateData) => {
   let errors: ProductErrorWithAttributesFragment[] = [];
+
+  if (!data) {
+    return errors;
+  }
 
   if (!data.productType) {
     errors = [...errors, createRequiredError("productType")];

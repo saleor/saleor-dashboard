@@ -90,7 +90,6 @@ describe("validateProductCreateData", () => {
     // Assert
     expect(errors).toEqual([]);
   });
-
   it("returns 'required' errors on product variant form if price is not provided", () => {
     const intl = useIntl();
 
@@ -131,5 +130,14 @@ describe("validateProductCreateData", () => {
       field: "channel2-channelListing-price",
       message: "This field cannot be blank",
     });
+  });
+  it("returns empty errors when data is undefined", () => {
+    // Arrange
+    const data = undefined;
+    // Act
+    const errors = validateProductCreateData(data);
+
+    // Assert
+    expect(errors).toEqual([]);
   });
 });
