@@ -20,37 +20,7 @@ test.beforeEach(async ({ page, request }) => {
   permissionGroupsPage = new PermissionGroupsPage(page);
   basicApiService = new BasicApiService(request);
 });
-test("TC: SALEOR_137 Admin User should be able to deactivate other user @e2e @staff-members", async () => {
-  await staffMembersPage.goToStaffDetailsPage(USERS.userToBeDeactivated.id);
-  await staffMembersPage.clickIsActiveCheckbox();
-  await staffMembersPage.clickSaveButton();
-  await staffMembersPage.basePage.expectSuccessBanner();
-  await expect(await staffMembersPage.isActiveCheckbox.isChecked()).toEqual(false);
 
-  const loginViaApiDeactivatedUserResponse = await basicApiService.logInUserViaApi({
-    email: USERS.userToBeDeactivated.email,
-    password: process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
-  });
-
-  await expect(loginViaApiDeactivatedUserResponse.data.tokenCreate.errors[0].code).toEqual(
-    "INACTIVE",
-  );
-});
-test("TC: SALEOR_38 Admin User should be able to activate other user @e2e @staff-members", async () => {
-  await staffMembersPage.goToStaffDetailsPage(USERS.userToBeActivated.id);
-  await staffMembersPage.clickIsActiveCheckbox();
-  await staffMembersPage.clickSaveButton();
-  await staffMembersPage.basePage.expectSuccessBanner();
-  await expect(await staffMembersPage.isActiveCheckbox.isChecked()).toEqual(true);
-
-  const loginViaApiDeactivatedUserResponse = await basicApiService.logInUserViaApi({
-    email: USERS.userToBeActivated.email,
-    password: process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
-  });
-
-  await expect(loginViaApiDeactivatedUserResponse.data.tokenCreate.errors).toEqual([]);
-  await expect(loginViaApiDeactivatedUserResponse.data.tokenCreate.token).not.toEqual(null);
-});
 test("TC: SALEOR_211 Create a staff member @e2e @staff-members", async () => {
   const name = faker.name.firstName();
   const lastName = faker.name.lastName();
@@ -74,6 +44,7 @@ test("TC: SALEOR_211 Create a staff member @e2e @staff-members", async () => {
   await staffMembersPage.verifyAssignedPermission("Customer Support");
   await staffMembersPage.verifyAssignedPermission("Channels management");
 });
+
 test("TC: SALEOR_212 Edit a staff member @e2e @staff-members", async () => {
   const newName = faker.name.firstName();
   const newLastName = faker.name.lastName();
@@ -93,6 +64,7 @@ test("TC: SALEOR_212 Edit a staff member @e2e @staff-members", async () => {
   await staffMembersPage.verifyAssignedPermission("Channels management");
   await staffMembersPage.verifyAssignedPermission(USERS.staffToBeEdited.permission);
 });
+
 test("TC: SALEOR_213 Delete a single staff member @e2e @staff-members", async () => {
   await staffMembersPage.gotToExistingStaffMemberPage(USERS.staffToBeDeleted.id);
   await staffMembersPage.clickDeleteButton();
@@ -100,4 +72,37 @@ test("TC: SALEOR_213 Delete a single staff member @e2e @staff-members", async ()
   await staffMembersPage.expectSuccessBanner();
   await staffMembersPage.typeInSearchOnListView(USERS.staffToBeDeleted.name);
   await expect(staffMembersPage.emptyDataGridListView).toBeVisible();
+});
+
+test("TC: SALEOR_137 Admin User should be able to deactivate other user @e2e @staff-members", async () => {
+  await staffMembersPage.goToStaffDetailsPage(USERS.userToBeDeactivated.id);
+  await staffMembersPage.clickIsActiveCheckbox();
+  await staffMembersPage.clickSaveButton();
+  await staffMembersPage.basePage.expectSuccessBanner();
+  await expect(await staffMembersPage.isActiveCheckbox.isChecked()).toEqual(false);
+
+  const loginViaApiDeactivatedUserResponse = await basicApiService.logInUserViaApi({
+    email: USERS.userToBeDeactivated.email,
+    password: process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
+  });
+
+  await expect(loginViaApiDeactivatedUserResponse.data.tokenCreate.errors[0].code).toEqual(
+    "INACTIVE",
+  );
+});
+
+test("TC: SALEOR_38 Admin User should be able to activate other user @e2e @staff-members", async () => {
+  await staffMembersPage.goToStaffDetailsPage(USERS.userToBeActivated.id);
+  await staffMembersPage.clickIsActiveCheckbox();
+  await staffMembersPage.clickSaveButton();
+  await staffMembersPage.basePage.expectSuccessBanner();
+  await expect(await staffMembersPage.isActiveCheckbox.isChecked()).toEqual(true);
+
+  const loginViaApiDeactivatedUserResponse = await basicApiService.logInUserViaApi({
+    email: USERS.userToBeActivated.email,
+    password: process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
+  });
+
+  await expect(loginViaApiDeactivatedUserResponse.data.tokenCreate.errors).toEqual([]);
+  await expect(loginViaApiDeactivatedUserResponse.data.tokenCreate.token).not.toEqual(null);
 });
