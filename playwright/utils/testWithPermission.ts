@@ -14,7 +14,7 @@ import { getStorageState } from "./auth";
  * @param {UserPermission} permission - The user permission for which to retrieve the storage state.
  * @returns {typeof base} - The extended test function with the storage state.
  */
-export function testWithPermission(permission: UserPermission): typeof base {
+export function testWithPermission(permission: UserPermission | "admin"): typeof base {
   return base.extend({
     // eslint-disable-next-line no-empty-pattern
     storageState: async ({}, use) => {
