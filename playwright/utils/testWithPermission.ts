@@ -1,5 +1,5 @@
 import { UserPermission } from "@data/userPermissions";
-import { test as base } from "@playwright/test";
+import { test } from "@playwright/test";
 
 import { getStorageState } from "./auth";
 
@@ -12,9 +12,14 @@ import { getStorageState } from "./auth";
  * The test function is then extended with the storage state, so that the user is authenticated when running the test.
  *
  * @param {UserPermission} permission - The user permission for which to retrieve the storage state.
- * @returns {typeof base} - The extended test function with the storage state.
+ * @returns {typeof test} - The extended test function with the storage state.
  */
-export function testWithPermission(permission: UserPermission | "admin"): typeof base {
+export function testWithPermission(
+  permission: UserPermission | "admin",
+  testObject?: typeof test,
+): typeof test {
+  const base = testObject ? testObject : test;
+
   return base.extend({
     // eslint-disable-next-line no-empty-pattern
     storageState: async ({}, use) => {
