@@ -32,7 +32,18 @@ export const getStorageState = async (permission: UserPermission | "admin"): Pro
     const email = getEmailForPermission(permission);
     const password = getPasswordForPermission(permission);
 
-    await basicApiService.logInUserViaApi({ email, password });
+    try {
+      await basicApiService.logInUserViaApi({ email, password });
+    } catch (error: unknown) {
+      if (!(error instanceof Error)) {
+        throw new Error("An unknown error occurred while logging in the user via API");
+      }
+
+      const message = `logInUserViaApi failed for ${email}: ${error.message}`;
+
+      console.error(message);
+      throw new Error(message);
+    }
 
     const loginJsonInfo = await apiRequestContext.storageState();
 

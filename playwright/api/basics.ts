@@ -49,7 +49,15 @@ export class BasicApiService {
     const loginResponse = await this.request.post(process.env.API_URL || "", {
       data: { query },
     });
-    const loginResponseJson = await loginResponse.json();
+    const loginResponseJson: { data: TokenCreateResponse } = await loginResponse.json();
+
+    if (loginResponseJson.data.tokenCreate.errors?.length > 0) {
+      const errorMessages = loginResponseJson.data.tokenCreate.errors
+        .map(e => e.message)
+        .join(", ");
+
+      throw new Error(`Login failed: ${errorMessages}`);
+    }
 
     return loginResponseJson as ApiResponse<TokenCreateResponse>;
   }
