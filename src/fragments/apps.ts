@@ -113,3 +113,13 @@ export const appAvatarFragment = gql`
     # TODO: Add app image
   }
 `;
+
+export const webhookAttemptFragment = gql`
+  fragment EventDeliveryAttempt on EventDeliveryAttempt {
+    id
+    createdAt
+    status
+    response
+    responseStatusCode
+  }
+`;
