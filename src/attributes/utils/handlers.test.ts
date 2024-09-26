@@ -1,4 +1,5 @@
 import {
+  createAttributeChangeHandler,
   createAttributeMultiChangeHandler,
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
@@ -223,6 +224,7 @@ describe("Multiple select change handler", () => {
     expect(trigger).toHaveBeenCalledTimes(1);
   });
 });
+
 describe("Sending only changed attributes", () => {
   // null in expected = attribute not present in output
   describe("works with reference attributes", () => {
@@ -745,5 +747,52 @@ describe("Sending only changed attributes", () => {
         },
       ]);
     });
+  });
+});
+
+describe("createAttributeChangeHandler", () => {
+  it("should return empty array when value is empty string", () => {
+    // Arrange
+    const change = jest.fn();
+    const trigger = jest.fn();
+    const handler = createAttributeChangeHandler(change, trigger);
+
+    // Act
+    handler("attr-1", "");
+
+    // Assert
+    expect(change).toHaveBeenCalledTimes(1);
+    expect(change).toHaveBeenCalledWith("attr-1", []);
+    expect(trigger).toHaveBeenCalledTimes(1);
+  });
+
+  it("should return empty array when value is null", () => {
+    // Arrange
+    const change = jest.fn();
+    const trigger = jest.fn();
+    const handler = createAttributeChangeHandler(change, trigger);
+
+    // Act
+    handler("attr-1", null);
+
+    // Assert
+    expect(change).toHaveBeenCalledTimes(1);
+    expect(change).toHaveBeenCalledWith("attr-1", []);
+    expect(trigger).toHaveBeenCalledTimes(1);
+  });
+
+  it("should return array with value when value not null or undefined or empty string", () => {
+    // Arrange
+    const change = jest.fn();
+    const trigger = jest.fn();
+    const handler = createAttributeChangeHandler(change, trigger);
+
+    // Act
+    handler("attr-1", "val-1");
+
+    // Assert
+    expect(change).toHaveBeenCalledTimes(1);
+    expect(change).toHaveBeenCalledWith("attr-1", ["val-1"]);
+    expect(trigger).toHaveBeenCalledTimes(1);
   });
 });
