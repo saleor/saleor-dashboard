@@ -148,7 +148,7 @@ export const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => 
                           priceApiError ? getProductErrorMessage(priceApiError, intl) : ""
                         }
                         name={fieldName}
-                        value={listing.price || ""}
+                        value={listing.price ?? ""}
                         currencySymbol={listing.currency}
                         onChange={e =>
                           onChange(listing.id, {
@@ -172,7 +172,7 @@ export const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => 
                         })}
                         error={!!costPriceError}
                         name={`${listing.id}-channel-costPrice`}
-                        value={listing.costPrice || ""}
+                        value={listing.costPrice ?? ""}
                         currencySymbol={listing.currency}
                         onChange={e =>
                           onChange(listing.id, {
