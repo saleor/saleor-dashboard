@@ -159,6 +159,7 @@ export const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => 
                         }
                         disabled={loading}
                         required
+                        data-test-id="price-field"
                       />
                     ) : (
                       <Skeleton />
@@ -183,6 +184,7 @@ export const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => 
                         }
                         disabled={loading}
                         hint={costPriceError ? getProductErrorMessage(costPriceError, intl) : ""}
+                        data-test-id="cost-price-field"
                       />
                     ) : (
                       <Skeleton />
