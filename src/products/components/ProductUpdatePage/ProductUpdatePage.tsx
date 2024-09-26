@@ -43,6 +43,7 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { maybe } from "@dashboard/misc";
 import ProductExternalMediaDialog from "@dashboard/products/components/ProductExternalMediaDialog";
 import { ProductOrganization } from "@dashboard/products/components/ProductOrganization/ProductOrganization";
+import { mapByChannel } from "@dashboard/products/components/ProductUpdatePage/utils";
 import { defaultGraphiQLQuery } from "@dashboard/products/queries";
 import { productImageUrl, productListUrl } from "@dashboard/products/urls";
 import { ChoiceWithAncestors, getChoicesWithAncestors } from "@dashboard/products/utils/utils";
@@ -268,16 +269,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
           onChange: handlers.changeChannels,
           openModal: () => setChannelPickerOpen(true),
         };
-        const listings = data.channels.updateChannels?.map<ChannelData>(listing => {
-          const channel = channels?.find(ac => ac.id === listing.channelId);
 
-          return {
-            ...channel,
-            ...listing,
-            id: listing.channelId,
-            currency: channel.currencyCode,
-          };
-        });
+        const byChannel = mapByChannel(channels);
+        const listings = data.channels.updateChannels?.map<ChannelData>(byChannel);
+
         const entityType = getReferenceAttributeEntityTypeFromAttribute(
           assignReferencesAttributeId,
           data.attributes,

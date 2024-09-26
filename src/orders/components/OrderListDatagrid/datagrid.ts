@@ -116,7 +116,7 @@ export function getCustomerCellContent(
     );
   }
 
-  if (rowData.userEmail) {
+  if (rowData?.userEmail) {
     return readonlyTextCell(rowData.userEmail);
   }
 

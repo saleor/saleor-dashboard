@@ -10,7 +10,7 @@ import { AppFetchMutation, AppInstallMutation } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
 import { useTheme } from "@dashboard/theme";
-import { Box, Button, Skeleton, Spinner, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -52,25 +52,31 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
           <DashboardCard>
             <DashboardCard.Header>
               <DashboardCard.Title data-test-id="app-installation-page-header">
-                {loading ? <Skeleton /> : intl.formatMessage(messages.title, { name })}
+                {loading ? (
+                  <Skeleton __width="20ch" height={6} />
+                ) : (
+                  intl.formatMessage(messages.title, { name })
+                )}
               </DashboardCard.Title>
             </DashboardCard.Header>
             <DashboardCard.Content className={classes.installCard}>
-              {loading ? (
-                <Spinner />
-              ) : (
-                <div className={classes.installAppContainer}>
-                  <Box
-                    width={12}
-                    height={12}
-                    display="flex"
-                    placeItems="center"
-                    borderRadius={2}
-                    overflow="hidden"
-                  >
-                    <img src={getSaleorLogoUrl()} alt="Saleor" />
+              <div className={classes.installAppContainer}>
+                <Box
+                  width={12}
+                  height={12}
+                  display="flex"
+                  placeItems="center"
+                  borderRadius={2}
+                  overflow="hidden"
+                >
+                  <img src={getSaleorLogoUrl()} alt="Saleor" />
+                </Box>
+                <img src={plusIcon} alt="" />
+                {loading ? (
+                  <Box width={12} height={12} backgroundColor="default1">
+                    <Skeleton width={12} height={12} />
                   </Box>
-                  <img src={plusIcon} alt="" />
+                ) : (
                   <AppAvatar
                     size={12}
                     logo={
@@ -81,8 +87,8 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
                         : undefined
                     }
                   />
-                </div>
-              )}
+                )}
+              </div>
             </DashboardCard.Content>
           </DashboardCard>
 
@@ -91,12 +97,21 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
           <DashboardCard>
             <DashboardCard.Header>
               <DashboardCard.Title>
-                {loading ? <Skeleton /> : intl.formatMessage(messages.permissionsTitle)}
+                {intl.formatMessage(messages.permissionsTitle)}
               </DashboardCard.Title>
             </DashboardCard.Header>
             <DashboardCard.Content>
               {loading ? (
-                <Skeleton />
+                <>
+                  <Skeleton __width="30%" height={6} marginBottom={2} />
+
+                  <Skeleton height={4} __width="150px" marginBottom={2} />
+                  <Skeleton height={4} __width="120px" />
+
+                  <Hr className={classes.installSpacer} />
+
+                  <Skeleton height={3} __width="50%" />
+                </>
               ) : (
                 <>
                   <Text className={classes.installPermissionTitle}>
