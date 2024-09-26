@@ -29,10 +29,10 @@ import { getFileValuesToUploadFromAttributes, isFileValueUnused } from "./data";
 export function createAttributeChangeHandler(
   changeAttributeData: FormsetChange<string[]>,
   triggerChange: () => void,
-): FormsetChange<string> {
-  return (attributeId: string, value: string) => {
+): FormsetChange<string | null | undefined> {
+  return (attributeId: string, value: string | null | undefined) => {
     triggerChange();
-    changeAttributeData(attributeId, value === "" ? [] : [value]);
+    changeAttributeData(attributeId, !value ? [] : [value]);
   };
 }
 
