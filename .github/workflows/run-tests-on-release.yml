@@ -40,6 +40,9 @@ on:
       RUN_URL:
         value: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
         description: Url to job run
+      PR_COMMENT: 
+        value: ${{ jobs.tests-complete.outputs.PR_COMMENT }}
+        description: Comment for release PR
 
 jobs:
   add-check-and-prepare-instance:
@@ -233,6 +236,7 @@ jobs:
     timeout-minutes: 30
     outputs:
       TESTS_CONCLUSION: "${{ steps.send-slack-message.outputs.status }}"
+      PR_COMMENT: "${{ steps.send-slack-message.outputs.status }} - run details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
     steps:
       - uses: actions/checkout@v4
 
