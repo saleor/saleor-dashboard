@@ -43,4 +43,18 @@ jobs:
       CUSTOM_VERSION: ${{github.event.client_payload.custom_version }}
       ADDITIONAL_TITLE: "Core automation test"
     secrets: inherit
+
+  add-comment-to-release-pr:
+    needs: run-tests-on-release
+    runs-on: ubuntu-22.04
+    steps:
+      - name: add-comment-to-release-pr
+        env:
+          PR_NUMBER: ${{github.event.client_payload.release_pr }}
+          PR_COMMENT: ${{needs.run-tests-on-release.outputs.PR_COMMENT}}
+        run: |
+          export GITHUB_TOKEN=$( \
+            curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
+            )
+          gh pr comment "$PR_NUMBER" --body "$PR_COMMENT" -R github.com/saleor/saleor-cloud-deployments
   
