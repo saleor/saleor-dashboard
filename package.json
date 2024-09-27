@@ -310,7 +310,8 @@
     "qa:pw-e2e": "npx playwright test --grep @e2e",
     "qa:pw-ui": "npx playwright test --ui",
     "knip": "knip",
-    "knip:fix": "knip --fix --allow-remove-files"
+    "knip:fix": "knip --fix",
+    "knip:fix-remove": "knip --fix --allow-remove-files"
   },
   "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)"
 }

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "rules": {
+    "unlisted": "off",
+    "binaries": "off"
+  },
+  "ignore": [
+    "src/graphql/types.generated.ts",
+    "src/graphql/typePolicies.generated.ts",
+    "src/graphql/hooks.generated.ts",
+    "playwright/**",
+    "src/fragments/**",
+    "testUtils/**",
+    "scripts/**",
+    "assets/**",
+    "**/*.js",
+    "**/queries.ts",
+    "**/fixtures.ts",
+    "**/mutations.ts",
+    "**/filters.ts",
+    "src/fixtures"
+  ]
+}
