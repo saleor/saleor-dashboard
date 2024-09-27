@@ -81,14 +81,12 @@ test("TC: SALEOR_137 Admin User should be able to deactivate other user @e2e @st
   await staffMembersPage.basePage.expectSuccessBanner();
   await expect(await staffMembersPage.isActiveCheckbox.isChecked()).toEqual(false);
 
-  const loginViaApiDeactivatedUserResponse = await basicApiService.logInUserViaApi({
-    email: USERS.userToBeDeactivated.email,
-    password: process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
-  });
-
-  await expect(loginViaApiDeactivatedUserResponse.data.tokenCreate.errors[0].code).toEqual(
-    "INACTIVE",
-  );
+  await expect(
+    basicApiService.logInUserViaApi({
+      email: USERS.userToBeDeactivated.email,
+      password: process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
+    }),
+  ).rejects.toThrow("Login failed: Account inactive");
 });
 
 test("TC: SALEOR_38 Admin User should be able to activate other user @e2e @staff-members", async () => {
