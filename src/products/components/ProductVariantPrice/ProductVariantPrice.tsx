@@ -148,7 +148,7 @@ export const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => 
                           priceApiError ? getProductErrorMessage(priceApiError, intl) : ""
                         }
                         name={fieldName}
-                        value={listing.price || ""}
+                        value={listing.price ?? ""}
                         currencySymbol={listing.currency}
                         onChange={e =>
                           onChange(listing.id, {
@@ -159,6 +159,7 @@ export const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => 
                         }
                         disabled={loading}
                         required
+                        data-test-id="price-field"
                       />
                     ) : (
                       <Skeleton />
@@ -172,7 +173,7 @@ export const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => 
                         })}
                         error={!!costPriceError}
                         name={`${listing.id}-channel-costPrice`}
-                        value={listing.costPrice || ""}
+                        value={listing.costPrice ?? ""}
                         currencySymbol={listing.currency}
                         onChange={e =>
                           onChange(listing.id, {
@@ -183,6 +184,7 @@ export const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => 
                         }
                         disabled={loading}
                         hint={costPriceError ? getProductErrorMessage(costPriceError, intl) : ""}
+                        data-test-id="cost-price-field"
                       />
                     ) : (
                       <Skeleton />
