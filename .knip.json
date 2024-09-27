@@ -38,6 +38,14 @@
     "@graphql-codegen/fragment-matcher",
     "@graphql-codegen/import-types-preset",
     "@graphql-codegen/introspection",
-    "@graphql-codegen/typescript"
+    "@graphql-codegen/typescript",
+    "@material-ui/styles",
+    "keycode",
+    "tslib",
+    "@swc/jest",
+    "@types/lodash-es",
+    "@types/webappsec-credential-management",
+    "core-js",
+    "identity-obj-proxy"
   ]
 }
