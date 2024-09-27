@@ -64,7 +64,8 @@
     "@radix-ui/react-radio-group",
     "@react-editor-js/core",
     "@radix-ui/react-portal",
-    "@graphql-codegen/schema-ast"
+    "@graphql-codegen/schema-ast",
+    "playwright-testmo-reporter"
   ],
   "ignoreBinaries": ["testmo", "saleor", "lockfile-lint", "prettier", "husky", "jest"]
 }
