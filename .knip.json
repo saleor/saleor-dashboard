@@ -1,8 +1,20 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
   "rules": {
-    "unlisted": "off",
-    "binaries": "off"
+    "types": "off",
+    "enumMembers": "off",
+    "files": "off",
+    "exports": "off",
+    "duplicates": "off",
+    "classMembers": "error",
+    "nsTypes": "error",
+    "unresolved": "error",
+    "nsExports": "error",
+    "unlisted": "error",
+    "binaries": "error",
+    "optionalPeerDependencies": "error",
+    "dependencies": "error",
+    "devDependencies": "error"
   },
   "ignore": [
     "src/graphql/types.generated.ts",
@@ -37,7 +49,6 @@
     "@graphql-codegen/add",
     "@graphql-codegen/fragment-matcher",
     "@graphql-codegen/import-types-preset",
-    "@graphql-codegen/introspection",
     "@graphql-codegen/typescript",
     "@material-ui/styles",
     "keycode",
@@ -46,6 +57,14 @@
     "@types/lodash-es",
     "@types/webappsec-credential-management",
     "core-js",
-    "identity-obj-proxy"
-  ]
+    "identity-obj-proxy",
+    "moment",
+    "history",
+    "react-transition-group",
+    "@radix-ui/react-radio-group",
+    "@react-editor-js/core",
+    "@radix-ui/react-portal",
+    "@graphql-codegen/schema-ast"
+  ],
+  "ignoreBinaries": ["testmo", "saleor", "lockfile-lint", "prettier", "husky", "jest"]
 }

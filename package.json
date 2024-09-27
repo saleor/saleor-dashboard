@@ -279,7 +279,7 @@
     "qa:artifact-move-videos": "find cypress/reports/*/mochareports/videos -type f -name \"*.js.mp4\" -exec mv {} cypress/reports/mochareports/videos \\;",
     "qa:pw-e2e": "npx playwright test --grep @e2e",
     "qa:pw-ui": "npx playwright test --ui",
-    "knip": "knip",
+    "knip": "knip --reporter markdown",
     "knip:fix": "knip --fix",
     "knip:fix-remove": "knip --fix --allow-remove-files"
   },
