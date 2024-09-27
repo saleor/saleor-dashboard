@@ -152,6 +152,7 @@
     "knip": "^5.30.5",
     "mochawesome-merge": "^4.3.0",
     "mochawesome-report-generator": "^6.2.0",
+    "playwright-testmo-reporter": "^1.8.4",
     "rollup-plugin-polyfill-node": "^0.11.0",
     "typescript": "^5.0.4",
     "typescript-strict-plugin": "^2.1.0",
