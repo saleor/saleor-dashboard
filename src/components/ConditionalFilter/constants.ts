@@ -299,14 +299,14 @@ export const getAttributeInputType = (item: ConditionItem | null) => {
 
 export type RowType = keyof typeof STATIC_CONDITIONS | "attribute";
 
-export const booleanOptionTrue = (type?: string) => ({
+const booleanOptionTrue = (type?: string) => ({
   label: "Yes",
   value: "true",
   slug: "true",
   ...{ type },
 });
 
-export const booleanOptionFalse = (type?: string) => ({
+const booleanOptionFalse = (type?: string) => ({
   label: "No",
   value: "false",
   slug: "false",

@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 
 import { productVariantEndPreorderDialogMessages } from "./messages";
 
-export interface ProductVariantEndPreorderDialogProps {
+interface ProductVariantEndPreorderDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   onClose: () => void;

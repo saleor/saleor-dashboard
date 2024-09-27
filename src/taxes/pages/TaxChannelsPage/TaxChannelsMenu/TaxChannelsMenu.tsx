@@ -17,7 +17,7 @@ interface TaxChannelsMenuProps {
   selectedConfigurationId: string;
 }
 
-export const TaxChannelsMenu: React.FC<TaxChannelsMenuProps> = ({
+const TaxChannelsMenu: React.FC<TaxChannelsMenuProps> = ({
   configurations,
   selectedConfigurationId,
 }) => {

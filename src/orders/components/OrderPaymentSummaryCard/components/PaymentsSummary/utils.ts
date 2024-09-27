@@ -106,6 +106,3 @@ export const getShouldDisplayAmounts = (
     cancelledPending: false,
   };
 };
-
-export const shouldHideSummary = (result: ShouldDisplayResult) =>
-  [PaymentState.FULLY_SETTLED, PaymentState.NO_DATA].includes(result.state);

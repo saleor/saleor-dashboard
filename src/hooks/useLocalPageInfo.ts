@@ -1,12 +1,5 @@
 import { useEffect, useState } from "react";
 
-export interface PageInfo {
-  endCursor: number;
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
-  startCursor: number;
-}
-
 export function getMaxPage(valuesCount: number, paginateBy: number) {
   return Math.floor(Math.max(0, valuesCount - 1) / paginateBy);
 }

@@ -21,7 +21,7 @@ interface Value {
   minValue: string;
   price: string;
 }
-export interface OrderValueProps {
+interface OrderValueProps {
   channels: ChannelShippingData[];
   errors: ShippingChannelsErrorFragment[];
   disabled: boolean;
@@ -32,7 +32,7 @@ export interface OrderValueProps {
 
 const numberOfColumns = 3;
 
-export const OrderValue: React.FC<OrderValueProps> = ({
+const OrderValue: React.FC<OrderValueProps> = ({
   channels,
   errors,
   orderValueRestricted,

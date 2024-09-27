@@ -33,7 +33,7 @@ interface OrderReturnRefundLinesCardProps {
   onSetMaxQuantity: () => any;
 }
 
-export const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
+const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
   lines,
   onSetMaxQuantity,
   onChangeQuantity,
@@ -185,3 +185,5 @@ export const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
     </DashboardCard>
   );
 };
+
+export default ItemsCard;

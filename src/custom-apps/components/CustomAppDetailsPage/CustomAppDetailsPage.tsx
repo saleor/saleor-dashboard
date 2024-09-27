@@ -35,7 +35,7 @@ export interface CustomAppDetailsPageFormData {
   name: string;
   permissions: PermissionEnum[];
 }
-export interface CustomAppDetailsPageProps {
+interface CustomAppDetailsPageProps {
   apiUrl: string;
   disabled: boolean;
   errors: AppErrorFragment[];

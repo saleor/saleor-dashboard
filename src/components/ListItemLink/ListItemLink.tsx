@@ -4,7 +4,7 @@ import React from "react";
 
 import Link from "../Link";
 
-export interface ListItemLinkProps extends Omit<BaseListItemProps, "onClick" | "classes"> {
+interface ListItemLinkProps extends Omit<BaseListItemProps, "onClick" | "classes"> {
   href?: string;
   className?: string;
   linkClassName?: string;
@@ -20,12 +20,7 @@ const useStyles = makeStyles(
   { name: "ListItemLink" },
 );
 
-export const ListItemLink: React.FC<ListItemLinkProps> = ({
-  href,
-  children,
-  linkClassName,
-  ...props
-}) => {
+const ListItemLink: React.FC<ListItemLinkProps> = ({ href, children, linkClassName, ...props }) => {
   const classes = useStyles();
 
   if (!href) {

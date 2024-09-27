@@ -5,7 +5,7 @@ import React from "react";
 
 import { useStyles } from "./styles";
 
-export const CustomAppsSkeleton = () => {
+const CustomAppsSkeleton = () => {
   const classes = useStyles();
 
   return (

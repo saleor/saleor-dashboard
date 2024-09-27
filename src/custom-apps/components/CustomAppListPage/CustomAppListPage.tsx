@@ -18,7 +18,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import CustomAppsSkeleton from "../CustomAppsSkeleton";
 import { useStyles } from "./styles";
 
-export interface CustomAppListPageProps {
+interface CustomAppListPageProps {
   appsList: AppListItemFragment[];
   getCustomAppHref: (id: string) => string;
   onRemove: (id: string) => void;

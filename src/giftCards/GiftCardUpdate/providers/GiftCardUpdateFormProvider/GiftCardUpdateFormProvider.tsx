@@ -45,7 +45,7 @@ export interface GiftCardUpdateFormErrors {
   handlers: { changeMetadata: FormChange };
 }
 
-export type GiftCardUpdateFormConsumerProps = UseFormResult<GiftCardUpdateFormData> &
+type GiftCardUpdateFormConsumerProps = UseFormResult<GiftCardUpdateFormData> &
   GiftCardUpdateFormConsumerData;
 
 export const GiftCardUpdateFormContext = createContext<GiftCardUpdateFormConsumerProps>(null);

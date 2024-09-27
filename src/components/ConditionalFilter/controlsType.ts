@@ -1,6 +1,6 @@
 import { ConditionValue } from "./FilterElement/ConditionValue";
 
-export const CONTROL_DEFAULTS = {
+const CONTROL_DEFAULTS = {
   text: "",
   number: "",
   "number.range": ["", ""] as [string, string],

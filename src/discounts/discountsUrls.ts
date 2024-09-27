@@ -12,7 +12,7 @@ const discountSection = "/discounts/sales";
 
 export type DiscountListUrlDialog = TabActionDialog;
 
-export type DiscountListUrlSort = Sort<DiscountListUrlSortField>;
+type DiscountListUrlSort = Sort<DiscountListUrlSortField>;
 
 export type DiscountListUrlQueryParams = Dialog<DiscountListUrlDialog> &
   Pagination &
@@ -20,7 +20,7 @@ export type DiscountListUrlQueryParams = Dialog<DiscountListUrlDialog> &
     query?: string;
   };
 
-export type DiscountUrlDialog = "remove";
+type DiscountUrlDialog = "remove";
 export type DiscountUrlQueryParams = Dialog<DiscountUrlDialog>;
 
 export const discountListUrl = (params?: DiscountListUrlQueryParams) =>

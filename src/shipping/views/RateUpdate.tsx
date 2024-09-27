@@ -65,13 +65,13 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 const FORM_ID = Symbol("shipping-zone-rates-details-form-id");
 
-export interface RateUpdateProps {
+interface RateUpdateProps {
   id: string;
   rateId: string;
   params: ShippingRateUrlQueryParams;
 }
 
-export const RateUpdate: React.FC<RateUpdateProps> = ({ id, rateId, params }) => {
+const RateUpdate: React.FC<RateUpdateProps> = ({ id, rateId, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

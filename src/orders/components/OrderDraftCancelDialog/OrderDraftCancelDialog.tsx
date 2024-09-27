@@ -8,7 +8,7 @@ import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface OrderDraftCancelDialogProps {
+interface OrderDraftCancelDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;

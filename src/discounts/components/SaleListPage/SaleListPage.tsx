@@ -22,7 +22,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { SaleListDatagrid } from "../SaleListDatagrid";
 import { createFilterStructure, SaleFilterKeys, SaleListFilterOpts } from "./filters";
 
-export interface SaleListPageProps
+interface SaleListPageProps
   extends PageListProps,
     FilterPagePropsWithPresets<SaleFilterKeys, SaleListFilterOpts>,
     SortPage<SaleListUrlSortField>,

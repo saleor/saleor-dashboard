@@ -131,4 +131,3 @@ export const PaymentSubmitCardValues: React.FC<PaymentSubmitCardValuesProps> = p
 };
 
 PaymentSubmitCardValues.displayName = "PaymentSubmitCardValues";
-export default PaymentSubmitCardValues;

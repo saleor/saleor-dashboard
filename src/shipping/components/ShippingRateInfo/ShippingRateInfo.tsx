@@ -54,7 +54,7 @@ const useStyles = makeStyles(
   { name: "ShippingRateInfo" },
 );
 
-export interface ShippingRateInfoProps {
+interface ShippingRateInfoProps {
   data: {
     description: OutputData | null;
     name: string;

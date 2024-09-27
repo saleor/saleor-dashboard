@@ -27,7 +27,7 @@ import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderDraftAlert from "./OrderDraftAlert";
 
-export interface OrderDraftPageProps extends FetchMoreProps {
+interface OrderDraftPageProps extends FetchMoreProps {
   disabled: boolean;
   order?: OrderDetailsFragment;
   channelUsabilityData?: ChannelUsabilityDataQuery;

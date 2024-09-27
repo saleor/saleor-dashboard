@@ -15,7 +15,7 @@ import { dialogMessages as messages } from "./messages";
 import { useStyles } from "./styles";
 import { parseQuery, stringifyAddress } from "./utils";
 
-export interface OrderCustomerAddressesSearchProps {
+interface OrderCustomerAddressesSearchProps {
   type: AddressTypeEnum;
   cloneAddress: boolean;
   formChange: FormChange;

@@ -80,7 +80,7 @@ export interface VoucherDetailsPageFormData extends MetadataFormData {
   singleUse: boolean;
 }
 
-export interface VoucherDetailsPageProps
+interface VoucherDetailsPageProps
   extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
     TabListActions<"categoryListToolbar" | "collectionListToolbar" | "productListToolbar">,
     ChannelProps {

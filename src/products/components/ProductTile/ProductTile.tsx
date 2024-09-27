@@ -7,7 +7,7 @@ import React from "react";
 
 import { getTileStatus } from "./utils";
 
-export interface ProductTileProps {
+interface ProductTileProps {
   product: RelayToFlat<ProductListQuery["products"]>[0];
   onClick: () => void;
 }

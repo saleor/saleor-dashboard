@@ -41,7 +41,7 @@ interface OrderListProps {
   params: OrderListUrlQueryParams;
 }
 
-export const OrderList: React.FC<OrderListProps> = ({ params }) => {
+const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.ORDER_LIST);

@@ -8,7 +8,7 @@ interface OrderAlertsProps {
   values?: Record<string, any>;
 }
 
-export const OrderAlerts: React.FC<OrderAlertsProps> = ({ alertsHeader, alerts, values }) => {
+const OrderAlerts: React.FC<OrderAlertsProps> = ({ alertsHeader, alerts, values }) => {
   const intl = useIntl();
   const formattedAlerts = alerts.map((alert, index) => {
     if (typeof alert === "string") {
@@ -48,5 +48,6 @@ export const OrderAlerts: React.FC<OrderAlertsProps> = ({ alertsHeader, alerts, 
     </>
   );
 };
+
 OrderAlerts.displayName = "OrderAlerts";
 export default OrderAlerts;

@@ -28,7 +28,7 @@ interface OrderFulfillLineProps {
   onWarehouseChange: () => void;
 }
 
-export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
+const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
   const { line, lineIndex, formsetData, formsetChange, onWarehouseChange } = props;
   const classes = useStyles();
   const intl = useIntl();
@@ -163,5 +163,6 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
     </TableRowLink>
   );
 };
+
 OrderFulfillLine.displayName = "OrderFulfillLine";
 export default OrderFulfillLine;

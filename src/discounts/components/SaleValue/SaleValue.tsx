@@ -16,7 +16,7 @@ import SaleValueTextField from "./SaleValueTextField";
 import { useStyles } from "./styles";
 import { SaleValueInputOnChangeType } from "./types";
 
-export interface SaleValueProps {
+interface SaleValueProps {
   data: SaleDetailsPageFormData;
   disabled: boolean;
   errors: DiscountErrorFragment[];

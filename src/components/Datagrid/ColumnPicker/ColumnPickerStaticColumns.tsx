@@ -4,7 +4,7 @@ import React from "react";
 import { AvailableColumn } from "../types";
 import { filterEmptyColumn, isLastEnabledColumn } from "./utils";
 
-export interface ColumnPickerStaticColumnsProps {
+interface ColumnPickerStaticColumnsProps {
   staticColumns: AvailableColumn[];
   handleToggle: (id: string) => void;
   selectedColumns: string[];

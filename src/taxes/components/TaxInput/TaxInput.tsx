@@ -11,7 +11,7 @@ interface TaxInputProps {
   change: FormChange;
 }
 
-export const TaxInput: React.FC<TaxInputProps> = ({ placeholder, value, change }) => {
+const TaxInput: React.FC<TaxInputProps> = ({ placeholder, value, change }) => {
   const classes = useStyles();
   const handleChange: FormChange = e => {
     let value = e.target.value;

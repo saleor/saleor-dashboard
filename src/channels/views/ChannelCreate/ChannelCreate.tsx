@@ -24,7 +24,7 @@ import { useShippingZones } from "../ChannelDetails/useShippingZones";
 import { useWarehouses } from "../ChannelDetails/useWarehouses";
 import { useSaveChannel } from "./useSaveChannel";
 
-export const ChannelCreateView = () => {
+const ChannelCreateView = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

@@ -18,7 +18,7 @@ const useStyles = makeStyles(
   { name: "AccountPermissions" },
 );
 
-export interface CustomAppInfoProps {
+interface CustomAppInfoProps {
   data: {
     name: string;
   };

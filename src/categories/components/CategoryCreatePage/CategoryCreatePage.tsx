@@ -14,7 +14,7 @@ import { useIntl } from "react-intl";
 import CategoryDetailsForm from "../../components/CategoryDetailsForm";
 import CategoryCreateForm, { CategoryCreateData } from "./form";
 
-export interface CategoryCreatePageProps {
+interface CategoryCreatePageProps {
   errors: ProductErrorFragment[];
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -22,7 +22,7 @@ export interface CategoryCreatePageProps {
   onSubmit: (data: CategoryCreateData) => any;
 }
 
-export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
+const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
   disabled,
   onSubmit,
   errors,
@@ -88,5 +88,6 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
     </CategoryCreateForm>
   );
 };
+
 CategoryCreatePage.displayName = "CategoryCreatePage";
 export default CategoryCreatePage;

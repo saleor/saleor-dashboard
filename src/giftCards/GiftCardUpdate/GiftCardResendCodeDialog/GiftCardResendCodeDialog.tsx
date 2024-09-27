@@ -23,7 +23,7 @@ import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGi
 import { giftCardResendCodeDialogMessages as messages } from "./messages";
 import { useDialogFormReset } from "./utils";
 
-export interface GiftCardResendCodeFormData {
+interface GiftCardResendCodeFormData {
   email: string;
   channelSlug: string;
 }

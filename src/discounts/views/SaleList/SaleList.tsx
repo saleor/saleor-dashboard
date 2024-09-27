@@ -34,7 +34,7 @@ interface SaleListProps {
   params: SaleListUrlQueryParams;
 }
 
-export const SaleList: React.FC<SaleListProps> = ({ params }) => {
+const SaleList: React.FC<SaleListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.SALES_LIST);
@@ -222,4 +222,5 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
     </PaginatorContext.Provider>
   );
 };
+
 export default SaleList;

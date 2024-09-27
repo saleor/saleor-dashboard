@@ -35,7 +35,7 @@ interface OrderDetailsProps {
   params: OrderUrlQueryParams;
 }
 
-export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
+const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const { queue } = useBackgroundTask();
   const intl = useIntl();

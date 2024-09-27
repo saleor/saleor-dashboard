@@ -22,7 +22,7 @@ export type WarehouseListUrlDialog = "delete" | TabActionDialog;
 export enum WarehouseListUrlSortField {
   name = "name",
 }
-export type WarehouseListUrlSort = Sort<WarehouseListUrlSortField>;
+type WarehouseListUrlSort = Sort<WarehouseListUrlSortField>;
 export type WarehouseListUrlQueryParams = ActiveTab &
   Dialog<WarehouseListUrlDialog> &
   Pagination &
@@ -33,7 +33,7 @@ export const warehouseListUrl = (params?: WarehouseListUrlQueryParams) =>
   warehouseListPath + "?" + stringifyQs(params);
 
 export const warehousePath = (id: string) => urlJoin(warehouseSection, id);
-export type WarehouseUrlDialog = "delete";
+type WarehouseUrlDialog = "delete";
 export type WarehouseUrlQueryParams = Dialog<WarehouseUrlDialog> & SingleAction;
 export const warehouseUrl = (id: string, params?: WarehouseUrlQueryParams) =>
   warehousePath(encodeURIComponent(id)) + "?" + stringifyQs(params);

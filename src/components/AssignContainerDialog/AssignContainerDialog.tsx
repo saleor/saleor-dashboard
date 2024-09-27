@@ -15,11 +15,6 @@ import Checkbox from "../Checkbox";
 import { ConfirmButton } from "../ConfirmButton";
 import { useStyles } from "./styles";
 
-export interface AssignContainerDialogFormData {
-  containers: string[];
-  query: string;
-}
-
 type Labels = Record<"confirmBtn" | "title" | "label" | "placeholder", string>;
 export interface Container extends Node {
   name: string;

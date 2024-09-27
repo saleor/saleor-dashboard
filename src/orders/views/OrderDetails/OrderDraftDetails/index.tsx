@@ -305,5 +305,3 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     </>
   );
 };
-
-export default OrderDraftDetails;

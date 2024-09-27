@@ -10,7 +10,7 @@ const InnerSortableTableBody = SortableContainer<TableBodyProps>(({ children, ..
   <TableBody {...props}>{children}</TableBody>
 ));
 
-export interface SortableTableBodyProps {
+interface SortableTableBodyProps {
   onSortEnd: ReorderAction;
 }
 
@@ -29,7 +29,10 @@ const useStyles = makeStyles(
   }),
   { name: "SortableTableBody" },
 );
-const SortableTableBody: React.FC<Omit<TableBodyProps & SortableTableBodyProps, "ref">> = props => {
+
+export const SortableTableBody: React.FC<
+  Omit<TableBodyProps & SortableTableBodyProps, "ref">
+> = props => {
   const classes = useStyles({});
 
   return (
@@ -42,5 +45,3 @@ const SortableTableBody: React.FC<Omit<TableBodyProps & SortableTableBodyProps, 
     />
   );
 };
-
-export default SortableTableBody;

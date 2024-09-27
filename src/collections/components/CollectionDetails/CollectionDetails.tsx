@@ -12,7 +12,7 @@ import { TextField } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 
-export interface CollectionDetailsProps {
+interface CollectionDetailsProps {
   data: {
     description: OutputData;
     name: string;

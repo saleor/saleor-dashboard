@@ -56,7 +56,7 @@ export interface GetCellContentOpts {
   getChangeIndex: (column: string, row: number) => number;
 }
 
-export interface MenuItemsActions {
+interface MenuItemsActions {
   removeRows: (indexes: number[]) => void;
 }
 
@@ -67,7 +67,7 @@ export interface DatagridRenderHeaderProps {
   isAnimationOpenFinished: boolean;
 }
 
-export interface DatagridProps {
+interface DatagridProps {
   fillHandle?: boolean;
   availableColumns: readonly AvailableColumn[];
   emptyText: string;
@@ -100,7 +100,7 @@ export interface DatagridProps {
   renderHeader?: (props: DatagridRenderHeaderProps) => ReactNode;
 }
 
-export const Datagrid: React.FC<DatagridProps> = ({
+const Datagrid: React.FC<DatagridProps> = ({
   availableColumns,
   emptyText,
   getCellContent,

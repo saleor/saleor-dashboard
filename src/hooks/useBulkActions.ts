@@ -26,11 +26,3 @@ function useBulkActions(initial: string[] = []) {
   };
 }
 export default useBulkActions;
-
-export interface UseBulkActionsProps {
-  isSelected: (id: string) => boolean;
-  listElements: string[];
-  toggle: (id: string) => void;
-  toggleAll: (items: Node[], selected: number) => void;
-  reset: () => void;
-}

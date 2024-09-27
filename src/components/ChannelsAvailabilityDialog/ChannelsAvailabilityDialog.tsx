@@ -9,7 +9,7 @@ import ChannelsAvailabilityDialogWrapper from "../ChannelsAvailabilityDialogWrap
 import { NoChannels } from "./NoChannels";
 import { useChannelsSearch } from "./utils";
 
-export interface ChannelsAvailabilityDialogProps {
+interface ChannelsAvailabilityDialogProps {
   isSelected: (option: Channel) => boolean;
   channels: Channel[];
   confirmButtonState: ConfirmButtonTransitionState;
@@ -24,7 +24,7 @@ export interface ChannelsAvailabilityDialogProps {
   toggleAll?: (items: Channel[], selected: number) => void;
 }
 
-export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProps> = ({
+const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProps> = ({
   isSelected,
   channels,
   confirmButtonState,

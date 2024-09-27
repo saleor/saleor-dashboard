@@ -9,7 +9,7 @@ import { FormattedMessage } from "react-intl";
 
 import messages from "./messages";
 
-export interface ErrorPageProps {
+interface ErrorPageProps {
   onBack: () => void;
   onRefresh: () => void;
 }

@@ -1,9 +1,9 @@
 import { useCallback, useState } from "react";
 
-export type MapOrEntries<K, V> = Map<K, V> | Array<[K, V]>;
+type MapOrEntries<K, V> = Map<K, V> | Array<[K, V]>;
 
 // Public interface
-export interface Actions<K, V> {
+interface Actions<K, V> {
   set: (key: K, value: V) => void;
   setAll: (entries: MapOrEntries<K, V>) => void;
   remove: (key: K) => void;

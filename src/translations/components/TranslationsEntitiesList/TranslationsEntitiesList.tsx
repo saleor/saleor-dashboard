@@ -11,7 +11,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { maybe, renderCollection } from "../../../misc";
 import { ListProps } from "../../../types";
 
-export interface TranslatableEntity {
+interface TranslatableEntity {
   id: string;
   name: string;
   completion: {
@@ -20,7 +20,7 @@ export interface TranslatableEntity {
   };
 }
 
-export interface TranslationsEntitiesListProps extends ListProps {
+interface TranslationsEntitiesListProps extends ListProps {
   entities: TranslatableEntity[];
   getRowHref: (id: string) => string;
 }

@@ -30,6 +30,3 @@ export const ShopProvider: React.FC = ({ children }) => {
     </>
   );
 };
-
-export const Shop = ShopContext.Consumer;
-export default Shop;

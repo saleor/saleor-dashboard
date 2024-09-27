@@ -23,7 +23,7 @@ const useStyles = makeStyles(
   { name: "MoneySection" },
 );
 
-export const messages = defineMessages({
+const messages = defineMessages({
   discount: {
     id: "yJynYK",
     defaultMessage: "discount",

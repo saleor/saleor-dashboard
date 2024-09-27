@@ -3,10 +3,7 @@ import { Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-export interface ResetPasswordSuccessPageFormData {
-  email: string;
-}
-export interface ResetPasswordSuccessPageProps {
+interface ResetPasswordSuccessPageProps {
   onBack: () => void;
 }
 

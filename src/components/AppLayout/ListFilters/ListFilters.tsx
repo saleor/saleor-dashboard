@@ -8,7 +8,7 @@ import { FiltersSelect } from "./components/FiltersSelect";
 import { LegacyFiltersPresetsAlert } from "./components/LegacyFiltersPresetsAlert";
 import SearchInput from "./components/SearchInput";
 
-export interface ListFiltersProps<TKeys extends string = string>
+interface ListFiltersProps<TKeys extends string = string>
   extends FilterProps<TKeys>,
     SearchPageProps {
   searchPlaceholder: string;

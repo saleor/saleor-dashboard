@@ -68,7 +68,7 @@ const messages = defineMessages({
   },
 });
 
-export interface AttributePropertiesProps {
+interface AttributePropertiesProps {
   data: AttributePageFormData;
   disabled: boolean;
   errors: AttributeErrorFragment[];

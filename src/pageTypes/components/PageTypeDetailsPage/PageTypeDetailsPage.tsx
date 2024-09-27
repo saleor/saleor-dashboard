@@ -28,7 +28,7 @@ export interface PageTypeForm extends MetadataFormData {
   attributes: Option[];
 }
 
-export interface PageTypeDetailsPageProps {
+interface PageTypeDetailsPageProps {
   errors: PageErrorFragment[];
   pageType: PageTypeDetailsFragment;
   disabled: boolean;

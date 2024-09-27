@@ -9,7 +9,7 @@ import { useHasRendered } from "./hooks";
 import { EditorJsProps } from "./RichTextEditor";
 import useStyles from "./styles";
 
-export interface RichTextEditorContentProps extends Omit<EditorJsProps, "defaultValue"> {
+interface RichTextEditorContentProps extends Omit<EditorJsProps, "defaultValue"> {
   id?: string;
   className?: string;
 }

@@ -49,7 +49,7 @@ import React, { ComponentType, PropsWithChildren, ReactNode, useState } from "re
 
 import { useDashboardTheme, useGraphiQLThemeSwitcher } from "../GraphiQL/styles";
 
-export interface GraphiQLToolbarConfig {
+interface GraphiQLToolbarConfig {
   /**
    * This content will be rendered after the built-in buttons of the toolbar.
    * Note that this will not apply if you provide a completely custom toolbar
@@ -63,7 +63,7 @@ export interface GraphiQLToolbarConfig {
  *
  * https://graphiql-test.netlify.app/typedoc/modules/graphiql.html#graphiqlprops
  */
-export type GraphiQLProps = Omit<GraphiQLProviderProps, "children"> & GraphiQLInterfaceProps;
+type GraphiQLProps = Omit<GraphiQLProviderProps, "children"> & GraphiQLInterfaceProps;
 
 /**
  * The top-level React component for GraphiQL, intended to encompass the entire
@@ -72,7 +72,7 @@ export type GraphiQLProps = Omit<GraphiQLProviderProps, "children"> & GraphiQLIn
  * @see https://github.com/graphql/graphiql#usage
  */
 
-export function GraphiQL({
+function GraphiQL({
   dangerouslyAssumeSchemaIsValid,
   defaultQuery,
   defaultTabs,
@@ -150,7 +150,7 @@ type AddSuffix<Obj extends Record<string, any>, Suffix extends string> = {
   [Key in keyof Obj as `${string & Key}${Suffix}`]: Obj[Key];
 };
 
-export type GraphiQLInterfaceProps = WriteableEditorProps &
+type GraphiQLInterfaceProps = WriteableEditorProps &
   AddSuffix<Pick<UseQueryEditorArgs, "onEdit">, "Query"> &
   Pick<UseQueryEditorArgs, "onCopyQuery"> &
   AddSuffix<Pick<UseVariableEditorArgs, "onEdit">, "Variables"> &
@@ -184,7 +184,7 @@ export type GraphiQLInterfaceProps = WriteableEditorProps &
     showPersistHeadersSettings?: boolean;
   };
 
-export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
+function GraphiQLInterface(props: GraphiQLInterfaceProps) {
   const isHeadersEditorEnabled = props.isHeadersEditorEnabled ?? true;
   const editorContext = useEditorContext({ nonNull: true });
   const executionContext = useExecutionContext({ nonNull: true });

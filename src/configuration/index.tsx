@@ -251,7 +251,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
 
 export const configurationMenuUrl = "/configuration/";
 
-export const ConfigurationSection: React.FC = () => {
+const ConfigurationSection: React.FC = () => {
   const shop = useShop();
   const versions = {
     dashboardVersion,
@@ -271,4 +271,5 @@ export const ConfigurationSection: React.FC = () => {
     </>
   );
 };
+
 export default ConfigurationSection;

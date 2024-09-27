@@ -14,7 +14,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
 
-export interface OrderWeightProps {
+interface OrderWeightProps {
   disabled: boolean;
   errors: ShippingErrorFragment[];
   orderValueRestricted: boolean;
@@ -23,7 +23,7 @@ export interface OrderWeightProps {
   onChange: (event: ChangeEvent) => void;
 }
 
-export const OrderWeight: React.FC<OrderWeightProps> = ({
+const OrderWeight: React.FC<OrderWeightProps> = ({
   orderValueRestricted,
   disabled,
   errors,

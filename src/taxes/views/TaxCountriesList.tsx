@@ -33,7 +33,7 @@ interface TaxCountriesListProps {
   params: TaxesUrlQueryParams | undefined;
 }
 
-export const TaxCountriesList: React.FC<TaxCountriesListProps> = ({ id, params }) => {
+const TaxCountriesList: React.FC<TaxCountriesListProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

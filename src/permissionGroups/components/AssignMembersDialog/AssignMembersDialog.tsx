@@ -83,7 +83,7 @@ const useStyles = makeStyles(
   { name: "AssignStaffMembersDialog" },
 );
 
-export interface AssignMembersDialogProps extends DialogProps, FetchMoreProps, SearchPageProps {
+interface AssignMembersDialogProps extends DialogProps, FetchMoreProps, SearchPageProps {
   confirmButtonState: ConfirmButtonTransitionState;
   disabled: boolean;
   staffMembers: RelayToFlat<SearchStaffMembersQuery["search"]>;

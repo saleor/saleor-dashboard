@@ -77,7 +77,7 @@ interface ProductListProps {
   params: ProductListUrlQueryParams;
 }
 
-export const ProductList: React.FC<ProductListProps> = ({ params }) => {
+const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { queue } = useBackgroundTask();
@@ -493,4 +493,5 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     </PaginatorContext.Provider>
   );
 };
+
 export default ProductList;

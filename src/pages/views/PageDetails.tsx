@@ -46,7 +46,7 @@ import { PageData, PageSubmitData } from "../components/PageDetailsPage/form";
 import { pageListUrl, pageUrl, PageUrlQueryParams } from "../urls";
 import { getAttributeInputFromPage } from "../utils/data";
 
-export interface PageDetailsProps {
+interface PageDetailsProps {
   id: string;
   params: PageUrlQueryParams;
 }
@@ -72,7 +72,7 @@ const createPageInput = (
   title: data.title,
 });
 
-export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
+const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -241,5 +241,6 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
     </>
   );
 };
+
 PageDetails.displayName = "PageDetails";
 export default PageDetails;

@@ -10,7 +10,7 @@ import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface OrderInvoiceEmailSendDialogProps extends DialogProps {
+interface OrderInvoiceEmailSendDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: InvoiceErrorFragment[];
   invoice: InvoiceFragment;

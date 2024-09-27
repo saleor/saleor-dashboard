@@ -11,7 +11,7 @@ interface DateProps {
   plain?: boolean;
 }
 
-export const Date: React.FC<DateProps> = ({ date, plain }) => {
+const Date: React.FC<DateProps> = ({ date, plain }) => {
   const localizeDate = useDateLocalize();
   const getHumanized = (value: string, locale: string, currentDate: number) =>
     moment(value).locale(locale).from(currentDate);
@@ -42,5 +42,6 @@ export const Date: React.FC<DateProps> = ({ date, plain }) => {
     </LocaleConsumer>
   );
 };
+
 Date.displayName = "Date";
 export default Date;

@@ -11,7 +11,7 @@ import {
   TabActionDialog,
 } from "../types";
 
-export const pluginSection = "/plugins/";
+const pluginSection = "/plugins/";
 
 export const pluginListPath = pluginSection;
 
@@ -30,7 +30,7 @@ export enum PluginListUrlSortField {
   name = "name",
   active = "active",
 }
-export type PluginListUrlSort = Sort<PluginListUrlSortField>;
+type PluginListUrlSort = Sort<PluginListUrlSortField>;
 export type PluginListUrlQueryParams = ActiveTab &
   Dialog<PluginListUrlDialog> &
   PluginListUrlFilters &

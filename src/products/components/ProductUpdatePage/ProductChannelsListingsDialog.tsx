@@ -13,7 +13,7 @@ export type ProductChannelsListingDialogSubmit = (
   update: Record<"added" | "removed", string[]>,
 ) => void;
 
-export interface ProductChannelsListingsDialogProps extends DialogProps {
+interface ProductChannelsListingsDialogProps extends DialogProps {
   channels: ChannelFragment[];
   data: Pick<ProductUpdateData, "channels">;
   onConfirm: ProductChannelsListingDialogSubmit;

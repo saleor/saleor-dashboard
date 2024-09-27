@@ -6,13 +6,11 @@ import { FieldType, FilterElement, IFilter, InvalidFilters, ValidationErrorCode 
 export const getByName = (nameToCompare: string) => (obj: { name: string }) =>
   obj.name === nameToCompare;
 
-export const isAutocompleteFilterFieldValid = function <T extends string>({
-  value,
-}: FilterElement<T>) {
+const isAutocompleteFilterFieldValid = function <T extends string>({ value }: FilterElement<T>) {
   return !!compact(value).length;
 };
 
-export const isNumberFilterFieldValid = function <T extends string>({ value }: FilterElement<T>) {
+const isNumberFilterFieldValid = function <T extends string>({ value }: FilterElement<T>) {
   const [min, max] = value;
 
   if (!min && !max) {
@@ -22,7 +20,7 @@ export const isNumberFilterFieldValid = function <T extends string>({ value }: F
   return true;
 };
 
-export const isFilterFieldValid = function <T extends string>(filter: FilterElement<T>) {
+const isFilterFieldValid = function <T extends string>(filter: FilterElement<T>) {
   const { type } = filter;
 
   switch (type) {
@@ -39,7 +37,7 @@ export const isFilterFieldValid = function <T extends string>(filter: FilterElem
   }
 };
 
-export const isFilterValid = function <T extends string>(filter: FilterElement<T>) {
+const isFilterValid = function <T extends string>(filter: FilterElement<T>) {
   const { required, active } = filter;
 
   if (!required && !active) {

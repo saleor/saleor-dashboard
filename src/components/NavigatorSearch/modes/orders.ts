@@ -12,10 +12,6 @@ export function isQueryValidOrderNumber(query: string): boolean {
   return query === parseInt(query, 10).toString();
 }
 
-export function getGqlOrderId(orderNumber: string): string {
-  return btoa(`Order:${orderNumber}`);
-}
-
 function getOrdersModeActions(
   intl: IntlShape,
   navigate: UseNavigatorResult,

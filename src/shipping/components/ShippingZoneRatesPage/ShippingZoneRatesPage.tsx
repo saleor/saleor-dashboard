@@ -40,7 +40,7 @@ import ShippingMethodTaxes from "../ShippingMethodTaxes";
 import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
 import { ShippingZoneRateUpdateFormData } from "./types";
 
-export interface ShippingZoneRatesPageProps
+interface ShippingZoneRatesPageProps
   extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
     ListActions,
     WithFormId {
@@ -71,7 +71,7 @@ export interface ShippingZoneRatesPageProps
   fetchMoreTaxClasses: FetchMoreProps;
 }
 
-export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
+const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   allChannelsCount,
   shippingChannels,
   channelErrors,

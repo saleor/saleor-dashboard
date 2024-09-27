@@ -16,7 +16,7 @@ import { FilterPagePropsWithPresets, PageListProps, SortPage } from "../../../ty
 import { AttributeListDatagrid } from "../AttributeListDatagrid";
 import { AttributeFilterKeys, AttributeListFilterOpts, createFilterStructure } from "./filters";
 
-export interface AttributeListPageProps
+interface AttributeListPageProps
   extends PageListProps,
     FilterPagePropsWithPresets<AttributeFilterKeys, AttributeListFilterOpts>,
     SortPage<AttributeListUrlSortField> {

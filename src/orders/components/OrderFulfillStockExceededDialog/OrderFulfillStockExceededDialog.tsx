@@ -20,7 +20,7 @@ import OrderFulfillStockExceededDialogLine from "../OrderFulfillStockExceededDia
 import { stockExceededDialogMessages as messages } from "./messages";
 import { useStyles } from "./styles";
 
-export interface OrderFulfillStockExceededDialogProps {
+interface OrderFulfillStockExceededDialogProps {
   lines: Array<FulfillmentFragment["lines"][0] | OrderFulfillLineFragment>;
   open: boolean;
   formsetData: OrderFulfillStockFormsetData;

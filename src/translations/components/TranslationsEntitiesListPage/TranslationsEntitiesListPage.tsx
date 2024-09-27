@@ -8,13 +8,13 @@ import { useIntl } from "react-intl";
 
 import { languageListUrl, TranslatableEntities } from "../../urls";
 
-export interface TranslationsEntitiesListPageProps {
+interface TranslationsEntitiesListPageProps {
   children: React.ReactNode;
   filters: TranslationsEntitiesFilters;
   language: LanguageFragment;
 }
 
-export interface TranslationsEntitiesFilters {
+interface TranslationsEntitiesFilters {
   current: TranslationsEntitiesListFilterTab;
   onCategoriesTabClick: () => void;
   onCollectionsTabClick: () => void;

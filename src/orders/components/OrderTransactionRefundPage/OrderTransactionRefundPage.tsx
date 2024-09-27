@@ -49,7 +49,7 @@ export interface OrderTransactionRefundError {
     lineId: string;
   }>;
 }
-export interface OrderTransactionRefundPageProps {
+interface OrderTransactionRefundPageProps {
   errors: OrderTransactionRefundError[];
   order: OrderDetailsGrantRefundFragment | null | undefined;
   draftRefund?: OrderDetailsGrantRefundFragment["grantedRefunds"][0];

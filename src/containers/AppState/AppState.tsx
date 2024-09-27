@@ -4,7 +4,7 @@ import useRouter from "use-react-router";
 import appStateReducer, { AppStateReducerAction } from "./reducer";
 import IAppState, { initialAppState } from "./state";
 
-export type AppStateContextType = [IAppState, React.Dispatch<AppStateReducerAction>];
+type AppStateContextType = [IAppState, React.Dispatch<AppStateReducerAction>];
 export const AppStateContext = React.createContext<AppStateContextType>([
   initialAppState,
   () => undefined,
@@ -28,7 +28,5 @@ const AppStateProvider: React.FC = ({ children }) => {
 
   return <AppStateContext.Provider value={stateAndDispatch}>{children}</AppStateContext.Provider>;
 };
-
-export const { Consumer } = AppStateContext;
 
 export default AppStateProvider;

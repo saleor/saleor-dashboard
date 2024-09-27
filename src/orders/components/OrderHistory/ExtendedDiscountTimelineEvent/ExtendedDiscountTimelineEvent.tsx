@@ -25,7 +25,7 @@ const useStyles = makeStyles(
   { name: "ExtendedDiscountTimelineEvent" },
 );
 
-export const messages = defineMessages({
+const messages = defineMessages({
   reasonLabel: {
     id: "kVOslW",
     defaultMessage: "Reason for discount",

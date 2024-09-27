@@ -48,7 +48,7 @@ export const extractOrderGiftCardUsedAmount = (
   }, 0);
 };
 
-export const extractOutstandingBalance = (order: OrderDetailsFragment): IMoney =>
+const extractOutstandingBalance = (order: OrderDetailsFragment): IMoney =>
   order?.totalCaptured &&
   order?.total?.gross &&
   subtractMoney(order.total.gross, order.totalCaptured);

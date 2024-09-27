@@ -51,7 +51,7 @@ const useStyles = makeStyles(
   { name: "CollectionProducts" },
 );
 
-export interface CollectionProductsProps extends PageListProps, ListActions {
+interface CollectionProductsProps extends PageListProps, ListActions {
   collection: CollectionDetailsQuery["collection"];
   onProductUnassign: (id: string, event: React.MouseEvent<any>) => void;
   onAdd: () => void;

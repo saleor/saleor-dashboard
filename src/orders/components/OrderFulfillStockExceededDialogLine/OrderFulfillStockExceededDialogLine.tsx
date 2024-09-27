@@ -14,7 +14,7 @@ import React from "react";
 
 import { useStyles } from "../OrderFulfillStockExceededDialog/styles";
 
-export interface OrderFulfillStockExceededDialogLineProps {
+interface OrderFulfillStockExceededDialogLineProps {
   line: OrderFulfillLineFragment | FulfillmentFragment["lines"][0];
   warehouseId: string;
   formsetData: OrderFulfillStockFormsetData;

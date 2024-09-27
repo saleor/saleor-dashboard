@@ -6,7 +6,7 @@ import React from "react";
 
 import { Messages } from "../types";
 
-export interface ChannelContentWrapperProps {
+interface ChannelContentWrapperProps {
   data: ChannelData;
   children: React.ReactNode;
   messages: Messages;

@@ -40,7 +40,7 @@ interface RadioSwitchFieldProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-export const RadioSwitchField: React.FC<RadioSwitchFieldProps> = props => {
+const RadioSwitchField: React.FC<RadioSwitchFieldProps> = props => {
   const {
     classes: overrideClasses,
     className,
@@ -89,5 +89,6 @@ export const RadioSwitchField: React.FC<RadioSwitchFieldProps> = props => {
     </FormControl>
   );
 };
+
 RadioSwitchField.displayName = "RadioSwitchField";
 export default RadioSwitchField;

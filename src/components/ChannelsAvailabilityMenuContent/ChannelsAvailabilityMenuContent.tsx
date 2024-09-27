@@ -11,7 +11,7 @@ import { messages } from "../ChannelsAvailabilityDropdown/messages";
 import { Pill } from "../Pill";
 import { useStyles } from "./styles";
 
-export interface ChannelsAvailabilityMenuContentProps {
+interface ChannelsAvailabilityMenuContentProps {
   pills: Pill[];
 }
 export interface Pill {
@@ -20,7 +20,7 @@ export interface Pill {
   label: MessageDescriptor;
 }
 
-export const ChannelsAvailabilityMenuContent: React.FC<ChannelsAvailabilityMenuContentProps> = ({
+const ChannelsAvailabilityMenuContent: React.FC<ChannelsAvailabilityMenuContentProps> = ({
   pills,
 }) => {
   const intl = useIntl();
@@ -48,5 +48,6 @@ export const ChannelsAvailabilityMenuContent: React.FC<ChannelsAvailabilityMenuC
     </div>
   );
 };
+
 ChannelsAvailabilityMenuContent.displayName = "ChannelsAvailabilityMenuContent";
 export default ChannelsAvailabilityMenuContent;

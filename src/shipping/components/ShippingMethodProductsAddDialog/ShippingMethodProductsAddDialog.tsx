@@ -38,7 +38,7 @@ const useStyles = makeStyles(
   { name: "ShippingMethodProductsAddDialog" },
 );
 
-export interface ShippingMethodProductsAddDialogProps extends FetchMoreProps {
+interface ShippingMethodProductsAddDialogProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   products: RelayToFlat<SearchProductsQuery["search"]>;

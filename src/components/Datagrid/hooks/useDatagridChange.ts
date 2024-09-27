@@ -60,7 +60,8 @@ export function useDatagridChangeState(): UseDatagridChangeState {
 }
 
 export const DatagridChangeStateContext = createContext<UseDatagridChangeState>(undefined);
-export const useDatagridChangeStateContext = () => useContext(DatagridChangeStateContext);
+
+const useDatagridChangeStateContext = () => useContext(DatagridChangeStateContext);
 
 function useDatagridChange(
   availableColumns: readonly AvailableColumn[],

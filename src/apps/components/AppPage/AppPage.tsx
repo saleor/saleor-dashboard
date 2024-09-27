@@ -9,14 +9,14 @@ import React from "react";
 import { AppFrame } from "../AppFrame";
 import { AppPageNav } from "./AppPageNav";
 
-export interface AppPageProps {
+interface AppPageProps {
   data: AppQuery["app"];
   url: string;
   onError: () => void;
   refetch?: () => void;
 }
 
-export const AppPage: React.FC<AppPageProps> = ({ data, url, onError, refetch }) => {
+const AppPage: React.FC<AppPageProps> = ({ data, url, onError, refetch }) => {
   const shop = useShop();
 
   /**

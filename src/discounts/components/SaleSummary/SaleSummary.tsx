@@ -15,7 +15,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { maybe } from "../../../misc";
 import useStyles from "./styles";
 
-export interface SaleSummaryProps extends ChannelProps {
+interface SaleSummaryProps extends ChannelProps {
   sale: SaleDetailsFragment;
 }
 

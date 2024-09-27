@@ -10,9 +10,7 @@ import { SearchBarProps } from "../SearchBar";
 import SearchInput from "../SearchBar/SearchInput";
 import FilterTabs, { FilterTab } from "../TableFilter";
 
-export interface FilterBarProps<TKeys extends string = string>
-  extends FilterProps<TKeys>,
-    SearchBarProps {
+interface FilterBarProps<TKeys extends string = string> extends FilterProps<TKeys>, SearchBarProps {
   errorMessages?: FilterErrorMessages<TKeys>;
   filterStructure: IFilter<TKeys>;
   withoutBorder?: boolean;

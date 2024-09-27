@@ -53,7 +53,7 @@ const useStyles = makeStyles(
   { name: "ImageUpload" },
 );
 
-export const ImageUpload: React.FC<ImageUploadProps> = props => {
+const ImageUpload: React.FC<ImageUploadProps> = props => {
   const {
     children,
     className,
@@ -101,5 +101,6 @@ export const ImageUpload: React.FC<ImageUploadProps> = props => {
     </Dropzone>
   );
 };
+
 ImageUpload.displayName = "ImageUpload";
 export default ImageUpload;

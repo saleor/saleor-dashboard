@@ -6,7 +6,7 @@ import { Divider, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface CustomerStatsProps {
+interface CustomerStatsProps {
   customer: CustomerDetailsQuery["user"];
 }
 

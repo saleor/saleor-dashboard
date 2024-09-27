@@ -15,11 +15,11 @@ import WebhookDetailsPage, { WebhookFormData } from "../components/WebhookDetail
 import { useAvailableEvents } from "../hooks";
 import { CustomAppUrls } from "../urls";
 
-export interface CustomAppWebhookCreateProps {
+interface CustomAppWebhookCreateProps {
   appId: string;
 }
 
-export const CustomAppWebhookCreate: React.FC<CustomAppWebhookCreateProps> = ({ appId }) => {
+const CustomAppWebhookCreate: React.FC<CustomAppWebhookCreateProps> = ({ appId }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

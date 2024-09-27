@@ -27,7 +27,7 @@ interface CustomAppListProps {
   params: CustomAppListUrlQueryParams;
 }
 
-export const CustomAppList: React.FC<CustomAppListProps> = ({ params }) => {
+const CustomAppList: React.FC<CustomAppListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

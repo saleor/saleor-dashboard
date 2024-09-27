@@ -16,11 +16,11 @@ import { useIntl } from "react-intl";
 
 import TranslationFields from "../TranslationFields";
 
-export interface TranslationsSalesPageProps extends TranslationsEntitiesPageProps {
+interface TranslationsSalesPageProps extends TranslationsEntitiesPageProps {
   data: SaleTranslationFragment;
 }
 
-export const fieldNames = {
+const fieldNames = {
   name: "name",
 };
 

@@ -13,11 +13,11 @@ import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface FormData {
+interface FormData {
   amount: number;
 }
 
-export interface OrderPaymentDialogProps {
+interface OrderPaymentDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;

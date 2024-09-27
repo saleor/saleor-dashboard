@@ -37,7 +37,7 @@ import TaxCountriesForm from "./form";
 import { useStyles } from "./styles";
 import TaxCountriesMenu from "./TaxCountriesMenu";
 
-export interface TaxCountriesPageProps {
+interface TaxCountriesPageProps {
   countryTaxesData: TaxCountryConfigurationFragment[] | undefined;
   selectedCountryId: string;
   handleTabChange: (tab: string) => void;
@@ -48,7 +48,7 @@ export interface TaxCountriesPageProps {
   disabled: boolean;
 }
 
-export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
+const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
   const {
     countryTaxesData,
     selectedCountryId,

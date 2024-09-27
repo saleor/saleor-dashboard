@@ -23,7 +23,7 @@ import { DiscountGeneralInfo } from "../DiscountGeneralInfo";
 import { DiscountRules } from "../DiscountRules";
 import { DiscountSavebar } from "../DiscountSavebar";
 
-export interface DiscountDetailsPageProps {
+interface DiscountDetailsPageProps {
   channels: ChannelFragment[];
   data: PromotionDetailsFragment | undefined | null;
   disabled: boolean;

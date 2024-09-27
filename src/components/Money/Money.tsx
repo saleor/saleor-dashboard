@@ -18,11 +18,11 @@ const useStyles = makeStyles(
   { name: "Money" },
 );
 
-export interface MoneyProps {
+interface MoneyProps {
   money: IMoney | null;
 }
 
-export const Money: React.FC<MoneyProps> = props => {
+const Money: React.FC<MoneyProps> = props => {
   const { money, ...rest } = props;
   const { locale } = useLocale();
   const classes = useStyles();

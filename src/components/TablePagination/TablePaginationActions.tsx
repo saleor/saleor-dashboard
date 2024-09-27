@@ -52,7 +52,7 @@ const useStyles = makeStyles(
   { name: "TablePaginationActions" },
 );
 
-export interface TablePaginationActionsProps {
+interface TablePaginationActionsProps {
   backIconButtonProps?: any;
   className?: string;
   hasNextPage: boolean;
@@ -62,7 +62,7 @@ export interface TablePaginationActionsProps {
   onPreviousPage: (event) => any;
 }
 
-export const TablePaginationActions: React.FC<TablePaginationActionsProps> = props => {
+const TablePaginationActions: React.FC<TablePaginationActionsProps> = props => {
   const {
     backIconButtonProps,
     className,

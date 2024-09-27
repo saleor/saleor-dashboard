@@ -22,7 +22,7 @@ import { ListActions, ListProps } from "../../../types";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
-export interface SaleVariantsProps extends ListProps, ListActions {
+interface SaleVariantsProps extends ListProps, ListActions {
   discount: SaleDetailsFragment;
   onVariantAssign: () => void;
   onVariantUnassign: (id: string) => void;

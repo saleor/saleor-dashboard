@@ -21,7 +21,7 @@ export interface GrantRefundState {
   refundShipping: boolean;
 }
 
-export type GrantRefundLineKeyValue = [string, ReducerOrderLine];
+type GrantRefundLineKeyValue = [string, ReducerOrderLine];
 
 export type GrantRefundAction =
   | {

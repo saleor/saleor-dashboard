@@ -30,7 +30,7 @@ import OrderLimitReached from "../OrderLimitReached";
 import { OrderListDatagrid } from "../OrderListDatagrid";
 import { createFilterStructure, OrderFilterKeys, OrderListFilterOpts } from "./filters";
 
-export interface OrderListPageProps
+interface OrderListPageProps
   extends PageListProps,
     Omit<FilterPageProps<OrderFilterKeys, OrderListFilterOpts>, "onTabDelete">,
     SortPage<OrderListUrlSortField> {

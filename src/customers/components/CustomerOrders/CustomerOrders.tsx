@@ -29,7 +29,7 @@ const useStyles = makeStyles(
   { name: "CustomerOrders" },
 );
 
-export interface CustomerOrdersProps {
+interface CustomerOrdersProps {
   orders: RelayToFlat<CustomerDetailsQuery["user"]["orders"]>;
   viewAllHref: string;
 }

@@ -7,11 +7,11 @@ import { Pill } from "../Pill";
 import messages from "./messages";
 import useStyles from "./styles";
 
-export interface PreviewPillProps {
+interface PreviewPillProps {
   className?: string;
 }
 
-export const PreviewPill: React.FC<PreviewPillProps> = ({ className }) => {
+const PreviewPill: React.FC<PreviewPillProps> = ({ className }) => {
   const intl = useIntl();
   const [active, setActive] = React.useState(false);
   const anchor = React.useRef<HTMLDivElement>(null);

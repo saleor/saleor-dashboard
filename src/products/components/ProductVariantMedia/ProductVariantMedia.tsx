@@ -31,7 +31,7 @@ interface ProductVariantMediaProps {
   onImageAdd: () => any;
 }
 
-export const ProductVariantMedia: React.FC<ProductVariantMediaProps> = props => {
+const ProductVariantMedia: React.FC<ProductVariantMediaProps> = props => {
   const intl = useIntl();
   const { disabled, media, onImageAdd } = props;
 
@@ -70,5 +70,6 @@ export const ProductVariantMedia: React.FC<ProductVariantMediaProps> = props => 
     </DashboardCard>
   );
 };
+
 ProductVariantMedia.displayName = "ProductVariantMedia";
 export default ProductVariantMedia;

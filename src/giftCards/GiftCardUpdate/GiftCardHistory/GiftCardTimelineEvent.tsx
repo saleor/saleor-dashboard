@@ -107,7 +107,7 @@ const getEventMessage = (event: GiftCardEventType, intl: IntlShape) => {
   }
 };
 
-export interface GiftCardTimelineEventProps {
+interface GiftCardTimelineEventProps {
   date: string;
   event: GiftCardEventType;
 }

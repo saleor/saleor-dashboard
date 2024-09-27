@@ -20,7 +20,7 @@ import { useIntl } from "react-intl";
 
 import TranslationFields from "../TranslationFields";
 
-export interface TranslationsCategoriesPageProps extends TranslationsEntitiesPageProps {
+interface TranslationsCategoriesPageProps extends TranslationsEntitiesPageProps {
   data: CategoryTranslationFragment;
 }
 

@@ -12,7 +12,8 @@ const SiteSettings: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   return <SiteSettingsComponent params={params} />;
 };
 
-export const SiteSettingsSection: React.FC = () => (
+const SiteSettingsSection: React.FC = () => (
   <Route path={siteSettingsPath} component={SiteSettings} />
 );
+
 export default SiteSettingsSection;

@@ -6,11 +6,11 @@ import { Box, Button, Option, Select } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface FormData {
+interface FormData {
   unit: Option | null;
 }
 
-export interface ShippingWeightUnitFormProps {
+interface ShippingWeightUnitFormProps {
   defaultWeightUnit: WeightUnitsEnum | null;
   disabled: boolean;
   onSubmit: (unit: WeightUnitsEnum | null) => SubmitPromise;

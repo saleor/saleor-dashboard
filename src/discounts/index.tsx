@@ -96,7 +96,7 @@ const VoucherCreateView: React.FC<RouteComponentProps> = ({ location }) => {
   return <VoucherCreateViewComponent params={params} />;
 };
 
-export const DiscountSection: React.FC<{}> = () => {
+const DiscountSection: React.FC<{}> = () => {
   const intl = useIntl();
 
   return (
@@ -113,4 +113,5 @@ export const DiscountSection: React.FC<{}> = () => {
     </>
   );
 };
+
 export default DiscountSection;

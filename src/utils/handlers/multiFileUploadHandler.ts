@@ -1,4 +1,4 @@
-export type CreateMultiFileUploadHandlerCallbacks = Partial<{
+type CreateMultiFileUploadHandlerCallbacks = Partial<{
   onAfterUpload: (index: number, files: File[]) => void;
   onBeforeUpload: (index: number, files: File[]) => void;
   onCompleted: (files: File[]) => void;

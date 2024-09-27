@@ -15,7 +15,7 @@ import useRichText from "@dashboard/utils/richText/useRichText";
 import { OutputData } from "@editorjs/editorjs";
 import React, { useEffect } from "react";
 
-export interface CollectionUpdateFormData extends MetadataFormData {
+interface CollectionUpdateFormData extends MetadataFormData {
   backgroundImageAlt: string;
   channelListings: ChannelCollectionData[];
   name: string;
@@ -31,12 +31,12 @@ interface CollectionUpdateHandlers {
   changeMetadata: FormChange;
   changeChannels: (id: string, data: Omit<ChannelCollectionData, "name" | "id">) => void;
 }
-export type UseCollectionUpdateFormResult = CommonUseFormResultWithHandlers<
+type UseCollectionUpdateFormResult = CommonUseFormResultWithHandlers<
   CollectionUpdateData,
   CollectionUpdateHandlers
 >;
 
-export interface CollectionUpdateFormProps {
+interface CollectionUpdateFormProps {
   children: (props: UseCollectionUpdateFormResult) => React.ReactNode;
   collection: CollectionDetailsFragment;
   currentChannels: ChannelCollectionData[];

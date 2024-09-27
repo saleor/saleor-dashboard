@@ -16,7 +16,7 @@ import OrderSettings from "../OrderSettings/OrderSettings";
 import OrderSettingsForm from "./form";
 import { OrderSettingsFormData } from "./types";
 
-export interface OrderSettingsPageProps {
+interface OrderSettingsPageProps {
   orderSettings: OrderSettingsFragment;
   shop: ShopOrderSettingsFragment;
   disabled: boolean;

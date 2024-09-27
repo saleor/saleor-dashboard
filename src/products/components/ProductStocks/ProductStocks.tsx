@@ -21,7 +21,7 @@ export interface ProductStockFormsetData {
   quantityAllocated: number;
 }
 export type ProductStockInput = FormsetAtomicData<ProductStockFormsetData, string, string>;
-export interface ProductStockFormData {
+interface ProductStockFormData {
   sku: string;
   trackInventory: boolean;
   globalThreshold: string;
@@ -30,7 +30,7 @@ export interface ProductStockFormData {
   preorderEndDateTime?: string;
 }
 
-export interface ProductStocksProps {
+interface ProductStocksProps {
   productVariantChannelListings?: ChannelData[];
   data: ProductStockFormData;
   disabled: boolean;

@@ -21,7 +21,7 @@ import { ListActions, ListProps } from "../../../types";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
-export interface DiscountCategoriesProps extends ListProps, ListActions {
+interface DiscountCategoriesProps extends ListProps, ListActions {
   discount: SaleDetailsFragment | VoucherDetailsFragment;
   onCategoryAssign: () => void;
   onCategoryUnassign: (id: string) => void;

@@ -43,18 +43,12 @@ import {
 import { CategoryUpdateData } from "../components/CategoryUpdatePage/form";
 import { categoryListUrl, categoryUrl, CategoryUrlDialog, CategoryUrlQueryParams } from "../urls";
 
-export interface CategoryDetailsProps {
+interface CategoryDetailsProps {
   params: CategoryUrlQueryParams;
   id: string;
 }
 
-export function getActiveTab(tabName: string): CategoryPageTab {
-  return tabName === CategoryPageTab.products
-    ? CategoryPageTab.products
-    : CategoryPageTab.categories;
-}
-
-export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) => {
+const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -390,4 +384,5 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
     </PaginatorContext.Provider>
   );
 };
+
 export default CategoryDetails;

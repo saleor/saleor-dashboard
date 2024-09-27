@@ -22,11 +22,11 @@ import {
   resolveSectionsAvailability,
 } from "./utils";
 
-export interface AppListPageProps extends AppListPageSections, ListProps {
+interface AppListPageProps extends AppListPageSections, ListProps {
   marketplaceError?: Error;
 }
 
-export const AppListPage: React.FC<AppListPageProps> = props => {
+const AppListPage: React.FC<AppListPageProps> = props => {
   const {
     appsInstallations,
     installedApps,
@@ -136,5 +136,6 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
     </>
   );
 };
+
 AppListPage.displayName = "AppListPage";
 export default AppListPage;

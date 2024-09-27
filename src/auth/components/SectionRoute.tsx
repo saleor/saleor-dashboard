@@ -16,7 +16,7 @@ interface SectionRouteProps extends RouteProps {
 
 const matchAll = (match: MatchPermissionType) => match === "all";
 
-export const SectionRoute: React.FC<SectionRouteProps> = ({
+const SectionRoute: React.FC<SectionRouteProps> = ({
   permissions,
   matchPermission = "all",
   ...props
@@ -42,5 +42,6 @@ export const SectionRoute: React.FC<SectionRouteProps> = ({
 
   return hasSectionPermissions() ? <Route {...props} /> : <NotFound />;
 };
+
 SectionRoute.displayName = "Route";
 export default SectionRoute;

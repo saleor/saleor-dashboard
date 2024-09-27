@@ -9,7 +9,6 @@ import {
 } from "@dashboard/graphql";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
-import { OutputData } from "@editorjs/editorjs";
 import { Option } from "@saleor/macaw-ui-next";
 import { IntlShape } from "react-intl";
 
@@ -19,12 +18,6 @@ export function getSingleChoices(values: AttributeValueFragment[]): Option[] {
     value: value.slug,
   }));
 }
-
-export const getRichTextData = (attribute: AttributeInput): OutputData => {
-  const data = attribute.data.selectedValues?.[0]?.richText;
-
-  return data ? JSON.parse(data) : {};
-};
 
 export function getFileChoice(attribute: AttributeInput): FileChoiceType {
   const attributeValue = attribute.value?.length > 0 && attribute.value[0];

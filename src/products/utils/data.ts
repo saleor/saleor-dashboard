@@ -19,15 +19,9 @@ import { FormsetAtomicData } from "@dashboard/hooks/useFormset";
 import { maybe } from "@dashboard/misc";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { Option } from "@saleor/macaw-ui-next";
-import moment from "moment";
 
 import { ProductStockInput } from "../components/ProductStocks";
 import { ProductUpdateFormData } from "../components/ProductUpdatePage/types";
-
-export interface Collection {
-  id: string;
-  label: string;
-}
 
 interface Node {
   id: string;
@@ -90,7 +84,7 @@ export function getAttributeInputFromProductType(productType: ProductType): Attr
   }));
 }
 
-export function getAttributeInputFromAttributes(
+function getAttributeInputFromAttributes(
   variantAttributes: VariantAttributeFragment[],
   variantAttributeScope: VariantAttributeScope,
 ): AttributeInput[] {
@@ -109,7 +103,7 @@ export function getAttributeInputFromAttributes(
   }));
 }
 
-export function getAttributeInputFromSelectedAttributes(
+function getAttributeInputFromSelectedAttributes(
   variantAttributes: SelectedVariantAttributeFragment[],
   variantAttributeScope: VariantAttributeScope,
 ): AttributeInput[] {
@@ -167,19 +161,6 @@ export function getStockInputFromVariant(variant: ProductVariantFragment): Produ
       label: stock.warehouse.name,
       value: stock.quantity.toString(),
     })) || []
-  );
-}
-
-export function getCollectionInput(
-  productCollections: ProductFragment["collections"],
-): Collection[] {
-  return maybe(
-    () =>
-      productCollections.map(collection => ({
-        id: collection.id,
-        label: collection.name,
-      })),
-    [],
   );
 }
 
@@ -244,12 +225,6 @@ export function mapFormsetStockToStockInput(stock: FormsetAtomicData<null, strin
     warehouse: stock.id,
   };
 }
-
-export const getPreorderEndDateFormData = (endDate?: string) =>
-  endDate ? moment(endDate).format("YYYY-MM-DD") : "";
-
-export const getPreorderEndHourFormData = (endDate?: string) =>
-  endDate ? moment(endDate).format("HH:mm") : "";
 
 export const getSelectedMedia = <T extends Pick<ProductMediaFragment, "id" | "sortOrder">>(
   media: T[] = [],

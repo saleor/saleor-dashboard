@@ -43,7 +43,7 @@ export interface FormData extends StockSettingsInput {
   defaultTransactionFlowStrategy: TransactionFlowStrategyEnum;
 }
 
-export interface ChannelFormProps {
+interface ChannelFormProps {
   data: FormData;
   disabled: boolean;
   currencyCodes?: Option[];

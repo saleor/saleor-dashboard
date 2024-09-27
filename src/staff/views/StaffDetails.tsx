@@ -26,7 +26,7 @@ interface OrderListProps {
   params: StaffMemberDetailsUrlQueryParams;
 }
 
-export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
+const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const user = useUser();
   const intl = useIntl();

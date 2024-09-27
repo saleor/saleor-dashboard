@@ -88,16 +88,16 @@ export interface PageUpdateHandlers {
   fetchMoreReferences: FetchMoreProps;
 }
 
-export interface UsePageUpdateFormOutput
+interface UsePageUpdateFormOutput
   extends CommonUseFormResultWithHandlers<PageData, PageUpdateHandlers>,
     RichTextProps {
   valid: boolean;
   validationErrors: PageErrorWithAttributesFragment[];
 }
 
-export type UsePageUpdateFormRenderProps = Omit<UsePageUpdateFormOutput, "richText">;
+type UsePageUpdateFormRenderProps = Omit<UsePageUpdateFormOutput, "richText">;
 
-export interface UsePageFormOpts {
+interface UsePageFormOpts {
   pageTypes?: RelayToFlat<SearchPageTypesQuery["search"]>;
   referencePages: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
@@ -110,7 +110,7 @@ export interface UsePageFormOpts {
   onSelectPageType: (pageTypeId: string) => void;
 }
 
-export interface PageFormProps extends UsePageFormOpts {
+interface PageFormProps extends UsePageFormOpts {
   children: (props: UsePageUpdateFormRenderProps) => React.ReactNode;
   page: PageDetailsFragment;
   onSubmit: (data: PageData) => SubmitPromise;

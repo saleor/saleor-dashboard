@@ -8,7 +8,7 @@ import { TextField } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 
-export interface WarehouseInfoProps {
+interface WarehouseInfoProps {
   data: Record<"name", string>;
   disabled: boolean;
   errors: WarehouseErrorFragment[];

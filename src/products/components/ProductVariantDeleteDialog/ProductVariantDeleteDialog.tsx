@@ -5,7 +5,7 @@ import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-export interface ProductVariantDeleteDialogProps {
+interface ProductVariantDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   name: string;

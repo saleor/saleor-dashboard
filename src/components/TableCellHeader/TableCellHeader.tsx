@@ -56,7 +56,7 @@ const useStyles = makeStyles(
 );
 
 export type TableCellHeaderArrowDirection = "asc" | "desc";
-export type TableCellHeaderArrowPosition = "left" | "right";
+type TableCellHeaderArrowPosition = "left" | "right";
 export interface TableCellHeaderProps extends TableCellProps {
   arrowPosition?: TableCellHeaderArrowPosition;
   direction?: TableCellHeaderArrowDirection;

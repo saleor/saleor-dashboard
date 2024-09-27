@@ -7,7 +7,7 @@ import { SortableElement, SortableElementProps } from "react-sortable-hoc";
 
 import SortableHandle from "./SortableHandle";
 
-export interface SortableChipProps extends SortableElementProps {
+interface SortableChipProps extends SortableElementProps {
   className?: string;
   label: React.ReactNode;
   onClose?: () => void;

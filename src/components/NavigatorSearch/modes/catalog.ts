@@ -11,7 +11,7 @@ import { IntlShape } from "react-intl";
 import { QuickSearchAction, QuickSearchActionInput } from "../types";
 import messages from "./messages";
 
-export function searchInCatalog(
+function searchInCatalog(
   search: string,
   intl: IntlShape,
   navigate: UseNavigatorResult,

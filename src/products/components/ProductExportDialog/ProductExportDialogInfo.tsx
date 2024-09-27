@@ -195,7 +195,7 @@ const FieldAccordion: React.FC<
   );
 };
 
-export interface ProductExportDialogInfoProps extends FetchMoreProps {
+interface ProductExportDialogInfoProps extends FetchMoreProps {
   attributes: Option[];
   channels: ChannelFragment[];
   selectedChannels: ChannelFragment[];

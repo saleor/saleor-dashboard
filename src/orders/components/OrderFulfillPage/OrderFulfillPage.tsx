@@ -52,7 +52,7 @@ interface OrderFulfillFormData {
 export interface OrderFulfillSubmitData extends OrderFulfillFormData {
   items: FormsetData<null, OrderFulfillStockInput[]>;
 }
-export interface OrderFulfillPageProps {
+interface OrderFulfillPageProps {
   params: OrderFulfillUrlQueryParams;
   loading: boolean;
   errors: FulfillOrderMutation["orderFulfill"]["errors"];

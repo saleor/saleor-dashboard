@@ -66,7 +66,7 @@ export enum SaleDetailsPageTab {
 
 export type SaleTabItemsCount = Partial<Record<SaleDetailsPageTab, number>>;
 
-export interface SaleDetailsPageProps
+interface SaleDetailsPageProps
   extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
     TabListActions<
       "categoryListToolbar" | "collectionListToolbar" | "productListToolbar" | "variantListToolbar"

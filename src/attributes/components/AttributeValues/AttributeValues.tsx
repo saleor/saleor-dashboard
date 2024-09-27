@@ -17,7 +17,7 @@ import { Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface AttributeValuesProps
+interface AttributeValuesProps
   extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
     PaginateListProps {
   disabled: boolean;

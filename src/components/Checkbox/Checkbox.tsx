@@ -13,7 +13,7 @@ const useStyles = makeStyles(
   { name: "Checkbox" },
 );
 
-export type CheckboxProps = Omit<
+type CheckboxProps = Omit<
   MuiCheckboxProps,
   "checkedIcon" | "color" | "icon" | "indeterminateIcon" | "classes" | "onClick"
 > & {

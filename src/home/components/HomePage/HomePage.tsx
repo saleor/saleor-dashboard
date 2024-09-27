@@ -21,7 +21,7 @@ import { HomeProductList } from "../HomeProductList";
 import { HomePageRightSidebar } from "./HomePageRightSidebar";
 import { homePageMessages } from "./messages";
 
-export interface HomePageProps {
+interface HomePageProps {
   activities: HomeData<Activities>;
   analitics: HomeData<Analitics>;
   topProducts: HomeData<ProductTopToday>;

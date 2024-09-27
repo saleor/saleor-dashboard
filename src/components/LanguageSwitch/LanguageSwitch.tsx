@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 
 import { DashboardCard } from "../Card";
 
-export interface LanguageSwitchProps {
+interface LanguageSwitchProps {
   currentLanguage: LanguageCodeEnum;
   languages: LanguageFragment[];
   getLanguageUrl: (lang: LanguageCodeEnum) => string;

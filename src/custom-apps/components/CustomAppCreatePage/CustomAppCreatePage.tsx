@@ -21,7 +21,7 @@ export interface CustomAppCreatePageFormData {
   name: string;
   permissions: PermissionEnum[];
 }
-export interface CustomAppCreatePageProps {
+interface CustomAppCreatePageProps {
   disabled: boolean;
   errors: AppErrorFragment[];
   permissions: PermissionFragment[];

@@ -16,11 +16,11 @@ import SiteSettingsPage, {
 } from "../components/SiteSettingsPage";
 import { SiteSettingsUrlQueryParams } from "../urls";
 
-export interface SiteSettingsProps {
+interface SiteSettingsProps {
   params: SiteSettingsUrlQueryParams;
 }
 
-export const SiteSettings: React.FC<SiteSettingsProps> = () => {
+const SiteSettings: React.FC<SiteSettingsProps> = () => {
   const notify = useNotifier();
   const intl = useIntl();
   const siteSettings = useSiteSettingsQuery({
@@ -90,4 +90,5 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
     </>
   );
 };
+
 export default SiteSettings;

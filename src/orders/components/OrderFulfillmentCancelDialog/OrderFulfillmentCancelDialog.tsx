@@ -13,7 +13,7 @@ import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface OrderFulfillmentCancelDialogFormData {
+interface OrderFulfillmentCancelDialogFormData {
   warehouseId: string;
 }
 
@@ -32,7 +32,7 @@ const useStyles = makeStyles(
   { name: "OrderFulfillmentCancelDialog" },
 );
 
-export interface OrderFulfillmentCancelDialogProps {
+interface OrderFulfillmentCancelDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;

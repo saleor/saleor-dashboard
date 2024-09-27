@@ -24,7 +24,7 @@ export type PageTypeListUrlDialog = "remove" | TabActionDialog;
 export enum PageTypeListUrlSortField {
   name = "name",
 }
-export type PageTypeListUrlSort = Sort<PageTypeListUrlSortField>;
+type PageTypeListUrlSort = Sort<PageTypeListUrlSortField>;
 export type PageTypeListUrlQueryParams = ActiveTab &
   BulkAction &
   Dialog<PageTypeListUrlDialog> &
@@ -38,7 +38,7 @@ export const pageTypeAddPath = urlJoin(pageTypeSection, "add");
 export const pageTypeAddUrl = pageTypeAddPath;
 
 export const pageTypePath = (id: string) => urlJoin(pageTypeSection, id);
-export type PageTypeUrlDialog =
+type PageTypeUrlDialog =
   | "assign-attribute"
   | "unassign-attribute"
   | "unassign-attributes"

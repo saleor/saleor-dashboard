@@ -30,7 +30,7 @@ interface VoucherValueProps {
   onChannelChange: (channelId: string, input: ChannelInput) => void;
 }
 
-export enum VoucherType {
+enum VoucherType {
   ENTIRE_ORDER = "ENTIRE_ORDER",
   SPECIFIC_PRODUCT = "SPECIFIC_PRODUCT",
 }

@@ -21,7 +21,7 @@ interface ChannelsListProps {
   params: ChannelsListUrlQueryParams;
 }
 
-export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
+const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

@@ -9,7 +9,7 @@ import graphQl from "../../../assets/images/graphql.svg";
 import { SALEOR_GRAPHQL_URL, SALEOR_STOREFRONT_URL } from "./constants";
 import styles from "./styles";
 
-export const DemoBanner: React.FC = () => {
+const DemoBanner: React.FC = () => {
   const classes = styles();
   const [isHidden, setIsHidden] = useState(false);
 

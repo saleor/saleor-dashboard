@@ -67,7 +67,7 @@ interface ProductUpdateProps {
   params: ProductVariantEditUrlQueryParams;
 }
 
-export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, productId, params }) => {
+const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, productId, params }) => {
   const shop = useShop();
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -322,4 +322,5 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, produc
     </>
   );
 };
+
 export default ProductVariant;

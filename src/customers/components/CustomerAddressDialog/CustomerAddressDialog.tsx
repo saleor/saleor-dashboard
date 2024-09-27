@@ -21,7 +21,7 @@ import { FormattedMessage } from "react-intl";
 
 import { AddressTypeInput } from "../../types";
 
-export interface CustomerAddressDialogProps {
+interface CustomerAddressDialogProps {
   address: AddressFragment;
   confirmButtonState: ConfirmButtonTransitionState;
   countries: CountryWithCodeFragment[];

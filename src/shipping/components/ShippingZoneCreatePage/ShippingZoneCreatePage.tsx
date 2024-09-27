@@ -39,7 +39,7 @@ const messages = defineMessages({
   },
 });
 
-export interface ShippingZoneCreatePageProps {
+interface ShippingZoneCreatePageProps {
   countries: CountryFragment[];
   restWorldCountries: string[];
   disabled: boolean;

@@ -3,7 +3,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface UnassignDialogProps {
+interface UnassignDialogProps {
   open: boolean;
   confirmButtonState: ConfirmButtonTransitionState;
   idsLength: number;
@@ -11,7 +11,7 @@ export interface UnassignDialogProps {
   onConfirm: () => void;
 }
 
-export const UnassignDialog: React.FC<UnassignDialogProps> = ({
+const UnassignDialog: React.FC<UnassignDialogProps> = ({
   closeModal,
   confirmButtonState,
   idsLength,

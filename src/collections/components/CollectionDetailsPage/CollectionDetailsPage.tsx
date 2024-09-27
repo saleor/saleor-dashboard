@@ -26,7 +26,7 @@ import { CollectionImage } from "../CollectionImage/CollectionImage";
 import CollectionProducts from "../CollectionProducts/CollectionProducts";
 import CollectionUpdateForm, { CollectionUpdateData } from "./form";
 
-export interface CollectionDetailsPageProps extends PageListProps, ListActions, ChannelProps {
+interface CollectionDetailsPageProps extends PageListProps, ListActions, ChannelProps {
   onAdd: () => void;
   channelsCount: number;
   channelsErrors: CollectionChannelListingErrorFragment[];

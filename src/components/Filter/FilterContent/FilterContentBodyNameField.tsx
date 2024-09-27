@@ -17,7 +17,7 @@ const useStyles = makeStyles(
   { name: "FilterContentBodyNameField" },
 );
 
-export interface FilterContentBodyNameFieldProps<K extends string = string> {
+interface FilterContentBodyNameFieldProps<K extends string = string> {
   filter: FilterElement<K>;
   onFilterPropertyChange: FilterDispatchFunction<K>;
 }

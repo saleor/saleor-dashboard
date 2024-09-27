@@ -18,7 +18,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { StaffListDatagrid } from "../StaffListDatagrid";
 import { createFilterStructure, StaffFilterKeys, StaffListFilterOpts } from "./filters";
 
-export interface StaffListPageProps
+interface StaffListPageProps
   extends ListProps,
     FilterPagePropsWithPresets<StaffFilterKeys, StaffListFilterOpts>,
     SortPage<StaffListUrlSortField> {

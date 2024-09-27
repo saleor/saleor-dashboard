@@ -11,7 +11,7 @@ interface AttributeValueSearchHandlerState {
   query: string;
 }
 
-export interface UseAttributeValueSearchHandler
+interface UseAttributeValueSearchHandler
   extends Omit<
     UseSearchResult<SearchAttributeValuesQuery, SearchAttributeValuesQueryVariables>,
     "search"

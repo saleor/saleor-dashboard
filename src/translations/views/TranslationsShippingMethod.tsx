@@ -20,7 +20,7 @@ import { getParsedTranslationInputData } from "../utils";
 export interface TranslationsShippingMethodQueryParams {
   activeField: string;
 }
-export interface TranslationsShippingMethodProps {
+interface TranslationsShippingMethodProps {
   id: string;
   languageCode: LanguageCodeEnum;
   params: TranslationsShippingMethodQueryParams;

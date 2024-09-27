@@ -24,7 +24,7 @@ import { useIntl } from "react-intl";
 import SiteCheckoutSettingsCard from "../SiteCheckoutSettingsCard";
 import { messages } from "./messages";
 
-export interface SiteSettingsPageAddressFormData {
+interface SiteSettingsPageAddressFormData {
   city: string;
   companyName: string;
   country: string;
@@ -43,7 +43,7 @@ export interface SiteSettingsPageFormData extends SiteSettingsPageAddressFormDat
   emailConfirmation: boolean;
 }
 
-export interface SiteSettingsPageProps {
+interface SiteSettingsPageProps {
   disabled: boolean;
   errors: ShopErrorFragment[];
   shop?: SiteSettingsQuery["shop"];

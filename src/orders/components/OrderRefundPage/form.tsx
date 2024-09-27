@@ -18,14 +18,14 @@ export enum OrderRefundAmountCalculationMode {
   NONE = "none",
 }
 
-export interface OrderRefundData {
+interface OrderRefundData {
   amount: string;
   type: OrderRefundType;
   refundShipmentCosts: boolean;
   amountCalculationMode: OrderRefundAmountCalculationMode;
 }
 
-export interface OrderRefundHandlers {
+interface OrderRefundHandlers {
   changeRefundedProductQuantity: FormsetChange<string>;
   setMaximalRefundedProductQuantities: () => void;
   changeRefundedFulfilledProductQuantity: FormsetChange<string>;
@@ -39,7 +39,7 @@ export interface OrderRefundFormData extends OrderRefundData {
 
 export type OrderRefundSubmitData = OrderRefundFormData;
 
-export interface UseOrderRefundFormResult
+interface UseOrderRefundFormResult
   extends CommonUseFormResultWithHandlers<OrderRefundFormData, OrderRefundHandlers> {
   disabled: boolean;
 }

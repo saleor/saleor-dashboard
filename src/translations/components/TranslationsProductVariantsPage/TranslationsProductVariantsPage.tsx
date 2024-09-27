@@ -21,7 +21,7 @@ import { useIntl } from "react-intl";
 import ProductContextSwitcher from "../ProductContextSwitcher";
 import TranslationFields from "../TranslationFields";
 
-export interface TranslationsProductsPageProps extends TranslationsEntitiesPageProps {
+interface TranslationsProductsPageProps extends TranslationsEntitiesPageProps {
   data: ProductVariantTranslationFragment;
   productId: string;
   variantId: string;

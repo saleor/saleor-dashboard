@@ -58,7 +58,7 @@ export interface GiftCardsListConsumerProps
   setFilterPresetOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export const GiftCardsListContext = createContext<GiftCardsListConsumerProps | null>(null);
+const GiftCardsListContext = createContext<GiftCardsListConsumerProps | null>(null);
 
 export const useGiftCardList = () => {
   const context = useContext(GiftCardsListContext);

@@ -23,7 +23,7 @@ export interface Extension {
   open: () => void;
 }
 
-export interface ExtensionWithParams extends Omit<Extension, "open"> {
+interface ExtensionWithParams extends Omit<Extension, "open"> {
   open: (params: AppDetailsUrlMountQueryParams) => void;
 }
 

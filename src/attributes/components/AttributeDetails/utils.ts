@@ -45,7 +45,7 @@ const UNIT_MESSAGES_MAPPING = {
   [MeasurementUnitsEnum.SQ_KM]: M.units.squareKilometer,
 };
 
-export const getMeasurementUnitMessage = (
+const getMeasurementUnitMessage = (
   unit: MeasurementUnitsEnum,
   formatMessage: IntlShape["formatMessage"],
 ): MessageDescriptor | React.ReactNode => {
@@ -86,7 +86,7 @@ export const unitTypeChoices = [
   },
 ];
 
-export const unitMapping = {
+const unitMapping = {
   imperial: {
     volume: [
       MeasurementUnitsEnum.CUBIC_FOOT,

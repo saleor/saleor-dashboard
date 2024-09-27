@@ -8,7 +8,7 @@ import { IntlShape, useIntl } from "react-intl";
 
 import { SaleDetailsPageFormData } from "../SaleDetailsPage";
 
-export interface SaleTypeProps {
+interface SaleTypeProps {
   data: SaleDetailsPageFormData;
   disabled: boolean;
   onChange: FormChange;

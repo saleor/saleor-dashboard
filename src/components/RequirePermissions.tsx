@@ -19,7 +19,7 @@ export function hasOneOfPermissions(
   return givenPermissions.some(perm => !!findPerm(userPermissions, perm));
 }
 
-export interface RequirePermissionsProps {
+interface RequirePermissionsProps {
   children: React.ReactNode | React.ReactNodeArray;
   requiredPermissions?: PermissionEnum[];
   oneOfPermissions?: PermissionEnum[];

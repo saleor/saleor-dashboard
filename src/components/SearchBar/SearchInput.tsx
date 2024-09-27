@@ -5,7 +5,7 @@ import React from "react";
 import { SearchPageProps } from "../../types";
 import Debounce from "../Debounce";
 
-export interface SearchInputProps extends SearchPageProps {
+interface SearchInputProps extends SearchPageProps {
   placeholder: string;
 }
 

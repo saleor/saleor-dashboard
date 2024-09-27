@@ -33,7 +33,7 @@ interface TaxClassesListProps {
   id: string | undefined;
 }
 
-export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
+const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

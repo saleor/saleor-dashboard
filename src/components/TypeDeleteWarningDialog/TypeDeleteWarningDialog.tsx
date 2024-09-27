@@ -12,7 +12,7 @@ import { DashboardModal } from "../Modal";
 import DeleteWarningDialogConsentContent from "./DeleteWarningDialogConsentContent";
 import { CommonTypeDeleteWarningMessages, TypeDeleteWarningMessages } from "./types";
 
-export interface TypeBaseData {
+interface TypeBaseData {
   id: string;
   name: string;
 }
@@ -25,7 +25,7 @@ export interface TypeDeleteMessages {
   multipleWithoutItemsMessages: TypeDeleteWarningMessages;
 }
 
-export interface TypeDeleteWarningDialogProps<T extends TypeBaseData> extends TypeDeleteMessages {
+interface TypeDeleteWarningDialogProps<T extends TypeBaseData> extends TypeDeleteMessages {
   isOpen: boolean;
   deleteButtonState: ConfirmButtonTransitionState;
   onClose: () => void;

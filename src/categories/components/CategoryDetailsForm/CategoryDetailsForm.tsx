@@ -21,7 +21,7 @@ interface CategoryDetailsFormProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
+const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
   disabled,
   data,
   onChange,
@@ -85,4 +85,5 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
     </DashboardCard>
   );
 };
+
 export default CategoryDetailsForm;

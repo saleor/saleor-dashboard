@@ -55,7 +55,7 @@ interface CollectionDetailsProps {
   params: CollectionUrlQueryParams;
 }
 
-export const CollectionDetails: React.FC<CollectionDetailsProps> = ({ id, params }) => {
+const CollectionDetails: React.FC<CollectionDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
@@ -428,4 +428,5 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({ id, params
     </PaginatorContext.Provider>
   );
 };
+
 export default CollectionDetails;

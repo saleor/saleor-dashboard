@@ -17,7 +17,7 @@ export function canBeSorted(sort: CollectionListUrlSortField, isChannelSelected:
   }
 }
 
-export function getSortQueryField(sort: CollectionListUrlSortField): CollectionSortField {
+function getSortQueryField(sort: CollectionListUrlSortField): CollectionSortField {
   switch (sort) {
     case CollectionListUrlSortField.name:
       return CollectionSortField.NAME;

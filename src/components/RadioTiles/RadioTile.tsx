@@ -5,7 +5,7 @@ import React from "react";
 import { RadioTileIndicator } from "./RadioTileIndicator";
 import { getBgColor, getBorderColor, getHoverStateBgColor } from "./utils";
 
-export interface RadioTileProps {
+interface RadioTileProps {
   checked: boolean;
   title: string;
   description: string;

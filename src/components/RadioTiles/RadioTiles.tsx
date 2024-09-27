@@ -3,7 +3,7 @@ import React from "react";
 
 import { RadioTile } from "./RadioTile";
 
-export interface RadioTilesProps {
+interface RadioTilesProps {
   children: React.ReactNode;
   asChild: boolean;
   value: string;

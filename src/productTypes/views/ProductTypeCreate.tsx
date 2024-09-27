@@ -22,7 +22,7 @@ interface ProductTypeCreateProps {
   params: ProductTypeAddUrlQueryParams;
 }
 
-export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({ params }) => {
+const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -106,4 +106,5 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({ params }) 
     </>
   );
 };
+
 export default ProductTypeCreate;

@@ -7,7 +7,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import msgs from "./messages";
 
-export interface AppDeleteDialogProps {
+interface AppDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   name?: string | null;

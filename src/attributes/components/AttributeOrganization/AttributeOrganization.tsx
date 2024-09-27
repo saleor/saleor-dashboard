@@ -8,7 +8,7 @@ import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { AttributePageFormData } from "../AttributePage";
 
-export interface AttributeOrganizationProps {
+interface AttributeOrganizationProps {
   canChangeType: boolean;
   data: AttributePageFormData;
   disabled: boolean;

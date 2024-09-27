@@ -30,7 +30,7 @@ export enum AttributeListUrlSortField {
   searchable = "searchable",
   useInFacetedSearch = "use-in-faceted-search",
 }
-export type AttributeListUrlSort = Sort<AttributeListUrlSortField>;
+type AttributeListUrlSort = Sort<AttributeListUrlSortField>;
 export type AttributeListUrlQueryParams = ActiveTab &
   AttributeListUrlFilters &
   AttributeListUrlSort &

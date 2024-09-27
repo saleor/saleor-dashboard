@@ -14,7 +14,7 @@ import { FormattedMessage } from "react-intl";
 import { getStringOrPlaceholder, maybe, renderCollection } from "../../misc";
 import { DashboardCard } from "../Card";
 
-export interface CountryListProps {
+interface CountryListProps {
   countries: CountryFragment[];
   disabled: boolean;
   emptyText: React.ReactNode;

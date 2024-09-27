@@ -89,4 +89,3 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({ parentId
     </>
   );
 };
-export default CategoryCreateView;

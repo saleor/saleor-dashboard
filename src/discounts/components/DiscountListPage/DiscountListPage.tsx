@@ -20,7 +20,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { DiscountListDatagrid } from "../DiscountListDatagrid";
 
-export interface DiscountListPageProps
+interface DiscountListPageProps
   extends PageListProps,
     FilterPresetsProps,
     SortPage<DiscountListUrlSortField> {

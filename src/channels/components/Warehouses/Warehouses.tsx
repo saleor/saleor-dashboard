@@ -10,7 +10,7 @@ import { useIntl } from "react-intl";
 import AssignmentList from "../AssignmentList";
 import { messages } from "./messages";
 
-export interface WarehousesProps {
+interface WarehousesProps {
   addWarehouse: (id: string) => void;
   removeWarehouse: (id: string) => void;
   searchWarehouses: (searchPhrase: string) => void;

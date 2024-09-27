@@ -44,5 +44,3 @@ export const ShippingWeightUnitDialog: React.FC<ShippingWeightUnitDialogProps> =
     </DashboardModal>
   );
 };
-
-export default ShippingWeightUnitDialog;

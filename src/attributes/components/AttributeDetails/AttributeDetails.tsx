@@ -40,7 +40,7 @@ const entityTypeMessages = defineMessages({
   },
 });
 
-export interface AttributeDetailsProps
+interface AttributeDetailsProps
   extends Pick<
     UseFormResult<AttributePageFormData>,
     "set" | "setError" | "data" | "clearErrors" | "errors"

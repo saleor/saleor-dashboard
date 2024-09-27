@@ -5,7 +5,7 @@ export interface Weight {
   unit: string;
   value: number;
 }
-export interface WeightProps {
+interface WeightProps {
   weight: Weight;
 }
 
@@ -19,4 +19,3 @@ const Weight: React.FC<WeightProps> = ({ weight }) => (
 );
 
 Weight.displayName = "Weight";
-export default Weight;

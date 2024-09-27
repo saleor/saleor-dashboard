@@ -38,7 +38,7 @@ const initialForm: PermissionGroupCreateFormData = {
   channels: [],
 };
 
-export interface PermissionGroupCreatePageProps {
+interface PermissionGroupCreatePageProps {
   disabled: boolean;
   errors: PermissionGroupErrorFragment[];
   permissions: PermissionData[];

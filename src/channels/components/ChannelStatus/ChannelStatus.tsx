@@ -3,7 +3,7 @@ import { Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface ChannelStatusProps {
+interface ChannelStatusProps {
   isActive: boolean;
   disabled: boolean;
   updateChannelStatus: () => void;
@@ -57,4 +57,3 @@ export const ChannelStatus: React.FC<ChannelStatusProps> = ({
 };
 
 ChannelStatus.displayName = "ChannelStatus";
-export default ChannelStatus;

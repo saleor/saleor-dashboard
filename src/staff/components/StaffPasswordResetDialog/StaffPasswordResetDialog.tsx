@@ -18,7 +18,7 @@ interface StaffPasswordResetDialogFormData {
   newPassword: string;
   oldPassword: string;
 }
-export interface StaffPasswordResetDialogProps extends DialogProps {
+interface StaffPasswordResetDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: AccountErrorFragment[];
   onSubmit: (data: StaffPasswordResetDialogFormData) => SubmitPromise;

@@ -18,7 +18,7 @@ import PluginChannelAvailabilityCell from "./PluginChannelAvailabilityCell";
 import PluginChannelConfigurationCell from "./PluginChannelConfigurationCell";
 import PluginListTableHead from "./PluginListTableHead";
 
-export const useStyles = makeStyles(
+const useStyles = makeStyles(
   () => ({
     link: {
       cursor: "pointer",
@@ -30,7 +30,7 @@ export const useStyles = makeStyles(
 const pluginsWithAppReplacements = getPluginsWithAppReplacementsIds();
 const hasAppReplacement = (pluginId: string) => pluginsWithAppReplacements.includes(pluginId);
 
-export interface PluginListProps extends ListProps, SortPage<PluginListUrlSortField> {
+interface PluginListProps extends ListProps, SortPage<PluginListUrlSortField> {
   plugins: PluginBaseFragment[];
 }
 

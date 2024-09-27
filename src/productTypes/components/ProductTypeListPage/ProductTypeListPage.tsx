@@ -20,7 +20,7 @@ import {
 } from "../../../types";
 import { createFilterStructure, ProductTypeFilterKeys, ProductTypeListFilterOpts } from "./filters";
 
-export interface ProductTypeListPageProps
+interface ProductTypeListPageProps
   extends PageListProps,
     ListActions,
     FilterPageProps<ProductTypeFilterKeys, ProductTypeListFilterOpts>,

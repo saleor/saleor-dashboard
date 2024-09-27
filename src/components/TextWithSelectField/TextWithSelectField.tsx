@@ -8,7 +8,7 @@ interface CommonFieldProps {
   label?: string;
 }
 
-export interface TextWithSelectFieldProps {
+interface TextWithSelectFieldProps {
   change: FormChange;
   choices: Option[];
   helperText?: string;

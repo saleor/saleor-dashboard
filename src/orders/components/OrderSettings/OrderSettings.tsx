@@ -7,7 +7,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderSettingsFormData } from "../OrderSettingsPage/types";
 
-export interface OrderSettingsProps {
+interface OrderSettingsProps {
   data: OrderSettingsFormData;
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;

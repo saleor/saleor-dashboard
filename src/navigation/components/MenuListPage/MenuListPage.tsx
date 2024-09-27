@@ -11,10 +11,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import MenuList from "../MenuList";
 
-export interface MenuListPageProps
-  extends PageListProps,
-    ListActions,
-    SortPage<MenuListUrlSortField> {
+interface MenuListPageProps extends PageListProps, ListActions, SortPage<MenuListUrlSortField> {
   menus: MenuFragment[];
   onDelete: (id: string) => void;
 }

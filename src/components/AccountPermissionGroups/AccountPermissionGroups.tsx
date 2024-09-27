@@ -10,7 +10,7 @@ import { useIntl } from "react-intl";
 
 import { Multiselect } from "../Combobox";
 
-export interface AccountPermissionGroupsProps extends FetchMoreProps, SearchPageProps {
+interface AccountPermissionGroupsProps extends FetchMoreProps, SearchPageProps {
   formData: {
     permissionGroups: Option[];
   };

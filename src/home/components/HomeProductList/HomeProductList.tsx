@@ -123,7 +123,6 @@ export const HomeProductList = ({ topProducts, testId }: HomeProductListProps) =
 };
 
 HomeProductList.displayName = "HomeProductList";
-export default HomeProductList;
 
 function ProductListSkeleton() {
   return (

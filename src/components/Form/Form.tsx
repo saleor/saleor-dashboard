@@ -6,8 +6,7 @@ import { FormId } from "./types";
 
 export type CheckIfSaveIsDisabledFnType<T> = (data: T) => boolean;
 
-export interface FormProps<TData, TErrors>
-  extends Omit<React.HTMLProps<HTMLFormElement>, "onSubmit"> {
+interface FormProps<TData, TErrors> extends Omit<React.HTMLProps<HTMLFormElement>, "onSubmit"> {
   children: (props: UseFormResult<TData>) => React.ReactNode;
   confirmLeave?: boolean;
   initial?: TData;

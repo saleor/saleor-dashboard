@@ -30,7 +30,7 @@ export interface CardMenuItem {
   Icon?: React.ReactElement;
 }
 
-export interface CardMenuProps {
+interface CardMenuProps {
   className?: string;
   disabled?: boolean;
   menuItems: CardMenuItem[];

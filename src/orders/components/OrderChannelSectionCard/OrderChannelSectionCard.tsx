@@ -6,11 +6,11 @@ import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-export interface OrderChannelSectionCardProps {
+interface OrderChannelSectionCardProps {
   channel?: Pick<ChannelFragment, "id" | "name">;
 }
 
-export const OrderChannelSectionCard: React.FC<OrderChannelSectionCardProps> = ({ channel }) => {
+const OrderChannelSectionCard: React.FC<OrderChannelSectionCardProps> = ({ channel }) => {
   const intl = useIntl();
 
   return (
@@ -38,5 +38,6 @@ export const OrderChannelSectionCard: React.FC<OrderChannelSectionCardProps> = (
     </DashboardCard>
   );
 };
+
 OrderChannelSectionCard.displayName = "OrderChannelSectionCard";
 export default OrderChannelSectionCard;

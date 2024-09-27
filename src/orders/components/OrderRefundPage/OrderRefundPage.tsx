@@ -26,7 +26,7 @@ export const refundFulfilledStatuses = [
   FulfillmentStatus.WAITING_FOR_APPROVAL,
 ];
 
-export interface OrderRefundPageProps {
+interface OrderRefundPageProps {
   order: OrderRefundData;
   defaultType?: OrderRefundType;
   disabled: boolean;

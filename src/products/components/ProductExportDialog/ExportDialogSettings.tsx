@@ -15,12 +15,12 @@ import { ExportSettingsInput } from "./types";
 
 export type ExportItemsQuantity = Record<"all" | "filter", number>;
 
-export interface ExportScopeLabels {
+interface ExportScopeLabels {
   allItems: string;
   selectedItems: string;
 }
 
-export interface ExportDialogSettingsProps {
+interface ExportDialogSettingsProps {
   data: ExportSettingsInput;
   errors: ExportErrorFragment[];
   itemsQuantity: ExportItemsQuantity;

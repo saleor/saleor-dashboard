@@ -49,7 +49,7 @@ interface ProductTypeListProps {
   params: ProductTypeListUrlQueryParams;
 }
 
-export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
+const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const {
@@ -207,5 +207,6 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
     </PaginatorContext.Provider>
   );
 };
+
 ProductTypeList.displayName = "ProductTypeList";
 export default ProductTypeList;

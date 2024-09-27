@@ -40,7 +40,7 @@ interface PageListProps {
   params: PageListUrlQueryParams;
 }
 
-export const PageList: React.FC<PageListProps> = ({ params }) => {
+const PageList: React.FC<PageListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

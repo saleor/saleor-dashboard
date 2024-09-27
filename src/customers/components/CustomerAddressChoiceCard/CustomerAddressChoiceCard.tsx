@@ -11,7 +11,7 @@ import { useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
 
-export interface CustomerAddressChoiceCardProps {
+interface CustomerAddressChoiceCardProps {
   address: AddressFragment;
   selected?: boolean;
   editable?: boolean;

@@ -12,7 +12,7 @@ import { defineMessages, useIntl } from "react-intl";
 
 import CustomerAddress from "../CustomerAddress/CustomerAddress";
 
-export interface CustomerAddressListPageProps {
+interface CustomerAddressListPageProps {
   customer: CustomerAddressesFragment;
   disabled: boolean;
   onAdd: () => void;

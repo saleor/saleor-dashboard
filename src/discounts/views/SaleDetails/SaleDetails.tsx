@@ -63,7 +63,7 @@ interface SaleDetailsProps {
   params: SaleUrlQueryParams;
 }
 
-export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
+const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const navigate = useNavigator();
@@ -547,4 +547,5 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     </PaginatorContext.Provider>
   );
 };
+
 export default SaleDetails;

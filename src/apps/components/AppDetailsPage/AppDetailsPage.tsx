@@ -10,7 +10,7 @@ import { DataPrivacyCard } from "./DataPrivacyCard";
 import Header from "./Header";
 import { PermissionsCard } from "./PermissionsCard";
 
-export interface AppDetailsPageProps {
+interface AppDetailsPageProps {
   loading: boolean;
   data: AppQuery["app"];
   onAppActivateOpen: () => void;

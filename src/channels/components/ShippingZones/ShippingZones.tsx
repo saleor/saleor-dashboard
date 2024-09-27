@@ -10,7 +10,7 @@ import { useIntl } from "react-intl";
 import AssignmentList from "../AssignmentList";
 import { messages } from "./messages";
 
-export interface ShippingZonesProps {
+interface ShippingZonesProps {
   addShippingZone: (id: string) => void;
   removeShippingZone: (id: string) => void;
   searchShippingZones: (searchPhrase: string) => void;

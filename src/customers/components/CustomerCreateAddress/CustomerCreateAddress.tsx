@@ -19,7 +19,7 @@ const useStyles = makeStyles(
   { name: "CustomerCreateAddress" },
 );
 
-export interface CustomerCreateAddressProps {
+interface CustomerCreateAddressProps {
   countries: Option[];
   countryDisplayName: string;
   data: AddressTypeInput;

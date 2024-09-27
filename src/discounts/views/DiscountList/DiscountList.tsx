@@ -151,4 +151,3 @@ export const DiscountList: React.FC<DiscountListProps> = ({ params }) => {
     </PaginatorContext.Provider>
   );
 };
-export default DiscountList;

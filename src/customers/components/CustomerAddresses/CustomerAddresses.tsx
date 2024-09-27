@@ -22,7 +22,7 @@ const useStyles = makeStyles(
   { name: "CustomerAddresses" },
 );
 
-export interface CustomerAddressesProps {
+interface CustomerAddressesProps {
   customer: CustomerDetailsFragment;
   disabled: boolean;
   manageAddressHref: string;

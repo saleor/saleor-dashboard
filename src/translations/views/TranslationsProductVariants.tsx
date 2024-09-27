@@ -24,7 +24,7 @@ type HandleSubmitAttributeValue = OutputData | string;
 export interface TranslationsProductVariantsQueryParams {
   activeField: string;
 }
-export interface TranslationsProductVariantsProps {
+interface TranslationsProductVariantsProps {
   id: string;
   productId: string;
   languageCode: LanguageCodeEnum;

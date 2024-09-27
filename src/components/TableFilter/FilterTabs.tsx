@@ -17,7 +17,7 @@ interface FilterTabsProps {
   currentTab: number | undefined;
 }
 
-export const FilterTabs: React.FC<FilterTabsProps> = props => {
+const FilterTabs: React.FC<FilterTabsProps> = props => {
   const { children, currentTab } = props;
   const classes = useStyles(props);
 

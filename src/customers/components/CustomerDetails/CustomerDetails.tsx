@@ -30,7 +30,7 @@ const useStyles = makeStyles(
   { name: "CustomerDetails" },
 );
 
-export interface CustomerDetailsProps {
+interface CustomerDetailsProps {
   customer: CustomerDetailsQuery["user"];
   data: {
     isActive: boolean;

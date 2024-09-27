@@ -10,7 +10,7 @@ import { Option } from "@saleor/macaw-ui-next";
 import pick from "lodash/pick";
 import React from "react";
 
-export type DropdownCellGetSuggestionsFn = (text: string) => Promise<Option[]>;
+type DropdownCellGetSuggestionsFn = (text: string) => Promise<Option[]>;
 export interface DropdownCellProps {
   readonly choices?: Option[];
   readonly update?: DropdownCellGetSuggestionsFn;

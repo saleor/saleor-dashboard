@@ -7,7 +7,7 @@ import * as React from "react";
 import { HomeActivityCard } from "../HomeActivityCard";
 import { HomeGetInTouchCard } from "./HomeGetInTouch";
 
-export interface HomePageRightSidebarProps {
+interface HomePageRightSidebarProps {
   activities?: HomeData<Activities>;
 }
 

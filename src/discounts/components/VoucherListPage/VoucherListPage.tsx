@@ -23,7 +23,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { VoucherListDatagrid } from "../VoucherListDatagrid";
 import { createFilterStructure, VoucherFilterKeys, VoucherListFilterOpts } from "./filters";
 
-export interface VoucherListPageProps
+interface VoucherListPageProps
   extends PageListProps,
     FilterPagePropsWithPresets<VoucherFilterKeys, VoucherListFilterOpts>,
     SortPage<VoucherListUrlSortField>,

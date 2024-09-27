@@ -22,7 +22,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { CollectionListDatagrid } from "../CollectionListDatagrid";
 import { CollectionFilterKeys, CollectionListFilterOpts, createFilterStructure } from "./filters";
 
-export interface CollectionListPageProps
+interface CollectionListPageProps
   extends PageListProps,
     Omit<FilterPageProps<CollectionFilterKeys, CollectionListFilterOpts>, "onTabDelete">,
     SortPage<CollectionListUrlSortField> {

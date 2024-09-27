@@ -7,7 +7,7 @@ import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-export const useStyles = makeStyles(
+const useStyles = makeStyles(
   theme => ({
     content: {
       "& hr": {
@@ -75,7 +75,7 @@ const messages = defineMessages({
   },
 });
 
-export interface ChannelsAvailabilityContentProps {
+interface ChannelsAvailabilityContentProps {
   contentType?: string;
   toggleAll?: () => void;
   children: React.ReactNode;
@@ -86,7 +86,7 @@ export interface ChannelsAvailabilityContentProps {
   hasAllSelected: boolean;
 }
 
-export const ChannelsAvailabilityContentWrapper: React.FC<ChannelsAvailabilityContentProps> = ({
+const ChannelsAvailabilityContentWrapper: React.FC<ChannelsAvailabilityContentProps> = ({
   contentType = "",
   toggleAll,
   toggleAllLabel,

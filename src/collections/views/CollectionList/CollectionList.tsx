@@ -39,7 +39,7 @@ interface CollectionListProps {
   params: CollectionListUrlQueryParams;
 }
 
-export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
+const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const navigate = useNavigator();
   const intl = useIntl();
   const notify = useNotifier();
@@ -232,4 +232,5 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     </PaginatorContext.Provider>
   );
 };
+
 export default CollectionList;

@@ -68,7 +68,7 @@ const useStyles = makeStyles(
   { name: "ConfigurationPage" },
 );
 
-export interface ConfigurationPageProps {
+interface ConfigurationPageProps {
   menu: MenuSection[];
   user: UserFragment;
   versionInfo: VersionInfo;

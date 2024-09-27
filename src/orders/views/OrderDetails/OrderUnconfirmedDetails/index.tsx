@@ -478,5 +478,3 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
     </>
   );
 };
-
-export default OrderUnconfirmedDetails;

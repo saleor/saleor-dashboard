@@ -71,12 +71,12 @@ interface Message {
   setAvailabilityDateLabel?: string;
 }
 
-export interface DateFields {
+interface DateFields {
   publishedAt: string;
   availableForPurchaseAt?: string;
 }
 
-export interface VisibilityCardProps {
+interface VisibilityCardProps {
   children?: React.ReactNode;
   data: DateFields & {
     availableForPurchaseAt?: string;
@@ -90,7 +90,7 @@ export interface VisibilityCardProps {
   onChange: (event: ChangeEvent) => void;
 }
 
-export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
+const VisibilityCard: React.FC<VisibilityCardProps> = props => {
   const {
     children,
     data: {
@@ -332,5 +332,6 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
     </DashboardCard>
   );
 };
+
 VisibilityCard.displayName = "VisibilityCard";
 export default VisibilityCard;

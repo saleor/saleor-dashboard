@@ -10,8 +10,8 @@ export interface OrderSettingsFormData {
   automaticallyFulfillNonShippableGiftCard: boolean;
 }
 
-export type UseOrderSettingsFormResult = CommonUseFormResult<OrderSettingsFormData>;
-export interface OrderSettingsFormProps {
+type UseOrderSettingsFormResult = CommonUseFormResult<OrderSettingsFormData>;
+interface OrderSettingsFormProps {
   children: (props: UseOrderSettingsFormResult) => React.ReactNode;
   orderSettings: OrderSettingsFragment;
   shop: ShopOrderSettingsFragment;

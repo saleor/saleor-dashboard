@@ -37,7 +37,7 @@ export interface SortableChipsFieldValueType {
   value: string;
 }
 
-export interface SortableChipsFieldProps extends SortableContainerProps {
+interface SortableChipsFieldProps extends SortableContainerProps {
   loading?: boolean;
   values: SortableChipsFieldValueType[];
   error?: boolean;

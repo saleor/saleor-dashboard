@@ -8,7 +8,7 @@ import { IntlShape } from "react-intl";
 import { QuickSearchAction } from "../types";
 import messages from "./messages";
 
-export function searchInCustomers(
+function searchInCustomers(
   intl: IntlShape,
   navigate: UseNavigatorResult,
   customers: RelayToFlat<SearchCustomersQuery["search"]>,

@@ -23,7 +23,7 @@ interface FormData {
   query: string;
 }
 
-export interface ShippingZoneCountriesAssignDialogProps {
+interface ShippingZoneCountriesAssignDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   countries: CountryWithCodeFragment[];
   restWorldCountries: string[];

@@ -11,7 +11,7 @@ import { useCategorySelection } from "./useCategorySelection";
 import { ColumnCategory } from "./useColumns";
 import { getExitIcon, getExitOnClick } from "./utils";
 
-export interface ColumnPickerCategoriesProps {
+interface ColumnPickerCategoriesProps {
   columnCategories: ColumnCategory[];
   selectedColumns: string[];
   onClose: () => void;

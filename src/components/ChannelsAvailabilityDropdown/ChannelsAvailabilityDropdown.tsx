@@ -9,7 +9,7 @@ import { Pill } from "../Pill";
 import { messages } from "./messages";
 import { CollectionChannels, getDropdownColor, mapChannelsToPills } from "./utils";
 
-export interface ChannelsAvailabilityDropdownProps {
+interface ChannelsAvailabilityDropdownProps {
   channels: CollectionChannels[] | null;
 }
 
@@ -53,4 +53,3 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
   );
 };
 ChannelsAvailabilityDropdown.displayName = "ChannelsAvailabilityDropdown";
-export default ChannelsAvailabilityDropdown;

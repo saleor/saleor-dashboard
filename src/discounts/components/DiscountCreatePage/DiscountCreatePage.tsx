@@ -20,7 +20,7 @@ import { DiscountDescription } from "../DiscountDescription";
 import { DiscountGeneralInfo } from "../DiscountGeneralInfo";
 import { DiscountRules, DiscountRulesErrors } from "../DiscountRules";
 
-export interface DiscountCreatePageProps {
+interface DiscountCreatePageProps {
   channels: ChannelFragment[];
   disabled: boolean;
   errors: PromotionCreateErrorFragment[];

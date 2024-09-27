@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 
 import { getPermissions } from "./utils";
 
-export interface PermissionAlertProps {
+interface PermissionAlertProps {
   query: string;
 }
 

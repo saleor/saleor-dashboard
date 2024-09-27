@@ -34,7 +34,7 @@ interface SaleCreateProps {
   params: SaleCreateUrlQueryParams;
 }
 
-export const SaleCreateView: React.FC<SaleCreateProps> = ({ params }) => {
+const SaleCreateView: React.FC<SaleCreateProps> = ({ params }) => {
   const navigate = useNavigator();
   const pushMessage = useNotifier();
   const intl = useIntl();
@@ -123,4 +123,5 @@ export const SaleCreateView: React.FC<SaleCreateProps> = ({ params }) => {
     </>
   );
 };
+
 export default SaleCreateView;

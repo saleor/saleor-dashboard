@@ -23,7 +23,7 @@ import { ListActions, ListProps } from "../../../types";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
-export interface SaleProductsProps extends ListProps, ListActions {
+interface SaleProductsProps extends ListProps, ListActions {
   discount: SaleDetailsFragment | VoucherDetailsFragment;
   onProductAssign: () => void;
   onProductUnassign: (id: string) => void;

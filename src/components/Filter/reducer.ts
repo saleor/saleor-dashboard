@@ -3,7 +3,7 @@ import { update } from "@dashboard/utils/lists";
 
 import { FieldType, IFilter, IFilterElementMutableDataGeneric } from "./types";
 
-export type FilterReducerActionType = "clear" | "merge" | "reset" | "set-property";
+type FilterReducerActionType = "clear" | "merge" | "reset" | "set-property";
 export interface FilterReducerAction<K extends string, T extends FieldType> {
   type: FilterReducerActionType;
   payload: Partial<{
@@ -12,10 +12,6 @@ export interface FilterReducerAction<K extends string, T extends FieldType> {
     new: IFilter<K, T>;
   }>;
 }
-export type UpdateStateFunction<K extends string = string> = <T extends FieldType>(
-  value: FilterReducerAction<K, T>,
-) => void;
-
 function setProperty<K extends string, T extends FieldType>(
   prevState: IFilter<K, T>,
   filter: K,

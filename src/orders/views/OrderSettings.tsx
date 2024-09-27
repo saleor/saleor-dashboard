@@ -9,7 +9,7 @@ import { useIntl } from "react-intl";
 
 import { OrderSettingsFormData } from "../components/OrderSettingsPage/types";
 
-export const OrderSettings: React.FC = () => {
+const OrderSettings: React.FC = () => {
   const intl = useIntl();
   const notify = useNotifier();
   const { data, loading } = useOrderSettingsQuery({});
@@ -65,4 +65,5 @@ export const OrderSettings: React.FC = () => {
     />
   );
 };
+
 export default OrderSettings;

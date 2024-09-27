@@ -68,7 +68,7 @@ interface VoucherDetailsProps {
   params: VoucherUrlQueryParams;
 }
 
-export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) => {
+const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
@@ -598,4 +598,5 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
     </PaginatorContext.Provider>
   );
 };
+
 export default VoucherDetails;

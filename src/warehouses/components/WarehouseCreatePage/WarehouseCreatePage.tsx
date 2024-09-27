@@ -24,7 +24,7 @@ import WarehouseInfo from "../WarehouseInfo";
 export interface WarehouseCreatePageFormData extends AddressTypeInput {
   name: string;
 }
-export interface WarehouseCreatePageProps {
+interface WarehouseCreatePageProps {
   countries: CountryWithCodeFragment[];
   disabled: boolean;
   errors: WarehouseErrorFragment[];

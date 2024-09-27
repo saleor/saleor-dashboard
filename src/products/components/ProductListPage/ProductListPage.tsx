@@ -45,7 +45,7 @@ import { ProductListTiles } from "../ProductListTiles/ProductListTiles";
 import { ProductListViewSwitch } from "../ProductListViewSwitch";
 import { createFilterStructure, ProductFilterKeys, ProductListFilterOpts } from "./filters";
 
-export interface ProductListPageProps
+interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
     Omit<FilterPageProps<ProductFilterKeys, ProductListFilterOpts>, "onTabDelete">,
     SortPage<ProductListUrlSortField>,
@@ -76,7 +76,7 @@ export type ProductListViewType = "datagrid" | "tile";
 
 const DEFAULT_PRODUCT_LIST_VIEW_TYPE: ProductListViewType = "datagrid";
 
-export const ProductListPage: React.FC<ProductListPageProps> = props => {
+const ProductListPage: React.FC<ProductListPageProps> = props => {
   const {
     currencySymbol,
     defaultSettings,
@@ -304,5 +304,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     </ListPageLayout>
   );
 };
+
 ProductListPage.displayName = "ProductListPage";
 export default ProductListPage;

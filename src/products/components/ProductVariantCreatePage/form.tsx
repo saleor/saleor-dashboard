@@ -62,7 +62,7 @@ import {
   createChannelsWithPreorderInfo,
 } from "../ProductVariantChannels/formOpretations";
 
-export interface ProductVariantCreateFormData extends MetadataFormData {
+interface ProductVariantCreateFormData extends MetadataFormData {
   sku: string;
   trackInventory: boolean;
   weight: string;
@@ -81,7 +81,7 @@ export interface ProductVariantCreateData extends ProductVariantCreateFormData {
   channelListings: FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>;
 }
 
-export interface UseProductVariantCreateFormOpts {
+interface UseProductVariantCreateFormOpts {
   referencePages: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
   fetchReferencePages?: (data: string) => void;
@@ -109,7 +109,7 @@ export interface ProductVariantCreateHandlers
   selectAttributeReferenceMetadata: FormsetMetadataChange<AttributeValuesMetadata[]>;
 }
 
-export interface UseProductVariantCreateFormOutput
+interface UseProductVariantCreateFormOutput
   extends CommonUseFormResultWithHandlers<ProductVariantCreateData, ProductVariantCreateHandlers>,
     Omit<RichTextProps, "richText"> {
   formErrors: FormErrors<ProductVariantCreateData>;
@@ -117,7 +117,7 @@ export interface UseProductVariantCreateFormOutput
   disabled: boolean;
 }
 
-export interface ProductVariantCreateFormProps extends UseProductVariantCreateFormOpts {
+interface ProductVariantCreateFormProps extends UseProductVariantCreateFormOpts {
   children: (props: UseProductVariantCreateFormOutput) => React.ReactNode;
   product: ProductVariantCreateDataQuery["product"];
   onSubmit: (data: ProductVariantCreateData) => SubmitPromise;

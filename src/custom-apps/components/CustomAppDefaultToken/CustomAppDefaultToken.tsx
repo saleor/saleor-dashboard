@@ -8,7 +8,7 @@ import { FormattedMessage } from "react-intl";
 
 import { Mono } from "../TokenCreateDialog/Mono";
 
-export interface CustomAppDefaultTokenProps {
+interface CustomAppDefaultTokenProps {
   apiUrl: string;
   token: string;
   onApiUrlClick: () => void;

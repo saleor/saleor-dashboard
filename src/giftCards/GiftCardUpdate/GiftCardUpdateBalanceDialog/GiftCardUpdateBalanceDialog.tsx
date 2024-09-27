@@ -20,7 +20,7 @@ import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGi
 import { giftCardUpdateBalanceDialogMessages as messages } from "./messages";
 import { useUpdateBalanceDialogStyles as useStyles } from "./styles";
 
-export interface GiftCardBalanceUpdateFormData {
+interface GiftCardBalanceUpdateFormData {
   balanceAmount: number;
 }
 

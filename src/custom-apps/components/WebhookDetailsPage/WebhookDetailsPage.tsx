@@ -44,7 +44,7 @@ export interface WebhookFormData {
   customHeaders: string;
 }
 
-export interface WebhookDetailsPageProps {
+interface WebhookDetailsPageProps {
   appId: string;
   appName: string;
   disabled: boolean;

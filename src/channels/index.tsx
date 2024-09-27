@@ -30,7 +30,7 @@ const ChannelsList: React.FC<RouteComponentProps> = ({ location }) => {
   return <ChannelsListComponent params={params} />;
 };
 
-export const ChannelsSection: React.FC<{}> = () => {
+const ChannelsSection: React.FC<{}> = () => {
   const intl = useIntl();
 
   return (
@@ -44,4 +44,5 @@ export const ChannelsSection: React.FC<{}> = () => {
     </>
   );
 };
+
 export default ChannelsSection;

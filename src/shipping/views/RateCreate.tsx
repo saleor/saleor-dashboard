@@ -29,12 +29,12 @@ import { useIntl } from "react-intl";
 
 const FORM_ID = Symbol("shipping-zone-rates-create-form-id");
 
-export interface RateCreateProps {
+interface RateCreateProps {
   id: string;
   params: ShippingRateCreateUrlQueryParams;
 }
 
-export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
+const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const intl = useIntl();
   const [openModal, closeModal] = createDialogActionHandlers<

@@ -23,7 +23,7 @@ const useStyles = makeStyles(
   { name: "CustomerCreateDetails" },
 );
 
-export interface CustomerCreateDetailsProps {
+interface CustomerCreateDetailsProps {
   data: CustomerCreatePageFormData;
   disabled: boolean;
   errors: AccountErrorFragment[];

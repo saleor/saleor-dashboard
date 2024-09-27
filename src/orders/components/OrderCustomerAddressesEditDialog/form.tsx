@@ -61,7 +61,7 @@ interface UseOrderCustomerAddressesEditFormOpts {
   defaultCloneAddress: boolean;
 }
 
-export interface OrderCustomerAddressesEditFormProps extends UseOrderCustomerAddressesEditFormOpts {
+interface OrderCustomerAddressesEditFormProps extends UseOrderCustomerAddressesEditFormOpts {
   children: (props: UseOrderCustomerAddressesEditFormResult) => React.ReactNode;
   initial?: Partial<OrderCustomerAddressesEditFormData>;
   onSubmit: (data: OrderCustomerAddressesEditData) => void;

@@ -34,11 +34,11 @@ import { useVoucherCodesPagination } from "./hooks/useVoucherCodesPagination";
 import { useVoucherCodesSelection } from "./hooks/useVoucherCodesSelection";
 import { generateDraftVoucherCode, generateMultipleVoucherCodes, voucherCodeExists } from "./utils";
 
-export interface FormData extends VoucherDetailsPageFormData {
+interface FormData extends VoucherDetailsPageFormData {
   value: number;
 }
 
-export interface VoucherCreatePageProps {
+interface VoucherCreatePageProps {
   allChannelsCount: number;
   channelListings: ChannelVoucherData[];
   disabled: boolean;

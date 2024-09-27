@@ -23,7 +23,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
 
-export interface ChannelsListPageProps {
+interface ChannelsListPageProps {
   channelsList: ChannelDetailsFragment[] | undefined;
   limits: RefreshLimitsQuery["shop"]["limits"];
   onRemove: (id: string) => void;
@@ -31,11 +31,7 @@ export interface ChannelsListPageProps {
 
 const numberOfColumns = 2;
 
-export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
-  channelsList,
-  limits,
-  onRemove,
-}) => {
+const ChannelsListPage: React.FC<ChannelsListPageProps> = ({ channelsList, limits, onRemove }) => {
   const intl = useIntl();
   const classes = useStyles({});
   const limitReached = isLimitReached(limits, "channels");

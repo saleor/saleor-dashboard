@@ -11,7 +11,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
-export interface PageTypePickerDialogProps {
+interface PageTypePickerDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   pageTypes: Option[];

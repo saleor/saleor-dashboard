@@ -42,7 +42,7 @@ export interface CustomerDetailsPageFormData extends MetadataFormData {
   note: string;
 }
 
-export interface CustomerDetailsPageProps {
+interface CustomerDetailsPageProps {
   customerId: string;
   customer: CustomerDetailsQuery["user"];
   disabled: boolean;

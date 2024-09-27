@@ -125,7 +125,7 @@ export interface ProductCreateHandlers
   fetchMoreReferences: FetchMoreProps;
   selectAttributeReferenceMetadata: FormsetMetadataChange<AttributeValuesMetadata[]>;
 }
-export interface UseProductCreateFormOutput
+interface UseProductCreateFormOutput
   extends CommonUseFormResultWithHandlers<ProductCreateData, ProductCreateHandlers>,
     RichTextProps {
   disabled: boolean;
@@ -133,9 +133,9 @@ export interface UseProductCreateFormOutput
   validationErrors: ProductErrorWithAttributesFragment[];
 }
 
-export type UseProductCreateFormRenderProps = Omit<UseProductCreateFormOutput, "richText">;
+type UseProductCreateFormRenderProps = Omit<UseProductCreateFormOutput, "richText">;
 
-export interface UseProductCreateFormOpts
+interface UseProductCreateFormOpts
   extends Record<"categories" | "collections" | "taxClasses", Option[]> {
   setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
   setSelectedCollections: React.Dispatch<React.SetStateAction<Option[]>>;
@@ -155,7 +155,7 @@ export interface UseProductCreateFormOpts
   onSelectProductType: (productTypeId: string) => void;
 }
 
-export interface ProductCreateFormProps extends UseProductCreateFormOpts {
+interface ProductCreateFormProps extends UseProductCreateFormOpts {
   children: (props: UseProductCreateFormRenderProps) => React.ReactNode;
   initial?: Partial<ProductCreateFormData>;
   onSubmit: (data: ProductCreateData) => SubmitPromise;

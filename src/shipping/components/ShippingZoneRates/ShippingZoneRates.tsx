@@ -19,7 +19,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
 
-export interface ShippingZoneRatesProps extends ChannelProps {
+interface ShippingZoneRatesProps extends ChannelProps {
   disabled: boolean;
   rates: ShippingZoneDetailsFragment["shippingMethods"];
   variant: "price" | "weight";

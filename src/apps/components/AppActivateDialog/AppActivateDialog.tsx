@@ -8,7 +8,7 @@ import { useIntl } from "react-intl";
 
 import msgs from "./messages";
 
-export interface AppActivateDialogProps {
+interface AppActivateDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   name?: string | null;

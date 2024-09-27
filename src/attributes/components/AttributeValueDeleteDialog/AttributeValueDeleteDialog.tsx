@@ -3,7 +3,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface AttributeValueDeleteDialogProps {
+interface AttributeValueDeleteDialogProps {
   attributeName: string;
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;

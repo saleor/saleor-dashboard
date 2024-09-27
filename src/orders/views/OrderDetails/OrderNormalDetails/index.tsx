@@ -459,5 +459,3 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
     </>
   );
 };
-
-export default OrderNormalDetails;

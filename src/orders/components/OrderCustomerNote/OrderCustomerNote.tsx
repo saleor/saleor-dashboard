@@ -7,7 +7,7 @@ interface OrderCustomerNoteProps {
   note: string;
 }
 
-export const OrderCustomerNote: React.FC<OrderCustomerNoteProps> = ({ note }) => {
+const OrderCustomerNote: React.FC<OrderCustomerNoteProps> = ({ note }) => {
   const intl = useIntl();
 
   return (
@@ -35,4 +35,5 @@ export const OrderCustomerNote: React.FC<OrderCustomerNoteProps> = ({ note }) =>
     </DashboardCard>
   );
 };
+
 export default OrderCustomerNote;

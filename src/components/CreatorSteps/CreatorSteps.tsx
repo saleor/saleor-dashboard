@@ -38,7 +38,7 @@ const useStyles = makeStyles(
   },
 );
 
-export interface CreatorStepsProps<T> {
+interface CreatorStepsProps<T> {
   currentStep: T;
   steps: Array<Step<T>>;
   onStepClick: (step: T) => void;

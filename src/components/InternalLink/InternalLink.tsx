@@ -9,5 +9,3 @@ export const InternalLink: React.FC<LinkProps> = ({ className, ...props }) => {
 
   return <Link className={clsx(classes.root, className)} {...props} />;
 };
-
-export default InternalLink;

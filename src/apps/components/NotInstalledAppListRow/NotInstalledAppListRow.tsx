@@ -21,7 +21,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { AppAvatar } from "../AppAvatar/AppAvatar";
 import { useStyles } from "./styles";
 
-export const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
+const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
   const { appInstallation, isExternal, logo } = props;
   const intl = useIntl();
   const classes = useStyles(props);

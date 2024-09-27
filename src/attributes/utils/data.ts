@@ -18,7 +18,6 @@ import {
   UploadErrorFragment,
 } from "@dashboard/graphql";
 import { FormsetData } from "@dashboard/hooks/useFormset";
-import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems, mapNodeToChoice, mapPagesToChoices } from "@dashboard/utils/maps";
 import { RichTextContextValues } from "@dashboard/utils/richText/context";
@@ -247,16 +246,6 @@ export const mergeAttributeValues = (
   return attribute?.value ? [...attribute.value, ...attributeValues] : attributeValues;
 };
 
-export const mergeAttributeValuesWithLabels = (
-  attributeId: string,
-  attributeMetadata: AttributeValuesMetadata[],
-  attributes: FormsetData<AttributeInputData, string[], AttributeValuesMetadata[]>,
-) => {
-  const attribute = attributes.find(attribute => attribute.id === attributeId);
-
-  return attribute?.metadata ? [...attribute.metadata, ...attributeMetadata] : attributeMetadata;
-};
-
 export const mergeAttributes = (...attributeLists: AttributeInput[][]): AttributeInput[] =>
   attributeLists.reduce((prev, attributes) => {
     const newAttributeIds = new Set(attributes.map(attr => attr.id));
@@ -290,11 +279,10 @@ export const getFileValuesToUploadFromAttributes = (
   attributesWithNewFileValue: FormsetData<null, File>,
 ) => attributesWithNewFileValue.filter(fileAttribute => !!fileAttribute.value);
 
-export const getFileValuesRemovedFromAttributes = (
-  attributesWithNewFileValue: FormsetData<null, File>,
-) => attributesWithNewFileValue.filter(attribute => !attribute.value);
+const getFileValuesRemovedFromAttributes = (attributesWithNewFileValue: FormsetData<null, File>) =>
+  attributesWithNewFileValue.filter(attribute => !attribute.value);
 
-export const getAttributesOfRemovedFiles = (
+const getAttributesOfRemovedFiles = (
   fileAttributesRemoved: FormsetData<null, File>,
 ): AtributesOfFiles[] =>
   fileAttributesRemoved.map(attribute => ({
@@ -304,7 +292,7 @@ export const getAttributesOfRemovedFiles = (
     values: [],
   }));
 
-export const getAttributesOfUploadedFiles = (
+const getAttributesOfUploadedFiles = (
   fileValuesToUpload: FormsetData<null, File>,
   uploadFilesResult: Array<FetchResult<FileUploadMutation>>,
 ): AtributesOfFiles[] =>
@@ -334,7 +322,7 @@ export const getAttributesAfterFileAttributesUpdate = (
   return uploadedFileAttributes.concat(removedFileAttributes);
 };
 
-export const getFileAttributeDisplayData = (
+const getFileAttributeDisplayData = (
   attribute: AttributeInput,
   attributesWithNewFileValue: FormsetData<null, File>,
 ) => {
@@ -352,7 +340,7 @@ export const getFileAttributeDisplayData = (
   return attribute;
 };
 
-export const getPageReferenceAttributeDisplayData = (
+const getPageReferenceAttributeDisplayData = (
   attribute: AttributeInput,
   referencePages: RelayToFlat<NonNullable<SearchPagesQuery["search"]>>,
 ) => ({
@@ -379,7 +367,7 @@ export const getPageReferenceAttributeDisplayData = (
   },
 });
 
-export const getProductReferenceAttributeDisplayData = (
+const getProductReferenceAttributeDisplayData = (
   attribute: AttributeInput,
   referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
 ) => ({
@@ -406,7 +394,7 @@ export const getProductReferenceAttributeDisplayData = (
   },
 });
 
-export const getProductVariantReferenceAttributeDisplayData = (
+const getProductVariantReferenceAttributeDisplayData = (
   attribute: AttributeInput,
   referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
 ) => ({
@@ -432,7 +420,7 @@ export const getProductVariantReferenceAttributeDisplayData = (
   },
 });
 
-export const getReferenceAttributeDisplayData = (
+const getReferenceAttributeDisplayData = (
   attribute: AttributeInput,
   referencePages: RelayToFlat<NonNullable<SearchPagesQuery["search"]>>,
   referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
@@ -464,21 +452,13 @@ export const getAttributesDisplayData = (
     return attribute;
   });
 
-export const getSelectedReferencesFromAttribute = <T extends Node>(
-  attribute?: AttributeInput,
-  references?: T[],
-) =>
-  references?.filter(
-    value => !attribute?.value?.some(selectedValue => selectedValue === value.id),
-  ) || [];
-
 export const getReferenceAttributeEntityTypeFromAttribute = (
   attributeId: string,
   attributes?: AttributeInput[],
 ): AttributeEntityTypeEnum | undefined =>
   attributes?.find(attribute => attribute.id === attributeId)?.data?.entityType;
 
-export const mapReferenceProductsToVariants = (
+const mapReferenceProductsToVariants = (
   referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
 ) =>
   referenceProducts.flatMap(product =>

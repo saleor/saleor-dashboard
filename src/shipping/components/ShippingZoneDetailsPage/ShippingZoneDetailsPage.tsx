@@ -47,7 +47,7 @@ const messages = defineMessages({
   },
 });
 
-export interface ShippingZoneDetailsPageProps extends FetchMoreProps, SearchProps, ChannelProps {
+interface ShippingZoneDetailsPageProps extends FetchMoreProps, SearchProps, ChannelProps {
   disabled: boolean;
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;

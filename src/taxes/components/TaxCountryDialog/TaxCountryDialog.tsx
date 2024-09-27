@@ -20,7 +20,7 @@ interface TaxCountryDialogProps {
   onClose: () => void;
 }
 
-export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
+const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
   open,
   countries,
   onConfirm,

@@ -25,7 +25,7 @@ import {
   GiftCardBulkCreateFormErrors,
 } from "./types";
 
-export const initialData: GiftCardBulkCreateFormData = {
+const initialData: GiftCardBulkCreateFormData = {
   tags: [],
   balanceAmount: 1,
   balanceCurrency: null,

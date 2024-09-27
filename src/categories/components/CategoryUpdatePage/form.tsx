@@ -11,7 +11,7 @@ import useRichText from "@dashboard/utils/richText/useRichText";
 import { OutputData } from "@editorjs/editorjs";
 import React, { useEffect } from "react";
 
-export interface CategoryUpdateFormData extends MetadataFormData {
+interface CategoryUpdateFormData extends MetadataFormData {
   backgroundImageAlt: string;
   name: string;
   slug: string;
@@ -26,11 +26,11 @@ interface CategoryUpdateHandlers {
   changeMetadata: FormChange;
 }
 
-export interface UseCategoryUpdateFormResult extends CommonUseFormResult<CategoryUpdateData> {
+interface UseCategoryUpdateFormResult extends CommonUseFormResult<CategoryUpdateData> {
   handlers: CategoryUpdateHandlers;
 }
 
-export interface CategoryUpdateFormProps {
+interface CategoryUpdateFormProps {
   children: (props: UseCategoryUpdateFormResult) => React.ReactNode;
   category: CategoryDetailsFragment | undefined | null;
   onSubmit: (data: CategoryUpdateData) => Promise<any[]>;

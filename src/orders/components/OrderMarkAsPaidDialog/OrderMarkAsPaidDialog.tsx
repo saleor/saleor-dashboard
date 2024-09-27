@@ -8,7 +8,7 @@ import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface OrderMarkAsPaidDialogProps {
+interface OrderMarkAsPaidDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;

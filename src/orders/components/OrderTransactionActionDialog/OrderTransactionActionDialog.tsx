@@ -10,7 +10,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { mapActionToMessage } from "../OrderTransaction/utils";
 import { messages } from "./messages";
 
-export interface OrderTransactionActionDialogProps {
+interface OrderTransactionActionDialogProps {
   open: boolean;
   confirmButtonState: ConfirmButtonTransitionState;
   onClose: () => void;

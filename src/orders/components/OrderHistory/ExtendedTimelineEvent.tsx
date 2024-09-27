@@ -41,7 +41,7 @@ const useStyles = makeStyles(
   { name: "OrderHistory" },
 );
 
-export const productTitles = defineMessages({
+const productTitles = defineMessages({
   draftCreatedFromReplace: {
     id: "a1uffz",
     defaultMessage: "Products replaced",
@@ -64,7 +64,7 @@ export const productTitles = defineMessages({
   },
 });
 
-export const titles = defineMessages({
+const titles = defineMessages({
   draftCreatedFromReplace: {
     id: "5R4VMl",
     defaultMessage: "Draft was reissued from order ",
@@ -117,7 +117,7 @@ export const titles = defineMessages({
   },
 });
 
-export const messages = defineMessages({
+const messages = defineMessages({
   by: {
     id: "xrPv2K",
     defaultMessage: "by",

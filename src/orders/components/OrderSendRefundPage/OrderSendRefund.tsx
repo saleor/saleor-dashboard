@@ -21,7 +21,7 @@ import { TransactionCard } from "./components/TransactionCard";
 import { refundPageMessages } from "./messages";
 import { useStyles } from "./styles";
 
-export interface OrderSendRefundPageProps {
+interface OrderSendRefundPageProps {
   order: OrderDetailsFragment;
   loading: boolean;
   onAddManualRefund: (args: CreateManualTransactionRefundMutationVariables) => void;

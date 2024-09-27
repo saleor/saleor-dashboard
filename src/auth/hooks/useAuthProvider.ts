@@ -28,7 +28,7 @@ import {
 } from "../types";
 import { displayDemoMessage } from "../utils";
 
-export interface UseAuthProviderOpts {
+interface UseAuthProviderOpts {
   intl: IntlShape;
   notify: IMessageContext;
   apolloClient: ApolloClient<any>;

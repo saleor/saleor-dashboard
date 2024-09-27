@@ -17,14 +17,14 @@ import { FormattedMessage, useIntl } from "react-intl";
 import messages from "./messages";
 import { useStyles } from "./styles";
 
-export interface AppInstallPageProps {
+interface AppInstallPageProps {
   data: NonNullable<AppFetchMutation["appFetchManifest"]>["manifest"];
   loading: boolean;
   navigateToAppsList: () => void;
   onSubmit: () => SubmitPromise<NonNullable<AppInstallMutation["appInstall"]>["errors"]>;
 }
 
-export const AppInstallPage: React.FC<AppInstallPageProps> = ({
+const AppInstallPage: React.FC<AppInstallPageProps> = ({
   data,
   loading,
   navigateToAppsList,

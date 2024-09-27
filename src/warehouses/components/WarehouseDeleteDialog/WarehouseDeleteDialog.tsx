@@ -3,7 +3,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface WarehouseDeleteDialogProps {
+interface WarehouseDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   onConfirm: () => void;

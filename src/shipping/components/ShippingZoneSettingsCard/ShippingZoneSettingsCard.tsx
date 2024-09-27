@@ -18,7 +18,7 @@ const messages = defineMessages({
   },
 });
 
-export interface ShippingZoneSettingsCardProps {
+interface ShippingZoneSettingsCardProps {
   formData: ShippingZoneUpdateFormData;
   warehousesChoices: Option[];
   onWarehouseAdd: () => void;
@@ -31,7 +31,7 @@ export interface ShippingZoneSettingsCardProps {
   loading: boolean;
 }
 
-export const ShippingZoneSettingsCard: React.FC<ShippingZoneSettingsCardProps> = ({
+const ShippingZoneSettingsCard: React.FC<ShippingZoneSettingsCardProps> = ({
   formData,
   hasMoreWarehouses,
   loading,

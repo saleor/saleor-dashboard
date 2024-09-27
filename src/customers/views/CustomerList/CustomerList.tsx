@@ -33,7 +33,7 @@ interface CustomerListProps {
   params: CustomerListUrlQueryParams;
 }
 
-export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
+const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -199,4 +199,5 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
     </PaginatorContext.Provider>
   );
 };
+
 export default CustomerList;

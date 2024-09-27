@@ -4,7 +4,7 @@ import React from "react";
 
 import TablePagination, { PaginationProps } from "./TablePagination";
 
-export type TablePaginationWithContextProps = Omit<
+type TablePaginationWithContextProps = Omit<
   PaginationProps,
   "nextHref" | "prevHref" | "hasNextPage" | "hasPreviousPage" | "onNextPage" | "onPreviousPage"
 >;

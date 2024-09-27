@@ -37,7 +37,7 @@ import {
   prepareLineData,
 } from "./utils";
 
-export interface OrderGrantRefundPageProps {
+interface OrderGrantRefundPageProps {
   order: OrderDetailsGrantRefundFragment;
   loading: boolean;
   submitState: ConfirmButtonTransitionState;

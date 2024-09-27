@@ -23,7 +23,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { CustomerListDatagrid } from "../CustomerListDatagrid/CustomerListDatagrid";
 import { createFilterStructure, CustomerFilterKeys, CustomerListFilterOpts } from "./filters";
 
-export interface CustomerListPageProps
+interface CustomerListPageProps
   extends PageListProps,
     FilterPagePropsWithPresets<CustomerFilterKeys, CustomerListFilterOpts>,
     SortPage<CustomerListUrlSortField> {

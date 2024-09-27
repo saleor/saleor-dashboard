@@ -18,7 +18,7 @@ export interface PriceFieldProps extends InputProps {
   onChange: (event: any) => any;
 }
 
-export const PriceField: React.FC<PriceFieldProps> = props => {
+const PriceField: React.FC<PriceFieldProps> = props => {
   const {
     className,
     disabled,
@@ -60,6 +60,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
     />
   );
 };
+
 PriceField.defaultProps = {
   name: "price",
 };

@@ -8,13 +8,13 @@ export interface LoginFormData {
   password: string;
 }
 
-export interface UseLoginFormResult {
+interface UseLoginFormResult {
   change: FormChange;
   data: LoginFormData;
   submit: () => SubmitPromise;
 }
 
-export interface LoginFormProps {
+interface LoginFormProps {
   children: (props: UseLoginFormResult) => React.ReactNode;
   onSubmit: (data: LoginFormData) => SubmitPromise;
 }

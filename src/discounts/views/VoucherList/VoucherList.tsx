@@ -35,7 +35,7 @@ interface VoucherListProps {
   params: VoucherListUrlQueryParams;
 }
 
-export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
+const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.VOUCHER_LIST);
@@ -223,4 +223,5 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
     </PaginatorContext.Provider>
   );
 };
+
 export default VoucherList;

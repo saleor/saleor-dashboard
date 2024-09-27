@@ -5,7 +5,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import messages from "./messages";
 
-export interface BulkAttributeUnassignDialogProps {
+interface BulkAttributeUnassignDialogProps {
   title: string;
   attributeQuantity: number;
   confirmButtonState: ConfirmButtonTransitionState;

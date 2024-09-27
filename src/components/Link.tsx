@@ -33,7 +33,7 @@ const useStyles = makeStyles(
   { name: "Link" },
 );
 
-export interface LinkState {
+interface LinkState {
   from?: string;
 }
 

@@ -3,7 +3,7 @@ import { FormattedMessage } from "react-intl";
 
 import { Weight } from "../Weight";
 
-export interface WeightRangeProps {
+interface WeightRangeProps {
   from?: Weight;
   to?: Weight;
 }

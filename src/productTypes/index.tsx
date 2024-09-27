@@ -53,7 +53,7 @@ const ProductTypeUpdate: React.FC<RouteComponentProps<ProductTypeUpdateRoutePara
   return <ProductTypeUpdateComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
 
-export const ProductTypeRouter: React.FC = () => {
+const ProductTypeRouter: React.FC = () => {
   const intl = useIntl();
 
   return (
@@ -67,5 +67,6 @@ export const ProductTypeRouter: React.FC = () => {
     </>
   );
 };
+
 ProductTypeRouter.displayName = "ProductTypeRouter";
 export default ProductTypeRouter;

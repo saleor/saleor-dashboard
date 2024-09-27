@@ -1,4 +1,4 @@
-export type QuickSearchActionType = "action" | "catalog" | "customer" | "view";
+type QuickSearchActionType = "action" | "catalog" | "customer" | "view";
 
 export interface QuickSearchAction {
   caption?: string;

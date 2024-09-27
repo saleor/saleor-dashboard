@@ -37,7 +37,7 @@ const PageTypeDetails: React.FC<RouteComponentProps<PageTypeDetailsRouteParams>>
   return <PageTypeDetailsComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
 
-export const PageTypeRouter: React.FC = () => {
+const PageTypeRouter: React.FC = () => {
   const intl = useIntl();
 
   return (
@@ -51,5 +51,6 @@ export const PageTypeRouter: React.FC = () => {
     </>
   );
 };
+
 PageTypeRouter.displayName = "PageTypeRouter";
 export default PageTypeRouter;

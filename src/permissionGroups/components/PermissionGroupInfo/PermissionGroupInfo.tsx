@@ -9,7 +9,7 @@ import { TextField } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 
-export interface PermissionGroupInfoProps {
+interface PermissionGroupInfoProps {
   disabled: boolean;
   errors: PermissionGroupErrorFragment[];
   onChange: FormChange;

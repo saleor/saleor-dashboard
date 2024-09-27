@@ -4,7 +4,7 @@ import { getAttributeInputType } from "../constants";
 import { ConditionSelected } from "../FilterElement/ConditionSelected";
 import { slugFromConditionValue } from "../FilterElement/ConditionValue";
 
-export const CONDITIONS = ["is", "equals", "in", "between", "lower", "greater"];
+const CONDITIONS = ["is", "equals", "in", "between", "lower", "greater"];
 
 const ORDER_STATICS = [
   "paymentStatus",
@@ -43,7 +43,7 @@ export const TokenType = {
   STATIC: "s",
 } as const;
 
-export type TokenTypeValue = (typeof TokenType)[keyof typeof TokenType];
+type TokenTypeValue = (typeof TokenType)[keyof typeof TokenType];
 
 const resolveTokenType = (name: string): TokenTypeValue => {
   const key = `ATTRIBUTE_${name}` as keyof typeof TokenType;

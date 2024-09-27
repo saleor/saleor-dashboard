@@ -19,7 +19,7 @@ import {
 } from "../../../types";
 import PageTypeList from "../PageTypeList";
 
-export interface PageTypeListPageProps
+interface PageTypeListPageProps
   extends PageListProps,
     ListActions,
     SearchPageProps,

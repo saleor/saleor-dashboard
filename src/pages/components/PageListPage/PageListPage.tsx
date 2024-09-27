@@ -7,12 +7,7 @@ import { ListPageLayout } from "@dashboard/components/Layouts";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { Pages } from "@dashboard/pages/types";
-import {
-  PageListUrlDialog,
-  PageListUrlQueryParams,
-  PageListUrlSortField,
-  pageUrl,
-} from "@dashboard/pages/urls";
+import { PageListUrlSortField, pageUrl } from "@dashboard/pages/urls";
 import { FilterPagePropsWithPresets, PageListProps, SortPage } from "@dashboard/types";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -26,11 +21,7 @@ import {
 import { PageListDatagrid } from "../PageListDatagrid/PageListDatagrid";
 import { pagesListSearchAndFiltersMessages as messages } from "./messages";
 
-export interface PageListActionDialogOpts {
-  open: (action: PageListUrlDialog, newParams?: PageListUrlQueryParams) => void;
-  close: () => void;
-}
-export interface PageListPageProps
+interface PageListPageProps
   extends PageListProps,
     FilterPagePropsWithPresets<PageListFilterKeys, PageListFilterOpts>,
     SortPage<PageListUrlSortField> {

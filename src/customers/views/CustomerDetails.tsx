@@ -147,9 +147,10 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({ id, para
   );
 };
 
-export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({ id, params }) => (
+const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({ id, params }) => (
   <CustomerDetailsProvider id={id}>
     <CustomerDetailsViewInner id={id} params={params} />
   </CustomerDetailsProvider>
 );
+
 export default CustomerDetailsView;

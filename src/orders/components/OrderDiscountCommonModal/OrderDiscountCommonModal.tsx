@@ -69,7 +69,7 @@ const messages = defineMessages({
   },
 });
 
-export interface OrderDiscountCommonModalProps {
+interface OrderDiscountCommonModalProps {
   maxPrice: MoneyFragment;
   onConfirm: (discount: OrderDiscountCommonInput) => void;
   onClose: () => void;

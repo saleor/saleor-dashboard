@@ -30,7 +30,7 @@ export interface PluginDetailsPageFormData {
   configuration: ConfigurationItemInput[];
 }
 
-export interface PluginsDetailsPageProps {
+interface PluginsDetailsPageProps {
   disabled: boolean;
   errors: PluginErrorFragment[];
   plugin?: PluginsDetailsFragment;

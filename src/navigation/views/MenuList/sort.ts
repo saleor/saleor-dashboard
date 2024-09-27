@@ -3,7 +3,7 @@ import { MenuSortField } from "@dashboard/graphql";
 import { MenuListUrlSortField } from "@dashboard/navigation/urls";
 import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 
-export function getSortQueryField(sort: MenuListUrlSortField): MenuSortField {
+function getSortQueryField(sort: MenuListUrlSortField): MenuSortField {
   switch (sort) {
     case MenuListUrlSortField.name:
       return MenuSortField.NAME;

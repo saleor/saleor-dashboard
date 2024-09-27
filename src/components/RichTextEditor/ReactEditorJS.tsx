@@ -55,7 +55,7 @@ class ClientEditorCore implements EditorCore {
   }
 }
 
-export type Props = Omit<ReactEditorJSProps, "factory">;
+type Props = Omit<ReactEditorJSProps, "factory">;
 
 function ReactEditorJSClient(props: Props) {
   const factory = React.useCallback((config: EditorConfig) => new ClientEditorCore(config), []);

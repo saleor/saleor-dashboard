@@ -28,7 +28,7 @@ export type FormErrors<T> = {
   [field in keyof T]?: string | React.ReactNode;
 };
 
-export interface UseFormOpts<T> {
+interface UseFormOpts<T> {
   confirmLeave: boolean;
   formId?: FormId;
   checkIfSaveIsDisabled?: CheckIfSaveIsDisabledFnType<T>;

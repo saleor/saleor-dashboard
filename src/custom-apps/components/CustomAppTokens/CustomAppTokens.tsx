@@ -13,7 +13,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
 
-export interface CustomAppTokensProps {
+interface CustomAppTokensProps {
   tokens: AppUpdateMutation["appUpdate"]["app"]["tokens"] | null;
   onCreate: () => void;
   onDelete: (id: string) => void;

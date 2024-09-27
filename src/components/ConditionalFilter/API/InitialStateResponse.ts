@@ -5,7 +5,7 @@ import { AttributeInputType } from "../FilterElement/ConditionOptions";
 import { ItemOption } from "../FilterElement/ConditionValue";
 import { UrlToken } from "../ValueProvider/UrlToken";
 
-export interface AttributeDTO {
+interface AttributeDTO {
   choices: Array<{
     label: string;
     value: string;

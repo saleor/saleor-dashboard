@@ -113,5 +113,3 @@ export const ShippingZoneListDatagrid = ({
     </DatagridChangeStateContext.Provider>
   );
 };
-
-export default ShippingZoneListDatagrid;

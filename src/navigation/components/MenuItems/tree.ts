@@ -3,7 +3,7 @@
 import { MenuTreeItem } from "@dashboard/navigation/types";
 import { getPatch } from "fast-array-diff";
 
-export type TreeOperationType = "move" | "remove";
+type TreeOperationType = "move" | "remove";
 export interface TreeOperation {
   id: string;
   type: TreeOperationType;

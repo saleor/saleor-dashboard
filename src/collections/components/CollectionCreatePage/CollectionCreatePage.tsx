@@ -23,7 +23,7 @@ import CollectionDetails from "../CollectionDetails/CollectionDetails";
 import { CollectionImage } from "../CollectionImage/CollectionImage";
 import CollectionCreateForm, { CollectionCreateData } from "./form";
 
-export interface CollectionCreatePageProps {
+interface CollectionCreatePageProps {
   channelsCount: number;
   channelsErrors: CollectionChannelListingErrorFragment[];
   currentChannels: ChannelCollectionData[];

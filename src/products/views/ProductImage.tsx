@@ -21,7 +21,7 @@ interface ProductMediaProps {
   params: ProductImageUrlQueryParams;
 }
 
-export const ProductImage: React.FC<ProductMediaProps> = ({ mediaId, productId, params }) => {
+const ProductImage: React.FC<ProductMediaProps> = ({ mediaId, productId, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -103,4 +103,5 @@ export const ProductImage: React.FC<ProductMediaProps> = ({ mediaId, productId, 
     </>
   );
 };
+
 export default ProductImage;
