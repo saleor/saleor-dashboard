@@ -61,9 +61,9 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
         <Form initial={{ name: "" }} onSubmit={data => onCreate(data.name)}>
           {({ change, data, submit }) => (
             <DashboardModal.Grid>
-              <DashboardModal.Title>
+              <DashboardModal.Header onClose={onClose}>
                 <FormattedMessage id="T5nU7u" defaultMessage="Create Token" description="header" />
-              </DashboardModal.Title>
+              </DashboardModal.Header>
 
               {step === "form" ? (
                 <>

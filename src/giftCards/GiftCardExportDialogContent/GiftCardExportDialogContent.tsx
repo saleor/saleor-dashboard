@@ -97,9 +97,9 @@ const GiftCardExportDialog: React.FC<
 
   return (
     <DashboardModal.Content size="sm">
-      <DashboardModal.Title>
+      <DashboardModal.Header onClose={onClose}>
         <FormattedMessage {...messages.title} />
-      </DashboardModal.Title>
+      </DashboardModal.Header>
 
       <ContentWithProgress>
         {!loading && (

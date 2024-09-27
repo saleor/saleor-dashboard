@@ -44,13 +44,13 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
         <Form initial={initialForm} onSubmit={onConfirm}>
           {({ change, data, submit }) => (
             <Box display="grid" gap={6}>
-              <DashboardModal.Title data-test-id="create-menu-dialog-title">
+              <DashboardModal.Header onClose={onClose} data-test-id="create-menu-dialog-title">
                 <FormattedMessage
                   id="0OtaXa"
                   defaultMessage="Create Menu"
                   description="dialog header"
                 />
-              </DashboardModal.Title>
+              </DashboardModal.Header>
 
               <TextField
                 data-test-id="menu-name-input"

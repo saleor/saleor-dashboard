@@ -33,13 +33,13 @@ const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDia
         <Form initial={initial} onSubmit={onSubmit}>
           {({ change, data }) => (
             <DashboardModal.Grid>
-              <DashboardModal.Title>
+              <DashboardModal.Header onClose={onClose}>
                 <FormattedMessage
                   id="2Xt+sw"
                   defaultMessage="Add postal codes"
                   description="dialog header"
                 />
-              </DashboardModal.Title>
+              </DashboardModal.Header>
 
               <Text>
                 <FormattedMessage

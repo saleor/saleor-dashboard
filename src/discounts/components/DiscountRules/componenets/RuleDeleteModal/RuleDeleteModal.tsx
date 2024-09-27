@@ -25,10 +25,9 @@ export const RuleDeleteModal = ({
   return (
     <DashboardModal open={open} onChange={onClose}>
       <DashboardModal.Content size="xs" data-test-id="delete-rule-dialog">
-        <DashboardModal.Title display="flex" justifyContent="space-between" alignItems="center">
+        <DashboardModal.Header onClose={onClose}>
           {intl.formatMessage(messages.deleteRule)}
-          <DashboardModal.Close onClose={onClose} />
-        </DashboardModal.Title>
+        </DashboardModal.Header>
 
         <Text>
           <FormattedMessage {...messages.deleteRuleDescription} />

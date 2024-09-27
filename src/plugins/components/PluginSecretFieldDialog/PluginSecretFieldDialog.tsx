@@ -38,7 +38,7 @@ const PluginSecretFieldDialog: React.FC<PluginSecretFieldDialogProps> = ({
         <Form initial={initialForm} onSubmit={onConfirm}>
           {({ change, data, submit }) => (
             <DashboardModal.Grid>
-              <DashboardModal.Title>
+              <DashboardModal.Header onClose={onClose}>
                 {field ? (
                   field.value === null ? (
                     intl.formatMessage({
@@ -56,7 +56,7 @@ const PluginSecretFieldDialog: React.FC<PluginSecretFieldDialogProps> = ({
                 ) : (
                   <Skeleton />
                 )}
-              </DashboardModal.Title>
+              </DashboardModal.Header>
 
               <TextField
                 multiline={field?.type === ConfigurationTypeFieldEnum.SECRETMULTILINE}

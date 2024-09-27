@@ -35,9 +35,9 @@ const OrderFulfillmentApproveDialog: React.FC<OrderFulfillmentAcceptDialogProps>
         <Form initial={{ notifyCustomer: true }} onSubmit={onConfirm}>
           {({ change, data, submit }) => (
             <DashboardModal.Grid>
-              <DashboardModal.Title>
+              <DashboardModal.Header onClose={onClose}>
                 <FormattedMessage {...messages.title} />
-              </DashboardModal.Title>
+              </DashboardModal.Header>
 
               <Text>
                 <FormattedMessage {...messages.description} />

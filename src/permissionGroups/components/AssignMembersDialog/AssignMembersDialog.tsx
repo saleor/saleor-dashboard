@@ -129,9 +129,9 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
   return (
     <DashboardModal onChange={onClose} open={open}>
       <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr">
-        <DashboardModal.Title>
+        <DashboardModal.Header onClose={onClose}>
           <FormattedMessage {...messages.title} />
-        </DashboardModal.Title>
+        </DashboardModal.Header>
 
         <TextField
           data-test-id="search-members-input"

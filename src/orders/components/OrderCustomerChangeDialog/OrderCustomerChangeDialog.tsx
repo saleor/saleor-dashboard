@@ -27,9 +27,9 @@ const OrderCustomerChangeDialog: React.FC<OrderCustomerChangeDialogProps> = prop
         <OrderCustomerChangeForm onSubmit={onConfirm}>
           {({ change, data }) => (
             <Box display="grid" gap={6}>
-              <DashboardModal.Title>
+              <DashboardModal.Header onClose={onClose}>
                 <FormattedMessage {...messages.title} />
-              </DashboardModal.Title>
+              </DashboardModal.Header>
               <Text>
                 <FormattedMessage {...messages.description} />
               </Text>

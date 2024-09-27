@@ -98,13 +98,13 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
   return (
     <DashboardModal onChange={handleClose} open={open}>
       <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr">
-        <DashboardModal.Title>
+        <DashboardModal.Header onClose={onClose}>
           <FormattedMessage
             id="xZhxBJ"
             defaultMessage="Assign Products"
             description="dialog header"
           />
-        </DashboardModal.Title>
+        </DashboardModal.Header>
 
         <Box data-test-id="assign-products-dialog-content">
           <TextField

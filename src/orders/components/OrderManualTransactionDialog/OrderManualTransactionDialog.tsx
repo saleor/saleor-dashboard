@@ -27,10 +27,9 @@ export const OrderManualTransactionDialog: React.FC<OrderManualTransactionDialog
     <OrderManualTransactionForm {...props}>
       <DashboardModal {...dialogProps}>
         <DashboardModal.Content size="xs">
-          <DashboardModal.Title display="flex" justifyContent="space-between" alignItems="center">
+          <DashboardModal.Header onClose={onClose}>
             <FormattedMessage {...manualTransactionMessages.dialogTitle} />
-            <DashboardModal.Close onClose={onClose} />
-          </DashboardModal.Title>
+          </DashboardModal.Header>
 
           <OrderManualTransactionForm.Form>
             <Box display="flex" flexDirection="column" gap={4}>

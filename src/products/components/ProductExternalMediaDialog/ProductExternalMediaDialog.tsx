@@ -45,11 +45,11 @@ const ProductExternalMediaDialog: React.FC<ProductExternalMediaDialogProps> = ({
         <Form initial={initialValues} onSubmit={handleOnSubmit}>
           {({ change, data, submit }) => (
             <DashboardModal.Grid>
-              <DashboardModal.Title>
+              <DashboardModal.Header onClose={onClose}>
                 <Text size={5} fontWeight="bold">
                   {intl.formatMessage(messages.buttonMessage)}
                 </Text>
-              </DashboardModal.Title>
+              </DashboardModal.Header>
 
               <Text size={2}>
                 <FormattedMessage

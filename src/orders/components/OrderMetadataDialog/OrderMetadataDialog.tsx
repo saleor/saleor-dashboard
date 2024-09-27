@@ -20,9 +20,9 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
   return (
     <DashboardModal open={open} onChange={onClose}>
       <DashboardModal.Content size="md">
-        <DashboardModal.Title paddingX={6}>
+        <DashboardModal.Header onClose={onClose} paddingX={6}>
           <FormattedMessage {...commonMessages.metadata} />: {data?.productName ?? ""}
-        </DashboardModal.Title>
+        </DashboardModal.Header>
 
         <Metadata
           readonly={true}

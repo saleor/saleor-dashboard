@@ -28,9 +28,9 @@ export const OrderRefundDialog = ({
   return (
     <DashboardModal open={open} onChange={onClose}>
       <DashboardModal.Content size="xs" data-test-id="order-refund-dialog">
-        <DashboardModal.Title>
+        <DashboardModal.Header onClose={onClose}>
           {intl.formatMessage(orderRefundDialogMesages.title)}
-        </DashboardModal.Title>
+        </DashboardModal.Header>
         <Text>{intl.formatMessage(orderRefundDialogMesages.subtitle)}</Text>
         <RadioTiles asChild value={selectedRefundType} onValueChange={handleChangeRefundType}>
           <Box

@@ -79,13 +79,13 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
         {({ change, data, submit }) => (
           <>
             <DashboardModal.Content size="sm">
-              <DashboardModal.Title>
+              <DashboardModal.Header onClose={onClose}>
                 <FormattedMessage
                   id="V/YxJa"
                   defaultMessage="Edit Shipping Method"
                   description="dialog header"
                 />
-              </DashboardModal.Title>
+              </DashboardModal.Header>
 
               <Select
                 options={choices as unknown as Option[]}

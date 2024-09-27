@@ -213,9 +213,9 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
   return (
     <DashboardModal onChange={onClose} open={open}>
       <DashboardModal.Content size="sm">
-        <DashboardModal.Title>
+        <DashboardModal.Header onClose={onClose}>
           <FormattedMessage {...messages.title} />
-        </DashboardModal.Title>
+        </DashboardModal.Header>
 
         <ProductExportSteps currentStep={step} steps={steps} onStepClick={setStep} />
         {step === ProductExportStep.INFO && (
