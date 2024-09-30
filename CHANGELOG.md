@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.20.12
+
+### Patch Changes
+
+- 8db152e60: Clicking a select channel on a product list and then click close button clear filter state, so when you click again select button, only one channel filter will be selected
+- 3f74d5cb2: You can now see app's webhooks' event delivery attempts in app settings. These include last 6 failed or pending deliveries with their details: payload, status and date.
+- c330adeb7: You can now provide 0 variant price value during product creation
+- 350194c3d: Removing not required dropdown attribue value no longer cause error
+
 ## 3.20.11
 
 ### Patch Changes
