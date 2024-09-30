@@ -25,7 +25,7 @@ export interface TypeDeleteWarningDialogProps<T extends TypeBaseData> extends Ty
   deleteButtonState: ConfirmButtonTransitionState;
   onClose: () => void;
   onDelete: () => void;
-  viewAssignedItemsUrl: string;
+  viewAssignedItemsUrl: string | null;
   typesToDelete: string[];
   assignedItemsCount: number | undefined;
   typesData: T[];
@@ -105,8 +105,11 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
 
             <DashboardModal.Actions>
               {shouldShowViewAssignedItemsButton && (
-                <Link to={viewAssignedItemsUrl}>
-                  <ConfirmButton transitionState="default">
+                <Link
+                  to={viewAssignedItemsUrl}
+                  style={{ pointerEvents: viewAssignedItemsUrl ? undefined : "none" }}
+                >
+                  <ConfirmButton transitionState="default" disabled={!viewAssignedItemsUrl}>
                     {intl.formatMessage(baseMessages.viewAssignedItemsButtonLabel)}
                   </ConfirmButton>
                 </Link>

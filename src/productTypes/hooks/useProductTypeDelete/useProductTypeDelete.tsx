@@ -52,7 +52,13 @@ function useProductTypeDelete({
     productTypes: filteredTypes,
   });
 
-  const typesToLink = typeBaseData?.filter(type => type && productTypes.includes(type.id));
+  const typesToLink = Array.isArray(typeBaseData)
+    ? typeBaseData
+        // [undefined] can be passed when loading data
+        // @ts-expect-error - filter is used to remove undefined values
+        .filter((t: unknown) => !!t)
+        .filter((type: TypeBaseData) => productTypes.includes(type.id))
+    : undefined;
 
   const viewProductsURL = useViewProducts({
     defaultNavigationLink: selectedProductsAssignedToDeleteUrl,

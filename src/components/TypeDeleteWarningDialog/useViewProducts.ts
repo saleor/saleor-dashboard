@@ -25,9 +25,10 @@ export const useViewProducts = ({
 }: ViewProductsProps) => {
   const { enabled: productFiltersFlagEnabled } = useFlag("product_filters");
 
-  const handleLegacyViewProducts = defaultNavigationLink;
+  // TODO: Remove this when the feature flag is removed
+  const legacyViewProductsUrl = defaultNavigationLink;
 
-  const handleViewProducts = useMemo(() => {
+  const newViewProductsUrl = useMemo(() => {
     if (!productTypeBaseData) {
       return null;
     }
@@ -50,5 +51,5 @@ export const useViewProducts = ({
     return urljoin(productListPath, `?${url}`);
   }, [productTypeBaseData]);
 
-  return productFiltersFlagEnabled ? handleViewProducts : handleLegacyViewProducts;
+  return productFiltersFlagEnabled ? newViewProductsUrl : legacyViewProductsUrl;
 };
