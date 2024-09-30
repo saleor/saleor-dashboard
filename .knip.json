@@ -41,6 +41,8 @@
     "@radix-ui/react-portal",
     "@graphql-codegen/schema-ast",
     "playwright-testmo-reporter",
+    "mocha",
+    "mochawesome",
     "mochawesome-report-generator",
     "mochawesome-merge"
   ]
