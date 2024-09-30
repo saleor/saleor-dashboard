@@ -30,7 +30,7 @@ function useProductTypeDelete({
   const isDeleteDialogOpen = params.action === "remove";
   const productsAssignedToSelectedTypesQueryVars = useMemo<ProductCountQueryVariables>(
     () =>
-      filteredTypes
+      filteredTypes.length
         ? {
             filter: {
               productTypes: filteredTypes,
@@ -66,7 +66,7 @@ function useProductTypeDelete({
   return {
     ...messages,
     isOpen: isDeleteDialogOpen,
-    assignedItemsCount: typeof assignedItemsCount === "number" ? assignedItemsCount : undefined,
+    assignedItemsCount: assignedItemsCount ?? undefined,
     viewAssignedItemsUrl: viewProductsURL,
     isLoading: loadingProductsAssignedToSelectedTypes,
     typesToDelete: filteredTypes,
