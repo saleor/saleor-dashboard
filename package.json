@@ -150,6 +150,8 @@
     "identity-obj-proxy": "^3.0.0",
     "is-ci": "^3.0.1",
     "knip": "^5.30.5",
+    "mocha": "^10.2.0",
+    "mochawesome": "^7.1.3",
     "mochawesome-merge": "^4.3.0",
     "mochawesome-report-generator": "^6.2.0",
     "playwright-testmo-reporter": "^1.8.4",
@@ -281,8 +283,7 @@
     "qa:pw-e2e": "npx playwright test --grep @e2e",
     "qa:pw-ui": "npx playwright test --ui",
     "knip": "knip --reporter markdown",
-    "knip:fix": "knip --fix",
-    "knip:fix-remove": "knip --fix --allow-remove-files"
+    "knip:fix": "knip --fix"
   },
   "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)"
 }
