@@ -30,11 +30,25 @@ export class BasicApiService {
 
   private static lock: Promise<void> | null = null;
 
+  private static lastExecutionTime = 0;
+
   constructor(request: APIRequestContext) {
     this.request = request;
   }
 
+  private static async waitIfNeeded(): Promise<void> {
+    const now = Date.now();
+    const timeSinceLastExecution = now - BasicApiService.lastExecutionTime;
+
+    if (timeSinceLastExecution < 1000) {
+      await new Promise(resolve => setTimeout(resolve, 1000 - timeSinceLastExecution));
+    }
+  }
+
   async logInUserViaApi(user: User): Promise<ApiResponse<TokenCreateResponse>> {
+    // Wait if the last execution was within the last 1000ms.
+    await BasicApiService.waitIfNeeded();
+
     // Acquire the global lock.
     while (BasicApiService.lock) {
       await BasicApiService.lock;
@@ -77,6 +91,9 @@ export class BasicApiService {
 
         throw new Error(`Login failed: ${errorMessages}`);
       }
+
+      // Update the last execution time.
+      BasicApiService.lastExecutionTime = Date.now();
 
       return loginResponseJson as ApiResponse<TokenCreateResponse>;
     } finally {
