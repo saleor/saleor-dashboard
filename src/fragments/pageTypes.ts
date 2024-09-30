@@ -4,7 +4,6 @@ export const pageTypeFragment = gql`
   fragment PageType on PageType {
     id
     name
-    slug
     hasPages
   }
 `;

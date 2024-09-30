@@ -12,5 +12,5 @@ export type TypeDeleteWarningMessages = Partial<
 export interface TypeBaseData {
   id: string;
   name: string;
-  slug: string;
+  slug?: string;
 }

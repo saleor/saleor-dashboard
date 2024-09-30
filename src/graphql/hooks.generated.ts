@@ -2223,7 +2223,6 @@ export const PageTypeFragmentDoc = gql`
     fragment PageType on PageType {
   id
   name
-  slug
   hasPages
 }
     `;

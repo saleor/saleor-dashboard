@@ -1,5 +1,8 @@
 import { TypeBaseData } from "@dashboard/components/TypeDeleteWarningDialog/types";
-import { useViewProducts } from "@dashboard/components/TypeDeleteWarningDialog/useViewProducts";
+import {
+  ProductTypeBaseData,
+  useViewProducts,
+} from "@dashboard/components/TypeDeleteWarningDialog/useViewProducts";
 import { ProductCountQueryVariables, useProductCountQuery } from "@dashboard/graphql";
 import {
   UseTypeDeleteData,
@@ -15,7 +18,7 @@ import { useMemo } from "react";
 import * as messages from "./messages";
 
 type UseProductTypeDeleteProps<T = ProductTypeListUrlQueryParams | ProductTypeUrlQueryParams> =
-  UseTypeDeleteProps<T> & { typeBaseData: TypeBaseData[] | undefined };
+  UseTypeDeleteProps<T> & { typeBaseData: ProductTypeBaseData[] | undefined };
 
 function useProductTypeDelete({
   params,
