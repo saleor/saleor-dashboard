@@ -46,8 +46,10 @@ describe("useViewProducts", () => {
     );
 
     // Assert
+    expect(result.current).not.toBeNull();
+
     const expectedQuery = "0[s0.productType][0]=audiobooks";
-    const receivedQuery = decodeURIComponent(result.current.split("?")[1]);
+    const receivedQuery = decodeURIComponent(result.current!.split("?")[1]);
 
     expect(receivedQuery).toBe(expectedQuery);
   });
@@ -74,9 +76,11 @@ describe("useViewProducts", () => {
     );
 
     // Assert
+    expect(result.current).not.toBeNull();
+
     const expectedQuery = "0[s2.productType][0]=audiobooks&0[s2.productType][1]=shirts";
 
-    const receivedQuery = decodeURIComponent(result.current.split("?")[1]);
+    const receivedQuery = decodeURIComponent(result.current!.split("?")[1]);
 
     expect(receivedQuery).toBe(expectedQuery);
   });
