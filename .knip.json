@@ -16,32 +16,7 @@
     "dependencies": "error",
     "devDependencies": "error"
   },
-  "ignore": [
-    "src/graphql/types.generated.ts",
-    "src/graphql/typePolicies.generated.ts",
-    "src/graphql/hooks.generated.ts",
-    "playwright/**",
-    "src/fragments/**",
-    "testUtils/**",
-    "scripts/**",
-    "assets/**",
-    "**/*.js",
-    "**/queries.ts",
-    "**/fixtures.ts",
-    "**/mutations.ts",
-    "**/filters.ts",
-    "src/searches/**/*.ts",
-    "src/fixtures",
-    "src/utils/errors/product.ts",
-    "src/orders/components/OrderSummaryCard/utils.ts",
-    "src/misc.ts",
-    "*mock*.ts",
-    "src/orders/components/OrderReturnPage/components/ItemsCard/ItemsCard.tsx",
-    "src/hooks/makeMutation.ts",
-    "src/components/DemoBanner/constants.ts",
-    "src/components/ConditionalFilter/UI/types.ts",
-    "Savebar.tsx"
-  ],
+  "ignore": ["playwright/**", "**/*.js"],
   "ignoreDependencies": [
     "@graphql-codegen/typescript-apollo-client-helpers",
     "@graphql-codegen/typescript-operations",
@@ -64,6 +39,9 @@
     "@radix-ui/react-radio-group",
     "@react-editor-js/core",
     "@radix-ui/react-portal",
-    "@graphql-codegen/schema-ast"
+    "@graphql-codegen/schema-ast",
+    "playwright-testmo-reporter",
+    "mochawesome-report-generator",
+    "mochawesome-merge"
   ]
 }
