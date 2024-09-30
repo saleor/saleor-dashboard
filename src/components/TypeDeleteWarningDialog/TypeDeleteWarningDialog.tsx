@@ -11,7 +11,6 @@ import DeleteButton from "../DeleteButton";
 import { DashboardModal } from "../Modal";
 import DeleteWarningDialogConsentContent from "./DeleteWarningDialogConsentContent";
 import { CommonTypeDeleteWarningMessages, TypeBaseData, TypeDeleteWarningMessages } from "./types";
-import { useViewProducts } from "./useViewProducts";
 
 export interface TypeDeleteMessages {
   baseMessages: CommonTypeDeleteWarningMessages;
@@ -29,10 +28,8 @@ export interface TypeDeleteWarningDialogProps<T extends TypeBaseData> extends Ty
   viewAssignedItemsUrl: string;
   typesToDelete: string[];
   assignedItemsCount: number | undefined;
-  isLoading?: boolean;
   typesData: T[];
-  // temporary, until we add filters to pages list - SALEOR-3279
-  showViewAssignedItemsButton?: boolean;
+  isLoading?: boolean;
 }
 
 function TypeDeleteWarningDialog<T extends TypeBaseData>({
@@ -49,7 +46,6 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
   viewAssignedItemsUrl,
   typesToDelete,
   typesData,
-  showViewAssignedItemsButton = true,
 }: TypeDeleteWarningDialogProps<T>) {
   const intl = useIntl();
   const [isConsentChecked, setIsConsentChecked] = useState(false);
@@ -77,14 +73,7 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
 
   const singleItemSelectedId = typesToDelete[0];
   const singleItemSelectedName = typesData.find(getById(singleItemSelectedId))?.name;
-  const shouldShowViewAssignedItemsButton = showViewAssignedItemsButton && hasAssignedItems;
-
-  const { getViewProductsURL } = useViewProducts({
-    defaultNavigationLink: viewAssignedItemsUrl,
-    productTypeBaseData: typesData[0],
-  });
-
-  const productsListOfTypeURL = getViewProductsURL();
+  const shouldShowViewAssignedItemsButton = hasAssignedItems;
 
   return (
     <DashboardModal open={isOpen} onChange={onClose}>
@@ -116,7 +105,7 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
 
             <DashboardModal.Actions>
               {shouldShowViewAssignedItemsButton && (
-                <Link to={productsListOfTypeURL}>
+                <Link to={viewAssignedItemsUrl}>
                   <ConfirmButton transitionState="default">
                     {intl.formatMessage(baseMessages.viewAssignedItemsButtonLabel)}
                   </ConfirmButton>
