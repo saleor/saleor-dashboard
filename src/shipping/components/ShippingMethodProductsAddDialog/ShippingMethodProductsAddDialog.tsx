@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FetchResult } from "@apollo/client";
 import { Channel, isAvailableInChannel } from "@dashboard/channels/utils";
 import BackButton from "@dashboard/components/BackButton";
@@ -8,16 +7,19 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { SearchProductsQuery, ShippingPriceExcludeProductMutation } from "@dashboard/graphql";
+import { ShippingPriceExcludeProductMutation } from "@dashboard/graphql";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { renderCollection } from "@dashboard/misc";
-import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { isProductSelected } from "@dashboard/shipping/components/ShippingMethodProductsAddDialog/utils";
+import { FetchMoreProps } from "@dashboard/types";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import { Product, Products } from "./types";
 
 const useStyles = makeStyles(
   () => ({
@@ -41,7 +43,7 @@ const useStyles = makeStyles(
 export interface ShippingMethodProductsAddDialogProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
-  products: RelayToFlat<SearchProductsQuery["search"]>;
+  products: Products;
   onClose: () => void;
   onFetch: (query: string) => void;
   onSubmit: (ids: string[]) => Promise<FetchResult<ShippingPriceExcludeProductMutation>>;
@@ -49,10 +51,10 @@ export interface ShippingMethodProductsAddDialogProps extends FetchMoreProps {
 }
 
 const handleProductAssign = (
-  product: RelayToFlat<SearchProductsQuery["search"]>[0],
+  product: Product,
   isSelected: boolean,
-  selectedProducts: RelayToFlat<SearchProductsQuery["search"]>,
-  setSelectedProducts: (data: RelayToFlat<SearchProductsQuery["search"]>) => void,
+  selectedProducts: Products,
+  setSelectedProducts: (data: Products) => void,
 ) => {
   if (isSelected) {
     setSelectedProducts(
@@ -80,9 +82,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
   const classes = useStyles();
   const intl = useIntl();
   const [query, onQueryChange, resetQuery] = useSearchQuery(onFetch);
-  const [selectedProducts, setSelectedProducts] = React.useState<
-    RelayToFlat<SearchProductsQuery["search"]>
-  >([]);
+  const [selectedProducts, setSelectedProducts] = React.useState<Products>([]);
   const handleSubmit = () => {
     onSubmit(selectedProducts.map(product => product.id)).then(() => {
       setSelectedProducts([]);
@@ -153,9 +153,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
                 {renderCollection(
                   products,
                   (product, productIndex) => {
-                    const isSelected = selectedProducts.some(
-                      selectedProduct => selectedProduct.id === product.id,
-                    );
+                    const isSelected = isProductSelected(selectedProducts, product?.id);
 
                     const isProductAvailable = isAvailableInChannel({
                       availableChannels,
