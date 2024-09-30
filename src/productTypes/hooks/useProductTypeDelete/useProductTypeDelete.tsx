@@ -15,7 +15,7 @@ import { useMemo } from "react";
 import * as messages from "./messages";
 
 type UseProductTypeDeleteProps<T = ProductTypeListUrlQueryParams | ProductTypeUrlQueryParams> =
-  UseTypeDeleteProps<T> & { typeBaseData: TypeBaseData[] | undefined[] | undefined };
+  UseTypeDeleteProps<T> & { typeBaseData: TypeBaseData[] | undefined };
 
 function useProductTypeDelete({
   params,
@@ -53,11 +53,7 @@ function useProductTypeDelete({
   });
 
   const typesToLink = Array.isArray(typeBaseData)
-    ? typeBaseData
-        // [undefined] can be passed when loading data
-        // @ts-expect-error - filter is used to remove undefined values
-        .filter((t: unknown) => !!t)
-        .filter((type: TypeBaseData) => productTypes.includes(type.id))
+    ? typeBaseData.filter((type: TypeBaseData) => productTypes.includes(type.id))
     : undefined;
 
   const viewProductsURL = useViewProducts({

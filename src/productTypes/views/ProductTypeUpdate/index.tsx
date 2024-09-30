@@ -141,7 +141,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
   const productTypeDeleteData = useProductTypeDelete({
     singleId: id,
     params,
-    typeBaseData: [productType],
+    typeBaseData: productType ? [productType] : undefined,
   });
   const closeModal = () => navigate(productTypeUrl(id), { replace: true });
   const handleAttributeAssignSuccess = (data: AssignProductAttributeMutation) => {
