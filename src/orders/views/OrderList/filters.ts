@@ -2,13 +2,11 @@
 import { FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
 import { createOrderQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { OrderFilterInput, OrderStatusFilter, PaymentChargeStatusEnum } from "@dashboard/graphql";
-import { findInEnum, findValueInEnum, parseBoolean } from "@dashboard/misc";
+import { findInEnum, parseBoolean } from "@dashboard/misc";
 import {
   OrderFilterGiftCard,
   OrderFilterKeys,
-  OrderListFilterOpts,
 } from "@dashboard/orders/components/OrderListPage/filters";
-import { Option } from "@saleor/macaw-ui-next";
 
 import {
   FilterElement,
@@ -18,7 +16,6 @@ import {
 import {
   createFilterTabUtils,
   createFilterUtils,
-  dedupeFilter,
   getGteLteVariables,
   getKeyValueQueryParam,
   getMinMaxQueryParam,
@@ -35,64 +32,6 @@ import {
 } from "../../urls";
 
 export const ORDER_FILTERS_KEY = "orderFiltersPresets";
-
-export function getFilterOpts(
-  params: OrderListUrlFilters,
-  channels: Option[],
-): OrderListFilterOpts {
-  return {
-    clickAndCollect: {
-      active: params.clickAndCollect !== undefined,
-      value: parseBoolean(params.clickAndCollect, true),
-    },
-    preorder: {
-      active: params.preorder !== undefined,
-      value: parseBoolean(params.preorder, true),
-    },
-    channel: channels
-      ? {
-          active: params?.channel !== undefined,
-          choices: channels,
-          value: params?.channel ?? [],
-        }
-      : null,
-    created: {
-      active: [params?.createdFrom, params?.createdTo].some(field => field !== undefined),
-      value: {
-        max: params?.createdTo || "",
-        min: params?.createdFrom || "",
-      },
-    },
-    giftCard: {
-      active: params?.giftCard !== undefined,
-      value: params.giftCard?.length
-        ? params.giftCard?.map(status => findValueInEnum(status, OrderFilterGiftCard))
-        : ([] as OrderFilterGiftCard[]),
-    },
-    customer: {
-      active: !!params?.customer,
-      value: params?.customer,
-    },
-    status: {
-      active: params?.status !== undefined,
-      value: dedupeFilter(
-        params.status?.map(status => findValueInEnum(status, OrderStatusFilter)) || [],
-      ),
-    },
-    paymentStatus: {
-      active: params?.paymentStatus !== undefined,
-      value: dedupeFilter(
-        params.paymentStatus?.map(paymentStatus =>
-          findValueInEnum(paymentStatus, PaymentChargeStatusEnum),
-        ) || [],
-      ),
-    },
-    metadata: {
-      active: !!params?.metadata?.length,
-      value: [...(params?.metadata ? params.metadata.filter(pair => pair?.key !== undefined) : [])],
-    },
-  };
-}
 
 const whereInputTypes = ["oneOf", "eq", "range", "gte", "lte"];
 const orderBooleanFilters = ["isClickAndCollect", "isPreorder"];
