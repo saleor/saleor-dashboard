@@ -25,6 +25,8 @@ interface ApiResponse<T> {
   data: T;
 }
 
+const secondAndAHalf = 1500;
+
 export class BasicApiService {
   readonly request: APIRequestContext;
 
@@ -40,13 +42,13 @@ export class BasicApiService {
     const now = Date.now();
     const timeSinceLastExecution = now - BasicApiService.lastExecutionTime;
 
-    if (timeSinceLastExecution < 1000) {
-      await new Promise(resolve => setTimeout(resolve, 1000 - timeSinceLastExecution));
+    if (timeSinceLastExecution < secondAndAHalf) {
+      await new Promise(resolve => setTimeout(resolve, secondAndAHalf - timeSinceLastExecution));
     }
   }
 
   async logInUserViaApi(user: User): Promise<ApiResponse<TokenCreateResponse>> {
-    // Wait if the last execution was within the last 1000ms.
+    // Wait if the last execution was within the last 1500ms.
     await BasicApiService.waitIfNeeded();
 
     // Acquire the global lock.
@@ -77,6 +79,8 @@ export class BasicApiService {
           }
         }
       }`;
+
+      console.log(`Executing login request at: ${new Date().toISOString()}`);
 
       const loginResponse = await this.request.post(process.env.API_URL || "", {
         data: { query },
