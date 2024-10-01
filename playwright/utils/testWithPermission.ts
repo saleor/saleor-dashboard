@@ -23,7 +23,7 @@ export function testWithPermission(
   return base.extend({
     // eslint-disable-next-line no-empty-pattern
     storageState: async ({}, use) => {
-      const storageStatePath = await getStorageState(permission);
+      const storageStatePath = await getStorageState(permission, base.info().workerIndex);
 
       await use(storageStatePath);
     },

@@ -18,7 +18,7 @@ test.beforeEach(async ({ page, request }) => {
   staffMembersPage = new StaffMembersPage(page, request);
   config = new ConfigurationPage(page);
   permissionGroupsPage = new PermissionGroupsPage(page);
-  basicApiService = new BasicApiService(request);
+  basicApiService = new BasicApiService(request, test.info().workerIndex);
 });
 
 test("TC: SALEOR_211 Create a staff member @e2e @staff-members", async () => {

@@ -12,11 +12,12 @@ import path from "path";
  * @param {UserPermission} permission - The user permission for which to retrieve the storage state.
  * @returns {Promise<string>} - A promise that resolves to the path of the storage state file.
  */
-export const getStorageState = async (permission: UserPermission | "admin"): Promise<string> => {
+export const getStorageState = async (
+  permission: UserPermission | "admin",
+  workerIndex: number,
+): Promise<string> => {
   const tempDir = path.join(__dirname, "../.auth");
   const storageStatePath = path.join(tempDir, `${permission}.json`);
-
-  process.stdout.write("getStorageState attempt");
 
   // Create the .auth directory if it does not exist.
   if (!fs.existsSync(tempDir)) {
@@ -29,12 +30,10 @@ export const getStorageState = async (permission: UserPermission | "admin"): Pro
       baseURL: process.env.BASE_URL!,
     });
 
-    const basicApiService = new BasicApiService(apiRequestContext);
+    const basicApiService = new BasicApiService(apiRequestContext, workerIndex);
 
     const email = getEmailForPermission(permission);
     const password = getPasswordForPermission(permission);
-
-    process.stdout.write("getStorageState login external api");
 
     try {
       await basicApiService.logInUserViaApi({ email, password });

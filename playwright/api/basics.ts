@@ -1,5 +1,6 @@
-import * as core from "@actions/core";
 import { APIRequestContext } from "@playwright/test";
+import fs from "fs";
+import path from "path";
 
 interface User {
   email: string;
@@ -26,45 +27,56 @@ interface ApiResponse<T> {
   data: T;
 }
 
-const secondAndAHalf = 1500;
+const delayBetweenRequests = 1000;
+const LOCK_FILE_PATH = path.join(__dirname, "../.auth", "lockfile");
 
 export class BasicApiService {
   readonly request: APIRequestContext;
 
-  private static lock: Promise<void> | null = null;
+  readonly workerIndex: number;
 
   private static lastExecutionTime = 0;
 
-  constructor(request: APIRequestContext) {
+  constructor(request: APIRequestContext, workerIndex: number) {
     this.request = request;
+    this.workerIndex = workerIndex;
   }
 
-  private static async waitIfNeeded(): Promise<void> {
+  private async waitIfNeeded(): Promise<void> {
     const now = Date.now();
     const timeSinceLastExecution = now - BasicApiService.lastExecutionTime;
 
-    if (timeSinceLastExecution < secondAndAHalf) {
-      await new Promise(resolve => setTimeout(resolve, secondAndAHalf - timeSinceLastExecution));
+    if (timeSinceLastExecution < delayBetweenRequests) {
+      console.log(
+        `[BasicApiService][Worker ${this.workerIndex}] Waiting for ${delayBetweenRequests - timeSinceLastExecution}ms`,
+      );
+      await new Promise(resolve =>
+        setTimeout(resolve, delayBetweenRequests - timeSinceLastExecution),
+      );
+    }
+  }
+
+  private async acquireLock(): Promise<void> {
+    while (fs.existsSync(LOCK_FILE_PATH)) {
+      console.log(`[BasicApiService][Worker ${this.workerIndex}] Waiting for lock to be released`);
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+
+    console.log(`[BasicApiService][Worker ${this.workerIndex}] Acquiring lock`);
+    fs.writeFileSync(LOCK_FILE_PATH, "");
+  }
+
+  private releaseLock(): void {
+    if (fs.existsSync(LOCK_FILE_PATH)) {
+      console.log(`[BasicApiService][Worker ${this.workerIndex}] Releasing lock`);
+      fs.unlinkSync(LOCK_FILE_PATH);
     }
   }
 
   async logInUserViaApi(user: User): Promise<ApiResponse<TokenCreateResponse>> {
-    // Wait if the last execution was within the last 1500ms.
-    await BasicApiService.waitIfNeeded();
+    await this.waitIfNeeded();
 
-    // Acquire the global lock.
-    while (BasicApiService.lock) {
-      await BasicApiService.lock;
-    }
-
-    let releaseLock: () => void = () => {
-      // Dummy release
-    };
-
-    // Create a new lock promise.
-    BasicApiService.lock = new Promise<void>(resolve => {
-      releaseLock = resolve;
-    });
+    await this.acquireLock();
 
     try {
       const query = `mutation TokenAuth{
@@ -81,7 +93,9 @@ export class BasicApiService {
         }
       }`;
 
-      core.info(`Executing login request at: ${new Date().toISOString()}`);
+      console.log(
+        `[BasicApiService][Worker ${this.workerIndex}] Executing login request at: ${new Date().toISOString()}`,
+      );
 
       const loginResponse = await this.request.post(process.env.API_URL || "", {
         data: { query },
@@ -97,13 +111,11 @@ export class BasicApiService {
         throw new Error(`Login failed: ${errorMessages}`);
       }
 
-      // Update the last execution time.
       BasicApiService.lastExecutionTime = Date.now();
 
       return loginResponseJson as ApiResponse<TokenCreateResponse>;
     } finally {
-      releaseLock();
-      BasicApiService.lock = null;
+      this.releaseLock();
     }
   }
 }
