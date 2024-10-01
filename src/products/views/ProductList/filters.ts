@@ -6,30 +6,11 @@ import {
   AttributeFragment,
   AttributeInputTypeEnum,
   InitialProductFilterAttributesQuery,
-  InitialProductFilterCategoriesQuery,
-  InitialProductFilterCollectionsQuery,
-  InitialProductFilterProductTypesQuery,
-  ProductFilterInput,
   ProductWhereInput,
-  SearchAttributeValuesQuery,
-  SearchAttributeValuesQueryVariables,
-  SearchCategoriesQuery,
-  SearchCategoriesQueryVariables,
-  SearchCollectionsQuery,
-  SearchCollectionsQueryVariables,
-  SearchProductTypesQuery,
-  SearchProductTypesQueryVariables,
   StockAvailability,
 } from "@dashboard/graphql";
-import { UseSearchResult } from "@dashboard/hooks/makeSearch";
-import { findValueInEnum, maybe } from "@dashboard/misc";
-import {
-  ProductFilterKeys,
-  ProductListFilterOpts,
-} from "@dashboard/products/components/ProductListPage";
+import { ProductFilterKeys } from "@dashboard/products/components/ProductListPage";
 import { RelayToFlat } from "@dashboard/types";
-import { mapEdgesToItems, mapNodeToChoice, mapSlugNodeToChoice } from "@dashboard/utils/maps";
-import { Option } from "@saleor/macaw-ui-next";
 
 import {
   FilterElement,
@@ -56,7 +37,6 @@ import {
   ProductListUrlFiltersWithMultipleValues,
   ProductListUrlQueryParams,
 } from "../../urls";
-import { getProductGiftCardFilterParam } from "./utils";
 
 export const PRODUCT_FILTERS_KEY = "productPresets";
 
@@ -100,137 +80,6 @@ export function mapAttributeParamsToFilterOpts(
         value: dedupeFilter(attrValues),
       };
     });
-}
-
-export function getFilterOpts(
-  params: ProductListUrlFilters,
-  attributes: RelayToFlat<InitialProductFilterAttributesQuery["attributes"]>,
-  focusedAttributeChoices: UseSearchResult<
-    SearchAttributeValuesQuery,
-    SearchAttributeValuesQueryVariables
-  >,
-  categories: {
-    initial: RelayToFlat<InitialProductFilterCategoriesQuery["categories"]>;
-    search: UseSearchResult<SearchCategoriesQuery, SearchCategoriesQueryVariables>;
-  },
-  collections: {
-    initial: RelayToFlat<InitialProductFilterCollectionsQuery["collections"]>;
-    search: UseSearchResult<SearchCollectionsQuery, SearchCollectionsQueryVariables>;
-  },
-  productTypes: {
-    initial: RelayToFlat<InitialProductFilterProductTypesQuery["productTypes"]>;
-    search: UseSearchResult<SearchProductTypesQuery, SearchProductTypesQueryVariables>;
-  },
-  productKind: Option[],
-  channels: Option[],
-): ProductListFilterOpts {
-  return {
-    attributes: mapAttributeParamsToFilterOpts(attributes, params),
-    attributeChoices: {
-      active: true,
-      choices: mapSlugNodeToChoice(
-        mapEdgesToItems(focusedAttributeChoices.result.data?.attribute?.choices),
-      ),
-      displayValues: mapNodeToChoice(
-        mapEdgesToItems(focusedAttributeChoices.result.data?.attribute?.choices),
-      ),
-      hasMore:
-        focusedAttributeChoices.result.data?.attribute?.choices?.pageInfo?.hasNextPage || false,
-      initialSearch: "",
-      loading: focusedAttributeChoices.result.loading,
-      onFetchMore: focusedAttributeChoices.loadMore,
-      onSearchChange: focusedAttributeChoices.search,
-      value: null,
-    },
-    categories: {
-      active: !!params.categories,
-      choices: mapNodeToChoice(mapEdgesToItems(categories?.search?.result?.data?.search)),
-      displayValues: params.categories
-        ? maybe(
-            () =>
-              categories.initial.map(category => ({
-                label: category.name,
-                value: category.id,
-              })),
-            [],
-          )
-        : [],
-      hasMore: maybe(() => categories.search.result.data.search.pageInfo.hasNextPage, false),
-      initialSearch: "",
-      loading: categories.search.result.loading,
-      onFetchMore: categories.search.loadMore,
-      onSearchChange: categories.search.search,
-      value: dedupeFilter(params.categories || []),
-    },
-    channel: {
-      active: params?.channel !== undefined,
-      choices: channels,
-      value: params?.channel,
-    },
-    collections: {
-      active: !!params.collections,
-      choices: mapNodeToChoice(mapEdgesToItems(collections?.search?.result?.data?.search)),
-      displayValues: params.collections
-        ? maybe(
-            () =>
-              collections.initial.map(category => ({
-                label: category.name,
-                value: category.id,
-              })),
-            [],
-          )
-        : [],
-      hasMore: maybe(() => collections.search.result.data.search.pageInfo.hasNextPage, false),
-      initialSearch: "",
-      loading: collections.search.result.loading,
-      onFetchMore: collections.search.loadMore,
-      onSearchChange: collections.search.search,
-      value: dedupeFilter(params.collections || []),
-    },
-    metadata: {
-      active: !!params?.metadata?.length,
-      value: [...(params?.metadata ? params.metadata.filter(pair => pair?.key !== undefined) : [])],
-    },
-    productKind: {
-      active: params?.productKind !== undefined,
-      choices: productKind,
-      value: params?.productKind,
-    },
-    price: {
-      active: maybe(
-        () => [params.priceFrom, params.priceTo].some(field => field !== undefined),
-        false,
-      ),
-      value: {
-        max: maybe(() => params.priceTo, "0"),
-        min: maybe(() => params.priceFrom, "0"),
-      },
-    },
-    productType: {
-      active: !!params.productTypes,
-      choices: mapNodeToChoice(mapEdgesToItems(productTypes?.search?.result?.data?.search)),
-      displayValues: params.productTypes
-        ? maybe(
-            () =>
-              productTypes.initial.map(productType => ({
-                label: productType.name,
-                value: productType.id,
-              })),
-            [],
-          )
-        : [],
-      hasMore: maybe(() => productTypes.search.result.data.search.pageInfo.hasNextPage, false),
-      initialSearch: "",
-      loading: productTypes.search.result.loading,
-      onFetchMore: productTypes.search.loadMore,
-      onSearchChange: productTypes.search.search,
-      value: dedupeFilter(params.productTypes || []),
-    },
-    stockStatus: {
-      active: maybe(() => params.stockStatus !== undefined, false),
-      value: maybe(() => findValueInEnum(params.stockStatus, StockAvailability)),
-    },
-  };
 }
 
 interface BaseFilterParam {
@@ -301,55 +150,6 @@ export const parseFilterValue = (
       return { ...name, values: value };
   }
 };
-
-function getFilteredAttributeValue(params: ProductListUrlFilters): FilterParam[] {
-  const attrValues = Object.values(ProductListUrlFiltersAsDictWithMultipleValues).reduce<
-    FilterParam[]
-  >((attrValues, attributeType) => {
-    const attributes = params[attributeType];
-
-    if (!attributes) {
-      return attrValues;
-    }
-
-    return [
-      ...attrValues,
-      ...Object.keys(attributes).map(key => parseFilterValue(params, key, attributeType)),
-    ];
-  }, []);
-
-  if (!attrValues.length) {
-    return null;
-  }
-
-  return attrValues;
-}
-
-// TODO: Remove this function when productListingPageFiltersFlag is removed
-export function getLegacyFilterVariables(
-  params: ProductListUrlFilters,
-  isChannelSelected: boolean,
-): ProductFilterInput {
-  return {
-    attributes: getFilteredAttributeValue(params),
-    categories: params.categories !== undefined ? params.categories : null,
-    collections: params.collections !== undefined ? params.collections : null,
-    metadata: params?.metadata,
-    price: isChannelSelected
-      ? getGteLteVariables({
-          gte: parseFloat(params.priceFrom),
-          lte: parseFloat(params.priceTo),
-        })
-      : null,
-    productTypes: params.productTypes !== undefined ? params.productTypes : null,
-    search: params.query,
-    giftCard: getProductGiftCardFilterParam(params.productKind),
-    stockAvailability:
-      params.stockStatus !== undefined
-        ? findValueInEnum(params.stockStatus, StockAvailability)
-        : null,
-  };
-}
 
 export function getFilterQueryParam(
   filter: FilterElement<ProductFilterKeys>,
