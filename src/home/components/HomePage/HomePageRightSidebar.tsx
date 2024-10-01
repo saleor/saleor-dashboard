@@ -5,20 +5,24 @@ import { Activities, HomeData } from "@dashboard/home/types";
 import * as React from "react";
 
 import { HomeActivityCard } from "../HomeActivityCard";
-import { HomeGetInTouchCard } from "./HomeGetInTouch";
+import { HomeGetInTouchCard, useGetInTouchCard } from "./HomeGetInTouch";
 
 export interface HomePageRightSidebarProps {
   activities?: HomeData<Activities>;
 }
 
-export const HomePageRightSidebar: React.FC<HomePageRightSidebarProps> = ({ activities }) => (
-  <DetailPageLayout.RightSidebar>
-    <HomeGetInTouchCard />
+export const HomePageRightSidebar: React.FC<HomePageRightSidebarProps> = ({ activities }) => {
+  const { visible: getInTouchVisible, hide: handleCloseClick } = useGetInTouchCard();
 
-    {activities && (
-      <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
-        <HomeActivityCard activities={activities} testId="activity-card" />
-      </RequirePermissions>
-    )}
-  </DetailPageLayout.RightSidebar>
-);
+  return (
+    <DetailPageLayout.RightSidebar>
+      {getInTouchVisible && <HomeGetInTouchCard onCloseClick={handleCloseClick} />}
+
+      {activities && (
+        <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
+          <HomeActivityCard activities={activities} testId="activity-card" />
+        </RequirePermissions>
+      )}
+    </DetailPageLayout.RightSidebar>
+  );
+};

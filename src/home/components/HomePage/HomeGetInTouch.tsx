@@ -1,10 +1,29 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { TECHNICAL_HELP_CTA_URL } from "@dashboard/links";
-import { Button, HelpIcon, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { Box, Button, CloseIcon, HelpIcon, Text } from "@saleor/macaw-ui-next";
+import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
-export const HomeGetInTouchCard: React.FC = () => (
+export const useGetInTouchCard = () => {
+  const storageState = localStorage.getItem("get_in_touch_card_hidden");
+  const [hidden, setHidden] = useState(!!storageState);
+
+  const hide = () => {
+    setHidden(true);
+    localStorage.setItem("get_in_touch_card_hidden", "true");
+  };
+
+  return {
+    visible: !hidden,
+    hide,
+  };
+};
+
+interface HomeGetInTouchCardProps {
+  onCloseClick: () => void;
+}
+
+export const HomeGetInTouchCard = ({ onCloseClick }: HomeGetInTouchCardProps) => (
   <DashboardCard
     backgroundColor="default2"
     borderStyle="solid"
@@ -25,6 +44,16 @@ export const HomeGetInTouchCard: React.FC = () => (
           description="home get in touch card title"
         />
       </DashboardCard.Title>
+      <Box
+        onClick={onCloseClick}
+        as="button"
+        __backgroundColor="transparent"
+        borderWidth={0}
+        outlineStyle="none"
+        cursor="pointer"
+      >
+        <CloseIcon />
+      </Box>
     </DashboardCard.Header>
 
     <DashboardCard.Content>
