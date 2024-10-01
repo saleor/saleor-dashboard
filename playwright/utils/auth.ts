@@ -16,10 +16,6 @@ export const getStorageState = async (permission: UserPermission | "admin"): Pro
   const tempDir = path.join(__dirname, "../.auth");
   const storageStatePath = path.join(tempDir, `${permission}.json`);
 
-  console.log("getStorageState attempt, ", permission);
-  console.log(tempDir);
-  console.log(storageStatePath);
-
   // Create the .auth directory if it does not exist.
   if (!fs.existsSync(tempDir)) {
     fs.mkdirSync(tempDir, { recursive: true });
@@ -36,7 +32,7 @@ export const getStorageState = async (permission: UserPermission | "admin"): Pro
     const email = getEmailForPermission(permission);
     const password = getPasswordForPermission(permission);
 
-    console.log("getStorageState login external api");
+    console.log("getStorageState login external api", permission);
 
     try {
       await basicApiService.logInUserViaApi({ email, password });
