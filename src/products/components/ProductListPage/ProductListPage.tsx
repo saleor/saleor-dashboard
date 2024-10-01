@@ -11,12 +11,11 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
 import { DashboardCard } from "@dashboard/components/Card";
-import { getByName } from "@dashboard/components/Filter/utils";
+import { FilterElement } from "@dashboard/components/Filter";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { ProductListColumns } from "@dashboard/config";
-import { useFlag } from "@dashboard/featureFlags";
 import {
   Exact,
   GridAttributesQuery,
@@ -29,10 +28,11 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import {
   ChannelProps,
-  FilterPageProps,
   PageListProps,
   RelayToFlat,
+  SearchPageProps,
   SortPage,
+  TabPageProps,
 } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Box, Button, ChevronRightIcon, Text } from "@saleor/macaw-ui-next";
@@ -43,11 +43,11 @@ import { ProductListUrlSortField, productUrl } from "../../urls";
 import { ProductListDatagrid } from "../ProductListDatagrid";
 import { ProductListTiles } from "../ProductListTiles/ProductListTiles";
 import { ProductListViewSwitch } from "../ProductListViewSwitch";
-import { createFilterStructure, ProductFilterKeys, ProductListFilterOpts } from "./filters";
 
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
-    Omit<FilterPageProps<ProductFilterKeys, ProductListFilterOpts>, "onTabDelete">,
+    SearchPageProps,
+    Omit<TabPageProps, "onTabDelete" | "onTabDelete">,
     SortPage<ProductListUrlSortField>,
     ChannelProps {
   activeAttributeSortId: string;
@@ -70,6 +70,7 @@ export interface ProductListPageProps
   onProductsDelete: () => void;
   onSelectProductIds: (ids: number[], clearSelection: () => void) => void;
   clearRowSelection: () => void;
+  filterDependency?: FilterElement;
 }
 
 export type ProductListViewType = "datagrid" | "tile";
@@ -83,13 +84,10 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     gridAttributesOpts,
     limits,
     availableColumnsAttributesOpts,
-    filterOpts,
     initialSearch,
     settings,
     onAdd,
     onExport,
-    onFilterChange,
-    onFilterAttributeFocus,
     onSearchChange,
     onUpdateListSettings,
     selectedChannelId,
@@ -105,13 +103,12 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     selectedProductIds,
     onProductsDelete,
     clearRowSelection,
+    filterDependency,
     ...listProps
   } = props;
   const intl = useIntl();
   const navigate = useNavigator();
-  const filterStructure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
-  const filterDependency = filterStructure.find(getByName("channel"));
   const limitReached = isLimitReached(limits, "productVariants");
   const { PRODUCT_OVERVIEW_CREATE, PRODUCT_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.PRODUCT_LIST,
@@ -126,10 +123,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     DEFAULT_PRODUCT_LIST_VIEW_TYPE,
   );
   const isDatagridView = storedProductListViewType === "datagrid";
-
-  const isProductPage = window.location.pathname.includes("/products");
-  const productListingPageFiltersFlag = useFlag("product_filters");
-  const filtersEnabled = isProductPage && productListingPageFiltersFlag.enabled;
 
   return (
     <ListPageLayout>
@@ -240,17 +233,13 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           justifyContent="space-between"
         >
           <ListFilters
-            currencySymbol={currencySymbol}
+            type="new"
             initialSearch={initialSearch}
-            onFilterChange={onFilterChange}
-            onFilterAttributeFocus={onFilterAttributeFocus}
             onSearchChange={onSearchChange}
-            filterStructure={filterStructure}
             searchPlaceholder={intl.formatMessage({
               id: "kIvvax",
               defaultMessage: "Search Products...",
             })}
-            filtersEnabled={filtersEnabled}
             actions={
               <Box display="flex" gap={4}>
                 {selectedProductIds.length > 0 && (

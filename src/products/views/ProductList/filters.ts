@@ -439,31 +439,18 @@ export const getWhereVariables = (
 };
 
 export const getFilterVariables = ({
-  isProductListingPageFiltersFlagEnabled,
   filterContainer,
   queryParams,
-  isChannelSelected,
-  channelSlug,
 }: {
-  isProductListingPageFiltersFlagEnabled: boolean;
   filterContainer: FilterContainer;
   queryParams: ProductListUrlFilters;
-  isChannelSelected: boolean;
-  channelSlug: string | undefined;
 }) => {
-  if (isProductListingPageFiltersFlagEnabled) {
-    const queryVars = createProductQueryVariables(filterContainer);
-    const { channel, ...where } = queryVars;
-
-    return {
-      where,
-      search: queryParams.query,
-      channel: channel?.eq,
-    };
-  }
+  const queryVars = createProductQueryVariables(filterContainer);
+  const { channel, ...where } = queryVars;
 
   return {
-    filter: getLegacyFilterVariables(queryParams, isChannelSelected),
-    channel: channelSlug,
+    where,
+    search: queryParams.query,
+    channel: channel?.eq,
   };
 };
