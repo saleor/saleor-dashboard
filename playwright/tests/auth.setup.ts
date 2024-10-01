@@ -7,9 +7,8 @@ setup.describe.configure({ mode: "serial" });
 setup("Authenticate for each permission type via API", async () => {
   await getStorageState("admin");
 
-  await permissions
-    .map(permissionName => () => getStorageState(permissionName))
-    .forEach(async permissionPromise => {
-      await permissionPromise();
-    });
+  for (const permissionName of permissions) {
+    console.log("Loading permission", permissionName);
+    await getStorageState(permissionName);
+  }
 });
