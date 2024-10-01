@@ -184,9 +184,9 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
       const action = getCellAction(visibleColumns, col);
 
       if (action) {
-        action(products[row].id);
+        const result = action(products[row].id);
 
-        return;
+        if (result) return;
       }
 
       const rowData = products[row];

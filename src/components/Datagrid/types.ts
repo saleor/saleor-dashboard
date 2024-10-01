@@ -10,5 +10,5 @@ export interface AvailableColumn {
   hasMenu?: boolean;
   icon?: string;
   themeOverride?: Partial<Theme>;
-  action?: (id: string) => void;
+  action?: (id: string) => boolean;
 }

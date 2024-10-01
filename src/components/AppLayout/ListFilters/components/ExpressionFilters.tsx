@@ -10,7 +10,7 @@ import { useIntl } from "react-intl";
 export const ExpressionFilters = () => {
   const { formatMessage } = useIntl();
   const { valueProvider, containerState, filterWindow } = useConditionalFilterContext();
-  const clickOutside = () => {
+  const clearEmpty = () => {
     containerState.clearEmpty();
   };
 
@@ -23,7 +23,7 @@ export const ExpressionFilters = () => {
           })}
         </DropdownButton>
       </Popover.Trigger>
-      <Popover.Content align="start" onInteractOutside={clickOutside}>
+      <Popover.Content align="start" onInteractOutside={clearEmpty}>
         <Box __minHeight="250px" __minWidth="636px" display="grid" __gridTemplateRows="auto 1fr">
           <Popover.Arrow fill="default1" />
           <Box
@@ -41,7 +41,7 @@ export const ExpressionFilters = () => {
             <Text>{formatMessage(conditionalFilterMessages.popoverTitle)}</Text>
             <Box display="flex" alignItems="center" gap={2}>
               <Popover.Close>
-                <Button variant="tertiary" icon={<CloseIcon />} />
+                <Button variant="tertiary" icon={<CloseIcon />} onClick={clearEmpty} />
               </Popover.Close>
             </Box>
           </Box>
