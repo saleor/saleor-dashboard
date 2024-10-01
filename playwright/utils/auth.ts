@@ -4,12 +4,16 @@ import { request } from "@playwright/test";
 import fs from "fs";
 import path from "path";
 
+const CHECK_INTERVAL = 100; // Interval to check if the file has been filled (in ms)
+const TIMEOUT = 5000; // Timeout to wait for the file to be filled (in ms)
+
 /**
  * Retrieves the storage state for a given user permission.
  * If the storage state does not exist, it creates the necessary directories,
  * logs in the user via API, and saves the storage state to a file.
  *
  * @param {UserPermission} permission - The user permission for which to retrieve the storage state.
+ * @param {number} workerIndex - The index of the worker executing the function.
  * @returns {Promise<string>} - A promise that resolves to the path of the storage state file.
  */
 export const getStorageState = async (
@@ -24,48 +28,103 @@ export const getStorageState = async (
     fs.mkdirSync(tempDir, { recursive: true });
   }
 
-  // If the storage state does not exist, log in the user via API and save the storage state to a file.
+  // If the storage state does not exist, create an empty file.
   if (!fs.existsSync(storageStatePath)) {
-    const apiRequestContext = await request.newContext({
-      baseURL: process.env.BASE_URL!,
-    });
+    console.log(
+      `[getStorageState][Permission ${permission}][Worker ${workerIndex}] Creating empty storage state file at: ${new Date().toISOString()}`,
+    );
+    fs.writeFileSync(storageStatePath, "");
 
-    const basicApiService = new BasicApiService(apiRequestContext, workerIndex);
+    // Wait for the file to be filled by another parallel executor.
+    const filled = await waitForFileToBeFilled(storageStatePath, permission, workerIndex);
 
-    const email = getEmailForPermission(permission);
-    const password = getPasswordForPermission(permission);
-
-    try {
-      await basicApiService.logInUserViaApi({ email, password });
-    } catch (error: unknown) {
-      if (!(error instanceof Error)) {
-        throw new Error("An unknown error occurred while logging in the user via API");
-      }
-
-      const message = `logInUserViaApi failed for ${email}: ${error.message}`;
-
-      console.error(message);
-      throw new Error(message);
+    if (filled) {
+      return storageStatePath;
     }
 
-    const loginJsonInfo = await apiRequestContext.storageState();
+    // If the file is still empty after the timeout, proceed to fill it with data.
+    console.log(
+      `[getStorageState][Permission ${permission}][Worker ${workerIndex}] Proceeding to fill storage state file at: ${new Date().toISOString()}`,
+    );
+    await createAndFillStorageStateFile(storageStatePath, permission, workerIndex);
+  } else {
+    // If the storage state file exists, wait for it to be filled if it's empty.
+    const filled = await waitForFileToBeFilled(storageStatePath, permission, workerIndex);
 
-    loginJsonInfo.origins.push({
-      origin: process.env.BASE_URL!,
-      localStorage: [
-        {
-          name: "_saleorRefreshToken",
-          value: loginJsonInfo.cookies[0].value,
-        },
-      ],
-    });
-
-    fs.writeFileSync(storageStatePath, JSON.stringify(loginJsonInfo, null, 2));
-
-    await apiRequestContext.dispose();
+    if (filled) {
+      return storageStatePath;
+    }
   }
 
   return storageStatePath;
+};
+
+const waitForFileToBeFilled = async (
+  storageStatePath: string,
+  permission: UserPermission | "admin",
+  workerIndex: number,
+): Promise<boolean> => {
+  const startTime = Date.now();
+
+  while (Date.now() - startTime < TIMEOUT) {
+    const fileContent = fs.readFileSync(storageStatePath, "utf-8");
+
+    if (fileContent.trim() !== "") {
+      console.log(
+        `[getStorageState][Permission ${permission}][Worker ${workerIndex}] Detected filled storage state file at: ${new Date().toISOString()}`,
+      );
+
+      return true;
+    }
+
+    await new Promise(resolve => setTimeout(resolve, CHECK_INTERVAL));
+  }
+
+  return false;
+};
+
+const createAndFillStorageStateFile = async (
+  storageStatePath: string,
+  permission: UserPermission | "admin",
+  workerIndex: number,
+): Promise<void> => {
+  const apiRequestContext = await request.newContext({
+    baseURL: process.env.BASE_URL!,
+  });
+
+  const basicApiService = new BasicApiService(apiRequestContext, workerIndex);
+
+  const email = getEmailForPermission(permission);
+  const password = getPasswordForPermission(permission);
+
+  try {
+    await basicApiService.logInUserViaApi({ email, password });
+  } catch (error: unknown) {
+    if (!(error instanceof Error)) {
+      throw new Error("An unknown error occurred while logging in the user via API");
+    }
+
+    const message = `logInUserViaApi failed for ${email}: ${error.message}`;
+
+    console.error(message);
+    throw new Error(message);
+  }
+
+  const loginJsonInfo = await apiRequestContext.storageState();
+
+  loginJsonInfo.origins.push({
+    origin: process.env.BASE_URL!,
+    localStorage: [
+      {
+        name: "_saleorRefreshToken",
+        value: loginJsonInfo.cookies[0].value,
+      },
+    ],
+  });
+
+  fs.writeFileSync(storageStatePath, JSON.stringify(loginJsonInfo, null, 2));
+
+  await apiRequestContext.dispose();
 };
 
 const getEmailForPermission = (permission: UserPermission | "admin"): string => {
