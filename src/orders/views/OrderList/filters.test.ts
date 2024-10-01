@@ -19,7 +19,7 @@ describe("[old] Filtering query params", () => {
   it("should be empty object if no params given", () => {
     // Arrange & Act
     const params: OrderListUrlFilters = {};
-    const filterVariables = getFilterVariables(params, [], false);
+    const filterVariables = getFilterVariables(params, []);
 
     // Assert
     expect(getExistingKeys(filterVariables)).toHaveLength(0);
@@ -32,7 +32,7 @@ describe("[old] Filtering query params", () => {
       customer: "email@example.com",
       status: [OrderStatusFilter.FULFILLED, OrderStatusFilter.PARTIALLY_FULFILLED],
     };
-    const filterVariables = getFilterVariables(params, [], false);
+    const filterVariables = getFilterVariables(params, []);
 
     // Assert
     expect(getExistingKeys(filterVariables)).toHaveLength(3);
@@ -114,7 +114,7 @@ describe("[new] Filtering URL params", () => {
   it("should be empty object if no params given", () => {
     // Arrange & Act
     const params: OrderListUrlFilters = {};
-    const filterVariables = getFilterVariables(params, [], true);
+    const filterVariables = getFilterVariables(params, []);
 
     // Assert
     expect(getExistingKeys(filterVariables)).toHaveLength(0);
@@ -164,7 +164,6 @@ describe("[new] Filtering URL params", () => {
     const filterVariables = getFilterVariables(
       {},
       tokenizedUrl.asFilterValuesFromResponse(initialOrderState),
-      true,
     );
 
     // Assert

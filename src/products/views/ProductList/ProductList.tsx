@@ -176,7 +176,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       }
     },
   });
-  const [resetFilters, handleSearchChange] = useFilterHandlers({
+  const [_, resetFilters, handleSearchChange] = useFilterHandlers({
     cleanupFn: clearRowSelection,
     createUrl: productListUrl,
     getFilterQueryParam,

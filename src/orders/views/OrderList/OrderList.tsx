@@ -88,7 +88,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   });
   const noChannel = !channel && typeof channel !== "undefined";
   const channelOpts = availableChannels ? mapNodeToChoice(channels) : null;
-  const [resetFilters, handleSearchChange] = useFilterHandlers({
+  const [_, resetFilters, handleSearchChange] = useFilterHandlers({
     createUrl: orderListUrl,
     getFilterQueryParam,
     params,
