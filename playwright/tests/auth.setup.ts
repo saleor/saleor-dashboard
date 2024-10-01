@@ -4,7 +4,9 @@ import { getStorageState } from "utils/auth";
 
 setup.describe.configure({ mode: "serial" });
 
-setup("Authenticate as admin via API", async () => {
+setup("Authenticate for each permission type via API", async () => {
+  await getStorageState("admin");
+
   await permissions
     .map(permissionName => () => getStorageState(permissionName))
     .forEach(async permissionPromise => {
