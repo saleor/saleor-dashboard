@@ -103,7 +103,8 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
 
     setValue(v => removeElement(v, index));
   };
-  const create = (element: FilterElement) => {
+
+  const createNewValue = (value: FilterContainer, element: FilterElement) => {
     const newValue: FilterContainer = [];
 
     if (value.length > 0) {
@@ -111,8 +112,26 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
     }
 
     newValue.push(element);
+
+    return newValue;
+  };
+
+  const create = (element: FilterElement) => {
+    const newValue = createNewValue(value, element);
+
     setValue(v => v.concat(newValue));
   };
+
+  // This function was created to cover a case when on click outside filter handler
+  // fire state update, but applied of those state change happened after create function call,
+  // so we have not removed empty values in container
+  const createAndRemoveEmpty = (element: FilterElement) => {
+    const filteredValue = removeEmptyElements(value, valueProvider);
+    const newValue = createNewValue(filteredValue, element);
+
+    setValue(() => filteredValue.concat(newValue));
+  };
+
   const exist = (slug: string) => {
     return value.some(entry => FilterElement.isCompatible(entry) && entry.value.value === slug);
   };
@@ -128,6 +147,7 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
 
   return {
     create,
+    createAndRemoveEmpty,
     exist,
     updateBySlug,
     createEmpty,

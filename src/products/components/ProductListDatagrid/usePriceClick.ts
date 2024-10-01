@@ -4,13 +4,15 @@ import { createChannelFilterElement } from "@dashboard/products/components/Produ
 export const usePriceClick = ({ isChannelSelected }: { isChannelSelected: boolean }) => {
   const { filterWindow, containerState } = useConditionalFilterContext();
 
-  return (productId: string) => {
-    if (!productId || isChannelSelected) return;
+  return (productId: string): boolean => {
+    if (!productId || isChannelSelected) return false;
 
-    containerState.create(createChannelFilterElement());
+    containerState.createAndRemoveEmpty(createChannelFilterElement());
 
     window.scrollTo({ top: 0, behavior: "smooth" });
 
     filterWindow.setOpen(true);
+
+    return true;
   };
 };
