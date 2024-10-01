@@ -1,3 +1,4 @@
+import * as core from "@actions/core";
 import { APIRequestContext } from "@playwright/test";
 
 interface User {
@@ -80,7 +81,7 @@ export class BasicApiService {
         }
       }`;
 
-      console.log(`Executing login request at: ${new Date().toISOString()}`);
+      core.info(`Executing login request at: ${new Date().toISOString()}`);
 
       const loginResponse = await this.request.post(process.env.API_URL || "", {
         data: { query },
