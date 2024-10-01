@@ -233,7 +233,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           justifyContent="space-between"
         >
           <ListFilters
-            type="new"
+            type="expression-filter"
             initialSearch={initialSearch}
             onSearchChange={onSearchChange}
             searchPlaceholder={intl.formatMessage({

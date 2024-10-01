@@ -209,7 +209,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
 
       <DashboardCard>
         <ListFilters
-          type="new"
+          type="expression-filter"
           initialSearch={initialSearch}
           onSearchChange={onSearchChange}
           searchPlaceholder={intl.formatMessage({

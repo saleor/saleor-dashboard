@@ -9,7 +9,7 @@ import { LegacyFiltersPresetsAlert } from "./components/LegacyFiltersPresetsAler
 import SearchInput from "./components/SearchInput";
 
 export interface NewFilterProps extends SearchPageProps {
-  type: "new";
+  type: "expression-filter";
   searchPlaceholder: string;
   actions?: ReactNode;
 }
@@ -17,7 +17,7 @@ export interface NewFilterProps extends SearchPageProps {
 interface OldFiltersProps<TKeys extends string = string>
   extends FilterProps<TKeys>,
     SearchPageProps {
-  type?: "old";
+  type?: "old-filter-select";
   searchPlaceholder: string;
   actions?: ReactNode;
   filterStructure?: IFilter<TKeys>;
@@ -35,12 +35,14 @@ export const ListFilters = <TFilterKeys extends string = string>({
   actions,
   ...props
 }: ListFiltersProps<TFilterKeys>) => {
+  const isExpressionFilter = props.type === "expression-filter";
+
   return (
     <>
-      {props.type === "new" && <LegacyFiltersPresetsAlert />}
+      {isExpressionFilter && <LegacyFiltersPresetsAlert />}
       <Box display="grid" __gridTemplateColumns="auto 1fr" gap={4} paddingBottom={2} paddingX={6}>
         <Box display="flex" alignItems="center" gap={4}>
-          {props.type === "new" ? (
+          {isExpressionFilter ? (
             <ExpressionFilters data-test-id="filters-button" />
           ) : (
             <FiltersSelect<TFilterKeys>
