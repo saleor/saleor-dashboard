@@ -16,24 +16,7 @@ export default defineConfig({
   // as the test will most likely fail again. We can enable it later if needed.
   // retries: parseInt(env.RETRIES || DEFAULT_RETRIES),
   workers: parseInt(env.WORKERS || DEFAULT_WORKERS),
-  reporter: process.env.CI
-    ? [
-        ["blob"],
-        ["github"],
-        [
-          "playwright-testmo-reporter",
-          {
-            outputFile: "testmo/testmo.xml", // Optional: Output file path. Defaults to 'testmo.xml'.
-            embedBrowserType: true, // Optional: Embed browser type in the XML file. Defaults to false.
-            embedTestSteps: true, // Optional: Embed test steps in the XML file. Defaults to true.
-            testStepCategories: ["hook", "expect", "pw:api", "test.step"], // Optional: Test step categories to include in the XML file. Defaults to ["hook","expect","pw:api","test.step"]. Possible options are "hook", "expect", "pw:api", "test.step".
-            testTitleDepth: 1, // Optional: Test case title depth to report in the XML file. Defaults to 1. Increase this to 2 include suite name. Increase this even further to include the path.
-            attachmentBasePathCallback: () =>
-              process.env.URL_TO_RUN ? process.env.URL_TO_RUN : "",
-          },
-        ],
-      ]
-    : [["html"], ["list"]],
+  reporter: "list",
   expect: { timeout: 10 * 1000 },
   maxFailures: 10,
   timeout: 30 * 1000,
