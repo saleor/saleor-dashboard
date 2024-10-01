@@ -4,7 +4,12 @@ import { getStorageState } from "utils/auth";
 
 setup.describe.configure({ mode: "serial" });
 
-setup("Authenticate for each permission type via API", async () => {
+setup("Authenticate for each permission type via API", async (ctx, workerInfo) => {
+  const shardNumber = workerInfo.config.shard?.current || 1;
+
+  console.log("Shard number", shardNumber);
+  await ctx.page.waitForTimeout(shardNumber * 1000);
+
   await getStorageState("admin");
 
   for (const permissionName of permissions) {
