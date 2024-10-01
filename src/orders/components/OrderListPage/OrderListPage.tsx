@@ -20,7 +20,13 @@ import { orderMessages } from "@dashboard/orders/messages";
 import { DevModeQuery } from "@dashboard/orders/queries";
 import { OrderListUrlQueryParams, OrderListUrlSortField, orderUrl } from "@dashboard/orders/urls";
 import { getFilterVariables } from "@dashboard/orders/views/OrderList/filters";
-import { FilterPageProps, PageListProps, RelayToFlat, SortPage } from "@dashboard/types";
+import {
+  PageListProps,
+  RelayToFlat,
+  SearchPageProps,
+  SortPage,
+  TabPageProps,
+} from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Box, Button, ChevronRightIcon, Tooltip } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
@@ -28,16 +34,15 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderLimitReached from "../OrderLimitReached";
 import { OrderListDatagrid } from "../OrderListDatagrid";
-import { createFilterStructure, OrderFilterKeys, OrderListFilterOpts } from "./filters";
 
 export interface OrderListPageProps
   extends PageListProps,
-    Omit<FilterPageProps<OrderFilterKeys, OrderListFilterOpts>, "onTabDelete">,
+    SearchPageProps,
+    Omit<TabPageProps, "onTabDelete">,
     SortPage<OrderListUrlSortField> {
   limits: RefreshLimitsQuery["shop"]["limits"];
   orders: RelayToFlat<OrderListQuery["orders"]>;
   hasPresetsChanged: boolean;
-  newOrdersFiltersEnabled: boolean;
   onSettingsOpen: () => void;
   onAdd: () => void;
   params: OrderListUrlQueryParams;
@@ -47,12 +52,10 @@ export interface OrderListPageProps
 
 const OrderListPage: React.FC<OrderListPageProps> = ({
   initialSearch,
-  filterOpts,
   limits,
   onAdd,
   onSearchChange,
   onSettingsOpen,
-  onFilterChange,
   params,
   onTabChange,
   onTabDelete,
@@ -62,13 +65,11 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   onAll,
   currentTab,
   hasPresetsChanged,
-  newOrdersFiltersEnabled,
   ...listProps
 }) => {
   const intl = useIntl();
   const userAccessibleChannels = useUserAccessibleChannels();
   const hasAccessibleChannels = userAccessibleChannels.length > 0;
-  const filterStructure = createFilterStructure(intl, filterOpts);
   const limitsReached = isLimitReached(limits, "orders");
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const { ORDER_OVERVIEW_CREATE, ORDER_OVERVIEW_MORE_ACTIONS } = useExtensions(
@@ -84,7 +85,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
 
     const variables = JSON.stringify(
       {
-        filter: getFilterVariables(params, valueProvider.value, newOrdersFiltersEnabled),
+        filter: getFilterVariables(params, valueProvider.value),
         // TODO add sorting: Issue #3409
         // strange error when uncommenting this line
         // sortBy: getSortQueryVariables(params)
@@ -208,15 +209,13 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
 
       <DashboardCard>
         <ListFilters
+          type="new"
           initialSearch={initialSearch}
-          onFilterChange={onFilterChange}
           onSearchChange={onSearchChange}
-          filterStructure={filterStructure}
           searchPlaceholder={intl.formatMessage({
             id: "wTHjt3",
             defaultMessage: "Search Orders...",
           })}
-          filtersEnabled={!!newOrdersFiltersEnabled}
         />
         <OrderListDatagrid {...listProps} hasRowHover={!isFilterPresetOpen} rowAnchor={orderUrl} />
       </DashboardCard>

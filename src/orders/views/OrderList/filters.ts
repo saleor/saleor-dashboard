@@ -131,13 +131,8 @@ const _whereToLegacyVariables = (where: OrderFilterInput) => {
 export function getFilterVariables(
   params: OrderListUrlFilters,
   filterContainer: FilterContainer,
-  isFeatureFlagEnabled: boolean,
 ): OrderFilterInput {
-  let queryVariables;
-
-  if (isFeatureFlagEnabled) {
-    queryVariables = _whereToLegacyVariables(createOrderQueryVariables(filterContainer));
-  }
+  const queryVariables = _whereToLegacyVariables(createOrderQueryVariables(filterContainer));
 
   return {
     channels: params.channel as unknown as string[],
