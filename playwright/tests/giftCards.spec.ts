@@ -2,9 +2,9 @@ import { MailpitService } from "@api/mailpit";
 import { GIFT_CARDS } from "@data/e2eTestData";
 import { GiftCardsPage } from "@pages/giftCardsPage";
 import { expect } from "@playwright/test";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("admin");
+test.use({ permissionName: "admin" });
 
 let giftCardsPage: GiftCardsPage;
 let mailpitService: MailpitService;

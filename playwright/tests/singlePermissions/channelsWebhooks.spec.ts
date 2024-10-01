@@ -4,9 +4,9 @@ import { HomePage } from "@pages/homePage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { WebhooksEventsPage } from "@pages/webhooksEventsPage";
 import { expect } from "@playwright/test";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("channel");
+test.use({ permissionName: "channel" });
 
 let channelPage: ChannelPage;
 let mainMenuPage: MainMenuPage;

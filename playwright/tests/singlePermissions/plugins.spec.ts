@@ -2,9 +2,9 @@ import { ConfigurationPage } from "@pages/configurationPage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { PluginsPage } from "@pages/pluginsPage";
 import { expect } from "@playwright/test";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("plugin");
+test.use({ permissionName: "plugin" });
 
 let configurationPage: ConfigurationPage;
 let mainMenuPage: MainMenuPage;

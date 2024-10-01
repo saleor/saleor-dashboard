@@ -3,9 +3,9 @@ import { AppInstallationPage } from "@pages/appInstallationPage";
 import { AppPage } from "@pages/appPageThirdparty";
 import { AppsPage } from "@pages/appsPage";
 import { expect } from "@playwright/test";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("admin");
+test.use({ permissionName: "admin" });
 
 let appsPage: AppsPage;
 let installationPage: AppInstallationPage;

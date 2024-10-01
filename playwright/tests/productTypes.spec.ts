@@ -2,9 +2,9 @@ import { PRODUCT_TYPES } from "@data/e2eTestData";
 import { ProductTypePage } from "@pages/productTypePage";
 import { expect } from "@playwright/test";
 import * as faker from "faker";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("admin");
+test.use({ permissionName: "admin" });
 
 const productTypeName = `e2e-product-type-${faker.datatype.number()}`;
 

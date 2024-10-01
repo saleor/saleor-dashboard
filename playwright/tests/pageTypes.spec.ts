@@ -2,9 +2,9 @@ import { ATTRIBUTES, PAGE_TYPES } from "@data/e2eTestData";
 import { PageTypesPage } from "@pages/pageTypesPage";
 import { expect } from "@playwright/test";
 import * as faker from "faker";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("admin");
+test.use({ permissionName: "admin" });
 
 const pageTypeName = `e2e-page-type-${faker.datatype.number()}`;
 

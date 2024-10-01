@@ -5,9 +5,9 @@ import { ProductCreateDialog } from "@pages/dialogs/productCreateDialog";
 import { ProductPage } from "@pages/productPage";
 import { VariantsPage } from "@pages/variantsPage";
 import { expect } from "@playwright/test";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("admin");
+test.use({ permissionName: "admin" });
 
 let productPage: ProductPage;
 let productCreateDialog: ProductCreateDialog;

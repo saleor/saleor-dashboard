@@ -8,9 +8,9 @@ import { AddressForm } from "@pages/forms/addressForm";
 import { GiftCardsPage } from "@pages/giftCardsPage";
 import { expect } from "@playwright/test";
 import faker from "faker";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("admin");
+test.use({ permissionName: "admin" });
 
 let customersPage: CustomersPage;
 let giftCardsPage: GiftCardsPage;

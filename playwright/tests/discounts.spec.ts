@@ -2,9 +2,9 @@ import { CATEGORIES, CHANNELS, COLLECTIONS, DISCOUNTS, PRODUCTS } from "@data/e2
 import { DiscountsPage } from "@pages/discountsPage";
 import { expect } from "@playwright/test";
 import faker from "faker";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("admin");
+test.use({ permissionName: "admin" });
 
 let discounts: DiscountsPage;
 

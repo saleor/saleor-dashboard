@@ -2,9 +2,9 @@ import { AppsPage } from "@pages/appsPage";
 import { HomePage } from "@pages/homePage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { expect } from "@playwright/test";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("app");
+test.use({ permissionName: "app" });
 
 let mainMenuPage: MainMenuPage;
 let appsPage: AppsPage;

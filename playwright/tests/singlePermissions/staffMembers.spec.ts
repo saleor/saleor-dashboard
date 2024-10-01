@@ -3,9 +3,9 @@ import { MainMenuPage } from "@pages/mainMenuPage";
 import { PermissionGroupsPage } from "@pages/permissionGroupsPage";
 import { StaffMembersPage } from "@pages/staffMembersPage";
 import { expect } from "@playwright/test";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("staff");
+test.use({ permissionName: "staff" });
 
 let staffMembersPage: StaffMembersPage;
 let mainMenuPage: MainMenuPage;

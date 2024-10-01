@@ -4,9 +4,9 @@ import { HomePage } from "@pages/homePage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { VouchersPage } from "@pages/vouchersPage";
 import { expect } from "@playwright/test";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("discount");
+test.use({ permissionName: "discount" });
 
 let mainMenuPage: MainMenuPage;
 let home: HomePage;

@@ -16,6 +16,8 @@ export const getStorageState = async (permission: UserPermission | "admin"): Pro
   const tempDir = path.join(__dirname, "../.auth");
   const storageStatePath = path.join(tempDir, `${permission}.json`);
 
+  console.log("getStorageState");
+
   // Create the .auth directory if it does not exist.
   if (!fs.existsSync(tempDir)) {
     fs.mkdirSync(tempDir, { recursive: true });
@@ -25,6 +27,7 @@ export const getStorageState = async (permission: UserPermission | "admin"): Pro
   if (!fs.existsSync(storageStatePath)) {
     const apiRequestContext = await request.newContext({
       baseURL: process.env.BASE_URL!,
+      storageState: undefined,
     });
 
     const basicApiService = new BasicApiService(apiRequestContext);
@@ -60,6 +63,8 @@ export const getStorageState = async (permission: UserPermission | "admin"): Pro
     });
 
     fs.writeFileSync(storageStatePath, JSON.stringify(loginJsonInfo, null, 2));
+
+    await apiRequestContext.storageState({ path: storageStatePath });
 
     await apiRequestContext.dispose();
   }

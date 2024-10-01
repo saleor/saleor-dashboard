@@ -3,9 +3,9 @@ import { ConfigurationPage } from "@pages/configurationPage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { ProductTypePage } from "@pages/productTypePage";
 import { expect } from "@playwright/test";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("productTypeAndAttribute");
+test.use({ permissionName: "productTypeAndAttribute" });
 
 test("TC: SALEOR_17 User should be able to navigate to product type list as a staff member using PRODUCT TYPE permission @e2e", async ({
   page,

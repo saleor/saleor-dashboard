@@ -5,9 +5,9 @@ import { HomePage } from "@pages/homePage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { PageTypesPage } from "@pages/pageTypesPage";
 import { expect } from "@playwright/test";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("page");
+test.use({ permissionName: "page" });
 
 let basePage: BasePage;
 let mainMenuPage: MainMenuPage;

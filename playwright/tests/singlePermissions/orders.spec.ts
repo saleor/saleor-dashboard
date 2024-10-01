@@ -3,9 +3,9 @@ import { HomePage } from "@pages/homePage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { OrdersPage } from "@pages/ordersPage";
 import { expect } from "@playwright/test";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("order");
+test.use({ permissionName: "order" });
 
 let home: HomePage;
 let draftOrdersPage: DraftOrdersPage;

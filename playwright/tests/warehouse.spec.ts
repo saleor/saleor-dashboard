@@ -1,9 +1,9 @@
 import { WAREHOUSES } from "@data/e2eTestData";
 import { WarehousePage } from "@pages/warehousePage";
 import { expect } from "@playwright/test";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("admin");
+test.use({ permissionName: "admin" });
 
 let warehousePage: WarehousePage;
 

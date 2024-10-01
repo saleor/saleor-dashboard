@@ -5,9 +5,9 @@ import { NavigationDetailsPage } from "@pages/navigationDetailsPage";
 import { NavigationPage } from "@pages/navigationPage";
 import { expect } from "@playwright/test";
 import faker from "faker";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("admin");
+test.use({ permissionName: "admin" });
 
 let navigation: NavigationPage;
 let navigationDetailsPage: NavigationDetailsPage;

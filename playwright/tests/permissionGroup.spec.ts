@@ -6,9 +6,9 @@ import { PermissionGroupDetailsPage } from "@pages/permissionGroupDetailsPage";
 import { PermissionGroupsPage } from "@pages/permissionGroupsPage";
 import { expect } from "@playwright/test";
 import faker from "faker";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("admin");
+test.use({ permissionName: "admin" });
 
 let permissions: PermissionGroupsPage;
 let permissionDetails: PermissionGroupDetailsPage;

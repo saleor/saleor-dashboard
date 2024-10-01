@@ -8,9 +8,9 @@ import { FulfillmentPage } from "@pages/fulfillmentPage";
 import { OrdersPage } from "@pages/ordersPage";
 import { RefundPage } from "@pages/refundPage";
 import { expect } from "@playwright/test";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("admin");
+test.use({ permissionName: "admin" });
 
 let ordersPage: OrdersPage;
 let draftOrdersPage: DraftOrdersPage;

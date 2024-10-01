@@ -2,9 +2,9 @@ import { CHANNELS, COUNTRIES } from "@data/e2eTestData";
 import { ConfigurationPage } from "@pages/configurationPage";
 import { TaxesPage } from "@pages/taxesPage";
 import { expect } from "@playwright/test";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("admin");
+test.use({ permissionName: "admin" });
 
 let configurationPage: ConfigurationPage;
 let taxesPage: TaxesPage;

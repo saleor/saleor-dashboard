@@ -2,9 +2,9 @@ import { AVAILABILITY } from "@data/copy";
 import { VOUCHERS } from "@data/e2eTestData";
 import { VouchersPage } from "@pages/vouchersPage";
 import { expect } from "@playwright/test";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("admin");
+test.use({ permissionName: "admin" });
 
 let vouchersPage: VouchersPage;
 

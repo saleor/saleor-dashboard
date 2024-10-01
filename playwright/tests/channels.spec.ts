@@ -2,9 +2,9 @@ import { CHANNELS } from "@data/e2eTestData";
 import { ChannelPage } from "@pages/channelsPage";
 import { ConfigurationPage } from "@pages/configurationPage";
 import { expect } from "@playwright/test";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("admin");
+test.use({ permissionName: "admin" });
 
 let configurationPage: ConfigurationPage;
 let channelPage: ChannelPage;

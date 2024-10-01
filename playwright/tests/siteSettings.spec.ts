@@ -1,9 +1,9 @@
 import { SiteSettingsPage } from "@pages/siteSettingsPage";
 import { expect } from "@playwright/test";
 import faker from "faker";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("admin");
+test.use({ permissionName: "admin" });
 
 let siteSettingsPage: SiteSettingsPage;
 

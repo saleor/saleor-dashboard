@@ -1,9 +1,9 @@
 import { TRANSLATIONS } from "@data/e2eTestData";
 import { TranslationsPage } from "@pages/translationsPage";
 import { expect } from "@playwright/test";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("admin");
+test.use({ permissionName: "admin" });
 
 let translationsPage: TranslationsPage;
 

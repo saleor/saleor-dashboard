@@ -1,16 +1,16 @@
 import { CATEGORIES } from "@data/e2eTestData";
 import { CategoriesPage } from "@pages/categoriesPage";
 import { expect } from "@playwright/test";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("admin");
+test.use({ permissionName: "admin" });
 
 let categoriesPage: CategoriesPage;
 
 test.beforeEach(({ page }) => {
   categoriesPage = new CategoriesPage(page);
 });
-test("TC: SALEOR_102 Create basic category @e2e @category", async () => {
+test("TC: SALEOR_102 Create basic category @e2e @test @category", async () => {
   await categoriesPage.gotoCategoryListView();
   await categoriesPage.waitForDOMToFullyLoad();
   await categoriesPage.clickCreateNewCategoryButton();

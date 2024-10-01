@@ -3,9 +3,9 @@ import { ConfigurationPage } from "@pages/configurationPage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { ShippingMethodsPage } from "@pages/shippingMethodsPage";
 import { expect } from "@playwright/test";
-import { testWithPermission } from "utils/testWithPermission";
+import { test } from "utils/testWithPermission";
 
-const test = testWithPermission("shipping");
+test.use({ permissionName: "shipping" });
 
 test("TC: SALEOR_21 User should be able to navigate to shipping zones page as a staff member using SHIPPING permission @e2e", async ({
   page,
