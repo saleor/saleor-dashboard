@@ -68,6 +68,7 @@ runs:
         WORKERS: ${{ inputs.PW_WORKERS }}
         RETRIES: ${{ inputs.PW_RETRIES }}
         PROJECT: ${{ inputs.PROJECT }}
+        DEBUG: playwright:*
       run: |
         PROJECTS=($PROJECT)
         PROJECT_PARAMS=""
