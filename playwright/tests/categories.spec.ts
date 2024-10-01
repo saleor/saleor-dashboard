@@ -1,8 +1,9 @@
 import { CATEGORIES } from "@data/e2eTestData";
 import { CategoriesPage } from "@pages/categoriesPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
+import { testWithPermission } from "utils/testWithPermission";
 
-test.use({ storageState: "./playwright/.auth/admin.json" });
+const test = testWithPermission("admin");
 
 let categoriesPage: CategoriesPage;
 

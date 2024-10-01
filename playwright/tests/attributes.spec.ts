@@ -1,10 +1,11 @@
 import { ATTRIBUTES } from "@data/e2eTestData";
 import { AttributesPage } from "@pages/attributesPage";
 import { ConfigurationPage } from "@pages/configurationPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
 import faker from "faker";
+import { testWithPermission } from "utils/testWithPermission";
 
-test.use({ storageState: "./playwright/.auth/admin.json" });
+const test = testWithPermission("admin");
 
 let attributesPage: AttributesPage;
 let configurationPage: ConfigurationPage;

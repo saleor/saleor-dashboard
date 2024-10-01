@@ -16,7 +16,9 @@ export const getStorageState = async (permission: UserPermission | "admin"): Pro
   const tempDir = path.join(__dirname, "../.auth");
   const storageStatePath = path.join(tempDir, `${permission}.json`);
 
-  console.log("getStorageState attempt");
+  console.log("getStorageState attempt, ", permission);
+  console.log(tempDir);
+  console.log(storageStatePath);
 
   // Create the .auth directory if it does not exist.
   if (!fs.existsSync(tempDir)) {

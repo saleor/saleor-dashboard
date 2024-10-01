@@ -7,9 +7,10 @@ import { AddressForm } from "@pages/forms/addressForm";
 import { FulfillmentPage } from "@pages/fulfillmentPage";
 import { OrdersPage } from "@pages/ordersPage";
 import { RefundPage } from "@pages/refundPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
+import { testWithPermission } from "utils/testWithPermission";
 
-test.use({ storageState: "./playwright/.auth/admin.json" });
+const test = testWithPermission("admin");
 
 let ordersPage: OrdersPage;
 let draftOrdersPage: DraftOrdersPage;

@@ -1,9 +1,10 @@
 import { CHANNELS, SHIPPING_METHODS, WAREHOUSES } from "@data/e2eTestData";
 import { ShippingMethodsPage } from "@pages/shippingMethodsPage";
 import { ShippingRatesPage } from "@pages/shippingRatesPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
+import { testWithPermission } from "utils/testWithPermission";
 
-test.use({ storageState: "./playwright/.auth/admin.json" });
+const test = testWithPermission("admin");
 
 let shippingMethodsPage: ShippingMethodsPage;
 let shippingRatesPage: ShippingRatesPage;

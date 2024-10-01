@@ -4,9 +4,10 @@ import { PRODUCTS } from "@data/e2eTestData";
 import { ProductCreateDialog } from "@pages/dialogs/productCreateDialog";
 import { ProductPage } from "@pages/productPage";
 import { VariantsPage } from "@pages/variantsPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
+import { testWithPermission } from "utils/testWithPermission";
 
-test.use({ storageState: "./playwright/.auth/admin.json" });
+const test = testWithPermission("admin");
 
 let productPage: ProductPage;
 let productCreateDialog: ProductCreateDialog;
