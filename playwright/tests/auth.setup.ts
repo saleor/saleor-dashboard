@@ -4,5 +4,5 @@ import { getStorageState } from "utils/auth";
 setup.describe.configure({ mode: "serial" });
 
 setup("Authenticate as admin via API", async () => {
-  await getStorageState("admin");
+  await getStorageState("admin", setup.info().workerIndex);
 });
