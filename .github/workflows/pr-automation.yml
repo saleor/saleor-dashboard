@@ -179,9 +179,9 @@ jobs:
         env:
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
           ACCOUNTS: ${{ needs.deploy-dashboard.outputs.ACCOUNTS }}
-        run:
+        run: |
           ls playwright
-          node node playwright/auth.js restore $ACCOUNTS
+          node playwright/auth.js restore $ACCOUNTS
           ls playwright
 
       # - name: Run playwright tests
