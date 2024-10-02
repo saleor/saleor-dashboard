@@ -57,7 +57,7 @@ runs:
       shell: bash
       env:
         E2E_ENCODE_PASS: ${{ inputs.E2E_ENCODE_PASS }}
-        ACCOUNTS: ${{ inputs.API_URL }}
+        ACCOUNTS: ${{ inputs.ACCOUNTS }}
       run: |
         ls playwright
         node playwright/auth.js restore $ACCOUNTS
