@@ -122,7 +122,7 @@ const decrypt = (password, text) => {
     // const encodedString = encrypt(process.env.E2E_ENCODE_PASS, authString)
 
     // process.stdout.write(encodedString)
-    process.stdout.write("example133")
+    console.log("example133")
   }
 
 
