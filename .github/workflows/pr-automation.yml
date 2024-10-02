@@ -161,34 +161,34 @@ jobs:
           E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
         run: |
-          node playwright/auth.js login
+          ACCOUNTS=$(node playwright/auth.js login)
+          echo "ACCOUNTS=${ACCOUNTS}" >> "$GITHUB_OUTPUT"
 
+  run-tests:
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'run pw-e2e') }}
+    runs-on: ubuntu-22.04
+    needs: [deploy-dashboard]
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1]
+    steps:
+      - uses: actions/checkout@v4
 
-  # run-tests:
-  #   if: ${{ contains(github.event.pull_request.labels.*.name, 'run pw-e2e') }}
-  #   runs-on: ubuntu-22.04
-  #   needs: [initialize-cloud, deploy-dashboard]
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       shard: [1]
-  #   steps:
-  #     - uses: actions/checkout@v4
-
-  #     - name: Run playwright tests
-  #       uses: ./.github/actions/run-pw-tests
-  #       with:
-  #         SHARD: ${{ matrix.shard }}
-  #         BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
-  #         API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
-  #         E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
-  #         E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
-  #         E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
-  #         MAILPITURL: ${{ secrets.MAILPITURL }}
-  #         PW_WORKERS: ${{ vars.PW_WORKERS }}
-  #         PW_RETRIES: ${{ vars.PW_RETRIES }}
-  #         ACCOUNTS: ${{ needs.deploy-dashboard.outputs.ACCOUNTS }}
-  #         E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
+      - name: Run playwright tests
+        uses: ./.github/actions/run-pw-tests
+        with:
+          SHARD: ${{ matrix.shard }}
+          BASE_URL: https://pr-5176.dashboard.saleor.rocks
+          API_URL: https://pr-5176.staging.saleor.cloud/graphql/
+          E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
+          MAILPITURL: ${{ secrets.MAILPITURL }}
+          PW_WORKERS: ${{ vars.PW_WORKERS }}
+          PW_RETRIES: ${{ vars.PW_RETRIES }}
+          ACCOUNTS: ${{ needs.deploy-dashboard.outputs.ACCOUNTS }}
+          E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
 
   # merge-reports:
   #   if: "!cancelled() && contains(github.event.pull_request.labels.*.name, 'run pw-e2e')"
