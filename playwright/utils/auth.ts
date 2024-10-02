@@ -4,8 +4,8 @@ import { request } from "@playwright/test";
 import fs from "fs";
 import path from "path";
 
-const CHECK_INTERVAL = 100;
-const TIMEOUT = 5000;
+const CHECK_INTERVAL = 250;
+const TIMEOUT = 30000;
 
 /**
  * Retrieves the storage state for a given user permission.
@@ -43,15 +43,17 @@ export const getStorageState = async (
       `[getStorageState][Permission ${permission}][Worker ${workerIndex}] Proceeding to fill storage state file at: ${new Date().toISOString()}`,
     );
     await createAndFillStorageStateFile(storageStatePath, permission, workerIndex);
+
+    return storageStatePath;
   } else {
     const filled = await waitForFileToBeFilled(storageStatePath, permission, workerIndex);
 
     if (filled) {
       return storageStatePath;
+    } else {
+      throw new Error(`Failed to fill storage state file for permission ${permission}`);
     }
   }
-
-  return storageStatePath;
 };
 
 const waitForFileToBeFilled = async (
@@ -82,6 +84,10 @@ const waitForFileToBeFilled = async (
 
     await new Promise(resolve => setTimeout(resolve, CHECK_INTERVAL));
   }
+
+  console.warn(
+    `[getStorageState][Permission ${permission}][Worker ${workerIndex}] Timeout waiting for storage state file.`,
+  );
 
   return false;
 };

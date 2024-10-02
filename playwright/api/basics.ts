@@ -94,7 +94,7 @@ export class BasicApiService {
       }`;
 
       console.log(
-        `[BasicApiService][Worker ${this.workerIndex}] Executing login request at: ${new Date().toISOString()}`,
+        `[BasicApiService][Worker ${this.workerIndex}][Email: ${user.email}] Executing login request at: ${new Date().toISOString()}`,
       );
 
       const loginResponse = await this.request.post(process.env.API_URL || "", {
@@ -108,6 +108,9 @@ export class BasicApiService {
           .map(e => e.message)
           .join(", ");
 
+        console.error(
+          `[BasicApiService][Worker ${this.workerIndex}][Email: ${user.email}] Login failed: ${errorMessages}`,
+        );
         throw new Error(`Login failed: ${errorMessages}`);
       }
 
