@@ -153,7 +153,8 @@ jobs:
 
       - name: Prepare artifacts
         run: 
-          ls playwright
+          npx playwright test playwright/tests/auth.setup.ts
+          ls playwright 
 
   # run-tests:
   #   if: ${{ contains(github.event.pull_request.labels.*.name, 'run pw-e2e') }}
