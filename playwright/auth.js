@@ -111,18 +111,17 @@ const decrypt = (password, text) => {
   const command = process.argv[2]
 
   if (command == "login") {
-    // let authString = ''
+    let authString = ''
 
-    // for (const permissionName of PERMISSIONS) {
-    //  const auth = await getAuthForPermission(permissionName)
+    for (const permissionName of PERMISSIONS) {
+     const auth = await getAuthForPermission(permissionName)
 
-    //  authString = `${authString}${JSON.stringify(auth)}|`
-    // }
+     authString = `${authString}${JSON.stringify(auth)}|`
+    }
 
-    // const encodedString = encrypt(process.env.E2E_ENCODE_PASS, authString)
+    const encodedString = encrypt(process.env.E2E_ENCODE_PASS, authString)
 
-    // process.stdout.write(encodedString)
-    console.log("example133")
+    process.stdout.write(encodedString)
   }
 
 
