@@ -2,15 +2,14 @@ import { ExitFormDialogContext } from "@dashboard/components/Form/ExitFormDialog
 import { useContext } from "react";
 import useRouter from "use-react-router";
 
-export type UseNavigatorResult = (
-  url: string,
-  opts?: {
-    replace?: boolean;
-    preserveQs?: boolean;
-    resetScroll?: boolean;
-    state?: Record<string, unknown>;
-  },
-) => void;
+export type NavigatorOpts = {
+  replace?: boolean;
+  preserveQs?: boolean;
+  resetScroll?: boolean;
+  state?: Record<string, unknown>;
+};
+
+export type UseNavigatorResult = (url: string, opts?: NavigatorOpts) => void;
 function useNavigator(): UseNavigatorResult {
   const {
     location: { search },

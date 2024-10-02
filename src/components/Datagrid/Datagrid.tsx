@@ -1,6 +1,6 @@
 import "@glideapps/glide-data-grid/dist/index.css";
 
-import useNavigator from "@dashboard/hooks/useNavigator";
+import useNavigator, { NavigatorOpts } from "@dashboard/hooks/useNavigator";
 import { usePreventHistoryBack } from "@dashboard/hooks/usePreventHistoryBack";
 import { getCellAction } from "@dashboard/products/components/ProductListDatagrid/datagrid";
 import DataEditor, {
@@ -30,7 +30,6 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { useLocation } from "react-router";
 
 import { DashboardCard } from "../Card";
 import { CardMenuItem } from "../CardMenu";
@@ -99,6 +98,7 @@ export interface DatagridProps {
   recentlyAddedColumn?: string | null; // Enables scroll to recently added column
   onClearRecentlyAddedColumn?: () => void;
   renderHeader?: (props: DatagridRenderHeaderProps) => ReactNode;
+  navigatorOpts?: NavigatorOpts;
 }
 
 export const Datagrid: React.FC<DatagridProps> = ({
@@ -131,6 +131,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   onClearRecentlyAddedColumn,
   rowHeight = cellHeight,
   renderHeader,
+  navigatorOpts,
   ...datagridProps
 }): ReactElement => {
   const classes = useStyles({ actionButtonPosition });
@@ -138,7 +139,6 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const datagridTheme = useDatagridTheme(readonly, readonly);
   const editor = useRef<DataEditorRef | null>(null);
   const customRenderers = useCustomCellRenderers();
-  const location = useLocation();
   const navigate = useNavigator();
   const { scrolledToRight, scroller } = useScrollRight();
   const fullScreenClasses = useFullScreenStyles(classes);
@@ -533,11 +533,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
             e.preventDefault();
 
             if (e.currentTarget.dataset.reactRouterPath) {
-              navigate(e.currentTarget.dataset.reactRouterPath, {
-                state: {
-                  prevLocation: location,
-                },
-              });
+              navigate(e.currentTarget.dataset.reactRouterPath, navigatorOpts);
             }
           }}
         />
