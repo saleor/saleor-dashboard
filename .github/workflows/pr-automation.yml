@@ -161,8 +161,8 @@ jobs:
           E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
         run: 
-          # ACCOUNTS=$(node playwright/auth.js login)
-          echo "ACCOUNTS=loginexample" >> "$GITHUB_OUTPUT"
+          ACCOUNTS=$(node playwright/auth.js login)
+          echo "ACCOUNTS=${ACCOUNTS}" >> "$GITHUB_OUTPUT"
 
   run-tests:
     if: ${{ contains(github.event.pull_request.labels.*.name, 'run pw-e2e') }}
