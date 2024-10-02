@@ -58,7 +58,9 @@ runs:
       env:
         E2E_ENCODE_PASS: ${{ inputs.E2E_ENCODE_PASS }}
         ACCOUNTS: ${{ inputs.ACCOUNTS }}
-      run: node playwright/auth.js restore $ACCOUNTS
+      run: |
+        echo "::add-mask::$ACCOUNTS"
+        node playwright/auth.js restore $ACCOUNTS
 
     # - name: Install Playwright Browsers
     #   shell: bash
