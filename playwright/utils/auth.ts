@@ -7,19 +7,13 @@ import path from "path";
 const CHECK_INTERVAL = 100;
 const TIMEOUT = 30000;
 
-/**
- * Retrieves the storage state for a given user permission.
- * If the storage state does not exist, it creates the necessary directories,
- * logs in the user via API, and saves the storage state to a file.
- *
- * @param {UserPermission} permission - The user permission for which to retrieve the storage state.
- * @param {number} workerIndex - The index of the worker executing the function.
- * @returns {Promise<string>} - A promise that resolves to the path of the storage state file.
- */
-export const getStorageState = async (
-  permission: UserPermission | "admin",
-  workerIndex: number,
-): Promise<string> => {
+interface StorageStateOptions {
+  permission: UserPermission | "admin";
+  workerIndex: number;
+}
+
+export const getStorageState = async (options: StorageStateOptions): Promise<string> => {
+  const { permission } = options;
   const tempDir = path.join(__dirname, "../.auth");
   const storageStatePath = path.join(tempDir, `${permission}.json`);
 
@@ -28,11 +22,11 @@ export const getStorageState = async (
   }
 
   if (!fs.existsSync(storageStatePath)) {
-    await createAndFillStorageStateFile(storageStatePath, permission, workerIndex);
+    await createAndFillStorageStateFile(storageStatePath, options);
 
     return storageStatePath;
   } else {
-    const filled = await waitForFileToBeFilled(storageStatePath, permission, workerIndex);
+    const filled = await waitForFileToBeFilled(storageStatePath, options);
 
     if (filled) {
       return storageStatePath;
@@ -44,9 +38,9 @@ export const getStorageState = async (
 
 const waitForFileToBeFilled = async (
   storageStatePath: string,
-  permission: UserPermission | "admin",
-  workerIndex: number,
+  options: StorageStateOptions,
 ): Promise<boolean> => {
+  const { permission, workerIndex } = options;
   const startTime = Date.now();
 
   while (Date.now() - startTime < TIMEOUT) {
@@ -55,62 +49,57 @@ const waitForFileToBeFilled = async (
 
       if (fileContent.trim() !== "") {
         JSON.parse(fileContent);
-
-        console.log(
-          `[getStorageState][Permission ${permission}][Worker ${workerIndex}] Detected filled and valid storage state file at: ${new Date().toISOString()}`,
-        );
+        log(`Detected filled and valid storage state file`, options);
 
         return true;
       }
     } catch (error) {
-      console.warn(
-        `[getStorageState][Permission ${permission}][Worker ${workerIndex}] Detected malformed storage state file at: ${new Date().toISOString()}, continuing to wait...`,
-      );
+      log(`Detected malformed storage state file, continuing to wait...`, options, true);
     }
 
     await new Promise(resolve => setTimeout(resolve, CHECK_INTERVAL));
   }
 
-  console.warn(
-    `[getStorageState][Permission ${permission}][Worker ${workerIndex}] Timeout waiting for storage state file.`,
-  );
+  log(`Timeout waiting for storage state file.`, options, true);
 
   return false;
 };
 
 const createAndFillStorageStateFile = async (
   storageStatePath: string,
-  permission: UserPermission | "admin",
-  workerIndex: number,
+  options: StorageStateOptions,
 ): Promise<void> => {
-  console.log(
-    `[getStorageState][Permission ${permission}][Worker ${workerIndex}] Creating empty storage state file at: ${new Date().toISOString()}`,
-  );
+  const { permission, workerIndex } = options;
+
+  log(`Creating empty storage state file`, options);
   fs.writeFileSync(storageStatePath, "");
 
   const apiRequestContext = await request.newContext({
     baseURL: process.env.BASE_URL!,
   });
 
-  const basicApiService = new BasicApiService(apiRequestContext, workerIndex);
-
+  const basicApiService = new BasicApiService({
+    request: apiRequestContext,
+    workerIndex,
+  });
   const email = getEmailForPermission(permission);
   const password = getPasswordForPermission(permission);
 
-  console.log(
-    `[getStorageState][Permission ${permission}][Worker ${workerIndex}] Proceeding to fill storage state file at: ${new Date().toISOString()}`,
-  );
+  log(`Proceeding to fill storage state file`, options);
 
   try {
     await basicApiService.logInUserViaApi({ email, password });
   } catch (error: unknown) {
     if (!(error instanceof Error)) {
-      throw new Error("An unknown error occurred while logging in the user via API");
+      const message = `An unknown error occurred while logging in the user via API`;
+
+      log(message, options, true);
+      throw new Error(message);
     }
 
     const message = `logInUserViaApi failed for ${email}: ${error.message}`;
 
-    console.error(message);
+    log(message, options, true);
     throw new Error(message);
   }
 
@@ -131,10 +120,7 @@ const createAndFillStorageStateFile = async (
   fs.writeFileSync(tempPath, JSON.stringify(loginJsonInfo, null, 2));
   fs.renameSync(tempPath, storageStatePath);
 
-  console.log(
-    `[getStorageState][Permission ${permission}][Worker ${workerIndex}] Filled storage state file at: ${new Date().toISOString()}`,
-  );
-
+  log(`Filled storage state file`, options);
   await apiRequestContext.dispose();
 };
 
@@ -151,5 +137,16 @@ const getPasswordForPermission = (permission: UserPermission | "admin"): string 
     return process.env.E2E_USER_PASSWORD!;
   } else {
     return process.env.E2E_PERMISSIONS_USERS_PASSWORD!;
+  }
+};
+
+const log = (message: string, options: StorageStateOptions, isError = false): void => {
+  const { permission, workerIndex } = options;
+  const logMessage = `[getStorageState][Permission ${permission}][Worker ${workerIndex}] ${message} at: ${new Date().toISOString()}`;
+
+  if (isError) {
+    console.error(logMessage);
+  } else {
+    console.log(logMessage);
   }
 };
