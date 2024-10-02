@@ -71,6 +71,8 @@ jobs:
 
   deploy-dashboard:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
+    outputs:
+      accounts: ${{ steps.accounts.outputs.ACCOUNTS }}
     runs-on: ubuntu-22.04
     # needs: initialize-cloud
     permissions:
@@ -92,17 +94,17 @@ jobs:
       #     env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
       #     ref: ${{ github.head_ref }}
 
-      - name: Cache node modules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-qa-${{ env.cache-name }}-
-            ${{ runner.os }}-qa-
-            ${{ runner.os }}-
+      # - name: Cache node modules
+      #   uses: actions/cache@v3
+      #   env:
+      #     cache-name: cache-node-modules
+      #   with:
+      #     path: ~/.npm
+      #     key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-qa-${{ env.cache-name }}-
+      #       ${{ runner.os }}-qa-
+      #       ${{ runner.os }}-
 
       - name: Install deps
         run: npm ci
@@ -150,35 +152,46 @@ jobs:
       #     env_url: ${{ needs.initialize-cloud.outputs.BASE_URL }}
       #     deployment_id: ${{ steps.deployment.outputs.deployment_id }}
       #     env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
-
-      - name: Prepare artifacts
+      - name: Prepare accounts
+        id: accounts
+        env:
+          E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
         run: 
-          npx playwright test playwright/tests/auth.setup.ts
-          ls playwright 
+          ACCOUNTS=$(node playwright/auth.js login)
+          echo "ACCOUNTS=${ACCOUNTS}" >> "$GITHUB_OUTPUT"
 
-  # run-tests:
-  #   if: ${{ contains(github.event.pull_request.labels.*.name, 'run pw-e2e') }}
-  #   runs-on: ubuntu-22.04
-  #   needs: [prepare-auth, initialize-cloud, deploy-dashboard]
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       shard: ${{ fromJson(needs.initialize-cloud.outputs.SHARD_MATRIX) }}
-  #   steps:
-  #     - uses: actions/checkout@v4
+  run-tests:
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'run pw-e2e') }}
+    runs-on: ubuntu-22.04
+    needs: [prepare-auth, initialize-cloud, deploy-dashboard]
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: ${{ fromJson(needs.initialize-cloud.outputs.SHARD_MATRIX) }}
+    steps:
+      - uses: actions/checkout@v4
 
-  #     - name: Run playwright tests
-  #       uses: ./.github/actions/run-pw-tests
-  #       with:
-  #         SHARD: ${{ matrix.shard }}
-  #         BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
-  #         API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
-  #         E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
-  #         E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
-  #         E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
-  #         MAILPITURL: ${{ secrets.MAILPITURL }}
-  #         PW_WORKERS: ${{ vars.PW_WORKERS }}
-  #         PW_RETRIES: ${{ vars.PW_RETRIES }}
+      - name: Restore accounts
+        env:
+          E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
+          ACCOUNTS: ${{ needs.deploy-dashboard.outputs.ACCOUNTS }}
+        run:
+          ls playwright
+          node node playwright/auth.js restore $ACCOUNTS
+          ls playwright
+
+      # - name: Run playwright tests
+      #   uses: ./.github/actions/run-pw-tests
+      #   with:
+      #     SHARD: ${{ matrix.shard }}
+      #     BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
+      #     API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
+      #     E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
+      #     E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
+      #     E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
+      #     MAILPITURL: ${{ secrets.MAILPITURL }}
+      #     PW_WORKERS: ${{ vars.PW_WORKERS }}
+      #     PW_RETRIES: ${{ vars.PW_RETRIES }}
 
   # merge-reports:
   #   if: "!cancelled() && contains(github.event.pull_request.labels.*.name, 'run pw-e2e')"
