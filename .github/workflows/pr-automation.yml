@@ -162,6 +162,7 @@ jobs:
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
         run: |
           ACCOUNTS=$(node playwright/auth.js login)
+          echo "::add-mask::$ACCOUNTS"
           echo "ACCOUNTS=${ACCOUNTS}" >> "$GITHUB_OUTPUT"
 
   run-tests:
