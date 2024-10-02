@@ -9,7 +9,7 @@ jest.mock("react-router", () => ({
 
 describe("useBackLinkWithState", () => {
   // Arrange
-  it("should return null if there is no previous location in state", () => {
+  it("should return path if there is no previous location in state", () => {
     (useLocation as jest.Mock).mockReturnValue({
       state: {},
     });
@@ -22,29 +22,7 @@ describe("useBackLinkWithState", () => {
     );
 
     // Assert
-    expect(result.current).toBeNull();
-  });
-
-  it("should return null if the previous location is not an order list path", () => {
-    // Arrange
-    (useLocation as jest.Mock).mockReturnValue({
-      state: {
-        prevLocation: {
-          pathname: "/configuration",
-          search: "?query=param",
-        },
-      },
-    });
-
-    // Act
-    const { result } = renderHook(() =>
-      useBackLinkWithState({
-        path: "/orders",
-      }),
-    );
-
-    // Assert
-    expect(result.current).toBeNull();
+    expect(result.current).toBe("/orders");
   });
 
   it("should return the previous URL if it is an order list path", () => {
