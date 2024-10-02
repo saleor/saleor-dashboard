@@ -8,6 +8,7 @@ export type UseNavigatorResult = (
     replace?: boolean;
     preserveQs?: boolean;
     resetScroll?: boolean;
+    state?: Record<string, unknown>;
   },
 ) => void;
 function useNavigator(): UseNavigatorResult {
@@ -17,7 +18,10 @@ function useNavigator(): UseNavigatorResult {
   } = useRouter();
   const { shouldBlockNavigation } = useContext(ExitFormDialogContext);
 
-  return (url: string, { replace = false, preserveQs = false, resetScroll = false } = {}) => {
+  return (
+    url: string,
+    { replace = false, preserveQs = false, resetScroll = false, state } = {},
+  ) => {
     if (shouldBlockNavigation()) {
       return;
     }
@@ -25,9 +29,9 @@ function useNavigator(): UseNavigatorResult {
     const targetUrl = preserveQs ? url + search : url;
 
     if (replace) {
-      history.replace(targetUrl);
+      history.replace(targetUrl, state);
     } else {
-      history.push(targetUrl);
+      history.push(targetUrl, state);
     }
 
     if (resetScroll) {

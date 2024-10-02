@@ -25,6 +25,7 @@ import { useIntl } from "react-intl";
 import OrderCustomer, { CustomerEditData } from "../OrderCustomer";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
+import { useOrderListBackLink } from "../OrderList/useOrderListBackLink";
 import OrderDraftAlert from "./OrderDraftAlert";
 
 export interface OrderDraftPageProps extends FetchMoreProps {
@@ -78,11 +79,12 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
   } = props;
   const navigate = useNavigator();
   const intl = useIntl();
+  const draftOrderListBackLink = useOrderListBackLink();
 
   return (
     <DetailPageLayout>
       <TopNav
-        href={orderDraftListUrl()}
+        href={draftOrderListBackLink ?? orderDraftListUrl()}
         title={
           <Box display="flex" alignItems="center" gap={3}>
             <span>{order?.number ? "#" + order?.number : undefined}</span>

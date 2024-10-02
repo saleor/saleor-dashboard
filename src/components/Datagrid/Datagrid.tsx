@@ -30,6 +30,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { useLocation } from "react-router";
 
 import { DashboardCard } from "../Card";
 import { CardMenuItem } from "../CardMenu";
@@ -137,6 +138,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const datagridTheme = useDatagridTheme(readonly, readonly);
   const editor = useRef<DataEditorRef | null>(null);
   const customRenderers = useCustomCellRenderers();
+  const location = useLocation();
   const navigate = useNavigator();
   const { scrolledToRight, scroller } = useScrollRight();
   const fullScreenClasses = useFullScreenStyles(classes);
@@ -531,7 +533,11 @@ export const Datagrid: React.FC<DatagridProps> = ({
             e.preventDefault();
 
             if (e.currentTarget.dataset.reactRouterPath) {
-              navigate(e.currentTarget.dataset.reactRouterPath);
+              navigate(e.currentTarget.dataset.reactRouterPath, {
+                state: {
+                  prevLocation: location,
+                },
+              });
             }
           }}
         />

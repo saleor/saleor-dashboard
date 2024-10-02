@@ -36,6 +36,7 @@ import { FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDeta
 import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
+import { useOrderListBackLink } from "../OrderList/useOrderListBackLink";
 import { OrderPaymentOrTransaction } from "../OrderPaymentOrTransaction/OrderPaymentOrTransaction";
 import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
 import { messages } from "./messages";
@@ -172,6 +173,8 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     context.setDevModeVisibility(true);
   };
 
+  const backLinkUrl = useOrderListBackLink();
+
   return (
     <Form confirmLeave initial={initial} onSubmit={handleSubmit} mergeData={false}>
       {({ set, triggerChange, data, submit }) => {
@@ -179,7 +182,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
 
         return (
           <DetailPageLayout>
-            <TopNav href={orderListUrl()} title={<Title order={order} />}>
+            <TopNav href={backLinkUrl ?? orderListUrl()} title={<Title order={order} />}>
               <CardMenu
                 menuItems={[
                   ...selectCardMenuItems,
