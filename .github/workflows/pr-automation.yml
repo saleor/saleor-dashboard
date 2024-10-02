@@ -85,14 +85,14 @@ jobs:
         with:
           node-version-file: ".nvmrc"
 
-      # - name: Start deployment
-      #   uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
-      #   id: deployment
-      #   with:
-      #     step: start
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      #     env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
-      #     ref: ${{ github.head_ref }}
+      - name: Start deployment
+        uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
+        id: deployment
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
+          ref: ${{ github.head_ref }}
 
       - name: Cache node modules
         uses: actions/cache@v3
@@ -109,49 +109,49 @@ jobs:
       - name: Install deps
         run: npm ci
 
-      # - name: Build dashboard
-      #   env:
-      #     ## backward compatibility for older versions
-      #     API_URI: ${{ needs.initialize-cloud.outputs.API_URL }}
-      #     ## backward compatibility for older versions
-      #     APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
+      - name: Build dashboard
+        env:
+          ## backward compatibility for older versions
+          API_URI: ${{ needs.initialize-cloud.outputs.API_URL }}
+          ## backward compatibility for older versions
+          APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
 
-      #     API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
-      #     APPS_MARKETPLACE_API_URL: "https://apps.staging.saleor.io/api/v2/saleor-apps"
-      #     APP_MOUNT_URI: /
-      #     STATIC_URL: /
-      #     IS_CLOUD_INSTANCE: true
-      #   run: npm run build
+          API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
+          APPS_MARKETPLACE_API_URL: "https://apps.staging.saleor.io/api/v2/saleor-apps"
+          APP_MOUNT_URI: /
+          STATIC_URL: /
+          IS_CLOUD_INSTANCE: true
+        run: npm run build
 
-      # - name: Configure AWS credentials
-      #   uses: aws-actions/configure-aws-credentials@v3
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
-      # - name: Deploy to S3
-      #   env:
-      #     AWS_TEST_DEPLOYMENT_BUCKET: ${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}
-      #     BASE_URL_DOMAIN: ${{ needs.initialize-cloud.outputs.BASE_URL_DOMAIN }}
-      #   run: aws s3 sync ./build/dashboard "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL_DOMAIN}"
+      - name: Deploy to S3
+        env:
+          AWS_TEST_DEPLOYMENT_BUCKET: ${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}
+          BASE_URL_DOMAIN: ${{ needs.initialize-cloud.outputs.BASE_URL_DOMAIN }}
+        run: aws s3 sync ./build/dashboard "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL_DOMAIN}"
 
-      # - name: Invalidate cache
-      #   env:
-      #     AWS_TEST_CF_DIST_ID: ${{ secrets.AWS_TEST_CF_DIST_ID }}
-      #     BASE_URL_DOMAIN: ${{ needs.initialize-cloud.outputs.BASE_URL_DOMAIN }}
-      #   run: aws cloudfront create-invalidation --distribution-id "$AWS_TEST_CF_DIST_ID" --paths "/${BASE_URL_DOMAIN}/*"
+      - name: Invalidate cache
+        env:
+          AWS_TEST_CF_DIST_ID: ${{ secrets.AWS_TEST_CF_DIST_ID }}
+          BASE_URL_DOMAIN: ${{ needs.initialize-cloud.outputs.BASE_URL_DOMAIN }}
+        run: aws cloudfront create-invalidation --distribution-id "$AWS_TEST_CF_DIST_ID" --paths "/${BASE_URL_DOMAIN}/*"
 
-      # - name: Update deployment status
-      #   uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
-      #   if: always()
-      #   with:
-      #     step: finish
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      #     status: ${{ job.status }}
-      #     env_url: ${{ needs.initialize-cloud.outputs.BASE_URL }}
-      #     deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-      #     env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
+      - name: Update deployment status
+        uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
+        if: always()
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ job.status }}
+          env_url: ${{ needs.initialize-cloud.outputs.BASE_URL }}
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
       - name: Prepare accounts
         id: accounts
         env:
@@ -176,13 +176,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Masking
-        id: masked
-        run: |
-          ACCOUNTS=${{ needs.deploy-dashboard.outputs.ACCOUNTS }}
-          echo "::add-mask::$ACCOUNTS"
-          echo "ACCOUNTS=${ACCOUNTS}" >> "$GITHUB_OUTPUT"
-
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
         with:
@@ -195,16 +188,16 @@ jobs:
           MAILPITURL: ${{ secrets.MAILPITURL }}
           PW_WORKERS: ${{ vars.PW_WORKERS }}
           PW_RETRIES: ${{ vars.PW_RETRIES }}
-          ACCOUNTS: ${{ steps.masked.outputs.ACCOUNTS }}
+          ACCOUNTS: ${{ needs.deploy-dashboard.outputs.ACCOUNTS }}
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
 
-  # merge-reports:
-  #   if: "!cancelled() && contains(github.event.pull_request.labels.*.name, 'run pw-e2e')"
+  merge-reports:
+    if: "!cancelled() && contains(github.event.pull_request.labels.*.name, 'run pw-e2e')"
 
-  #   needs: run-tests
-  #   runs-on: ubuntu-22.04
-  #   steps:
-  #     - uses: actions/checkout@v4
+    needs: run-tests
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
 
-  #     - name: Merge playwright reports
-  #       uses: ./.github/actions/merge-pw-reports
+      - name: Merge playwright reports
+        uses: ./.github/actions/merge-pw-reports

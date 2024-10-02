@@ -61,39 +61,39 @@ runs:
       run: |
         node playwright/auth.js restore $ACCOUNTS
 
-    # - name: Install Playwright Browsers
-    #   shell: bash
-    #   run: npx playwright install --with-deps
+    - name: Install Playwright Browsers
+      shell: bash
+      run: npx playwright install --with-deps
 
-    # - name: Run tests
-    #   shell: bash
-    #   env:
-    #     ## backward compatibility for older versions
-    #     API_URI: ${{ inputs.API_URL }}
+    - name: Run tests
+      shell: bash
+      env:
+        ## backward compatibility for older versions
+        API_URI: ${{ inputs.API_URL }}
 
-    #     API_URL: ${{ inputs.API_URL }}
-    #     BASE_URL: ${{ inputs.BASE_URL }}
-    #     E2E_USER_NAME: ${{ inputs.E2E_USER_NAME }}
-    #     E2E_USER_PASSWORD: ${{ inputs.E2E_USER_PASSWORD }}
-    #     E2E_PERMISSIONS_USERS_PASSWORD: ${{ inputs.E2E_PERMISSIONS_USERS_PASSWORD }}
-    #     SHARD_NUMBER: ${{ inputs.SHARD }}
-    #     MAILPITURL: ${{ inputs.MAILPITURL }}
-    #     URL_TO_RUN: ${{ inputs.URL_TO_RUN }}
-    #     WORKERS: ${{ inputs.PW_WORKERS }}
-    #     RETRIES: ${{ inputs.PW_RETRIES }}
-    #     PROJECT: ${{ inputs.PROJECT }}
-    #   run: |
-    #     PROJECTS=($PROJECT)
-    #     PROJECT_PARAMS=""
-    #     for PROJECT in "${PROJECTS[@]}"; do
-    #       PROJECT_PARAMS+="--project=${PROJECT} "
-    #     done
-    #     npx playwright test --grep @e2e $PROJECT_PARAMS --shard "$SHARD_NUMBER"
+        API_URL: ${{ inputs.API_URL }}
+        BASE_URL: ${{ inputs.BASE_URL }}
+        E2E_USER_NAME: ${{ inputs.E2E_USER_NAME }}
+        E2E_USER_PASSWORD: ${{ inputs.E2E_USER_PASSWORD }}
+        E2E_PERMISSIONS_USERS_PASSWORD: ${{ inputs.E2E_PERMISSIONS_USERS_PASSWORD }}
+        SHARD_NUMBER: ${{ inputs.SHARD }}
+        MAILPITURL: ${{ inputs.MAILPITURL }}
+        URL_TO_RUN: ${{ inputs.URL_TO_RUN }}
+        WORKERS: ${{ inputs.PW_WORKERS }}
+        RETRIES: ${{ inputs.PW_RETRIES }}
+        PROJECT: ${{ inputs.PROJECT }}
+      run: |
+        PROJECTS=($PROJECT)
+        PROJECT_PARAMS=""
+        for PROJECT in "${PROJECTS[@]}"; do
+          PROJECT_PARAMS+="--project=${PROJECT} "
+        done
+        npx playwright test --grep @e2e $PROJECT_PARAMS --shard "$SHARD_NUMBER"
 
-    # - name: Upload blob report to GitHub Actions Artifacts
-    #   uses: actions/upload-artifact@v3
-    #   if: always()
-    #   with:
-    #     name: all-blob-reports
-    #     path: blob-report
-    #     retention-days: 1
+    - name: Upload blob report to GitHub Actions Artifacts
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: all-blob-reports
+        path: blob-report
+        retention-days: 1
