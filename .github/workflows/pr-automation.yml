@@ -72,7 +72,7 @@ jobs:
   deploy-dashboard:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
     outputs:
-      accounts: ${{ steps.accounts.outputs.ACCOUNTS }}
+      ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
     runs-on: ubuntu-22.04
     needs: initialize-cloud
     permissions:
