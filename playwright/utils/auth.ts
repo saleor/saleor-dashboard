@@ -4,7 +4,7 @@ import { request } from "@playwright/test";
 import fs from "fs";
 import path from "path";
 
-const CHECK_INTERVAL = 250;
+const CHECK_INTERVAL = 100;
 const TIMEOUT = 30000;
 
 /**
@@ -28,20 +28,6 @@ export const getStorageState = async (
   }
 
   if (!fs.existsSync(storageStatePath)) {
-    console.log(
-      `[getStorageState][Permission ${permission}][Worker ${workerIndex}] Creating empty storage state file at: ${new Date().toISOString()}`,
-    );
-    fs.writeFileSync(storageStatePath, "");
-
-    const filled = await waitForFileToBeFilled(storageStatePath, permission, workerIndex);
-
-    if (filled) {
-      return storageStatePath;
-    }
-
-    console.log(
-      `[getStorageState][Permission ${permission}][Worker ${workerIndex}] Proceeding to fill storage state file at: ${new Date().toISOString()}`,
-    );
     await createAndFillStorageStateFile(storageStatePath, permission, workerIndex);
 
     return storageStatePath;
@@ -97,6 +83,11 @@ const createAndFillStorageStateFile = async (
   permission: UserPermission | "admin",
   workerIndex: number,
 ): Promise<void> => {
+  console.log(
+    `[getStorageState][Permission ${permission}][Worker ${workerIndex}] Creating empty storage state file at: ${new Date().toISOString()}`,
+  );
+  fs.writeFileSync(storageStatePath, "");
+
   const apiRequestContext = await request.newContext({
     baseURL: process.env.BASE_URL!,
   });
@@ -105,6 +96,10 @@ const createAndFillStorageStateFile = async (
 
   const email = getEmailForPermission(permission);
   const password = getPasswordForPermission(permission);
+
+  console.log(
+    `[getStorageState][Permission ${permission}][Worker ${workerIndex}] Proceeding to fill storage state file at: ${new Date().toISOString()}`,
+  );
 
   try {
     await basicApiService.logInUserViaApi({ email, password });
@@ -135,6 +130,10 @@ const createAndFillStorageStateFile = async (
 
   fs.writeFileSync(tempPath, JSON.stringify(loginJsonInfo, null, 2));
   fs.renameSync(tempPath, storageStatePath);
+
+  console.log(
+    `[getStorageState][Permission ${permission}][Worker ${workerIndex}] Filled storage state file at: ${new Date().toISOString()}`,
+  );
 
   await apiRequestContext.dispose();
 };
