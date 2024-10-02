@@ -26,7 +26,7 @@ describe("useOrderListBackLink", () => {
     (useLocation as jest.Mock).mockReturnValue({
       state: {
         prevLocation: {
-          pathname: "/configuration/",
+          pathname: "/configuration",
           search: "?query=param",
         },
       },
@@ -45,7 +45,7 @@ describe("useOrderListBackLink", () => {
     (useLocation as jest.Mock).mockReturnValue({
       state: {
         prevLocation: {
-          pathname: "/orders/",
+          pathname: "/orders",
           search: "?asc=false&after=cursor",
         },
       },
@@ -55,7 +55,7 @@ describe("useOrderListBackLink", () => {
     const { result } = renderHook(() => useOrderListBackLink());
 
     // Assert
-    expect(result.current).toBe("/orders/?asc=false&after=cursor");
+    expect(result.current).toBe("/orders?asc=false&after=cursor");
   });
 
   it("should return the previous URL if it is a draft order list path", () => {
@@ -63,7 +63,7 @@ describe("useOrderListBackLink", () => {
     (useLocation as jest.Mock).mockReturnValue({
       state: {
         prevLocation: {
-          pathname: "/order/drafts/",
+          pathname: "/orders/drafts",
           search: "?asc=false&after=cursor",
         },
       },
@@ -73,6 +73,6 @@ describe("useOrderListBackLink", () => {
     const { result } = renderHook(() => useOrderListBackLink());
 
     // Assert
-    expect(result.current).toBe("/order/drafts/?asc=false&after=cursor");
+    expect(result.current).toBe("/orders/drafts?asc=false&after=cursor");
   });
 });
