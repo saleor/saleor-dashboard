@@ -134,6 +134,9 @@ const decrypt = (password, text) => {
 
 
     const encodedInput = process.argv[3]
+    console.log("Restoring...", encodedInput.length)
+
+
     const decodedString = decrypt(process.env.E2E_ENCODE_PASS, encodedInput)
     decodedString
       .split("|")
