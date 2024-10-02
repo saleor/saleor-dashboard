@@ -16,65 +16,65 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # initialize-cloud:
-  #   runs-on: ubuntu-22.04
-  #   outputs:
-  #     POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
-  #     POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
-  #     BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
-  #     BASE_URL_DOMAIN: ${{ steps.cloud_variables.outputs.BASE_URL_DOMAIN }}
-  #     API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
-  #     BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
-  #     BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
-  #     BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
-  #     SHARD_MATRIX: ${{ steps.generate-shard-matrix.outputs.SHARD_MATRIX }}
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         sparse-checkout: ./.github/actions
+  initialize-cloud:
+    runs-on: ubuntu-22.04
+    outputs:
+      POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
+      POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
+      BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
+      BASE_URL_DOMAIN: ${{ steps.cloud_variables.outputs.BASE_URL_DOMAIN }}
+      API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
+      BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
+      BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
+      BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
+      SHARD_MATRIX: ${{ steps.generate-shard-matrix.outputs.SHARD_MATRIX }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: ./.github/actions
 
-  #     - name: Generate variables
-  #       id: cloud_variables
-  #       uses: ./.github/actions/prepare-tests-variables
-  #       with:
-  #         CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
-  #         MODE: pull-request
+      - name: Generate variables
+        id: cloud_variables
+        uses: ./.github/actions/prepare-tests-variables
+        with:
+          CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
+          MODE: pull-request
 
-  #     - name: Prepare instances
-  #       uses: ./.github/actions/prepare-instance
-  #       with:
-  #         STRATEGY: reload
-  #         CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
-  #         BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
-  #         API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
-  #         POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
-  #         POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
-  #         BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
-  #         SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
+      - name: Prepare instances
+        uses: ./.github/actions/prepare-instance
+        with:
+          STRATEGY: reload
+          CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
+          BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
+          API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
+          POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
+          POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
+          BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
+          SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
 
-  #     - name: Generate shard matrix
-  #       id: generate-shard-matrix
-  #       env:
-  #         CONCURRENCY: ${{ inputs.shards || 2 }}
-  #       run: |
-  #         MAX_CONCURRENCY=4
-  #         if [ "$CONCURRENCY" -gt "$MAX_CONCURRENCY" ]; then
-  #           echo "[WARN] The requested number of shards ($CONCURRENCY) exceeds maximum allowed value ($MAX_CONCURRENCY). Using $MAX_CONCURRENCY shards instead." >&2
-  #           CONCURRENCY=$MAX_CONCURRENCY
-  #         fi
-  #         shard_matrix=()                             # Initialize an empty array to store the shard values.
-  #         for i in $(seq 1 "$CONCURRENCY"); do        # Loop through the numbers from 1 to $CONCURRENCY.
-  #           shard_matrix+=("\"$i/$CONCURRENCY\"")     # For each number i, append a string in the format "${i}/${CONCURRENCY}" to the shard_matrix array.
-  #         done
-  #         shard_matrix=( $(IFS=,; echo "[${shard_matrix[*]}]") ) # Join the elements of the shard_matrix array with commas and wrap the result in square brackets to create a valid JSON array string.
-  #         echo "SHARD_MATRIX=${shard_matrix[0]}" >> "$GITHUB_OUTPUT"
+      - name: Generate shard matrix
+        id: generate-shard-matrix
+        env:
+          CONCURRENCY: ${{ inputs.shards || 2 }}
+        run: |
+          MAX_CONCURRENCY=4
+          if [ "$CONCURRENCY" -gt "$MAX_CONCURRENCY" ]; then
+            echo "[WARN] The requested number of shards ($CONCURRENCY) exceeds maximum allowed value ($MAX_CONCURRENCY). Using $MAX_CONCURRENCY shards instead." >&2
+            CONCURRENCY=$MAX_CONCURRENCY
+          fi
+          shard_matrix=()                             # Initialize an empty array to store the shard values.
+          for i in $(seq 1 "$CONCURRENCY"); do        # Loop through the numbers from 1 to $CONCURRENCY.
+            shard_matrix+=("\"$i/$CONCURRENCY\"")     # For each number i, append a string in the format "${i}/${CONCURRENCY}" to the shard_matrix array.
+          done
+          shard_matrix=( $(IFS=,; echo "[${shard_matrix[*]}]") ) # Join the elements of the shard_matrix array with commas and wrap the result in square brackets to create a valid JSON array string.
+          echo "SHARD_MATRIX=${shard_matrix[0]}" >> "$GITHUB_OUTPUT"
 
   deploy-dashboard:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
     outputs:
       ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
     runs-on: ubuntu-22.04
-    # needs: initialize-cloud
+    needs: initialize-cloud
     permissions:
       deployments: write
     steps:
@@ -109,54 +109,54 @@ jobs:
       - name: Install deps
         run: npm ci
 
-      # - name: Build dashboard
-      #   env:
-      #     ## backward compatibility for older versions
-      #     API_URI: ${{ needs.initialize-cloud.outputs.API_URL }}
-      #     ## backward compatibility for older versions
-      #     APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
+      - name: Build dashboard
+        env:
+          ## backward compatibility for older versions
+          API_URI: ${{ needs.initialize-cloud.outputs.API_URL }}
+          ## backward compatibility for older versions
+          APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
 
-      #     API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
-      #     APPS_MARKETPLACE_API_URL: "https://apps.staging.saleor.io/api/v2/saleor-apps"
-      #     APP_MOUNT_URI: /
-      #     STATIC_URL: /
-      #     IS_CLOUD_INSTANCE: true
-      #   run: npm run build
+          API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
+          APPS_MARKETPLACE_API_URL: "https://apps.staging.saleor.io/api/v2/saleor-apps"
+          APP_MOUNT_URI: /
+          STATIC_URL: /
+          IS_CLOUD_INSTANCE: true
+        run: npm run build
 
-      # - name: Configure AWS credentials
-      #   uses: aws-actions/configure-aws-credentials@v3
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
-      # - name: Deploy to S3
-      #   env:
-      #     AWS_TEST_DEPLOYMENT_BUCKET: ${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}
-      #     BASE_URL_DOMAIN: ${{ needs.initialize-cloud.outputs.BASE_URL_DOMAIN }}
-      #   run: aws s3 sync ./build/dashboard "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL_DOMAIN}"
+      - name: Deploy to S3
+        env:
+          AWS_TEST_DEPLOYMENT_BUCKET: ${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}
+          BASE_URL_DOMAIN: ${{ needs.initialize-cloud.outputs.BASE_URL_DOMAIN }}
+        run: aws s3 sync ./build/dashboard "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL_DOMAIN}"
 
-      # - name: Invalidate cache
-      #   env:
-      #     AWS_TEST_CF_DIST_ID: ${{ secrets.AWS_TEST_CF_DIST_ID }}
-      #     BASE_URL_DOMAIN: ${{ needs.initialize-cloud.outputs.BASE_URL_DOMAIN }}
-      #   run: aws cloudfront create-invalidation --distribution-id "$AWS_TEST_CF_DIST_ID" --paths "/${BASE_URL_DOMAIN}/*"
+      - name: Invalidate cache
+        env:
+          AWS_TEST_CF_DIST_ID: ${{ secrets.AWS_TEST_CF_DIST_ID }}
+          BASE_URL_DOMAIN: ${{ needs.initialize-cloud.outputs.BASE_URL_DOMAIN }}
+        run: aws cloudfront create-invalidation --distribution-id "$AWS_TEST_CF_DIST_ID" --paths "/${BASE_URL_DOMAIN}/*"
 
-      # - name: Update deployment status
-      #   uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
-      #   if: always()
-      #   with:
-      #     step: finish
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      #     status: ${{ job.status }}
-      #     env_url: ${{ needs.initialize-cloud.outputs.BASE_URL }}
-      #     deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-      #     env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
+      - name: Update deployment status
+        uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
+        if: always()
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ job.status }}
+          env_url: ${{ needs.initialize-cloud.outputs.BASE_URL }}
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
       - name: Prepare accounts
         id: accounts
         env:
-          BASE_URL: https://pr-5176.dashboard.saleor.rocks
-          API_URL: https://pr-5176.staging.saleor.cloud/graphql/
+          BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
+          API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
           E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
           E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
@@ -167,11 +167,11 @@ jobs:
   run-tests:
     if: ${{ contains(github.event.pull_request.labels.*.name, 'run pw-e2e') }}
     runs-on: ubuntu-22.04
-    needs: [deploy-dashboard]
+    needs: [initialize-cloud, deploy-dashboard]
     strategy:
       fail-fast: false
       matrix:
-        shard: [1]
+        shard: ${{ needs.initialize-cloud.outputs.SHARD_MATRIX }}
     steps:
       - uses: actions/checkout@v4
 
@@ -182,8 +182,8 @@ jobs:
         uses: ./.github/actions/run-pw-tests
         with:
           SHARD: ${{ matrix.shard }}
-          BASE_URL: https://pr-5176.dashboard.saleor.rocks
-          API_URL: https://pr-5176.staging.saleor.cloud/graphql/
+          BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
+          API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
           E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
           E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
