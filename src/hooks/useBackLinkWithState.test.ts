@@ -1,13 +1,13 @@
 import { renderHook } from "@testing-library/react-hooks";
 import { useLocation } from "react-router";
 
-import { useOrderListBackLink } from "./useOrderListBackLink";
+import { useBackLinkWithState } from "./useBackLinkWithState";
 
 jest.mock("react-router", () => ({
   useLocation: jest.fn(),
 }));
 
-describe("useOrderListBackLink", () => {
+describe("useBackLinkWithState", () => {
   // Arrange
   it("should return null if there is no previous location in state", () => {
     (useLocation as jest.Mock).mockReturnValue({
@@ -15,7 +15,11 @@ describe("useOrderListBackLink", () => {
     });
 
     // Act
-    const { result } = renderHook(() => useOrderListBackLink());
+    const { result } = renderHook(() =>
+      useBackLinkWithState({
+        path: "/orders",
+      }),
+    );
 
     // Assert
     expect(result.current).toBeNull();
@@ -33,7 +37,11 @@ describe("useOrderListBackLink", () => {
     });
 
     // Act
-    const { result } = renderHook(() => useOrderListBackLink());
+    const { result } = renderHook(() =>
+      useBackLinkWithState({
+        path: "/orders",
+      }),
+    );
 
     // Assert
     expect(result.current).toBeNull();
@@ -52,7 +60,11 @@ describe("useOrderListBackLink", () => {
     });
 
     // Act
-    const { result } = renderHook(() => useOrderListBackLink());
+    const { result } = renderHook(() =>
+      useBackLinkWithState({
+        path: "/orders",
+      }),
+    );
 
     // Assert
     expect(result.current).toBe("/orders?asc=false&after=cursor");
@@ -70,7 +82,11 @@ describe("useOrderListBackLink", () => {
     });
 
     // Act
-    const { result } = renderHook(() => useOrderListBackLink());
+    const { result } = renderHook(() =>
+      useBackLinkWithState({
+        path: "/orders/drafts",
+      }),
+    );
 
     // Assert
     expect(result.current).toBe("/orders/drafts?asc=false&after=cursor");

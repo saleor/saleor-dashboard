@@ -1,4 +1,3 @@
-import { orderDraftListPath, orderListUrl as getOrderListUrl } from "@dashboard/orders/urls";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import urljoin from "url-join";
@@ -19,27 +18,26 @@ const getPreviousUrl = (location: LocationWithState) => {
   return urljoin(pathname, search);
 };
 
-const orderListUrl = getOrderListUrl();
-const draftOrderListUrl = orderDraftListPath;
+interface UseBackLinkWithState {
+  path: string;
+}
 
-export const useOrderListBackLink = () => {
+export const useBackLinkWithState = ({ path }: UseBackLinkWithState) => {
   const location = useLocation();
-  const [backLink, setBackLink] = useState<string | null>(null);
+  const [backLink, setBackLink] = useState<string>(path);
 
   useEffect(() => {
     if (location.state) {
       const previousUrl = getPreviousUrl(location as LocationWithState);
 
       // Prevent other links from being set as back link
-      // it should accept '/orders/' and '/order/drafts/' with query params
-      const isOrderListPath =
-        previousUrl?.includes(orderListUrl) || previousUrl?.includes(draftOrderListUrl);
+      const isCorrectPath = previousUrl?.includes(path);
 
-      if (isOrderListPath) {
+      if (isCorrectPath) {
         setBackLink(previousUrl);
       }
     }
-  }, [location]);
+  }, [location, path]);
 
   return backLink;
 };

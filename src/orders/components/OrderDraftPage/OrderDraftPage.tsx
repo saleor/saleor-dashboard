@@ -13,6 +13,7 @@ import {
   OrderLineInput,
   SearchCustomersQuery,
 } from "@dashboard/graphql";
+import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSectionCard";
@@ -25,7 +26,6 @@ import { useIntl } from "react-intl";
 import OrderCustomer, { CustomerEditData } from "../OrderCustomer";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
-import { useOrderListBackLink } from "../OrderList/useOrderListBackLink";
 import OrderDraftAlert from "./OrderDraftAlert";
 
 export interface OrderDraftPageProps extends FetchMoreProps {
@@ -51,6 +51,8 @@ export interface OrderDraftPageProps extends FetchMoreProps {
   onProfileView: () => void;
   onShowMetadata: (id: string) => void;
 }
+
+const draftOrderListUrl = orderDraftListUrl();
 
 const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
   const {
@@ -79,12 +81,14 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
   } = props;
   const navigate = useNavigator();
   const intl = useIntl();
-  const draftOrderListBackLink = useOrderListBackLink();
+  const backLinkUrl = useBackLinkWithState({
+    path: draftOrderListUrl,
+  });
 
   return (
     <DetailPageLayout>
       <TopNav
-        href={draftOrderListBackLink ?? orderDraftListUrl()}
+        href={backLinkUrl}
         title={
           <Box display="flex" alignItems="center" gap={3}>
             <span>{order?.number ? "#" + order?.number : undefined}</span>
