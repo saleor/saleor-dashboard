@@ -175,6 +175,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Masking
+        run: echo "::add-mask::${{ needs.deploy-dashboard.outputs.ACCOUNTS }}"
+
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
         with:
