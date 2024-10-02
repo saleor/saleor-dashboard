@@ -172,11 +172,16 @@ jobs:
       fail-fast: false
       matrix:
         shard: ${{ fromJson(needs.initialize-cloud.outputs.SHARD_MATRIX) }}
+
     steps:
       - uses: actions/checkout@v4
 
       - name: Masking
-        run: echo "::add-mask::${{ needs.deploy-dashboard.outputs.ACCOUNTS }}"
+        id: masked
+        run: |
+          ACCOUNTS=${{ needs.deploy-dashboard.outputs.ACCOUNTS }}
+          echo "::add-mask::$ACCOUNTS"
+          echo "ACCOUNTS=${ACCOUNTS}" >> "$GITHUB_OUTPUT"
 
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
@@ -190,7 +195,7 @@ jobs:
           MAILPITURL: ${{ secrets.MAILPITURL }}
           PW_WORKERS: ${{ vars.PW_WORKERS }}
           PW_RETRIES: ${{ vars.PW_RETRIES }}
-          ACCOUNTS: ${{ needs.deploy-dashboard.outputs.ACCOUNTS }}
+          ACCOUNTS: ${{ steps.masked.outputs.ACCOUNTS }}
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
 
   # merge-reports:
