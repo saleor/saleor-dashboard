@@ -4,8 +4,8 @@ import { request } from "@playwright/test";
 import fs from "fs";
 import path from "path";
 
-const CHECK_INTERVAL = 100; // Interval to check if the file has been filled (in ms)
-const TIMEOUT = 5000; // Timeout to wait for the file to be filled (in ms)
+const CHECK_INTERVAL = 100;
+const TIMEOUT = 5000;
 
 /**
  * Retrieves the storage state for a given user permission.
@@ -23,32 +23,27 @@ export const getStorageState = async (
   const tempDir = path.join(__dirname, "../.auth");
   const storageStatePath = path.join(tempDir, `${permission}.json`);
 
-  // Create the .auth directory if it does not exist.
   if (!fs.existsSync(tempDir)) {
     fs.mkdirSync(tempDir, { recursive: true });
   }
 
-  // If the storage state does not exist, create an empty file.
   if (!fs.existsSync(storageStatePath)) {
     console.log(
       `[getStorageState][Permission ${permission}][Worker ${workerIndex}] Creating empty storage state file at: ${new Date().toISOString()}`,
     );
     fs.writeFileSync(storageStatePath, "");
 
-    // Wait for the file to be filled by another parallel executor.
     const filled = await waitForFileToBeFilled(storageStatePath, permission, workerIndex);
 
     if (filled) {
       return storageStatePath;
     }
 
-    // If the file is still empty after the timeout, proceed to fill it with data.
     console.log(
       `[getStorageState][Permission ${permission}][Worker ${workerIndex}] Proceeding to fill storage state file at: ${new Date().toISOString()}`,
     );
     await createAndFillStorageStateFile(storageStatePath, permission, workerIndex);
   } else {
-    // If the storage state file exists, wait for it to be filled if it's empty.
     const filled = await waitForFileToBeFilled(storageStatePath, permission, workerIndex);
 
     if (filled) {
@@ -67,14 +62,22 @@ const waitForFileToBeFilled = async (
   const startTime = Date.now();
 
   while (Date.now() - startTime < TIMEOUT) {
-    const fileContent = fs.readFileSync(storageStatePath, "utf-8");
+    try {
+      const fileContent = fs.readFileSync(storageStatePath, "utf-8");
 
-    if (fileContent.trim() !== "") {
-      console.log(
-        `[getStorageState][Permission ${permission}][Worker ${workerIndex}] Detected filled storage state file at: ${new Date().toISOString()}`,
+      if (fileContent.trim() !== "") {
+        JSON.parse(fileContent);
+
+        console.log(
+          `[getStorageState][Permission ${permission}][Worker ${workerIndex}] Detected filled and valid storage state file at: ${new Date().toISOString()}`,
+        );
+
+        return true;
+      }
+    } catch (error) {
+      console.warn(
+        `[getStorageState][Permission ${permission}][Worker ${workerIndex}] Detected malformed storage state file at: ${new Date().toISOString()}, continuing to wait...`,
       );
-
-      return true;
     }
 
     await new Promise(resolve => setTimeout(resolve, CHECK_INTERVAL));
@@ -122,7 +125,10 @@ const createAndFillStorageStateFile = async (
     ],
   });
 
-  fs.writeFileSync(storageStatePath, JSON.stringify(loginJsonInfo, null, 2));
+  const tempPath = `${storageStatePath}.tmp`;
+
+  fs.writeFileSync(tempPath, JSON.stringify(loginJsonInfo, null, 2));
+  fs.renameSync(tempPath, storageStatePath);
 
   await apiRequestContext.dispose();
 };
