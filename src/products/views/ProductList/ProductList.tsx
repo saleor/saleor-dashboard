@@ -94,7 +94,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       first: 10,
     },
-    skip: true,
+    skip: params.action !== "export",
   });
 
   const warehouses = useWarehouseListQuery({

@@ -5,12 +5,10 @@ import { FlagValue } from "@dashboard/featureFlags/FlagContent";
 import {
   AttributeFragment,
   AttributeInputTypeEnum,
-  InitialProductFilterAttributesQuery,
   ProductWhereInput,
   StockAvailability,
 } from "@dashboard/graphql";
 import { ProductFilterKeys } from "@dashboard/products/components/ProductListPage";
-import { RelayToFlat } from "@dashboard/types";
 
 import {
   FilterElement,
@@ -20,7 +18,6 @@ import {
 import {
   createFilterTabUtils,
   createFilterUtils,
-  dedupeFilter,
   getGteLteVariables,
   getKeyValueQueryParam,
   getMinMaxQueryParam,
@@ -60,26 +57,6 @@ export function getAttributeValuesFromParams(
   attribute: Pick<AttributeFragment, "inputType" | "slug">,
 ) {
   return params[getAttributeFilterParamType(attribute.inputType)]?.[attribute.slug] || [];
-}
-
-export function mapAttributeParamsToFilterOpts(
-  attributes: RelayToFlat<InitialProductFilterAttributesQuery["attributes"]>,
-  params: ProductListUrlFilters,
-) {
-  return attributes
-    .sort((a, b) => (a.name > b.name ? 1 : -1))
-    .map(attr => {
-      const attrValues = getAttributeValuesFromParams(params, attr);
-
-      return {
-        active: attrValues.length > 0,
-        id: attr.id,
-        name: attr.name,
-        slug: attr.slug,
-        inputType: attr.inputType,
-        value: dedupeFilter(attrValues),
-      };
-    });
 }
 
 interface BaseFilterParam {

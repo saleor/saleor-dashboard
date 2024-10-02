@@ -3,12 +3,7 @@ import { AttributeInputTypeEnum } from "@dashboard/graphql";
 import { ProductListUrlFilters } from "@dashboard/products/urls";
 
 import { ProductListUrlFiltersAsDictWithMultipleValues } from "../../urls";
-import {
-  FilterParam,
-  getAttributeValuesFromParams,
-  mapAttributeParamsToFilterOpts,
-  parseFilterValue,
-} from "./filters";
+import { FilterParam, getAttributeValuesFromParams, parseFilterValue } from "./filters";
 
 describe("Get attribute values from URL params", () => {
   type GetAttributeValuesFromParams = Parameters<typeof getAttributeValuesFromParams>;
@@ -42,102 +37,6 @@ describe("Get attribute values from URL params", () => {
 
     // Assert
     expect(attributeValues).toEqual(["value-1", "value-2"]);
-  });
-});
-describe("Map attribute params to filter opts", () => {
-  type MapAttributeParamsToFilterOpts = Parameters<typeof mapAttributeParamsToFilterOpts>;
-  type MapAttributeParamsToFilterOptsReturn = ReturnType<typeof mapAttributeParamsToFilterOpts>;
-
-  it("should return empty array when no params given", () => {
-    // Arrange
-    const attributes: MapAttributeParamsToFilterOpts[0] = [
-      {
-        id: "1",
-        slug: "test",
-        inputType: AttributeInputTypeEnum.DROPDOWN,
-        name: "Test",
-        __typename: "Attribute",
-      },
-    ];
-    const params: MapAttributeParamsToFilterOpts[1] = {};
-    // Act
-    const filterOpts = mapAttributeParamsToFilterOpts(attributes, params);
-    // Assert
-    const expectedFilterOpts: MapAttributeParamsToFilterOptsReturn = [
-      {
-        id: "1",
-        slug: "test",
-        inputType: AttributeInputTypeEnum.DROPDOWN,
-        name: "Test",
-        active: false,
-        value: [],
-      },
-    ];
-
-    expect(filterOpts).toEqual(expectedFilterOpts);
-  });
-  it("should return filter opts with proper values selected according to passed values selection in params", () => {
-    // Arrange
-    const attributes: MapAttributeParamsToFilterOpts[0] = [
-      {
-        id: "1",
-        slug: "test-1",
-        inputType: AttributeInputTypeEnum.MULTISELECT,
-        name: "Test 1",
-        __typename: "Attribute",
-      },
-      {
-        id: "2",
-        slug: "test-2",
-        inputType: AttributeInputTypeEnum.DROPDOWN,
-        name: "Test 2",
-        __typename: "Attribute",
-      },
-      {
-        id: "3",
-        slug: "test-3",
-        inputType: AttributeInputTypeEnum.DROPDOWN,
-        name: "Test 3",
-        __typename: "Attribute",
-      },
-    ];
-    const params: MapAttributeParamsToFilterOpts[1] = {
-      "string-attributes": {
-        "test-1": ["value-1", "value-2"],
-        "test-2": ["value-3"],
-      },
-    };
-    // Act
-    const filterOpts = mapAttributeParamsToFilterOpts(attributes, params);
-    // Assert
-    const expectedFilterOpts: MapAttributeParamsToFilterOptsReturn = [
-      {
-        id: "1",
-        slug: "test-1",
-        inputType: AttributeInputTypeEnum.MULTISELECT,
-        name: "Test 1",
-        active: true,
-        value: ["value-1", "value-2"],
-      },
-      {
-        id: "2",
-        slug: "test-2",
-        inputType: AttributeInputTypeEnum.DROPDOWN,
-        name: "Test 2",
-        active: true,
-        value: ["value-3"],
-      },
-      {
-        id: "3",
-        slug: "test-3",
-        inputType: AttributeInputTypeEnum.DROPDOWN,
-        name: "Test 3",
-        active: false,
-        value: [],
-      },
-    ];
-
-    expect(filterOpts).toEqual(expectedFilterOpts);
   });
 });
 describe("Parsing filter value", () => {
