@@ -33,7 +33,7 @@ export const useBackLinkWithState = ({ path }: UseBackLinkWithState) => {
       // Prevent other links from being set as back link
       const isCorrectPath = previousUrl?.includes(path);
 
-      if (isCorrectPath) {
+      if (isCorrectPath && previousUrl) {
         setBackLink(previousUrl);
       }
     }
