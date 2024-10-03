@@ -2,9 +2,10 @@ import { APPS } from "@data/e2eTestData";
 import { AppInstallationPage } from "@pages/appInstallationPage";
 import { AppPage } from "@pages/appPageThirdparty";
 import { AppsPage } from "@pages/appsPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
+import { test } from "utils/testWithPermission";
 
-test.use({ storageState: "./playwright/.auth/admin.json" });
+test.use({ permissionName: "admin" });
 
 let appsPage: AppsPage;
 let installationPage: AppInstallationPage;
