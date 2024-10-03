@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-const { request }  = require("@playwright/test");
+const { request } = require("@playwright/test");
 const dotenv = require("dotenv");
 const process = require("process");
 const crypto = require("crypto");
@@ -27,6 +27,23 @@ const PERMISSIONS = [
   "translations",
 ]
 
+const ACCOUNT_EMAILS = {
+  channel: "channel.manager@example.com",
+  shipping: "shipping.manager@example.com",
+  giftCard: "gift.card.manager@example.com",
+  app: "app.manager@example.com",
+  settings: "setting.manager@example.com",
+  page: "page.manager@example.com",
+  order: "order.manager@example.com",
+  translations: "translation.manager@example.com",
+  staff: "staff.manager@example.com",
+  customer: "user.manager@example.com",
+  productTypeAndAttribute: "product.type.and.attribute.manager@example.com",
+  discount: "discount.manager@example.com",
+  plugin: "plugin.manager@example.com",
+  product: "product.manager@example.com",
+};
+
 const createQuery = (email, password) => `mutation TokenAuth{
   tokenCreate(email: "${email}", password: "${password}") {
     token
@@ -45,17 +62,17 @@ const createQuery = (email, password) => `mutation TokenAuth{
 const getEmailForPermission = (permission) => {
   if (permission === "admin") {
     return process.env.E2E_USER_NAME;
-  } else {
-    return USER_PERMISSION[permission];
   }
+
+  return ACCOUNT_EMAILS[permission];
 };
 
 const getPasswordForPermission = (permission) => {
   if (permission === "admin") {
     return process.env.E2E_USER_PASSWORD;
-  } else {
-    return process.env.E2E_PERMISSIONS_USERS_PASSWORD;
   }
+
+  return process.env.E2E_PERMISSIONS_USERS_PASSWORD;
 };
 
 const getAuthForPermission = async (permissionName) => {
@@ -63,8 +80,8 @@ const getAuthForPermission = async (permissionName) => {
     baseURL: process.env.BASE_URL,
   });
 
-  const email = getEmailForPermission("admin");
-  const password = getPasswordForPermission("admin");
+  const email = getEmailForPermission(permissionName);
+  const password = getPasswordForPermission(permissionName);
   const query = createQuery(email, password)
 
   await apiRequestContext.post(process.env.API_URL || "", {
@@ -72,16 +89,6 @@ const getAuthForPermission = async (permissionName) => {
   });
 
   const loginJsonInfo = await apiRequestContext.storageState();
-
-  loginJsonInfo.origins.push({
-    origin: process.env.BASE_URL,
-    localStorage: [
-      {
-        name: "_saleorRefreshToken",
-        value: loginJsonInfo.cookies[0].value,
-      },
-    ],
-  });
 
   return loginJsonInfo
 }
@@ -114,9 +121,9 @@ const decrypt = (password, text) => {
     let authString = ''
 
     for (const permissionName of PERMISSIONS) {
-     const auth = await getAuthForPermission(permissionName)
+      const auth = await getAuthForPermission(permissionName)
 
-     authString = `${authString}${JSON.stringify(auth)}|`
+      authString = `${authString}${JSON.stringify(auth)}|`
     }
 
     const encodedString = encrypt(process.env.E2E_ENCODE_PASS, authString)
@@ -127,7 +134,7 @@ const decrypt = (password, text) => {
 
   if (command == "restore") {
     const tempDir = path.join(__dirname, "../playwright/.auth");
-  
+
     if (!fs.existsSync(tempDir)) {
       fs.mkdirSync(tempDir, { recursive: true });
     }
@@ -141,6 +148,21 @@ const decrypt = (password, text) => {
     decodedString
       .split("|")
       .filter(Boolean)
+      .map(JSON.parse)
+      .map(obj => {
+        obj.origins.push({
+          origin: process.env.BASE_URL,
+          localStorage: [
+            {
+              name: "_saleorRefreshToken",
+              value: obj.cookies[0].value,
+            },
+          ],
+        });
+
+        return obj
+      })
+      .map(JSON.stringify)
       .map((str, index) => ({ name: PERMISSIONS[index], str }))
       .forEach(token => {
         const storageStatePath = path.join(tempDir, `${token.name}.json`); 
