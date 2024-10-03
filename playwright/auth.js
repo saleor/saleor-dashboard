@@ -95,7 +95,7 @@ const getAuthForPermission = async (permissionName) => {
       .map(e => e.message)
       .join(", ");
 
-    throw new Error(`Login failed: ${errorMessages}`);
+    throw new Error(`Login failed for permission ${permissionName}: ${errorMessages}`);
   }
 
   const loginJsonInfo = await apiRequestContext.storageState();

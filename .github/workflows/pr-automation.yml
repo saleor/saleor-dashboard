@@ -160,6 +160,7 @@ jobs:
           E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
           E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
         run: |
           ACCOUNTS=$(node playwright/auth.js login)
           echo "ACCOUNTS=${ACCOUNTS}" >> "$GITHUB_OUTPUT"
