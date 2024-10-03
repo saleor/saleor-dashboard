@@ -162,7 +162,6 @@ const decrypt = (password, text) => {
       .filter(Boolean)
       .map(JSON.parse)
       .map(obj => {
-        console.log(obj)
         obj.origins.push({
           origin: process.env.BASE_URL,
           localStorage: [
