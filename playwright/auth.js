@@ -84,9 +84,19 @@ const getAuthForPermission = async (permissionName) => {
   const password = getPasswordForPermission(permissionName);
   const query = createQuery(email, password)
 
-  await apiRequestContext.post(process.env.API_URL || "", {
+  const response = await apiRequestContext.post(process.env.API_URL || "", {
     data: { query },
   });
+  const resposnseObj = await response.json()
+  const { errors } = resposnseObj.data.tokenCreate
+
+  if (errors && errors.length > 0) {
+    const errorMessages = errors
+      .map(e => e.message)
+      .join(", ");
+
+    throw new Error(`Login failed: ${errorMessages}`);
+  }
 
   const loginJsonInfo = await apiRequestContext.storageState();
 
@@ -121,7 +131,9 @@ const decrypt = (password, text) => {
     let authString = ''
 
     for (const permissionName of PERMISSIONS) {
+
       const auth = await getAuthForPermission(permissionName)
+
 
       authString = `${authString}${JSON.stringify(auth)}|`
     }
@@ -150,6 +162,7 @@ const decrypt = (password, text) => {
       .filter(Boolean)
       .map(JSON.parse)
       .map(obj => {
+        console.log(obj)
         obj.origins.push({
           origin: process.env.BASE_URL,
           localStorage: [
