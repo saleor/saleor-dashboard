@@ -42,7 +42,7 @@ const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogP
   return (
     <DashboardModal onChange={onClose} open={open}>
       <DashboardModal.Content size="md" __gridTemplateRows="auto 1fr">
-        <DashboardModal.Header onClose={onClose}>
+        <DashboardModal.Header>
           <FormattedMessage
             id="iPk640"
             defaultMessage="Media Selection"

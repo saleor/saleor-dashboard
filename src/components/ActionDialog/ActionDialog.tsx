@@ -39,7 +39,7 @@ const ActionDialog = ({
   return (
     <DashboardModal onChange={onClose} open={open}>
       <DashboardModal.Content size={size}>
-        <DashboardModal.Header onClose={onClose}>{title}</DashboardModal.Header>
+        <DashboardModal.Header>{title}</DashboardModal.Header>
         <Box fontSize={3}>{children}</Box>
         <DashboardModal.Actions>
           <BackButton onClick={onClose}>{backButtonText}</BackButton>

@@ -98,7 +98,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
   return (
     <DashboardModal onChange={handleClose} open={open}>
       <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr">
-        <DashboardModal.Header onClose={onClose}>
+        <DashboardModal.Header>
           <FormattedMessage
             id="xZhxBJ"
             defaultMessage="Assign Products"

@@ -253,7 +253,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
 
             return (
               <DashboardModal.Grid>
-                <DashboardModal.Header onClose={onClose}>
+                <DashboardModal.Header>
                   <FormattedMessage {...getDialogTitle()} />
                 </DashboardModal.Header>
 

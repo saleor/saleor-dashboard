@@ -129,7 +129,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
   return (
     <DashboardModal onChange={onClose} open={open}>
       <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr">
-        <DashboardModal.Header onClose={onClose}>
+        <DashboardModal.Header>
           <FormattedMessage {...messages.title} />
         </DashboardModal.Header>
 

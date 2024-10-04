@@ -109,9 +109,7 @@ const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
     <>
       <DashboardModal open={open} onChange={onClose}>
         <DashboardModal.Content size="sm">
-          <DashboardModal.Header onClose={onClose}>
-            {intl.formatMessage(messages.title)}
-          </DashboardModal.Header>
+          <DashboardModal.Header>{intl.formatMessage(messages.title)}</DashboardModal.Header>
           <ContentWithProgress>
             {!loadingChannelCurrencies && (
               <GiftCardBulkCreateDialogForm

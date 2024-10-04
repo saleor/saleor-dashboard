@@ -39,7 +39,7 @@ export const RuleFormModal = ({
   return (
     <DashboardModal open={true} onChange={onClose}>
       <DashboardModal.Content size="sm" data-test-id="add-rule-dialog">
-        <DashboardModal.Header onClose={onClose}>
+        <DashboardModal.Header>
           <FormattedMessage {...(initialFormValues ? messages.editRule : messages.addRule)} />
         </DashboardModal.Header>
         <FormProvider {...methods}>

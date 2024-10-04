@@ -30,7 +30,7 @@ const OrderInvoiceEmailSendDialog: React.FC<OrderInvoiceEmailSendDialogProps> = 
   return (
     <DashboardModal onChange={onClose} open={open}>
       <DashboardModal.Content size="sm">
-        <DashboardModal.Header onClose={onClose}>
+        <DashboardModal.Header>
           {intl.formatMessage({
             id: "5JT4v2",
             defaultMessage: "Send Invoice",

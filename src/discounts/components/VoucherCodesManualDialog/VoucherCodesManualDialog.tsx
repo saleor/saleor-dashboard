@@ -45,7 +45,7 @@ export const VoucherCodesManualDialog = ({
   return (
     <DashboardModal open={open} onChange={handleModalClose}>
       <DashboardModal.Content size="xs">
-        <DashboardModal.Header onClose={onClose}>
+        <DashboardModal.Header>
           <FormattedMessage defaultMessage="Enter Voucher Code" id="giVGCH" />
         </DashboardModal.Header>
         <Box display="grid" gap={3} __width={390}>

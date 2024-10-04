@@ -18,7 +18,7 @@ const ExitFormDialog: React.FC<ExitFormDialogProps> = ({ onLeave, onClose, isOpe
   return (
     <DashboardModal open={isOpen} onChange={onClose}>
       <DashboardModal.Content size="sm">
-        <DashboardModal.Header onClose={onClose}>
+        <DashboardModal.Header>
           {intl.formatMessage(messages.unableToSaveTitle)}
         </DashboardModal.Header>
 

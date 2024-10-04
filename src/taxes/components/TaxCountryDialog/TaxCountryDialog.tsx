@@ -46,7 +46,7 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
   return (
     <DashboardModal open={open} onChange={onClose}>
       <DashboardModal.Content size="sm">
-        <DashboardModal.Header onClose={onClose}>
+        <DashboardModal.Header>
           <FormattedMessage {...taxesMessages.chooseCountryDialogTitle} />
         </DashboardModal.Header>
 

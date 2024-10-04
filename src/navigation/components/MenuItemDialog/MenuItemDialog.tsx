@@ -98,7 +98,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
       <DashboardModal.Content size="sm">
         <form onSubmit={handleSubmit(onSubmit)}>
           <DashboardModal.Grid>
-            <DashboardModal.Header onClose={onClose} data-test-id="add-menu-item-dialog-title">
+            <DashboardModal.Header data-test-id="add-menu-item-dialog-title">
               {initial
                 ? intl.formatMessage({
                     id: "KKQUMK",

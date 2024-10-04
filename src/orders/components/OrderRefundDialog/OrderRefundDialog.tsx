@@ -28,7 +28,7 @@ export const OrderRefundDialog = ({
   return (
     <DashboardModal open={open} onChange={onClose}>
       <DashboardModal.Content size="xs" data-test-id="order-refund-dialog">
-        <DashboardModal.Header onClose={onClose}>
+        <DashboardModal.Header>
           {intl.formatMessage(orderRefundDialogMesages.title)}
         </DashboardModal.Header>
         <Text>{intl.formatMessage(orderRefundDialogMesages.subtitle)}</Text>

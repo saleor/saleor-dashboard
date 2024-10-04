@@ -82,7 +82,7 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
 
             return (
               <DashboardModal.Grid>
-                <DashboardModal.Header onClose={onClose}>
+                <DashboardModal.Header>
                   {variant === "create" ? (
                     <FormattedMessage
                       id="W0kQd+"

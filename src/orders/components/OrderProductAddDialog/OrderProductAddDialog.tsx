@@ -90,7 +90,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
   return (
     <DashboardModal onChange={onClose} open={open}>
       <DashboardModal.Content size="sm" __gridTemplateRows="auto auto auto 1fr">
-        <DashboardModal.Header onClose={onClose}>
+        <DashboardModal.Header>
           <FormattedMessage
             {...messages.title}
             values={{

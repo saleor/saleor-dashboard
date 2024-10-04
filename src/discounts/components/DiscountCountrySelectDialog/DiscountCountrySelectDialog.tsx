@@ -62,7 +62,7 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
                 __gridTemplateRows="auto auto auto auto auto 1fr auto"
                 height="100%"
               >
-                <DashboardModal.Header onClose={onClose}>
+                <DashboardModal.Header>
                   <FormattedMessage
                     id="cvVIV/"
                     defaultMessage="Assign Countries"

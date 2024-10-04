@@ -48,7 +48,7 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
       >
         {({ data, change, submit }) => (
           <DashboardModal.Content size="sm">
-            <DashboardModal.Header onClose={onClose}>
+            <DashboardModal.Header>
               {intl.formatMessage({
                 id: "+PbHKD",
                 defaultMessage: "Capture Payment",

@@ -43,7 +43,7 @@ const PageTypePickerDialog: React.FC<PageTypePickerDialogProps> = ({
   return (
     <DashboardModal open={open} onChange={onClose}>
       <DashboardModal.Content size="xs">
-        <DashboardModal.Header onClose={onClose}>
+        <DashboardModal.Header>
           <FormattedMessage {...messages.selectPageType} />
         </DashboardModal.Header>
 

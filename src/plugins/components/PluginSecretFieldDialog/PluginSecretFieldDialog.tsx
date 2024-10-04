@@ -38,7 +38,7 @@ const PluginSecretFieldDialog: React.FC<PluginSecretFieldDialogProps> = ({
         <Form initial={initialForm} onSubmit={onConfirm}>
           {({ change, data, submit }) => (
             <DashboardModal.Grid>
-              <DashboardModal.Header onClose={onClose}>
+              <DashboardModal.Header>
                 {field ? (
                   field.value === null ? (
                     intl.formatMessage({

@@ -44,7 +44,7 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
         <Form initial={initialForm} onSubmit={onConfirm}>
           {({ change, data, submit }) => (
             <Box display="grid" gap={6}>
-              <DashboardModal.Header onClose={onClose} data-test-id="create-menu-dialog-title">
+              <DashboardModal.Header data-test-id="create-menu-dialog-title">
                 <FormattedMessage
                   id="0OtaXa"
                   defaultMessage="Create Menu"

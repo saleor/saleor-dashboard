@@ -63,7 +63,7 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
       >
         {({ change, data: formData, submit }) => (
           <DashboardModal.Content size="sm">
-            <DashboardModal.Header onClose={onClose}>
+            <DashboardModal.Header>
               <FormattedMessage
                 id="23g7PY"
                 defaultMessage="Invite Staff Member"

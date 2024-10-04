@@ -82,7 +82,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
   return (
     <DashboardModal onChange={onClose} open={open}>
       <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr auto auto">
-        <DashboardModal.Header onClose={onClose}>
+        <DashboardModal.Header>
           <FormattedMessage {...messages.title} />
         </DashboardModal.Header>
 

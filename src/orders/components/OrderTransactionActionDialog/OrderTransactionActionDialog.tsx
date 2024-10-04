@@ -32,7 +32,7 @@ export const OrderTransactionActionDialog: React.FC<OrderTransactionActionDialog
   return (
     <DashboardModal open={open} onChange={onClose}>
       <DashboardModal.Content size="sm">
-        <DashboardModal.Header onClose={onClose}>
+        <DashboardModal.Header>
           <FormattedMessage
             {...messages.title}
             values={{

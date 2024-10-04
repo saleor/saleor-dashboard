@@ -24,7 +24,7 @@ export const ShippingWeightUnitDialog: React.FC<ShippingWeightUnitDialogProps> =
   return (
     <DashboardModal open={open} onChange={onClose}>
       <DashboardModal.Content size="sm">
-        <DashboardModal.Header onClose={onClose}>
+        <DashboardModal.Header>
           <FormattedMessage
             description="weight config modal title"
             defaultMessage="Default weight unit configuration"

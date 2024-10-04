@@ -57,9 +57,7 @@ export const VoucherCodesGenerateDialog = ({
   return (
     <DashboardModal open={open} onChange={handleModalClose}>
       <DashboardModal.Content size="xs">
-        <DashboardModal.Header onClose={onClose}>
-          {intl.formatMessage(messages.title)}
-        </DashboardModal.Header>
+        <DashboardModal.Header>{intl.formatMessage(messages.title)}</DashboardModal.Header>
         <Box display="grid" gap={3} __width={390}>
           <Input
             name="quantity"

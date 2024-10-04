@@ -213,7 +213,7 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
   return (
     <DashboardModal onChange={onClose} open={open}>
       <DashboardModal.Content size="sm">
-        <DashboardModal.Header onClose={onClose}>
+        <DashboardModal.Header>
           <FormattedMessage {...messages.title} />
         </DashboardModal.Header>
 

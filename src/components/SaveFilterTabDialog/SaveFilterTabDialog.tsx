@@ -47,7 +47,7 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
         <Form initial={initialForm} onSubmit={handleErrors}>
           {({ change, data, submit }) => (
             <DashboardModal.Grid>
-              <DashboardModal.Header onClose={onClose}>
+              <DashboardModal.Header>
                 <FormattedMessage
                   id="P9YktI"
                   defaultMessage="Save view preset"

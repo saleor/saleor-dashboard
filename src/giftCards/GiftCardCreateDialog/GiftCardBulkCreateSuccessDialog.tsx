@@ -27,7 +27,7 @@ const GiftCardBulkCreateSuccessDialog: React.FC<GiftCardBulkCreateSuccessDialogP
     <>
       <DashboardModal open={open} onChange={onClose}>
         <DashboardModal.Content size="sm">
-          <DashboardModal.Header onClose={onClose}>
+          <DashboardModal.Header>
             {intl.formatMessage(messages.bulkCreateIssuedTitle)}
           </DashboardModal.Header>
 

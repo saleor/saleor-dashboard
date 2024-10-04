@@ -69,9 +69,7 @@ const DryRun: React.FC<DryRunProps> = ({
     return (
       <DashboardModal onChange={closeDialog} open={showDialog}>
         <DashboardModal.Content size="lg" data-test-id="dry-run">
-          <DashboardModal.Header onClose={closeDialog}>
-            {intl.formatMessage(messages.header)}
-          </DashboardModal.Header>
+          <DashboardModal.Header>{intl.formatMessage(messages.header)}</DashboardModal.Header>
 
           <Alert variant="error" close={false}>
             <Text>{intl.formatMessage(messages.unavailableSyncEvents)}</Text>
@@ -84,9 +82,7 @@ const DryRun: React.FC<DryRunProps> = ({
   return (
     <DashboardModal onChange={closeDialog} open={showDialog}>
       <DashboardModal.Content size="lg" data-test-id="dry-run">
-        <DashboardModal.Header onClose={closeDialog}>
-          {intl.formatMessage(messages.header)}
-        </DashboardModal.Header>
+        <DashboardModal.Header>{intl.formatMessage(messages.header)}</DashboardModal.Header>
 
         <Text>{intl.formatMessage(messages.selectObject)}</Text>
 

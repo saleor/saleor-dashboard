@@ -75,7 +75,7 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
 
           return (
             <DashboardModal.Content size="sm">
-              <DashboardModal.Header onClose={onClose}>
+              <DashboardModal.Header>
                 <FormattedMessage
                   id="yzYXW/"
                   defaultMessage="Create New Warehouse"
