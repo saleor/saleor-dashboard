@@ -71,6 +71,7 @@ export function getFilterVariables(
   params: OrderListUrlFilters,
   filterContainer: FilterContainer,
 ): OrderFilterInput {
+  // TODO: Cleanup this function to use the new filter system
   const queryVariables = _whereToLegacyVariables(createOrderQueryVariables(filterContainer));
 
   return {
