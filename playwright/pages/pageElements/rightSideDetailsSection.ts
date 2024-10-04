@@ -188,7 +188,6 @@ export class RightSideDetailsPage extends BasePage {
   async typeAndSelectCustomerEmail(customerEmail = "customer@example.com") {
     await this.searchCustomerInput.fill(customerEmail);
     await this.selectCustomerOption.locator(`text=${customerEmail}`).click();
-    await this.waitForDOMToFullyLoad();
   }
 
   async selectOneChannelAsAvailableWhenMoreSelected(channel: string) {
