@@ -73,8 +73,9 @@ export const messages = defineMessages({
     description: "automatically complete checkouts checkbox label",
   },
   automaticallyCompleteCheckoutsDescription: {
-    id: "WXinY6",
-    defaultMessage: "Automatically completes checkout when the order is fully paid. ({link})",
+    id: "hIh8bm",
+    defaultMessage:
+      "When enabled, checkouts detected as fully paid will be completed automatically, without checkoutComplete mutation. ({link})",
     description: "automatically complete checkouts checkbox description",
   },
 });

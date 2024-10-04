@@ -1,4 +1,4 @@
-import PreviewPill from "@dashboard/components/PreviewPill";
+import Link from "@dashboard/components/Link";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -33,14 +33,23 @@ export const AutomaticallyCompleteCheckouts = ({
       <Text>
         <FormattedMessage {...messages.automaticallyCompleteCheckoutsLabel} />
       </Text>{" "}
-      <PreviewPill />
     </Checkbox>
     <Box paddingLeft={4}>
       {" "}
       <Text size={3} color="default2" paddingLeft={0.5}>
         <FormattedMessage
           {...messages.automaticallyCompleteCheckoutsDescription}
-          values={{ link: "TODO" }}
+          values={{
+            link: (
+              <Link
+                href="https://docs.saleor.io/developer/payments/transactions#automatic-checkout-completion"
+                target="_blank"
+                rel="noopener noreferer"
+              >
+                <FormattedMessage defaultMessage="Learn more" id="TdTXXf" />
+              </Link>
+            ),
+          }}
         />
       </Text>
     </Box>
