@@ -67,4 +67,14 @@ export const messages = defineMessages({
       "When enabled, all transactions would require an additional step to be charged. ({link})",
     description: "When enabled, all transactions would require an additional step to be charged.",
   },
+  automaticallyCompleteCheckoutsLabel: {
+    id: "GFkb2t",
+    defaultMessage: "Automatically complete checkouts when fully paid",
+    description: "automatically complete checkouts checkbox label",
+  },
+  automaticallyCompleteCheckoutsDescription: {
+    id: "WXinY6",
+    defaultMessage: "Automatically completes checkout when the order is fully paid. ({link})",
+    description: "automatically complete checkouts checkbox description",
+  },
 });

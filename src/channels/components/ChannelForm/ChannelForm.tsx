@@ -1,3 +1,4 @@
+import { AutomaticallyCompleteCheckouts } from "@dashboard/channels/components/ChannelForm/AutomaticallyCompleteCheckouts";
 import {
   ChannelShippingZones,
   ChannelWarehouses,
@@ -216,12 +217,12 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
           disabled={disabled}
         />
         <Box />
-        <Box padding={4}>
-          TODO HERE NEW COMPONENT: <Box>v: {String(data.automaticallyCompleteCheckouts)}</Box>
-          <Box>
-            <Button onClick={() => onAutomaticallyCompleteCheckoutsChange()}>change</Button>
-          </Box>
-        </Box>
+        <AutomaticallyCompleteCheckouts
+          onChange={onAutomaticallyCompleteCheckoutsChange}
+          hasError={!!formErrors.automaticallyCompleteCheckouts}
+          isChecked={data.automaticallyCompleteCheckouts}
+          disabled={disabled}
+        />
       </Box>
     </>
   );
