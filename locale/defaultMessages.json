@@ -2377,6 +2377,10 @@
     "context": "no card defuned alert message",
     "string": "You haven’t defined a gift card product!"
   },
+  "E4GW+N": {
+    "context": "fully paid checkout automatically completed message",
+    "string": "Order created automatically from fully paid checkout"
+  },
   "E54eoT": {
     "string": "Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy"
   },
@@ -2761,6 +2765,10 @@
   "GFJabu": {
     "context": "dialog header",
     "string": "Delete Variant"
+  },
+  "GFkb2t": {
+    "context": "automatically complete checkouts checkbox label",
+    "string": "Automatically complete checkouts when fully paid"
   },
   "GJAX0z": {
     "context": "order history message",
@@ -6901,6 +6909,10 @@
   "hHOI7D": {
     "context": "product type name",
     "string": "Type Name"
+  },
+  "hIh8bm": {
+    "context": "automatically complete checkouts checkbox description",
+    "string": "When enabled, checkouts detected as fully paid will be completed automatically, without checkoutComplete mutation. ({link})"
   },
   "hJDnLg": {
     "context": "section header",
