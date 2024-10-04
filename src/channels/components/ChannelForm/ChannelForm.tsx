@@ -41,6 +41,7 @@ export interface FormData extends StockSettingsInput {
   deleteExpiredOrdersAfter: number;
   allowUnpaidOrders: boolean;
   defaultTransactionFlowStrategy: TransactionFlowStrategyEnum;
+  automaticallyCompleteCheckouts: boolean;
 }
 
 export interface ChannelFormProps {
@@ -56,6 +57,7 @@ export interface ChannelFormProps {
   onDefaultCountryChange: (event: ChangeEvent) => void;
   onMarkAsPaidStrategyChange: () => void;
   onTransactionFlowStrategyChange: () => void;
+  onAutomaticallyCompleteCheckoutsChange: () => void;
 }
 
 export const ChannelForm: React.FC<ChannelFormProps> = ({
@@ -71,6 +73,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
   onDefaultCountryChange,
   onMarkAsPaidStrategyChange,
   onTransactionFlowStrategyChange,
+  onAutomaticallyCompleteCheckoutsChange,
 }) => {
   const intl = useIntl();
   const [, copy] = useClipboard();
@@ -212,6 +215,13 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
           hasError={!!formErrors.defaultTransactionFlowStrategy}
           disabled={disabled}
         />
+        <Box />
+        <Box padding={4}>
+          TODO HERE NEW COMPONENT: <Box>v: {String(data.automaticallyCompleteCheckouts)}</Box>
+          <Box>
+            <Button onClick={() => onAutomaticallyCompleteCheckoutsChange()}>change</Button>
+          </Box>
+        </Box>
       </Box>
     </>
   );

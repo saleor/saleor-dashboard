@@ -102,8 +102,14 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     channel?.defaultCountry.country || "",
   );
   const countryChoices = mapCountriesToChoices(countries || []);
-  const { defaultCountry, stockSettings, orderSettings, paymentSettings, ...formData } =
-    channel || ({} as ChannelDetailsFragment);
+  const {
+    defaultCountry,
+    stockSettings,
+    orderSettings,
+    paymentSettings,
+    checkoutSettings,
+    ...formData
+  } = channel || ({} as ChannelDetailsFragment);
   const initialStockSettings: StockSettingsInput = {
     allocationStrategy: AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER,
     ...stockSettings,
@@ -125,6 +131,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     deleteExpiredOrdersAfter: orderSettings?.deleteExpiredOrdersAfter,
     allowUnpaidOrders: orderSettings?.allowUnpaidOrders,
     defaultTransactionFlowStrategy: paymentSettings?.defaultTransactionFlowStrategy,
+    automaticallyCompleteCheckouts: checkoutSettings?.automaticallyCompleteFullyPaidCheckouts,
   };
   const getFilteredShippingZonesChoices = (
     shippingZonesToDisplay: ChannelShippingZones,
@@ -211,6 +218,13 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                 : TransactionFlowStrategyEnum.CHARGE,
           });
         };
+
+        const handleAutomaticallyCompleteCheckoutsChange = () => {
+          set({
+            automaticallyCompleteCheckouts: !data.automaticallyCompleteCheckouts,
+          });
+        };
+
         const allErrors = [...errors, ...validationErrors];
 
         return (
@@ -239,6 +253,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                 onDefaultCountryChange={handleDefaultCountrySelect}
                 onMarkAsPaidStrategyChange={handleMarkAsPaidStrategyChange}
                 onTransactionFlowStrategyChange={handleTransactionFlowStrategyChange}
+                onAutomaticallyCompleteCheckoutsChange={handleAutomaticallyCompleteCheckoutsChange}
                 errors={allErrors}
               />
             </DetailPageLayout.Content>
