@@ -1,37 +1,11 @@
 import { InitialOrderStateResponse } from "@dashboard/components/ConditionalFilter/API/initialState/orders/InitialOrderState";
 import { TokenArray } from "@dashboard/components/ConditionalFilter/ValueProvider/TokenArray";
-import { date } from "@dashboard/fixtures";
-import { OrderStatusFilter } from "@dashboard/graphql";
 import { OrderListUrlFilters } from "@dashboard/orders/urls";
 import { getExistingKeys } from "@test/filters";
 
 import { getFilterVariables } from "./filters";
 
-describe("[old] Filtering query params", () => {
-  it("should be empty object if no params given", () => {
-    // Arrange & Act
-    const params: OrderListUrlFilters = {};
-    const filterVariables = getFilterVariables(params, []);
-
-    // Assert
-    expect(getExistingKeys(filterVariables)).toHaveLength(0);
-  });
-  it("should not be empty object if params given", () => {
-    // Arrange & Act
-    const params: OrderListUrlFilters = {
-      createdFrom: date.from,
-      createdTo: date.to,
-      customer: "email@example.com",
-      status: [OrderStatusFilter.FULFILLED, OrderStatusFilter.PARTIALLY_FULFILLED],
-    };
-    const filterVariables = getFilterVariables(params, []);
-
-    // Assert
-    expect(getExistingKeys(filterVariables)).toHaveLength(3);
-  });
-});
-
-describe("[new] Filtering URL params", () => {
+describe("Filtering URL params", () => {
   it("should be empty object if no params given", () => {
     // Arrange & Act
     const params: OrderListUrlFilters = {};
