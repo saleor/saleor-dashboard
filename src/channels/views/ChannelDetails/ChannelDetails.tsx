@@ -104,12 +104,16 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id, params }) =>
     warehousesIdsToAdd,
     warehousesIdsToRemove,
     warehousesToDisplay,
+    automaticallyCompleteCheckouts,
   }: FormData) => {
     const updateChannelMutation = updateChannel({
       variables: {
         id: data?.channel.id,
         input: {
           name,
+          checkoutSettings: {
+            automaticallyCompleteFullyPaidCheckouts: automaticallyCompleteCheckouts,
+          },
           slug,
           defaultCountry,
           addShippingZones: shippingZonesIdsToAdd,
