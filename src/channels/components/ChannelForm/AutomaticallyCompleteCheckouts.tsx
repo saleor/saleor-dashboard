@@ -1,5 +1,6 @@
 import Link from "@dashboard/components/Link";
 import { FormChange } from "@dashboard/hooks/useForm";
+import { DOCS_ULRS } from "@dashboard/links";
 import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -42,7 +43,7 @@ export const AutomaticallyCompleteCheckouts = ({
           values={{
             link: (
               <Link
-                href="https://docs.saleor.io/developer/payments/transactions#automatic-checkout-completion"
+                href={DOCS_ULRS.TRANSACTIONS_AUTOMATIC_CHECKOUT_COMPLETION}
                 target="_blank"
                 rel="noopener noreferer"
               >
