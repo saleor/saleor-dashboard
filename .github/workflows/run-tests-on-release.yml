@@ -130,6 +130,17 @@ jobs:
             --repo_token "$REPO_TOKEN" \
             --project "$PROJECT"
 
+      - name: send slack message if failure
+        if: failure()
+        uses: slackapi/slack-github-action@v1.27.0
+        with:
+          payload: |
+            {
+              "text": "Could not prepare instance for tests on version ${{ env.CUSTOM_VERSION }}"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_QA_STATUSES_WEBHOOK_URL }}
+
   run-cy-tests:
     if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"cypress"'
     needs: add-check-and-prepare-instance
@@ -230,7 +241,7 @@ jobs:
 
   tests-complete:
     if: |
-      !cancelled() && always()
+      !cancelled() && always() && needs.add-check-and-prepare-instance.result == 'success'
     needs: ["add-check-and-prepare-instance", "run-cy-tests", "run-pw-tests"]
     runs-on: ubuntu-22.04
     timeout-minutes: 30
@@ -303,6 +314,7 @@ jobs:
       always() &&
       (needs.tests-complete != 'success' && cancelled()) &&
       needs.add-check-and-prepare-instance.outputs.FRAMEWORK   == '"playwright"'
+      && needs.add-check-and-prepare-instance.result == 'success'
 
     steps:
       - uses: actions/checkout@v4
