@@ -261,7 +261,8 @@
     }
   },
   "overrides": {
-    "resolve": "1.20.0"
+    "resolve": "1.20.0",
+    "breakword": "^1.0.6"
   },
   "lint-staged": {
     "./{src,playwright}/**/*.{js,jsx,ts,tsx}": [
