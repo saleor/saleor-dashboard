@@ -37,6 +37,7 @@ import {
   SearchProductsQuery,
   TaxClassBaseFragment,
 } from "@dashboard/graphql";
+import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
@@ -45,7 +46,7 @@ import ProductExternalMediaDialog from "@dashboard/products/components/ProductEx
 import { ProductOrganization } from "@dashboard/products/components/ProductOrganization/ProductOrganization";
 import { mapByChannel } from "@dashboard/products/components/ProductUpdatePage/utils";
 import { defaultGraphiQLQuery } from "@dashboard/products/queries";
-import { productImageUrl, productListUrl } from "@dashboard/products/urls";
+import { productImageUrl, productListPath, productListUrl } from "@dashboard/products/urls";
 import { ChoiceWithAncestors, getChoicesWithAncestors } from "@dashboard/products/utils/utils";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
@@ -223,6 +224,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     context.setVariables(`{ "id": "${product?.id}" }`);
     context.setDevModeVisibility(true);
   };
+  const backLinkProductUrl = useBackLinkWithState({
+    path: productListPath,
+  });
 
   return (
     <ProductUpdateForm
@@ -280,7 +284,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
 
         return (
           <DetailPageLayout>
-            <TopNav href={productListUrl()} title={header}>
+            <TopNav href={backLinkProductUrl} title={header}>
               <TopNav.Menu
                 items={[
                   ...extensionMenuItems,

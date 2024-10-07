@@ -2,7 +2,8 @@ import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DiscountDeleteModal } from "@dashboard/discounts/components/DiscountDeleteModal";
 import { DiscountDetailsPage } from "@dashboard/discounts/components/DiscountDetailsPage";
-import { discountListUrl, DiscountUrlQueryParams } from "@dashboard/discounts/discountsUrls";
+import { discountSalesListPath, DiscountUrlQueryParams } from "@dashboard/discounts/discountsUrls";
+import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationErrors } from "@dashboard/misc";
@@ -34,6 +35,9 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
   const { promotionRuleUpdate, promotionRuleUpdateOpts } = usePromotionRuleUpdate(id);
   const { promotionRuleCreate, promotionRuleCreateOpts } = usePromotionRuleCreate(id);
   const { promotionRuleDelete, promotionRuleDeleteOpts } = usePromotionRuleDelete(id);
+  const discountListBackLink = useBackLinkWithState({
+    path: discountSalesListPath,
+  });
   const onSubmit = createUpdateHandler(promotionData?.promotion, variables =>
     promotionUpdate({ variables }),
   );
@@ -74,7 +78,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
             promotionRuleDeleteOpts.loading
           }
           onBack={() => {
-            navigate(discountListUrl());
+            navigate(discountListBackLink);
           }}
           channels={availableChannels}
           onSubmit={onSubmit}
@@ -86,6 +90,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
           ruleCreateButtonState={promotionRuleCreateOpts.status}
           onRuleDeleteSubmit={onRuleDeleteSubmit}
           ruleDeleteButtonState={promotionRuleDeleteOpts.status}
+          backLinkHref={discountListBackLink}
         />
       </LabelsMapsProvider>
       <DiscountDeleteModal

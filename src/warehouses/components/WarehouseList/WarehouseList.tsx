@@ -15,6 +15,7 @@ import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
+import { useLocation } from "react-router";
 
 const useStyles = makeStyles(
   theme => ({
@@ -62,6 +63,7 @@ const numberOfColumns = 3;
 const WarehouseList: React.FC<WarehouseListProps> = props => {
   const { warehouses, disabled, settings, sort, onUpdateListSettings, onRemove, onSort } = props;
   const classes = useStyles(props);
+  const location = useLocation();
 
   return (
     <ResponsiveTable data-test-id="warehouse-list">
@@ -102,7 +104,14 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
           warehouses,
           warehouse => (
             <TableRowLink
-              href={warehouse && warehouseUrl(warehouse.id)}
+              href={
+                warehouse
+                  ? {
+                      pathname: warehouseUrl(warehouse.id),
+                      state: { prevLocation: location },
+                    }
+                  : undefined
+              }
               className={classes.tableRow}
               hover={!!warehouse}
               key={warehouse ? warehouse.id : "skeleton"}
