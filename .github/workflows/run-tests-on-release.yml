@@ -137,8 +137,8 @@ jobs:
         with:
           payload: |
             {
-              "title": "Automation tests failure"
-              "text": "Could not prepare instance for release tests on version ${{ env.CUSTOM_VERSION }}"
+              "title": "Automation tests failure",
+              "text": "Could not prepare instance for release tests on version ${{ env.CUSTOM_VERSION }}",
               "pretext": "FAILURE",
               "color": "#FE6E76",
               "title_link": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
