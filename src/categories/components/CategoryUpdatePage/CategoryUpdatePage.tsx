@@ -1,4 +1,4 @@
-import { categoryListPath, categoryListUrl, categoryUrl } from "@dashboard/categories/urls";
+import { categoryListPath, categoryUrl } from "@dashboard/categories/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
