@@ -1,4 +1,4 @@
-import { categoryListUrl, categoryUrl } from "@dashboard/categories/urls";
+import { categoryListPath, categoryUrl } from "@dashboard/categories/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -8,6 +8,7 @@ import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import { Tab, TabContainer } from "@dashboard/components/Tab";
 import { CategoryDetailsQuery, ProductErrorFragment } from "@dashboard/graphql";
+import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sprinkles } from "@saleor/macaw-ui-next";
@@ -74,7 +75,12 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
 }: CategoryUpdatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const backHref = category?.parent?.id ? categoryUrl(category?.parent?.id) : categoryListUrl();
+
+  const categoryBackListUrl = useBackLinkWithState({
+    path: categoryListPath,
+  });
+
+  const backHref = category?.parent?.id ? categoryUrl(category?.parent?.id) : categoryBackListUrl;
 
   return (
     <CategoryUpdateForm category={category} onSubmit={onSubmit} disabled={disabled}>

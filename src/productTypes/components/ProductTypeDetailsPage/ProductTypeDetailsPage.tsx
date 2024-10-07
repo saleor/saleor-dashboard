@@ -15,12 +15,13 @@ import {
   TaxClassBaseFragment,
   WeightUnitsEnum,
 } from "@dashboard/graphql";
+import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { maybe } from "@dashboard/misc";
 import { handleTaxClassChange } from "@dashboard/productTypes/handlers";
-import { productTypeListUrl } from "@dashboard/productTypes/urls";
+import { productTypeListPath } from "@dashboard/productTypes/urls";
 import { FetchMoreProps, ListActions, ReorderEvent, UserError } from "@dashboard/types";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
@@ -93,6 +94,9 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
+  const productTypeListBackLink = useBackLinkWithState({
+    path: productTypeListPath,
+  });
   const {
     isMetadataModified,
     isPrivateMetadataModified,
@@ -147,7 +151,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
 
         return (
           <DetailPageLayout>
-            <TopNav href={productTypeListUrl()} title={pageTitle} />
+            <TopNav href={productTypeListBackLink} title={pageTitle} />
             <DetailPageLayout.Content>
               <ProductTypeDetails
                 data={data}
@@ -226,7 +230,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
             <Savebar>
               <Savebar.DeleteButton onClick={onDelete} />
               <Savebar.Spacer />
-              <Savebar.CancelButton onClick={() => navigate(productTypeListUrl())} />
+              <Savebar.CancelButton onClick={() => navigate(productTypeListBackLink)} />
               <Savebar.ConfirmButton
                 transitionState={saveButtonBarState}
                 onClick={submit}

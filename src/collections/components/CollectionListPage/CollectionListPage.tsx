@@ -18,6 +18,7 @@ import { FilterPageProps, PageListProps, SortPage } from "@dashboard/types";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { CollectionListDatagrid } from "../CollectionListDatagrid";
 import { CollectionFilterKeys, CollectionListFilterOpts, createFilterStructure } from "./filters";
@@ -59,6 +60,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
+  const location = useLocation();
   const navigate = useNavigator();
   const filterStructure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
@@ -140,7 +142,11 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
           selectedChannelId={selectedChannelId}
           filterDependency={filterDependency}
           onRowClick={id => {
-            navigate(collectionUrl(id));
+            navigate(collectionUrl(id), {
+              state: {
+                prevLocation: location,
+              },
+            });
           }}
           hasRowHover={!isFilterPresetOpen}
           rowAnchor={collectionUrl}

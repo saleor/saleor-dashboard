@@ -14,6 +14,7 @@ import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { createGetCellContent, shippingZonesListStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
@@ -35,6 +36,7 @@ export const ShippingZoneListDatagrid = ({
   const intl = useIntl();
   const { locale } = useLocale();
   const datagridState = useDatagridChangeState();
+  const location = useLocation();
   const navigate = useNavigator();
   const shippingZonesListStaticColumns = useMemo(
     () => shippingZonesListStaticColumnsAdapter(intl),
@@ -100,6 +102,11 @@ export const ShippingZoneListDatagrid = ({
         onRowClick={handleRowClick}
         rowAnchor={handleRowAnchor}
         recentlyAddedColumn={recentlyAddedColumn}
+        navigatorOpts={{
+          state: {
+            prevLocation: location,
+          },
+        }}
       />
 
       <Box paddingX={6}>

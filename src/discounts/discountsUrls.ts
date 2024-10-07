@@ -10,6 +10,8 @@ export enum DiscountListUrlSortField {
 
 const discountSection = "/discounts/sales";
 
+export const discountSalesListPath = discountSection;
+
 export type DiscountListUrlDialog = TabActionDialog;
 
 export type DiscountListUrlSort = Sort<DiscountListUrlSortField>;
