@@ -136,7 +136,7 @@ jobs:
         uses: slackapi/slack-github-action@v1.27.0
         with:
           payload: |
-            "attachments" = [{
+            "attachments": [{
               "title": "Automation tests failure",
               "text": "Could not prepare instance for release tests on version ${{ env.CUSTOM_VERSION }}",
               "pretext": "FAILURE",
