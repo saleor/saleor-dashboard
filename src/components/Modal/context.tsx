@@ -1,11 +1,11 @@
 import React, { createContext } from "react";
 
-interface ModalContext {
+interface ModalContextValues {
   open?: boolean;
   onChange?: (open: boolean) => void;
 }
 
-const modalContext = createContext<ModalContext | null>(null);
+const ModalContext = createContext<ModalContextValues | null>(null);
 
 export const ModalContextProvider = ({
   children,
@@ -16,11 +16,11 @@ export const ModalContextProvider = ({
   onChange?: (open: boolean) => void;
   open?: boolean;
 }) => {
-  return <modalContext.Provider value={{ open, onChange }}>{children}</modalContext.Provider>;
+  return <ModalContext.Provider value={{ open, onChange }}>{children}</ModalContext.Provider>;
 };
 
 export const useModalContext = () => {
-  const context = React.useContext(modalContext);
+  const context = React.useContext(ModalContext);
 
   if (!context) {
     throw new Error("useModalContext must be used within a ModalContextProvider");
