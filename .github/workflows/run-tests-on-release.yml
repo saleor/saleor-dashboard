@@ -143,7 +143,6 @@ jobs:
                   "pretext": "FAILURE",
                   "color": "#FE6E76",
                   "title": "Automation tests failure",
-                  "title_link": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
                   "text": "Could not prepare instance for release tests on version ${{ env.CUSTOM_VERSION }}"
                 }
               ]
