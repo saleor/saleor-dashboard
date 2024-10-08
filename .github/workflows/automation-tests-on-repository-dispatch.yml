@@ -1,10 +1,9 @@
 name: Execute automation tests
-run-name: Run tests on ${{github.event.client_payload.custom_version }} ${{github.event.client_payload.project}} test run 3.15
+run-name: Run tests on ${{github.event.client_payload.custom_version }} ${{github.event.client_payload.project}}
 
 on:
   repository_dispatch:
     types: [automation-tests-event]
-  push:
 
 jobs:
   get-environment-variables:
@@ -14,7 +13,7 @@ jobs:
       VERSION: ${{ steps.get-environment-variables.outputs.version }}
     env:
       REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      CUSTOM_VERSION: ${{github.event.client_payload.custom_version || '3.15' }}
+      CUSTOM_VERSION: ${{github.event.client_payload.custom_version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -41,7 +40,7 @@ jobs:
     uses: ./.github/workflows/run-tests-on-release.yml
     with:
       VERSION: ${{needs.get-environment-variables.outputs.VERSION}}
-      CUSTOM_VERSION: ${{github.event.client_payload.custom_version || '3.15' }} 
+      CUSTOM_VERSION: ${{github.event.client_payload.custom_version }} 
       ADDITIONAL_TITLE: "Core automation test"
     secrets: inherit
 
