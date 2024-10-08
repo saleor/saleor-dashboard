@@ -1,4 +1,3 @@
-import { useFlag } from "@dashboard/featureFlags";
 import { productListPath } from "@dashboard/products/urls";
 import { stringify } from "qs";
 import { useMemo } from "react";
@@ -14,7 +13,6 @@ export interface ProductTypeBaseData extends TypeBaseData {
 
 interface ViewProductsProps {
   productTypeBaseData: ProductTypeBaseData[] | undefined;
-  defaultNavigationLink: string;
 }
 
 const baseDataToCondition = (baseData: ProductTypeBaseData) => ({
@@ -23,16 +21,8 @@ const baseDataToCondition = (baseData: ProductTypeBaseData) => ({
   value: baseData.id,
 });
 
-export const useViewProducts = ({
-  defaultNavigationLink,
-  productTypeBaseData,
-}: ViewProductsProps) => {
-  const { enabled: productFiltersFlagEnabled } = useFlag("product_filters");
-
-  // TODO: Remove this when the feature flag is removed
-  const legacyViewProductsUrl = defaultNavigationLink;
-
-  const newViewProductsUrl = useMemo(() => {
+export const useViewProducts = ({ productTypeBaseData }: ViewProductsProps) => {
+  const viewProductsUrl = useMemo(() => {
     if (!productTypeBaseData) {
       return null;
     }
@@ -55,5 +45,5 @@ export const useViewProducts = ({
     return urljoin(productListPath, `?${url}`);
   }, [productTypeBaseData]);
 
-  return productFiltersFlagEnabled ? newViewProductsUrl : legacyViewProductsUrl;
+  return viewProductsUrl;
 };

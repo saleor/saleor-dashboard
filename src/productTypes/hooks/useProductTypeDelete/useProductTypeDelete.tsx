@@ -8,7 +8,6 @@ import {
   UseTypeDeleteData,
   UseTypeDeleteProps,
 } from "@dashboard/pageTypes/hooks/usePageTypeDelete/types";
-import { productListUrl } from "@dashboard/products/urls";
 import {
   ProductTypeListUrlQueryParams,
   ProductTypeUrlQueryParams,
@@ -51,16 +50,11 @@ function useProductTypeDelete({
     skip: shouldSkipProductListQuery,
   });
 
-  const selectedProductsAssignedToDeleteUrl = productListUrl({
-    productTypes: filteredTypes,
-  });
-
   const typesToLink = Array.isArray(typeBaseData)
     ? typeBaseData.filter((type: TypeBaseData) => productTypes.includes(type.id))
     : undefined;
 
   const viewProductsURL = useViewProducts({
-    defaultNavigationLink: selectedProductsAssignedToDeleteUrl,
     productTypeBaseData: typesToLink,
   });
 
