@@ -42,6 +42,9 @@ jobs:
         run: |
           npm run lint
           git diff --exit-code ./src
+      
+      - name: Knip for unused files, dependencies and exports
+        run: npm run knip
 
   jest-tests:
     runs-on: ubuntu-latest
