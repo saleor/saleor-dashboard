@@ -133,22 +133,29 @@ jobs:
 
       - name: send slack message if failure
         if: failure()
-        uses: slackapi/slack-github-action@v1.27.0
-        with:
-          payload: |
-            {
+        env:
+          LINK: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          MESSAGE: "Could not prepare instance for release tests on version ${{ env.CUSTOM_VERSION }}"
+        run: |
+          payload=$(\
+          jq --null-input \
+          --arg link "$LINK" \
+          --arg message "$MESSAGE" \
+          '{
               "attachments": [
                 {
-
                   "pretext": "FAILURE",
                   "color": "#FE6E76",
                   "title": "Automation tests failure",
-                  "text": "Could not prepare instance for release tests on version ${{ env.CUSTOM_VERSION }}"
+                  "title_link": $link,
+                  "text": $message
                 }
               ]
-            }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_QA_STATUSES_WEBHOOK_URL }}
+          }'
+          )
+          curl -H "Content-type: application/json" \
+          --data "$payload" \
+          -X POST ${{ secrets.SLACK_QA_STATUSES_WEBHOOK_URL }}
 
   run-cy-tests:
     if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"cypress"'
