@@ -46,10 +46,9 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
   return (
     <DashboardModal open={open} onChange={onClose}>
       <DashboardModal.Content size="sm">
-        <DashboardModal.Title display="flex" justifyContent="space-between" alignItems="center">
+        <DashboardModal.Header>
           <FormattedMessage {...taxesMessages.chooseCountryDialogTitle} />
-          <DashboardModal.Close onClose={onClose} />
-        </DashboardModal.Title>
+        </DashboardModal.Header>
 
         <TextField
           data-test-id="search-country-input"
