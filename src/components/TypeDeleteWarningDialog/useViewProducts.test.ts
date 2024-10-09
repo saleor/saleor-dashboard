@@ -11,7 +11,7 @@ describe("useViewProducts", () => {
     },
   ];
 
-  it("should return the new URL when productFiltersFlag is true", () => {
+  it("should return URL with product type filtered", () => {
     // Arrange & Act
     const { result } = renderHook(() => useViewProducts({ productTypeBaseData }));
 
@@ -24,7 +24,7 @@ describe("useViewProducts", () => {
     expect(receivedQuery).toBe(expectedQuery);
   });
 
-  it("should return correct url when multiple product types are selected", () => {
+  it("should return URL with product type filtered when multiple product types are selected", () => {
     // Arrange
     const multipleProductTypeBaseData = [
       ...productTypeBaseData,
