@@ -1,7 +1,7 @@
 import { Text, TextProps } from "@saleor/macaw-ui-next";
 import React, { ReactNode } from "react";
 
-interface TitleProps extends TextProps {
+export interface TitleProps extends TextProps {
   children: ReactNode;
 }
 

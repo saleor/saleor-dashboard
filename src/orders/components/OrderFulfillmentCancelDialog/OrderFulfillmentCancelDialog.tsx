@@ -63,13 +63,13 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
 
           return (
             <DashboardModal.Content size="sm">
-              <DashboardModal.Title>
+              <DashboardModal.Header>
                 <FormattedMessage
                   id="bb4nSp"
                   defaultMessage="Cancel Fulfillment"
                   description="dialog header"
                 />
-              </DashboardModal.Title>
+              </DashboardModal.Header>
 
               <Text>
                 <FormattedMessage

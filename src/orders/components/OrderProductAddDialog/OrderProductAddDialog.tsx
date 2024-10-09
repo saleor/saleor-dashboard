@@ -90,14 +90,14 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
   return (
     <DashboardModal onChange={onClose} open={open}>
       <DashboardModal.Content size="sm" __gridTemplateRows="auto auto auto 1fr">
-        <DashboardModal.Title>
+        <DashboardModal.Header>
           <FormattedMessage
             {...messages.title}
             values={{
               channelName,
             }}
           />
-        </DashboardModal.Title>
+        </DashboardModal.Header>
 
         <Text size={2} color="default2">
           <FormattedMessage {...messages.subtitle} />
