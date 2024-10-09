@@ -11640,32 +11640,6 @@ export type ProductVariantBulkUpdateMutationVariables = Exact<{
 
 export type ProductVariantBulkUpdateMutation = { __typename: 'Mutation', productVariantBulkUpdate: { __typename: 'ProductVariantBulkUpdate', errors: Array<{ __typename: 'ProductVariantBulkError', field: string | null, code: ProductVariantBulkErrorCode, message: string | null, attributes: Array<string> | null, values: Array<string> | null, warehouses: Array<string> | null, channels: Array<string> | null }>, results: Array<{ __typename: 'ProductVariantBulkResult', errors: Array<{ __typename: 'ProductVariantBulkError', field: string | null, code: ProductVariantBulkErrorCode, message: string | null, attributes: Array<string> | null, values: Array<string> | null, warehouses: Array<string> | null, channels: Array<string> | null }> | null }> } | null };
 
-export type InitialProductFilterAttributesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type InitialProductFilterAttributesQuery = { __typename: 'Query', attributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, slug: string | null } }> } | null };
-
-export type InitialProductFilterCategoriesQueryVariables = Exact<{
-  categories?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
-}>;
-
-
-export type InitialProductFilterCategoriesQuery = { __typename: 'Query', categories: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null };
-
-export type InitialProductFilterCollectionsQueryVariables = Exact<{
-  collections?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
-}>;
-
-
-export type InitialProductFilterCollectionsQuery = { __typename: 'Query', collections: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string } }> } | null };
-
-export type InitialProductFilterProductTypesQueryVariables = Exact<{
-  productTypes?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
-}>;
-
-
-export type InitialProductFilterProductTypesQuery = { __typename: 'Query', productTypes: { __typename: 'ProductTypeCountableConnection', edges: Array<{ __typename: 'ProductTypeCountableEdge', node: { __typename: 'ProductType', id: string, name: string } }> } | null };
-
 export type ProductListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']>;
   after?: InputMaybe<Scalars['String']>;

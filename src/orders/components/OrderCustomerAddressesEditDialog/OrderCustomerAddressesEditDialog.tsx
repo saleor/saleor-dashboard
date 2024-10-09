@@ -253,9 +253,9 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
 
             return (
               <DashboardModal.Grid>
-                <DashboardModal.Title>
+                <DashboardModal.Header>
                   <FormattedMessage {...getDialogTitle()} />
-                </DashboardModal.Title>
+                </DashboardModal.Header>
 
                 {addressSearchState.open ? (
                   <OrderCustomerAddressesSearch
