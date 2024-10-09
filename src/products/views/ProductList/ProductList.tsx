@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import { filterable } from "@dashboard/attributes/utils/data";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context";
@@ -13,15 +12,10 @@ import {
   ProductListColumns,
 } from "@dashboard/config";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
-import { useFlag } from "@dashboard/featureFlags";
 import {
   ProductListQueryVariables,
   useAvailableColumnAttributesLazyQuery,
   useGridAttributesLazyQuery,
-  useInitialProductFilterAttributesQuery,
-  useInitialProductFilterCategoriesQuery,
-  useInitialProductFilterCollectionsQuery,
-  useInitialProductFilterProductTypesQuery,
   useProductBulkDeleteMutation,
   useProductCountQuery,
   useProductExportMutation,
@@ -55,23 +49,20 @@ import {
   ProductListUrlSortField,
 } from "@dashboard/products/urls";
 import useAttributeSearch from "@dashboard/searches/useAttributeSearch";
-import useAttributeValueSearch from "@dashboard/searches/useAttributeValueSearch";
-import useCategorySearch from "@dashboard/searches/useCategorySearch";
-import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortUrlVariables } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import ProductListPage from "../../components/ProductListPage";
+import ProductListPage, { ProductFilterKeys } from "../../components/ProductListPage";
 import { ProductsExportParameters } from "./export";
-import { getFilterOpts, getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
+import { getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
 import { DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
-import { getAvailableProductKinds, getProductKindOpts, obtainChannelFromFilter } from "./utils";
+import { obtainChannelFromFilter } from "./utils";
 
 interface ProductListProps {
   params: ProductListUrlQueryParams;
@@ -82,7 +73,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const notify = useNotifier();
   const { queue } = useBackgroundTask();
   const { valueProvider } = useConditionalFilterContext();
-  const productListingPageFiltersFlag = useFlag("product_filters");
   const selectedChannelSlug = obtainChannelFromFilter(valueProvider);
   const { updateListSettings, settings } = useListSettings<ProductListColumns>(
     ListViews.PRODUCT_LIST,
@@ -91,82 +81,35 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   usePaginationReset(productListUrl, params, settings.rowNumber);
 
   const intl = useIntl();
-  const { data: initialFilterAttributes } = useInitialProductFilterAttributesQuery({
-    skip: productListingPageFiltersFlag.enabled,
-  });
-  const { data: initialFilterCategories } = useInitialProductFilterCategoriesQuery({
-    variables: {
-      categories: params.categories,
-    },
-    skip: !params.categories?.length || productListingPageFiltersFlag.enabled,
-  });
-  const { data: initialFilterCollections } = useInitialProductFilterCollectionsQuery({
-    variables: {
-      collections: params.collections,
-    },
-    skip: !params.collections?.length || productListingPageFiltersFlag.enabled,
-  });
-  const { data: initialFilterProductTypes } = useInitialProductFilterProductTypesQuery({
-    variables: {
-      productTypes: params.productTypes,
-    },
-    skip: !params.productTypes?.length || productListingPageFiltersFlag.enabled,
-  });
-  const searchCategories = useCategorySearch({
-    variables: {
-      ...DEFAULT_INITIAL_SEARCH_DATA,
-      first: 5,
-    },
-    skip: productListingPageFiltersFlag.enabled,
-  });
-  const searchCollections = useCollectionSearch({
-    variables: {
-      ...DEFAULT_INITIAL_SEARCH_DATA,
-      first: 5,
-    },
-    skip: productListingPageFiltersFlag.enabled,
-  });
-  const searchProductTypes = useProductTypeSearch({
-    variables: {
-      ...DEFAULT_INITIAL_SEARCH_DATA,
-      first: 5,
-    },
-    skip: productListingPageFiltersFlag.enabled,
-  });
+
+  const channelFilterDependency = {
+    active: params?.channel !== undefined,
+    multiple: false,
+    name: ProductFilterKeys.channel,
+    label: intl.formatMessage(commonMessages.channel),
+  };
+
   const searchAttributes = useAttributeSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       first: 10,
     },
-    skip: productListingPageFiltersFlag.enabled,
+    skip: params.action !== "export",
   });
-  const [focusedAttribute, setFocusedAttribute] = useState<string>();
-  const searchAttributeValues = useAttributeValueSearch({
-    variables: {
-      id: focusedAttribute,
-      ...DEFAULT_INITIAL_SEARCH_DATA,
-      first: 10,
-    },
-    skip: !focusedAttribute,
-  });
+
   const warehouses = useWarehouseListQuery({
     variables: {
       first: 100,
     },
     skip: params.action !== "export",
   });
-  const availableProductKinds = getAvailableProductKinds();
   const { availableChannels } = useAppChannel(false);
   const limitOpts = useShopLimitsQuery({
     variables: {
       productVariants: true,
     },
   });
-  const selectedChannel = availableChannels.find(
-    channel =>
-      channel.slug ===
-      (productListingPageFiltersFlag.enabled ? selectedChannelSlug : params.channel),
-  );
+  const selectedChannel = availableChannels.find(channel => channel.slug === selectedChannelSlug);
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductListUrlDialog,
     ProductListUrlQueryParams
@@ -233,7 +176,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       }
     },
   });
-  const [changeFilters, resetFilters, handleSearchChange] = useFilterHandlers({
+  const [_, resetFilters, handleSearchChange] = useFilterHandlers({
     cleanupFn: clearRowSelection,
     createUrl: productListUrl,
     getFilterQueryParam,
@@ -257,17 +200,10 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     });
     clearRowSelection();
   };
-  const kindOpts = getProductKindOpts(availableProductKinds, intl);
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const channelOpts = availableChannels
-    ? mapNodeToChoice(availableChannels, channel => channel.slug)
-    : null;
   const filterVariables = getFilterVariables({
-    isProductListingPageFiltersFlagEnabled: productListingPageFiltersFlag.enabled,
     filterContainer: valueProvider.value,
     queryParams: params,
-    isChannelSelected: !!selectedChannel,
-    channelSlug: selectedChannel?.slug,
   });
   const sort = getSortQueryVariables(params, !!selectedChannel);
   const queryVariables = React.useMemo<
@@ -339,25 +275,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     loading: searchDialogProductTypesOpts.loading,
     onFetchMore: loadMoreDialogProductTypes,
   };
-  const filterOpts = getFilterOpts(
-    params,
-    (mapEdgesToItems(initialFilterAttributes?.attributes) || []).filter(filterable),
-    searchAttributeValues,
-    {
-      initial: mapEdgesToItems(initialFilterCategories?.categories) || [],
-      search: searchCategories,
-    },
-    {
-      initial: mapEdgesToItems(initialFilterCollections?.collections) || [],
-      search: searchCollections,
-    },
-    {
-      initial: mapEdgesToItems(initialFilterProductTypes?.productTypes) || [],
-      search: searchProductTypes,
-    },
-    kindOpts,
-    channelOpts,
-  );
   const paginationValues = usePaginator({
     pageInfo: data?.products?.pageInfo,
     paginationState,
@@ -376,7 +293,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         currencySymbol={selectedChannel?.currencyCode || ""}
         currentTab={selectedPreset}
         defaultSettings={defaultListSettings[ListViews.PRODUCT_LIST]}
-        filterOpts={filterOpts}
         gridAttributesOpts={gridAttributesOpts}
         settings={settings}
         availableColumnsAttributesOpts={availableColumnsAttributesOpts}
@@ -390,8 +306,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         onAdd={() => openModal("create-product")}
         onAll={resetFilters}
         onSearchChange={handleSearchChange}
-        onFilterChange={changeFilters}
-        onFilterAttributeFocus={setFocusedAttribute}
+        filterDependency={channelFilterDependency}
         onTabSave={() => openModal("save-search")}
         onTabUpdate={onPresetUpdate}
         onTabDelete={(tabIndex: number) => {

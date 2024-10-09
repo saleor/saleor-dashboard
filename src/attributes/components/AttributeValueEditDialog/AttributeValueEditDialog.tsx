@@ -52,7 +52,7 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
         <Form initial={initialForm} onSubmit={onSubmit}>
           {({ errors, set, change, clearErrors, setError, data, submit }) => (
             <DashboardModal.Grid>
-              <DashboardModal.Title>
+              <DashboardModal.Header>
                 {attributeValue === null ? (
                   <FormattedMessage
                     id="PqMbma"
@@ -66,7 +66,7 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
                     description="edit attribute value"
                   />
                 )}
-              </DashboardModal.Title>
+              </DashboardModal.Header>
 
               <TextField
                 data-test-id="value-name"
