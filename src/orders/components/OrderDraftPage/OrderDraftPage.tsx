@@ -13,6 +13,7 @@ import {
   OrderLineInput,
   SearchCustomersQuery,
 } from "@dashboard/graphql";
+import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSectionCard";
@@ -51,6 +52,8 @@ export interface OrderDraftPageProps extends FetchMoreProps {
   onShowMetadata: (id: string) => void;
 }
 
+const draftOrderListUrl = orderDraftListUrl();
+
 const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
   const {
     loading,
@@ -78,11 +81,14 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
   } = props;
   const navigate = useNavigator();
   const intl = useIntl();
+  const backLinkUrl = useBackLinkWithState({
+    path: draftOrderListUrl,
+  });
 
   return (
     <DetailPageLayout>
       <TopNav
-        href={orderDraftListUrl()}
+        href={backLinkUrl}
         title={
           <Box display="flex" alignItems="center" gap={3}>
             <span>{order?.number ? "#" + order?.number : undefined}</span>

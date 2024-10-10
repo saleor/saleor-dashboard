@@ -20,6 +20,7 @@ import {
   OrderStatus,
   TransactionActionEnum,
 } from "@dashboard/graphql";
+import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
@@ -172,6 +173,10 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     context.setDevModeVisibility(true);
   };
 
+  const backLinkUrl = useBackLinkWithState({
+    path: orderListUrl(),
+  });
+
   return (
     <Form confirmLeave initial={initial} onSubmit={handleSubmit} mergeData={false}>
       {({ set, triggerChange, data, submit }) => {
@@ -179,7 +184,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
 
         return (
           <DetailPageLayout>
-            <TopNav href={orderListUrl()} title={<Title order={order} />}>
+            <TopNav href={backLinkUrl} title={<Title order={order} />}>
               <CardMenu
                 menuItems={[
                   ...selectCardMenuItems,
