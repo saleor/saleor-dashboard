@@ -15,7 +15,7 @@ program
   .action(async options => {
 
     if (options.version.match(/^\d+\.\d+\./)) {
-      throw new Error(`Incorrect version provided - ${customVersion}`);
+      throw new Error(`Incorrect version provided - ${options.version}`);
     }
     const isOldVersion = await checkIfOldVersion(options.version, options.repo_token);
     core.setOutput("IS_OLD_VERSION", isOldVersion);
