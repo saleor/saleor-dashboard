@@ -1,59 +1,5 @@
 import { gql } from "@apollo/client";
 
-export const initialProductFilterAttributesQuery = gql`
-  query InitialProductFilterAttributes {
-    attributes(first: 100, filter: { type: PRODUCT_TYPE }) {
-      edges {
-        node {
-          id
-          name
-          inputType
-          slug
-        }
-      }
-    }
-  }
-`;
-
-export const initialProductFilterCategoriesQuery = gql`
-  query InitialProductFilterCategories($categories: [ID!]) {
-    categories(first: 100, filter: { ids: $categories }) {
-      edges {
-        node {
-          id
-          name
-        }
-      }
-    }
-  }
-`;
-
-export const initialProductFilterCollectionsQuery = gql`
-  query InitialProductFilterCollections($collections: [ID!]) {
-    collections(first: 100, filter: { ids: $collections }) {
-      edges {
-        node {
-          id
-          name
-        }
-      }
-    }
-  }
-`;
-
-export const initialProductFilterProductTypesQuery = gql`
-  query InitialProductFilterProductTypes($productTypes: [ID!]) {
-    productTypes(first: 100, filter: { ids: $productTypes }) {
-      edges {
-        node {
-          id
-          name
-        }
-      }
-    }
-  }
-`;
-
 export const productListQuery = gql`
   query ProductList(
     $first: Int

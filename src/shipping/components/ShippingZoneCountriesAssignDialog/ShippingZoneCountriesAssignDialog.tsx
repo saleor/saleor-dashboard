@@ -66,9 +66,9 @@ const ShippingZoneCountriesAssignDialog: React.FC<
 
             return (
               <DashboardModal.Grid>
-                <DashboardModal.Title>
+                <DashboardModal.Header>
                   <FormattedMessage {...messages.assignCountriesTitle} />
-                </DashboardModal.Title>
+                </DashboardModal.Header>
 
                 <Text>
                   <FormattedMessage {...messages.assignCountriesDescription} />

@@ -9,7 +9,7 @@ export interface ProductVariantDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   name: string;
-  onClose?: () => any;
+  onClose: () => any;
   onConfirm?: () => any;
 }
 
@@ -19,13 +19,13 @@ const ProductVariantDeleteDialog: React.FC<ProductVariantDeleteDialogProps> = pr
   return (
     <DashboardModal onChange={onClose} open={open}>
       <DashboardModal.Content size="sm">
-        <DashboardModal.Title>
+        <DashboardModal.Header>
           <FormattedMessage
             id="GFJabu"
             defaultMessage="Delete Variant"
             description="dialog header"
           />
-        </DashboardModal.Title>
+        </DashboardModal.Header>
 
         <Text>
           <FormattedMessage

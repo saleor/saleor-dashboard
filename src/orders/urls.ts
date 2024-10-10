@@ -70,7 +70,7 @@ export const orderListUrl = (params?: OrderListUrlQueryParams): string => {
   }
 };
 
-export const ff_orderListUrl = (userEmail?: string) => {
+export const orderListUrlWithCustomer = (userEmail?: string) => {
   if (userEmail === undefined) {
     return orderListPath;
   }

@@ -1,7 +1,7 @@
 ---
 name: discounts_rules
 displayName: Discounts rules
-enabled: false
+enabled: true
 payload: "default"
 visible: true
 ---
