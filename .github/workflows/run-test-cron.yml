@@ -87,6 +87,7 @@ jobs:
           API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
           E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
           E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
+          ACCOUNTS: ${{ needs.initialize-cloud.outputs.ACCOUNTS }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
           MAILPITURL: ${{ secrets.MAILPITURL }}
           PW_WORKERS: ${{ vars.PW_WORKERS }}
