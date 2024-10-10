@@ -62,5 +62,11 @@ export default defineConfig({
       use: { ...devices["Desktop Chrome"] },
       testMatch: "playwright/tests/apps.spec.ts",
     },
+    {
+      name: "release",
+      dependencies: ["setup"],
+      use: { ...devices["Desktop Chrome"] },
+      testIgnore: "playwright/tests/apps.spec.ts",
+    },
   ],
 });
