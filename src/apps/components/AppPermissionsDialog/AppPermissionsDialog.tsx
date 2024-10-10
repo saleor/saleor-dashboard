@@ -111,7 +111,7 @@ export const AppPermissionsDialog = ({
   return (
     <DashboardModal open={true} onChange={onClose}>
       <DashboardModal.Content size="sm">
-        <DashboardModal.Title>{formatMessage(messages.heading)}</DashboardModal.Title>
+        <DashboardModal.Header>{formatMessage(messages.heading)}</DashboardModal.Header>
         <Box display={"grid"} gridAutoFlow={"row"}>
           <Text as={"p"}>{formatMessage(messages.info)}</Text>
           <Box

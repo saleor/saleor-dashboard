@@ -45,6 +45,7 @@ jobs:
     secrets: inherit
 
   add-comment-to-release-pr:
+    if: ${{ !cancelled() }}
     needs: run-tests-on-release
     runs-on: ubuntu-22.04
     steps:

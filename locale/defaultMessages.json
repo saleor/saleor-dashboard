@@ -848,10 +848,6 @@
     "context": "navigator command mode description",
     "string": "Search Command"
   },
-  "3Z8972": {
-    "context": "product",
-    "string": "Stock quantity"
-  },
   "3a5wL8": {
     "string": "Active"
   },
@@ -1315,10 +1311,6 @@
   "6WRFp2": {
     "context": "order history message",
     "string": "Note was added to the order"
-  },
-  "6Y1nQd": {
-    "context": "product is visible",
-    "string": "Visible"
   },
   "6aBkJm": {
     "context": "section header",
@@ -2057,10 +2049,6 @@
   },
   "BvGp1I": {
     "string": "between"
-  },
-  "Bx367s": {
-    "context": "product is hidden",
-    "string": "Hidden"
   },
   "By5ZBp": {
     "context": "header",
@@ -3314,10 +3302,6 @@
     "context": "csv file exporting has finished, header",
     "string": "Exporting CSV finished"
   },
-  "JUQwne": {
-    "context": "order",
-    "string": "Gift Card"
-  },
   "JV+EiM": {
     "context": "voucher value",
     "string": "Value"
@@ -3329,10 +3313,6 @@
   "JXRYQg": {
     "context": "button",
     "string": "Create Menu"
-  },
-  "JYvf8/": {
-    "context": "is preorder",
-    "string": "Preorder"
   },
   "Ja7gHc": {
     "context": "button",
@@ -3489,10 +3469,6 @@
   "Kg0Fiu": {
     "context": "quantity of fulfilled products",
     "string": "Quantity to fulfill"
-  },
-  "Kgxlsf": {
-    "context": "order",
-    "string": "Paid with Gift Card"
   },
   "KkufwD": {
     "string": "No voucher codes found"
@@ -4251,10 +4227,6 @@
   "Pyjarj": {
     "string": "This shipping rate has no postal codes assigned"
   },
-  "PzXIXh": {
-    "context": "order",
-    "string": "Customer"
-  },
   "Q/Nbku": {
     "context": "product field",
     "string": "Type"
@@ -4688,10 +4660,6 @@
   "Sjd7wm": {
     "context": "product filter label",
     "string": "Product"
-  },
-  "Sna+WK": {
-    "context": "product status",
-    "string": "Out Of Stock"
   },
   "SpngiS": {
     "context": "sale status",
@@ -5856,10 +5824,6 @@
     "context": "draft created from replace products list title",
     "string": "Products replaced"
   },
-  "a4qX2+": {
-    "context": "order",
-    "string": "Created"
-  },
   "a55zOn": {
     "context": "section header",
     "string": "Data privacy"
@@ -6127,10 +6091,6 @@
   "bh9+8A": {
     "context": "voucher requirement",
     "string": "Minimal order value"
-  },
-  "biAxKR": {
-    "context": "click and collect",
-    "string": "Click&Collect"
   },
   "biDgQS": {
     "context": "button, opens modal to create transaction in order",
@@ -6420,10 +6380,6 @@
   "dc5KWn": {
     "context": "products export type label",
     "string": "products"
-  },
-  "diOQm7": {
-    "context": "product status",
-    "string": "Available"
   },
   "dnbJKr": {
     "string": "This transaction doesn't have any events"
@@ -6724,10 +6680,6 @@
   },
   "fzpXvv": {
     "string": "Are you sure you want to remove {email} avatar?"
-  },
-  "g+GAf4": {
-    "context": "product visibility",
-    "string": "Visibility"
   },
   "g/BrOt": {
     "string": "Url has invalid format"
@@ -7521,10 +7473,6 @@
     "context": "table head",
     "string": "Variant Name"
   },
-  "lJP1iw": {
-    "context": "order",
-    "string": "Channel"
-  },
   "lJXkFS": {
     "context": "discount name",
     "string": "Discount name"
@@ -8056,10 +8004,6 @@
   "pAwBtz": {
     "string": "Reward value"
   },
-  "pBTTtU": {
-    "context": "product kind",
-    "string": "Product Kind"
-  },
   "pC6/1z": {
     "string": "Invalid manifest format"
   },
@@ -8114,10 +8058,6 @@
   },
   "paa4m0": {
     "string": "Successfully created product type"
-  },
-  "pbGIUg": {
-    "context": "sales channel",
-    "string": "Channel"
   },
   "phAZoj": {
     "string": "Collection"
@@ -8463,10 +8403,6 @@
   "s51tHd": {
     "context": "limit voucher",
     "string": "Limit of Uses"
-  },
-  "s5v6m0": {
-    "context": "order",
-    "string": "Gift Card ordered"
   },
   "s6lW8R": {
     "context": "option label",

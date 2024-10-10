@@ -86,13 +86,11 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
   return (
     <DashboardModal open={isOpen} onChange={onClose}>
       <DashboardModal.Content size="sm">
-        <DashboardModal.Title display="flex" justifyContent="space-between" alignItems="center">
+        <DashboardModal.Header>
           {intl.formatMessage(baseMessages.title, {
             selectedTypesCount: typesToDelete.length,
           })}
-
-          <DashboardModal.Close onClose={onClose} />
-        </DashboardModal.Title>
+        </DashboardModal.Header>
 
         {isLoading ? (
           <Box display="flex" width="100%" justifyContent="center" paddingY={10}>

@@ -82,7 +82,7 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
 
             return (
               <DashboardModal.Grid>
-                <DashboardModal.Title>
+                <DashboardModal.Header>
                   {variant === "create" ? (
                     <FormattedMessage
                       id="W0kQd+"
@@ -96,7 +96,7 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
                       description="dialog title"
                     />
                   )}
-                </DashboardModal.Title>
+                </DashboardModal.Header>
 
                 <AddressEdit
                   countries={countryChoices}
