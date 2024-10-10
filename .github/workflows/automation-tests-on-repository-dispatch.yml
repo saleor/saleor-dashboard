@@ -1,5 +1,5 @@
 name: Execute automation tests
-run-name: Run tests on ${{github.event.client_payload.custom_version }} ${{github.event.client_payload.project}} 
+run-name: Run tests on ${{github.event.client_payload.custom_version }} ${{github.event.client_payload.project}}
 
 on:
   repository_dispatch:
@@ -40,7 +40,7 @@ jobs:
     uses: ./.github/workflows/run-tests-on-release.yml
     with:
       VERSION: ${{needs.get-environment-variables.outputs.VERSION}}
-      CUSTOM_VERSION: ${{github.event.client_payload.custom_version }}
+      CUSTOM_VERSION: ${{github.event.client_payload.custom_version }} 
       ADDITIONAL_TITLE: "Core automation test"
     secrets: inherit
 

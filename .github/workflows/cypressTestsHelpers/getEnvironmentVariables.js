@@ -13,6 +13,10 @@ program
   .option("--repo_token <repo_token>", "github token")
   .option("--project <project>", "release project")
   .action(async options => {
+
+    if (options.version.match(/^\d+\.\d+\./)) {
+      throw new Error(`Incorrect version provided - ${customVersion}`);
+    }
     const isOldVersion = await checkIfOldVersion(options.version, options.repo_token);
     core.setOutput("IS_OLD_VERSION", isOldVersion);
 
