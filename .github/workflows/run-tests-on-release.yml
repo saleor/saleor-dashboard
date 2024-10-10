@@ -15,7 +15,6 @@ on:
         required: false
         default: "Dashboard Automation test run "
 
-
     secrets:
       STAGING_TOKEN:
         required: true
@@ -131,32 +130,6 @@ jobs:
             --repo_token "$REPO_TOKEN" \
             --project "$PROJECT"
 
-      - name: send slack message if failure
-        if: failure()
-        env:
-          LINK: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          MESSAGE: "Could not prepare instance for release tests on version ${{ env.CUSTOM_VERSION }}"
-        run: |
-          payload=$(\
-          jq --null-input \
-          --arg link "$LINK" \
-          --arg message "$MESSAGE" \
-          '{
-              "attachments": [
-                {
-                  "pretext": "FAILURE",
-                  "color": "#FE6E76",
-                  "title": "Automation tests failure",
-                  "title_link": $link,
-                  "text": $message
-                }
-              ]
-          }'
-          )
-          curl -H "Content-type: application/json" \
-          --data "$payload" \
-          -X POST ${{ secrets.SLACK_QA_STATUSES_WEBHOOK_URL }}
-
   run-cy-tests:
     if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"cypress"'
     needs: add-check-and-prepare-instance
@@ -257,7 +230,7 @@ jobs:
 
   tests-complete:
     if: |
-      !cancelled() && always() && needs.add-check-and-prepare-instance.result == 'success'
+      !cancelled() && always()
     needs: ["add-check-and-prepare-instance", "run-cy-tests", "run-pw-tests"]
     runs-on: ubuntu-22.04
     timeout-minutes: 30
@@ -330,7 +303,6 @@ jobs:
       always() &&
       (needs.tests-complete != 'success' && cancelled()) &&
       needs.add-check-and-prepare-instance.outputs.FRAMEWORK   == '"playwright"'
-      && needs.add-check-and-prepare-instance.result == 'success'
 
     steps:
       - uses: actions/checkout@v4
