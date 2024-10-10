@@ -3,10 +3,11 @@ import { ConfigurationPage } from "@pages/configurationPage";
 import { AddNavigationMenuItemDialog } from "@pages/dialogs/addNavigationMenuItemDialog";
 import { NavigationDetailsPage } from "@pages/navigationDetailsPage";
 import { NavigationPage } from "@pages/navigationPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
 import faker from "faker";
+import { test } from "utils/testWithPermission";
 
-test.use({ storageState: "playwright/.auth/admin.json" });
+test.use({ permissionName: "admin" });
 
 let navigation: NavigationPage;
 let navigationDetailsPage: NavigationDetailsPage;

@@ -1,8 +1,9 @@
 import { TRANSLATIONS } from "@data/e2eTestData";
 import { TranslationsPage } from "@pages/translationsPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
+import { test } from "utils/testWithPermission";
 
-test.use({ storageState: "playwright/.auth/admin.json" });
+test.use({ permissionName: "admin" });
 
 let translationsPage: TranslationsPage;
 

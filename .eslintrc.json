@@ -105,5 +105,5 @@
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unused-vars": "off"
   },
-  "ignorePatterns": ["node_modules/", "**/types/**/*", "type-policies.ts"]
+  "ignorePatterns": ["node_modules/", "**/types/**/*", "type-policies.ts", "playwright/auth.js"]
 }
