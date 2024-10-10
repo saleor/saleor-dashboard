@@ -131,16 +131,18 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
       ...productAttributeUpdateResult.data.productAttributeAssignmentUpdate.errors,
     ];
   };
-  const productTypeDeleteData = useProductTypeDelete({
-    singleId: id,
-    params,
-  });
   const { data, loading: dataLoading } = useProductTypeDetailsQuery({
     displayLoader: true,
     variables: { id },
   });
   const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
   const productType = data?.productType;
+
+  const productTypeDeleteData = useProductTypeDelete({
+    singleId: id,
+    params,
+    typeBaseData: productType ? [productType] : undefined,
+  });
   const closeModal = () => navigate(productTypeUrl(id), { replace: true });
   const handleAttributeAssignSuccess = (data: AssignProductAttributeMutation) => {
     if (data.productAttributeAssign.errors.length === 0) {

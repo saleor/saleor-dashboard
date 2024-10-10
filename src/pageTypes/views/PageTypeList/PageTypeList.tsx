@@ -188,7 +188,6 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
           onClose={closeModal}
           onDelete={hanldePageTypeBulkDelete}
           deleteButtonState={pageTypeBulkDeleteOpts.status}
-          showViewAssignedItemsButton={false}
         />
       )}
       <SaveFilterTabDialog

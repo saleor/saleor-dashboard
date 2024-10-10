@@ -114,11 +114,13 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
     queryString: params,
   });
   const handleSort = createSortHandler(navigate, productTypeListUrl, params);
+  const productTypesData = mapEdgesToItems(data?.productTypes);
+
   const productTypeDeleteData = useProductTypeDelete({
     selectedTypes: selectedProductTypes,
     params,
+    typeBaseData: productTypesData,
   });
-  const productTypesData = mapEdgesToItems(data?.productTypes);
   const [productTypeBulkDelete, productTypeBulkDeleteOpts] = useProductTypeBulkDeleteMutation({
     onCompleted: data => {
       if (data.productTypeBulkDelete.errors.length === 0) {

@@ -2460,6 +2460,7 @@ export const ProductTypeFragmentDoc = gql`
     fragment ProductType on ProductType {
   id
   name
+  slug
   kind
   hasVariants
   isShippingRequired

@@ -4,6 +4,7 @@ export const productTypeFragment = gql`
   fragment ProductType on ProductType {
     id
     name
+    slug
     kind
     hasVariants
     isShippingRequired
