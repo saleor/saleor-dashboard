@@ -9,6 +9,7 @@ import { OrdersPage } from "@pages/ordersPage";
 import { RefundPage } from "@pages/refundPage";
 import { expect } from "@playwright/test";
 import { test } from "utils/testWithPermission";
+import * as faker from "faker";
 
 test.use({ permissionName: "admin" });
 
@@ -444,4 +445,29 @@ test(`TC: SALEOR_216 Order type discount is applied to a draft order @draft @dis
   const discountedOrderSubTotal = undiscountedOrderSubTotal - (undiscountedOrderSubTotal * 5) / 100;
 
   expect(finalTotalPrice.slice(3)).toContain(discountedOrderSubTotal.toString());
+});
+
+test("TC: SALEOR_217 Complete basic order for non existing customer @e2e @order", async () => {
+  const nonExistingEmail = `customer-${faker.datatype.number()}@example.com`;
+  const newAddress = ADDRESS.addressPL;
+
+  await ordersPage.goToOrdersListView();
+  await ordersPage.clickCreateOrderButton();
+  await ordersPage.orderCreateDialog.completeOrderCreateDialogWithFirstChannel();
+  await ordersPage.clickAddProductsButton();
+  await draftOrdersPage.addProductsDialog.selectVariantBySKU(variantSKU);
+  await draftOrdersPage.addProductsDialog.clickConfirmButton();
+  await ordersPage.rightSideDetailsPage.clickEditCustomerButton();
+  await ordersPage.rightSideDetailsPage.clickSearchCustomerInput();
+  await ordersPage.rightSideDetailsPage.typeAndSelectCustomerEmail(nonExistingEmail);
+  await addressForm.completeBasicInfoAddressForm(newAddress);
+  await addressForm.typeCompanyName(newAddress.companyName);
+  await addressForm.typePhone(newAddress.phone);
+  await addressForm.typeAddressLine2(newAddress.addressLine2);
+  await addressDialog.clickConfirmButton();
+  await ordersPage.expectSuccessBanner();
+  await ordersPage.clickAddShippingCarrierButton();
+  await ordersPage.shippingAddressDialog.pickAndConfirmFirstShippingMethod();
+  await ordersPage.clickFinalizeButton();
+  await draftOrdersPage.expectSuccessBannerMessage("finalized");
 });
