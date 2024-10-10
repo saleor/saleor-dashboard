@@ -152,18 +152,17 @@ jobs:
           env_url: ${{ needs.initialize-cloud.outputs.BASE_URL }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
+
       - name: Prepare accounts
         id: accounts
-        env:
+        uses: ./.github/actions/prepare-accounts
+        with:
           BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
           API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
           E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
           E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
-        run: |
-          ACCOUNTS=$(node playwright/auth.js login)
-          echo "ACCOUNTS=${ACCOUNTS}" >> "$GITHUB_OUTPUT"
 
   run-tests:
     if: ${{ contains(github.event.pull_request.labels.*.name, 'run pw-e2e') }}

@@ -54,14 +54,12 @@ runs:
       run: npm ci
 
     - name: Restore accounts
-      shell: bash
-      env:
-        E2E_ENCODE_PASS: ${{ inputs.E2E_ENCODE_PASS }}
-        ACCOUNTS: ${{ inputs.ACCOUNTS }}
-        API_URL: ${{ inputs.API_URL }}
-        BASE_URL: ${{ inputs.BASE_URL }}
-      run: |
-        node playwright/auth.js restore $ACCOUNTS
+      uses: ./.github/actions/restore-accounts
+      with:
+        BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
+        API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
+        ACCOUNTS: ${{ needs.deploy-dashboard.outputs.ACCOUNTS }}
+        E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
 
     - name: Install Playwright Browsers
       shell: bash
