@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.20.13
+
+### Patch Changes
+
+- 04d16fc37: Add e2e for managing products on draft order. Add e2e for placing draft order for non-existing customer.
+- 8ea94af11: Enable by default feature flag for discount rules. Remove feature flags for product and order expression filters, so that expression filter will always show. Cleanup dead code after remove feature flags.
+- 1ff350a22: Assigning product to shipping method weight rate no more cause error
+- be5d5e65e: Modals in the Dashboard have been aligned, so that all contains close button
+- fc80e34ef: Knip was added to the codebase and workflow triggered on pull request. This means developers will now be informed about unused exports and files.
+
 ## 3.20.12
 
 ### Patch Changes
