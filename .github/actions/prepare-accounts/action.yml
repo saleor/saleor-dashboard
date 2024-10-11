@@ -1,0 +1,48 @@
+name: Prepare accounts
+description: Prepare accounts that are used by Playwright
+inputs:
+  BASE_URL:
+    description: "Dashboard base url"
+    required: true
+  API_URL:
+    description: "API url"
+    required: true
+  E2E_USER_NAME:
+    description: "Username for e2e tests"
+    required: true
+  E2E_USER_PASSWORD:
+    description: "Password for e2e tests"
+    required: true
+  E2E_PERMISSIONS_USERS_PASSWORD:
+    description: "Permissions user password for e2e tests"
+    required: true
+  E2E_ENCODE_PASS:
+    description: "Password for encoding credentials"
+    required: true
+
+outputs:
+  ACCOUNTS:
+    description: "Encrypted accounts"
+    value: ${{ steps.accounts.outputs.ACCOUNTS }}
+
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v3
+      with:
+        node-version-file: ".nvmrc"
+
+    - name: Prepare accounts
+      shell: bash
+      id: accounts
+      env:
+        BASE_URL: ${{ inputs.BASE_URL }}
+        API_URL:  ${{ inputs.API_URL }}
+        E2E_USER_NAME: ${{ inputs.E2E_USER_NAME }}
+        E2E_USER_PASSWORD: ${{ inputs.E2E_USER_PASSWORD }}
+        E2E_ENCODE_PASS: ${{ inputs.E2E_ENCODE_PASS }}
+        E2E_PERMISSIONS_USERS_PASSWORD: ${{ inputs.E2E_PERMISSIONS_USERS_PASSWORD }}
+      run: |
+        ACCOUNTS=$(node playwright/auth.js login)
+        echo "ACCOUNTS=${ACCOUNTS}" >> "$GITHUB_OUTPUT"
