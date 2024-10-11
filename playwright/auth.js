@@ -9,6 +9,8 @@ const fs = require("fs");
 
 dotenv.config();
 
+const algorithm = 'aes-256-ctr';
+
 const PERMISSIONS = [
   "admin",
   "app",
@@ -104,7 +106,6 @@ const getAuthForPermission = async (permissionName) => {
 }
 
 const encrypt = (password, text) => {
-  const algorithm = 'aes-256-ctr';
   const key = Buffer.concat([Buffer.from(password), Buffer.alloc(32)], 32);
   const iv = crypto.randomBytes(16);
   const cipher = crypto.createCipheriv(algorithm, key, iv);
@@ -114,7 +115,6 @@ const encrypt = (password, text) => {
 }
 
 const decrypt = (password, text) => {
-  const algorithm = 'aes-256-ctr';
   const key = Buffer.concat([Buffer.from(password), Buffer.alloc(32)], 32);
   const iv = Buffer.from(text.substring(0, 32), 'hex');
   const encryptedText = Buffer.from(text.substring(32), 'hex');
