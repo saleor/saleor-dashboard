@@ -48,7 +48,7 @@ const createQuery = (email, password) => `mutation TokenAuth{
   tokenCreate(email: "${email}", password: "${password}") {
     token
     refreshToken
-    errors: errors {
+    errors {
       code
       message
     }

@@ -4,24 +4,14 @@ import { request } from "@playwright/test";
 import fs from "fs";
 import path from "path";
 
-/**
- * Retrieves the storage state for a given user permission.
- * If the storage state does not exist, it creates the necessary directories,
- * logs in the user via API, and saves the storage state to a file.
- *
- * @param {UserPermission} permission - The user permission for which to retrieve the storage state.
- * @returns {Promise<string>} - A promise that resolves to the path of the storage state file.
- */
 export const getStorageState = async (permission: UserPermission | "admin"): Promise<string> => {
   const tempDir = path.join(__dirname, "../.auth");
   const storageStatePath = path.join(tempDir, `${permission}.json`);
 
-  // Create the .auth directory if it does not exist.
   if (!fs.existsSync(tempDir)) {
     fs.mkdirSync(tempDir, { recursive: true });
   }
 
-  // If the storage state does not exist, log in the user via API and save the storage state to a file.
   if (!fs.existsSync(storageStatePath)) {
     const apiRequestContext = await request.newContext({
       baseURL: process.env.BASE_URL!,
