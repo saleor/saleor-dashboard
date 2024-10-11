@@ -10,6 +10,10 @@ on:
         type: string
         required: true
         description: Version of run eg. "3.19.4-5a41d18"
+      ADDITIONAL_TITLE:
+        type: string
+        required: false
+        default: "Dashboard Automation test run "
 
     secrets:
       STAGING_TOKEN:
@@ -28,10 +32,22 @@ on:
         required: true
       SLACK_QA_STATUSES_WEBHOOK_URL:
         required: true
-        
+
+    outputs:
+      TESTS_CONCLUSION:
+        value: ${{ jobs.tests-complete.outputs.TESTS_CONCLUSION }}
+        description: conclusion of tests
+      RUN_URL:
+        value: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        description: Url to job run
+      PR_COMMENT: 
+        value: ${{ jobs.tests-complete.outputs.PR_COMMENT }}
+        description: Comment for release PR
+
 jobs:
   add-check-and-prepare-instance:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     env:
       VERSION: ${{inputs.VERSION}}
       CUSTOM_VERSION: ${{inputs.CUSTOM_VERSION}}
@@ -47,6 +63,8 @@ jobs:
       BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
       CHECK_ID: ${{ steps.create-check.outputs.CHECK_ID }}
       FRAMEWORK: ${{ steps.check-framework.outputs.result }}
+      IS_OLD_VERSION: ${{ steps.get-environment-variables.outputs.IS_OLD_VERSION }}
+      ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
     steps:
       - uses: actions/checkout@v4
 
@@ -65,7 +83,6 @@ jobs:
             }
 
       - name: Create check if release PR exists
-        if: steps.check-framework.outputs.result == '"playwright"'
         id: create-check
         uses: ./.github/actions/checks/create-pull-request-check
         with:
@@ -84,7 +101,6 @@ jobs:
           VERSION: ${{ env.VERSION }}
 
       - name: Prepare instances
-        if: steps.check-framework.outputs.result == '"playwright"' 
         id: pool_variables
         uses: ./.github/actions/prepare-instance
         with:
@@ -97,46 +113,100 @@ jobs:
           BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
 
       - uses: ./.github/actions/testmo/testmo-init
-        if: steps.check-framework.outputs.result == '"playwright"' 
         with:
           testmoUrl: ${{ secrets.TESTMO_URL }}
           testmoToken: ${{ secrets.TESTMO_TOKEN }}
-          testmoRunName: "Playwright run ${{ env.CUSTOM_VERSION }}"
+          testmoRunName: "${{ steps.check-framework.outputs.result }} run ${{ env.CUSTOM_VERSION }}"
         id: init-testmo
 
-  run-cy-tests:
-    runs-on: ubuntu-22.04
-    needs: "add-check-and-prepare-instance"
-    if: ${{ needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"cypress"' }}
-    steps:
-      - name: Trigger dashboard cypress automation tests
-        env: 
-          VERSION: ${{inputs.CUSTOM_VERSION}}
+      - name: get environment variables
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
+        id: get-environment-variables
         run: |
-          GITHUB_TOKEN=$( \
-            curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
-          )
-          export GITHUB_TOKEN
+          node .github/workflows/cypressTestsHelpers/getEnvironmentVariables.js \
+            --version $CUSTOM_VERSION \
+            --token "$TOKEN" \
+            --repo_token "$REPO_TOKEN" \
+            --project "$PROJECT"
 
-          payload=$(\
-          jq --null-input \
-          --arg version "$VERSION" \
-          '{
-            "event_type":"automation-tests-event", 
-            "client_payload": {
-              "project": "DASHBOARD",
-              "environment": "SANDBOX",
-              "version": $version
+      - name: Prepare accounts
+        id: accounts
+        uses: ./.github/actions/prepare-accounts
+        with:
+          BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
+          API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
+          E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
+          E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
+
+  run-cy-tests:
+    if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"cypress"'
+    needs: add-check-and-prepare-instance
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    container:
+      image: cypress/browsers:node18.12.0-chrome106-ff106
+      options: --user 1001
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3, 4, 5, 6]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.add-check-and-prepare-instance.outputs.VERSION }}
+
+      - name: Set tag for tests
+        id: set-tag-for-tests
+        uses: actions/github-script@v6
+        env:
+          is_old_version: ${{ needs.add-check-and-prepare-instance.outputs.IS_OLD_VERSION }}
+        with:
+          result-encoding: string
+          script: |
+            const { is_old_version } = process.env
+            if(is_old_version == "true"){
+              return "@oldRelease"
+            }else{
+              return "@stable"
             }
-          }'
-          )
 
-          gh api /repos/saleor/saleor-dashboard/dispatches \
-            --input - <<< "$payload"
+      - name: Cypress run
+        id: cypress-run
+        uses: ./.github/actions/e2e
+        continue-on-error: true
+        with:
+          apiUrl: ${{ needs.add-check-and-prepare-instance.outputs.API_URL }}
+          appMountUri: ${{ secrets.APP_MOUNT_URI }}
+          baseUrl: ${{ needs.add-check-and-prepare-instance.outputs.BASE_URL }}
+          userName: ${{ secrets.CYPRESS_USER_NAME }}
+          secondUserName: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
+          userPassword: ${{ secrets.CYPRESS_USER_PASSWORD }}
+          permissionsUserPassword: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          mailpitUrl: ${{ secrets.CYPRESS_MAILPITURL }}
+          stripeSecretKey: ${{ secrets.STRIPE_SECRET_KEY }}
+          stripePublicKey: ${{ secrets.STRIPE_PUBLIC_KEY }}
+          cypressGrepTags: ${{steps.set-tag-for-tests.outputs.result}}
+          split: ${{ strategy.job-total }}
+          splitIndex: ${{ strategy.job-index }}
+          commitInfoMessage: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
+          install: false
+          browser: "electron"
+
+      - name: Testmo threads submit
+        uses: ./.github/actions/testmo/testmo-threads-submit
+        with:
+          testmoUrl: ${{ secrets.TESTMO_URL }}
+          testmoToken: ${{ secrets.TESTMO_TOKEN }}
+          testmoRunId: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
 
   run-pw-tests:
     runs-on: ubuntu-22.04
     needs: "add-check-and-prepare-instance"
+    timeout-minutes: 30
     if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"playwright"'
     strategy:
       fail-fast: false
@@ -156,10 +226,12 @@ jobs:
           E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
           E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
+          ACCOUNTS: ${{ needs.add-check-and-prepare-instance.outputs.ACCOUNTS }}
           MAILPITURL: ${{ secrets.MAILPITURL }}
           URL_TO_RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           PW_WORKERS: ${{ vars.PW_WORKERS }}
           PW_RETRIES: ${{ vars.PW_RETRIES }}
+          PROJECT: "e2e apps-e2e"
 
       - name: submit-results-to-testmo
         if: always()
@@ -169,17 +241,33 @@ jobs:
           testmoToken: ${{ secrets.TESTMO_TOKEN }}
           testmoRunId: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
 
-  tests-complete-pw:
+  tests-complete:
     if: |
-      !cancelled() && 
-      needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"playwright"'
-    needs: ["add-check-and-prepare-instance", "run-pw-tests"]
+      !cancelled() && always()
+    needs: ["add-check-and-prepare-instance", "run-cy-tests", "run-pw-tests"]
     runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    outputs:
+      TESTS_CONCLUSION: "${{ steps.send-slack-message.outputs.status }}"
+      PR_COMMENT: "${{ steps.send-slack-message.outputs.status }} - run details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Install dependencies
+        run: npm ci
+
       - name: Merge playwright reports
+        if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"playwright"'
         uses: ./.github/actions/merge-pw-reports
+
+      - name: Merge cypress reports
+        if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"cypress"'
+        uses: ./.github/actions/combineReportsFromE2E
 
       - name: complete testmo report
         uses: ./.github/actions/testmo/testmo-finish
@@ -198,6 +286,7 @@ jobs:
           ENVIRONMENT: ${{ needs.add-check-and-prepare-instance.outputs.BASE_URL }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_QA_STATUSES_WEBHOOK_URL }}
           REF_NAME: ${{github.ref_name}}
+          ADDITIONAL_TITLE: "${{inputs.ADDITIONAL_TITLE}} ${{inputs.CUSTOM_VERSION}}"
         run: |
           node workflows/postTestsResults.js \
           --run_id "$RUN_ID" \
@@ -205,7 +294,8 @@ jobs:
           --slack_webhook_url "$SLACK_WEBHOOK_URL" \
           --environment "$ENVIRONMENT" \
           --url_to_action "$URL_TO_ACTION" \
-          --ref_name "$REF_NAME" 
+          --ref_name "$REF_NAME" \
+          --additional_title "$ADDITIONAL_TITLE"
 
       - id: update-check
         if: always() && ${{ needs.add-check-and-prepare-instance.outputs.CHECK_ID }}
@@ -221,10 +311,10 @@ jobs:
 
   update-check-status-if-previous-job-fails:
     runs-on: ubuntu-latest
-    needs: [tests-complete-pw, add-check-and-prepare-instance]
+    needs: [tests-complete, add-check-and-prepare-instance]
     if: |
       always() &&
-      (needs.tests-complete-pw != 'success' && cancelled()) &&
+      (needs.tests-complete != 'success' && cancelled()) &&
       needs.add-check-and-prepare-instance.outputs.FRAMEWORK   == '"playwright"'
 
     steps:
@@ -241,7 +331,7 @@ jobs:
           DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
       - name: Change job status if previous job failed or skipped
-        if: needs.tests-complete-pw != 'success' && !cancelled()
+        if: needs.tests-complete != 'success' && !cancelled()
         uses: ./.github/actions/checks/update-pull-request-check
         with:
           CHECK_ID: ${{ needs.add-check-and-prepare-instance.outputs.CHECK_ID }}

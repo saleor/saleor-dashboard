@@ -1,9 +1,11 @@
-import * as faker from "faker";
-import { PAGE_TYPES, ATTRIBUTES } from "@data/e2eTestData";
+import { ATTRIBUTES, PAGE_TYPES } from "@data/e2eTestData";
 import { PageTypesPage } from "@pages/pageTypesPage";
-import { test, expect } from "@playwright/test";
+import { expect } from "@playwright/test";
+import * as faker from "faker";
+import { test } from "utils/testWithPermission";
 
-test.use({ storageState: "./playwright/.auth/admin.json" });
+test.use({ permissionName: "admin" });
+
 const pageTypeName = `e2e-page-type-${faker.datatype.number()}`;
 
 test("TC: SALEOR_187 As an admin user I can create page type @e2e @page-type", async ({

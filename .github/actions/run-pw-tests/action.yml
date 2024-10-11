@@ -31,6 +31,16 @@ inputs:
   PW_RETRIES:
     description: "Playwright retries"
     required: true
+  PROJECT:
+    description: "Project name from playwright config"
+    required: false
+    default: "e2e"
+  ACCOUNTS:
+    description: "Accounts hash"
+    required: true
+  E2E_ENCODE_PASS:
+    description: "Password for encoding credentials"
+    required: true
 
 runs:
   using: "composite"
@@ -42,6 +52,14 @@ runs:
     - name: Install dependencies
       shell: bash
       run: npm ci
+
+    - name: Restore accounts
+      uses: ./.github/actions/restore-accounts
+      with:
+        BASE_URL: ${{ inputs.BASE_URL }}
+        API_URL: ${{ inputs.API_URL }}
+        ACCOUNTS: ${{ inputs.ACCOUNTS }}
+        E2E_ENCODE_PASS: ${{ inputs.E2E_ENCODE_PASS }}
 
     - name: Install Playwright Browsers
       shell: bash
@@ -63,7 +81,14 @@ runs:
         URL_TO_RUN: ${{ inputs.URL_TO_RUN }}
         WORKERS: ${{ inputs.PW_WORKERS }}
         RETRIES: ${{ inputs.PW_RETRIES }}
-      run: npm run qa:pw-e2e -- --shard "$SHARD_NUMBER"
+        PROJECT: ${{ inputs.PROJECT }}
+      run: |
+        PROJECTS=($PROJECT)
+        PROJECT_PARAMS=""
+        for PROJECT in "${PROJECTS[@]}"; do
+          PROJECT_PARAMS+="--project=${PROJECT} "
+        done
+        npx playwright test --grep @e2e $PROJECT_PARAMS --shard "$SHARD_NUMBER"
 
     - name: Upload blob report to GitHub Actions Artifacts
       uses: actions/upload-artifact@v3

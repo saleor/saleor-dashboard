@@ -1,15 +1,11 @@
-import {
-  CATEGORIES,
-  CHANNELS,
-  COLLECTIONS,
-  DISCOUNTS,
-  PRODUCTS,
-} from "@data/e2eTestData";
+import { CATEGORIES, CHANNELS, COLLECTIONS, DISCOUNTS, PRODUCTS } from "@data/e2eTestData";
 import { DiscountsPage } from "@pages/discountsPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
 import faker from "faker";
+import { test } from "utils/testWithPermission";
 
-test.use({ storageState: "./playwright/.auth/admin.json" });
+test.use({ permissionName: "admin" });
+
 let discounts: DiscountsPage;
 
 test.beforeEach( async ({ page }) => {
@@ -154,6 +150,7 @@ for (const { promotionRule, predicateValue } of predicateValues) {
         .filter({ hasText: `Catalog rule: ${name}` })
         .first(),
     ).toContainText(
+      // eslint-disable-next-line no-irregular-whitespace
       `Catalog rule: ${name}Discount of ${rewardValue}% on the purchase of ${promotionRule}: ${predicateValue} through the ${channelName}`,
     );
   });
@@ -207,6 +204,7 @@ for (const { conditionType, value, conditionDesc } of notEqConditions) {
     await expect(
       discounts.existingRule.filter({ hasText: `Order rule: ${name}` }).first(),
     ).toContainText(
+      // eslint-disable-next-line no-irregular-whitespace
       `Order rule: ${name}Discount of ${currency} ${rewardValueFixed} on the purchase of Subtotal price: ${currency} 100.00Total price: ${conditionDesc} ${currency} ${value} through the ${channelName}`,
     );
   });
@@ -283,6 +281,7 @@ for (const rule of orderRules) {
           .filter({ hasText: `Order rule: ${orderRules[0].name}` })
           .first(),
       ).toContainText(
+        // eslint-disable-next-line no-irregular-whitespace
         `Order rule: ${orderRules[0].name}Discount of ${orderRules[0].channelCurrency} 1.00 on the purchase of Subtotal price: ${orderRules[0].channelCurrency} 25.00Total price: ${orderRules[0].channelCurrency} 13.33 through the ${orderRules[0].channel}`,
       );
     } else {
@@ -306,6 +305,7 @@ for (const rule of orderRules) {
           .filter({ hasText: `Order rule: ${orderRules[1].name}` })
           .first(),
       ).toContainText(
+        // eslint-disable-next-line no-irregular-whitespace
         `Order rule: ${orderRules[1].name}Discount of Gift on the purchase of Subtotal price: ${orderRules[1].channelCurrency} 100.00 through the ${orderRules[1].channel}`,
       );
     }

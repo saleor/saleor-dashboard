@@ -3,13 +3,15 @@ import { USERS } from "@data/e2eTestData";
 import { ConfigurationPage } from "@pages/configurationPage";
 import { PermissionGroupsPage } from "@pages/permissionGroupsPage";
 import { StaffMembersPage } from "@pages/staffMembersPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
 import faker from "faker";
+import { test } from "utils/testWithPermission";
 
-test.use({ storageState: "./playwright/.auth/admin.json" });
+test.use({ permissionName: "admin" });
 
 let staffMembersPage: StaffMembersPage;
 let config: ConfigurationPage;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let permissionGroupsPage: PermissionGroupsPage;
 let basicApiService: BasicApiService;
 
@@ -52,7 +54,7 @@ test("TC: SALEOR_38 Admin User should be able to activate other user @e2e @staff
   await expect(loginViaApiDeactivatedUserResponse.data.tokenCreate.errors).toEqual([]);
   await expect(loginViaApiDeactivatedUserResponse.data.tokenCreate.token).not.toEqual(null);
 });
-//Adding skip since there is an error:
+// Adding skip since there is an error:
 // Something went wrong
 // https://pr-4947.dashboard.saleor.rocks/new-password/ is not allowed.
 // Please check `Trusted client origins` configuration in Saleor Cloud.

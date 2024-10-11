@@ -99,5 +99,5 @@
     "@typescript-eslint/restrict-template-expressions": "off",
     "react-refresh/only-export-components": "warn"
   },
-  "ignorePatterns": ["node_modules/", "**/types/**/*", "type-policies.ts"]
+  "ignorePatterns": ["node_modules/", "**/types/**/*", "type-policies.ts", "playwright/auth.js"]
 }

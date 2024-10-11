@@ -1,10 +1,12 @@
-import { AppsPage } from "@pages/appsPage";
-import { AppInstallationPage } from "@pages/appInstallationPage";
-import { expect, test } from "@playwright/test";
-import { AppPage } from "@pages/appPageThirdparty";
 import { APPS } from "@data/e2eTestData";
+import { AppInstallationPage } from "@pages/appInstallationPage";
+import { AppPage } from "@pages/appPageThirdparty";
+import { AppsPage } from "@pages/appsPage";
+import { expect } from "@playwright/test";
+import { test } from "utils/testWithPermission";
 
-test.use({ storageState: "./playwright/.auth/admin.json" });
+test.use({ permissionName: "admin" });
+
 let appsPage: AppsPage;
 let installationPage: AppInstallationPage;
 let appPage: AppPage;
@@ -15,7 +17,7 @@ test.beforeEach(({ page }) => {
   appPage = new AppPage(page);
 });
 
-//Adding temporary skip https://linear.app/saleor/issue/QAG-94/remove-skip-from-app-tests
+// Adding temporary skip https://linear.app/saleor/issue/QAG-94/remove-skip-from-app-tests
 test.skip("TC: SALEOR_119 User should be able to install and configure app from manifest @e2e", async ({
   page,
 }) => {
