@@ -48,13 +48,13 @@ const OrderFulfillmentTrackingDialog: React.FC<OrderFulfillmentTrackingDialogPro
         <Form initial={initialData} onSubmit={onConfirm}>
           {({ change, data, submit }) => (
             <DashboardModal.Grid>
-              <DashboardModal.Title>
+              <DashboardModal.Header>
                 <FormattedMessage
                   id="/BJQIq"
                   defaultMessage="Add Tracking Code"
                   description="dialog header"
                 />
-              </DashboardModal.Title>
+              </DashboardModal.Header>
 
               <TextField
                 error={!!formErrors.trackingNumber}

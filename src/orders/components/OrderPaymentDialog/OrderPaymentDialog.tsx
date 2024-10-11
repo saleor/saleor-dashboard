@@ -48,13 +48,13 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
       >
         {({ data, change, submit }) => (
           <DashboardModal.Content size="sm">
-            <DashboardModal.Title>
+            <DashboardModal.Header>
               {intl.formatMessage({
                 id: "+PbHKD",
                 defaultMessage: "Capture Payment",
                 description: "dialog header",
               })}
-            </DashboardModal.Title>
+            </DashboardModal.Header>
 
             <TextField
               error={!!formErrors.payment}

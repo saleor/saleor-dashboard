@@ -1,6 +1,15 @@
+import { ModalContextProvider } from "@dashboard/components/Modal/context";
 import { Modal, ModalRootProps } from "@saleor/macaw-ui-next";
 import React from "react";
 
-export const Root = ({ children, ...rest }: ModalRootProps) => {
-  return <Modal {...rest}>{children}</Modal>;
+type RootProps = ModalRootProps;
+
+export const Root = ({ children, onChange, open, ...rest }: RootProps) => {
+  return (
+    <ModalContextProvider onChange={onChange} open={open}>
+      <Modal onChange={onChange} open={open} {...rest}>
+        {children}
+      </Modal>
+    </ModalContextProvider>
+  );
 };
