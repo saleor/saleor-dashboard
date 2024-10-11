@@ -1,9 +1,10 @@
 import { CHANNELS } from "@data/e2eTestData";
 import { ChannelPage } from "@pages/channelsPage";
 import { ConfigurationPage } from "@pages/configurationPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
+import { test } from "utils/testWithPermission";
 
-test.use({ storageState: "./playwright/.auth/admin.json", locale: "en" });
+test.use({ permissionName: "admin" });
 
 let configurationPage: ConfigurationPage;
 let channelPage: ChannelPage;
