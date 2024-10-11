@@ -64,6 +64,7 @@ jobs:
       CHECK_ID: ${{ steps.create-check.outputs.CHECK_ID }}
       FRAMEWORK: ${{ steps.check-framework.outputs.result }}
       IS_OLD_VERSION: ${{ steps.get-environment-variables.outputs.IS_OLD_VERSION }}
+      ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}ą
     steps:
       - uses: actions/checkout@v4
 

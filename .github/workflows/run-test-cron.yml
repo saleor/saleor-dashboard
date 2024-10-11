@@ -20,6 +20,7 @@ jobs:
       BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
       BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
       BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
+      ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
     steps:
       - uses: actions/checkout@v4
         with:
