@@ -14,6 +14,7 @@ import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { createGetCellContent, orderDraftListStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
@@ -37,6 +38,7 @@ export const OrderDraftListDatagrid = ({
   onUpdateListSettings,
   onSelectOrderDraftIds,
 }: OrderDraftListDatagridProps) => {
+  const location = useLocation();
   const intl = useIntl();
   const { locale } = useLocale();
   const datagridState = useDatagridChangeState();
@@ -123,6 +125,11 @@ export const OrderDraftListDatagrid = ({
             onToggle={handlers.onToggle}
           />
         )}
+        navigatorOpts={{
+          state: {
+            prevLocation: location,
+          },
+        }}
       />
 
       <Box paddingX={6}>
