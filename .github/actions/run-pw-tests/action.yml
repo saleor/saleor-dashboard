@@ -32,14 +32,14 @@ inputs:
     description: "Playwright retries"
     required: true
   PROJECT:
-    description: "Project name form playwright config"
+    description: "Project name from playwright config"
     required: false
     default: "e2e"
   ACCOUNTS:
     description: "Accounts hash"
     required: true
   E2E_ENCODE_PASS:
-    description: "Accounts hash"
+    description: "Encode password"
     required: true
 
 runs:

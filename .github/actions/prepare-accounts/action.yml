@@ -1,5 +1,5 @@
 name: Prepare accounts
-description: Prepare accounts that are use by Playwright
+description: Prepare accounts that are used by Playwright
 inputs:
   BASE_URL:
     description: "Dashboard base url"
