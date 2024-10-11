@@ -46,19 +46,27 @@ const ACCOUNT_EMAILS = {
   product: "product.manager@example.com",
 };
 
-const createQuery = (email, password) => `mutation TokenAuth{
-  tokenCreate(email: "${email}", password: "${password}") {
-    token
-    refreshToken
-    errors {
-      code
-      message
+const createQuery = (email, password) => {
+  const query = `
+    mutation TokenAuth($email: String!, $password: String!) {
+      tokenCreate(email: $email, password: $password) {
+        token
+        refreshToken
+        errors {
+          code
+          message
+        }
+        user {
+          id
+        }
+      }
     }
-    user {
-      id
-    }
-  }
-}`;
+  `
+
+  const variables = { email, password }
+
+  return { query, variables }
+};
 
 
 const getEmailForPermission = (permission) => {
@@ -84,10 +92,9 @@ const getAuthForPermission = async (permissionName) => {
 
   const email = getEmailForPermission(permissionName);
   const password = getPasswordForPermission(permissionName);
-  const query = createQuery(email, password)
 
   const response = await apiRequestContext.post(process.env.API_URL || "", {
-    data: { query },
+    data: createQuery(email, password),
   });
   const resposnseObj = await response.json()
   const { errors } = resposnseObj.data.tokenCreate

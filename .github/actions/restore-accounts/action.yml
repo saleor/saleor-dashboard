@@ -29,4 +29,4 @@ runs:
         API_URL: ${{ inputs.API_URL }}
         BASE_URL: ${{ inputs.BASE_URL }}
       run: |
-        node playwright/auth.js restore $ACCOUNTS
+        node playwright/auth.js restore "$ACCOUNTS"
