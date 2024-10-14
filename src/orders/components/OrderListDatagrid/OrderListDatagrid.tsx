@@ -15,6 +15,7 @@ import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { orderListStaticColumnAdapter, useGetCellContent } from "./datagrid";
 import { messages } from "./messages";
@@ -38,6 +39,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
   hasRowHover,
   rowAnchor,
 }) => {
+  const location = useLocation();
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
   const ordersLength = getOrdersRowsLength(orders, disabled);
@@ -127,6 +129,11 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
           )}
           onRowClick={handleRowClick}
           rowAnchor={handleRowAnchor}
+          navigatorOpts={{
+            state: {
+              prevLocation: location,
+            },
+          }}
         />
 
         <Box paddingX={6}>
