@@ -23,8 +23,26 @@ jobs:
       ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
-          sparse-checkout: ./.github/actions
+          node-version-file: ".nvmrc"
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-qa-${{ env.cache-name }}-
+            ${{ runner.os }}-qa-
+            ${{ runner.os }}-
+
+      - name: Install deps
+        run: npm ci
 
       - name: Generate variables
         id: cloud_variables
