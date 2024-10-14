@@ -17,6 +17,7 @@ import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { createGetCellContent, vouchersListStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
@@ -41,6 +42,7 @@ export const VoucherListDatagrid = ({
   onUpdateListSettings,
 }: VoucherListDatagridProps) => {
   const datagridState = useDatagridChangeState();
+  const location = useLocation();
   const navigate = useNavigator();
   const { locale } = useLocale();
   const intl = useIntl();
@@ -77,7 +79,11 @@ export const VoucherListDatagrid = ({
       const rowData: VoucherFragment = vouchers[row];
 
       if (rowData) {
-        navigate(voucherUrl(rowData.id));
+        navigate(voucherUrl(rowData.id), {
+          state: {
+            prevLocation: location,
+          },
+        });
       }
     },
     [vouchers],

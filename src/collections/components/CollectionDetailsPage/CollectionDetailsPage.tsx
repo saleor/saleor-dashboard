@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { ChannelCollectionData } from "@dashboard/channels/utils";
-import { collectionListUrl } from "@dashboard/collections/urls";
+import { collectionListPath } from "@dashboard/collections/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
@@ -15,6 +15,7 @@ import {
   CollectionErrorFragment,
   PermissionEnum,
 } from "@dashboard/graphql";
+import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import React from "react";
@@ -62,6 +63,10 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
   const intl = useIntl();
   const navigate = useNavigator();
 
+  const collectionListBackLink = useBackLinkWithState({
+    path: collectionListPath,
+  });
+
   return (
     <CollectionUpdateForm
       collection={collection}
@@ -72,7 +77,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
     >
       {({ change, data, handlers, submit, isSaveDisabled }) => (
         <DetailPageLayout>
-          <TopNav href={collectionListUrl()} title={collection?.name} />
+          <TopNav href={collectionListBackLink} title={collection?.name} />
           <DetailPageLayout.Content>
             <CollectionDetails data={data} disabled={disabled} errors={errors} onChange={change} />
             <CardSpacer />
@@ -138,7 +143,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
           <Savebar>
             <Savebar.DeleteButton onClick={onCollectionRemove} />
             <Savebar.Spacer />
-            <Savebar.CancelButton onClick={() => navigate(collectionListUrl())} />
+            <Savebar.CancelButton onClick={() => navigate(collectionListBackLink)} />
             <Savebar.ConfirmButton
               transitionState={saveButtonBarState}
               onClick={submit}

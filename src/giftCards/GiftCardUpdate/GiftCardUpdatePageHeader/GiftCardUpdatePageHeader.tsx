@@ -4,6 +4,7 @@ import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import GiftCardStatusChip from "@dashboard/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
 import { useGiftCardPermissions } from "@dashboard/giftCards/hooks/useGiftCardPermissions";
 import { giftCardsListPath } from "@dashboard/giftCards/urls";
+import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -17,6 +18,9 @@ import useStyles from "./styles";
 
 const GiftCardUpdatePageHeader: React.FC = () => {
   const classes = useStyles();
+  const giftCardBackLink = useBackLinkWithState({
+    path: giftCardsListPath,
+  });
   const intl = useIntl();
   const { canManageChannels } = useGiftCardPermissions();
   const { giftCard } = useGiftCardDetails();
@@ -36,7 +40,7 @@ const GiftCardUpdatePageHeader: React.FC = () => {
   return (
     <>
       <TopNav
-        href={giftCardsListPath}
+        href={giftCardBackLink}
         title={
           <div className={classes.title}>
             {title}

@@ -15,6 +15,7 @@ import { Box, useTheme } from "@saleor/macaw-ui-next";
 import isEqual from "lodash/isEqual";
 import React, { useCallback, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { messages as filterLabels } from "../filters";
 import { useGiftCardList } from "../providers/GiftCardListProvider";
@@ -26,6 +27,7 @@ import { messages } from "./messages";
 export const GiftCardsListDatagrid = () => {
   const datagridState = useDatagridChangeState();
   const navigate = useNavigator();
+  const location = useLocation();
   const intl = useIntl();
   const {
     loading,
@@ -169,6 +171,11 @@ export const GiftCardsListDatagrid = () => {
             onToggle={handlers.onToggle}
           />
         )}
+        navigatorOpts={{
+          state: {
+            prevLocation: location,
+          },
+        }}
       />
 
       <Box paddingX={6}>
