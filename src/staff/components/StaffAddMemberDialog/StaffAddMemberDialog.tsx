@@ -63,13 +63,13 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
       >
         {({ change, data: formData, submit }) => (
           <DashboardModal.Content size="sm">
-            <DashboardModal.Title>
+            <DashboardModal.Header>
               <FormattedMessage
                 id="23g7PY"
                 defaultMessage="Invite Staff Member"
                 description="dialog header"
               />
-            </DashboardModal.Title>
+            </DashboardModal.Header>
 
             <Box display="flex" gap={3} justifyContent="space-between">
               <TextField

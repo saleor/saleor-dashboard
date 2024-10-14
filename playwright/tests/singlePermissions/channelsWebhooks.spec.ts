@@ -3,9 +3,10 @@ import { ConfigurationPage } from "@pages/configurationPage";
 import { HomePage } from "@pages/homePage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { WebhooksEventsPage } from "@pages/webhooksEventsPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
+import { test } from "utils/testWithPermission";
 
-test.use({ storageState: "playwright/.auth/channel.json" });
+test.use({ permissionName: "channel" });
 
 let channelPage: ChannelPage;
 let mainMenuPage: MainMenuPage;

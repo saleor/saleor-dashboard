@@ -8,7 +8,6 @@ import Form from "@dashboard/components/Form";
 import Hr from "@dashboard/components/Hr";
 import Link from "@dashboard/components/Link";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
-import { useFlag } from "@dashboard/featureFlags";
 import {
   OrderDetailsFragment,
   OrderErrorCode,
@@ -18,7 +17,7 @@ import {
 } from "@dashboard/graphql";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { buttonMessages } from "@dashboard/intl";
-import { ff_orderListUrl, orderListUrl } from "@dashboard/orders/urls";
+import { orderListUrlWithCustomer } from "@dashboard/orders/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
@@ -83,8 +82,6 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
   const noShippingAddressError = errors.find(
     error => error.code === OrderErrorCode.ORDER_NO_SHIPPING_ADDRESS,
   );
-
-  const { enabled: orderFiltersEnabled } = useFlag("order_filters");
 
   return (
     <DashboardCard>
@@ -177,16 +174,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
             <>
               <Text className={classes.userEmail}>{userEmail}</Text>
               <div>
-                <Link
-                  underline={false}
-                  href={
-                    orderFiltersEnabled
-                      ? ff_orderListUrl(userEmail)
-                      : orderListUrl({
-                          customer: userEmail,
-                        })
-                  }
-                >
+                <Link underline={false} href={orderListUrlWithCustomer(userEmail)}>
                   <FormattedMessage id="J4NBVR" defaultMessage="View Orders" description="link" />
                 </Link>
               </div>

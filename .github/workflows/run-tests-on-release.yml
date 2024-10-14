@@ -64,6 +64,7 @@ jobs:
       CHECK_ID: ${{ steps.create-check.outputs.CHECK_ID }}
       FRAMEWORK: ${{ steps.check-framework.outputs.result }}
       IS_OLD_VERSION: ${{ steps.get-environment-variables.outputs.IS_OLD_VERSION }}
+      ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
     steps:
       - uses: actions/checkout@v4
 
@@ -129,6 +130,17 @@ jobs:
             --token "$TOKEN" \
             --repo_token "$REPO_TOKEN" \
             --project "$PROJECT"
+
+      - name: Prepare accounts
+        id: accounts
+        uses: ./.github/actions/prepare-accounts
+        with:
+          BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
+          API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
+          E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
+          E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
 
   run-cy-tests:
     if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"cypress"'
@@ -214,6 +226,7 @@ jobs:
           E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
           E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
+          ACCOUNTS: ${{ needs.add-check-and-prepare-instance.outputs.ACCOUNTS }}
           MAILPITURL: ${{ secrets.MAILPITURL }}
           URL_TO_RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           PW_WORKERS: ${{ vars.PW_WORKERS }}
