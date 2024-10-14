@@ -14,6 +14,7 @@ import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { attributesListStaticColumnsAdapter, createGetCellContent } from "./datagrid";
 import { messages } from "./messages";
@@ -33,6 +34,7 @@ export const AttributeListDatagrid = ({
   onUpdateListSettings,
 }: AttributeListDatagridProps) => {
   const datagridState = useDatagridChangeState();
+  const location = useLocation();
   const navigate = useNavigator();
   const intl = useIntl();
   const attributesListStaticColumns = useMemo(
@@ -66,7 +68,11 @@ export const AttributeListDatagrid = ({
       const rowData: AttributeFragment = attributes[row];
 
       if (rowData) {
-        navigate(attributeUrl(rowData.id));
+        navigate(attributeUrl(rowData.id), {
+          state: {
+            prevLocation: location,
+          },
+        });
       }
     },
     [attributes],

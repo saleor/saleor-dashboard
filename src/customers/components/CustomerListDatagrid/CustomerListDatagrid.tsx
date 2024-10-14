@@ -15,6 +15,7 @@ import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { createGetCellContent, customerListStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
@@ -42,6 +43,7 @@ export const CustomerListDatagrid = ({
   onSort,
 }: CustomerListDatagridProps) => {
   const intl = useIntl();
+  const location = useLocation();
   const datagrid = useDatagridChangeState();
   const userPermissions = useUserPermissions();
   const hasManageOrdersPermission =
@@ -135,6 +137,11 @@ export const CustomerListDatagrid = ({
             onToggle={handlers.onToggle}
           />
         )}
+        navigatorOpts={{
+          state: {
+            prevLocation: location,
+          },
+        }}
       />
 
       <Box paddingX={6}>

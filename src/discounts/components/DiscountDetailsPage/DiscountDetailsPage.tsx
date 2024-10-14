@@ -1,7 +1,6 @@
 import { TopNav } from "@dashboard/components/AppLayout";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { discountListUrl } from "@dashboard/discounts/discountsUrls";
 import { Rule } from "@dashboard/discounts/models";
 import { DiscoutFormData } from "@dashboard/discounts/types";
 import {
@@ -38,6 +37,7 @@ export interface DiscountDetailsPageProps {
   onRuleDeleteSubmit: (id: string) => void;
   ruleDeleteButtonState: ConfirmButtonTransitionState;
   onBack: () => void;
+  backLinkHref: string;
 }
 
 export const DiscountDetailsPage = ({
@@ -55,13 +55,14 @@ export const DiscountDetailsPage = ({
   ruleCreateButtonState,
   ruleUpdateButtonState,
   ruleDeleteButtonState,
+  backLinkHref,
 }: DiscountDetailsPageProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["name"], errors);
 
   return (
     <DetailPageLayout gridTemplateColumns={1}>
-      <TopNav href={discountListUrl()} title={data?.name} />
+      <TopNav href={backLinkHref} title={data?.name} />
       <DetailPageLayout.Content>
         <DiscountDetailsForm
           data={data}

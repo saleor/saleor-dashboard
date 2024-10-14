@@ -22,10 +22,11 @@ import {
   SearchPageTypesQuery,
   SearchProductsQuery,
 } from "@dashboard/graphql";
+import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { pageListUrl } from "@dashboard/pages/urls";
+import { pagesSection } from "@dashboard/pages/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import React from "react";
@@ -118,6 +119,10 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   const handleSelectPageType = (pageTypeId: string) =>
     onSelectPageType && onSelectPageType(pageTypeId);
 
+  const pageListBackLink = useBackLinkWithState({
+    path: pagesSection,
+  });
+
   return (
     <PageForm
       page={page}
@@ -140,7 +145,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
         return (
           <DetailPageLayout>
             <TopNav
-              href={pageListUrl()}
+              href={pageListBackLink}
               title={!pageExists ? intl.formatMessage(messages.title) : page?.title}
             />
             <DetailPageLayout.Content>
@@ -214,7 +219,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
             <Savebar>
               {page !== null && <Savebar.DeleteButton onClick={onRemove} />}
               <Savebar.Spacer />
-              <Savebar.CancelButton onClick={() => navigate(pageListUrl())} />
+              <Savebar.CancelButton onClick={() => navigate(pageListBackLink)} />
               <Savebar.ConfirmButton
                 transitionState={saveButtonBarState}
                 onClick={submit}
