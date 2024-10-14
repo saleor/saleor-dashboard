@@ -1,21 +1,16 @@
 // @ts-strict-ignore
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import useNavigator from "@dashboard/hooks/useNavigator";
 import { buttonMessages } from "@dashboard/intl";
 import { getById } from "@dashboard/misc";
 import { Box, Spinner } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
+import { Link } from "react-router-dom";
 
 import DeleteButton from "../DeleteButton";
 import { DashboardModal } from "../Modal";
 import DeleteWarningDialogConsentContent from "./DeleteWarningDialogConsentContent";
-import { CommonTypeDeleteWarningMessages, TypeDeleteWarningMessages } from "./types";
-
-export interface TypeBaseData {
-  id: string;
-  name: string;
-}
+import { CommonTypeDeleteWarningMessages, TypeBaseData, TypeDeleteWarningMessages } from "./types";
 
 export interface TypeDeleteMessages {
   baseMessages: CommonTypeDeleteWarningMessages;
@@ -30,13 +25,11 @@ export interface TypeDeleteWarningDialogProps<T extends TypeBaseData> extends Ty
   deleteButtonState: ConfirmButtonTransitionState;
   onClose: () => void;
   onDelete: () => void;
-  viewAssignedItemsUrl: string;
+  viewAssignedItemsUrl: string | null;
   typesToDelete: string[];
   assignedItemsCount: number | undefined;
-  isLoading?: boolean;
   typesData: T[];
-  // temporary, until we add filters to pages list - SALEOR-3279
-  showViewAssignedItemsButton?: boolean;
+  isLoading?: boolean;
 }
 
 function TypeDeleteWarningDialog<T extends TypeBaseData>({
@@ -53,10 +46,8 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
   viewAssignedItemsUrl,
   typesToDelete,
   typesData,
-  showViewAssignedItemsButton = true,
 }: TypeDeleteWarningDialogProps<T>) {
   const intl = useIntl();
-  const navigate = useNavigator();
   const [isConsentChecked, setIsConsentChecked] = useState(false);
 
   const showMultiple = typesToDelete.length > 1;
@@ -79,9 +70,10 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
     };
   };
   const { description, consentLabel } = selectMessages();
+
   const singleItemSelectedId = typesToDelete[0];
   const singleItemSelectedName = typesData.find(getById(singleItemSelectedId))?.name;
-  const shouldShowViewAssignedItemsButton = showViewAssignedItemsButton && hasAssignedItems;
+  const shouldShowViewAssignedItemsButton = hasAssignedItems;
 
   return (
     <DashboardModal open={isOpen} onChange={onClose}>
@@ -111,12 +103,14 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
 
             <DashboardModal.Actions>
               {shouldShowViewAssignedItemsButton && (
-                <ConfirmButton
-                  onClick={() => navigate(viewAssignedItemsUrl)}
-                  transitionState="default"
+                <Link
+                  to={viewAssignedItemsUrl}
+                  style={{ pointerEvents: viewAssignedItemsUrl ? undefined : "none" }}
                 >
-                  {intl.formatMessage(baseMessages.viewAssignedItemsButtonLabel)}
-                </ConfirmButton>
+                  <ConfirmButton transitionState="default" disabled={!viewAssignedItemsUrl}>
+                    {intl.formatMessage(baseMessages.viewAssignedItemsButtonLabel)}
+                  </ConfirmButton>
+                </Link>
               )}
               <DeleteButton
                 onClick={onDelete}

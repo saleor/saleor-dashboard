@@ -4,7 +4,7 @@ import { Ids } from "@dashboard/types";
 export interface UseTypeDeleteData extends TypeDeleteMessages {
   isOpen: boolean;
   assignedItemsCount: number | undefined;
-  viewAssignedItemsUrl: string;
+  viewAssignedItemsUrl: string | null;
   isLoading: boolean | undefined;
   typesToDelete: Ids;
 }
