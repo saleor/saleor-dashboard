@@ -13,6 +13,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
+import { useLocation } from "react-router";
 
 import { renderCollection } from "../../../misc";
 import { ListActions, ListProps, SortPage } from "../../../types";
@@ -36,6 +37,7 @@ interface PageTypeListProps extends ListProps, ListActions, SortPage<PageTypeLis
 const PageTypeList: React.FC<PageTypeListProps> = props => {
   const { disabled, pageTypes, onSort, isChecked, selected, sort, toggle, toggleAll, toolbar } =
     props;
+  const location = useLocation();
   const classes = useStyles(props);
   const numberOfColumns = pageTypes?.length === 0 ? 1 : 2;
 
@@ -80,7 +82,14 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
                 className={pageType ? classes.link : undefined}
                 hover={!!pageType}
                 key={pageType ? pageType.id : "skeleton"}
-                href={pageType && pageTypeUrl(pageType.id)}
+                href={
+                  pageType
+                    ? {
+                        pathname: pageTypeUrl(pageType.id),
+                        state: { prevLocation: location },
+                      }
+                    : undefined
+                }
                 selected={isSelected}
                 data-test-id={"id-" + pageType?.id}
               >

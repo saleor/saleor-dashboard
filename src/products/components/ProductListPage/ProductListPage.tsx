@@ -38,6 +38,7 @@ import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Box, Button, ChevronRightIcon, Text } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { ProductListUrlSortField, productUrl } from "../../urls";
 import { ProductListDatagrid } from "../ProductListDatagrid";
@@ -107,6 +108,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     ...listProps
   } = props;
   const intl = useIntl();
+  const location = useLocation();
   const navigate = useNavigator();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const limitReached = isLimitReached(limits, "productVariants");
@@ -274,7 +276,11 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             onUpdateListSettings={onUpdateListSettings}
             rowAnchor={productUrl}
             onRowClick={id => {
-              navigate(productUrl(id));
+              navigate(productUrl(id), {
+                state: {
+                  prevLocation: location,
+                },
+              });
             }}
           />
         ) : (

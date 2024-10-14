@@ -14,9 +14,10 @@ import {
   ShippingZoneDetailsFragment,
   ShippingZoneQuery,
 } from "@dashboard/graphql";
+import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { shippingZonesListUrl } from "@dashboard/shipping/urls";
+import { shippingZonesListPath } from "@dashboard/shipping/urls";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -102,6 +103,10 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   const warehouseChoices = warehouses.map(warehouseToChoice);
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
 
+  const shippingZonesListBackLink = useBackLinkWithState({
+    path: shippingZonesListPath,
+  });
+
   return (
     <Form initial={initialForm} onSubmit={onSubmit} confirmLeave disabled={disabled}>
       {({ change, data, isSaveDisabled, submit }) => {
@@ -109,7 +114,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
 
         return (
           <DetailPageLayout>
-            <TopNav href={shippingZonesListUrl()} title={shippingZone?.name} />
+            <TopNav href={shippingZonesListBackLink} title={shippingZone?.name} />
             <DetailPageLayout.Content>
               <ShippingZoneInfo data={data} disabled={disabled} errors={errors} onChange={change} />
               <CardSpacer />
@@ -169,7 +174,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
             <Savebar>
               <Savebar.DeleteButton onClick={onDelete} />
               <Savebar.Spacer />
-              <Savebar.CancelButton onClick={() => navigate(shippingZonesListUrl())} />
+              <Savebar.CancelButton onClick={() => navigate(shippingZonesListBackLink)} />
               <Savebar.ConfirmButton
                 transitionState={saveButtonBarState}
                 onClick={submit}

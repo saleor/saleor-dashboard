@@ -3,13 +3,15 @@ import { TableRow, TableRowTypeMap } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React, { forwardRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, LinkProps } from "react-router-dom";
 
 type MaterialTableRowPropsType = TableRowTypeMap["props"];
 
+type LocationDescriptor = LinkProps["to"];
+
 export interface TableRowLinkProps extends MaterialTableRowPropsType {
   children: React.ReactNode;
-  href?: string;
+  href?: string | LocationDescriptor;
   className?: string;
   linkClassName?: string;
   onClick?: () => void;
@@ -28,7 +30,7 @@ const TableRowLink = forwardRef<HTMLTableRowElement, TableRowLinkProps>((props, 
   const { href, children, linkClassName, onClick, ...restProps } = props;
   const classes = useStyles();
 
-  if (!href || isExternalURL(href)) {
+  if (!href || (typeof href === "string" && isExternalURL(href))) {
     return (
       <TableRow ref={ref} hover={!!onClick} onClick={onClick} {...restProps}>
         {children}
