@@ -17,6 +17,7 @@ import { FilterPresetsProps, PageListProps, SortPage } from "@dashboard/types";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { DiscountListDatagrid } from "../DiscountListDatagrid";
 
@@ -45,9 +46,14 @@ const DiscountListPage: React.FC<DiscountListPageProps> = ({
 }) => {
   const intl = useIntl();
   const navigation = useNavigator();
+  const location = useLocation();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const handleRowClick = (id: string) => {
-    navigation(discountUrl(id));
+    navigation(discountUrl(id), {
+      state: {
+        prevLocation: location,
+      },
+    });
   };
 
   return (

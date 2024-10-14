@@ -14,6 +14,7 @@ import { Item } from "@glideapps/glide-data-grid";
 import { Box, useTheme } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { createGetCellContent, staffMembersListStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
@@ -32,6 +33,7 @@ export const StaffListDatagrid = ({
 }: StaffListDatagridProps) => {
   const datagridState = useDatagridChangeState();
   const navigate = useNavigator();
+  const location = useLocation();
   const intl = useIntl();
   const { theme: currentTheme } = useTheme();
   const emptyColumn = useEmptyColumn();
@@ -66,7 +68,9 @@ export const StaffListDatagrid = ({
       const rowData: StaffMember = staffMembers[row];
 
       if (rowData) {
-        navigate(staffMemberDetailsUrl(rowData?.id));
+        navigate(staffMemberDetailsUrl(rowData?.id), {
+          state: { prevLocation: location },
+        });
       }
     },
     [staffMembers],

@@ -22,6 +22,8 @@ interface UseBackLinkWithState {
   path: string;
 }
 
+const getPath = (path: string) => (path.endsWith("/") ? path.substring(0, path.length - 1) : path);
+
 export const useBackLinkWithState = ({ path }: UseBackLinkWithState) => {
   const location = useLocation();
   const [backLink, setBackLink] = useState<string>(path);
@@ -31,7 +33,7 @@ export const useBackLinkWithState = ({ path }: UseBackLinkWithState) => {
       const previousUrl = getPreviousUrl(location as LocationWithState);
 
       // Prevent other links from being set as back link
-      const isCorrectPath = previousUrl?.includes(path);
+      const isCorrectPath = previousUrl?.includes(getPath(path));
 
       if (isCorrectPath && previousUrl) {
         setBackLink(previousUrl);
