@@ -1,4 +1,3 @@
-import { MailpitService } from "@api/mailpit";
 import { URL_LIST } from "@data/url";
 import { BasePage } from "@pages/basePage";
 import { InviteStaffMembersDialog } from "@pages/dialogs/inviteStaffMemberDialog";
@@ -9,8 +8,6 @@ export class StaffMembersPage extends BasePage {
   readonly request: APIRequestContext;
 
   readonly basePage: BasePage;
-
-  readonly mailpitService: MailpitService;
 
   readonly inviteStaffMembersDialog: InviteStaffMembersDialog;
 
@@ -30,7 +27,6 @@ export class StaffMembersPage extends BasePage {
     super(page);
     this.request = request;
     this.basePage = new BasePage(page);
-    this.mailpitService = new MailpitService(request);
     this.inviteStaffMembersDialog = new InviteStaffMembersDialog(page);
   }
 
