@@ -1,10 +1,9 @@
 import { AVAILABILITY } from "@data/copy";
 import { VOUCHERS } from "@data/e2eTestData";
 import { VouchersPage } from "@pages/vouchersPage";
-import { expect } from "@playwright/test";
-import { test } from "utils/testWithPermission";
+import { expect, test } from "@playwright/test";
 
-test.use({ permissionName: "admin" });
+test.use({ storageState: "./playwright/.auth/admin.json" });
 
 let vouchersPage: VouchersPage;
 

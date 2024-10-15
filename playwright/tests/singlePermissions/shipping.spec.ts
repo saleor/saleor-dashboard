@@ -2,11 +2,9 @@ import { URL_LIST } from "@data/url";
 import { ConfigurationPage } from "@pages/configurationPage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { ShippingMethodsPage } from "@pages/shippingMethodsPage";
-import { expect } from "@playwright/test";
-import { test } from "utils/testWithPermission";
+import { expect, test } from "@playwright/test";
 
-test.use({ permissionName: "shipping" });
-
+test.use({ storageState: "playwright/.auth/shipping.json" });
 test("TC: SALEOR_21 User should be able to navigate to shipping zones page as a staff member using SHIPPING permission @e2e", async ({
   page,
 }) => {

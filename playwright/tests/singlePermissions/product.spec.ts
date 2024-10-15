@@ -3,10 +3,9 @@ import { CollectionsPage } from "@pages/collectionsPage";
 import { HomePage } from "@pages/homePage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { ProductPage } from "@pages/productPage";
-import { expect } from "@playwright/test";
-import { test } from "utils/testWithPermission";
+import { expect, test } from "@playwright/test";
 
-test.use({ permissionName: "product" });
+test.use({ storageState: "playwright/.auth/product.json" });
 
 let home: HomePage;
 let mainMenuPage: MainMenuPage;

@@ -1,10 +1,9 @@
 import { MailpitService } from "@api/mailpit";
 import { GIFT_CARDS } from "@data/e2eTestData";
 import { GiftCardsPage } from "@pages/giftCardsPage";
-import { expect } from "@playwright/test";
-import { test } from "utils/testWithPermission";
+import { expect, test } from "@playwright/test";
 
-test.use({ permissionName: "admin" });
+test.use({ storageState: "./playwright/.auth/admin.json" });
 
 let giftCardsPage: GiftCardsPage;
 let mailpitService: MailpitService;

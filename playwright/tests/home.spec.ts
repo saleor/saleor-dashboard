@@ -1,10 +1,8 @@
 import { URL_LIST } from "@data/url";
 import { HomePage } from "@pages/homePage";
-import { expect } from "@playwright/test";
-import { test } from "utils/testWithPermission";
+import { expect, test } from "@playwright/test";
 
-test.use({ permissionName: "admin" });
-
+test.use({ storageState: "./playwright/.auth/admin.json" });
 test("TC: SALEOR_29 Correct information on dashboard home page @e2e", async ({ page }) => {
   const homePage = new HomePage(page);
 

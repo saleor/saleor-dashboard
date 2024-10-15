@@ -32,9 +32,7 @@ export const USER_PERMISSION: UserPermissionType = {
   product: "product.manager@example.com",
 };
 
-export type UserPermission = keyof UserPermissionType;
-
-export const permissions: Array<UserPermission> = [
+export const permissions: Array<keyof UserPermissionType> = [
   "app",
   "discount",
   "order",

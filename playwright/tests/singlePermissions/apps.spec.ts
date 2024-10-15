@@ -1,10 +1,9 @@
 import { AppsPage } from "@pages/appsPage";
 import { HomePage } from "@pages/homePage";
 import { MainMenuPage } from "@pages/mainMenuPage";
-import { expect } from "@playwright/test";
-import { test } from "utils/testWithPermission";
+import { expect, test } from "@playwright/test";
 
-test.use({ permissionName: "app" });
+test.use({ storageState: "playwright/.auth/app.json" });
 
 let mainMenuPage: MainMenuPage;
 let appsPage: AppsPage;

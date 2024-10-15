@@ -1,10 +1,9 @@
 import { PRODUCT_TYPES } from "@data/e2eTestData";
 import { ProductTypePage } from "@pages/productTypePage";
-import { expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import * as faker from "faker";
-import { test } from "utils/testWithPermission";
 
-test.use({ permissionName: "admin" });
+test.use({ storageState: "./playwright/.auth/admin.json" });
 
 const productTypeName = `e2e-product-type-${faker.datatype.number()}`;
 

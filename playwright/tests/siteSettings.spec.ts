@@ -1,9 +1,8 @@
 import { SiteSettingsPage } from "@pages/siteSettingsPage";
-import { expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import faker from "faker";
-import { test } from "utils/testWithPermission";
 
-test.use({ permissionName: "admin" });
+test.use({ storageState: "./playwright/.auth/admin.json" });
 
 let siteSettingsPage: SiteSettingsPage;
 

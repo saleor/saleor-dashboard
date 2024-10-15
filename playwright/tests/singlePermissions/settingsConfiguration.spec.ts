@@ -2,11 +2,9 @@ import { URL_LIST } from "@data/url";
 import { ConfigurationPage } from "@pages/configurationPage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { SiteSettingsPage } from "@pages/siteSettingsPage";
-import { expect } from "@playwright/test";
-import { test } from "utils/testWithPermission";
+import { expect, test } from "@playwright/test";
 
-test.use({ permissionName: "settings" });
-
+test.use({ storageState: "playwright/.auth/settings.json" });
 test("TC: SALEOR_18 User should be able to navigate to configuration as a staff member using SETTINGS permission @e2e", async ({
   page,
 }) => {

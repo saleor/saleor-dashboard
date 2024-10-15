@@ -4,11 +4,10 @@ import { AssignPermissionGroupMembersDialog } from "@pages/dialogs/assignPermiss
 import { UnassignPermissionGroupMembersDialog } from "@pages/dialogs/unassignPermissionGroupMembersDialog";
 import { PermissionGroupDetailsPage } from "@pages/permissionGroupDetailsPage";
 import { PermissionGroupsPage } from "@pages/permissionGroupsPage";
-import { expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import faker from "faker";
-import { test } from "utils/testWithPermission";
 
-test.use({ permissionName: "admin" });
+test.use({ storageState: "playwright/.auth/admin.json" });
 
 let permissions: PermissionGroupsPage;
 let permissionDetails: PermissionGroupDetailsPage;
