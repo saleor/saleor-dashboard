@@ -1,9 +1,8 @@
 import { COLLECTIONS } from "@data/e2eTestData";
 import { CollectionsPage } from "@pages/collectionsPage";
-import { expect } from "@playwright/test";
-import { test } from "utils/testWithPermission";
+import { expect, test } from "@playwright/test";
 
-test.use({ permissionName: "admin" });
+test.use({ storageState: "./playwright/.auth/admin.json" });
 
 let collectionsPage: CollectionsPage;
 

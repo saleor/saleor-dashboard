@@ -2,10 +2,9 @@ import { DraftOrdersPage } from "@pages/draftOrdersPage";
 import { HomePage } from "@pages/homePage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { OrdersPage } from "@pages/ordersPage";
-import { expect } from "@playwright/test";
-import { test } from "utils/testWithPermission";
+import { expect, test } from "@playwright/test";
 
-test.use({ permissionName: "order" });
+test.use({ storageState: "playwright/.auth/order.json" });
 
 let home: HomePage;
 let draftOrdersPage: DraftOrdersPage;

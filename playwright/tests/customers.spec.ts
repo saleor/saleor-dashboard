@@ -6,11 +6,10 @@ import { AddAddressDialog } from "@pages/dialogs/addAddressDialog";
 import { DeleteAddressDialog } from "@pages/dialogs/deleteAddressDialog";
 import { AddressForm } from "@pages/forms/addressForm";
 import { GiftCardsPage } from "@pages/giftCardsPage";
-import { expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import faker from "faker";
-import { test } from "utils/testWithPermission";
 
-test.use({ permissionName: "admin" });
+test.use({ storageState: "./playwright/.auth/admin.json" });
 
 let customersPage: CustomersPage;
 let giftCardsPage: GiftCardsPage;
