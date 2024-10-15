@@ -32,9 +32,15 @@ inputs:
     description: "Playwright retries"
     required: true
   PROJECT:
-    description: "Project name form playwright config"
+    description: "Project name from playwright config"
     required: false
     default: "e2e"
+  ACCOUNTS:
+    description: "Accounts hash"
+    required: true
+  E2E_ENCODE_PASS:
+    description: "Password for encoding credentials"
+    required: true
 
 runs:
   using: "composite"
@@ -46,6 +52,14 @@ runs:
     - name: Install dependencies
       shell: bash
       run: npm ci
+
+    - name: Restore accounts
+      uses: ./.github/actions/restore-accounts
+      with:
+        BASE_URL: ${{ inputs.BASE_URL }}
+        API_URL: ${{ inputs.API_URL }}
+        ACCOUNTS: ${{ inputs.ACCOUNTS }}
+        E2E_ENCODE_PASS: ${{ inputs.E2E_ENCODE_PASS }}
 
     - name: Install Playwright Browsers
       shell: bash
