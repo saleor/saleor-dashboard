@@ -205,6 +205,12 @@ export const getEventMessage = (event: OrderEventFragment, intl: IntlShape): str
         defaultMessage: "Order was marked as paid",
         description: "order history message",
       });
+    case OrderEventsEnum.PLACED_AUTOMATICALLY_FROM_PAID_CHECKOUT:
+      return intl.formatMessage({
+        id: "E4GW+N",
+        defaultMessage: "Order created automatically from fully paid checkout",
+        description: "fully paid checkout automatically completed message",
+      });
     case OrderEventsEnum.OTHER:
       return event.message;
     case OrderEventsEnum.OVERSOLD_ITEMS:

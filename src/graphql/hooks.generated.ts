@@ -655,6 +655,9 @@ export const ChannelDetailsFragmentDoc = gql`
   paymentSettings {
     defaultTransactionFlowStrategy
   }
+  checkoutSettings {
+    automaticallyCompleteFullyPaidCheckouts
+  }
 }
     ${ChannelFragmentDoc}
 ${WarehouseFragmentDoc}`;
