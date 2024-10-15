@@ -16,7 +16,7 @@ export default defineConfig({
   // We are disabling retries for now as it prolongs the test run time
   // as the test will most likely fail again. We can enable it later if needed.
   // retries: parseInt(env.RETRIES || DEFAULT_RETRIES),
-  workers: 1,
+  workers: 2,
   reporter: process.env.CI
     ? [
         ["blob"],
