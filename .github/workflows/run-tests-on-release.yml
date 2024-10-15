@@ -243,6 +243,7 @@ jobs:
           E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
           E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
+          E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
           ACCOUNTS: ${{ needs.add-check-and-prepare-instance.outputs.ACCOUNTS }}
           MAILPITURL: ${{ secrets.MAILPITURL }}
           URL_TO_RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
