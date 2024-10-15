@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Now accounts are decoded with using an encryption key
+Now accounts are decoded using an encryption key
