@@ -71,6 +71,8 @@ jobs:
 
   deploy-dashboard:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
+    outputs:
+      ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
     runs-on: ubuntu-22.04
     needs: initialize-cloud
     permissions:
@@ -151,6 +153,17 @@ jobs:
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
 
+      - name: Prepare accounts
+        id: accounts
+        uses: ./.github/actions/prepare-accounts
+        with:
+          BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
+          API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
+          E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
+          E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
+
   run-tests:
     if: ${{ contains(github.event.pull_request.labels.*.name, 'run pw-e2e') }}
     runs-on: ubuntu-22.04
@@ -159,6 +172,7 @@ jobs:
       fail-fast: false
       matrix:
         shard: ${{ fromJson(needs.initialize-cloud.outputs.SHARD_MATRIX) }}
+
     steps:
       - uses: actions/checkout@v4
 
@@ -174,6 +188,8 @@ jobs:
           MAILPITURL: ${{ secrets.MAILPITURL }}
           PW_WORKERS: ${{ vars.PW_WORKERS }}
           PW_RETRIES: ${{ vars.PW_RETRIES }}
+          ACCOUNTS: ${{ needs.deploy-dashboard.outputs.ACCOUNTS }}
+          E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
 
   merge-reports:
     if: "!cancelled() && contains(github.event.pull_request.labels.*.name, 'run pw-e2e')"

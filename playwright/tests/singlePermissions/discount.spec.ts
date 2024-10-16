@@ -3,9 +3,10 @@ import { DiscountsPage } from "@pages/discountsPage";
 import { HomePage } from "@pages/homePage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { VouchersPage } from "@pages/vouchersPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
+import { test } from "utils/testWithPermission";
 
-test.use({ storageState: "playwright/.auth/discount.json" });
+test.use({ permissionName: "discount" });
 
 let mainMenuPage: MainMenuPage;
 let home: HomePage;
