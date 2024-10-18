@@ -2,14 +2,13 @@ import { categoryAddUrl, CategoryListUrlSortField } from "@dashboard/categories/
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { CategoryFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { PageListProps, SearchPageProps, SortPage, TabPageProps } from "@dashboard/types";
-import { Box, ChevronRightIcon } from "@saleor/macaw-ui-next";
+import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -78,7 +77,7 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
             />
           </Box>
 
-          <Button variant="primary" href={categoryAddUrl()} data-test-id="create-category">
+          <Button href={categoryAddUrl()} data-test-id="create-category">
             <FormattedMessage {...messages.createCategory} />
           </Button>
         </Box>
