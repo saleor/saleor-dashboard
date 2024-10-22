@@ -3,15 +3,14 @@ import { AttributeValueEditDialogFormData } from "@dashboard/attributes/utils/da
 import { ColorPicker, ColorPickerProps } from "@dashboard/components/ColorPicker";
 import FileUploadField from "@dashboard/components/FileUploadField";
 import { SimpleRadioGroupField } from "@dashboard/components/SimpleRadioGroupField";
-import { useFileUploadMutation } from "@dashboard/graphql";
 import { UseFormResult } from "@dashboard/hooks/useForm";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { errorMessages } from "@dashboard/intl";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { swatchFieldMessages } from "./messages";
+import { useColorProcessing } from "./useColorProcessing";
+import { useFileProcessing } from "./useFileProcessing";
 
 type AttributeSwatchFieldProps<T> = Pick<
   UseFormResult<T>,
@@ -19,68 +18,6 @@ type AttributeSwatchFieldProps<T> = Pick<
 >;
 
 type SwatchType = "picker" | "image";
-
-export const useFileProcessing = ({
-  set,
-}: {
-  set: (data: Partial<AttributeValueEditDialogFormData>) => void;
-}) => {
-  const notify = useNotifier();
-  const intl = useIntl();
-  const [processing, setProcessing] = useState(false);
-
-  const [uploadFile] = useFileUploadMutation({});
-
-  const handleFileUpload = async (file: File) => {
-    setProcessing(true);
-
-    const { data } = await uploadFile({ variables: { file } });
-
-    if (data?.fileUpload?.errors?.length) {
-      notify({
-        status: "error",
-        title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
-        text: intl.formatMessage(errorMessages.imageUploadErrorText),
-      });
-    } else {
-      set({
-        fileUrl: data?.fileUpload?.uploadedFile?.url,
-        contentType: data?.fileUpload?.uploadedFile?.contentType ?? "",
-        value: undefined,
-      });
-    }
-  };
-
-  const handleFileDelete = () => {
-    set({
-      fileUrl: undefined,
-      contentType: undefined,
-      value: undefined,
-    });
-  };
-
-  const handleOnload = () => {
-    setProcessing(false);
-  };
-
-  return {
-    processing,
-    handleFileUpload,
-    handleFileDelete,
-    handleOnload,
-  };
-};
-
-const useColorProcessing = ({
-  set,
-}: {
-  set: (data: Partial<AttributeValueEditDialogFormData>) => void;
-}) => {
-  const handleColorChange = (hex: string) =>
-    set({ value: hex, fileUrl: undefined, contentType: undefined });
-
-  return { handleColorChange };
-};
 
 const AttributeSwatchField: React.FC<
   AttributeSwatchFieldProps<AttributeValueEditDialogFormData>
