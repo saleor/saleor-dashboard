@@ -11,6 +11,7 @@ import { PageListProps, SearchPageProps, SortPage, TabPageProps } from "@dashboa
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { Link } from "react-router-dom";
 
 import { CategoryListDatagrid } from "../CategoryListDatagrid";
 import { messages } from "./messages";
@@ -77,9 +78,11 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
             />
           </Box>
 
-          <Button href={categoryAddUrl()} data-test-id="create-category">
-            <FormattedMessage {...messages.createCategory} />
-          </Button>
+          <Link to={categoryAddUrl()} data-test-id="create-category">
+            <Button as="div">
+              <FormattedMessage {...messages.createCategory} />
+            </Button>
+          </Link>
         </Box>
       </TopNav>
       <DashboardCard>
