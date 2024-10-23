@@ -173,7 +173,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
               >
                 {isSwatch && (
                   <TableCell className={classes.columnSwatch}>
-                    {value.file ? (
+                    {value?.file ? (
                       <Box
                         as="img"
                         objectFit="cover"
