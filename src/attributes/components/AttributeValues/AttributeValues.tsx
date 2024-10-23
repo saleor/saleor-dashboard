@@ -13,7 +13,7 @@ import { renderCollection, stopPropagation } from "@dashboard/misc";
 import { ListProps, PaginateListProps, RelayToFlat, ReorderAction } from "@dashboard/types";
 import { TableCell, TableFooter, TableHead } from "@material-ui/core";
 import { IconButton, makeStyles } from "@saleor/macaw-ui";
-import { Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -173,11 +173,23 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
               >
                 {isSwatch && (
                   <TableCell className={classes.columnSwatch}>
-                    <div
-                      data-test-id="swatch-image"
-                      className={classes.swatch}
-                      style={getSwatchCellStyle(value)}
-                    />
+                    {value.file ? (
+                      <Box
+                        as="img"
+                        objectFit="cover"
+                        alt=""
+                        src={value.file.url}
+                        __width={32}
+                        __height={32}
+                        data-test-id="swatch-image"
+                      />
+                    ) : (
+                      <div
+                        data-test-id="swatch-image"
+                        className={classes.swatch}
+                        style={getSwatchCellStyle(value)}
+                      />
+                    )}
                   </TableCell>
                 )}
                 <TableCell className={classes.columnAdmin} data-test-id="attribute-value-name">
