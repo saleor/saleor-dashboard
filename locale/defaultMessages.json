@@ -6795,10 +6795,6 @@
   "gvOzOl": {
     "string": "Page Title"
   },
-  "gx4wCT": {
-    "context": "swatch attribute type",
-    "string": "Swatch"
-  },
   "gx6b6x": {
     "context": "search shortcut",
     "string": "Search"
@@ -9572,6 +9568,10 @@
   },
   "ztQgD8": {
     "string": "No attributes found"
+  },
+  "ztvvcm": {
+    "context": "swatch attribute type",
+    "string": "Swatch type"
   },
   "zxs6G3": {
     "string": "Manage how you ship out orders"
