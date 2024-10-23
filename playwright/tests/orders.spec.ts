@@ -8,8 +8,8 @@ import { FulfillmentPage } from "@pages/fulfillmentPage";
 import { OrdersPage } from "@pages/ordersPage";
 import { RefundPage } from "@pages/refundPage";
 import { expect } from "@playwright/test";
-import { test } from "utils/testWithPermission";
 import * as faker from "faker";
+import { test } from "utils/testWithPermission";
 
 test.use({ permissionName: "admin" });
 
