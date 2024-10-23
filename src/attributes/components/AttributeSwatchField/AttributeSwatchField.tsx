@@ -43,7 +43,7 @@ const AttributeSwatchField: React.FC<
             value: "image",
           },
         ]}
-        label={<FormattedMessage {...inputTypeMessages.swatch} />}
+        label={<FormattedMessage {...inputTypeMessages.swatchType} />}
         name="swatch"
         value={type}
         onChange={event => setType(event.target.value)}

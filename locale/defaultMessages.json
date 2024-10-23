@@ -6699,6 +6699,10 @@
     "context": "export items to csv file, choice field label",
     "string": "Export information for:"
   },
+  "g8lXTL": {
+    "context": "swatch attribute",
+    "string": "Swatch"
+  },
   "g9Mb+U": {
     "context": "change warehouse dialog title",
     "string": "Change warehouse"
