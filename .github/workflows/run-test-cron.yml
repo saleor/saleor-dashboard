@@ -67,8 +67,8 @@ jobs:
         id: accounts
         uses: ./.github/actions/prepare-accounts
         with:
-          BASE_URL: ${{ needs.cloud_variables.outputs.BASE_URL }}
-          API_URL: ${{ needs.cloud_variables.outputs.API_URL }}
+          BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
+          API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
           E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
           E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
