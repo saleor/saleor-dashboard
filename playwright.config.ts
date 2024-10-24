@@ -5,6 +5,7 @@ dotenv.config();
 
 const env = process.env;
 const DEFAULT_WORKERS = "2";
+
 // const DEFAULT_RETRIES = "1";
 
 export default defineConfig({
@@ -15,7 +16,7 @@ export default defineConfig({
   // We are disabling retries for now as it prolongs the test run time
   // as the test will most likely fail again. We can enable it later if needed.
   // retries: parseInt(env.RETRIES || DEFAULT_RETRIES),
-  workers: parseInt(env.WORKERS || DEFAULT_WORKERS),
+  workers: 2,
   reporter: process.env.CI
     ? [
         ["blob"],
