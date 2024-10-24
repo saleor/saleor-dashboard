@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.20.14
+
+### Patch Changes
+
+- 12edac4: Now dependencies are installed properly in our pipelines, this means auth scripts are no longer stopping.
+- d15aff5: Now, swatch presents the preview of the selected image.
+- 80869fb: When deleting product type with products the "View products" link now navigates to product list with correctly applied product type filter
+- b9c8291: Now cron-workflow that runs e2e tests takes proper urls to for preparing accounts action
+- 6c85d52: Back buttons now navigate to the list with previously used filters and pagination applied.
+- 89b9170: "changeset/cli" version is now bumped to the latest version
+- 75751b0: Now the create category button is consistent with the other views
+- 4ef03df: When navigating to order details from the order list, the back button will now return you to the previous page with the same filters and pagination applied.
+- 4e0a555: Now accounts are decoded using an encryption key
+
 ## 3.20.13
 
 ### Patch Changes
