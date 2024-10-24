@@ -14,6 +14,7 @@ import {
   getReferenceDisplayValue,
   getSingleChoices,
   getSingleDisplayValue,
+  getTruncatedTextValue,
 } from "@dashboard/components/Attributes/utils";
 import FileUploadField from "@dashboard/components/FileUploadField";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
@@ -130,26 +131,38 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
           fetchMoreAttributeValues={fetchMoreAttributeValues}
         />
       );
-    case AttributeInputTypeEnum.PLAIN_TEXT:
+    case AttributeInputTypeEnum.PLAIN_TEXT: {
+      const MAX_LENGTH = 255;
+      const isTooLong = attribute.value[0]?.length > MAX_LENGTH;
+
+      const value = getTruncatedTextValue(attribute.value[0], MAX_LENGTH);
+
       return (
         <BasicAttributeRow
           label={attribute.label}
           description={intl.formatMessage(inputTypeMessages.plainText)}
         >
           <Input
-            disabled={disabled}
+            disabled={isTooLong || disabled}
             error={!!error}
             label=""
             name={`attribute:${attribute.label}`}
             onChange={event => onChange(attribute.id, event.target.value)}
             type="text"
-            value={attribute.value[0]}
+            value={value}
             size="small"
             id={`attribute:${attribute.label}`}
-            helperText={getErrorMessage(error, intl)}
+            helperText={
+              isTooLong
+                ? intl.formatMessage(inputTypeMessages.plainTextTruncated, {
+                    length: MAX_LENGTH,
+                  })
+                : getErrorMessage(error, intl)
+            }
           />
         </BasicAttributeRow>
       );
+    }
     case AttributeInputTypeEnum.RICH_TEXT: {
       const { getShouldMount, getDefaultValue, getMountEditor, getHandleChange } = richTextGetters;
       const defaultValue = getDefaultValue(attribute.id);

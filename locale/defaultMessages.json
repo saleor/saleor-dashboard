@@ -9534,6 +9534,10 @@
     "context": "bulk actions button label",
     "string": "Delete content"
   },
+  "zfI8z2": {
+    "context": "plain text attribute value was truncated",
+    "string": "The attribute value was capped at {length} characters"
+  },
   "zfjAc7": {
     "context": "grant refund, card header",
     "string": "Unfulfilled products"
