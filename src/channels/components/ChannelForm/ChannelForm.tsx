@@ -1,3 +1,4 @@
+import { AutomaticallyCompleteCheckouts } from "@dashboard/channels/components/ChannelForm/AutomaticallyCompleteCheckouts";
 import {
   ChannelShippingZones,
   ChannelWarehouses,
@@ -41,6 +42,7 @@ export interface FormData extends StockSettingsInput {
   deleteExpiredOrdersAfter: number;
   allowUnpaidOrders: boolean;
   defaultTransactionFlowStrategy: TransactionFlowStrategyEnum;
+  automaticallyCompleteCheckouts: boolean;
 }
 
 export interface ChannelFormProps {
@@ -56,6 +58,7 @@ export interface ChannelFormProps {
   onDefaultCountryChange: (event: ChangeEvent) => void;
   onMarkAsPaidStrategyChange: () => void;
   onTransactionFlowStrategyChange: () => void;
+  onAutomaticallyCompleteCheckoutsChange: () => void;
 }
 
 export const ChannelForm: React.FC<ChannelFormProps> = ({
@@ -71,6 +74,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
   onDefaultCountryChange,
   onMarkAsPaidStrategyChange,
   onTransactionFlowStrategyChange,
+  onAutomaticallyCompleteCheckoutsChange,
 }) => {
   const intl = useIntl();
   const [, copy] = useClipboard();
@@ -210,6 +214,13 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             data.defaultTransactionFlowStrategy === TransactionFlowStrategyEnum.AUTHORIZATION
           }
           hasError={!!formErrors.defaultTransactionFlowStrategy}
+          disabled={disabled}
+        />
+        <Box />
+        <AutomaticallyCompleteCheckouts
+          onChange={onAutomaticallyCompleteCheckoutsChange}
+          hasError={!!formErrors.automaticallyCompleteCheckouts}
+          isChecked={data.automaticallyCompleteCheckouts}
           disabled={disabled}
         />
       </Box>
