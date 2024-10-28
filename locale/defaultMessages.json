@@ -1779,6 +1779,10 @@
   "A+g/VP": {
     "string": "Unsaved preset"
   },
+  "A02NDR": {
+    "context": "plain text attribute value was truncated",
+    "string": "Attribute value too long and truncated at {length} characters."
+  },
   "A0Wlg7": {
     "context": "product discount removed title",
     "string": "{productName} discount was removed by"
@@ -9533,10 +9537,6 @@
   "zfBsje": {
     "context": "bulk actions button label",
     "string": "Delete content"
-  },
-  "zfI8z2": {
-    "context": "plain text attribute value was truncated",
-    "string": "The attribute value was capped at {length} characters"
   },
   "zfjAc7": {
     "context": "grant refund, card header",
