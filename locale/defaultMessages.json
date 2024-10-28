@@ -1779,6 +1779,10 @@
   "A+g/VP": {
     "string": "Unsaved preset"
   },
+  "A02NDR": {
+    "context": "plain text attribute value was truncated",
+    "string": "Attribute value too long and truncated at {length} characters."
+  },
   "A0Wlg7": {
     "context": "product discount removed title",
     "string": "{productName} discount was removed by"
