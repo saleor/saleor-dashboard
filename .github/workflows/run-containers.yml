@@ -5,7 +5,7 @@ on:
     types: [opened, synchronize]
 
 concurrency:
-  group: ${{ github.ref }}
+  group: ${{ github.ref }}-containers
   cancel-in-progress: true
 
 jobs:
