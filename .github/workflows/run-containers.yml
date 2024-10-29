@@ -90,6 +90,9 @@ jobs:
 
 
     steps:
+      - name: Wait
+        run: sleep 10s
+        shell: bash
       - name: Check API
         run: |
           curl -i -X POST http://localhost:8000 -H "Content-Type: application/json" -d '{"query": "{ products(limit: 4) { id } }"}'
