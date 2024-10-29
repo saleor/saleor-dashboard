@@ -1,0 +1,80 @@
+name: PR automation
+
+on: pull_request
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  container-job:
+    runs-on: ubuntu-latest
+    container: node:16-bullseye
+
+    services:
+      db:
+        image: library/postgres:15-alpine
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: saleor
+          POSTGRES_PASSWORD: saleor
+        volumes:
+          - saleor-db:/var/lib/postgresql/data
+          - ./replica_user.sql:/docker-entrypoint-initdb.d/replica_user.sql
+
+      redis:
+        image: library/redis:7.0-alpine
+        ports:
+          - 6379:6379
+        volumes:
+          - saleor-redis:/data
+
+      api:
+        image: ghcr.io/saleor/saleor:3.20
+        ports:
+          - 8000:8000
+        volumes:
+          - saleor-media:/app/media
+        env:
+          JAEGER_AGENT_HOST: jaeger
+          DASHBOARD_URL: http://localhost:9000/
+          ALLOWED_HOSTS: localhost,api
+          CELERY_BROKER_URL: redis://redis:6379/1
+          DATABASE_URL: postgres://saleor:saleor@db/saleor
+          DEFAULT_FROM_EMAIL: noreply@example.com
+          EMAIL_URL: smtp://mailpit:1025
+          SECRET_KEY: changeme
+          DEFAULT_CHANNEL_SLUG: default-channel
+          HTTP_IP_FILTER_ALLOW_LOOPBACK_IPS: true
+          HTTP_IP_FILTER_ENABLED: true
+
+      worker:
+        image: ghcr.io/saleor/saleor:3.20
+        env:
+          CELERY_BROKER_URL: redis://redis:6379/1
+          DATABASE_URL: postgres://saleor:saleor@db/saleor
+          DEFAULT_FROM_EMAIL: noreply@example.com
+          EMAIL_URL: smtp://mailpit:1025
+          SECRET_KEY: changeme
+          DEFAULT_CHANNEL_SLUG: default-channel
+          HTTP_IP_FILTER_ALLOW_LOOPBACK_IPS: true
+          HTTP_IP_FILTER_ENABLED: true
+        volumes:
+          - saleor-media:/app/media
+
+      jaeger:
+        image: jaegertracing/all-in-one
+        ports:
+          - "5775:5775/udp"
+          - "6831:6831/udp"
+          - "6832:6832/udp"
+          - "5778:5778"
+          - "16686:16686"
+          - "14268:14268"
+          - "9411:9411"
+        volumes:
+          - tmpfs:/tmp
+
+    steps:
+      - run: echo "Hello, world!"
