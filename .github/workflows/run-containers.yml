@@ -11,7 +11,7 @@ concurrency:
 jobs:
   container-job:
     runs-on: ubuntu-latest
-    container: node:16-bullseye
+    container: ubuntu
 
     services:
       db:
@@ -90,9 +90,11 @@ jobs:
 
 
     steps:
-      - name: Wait
-        run: sleep 10s
-        shell: bash
+      # - name: Wait
+      #   run: sleep 10s
+      #   shell: bash
       - name: Check API
         run: |
-          curl -i -X POST http://localhost:8000 -H "Content-Type: application/json" -d '{"query": "{ products(limit: 4) { id } }"}'
+          apt-get update;
+          apt-get install curl -y
+          curl -i -X POST api:8000 -H "Content-Type: application/json" -d '{"query": "{ products(limit: 4) { id } }"}'
