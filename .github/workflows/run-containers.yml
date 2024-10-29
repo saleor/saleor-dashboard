@@ -24,6 +24,11 @@ jobs:
         volumes:
           - saleor-db:/var/lib/postgresql/data
           - ./replica_user.sql:/docker-entrypoint-initdb.d/replica_user.sql
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
       redis:
         image: library/redis:7.0-alpine
@@ -31,6 +36,38 @@ jobs:
           - 6379:6379
         volumes:
           - saleor-redis:/data
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      jaeger:
+        image: jaegertracing/all-in-one
+        ports:
+          - "5775:5775/udp"
+          - "6831:6831/udp"
+          - "6832:6832/udp"
+          - "5778:5778"
+          - "16686:16686"
+          - "14268:14268"
+          - "9411:9411"
+        volumes:
+          - tmpfs:/tmp
+
+      worker:
+        image: ghcr.io/saleor/saleor:3.20
+        env:
+          CELERY_BROKER_URL: redis://redis:6379/1
+          DATABASE_URL: postgres://saleor:saleor@db/saleor
+          DEFAULT_FROM_EMAIL: noreply@example.com
+          EMAIL_URL: smtp://mailpit:1025
+          SECRET_KEY: changeme
+          DEFAULT_CHANNEL_SLUG: default-channel
+          HTTP_IP_FILTER_ALLOW_LOOPBACK_IPS: "True"
+          HTTP_IP_FILTER_ENABLED: "True"
+        volumes:
+          - saleor-media:/app/media
 
       api:
         image: ghcr.io/saleor/saleor:3.20
@@ -51,32 +88,6 @@ jobs:
           HTTP_IP_FILTER_ALLOW_LOOPBACK_IPS: "True"
           HTTP_IP_FILTER_ENABLED: "True"
 
-      worker:
-        image: ghcr.io/saleor/saleor:3.20
-        env:
-          CELERY_BROKER_URL: redis://redis:6379/1
-          DATABASE_URL: postgres://saleor:saleor@db/saleor
-          DEFAULT_FROM_EMAIL: noreply@example.com
-          EMAIL_URL: smtp://mailpit:1025
-          SECRET_KEY: changeme
-          DEFAULT_CHANNEL_SLUG: default-channel
-          HTTP_IP_FILTER_ALLOW_LOOPBACK_IPS: "True"
-          HTTP_IP_FILTER_ENABLED: "True"
-        volumes:
-          - saleor-media:/app/media
-
-      jaeger:
-        image: jaegertracing/all-in-one
-        ports:
-          - "5775:5775/udp"
-          - "6831:6831/udp"
-          - "6832:6832/udp"
-          - "5778:5778"
-          - "16686:16686"
-          - "14268:14268"
-          - "9411:9411"
-        volumes:
-          - tmpfs:/tmp
 
     steps:
       - name: Check API
