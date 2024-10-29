@@ -23,7 +23,7 @@ jobs:
           POSTGRES_PASSWORD: saleor
         volumes:
           - saleor-db:/var/lib/postgresql/data
-          - ./replica_user.sql:/docker-entrypoint-initdb.d/replica_user.sql
+          # - ./replica_user.sql:/docker-entrypoint-initdb.d/replica_user.sql
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
