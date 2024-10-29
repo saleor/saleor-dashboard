@@ -92,4 +92,4 @@ jobs:
     steps:
       - name: Check API
         run: |
-          curl -X POST http://localhost:8000 -H "Content-Type: application/json" -d '{"query": "{ products(limit: 4) { id } }"}'
+          curl -i -X POST http://localhost:8000 -H "Content-Type: application/json" -d '{"query": "{ products(limit: 4) { id } }"}'
