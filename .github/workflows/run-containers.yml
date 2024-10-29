@@ -97,4 +97,4 @@ jobs:
         run: |
           apt-get update;
           apt-get install curl -y
-          curl -i -X POST api:8000/graphql/ -H "Content-Type: application/json" -d '{"query": "{ products(limit: 4) { id } }"}'
+          curl -i -X POST api:8000/graphql/ -H "Content-Type: application/json" -d '{"query": "{ products(first: 4) { id } }"}'
