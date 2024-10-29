@@ -1,4 +1,4 @@
-name: PR automation
+name: Run containers
 
 on:
   pull_request:
