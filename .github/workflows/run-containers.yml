@@ -81,4 +81,4 @@ jobs:
     steps:
       - name: Check API
         run: |
-          curl -X POST http://localhost:8000/graphql -H "Content-Type: application/json" -d '{"query": "{ products(limit: 4) { id } }"}'
+          curl -X POST http://api:8000/graphql -H "Content-Type: application/json" -d '{"query": "{ products(limit: 4) { id } }"}'
