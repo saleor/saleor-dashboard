@@ -79,4 +79,6 @@ jobs:
           - tmpfs:/tmp
 
     steps:
-      - run: echo "Hello, world!"
+      - name: Check API
+        run: |
+          curl -X POST http://localhost:8000/graphql -H "Content-Type: application/json" -d '{"query": "{ products(limit: 4) { id } }"}'
