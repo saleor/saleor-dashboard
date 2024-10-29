@@ -48,8 +48,8 @@ jobs:
           EMAIL_URL: smtp://mailpit:1025
           SECRET_KEY: changeme
           DEFAULT_CHANNEL_SLUG: default-channel
-          HTTP_IP_FILTER_ALLOW_LOOPBACK_IPS: True
-          HTTP_IP_FILTER_ENABLED: True
+          HTTP_IP_FILTER_ALLOW_LOOPBACK_IPS: "True"
+          HTTP_IP_FILTER_ENABLED: "True"
 
       worker:
         image: ghcr.io/saleor/saleor:3.20
@@ -60,8 +60,8 @@ jobs:
           EMAIL_URL: smtp://mailpit:1025
           SECRET_KEY: changeme
           DEFAULT_CHANNEL_SLUG: default-channel
-          HTTP_IP_FILTER_ALLOW_LOOPBACK_IPS: True
-          HTTP_IP_FILTER_ENABLED: True
+          HTTP_IP_FILTER_ALLOW_LOOPBACK_IPS: "True"
+          HTTP_IP_FILTER_ENABLED: "True"
         volumes:
           - saleor-media:/app/media
 
