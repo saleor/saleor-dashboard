@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.20.15
+
+### Patch Changes
+
+- bfb6237: Mailpit service uses has been removed due to issues with checking email during E2E runs on PRs. This means the tests no longer check if export emails have been received.
+- 5b50332: The value of attribute type `plainText` is now capped. This prevents the UI from freezing when the value is very large.
+- 3948065: The tax app version no longer displayed in the tax select input because showing the initial installed app version caused confusing
+
 ## 3.20.14
 
 ### Patch Changes
