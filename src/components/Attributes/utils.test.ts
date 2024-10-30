@@ -16,4 +16,8 @@ describe("getTruncatedTextValue", () => {
   it("should return the value if it is empty", () => {
     expect(getTruncatedTextValue("", 5)).toBe("");
   });
+
+  it("should return the value if it is undefined", () => {
+    expect(getTruncatedTextValue(undefined, 5)).toBe(undefined);
+  });
 });
