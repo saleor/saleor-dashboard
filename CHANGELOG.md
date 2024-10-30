@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.20.16
+
+### Patch Changes
+
+- 8f225fa: Fixes a bug when the text truncating breaks on undefined attribute value.
+
 ## 3.20.15
 
 ### Patch Changes
