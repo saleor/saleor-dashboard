@@ -5194,7 +5194,7 @@ type CheckoutFilterShippingMethods implements Event {
 }
 
 """
-Event sent when checkout is fully paid with transactions.
+Event sent when checkout is fully paid with transactions. The checkout is considered as fully paid when the checkout `charge_status` is `FULL` or `OVERCHARGED`. The event is not sent when the checkout authorization flow strategy is used.
 
 Added in Saleor 3.13.
 
@@ -5560,6 +5560,13 @@ Note: this API is currently in Feature Preview and can be subject to changes at 
 """
 type CheckoutSettings {
   """
+  Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `charge_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount.
+  
+  Added in Saleor 3.20.
+  """
+  automaticallyCompleteFullyPaidCheckouts: Boolean!
+
+  """
   Default `true`. Determines if the checkout mutations should use legacy error flow. In legacy flow, all mutations can raise an exception unrelated to the requested action - (e.g. out-of-stock exception when updating checkoutShippingAddress.) If `false`, the errors will be aggregated in `checkout.problems` field. Some of the `problems` can block the finalizing checkout process. The legacy flow will be removed in Saleor 4.0. The flow with `checkout.problems` will be the default one.
   
   Added in Saleor 3.15.This field will be removed in Saleor 4.0.
@@ -5568,6 +5575,13 @@ type CheckoutSettings {
 }
 
 input CheckoutSettingsInput {
+  """
+  Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `charge_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount.
+  
+  Added in Saleor 3.20.
+  """
+  automaticallyCompleteFullyPaidCheckouts: Boolean
+
   """
   Default `true`. Determines if the checkout mutations should use legacy error flow. In legacy flow, all mutations can raise an exception unrelated to the requested action - (e.g. out-of-stock exception when updating checkoutShippingAddress.) If `false`, the errors will be aggregated in `checkout.problems` field. Some of the `problems` can block the finalizing checkout process. The legacy flow will be removed in Saleor 4.0. The flow with `checkout.problems` will be the default one. 
   
@@ -6431,7 +6445,11 @@ type ConfirmEmailChange {
   user: User
 }
 
-"""An enumeration."""
+"""
+Represents country codes defined by the ISO 3166-1 alpha-2 standard.
+
+The `EU` value is DEPRECATED and will be removed in Saleor 3.21.
+"""
 enum CountryCode {
   AD
   AE
@@ -16373,10 +16391,19 @@ type Mutation {
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   
   Requires the following permissions: OWNER and HANDLE_PAYMENTS for apps, HANDLE_PAYMENTS for staff users. Staff user cannot update a transaction that is owned by the app.
+  
+  Triggers the following webhook events:
+  - TRANSACTION_ITEM_METADATA_UPDATED (async): Optionally called when transaction's metadata was updated.
+  - CHECKOUT_FULLY_PAID (async): Optionally called when the checkout charge status changed to `FULL` or `OVERCHARGED`.
+  - ORDER_UPDATED (async): Optionally called when the transaction is related to the order and the order was updated.
   """
   transactionEventReport(
-    """The amount of the event to report."""
-    amount: PositiveDecimal!
+    """
+    The amount of the event to report. 
+    
+    Required for all `REQUEST`, `SUCCESS`, `ACTION_REQUIRED`, and `ADJUSTMENT` events. For other events, the amount will be calculated based on the previous events with the same pspReference. If not possible to calculate, the mutation will return an error.
+    """
+    amount: PositiveDecimal
 
     """List of all possible actions for the transaction"""
     availableActions: [TransactionActionEnum!]
@@ -16406,6 +16433,20 @@ type Mutation {
     Added in Saleor 3.14.
     """
     token: UUID
+
+    """
+    Fields required to update the transaction metadata.
+    
+    Added in Saleor 3.17.
+    """
+    transactionMetadata: [MetadataInput!]
+
+    """
+    Fields required to update the transaction private metadata.
+    
+    Added in Saleor 3.17.
+    """
+    transactionPrivateMetadata: [MetadataInput!]
 
     """Current status of the event to report."""
     type: TransactionEventTypeEnum!
@@ -17307,6 +17348,13 @@ type Order implements Node & ObjectWithMetadata {
 
   """Translated discount name."""
   translatedDiscountName: String @deprecated(reason: "This field will be removed in Saleor 4.0. Use the `discounts` field instead. ")
+
+  """
+  Undiscounted total price of shipping.
+  
+  Added in Saleor 3.19.
+  """
+  undiscountedShippingPrice: Money
 
   """Undiscounted total amount of the order."""
   undiscountedTotal: TaxedMoney!
@@ -18329,6 +18377,7 @@ enum OrderEventsEnum {
   PAYMENT_REFUNDED
   PAYMENT_VOIDED
   PLACED
+  PLACED_AUTOMATICALLY_FROM_PAID_CHECKOUT
   PLACED_FROM_DRAFT
   REMOVED_PRODUCTS
   TRACKING_UPDATED
@@ -18369,6 +18418,7 @@ input OrderFilterInput {
   channels: [ID!]
   chargeStatus: [OrderChargeStatusEnum!]
   checkoutIds: [ID!]
+  checkoutTokens: [UUID!]
   created: DateRangeInput
   customer: String
   giftCardBought: Boolean
@@ -29271,7 +29321,7 @@ type ShippingMethodTranslation implements Node {
   language: LanguageDisplay!
 
   """Translated shipping method name."""
-  name: String!
+  name: String
 
   """
   Represents the shipping method fields to translate.
@@ -30141,7 +30191,7 @@ type Shop implements ObjectWithMetadata {
   
   Requires one of the following permissions: AUTHENTICATED_STAFF_USER.
   """
-  limits: LimitInfo!
+  limits: LimitInfo! @deprecated(reason: "This field will be removed in Saleor 4.0.")
 
   """List of public metadata items. Can be accessed without permissions."""
   metadata: [MetadataItem!]!
@@ -31179,11 +31229,221 @@ input StringFilterInput {
 
 type Subscription {
   """
+  Event sent when new draft order is created.
+  
+  Added in Saleor 3.20.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  draftOrderCreated(
+    """
+    List of channel slugs. The event will be sent only if the order belongs to one of the provided channels. If the channel slug list is empty, orders that belong to any channel will be sent. Maximally 500 items.
+    """
+    channels: [String!]
+  ): DraftOrderCreated
+
+  """
+  Event sent when draft order is deleted.
+  
+  Added in Saleor 3.20.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  draftOrderDeleted(
+    """
+    List of channel slugs. The event will be sent only if the order belongs to one of the provided channels. If the channel slug list is empty, orders that belong to any channel will be sent. Maximally 500 items.
+    """
+    channels: [String!]
+  ): DraftOrderDeleted
+
+  """
+  Event sent when draft order is updated.
+  
+  Added in Saleor 3.20.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  draftOrderUpdated(
+    """
+    List of channel slugs. The event will be sent only if the order belongs to one of the provided channels. If the channel slug list is empty, orders that belong to any channel will be sent. Maximally 500 items.
+    """
+    channels: [String!]
+  ): DraftOrderUpdated
+
+  """
   Look up subscription event.
   
   Added in Saleor 3.2.
   """
   event: Event
+
+  """
+  Event sent when orders are imported.
+  
+  Added in Saleor 3.20.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  orderBulkCreated(
+    """
+    List of channel slugs. The event will be sent only if the order belongs to one of the provided channels. If the channel slug list is empty, orders that belong to any channel will be sent. Maximally 500 items.
+    """
+    channels: [String!]
+  ): OrderBulkCreated
+
+  """
+  Event sent when order is cancelled.
+  
+  Added in Saleor 3.20.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  orderCancelled(
+    """
+    List of channel slugs. The event will be sent only if the order belongs to one of the provided channels. If the channel slug list is empty, orders that belong to any channel will be sent. Maximally 500 items.
+    """
+    channels: [String!]
+  ): OrderCancelled
+
+  """
+  Event sent when order is confirmed.
+  
+  Added in Saleor 3.20.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  orderConfirmed(
+    """
+    List of channel slugs. The event will be sent only if the order belongs to one of the provided channels. If the channel slug list is empty, orders that belong to any channel will be sent. Maximally 500 items.
+    """
+    channels: [String!]
+  ): OrderConfirmed
+
+  """
+  Event sent when new order is created.
+  
+  Added in Saleor 3.20.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  orderCreated(
+    """
+    List of channel slugs. The event will be sent only if the order belongs to one of the provided channels. If the channel slug list is empty, orders that belong to any channel will be sent. Maximally 500 items.
+    """
+    channels: [String!]
+  ): OrderCreated
+
+  """
+  Event sent when order becomes expired.
+  
+  Added in Saleor 3.20.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  orderExpired(
+    """
+    List of channel slugs. The event will be sent only if the order belongs to one of the provided channels. If the channel slug list is empty, orders that belong to any channel will be sent. Maximally 500 items.
+    """
+    channels: [String!]
+  ): OrderExpired
+
+  """
+  Event sent when order is fulfilled.
+  
+  Added in Saleor 3.20.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  orderFulfilled(
+    """
+    List of channel slugs. The event will be sent only if the order belongs to one of the provided channels. If the channel slug list is empty, orders that belong to any channel will be sent. Maximally 500 items.
+    """
+    channels: [String!]
+  ): OrderFulfilled
+
+  """
+  Event sent when order is fully paid.
+  
+  Added in Saleor 3.20.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  orderFullyPaid(
+    """
+    List of channel slugs. The event will be sent only if the order belongs to one of the provided channels. If the channel slug list is empty, orders that belong to any channel will be sent. Maximally 500 items.
+    """
+    channels: [String!]
+  ): OrderFullyPaid
+
+  """
+  The order is fully refunded.
+  
+  Added in Saleor 3.20.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  orderFullyRefunded(
+    """
+    List of channel slugs. The event will be sent only if the order belongs to one of the provided channels. If the channel slug list is empty, orders that belong to any channel will be sent. Maximally 500 items.
+    """
+    channels: [String!]
+  ): OrderFullyRefunded
+
+  """
+  Event sent when order metadata is updated.
+  
+  Added in Saleor 3.20.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  orderMetadataUpdated(
+    """
+    List of channel slugs. The event will be sent only if the order belongs to one of the provided channels. If the channel slug list is empty, orders that belong to any channel will be sent. Maximally 500 items.
+    """
+    channels: [String!]
+  ): OrderMetadataUpdated
+
+  """
+  Payment has been made. The order may be partially or fully paid.
+  
+  Added in Saleor 3.20.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  orderPaid(
+    """
+    List of channel slugs. The event will be sent only if the order belongs to one of the provided channels. If the channel slug list is empty, orders that belong to any channel will be sent. Maximally 500 items.
+    """
+    channels: [String!]
+  ): OrderPaid
+
+  """
+  The order received a refund. The order may be partially or fully refunded.
+  
+  Added in Saleor 3.20.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  orderRefunded(
+    """
+    List of channel slugs. The event will be sent only if the order belongs to one of the provided channels. If the channel slug list is empty, orders that belong to any channel will be sent. Maximally 500 items.
+    """
+    channels: [String!]
+  ): OrderRefunded
+
+  """
+  Event sent when order is updated.
+  
+  Added in Saleor 3.20.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  orderUpdated(
+    """
+    List of channel slugs. The event will be sent only if the order belongs to one of the provided channels. If the channel slug list is empty, orders that belong to any channel will be sent. Maximally 500 items.
+    """
+    channels: [String!]
+  ): OrderUpdated
 }
 
 enum TaxCalculationStrategy {
@@ -31818,6 +32078,19 @@ type TaxableObjectDiscount {
 
   """The name of the discount."""
   name: String
+
+  """
+  Indicates which part of the order the discount should affect: SUBTOTAL or SHIPPING.
+  """
+  type: TaxableObjectDiscountTypeEnum!
+}
+
+"""
+Indicates which part of the order the discount should affect: SUBTOTAL or SHIPPING.
+"""
+enum TaxableObjectDiscountTypeEnum {
+  SHIPPING
+  SUBTOTAL
 }
 
 type TaxableObjectLine {
@@ -32262,6 +32535,11 @@ Added in Saleor 3.13.
 Note: this API is currently in Feature Preview and can be subject to changes at later point.
 
 Requires the following permissions: OWNER and HANDLE_PAYMENTS for apps, HANDLE_PAYMENTS for staff users. Staff user cannot update a transaction that is owned by the app.
+
+Triggers the following webhook events:
+- TRANSACTION_ITEM_METADATA_UPDATED (async): Optionally called when transaction's metadata was updated.
+- CHECKOUT_FULLY_PAID (async): Optionally called when the checkout charge status changed to `FULL` or `OVERCHARGED`.
+- ORDER_UPDATED (async): Optionally called when the transaction is related to the order and the order was updated.
 """
 type TransactionEventReport {
   """Defines if the reported event hasn't been processed earlier."""
@@ -32297,6 +32575,7 @@ enum TransactionEventReportErrorCode {
   INCORRECT_DETAILS
   INVALID
   NOT_FOUND
+  REQUIRED
 }
 
 """
