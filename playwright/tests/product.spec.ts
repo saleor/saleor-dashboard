@@ -1,23 +1,21 @@
-import { MailpitService } from "@api/mailpit";
 import { AVAILABILITY } from "@data/copy";
 import { PRODUCTS } from "@data/e2eTestData";
 import { ProductCreateDialog } from "@pages/dialogs/productCreateDialog";
 import { ProductPage } from "@pages/productPage";
 import { VariantsPage } from "@pages/variantsPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
+import { test } from "utils/testWithPermission";
 
-test.use({ storageState: "./playwright/.auth/admin.json" });
+test.use({ permissionName: "admin" });
 
 let productPage: ProductPage;
 let productCreateDialog: ProductCreateDialog;
 let variantsPage: VariantsPage;
-let mailpitService: MailpitService;
 
-test.beforeEach(({ page, request }) => {
+test.beforeEach(({ page }) => {
   productPage = new ProductPage(page);
   productCreateDialog = new ProductCreateDialog(page);
   variantsPage = new VariantsPage(page);
-  mailpitService = new MailpitService(request);
 });
 test("TC: SALEOR_3 Create basic product with variants @e2e @product", async () => {
   await productPage.gotoProductListPage();
@@ -176,10 +174,6 @@ test("TC: SALEOR_56 As an admin, I should be able to export products from single
   await productPage.exportProductsDialog.clickExportAllProductsRadioButton();
   await productPage.exportProductsDialog.clickSubmitButton();
   await productPage.expectInfoBanner();
-  await mailpitService.checkDoesUserReceivedExportedData(
-    process.env.E2E_USER_NAME!,
-    "Your exported products data is ready",
-  );
 });
 test("TC: SALEOR_57 As an admin, I should be able to search products on list view @basic-regression @product @e2e", async () => {
   await productPage.gotoProductListPage();

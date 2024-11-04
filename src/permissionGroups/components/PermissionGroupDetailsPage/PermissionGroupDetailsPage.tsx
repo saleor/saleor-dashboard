@@ -13,10 +13,11 @@ import {
   PermissionGroupErrorFragment,
   UserPermissionFragment,
 } from "@dashboard/graphql";
+import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { FormChange, SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { buttonMessages } from "@dashboard/intl";
-import { MembersListUrlSortField, permissionGroupListUrl } from "@dashboard/permissionGroups/urls";
+import { MembersListUrlSortField, permissionGroupListPath } from "@dashboard/permissionGroups/urls";
 import { ListActions, SortPage } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
@@ -98,6 +99,10 @@ export const PermissionGroupDetailsPage: React.FC<PermissonGroupDetailsPageProps
   const formErrors = getFormErrors(["addPermissions"], errors);
   const permissionsError = getPermissionGroupErrorMessage(formErrors.addPermissions, intl);
 
+  const permissionGroupListBackLink = useBackLinkWithState({
+    path: permissionGroupListPath,
+  });
+
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ data, change, submit }) => {
@@ -120,7 +125,7 @@ export const PermissionGroupDetailsPage: React.FC<PermissonGroupDetailsPageProps
 
         return (
           <DetailPageLayout>
-            <TopNav href={permissionGroupListUrl()} title={permissionGroup?.name} />
+            <TopNav href={permissionGroupListBackLink} title={permissionGroup?.name} />
             <DetailPageLayout.Content>
               <PermissionGroupInfo
                 data={data}
@@ -175,7 +180,7 @@ export const PermissionGroupDetailsPage: React.FC<PermissonGroupDetailsPageProps
               <Savebar>
                 <Savebar.DeleteButton onClick={onDelete} />
                 <Savebar.Spacer />
-                <Savebar.CancelButton onClick={() => navigate(permissionGroupListUrl())} />
+                <Savebar.CancelButton onClick={() => navigate(permissionGroupListBackLink)} />
                 <Savebar.ConfirmButton
                   transitionState={saveButtonBarState}
                   onClick={submit}

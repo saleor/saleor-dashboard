@@ -14,7 +14,7 @@ import {
   createSaleUpdateHandler,
 } from "@dashboard/discounts/handlers";
 import { itemsQuantityMessages } from "@dashboard/discounts/translations";
-import { saleListUrl } from "@dashboard/discounts/urls";
+import { saleListPath, saleListUrl } from "@dashboard/discounts/urls";
 import { SALE_UPDATE_FORM_ID } from "@dashboard/discounts/views/SaleDetails/types";
 import {
   DiscountErrorFragment,
@@ -22,6 +22,7 @@ import {
   SaleDetailsFragment,
   SaleType as SaleTypeEnum,
 } from "@dashboard/graphql";
+import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
@@ -149,6 +150,10 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   const checkIfSaveIsDisabled = (data: SaleDetailsPageFormData) =>
     data.channelListings?.some(channel => validateSalePrice(data, channel)) || disabled;
 
+  const saleListBackLink = useBackLinkWithState({
+    path: saleListPath,
+  });
+
   return (
     <Form
       confirmLeave
@@ -170,7 +175,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
 
         return (
           <DetailPageLayout>
-            <TopNav href={saleListUrl()} title={sale?.name} />
+            <TopNav href={saleListBackLink} title={sale?.name} />
             <DetailPageLayout.Content>
               <SaleInfo data={data} disabled={disabled} errors={errors} onChange={change} />
               <SaleType data={data} disabled={disabled} onChange={change} />

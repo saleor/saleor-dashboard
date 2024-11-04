@@ -183,3 +183,11 @@ export function getBooleanDropdownOptions(intl: IntlShape) {
     },
   ];
 }
+
+export function getTruncatedTextValue(value: string | undefined, length: number) {
+  if (!value) {
+    return value;
+  }
+
+  return value.length > length ? value.slice(0, length) + "..." : value;
+}

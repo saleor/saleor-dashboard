@@ -15,12 +15,13 @@ import {
   WarehouseErrorFragment,
 } from "@dashboard/graphql";
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
+import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices, mapEdgesToItems } from "@dashboard/utils/maps";
-import { warehouseListUrl } from "@dashboard/warehouses/urls";
+import { warehouseListPath } from "@dashboard/warehouses/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -72,6 +73,10 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
     streetAddress2: warehouse?.address.streetAddress2 ?? "",
   };
 
+  const warehouseListBackLink = useBackLinkWithState({
+    path: warehouseListPath,
+  });
+
   return (
     <Form confirmLeave initial={initialForm} onSubmit={handleSubmit} disabled={disabled}>
       {({ change, data, isSaveDisabled, submit, set }) => {
@@ -85,7 +90,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
 
         return (
           <DetailPageLayout>
-            <TopNav href={warehouseListUrl()} title={warehouse?.name} />
+            <TopNav href={warehouseListBackLink} title={warehouse?.name} />
             <DetailPageLayout.Content>
               <WarehouseInfo data={data} disabled={disabled} errors={errors} onChange={change} />
               <CardSpacer />
@@ -116,7 +121,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
             <Savebar>
               <Savebar.DeleteButton onClick={onDelete} />
               <Savebar.Spacer />
-              <Savebar.CancelButton onClick={() => navigate(warehouseListUrl())} />
+              <Savebar.CancelButton onClick={() => navigate(warehouseListBackLink)} />
               <Savebar.ConfirmButton
                 transitionState={saveButtonBarState}
                 onClick={submit}

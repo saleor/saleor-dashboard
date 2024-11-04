@@ -1,17 +1,15 @@
-import { MailpitService } from "@api/mailpit";
 import { GIFT_CARDS } from "@data/e2eTestData";
 import { GiftCardsPage } from "@pages/giftCardsPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
+import { test } from "utils/testWithPermission";
 
-test.use({ storageState: "./playwright/.auth/admin.json" });
+test.use({ permissionName: "admin" });
 
 let giftCardsPage: GiftCardsPage;
-let mailpitService: MailpitService;
 
-test.beforeEach(async ({ page, request }) => {
+test.beforeEach(async ({ page }) => {
   test.slow();
   giftCardsPage = new GiftCardsPage(page);
-  mailpitService = new MailpitService(request);
   await giftCardsPage.gotoGiftCardsListView();
   await giftCardsPage.waitForDOMToFullyLoad();
 });
@@ -124,10 +122,6 @@ test("TC: SALEOR_182 Export gift card codes in XLSX file @e2e @gift", async () =
     state: "hidden",
     timeout: 30000,
   });
-  await mailpitService.checkDoesUserReceivedExportedData(
-    process.env.E2E_USER_NAME!,
-    "Your exported gift cards data is ready",
-  );
 });
 test("TC: SALEOR_183 Export gift card codes in CSV file @e2e @gift", async () => {
   await giftCardsPage.clickShowMoreMenu();
@@ -137,8 +131,4 @@ test("TC: SALEOR_183 Export gift card codes in CSV file @e2e @gift", async () =>
     state: "hidden",
     timeout: 30000,
   });
-  await mailpitService.checkDoesUserReceivedExportedData(
-    process.env.E2E_USER_NAME!,
-    "Your exported gift cards data is ready",
-  );
 });

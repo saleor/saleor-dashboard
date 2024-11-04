@@ -36,10 +36,7 @@ export const DevModePanel: React.FC = () => {
     <DashboardModal open={isDevModeVisible} onChange={() => setDevModeVisibility(false)}>
       <DashboardModal.Content size="xl" __gridTemplateRows="auto 1fr" height="100%">
         <style dangerouslySetInnerHTML={overwriteCodeMirrorCSSVariables}></style>
-        <DashboardModal.Title display="flex" justifyContent="space-between">
-          {intl.formatMessage(messages.title)}
-          <DashboardModal.Close onClose={() => setDevModeVisibility(false)} />
-        </DashboardModal.Title>
+        <DashboardModal.Header>{intl.formatMessage(messages.title)}</DashboardModal.Header>
 
         <PlainGraphiQL query={devModeContent} variables={variables} fetcher={fetcher} />
       </DashboardModal.Content>

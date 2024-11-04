@@ -15,9 +15,10 @@ import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { MetadataFormData } from "@dashboard/components/Metadata/types";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { Savebar } from "@dashboard/components/Savebar";
-import { customerAddressesUrl, customerListUrl } from "@dashboard/customers/urls";
+import { customerAddressesUrl, customerListPath } from "@dashboard/customers/urls";
 import CustomerGiftCardsCard from "@dashboard/giftCards/components/GiftCardCustomerCard/CustomerGiftCardsCard";
 import { AccountErrorFragment, CustomerDetailsQuery, PermissionEnum } from "@dashboard/graphql";
+import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
@@ -81,6 +82,10 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
     customerId,
   );
 
+  const customerBackLink = useBackLinkWithState({
+    path: customerListPath,
+  });
+
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit} disabled={disabled}>
       {({ change, data, isSaveDisabled, submit }) => {
@@ -88,11 +93,11 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
 
         return (
           <DetailPageLayout>
-            <TopNav href={customerListUrl()} title={getUserName(customer, true)}>
+            <TopNav href={customerBackLink} title={getUserName(customer, true)}>
               {extensionMenuItems.length > 0 && <CardMenu menuItems={extensionMenuItems} />}
             </TopNav>
             <DetailPageLayout.Content>
-              <Backlink href={customerListUrl()}>
+              <Backlink href={customerBackLink}>
                 {intl.formatMessage(sectionNames.customers)}
               </Backlink>
               <CustomerDetails
@@ -132,7 +137,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
             <Savebar>
               <Savebar.DeleteButton onClick={onDelete} />
               <Savebar.Spacer />
-              <Savebar.CancelButton onClick={() => navigate(customerListUrl())} />
+              <Savebar.CancelButton onClick={() => navigate(customerBackLink)} />
               <Savebar.ConfirmButton
                 transitionState={saveButtonBar}
                 onClick={submit}

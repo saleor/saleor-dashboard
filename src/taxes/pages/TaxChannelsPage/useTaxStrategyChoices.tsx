@@ -29,7 +29,6 @@ export const useTaxStrategyChoices = () => {
         <TaxAppLabel
           name={app.name}
           created={app.created}
-          version={app.version}
           id={app.id}
           logoUrl={app.brand?.logo?.default}
         />

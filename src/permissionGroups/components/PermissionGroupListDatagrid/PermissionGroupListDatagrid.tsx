@@ -18,6 +18,7 @@ import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { createGetCellContent, permissionGroupsListStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
@@ -37,6 +38,7 @@ export const PermissionGroupListDatagrid = ({
   onUpdateListSettings,
 }: PermissionGroupListDatagridProps) => {
   const intl = useIntl();
+  const location = useLocation();
   const datagridState = useDatagridChangeState();
   const navigate = useNavigator();
   const emptyColumn = useEmptyColumn();
@@ -69,7 +71,11 @@ export const PermissionGroupListDatagrid = ({
       const rowData: PermissionGroupFragment = permissionGroups[row];
 
       if (rowData) {
-        navigate(permissionGroupDetailsUrl(rowData.id));
+        navigate(permissionGroupDetailsUrl(rowData.id), {
+          state: {
+            prevLocation: location,
+          },
+        });
       }
     },
     [permissionGroups],

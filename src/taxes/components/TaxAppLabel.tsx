@@ -8,11 +8,10 @@ interface TaxAppLabelProps {
   name: string | null;
   logoUrl: string | undefined;
   created: string | null;
-  version: string | null;
   id: string;
 }
 
-export const TaxAppLabel: React.FC<TaxAppLabelProps> = ({ name, logoUrl, version, created }) => {
+export const TaxAppLabel: React.FC<TaxAppLabelProps> = ({ name, logoUrl, created }) => {
   const logo = logoUrl ? { source: logoUrl } : undefined;
 
   return (
@@ -33,7 +32,6 @@ export const TaxAppLabel: React.FC<TaxAppLabelProps> = ({ name, logoUrl, version
           />
         </Text>
       )}
-      {version && <Text color="default2">{`v${version}`}</Text>}
       {created && (
         <Text size={2} color="default2">
           ({moment(created).format("YYYY-MM-DD")})
