@@ -3,9 +3,11 @@ import { USERS } from "@data/e2eTestData";
 import { ConfigurationPage } from "@pages/configurationPage";
 import { PermissionGroupsPage } from "@pages/permissionGroupsPage";
 import { StaffMembersPage } from "@pages/staffMembersPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
+import { test } from "utils/testWithPermission";
 
-test.use({ storageState: "./playwright/.auth/admin.json" });
+test.use({ permissionName: "admin" });
+
 test.describe.configure({ mode: "serial" });
 
 let staffMembersPage: StaffMembersPage;
