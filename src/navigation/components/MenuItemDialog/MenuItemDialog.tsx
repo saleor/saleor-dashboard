@@ -77,11 +77,17 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
     onClose: () => {
       reset(defaultInitial);
       clearErrors();
+      onQueryChange("");
     },
   });
 
   // Refresh initial display value if changed
-  React.useEffect(() => reset(initial), [initial]);
+  React.useEffect(() => {
+    // Form should be reset only when dialog is opened
+    // otherwise it will reset form on every render and when input is empty
+    reset(initial);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
 
   const errors = useModalDialogErrors(apiErrors, open);
   const mutationErrors = errors.filter(err => err.field === null);
@@ -187,7 +193,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
                           onChange={onChange}
                           value={
                             // Show initial value with label in case initial options list from API does not contain it
-                            initial && !formState.isDirty
+                            initial && !formState.dirtyFields.linkValue
                               ? {
                                   value,
                                   label: initialDisplayValue,
@@ -197,9 +203,8 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
                           name="linkValue"
                           error={!!error}
                           helperText={error?.message}
-                          fetchOptions={() => undefined}
+                          fetchOptions={onQueryChange}
                           loading={loading}
-                          onInputValueChange={onQueryChange}
                           data-test-id="menu-item-link-value-input"
                         />
                       );
