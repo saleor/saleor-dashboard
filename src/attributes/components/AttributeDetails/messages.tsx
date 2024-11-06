@@ -56,6 +56,11 @@ export const messages = defineMessages({
 });
 
 export const inputTypeMessages = defineMessages({
+  plainTextTruncated: {
+    id: "A02NDR",
+    defaultMessage: "Attribute value too long and truncated at {length} characters.",
+    description: "plain text attribute value was truncated",
+  },
   dropdown: {
     id: "bZksto",
     defaultMessage: "Dropdown",

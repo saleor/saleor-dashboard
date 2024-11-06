@@ -74,6 +74,7 @@ export const ChannelCreateView = () => {
     slug,
     warehousesIdsToAdd,
     warehousesToDisplay,
+    automaticallyCompleteCheckouts,
   }: FormData) => {
     const input: ChannelCreateInput = {
       name,
@@ -92,6 +93,9 @@ export const ChannelCreateView = () => {
         markAsPaidStrategy,
         deleteExpiredOrdersAfter,
         allowUnpaidOrders,
+      },
+      checkoutSettings: {
+        automaticallyCompleteFullyPaidCheckouts: automaticallyCompleteCheckouts,
       },
     };
 
