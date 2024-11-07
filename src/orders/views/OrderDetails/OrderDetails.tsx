@@ -29,6 +29,7 @@ import { OrderDraftDetails } from "./OrderDraftDetails";
 import { OrderNormalDetails } from "./OrderNormalDetails";
 import { OrderUnconfirmedDetails } from "./OrderUnconfirmedDetails";
 import { useOrderDetails } from "./useOrderDetails";
+import { useSingleOrder } from "./useSingleOrder";
 
 interface OrderDetailsProps {
   id: string;
@@ -61,7 +62,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
     },
   });
 
-  const { data, loading } = useOrderDetails(id);
+  const { data, loading } = useSingleOrder(id);
 
   const order = data?.order;
 
