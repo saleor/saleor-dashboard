@@ -58,6 +58,10 @@ export const channelsList: ChannelDetailsFragment[] = [
       __typename: "PaymentSettings",
       defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
     },
+    checkoutSettings: {
+      automaticallyCompleteFullyPaidCheckouts: true,
+      __typename: "CheckoutSettings",
+    },
   },
   {
     __typename: "Channel",
@@ -97,6 +101,10 @@ export const channelsList: ChannelDetailsFragment[] = [
     paymentSettings: {
       __typename: "PaymentSettings",
       defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+    },
+    checkoutSettings: {
+      automaticallyCompleteFullyPaidCheckouts: true,
+      __typename: "CheckoutSettings",
     },
   },
   {
@@ -138,6 +146,10 @@ export const channelsList: ChannelDetailsFragment[] = [
       __typename: "PaymentSettings",
       defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
     },
+    checkoutSettings: {
+      automaticallyCompleteFullyPaidCheckouts: true,
+      __typename: "CheckoutSettings",
+    },
   },
   {
     __typename: "Channel",
@@ -177,6 +189,10 @@ export const channelsList: ChannelDetailsFragment[] = [
     paymentSettings: {
       __typename: "PaymentSettings",
       defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+    },
+    checkoutSettings: {
+      automaticallyCompleteFullyPaidCheckouts: true,
+      __typename: "CheckoutSettings",
     },
   },
   {
@@ -218,6 +234,10 @@ export const channelsList: ChannelDetailsFragment[] = [
       __typename: "PaymentSettings",
       defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
     },
+    checkoutSettings: {
+      automaticallyCompleteFullyPaidCheckouts: true,
+      __typename: "CheckoutSettings",
+    },
   },
   {
     __typename: "Channel",
@@ -258,6 +278,10 @@ export const channelsList: ChannelDetailsFragment[] = [
       __typename: "PaymentSettings",
       defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
     },
+    checkoutSettings: {
+      automaticallyCompleteFullyPaidCheckouts: true,
+      __typename: "CheckoutSettings",
+    },
   },
   {
     __typename: "Channel",
@@ -297,6 +321,10 @@ export const channelsList: ChannelDetailsFragment[] = [
     paymentSettings: {
       __typename: "PaymentSettings",
       defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+    },
+    checkoutSettings: {
+      automaticallyCompleteFullyPaidCheckouts: true,
+      __typename: "CheckoutSettings",
     },
   },
 ];
@@ -339,6 +367,10 @@ export const channel: ChannelDetailsFragment = {
   paymentSettings: {
     __typename: "PaymentSettings",
     defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+  },
+  checkoutSettings: {
+    automaticallyCompleteFullyPaidCheckouts: true,
+    __typename: "CheckoutSettings",
   },
 };
 
