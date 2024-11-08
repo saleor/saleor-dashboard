@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.20.17
+
+### Patch Changes
+
+- 725ab22: `.env.template` no longer references Demo environment.
+- 4feda35: Increase global single test timeout to avoid false neagtive test results
+- 55988f0: Moving test cases for activation and deactivation staff members to other file and running it in serial mode to avoid login in two tests in the same time (it can cause error with code LOGIN_ATTEMPT_DELAYED)
+- 048b0fb: Added support for the new channel setting: `checkoutSettings.automaticallyCompleteFullyPaidCheckouts`. Setting can be changed in channel configuration page.
+- a230369: Link value input in Navigation no longer overrides input value with cached value.
+
 ## 3.20.16
 
 ### Patch Changes
