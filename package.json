@@ -66,7 +66,6 @@
     "jwt-decode": "^3.1.2",
     "keycode": "^2.2.1",
     "lodash": "^4.17.21",
-    "lz-string": "^1.5.0",
     "marked": "^4.0.17",
     "moment-timezone": "^0.5.32",
     "posthog-js": "^1.105.9",
