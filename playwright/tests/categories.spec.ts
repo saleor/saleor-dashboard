@@ -13,9 +13,7 @@ test.beforeEach(({ page }) => {
 });
 test("TC: SALEOR_102 Create basic category @e2e @category", async () => {
   await categoriesPage.gotoCategoryListView();
-  //await categoriesPage.waitForDOMToFullyLoad();
   await categoriesPage.waitForLoaderToDisappear();
-
   await categoriesPage.clickCreateNewCategoryButton();
   await categoriesPage.typeCategoryName("Utils");
   await categoriesPage.typeCategoryDescription("Utils description");
