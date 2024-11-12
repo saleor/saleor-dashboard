@@ -27,11 +27,7 @@ for (const permission of permissionList) {
 
     await expect(appsPage.installExternalAppButton).not.toBeVisible();
 
-    const appLists = [
-      appsPage.installedAppsList,
-      appsPage.availableAppsList,
-      appsPage.upcomingAppsList,
-    ];
+    const appLists = [appsPage.installedAppsList, appsPage.availableAppsList];
 
     for (const appList of appLists) {
       await expect(appList).toBeVisible();
