@@ -313,7 +313,7 @@ export class BasePage {
 
   async waitForDOMToFullyLoad() {
     await this.page.waitForLoadState("domcontentloaded", { timeout: 70000 });
-    await this.loader.waitFor({ state: "hidden" });
+    await this.dataGridLoader.waitFor({ state: "hidden" });
   }
 
   async expectElementIsHidden(locator: Locator) {
