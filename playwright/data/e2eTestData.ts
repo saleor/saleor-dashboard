@@ -515,6 +515,9 @@ export const ORDERS = {
       },
     ],
   },
+  orderWithoutAddedCustomer: {
+    id: "T3JkZXI6MDM4MjM4NDMtYjg3My00ZTQ2LWE1NTItNjc0ZGIwZjE2ZGZh",
+  },
 };
 
 export const SHIPPING_METHODS = {

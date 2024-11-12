@@ -451,12 +451,7 @@ test("TC: SALEOR_217 Complete basic order for non existing customer @e2e @order"
   const nonExistingEmail = `customer-${faker.datatype.number()}@example.com`;
   const newAddress = ADDRESS.addressPL;
 
-  await ordersPage.goToOrdersListView();
-  await ordersPage.clickCreateOrderButton();
-  await ordersPage.orderCreateDialog.completeOrderCreateDialogWithFirstChannel();
-  await ordersPage.clickAddProductsButton();
-  await draftOrdersPage.addProductsDialog.selectVariantBySKU(variantSKU);
-  await draftOrdersPage.addProductsDialog.clickConfirmButton();
+  await ordersPage.goToExistingOrderPage(ORDERS.orderWithoutAddedCustomer.id);
   await ordersPage.rightSideDetailsPage.clickEditCustomerButton();
   await ordersPage.rightSideDetailsPage.clickSearchCustomerInput();
   await ordersPage.rightSideDetailsPage.typeAndSelectCustomerEmail(nonExistingEmail);
