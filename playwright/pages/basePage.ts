@@ -327,4 +327,8 @@ export class BasePage {
   async waitForCanvasContainsText(text: string) {
     await this.gridCanvas.getByText(text).waitFor({ state: "attached", timeout: 50000 });
   }
+
+  async waitForLoaderToDisappear() {
+    await this.loader.waitFor({ state: "hidden" });
+  }
 }

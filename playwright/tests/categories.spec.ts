@@ -1,4 +1,5 @@
 import { CATEGORIES } from "@data/e2eTestData";
+import { BasePage } from "@pages/basePage";
 import { CategoriesPage } from "@pages/categoriesPage";
 import { expect } from "@playwright/test";
 import { test } from "utils/testWithPermission";
@@ -12,7 +13,9 @@ test.beforeEach(({ page }) => {
 });
 test("TC: SALEOR_102 Create basic category @e2e @category", async () => {
   await categoriesPage.gotoCategoryListView();
-  await categoriesPage.waitForDOMToFullyLoad();
+  //await categoriesPage.waitForDOMToFullyLoad();
+  await categoriesPage.waitForLoaderToDisappear();
+
   await categoriesPage.clickCreateNewCategoryButton();
   await categoriesPage.typeCategoryName("Utils");
   await categoriesPage.typeCategoryDescription("Utils description");
