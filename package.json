@@ -176,7 +176,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^8.0.1",
-    "@testing-library/user-event": "^14.4.3",
+    "@testing-library/user-event": "^14.5.2",
     "@types/jest": "^26.0.14",
     "@types/setup-polly-jest": "^0.5.0",
     "fsevents": "^1.2.9",
