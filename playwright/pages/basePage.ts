@@ -18,7 +18,7 @@ export class BasePage {
     readonly errorBanner = page.locator(LOCATORS.errorBanner),
     readonly saveButton = page.locator(LOCATORS.saveButton),
     readonly infoBanner = page.locator(LOCATORS.infoBanner),
-    readonly loader = page.locator(LOCATORS.loader),
+    readonly dataGridLoader = page.locator(LOCATORS.dataGridLoader),
     readonly previousPagePaginationButton = page.getByTestId("button-pagination-back"),
     readonly rowNumberButton = page.getByTestId("PaginationRowNumberSelect"),
     readonly rowNumberOption = page.getByTestId("rowNumberOption"),
@@ -328,7 +328,7 @@ export class BasePage {
     await this.gridCanvas.getByText(text).waitFor({ state: "attached", timeout: 50000 });
   }
 
-  async waitForLoaderToDisappear() {
-    await this.loader.waitFor({ state: "hidden" });
+  async waitForDatagridLoaderToDisappear() {
+    await this.dataGridLoader.waitFor({ state: "hidden" });
   }
 }

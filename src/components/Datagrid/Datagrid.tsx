@@ -396,7 +396,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   if (loading) {
     return (
-      <Box data-test-id="loader" display="flex" justifyContent="center" marginY={9}>
+      <Box data-test-id="datagrid-loader" display="flex" justifyContent="center" marginY={9}>
         <CircularProgress />
       </Box>
     );
