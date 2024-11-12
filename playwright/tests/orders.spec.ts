@@ -447,9 +447,7 @@ test(`TC: SALEOR_216 Order type discount is applied to a draft order @draft @dis
   expect(finalTotalPrice.slice(3)).toContain(discountedOrderSubTotal.toString());
 });
 
-test("TC: SALEOR_217 Complete basic order for non existing customer @e2e @order", async ({
-  page,
-}) => {
+test("TC: SALEOR_217 Complete basic order for non existing customer @e2e @order", async () => {
   const nonExistingEmail = `customer-${faker.datatype.number()}@example.com`;
   const newAddress = ADDRESS.addressPL;
 
