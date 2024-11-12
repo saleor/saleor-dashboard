@@ -1,5 +1,4 @@
 import { CATEGORIES } from "@data/e2eTestData";
-import { BasePage } from "@pages/basePage";
 import { CategoriesPage } from "@pages/categoriesPage";
 import { expect } from "@playwright/test";
 import { test } from "utils/testWithPermission";
