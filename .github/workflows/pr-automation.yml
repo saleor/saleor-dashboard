@@ -2,7 +2,6 @@ name: PR automation
 
 on:
   pull_request:
-    types: [opened, reopened, synchronize, labeled]
   workflow_dispatch:
     inputs:
       shards:
@@ -163,7 +162,6 @@ jobs:
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
 
   run-tests:
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'run pw-e2e') }}
     runs-on: ubuntu-22.04
     needs: [initialize-cloud, deploy-dashboard]
     strategy:
@@ -190,7 +188,7 @@ jobs:
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
 
   merge-reports:
-    if: "!cancelled() && contains(github.event.pull_request.labels.*.name, 'run pw-e2e')"
+    if: "!cancelled()"
 
     needs: run-tests
     runs-on: ubuntu-22.04
