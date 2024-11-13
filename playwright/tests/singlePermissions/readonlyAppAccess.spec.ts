@@ -29,7 +29,6 @@ for (const permission of permissionList) {
     const appLists = [
       appsPage.installedAppsList,
       appsPage.availableAppsList,
-      appsPage.upcomingAppsList,
     ];
     for (const appList of appLists) {
       await appsPage.waitForDOMToFullyLoad();
