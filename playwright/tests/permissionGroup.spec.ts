@@ -1,13 +1,14 @@
-import { ConfigurationPage } from "@pages/configurationPage";
-import { PermissionGroupsPage } from "@pages/permissionGroupsPage";
-import { PermissionGroupDetailsPage } from "@pages/permissionGroupDetailsPage";
-import { AssignPermissionGroupMembersDialog } from "@pages/dialogs/assignPermissionGroupMembersDialog";
 import { PERMISSION_GROUPS } from "@data/e2eTestData";
-import { expect, test } from "@playwright/test";
-import faker from "faker";
+import { ConfigurationPage } from "@pages/configurationPage";
+import { AssignPermissionGroupMembersDialog } from "@pages/dialogs/assignPermissionGroupMembersDialog";
 import { UnassignPermissionGroupMembersDialog } from "@pages/dialogs/unassignPermissionGroupMembersDialog";
+import { PermissionGroupDetailsPage } from "@pages/permissionGroupDetailsPage";
+import { PermissionGroupsPage } from "@pages/permissionGroupsPage";
+import { expect } from "@playwright/test";
+import faker from "faker";
+import { test } from "utils/testWithPermission";
 
-test.use({ storageState: "playwright/.auth/admin.json" });
+test.use({ permissionName: "admin" });
 
 let permissions: PermissionGroupsPage;
 let permissionDetails: PermissionGroupDetailsPage;

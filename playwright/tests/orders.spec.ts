@@ -6,9 +6,10 @@ import { DraftOrdersPage } from "@pages/draftOrdersPage";
 import { AddressForm } from "@pages/forms/addressForm";
 import { FulfillmentPage } from "@pages/fulfillmentPage";
 import { OrdersPage } from "@pages/ordersPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
+import { test } from "utils/testWithPermission";
 
-test.use({ storageState: "./playwright/.auth/admin.json" });
+test.use({ permissionName: "admin" });
 
 let ordersPage: OrdersPage;
 let draftOrdersPage: DraftOrdersPage;

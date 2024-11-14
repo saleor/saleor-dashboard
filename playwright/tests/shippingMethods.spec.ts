@@ -2,9 +2,10 @@ import { CHANNELS, SHIPPING_METHODS, WAREHOUSES } from "@data/e2eTestData";
 import { URL_LIST } from "@data/url";
 import { ShippingMethodsPage } from "@pages/shippingMethodsPage";
 import { ShippingRatesPage } from "@pages/shippingRatesPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
+import { test } from "utils/testWithPermission";
 
-test.use({ storageState: "./playwright/.auth/admin.json" });
+test.use({ permissionName: "admin" });
 
 let shippingMethodsPage: ShippingMethodsPage;
 let shippingRatesPage: ShippingRatesPage;

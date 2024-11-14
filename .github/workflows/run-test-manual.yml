@@ -17,6 +17,7 @@ jobs:
       BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
       BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
       BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
+      ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -51,6 +52,18 @@ jobs:
           POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
           BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
 
+      - name: Prepare accounts
+        id: accounts
+        uses: ./.github/actions/prepare-accounts
+        with:
+          BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
+          API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
+          E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
+          E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
+
+
   create-run-on-testmo:
     runs-on: ubuntu-22.04
     needs: initialize-cloud
@@ -84,6 +97,7 @@ jobs:
           E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
           E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
+          ACCOUNTS: ${{ needs.initialize-cloud.outputs.ACCOUNTS }}
           MAILPITURL: ${{ secrets.MAILPITURL }}
           PW_WORKERS: ${{ vars.PW_WORKERS }}
           PW_RETRIES: ${{ vars.PW_RETRIES }}

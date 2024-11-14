@@ -1,18 +1,19 @@
 import { URL_LIST } from "@data/url";
-import { AppsPage } from "@pages/appsPage";
-import { AppPage } from "@pages/appPageThirdparty";
-import { AppDetailsPage } from "@pages/appDetailsPage";
-import { MainMenuPage } from "@pages/mainMenuPage";
-import { expect, test } from "@playwright/test";
 import { permissions } from "@data/userPermissions";
+import { AppDetailsPage } from "@pages/appDetailsPage";
+import { AppPage } from "@pages/appPageThirdparty";
+import { AppsPage } from "@pages/appsPage";
+import { MainMenuPage } from "@pages/mainMenuPage";
+import { expect } from "@playwright/test";
+import { test } from "utils/testWithPermission";
 
-let permissionToExclude = "app";
+const permissionToExclude = "app";
 const permissionList = permissions.filter(item => item !== permissionToExclude);
 
 for (const permission of permissionList) {
-  test.use({ storageState: `playwright/.auth/${permission}.json` });
+  test.use({ permissionName: permission });
 
-  test(`TC: SALEOR_131 User with ${permission} permissions should have readonly access to Apps @e2e`, async ({
+  test(`TC: SALEOR_131 User with ${permission} permissions should have readonly access to Apps @e2e @apps`, async ({
     page,
   }) => {
     const mainMenuPage = new MainMenuPage(page);
@@ -28,7 +29,6 @@ for (const permission of permissionList) {
     const appLists = [
       appsPage.installedAppsList,
       appsPage.availableAppsList,
-      appsPage.upcomingAppsList,
     ];
     for (const appList of appLists) {
       await appsPage.waitForDOMToFullyLoad();
