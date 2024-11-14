@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.20.18
+
+### Patch Changes
+
+- 9436450: Optimize test by reusing an existing order instead of creating a new one
+- 3db9f24: Increase global single test timeout to avoid false neagtive test results
+- abdd791: Refactor tests to replace `waitForDOMToFullyLoad` with `waitForLoaderToDisappear`, making the test shorter by waiting only for the loader to disappear instead of the entire DOM to load.
+- 711c368: Upgrade lz-string library to version that supports MIT license
+
 ## 3.20.17
 
 ### Patch Changes
