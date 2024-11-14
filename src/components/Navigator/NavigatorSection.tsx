@@ -44,8 +44,8 @@ const NavigatorSearchSection: React.FC<NavigatorSearchSectionProps> = props => {
             paddingY={2}
             borderRadius={4}
             backgroundColor={{
-              hover: "interactiveBrandSecondaryHovering",
-              active: "interactiveBrandSecondaryFocused",
+              hover: "accent1Hovered",
+              active: "accent1Hovered",
             }}
             selected={highlightedIndex === index}
             key={[item.label, item.type].join(":")}
