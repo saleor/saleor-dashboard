@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Improve inline discount test precision and reliability in draft orders
+Adjust inline discount test for precise floating-point comparison with .toFixed(2)
