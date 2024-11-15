@@ -43,17 +43,17 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
   return (
     <DashboardModal onChange={onClose} open={open}>
       <DashboardModal.Content size="sm">
+        <DashboardModal.Header>
+          <FormattedMessage
+            id="+kb2lM"
+            defaultMessage="Change Password"
+            description="dialog header"
+          />
+        </DashboardModal.Header>
+
         <Form initial={initialForm} onSubmit={onSubmit} role="form">
           {({ change, data }) => (
             <Box display="flex" flexDirection="column" gap={4}>
-              <DashboardModal.Header>
-                <FormattedMessage
-                  id="+kb2lM"
-                  defaultMessage="Change Password"
-                  description="dialog header"
-                />
-              </DashboardModal.Header>
-
               <TextField
                 error={!!formErrors.oldPassword}
                 fullWidth
