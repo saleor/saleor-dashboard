@@ -50,6 +50,10 @@ describe("StaffPasswordResetDialog", () => {
     fireEvent.click(submitButton);
 
     // Assert
-    expect(defaultProps.onSubmit).toHaveBeenCalled();
+    expect(defaultProps.onSubmit).toHaveBeenCalledTimes(1);
+    expect(defaultProps.onSubmit).toHaveBeenCalledWith({
+      oldPassword: "old-password",
+      newPassword: "new-password",
+    });
   });
 });
