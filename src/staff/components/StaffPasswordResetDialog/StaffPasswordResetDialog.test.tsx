@@ -3,7 +3,9 @@ import "@testing-library/jest-dom/extend-expect";
 import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 
-import StaffPasswordResetDialog from "./StaffPasswordResetDialog";
+import StaffPasswordResetDialog, {
+  StaffPasswordResetDialogProps,
+} from "./StaffPasswordResetDialog";
 
 const defaultProps = {
   confirmButtonState: "default",
@@ -11,7 +13,7 @@ const defaultProps = {
   open: true,
   onClose: jest.fn(),
   onSubmit: jest.fn(),
-};
+} as StaffPasswordResetDialogProps;
 
 jest.mock("react-intl", () => ({
   useIntl: jest.fn(() => ({
