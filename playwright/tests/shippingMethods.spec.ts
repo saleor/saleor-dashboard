@@ -157,6 +157,7 @@ test("TC: SALEOR_37 Update a shipping method @shipping-method @e2e", async () =>
   await shippingMethodsPage.rightSideDetailsPage.typeAndSelectMultipleWarehousesShippingPage(
     warehousesToBeAssigned,
   );
+  await shippingMethodsPage.expectSuccessBanner();
 
   await shippingMethodsPage.saveShippingZone();
   await shippingMethodsPage.expectSuccessBanner();
