@@ -342,46 +342,58 @@ for (const refund of orderRefunds) {
     await expect(ordersPage.orderRefundList).not.toContainText(refund.status);
   });
 }
+
 test(`TC: SALEOR_215 Inline discount is applied in a draft order @draft @discounts @e2e`, async () => {
   test.slow();
 
+  const calculateDiscountedPrice = (
+    undiscountedPrice: number,
+    discountPercentage: number,
+  ): number => {
+    return undiscountedPrice - (undiscountedPrice * discountPercentage) / 100;
+  };
+
+  const formatPrice = (price: string): number => parseFloat(price.slice(3));
+
   const discountedProduct = PRODUCTS.productWithDiscountChannelPLN;
   const productAlreadyInBasket = ORDERS.draftOrderChannelPLN.productInBasket;
+  const totalPriceLocator = ordersPage.orderSummary.locator(ordersPage.totalPrice);
 
   await ordersPage.goToExistingOrderPage(ORDERS.draftOrderChannelPLN.id);
-  await draftOrdersPage.basketProductList.waitFor({ state: "visible" });
 
-  const initialTotal = await ordersPage.orderSummary.locator(ordersPage.totalPrice).innerText();
+  const [initialTotal] = await Promise.all([
+    totalPriceLocator.innerText(),
+    draftOrdersPage.basketProductList.isVisible(),
+  ]);
 
   expect(initialTotal).toContain(productAlreadyInBasket.price.toString());
+
   await draftOrdersPage.clickAddProductsButton();
   await draftOrdersPage.addProductsDialog.searchForProductInDialog(discountedProduct.name);
   await draftOrdersPage.addProductsDialog.selectVariantBySKU(discountedProduct.variant.sku);
   await draftOrdersPage.addProductsDialog.clickConfirmButton();
+
   await draftOrdersPage.expectElementIsHidden(draftOrdersPage.dialog);
   await draftOrdersPage.expectElementIsHidden(draftOrdersPage.successBanner);
 
-  const calculatedDiscountForAddedProduct =
-    (await discountedProduct.variant.undiscountedPrice) -
-    (discountedProduct.variant.undiscountedPrice *
-      discountedProduct.rewardPercentageDiscountValue) /
-      100;
+  const expectedDiscountedPrice = calculateDiscountedPrice(
+    discountedProduct.variant.undiscountedPrice,
+    discountedProduct.rewardPercentageDiscountValue,
+  );
 
-  expect(discountedProduct.variant.discountedPrice).toEqual(calculatedDiscountForAddedProduct);
+  expect(discountedProduct.variant.discountedPrice).toEqual(expectedDiscountedPrice);
 
-  const undiscountedTotal =
-    productAlreadyInBasket.price + discountedProduct.variant.undiscountedPrice;
+  await totalPriceLocator.waitFor({ state: "visible" });
 
-  await ordersPage.totalPrice.waitFor({ state: "visible" });
+  const finalTotal = await totalPriceLocator.innerText();
 
-  const finalTotal = await ordersPage.orderSummary.locator(ordersPage.totalPrice).innerText();
+  const expectedTotal = (
+    productAlreadyInBasket.price + discountedProduct.variant.discountedPrice
+  ).toFixed(2);
 
-  expect(finalTotal.slice(3)).not.toContain(undiscountedTotal.toString());
-
-  const discountedTotal = productAlreadyInBasket.price + discountedProduct.variant.discountedPrice;
-
-  expect(finalTotal.slice(3)).toContain(discountedTotal.toString());
+  expect(formatPrice(finalTotal).toFixed(2)).toEqual(expectedTotal);
 });
+
 test(`TC: SALEOR_216 Order type discount is applied to a draft order @draft @discounts @e2e`, async () => {
   test.slow();
   await draftOrdersPage.goToDraftOrdersListView();
@@ -439,7 +451,6 @@ test(`TC: SALEOR_216 Order type discount is applied to a draft order @draft @dis
     PRODUCTS.productWithPriceLowerThan20.price + PRODUCTS.productWithPriceHigherThan20.price;
   const finalTotalPrice = await ordersPage.orderSummary.locator(ordersPage.totalPrice).innerText();
 
-  expect(finalTotalPrice.slice(3)).not.toContain(initialSubTotalPrice);
   expect(finalTotalPrice.slice(3)).not.toContain(initialSubTotalPrice);
 
   const discountedOrderSubTotal = undiscountedOrderSubTotal - (undiscountedOrderSubTotal * 5) / 100;
