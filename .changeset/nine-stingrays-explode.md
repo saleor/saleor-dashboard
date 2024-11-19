@@ -2,4 +2,6 @@
 "saleor-dashboard": patch
 ---
 
-Changed test structure for better visibility, changed expects to be more reliable
+Refactored tests by replacing direct banner visibility checks with `expectSuccessBanner()`.  
+Removed unnecessary `waitForNetworkIdleAfterAction` wrappers.  
+Simplified test scope for `staffMembers` and removed explicit timeouts where appropriate.
