@@ -124,9 +124,10 @@ test("TC: SALEOR_36 Delete shipping zones in bulk @shipping-method @e2e", async 
 });
 test("TC: SALEOR_37 Update a shipping method @shipping-method @e2e", async () => {
   const channelSection = shippingMethodsPage.rightSideDetailsPage.channelSection;
-  const warehouseSection = shippingMethodsPage.rightSideDetailsPage.warehouseSection;
   const alreadyAssignedChannels = [CHANNELS.channelUSD.name];
   const channelsToBeAssigned = [CHANNELS.channelPLN.name];
+
+  const warehouseSection = shippingMethodsPage.rightSideDetailsPage.warehouseSection;
   const alreadyAssignedWarehouses = [
     WAREHOUSES.warehouseOceania.name,
     WAREHOUSES.warehouseAfrica.name,
@@ -147,27 +148,27 @@ test("TC: SALEOR_37 Update a shipping method @shipping-method @e2e", async () =>
   );
   await shippingMethodsPage.rightSideDetailsPage.clickChannelsSelectShippingPage();
   await shippingMethodsPage.rightSideDetailsPage.selectSingleChannelShippingPage();
+
   await shippingMethodsPage.rightSideDetailsPage.expectOptionsSelected(
     warehouseSection,
     alreadyAssignedWarehouses,
   );
-
   await shippingMethodsPage.rightSideDetailsPage.clickWarehouseSelectShippingPage();
   await shippingMethodsPage.rightSideDetailsPage.typeAndSelectMultipleWarehousesShippingPage(
     warehousesToBeAssigned,
   );
+  await shippingMethodsPage.expectSuccessBanner();
+
   await shippingMethodsPage.saveShippingZone();
   await shippingMethodsPage.expectSuccessBanner();
 
-  const updatedChannelsList = alreadyAssignedChannels.concat(channelsToBeAssigned);
+  const updatedChannelsList = [...alreadyAssignedChannels, ...channelsToBeAssigned];
+  const updatedWarehousesList = [...alreadyAssignedWarehouses, ...warehousesToBeAssigned];
 
   await shippingMethodsPage.rightSideDetailsPage.expectOptionsSelected(
     channelSection,
     updatedChannelsList,
   );
-
-  const updatedWarehousesList = alreadyAssignedWarehouses.concat(warehousesToBeAssigned);
-
   await shippingMethodsPage.rightSideDetailsPage.expectOptionsSelected(
     warehouseSection,
     updatedWarehousesList,
