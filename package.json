@@ -40,7 +40,7 @@
     "@saleor/macaw-ui": "npm:@saleor/macaw-ui@0.7.4",
     "@saleor/macaw-ui-next": "npm:@saleor/macaw-ui@1.1.15",
     "@saleor/sdk": "0.6.0",
-    "@sentry/react": "^8.21.0",
+    "@sentry/react": "^8.38.0",
     "@sentry/vite-plugin": "^2.21.1",
     "@types/faker": "^5.1.6",
     "@uiw/react-color-hue": "0.0.34",
