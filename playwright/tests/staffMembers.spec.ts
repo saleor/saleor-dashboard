@@ -22,27 +22,39 @@ test.beforeEach(async ({ page, request }) => {
 });
 
 test("TC: SALEOR_211 Create a staff member @e2e @staff-members", async () => {
-  const name = faker.name.firstName();
-  const lastName = faker.name.lastName();
-  const email = faker.internet.email().toLowerCase();
+  const staffMember = {
+    name: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    email: faker.internet.email().toLowerCase(),
+    permissions: ["Customer Support", "Channels Management"],
+  };
 
   await config.goToConfigurationView();
   await config.openStaffMembers();
   await staffMembersPage.clickInviteStaffMemberButton();
-  await staffMembersPage.inviteStaffMembersDialog.typeNameLastNameAndEmail(name, lastName, email);
+  await staffMembersPage.inviteStaffMembersDialog.typeNameLastNameAndEmail(
+    staffMember.name,
+    staffMember.lastName,
+    staffMember.email,
+  );
   await staffMembersPage.inviteStaffMembersDialog.clickSendInviteButton();
   await staffMembersPage.expectSuccessBanner();
-  await expect(staffMembersPage.firstName).toHaveValue(name);
-  await expect(staffMembersPage.lastName).toHaveValue(lastName);
-  await expect(staffMembersPage.email).toHaveValue(email);
-  await expect(await staffMembersPage.isActiveCheckbox.isChecked()).toEqual(true);
+
+  await expect(staffMembersPage.firstName).toHaveValue(staffMember.name);
+  await expect(staffMembersPage.lastName).toHaveValue(staffMember.lastName);
+  await expect(staffMembersPage.email).toHaveValue(staffMember.email);
+  await expect(await staffMembersPage.isActiveCheckbox.isChecked()).toBeTruthy();
+
   await staffMembersPage.clickPermissionsGroupSelectButton();
-  await staffMembersPage.assignUserToPermissionGroup("Customer Support");
-  await staffMembersPage.assignUserToPermissionGroup("Channels management");
+  for (const permission of staffMember.permissions) {
+    await staffMembersPage.assignUserToPermissionGroup(permission);
+  }
   await staffMembersPage.clickSaveButton();
   await staffMembersPage.expectSuccessBanner();
-  await staffMembersPage.verifyAssignedPermission("Customer Support");
-  await staffMembersPage.verifyAssignedPermission("Channels management");
+
+  for (const permission of staffMember.permissions) {
+    await staffMembersPage.verifyAssignedPermission(permission);
+  }
 });
 test("TC: SALEOR_212 Edit a staff member @e2e @staff-members", async () => {
   const newName = faker.name.firstName();
@@ -52,7 +64,7 @@ test("TC: SALEOR_212 Edit a staff member @e2e @staff-members", async () => {
   await staffMembersPage.gotToExistingStaffMemberPage(USERS.staffToBeEdited.id);
   await staffMembersPage.clickPermissionsGroupSelectButton();
   await staffMembersPage.assignUserToPermissionGroup("Customer Support");
-  await staffMembersPage.assignUserToPermissionGroup("Channels management");
+  await staffMembersPage.assignUserToPermissionGroup("Channels Management");
   await staffMembersPage.clickSaveButton();
   await staffMembersPage.expectSuccessBanner();
   await staffMembersPage.updateStaffInfo(newName, newLastName, newEmail);
@@ -60,7 +72,7 @@ test("TC: SALEOR_212 Edit a staff member @e2e @staff-members", async () => {
   await expect(staffMembersPage.lastName).toHaveValue(newLastName);
   await expect(staffMembersPage.email).toHaveValue(newEmail);
   await staffMembersPage.verifyAssignedPermission("Customer Support");
-  await staffMembersPage.verifyAssignedPermission("Channels management");
+  await staffMembersPage.verifyAssignedPermission("Channels Management");
   await staffMembersPage.verifyAssignedPermission(USERS.staffToBeEdited.permission);
 });
 test("TC: SALEOR_213 Delete a single staff member @e2e @staff-members", async () => {
