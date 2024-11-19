@@ -251,10 +251,8 @@ describe("AuthProvider", () => {
     const { result } = renderHook(() => useAuthProvider({ intl, notify, apolloClient }));
 
     // Simulate two concurrent login attempts
-    const loginPromise1 = result.current.login!("email", "password");
-    const loginPromise2 = result.current.login!("email", "password");
-
-    await Promise.all([loginPromise1, loginPromise2]);
+    result.current.login!("email", "password");
+    result.current.login!("email", "password");
 
     expect(loginMock).toHaveBeenCalledTimes(1);
   });
