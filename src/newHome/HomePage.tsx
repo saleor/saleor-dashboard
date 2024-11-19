@@ -4,10 +4,12 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import {
   PermissionEnum,
+  useHomeActivitiesQuery,
   useHomeAnaliticsQuery,
   useHomeNotificationsQuery,
 } from "@dashboard/graphql";
 import { HomeSidebar } from "@dashboard/newHome/components/HomeSidebar";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
@@ -41,6 +43,17 @@ export const HomePage = () => {
     },
   });
 
+  const {
+    data: homeActivities,
+    loading: homeActivitiesLoading,
+    error: homeActivitiesError,
+  } = useHomeActivitiesQuery({
+    skip: noChannel,
+    variables: {
+      hasPermissionToManageOrders,
+    },
+  });
+
   return (
     <DetailPageLayout withSavebar={false}>
       <Box gridColumn="8" gridRowStart="1" />
@@ -63,6 +76,11 @@ export const HomePage = () => {
             },
             loading: homeNotificationsLoaing,
             hasError: !!homeNotificationsError,
+          }}
+          activities={{
+            data: mapEdgesToItems(homeActivities?.activities)?.reverse() ?? [],
+            loading: homeActivitiesLoading,
+            hasError: !!homeActivitiesError,
           }}
         />
       </DetailPageLayout.RightSidebar>

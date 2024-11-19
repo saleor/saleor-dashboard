@@ -5,7 +5,8 @@ import { topBarHeight } from "@dashboard/components/AppLayout/consts";
 import { DashboardCard } from "@dashboard/components/Card";
 import Money from "@dashboard/components/Money";
 import { homePageMessages } from "@dashboard/home/components/HomePage/messages";
-import { Analitics, HomeData, Notifications } from "@dashboard/home/types";
+import { Activities, Analitics, HomeData, Notifications } from "@dashboard/home/types";
+import { HomeActivities } from "@dashboard/newHome/components/HomeActivities";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -15,10 +16,16 @@ import { HomeAnalyticsCard } from "../components/HomeAnalyticsCard";
 interface HomeSidebarProps {
   analytics: HomeData<Analitics>;
   notifications: HomeData<Notifications>;
+  activities: HomeData<Activities>;
   noChannel: boolean;
 }
 
-export const HomeSidebar = ({ notifications, noChannel, analytics }: HomeSidebarProps) => {
+export const HomeSidebar = ({
+  notifications,
+  noChannel,
+  analytics,
+  activities,
+}: HomeSidebarProps) => {
   const intl = useIntl();
   const { channel, setChannel } = useAppChannel(false);
   const user = useUser();
@@ -77,6 +84,7 @@ export const HomeSidebar = ({ notifications, noChannel, analytics }: HomeSidebar
             )}
           </HomeAnalyticsCard>
         </Box>
+        <HomeActivities activities={activities} />
       </DashboardCard.Content>
     </DashboardCard>
   );
