@@ -151,7 +151,7 @@ const useHandleUpdateRoutingAction = (appId: string) => ({
     );
 
     if (window.location.pathname === exactLocation) {
-      debug("Current route is the same as the exact location, skipping navigation.");
+      debug("Current route is the same as requested change, skipping navigation.");
 
       return createResponseStatus(actionId, true);
     }
