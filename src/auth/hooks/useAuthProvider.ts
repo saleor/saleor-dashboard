@@ -146,7 +146,7 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
 
         saveCredentials(result.data?.tokenCreate?.user!, password);
       } else {
-        // While login page can show multiple errors, "loginError" is too generic
+        // While login page can show multiple errors, "loginError" doesn't match "attemptDelay"
         // and should be shown when no other error is present
         if (errorList?.includes(AccountErrorCode.LOGIN_ATTEMPT_DELAYED)) {
           setErrors(["loginAttemptDelay"]);
