@@ -150,6 +150,12 @@ const useHandleUpdateRoutingAction = (appId: string) => ({
       action.payload.newRoute,
     );
 
+    if (window.location.pathname === exactLocation) {
+      debug("Current route is the same as the exact location, skipping navigation.");
+
+      return createResponseStatus(actionId, true);
+    }
+
     debug(`Update to new nested route:  %s`, exactLocation);
     window.history.pushState(null, "", exactLocation);
 
