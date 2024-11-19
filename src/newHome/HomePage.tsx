@@ -1,4 +1,5 @@
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { HomeSidebar } from "@dashboard/newHome/components/HomeSidebar";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
@@ -9,8 +10,8 @@ export const HomePage = () => {
       <DetailPageLayout.Content>
         <h1>Hello John, welcome to your Store Dashboard</h1>
       </DetailPageLayout.Content>
-      <DetailPageLayout.RightSidebar>
-        <h1>Right Sidebar</h1>
+      <DetailPageLayout.RightSidebar borderLeftStyle="none">
+        <HomeSidebar />
       </DetailPageLayout.RightSidebar>
     </DetailPageLayout>
   );
