@@ -6,6 +6,7 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useLocale from "@dashboard/hooks/useLocale";
 import { OrderDraft } from "@dashboard/orders/types";
 import { OrderDraftListUrlSortField, orderUrl } from "@dashboard/orders/urls";
@@ -125,11 +126,7 @@ export const OrderDraftListDatagrid = ({
             onToggle={handlers.onToggle}
           />
         )}
-        navigatorOpts={{
-          state: {
-            prevLocation: location,
-          },
-        }}
+        navigatorOpts={{ state: getPrevLocationState(location) }}
       />
 
       <Box paddingX={6}>

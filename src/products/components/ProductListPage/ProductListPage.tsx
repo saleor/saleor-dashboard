@@ -23,6 +23,7 @@ import {
   RefreshLimitsQuery,
   useAvailableColumnAttributesLazyQuery,
 } from "@dashboard/graphql";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
@@ -277,9 +278,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             rowAnchor={productUrl}
             onRowClick={id => {
               navigate(productUrl(id), {
-                state: {
-                  prevLocation: location,
-                },
+                state: getPrevLocationState(location),
               });
             }}
           />

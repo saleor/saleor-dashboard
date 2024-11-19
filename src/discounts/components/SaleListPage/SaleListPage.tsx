@@ -7,6 +7,7 @@ import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { saleAddUrl, SaleListUrlSortField, saleUrl } from "@dashboard/discounts/urls";
 import { SaleFragment } from "@dashboard/graphql";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import {
@@ -60,9 +61,7 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
   const filterDependency = structure.find(getByName("channel"));
   const handleRowClick = (id: string) => {
     navigation(saleUrl(id), {
-      state: {
-        prevLocation: location,
-      },
+      state: getPrevLocationState(location),
     });
   };
 
