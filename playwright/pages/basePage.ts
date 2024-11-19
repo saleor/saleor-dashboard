@@ -2,6 +2,8 @@ import { LOCATORS } from "@data/commonLocators";
 import type { Locator, Page } from "@playwright/test";
 import { expect } from "@playwright/test";
 
+import { SUCCESS_BANNER_TIMEOUT } from "../../playwright.config";
+
 export class BasePage {
   readonly page: Page;
 
@@ -110,11 +112,11 @@ export class BasePage {
   }
 
   async expectSuccessBanner() {
-    await this.page.waitForLoadState("networkidle");
-    await Promise.all([
-      this.successBanner.first().waitFor({ state: "visible", timeout: 15000 }),
-      expect(this.errorBanner, "No error banner should be visible").not.toBeVisible(),
-    ]);
+    await this.successBanner.first().waitFor({
+      state: "visible",
+      timeout: SUCCESS_BANNER_TIMEOUT,
+    });
+    await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
   }
 
   async expectInfoBanner() {

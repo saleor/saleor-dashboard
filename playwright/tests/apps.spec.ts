@@ -38,7 +38,7 @@ test("TC: SALEOR_119 User should be able to install and configure app from manif
   );
   await installationPage.installAppButton.click();
 
-  await expect(appsPage.successBanner).toBeVisible({ timeout: INSTALLATION_PENDING_TIMEOUT });
+  await appsPage.expectSuccessBanner();
   await expect(appsPage.installedAppRow.first()).toBeVisible();
   await expect(appsPage.installationPendingLabel).not.toBeVisible();
 

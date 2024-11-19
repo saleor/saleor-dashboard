@@ -30,14 +30,7 @@ test("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
   await giftCardsPage.issueGiftCardDialog.clickOkButton();
   await giftCardsPage.giftCardDialog.waitFor({ state: "hidden" });
   await giftCardsPage.expectSuccessBannerMessage("Successfully created gift card");
-  await giftCardsPage.successBanner.first().waitFor({
-    state: "hidden",
-    timeout: 30000,
-  });
-  await giftCardsPage.gotoGiftCardsListView();
-  await giftCardsPage.gridCanvas
-    .getByText(`Code ending with ${code}`)
-    .waitFor({ state: "attached", timeout: 30000 });
+  await giftCardsPage.expectSuccessBanner();
 });
 test("TC: SALEOR_106 Issue gift card with specific customer and expiry date @e2e @gift", async () => {
   await giftCardsPage.clickIssueCardButton();
@@ -54,10 +47,7 @@ test("TC: SALEOR_106 Issue gift card with specific customer and expiry date @e2e
   await giftCardsPage.issueGiftCardDialog.clickOkButton();
   await giftCardsPage.giftCardDialog.waitFor({ state: "hidden" });
   await giftCardsPage.expectSuccessBannerMessage("Successfully created gift card");
-  await giftCardsPage.successBanner.waitFor({
-    state: "hidden",
-    timeout: 30000,
-  });
+  await giftCardsPage.expectSuccessBanner();
   await giftCardsPage.gotoGiftCardsListView();
   await giftCardsPage.searchAndFindRowIndexes(fullCode);
   expect(

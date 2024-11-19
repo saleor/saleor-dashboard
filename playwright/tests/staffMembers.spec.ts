@@ -47,10 +47,7 @@ test("TC: SALEOR_211 Create a staff member @e2e @staff-members", async () => {
   );
   await staffMembersPage.inviteStaffMembersDialog.sendInviteButton.waitFor({ state: "visible" });
   await staffMembersPage.inviteStaffMembersDialog.clickSendInviteButton();
-
-  await staffMembersPage.page.waitForLoadState("networkidle");
-  await staffMembersPage.successBanner.first().waitFor({ state: "visible", timeout: 30000 });
-  await expect(staffMembersPage.errorBanner, "No error banner should be visible").not.toBeVisible();
+  await staffMembersPage.expectSuccessBanner();
 
   await expect(staffMembersPage.firstName).toHaveValue(staffMember.name);
   await expect(staffMembersPage.lastName).toHaveValue(staffMember.lastName);

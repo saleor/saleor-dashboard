@@ -7,6 +7,8 @@ const env = process.env;
 const DEFAULT_WORKERS = "2";
 // const DEFAULT_RETRIES = "1";
 
+export const SUCCESS_BANNER_TIMEOUT = process.env.CI ? 30000 : 15000;
+
 export default defineConfig({
   testDir: "playwright/tests",
   fullyParallel: true,

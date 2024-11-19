@@ -45,7 +45,7 @@ test("TC: SALEOR_194 Should create a new menu navigation with menu item @navigat
   await addNavigationMenuItemDialog.selectLinkOption("Categories", "Polo Shirts");
   await addNavigationMenuItemDialog.clickSaveButton();
   await expect(navigationDetailsPage.addMenuItemDialog).not.toBeVisible();
-  await navigationDetailsPage.expectSuccessBanner();
+  await navigation.expectSuccessBanner();
   await expect(navigationDetailsPage.menuNameInput).toHaveValue(menuName);
   await expect(navigationDetailsPage.menuItemList).toContainText(menuItemName);
 });
@@ -95,7 +95,7 @@ test("TC: SALEOR_197 Should remove existing menu from it's details page @navigat
   );
   await navigationDetailsPage.clickDeleteButton();
   await navigationDetailsPage.deleteDialog.clickDeleteButton();
-  await navigationDetailsPage.expectSuccessBanner();
+  await navigation.expectSuccessBanner();
   await expect(navigation.navigationList).not.toHaveText(
     NAVIGATION_ITEMS.navigationMenuToBeDeletedFromDetailsView.name,
   );
@@ -127,7 +127,7 @@ test("TC: SALEOR_196 Should bulk delete menus from the list @navigation @e2e", a
   }
   await navigation.clickBulkDeleteButton();
   await navigation.deleteDialog.clickDeleteButton();
-  await navigation.successBanner.waitFor({ state: "hidden" });
+  await navigation.expectSuccessBanner();
   await expect(navigation.navigationList).not.toHaveText(menusToBeBulkDeleted[0]);
   await expect(navigation.navigationList).not.toHaveText(menusToBeBulkDeleted[1]);
 });

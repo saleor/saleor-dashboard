@@ -45,9 +45,9 @@ test("TC: SALEOR_32 Add price rate to shipping method - with excluded zip codes 
   await shippingRatesPage.typePrice();
   await shippingRatesPage.addPostalCodeRange();
   await shippingRatesPage.clickSaveButton();
-  await shippingRatesPage.basePage.expectSuccessBanner();
+  await shippingRatesPage.expectSuccessBanner();
   await shippingRatesPage.addExcludedProduct("Bean Juice");
-  await shippingRatesPage.basePage.expectSuccessBanner();
+  await shippingRatesPage.expectSuccessBanner();
   await shippingRatesPage.excludedProductsRows.waitFor({ state: "visible" });
   await expect(shippingRatesPage.excludedProductsRows).toContainText("Bean Juice");
   await expect(await shippingRatesPage.assignedPostalCodesRows.count()).toEqual(1);
@@ -68,9 +68,9 @@ test("TC: SALEOR_33 Add weight rate to shipping method - with included zip codes
   await shippingRatesPage.clickIncludePostalCodesRadioButton();
   await shippingRatesPage.addPostalCodeRange();
   await shippingRatesPage.clickSaveButton();
-  await shippingRatesPage.basePage.expectSuccessBanner();
+  await shippingRatesPage.expectSuccessBanner();
   await shippingRatesPage.addExcludedProduct("Bean Juice");
-  await shippingRatesPage.basePage.expectSuccessBanner();
+  await shippingRatesPage.expectSuccessBanner();
   await shippingRatesPage.excludedProductsRows.waitFor({ state: "visible" });
   await expect(shippingRatesPage.excludedProductsRows).toContainText("Bean Juice");
 });
@@ -157,7 +157,6 @@ test("TC: SALEOR_37 Update a shipping method @shipping-method @e2e", async () =>
   await shippingMethodsPage.rightSideDetailsPage.typeAndSelectMultipleWarehousesShippingPage(
     warehousesToBeAssigned,
   );
-  await shippingMethodsPage.expectSuccessBanner();
 
   await shippingMethodsPage.saveShippingZone();
   await shippingMethodsPage.expectSuccessBanner();
