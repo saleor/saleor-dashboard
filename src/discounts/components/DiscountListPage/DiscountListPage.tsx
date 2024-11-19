@@ -11,6 +11,7 @@ import {
   discountUrl,
 } from "@dashboard/discounts/discountsUrls";
 import { PromotionFragment } from "@dashboard/graphql";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { FilterPresetsProps, PageListProps, SortPage } from "@dashboard/types";
@@ -50,9 +51,7 @@ const DiscountListPage: React.FC<DiscountListPageProps> = ({
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const handleRowClick = (id: string) => {
     navigation(discountUrl(id), {
-      state: {
-        prevLocation: location,
-      },
+      state: getPrevLocationState(location),
     });
   };
 
