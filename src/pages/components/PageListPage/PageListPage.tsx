@@ -4,6 +4,7 @@ import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { Pages } from "@dashboard/pages/types";
@@ -133,9 +134,7 @@ const PageListPage: React.FC<PageListPageProps> = ({
           rowAnchor={pageUrl}
           onRowClick={id =>
             navigate(pageUrl(id), {
-              state: {
-                prevLocation: location,
-              },
+              state: getPrevLocationState(location),
             })
           }
         />

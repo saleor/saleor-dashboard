@@ -8,6 +8,7 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { AttributeFragment } from "@dashboard/graphql";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
@@ -69,9 +70,7 @@ export const AttributeListDatagrid = ({
 
       if (rowData) {
         navigate(attributeUrl(rowData.id), {
-          state: {
-            prevLocation: location,
-          },
+          state: getPrevLocationState(location),
         });
       }
     },
@@ -120,6 +119,7 @@ export const AttributeListDatagrid = ({
             onToggle={handlers.onToggle}
           />
         )}
+        navigatorOpts={{ state: getPrevLocationState(location) }}
       />
 
       <Box paddingX={6}>

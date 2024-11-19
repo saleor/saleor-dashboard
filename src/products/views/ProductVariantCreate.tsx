@@ -75,6 +75,15 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
     onCompleted: data => {
       const variantId = data.productVariantCreate.productVariant.id;
 
+      if (!variantId) {
+        notify({
+          status: "error",
+          text: intl.formatMessage(messages.variantCreatedError),
+        });
+
+        return;
+      }
+
       notify({
         status: "success",
         text: intl.formatMessage(messages.variantCreatedSuccess),
@@ -98,6 +107,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
       formData.attributesWithNewFileValue,
       uploadFilesResult,
     );
+
     const variantCreateResult = await variantCreate({
       variables: {
         input: {
@@ -136,7 +146,12 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
       return { id: null, errors: variantCreateResultErrors };
     }
 
-    const id = variantCreateResult.data.productVariantCreate.productVariant.id;
+    const id = variantCreateResult.data?.productVariantCreate?.productVariant?.id;
+
+    if (!id) {
+      return { id: null, errors: [] };
+    }
+
     const updateChannelsResult = await updateChannels({
       variables: {
         id,

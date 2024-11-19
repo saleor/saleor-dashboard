@@ -8,6 +8,7 @@ import {
 import TablePagination from "@dashboard/components/TablePagination";
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
 import { giftCardListUrl, giftCardUrl } from "@dashboard/giftCards/urls";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import usePaginator from "@dashboard/hooks/usePaginator";
 import { Item } from "@glideapps/glide-data-grid";
@@ -171,11 +172,7 @@ export const GiftCardsListDatagrid = () => {
             onToggle={handlers.onToggle}
           />
         )}
-        navigatorOpts={{
-          state: {
-            prevLocation: location,
-          },
-        }}
+        navigatorOpts={{ state: getPrevLocationState(location) }}
       />
 
       <Box paddingX={6}>
