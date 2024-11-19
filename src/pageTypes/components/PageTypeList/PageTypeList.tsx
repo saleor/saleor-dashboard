@@ -6,6 +6,7 @@ import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { PageTypeFragment } from "@dashboard/graphql";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { PageTypeListUrlSortField, pageTypeUrl } from "@dashboard/pageTypes/urls";
 import { getArrowDirection } from "@dashboard/utils/sort";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
@@ -86,7 +87,7 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
                   pageType
                     ? {
                         pathname: pageTypeUrl(pageType.id),
-                        state: { prevLocation: location },
+                        state: getPrevLocationState(location),
                       }
                     : undefined
                 }

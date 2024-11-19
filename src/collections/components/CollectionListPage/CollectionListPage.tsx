@@ -12,6 +12,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { getByName } from "@dashboard/components/Filter/utils";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { FilterPageProps, PageListProps, SortPage } from "@dashboard/types";
@@ -143,9 +144,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
           filterDependency={filterDependency}
           onRowClick={id => {
             navigate(collectionUrl(id), {
-              state: {
-                prevLocation: location,
-              },
+              state: getPrevLocationState(location),
             });
           }}
           hasRowHover={!isFilterPresetOpen}

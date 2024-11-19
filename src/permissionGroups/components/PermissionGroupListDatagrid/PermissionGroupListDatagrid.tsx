@@ -7,6 +7,7 @@ import {
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { PermissionGroupFragment } from "@dashboard/graphql";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import {
   permissionGroupDetailsUrl,
@@ -72,9 +73,7 @@ export const PermissionGroupListDatagrid = ({
 
       if (rowData) {
         navigate(permissionGroupDetailsUrl(rowData.id), {
-          state: {
-            prevLocation: location,
-          },
+          state: getPrevLocationState(location),
         });
       }
     },
@@ -118,6 +117,7 @@ export const PermissionGroupListDatagrid = ({
         onHeaderClicked={handleHeaderClick}
         rowAnchor={handleRowAnchor}
         recentlyAddedColumn={recentlyAddedColumn}
+        navigatorOpts={{ state: getPrevLocationState(location) }}
       />
 
       <Box paddingX={6}>

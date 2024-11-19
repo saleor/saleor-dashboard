@@ -2,11 +2,20 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import urljoin from "url-join";
 
+type LocationData = Pick<Location, "pathname" | "search">;
+
 type LocationWithState = Location & {
   state?: {
-    prevLocation?: Location;
+    prevLocation?: LocationData;
   };
 };
+
+export const getPrevLocationState = (location: LocationData) => ({
+  prevLocation: {
+    pathname: location.pathname,
+    search: location.search,
+  },
+});
 
 const getPreviousUrl = (location: LocationWithState) => {
   if (!location.state?.prevLocation) {
