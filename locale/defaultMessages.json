@@ -266,6 +266,10 @@
     "context": "collection name",
     "string": "Name"
   },
+  "/XGvYd": {
+    "context": "onboarding step description",
+    "string": "Webhooks are available in Saleor to both Local and External Apps. To create a Webhook you need to create a Local App first. You can do that in the Configuration > Webhooks & Events."
+  },
   "/Xwjww": {
     "context": "button",
     "string": "Fulfill"
@@ -775,6 +779,10 @@
     "context": "card title",
     "string": "Refund balance"
   },
+  "2xkzcr": {
+    "context": "btn label",
+    "string": "Go to GraphQL Playground"
+  },
   "2yU+q9": {
     "context": "tab name",
     "string": "All Warehouses"
@@ -966,6 +974,10 @@
     "context": "datagrid title label",
     "string": "Select transaction to refund"
   },
+  "4IawKc": {
+    "context": "onboarding step description",
+    "string": "Go to all orders where you can create an fulfilment and refund and review corresponding statuses. View the order in GraphQL"
+  },
   "4IgzXs": {
     "context": "label",
     "string": "App Manifest URL"
@@ -1147,6 +1159,10 @@
   "5TUpjG": {
     "context": "product attribute entity type",
     "string": "Products"
+  },
+  "5TzisG": {
+    "context": "btn label",
+    "string": "Go to Webhooks"
   },
   "5Vwnu+": {
     "string": "You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits."
@@ -1949,6 +1965,10 @@
   "B9yrkK": {
     "string": "No Channels found"
   },
+  "BBt3jD": {
+    "context": "btn label",
+    "string": "Invite members"
+  },
   "BCPrmK": {
     "context": "order history message",
     "string": "Shipping details was sent to customer"
@@ -2086,6 +2106,10 @@
   "C50ahv": {
     "context": "button",
     "string": "Add products"
+  },
+  "C5gcqL": {
+    "context": "btn label",
+    "string": "Mark as done"
   },
   "C6bb6x": {
     "context": "order refund amount",
@@ -2418,6 +2442,10 @@
   "EP+jcU": {
     "context": "checkbox",
     "string": "Refund shipment costs"
+  },
+  "EQfaUv": {
+    "context": "onboarding step title",
+    "string": "Check our GraphQL playground & make an API call"
   },
   "ER/yBq": {
     "context": "max price in channel",
@@ -2940,6 +2968,10 @@
     "context": "pages section name",
     "string": "Pages"
   },
+  "HADMte": {
+    "context": "onboarding step title",
+    "string": "Explore orders"
+  },
   "HAlOn1": {
     "string": "Name"
   },
@@ -3099,6 +3131,10 @@
   "ICeshC": {
     "context": "product type",
     "string": "Shippable"
+  },
+  "IDwsCU": {
+    "context": "onboarding step title",
+    "string": "Create a new product"
   },
   "IEpmGQ": {
     "context": "description",
@@ -3965,6 +4001,10 @@
     "context": "image upload",
     "string": "Drop here to upload"
   },
+  "Nyxzpe": {
+    "context": "onboarding step description",
+    "string": "Saleor includes a GraphQL Playground, an interactive GraphQL editor, allowing access to your Saleor instance's API through the web browser. The Playground lets you quickly familiarize yourself with the API, perform example operations, and send your first queries and mutations."
+  },
   "NzifUg": {
     "context": "window title",
     "string": "Fulfill Order"
@@ -4182,6 +4222,10 @@
   "PXx4Jk": {
     "context": "window title",
     "string": "Create Product"
+  },
+  "PaQFmR": {
+    "context": "onboarding step title",
+    "string": "Welcome to Dashboard!"
   },
   "PbqNhi": {
     "context": "order status",
@@ -4448,6 +4492,10 @@
     "context": "info text",
     "string": "Set up an end date of preorder. When end date will be reached product will be automatically taken from preorder to standard selling"
   },
+  "RFXT9O": {
+    "context": "tooltip message",
+    "string": "You don't have permission to invite staff members"
+  },
   "RH+aOF": {
     "context": "use attribute in filtering",
     "string": "Use in Filtering"
@@ -4696,6 +4744,10 @@
   "Sxzua5": {
     "context": "order payment",
     "string": "Settled"
+  },
+  "SzqT+H": {
+    "context": "onboarding title",
+    "string": "Let’s Get Started"
   },
   "T/5OyA": {
     "string": "No translation yet"
@@ -5481,6 +5533,10 @@
   "XZR590": {
     "context": "sale value",
     "string": "Value"
+  },
+  "XZpRr8": {
+    "context": "btn label",
+    "string": "Go to all products"
   },
   "Xb6BJ9": {
     "context": "error message",
@@ -6336,6 +6392,9 @@
     "context": "volume units types",
     "string": "Volume"
   },
+  "d+qgix": {
+    "string": "Next step"
+  },
   "d1PvC8": {
     "context": "checkbox",
     "string": "Grant refund for returned items"
@@ -6505,6 +6564,10 @@
   "eWcvOc": {
     "context": "button",
     "string": "Choose file"
+  },
+  "eWrHmu": {
+    "context": "onboarding step title",
+    "string": "View webhooks functionalities"
   },
   "egBBQ/": {
     "context": "all captured amount from transactions in order",
@@ -6969,6 +7032,10 @@
     "context": "table head",
     "string": "Collection Name"
   },
+  "htGz4h": {
+    "context": "onboarding step description",
+    "string": "Invite team members and assign permissions on Product Information Management (PIM), Order Management System (OMS), Promotions engine, Integrations (Apps)"
+  },
   "htvX+Z": {
     "string": "Deny"
   },
@@ -7094,6 +7161,10 @@
   "imYxM9": {
     "context": "header",
     "string": "App Information"
+  },
+  "ipbT0Q": {
+    "context": "btn label",
+    "string": "Mark all as done"
   },
   "isM94c": {
     "context": "create service token, button",
@@ -7441,6 +7512,10 @@
     "context": "dialog title",
     "string": "Capture manual transaction"
   },
+  "kv3FWU": {
+    "context": "btn label",
+    "string": "Go to orders"
+  },
   "kvSYZh": {
     "context": "replacement created order history message description",
     "string": "was created for replaced products"
@@ -7448,6 +7523,10 @@
   "kyNv+Y": {
     "context": "footer description",
     "string": "Are we missing an integration your project requires? Let us know here"
+  },
+  "l0a2tU": {
+    "context": "onboarding step description",
+    "string": "Go to all products from where you can create a new product and view it in all product list. View the product in GraphQL"
   },
   "l1/Hwb": {
     "context": "invalid date in expirydate field header",
@@ -7590,6 +7669,10 @@
     "context": "country rates list label for the default rate",
     "string": "Country default rate"
   },
+  "loEfAh": {
+    "context": "onboarding completed message",
+    "string": "Onboarding completed 🎉"
+  },
   "lqIzC8": {
     "string": "This field needs to be unique"
   },
@@ -7656,6 +7739,10 @@
   "mTEqYL": {
     "context": "NoChannels content",
     "string": "No channels to assign. Please first assign them for the product."
+  },
+  "mU695h": {
+    "context": "onboarding step description",
+    "string": "We’ll guide you through the main features so you can start customizing your store. Explore products, orders, collections, customers, and discounts to get familiar with key functions and concepts."
   },
   "mWQt3s": {
     "string": "No. of Products"
@@ -8000,6 +8087,10 @@
   "p/Fd7s": {
     "context": "unassign products from shipping rate and save, button",
     "string": "Unassign and save"
+  },
+  "p/m4dD": {
+    "context": "onboarding step title",
+    "string": "Invite staff members"
   },
   "p12BmC": {
     "context": "transaction refund tiles disabled transaction",
