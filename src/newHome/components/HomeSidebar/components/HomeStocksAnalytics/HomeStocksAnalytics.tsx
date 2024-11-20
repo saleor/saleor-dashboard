@@ -5,12 +5,12 @@ import { useIntl } from "react-intl";
 
 import { useHomeSidebarContext } from "../../context/homeSidebarContext";
 import { HomeAnalyticsCard } from "../HomeAnalyticsCard";
-import { useHomeStocsAnalytics } from "./useHomeStocsAnalytics";
+import { useHomeStocksAnalytics } from "./useHomeStocksAnalytics";
 
-export const HomeStocsAnalytics = () => {
+export const HomeStocksAnalytics = () => {
   const intl = useIntl();
   const { hasNoChannels } = useHomeSidebarContext();
-  const { analytics, loading, hasError } = useHomeStocsAnalytics();
+  const { analytics, loading, hasError } = useHomeStocksAnalytics();
 
   return (
     <HomeAnalyticsCard

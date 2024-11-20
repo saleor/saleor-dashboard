@@ -3,14 +3,14 @@ import { topBarHeight } from "@dashboard/components/AppLayout/consts";
 import { DashboardCard } from "@dashboard/components/Card";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
-import { useHomeSidebarContext } from "@dashboard/newHome/components/HomeSidebar/context/homeSidebarContext";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { HomeActivities } from "./components/HomeActivities";
 import { HomeSalesAnalytics } from "./components/HomeSalesAnalytics";
-import { HomeStocsAnalytics } from "./components/HomeStocsAnalytics";
+import { HomeStocksAnalytics } from "./components/HomeStocksAnalytics";
+import { useHomeSidebarContext } from "./context/homeSidebarContext";
 
 export const HomeSidebar = () => {
   const { channels, setChannel, selectedChannel } = useHomeSidebarContext();
@@ -45,7 +45,7 @@ export const HomeSidebar = () => {
         <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
           <Box display="grid" gap={5} marginBottom={7}>
             <HomeSalesAnalytics />
-            <HomeStocsAnalytics />
+            <HomeStocksAnalytics />
           </Box>
         </RequirePermissions>
         <HomeActivities />

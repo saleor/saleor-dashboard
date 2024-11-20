@@ -1,13 +1,13 @@
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useNewHomeNotificationsQuery } from "@dashboard/graphql";
 
-export const useHomeStocsAnalytics = () => {
+export const useHomeStocksAnalytics = () => {
   const { channel } = useAppChannel();
   const noChannel = !channel && typeof channel !== "undefined";
 
   const {
     data: homeNotificationsData,
-    loading: homeNotificationsLoaing,
+    loading: homeNotificationsLoading,
     error: homeNotificationsError,
   } = useNewHomeNotificationsQuery({
     skip: noChannel,
@@ -18,7 +18,7 @@ export const useHomeStocsAnalytics = () => {
     analytics: {
       productsOutOfStock: homeNotificationsData?.productsOutOfStock?.totalCount ?? 0,
     },
-    loading: homeNotificationsLoaing,
+    loading: homeNotificationsLoading,
     hasError: !!homeNotificationsError,
   };
 };
