@@ -10,38 +10,41 @@ import { useExpandedOnboardingId } from "./useExpandedOnboardingId";
 
 const OnboardingContext = React.createContext<OnboardingContextType | null>(null);
 
-const initialOnboardingState: OnboardingState = [
-  {
-    id: "get-started",
-    completed: false,
-    expanded: true,
-  },
-  {
-    id: "create-product",
-    completed: false,
-    expanded: false,
-  },
-  {
-    id: "explore-orders",
-    completed: false,
-    expanded: false,
-  },
-  {
-    id: "graphql-playground",
-    completed: false,
-    expanded: false,
-  },
-  {
-    id: "view-webhooks",
-    completed: false,
-    expanded: false,
-  },
-  {
-    id: "invite-staff",
-    completed: false,
-    expanded: false,
-  },
-];
+const initialOnboardingState: OnboardingState = {
+  steps: [
+    {
+      id: "get-started",
+      completed: false,
+      expanded: true,
+    },
+    {
+      id: "create-product",
+      completed: false,
+      expanded: false,
+    },
+    {
+      id: "explore-orders",
+      completed: false,
+      expanded: false,
+    },
+    {
+      id: "graphql-playground",
+      completed: false,
+      expanded: false,
+    },
+    {
+      id: "view-webhooks",
+      completed: false,
+      expanded: false,
+    },
+    {
+      id: "invite-staff",
+      completed: false,
+      expanded: false,
+    },
+  ],
+  onboardingExpanded: true,
+};
 
 export const OnboardingProvider = ({ children, storageService }: OnboardingProviderProps) => {
   const [onboardingState, setOnboardingState] =
@@ -73,16 +76,16 @@ export const OnboardingProvider = ({ children, storageService }: OnboardingProvi
     storageService.saveOnboardingState(onboardingState);
   }, [onboardingState, storageService]);
 
-  const isOnboardingCompleted = onboardingState.every(step => step.completed);
+  const isOnboardingCompleted = onboardingState.steps.every(step => step.completed);
 
   const extendedStepId = useExpandedOnboardingId(onboardingState, loaded);
 
   const markOnboardingStepAsCompleted = (id: OnboardingStepsIDs) => {
-    setOnboardingState(prev => {
-      const findIndex = prev.findIndex(step => step.id === id);
-      const findNextToExpand = prev.find((step, index) => index > findIndex && !step.completed);
+    setOnboardingState(({ steps, ...rest }) => {
+      const findIndex = steps.findIndex(step => step.id === id);
+      const findNextToExpand = steps.find((step, index) => index > findIndex && !step.completed);
 
-      return prev.map(step => {
+      const newSteps = steps.map(step => {
         const isNextToExpand = findNextToExpand?.id === step.id;
 
         if (isNextToExpand) {
@@ -107,11 +110,19 @@ export const OnboardingProvider = ({ children, storageService }: OnboardingProvi
           expanded: step.id === id ? false : step.expanded,
         };
       });
+
+      return {
+        ...rest,
+        steps: newSteps,
+      };
     });
   };
 
   const markAllAsCompleted = () => {
-    setOnboardingState(prev => prev.map(step => ({ ...step, completed: true, expanded: false })));
+    setOnboardingState(prev => ({
+      ...prev,
+      steps: prev.steps.map(step => ({ ...step, completed: true, expanded: false })),
+    }));
   };
 
   // In case accordion collapse, we get empty string as id and I need current expanded id to toggle it
@@ -119,8 +130,9 @@ export const OnboardingProvider = ({ children, storageService }: OnboardingProvi
     // In case that step was collapse we get empty string as id
     const expandedId = id || currentExpandedId;
 
-    setOnboardingState(prev =>
-      prev.map(step => {
+    setOnboardingState(prev => ({
+      ...prev,
+      steps: prev.steps.map(step => {
         if (step.id === expandedId) {
           return {
             ...step,
@@ -133,7 +145,14 @@ export const OnboardingProvider = ({ children, storageService }: OnboardingProvi
           expanded: false,
         };
       }),
-    );
+    }));
+  };
+
+  const toggleOnboarding = (value: boolean) => {
+    setOnboardingState(prev => ({
+      ...prev,
+      onboardingExpanded: value,
+    }));
   };
 
   return (
@@ -146,6 +165,7 @@ export const OnboardingProvider = ({ children, storageService }: OnboardingProvi
         markOnboardingStepAsCompleted,
         markAllAsCompleted,
         toggleExpandedOnboardingStep,
+        toggleOnboarding,
       }}
     >
       {children}
