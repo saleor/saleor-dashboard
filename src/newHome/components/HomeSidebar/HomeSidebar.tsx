@@ -1,6 +1,8 @@
 import AppChannelSelect from "@dashboard/components/AppLayout/AppChannelSelect";
 import { topBarHeight } from "@dashboard/components/AppLayout/consts";
 import { DashboardCard } from "@dashboard/components/Card";
+import RequirePermissions from "@dashboard/components/RequirePermissions";
+import { PermissionEnum } from "@dashboard/graphql";
 import { useHomeSidebarContext } from "@dashboard/newHome/components/HomeSidebar/context/homeSidebarContext";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -40,10 +42,12 @@ export const HomeSidebar = () => {
         />
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <Box display="grid" gap={5} marginBottom={7}>
-          <HomeSalesAnalytics />
-          <HomeStocsAnalytics />
-        </Box>
+        <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
+          <Box display="grid" gap={5} marginBottom={7}>
+            <HomeSalesAnalytics />
+            <HomeStocsAnalytics />
+          </Box>
+        </RequirePermissions>
         <HomeActivities />
       </DashboardCard.Content>
     </DashboardCard>

@@ -18,7 +18,7 @@ export const useHomeActivities = () => {
   });
 
   return {
-    activities: mapEdgesToItems(homeActivities?.activities)?.reverse() ?? [],
+    activities: mapEdgesToItems(homeActivities?.activities)?.reverse(),
     loading: homeActivitiesLoading,
     hasError: !!homeActivitiesError,
   };
