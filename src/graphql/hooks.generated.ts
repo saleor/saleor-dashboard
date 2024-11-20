@@ -10147,6 +10147,45 @@ export function useMenuDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type MenuDetailsQueryHookResult = ReturnType<typeof useMenuDetailsQuery>;
 export type MenuDetailsLazyQueryHookResult = ReturnType<typeof useMenuDetailsLazyQuery>;
 export type MenuDetailsQueryResult = Apollo.QueryResult<Types.MenuDetailsQuery, Types.MenuDetailsQueryVariables>;
+export const HomeAnalticsDocument = gql`
+    query HomeAnaltics($channel: String!, $hasPermissionToManageOrders: Boolean!) {
+  salesToday: ordersTotal(period: TODAY, channel: $channel) @include(if: $hasPermissionToManageOrders) {
+    gross {
+      amount
+      currency
+    }
+  }
+}
+    `;
+
+/**
+ * __useHomeAnalticsQuery__
+ *
+ * To run a query within a React component, call `useHomeAnalticsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useHomeAnalticsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useHomeAnalticsQuery({
+ *   variables: {
+ *      channel: // value for 'channel'
+ *      hasPermissionToManageOrders: // value for 'hasPermissionToManageOrders'
+ *   },
+ * });
+ */
+export function useHomeAnalticsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.HomeAnalticsQuery, Types.HomeAnalticsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.HomeAnalticsQuery, Types.HomeAnalticsQueryVariables>(HomeAnalticsDocument, options);
+      }
+export function useHomeAnalticsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.HomeAnalticsQuery, Types.HomeAnalticsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.HomeAnalticsQuery, Types.HomeAnalticsQueryVariables>(HomeAnalticsDocument, options);
+        }
+export type HomeAnalticsQueryHookResult = ReturnType<typeof useHomeAnalticsQuery>;
+export type HomeAnalticsLazyQueryHookResult = ReturnType<typeof useHomeAnalticsLazyQuery>;
+export type HomeAnalticsQueryResult = Apollo.QueryResult<Types.HomeAnalticsQuery, Types.HomeAnalticsQueryVariables>;
 export const OrderCancelDocument = gql`
     mutation OrderCancel($id: ID!) {
   orderCancel(id: $id) {
