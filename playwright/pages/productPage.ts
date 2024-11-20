@@ -20,8 +20,6 @@ export class ProductPage extends BasePage {
 
   readonly rightSideDetailsPage: RightSideDetailsPage;
 
-  readonly basePage: BasePage;
-
   readonly channelSelectDialog: ChannelSelectDialog;
 
   readonly deleteProductDialog: DeleteDialog;
@@ -78,7 +76,6 @@ export class ProductPage extends BasePage {
     readonly emptyDataGridListView = page.getByTestId("empty-data-grid-text"),
   ) {
     super(page);
-    this.basePage = new BasePage(page);
     this.exportProductsDialog = new ExportProductsDialog(page);
     this.deleteProductDialog = new DeleteDialog(page);
     this.channelSelectDialog = new ChannelSelectDialog(page);
@@ -187,10 +184,6 @@ export class ProductPage extends BasePage {
 
   async clickSaveButton() {
     await this.saveButton.click();
-  }
-
-  async expectSuccessBanner() {
-    await this.basePage.expectSuccessBanner();
   }
 
   async clickCreateProductButton() {

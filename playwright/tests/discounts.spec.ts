@@ -29,7 +29,7 @@ for (const type of discountType) {
     await discounts.typeEndDate();
     await discounts.typeEndHour();
     await discounts.clickSaveButton();
-    await expect(discounts.successBanner).toBeVisible({ timeout: 10000 });
+    await discounts.expectSuccessBanner();
     await expect(discounts.pageHeader).toHaveText(discountName);
     await expect(discounts.discountTypeSelect).toHaveText(type);
     await expect(discounts.ruleSection).toHaveText("Add your first rule to set up a promotion");
@@ -58,7 +58,7 @@ test(`TC: SALEOR_151 Update existing promotion @discounts @e2e`, async () => {
   await expect(discounts.endDateInput).not.toBeAttached();
   await expect(discounts.endHourInput).not.toBeAttached();
   await discounts.clickSaveButton();
-  await expect(discounts.successBanner).toBeVisible({ timeout: 10000 });
+  await discounts.expectSuccessBanner();
   await expect(discounts.pageHeader).toHaveText(newDiscountName);
   await expect(discounts.discountTypeSelect).toHaveText(DISCOUNTS.promotionToBeEdited.type);
 });
@@ -85,7 +85,7 @@ for (const promotion of promotions) {
     await discounts.waitForNetworkIdleAfterAction(() =>
       discounts.deleteDiscountDialog.clickConfirmDeleteButton(),
     );
-    await expect(discounts.successBanner).toBeVisible({ timeout: 10000 });
+    await discounts.expectSuccessBanner();
   });
 }
 
@@ -138,7 +138,7 @@ for (const { promotionRule, predicateValue } of predicateValues) {
     await discounts.promotionRuleDialog.selectPercentageRewardValueType();
     await discounts.promotionRuleDialog.typeRewardValue(rewardValue);
     await discounts.promotionRuleDialog.clickSaveRuleButton();
-    await expect(discounts.successBanner).toBeVisible({ timeout: 10000 });
+    await discounts.expectSuccessBanner();
     await expect(
       discounts.existingRule.filter({ hasText: `Catalog rule: ${name}` }).first(),
     ).toContainText(
@@ -192,7 +192,7 @@ for (const { conditionType, value, conditionDesc } of notEqConditions) {
     await discounts.promotionRuleDialog.selectRuleConditionType(conditionType);
     await discounts.promotionRuleDialog.typeRuleConditionValue(value, 1);
     await discounts.promotionRuleDialog.clickSaveRuleButton();
-    await expect(discounts.successBanner).toBeVisible({ timeout: 10000 });
+    await discounts.expectSuccessBanner();
     await expect(
       discounts.existingRule.filter({ hasText: `Order rule: ${name}` }).first(),
     ).toContainText(
@@ -231,7 +231,7 @@ for (const { condition, lte, gte } of conditionsBetween) {
     await discounts.waitForNetworkIdleAfterAction(() =>
       discounts.promotionRuleDialog.clickSaveRuleButton(),
     );
-    await expect(discounts.successBanner).toBeVisible({ timeout: 10000 });
+    await discounts.expectSuccessBanner();
     await discounts.ruleSection.waitFor({
       state: "visible",
       timeout: 10000,
@@ -270,7 +270,7 @@ for (const rule of orderRules) {
       await discounts.promotionRuleDialog.typeRuleConditionValue("13.33", 1);
       await discounts.promotionRuleDialog.typeRewardValue("1.00");
       await discounts.promotionRuleDialog.clickSaveEditedRuleButton();
-      await expect(discounts.successBanner).toBeVisible({ timeout: 10000 });
+      await discounts.expectSuccessBanner();
       await expect(
         discounts.existingRule.filter({ hasText: `Order rule: ${orderRules[0].name}` }).first(),
       ).toContainText(
@@ -288,7 +288,7 @@ for (const rule of orderRules) {
       await discounts.promotionRuleDialog.removeExistingGiftReward(giftRewardToBeDeleted);
       await discounts.promotionRuleDialog.selectGiftReward("Blue Hoodie");
       await discounts.promotionRuleDialog.clickSaveEditedRuleButton();
-      await expect(discounts.successBanner).toBeVisible({ timeout: 10000 });
+      await discounts.expectSuccessBanner();
       await expect(
         discounts.existingRule.filter({ hasText: `Order rule: ${orderRules[1].name}` }).first(),
       ).toContainText(
@@ -339,7 +339,7 @@ for (const rule of catalogRules) {
     }
 
     await discounts.promotionRuleDialog.clickSaveEditedRuleButton();
-    await expect(discounts.successBanner).toBeVisible({ timeout: 10000 });
+    await discounts.expectSuccessBanner();
     await discounts.ruleSection.waitFor({
       state: "visible",
       timeout: 10000,
@@ -372,7 +372,7 @@ for (const promotion of promotionsWithRules) {
       await discounts.waitForNetworkIdleAfterAction(() =>
         discounts.deleteRuleDialog.clickConfirmDeleteButton(),
       );
-      await expect(discounts.successBanner).toBeVisible({ timeout: 10000 });
+      await discounts.expectSuccessBanner();
       await expect(discounts.ruleSection).not.toHaveText(`${promotion.type}: ${rule.name}`);
     });
   }
