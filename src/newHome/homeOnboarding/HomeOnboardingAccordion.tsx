@@ -42,6 +42,7 @@ export const HomeOnboardingAccordion = () => {
           borderStyle="solid"
           borderRadius={3}
           width="100%"
+          boxShadow={extendedStepId === step.id ? "defaultFocused" : "none"}
         >
           <Accordion.Trigger alignItems="center">
             <Box width="100%" display="flex" alignItems="center" justifyContent="space-between">

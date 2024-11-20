@@ -8,11 +8,14 @@ export type OnboardingStepsIDs =
   | "view-webhooks"
   | "invite-staff";
 
-export type OnboardingState = Array<{
-  id: OnboardingStepsIDs;
-  completed: boolean;
-  expanded: boolean | undefined;
-}>;
+export type OnboardingState = {
+  steps: Array<{
+    id: OnboardingStepsIDs;
+    completed: boolean;
+    expanded: boolean | undefined;
+  }>;
+  onboardingExpanded: boolean;
+};
 
 export interface StorageService {
   getOnboardingState(): OnboardingState | undefined;
@@ -27,6 +30,7 @@ export interface OnboardingContextType {
   markOnboardingStepAsCompleted: (id: OnboardingStepsIDs) => void;
   markAllAsCompleted: () => void;
   toggleExpandedOnboardingStep: (id: string, currentExpandedId: OnboardingStepsIDs | "") => void;
+  toggleOnboarding: (value: boolean) => void;
 }
 
 export interface OnboardingProviderProps {

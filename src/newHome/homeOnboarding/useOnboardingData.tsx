@@ -7,6 +7,7 @@ import { HomeCreateProductButton } from "./HomeCreateProductButton";
 import { HomeInviteStaffButton } from "./HomeInviteStaffButton";
 import { HomeOrdersButton } from "./HomeOrdersButton";
 import { HomeWebhooksButton } from "./HomeWebhooksButton";
+import { useOnboarding } from "./onboardingContext";
 import { OnboardingStepsIDs } from "./onboardingContext/types";
 
 interface OnboardingStepData {
@@ -175,13 +176,14 @@ const getStepsData = ({
 
 export const useOnboardingData = () => {
   const intl = useIntl();
-  const [completedSteps, setCompletedSteps] = React.useState<OnboardingStepsIDs[]>([]);
+  const { markOnboardingStepAsCompleted, onboardingState } = useOnboarding();
 
   const steps = getStepsData({
     intl,
-    isStepCompleted: (step: OnboardingStepsIDs) => completedSteps.includes(step),
+    isStepCompleted: (step: OnboardingStepsIDs) =>
+      onboardingState.steps.find(s => s.id === step)?.completed ?? false,
     onStepComplete: (step: OnboardingStepsIDs) => {
-      setCompletedSteps([...completedSteps, step]);
+      markOnboardingStepAsCompleted(step);
     },
   });
 
