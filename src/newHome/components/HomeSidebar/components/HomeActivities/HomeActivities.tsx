@@ -1,12 +1,12 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { DateTime } from "@dashboard/components/Date";
-import { getActivityMessage } from "@dashboard/home/components/HomeActivityCard/activityMessages";
 import { renderCollection } from "@dashboard/misc";
-import { useHomeSidebarContext } from "@dashboard/newHome/components/HomeSidebar/context/homeSidebarContext";
 import { Box, List, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { useHomeSidebarContext } from "../../context/homeSidebarContext";
+import { getActivityMessage } from "./activityMessages";
 import { useHomeActivities } from "./useHomeActivities";
 
 export const HomeActivities = () => {

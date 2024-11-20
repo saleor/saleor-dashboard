@@ -1,10 +1,10 @@
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import Money from "@dashboard/components/Money";
-import { homePageMessages } from "@dashboard/home/components/HomePage/messages";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { homePageMessages } from "../../messages";
 import { HomeAnalyticsCard } from "../HomeAnalyticsCard";
 import { useHomeSalesAnalytics } from "./useHomeSalesAnalytics";
 

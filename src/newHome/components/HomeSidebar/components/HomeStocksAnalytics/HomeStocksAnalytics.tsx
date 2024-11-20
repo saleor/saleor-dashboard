@@ -1,9 +1,9 @@
-import { homePageMessages } from "@dashboard/home/components/HomePage/messages";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { useHomeSidebarContext } from "../../context/homeSidebarContext";
+import { homePageMessages } from "../../messages";
 import { HomeAnalyticsCard } from "../HomeAnalyticsCard";
 import { useHomeStocksAnalytics } from "./useHomeStocksAnalytics";
 
