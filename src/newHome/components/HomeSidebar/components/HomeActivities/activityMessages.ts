@@ -1,4 +1,4 @@
-import { HomeActivitiesQuery, OrderEventsEnum } from "@dashboard/graphql";
+import { NewHomeActivitiesQuery, OrderEventsEnum } from "@dashboard/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 const messages = defineMessages({
@@ -21,7 +21,7 @@ const messages = defineMessages({
 });
 
 export const getActivityMessage = (
-  activity: HomeActivitiesQuery["activities"]["edges"][0]["node"],
+  activity: NonNullable<NewHomeActivitiesQuery["activities"]>["edges"][0]["node"],
   intl: IntlShape,
 ) => {
   switch (activity.type) {
