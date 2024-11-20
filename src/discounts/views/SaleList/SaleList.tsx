@@ -133,7 +133,10 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         return;
       }
 
-      const rowsIds = rows.map(row => sales[row].id);
+      const rowsIds = rows
+        .filter(row => typeof sales[row] !== "undefined")
+        .map(row => sales[row].id);
+
       const haveSaveValues = isEqual(rowsIds, selectedRowIds);
 
       if (!haveSaveValues) {
