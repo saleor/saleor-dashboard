@@ -2,28 +2,29 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { DateTime } from "@dashboard/components/Date";
 import { getActivityMessage } from "@dashboard/home/components/HomeActivityCard/activityMessages";
 import { renderCollection } from "@dashboard/misc";
-import { useHomeActivities } from "@dashboard/newHome/components/HomeActivities/useHomeActivities";
-import { Box, List, Skeleton, Text, useTheme } from "@saleor/macaw-ui-next";
+import { Box, List, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { useHomeActivities } from "./useHomeActivities";
+
 export const HomeActivities = () => {
   const intl = useIntl();
-  const { themeValues } = useTheme();
+  const { activities, loading, hasError } = useHomeActivities();
+
   const title = intl.formatMessage({
     id: "BXkF8Z",
     defaultMessage: "Activity",
     description: "header",
   });
-  const { activities, loading, hasError } = useHomeActivities();
 
   if (hasError) {
     return (
       <DashboardCard data-test-id="activity-card">
-        <DashboardCard.Header>
+        <DashboardCard.Header paddingX={3}>
           <DashboardCard.Title>{title}</DashboardCard.Title>
         </DashboardCard.Header>
-        <DashboardCard.Content>
+        <DashboardCard.Content paddingX={3}>
           <Text color="default2">
             <FormattedMessage id="/U8FUp" defaultMessage="Couldn't load activities" />
           </Text>
@@ -35,10 +36,10 @@ export const HomeActivities = () => {
   if (loading) {
     return (
       <DashboardCard data-test-id="activity-card">
-        <DashboardCard.Header>
+        <DashboardCard.Header paddingX={3}>
           <DashboardCard.Title>{title}</DashboardCard.Title>
         </DashboardCard.Header>
-        <DashboardCard.Content>
+        <DashboardCard.Content paddingX={3}>
           <Box display="flex" flexDirection="column" gap={5}>
             <Skeleton height={3} />
             <Skeleton __width="80%" height={3} />
@@ -51,10 +52,10 @@ export const HomeActivities = () => {
 
   return (
     <DashboardCard data-test-id="activity-card">
-      <DashboardCard.Header>
+      <DashboardCard.Header paddingX={3}>
         <DashboardCard.Title>{title}</DashboardCard.Title>
       </DashboardCard.Header>
-      <DashboardCard.Content>
+      <DashboardCard.Content paddingX={3}>
         <List>
           {renderCollection(
             activities,
@@ -65,9 +66,6 @@ export const HomeActivities = () => {
                 alignItems="flex-start"
                 cursor="auto"
                 paddingY={1}
-                paddingX={6}
-                __marginLeft={"-" + themeValues.spacing[6]}
-                __marginRight={"-" + themeValues.spacing[6]}
                 marginBottom={3}
               >
                 {activity ? (

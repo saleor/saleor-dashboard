@@ -1,19 +1,17 @@
-import { useUser } from "@dashboard/auth";
-import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import AppChannelSelect from "@dashboard/components/AppLayout/AppChannelSelect";
 import { topBarHeight } from "@dashboard/components/AppLayout/consts";
 import { DashboardCard } from "@dashboard/components/Card";
-import { HomeActivities } from "@dashboard/newHome/components/HomeActivities";
-import { HomeSalesAnalytics } from "@dashboard/newHome/components/HomeSalesAnalytics";
-import { HomeStocsAnalytics } from "@dashboard/newHome/components/HomeStocsAnalytics";
+import { useHomeSidebarContext } from "@dashboard/newHome/components/HomeSidebar/context/homeSidebarContext";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
+import { HomeActivities } from "./components/HomeActivities";
+import { HomeSalesAnalytics } from "./components/HomeSalesAnalytics";
+import { HomeStocsAnalytics } from "./components/HomeStocsAnalytics";
+
 export const HomeSidebar = () => {
-  const { channel, setChannel } = useAppChannel(false);
-  const user = useUser();
-  const channels = user?.user?.accessibleChannels ?? [];
+  const { channels, setChannel, selectedChannel } = useHomeSidebarContext();
 
   return (
     <DashboardCard
@@ -26,7 +24,7 @@ export const HomeSidebar = () => {
     >
       <DashboardCard.Header>
         <DashboardCard.Title>
-          <Text size={7}>
+          <Text size={8}>
             <FormattedMessage
               defaultMessage="Your store info"
               id="x0wum5"
@@ -37,12 +35,12 @@ export const HomeSidebar = () => {
 
         <AppChannelSelect
           channels={channels}
-          selectedChannelId={channel?.id}
+          selectedChannelId={selectedChannel?.id ?? ""}
           onChannelSelect={setChannel}
         />
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <Box display="grid" gap={5} marginBottom={5}>
+        <Box display="grid" gap={5} marginBottom={7}>
           <HomeSalesAnalytics />
           <HomeStocsAnalytics />
         </Box>

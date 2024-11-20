@@ -1,12 +1,12 @@
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import Money from "@dashboard/components/Money";
 import { homePageMessages } from "@dashboard/home/components/HomePage/messages";
-import { useHomeSalesAnalytics } from "@dashboard/newHome/components/HomeSalesAnalytics/useHomeSalesAnalytics";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { HomeAnalyticsCard } from "../HomeAnalyticsCard";
+import { useHomeSalesAnalytics } from "./useHomeSalesAnalytics";
 
 export const HomeSalesAnalytics = () => {
   const intl = useIntl();
