@@ -1,5 +1,22 @@
 # Changelog
 
+## 3.20.19
+
+### Patch Changes
+
+- fd98d31: Selecting sale entries no longer fails when browsing the sales list
+- 05a2be7: Variant creation no longer reports an error when API call fails, this means this scenario is now handled gracefully.
+- bd125e8: List item links are no longer rendered outside of cursor. This means you can now copy the item's URL with mouse right click or use middle click to open page in new tab.
+- 747030e: Enhanced success banner verification in basePage.ts by adding network idle state check and parallel assertions, while modernizing array operations in shipping methods tests using spread syntax instead of .concat()
+- 73f4a95: Refactored tests by replacing direct banner visibility checks with `expectSuccessBanner()`.
+  Removed unnecessary `waitForNetworkIdleAfterAction` wrappers.
+  Simplified test scope for `staffMembers` and removed explicit timeouts where appropriate.
+- e1c0868: The "Save" button in Change Password form now submits the form data to Saleor.
+- f4466d9: Now, codeql action is no longer needed since we enabled code analysis via GH configuration with default settings.
+- a28cd97: Prepare base layout for new home, hide new home page under feature flag
+- 54e77d2: You can now select attribute value from dropdown in datagrid cell
+- 82cd647: Adjust inline discount test for precise floating-point comparison with .toFixed(2)
+
 ## 3.20.18
 
 ### Patch Changes
