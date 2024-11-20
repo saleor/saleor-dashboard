@@ -3,30 +3,14 @@ import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import AppChannelSelect from "@dashboard/components/AppLayout/AppChannelSelect";
 import { topBarHeight } from "@dashboard/components/AppLayout/consts";
 import { DashboardCard } from "@dashboard/components/Card";
-import Money from "@dashboard/components/Money";
-import { homePageMessages } from "@dashboard/home/components/HomePage/messages";
-import { Activities, Analitics, HomeData, Notifications } from "@dashboard/home/types";
 import { HomeActivities } from "@dashboard/newHome/components/HomeActivities";
-import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { HomeSalesAnalytics } from "@dashboard/newHome/components/HomeSalesAnalytics";
+import { HomeStocsAnalytics } from "@dashboard/newHome/components/HomeStocsAnalytics";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
-import { HomeAnalyticsCard } from "../components/HomeAnalyticsCard";
-
-interface HomeSidebarProps {
-  analytics: HomeData<Analitics>;
-  notifications: HomeData<Notifications>;
-  activities: HomeData<Activities>;
-  noChannel: boolean;
-}
-
-export const HomeSidebar = ({
-  notifications,
-  noChannel,
-  analytics,
-  activities,
-}: HomeSidebarProps) => {
-  const intl = useIntl();
+export const HomeSidebar = () => {
   const { channel, setChannel } = useAppChannel(false);
   const user = useUser();
   const channels = user?.user?.accessibleChannels ?? [];
@@ -59,32 +43,10 @@ export const HomeSidebar = ({
       </DashboardCard.Header>
       <DashboardCard.Content>
         <Box display="grid" gap={5} marginBottom={5}>
-          <HomeAnalyticsCard
-            title={intl.formatMessage(homePageMessages.salesCardTitle)}
-            testId="sales-analytics"
-          >
-            {noChannel || analytics.hasError ? (
-              0
-            ) : !analytics.loading ? (
-              <Money money={analytics.data.sales} />
-            ) : (
-              <Skeleton width={10} height={3} />
-            )}
-          </HomeAnalyticsCard>
-          <HomeAnalyticsCard
-            title={intl.formatMessage(homePageMessages.outOfStockCardTitle)}
-            testId="out-of-stock-analytics"
-          >
-            {noChannel || notifications.hasError ? (
-              0
-            ) : !notifications.loading ? (
-              notifications.data.productsOutOfStock
-            ) : (
-              <Skeleton width={16} height={3} />
-            )}
-          </HomeAnalyticsCard>
+          <HomeSalesAnalytics />
+          <HomeStocsAnalytics />
         </Box>
-        <HomeActivities activities={activities} />
+        <HomeActivities />
       </DashboardCard.Content>
     </DashboardCard>
   );

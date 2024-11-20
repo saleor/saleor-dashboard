@@ -1,17 +1,13 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { DateTime } from "@dashboard/components/Date";
 import { getActivityMessage } from "@dashboard/home/components/HomeActivityCard/activityMessages";
-import { Activities, HomeData } from "@dashboard/home/types";
 import { renderCollection } from "@dashboard/misc";
+import { useHomeActivities } from "@dashboard/newHome/components/HomeActivities/useHomeActivities";
 import { Box, List, Skeleton, Text, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-interface HomeActivitiesProps {
-  activities: HomeData<Activities>;
-}
-
-export const HomeActivities = ({ activities }: HomeActivitiesProps) => {
+export const HomeActivities = () => {
   const intl = useIntl();
   const { themeValues } = useTheme();
   const title = intl.formatMessage({
@@ -19,8 +15,9 @@ export const HomeActivities = ({ activities }: HomeActivitiesProps) => {
     defaultMessage: "Activity",
     description: "header",
   });
+  const { activities, loading, hasError } = useHomeActivities();
 
-  if (activities.hasError) {
+  if (hasError) {
     return (
       <DashboardCard data-test-id="activity-card">
         <DashboardCard.Header>
@@ -35,7 +32,7 @@ export const HomeActivities = ({ activities }: HomeActivitiesProps) => {
     );
   }
 
-  if (activities.loading) {
+  if (loading) {
     return (
       <DashboardCard data-test-id="activity-card">
         <DashboardCard.Header>
@@ -60,7 +57,7 @@ export const HomeActivities = ({ activities }: HomeActivitiesProps) => {
       <DashboardCard.Content>
         <List>
           {renderCollection(
-            activities.data,
+            activities,
             (activity, activityId) => (
               <List.Item
                 key={activityId}
