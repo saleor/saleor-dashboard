@@ -5,7 +5,7 @@ export type Activities = RelayToFlat<NonNullable<HomeActivitiesQuery["activities
 export type ProductTopToday = RelayToFlat<NonNullable<HomeTopProductsQuery["productTopToday"]>>;
 
 export interface Analitics {
-  sales: NonNullable<HomeAnaliticsQuery["salesToday"]>["gross"] | null;
+  sales: NonNullable<HomeAnaliticsQuery["salesToday"]>["gross"];
 }
 
 export interface Notifications {
