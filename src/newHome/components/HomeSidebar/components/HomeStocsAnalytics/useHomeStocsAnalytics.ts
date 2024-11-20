@@ -1,5 +1,5 @@
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { useHomeNotificationsQuery } from "@dashboard/graphql";
+import { useNewHomeNotificationsQuery } from "@dashboard/graphql";
 
 export const useHomeStocsAnalytics = () => {
   const { channel } = useAppChannel();
@@ -9,7 +9,7 @@ export const useHomeStocsAnalytics = () => {
     data: homeNotificationsData,
     loading: homeNotificationsLoaing,
     error: homeNotificationsError,
-  } = useHomeNotificationsQuery({
+  } = useNewHomeNotificationsQuery({
     skip: noChannel,
     variables: { channel: channel?.slug },
   });

@@ -1,4 +1,4 @@
-import { useHomeAnaliticsQuery } from "@dashboard/graphql";
+import { useNewHomeAnalyticsQuery } from "@dashboard/graphql";
 
 import { useHomeSidebarContext } from "../../context/homeSidebarContext";
 
@@ -9,7 +9,7 @@ export const useHomeSalesAnalytics = () => {
     data: homeAnalyticsData,
     loading: homeAnalyticsLoading,
     error: homeAnalyticsError,
-  } = useHomeAnaliticsQuery({
+  } = useNewHomeAnalyticsQuery({
     skip: hasNoChannels,
     variables: {
       channel: selectedChannel?.slug ?? "",

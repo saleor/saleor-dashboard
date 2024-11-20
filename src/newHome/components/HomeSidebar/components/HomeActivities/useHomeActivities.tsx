@@ -1,4 +1,4 @@
-import { useHomeActivitiesQuery } from "@dashboard/graphql";
+import { useNewHomeActivitiesQuery } from "@dashboard/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 import { useHomeSidebarContext } from "../../context/homeSidebarContext";
@@ -10,7 +10,7 @@ export const useHomeActivities = () => {
     data: homeActivities,
     loading: homeActivitiesLoading,
     error: homeActivitiesError,
-  } = useHomeActivitiesQuery({
+  } = useNewHomeActivitiesQuery({
     skip: hasNoChannels,
     variables: {
       hasPermissionToManageOrders,
