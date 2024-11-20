@@ -170,11 +170,16 @@ for (const attr of ATTRIBUTES.attributesToBeUpdated) {
     await attributesPage.typeAttributeDefaultLabel(`updated ${attr.name}`);
     await attributesPage.expandMetadataSection();
     await attributesPage.metadataAddFieldButton.click();
+
+    await attributesPage.metadataKeyInput.waitFor({ state: "visible" });
+    await attributesPage.metadataValueInput.waitFor({ state: "visible" });
     await attributesPage.fillMetadataFields("new key", "new value");
-    await attributesPage.waitForNetworkIdleAfterAction(() => attributesPage.clickSaveButton());
+    // await attributesPage.waitForNetworkIdleAfterAction(() => attributesPage.clickSaveButton());
+    await attributesPage.clickSaveButton();
     await attributesPage.expectSuccessBanner();
     await attributesPage.expectElementIsHidden(attributesPage.successBanner);
     await attributesPage.attributeSelect.waitFor({ state: "visible" });
+
     await expect(attributesPage.attributeSelect).toHaveAttribute("aria-disabled", "true");
     await expect(attributesPage.metadataKeyInput).toHaveValue("new key");
     await expect(attributesPage.metadataValueInput).toHaveValue("new value");

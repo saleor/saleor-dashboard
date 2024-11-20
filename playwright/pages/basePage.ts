@@ -111,10 +111,10 @@ export class BasePage {
     await this.errorBanner.locator(`text=${msg}`).waitFor({ state: "visible", timeout: 10000 });
   }
 
-  async expectSuccessBanner() {
+  async expectSuccessBanner(timeout = SUCCESS_BANNER_TIMEOUT) {
     await this.successBanner.first().waitFor({
       state: "visible",
-      timeout: SUCCESS_BANNER_TIMEOUT,
+      timeout,
     });
     await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
   }

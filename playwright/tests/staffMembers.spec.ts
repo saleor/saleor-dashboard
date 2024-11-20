@@ -4,7 +4,6 @@ import { ConfigurationPage } from "@pages/configurationPage";
 import { PermissionGroupsPage } from "@pages/permissionGroupsPage";
 import { StaffMembersPage } from "@pages/staffMembersPage";
 import { expect } from "@playwright/test";
-import faker from "faker";
 import { test } from "utils/testWithPermission";
 
 test.use({ permissionName: "admin" });
@@ -32,11 +31,10 @@ test.beforeEach(async ({ page, request }) => {
 });
 
 test("TC: SALEOR_211 Create a staff member @e2e @staff-members", async () => {
-  const randomString = Math.random().toString(36).substring(7);
   const staffMember: StaffMember = {
-    name: faker.name.firstName(),
-    lastName: faker.name.lastName(),
-    email: `test.staff.${randomString}@example.com`,
+    name: "John",
+    lastName: "Create",
+    email: `test.staff.john.create@example.com`,
   };
 
   await staffMembersPage.clickInviteStaffMemberButton();
@@ -67,9 +65,9 @@ test("TC: SALEOR_211 Create a staff member @e2e @staff-members", async () => {
 });
 test("TC: SALEOR_212 Edit a staff member @e2e @staff-members", async () => {
   const updatedStaffMember: StaffMember = {
-    name: faker.name.firstName(),
-    lastName: faker.name.lastName(),
-    email: faker.internet.email().toLowerCase(),
+    name: "John",
+    lastName: "Edit",
+    email: `test.staff.john.edit@example.com`,
   };
 
   await staffMembersPage.gotToExistingStaffMemberPage(USERS.staffToBeEdited.id);
