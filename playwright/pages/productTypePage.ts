@@ -4,10 +4,6 @@ import { DeleteDialog } from "@pages/dialogs/deleteDialog";
 import type { Page } from "@playwright/test";
 
 export class ProductTypePage extends BasePage {
-  readonly page: Page;
-
-  readonly basePage: BasePage;
-
   readonly deleteProductTypeDialog: DeleteDialog;
 
   constructor(
@@ -27,8 +23,6 @@ export class ProductTypePage extends BasePage {
     readonly rowCheckbox = page.getByTestId("checkbox"),
   ) {
     super(page);
-    this.page = page;
-    this.basePage = new BasePage(page);
     this.deleteProductTypeDialog = new DeleteDialog(page);
   }
 
@@ -57,10 +51,6 @@ export class ProductTypePage extends BasePage {
   async gotoAddProductTypePage() {
     console.log(`Navigating to add product type page: ${URL_LIST.productTypesAdd}`);
     await this.page.goto(URL_LIST.productTypesAdd);
-  }
-
-  async expectSuccessBanner() {
-    await this.basePage.expectSuccessBanner();
   }
 
   async gotoProductTypeListPage() {

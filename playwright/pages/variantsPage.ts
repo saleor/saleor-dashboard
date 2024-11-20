@@ -5,14 +5,10 @@ import { MetadataSeoPage } from "@pageElements/metadataSeoPage";
 import { BasePage } from "@pages/basePage";
 import type { Page } from "@playwright/test";
 
-export class VariantsPage {
-  readonly page: Page;
-
+export class VariantsPage extends BasePage {
   channelSelectDialog: ChannelSelectDialog;
 
   metadataSeoPage: MetadataSeoPage;
-
-  basePage: BasePage;
 
   deleteVariantDialog: DeleteVariantDialog;
 
@@ -40,8 +36,7 @@ export class VariantsPage {
     readonly manageChannels = page.getByTestId("manage-channels-button"),
     readonly allChannels = page.locator("[name='allChannels']"),
   ) {
-    this.page = page;
-    this.basePage = new BasePage(page);
+    super(page);
     this.metadataSeoPage = new MetadataSeoPage(page);
     this.channelSelectDialog = new ChannelSelectDialog(page);
     this.deleteVariantDialog = new DeleteVariantDialog(page);
@@ -109,10 +104,6 @@ export class VariantsPage {
 
   async clickSaveVariantButton() {
     await this.saveButton.click();
-  }
-
-  async expectSuccessBanner() {
-    await this.basePage.expectSuccessBanner();
   }
 
   async selectFirstAttributeValue() {
