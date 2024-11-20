@@ -174,7 +174,6 @@ for (const attr of ATTRIBUTES.attributesToBeUpdated) {
     await attributesPage.metadataKeyInput.waitFor({ state: "visible" });
     await attributesPage.metadataValueInput.waitFor({ state: "visible" });
     await attributesPage.fillMetadataFields("new key", "new value");
-    // await attributesPage.waitForNetworkIdleAfterAction(() => attributesPage.clickSaveButton());
     await attributesPage.clickSaveButton();
     await attributesPage.expectSuccessBanner();
     await attributesPage.expectElementIsHidden(attributesPage.successBanner);
