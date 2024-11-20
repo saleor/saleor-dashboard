@@ -4741,10 +4741,6 @@
     "context": "order payment",
     "string": "Settled"
   },
-  "SzqT+H": {
-    "context": "onboarding title",
-    "string": "Let’s Get Started"
-  },
   "T/5OyA": {
     "string": "No translation yet"
   },
@@ -7087,6 +7083,10 @@
   "iFM716": {
     "context": "grant refund, refund card subtitle",
     "string": "How much money do you want to return to the customer for the order?"
+  },
+  "iIPThY": {
+    "context": "onboarding title",
+    "string": "Let’s Get Started ({count}/{total})"
   },
   "iIfq2+": {
     "context": "Transaction cancel button - return preauthorized amount to client",
