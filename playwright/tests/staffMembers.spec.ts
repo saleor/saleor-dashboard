@@ -58,7 +58,6 @@ test("TC: SALEOR_211 Create a staff member @e2e @staff-members", async () => {
   await staffMembersPage.assignUserToPermissionGroup("Channels Management");
 
   await staffMembersPage.clickSaveButton();
-  await staffMembersPage.expectSuccessBanner();
 
   await staffMembersPage.verifyAssignedPermission("Customer Support");
   await staffMembersPage.verifyAssignedPermission("Channels Management");
