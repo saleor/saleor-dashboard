@@ -7,7 +7,7 @@ interface DetailPageLayoutRightSidebarProps extends BoxProps {
 
 export const RightSidebar: React.FC<DetailPageLayoutRightSidebarProps> = ({
   children,
-  ...porps
+  ...props
 }) => (
   <Box
     borderLeftStyle="solid"
@@ -19,7 +19,7 @@ export const RightSidebar: React.FC<DetailPageLayoutRightSidebarProps> = ({
     gridColumn={"8"}
     gridRow={{ mobile: "6", tablet: "full", desktop: "full" }}
     paddingBottom={6}
-    {...porps}
+    {...props}
   >
     {children}
   </Box>

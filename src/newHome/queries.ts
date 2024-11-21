@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-// TODO: Remove this query to homeActivities
+// TODO: Rename this query to homeActivities when old home page was deleted
 export const newHomeActivities = gql`
   query NewHomeActivities($hasPermissionToManageOrders: Boolean!) {
     activities: homepageEvents(last: 10) @include(if: $hasPermissionToManageOrders) {
@@ -20,7 +20,7 @@ export const newHomeActivities = gql`
   }
 `;
 
-// TODO: Remove this query to homeAnalytics
+// TODO: Rename this query to homeAnalytics when old home page was deleted
 export const newHomeAnalytics = gql`
   query NewHomeAnalytics($channel: String!, $hasPermissionToManageOrders: Boolean!) {
     salesToday: ordersTotal(period: TODAY, channel: $channel)
@@ -33,7 +33,7 @@ export const newHomeAnalytics = gql`
   }
 `;
 
-// TODO: Remove this query to homeNotifications
+// TODO: Rename this query to homeNotifications when old home page was deleted
 export const newHomeNotifications = gql`
   query NewHomeNotifications($channel: String!) {
     productsOutOfStock: products(filter: { stockAvailability: OUT_OF_STOCK }, channel: $channel) {
