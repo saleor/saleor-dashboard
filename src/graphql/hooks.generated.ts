@@ -212,6 +212,7 @@ export const UserFragmentDoc = gql`
   firstName
   lastName
   isStaff
+  dateJoined
   metadata {
     key
     value

@@ -23,6 +23,7 @@ export const fragmentUser = gql`
     firstName
     lastName
     isStaff
+    dateJoined
     metadata {
       key
       value
