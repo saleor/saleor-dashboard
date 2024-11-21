@@ -1,4 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
+import { TOTAL_STEPS_COUNT } from "@dashboard/newHome/homeOnboarding/onboardingContext/initialOnboardingState";
 import { Accordion, Box, Button, ChervonDownIcon, sprinkles, Text } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
@@ -21,12 +22,11 @@ const HomeOnboarding = () => {
   const isOnboardingExpanded = onboardingState.onboardingExpanded;
   const status = {
     done: onboardingState.steps.filter(step => step.completed).length,
-    total: onboardingState.steps.length,
+    total: TOTAL_STEPS_COUNT,
   };
 
   const handleMarkAllAsCompleted = () => {
     markAllAsCompleted();
-    toggleOnboarding(false);
   };
 
   return (

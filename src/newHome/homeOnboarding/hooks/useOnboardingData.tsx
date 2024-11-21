@@ -2,13 +2,13 @@ import { Button } from "@saleor/macaw-ui-next";
 import React, { ReactNode } from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
-import { HomeCheckGraphQLButton } from "./HomeCheckGraphQLButton";
-import { HomeCreateProductButton } from "./HomeCreateProductButton";
-import { HomeInviteStaffButton } from "./HomeInviteStaffButton";
-import { HomeOrdersButton } from "./HomeOrdersButton";
-import { HomeWebhooksButton } from "./HomeWebhooksButton";
-import { useOnboarding } from "./onboardingContext";
-import { OnboardingStepsIDs } from "./onboardingContext/types";
+import { HomeCheckGraphQLButton } from "../HomeCheckGraphQLButton";
+import { HomeCreateProductButton } from "../HomeCreateProductButton";
+import { HomeInviteStaffButton } from "../HomeInviteStaffButton";
+import { HomeOrdersButton } from "../HomeOrdersButton";
+import { HomeWebhooksButton } from "../HomeWebhooksButton";
+import { useOnboarding } from "../onboardingContext";
+import { OnboardingStepsIDs } from "../onboardingContext/types";
 
 interface OnboardingStepData {
   id: OnboardingStepsIDs;

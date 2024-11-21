@@ -27,7 +27,7 @@ describe("useNewUserCheck", () => {
     const { result } = renderHook(() => useNewUserCheck());
 
     // Assert
-    expect(result.current).toEqual({ isNewUser: false });
+    expect(result.current).toEqual({ isNewUser: false, isUserLoading: false });
   });
 
   it("should return isNewUser as false if ONBOARDING_USER_JOINED_DATE_THRESHOLD is not set", () => {
@@ -40,7 +40,7 @@ describe("useNewUserCheck", () => {
     const { result } = renderHook(() => useNewUserCheck());
 
     // Assert
-    expect(result.current).toEqual({ isNewUser: false });
+    expect(result.current).toEqual({ isNewUser: false, isUserLoading: false });
   });
 
   it("should return isNewUser as true if user joined after the threshold date", () => {
@@ -53,7 +53,7 @@ describe("useNewUserCheck", () => {
     const { result } = renderHook(() => useNewUserCheck());
 
     // Assert
-    expect(result.current).toEqual({ isNewUser: true });
+    expect(result.current).toEqual({ isNewUser: true, isUserLoading: false });
   });
 
   it("should return isNewUser as false if user joined before the threshold date", () => {
@@ -66,7 +66,7 @@ describe("useNewUserCheck", () => {
     const { result } = renderHook(() => useNewUserCheck());
 
     // Assert
-    expect(result.current).toEqual({ isNewUser: false });
+    expect(result.current).toEqual({ isNewUser: false, isUserLoading: false });
   });
 
   it("should return isNewUser as false if threshold date is invalid", () => {
@@ -79,6 +79,17 @@ describe("useNewUserCheck", () => {
     const { result } = renderHook(() => useNewUserCheck());
 
     // Assert
-    expect(result.current).toEqual({ isNewUser: false });
+    expect(result.current).toEqual({ isNewUser: false, isUserLoading: false });
+  });
+
+  it("should return isNewUser as false and isUserLoading true when uer is loading", () => {
+    // Arrange
+    (useUser as jest.Mock).mockReturnValue({ user: null, isUserLoading: true });
+
+    // Act
+    const { result } = renderHook(() => useNewUserCheck());
+
+    // Assert
+    expect(result.current).toEqual({ isNewUser: false, isUserLoading: true });
   });
 });

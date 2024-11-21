@@ -8,12 +8,14 @@ export type OnboardingStepsIDs =
   | "view-webhooks"
   | "invite-staff";
 
+export type OnboardingStep = {
+  id: OnboardingStepsIDs;
+  completed: boolean;
+  expanded: boolean | undefined;
+};
+
 export type OnboardingState = {
-  steps: Array<{
-    id: OnboardingStepsIDs;
-    completed: boolean;
-    expanded: boolean | undefined;
-  }>;
+  steps: OnboardingStep[];
   onboardingExpanded: boolean;
 };
 

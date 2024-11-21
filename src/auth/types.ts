@@ -37,6 +37,7 @@ export interface UserContext {
     input: RequestExternalLoginInput,
   ) => Promise<GetExternalAuthUrlData | undefined>;
   user?: UserFragment | null;
+  isUserLoading?: boolean;
   authenticating: boolean;
   authenticated: boolean;
   errors: UserContextError[];
