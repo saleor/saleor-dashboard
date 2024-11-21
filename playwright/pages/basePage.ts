@@ -102,20 +102,21 @@ export class BasePage {
     await this.saveButton.click();
   }
 
-  async expectSuccessBannerMessage(msg: string) {
-    await this.successBanner.locator(`text=${msg}`).waitFor({ state: "visible", timeout: 10000 });
-    await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
-  }
-
   async expectErrorBannerMessage(msg: string) {
     await this.errorBanner.locator(`text=${msg}`).waitFor({ state: "visible", timeout: 10000 });
   }
 
-  async expectSuccessBanner(timeout = SUCCESS_BANNER_TIMEOUT) {
-    await this.successBanner.first().waitFor({
-      state: "visible",
-      timeout,
-    });
+  async expectSuccessBanner(
+    options: { message?: string; timeout?: number } = { timeout: SUCCESS_BANNER_TIMEOUT },
+  ) {
+    if (options.message) {
+      await this.successBanner
+        .locator(`text=${options.message}`)
+        .waitFor({ state: "visible", timeout: options.timeout });
+    } else {
+      await this.successBanner.first().waitFor({ state: "visible", timeout: options.timeout });
+    }
+
     await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
   }
 
