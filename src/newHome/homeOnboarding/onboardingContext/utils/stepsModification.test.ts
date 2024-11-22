@@ -8,13 +8,13 @@ import {
   addCompletedStep,
   addGetStartedStepIfNotPresent,
   addNextStep,
-  addToggledStep,
+  toggleStepExpand,
 } from "./stepsModification";
 
 jest.mock("./getNextExpandedStepId");
 
 describe("stepsModification", () => {
-  describe("addToggledStep", () => {
+  describe("toggleStepExpand", () => {
     it("should change toggled step to expanded  and rest as not expanded", () => {
       // Arrange
       const steps = [
@@ -25,12 +25,32 @@ describe("stepsModification", () => {
       const id = "step2" as OnboardingStepsIDs;
 
       // Act
-      const result = addToggledStep(id, steps);
+      const result = toggleStepExpand(id, steps);
 
       // Assert
       expect(result).toEqual([
         { id: "step1", completed: true, expanded: false },
         { id: "step2", completed: false, expanded: true },
+        { id: "step3", completed: false, expanded: false },
+      ]);
+    });
+
+    it("should change toggled step to unexpanded when as expanded  and rest as not expanded", () => {
+      // Arrange
+      const steps = [
+        { id: "step1", completed: true, expanded: undefined },
+        { id: "step2", completed: false, expanded: true },
+        { id: "step3", completed: false, expanded: undefined },
+      ] as unknown as OnboardingStep[];
+      const id = "step2" as OnboardingStepsIDs;
+
+      // Act
+      const result = toggleStepExpand(id, steps);
+
+      // Assert
+      expect(result).toEqual([
+        { id: "step1", completed: true, expanded: false },
+        { id: "step2", completed: false, expanded: false },
         { id: "step3", completed: false, expanded: false },
       ]);
     });
@@ -44,7 +64,7 @@ describe("stepsModification", () => {
       const id = "step3" as OnboardingStepsIDs;
 
       // Act
-      const result = addToggledStep(id, steps);
+      const result = toggleStepExpand(id, steps);
 
       // Assert
       expect(result).toEqual([

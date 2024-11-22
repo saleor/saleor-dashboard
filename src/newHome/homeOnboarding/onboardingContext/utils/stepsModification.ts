@@ -65,7 +65,7 @@ export const addNextStep = (id: OnboardingStepsIDs, steps: OnboardingStep[]): On
   return steps;
 };
 
-export const addToggledStep = (id: OnboardingStepsIDs, steps: OnboardingStep[]) => {
+export const toggleStepExpand = (id: OnboardingStepsIDs, steps: OnboardingStep[]) => {
   const stepIndex = steps.findIndex(step => step.id === id);
   const unexpandedSteps = steps.map(step => ({ ...step, expanded: false }));
 
@@ -74,12 +74,12 @@ export const addToggledStep = (id: OnboardingStepsIDs, steps: OnboardingStep[]) 
     return [...unexpandedSteps, { id, completed: false, expanded: true }];
   } else {
     // Step found, toggle its expanded state
-    return unexpandedSteps.map(step => {
+    return steps.map(step => {
       if (step.id === id) {
-        step.expanded = !step.expanded;
+        return { ...step, expanded: !step.expanded };
       }
 
-      return step;
+      return { ...step, expanded: false };
     });
   }
 };

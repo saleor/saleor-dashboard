@@ -14,7 +14,7 @@ import {
   addCompletedStep,
   addGetStartedStepIfNotPresent,
   addNextStep,
-  addToggledStep,
+  toggleStepExpand,
 } from "./utils/stepsModification";
 
 const OnboardingContext = React.createContext<OnboardingContextType | null>(null);
@@ -84,7 +84,7 @@ export const OnboardingProvider = ({ children, storageService }: OnboardingProvi
 
     setOnboardingState(prev => {
       const steps = [...prev.steps];
-      const stepsWithToggledStep = addToggledStep(expandedId as OnboardingStepsIDs, steps);
+      const stepsWithToggledStep = toggleStepExpand(expandedId as OnboardingStepsIDs, steps);
 
       return {
         ...prev,
