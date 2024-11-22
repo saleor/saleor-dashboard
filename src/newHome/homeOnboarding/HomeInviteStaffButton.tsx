@@ -1,7 +1,7 @@
 import { useUser } from "@dashboard/auth";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
-import { staffListPath } from "@dashboard/staff/urls";
+import { staffListUrl } from "@dashboard/staff/urls";
 import { Button, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -34,10 +34,8 @@ export const HomeInviteStaffButton = () => {
     );
   }
 
-  const inviteTeamMembersPath = staffListPath;
-
   return (
-    <Link to={inviteTeamMembersPath}>
+    <Link to={staffListUrl({ action: "add" })}>
       <Button variant="primary">
         <FormattedMessage defaultMessage="Invite members" id="BBt3jD" description="btn label" />
       </Button>

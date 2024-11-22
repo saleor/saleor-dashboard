@@ -5,6 +5,7 @@ import { orderListUrl } from "@dashboard/orders/urls";
 import { Button, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
+import { Link } from "react-router-dom";
 
 import { HomeFakeDisabledButton } from "./HomeFakeDisabledButton";
 
@@ -34,11 +35,11 @@ export const HomeOrdersButton = () => {
     );
   }
 
-  const goToOrdersUrl = orderListUrl();
-
   return (
-    <Button as="a" href={goToOrdersUrl} target="_blank" rel="noreferrer noopener" variant="primary">
-      <FormattedMessage defaultMessage="Go to orders" id="kv3FWU" description="btn label" />
-    </Button>
+    <Link to={orderListUrl()}>
+      <Button variant="primary">
+        <FormattedMessage defaultMessage="Go to orders" id="kv3FWU" description="btn label" />
+      </Button>
+    </Link>
   );
 };
