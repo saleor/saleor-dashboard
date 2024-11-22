@@ -9,12 +9,16 @@ import { getNextExpandedStepId } from "./getNextExpandedStepId";
 describe("getNextExpandedStepId", () => {
   it("should return the next step id to expand", () => {
     // Arrange
+    const onboardingSteps = [
+      { id: "get-started", completed: true, expanded: false },
+    ] as OnboardingStep[];
     const currentStepId = "get-started" as OnboardingStepsIDs;
 
     // Act
     const result = getNextExpandedStepId({
       currentStepId,
       initialOnboardingSteps,
+      onboardingSteps,
     });
 
     // Assert
@@ -23,6 +27,9 @@ describe("getNextExpandedStepId", () => {
 
   it("should return an empty string if there is no next step to expand", () => {
     // Arrange
+    const onboardingSteps = [
+      { id: "get-started", completed: true, expanded: false },
+    ] as OnboardingStep[];
     const currentStepId = "step1" as OnboardingStepsIDs;
     const initialOnboardingSteps = [
       {
@@ -46,6 +53,7 @@ describe("getNextExpandedStepId", () => {
     const result = getNextExpandedStepId({
       currentStepId,
       initialOnboardingSteps,
+      onboardingSteps,
     });
 
     // Assert

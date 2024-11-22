@@ -10,7 +10,12 @@ import {
 } from "./types";
 import { useExpandedOnboardingId } from "./useExpandedOnboardingId";
 import { calculateOnboardingCompletion } from "./utils/calculateOnboardingCompletion";
-import { getNextExpandedStepId } from "./utils/getNextExpandedStepId";
+import {
+  addCompletedStep,
+  addGetStartedStepIfNotPresent,
+  addNextStep,
+  addToggledStep,
+} from "./utils/stepsModification";
 
 const OnboardingContext = React.createContext<OnboardingContextType | null>(null);
 
@@ -43,60 +48,24 @@ export const OnboardingProvider = ({ children, storageService }: OnboardingProvi
     }
   }, [onboardingState, storageService]);
 
+  // For old users, onboarding is always completed, for new one we need to calculate it
   const isOnboardingCompleted = isNewUser
     ? calculateOnboardingCompletion(onboardingState.steps)
     : true;
 
   const extendedStepId = useExpandedOnboardingId(onboardingState, loaded);
 
-  const isStepInState = (id: OnboardingStepsIDs) => {
-    return !!onboardingState.steps.find(step => step.id === id);
-  };
-
   const markOnboardingStepAsCompleted = (id: OnboardingStepsIDs) => {
     setOnboardingState(prevOnboardingState => {
       const newSteps = [...prevOnboardingState.steps];
-      const hasWelcomeStep = prevOnboardingState.steps.some(step => step.id === "get-started");
 
-      if (!hasWelcomeStep && id !== "get-started") {
-        newSteps.push({ id: "get-started", completed: true, expanded: undefined });
-      }
-
-      if (isStepInState(id)) {
-        newSteps.map(step => {
-          if (step.id === id) {
-            step.completed = true;
-            step.expanded = undefined;
-          }
-
-          return step;
-        });
-      } else {
-        newSteps.push({ id, completed: true, expanded: undefined });
-      }
-
-      const nextExpandedStepId = getNextExpandedStepId({
-        currentStepId: id,
-        initialOnboardingSteps,
-      });
-
-      if (nextExpandedStepId) {
-        if (isStepInState(nextExpandedStepId)) {
-          newSteps.map(step => {
-            if (step.id === nextExpandedStepId) {
-              step.expanded = true;
-            }
-
-            return step;
-          });
-        } else {
-          newSteps.push({ id: nextExpandedStepId, completed: false, expanded: true });
-        }
-      }
+      const stepsWithGetStarted = addGetStartedStepIfNotPresent(id, newSteps);
+      const stepsWithCompleted = addCompletedStep(id, stepsWithGetStarted);
+      const stepsWithNextStep = addNextStep(id, stepsWithCompleted);
 
       return {
         ...prevOnboardingState,
-        steps: newSteps,
+        steps: stepsWithNextStep,
       };
     });
   };
@@ -115,29 +84,11 @@ export const OnboardingProvider = ({ children, storageService }: OnboardingProvi
 
     setOnboardingState(prev => {
       const steps = [...prev.steps];
-      const stepIndex = steps.findIndex(step => step.id === expandedId);
+      const stepsWithToggledStep = addToggledStep(expandedId as OnboardingStepsIDs, steps);
 
-      if (stepIndex === -1) {
-        // Step not found, add it with expanded true
-        steps.push({ id: expandedId as OnboardingStepsIDs, completed: false, expanded: true });
-      } else {
-        // Step found, toggle its expanded state
-        steps[stepIndex].expanded = !steps[stepIndex].expanded;
-      }
-
-      // Mark rest of steps as not expanded
       return {
         ...prev,
-        steps: steps.map(step => {
-          if (step.id !== expandedId) {
-            return {
-              ...step,
-              expanded: false,
-            };
-          }
-
-          return step;
-        }),
+        steps: stepsWithToggledStep,
       };
     });
   };
