@@ -1,3 +1,6 @@
+import { useUser } from "@dashboard/auth";
+import { hasPermissions } from "@dashboard/components/RequirePermissions";
+import { PermissionEnum } from "@dashboard/graphql";
 import { staffListPath } from "@dashboard/staff/urls";
 import { Button, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -7,9 +10,11 @@ import { Link } from "react-router-dom";
 import { HomeFakeDisabledButton } from "./HomeFakeDisabledButton";
 
 export const HomeInviteStaffButton = () => {
-  const canInviteStaffMembers = true;
+  const { user } = useUser();
+  const userPermissions = user?.userPermissions || [];
+  const hasPermissionToManageStaff = hasPermissions(userPermissions, [PermissionEnum.MANAGE_STAFF]);
 
-  if (!canInviteStaffMembers) {
+  if (!hasPermissionToManageStaff) {
     return (
       <Tooltip>
         <Tooltip.Trigger>
@@ -20,8 +25,8 @@ export const HomeInviteStaffButton = () => {
         <Tooltip.Content>
           <Tooltip.Arrow />
           <FormattedMessage
-            defaultMessage="You don't have permission to invite staff members"
-            id="RFXT9O"
+            defaultMessage="You don't have permission to manage staff"
+            id="gt05TH"
             description="tooltip message"
           />
         </Tooltip.Content>
