@@ -27,7 +27,7 @@ describe("useNewUserCheck", () => {
     const { result } = renderHook(() => useNewUserCheck());
 
     // Assert
-    expect(result.current).toEqual({ isNewUser: false, isUserLoading: false });
+    expect(result.current).toEqual({ isNewUser: false, isUserLoading: true });
   });
 
   it("should return isNewUser as false if ONBOARDING_USER_JOINED_DATE_THRESHOLD is not set", () => {

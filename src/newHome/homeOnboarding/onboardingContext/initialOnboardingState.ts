@@ -4,32 +4,32 @@ export const initialOnboardingSteps: OnboardingStep[] = [
   {
     id: "get-started",
     completed: false,
-    expanded: false,
+    expanded: undefined,
   },
   {
     id: "create-product",
     completed: false,
-    expanded: false,
+    expanded: undefined,
   },
   {
     id: "explore-orders",
     completed: false,
-    expanded: false,
+    expanded: undefined,
   },
   {
     id: "graphql-playground",
     completed: false,
-    expanded: false,
+    expanded: undefined,
   },
   {
     id: "view-webhooks",
     completed: false,
-    expanded: false,
+    expanded: undefined,
   },
   {
     id: "invite-staff",
     completed: false,
-    expanded: false,
+    expanded: undefined,
   },
 ];
 

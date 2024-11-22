@@ -18,6 +18,18 @@ describe("calculateOnboardingCompletion", () => {
         id: "step3",
         completed: true,
       },
+      {
+        id: "step4",
+        completed: true,
+      },
+      {
+        id: "step5",
+        completed: true,
+      },
+      {
+        id: "step6",
+        completed: true,
+      },
     ] as unknown as OnboardingStep[];
 
     // Act

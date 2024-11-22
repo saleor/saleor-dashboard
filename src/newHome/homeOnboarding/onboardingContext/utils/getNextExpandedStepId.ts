@@ -13,7 +13,7 @@ export const getNextExpandedStepId = ({
   const currentStepIndex = initialOnboardingSteps.findIndex(step => step.id === currentStepId);
 
   const nextStepToExpand = initialOnboardingSteps.find((step, index) => {
-    return index > currentStepIndex && !step.completed;
+    return index > currentStepIndex && !step.completed && step.expanded !== false;
   });
 
   if (nextStepToExpand) {

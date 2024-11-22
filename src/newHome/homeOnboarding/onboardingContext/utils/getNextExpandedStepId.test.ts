@@ -27,12 +27,18 @@ describe("getNextExpandedStepId", () => {
     const initialOnboardingSteps = [
       {
         id: "step1",
+        expanded: false,
+        completed: true,
       },
       {
         id: "step2",
+        expanded: false,
+        completed: true,
       },
       {
         id: "step3",
+        expanded: false,
+        completed: true,
       },
     ] as unknown as OnboardingStep[];
 

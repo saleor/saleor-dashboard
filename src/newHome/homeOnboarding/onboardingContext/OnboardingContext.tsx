@@ -49,6 +49,10 @@ export const OnboardingProvider = ({ children, storageService }: OnboardingProvi
 
   const extendedStepId = useExpandedOnboardingId(onboardingState, loaded);
 
+  const isStepInState = (id: OnboardingStepsIDs) => {
+    return !!onboardingState.steps.find(step => step.id === id);
+  };
+
   const markOnboardingStepAsCompleted = (id: OnboardingStepsIDs) => {
     setOnboardingState(prevOnboardingState => {
       const newSteps = [...prevOnboardingState.steps];
@@ -58,9 +62,7 @@ export const OnboardingProvider = ({ children, storageService }: OnboardingProvi
         newSteps.push({ id: "get-started", completed: true, expanded: undefined });
       }
 
-      if (!newSteps.some(step => step.id === id)) {
-        newSteps.push({ id, completed: true, expanded: undefined });
-      } else {
+      if (isStepInState(id)) {
         newSteps.map(step => {
           if (step.id === id) {
             step.completed = true;
@@ -69,6 +71,8 @@ export const OnboardingProvider = ({ children, storageService }: OnboardingProvi
 
           return step;
         });
+      } else {
+        newSteps.push({ id, completed: true, expanded: undefined });
       }
 
       const nextExpandedStepId = getNextExpandedStepId({
@@ -77,7 +81,17 @@ export const OnboardingProvider = ({ children, storageService }: OnboardingProvi
       });
 
       if (nextExpandedStepId) {
-        newSteps.push({ id: nextExpandedStepId, completed: false, expanded: true });
+        if (isStepInState(nextExpandedStepId)) {
+          newSteps.map(step => {
+            if (step.id === nextExpandedStepId) {
+              step.expanded = true;
+            }
+
+            return step;
+          });
+        } else {
+          newSteps.push({ id: nextExpandedStepId, completed: false, expanded: true });
+        }
       }
 
       return {
@@ -114,8 +128,8 @@ export const OnboardingProvider = ({ children, storageService }: OnboardingProvi
       // Mark rest of steps as not expanded
       return {
         ...prev,
-        steps: steps.map((step, index) => {
-          if (index !== stepIndex) {
+        steps: steps.map(step => {
+          if (step.id !== expandedId) {
             return {
               ...step,
               expanded: false,
