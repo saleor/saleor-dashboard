@@ -19,8 +19,7 @@ export const MissingAppsFooter = () => {
         alignItems="center"
         justifyContent="flex-start"
         flexDirection="column"
-        marginTop={20}
-        marginBottom={52}
+        marginBottom={20}
       >
         <Text marginTop={5} as="h1" fontSize={11} fontWeight="regular" marginBottom={7}>
           {intl.formatMessage(messages.missingAppsHeader)}
