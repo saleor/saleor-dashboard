@@ -3474,6 +3474,9 @@
     "context": "tooltip",
     "string": "This feature is in a preview state and can be subject to changes at later point"
   },
+  "KHI/qv": {
+    "string": "You don't have permission to manage products"
+  },
   "KHZlmi": {
     "string": "Discount Type"
   },
@@ -4487,10 +4490,6 @@
   "REVk27": {
     "context": "info text",
     "string": "Set up an end date of preorder. When end date will be reached product will be automatically taken from preorder to standard selling"
-  },
-  "RFXT9O": {
-    "context": "tooltip message",
-    "string": "You don't have permission to invite staff members"
   },
   "RH+aOF": {
     "context": "use attribute in filtering",
@@ -6870,6 +6869,10 @@
   },
   "grkY2V": {
     "string": "You don't have access to any channels"
+  },
+  "gt05TH": {
+    "context": "tooltip message",
+    "string": "You don't have permission to manage staff"
   },
   "gvOzOl": {
     "string": "Page Title"
@@ -9368,6 +9371,9 @@
   "xo5UIb": {
     "context": "dialog title",
     "string": "Delete category"
+  },
+  "xol6jX": {
+    "string": "You don't have permission to manage orders"
   },
   "xoyCZ/": {
     "context": "error message",
