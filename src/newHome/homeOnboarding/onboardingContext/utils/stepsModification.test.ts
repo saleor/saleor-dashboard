@@ -23,9 +23,10 @@ describe("stepsModification", () => {
         { id: "step3", completed: false, expanded: undefined },
       ] as unknown as OnboardingStep[];
       const id = "step2" as OnboardingStepsIDs;
+      const hasBeenOpened = true;
 
       // Act
-      const result = toggleStepExpand(id, steps);
+      const result = toggleStepExpand({ id, steps, hasBeenOpened });
 
       // Assert
       expect(result).toEqual([
@@ -43,9 +44,10 @@ describe("stepsModification", () => {
         { id: "step3", completed: false, expanded: undefined },
       ] as unknown as OnboardingStep[];
       const id = "step2" as OnboardingStepsIDs;
+      const hasBeenOpened = true;
 
       // Act
-      const result = toggleStepExpand(id, steps);
+      const result = toggleStepExpand({ id, steps, hasBeenOpened });
 
       // Assert
       expect(result).toEqual([
@@ -62,15 +64,38 @@ describe("stepsModification", () => {
         { id: "step2", completed: false, expanded: true },
       ] as unknown as OnboardingStep[];
       const id = "step3" as OnboardingStepsIDs;
+      const hasBeenOpened = true;
 
       // Act
-      const result = toggleStepExpand(id, steps);
+      const result = toggleStepExpand({ id, steps, hasBeenOpened });
 
       // Assert
       expect(result).toEqual([
         { id: "step1", completed: true, expanded: false },
         { id: "step2", completed: false, expanded: false },
         { id: "step3", completed: false, expanded: true },
+      ]);
+    });
+
+    it("should add unexpanded step when toggled and step was already open", () => {
+      // Arrange
+      const steps = [
+        { id: "step1", completed: true, expanded: undefined },
+        { id: "step2", completed: false, expanded: true },
+      ] as unknown as OnboardingStep[];
+
+      // Accordion return "" string when closing an accordion step
+      const id = "step3" as OnboardingStepsIDs;
+      const hasBeenOpened = false;
+
+      // Act
+      const result = toggleStepExpand({ id, steps, hasBeenOpened });
+
+      // Assert
+      expect(result).toEqual([
+        { id: "step1", completed: true, expanded: false },
+        { id: "step2", completed: false, expanded: false },
+        { id: "step3", completed: false, expanded: false },
       ]);
     });
   });

@@ -84,7 +84,13 @@ export const OnboardingProvider = ({ children, storageService }: OnboardingProvi
 
     setOnboardingState(prev => {
       const steps = [...prev.steps];
-      const stepsWithToggledStep = toggleStepExpand(expandedId as OnboardingStepsIDs, steps);
+
+      const stepsWithToggledStep = toggleStepExpand({
+        id: expandedId as OnboardingStepsIDs,
+        steps,
+        // We used to detect that when a step has been expanded or collapsed
+        hasBeenOpened: id !== "",
+      });
 
       return {
         ...prev,

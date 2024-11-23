@@ -65,13 +65,21 @@ export const addNextStep = (id: OnboardingStepsIDs, steps: OnboardingStep[]): On
   return steps;
 };
 
-export const toggleStepExpand = (id: OnboardingStepsIDs, steps: OnboardingStep[]) => {
+export const toggleStepExpand = ({
+  id,
+  steps,
+  hasBeenOpened,
+}: {
+  id: OnboardingStepsIDs;
+  steps: OnboardingStep[];
+  hasBeenOpened: boolean;
+}) => {
   const stepIndex = steps.findIndex(step => step.id === id);
   const unexpandedSteps = steps.map(step => ({ ...step, expanded: false }));
 
   if (stepIndex === -1) {
-    // Step not found, add it with expanded true
-    return [...unexpandedSteps, { id, completed: false, expanded: true }];
+    // Step not found, toggle expanded base on if was opened or not
+    return [...unexpandedSteps, { id, completed: false, expanded: hasBeenOpened }];
   } else {
     // Step found, toggle its expanded state
     return steps.map(step => {
