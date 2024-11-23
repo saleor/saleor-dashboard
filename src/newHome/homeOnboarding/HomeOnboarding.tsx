@@ -21,7 +21,7 @@ const HomeOnboarding = () => {
 
   const isOnboardingExpanded = onboardingState.onboardingExpanded;
   const status = {
-    done: onboardingState.steps.filter(step => step.completed).length,
+    done: onboardingState.stepsCompleted.length,
     total: TOTAL_STEPS_COUNT,
   };
 

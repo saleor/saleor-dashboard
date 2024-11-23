@@ -15,7 +15,8 @@ export type OnboardingStep = {
 };
 
 export type OnboardingState = {
-  steps: OnboardingStep[];
+  stepsCompleted: OnboardingStepsIDs[];
+  stepsExpanded: Record<OnboardingStepsIDs, boolean>;
   onboardingExpanded: boolean;
 };
 

@@ -1,4 +1,7 @@
-import { OnboardingStep } from "@dashboard/newHome/homeOnboarding/onboardingContext/types";
+import {
+  OnboardingState,
+  OnboardingStep,
+} from "@dashboard/newHome/homeOnboarding/onboardingContext/types";
 
 export const initialOnboardingSteps: OnboardingStep[] = [
   {
@@ -35,19 +38,18 @@ export const initialOnboardingSteps: OnboardingStep[] = [
 
 export const TOTAL_STEPS_COUNT = initialOnboardingSteps.length;
 
-export const getInitialOnboardingState = (isNewUser: boolean) => {
+export const getInitialOnboardingState = (isNewUser: boolean): OnboardingState => {
   if (isNewUser) {
     return {
       onboardingExpanded: true,
-      steps: [],
+      stepsCompleted: [],
+      stepsExpanded: {} as OnboardingState["stepsExpanded"],
     };
   }
 
   return {
     onboardingExpanded: false,
-    steps: initialOnboardingSteps.map(step => ({
-      ...step,
-      completed: true,
-    })),
+    stepsCompleted: initialOnboardingSteps.map(step => step.id),
+    stepsExpanded: {} as OnboardingState["stepsExpanded"],
   };
 };

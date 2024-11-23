@@ -1,22 +1,25 @@
 import { initialOnboardingSteps } from "@dashboard/newHome/homeOnboarding/onboardingContext/initialOnboardingState";
 import React, { useEffect } from "react";
 
-import { OnboardingState, OnboardingStep, OnboardingStepsIDs } from "./types";
+import { OnboardingState, OnboardingStepsIDs } from "./types";
 
-const getFirstExpandedStep = (onboardingState: OnboardingState) => {
-  return onboardingState.steps.find(step => step.expanded);
+const getFirstExpanderStepId = (onboardingState: OnboardingState) => {
+  const stepsExpandedEntries = Object.entries(onboardingState.stepsExpanded);
+
+  return (stepsExpandedEntries.find(([_, value]) => value)?.[0] ?? "") as OnboardingStepsIDs;
 };
 
-const createFilterByNotCompletedAndNotExpandedSteps =
-  (onboardingState: OnboardingState) => (step: OnboardingStep) => {
-    const onboardingStep = onboardingState.steps.find(s => s.id === step.id);
-
-    if (onboardingStep) {
-      return !onboardingStep.completed && onboardingStep.expanded !== false;
-    }
-
-    return true;
-  };
+export const getNextOnboardingStepId = (onboardingState: OnboardingState) => {
+  return (
+    initialOnboardingSteps
+      .map(step => ({
+        ...step,
+        completed: onboardingState.stepsCompleted.includes(step.id),
+        expanded: onboardingState.stepsExpanded[step.id],
+      }))
+      .filter(step => !step.completed && step.expanded !== false)[0]?.id ?? ""
+  );
+};
 
 export const useExpandedOnboardingId = (onboardingState: OnboardingState, loaded: boolean) => {
   const hasBeenCalled = React.useRef(false);
@@ -24,35 +27,34 @@ export const useExpandedOnboardingId = (onboardingState: OnboardingState, loaded
 
   useEffect(() => {
     if (hasBeenCalled.current) {
-      const firstExpandedStep = getFirstExpandedStep(onboardingState);
-
-      if (firstExpandedStep) {
-        setExpandedStepId(firstExpandedStep.id);
-      } else {
-        setExpandedStepId("");
-      }
+      // After completing a step, set next expanded step
+      setExpandedStepId(getNextOnboardingStepId(onboardingState));
     }
-  }, [loaded, onboardingState, onboardingState.steps]);
+  }, [onboardingState.stepsCompleted]);
 
   useEffect(() => {
+    if (hasBeenCalled.current) {
+      // After toggle onboarding steps, set first expanded step from state
+      setExpandedStepId(getFirstExpanderStepId(onboardingState));
+    }
+  }, [onboardingState.stepsExpanded]);
+
+  useEffect(() => {
+    // On context first load
     if (loaded && !hasBeenCalled.current) {
       hasBeenCalled.current = true;
 
-      const firstExpandedStep = getFirstExpandedStep(onboardingState);
+      const firstExpandedStep = getFirstExpanderStepId(onboardingState);
 
       if (firstExpandedStep) {
-        setExpandedStepId(firstExpandedStep.id);
+        setExpandedStepId(firstExpandedStep);
 
         return;
       }
 
-      const steps = initialOnboardingSteps.filter(
-        createFilterByNotCompletedAndNotExpandedSteps(onboardingState),
-      );
-
-      setExpandedStepId(steps[0]?.id ?? "");
+      setExpandedStepId(getNextOnboardingStepId(onboardingState));
     }
-  }, [loaded, onboardingState, onboardingState.steps]);
+  }, [loaded, onboardingState]);
 
   return expandedStepId;
 };
