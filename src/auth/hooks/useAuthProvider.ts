@@ -209,7 +209,6 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
     authenticating: authenticating && !errors.length,
     authenticated: authenticated && !!user?.isStaff && !errors.length,
     user: userDetails.data?.me,
-    isUserLoading: userDetails.loading,
     refetchUser: userDetails.refetch,
     errors,
   };
