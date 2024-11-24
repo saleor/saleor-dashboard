@@ -1,43 +1,28 @@
-import { initialOnboardingSteps } from "@dashboard/newHome/homeOnboarding/onboardingContext/initialOnboardingState";
 import React, { useEffect } from "react";
 
 import { OnboardingState, OnboardingStepsIDs } from "./types";
-
-const getFirstExpanderStepId = (onboardingState: OnboardingState) => {
-  const stepsExpandedEntries = Object.entries(onboardingState.stepsExpanded);
-
-  return (stepsExpandedEntries.find(([_, value]) => value)?.[0] ?? "") as OnboardingStepsIDs;
-};
-
-export const getNextOnboardingStepId = (onboardingState: OnboardingState) => {
-  return (
-    initialOnboardingSteps
-      .map(step => ({
-        ...step,
-        completed: onboardingState.stepsCompleted.includes(step.id),
-        expanded: onboardingState.stepsExpanded[step.id],
-      }))
-      .filter(step => !step.completed && step.expanded !== false)[0]?.id ?? ""
-  );
-};
+import {
+  getFirstExpanderStepId,
+  getFirstNotCompletedAndNotExpandedStep,
+  getNextStepToExpand,
+} from "./utils";
 
 export const useExpandedOnboardingId = (onboardingState: OnboardingState, loaded: boolean) => {
   const hasBeenCalled = React.useRef(false);
   const [expandedStepId, setExpandedStepId] = React.useState<OnboardingStepsIDs | "">("");
 
   useEffect(() => {
+    // On every state change
     if (hasBeenCalled.current) {
-      // After completing a step, set next expanded step
-      setExpandedStepId(getNextOnboardingStepId(onboardingState));
-    }
-  }, [onboardingState.stepsCompleted]);
+      const firstExpandedStepId = getFirstExpanderStepId(onboardingState);
 
-  useEffect(() => {
-    if (hasBeenCalled.current) {
-      // After toggle onboarding steps, set first expanded step from state
-      setExpandedStepId(getFirstExpanderStepId(onboardingState));
+      if (firstExpandedStepId) {
+        setExpandedStepId(getFirstExpanderStepId(onboardingState));
+      } else {
+        setExpandedStepId(getNextStepToExpand(onboardingState));
+      }
     }
-  }, [onboardingState.stepsExpanded]);
+  }, [onboardingState]);
 
   useEffect(() => {
     // On context first load
@@ -48,11 +33,9 @@ export const useExpandedOnboardingId = (onboardingState: OnboardingState, loaded
 
       if (firstExpandedStep) {
         setExpandedStepId(firstExpandedStep);
-
-        return;
+      } else {
+        setExpandedStepId(getFirstNotCompletedAndNotExpandedStep(onboardingState));
       }
-
-      setExpandedStepId(getNextOnboardingStepId(onboardingState));
     }
   }, [loaded, onboardingState]);
 

@@ -45,13 +45,10 @@ export const OnboardingProvider = ({ children, storageService }: OnboardingProvi
   }, [isNewUser, isUserLoading, loaded, storageService]);
 
   React.useEffect(() => {
-    if (
-      onboardingState.stepsCompleted.length > 0 ||
-      Object.keys(onboardingState.onboardingExpanded).length > 0
-    ) {
+    if (loaded) {
       storageService.saveOnboardingState(onboardingState);
     }
-  }, [onboardingState, storageService]);
+  }, [loaded, onboardingState, storageService]);
 
   // For old users, onboarding is always completed, for new one we need to calculate it
   const isOnboardingCompleted = isNewUser

@@ -62,7 +62,7 @@ describe("useExpandedOnboardingId", () => {
     expect(expandedStepId).toBe("");
   });
 
-  it("should return first expanded step after collapse steps change", () => {
+  it("should return first not completed step after step competed", async () => {
     // Arrange
     const onboardingState = {
       onboardingExpanded: true,
@@ -73,7 +73,7 @@ describe("useExpandedOnboardingId", () => {
     } as unknown as OnboardingState;
     const onboardingStateChanged = {
       onboardingExpanded: true,
-      stepsCompleted: ["view-webhooks"],
+      stepsCompleted: ["create-product"],
       stepsExpanded: {
         "get-started": false,
       },
@@ -81,12 +81,56 @@ describe("useExpandedOnboardingId", () => {
     const loaded = true;
 
     // Act
-    renderHook(() => useExpandedOnboardingId(onboardingState, loaded));
+    const { rerender, result } = renderHook(
+      ({ onboardingState, loaded }) => useExpandedOnboardingId(onboardingState, loaded),
+      {
+        initialProps: {
+          onboardingState,
+          loaded,
+        },
+      },
+    );
 
-    const expandedStepId = renderHook(() => useExpandedOnboardingId(onboardingStateChanged, loaded))
-      .result.current;
+    rerender({ onboardingState: onboardingStateChanged, loaded });
 
     // Assert
-    expect(expandedStepId).toBe("create-product");
+    expect(result.current).toBe("explore-orders");
+  });
+
+  it("should return first expanded step after expand step toggle", async () => {
+    // Arrange
+    const onboardingState = {
+      onboardingExpanded: true,
+      stepsCompleted: ["get-started", "create-product"],
+      stepsExpanded: {
+        "get-started": false,
+      },
+    } as unknown as OnboardingState;
+
+    const onboardingStateChanged = {
+      onboardingExpanded: true,
+      stepsCompleted: ["get-started", "create-product"],
+      stepsExpanded: {
+        "get-started": false,
+        "explore-orders": true,
+      },
+    } as OnboardingState;
+    const loaded = true;
+
+    // Act
+    const { rerender, result } = renderHook(
+      ({ onboardingState, loaded }) => useExpandedOnboardingId(onboardingState, loaded),
+      {
+        initialProps: {
+          onboardingState,
+          loaded,
+        },
+      },
+    );
+
+    rerender({ onboardingState: onboardingStateChanged, loaded });
+
+    // Assert
+    expect(result.current).toBe("explore-orders");
   });
 });
