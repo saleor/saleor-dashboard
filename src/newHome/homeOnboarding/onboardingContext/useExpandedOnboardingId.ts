@@ -12,17 +12,23 @@ export const useExpandedOnboardingId = (onboardingState: OnboardingState, loaded
   const [expandedStepId, setExpandedStepId] = React.useState<OnboardingStepsIDs | "">("");
 
   useEffect(() => {
-    // On every state change
     if (hasBeenCalled.current) {
       const firstExpandedStepId = getFirstExpanderStepId(onboardingState);
 
       if (firstExpandedStepId) {
         setExpandedStepId(getFirstExpanderStepId(onboardingState));
       } else {
-        setExpandedStepId(getNextStepToExpand(onboardingState));
+        setExpandedStepId("");
       }
     }
-  }, [onboardingState]);
+  }, [onboardingState.stepsExpanded]);
+
+  useEffect(() => {
+    // On every state change
+    if (hasBeenCalled.current) {
+      setExpandedStepId(getNextStepToExpand(onboardingState));
+    }
+  }, [onboardingState.stepsCompleted]);
 
   useEffect(() => {
     // On context first load
