@@ -2,6 +2,8 @@ import { LOCATORS } from "@data/commonLocators";
 import type { Locator, Page } from "@playwright/test";
 import { expect } from "@playwright/test";
 
+import { SUCCESS_BANNER_TIMEOUT } from "../../playwright.config";
+
 export class BasePage {
   readonly page: Page;
 
@@ -100,21 +102,22 @@ export class BasePage {
     await this.saveButton.click();
   }
 
-  async expectSuccessBannerMessage(msg: string) {
-    await this.successBanner.locator(`text=${msg}`).waitFor({ state: "visible", timeout: 10000 });
-    await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
-  }
-
   async expectErrorBannerMessage(msg: string) {
     await this.errorBanner.locator(`text=${msg}`).waitFor({ state: "visible", timeout: 10000 });
   }
 
-  async expectSuccessBanner() {
-    await this.page.waitForLoadState("networkidle");
-    await Promise.all([
-      this.successBanner.first().waitFor({ state: "visible", timeout: 15000 }),
-      expect(this.errorBanner, "No error banner should be visible").not.toBeVisible(),
-    ]);
+  async expectSuccessBanner(
+    options: { message?: string; timeout?: number } = { timeout: SUCCESS_BANNER_TIMEOUT },
+  ) {
+    if (options.message) {
+      await this.successBanner
+        .locator(`text=${options.message}`)
+        .waitFor({ state: "visible", timeout: options.timeout });
+    } else {
+      await this.successBanner.first().waitFor({ state: "visible", timeout: options.timeout });
+    }
+
+    await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
   }
 
   async expectInfoBanner() {

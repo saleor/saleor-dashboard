@@ -9,6 +9,7 @@ import {
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { OrderListQuery } from "@dashboard/graphql";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
@@ -129,11 +130,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
           )}
           onRowClick={handleRowClick}
           rowAnchor={handleRowAnchor}
-          navigatorOpts={{
-            state: {
-              prevLocation: location,
-            },
-          }}
+          navigatorOpts={{ state: getPrevLocationState(location) }}
         />
 
         <Box paddingX={6}>

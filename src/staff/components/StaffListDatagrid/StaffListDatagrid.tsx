@@ -6,6 +6,7 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { StaffMember, StaffMembers } from "@dashboard/staff/types";
 import { StaffListUrlSortField, staffMemberDetailsUrl } from "@dashboard/staff/urls";
@@ -69,7 +70,7 @@ export const StaffListDatagrid = ({
 
       if (rowData) {
         navigate(staffMemberDetailsUrl(rowData?.id), {
-          state: { prevLocation: location },
+          state: getPrevLocationState(location),
         });
       }
     },
@@ -112,6 +113,7 @@ export const StaffListDatagrid = ({
         onHeaderClicked={handleHeaderClick}
         rowAnchor={handleRowAnchor}
         recentlyAddedColumn={recentlyAddedColumn}
+        navigatorOpts={{ state: getPrevLocationState(location) }}
       />
 
       <Box paddingX={6}>

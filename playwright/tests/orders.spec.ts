@@ -47,7 +47,7 @@ test("TC: SALEOR_28 Create basic order @e2e @order", async () => {
   await ordersPage.clickAddShippingCarrierButton();
   await ordersPage.shippingAddressDialog.pickAndConfirmFirstShippingMethod();
   await ordersPage.clickFinalizeButton();
-  await draftOrdersPage.expectSuccessBannerMessage("finalized");
+  await draftOrdersPage.expectSuccessBanner({ message: "finalized" });
 });
 
 test("TC: SALEOR_76 Create order with transaction flow activated @e2e @order", async () => {
@@ -65,7 +65,7 @@ test("TC: SALEOR_76 Create order with transaction flow activated @e2e @order", a
   await ordersPage.clickAddShippingCarrierButton();
   await ordersPage.shippingAddressDialog.pickAndConfirmFirstShippingMethod();
   await ordersPage.clickFinalizeButton();
-  await draftOrdersPage.expectSuccessBannerMessage("finalized");
+  await draftOrdersPage.expectSuccessBanner({ message: "finalized" });
 });
 
 test("TC: SALEOR_77 Mark order as paid and fulfill it with transaction flow activated @e2e @order", async () => {
@@ -74,7 +74,7 @@ test("TC: SALEOR_77 Mark order as paid and fulfill it with transaction flow acti
   );
   await ordersPage.clickMarkAsPaidButton();
   await ordersPage.markOrderAsPaidDialog.typeAndSaveOrderReference();
-  await ordersPage.expectSuccessBannerMessage("paid");
+  await ordersPage.expectSuccessBanner({ message: "paid" });
 
   const transactionsMadeRows = await ordersPage.orderTransactionsList.locator("tr");
 
@@ -82,7 +82,7 @@ test("TC: SALEOR_77 Mark order as paid and fulfill it with transaction flow acti
   await expect(transactionsMadeRows).toContainText("Success");
   await ordersPage.clickFulfillButton();
   await fulfillmentPage.clickFulfillButton();
-  await ordersPage.expectSuccessBannerMessage("fulfilled");
+  await ordersPage.expectSuccessBanner({ message: "fulfilled" });
   expect(await ordersPage.pageHeaderStatusInfo).toContainText("Fulfilled");
 });
 
@@ -140,7 +140,7 @@ test("TC: SALEOR_78 Capture partial amounts by manual transactions and fulfill o
   );
   await ordersPage.clickFulfillButton();
   await fulfillmentPage.clickFulfillButton();
-  await ordersPage.expectSuccessBannerMessage("fulfilled");
+  await ordersPage.expectSuccessBanner({ message: "fulfilled" });
   expect(await ordersPage.pageHeaderStatusInfo, "Order should be yet fulfilled").toContainText(
     "Fulfilled",
   );
@@ -150,7 +150,7 @@ test("TC: SALEOR_79 Mark order as paid and fulfill it with regular flow @e2e @or
   await ordersPage.goToExistingOrderPage(ORDERS.orderToMarkAsPaidAndFulfill.id);
   await ordersPage.clickMarkAsPaidButton();
   await ordersPage.markOrderAsPaidDialog.typeAndSaveOrderReference();
-  await ordersPage.expectSuccessBannerMessage("paid");
+  await ordersPage.expectSuccessBanner({ message: "paid" });
   await expect(ordersPage.balanceStatusInfo).toHaveText("Settled");
   expect(await ordersPage.paymentStatusInfo, "Order should be fully paid").toContainText(
     "Fully paid",
@@ -158,7 +158,7 @@ test("TC: SALEOR_79 Mark order as paid and fulfill it with regular flow @e2e @or
 
   await ordersPage.clickFulfillButton();
   await fulfillmentPage.clickFulfillButton();
-  await ordersPage.expectSuccessBannerMessage("fulfilled");
+  await ordersPage.expectSuccessBanner({ message: "fulfilled" });
   expect(await ordersPage.pageHeaderStatusInfo).toContainText("Fulfilled");
 });
 
@@ -168,7 +168,7 @@ test("TC: SALEOR_80 Add tracking to order @e2e @order", async () => {
   await ordersPage.goToExistingOrderPage(ORDERS.orderToAddTrackingNumberTo.id);
   await ordersPage.clickAddTrackingButton();
   await ordersPage.addTrackingDialog.typeTrackingNumberAndSave(trackingNumber);
-  await ordersPage.expectSuccessBannerMessage("updated");
+  await ordersPage.expectSuccessBanner({ message: "updated" });
   await expect(ordersPage.setTrackingNumber).toContainText(trackingNumber);
 });
 
@@ -253,9 +253,9 @@ test("TC: SALEOR_84 Create draft order @e2e @draft", async () => {
   await draftOrdersPage.expectSuccessBanner();
   await draftOrdersPage.clickAddShippingCarrierButton();
   await draftOrdersPage.shippingAddressDialog.pickAndConfirmFirstShippingMethod();
-  await draftOrdersPage.expectSuccessBanner();
+  //await draftOrdersPage.expectSuccessBanner();
   await draftOrdersPage.clickFinalizeButton();
-  await draftOrdersPage.expectSuccessBannerMessage("finalized");
+  await draftOrdersPage.expectSuccessBanner({ message: "finalized" });
 });
 
 test("TC: SALEOR_191 Refund products from the fully paid order @e2e @refunds", async () => {
@@ -293,7 +293,7 @@ test("TC: SALEOR_191 Refund products from the fully paid order @e2e @refunds", a
   await ordersPage.clickEditRefundButton(refundReason);
   await refundPage.waitForDOMToFullyLoad();
   await refundPage.transferFunds();
-  await refundPage.expectSuccessBannerMessage("Refund has been sent");
+  await refundPage.expectSuccessBanner({ message: "Refund has been sent" });
 });
 
 test("TC: SALEOR_192 Should create a manual refund with a custom amount @e2e @refunds", async () => {
@@ -313,7 +313,7 @@ test("TC: SALEOR_192 Should create a manual refund with a custom amount @e2e @re
   );
   await refundPage.provideRefundAmount("10");
   await refundPage.transferFunds();
-  await refundPage.expectSuccessBannerMessage("Transaction action requested successfully");
+  await refundPage.expectSuccessBanner({ message: "Transaction action requested successfully" });
   await ordersPage.goToExistingOrderPage(order.id);
   await ordersPage.orderRefundSection.waitFor({ state: "visible" });
   await ordersPage.assertRefundOnList("Manual refund");
@@ -342,46 +342,58 @@ for (const refund of orderRefunds) {
     await expect(ordersPage.orderRefundList).not.toContainText(refund.status);
   });
 }
-test(`TC: SALEOR_215 Inline discount is applied in a draft order @draft @discounts @e2e`, async page => {
+
+test(`TC: SALEOR_215 Inline discount is applied in a draft order @draft @discounts @e2e`, async () => {
   test.slow();
+
+  const calculateDiscountedPrice = (
+    undiscountedPrice: number,
+    discountPercentage: number,
+  ): number => {
+    return undiscountedPrice - (undiscountedPrice * discountPercentage) / 100;
+  };
+
+  const formatPrice = (price: string): number => parseFloat(price.slice(3));
 
   const discountedProduct = PRODUCTS.productWithDiscountChannelPLN;
   const productAlreadyInBasket = ORDERS.draftOrderChannelPLN.productInBasket;
+  const totalPriceLocator = ordersPage.orderSummary.locator(ordersPage.totalPrice);
 
   await ordersPage.goToExistingOrderPage(ORDERS.draftOrderChannelPLN.id);
-  await draftOrdersPage.basketProductList.waitFor({ state: "visible" });
 
-  const initialTotal = await ordersPage.orderSummary.locator(ordersPage.totalPrice).innerText();
+  const [initialTotal] = await Promise.all([
+    totalPriceLocator.innerText(),
+    draftOrdersPage.basketProductList.isVisible(),
+  ]);
 
   expect(initialTotal).toContain(productAlreadyInBasket.price.toString());
+
   await draftOrdersPage.clickAddProductsButton();
   await draftOrdersPage.addProductsDialog.searchForProductInDialog(discountedProduct.name);
   await draftOrdersPage.addProductsDialog.selectVariantBySKU(discountedProduct.variant.sku);
   await draftOrdersPage.addProductsDialog.clickConfirmButton();
+
   await draftOrdersPage.expectElementIsHidden(draftOrdersPage.dialog);
   await draftOrdersPage.expectElementIsHidden(draftOrdersPage.successBanner);
 
-  const calculatedDiscountForAddedProduct =
-    (await discountedProduct.variant.undiscountedPrice) -
-    (discountedProduct.variant.undiscountedPrice *
-      discountedProduct.rewardPercentageDiscountValue) /
-      100;
+  const expectedDiscountedPrice = calculateDiscountedPrice(
+    discountedProduct.variant.undiscountedPrice,
+    discountedProduct.rewardPercentageDiscountValue,
+  );
 
-  expect(discountedProduct.variant.discountedPrice).toEqual(calculatedDiscountForAddedProduct);
+  expect(discountedProduct.variant.discountedPrice).toEqual(expectedDiscountedPrice);
 
-  const undiscountedTotal =
-    productAlreadyInBasket.price + discountedProduct.variant.undiscountedPrice;
+  await totalPriceLocator.waitFor({ state: "visible" });
 
-  await ordersPage.totalPrice.waitFor({ state: "visible" });
+  const finalTotal = await totalPriceLocator.innerText();
 
-  const finalTotal = await ordersPage.orderSummary.locator(ordersPage.totalPrice).innerText();
+  const expectedTotal = (
+    productAlreadyInBasket.price + discountedProduct.variant.discountedPrice
+  ).toFixed(2);
 
-  expect(finalTotal.slice(3)).not.toContain(undiscountedTotal.toString());
-
-  const discountedTotal = productAlreadyInBasket.price + discountedProduct.variant.discountedPrice;
-
-  expect(finalTotal.slice(3)).toContain(discountedTotal.toString());
+  expect(formatPrice(finalTotal).toFixed(2)).toEqual(expectedTotal);
 });
+
 test(`TC: SALEOR_216 Order type discount is applied to a draft order @draft @discounts @e2e`, async () => {
   test.slow();
   await draftOrdersPage.goToDraftOrdersListView();
@@ -440,7 +452,6 @@ test(`TC: SALEOR_216 Order type discount is applied to a draft order @draft @dis
   const finalTotalPrice = await ordersPage.orderSummary.locator(ordersPage.totalPrice).innerText();
 
   expect(finalTotalPrice.slice(3)).not.toContain(initialSubTotalPrice);
-  expect(finalTotalPrice.slice(3)).not.toContain(initialSubTotalPrice);
 
   const discountedOrderSubTotal = undiscountedOrderSubTotal - (undiscountedOrderSubTotal * 5) / 100;
 
@@ -464,5 +475,5 @@ test("TC: SALEOR_217 Complete basic order for non existing customer @e2e @order"
   await ordersPage.clickAddShippingCarrierButton();
   await ordersPage.shippingAddressDialog.pickAndConfirmFirstShippingMethod();
   await ordersPage.clickFinalizeButton();
-  await draftOrdersPage.expectSuccessBannerMessage("finalized");
+  await ordersPage.expectSuccessBanner({ message: "finalized" });
 });

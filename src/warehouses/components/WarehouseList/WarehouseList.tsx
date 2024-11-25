@@ -4,6 +4,7 @@ import TableCellHeader from "@dashboard/components/TableCellHeader";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { WarehouseWithShippingFragment } from "@dashboard/graphql";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { renderCollection, stopPropagation } from "@dashboard/misc";
 import { ListProps, SortPage } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -108,7 +109,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
                 warehouse
                   ? {
                       pathname: warehouseUrl(warehouse.id),
-                      state: { prevLocation: location },
+                      state: getPrevLocationState(location),
                     }
                   : undefined
               }
