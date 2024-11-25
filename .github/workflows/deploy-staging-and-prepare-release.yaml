@@ -61,7 +61,6 @@ jobs:
       IS_CLOUD_INSTANCE: true
       POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
       POSTHOG_HOST: ${{ secrets.POSTHOG_HOST }}
-      ONBOARDING_USER_JOINED_DATE_THRESHOLD: ${{ vars.ONBOARDING_USER_JOINED_DATE_THRESHOLD }}
     steps:
       - uses: actions/checkout@v4
         with:
