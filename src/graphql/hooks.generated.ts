@@ -10147,8 +10147,8 @@ export function useMenuDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type MenuDetailsQueryHookResult = ReturnType<typeof useMenuDetailsQuery>;
 export type MenuDetailsLazyQueryHookResult = ReturnType<typeof useMenuDetailsLazyQuery>;
 export type MenuDetailsQueryResult = Apollo.QueryResult<Types.MenuDetailsQuery, Types.MenuDetailsQueryVariables>;
-export const NewHomeActivitiesDocument = gql`
-    query NewHomeActivities($hasPermissionToManageOrders: Boolean!) {
+export const WelcomePageActivitiesDocument = gql`
+    query WelcomePageActivities($hasPermissionToManageOrders: Boolean!) {
   activities: homepageEvents(last: 10) @include(if: $hasPermissionToManageOrders) {
     edges {
       node {
@@ -10167,34 +10167,34 @@ export const NewHomeActivitiesDocument = gql`
     `;
 
 /**
- * __useNewHomeActivitiesQuery__
+ * __useWelcomePageActivitiesQuery__
  *
- * To run a query within a React component, call `useNewHomeActivitiesQuery` and pass it any options that fit your needs.
- * When your component renders, `useNewHomeActivitiesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useWelcomePageActivitiesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWelcomePageActivitiesQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useNewHomeActivitiesQuery({
+ * const { data, loading, error } = useWelcomePageActivitiesQuery({
  *   variables: {
  *      hasPermissionToManageOrders: // value for 'hasPermissionToManageOrders'
  *   },
  * });
  */
-export function useNewHomeActivitiesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.NewHomeActivitiesQuery, Types.NewHomeActivitiesQueryVariables>) {
+export function useWelcomePageActivitiesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.WelcomePageActivitiesQuery, Types.WelcomePageActivitiesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.NewHomeActivitiesQuery, Types.NewHomeActivitiesQueryVariables>(NewHomeActivitiesDocument, options);
+        return ApolloReactHooks.useQuery<Types.WelcomePageActivitiesQuery, Types.WelcomePageActivitiesQueryVariables>(WelcomePageActivitiesDocument, options);
       }
-export function useNewHomeActivitiesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.NewHomeActivitiesQuery, Types.NewHomeActivitiesQueryVariables>) {
+export function useWelcomePageActivitiesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.WelcomePageActivitiesQuery, Types.WelcomePageActivitiesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.NewHomeActivitiesQuery, Types.NewHomeActivitiesQueryVariables>(NewHomeActivitiesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.WelcomePageActivitiesQuery, Types.WelcomePageActivitiesQueryVariables>(WelcomePageActivitiesDocument, options);
         }
-export type NewHomeActivitiesQueryHookResult = ReturnType<typeof useNewHomeActivitiesQuery>;
-export type NewHomeActivitiesLazyQueryHookResult = ReturnType<typeof useNewHomeActivitiesLazyQuery>;
-export type NewHomeActivitiesQueryResult = Apollo.QueryResult<Types.NewHomeActivitiesQuery, Types.NewHomeActivitiesQueryVariables>;
-export const NewHomeAnalyticsDocument = gql`
-    query NewHomeAnalytics($channel: String!, $hasPermissionToManageOrders: Boolean!) {
+export type WelcomePageActivitiesQueryHookResult = ReturnType<typeof useWelcomePageActivitiesQuery>;
+export type WelcomePageActivitiesLazyQueryHookResult = ReturnType<typeof useWelcomePageActivitiesLazyQuery>;
+export type WelcomePageActivitiesQueryResult = Apollo.QueryResult<Types.WelcomePageActivitiesQuery, Types.WelcomePageActivitiesQueryVariables>;
+export const WelcomePageAnalyticsDocument = gql`
+    query WelcomePageAnalytics($channel: String!, $hasPermissionToManageOrders: Boolean!) {
   salesToday: ordersTotal(period: TODAY, channel: $channel) @include(if: $hasPermissionToManageOrders) {
     gross {
       amount
@@ -10205,35 +10205,35 @@ export const NewHomeAnalyticsDocument = gql`
     `;
 
 /**
- * __useNewHomeAnalyticsQuery__
+ * __useWelcomePageAnalyticsQuery__
  *
- * To run a query within a React component, call `useNewHomeAnalyticsQuery` and pass it any options that fit your needs.
- * When your component renders, `useNewHomeAnalyticsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useWelcomePageAnalyticsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWelcomePageAnalyticsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useNewHomeAnalyticsQuery({
+ * const { data, loading, error } = useWelcomePageAnalyticsQuery({
  *   variables: {
  *      channel: // value for 'channel'
  *      hasPermissionToManageOrders: // value for 'hasPermissionToManageOrders'
  *   },
  * });
  */
-export function useNewHomeAnalyticsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.NewHomeAnalyticsQuery, Types.NewHomeAnalyticsQueryVariables>) {
+export function useWelcomePageAnalyticsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.WelcomePageAnalyticsQuery, Types.WelcomePageAnalyticsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.NewHomeAnalyticsQuery, Types.NewHomeAnalyticsQueryVariables>(NewHomeAnalyticsDocument, options);
+        return ApolloReactHooks.useQuery<Types.WelcomePageAnalyticsQuery, Types.WelcomePageAnalyticsQueryVariables>(WelcomePageAnalyticsDocument, options);
       }
-export function useNewHomeAnalyticsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.NewHomeAnalyticsQuery, Types.NewHomeAnalyticsQueryVariables>) {
+export function useWelcomePageAnalyticsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.WelcomePageAnalyticsQuery, Types.WelcomePageAnalyticsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.NewHomeAnalyticsQuery, Types.NewHomeAnalyticsQueryVariables>(NewHomeAnalyticsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.WelcomePageAnalyticsQuery, Types.WelcomePageAnalyticsQueryVariables>(WelcomePageAnalyticsDocument, options);
         }
-export type NewHomeAnalyticsQueryHookResult = ReturnType<typeof useNewHomeAnalyticsQuery>;
-export type NewHomeAnalyticsLazyQueryHookResult = ReturnType<typeof useNewHomeAnalyticsLazyQuery>;
-export type NewHomeAnalyticsQueryResult = Apollo.QueryResult<Types.NewHomeAnalyticsQuery, Types.NewHomeAnalyticsQueryVariables>;
-export const NewHomeNotificationsDocument = gql`
-    query NewHomeNotifications($channel: String!) {
+export type WelcomePageAnalyticsQueryHookResult = ReturnType<typeof useWelcomePageAnalyticsQuery>;
+export type WelcomePageAnalyticsLazyQueryHookResult = ReturnType<typeof useWelcomePageAnalyticsLazyQuery>;
+export type WelcomePageAnalyticsQueryResult = Apollo.QueryResult<Types.WelcomePageAnalyticsQuery, Types.WelcomePageAnalyticsQueryVariables>;
+export const WelcomePageNotificationsDocument = gql`
+    query welcomePageNotifications($channel: String!) {
   productsOutOfStock: products(
     filter: {stockAvailability: OUT_OF_STOCK}
     channel: $channel
@@ -10244,32 +10244,32 @@ export const NewHomeNotificationsDocument = gql`
     `;
 
 /**
- * __useNewHomeNotificationsQuery__
+ * __useWelcomePageNotificationsQuery__
  *
- * To run a query within a React component, call `useNewHomeNotificationsQuery` and pass it any options that fit your needs.
- * When your component renders, `useNewHomeNotificationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useWelcomePageNotificationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWelcomePageNotificationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useNewHomeNotificationsQuery({
+ * const { data, loading, error } = useWelcomePageNotificationsQuery({
  *   variables: {
  *      channel: // value for 'channel'
  *   },
  * });
  */
-export function useNewHomeNotificationsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.NewHomeNotificationsQuery, Types.NewHomeNotificationsQueryVariables>) {
+export function useWelcomePageNotificationsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.WelcomePageNotificationsQuery, Types.WelcomePageNotificationsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.NewHomeNotificationsQuery, Types.NewHomeNotificationsQueryVariables>(NewHomeNotificationsDocument, options);
+        return ApolloReactHooks.useQuery<Types.WelcomePageNotificationsQuery, Types.WelcomePageNotificationsQueryVariables>(WelcomePageNotificationsDocument, options);
       }
-export function useNewHomeNotificationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.NewHomeNotificationsQuery, Types.NewHomeNotificationsQueryVariables>) {
+export function useWelcomePageNotificationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.WelcomePageNotificationsQuery, Types.WelcomePageNotificationsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.NewHomeNotificationsQuery, Types.NewHomeNotificationsQueryVariables>(NewHomeNotificationsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.WelcomePageNotificationsQuery, Types.WelcomePageNotificationsQueryVariables>(WelcomePageNotificationsDocument, options);
         }
-export type NewHomeNotificationsQueryHookResult = ReturnType<typeof useNewHomeNotificationsQuery>;
-export type NewHomeNotificationsLazyQueryHookResult = ReturnType<typeof useNewHomeNotificationsLazyQuery>;
-export type NewHomeNotificationsQueryResult = Apollo.QueryResult<Types.NewHomeNotificationsQuery, Types.NewHomeNotificationsQueryVariables>;
+export type WelcomePageNotificationsQueryHookResult = ReturnType<typeof useWelcomePageNotificationsQuery>;
+export type WelcomePageNotificationsLazyQueryHookResult = ReturnType<typeof useWelcomePageNotificationsLazyQuery>;
+export type WelcomePageNotificationsQueryResult = Apollo.QueryResult<Types.WelcomePageNotificationsQuery, Types.WelcomePageNotificationsQueryVariables>;
 export const OrderCancelDocument = gql`
     mutation OrderCancel($id: ID!) {
   orderCancel(id: $id) {
