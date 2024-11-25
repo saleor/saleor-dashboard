@@ -15,11 +15,11 @@ export const HomeInfoTile: React.FC<InfoTile> = ({ id, bottomActions, content, h
     borderColor="default1"
     borderRadius={3}
     borderWidth={1}
-    margin={4}
     display="flex"
     flexDirection="column"
     gap={4}
     key={id}
+    margin={0}
   >
     <DashboardCard.Header>
       <DashboardCard.Title display="flex" alignItems="center" gap={3}>
