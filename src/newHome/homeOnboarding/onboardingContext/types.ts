@@ -35,5 +35,4 @@ export interface OnboardingContextType {
 
 export interface OnboardingProviderProps {
   children: React.ReactNode;
-  storageService: StorageService;
 }

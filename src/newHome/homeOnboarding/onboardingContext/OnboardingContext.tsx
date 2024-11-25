@@ -1,3 +1,4 @@
+import { useOnboardingStorage } from "@dashboard/newHome/homeOnboarding/onboardingContext/useOnboardingStorage";
 import React from "react";
 
 import {
@@ -46,10 +47,12 @@ const initialOnboardingState: OnboardingState = {
   onboardingExpanded: true,
 };
 
-export const OnboardingProvider = ({ children, storageService }: OnboardingProviderProps) => {
+export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
   const [onboardingState, setOnboardingState] =
     React.useState<OnboardingState>(initialOnboardingState);
   const [loaded, setLoaded] = React.useState(false);
+
+  const storageService = useOnboardingStorage();
 
   React.useEffect(() => {
     if (loaded) return;
@@ -74,7 +77,7 @@ export const OnboardingProvider = ({ children, storageService }: OnboardingProvi
 
   React.useEffect(() => {
     storageService.saveOnboardingState(onboardingState);
-  }, [onboardingState, storageService]);
+  }, [onboardingState]);
 
   const isOnboardingCompleted = onboardingState.steps.every(step => step.completed);
 
