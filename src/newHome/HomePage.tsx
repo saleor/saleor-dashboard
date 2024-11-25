@@ -9,6 +9,8 @@ import { HomeTitle } from "@dashboard/newHome/components/HomeTitle";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
+import HomeOnboarding from "./homeOnboarding/HomeOnboarding";
+
 export const HomePage = () => {
   const { channel, setChannel } = useAppChannel(false);
   const { user } = useUser();
@@ -23,6 +25,7 @@ export const HomePage = () => {
       <Box gridColumn="8" gridRowStart="1" />
       <DetailPageLayout.Content marginTop={6} paddingLeft={8}>
         <HomeTitle />
+        <HomeOnboarding />
       </DetailPageLayout.Content>
       <DetailPageLayout.RightSidebar borderLeftStyle="none">
         <HomeSidebarContextProvider
