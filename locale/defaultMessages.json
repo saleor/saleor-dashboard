@@ -3980,6 +3980,10 @@
     "context": "weight",
     "string": "{value} {unit}"
   },
+  "Ntk3CQ": {
+    "context": "footer title",
+    "string": "Missing something?"
+  },
   "Nv/toB": {
     "context": "button",
     "string": "Assign and save"
@@ -5184,6 +5188,10 @@
   },
   "VkYZQ8": {
     "string": "Current Permissions"
+  },
+  "VlDG1B": {
+    "context": "Request integration",
+    "string": "Request integration"
   },
   "VmMDLN": {
     "context": "permission list item description",
@@ -7514,6 +7522,10 @@
   "kvSYZh": {
     "context": "replacement created order history message description",
     "string": "was created for replaced products"
+  },
+  "kyNv+Y": {
+    "context": "footer description",
+    "string": "Are we missing an integration your project requires? Let us know here"
   },
   "l0a2tU": {
     "context": "onboarding step description",
