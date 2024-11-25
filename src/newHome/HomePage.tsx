@@ -6,6 +6,7 @@ import { PermissionEnum } from "@dashboard/graphql";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
+import { HomeTilesContainer } from "./homeInfoTiles/TilesContainer";
 import HomeOnboarding from "./homeOnboarding/HomeOnboarding";
 import { HomeSidebar } from "./HomeSidebar";
 import { HomeTitle } from "./HomeTitle";
@@ -25,6 +26,7 @@ export const HomePage = () => {
       <DetailPageLayout.Content marginTop={6} paddingLeft={8}>
         <HomeTitle />
         <HomeOnboarding />
+        <HomeTilesContainer />
       </DetailPageLayout.Content>
       <DetailPageLayout.RightSidebar borderLeftStyle="none">
         <HomeSidebar
