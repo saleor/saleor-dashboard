@@ -1,4 +1,5 @@
 import { Box } from "@saleor/macaw-ui-next";
+import { usePostHog } from "posthog-js/react";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -7,8 +8,13 @@ import { WelcomePageInfoTile } from "./WelcomePageInfoTile";
 
 export const WelcomePageTilesContainer = () => {
   const intl = useIntl();
+  const posthog = usePostHog();
 
-  const tiles = getTilesData({ intl });
+  const handleTileButtonClick = (tileId: string) => {
+    posthog.capture(`home_page:${tileId}_click`);
+  };
+
+  const tiles = getTilesData({ intl, onTileButtonClick: handleTileButtonClick });
 
   return (
     <Box
