@@ -13,6 +13,7 @@ import InstalledAppList from "../InstalledAppList";
 import { InstallWithManifestFormButton } from "../InstallWithManifestFormButton";
 import MarketplaceAlert from "../MarketplaceAlert";
 import { messages } from "./messages";
+import { MissingAppsFooter } from "./MissingAppsFooter";
 import { useStyles } from "./styles";
 import { AppListPageSections } from "./types";
 import {
@@ -63,6 +64,9 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
   const navigateToGithubForkPage = useCallback((githubForkUrl: string) => {
     window.open(githubForkUrl, "_blank");
   }, []);
+
+  const showMissingAppsFooter =
+    !marketplaceError && verifiedInstallableMarketplaceApps && comingSoonMarketplaceApps;
 
   return (
     <>
@@ -132,6 +136,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
             </Box>
           )}
         </Box>
+        {showMissingAppsFooter && <MissingAppsFooter />}
       </Box>
     </>
   );
