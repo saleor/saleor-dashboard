@@ -228,6 +228,9 @@
   "/Fa+RP": {
     "string": "Couldn't load top products"
   },
+  "/H9LeU": {
+    "string": "Explore Saleor App Store"
+  },
   "/ILyIf": {
     "context": "tax classes menu header",
     "string": "Tax class label"
@@ -347,6 +350,9 @@
   "/z9uo1": {
     "context": "order returned success message",
     "string": "Successfully returned products!"
+  },
+  "0+zatS": {
+    "string": "Hello {userName}, welcome to your Store Dashboard"
   },
   "01+5kQ": {
     "string": "Mark as paid"
@@ -2186,6 +2192,9 @@
   "CZmloB": {
     "string": "Fulfillment successfully updated"
   },
+  "Cc3Z40": {
+    "string": "Learn Saleor checkout process flow"
+  },
   "CcEwXH": {
     "context": "dialog header",
     "string": "Delete Page Types"
@@ -2712,6 +2721,9 @@
   },
   "FuAV5G": {
     "string": "This name is already taken. Please provide another."
+  },
+  "FvmV6q": {
+    "string": "Discord"
   },
   "Fvvgoi": {
     "string": "Your session has expired. Please log in again to continue."
@@ -4484,6 +4496,12 @@
     "context": "OrderCustomer Fulfillment from All Warehouses",
     "string": "Fulfill from All Warehouses"
   },
+  "RABrGb": {
+    "string": "Save hours of evaluating Saleor on your own by speaking with our solution engineer."
+  },
+  "RBkNPr": {
+    "string": "Full coverage of advanced checkout cases like split payments, split fulfillments, and orchestrated payments."
+  },
   "RBxYJf": {
     "context": "sale status",
     "string": "Expired"
@@ -4905,6 +4923,9 @@
   "TnyLrZ": {
     "context": "PageTypeDeleteWarningDialog with items multiple description",
     "string": "You are about to delete multiple page types. Some of them are assigned to pages. Deleting those page types will also delete those pages"
+  },
+  "Tp5T7U": {
+    "string": "Join our OS community of industry experts and learn more about open source at Saleor."
   },
   "TpPx7V": {
     "context": "navigator placeholder",
@@ -5365,6 +5386,9 @@
     "context": "helper text",
     "string": "All items refunded"
   },
+  "Wk00wL": {
+    "string": "Join the open source community"
+  },
   "WkxE8/": {
     "context": "percentage or fixed, header",
     "string": "Discount Type"
@@ -5518,6 +5542,9 @@
   "XUU9sU": {
     "context": "section header",
     "string": "All Media"
+  },
+  "XVQpjm": {
+    "string": "Add new functionalities on top of Saleor and integrate it with third-party services. They can be installed, managed, and rendered in here in Saleor Dashboard."
   },
   "XVuPMw": {
     "string": "Are you sure you want to delete this rule?"
@@ -5879,6 +5906,10 @@
   },
   "Zz67wc": {
     "string": "View and update your webhooks and events."
+  },
+  "a+WuZg": {
+    "context": "cta button label",
+    "string": "View Documentation"
   },
   "a+iRI1": {
     "context": "single gift card title",
@@ -6789,6 +6820,9 @@
   "g8lXTL": {
     "context": "swatch attribute",
     "string": "Swatch"
+  },
+  "g9HrbF": {
+    "string": "Need technical help?"
   },
   "g9Mb+U": {
     "context": "change warehouse dialog title",
@@ -8650,6 +8684,9 @@
     "context": "variant pricing section subtitle",
     "string": "There is no channel to define prices for. You need to first add variant to channels to define prices."
   },
+  "swOKYO": {
+    "string": "Discover the latest enhancements, new features, fixes, and performance improvements that make your dashboard experience even better."
+  },
   "szXISP": {
     "context": "permission group name",
     "string": "Permission Group Name"
@@ -9197,6 +9234,9 @@
   "wNQzS/": {
     "string": "The primary address of this customer."
   },
+  "wO9wb5": {
+    "string": "GitHub"
+  },
   "wOeIR4": {
     "context": "order history message",
     "string": "Restocked {quantity} items"
@@ -9285,6 +9325,10 @@
   },
   "x0n6YG": {
     "string": "This refund is currently being processed and cannot be edited"
+  },
+  "x0wum5": {
+    "context": "home sidebar card title",
+    "string": "Your store info"
   },
   "x2mg39": {
     "context": "Transaction event description",
@@ -9578,6 +9622,9 @@
   "z9c6/C": {
     "string": "Deprecated"
   },
+  "z9f2oQ": {
+    "string": "Recent Dashboard Updates"
+  },
   "z9wQ/U": {
     "context": "no variant stock in warehouse",
     "string": "No Stock"
@@ -9692,6 +9739,10 @@
   "znbVYT": {
     "context": "product available for purchase date",
     "string": "Will become available on {date}"
+  },
+  "zp9VHt": {
+    "context": "cta button label",
+    "string": "Explore Updates"
   },
   "zqarUF": {
     "context": "modal information under title",
