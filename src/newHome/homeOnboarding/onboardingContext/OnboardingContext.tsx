@@ -76,7 +76,9 @@ export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
   }, [loaded, storageService]);
 
   React.useEffect(() => {
-    storageService.saveOnboardingState(onboardingState);
+    if (loaded) {
+      storageService.saveOnboardingState(onboardingState);
+    }
   }, [onboardingState]);
 
   const isOnboardingCompleted = onboardingState.steps.every(step => step.completed);

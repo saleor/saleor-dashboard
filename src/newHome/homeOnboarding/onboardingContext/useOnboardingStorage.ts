@@ -40,10 +40,10 @@ export const useOnboardingStorage = (): StorageService => {
     try {
       const userMetadata = [...(user?.metadata ?? [])];
       const metadataValue = JSON.stringify(onboardingState);
-      const metadata = userMetadata.find(m => m.key === METADATA_KEY);
+      const metadataIndex = userMetadata.findIndex(m => m.key === METADATA_KEY);
 
-      if (metadata) {
-        metadata.value = metadataValue;
+      if (metadataIndex !== -1) {
+        userMetadata[metadataIndex] = { key: METADATA_KEY, value: metadataValue } as any;
       } else {
         userMetadata.push({ key: METADATA_KEY, value: metadataValue } as any);
       }
