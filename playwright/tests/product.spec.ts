@@ -118,7 +118,7 @@ test("TC: SALEOR_45 As an admin I should be able to delete a single products @ba
   );
   await productPage.clickDeleteProductButton();
   await productPage.deleteProductDialog.clickDeleteButton();
-  await productPage.expectSuccessBannerMessage("Product Removed");
+  await productPage.expectSuccessBanner({ message: "Product Removed" });
   await productPage.waitForGrid();
   await productPage.searchforProduct(PRODUCTS.productWithOneVariantToBeDeletedFromDetails.name);
   await expect(
