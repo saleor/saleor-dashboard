@@ -1,4 +1,5 @@
 import { Button } from "@saleor/macaw-ui-next";
+import { usePostHog } from "posthog-js/react";
 import React, { ReactNode } from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
@@ -200,12 +201,16 @@ const getStepsData = ({
 
 export const useOnboardingData = () => {
   const intl = useIntl();
+  const posthog = usePostHog();
   const { markOnboardingStepAsCompleted, onboardingState } = useOnboarding();
 
   const steps = getStepsData({
     intl,
     isStepCompleted: (step: OnboardingStepsIDs) => onboardingState.stepsCompleted.includes(step),
-    onStepComplete: markOnboardingStepAsCompleted,
+    onStepComplete: (step: OnboardingStepsIDs) => {
+      posthog.capture(`home_page:onboarding_${step}_click`);
+      markOnboardingStepAsCompleted(step);
+    },
   });
 
   return {

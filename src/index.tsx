@@ -116,12 +116,12 @@ const App: React.FC = () => (
                   <BackgroundTasksProvider>
                     <AppStateProvider>
                       <AuthProvider>
-                        <ShopProvider>
-                          <AppChannelProvider>
-                            <ExitFormDialogProvider>
-                              <DevModeProvider>
-                                <NavigatorSearchProvider>
-                                  <ProductAnalytics>
+                        <ProductAnalytics>
+                          <ShopProvider>
+                            <AppChannelProvider>
+                              <ExitFormDialogProvider>
+                                <DevModeProvider>
+                                  <NavigatorSearchProvider>
                                     <SavebarRefProvider>
                                       <FeatureFlagsProviderWithUser>
                                         <OnboardingProvider>
@@ -129,12 +129,12 @@ const App: React.FC = () => (
                                         </OnboardingProvider>
                                       </FeatureFlagsProviderWithUser>
                                     </SavebarRefProvider>
-                                  </ProductAnalytics>
-                                </NavigatorSearchProvider>
-                              </DevModeProvider>
-                            </ExitFormDialogProvider>
-                          </AppChannelProvider>
-                        </ShopProvider>
+                                  </NavigatorSearchProvider>
+                                </DevModeProvider>
+                              </ExitFormDialogProvider>
+                            </AppChannelProvider>
+                          </ShopProvider>
+                        </ProductAnalytics>
                       </AuthProvider>
                     </AppStateProvider>
                   </BackgroundTasksProvider>
