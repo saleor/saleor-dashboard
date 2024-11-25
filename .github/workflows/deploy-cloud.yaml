@@ -26,6 +26,7 @@ jobs:
       IS_CLOUD_INSTANCE: true
       POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
       POSTHOG_HOST: ${{ secrets.POSTHOG_HOST }}
+      ONBOARDING_USER_JOINED_DATE_THRESHOLD: ${{ secrets.ONBOARDING_USER_JOINED_DATE_THRESHOLD }}
     steps:
       - name: Check region
         if: ${{ !contains(fromJSON('["eu", "us"]'), env.REGION) }}
