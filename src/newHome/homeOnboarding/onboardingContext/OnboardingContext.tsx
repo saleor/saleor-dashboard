@@ -1,3 +1,4 @@
+import { useUser } from "@dashboard/auth";
 import React from "react";
 
 import {
@@ -51,11 +52,12 @@ export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
   const [onboardingState, setOnboardingState] =
     React.useState<OnboardingState>(initialOnboardingState);
   const [loaded, setLoaded] = React.useState(false);
+  const { user } = useUser();
 
   const storageService = useOnboardingStorage();
 
   React.useEffect(() => {
-    if (loaded) return;
+    if (loaded || !user) return;
 
     const onboardingStateLS = storageService.getOnboardingState();
 
@@ -73,10 +75,10 @@ export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
 
     setOnboardingState(onboardingStateLS);
     setLoaded(true);
-  }, [loaded, storageService]);
+  }, [loaded, storageService, user]);
 
   React.useEffect(() => {
-    if (loaded) {
+    if (loaded && user) {
       storageService.saveOnboardingState(onboardingState);
     }
   }, [onboardingState]);
