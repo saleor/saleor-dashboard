@@ -3,7 +3,7 @@ import React from "react";
 
 import { HomeSidebarContext } from "./homeSidebarContext";
 
-interface HomeSidebarContextProviderProps {
+export interface HomeSidebarContextProviderProps {
   children: React.ReactNode;
   channel: ChannelFragment | undefined;
   setChannel: (channelId: string) => void;

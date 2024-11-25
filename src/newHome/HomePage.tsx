@@ -8,7 +8,6 @@ import React from "react";
 
 import HomeOnboarding from "./homeOnboarding/HomeOnboarding";
 import { HomeSidebar } from "./HomeSidebar";
-import { HomeSidebarContextProvider } from "./HomeSidebar/context/HomeSidebarContextProvider";
 import { HomeTitle } from "./HomeTitle";
 
 export const HomePage = () => {
@@ -28,14 +27,12 @@ export const HomePage = () => {
         <HomeOnboarding />
       </DetailPageLayout.Content>
       <DetailPageLayout.RightSidebar borderLeftStyle="none">
-        <HomeSidebarContextProvider
+        <HomeSidebar
           channel={channel}
           setChannel={setChannel}
           channels={channels}
           hasPermissionToManageOrders={hasPermissionToManageOrders}
-        >
-          <HomeSidebar />
-        </HomeSidebarContextProvider>
+        />
       </DetailPageLayout.RightSidebar>
     </DetailPageLayout>
   );
