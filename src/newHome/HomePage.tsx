@@ -3,13 +3,13 @@ import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
-import { HomeSidebar } from "@dashboard/newHome/components/HomeSidebar";
-import { HomeSidebarContextProvider } from "@dashboard/newHome/components/HomeSidebar/context/HomeSidebarContextProvider";
-import { HomeTitle } from "@dashboard/newHome/components/HomeTitle";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import HomeOnboarding from "./homeOnboarding/HomeOnboarding";
+import { HomeSidebar } from "./HomeSidebar";
+import { HomeSidebarContextProvider } from "./HomeSidebar/context/HomeSidebarContextProvider";
+import { HomeTitle } from "./HomeTitle";
 
 export const HomePage = () => {
   const { channel, setChannel } = useAppChannel(false);

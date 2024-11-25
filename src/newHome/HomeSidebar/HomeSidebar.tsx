@@ -17,7 +17,7 @@ export const HomeSidebar = () => {
 
   return (
     <DashboardCard
-      borderRadius={2}
+      borderRadius={3}
       borderWidth={1}
       borderStyle="solid"
       borderColor="default1"
