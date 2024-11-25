@@ -106,51 +106,49 @@ const handleLegacyTheming = () => {
 
 handleLegacyTheming();
 
-const App: React.FC = () => {
-  return (
-    <SaleorProvider client={saleorClient}>
-      <ApolloProvider client={apolloClient}>
-        <Router>
-          <LegacyThemeProvider overrides={themeOverrides} palettes={paletteOverrides}>
-            <ThemeProvider>
-              <DateProvider>
-                <LocaleProvider>
-                  <MessageManagerProvider>
-                    <BackgroundTasksProvider>
-                      <AppStateProvider>
-                        <AuthProvider>
-                          <ShopProvider>
-                            <AppChannelProvider>
-                              <ExitFormDialogProvider>
-                                <DevModeProvider>
-                                  <NavigatorSearchProvider>
-                                    <ProductAnalytics>
-                                      <SavebarRefProvider>
-                                        <FeatureFlagsProviderWithUser>
-                                          <OnboardingProvider>
-                                            <Routes />
-                                          </OnboardingProvider>
-                                        </FeatureFlagsProviderWithUser>
-                                      </SavebarRefProvider>
-                                    </ProductAnalytics>
-                                  </NavigatorSearchProvider>
-                                </DevModeProvider>
-                              </ExitFormDialogProvider>
-                            </AppChannelProvider>
-                          </ShopProvider>
-                        </AuthProvider>
-                      </AppStateProvider>
-                    </BackgroundTasksProvider>
-                  </MessageManagerProvider>
-                </LocaleProvider>
-              </DateProvider>
-            </ThemeProvider>
-          </LegacyThemeProvider>
-        </Router>
-      </ApolloProvider>
-    </SaleorProvider>
-  );
-};
+const App: React.FC = () => (
+  <SaleorProvider client={saleorClient}>
+    <ApolloProvider client={apolloClient}>
+      <Router>
+        <LegacyThemeProvider overrides={themeOverrides} palettes={paletteOverrides}>
+          <ThemeProvider>
+            <DateProvider>
+              <LocaleProvider>
+                <MessageManagerProvider>
+                  <BackgroundTasksProvider>
+                    <AppStateProvider>
+                      <AuthProvider>
+                        <ShopProvider>
+                          <AppChannelProvider>
+                            <ExitFormDialogProvider>
+                              <DevModeProvider>
+                                <NavigatorSearchProvider>
+                                  <ProductAnalytics>
+                                    <SavebarRefProvider>
+                                      <FeatureFlagsProviderWithUser>
+                                        <OnboardingProvider>
+                                          <Routes />
+                                        </OnboardingProvider>
+                                      </FeatureFlagsProviderWithUser>
+                                    </SavebarRefProvider>
+                                  </ProductAnalytics>
+                                </NavigatorSearchProvider>
+                              </DevModeProvider>
+                            </ExitFormDialogProvider>
+                          </AppChannelProvider>
+                        </ShopProvider>
+                      </AuthProvider>
+                    </AppStateProvider>
+                  </BackgroundTasksProvider>
+                </MessageManagerProvider>
+              </LocaleProvider>
+            </DateProvider>
+          </ThemeProvider>
+        </LegacyThemeProvider>
+      </Router>
+    </ApolloProvider>
+  </SaleorProvider>
+);
 const Routes: React.FC = () => {
   const intl = useIntl();
   const [, dispatchAppState] = useAppState();

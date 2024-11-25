@@ -1,4 +1,3 @@
-import { useOnboardingStorage } from "@dashboard/newHome/homeOnboarding/onboardingContext/useOnboardingStorage";
 import React from "react";
 
 import {
@@ -8,6 +7,7 @@ import {
   OnboardingStepsIDs,
 } from "./types";
 import { useExpandedOnboardingId } from "./useExpandedOnboardingId";
+import { useOnboardingStorage } from "./useOnboardingStorage";
 
 const OnboardingContext = React.createContext<OnboardingContextType | null>(null);
 
