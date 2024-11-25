@@ -4,6 +4,8 @@ import {
   OnboardingState,
   StorageService,
 } from "@dashboard/newHome/homeOnboarding/onboardingContext/types";
+import debounce from "lodash/debounce";
+import { useCallback, useMemo } from "react";
 
 const METADATA_KEY = "onboarding";
 
@@ -30,39 +32,45 @@ export const useOnboardingStorage = (): StorageService => {
     }
   };
 
-  const saveOnboardingState: StorageService["saveOnboardingState"] = async (
-    onboardingState: OnboardingState,
-  ) => {
-    if (!user) {
-      return;
-    }
-
-    try {
-      const userMetadata = [...(user?.metadata ?? [])];
-      const metadataValue = JSON.stringify(onboardingState);
-      const metadataIndex = userMetadata.findIndex(m => m.key === METADATA_KEY);
-
-      if (metadataIndex !== -1) {
-        userMetadata[metadataIndex] = { key: METADATA_KEY, value: metadataValue } as any;
-      } else {
-        userMetadata.push({ key: METADATA_KEY, value: metadataValue } as any);
+  const saveOnboardingState: StorageService["saveOnboardingState"] = useCallback(
+    async (onboardingState: OnboardingState) => {
+      if (!user) {
+        return;
       }
 
-      await updateMetadata({
-        variables: {
-          id: user?.id ?? "",
-          input: userMetadata,
-          keysToDelete: [],
-        },
-      });
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.warn("Could not save onboarding state to metadata");
-    }
-  };
+      try {
+        const userMetadata = [...(user?.metadata ?? [])];
+        const metadataValue = JSON.stringify(onboardingState);
+        const metadataIndex = userMetadata.findIndex(m => m.key === METADATA_KEY);
+
+        if (metadataIndex !== -1) {
+          userMetadata[metadataIndex] = { key: METADATA_KEY, value: metadataValue } as any;
+        } else {
+          userMetadata.push({ key: METADATA_KEY, value: metadataValue } as any);
+        }
+
+        await updateMetadata({
+          variables: {
+            id: user?.id ?? "",
+            input: userMetadata,
+            keysToDelete: [],
+          },
+        });
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.warn("Could not save onboarding state to metadata");
+      }
+    },
+    [updateMetadata, user],
+  );
+
+  const debouncedSaveOnboardingState = useMemo(
+    () => debounce(saveOnboardingState, 1000),
+    [saveOnboardingState],
+  );
 
   return {
     getOnboardingState,
-    saveOnboardingState,
+    saveOnboardingState: debouncedSaveOnboardingState,
   };
 };
