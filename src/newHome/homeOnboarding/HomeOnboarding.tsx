@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { TOTAL_STEPS_COUNT } from "@dashboard/newHome/homeOnboarding/onboardingContext/initialOnboardingState";
-import { Accordion, Box, Button, ChervonDownIcon, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Accordion, Box, Button, ChervonDownIcon, Text } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -31,13 +31,12 @@ const HomeOnboarding = () => {
 
   return (
     <DashboardCard
-      className={sprinkles({
-        margin: 6,
-        borderRadius: 4,
-        borderStyle: "solid",
-        borderColor: "default1",
-        borderWidth: 1,
-      })}
+      marginTop={6}
+      marginRight={6}
+      borderRadius={3}
+      borderColor="default1"
+      borderWidth={1}
+      borderStyle="solid"
     >
       <Accordion
         value={isOnboardingExpanded ? "onboarding" : ""}
@@ -73,12 +72,7 @@ const HomeOnboarding = () => {
           </DashboardCard.Header>
 
           <Accordion.Content>
-            <DashboardCard.Content
-              className={sprinkles({
-                padding: 6,
-                paddingTop: 0,
-              })}
-            >
+            <DashboardCard.Content padding={6} paddingTop={0}>
               <HomeOnboardingAccordion />
             </DashboardCard.Content>
           </Accordion.Content>

@@ -348,6 +348,9 @@
     "context": "order returned success message",
     "string": "Successfully returned products!"
   },
+  "0+zatS": {
+    "string": "Hello {userName}, welcome to your Store Dashboard"
+  },
   "01+5kQ": {
     "string": "Mark as paid"
   },
@@ -9284,6 +9287,10 @@
   },
   "x0n6YG": {
     "string": "This refund is currently being processed and cannot be edited"
+  },
+  "x0wum5": {
+    "context": "home sidebar card title",
+    "string": "Your store info"
   },
   "x2mg39": {
     "context": "Transaction event description",
