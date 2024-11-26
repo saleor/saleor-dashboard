@@ -11,7 +11,9 @@ export const WelcomePageTilesContainer = () => {
   const posthog = usePostHog();
 
   const handleTileButtonClick = (tileId: string) => {
-    posthog.capture(`home_page:${tileId}_click`);
+    posthog.capture("home_tile_click", {
+      tile_id: tileId,
+    });
   };
 
   const tiles = getTilesData({ intl, onTileButtonClick: handleTileButtonClick });

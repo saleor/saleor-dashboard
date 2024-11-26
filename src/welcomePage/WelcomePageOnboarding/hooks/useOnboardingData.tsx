@@ -217,7 +217,8 @@ export const useOnboardingData = () => {
     onStepComplete: (step: OnboardingStepsIDs) => {
       markOnboardingStepAsCompleted(step);
     },
-    posthogCapture: (event: string) => posthog.capture(`home_page:onboarding_${event}_click`),
+    posthogCapture: (step_id: string) =>
+      posthog.capture("home_onboarding_step_click", { step_id: step_id }),
   });
 
   return {
