@@ -15,9 +15,12 @@ const useConfig = () => {
   const apiKey = process.env.POSTHOG_KEY;
   const isCloudInstance = process.env.IS_CLOUD_INSTANCE;
   const canRenderAnalytics = () => {
-    if (!isCloudInstance) {
-      return false;
-    }
+    // if (!isCloudInstance) {
+    //   return false;
+    // }
+
+    // eslint-disable-next-line no-console
+    console.log({ options });
 
     if (!options.api_host || !apiKey) {
       return false;
