@@ -1,3 +1,3 @@
 export interface PrimaryActionProps {
-  onPrimaryAction: () => void;
+  onClick: () => void;
 }

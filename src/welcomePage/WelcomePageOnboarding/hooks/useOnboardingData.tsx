@@ -73,7 +73,7 @@ const getStepsData = ({
     isCompleted: isStepCompleted("create-product"),
     actions: (
       <>
-        <WelcomePageCreateProductButton onPrimaryAction={() => posthogCapture("create-product")} />
+        <WelcomePageCreateProductButton onClick={() => posthogCapture("create-product")} />
         {!isStepCompleted("create-product") && (
           <Button
             variant="secondary"
@@ -102,7 +102,7 @@ const getStepsData = ({
     isCompleted: isStepCompleted("explore-orders"),
     actions: (
       <>
-        <WelcomePageOrdersButton onPrimaryAction={() => posthogCapture("explore-orders")} />
+        <WelcomePageOrdersButton onClick={() => posthogCapture("explore-orders")} />
         {!isStepCompleted("explore-orders") && (
           <Button
             variant="secondary"
@@ -131,9 +131,7 @@ const getStepsData = ({
     isCompleted: isStepCompleted("graphql-playground"),
     actions: (
       <>
-        <WelcomePageCheckGraphQLButton
-          onPrimaryAction={() => posthogCapture("graphql-playground")}
-        />
+        <WelcomePageCheckGraphQLButton onClick={() => posthogCapture("graphql-playground")} />
         {!isStepCompleted("graphql-playground") && (
           <Button
             variant="secondary"
@@ -162,7 +160,7 @@ const getStepsData = ({
     isCompleted: isStepCompleted("view-webhooks"),
     actions: (
       <>
-        <WelcomePageWebhooksButton onPrimaryAction={() => posthogCapture("view-webhooks")} />
+        <WelcomePageWebhooksButton onClick={() => posthogCapture("view-webhooks")} />
         {!isStepCompleted("view-webhooks") && (
           <Button
             variant="secondary"
@@ -191,7 +189,7 @@ const getStepsData = ({
     isCompleted: isStepCompleted("invite-staff"),
     actions: (
       <>
-        <WelcomePageInviteStaffButton onPrimaryAction={() => posthogCapture("invite-staff")} />
+        <WelcomePageInviteStaffButton onClick={() => posthogCapture("invite-staff")} />
         {!isStepCompleted("invite-staff") && (
           <Button
             variant="secondary"
@@ -216,6 +214,7 @@ export const useOnboardingData = () => {
     isStepCompleted: (step: OnboardingStepsIDs) => onboardingState.stepsCompleted.includes(step),
     onStepComplete: (step: OnboardingStepsIDs) => {
       markOnboardingStepAsCompleted(step);
+      posthog.capture("home_onboarding_step_complete_click", { step_id: step });
     },
     posthogCapture: (step_id: string) =>
       posthog.capture("home_onboarding_step_click", { step_id: step_id }),

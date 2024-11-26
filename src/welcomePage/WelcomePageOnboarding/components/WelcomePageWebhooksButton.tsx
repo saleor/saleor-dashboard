@@ -4,9 +4,11 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
-export const WelcomePageWebhooksButton = () => {
+import { PrimaryActionProps } from "./type";
+
+export const WelcomePageWebhooksButton: React.FC<PrimaryActionProps> = ({ onClick }) => {
   return (
-    <Link to={CustomAppSections.appsSection}>
+    <Link to={CustomAppSections.appsSection} onClick={onClick}>
       <Button variant="primary">
         <FormattedMessage defaultMessage="Go to Webhooks" id="5TzisG" description="btn label" />
       </Button>
