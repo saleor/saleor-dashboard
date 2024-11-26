@@ -21,9 +21,7 @@ export const useOnboardingStorage = (): StorageService => {
         return undefined;
       }
 
-      const parsed = JSON.parse(metadata.value);
-
-      return parsed;
+      return JSON.parse(metadata.value);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.warn("Could not get onboarding state from metadata", { error });
@@ -67,7 +65,7 @@ export const useOnboardingStorage = (): StorageService => {
   const debouncedSaveOnboardingState = useMemo(
     () => debounce(saveOnboardingState, 1000),
     [saveOnboardingState],
-  );
+  ) as StorageService["saveOnboardingState"];
 
   return {
     getOnboardingState,

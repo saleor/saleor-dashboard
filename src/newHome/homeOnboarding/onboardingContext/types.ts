@@ -19,7 +19,7 @@ export type OnboardingState = {
 
 export interface StorageService {
   getOnboardingState(): OnboardingState | undefined;
-  saveOnboardingState(onboardingState: OnboardingState): void;
+  saveOnboardingState(onboardingState: OnboardingState): Promise<void>;
 }
 
 export interface OnboardingContextType {
