@@ -4,8 +4,8 @@ import { Accordion, Box, ChervonDownIcon, Skeleton, Text } from "@saleor/macaw-u
 import React from "react";
 import SVG from "react-inlinesvg";
 
+import { useOnboardingData } from "./hooks/useOnboardingData";
 import { useOnboarding } from "./onboardingContext/OnboardingContext";
-import { useOnboardingData } from "./useOnboardingData";
 
 export const HomeOnboardingAccordion = () => {
   const { toggleExpandedOnboardingStep, extendedStepId, loading } = useOnboarding();
