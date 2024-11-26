@@ -1,5 +1,5 @@
 import { useUser } from "@dashboard/auth";
-import { MetadataInput, useUpdateMetadataMutation } from "@dashboard/graphql";
+import { MetadataInput, useUpdateUserMetadataMutation } from "@dashboard/graphql";
 import {
   OnboardingState,
   StorageService,
@@ -11,7 +11,7 @@ const METADATA_KEY = "onboarding";
 
 export const useOnboardingStorage = (): StorageService => {
   const { user } = useUser();
-  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updateMetadata] = useUpdateUserMetadataMutation({});
 
   const getOnboardingState: StorageService["getOnboardingState"] = () => {
     try {
@@ -61,7 +61,6 @@ export const useOnboardingStorage = (): StorageService => {
           variables: {
             id: user.id,
             input: userMetadata,
-            keysToDelete: [],
           },
         });
       } catch (error) {

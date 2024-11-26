@@ -1,5 +1,5 @@
 import { useUser } from "@dashboard/auth";
-import { useUpdateMetadataMutation } from "@dashboard/graphql";
+import { useUpdateUserMetadataMutation } from "@dashboard/graphql";
 import { OnboardingStepsIDs } from "@dashboard/newHome/homeOnboarding/onboardingContext/types";
 import { act } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
@@ -24,7 +24,7 @@ describe("useOnboardingStorage", () => {
       (useUser as jest.Mock).mockImplementation(() => ({
         user: { metadata: [{ key1: "value1" }, { key2: "value2" }] },
       }));
-      (useUpdateMetadataMutation as jest.Mock).mockReturnValue([jest.fn(), {}]);
+      (useUpdateUserMetadataMutation as jest.Mock).mockReturnValue([jest.fn(), {}]);
 
       const { getOnboardingState } = renderHook(() => useOnboardingStorage()).result.current;
 
@@ -47,7 +47,7 @@ describe("useOnboardingStorage", () => {
           ],
         },
       }));
-      (useUpdateMetadataMutation as jest.Mock).mockReturnValue([jest.fn(), {}]);
+      (useUpdateUserMetadataMutation as jest.Mock).mockReturnValue([jest.fn(), {}]);
 
       const { getOnboardingState } = renderHook(() => useOnboardingStorage()).result.current;
 
@@ -66,7 +66,7 @@ describe("useOnboardingStorage", () => {
 
       const updateMetadataMock = jest.fn();
 
-      (useUpdateMetadataMutation as jest.Mock).mockReturnValue([updateMetadataMock, {}]);
+      (useUpdateUserMetadataMutation as jest.Mock).mockReturnValue([updateMetadataMock, {}]);
 
       const { result } = renderHook(() => useOnboardingStorage());
 
@@ -90,7 +90,7 @@ describe("useOnboardingStorage", () => {
 
       const updateMetadataMock = jest.fn();
 
-      (useUpdateMetadataMutation as jest.Mock).mockReturnValue([updateMetadataMock, {}]);
+      (useUpdateUserMetadataMutation as jest.Mock).mockReturnValue([updateMetadataMock, {}]);
 
       const { result } = renderHook(() => useOnboardingStorage());
 
@@ -120,7 +120,6 @@ describe("useOnboardingStorage", () => {
               }),
             },
           ],
-          keysToDelete: [],
         },
       });
     });
