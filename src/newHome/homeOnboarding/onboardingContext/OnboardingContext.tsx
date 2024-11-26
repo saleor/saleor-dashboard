@@ -1,4 +1,4 @@
-import { useUser } from "@dashboard/auth";
+import { useFlag } from "@dashboard/featureFlags";
 import {
   handleStateChangeAfterStepCompleted,
   handleStateChangeAfterToggle,
@@ -22,7 +22,7 @@ import { useOnboardingStorage } from "./useOnboardingStorage";
 
 const OnboardingContext = React.createContext<OnboardingContextType | null>(null);
 
-export const OnboardingProvider = ({ children, storageService }: OnboardingProviderProps) => {
+export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
   const [onboardingState, setOnboardingState] = React.useState<OnboardingState>({
     onboardingExpanded: true,
     stepsCompleted: [],
@@ -30,6 +30,7 @@ export const OnboardingProvider = ({ children, storageService }: OnboardingProvi
   });
   const [loaded, setLoaded] = React.useState(false);
   const { isNewUser, isUserLoading } = useNewUserCheck();
+  const newHomePageFlag = useFlag("new_home_page");
 
   const storageService = useOnboardingStorage();
 
@@ -62,6 +63,8 @@ export const OnboardingProvider = ({ children, storageService }: OnboardingProvi
   const extendedStepId = useExpandedOnboardingId(onboardingState, loaded);
 
   const markOnboardingStepAsCompleted = (id: OnboardingStepsIDs) => {
+    if (!newHomePageFlag.enabled) return;
+
     setOnboardingState(prevOnboardingState =>
       handleStateChangeAfterStepCompleted(prevOnboardingState, id),
     );

@@ -181,9 +181,7 @@ export const useOnboardingData = () => {
   const steps = getStepsData({
     intl,
     isStepCompleted: (step: OnboardingStepsIDs) => onboardingState.stepsCompleted.includes(step),
-    onStepComplete: (step: OnboardingStepsIDs) => {
-      markOnboardingStepAsCompleted(step);
-    },
+    onStepComplete: markOnboardingStepAsCompleted,
   });
 
   return {
