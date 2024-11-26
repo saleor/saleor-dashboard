@@ -23,10 +23,12 @@ const getStepsData = ({
   intl,
   isStepCompleted,
   onStepComplete,
+  posthogCapture,
 }: {
   intl: IntlShape;
   isStepCompleted: (step: OnboardingStepsIDs) => boolean;
   onStepComplete: (step: OnboardingStepsIDs) => void;
+  posthogCapture: (event: string) => void;
 }): OnboardingStepData[] => [
   {
     id: "get-started",
@@ -45,8 +47,11 @@ const getStepsData = ({
     actions: !isStepCompleted("get-started") ? (
       <Button
         variant="primary"
-        onClick={() => onStepComplete("get-started")}
         data-test-id="get-started-next-step-btn"
+        onClick={() => {
+          onStepComplete("get-started");
+          posthogCapture("get-started");
+        }}
       >
         <FormattedMessage defaultMessage="Next step" id="d+qgix" />
       </Button>
@@ -68,7 +73,7 @@ const getStepsData = ({
     isCompleted: isStepCompleted("create-product"),
     actions: (
       <>
-        <WelcomePageCreateProductButton />
+        <WelcomePageCreateProductButton onPrimaryAction={() => posthogCapture("create-product")} />
         {!isStepCompleted("create-product") && (
           <Button
             variant="secondary"
@@ -97,7 +102,7 @@ const getStepsData = ({
     isCompleted: isStepCompleted("explore-orders"),
     actions: (
       <>
-        <WelcomePageOrdersButton />
+        <WelcomePageOrdersButton onPrimaryAction={() => posthogCapture("explore-orders")} />
         {!isStepCompleted("explore-orders") && (
           <Button
             variant="secondary"
@@ -126,7 +131,9 @@ const getStepsData = ({
     isCompleted: isStepCompleted("graphql-playground"),
     actions: (
       <>
-        <WelcomePageCheckGraphQLButton />
+        <WelcomePageCheckGraphQLButton
+          onPrimaryAction={() => posthogCapture("graphql-playground")}
+        />
         {!isStepCompleted("graphql-playground") && (
           <Button
             variant="secondary"
@@ -155,7 +162,7 @@ const getStepsData = ({
     isCompleted: isStepCompleted("view-webhooks"),
     actions: (
       <>
-        <WelcomePageWebhooksButton />
+        <WelcomePageWebhooksButton onPrimaryAction={() => posthogCapture("view-webhooks")} />
         {!isStepCompleted("view-webhooks") && (
           <Button
             variant="secondary"
@@ -184,7 +191,7 @@ const getStepsData = ({
     isCompleted: isStepCompleted("invite-staff"),
     actions: (
       <>
-        <WelcomePageInviteStaffButton />
+        <WelcomePageInviteStaffButton onPrimaryAction={() => posthogCapture("invite-staff")} />
         {!isStepCompleted("invite-staff") && (
           <Button
             variant="secondary"
@@ -208,9 +215,9 @@ export const useOnboardingData = () => {
     intl,
     isStepCompleted: (step: OnboardingStepsIDs) => onboardingState.stepsCompleted.includes(step),
     onStepComplete: (step: OnboardingStepsIDs) => {
-      posthog.capture(`home_page:onboarding_${step}_click`);
       markOnboardingStepAsCompleted(step);
     },
+    posthogCapture: (event: string) => posthog.capture(`home_page:onboarding_${event}_click`),
   });
 
   return {
