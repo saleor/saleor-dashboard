@@ -1,7 +1,9 @@
 // @ts-strict-ignore
 import { useDashboardTheme } from "@dashboard/components/GraphiQL/styles";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { createGraphiQLFetcher } from "@graphiql/toolkit";
+import { useFlag } from "@dashboard/featureFlags";
+import { useOnboarding } from "@dashboard/newHome/homeOnboarding/onboardingContext";
+import { createGraphiQLFetcher, FetcherOpts, FetcherParams } from "@graphiql/toolkit";
 import { createFetch } from "@saleor/sdk";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -15,11 +17,22 @@ const authorizedFetch = createFetch();
 export const DevModePanel: React.FC = () => {
   const intl = useIntl();
   const { rootStyle } = useDashboardTheme();
+  const { markOnboardingStepAsCompleted } = useOnboarding();
+  const newHomePageFlag = useFlag("new_home_page");
   const { isDevModeVisible, variables, devModeContent, setDevModeVisibility } = useDevModeContext();
-  const fetcher = createGraphiQLFetcher({
+  const baseFetcher = createGraphiQLFetcher({
     url: process.env.API_URL,
     fetch: authorizedFetch,
   });
+  const fetcher = async (graphQLParams: FetcherParams, opts: FetcherOpts) => {
+    if (graphQLParams.operationName !== "IntrospectionQuery" && newHomePageFlag.enabled) {
+      markOnboardingStepAsCompleted("graphql-playground");
+    }
+
+    const result = await baseFetcher(graphQLParams, opts); // Call the base fetcher
+
+    return result;
+  };
   const overwriteCodeMirrorCSSVariables = {
     __html: `
       .graphiql-container, .CodeMirror-info, .CodeMirror-lint-tooltip, reach-portal{
