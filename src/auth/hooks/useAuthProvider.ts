@@ -14,6 +14,7 @@ import {
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
 import { GetExternalAccessTokenData, LoginData, useAuth, useAuthState } from "@saleor/sdk";
 import isEmpty from "lodash/isEmpty";
+import { posthog } from "posthog-js";
 import { useEffect, useRef, useState } from "react";
 import { IntlShape } from "react-intl";
 import urlJoin from "url-join";
@@ -81,6 +82,8 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
     }
   };
   const handleLogout = async () => {
+    posthog.reset();
+
     const returnTo = urlJoin(window.location.origin, getAppMountUriForRedirect());
     const result = await logout({
       input: JSON.stringify({

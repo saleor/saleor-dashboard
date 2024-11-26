@@ -26,7 +26,7 @@ export const ShopProvider: React.FC = ({ children }) => {
     if (data) {
       const { shop } = data;
 
-      posthog.identify(undefined, {
+      posthog.identify(posthog.get_distinct_id(), {
         domain: shop.domain.host,
         email_domain: extractEmailDomain(user.email),
       });
