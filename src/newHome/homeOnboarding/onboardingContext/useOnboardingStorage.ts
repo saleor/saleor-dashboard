@@ -37,12 +37,11 @@ export const useOnboardingStorage = (): StorageService => {
       }
 
       try {
-        const userMetadata: Array<MetadataInput> = [
-          ...(user?.metadata?.map(data => ({
+        const userMetadata: MetadataInput[] =
+          user?.metadata?.map(data => ({
             key: data.key,
             value: data.value,
-          })) ?? []),
-        ];
+          })) ?? [];
         const metadataValue = JSON.stringify(onboardingState);
         const metadataIndex = userMetadata.findIndex(m => m.key === METADATA_KEY);
 
@@ -60,7 +59,7 @@ export const useOnboardingStorage = (): StorageService => {
 
         await updateMetadata({
           variables: {
-            id: user?.id ?? "",
+            id: user.id,
             input: userMetadata,
             keysToDelete: [],
           },
