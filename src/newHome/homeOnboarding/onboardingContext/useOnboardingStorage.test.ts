@@ -1,5 +1,6 @@
 import { useUser } from "@dashboard/auth";
 import { useUpdateMetadataMutation } from "@dashboard/graphql";
+import { OnboardingStepsIDs } from "@dashboard/newHome/homeOnboarding/onboardingContext/types";
 import { act } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 
@@ -71,7 +72,11 @@ describe("useOnboardingStorage", () => {
 
       // Act
       const returnValue = await act(async () => {
-        return await result.current.saveOnboardingState({ steps: [], onboardingExpanded: true });
+        return await result.current.saveOnboardingState({
+          stepsCompleted: [],
+          stepsExpanded: {} as Record<OnboardingStepsIDs, boolean>,
+          onboardingExpanded: true,
+        });
       });
 
       // Assert
@@ -91,7 +96,11 @@ describe("useOnboardingStorage", () => {
 
       // Act
       await act(async () => {
-        await result.current.saveOnboardingState({ steps: [], onboardingExpanded: true });
+        await result.current.saveOnboardingState({
+          stepsCompleted: [],
+          stepsExpanded: {} as Record<OnboardingStepsIDs, boolean>,
+          onboardingExpanded: true,
+        });
       });
 
       jest.runAllTimers();
@@ -102,7 +111,14 @@ describe("useOnboardingStorage", () => {
         variables: {
           id: "1",
           input: [
-            { key: "onboarding", value: JSON.stringify({ steps: [], onboardingExpanded: true }) },
+            {
+              key: "onboarding",
+              value: JSON.stringify({
+                stepsCompleted: [],
+                stepsExpanded: {} as Record<OnboardingStepsIDs, boolean>,
+                onboardingExpanded: true,
+              }),
+            },
           ],
           keysToDelete: [],
         },
