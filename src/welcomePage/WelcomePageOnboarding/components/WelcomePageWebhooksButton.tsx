@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 import { PrimaryActionProps } from "./type";
 
-export const WelcomePageWebhooksButton: React.FC<PrimaryActionProps> = ({ onClick }) => {
+export const WelcomePageWebhooksButton = ({ onClick }: PrimaryActionProps) => {
   return (
     <Link to={CustomAppSections.appsSection} onClick={onClick}>
       <Button variant="primary">

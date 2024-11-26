@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { PrimaryActionProps } from "./type";
 import { WelcomePageFakeDisabledButton } from "./WelcomePageFakeDisabledButton";
 
-export const WelcomePageCreateProductButton: React.FC<PrimaryActionProps> = ({ onClick }) => {
+export const WelcomePageCreateProductButton = ({ onClick }: PrimaryActionProps) => {
   const { user } = useUser();
   const userPermissions = user?.userPermissions || [];
   const hasPermissionToManageProducts = hasPermissions(userPermissions, [

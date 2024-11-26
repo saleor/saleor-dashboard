@@ -28,7 +28,7 @@ const getStepsData = ({
   intl: IntlShape;
   isStepCompleted: (step: OnboardingStepsIDs) => boolean;
   onStepComplete: (step: OnboardingStepsIDs) => void;
-  posthogCapture: (event: string) => void;
+  posthogCapture: (event: OnboardingStepsIDs) => void;
 }): OnboardingStepData[] => [
   {
     id: "get-started",
@@ -216,7 +216,7 @@ export const useOnboardingData = () => {
       markOnboardingStepAsCompleted(step);
       posthog.capture("home_onboarding_step_complete_click", { step_id: step });
     },
-    posthogCapture: (step_id: string) =>
+    posthogCapture: (step_id: OnboardingStepsIDs) =>
       posthog.capture("home_onboarding_step_click", { step_id: step_id }),
   });
 

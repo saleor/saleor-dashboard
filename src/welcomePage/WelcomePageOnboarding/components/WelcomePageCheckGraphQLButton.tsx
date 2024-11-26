@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 
 import { PrimaryActionProps } from "./type";
 
-export const WelcomePageCheckGraphQLButton: React.FC<PrimaryActionProps> = ({ onClick }) => {
+export const WelcomePageCheckGraphQLButton = ({ onClick }: PrimaryActionProps) => {
   const context = useDevModeContext();
 
   return (
