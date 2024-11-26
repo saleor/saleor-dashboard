@@ -6,6 +6,7 @@ import { useConditionalFilterContext } from "@dashboard/components/ConditionalFi
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
+import { useFlag } from "@dashboard/featureFlags";
 import { useOrderDraftCreateMutation, useOrderListQuery } from "@dashboard/graphql";
 import { useFilterHandlers } from "@dashboard/hooks/useFilterHandlers";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
@@ -17,12 +18,13 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
+import { useOnboarding } from "@dashboard/newHome/homeOnboarding/onboardingContext";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import React from "react";
+import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import OrderListPage from "../../components/OrderListPage/OrderListPage";
@@ -45,6 +47,15 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.ORDER_LIST);
   const { valueProvider } = useConditionalFilterContext();
+
+  const { markOnboardingStepAsCompleted } = useOnboarding();
+  const newHomePageFlag = useFlag("new_home_page");
+
+  useEffect(() => {
+    if (newHomePageFlag) {
+      markOnboardingStepAsCompleted("explore-orders");
+    }
+  }, []);
 
   const {
     hasPresetsChanged,
