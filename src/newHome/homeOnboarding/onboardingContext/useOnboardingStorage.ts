@@ -1,5 +1,5 @@
 import { useUser } from "@dashboard/auth";
-import { useUpdateMetadataMutation } from "@dashboard/graphql";
+import { MetadataInput, useUpdateMetadataMutation } from "@dashboard/graphql";
 import {
   OnboardingState,
   StorageService,
@@ -37,14 +37,25 @@ export const useOnboardingStorage = (): StorageService => {
       }
 
       try {
-        const userMetadata = [...(user?.metadata ?? [])];
+        const userMetadata: Array<MetadataInput> = [
+          ...(user?.metadata?.map(data => ({
+            key: data.key,
+            value: data.value,
+          })) ?? []),
+        ];
         const metadataValue = JSON.stringify(onboardingState);
         const metadataIndex = userMetadata.findIndex(m => m.key === METADATA_KEY);
 
         if (metadataIndex !== -1) {
-          userMetadata[metadataIndex] = { key: METADATA_KEY, value: metadataValue } as any;
+          userMetadata[metadataIndex] = {
+            key: METADATA_KEY,
+            value: metadataValue,
+          };
         } else {
-          userMetadata.push({ key: METADATA_KEY, value: metadataValue } as any);
+          userMetadata.push({
+            key: METADATA_KEY,
+            value: metadataValue,
+          });
         }
 
         await updateMetadata({

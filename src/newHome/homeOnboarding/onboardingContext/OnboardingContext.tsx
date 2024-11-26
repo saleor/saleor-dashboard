@@ -3,7 +3,7 @@ import {
   handleStateChangeAfterStepCompleted,
   handleStateChangeAfterToggle,
 } from "@dashboard/newHome/homeOnboarding/onboardingContext/utils";
-import React from "react";
+import React, { useRef } from "react";
 
 import { useNewUserCheck } from "../hooks/useNewUserCheck";
 import {
@@ -28,29 +28,29 @@ export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
     stepsCompleted: [],
     stepsExpanded: {} as OnboardingState["stepsExpanded"],
   });
-  const [loaded, setLoaded] = React.useState(false);
+  const loaded = useRef(false);
   const { isNewUser, isUserLoading } = useNewUserCheck();
   const newHomePageFlag = useFlag("new_home_page");
 
   const storageService = useOnboardingStorage();
 
   React.useEffect(() => {
-    if (loaded || isUserLoading) return;
+    if (loaded.current || isUserLoading) return;
 
-    const onboardingStateLS = storageService.getOnboardingState();
+    const onboardingStateFromUserMetadata = storageService.getOnboardingState();
 
     // When first time load there is not data in local storage, so use initial state
-    if (!onboardingStateLS) {
+    if (!onboardingStateFromUserMetadata) {
       setOnboardingState(getInitialOnboardingState(isNewUser));
     } else {
-      setOnboardingState(onboardingStateLS);
+      setOnboardingState(onboardingStateFromUserMetadata);
     }
 
-    setLoaded(true);
+    loaded.current = true;
   }, [isNewUser, isUserLoading, loaded, storageService]);
 
   React.useEffect(() => {
-    if (loaded && !isUserLoading) {
+    if (loaded.current) {
       storageService.saveOnboardingState(onboardingState);
     }
   }, [onboardingState]);
@@ -60,10 +60,10 @@ export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
     ? onboardingState.stepsCompleted.length === TOTAL_STEPS_COUNT
     : true;
 
-  const extendedStepId = useExpandedOnboardingId(onboardingState, loaded);
+  const extendedStepId = useExpandedOnboardingId(onboardingState, loaded.current);
 
   const markOnboardingStepAsCompleted = (id: OnboardingStepsIDs) => {
-    if (!newHomePageFlag.enabled) return;
+    if (!newHomePageFlag.enabled || onboardingState.stepsCompleted.includes(id)) return;
 
     setOnboardingState(prevOnboardingState =>
       handleStateChangeAfterStepCompleted(prevOnboardingState, id),
