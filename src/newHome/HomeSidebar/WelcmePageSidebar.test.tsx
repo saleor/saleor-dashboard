@@ -1,15 +1,36 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { channelsList } from "@dashboard/channels/fixtures";
 import { ChannelFragment, PermissionEnum } from "@dashboard/graphql";
-import { activities } from "@dashboard/home/fixtures";
-import { ApolloMockedProvider } from "@test/ApolloMockedProvider";
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
+import { activities } from "../fixtures";
 import { HomeSidebar } from "./HomeSidebar";
 
 jest.mock("@dashboard/auth/hooks/useUserPermissions");
+jest.mock("./components/HomeActivities/useHomeActivities", () => ({
+  useHomeActivities: jest.fn(() => ({ activities, loading: false })),
+}));
+jest.mock("./components/HomeSalesAnalytics/useHomeSalesAnalytics", () => ({
+  useHomeSalesAnalytics: jest.fn(() => ({
+    analytics: {
+      sales: {
+        amount: 1000,
+        currency: "USD",
+      },
+    },
+    loading: false,
+  })),
+}));
+jest.mock("./components/HomeStocksAnalytics/useHomeStocksAnalytics", () => ({
+  useHomeStocksAnalytics: jest.fn(() => ({
+    analytics: {
+      productsOutOfStock: 10,
+    },
+    loading: false,
+  })),
+}));
 
 jest.mock("react-intl", () => ({
   useIntl: jest.fn(() => ({
@@ -23,17 +44,6 @@ jest.mock("@dashboard/hooks/useNotifier", () => ({
   __esModule: true,
   default: jest.fn(() => () => undefined),
 }));
-
-jest.mock("./components/HomeActivities/useHomeActivities", () => ({
-  useHomeActivities: jest.fn(() => ({
-    activities,
-    loading: false,
-  })),
-}));
-
-const Wrapper = ({ children }: { children: React.ReactNode }) => (
-  <ApolloMockedProvider>{children}</ApolloMockedProvider>
-);
 
 afterEach(() => {
   jest.clearAllMocks();
@@ -54,16 +64,24 @@ describe("HomeSidebar", () => {
         channels={channelsList}
         hasPermissionToManageOrders={true}
       />,
-      {
-        wrapper: Wrapper,
-      },
     );
 
     // Assert
     expect(screen.getByTestId("app-channel-select")).toBeInTheDocument();
-    expect(screen.getByTestId("sales-analytics")).toBeInTheDocument();
-    expect(screen.getByTestId("out-of-stock-analytics")).toBeInTheDocument();
+
+    // Check sales analytics
+    expect(screen.getByTestId("sales-analytics")).toHaveTextContent("1,000.00");
+    expect(screen.getByTestId("sales-analytics")).toHaveTextContent("USD");
+
+    // Check out-of-stock analytics
+    expect(screen.getByTestId("out-of-stock-analytics")).toHaveTextContent("10");
+
+    // Check activities
     expect(screen.getByTestId("activity-card")).toBeInTheDocument();
+    expect(
+      screen.getByText("Order #{orderId} was placed from draft by {userEmail}"),
+    ).toBeInTheDocument();
+    expect(screen.getByText("Order #{orderId} was fully paid")).toBeInTheDocument();
   });
 
   it("should render only channel select when user has no permission to manage orders ", async () => {
@@ -80,9 +98,6 @@ describe("HomeSidebar", () => {
         channels={channelsList}
         hasPermissionToManageOrders={false}
       />,
-      {
-        wrapper: Wrapper,
-      },
     );
 
     // Assert
@@ -104,9 +119,6 @@ describe("HomeSidebar", () => {
         channels={channelsList}
         hasPermissionToManageOrders={true}
       />,
-      {
-        wrapper: Wrapper,
-      },
     );
 
     // Act
