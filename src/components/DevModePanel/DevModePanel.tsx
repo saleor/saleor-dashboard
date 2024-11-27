@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { useDashboardTheme } from "@dashboard/components/GraphiQL/styles";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { useOnboarding } from "@dashboard/newHome/homeOnboarding/onboardingContext";
+import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { createGraphiQLFetcher, FetcherOpts, FetcherParams } from "@graphiql/toolkit";
 import { createFetch } from "@saleor/sdk";
 import React from "react";
