@@ -3,12 +3,12 @@ import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
-import WelcomePageOnboarding from "@dashboard/welcomePage/WelcomePageOnboarding/WelcomePageOnboarding";
-import { WelcomePageSidebar } from "@dashboard/welcomePage/WelcomePageSidebar/WelcomePageSidebar";
-import { WelcomePageTilesContainer } from "@dashboard/welcomePage/WelcomePageTilesContainer/WelcomePageTilesContainer";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
+import { WelcomePageOnboarding } from "./WelcomePageOnboarding";
+import { WelcomePageSidebar } from "./WelcomePageSidebar";
+import { WelcomePageTilesContainer } from "./WelcomePageTilesContainer";
 import { WelcomePageTitle } from "./WelcomePageTitle";
 
 export const WelcomePage = () => {

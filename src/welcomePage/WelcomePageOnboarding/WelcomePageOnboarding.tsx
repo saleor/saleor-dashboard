@@ -15,7 +15,7 @@ type TitleProps = {
   };
 };
 
-const WelcomePageOnboarding = () => {
+export const WelcomePageOnboarding = () => {
   const { markAllAsCompleted, isOnboardingCompleted, toggleOnboarding, onboardingState } =
     useOnboarding();
 
@@ -109,5 +109,3 @@ const Title = ({ isOnboardingCompleted, status }: TitleProps) => {
     </Text>
   );
 };
-
-export default WelcomePageOnboarding;

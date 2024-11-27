@@ -7,9 +7,9 @@ import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { WelcomePageActivities } from "./components/WelcomePageActivities/WelcomePageActivities";
-import { WelcomePageSalesAnalytics } from "./components/WelcomePageSalesAnalytics/WelcomePageSalesAnalytics";
-import { WelcomePageStocksAnalytics } from "./components/WelcomePageStocksAnalytics/WelcomePageStocksAnalytics";
+import { WelcomePageActivities } from "./components/WelcomePageActivities";
+import { WelcomePageSalesAnalytics } from "./components/WelcomePageSalesAnalytics";
+import { WelcomePageStocksAnalytics } from "./components/WelcomePageStocksAnalytics";
 import { WelcomePageSidebarContextProvider } from "./context/WelcomePageSidebarContextProvider";
 
 interface HomeSidebarProps {
