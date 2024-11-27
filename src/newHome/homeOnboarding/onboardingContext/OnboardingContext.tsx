@@ -1,5 +1,15 @@
+import {
+  handleStateChangeAfterStepCompleted,
+  handleStateChangeAfterToggle,
+} from "@dashboard/newHome/homeOnboarding/onboardingContext/utils";
 import React from "react";
 
+import { useNewUserCheck } from "../hooks/useNewUserCheck";
+import {
+  getInitialOnboardingState,
+  initialOnboardingSteps,
+  TOTAL_STEPS_COUNT,
+} from "./initialOnboardingState";
 import {
   OnboardingContextType,
   OnboardingProviderProps,
@@ -10,118 +20,54 @@ import { useExpandedOnboardingId } from "./useExpandedOnboardingId";
 
 const OnboardingContext = React.createContext<OnboardingContextType | null>(null);
 
-const initialOnboardingState: OnboardingState = {
-  steps: [
-    {
-      id: "get-started",
-      completed: false,
-      expanded: true,
-    },
-    {
-      id: "create-product",
-      completed: false,
-      expanded: false,
-    },
-    {
-      id: "explore-orders",
-      completed: false,
-      expanded: false,
-    },
-    {
-      id: "graphql-playground",
-      completed: false,
-      expanded: false,
-    },
-    {
-      id: "view-webhooks",
-      completed: false,
-      expanded: false,
-    },
-    {
-      id: "invite-staff",
-      completed: false,
-      expanded: false,
-    },
-  ],
-  onboardingExpanded: true,
-};
-
 export const OnboardingProvider = ({ children, storageService }: OnboardingProviderProps) => {
-  const [onboardingState, setOnboardingState] =
-    React.useState<OnboardingState>(initialOnboardingState);
+  const [onboardingState, setOnboardingState] = React.useState<OnboardingState>({
+    onboardingExpanded: true,
+    stepsCompleted: [],
+    stepsExpanded: {} as OnboardingState["stepsExpanded"],
+  });
   const [loaded, setLoaded] = React.useState(false);
+  const { isNewUser, isUserLoading } = useNewUserCheck();
 
   React.useEffect(() => {
-    if (loaded) return;
+    if (loaded || isUserLoading) return;
 
     const onboardingStateLS = storageService.getOnboardingState();
 
     // When first time load there is not data in local storage, so use initial state
     if (!onboardingStateLS) {
-      setOnboardingState(initialOnboardingState);
-      setLoaded(true);
-
-      return;
+      setOnboardingState(getInitialOnboardingState(isNewUser));
+    } else {
+      setOnboardingState(onboardingStateLS);
     }
 
-    if (!onboardingStateLS) {
-      return;
-    }
-
-    setOnboardingState(onboardingStateLS);
     setLoaded(true);
-  }, [loaded, storageService]);
+  }, [isNewUser, isUserLoading, loaded, storageService]);
 
   React.useEffect(() => {
-    storageService.saveOnboardingState(onboardingState);
-  }, [onboardingState, storageService]);
+    if (loaded) {
+      storageService.saveOnboardingState(onboardingState);
+    }
+  }, [loaded, onboardingState, storageService]);
 
-  const isOnboardingCompleted = onboardingState.steps.every(step => step.completed);
+  // For old users, onboarding is always completed, for new one we need to calculate it
+  const isOnboardingCompleted = isNewUser
+    ? onboardingState.stepsCompleted.length === TOTAL_STEPS_COUNT
+    : true;
 
   const extendedStepId = useExpandedOnboardingId(onboardingState, loaded);
 
   const markOnboardingStepAsCompleted = (id: OnboardingStepsIDs) => {
-    setOnboardingState(({ steps, ...rest }) => {
-      const findIndex = steps.findIndex(step => step.id === id);
-      const findNextToExpand = steps.find((step, index) => index > findIndex && !step.completed);
-
-      const newSteps = steps.map(step => {
-        const isNextToExpand = findNextToExpand?.id === step.id;
-
-        if (isNextToExpand) {
-          return {
-            ...step,
-            expanded: true,
-          };
-        }
-
-        // Always mark get-started as completed when complete other steps
-        if (step.id === "get-started") {
-          return {
-            ...step,
-            completed: true,
-            expanded: false,
-          };
-        }
-
-        return {
-          ...step,
-          completed: step.id === id ? true : step.completed,
-          expanded: step.id === id ? false : step.expanded,
-        };
-      });
-
-      return {
-        ...rest,
-        steps: newSteps,
-      };
-    });
+    setOnboardingState(prevOnboardingState =>
+      handleStateChangeAfterStepCompleted(prevOnboardingState, id),
+    );
   };
 
   const markAllAsCompleted = () => {
-    setOnboardingState(prev => ({
-      ...prev,
-      steps: prev.steps.map(step => ({ ...step, completed: true, expanded: false })),
+    setOnboardingState(prevOnboardingState => ({
+      ...prevOnboardingState,
+      stepsCompleted: initialOnboardingSteps.map(step => step.id),
+      stepsExpanded: {} as OnboardingState["stepsExpanded"],
     }));
   };
 
@@ -130,29 +76,22 @@ export const OnboardingProvider = ({ children, storageService }: OnboardingProvi
     // In case that step was collapse we get empty string as id
     const expandedId = id || currentExpandedId;
 
-    setOnboardingState(prev => ({
-      ...prev,
-      steps: prev.steps.map(step => {
-        if (step.id === expandedId) {
-          return {
-            ...step,
-            expanded: !step.expanded,
-          };
-        }
-
-        return {
-          ...step,
-          expanded: false,
-        };
-      }),
-    }));
+    setOnboardingState(prev =>
+      handleStateChangeAfterToggle(prev, expandedId as OnboardingStepsIDs, id),
+    );
   };
 
   const toggleOnboarding = (value: boolean) => {
-    setOnboardingState(prev => ({
-      ...prev,
-      onboardingExpanded: value,
-    }));
+    setOnboardingState(prev => {
+      const newState = {
+        ...prev,
+        onboardingExpanded: value,
+      };
+
+      storageService.saveOnboardingState(newState);
+
+      return newState;
+    });
   };
 
   return (

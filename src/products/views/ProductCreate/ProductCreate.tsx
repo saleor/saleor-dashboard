@@ -5,6 +5,7 @@ import { AttributeInput } from "@dashboard/components/Attributes";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
+import { useFlag } from "@dashboard/featureFlags";
 import {
   ProductChannelListingErrorFragment,
   ProductErrorWithAttributesFragment,
@@ -23,6 +24,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { getMutationErrors } from "@dashboard/misc";
+import { useOnboarding } from "@dashboard/newHome/homeOnboarding/onboardingContext";
 import ProductCreatePage, {
   ProductCreateData,
 } from "@dashboard/products/components/ProductCreatePage";
@@ -59,6 +61,8 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
+  const { markOnboardingStepAsCompleted } = useOnboarding();
+  const newHomePageFlag = useFlag("new_home_page");
   const intl = useIntl();
   const [productCreateComplete, setProductCreateComplete] = React.useState(false);
   const selectedProductTypeId = params["product-type-id"];
@@ -207,6 +211,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     )(data);
 
     if (!errors?.length) {
+      newHomePageFlag.enabled && markOnboardingStepAsCompleted("create-product");
       setProductCreateComplete(true);
     }
 

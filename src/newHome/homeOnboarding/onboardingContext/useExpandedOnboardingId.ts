@@ -1,24 +1,49 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-import { OnboardingState } from "./types";
+import { OnboardingState, OnboardingStepsIDs } from "./types";
+import {
+  getFirstExpanderStepId,
+  getFirstNotCompletedAndNotExpandedStep,
+  getNextStepToExpand,
+} from "./utils";
 
 export const useExpandedOnboardingId = (onboardingState: OnboardingState, loaded: boolean) => {
-  const hasBeenCall = React.useRef(false);
+  const hasBeenCalled = React.useRef(false);
+  const [expandedStepId, setExpandedStepId] = React.useState<OnboardingStepsIDs | "">("");
 
-  const allExpandedSteps = onboardingState.steps.filter(step => step.expanded);
-  const extendedStepId = allExpandedSteps.length ? allExpandedSteps[0].id : "";
+  useEffect(() => {
+    if (hasBeenCalled.current) {
+      const firstExpandedStepId = getFirstExpanderStepId(onboardingState);
 
-  if (extendedStepId) {
-    return extendedStepId;
-  }
+      if (firstExpandedStepId) {
+        setExpandedStepId(getFirstExpanderStepId(onboardingState));
+      } else {
+        setExpandedStepId("");
+      }
+    }
+  }, [onboardingState.stepsExpanded]);
 
-  if (loaded && !hasBeenCall.current) {
-    hasBeenCall.current = true;
+  useEffect(() => {
+    // On every state change
+    if (hasBeenCalled.current) {
+      setExpandedStepId(getNextStepToExpand(onboardingState));
+    }
+  }, [onboardingState.stepsCompleted]);
 
-    return (
-      onboardingState.steps.find(step => !step.completed && step.expanded === undefined)?.id ?? ""
-    );
-  }
+  useEffect(() => {
+    // On context first load
+    if (loaded && !hasBeenCalled.current) {
+      hasBeenCalled.current = true;
 
-  return "";
+      const firstExpandedStep = getFirstExpanderStepId(onboardingState);
+
+      if (firstExpandedStep) {
+        setExpandedStepId(firstExpandedStep);
+      } else {
+        setExpandedStepId(getFirstNotCompletedAndNotExpandedStep(onboardingState));
+      }
+    }
+  }, [loaded, onboardingState]);
+
+  return expandedStepId;
 };
