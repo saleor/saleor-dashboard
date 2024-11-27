@@ -212,6 +212,7 @@ export const UserFragmentDoc = gql`
   firstName
   lastName
   isStaff
+  dateJoined
   metadata {
     key
     value
@@ -10147,6 +10148,42 @@ export function useMenuDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type MenuDetailsQueryHookResult = ReturnType<typeof useMenuDetailsQuery>;
 export type MenuDetailsLazyQueryHookResult = ReturnType<typeof useMenuDetailsLazyQuery>;
 export type MenuDetailsQueryResult = Apollo.QueryResult<Types.MenuDetailsQuery, Types.MenuDetailsQueryVariables>;
+export const UpdateUserMetadataDocument = gql`
+    mutation UpdateUserMetadata($id: ID!, $input: [MetadataInput!]!) {
+  updateMetadata(id: $id, input: $input) {
+    errors {
+      ...MetadataError
+    }
+  }
+}
+    ${MetadataErrorFragmentDoc}`;
+export type UpdateUserMetadataMutationFn = Apollo.MutationFunction<Types.UpdateUserMetadataMutation, Types.UpdateUserMetadataMutationVariables>;
+
+/**
+ * __useUpdateUserMetadataMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserMetadataMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserMetadataMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserMetadataMutation, { data, loading, error }] = useUpdateUserMetadataMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateUserMetadataMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateUserMetadataMutation, Types.UpdateUserMetadataMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.UpdateUserMetadataMutation, Types.UpdateUserMetadataMutationVariables>(UpdateUserMetadataDocument, options);
+      }
+export type UpdateUserMetadataMutationHookResult = ReturnType<typeof useUpdateUserMetadataMutation>;
+export type UpdateUserMetadataMutationResult = Apollo.MutationResult<Types.UpdateUserMetadataMutation>;
+export type UpdateUserMetadataMutationOptions = Apollo.BaseMutationOptions<Types.UpdateUserMetadataMutation, Types.UpdateUserMetadataMutationVariables>;
 export const WelcomePageActivitiesDocument = gql`
     query WelcomePageActivities($hasPermissionToManageOrders: Boolean!) {
   activities: homepageEvents(last: 10) @include(if: $hasPermissionToManageOrders) {

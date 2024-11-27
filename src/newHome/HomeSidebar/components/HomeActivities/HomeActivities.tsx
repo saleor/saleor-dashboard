@@ -45,7 +45,7 @@ export const HomeActivities = () => {
         <DashboardCard.Header paddingX={3}>
           <DashboardCard.Title>{title}</DashboardCard.Title>
         </DashboardCard.Header>
-        <DashboardCard.Content paddingX={3}>
+        <DashboardCard.Content paddingX={3} paddingBottom={6}>
           <Box display="flex" flexDirection="column" gap={5}>
             <Skeleton height={3} />
             <Skeleton __width="80%" height={3} />
@@ -61,7 +61,7 @@ export const HomeActivities = () => {
       <DashboardCard.Header paddingX={3}>
         <DashboardCard.Title>{title}</DashboardCard.Title>
       </DashboardCard.Header>
-      <DashboardCard.Content paddingX={3}>
+      <DashboardCard.Content paddingX={3} paddingBottom={5}>
         <List>
           {renderCollection(
             activities,

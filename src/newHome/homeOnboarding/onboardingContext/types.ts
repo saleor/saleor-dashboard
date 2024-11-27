@@ -8,18 +8,21 @@ export type OnboardingStepsIDs =
   | "view-webhooks"
   | "invite-staff";
 
+export type OnboardingStep = {
+  id: OnboardingStepsIDs;
+  completed: boolean;
+  expanded: boolean | undefined;
+};
+
 export type OnboardingState = {
-  steps: Array<{
-    id: OnboardingStepsIDs;
-    completed: boolean;
-    expanded: boolean | undefined;
-  }>;
+  stepsCompleted: OnboardingStepsIDs[];
+  stepsExpanded: Record<OnboardingStepsIDs, boolean>;
   onboardingExpanded: boolean;
 };
 
 export interface StorageService {
   getOnboardingState(): OnboardingState | undefined;
-  saveOnboardingState(onboardingState: OnboardingState): void;
+  saveOnboardingState(onboardingState: OnboardingState): Promise<void>;
 }
 
 export interface OnboardingContextType {
@@ -35,5 +38,4 @@ export interface OnboardingContextType {
 
 export interface OnboardingProviderProps {
   children: React.ReactNode;
-  storageService: StorageService;
 }

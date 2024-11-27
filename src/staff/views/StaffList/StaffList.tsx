@@ -14,6 +14,7 @@ import usePaginator, {
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
 import { commonMessages } from "@dashboard/intl";
+import { useOnboarding } from "@dashboard/newHome/homeOnboarding/onboardingContext";
 import usePermissionGroupSearch from "@dashboard/searches/usePermissionGroupSearch";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -46,6 +47,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.STAFF_MEMBERS_LIST);
   const intl = useIntl();
+  const { markOnboardingStepAsCompleted } = useOnboarding();
 
   usePaginationReset(staffListUrl, params, settings.rowNumber);
 
@@ -70,6 +72,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
   const [addStaffMember, addStaffMemberData] = useStaffMemberAddMutation({
     onCompleted: data => {
       if (data?.staffCreate?.errors?.length === 0) {
+        markOnboardingStepAsCompleted("invite-staff");
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),

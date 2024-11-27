@@ -18,8 +18,9 @@ export const HomeTilesContainer: React.FC = () => {
         desktop: 2,
       }}
       gap={6}
-      marginTop={6}
       marginRight={6}
+      marginY={6}
+      paddingBottom={6}
     >
       {tiles.map(tile => (
         <HomeInfoTile key={tile.id} {...tile} />
