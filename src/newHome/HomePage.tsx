@@ -23,7 +23,7 @@ export const HomePage = () => {
   return (
     <DetailPageLayout withSavebar={false}>
       <Box gridColumn="8" gridRowStart="1" />
-      <DetailPageLayout.Content marginTop={6} paddingLeft={8}>
+      <DetailPageLayout.Content paddingTop={6} paddingLeft={8}>
         <HomeTitle />
         <HomeOnboarding />
         <HomeTilesContainer />
