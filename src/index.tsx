@@ -64,7 +64,6 @@ import NavigationSection from "./navigation";
 import { navigationSection } from "./navigation/urls";
 import { HomePage } from "./newHome";
 import { OnboardingProvider } from "./newHome/homeOnboarding/onboardingContext/OnboardingContext";
-import { OnboardingStorage } from "./newHome/homeOnboarding/onboardingContext/OnboardingStorage";
 import { NotFound } from "./NotFound";
 import OrdersSection from "./orders";
 import PageSection from "./pages";
@@ -88,8 +87,6 @@ if (GTM_ID) {
 }
 
 errorTracker.init(history);
-
-const onboardingStorage = new OnboardingStorage();
 
 /*
   Handle legacy theming toggle. Since we use new and old macaw,
@@ -129,7 +126,7 @@ const App: React.FC = () => (
                                   <ProductAnalytics>
                                     <SavebarRefProvider>
                                       <FeatureFlagsProviderWithUser>
-                                        <OnboardingProvider storageService={onboardingStorage}>
+                                        <OnboardingProvider>
                                           <Routes />
                                         </OnboardingProvider>
                                       </FeatureFlagsProviderWithUser>

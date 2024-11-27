@@ -3,7 +3,6 @@ import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
-import { useFlag } from "@dashboard/featureFlags";
 import { useStaffListQuery, useStaffMemberAddMutation } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
@@ -49,7 +48,6 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(ListViews.STAFF_MEMBERS_LIST);
   const intl = useIntl();
   const { markOnboardingStepAsCompleted } = useOnboarding();
-  const newHomePageFlag = useFlag("new_home_page");
 
   usePaginationReset(staffListUrl, params, settings.rowNumber);
 
@@ -74,6 +72,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
   const [addStaffMember, addStaffMemberData] = useStaffMemberAddMutation({
     onCompleted: data => {
       if (data?.staffCreate?.errors?.length === 0) {
+        markOnboardingStepAsCompleted("invite-staff");
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -121,10 +120,8 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
   } = usePermissionGroupSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
-  const handleStaffMemberAdd = (variables: AddMemberFormData) => {
-    newHomePageFlag.enabled && markOnboardingStepAsCompleted("invite-staff");
-
-    return addStaffMember({
+  const handleStaffMemberAdd = (variables: AddMemberFormData) =>
+    addStaffMember({
       variables: {
         input: {
           addGroups: variables.permissionGroups,
@@ -139,7 +136,6 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
         },
       },
     });
-  };
 
   return (
     <PaginatorContext.Provider value={paginationValues}>
