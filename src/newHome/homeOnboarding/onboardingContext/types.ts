@@ -22,7 +22,7 @@ export type OnboardingState = {
 
 export interface StorageService {
   getOnboardingState(): OnboardingState | undefined;
-  saveOnboardingState(onboardingState: OnboardingState): void;
+  saveOnboardingState(onboardingState: OnboardingState): Promise<void>;
 }
 
 export interface OnboardingContextType {
@@ -38,5 +38,4 @@ export interface OnboardingContextType {
 
 export interface OnboardingProviderProps {
   children: React.ReactNode;
-  storageService: StorageService;
 }
