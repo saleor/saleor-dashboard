@@ -1,7 +1,7 @@
 ---
 name: new_home_page
 displayName: New home page
-enabled: false
+enabled: true
 payload: "default"
 visible: false
 ---
