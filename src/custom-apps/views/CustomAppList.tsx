@@ -3,7 +3,6 @@ import { useApolloClient } from "@apollo/client";
 import AppDeleteDialog from "@dashboard/apps/components/AppDeleteDialog";
 import { EXTENSION_LIST_QUERY } from "@dashboard/apps/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { useFlag } from "@dashboard/featureFlags";
 import {
   AppSortField,
   AppTypeEnum,
@@ -35,12 +34,9 @@ export const CustomAppList: React.FC<CustomAppListProps> = ({ params }) => {
   const intl = useIntl();
   const client = useApolloClient();
   const { markOnboardingStepAsCompleted } = useOnboarding();
-  const newHomePageFlag = useFlag("new_home_page");
 
   useEffect(() => {
-    if (newHomePageFlag) {
-      markOnboardingStepAsCompleted("view-webhooks");
-    }
+    markOnboardingStepAsCompleted("view-webhooks");
   }, []);
 
   const [openModal, closeModal] = createDialogActionHandlers<

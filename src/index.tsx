@@ -89,8 +89,6 @@ if (GTM_ID) {
 
 errorTracker.init(history);
 
-const onboardingStorage = new OnboardingStorage();
-
 /*
   Handle legacy theming toggle. Since we use new and old macaw,
   we need to handle both theme swticher for a while.
@@ -129,7 +127,7 @@ const App: React.FC = () => (
                                   <ProductAnalytics>
                                     <SavebarRefProvider>
                                       <FeatureFlagsProviderWithUser>
-                                        <OnboardingProvider storageService={onboardingStorage}>
+                                        <OnboardingProvider>
                                           <Routes />
                                         </OnboardingProvider>
                                       </FeatureFlagsProviderWithUser>

@@ -18,8 +18,9 @@ export const WelcomePageTilesContainer = () => {
         desktop: 2,
       }}
       gap={6}
-      marginTop={6}
       marginRight={6}
+      marginY={6}
+      paddingBottom={6}
     >
       {tiles.map(tile => (
         <WelcomePageInfoTile key={tile.id} {...tile} />

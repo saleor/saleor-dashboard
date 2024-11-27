@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { useDashboardTheme } from "@dashboard/components/GraphiQL/styles";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { useFlag } from "@dashboard/featureFlags";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { createGraphiQLFetcher, FetcherOpts, FetcherParams } from "@graphiql/toolkit";
 import { createFetch } from "@saleor/sdk";
@@ -18,14 +17,13 @@ export const DevModePanel: React.FC = () => {
   const intl = useIntl();
   const { rootStyle } = useDashboardTheme();
   const { markOnboardingStepAsCompleted } = useOnboarding();
-  const newHomePageFlag = useFlag("new_home_page");
   const { isDevModeVisible, variables, devModeContent, setDevModeVisibility } = useDevModeContext();
   const baseFetcher = createGraphiQLFetcher({
     url: process.env.API_URL,
     fetch: authorizedFetch,
   });
   const fetcher = async (graphQLParams: FetcherParams, opts: FetcherOpts) => {
-    if (graphQLParams.operationName !== "IntrospectionQuery" && newHomePageFlag.enabled) {
+    if (graphQLParams.operationName !== "IntrospectionQuery") {
       markOnboardingStepAsCompleted("graphql-playground");
     }
 
