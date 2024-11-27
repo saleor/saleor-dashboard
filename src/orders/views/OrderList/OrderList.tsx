@@ -6,7 +6,6 @@ import { useConditionalFilterContext } from "@dashboard/components/ConditionalFi
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
-import { useFlag } from "@dashboard/featureFlags";
 import { useOrderDraftCreateMutation, useOrderListQuery } from "@dashboard/graphql";
 import { useFilterHandlers } from "@dashboard/hooks/useFilterHandlers";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
@@ -49,12 +48,9 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const { valueProvider } = useConditionalFilterContext();
 
   const { markOnboardingStepAsCompleted } = useOnboarding();
-  const newHomePageFlag = useFlag("new_home_page");
 
   useEffect(() => {
-    if (newHomePageFlag) {
-      markOnboardingStepAsCompleted("explore-orders");
-    }
+    markOnboardingStepAsCompleted("explore-orders");
   }, []);
 
   const {

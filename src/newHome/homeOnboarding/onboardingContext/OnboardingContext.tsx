@@ -1,8 +1,9 @@
+import { useFlag } from "@dashboard/featureFlags";
 import {
   handleStateChangeAfterStepCompleted,
   handleStateChangeAfterToggle,
 } from "@dashboard/newHome/homeOnboarding/onboardingContext/utils";
-import React from "react";
+import React, { useRef } from "react";
 
 import { useNewUserCheck } from "../hooks/useNewUserCheck";
 import {
@@ -17,47 +18,53 @@ import {
   OnboardingStepsIDs,
 } from "./types";
 import { useExpandedOnboardingId } from "./useExpandedOnboardingId";
+import { useOnboardingStorage } from "./useOnboardingStorage";
 
 const OnboardingContext = React.createContext<OnboardingContextType | null>(null);
 
-export const OnboardingProvider = ({ children, storageService }: OnboardingProviderProps) => {
+export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
   const [onboardingState, setOnboardingState] = React.useState<OnboardingState>({
     onboardingExpanded: true,
     stepsCompleted: [],
     stepsExpanded: {} as OnboardingState["stepsExpanded"],
   });
-  const [loaded, setLoaded] = React.useState(false);
+  const loaded = useRef(false);
   const { isNewUser, isUserLoading } = useNewUserCheck();
+  const newHomePageFlag = useFlag("new_home_page");
+
+  const storageService = useOnboardingStorage();
 
   React.useEffect(() => {
-    if (loaded || isUserLoading) return;
+    if (loaded.current || isUserLoading) return;
 
-    const onboardingStateLS = storageService.getOnboardingState();
+    const onboardingStateFromUserMetadata = storageService.getOnboardingState();
 
     // When first time load there is not data in local storage, so use initial state
-    if (!onboardingStateLS) {
+    if (!onboardingStateFromUserMetadata) {
       setOnboardingState(getInitialOnboardingState(isNewUser));
     } else {
-      setOnboardingState(onboardingStateLS);
+      setOnboardingState(onboardingStateFromUserMetadata);
     }
 
-    setLoaded(true);
+    loaded.current = true;
   }, [isNewUser, isUserLoading, loaded, storageService]);
 
   React.useEffect(() => {
-    if (loaded) {
+    if (loaded.current) {
       storageService.saveOnboardingState(onboardingState);
     }
-  }, [loaded, onboardingState, storageService]);
+  }, [onboardingState]);
 
   // For old users, onboarding is always completed, for new one we need to calculate it
   const isOnboardingCompleted = isNewUser
     ? onboardingState.stepsCompleted.length === TOTAL_STEPS_COUNT
     : true;
 
-  const extendedStepId = useExpandedOnboardingId(onboardingState, loaded);
+  const extendedStepId = useExpandedOnboardingId(onboardingState, loaded.current);
 
   const markOnboardingStepAsCompleted = (id: OnboardingStepsIDs) => {
+    if (!newHomePageFlag.enabled || onboardingState.stepsCompleted.includes(id)) return;
+
     setOnboardingState(prevOnboardingState =>
       handleStateChangeAfterStepCompleted(prevOnboardingState, id),
     );
