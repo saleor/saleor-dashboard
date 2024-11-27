@@ -14,9 +14,9 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { sectionNames } from "@dashboard/intl";
 import { findById } from "@dashboard/misc";
-import { useOnboarding } from "@dashboard/newHome/homeOnboarding/onboardingContext";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
