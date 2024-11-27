@@ -10745,36 +10745,6 @@ export type MenuDetailsQueryVariables = Exact<{
 
 export type MenuDetailsQuery = { __typename: 'Query', menu: { __typename: 'Menu', id: string, name: string, items: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null } | null };
 
-export type UpdateUserMetadataMutationVariables = Exact<{
-  id: Scalars['ID'];
-  input: Array<MetadataInput> | MetadataInput;
-}>;
-
-
-export type UpdateUserMetadataMutation = { __typename: 'Mutation', updateMetadata: { __typename: 'UpdateMetadata', errors: Array<{ __typename: 'MetadataError', code: MetadataErrorCode, field: string | null, message: string | null }> } | null };
-
-export type WelcomePageActivitiesQueryVariables = Exact<{
-  hasPermissionToManageOrders: Scalars['Boolean'];
-}>;
-
-
-export type WelcomePageActivitiesQuery = { __typename: 'Query', activities: { __typename: 'OrderEventCountableConnection', edges: Array<{ __typename: 'OrderEventCountableEdge', node: { __typename: 'OrderEvent', date: any | null, email: string | null, message: string | null, orderNumber: string | null, type: OrderEventsEnum | null, user: { __typename: 'User', email: string } | null } }> } | null };
-
-export type WelcomePageAnalyticsQueryVariables = Exact<{
-  channel: Scalars['String'];
-  hasPermissionToManageOrders: Scalars['Boolean'];
-}>;
-
-
-export type WelcomePageAnalyticsQuery = { __typename: 'Query', salesToday: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } | null };
-
-export type WelcomePageNotificationsQueryVariables = Exact<{
-  channel: Scalars['String'];
-}>;
-
-
-export type WelcomePageNotificationsQuery = { __typename: 'Query', productsOutOfStock: { __typename: 'ProductCountableConnection', totalCount: number | null } | null };
-
 export type OrderCancelMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -12657,3 +12627,33 @@ export type WarehousesCountQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type WarehousesCountQuery = { __typename: 'Query', warehouses: { __typename: 'WarehouseCountableConnection', totalCount: number | null } | null };
+
+export type SaveOnBoardingStateMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: Array<MetadataInput> | MetadataInput;
+}>;
+
+
+export type SaveOnBoardingStateMutation = { __typename: 'Mutation', updateMetadata: { __typename: 'UpdateMetadata', errors: Array<{ __typename: 'MetadataError', code: MetadataErrorCode, field: string | null, message: string | null }> } | null };
+
+export type WelcomePageActivitiesQueryVariables = Exact<{
+  hasPermissionToManageOrders: Scalars['Boolean'];
+}>;
+
+
+export type WelcomePageActivitiesQuery = { __typename: 'Query', activities: { __typename: 'OrderEventCountableConnection', edges: Array<{ __typename: 'OrderEventCountableEdge', node: { __typename: 'OrderEvent', date: any | null, email: string | null, message: string | null, orderNumber: string | null, type: OrderEventsEnum | null, user: { __typename: 'User', email: string } | null } }> } | null };
+
+export type WelcomePageAnalyticsQueryVariables = Exact<{
+  channel: Scalars['String'];
+  hasPermissionToManageOrders: Scalars['Boolean'];
+}>;
+
+
+export type WelcomePageAnalyticsQuery = { __typename: 'Query', salesToday: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } | null };
+
+export type WelcomePageNotificationsQueryVariables = Exact<{
+  channel: Scalars['String'];
+}>;
+
+
+export type WelcomePageNotificationsQuery = { __typename: 'Query', productsOutOfStock: { __typename: 'ProductCountableConnection', totalCount: number | null } | null };

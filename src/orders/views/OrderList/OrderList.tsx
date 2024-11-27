@@ -17,12 +17,12 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
-import { useOnboarding } from "@dashboard/newHome/homeOnboarding/onboardingContext";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
+import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
