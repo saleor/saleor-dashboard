@@ -1,3 +1,5 @@
+import { MetadataInput } from "@dashboard/graphql";
+
 import { initialOnboardingSteps } from "./initialOnboardingState";
 import { OnboardingState, OnboardingStepsIDs } from "./types";
 
@@ -76,4 +78,33 @@ export const getNextStepToExpand = (onboardingState: OnboardingState) => {
   return (
     steps.slice(stepIndex + 1).find(step => !step.completed && step.expanded !== false)?.id ?? ""
   );
+};
+
+export const METADATA_KEY = "onboarding";
+
+export const prepareUserMetadata = (
+  metadata: MetadataInput[] | undefined,
+  onboardingState: OnboardingState,
+) => {
+  const userMetadata: MetadataInput[] =
+    metadata?.map(data => ({
+      key: data.key,
+      value: data.value,
+    })) ?? [];
+  const metadataValue = JSON.stringify(onboardingState);
+  const metadataIndex = userMetadata.findIndex(m => m.key === METADATA_KEY);
+
+  if (metadataIndex !== -1) {
+    userMetadata[metadataIndex] = {
+      key: METADATA_KEY,
+      value: metadataValue,
+    };
+  } else {
+    userMetadata.push({
+      key: METADATA_KEY,
+      value: metadataValue,
+    });
+  }
+
+  return userMetadata;
 };

@@ -1,9 +1,9 @@
 import { useUser } from "@dashboard/auth";
-import { useUpdateUserMetadataMutation } from "@dashboard/graphql";
-import { OnboardingStepsIDs } from "@dashboard/newHome/homeOnboarding/onboardingContext/types";
+import { useSaveOnBoardingStateMutation } from "@dashboard/graphql";
 import { act } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 
+import { OnboardingStepsIDs } from "./types";
 import { useOnboardingStorage } from "./useOnboardingStorage";
 
 jest.mock("@dashboard/auth", () => ({
@@ -24,7 +24,7 @@ describe("useOnboardingStorage", () => {
       (useUser as jest.Mock).mockImplementation(() => ({
         user: { metadata: [{ key1: "value1" }, { key2: "value2" }] },
       }));
-      (useUpdateUserMetadataMutation as jest.Mock).mockReturnValue([jest.fn(), {}]);
+      (useSaveOnBoardingStateMutation as jest.Mock).mockReturnValue([jest.fn(), {}]);
 
       const { getOnboardingState } = renderHook(() => useOnboardingStorage()).result.current;
 
@@ -47,7 +47,7 @@ describe("useOnboardingStorage", () => {
           ],
         },
       }));
-      (useUpdateUserMetadataMutation as jest.Mock).mockReturnValue([jest.fn(), {}]);
+      (useSaveOnBoardingStateMutation as jest.Mock).mockReturnValue([jest.fn(), {}]);
 
       const { getOnboardingState } = renderHook(() => useOnboardingStorage()).result.current;
 
@@ -66,7 +66,7 @@ describe("useOnboardingStorage", () => {
 
       const updateMetadataMock = jest.fn();
 
-      (useUpdateUserMetadataMutation as jest.Mock).mockReturnValue([updateMetadataMock, {}]);
+      (useSaveOnBoardingStateMutation as jest.Mock).mockReturnValue([updateMetadataMock, {}]);
 
       const { result } = renderHook(() => useOnboardingStorage());
 
@@ -90,7 +90,7 @@ describe("useOnboardingStorage", () => {
 
       const updateMetadataMock = jest.fn();
 
-      (useUpdateUserMetadataMutation as jest.Mock).mockReturnValue([updateMetadataMock, {}]);
+      (useSaveOnBoardingStateMutation as jest.Mock).mockReturnValue([updateMetadataMock, {}]);
 
       const { result } = renderHook(() => useOnboardingStorage());
 

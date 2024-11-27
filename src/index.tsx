@@ -9,7 +9,6 @@ import { PermissionEnum } from "@dashboard/graphql";
 import useAppState from "@dashboard/hooks/useAppState";
 import { ThemeProvider } from "@dashboard/theme";
 import { OnboardingProvider } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
-import { OnboardingStorage } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/OnboardingStorage";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { SaleorProvider } from "@saleor/sdk";
 import React from "react";

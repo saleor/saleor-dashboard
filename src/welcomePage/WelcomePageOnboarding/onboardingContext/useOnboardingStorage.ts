@@ -1,15 +1,14 @@
 import { useUser } from "@dashboard/auth";
-import { MetadataInput, useUpdateUserMetadataMutation } from "@dashboard/graphql";
+import { useSaveOnBoardingStateMutation } from "@dashboard/graphql";
 import debounce from "lodash/debounce";
 import { useCallback, useMemo } from "react";
 
 import { OnboardingState, StorageService } from "../onboardingContext/types";
-
-const METADATA_KEY = "onboarding";
+import { METADATA_KEY, prepareUserMetadata } from "./utils";
 
 export const useOnboardingStorage = (): StorageService => {
   const { user } = useUser();
-  const [updateMetadata] = useUpdateUserMetadataMutation({});
+  const [saveOnboarding] = useSaveOnBoardingStateMutation({});
 
   const getOnboardingState: StorageService["getOnboardingState"] = () => {
     try {
@@ -35,27 +34,9 @@ export const useOnboardingStorage = (): StorageService => {
       }
 
       try {
-        const userMetadata: MetadataInput[] =
-          user?.metadata?.map(data => ({
-            key: data.key,
-            value: data.value,
-          })) ?? [];
-        const metadataValue = JSON.stringify(onboardingState);
-        const metadataIndex = userMetadata.findIndex(m => m.key === METADATA_KEY);
+        const userMetadata = prepareUserMetadata(user?.metadata, onboardingState);
 
-        if (metadataIndex !== -1) {
-          userMetadata[metadataIndex] = {
-            key: METADATA_KEY,
-            value: metadataValue,
-          };
-        } else {
-          userMetadata.push({
-            key: METADATA_KEY,
-            value: metadataValue,
-          });
-        }
-
-        await updateMetadata({
+        await saveOnboarding({
           variables: {
             id: user.id,
             input: userMetadata,
@@ -66,7 +47,7 @@ export const useOnboardingStorage = (): StorageService => {
         console.warn("Could not save onboarding state to metadata");
       }
     },
-    [updateMetadata, user],
+    [saveOnboarding, user],
   );
 
   const debouncedSaveOnboardingState = useMemo(
