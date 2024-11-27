@@ -133,5 +133,6 @@ describe("WelcomePageSidebar", () => {
 
     // Assert
     expect(setChannel).toHaveBeenCalledWith(channelsList[1].id);
+    expect(screen.getByRole("combobox")).toHaveTextContent(channelsList[1].name);
   });
 });
