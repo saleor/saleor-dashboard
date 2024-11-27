@@ -1,9 +1,13 @@
-import { useWelcomePageActivitiesQuery } from "@dashboard/graphql";
+import { ActivitiesFragment, useWelcomePageActivitiesQuery } from "@dashboard/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 import { useHomeSidebarContext } from "../../context/homeSidebarContext";
 
-export const useHomeActivities = () => {
+export const useHomeActivities = (): {
+  activities: ActivitiesFragment[] | undefined;
+  loading: boolean;
+  hasError: boolean;
+} => {
   const { hasNoChannels, hasPermissionToManageOrders } = useHomeSidebarContext();
 
   const {

@@ -2223,6 +2223,18 @@ ${OrderFulfillmentGrantRefundFragmentDoc}
 ${MoneyFragmentDoc}
 ${OrderDetailsGrantedRefundFragmentDoc}
 ${TransactionItemFragmentDoc}`;
+export const ActivitiesFragmentDoc = gql`
+    fragment Activities on OrderEvent {
+  date
+  email
+  message
+  orderNumber
+  type
+  user {
+    email
+  }
+}
+    `;
 export const PageTypeFragmentDoc = gql`
     fragment PageType on PageType {
   id
@@ -10153,19 +10165,12 @@ export const WelcomePageActivitiesDocument = gql`
   activities: homepageEvents(last: 10) @include(if: $hasPermissionToManageOrders) {
     edges {
       node {
-        date
-        email
-        message
-        orderNumber
-        type
-        user {
-          email
-        }
+        ...Activities
       }
     }
   }
 }
-    `;
+    ${ActivitiesFragmentDoc}`;
 
 /**
  * __useWelcomePageActivitiesQuery__
