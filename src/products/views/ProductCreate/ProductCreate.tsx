@@ -5,7 +5,6 @@ import { AttributeInput } from "@dashboard/components/Attributes";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
-import { useFlag } from "@dashboard/featureFlags";
 import {
   ProductChannelListingErrorFragment,
   ProductErrorWithAttributesFragment,
@@ -24,7 +23,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { getMutationErrors } from "@dashboard/misc";
-import { useOnboarding } from "@dashboard/newHome/homeOnboarding/onboardingContext";
 import ProductCreatePage, {
   ProductCreateData,
 } from "@dashboard/products/components/ProductCreatePage";
@@ -47,6 +45,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseAddPath } from "@dashboard/warehouses/urls";
+import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -62,7 +61,6 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   const notify = useNotifier();
   const shop = useShop();
   const { markOnboardingStepAsCompleted } = useOnboarding();
-  const newHomePageFlag = useFlag("new_home_page");
   const intl = useIntl();
   const [productCreateComplete, setProductCreateComplete] = React.useState(false);
   const selectedProductTypeId = params["product-type-id"];
@@ -211,7 +209,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     )(data);
 
     if (!errors?.length) {
-      newHomePageFlag.enabled && markOnboardingStepAsCompleted("create-product");
+      markOnboardingStepAsCompleted("create-product");
       setProductCreateComplete(true);
     }
 

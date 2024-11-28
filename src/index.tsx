@@ -4,10 +4,10 @@ import "./index.css";
 import { ApolloProvider } from "@apollo/client";
 import DemoBanner from "@dashboard/components/DemoBanner";
 import { history, Route, Router } from "@dashboard/components/Router";
-import { useFlag } from "@dashboard/featureFlags";
 import { PermissionEnum } from "@dashboard/graphql";
 import useAppState from "@dashboard/hooks/useAppState";
 import { ThemeProvider } from "@dashboard/theme";
+import { OnboardingProvider } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { SaleorProvider } from "@saleor/sdk";
 import React from "react";
@@ -57,14 +57,10 @@ import { FeatureFlagsProviderWithUser } from "./featureFlags/FeatureFlagsProvide
 import GiftCardSection from "./giftCards";
 import { giftCardsSectionUrlName } from "./giftCards/urls";
 import { apolloClient, saleorClient } from "./graphql/client";
-import OldHomePage from "./home";
 import { useLocationState } from "./hooks/useLocationState";
 import { commonMessages } from "./intl";
 import NavigationSection from "./navigation";
 import { navigationSection } from "./navigation/urls";
-import { HomePage } from "./newHome";
-import { OnboardingProvider } from "./newHome/homeOnboarding/onboardingContext/OnboardingContext";
-import { OnboardingStorage } from "./newHome/homeOnboarding/onboardingContext/OnboardingStorage";
 import { NotFound } from "./NotFound";
 import OrdersSection from "./orders";
 import PageSection from "./pages";
@@ -82,14 +78,13 @@ import { paletteOverrides, themeOverrides } from "./themeOverrides";
 import TranslationsSection from "./translations";
 import WarehouseSection from "./warehouses";
 import { warehouseSection } from "./warehouses/urls";
+import { WelcomePage } from "./welcomePage";
 
 if (GTM_ID) {
   TagManager.initialize({ gtmId: GTM_ID });
 }
 
 errorTracker.init(history);
-
-const onboardingStorage = new OnboardingStorage();
 
 /*
   Handle legacy theming toggle. Since we use new and old macaw,
@@ -129,7 +124,7 @@ const App: React.FC = () => (
                                   <ProductAnalytics>
                                     <SavebarRefProvider>
                                       <FeatureFlagsProviderWithUser>
-                                        <OnboardingProvider storageService={onboardingStorage}>
+                                        <OnboardingProvider>
                                           <Routes />
                                         </OnboardingProvider>
                                       </FeatureFlagsProviderWithUser>
@@ -161,8 +156,6 @@ const Routes: React.FC = () => {
   const homePageLoaded = channelLoaded && authenticated;
   const homePageLoading = (authenticated && !channelLoaded) || authenticating;
   const { isAppPath } = useLocationState();
-  const { enabled: isNewHomePageEnabled } = useFlag("new_home_page");
-  const HomePageComponent = isNewHomePageEnabled ? HomePage : OldHomePage;
 
   return (
     <>
@@ -188,7 +181,7 @@ const Routes: React.FC = () => {
               )}
             >
               <Switch>
-                <SectionRoute exact path="/" component={HomePageComponent} />
+                <SectionRoute exact path="/" component={WelcomePage} />
                 <SectionRoute
                   permissions={[PermissionEnum.MANAGE_PRODUCTS]}
                   path="/categories"
