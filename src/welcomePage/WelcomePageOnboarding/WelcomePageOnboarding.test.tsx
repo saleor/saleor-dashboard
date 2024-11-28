@@ -24,14 +24,7 @@ jest.mock("react-intl", () => ({
 jest.mock("./onboardingContext/useOnboardingStorage");
 jest.useFakeTimers();
 jest.mock("@dashboard/components/DevModePanel/hooks", () => ({
-  useDevModeContext: jest.fn(() => ({
-    variables: "",
-    setVariables: jest.fn(),
-    isDevModeVisible: false,
-    setDevModeVisibility: jest.fn(),
-    devModeContent: "",
-    setDevModeContent: jest.fn(),
-  })),
+  useDevModeContext: jest.fn(),
 }));
 jest.mock("react-router-dom", () => ({
   Link: jest.fn(({ to, ...props }) => <a href={to} {...props} />),
@@ -55,17 +48,6 @@ const allMarkAsDoneStepsIds = [
 ];
 
 describe("WelcomePageOnboarding", () => {
-  const originalEnv = process.env;
-
-  beforeEach(() => {
-    jest.resetModules();
-    process.env = { ...originalEnv };
-  });
-
-  afterAll(() => {
-    process.env = originalEnv;
-  });
-
   it("should show 'Onboarding completed' when user's account is older than set date", () => {
     // Arrange
     (useUser as jest.Mock).mockReturnValue({ user: { dateJoined: OLD_ACCOUNT_DATE } });
