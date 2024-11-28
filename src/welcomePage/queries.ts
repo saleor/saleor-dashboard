@@ -5,14 +5,7 @@ export const welcomePageActivities = gql`
     activities: homepageEvents(last: 10) @include(if: $hasPermissionToManageOrders) {
       edges {
         node {
-          date
-          email
-          message
-          orderNumber
-          type
-          user {
-            email
-          }
+          ...Activities
         }
       }
     }

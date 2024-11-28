@@ -2223,6 +2223,18 @@ ${OrderFulfillmentGrantRefundFragmentDoc}
 ${MoneyFragmentDoc}
 ${OrderDetailsGrantedRefundFragmentDoc}
 ${TransactionItemFragmentDoc}`;
+export const ActivitiesFragmentDoc = gql`
+    fragment Activities on OrderEvent {
+  date
+  email
+  message
+  orderNumber
+  type
+  user {
+    email
+  }
+}
+    `;
 export const PageTypeFragmentDoc = gql`
     fragment PageType on PageType {
   id
