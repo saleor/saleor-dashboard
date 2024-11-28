@@ -44,13 +44,17 @@ export const WelcomePageOnboarding = () => {
           toggleOnboarding(value === "onboarding");
         }}
       >
-        <Accordion.Item value="onboarding">
+        <Accordion.Item value="onboarding" data-test-id="onboarding-accordion-item">
           <DashboardCard.Header padding={6}>
             <Title isOnboardingCompleted={isOnboardingCompleted} status={status} />
 
             <Box display="flex" flexDirection="row" alignItems="center" gap={4}>
               {!isOnboardingCompleted && (
-                <Button variant="secondary" onClick={handleMarkAllAsCompleted}>
+                <Button
+                  variant="secondary"
+                  onClick={handleMarkAllAsCompleted}
+                  data-test-id="mark-as-done"
+                >
                   <FormattedMessage
                     defaultMessage="Mark all as done"
                     id="ipbT0Q"
@@ -59,14 +63,21 @@ export const WelcomePageOnboarding = () => {
                 </Button>
               )}
               <Accordion.Trigger>
-                <Box
+                <Button
                   display="flex"
                   alignItems="center"
                   transition="ease"
                   __transform={`${isOnboardingExpanded ? "rotate(180deg)" : "none"}`}
+                  backgroundColor={{
+                    hover: "transparent",
+                    active: "transparent",
+                  }}
+                  variant="tertiary"
+                  size="small"
+                  data-test-id="onboarding-accordion-trigger"
                 >
                   <ChervonDownIcon />
-                </Box>
+                </Button>
               </Accordion.Trigger>
             </Box>
           </DashboardCard.Header>
