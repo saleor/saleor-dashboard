@@ -1,13 +1,13 @@
 // @ts-nocheck
 
-import X97611 from "./images/discounts-list.png"
-import B19783 from "./images/improved_refunds.png"
+import V24493 from "./images/discounts-list.png"
+import J49162 from "./images/improved_refunds.png"
 
-const discounts_rules = () => (<><p><img src={X97611} alt="Discount rules"/></p>
+const discounts_rules = () => (<><p><img src={V24493} alt="Discount rules"/></p>
 <p>Apply the new discounts rules to narrow your promotions audience.
 Set up conditions and channels that must be fulfilled to apply defined reward.</p>
 </>)
-const improved_refunds = () => (<><p><img src={B19783} alt="Improved refunds"/></p>
+const improved_refunds = () => (<><p><img src={J49162} alt="Improved refunds"/></p>
 <h3 id="enable-the-enhanced-refund-feature-to-streamline-your-refund-process">Enable the enhanced refund feature to streamline your refund process:</h3>
 <ul>
 <li><p>• Choose between automatic calculations based on selected items or enter refund amounts directly for overcharges and custom adjustments.</p>
@@ -17,7 +17,6 @@ const improved_refunds = () => (<><p><img src={B19783} alt="Improved refunds"/><
 </ul>
 
 </>)
-const new_home_page = () => (<></>)
 
 export const AVAILABLE_FLAGS = [{
   name: "discounts_rules",
@@ -35,15 +34,6 @@ export const AVAILABLE_FLAGS = [{
   visible: true,
   content: {
     enabled: true,
-    payload: "default",
-  }
-},{
-  name: "new_home_page",
-  displayName: "New home page",
-  component: new_home_page,
-  visible: false,
-  content: {
-    enabled: false,
     payload: "default",
   }
 }] as const;
