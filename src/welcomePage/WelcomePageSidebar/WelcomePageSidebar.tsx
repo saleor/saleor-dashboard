@@ -1,5 +1,4 @@
 import AppChannelSelect from "@dashboard/components/AppLayout/AppChannelSelect";
-import { topBarHeight } from "@dashboard/components/AppLayout/consts";
 import { DashboardCard } from "@dashboard/components/Card";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { ChannelFragment, PermissionEnum } from "@dashboard/graphql";
@@ -22,15 +21,8 @@ interface HomeSidebarProps {
 export const WelcomePageSidebar = (props: HomeSidebarProps) => {
   return (
     <WelcomePageSidebarContextProvider {...props}>
-      <DashboardCard
-        borderRadius={3}
-        borderWidth={1}
-        borderStyle="solid"
-        borderColor="default1"
-        __marginTop={topBarHeight}
-        marginRight={5}
-      >
-        <DashboardCard.Header>
+      <DashboardCard borderRadius={3} borderWidth={1} borderStyle="solid" borderColor="default1">
+        <DashboardCard.Header gap={3} display="flex" flexWrap="wrap">
           <DashboardCard.Title>
             <Text size={8}>
               <FormattedMessage

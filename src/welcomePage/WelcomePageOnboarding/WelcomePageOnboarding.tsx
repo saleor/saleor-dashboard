@@ -30,14 +30,7 @@ export const WelcomePageOnboarding = () => {
   };
 
   return (
-    <DashboardCard
-      marginTop={6}
-      marginRight={6}
-      borderRadius={3}
-      borderColor="default1"
-      borderWidth={1}
-      borderStyle="solid"
-    >
+    <DashboardCard borderRadius={3} borderColor="default1" borderWidth={1} borderStyle="solid">
       <Accordion
         value={isOnboardingExpanded ? "onboarding" : ""}
         onValueChange={value => {
@@ -46,9 +39,16 @@ export const WelcomePageOnboarding = () => {
       >
         <Accordion.Item value="onboarding" data-test-id="onboarding-accordion-item">
           <DashboardCard.Header padding={6}>
-            <Title isOnboardingCompleted={isOnboardingCompleted} status={status} />
+            <Box
+              display="flex"
+              flexWrap="wrap"
+              justifyContent="space-between"
+              gap={3}
+              width="100%"
+              marginRight={4}
+            >
+              <Title isOnboardingCompleted={isOnboardingCompleted} status={status} />
 
-            <Box display="flex" flexDirection="row" alignItems="center" gap={4}>
               {!isOnboardingCompleted && (
                 <Button
                   variant="secondary"
@@ -62,24 +62,24 @@ export const WelcomePageOnboarding = () => {
                   />
                 </Button>
               )}
-              <Accordion.Trigger>
-                <Button
-                  display="flex"
-                  alignItems="center"
-                  transition="ease"
-                  __transform={`${isOnboardingExpanded ? "rotate(180deg)" : "none"}`}
-                  backgroundColor={{
-                    hover: "transparent",
-                    active: "transparent",
-                  }}
-                  variant="tertiary"
-                  size="small"
-                  data-test-id="onboarding-accordion-trigger"
-                >
-                  <ChervonDownIcon />
-                </Button>
-              </Accordion.Trigger>
             </Box>
+            <Accordion.Trigger>
+              <Button
+                display="flex"
+                alignItems="center"
+                transition="ease"
+                __transform={`${isOnboardingExpanded ? "rotate(180deg)" : "none"}`}
+                backgroundColor={{
+                  hover: "transparent",
+                  active: "transparent",
+                }}
+                variant="tertiary"
+                size="small"
+                data-test-id="onboarding-accordion-trigger"
+              >
+                <ChervonDownIcon />
+              </Button>
+            </Accordion.Trigger>
           </DashboardCard.Header>
 
           <Accordion.Content>
