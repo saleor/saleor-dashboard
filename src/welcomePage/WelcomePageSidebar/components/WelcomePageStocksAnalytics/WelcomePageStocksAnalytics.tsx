@@ -5,12 +5,12 @@ import { useIntl } from "react-intl";
 import { useWelcomePageSidebarContext } from "../../context/welcomePageSidebarContext";
 import { welcomePageMessages } from "../../messages";
 import { WelcomePageAnalyticsCard } from "../WelcomePageAnalyticsCard";
-import { useHomeStocksAnalytics } from "./useHomeStocksAnalytics";
+import { useWelcomePageStocksAnalytics } from "./useWelcomePageStocksAnalytics";
 
 export const WelcomePageStocksAnalytics = () => {
   const intl = useIntl();
   const { hasNoChannels } = useWelcomePageSidebarContext();
-  const { analytics, loading, hasError } = useHomeStocksAnalytics();
+  const { analytics, loading, hasError } = useWelcomePageStocksAnalytics();
 
   return (
     <WelcomePageAnalyticsCard

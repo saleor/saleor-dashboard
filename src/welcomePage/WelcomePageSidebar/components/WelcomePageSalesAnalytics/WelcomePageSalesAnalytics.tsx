@@ -6,13 +6,13 @@ import { useIntl } from "react-intl";
 
 import { welcomePageMessages } from "../../messages";
 import { WelcomePageAnalyticsCard } from "../WelcomePageAnalyticsCard";
-import { useHomeSalesAnalytics } from "./useHomeSalesAnalytics";
+import { useWelcomePageSalesAnalytics } from "./useWelcomePageSalesAnalytics";
 
 export const WelcomePageSalesAnalytics = () => {
   const intl = useIntl();
   const { channel } = useAppChannel();
   const noChannel = !channel && typeof channel !== "undefined";
-  const { analytics, loading, hasError } = useHomeSalesAnalytics();
+  const { analytics, loading, hasError } = useWelcomePageSalesAnalytics();
 
   return (
     <WelcomePageAnalyticsCard
