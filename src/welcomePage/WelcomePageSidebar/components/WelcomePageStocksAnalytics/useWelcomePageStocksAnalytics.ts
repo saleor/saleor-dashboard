@@ -1,7 +1,7 @@
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useWelcomePageNotificationsQuery } from "@dashboard/graphql";
 
-export const useHomeStocksAnalytics = () => {
+export const useWelcomePageStocksAnalytics = () => {
   const { channel } = useAppChannel();
   const noChannel = !channel && typeof channel !== "undefined";
 
