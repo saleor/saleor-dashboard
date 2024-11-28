@@ -13,7 +13,7 @@ export const WelcomePageTilesContainer = () => {
   return (
     <Box
       display="grid"
-      __gridTemplateColumns="repeat(auto-fill, minmax(400px, 1fr))"
+      __gridTemplateColumns="repeat(auto-fill, minmax(min(100%, 400px), 1fr))"
       gap={6}
       marginTop={7}
     >

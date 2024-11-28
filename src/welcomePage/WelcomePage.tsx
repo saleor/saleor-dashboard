@@ -30,7 +30,7 @@ export const WelcomePage = () => {
       }}
       paddingX={8}
       paddingY={6}
-      paddingTop={10}
+      paddingTop={9}
       __gridTemplateRows="auto 1fr"
     >
       <Box gridRowStart="1" __grid-column="1/-1">
