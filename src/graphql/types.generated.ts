@@ -10653,36 +10653,6 @@ export type CustomerGiftCardListQueryVariables = Exact<{
 
 export type CustomerGiftCardListQuery = { __typename: 'Query', giftCards: { __typename: 'GiftCardCountableConnection', edges: Array<{ __typename: 'GiftCardCountableEdge', node: { __typename: 'GiftCard', id: string, last4CodeChars: string, expiryDate: any | null, isActive: boolean, currentBalance: { __typename: 'Money', amount: number, currency: string } } }> } | null };
 
-export type HomeAnaliticsQueryVariables = Exact<{
-  channel: Scalars['String'];
-  hasPermissionToManageOrders: Scalars['Boolean'];
-}>;
-
-
-export type HomeAnaliticsQuery = { __typename: 'Query', salesToday: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } | null };
-
-export type HomeActivitiesQueryVariables = Exact<{
-  hasPermissionToManageOrders: Scalars['Boolean'];
-}>;
-
-
-export type HomeActivitiesQuery = { __typename: 'Query', activities: { __typename: 'OrderEventCountableConnection', edges: Array<{ __typename: 'OrderEventCountableEdge', node: { __typename: 'OrderEvent', amount: number | null, composedId: string | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, id: string, message: string | null, orderNumber: string | null, oversoldItems: Array<string> | null, quantity: number | null, type: OrderEventsEnum | null, user: { __typename: 'User', id: string, email: string } | null } }> } | null };
-
-export type HomeTopProductsQueryVariables = Exact<{
-  channel: Scalars['String'];
-  hasPermissionToManageProducts: Scalars['Boolean'];
-}>;
-
-
-export type HomeTopProductsQuery = { __typename: 'Query', productTopToday: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, quantityOrdered: number | null, revenue: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } | null, attributes: Array<{ __typename: 'SelectedAttribute', values: Array<{ __typename: 'AttributeValue', id: string, name: string | null }> }>, product: { __typename: 'Product', id: string, name: string, thumbnail: { __typename: 'Image', url: string } | null } } }> } | null };
-
-export type HomeNotificationsQueryVariables = Exact<{
-  channel: Scalars['String'];
-}>;
-
-
-export type HomeNotificationsQuery = { __typename: 'Query', productsOutOfStock: { __typename: 'ProductCountableConnection', totalCount: number | null } | null };
-
 export type MenuCreateMutationVariables = Exact<{
   input: MenuCreateInput;
 }>;
