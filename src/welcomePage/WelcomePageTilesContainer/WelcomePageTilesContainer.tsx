@@ -13,14 +13,9 @@ export const WelcomePageTilesContainer = () => {
   return (
     <Box
       display="grid"
-      gridTemplateColumns={{
-        mobile: 1,
-        desktop: 2,
-      }}
+      __gridTemplateColumns="repeat(auto-fill, minmax(400px, 1fr))"
       gap={6}
-      marginRight={6}
-      marginY={6}
-      paddingBottom={6}
+      marginTop={7}
     >
       {tiles.map(tile => (
         <WelcomePageInfoTile key={tile.id} {...tile} />

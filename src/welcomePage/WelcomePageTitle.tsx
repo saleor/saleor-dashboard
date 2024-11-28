@@ -9,7 +9,7 @@ export const WelcomePageTitle = () => {
   const userName = getUserName(user, true);
 
   return (
-    <Text as="h1" size={8}>
+    <Text as="h1" size={9} lineHeight={4}>
       <FormattedMessage
         defaultMessage="Hello {userName}, welcome to your Store Dashboard"
         id="0+zatS"
