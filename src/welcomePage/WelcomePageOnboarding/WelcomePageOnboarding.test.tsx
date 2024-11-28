@@ -48,7 +48,7 @@ const allMarkAsDoneStepsIds = [
 ];
 
 describe("WelcomePageOnboarding", () => {
-  it("should show 'Onboarding completed' when user's account is older than set date", () => {
+  it("should show collapsed accordion with 'Onboarding completed' when user's account is older than set date", () => {
     // Arrange
     (useUser as jest.Mock).mockReturnValue({ user: { dateJoined: OLD_ACCOUNT_DATE } });
     (useOnboardingStorage as jest.Mock).mockReturnValue({
