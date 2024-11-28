@@ -1,6 +1,6 @@
 import { useUser } from "@dashboard/auth";
 import { ApolloMockedProvider } from "@test/ApolloMockedProvider";
-import { render, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 
 import { onboardingCompletedMock, onboardingInitState } from "./mocks";
@@ -65,7 +65,9 @@ describe("WelcomePageOnboarding", () => {
 
     // Assert
     expect(getByText(onboardingCompleteMessage)).toBeInTheDocument();
+    expect(screen.getByTestId("onboarding-accordion-item")).toHaveAttribute("data-state", "closed");
   });
+
   it("should save onboarding expanded state to storage service", async () => {
     // Arrange
     const saveOnboardingState = jest.fn();
@@ -77,13 +79,13 @@ describe("WelcomePageOnboarding", () => {
     });
 
     // Act
-    const { getByTestId } = render(
+    render(
       <Wrapper>
         <WelcomePageOnboarding />
       </Wrapper>,
     );
 
-    getByTestId("onboarding-accordion-trigger").click();
+    screen.getByTestId("onboarding-accordion-trigger").click();
     jest.runAllTimers();
 
     // Assert
@@ -92,8 +94,9 @@ describe("WelcomePageOnboarding", () => {
       stepsCompleted: [],
       stepsExpanded: {},
     });
-    expect(getByTestId("onboarding-accordion-item")).toHaveAttribute("data-state", "closed");
+    expect(screen.getByTestId("onboarding-accordion-item")).toHaveAttribute("data-state", "closed");
   });
+
   it("should show 'Onboarding completed' when 'Mark all as done' is clicked", () => {
     // Arrange
     (useUser as jest.Mock).mockReturnValue({ user: { dateJoined: NEW_ACCOUNT_DATE } });
@@ -103,19 +106,20 @@ describe("WelcomePageOnboarding", () => {
     });
 
     // Act
-    const { getByText, getByTestId, queryByText } = render(
+    render(
       <Wrapper>
         <WelcomePageOnboarding />
       </Wrapper>,
     );
 
-    getByTestId("mark-as-done").click();
+    screen.getByTestId("mark-as-done").click();
 
     // Assert
-    expect(getByText(onboardingCompleteMessage)).toBeInTheDocument();
-    expect(getByTestId("onboarding-accordion-item")).toHaveAttribute("data-state", "open");
-    expect(queryByText("Mark all as done")).toBeNull();
+    expect(screen.getByText(onboardingCompleteMessage)).toBeInTheDocument();
+    expect(screen.getByTestId("onboarding-accordion-item")).toHaveAttribute("data-state", "open");
+    expect(screen.queryByText("Mark all as done")).toBeNull();
   });
+
   it("should show 'Onboarding completed' after marking each steps as done", () => {
     // Arrange
     (useUser as jest.Mock).mockReturnValue({ user: { dateJoined: NEW_ACCOUNT_DATE } });
@@ -125,26 +129,27 @@ describe("WelcomePageOnboarding", () => {
     });
 
     // Act
-    const { getByTestId, getByText } = render(
+    render(
       <Wrapper>
         <WelcomePageOnboarding />
       </Wrapper>,
     );
 
     // 'get-started' has only 'Next step' button
-    const getStartedNextStepBtn = getByTestId("get-started-next-step-btn");
+    const getStartedNextStepBtn = screen.getByTestId("get-started-next-step-btn");
 
     getStartedNextStepBtn.click();
 
     allMarkAsDoneStepsIds.forEach(stepId => {
-      const markAsDone = getByTestId(stepId + "-mark-as-done");
+      const markAsDone = screen.getByTestId(stepId + "-mark-as-done");
 
       markAsDone.click();
     });
 
     // Assert
-    expect(getByText(onboardingCompleteMessage)).toBeInTheDocument();
+    expect(screen.getByText(onboardingCompleteMessage)).toBeInTheDocument();
   });
+
   it("should show 'Onboarding completed' when all steps were completed", () => {
     // Arrange
     (useUser as jest.Mock).mockReturnValue({ user: { dateJoined: NEW_ACCOUNT_DATE } });
@@ -163,6 +168,7 @@ describe("WelcomePageOnboarding", () => {
     // Assert
     expect(getByText(onboardingCompleteMessage)).toBeInTheDocument();
   });
+
   it("clicking 'Next step' should save the status to storage service", async () => {
     // Arrange
     const saveOnboardingState = jest.fn();
@@ -174,13 +180,13 @@ describe("WelcomePageOnboarding", () => {
     });
 
     // Act
-    const { getByTestId } = render(
+    render(
       <Wrapper>
         <WelcomePageOnboarding />
       </Wrapper>,
     );
 
-    getByTestId("get-started-next-step-btn").click();
+    screen.getByTestId("get-started-next-step-btn").click();
     jest.runAllTimers();
 
     // Assert
@@ -190,6 +196,7 @@ describe("WelcomePageOnboarding", () => {
       stepsExpanded: {},
     });
   });
+
   it("clicking any 'Mark as done' should save the status to storage service with 'get-started' step", async () => {
     // Arrange
     const saveOnboardingState = jest.fn();
@@ -201,7 +208,7 @@ describe("WelcomePageOnboarding", () => {
     });
 
     // Act
-    const { getByTestId } = render(
+    render(
       <Wrapper>
         <WelcomePageOnboarding />
       </Wrapper>,
@@ -209,11 +216,11 @@ describe("WelcomePageOnboarding", () => {
 
     // Any step:
     const graphqlPlaygroundId = "graphql-playground";
-    const exploreGraphql = getByTestId("accordion-step-trigger-" + graphqlPlaygroundId);
+    const exploreGraphql = screen.getByTestId("accordion-step-trigger-" + graphqlPlaygroundId);
 
     exploreGraphql.click();
 
-    const markAsDone = getByTestId(graphqlPlaygroundId + "-mark-as-done");
+    const markAsDone = screen.getByTestId(graphqlPlaygroundId + "-mark-as-done");
 
     markAsDone.click();
 
