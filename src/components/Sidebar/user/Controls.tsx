@@ -22,8 +22,8 @@ export const useLegacyThemeHandler = () => {
   const { theme, setTheme } = useTheme();
   const { setTheme: setLegacyTheme } = useLegacyTheme();
   const changeTheme = () => {
-    setLegacyTheme(theme === "defaultLight" ? "dark" : "light");
-    setTheme(theme === "defaultLight" ? "defaultDark" : "defaultLight");
+    setLegacyTheme("dark");
+    setTheme("defaultDark");
   };
   const handleStorage = (event: StorageEvent) => {
     if (!["macaw-ui-theme", "activeMacawUITheme"].includes(event.key || "")) {
@@ -38,6 +38,7 @@ export const useLegacyThemeHandler = () => {
 
   useEffect(() => {
     window.addEventListener("storage", handleStorage);
+    changeTheme();
 
     return () => window.removeEventListener("storage", handleStorage);
   }, []);
@@ -112,22 +113,6 @@ export const UserControls = () => {
                   <Text>
                     <FormattedMessage id="qLbse5" defaultMessage="Log out" description="button" />
                   </Text>
-                </List.Item>
-              </Dropdown.Item>
-              <Dropdown.Item>
-                <List.Item
-                  display="flex"
-                  alignItems="center"
-                  gap={2}
-                  marginTop={1}
-                  onClick={() => {
-                    changeTheme();
-                    setOpen(false);
-                  }}
-                  {...listItemStyles}
-                  data-test-id="theme-switch"
-                >
-                  <ThemeSwitcher theme={theme} />
                 </List.Item>
               </Dropdown.Item>
             </List>

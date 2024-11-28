@@ -7,13 +7,15 @@ import { commonMessages } from "@dashboard/intl";
 import { CircularProgress, Divider, TextField } from "@material-ui/core";
 import { EyeIcon, IconButton } from "@saleor/macaw-ui";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
 import useStyles from "../styles";
 import LoginForm, { LoginFormData } from "./form";
 import { getErrorMessage } from "./messages";
+import { useTheme } from "@dashboard/theme";
+import { useTheme as useLegacyTheme } from "@saleor/macaw-ui";
 
 export interface LoginCardProps {
   errors: UserContextError[];
@@ -36,7 +38,15 @@ const LoginPage: React.FC<LoginCardProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
   const [showPassword, setShowPassword] = React.useState(false);
-
+  const { setTheme } = useTheme();
+  const { setTheme: setLegacyTheme } = useLegacyTheme();
+  const changeTheme = () => {
+    setLegacyTheme("dark");
+    setTheme("defaultDark");
+  };
+  useEffect(() => {
+    changeTheme();
+  }, []);
   if (loading) {
     return (
       <div className={classes.loading}>
