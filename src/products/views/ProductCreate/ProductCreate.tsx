@@ -23,7 +23,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { getMutationErrors } from "@dashboard/misc";
-import { useOnboarding } from "@dashboard/newHome/homeOnboarding/onboardingContext";
 import ProductCreatePage, {
   ProductCreateData,
 } from "@dashboard/products/components/ProductCreatePage";
@@ -46,6 +45,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseAddPath } from "@dashboard/warehouses/urls";
+import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 
