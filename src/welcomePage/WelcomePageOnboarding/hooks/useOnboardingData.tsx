@@ -42,7 +42,11 @@ const getStepsData = ({
     }),
     isCompleted: isStepCompleted("get-started"),
     actions: !isStepCompleted("get-started") ? (
-      <Button variant="primary" onClick={() => onStepComplete("get-started")}>
+      <Button
+        variant="primary"
+        onClick={() => onStepComplete("get-started")}
+        data-test-id="get-started-next-step-btn"
+      >
         <FormattedMessage defaultMessage="Next step" id="d+qgix" />
       </Button>
     ) : null,
@@ -65,7 +69,11 @@ const getStepsData = ({
       <>
         <WelcomePageCreateProductButton />
         {!isStepCompleted("create-product") && (
-          <Button variant="secondary" onClick={() => onStepComplete("create-product")}>
+          <Button
+            variant="secondary"
+            onClick={() => onStepComplete("create-product")}
+            data-test-id="create-product-mark-as-done"
+          >
             <FormattedMessage defaultMessage="Mark as done" id="C5gcqL" description="btn label" />
           </Button>
         )}
@@ -90,7 +98,11 @@ const getStepsData = ({
       <>
         <WelcomePageOrdersButton />
         {!isStepCompleted("explore-orders") && (
-          <Button variant="secondary" onClick={() => onStepComplete("explore-orders")}>
+          <Button
+            variant="secondary"
+            onClick={() => onStepComplete("explore-orders")}
+            data-test-id="explore-orders-mark-as-done"
+          >
             <FormattedMessage defaultMessage="Mark as done" id="C5gcqL" description="btn label" />
           </Button>
         )}
@@ -115,7 +127,11 @@ const getStepsData = ({
       <>
         <WelcomePageCheckGraphQLButton />
         {!isStepCompleted("graphql-playground") && (
-          <Button variant="secondary" onClick={() => onStepComplete("graphql-playground")}>
+          <Button
+            variant="secondary"
+            onClick={() => onStepComplete("graphql-playground")}
+            data-test-id="graphql-playground-mark-as-done"
+          >
             <FormattedMessage defaultMessage="Mark as done" id="C5gcqL" description="btn label" />
           </Button>
         )}
@@ -140,7 +156,11 @@ const getStepsData = ({
       <>
         <WelcomePageWebhooksButton />
         {!isStepCompleted("view-webhooks") && (
-          <Button variant="secondary" onClick={() => onStepComplete("view-webhooks")}>
+          <Button
+            variant="secondary"
+            onClick={() => onStepComplete("view-webhooks")}
+            data-test-id="view-webhooks-mark-as-done"
+          >
             <FormattedMessage defaultMessage="Mark as done" id="C5gcqL" description="btn label" />
           </Button>
         )}
@@ -165,7 +185,11 @@ const getStepsData = ({
       <>
         <WelcomePageInviteStaffButton />
         {!isStepCompleted("invite-staff") && (
-          <Button variant="secondary" onClick={() => onStepComplete("invite-staff")}>
+          <Button
+            variant="secondary"
+            onClick={() => onStepComplete("invite-staff")}
+            data-test-id="invite-staff-mark-as-done"
+          >
             <FormattedMessage defaultMessage="Mark as done" id="C5gcqL" description="btn label" />
           </Button>
         )}

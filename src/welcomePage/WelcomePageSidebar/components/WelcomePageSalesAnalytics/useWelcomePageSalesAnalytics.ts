@@ -2,7 +2,7 @@ import { useWelcomePageAnalyticsQuery } from "@dashboard/graphql";
 
 import { useWelcomePageSidebarContext } from "../../context/welcomePageSidebarContext";
 
-export const useHomeSalesAnalytics = () => {
+export const useWelcomePageSalesAnalytics = () => {
   const { selectedChannel, hasNoChannels, hasPermissionToManageOrders } =
     useWelcomePageSidebarContext();
 

@@ -44,7 +44,7 @@ export const WelcomePageOnboardingAccordion = () => {
           width="100%"
           boxShadow={extendedStepId === step.id ? "defaultFocused" : "none"}
         >
-          <Accordion.Trigger alignItems="center">
+          <Accordion.Trigger alignItems="center" data-test-id={`accordion-step-trigger-${step.id}`}>
             <Box width="100%" display="flex" alignItems="center" justifyContent="space-between">
               <Box display="flex" alignItems="center" gap={3.5}>
                 <StepIcon isComplete={step.isCompleted} />
