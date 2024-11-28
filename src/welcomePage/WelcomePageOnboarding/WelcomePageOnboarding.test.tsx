@@ -57,14 +57,14 @@ describe("WelcomePageOnboarding", () => {
     });
 
     // Act
-    const { getByText } = render(
+    render(
       <Wrapper>
         <WelcomePageOnboarding />
       </Wrapper>,
     );
 
     // Assert
-    expect(getByText(onboardingCompleteMessage)).toBeInTheDocument();
+    expect(screen.getByText(onboardingCompleteMessage)).toBeInTheDocument();
     expect(screen.getByTestId("onboarding-accordion-item")).toHaveAttribute("data-state", "closed");
   });
 
@@ -159,14 +159,14 @@ describe("WelcomePageOnboarding", () => {
     });
 
     // Act
-    const { getByText } = render(
+    render(
       <Wrapper>
         <WelcomePageOnboarding />
       </Wrapper>,
     );
 
     // Assert
-    expect(getByText(onboardingCompleteMessage)).toBeInTheDocument();
+    expect(screen.getByText(onboardingCompleteMessage)).toBeInTheDocument();
   });
 
   it("clicking 'Next step' should save the status to storage service", async () => {
