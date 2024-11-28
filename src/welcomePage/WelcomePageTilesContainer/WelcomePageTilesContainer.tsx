@@ -1,5 +1,5 @@
+import { useDashboardAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { Box } from "@saleor/macaw-ui-next";
-import { usePostHog } from "posthog-js/react";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -8,10 +8,10 @@ import { WelcomePageInfoTile } from "./WelcomePageInfoTile";
 
 export const WelcomePageTilesContainer = () => {
   const intl = useIntl();
-  const posthog = usePostHog();
+  const analytics = useDashboardAnalytics();
 
   const handleTileButtonClick = (tileId: string) => {
-    posthog.capture("home_tile_click", {
+    analytics.trackEvent("home_tile_click", {
       tile_id: tileId,
     });
   };

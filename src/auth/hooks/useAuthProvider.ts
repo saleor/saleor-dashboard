@@ -1,5 +1,6 @@
 import { ApolloClient, ApolloError } from "@apollo/client";
 import { IMessageContext } from "@dashboard/components/messages";
+import { useDashboardAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { DEMO_MODE } from "@dashboard/config";
 import { useUserDetailsQuery } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
@@ -14,7 +15,6 @@ import {
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
 import { GetExternalAccessTokenData, LoginData, useAuth, useAuthState } from "@saleor/sdk";
 import isEmpty from "lodash/isEmpty";
-import { posthog } from "posthog-js";
 import { useEffect, useRef, useState } from "react";
 import { IntlShape } from "react-intl";
 import urlJoin from "url-join";
@@ -37,6 +37,7 @@ export interface UseAuthProviderOpts {
 
 export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderOpts): UserContext {
   const { login, getExternalAuthUrl, getExternalAccessToken, logout } = useAuth();
+  const analytics = useDashboardAnalytics();
   const navigate = useNavigator();
   const { authenticated, authenticating, user } = useAuthState();
   const [requestedExternalPluginId] = useLocalStorage("requestedExternalPluginId", null);
@@ -82,7 +83,7 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
     }
   };
   const handleLogout = async () => {
-    posthog.reset();
+    analytics.reset();
 
     const returnTo = urlJoin(window.location.origin, getAppMountUriForRedirect());
     const result = await logout({

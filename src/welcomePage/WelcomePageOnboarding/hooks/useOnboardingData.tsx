@@ -1,5 +1,5 @@
+import { useDashboardAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { Button } from "@saleor/macaw-ui-next";
-import { usePostHog } from "posthog-js/react";
 import React, { ReactNode } from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
@@ -206,7 +206,7 @@ const getStepsData = ({
 
 export const useOnboardingData = () => {
   const intl = useIntl();
-  const posthog = usePostHog();
+  const analytics = useDashboardAnalytics();
   const { markOnboardingStepAsCompleted, onboardingState } = useOnboarding();
 
   const steps = getStepsData({
@@ -214,10 +214,10 @@ export const useOnboardingData = () => {
     isStepCompleted: (step: OnboardingStepsIDs) => onboardingState.stepsCompleted.includes(step),
     onStepComplete: (step: OnboardingStepsIDs) => {
       markOnboardingStepAsCompleted(step);
-      posthog.capture("home_onboarding_step_complete_click", { step_id: step });
+      analytics.trackEvent("home_onboarding_step_complete_click", { step_id: step });
     },
     posthogCapture: (step_id: OnboardingStepsIDs) =>
-      posthog.capture("home_onboarding_step_click", { step_id: step_id }),
+      analytics.trackEvent("home_onboarding_step_click", { step_id: step_id }),
   });
 
   return {

@@ -1,8 +1,8 @@
+import { useDashboardAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import {
   handleStateChangeAfterStepCompleted,
   handleStateChangeAfterToggle,
 } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/utils";
-import { usePostHog } from "posthog-js/react";
 import React, { useRef } from "react";
 
 import { useNewUserCheck } from "../hooks/useNewUserCheck";
@@ -23,7 +23,7 @@ import { useOnboardingStorage } from "./useOnboardingStorage";
 const OnboardingContext = React.createContext<OnboardingContextType | null>(null);
 
 export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
-  const posthog = usePostHog();
+  const analytics = useDashboardAnalytics();
   const [onboardingState, setOnboardingState] = React.useState<OnboardingState>({
     onboardingExpanded: true,
     stepsCompleted: [],
@@ -71,7 +71,7 @@ export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
   };
 
   const markAllAsCompleted = () => {
-    posthog.capture("home_onboarding_mark_all_steps_completed");
+    analytics.trackEvent("home_onboarding_mark_all_steps_completed");
     setOnboardingState(prevOnboardingState => ({
       ...prevOnboardingState,
       stepsCompleted: initialOnboardingSteps.map(step => step.id),
