@@ -5,7 +5,11 @@ import { SidebarContent } from "./Content";
 
 export const Sidebar = () => (
   <>
-    <Box display={{ mobile: "none", tablet: "none", desktop: "block" }} height="100%">
+    <Box
+      __width="260px"
+      display={{ mobile: "none", tablet: "none", desktop: "block" }}
+      height="100%"
+    >
       <SidebarContent />
     </Box>
     <Box display={{ mobile: "block", tablet: "block", desktop: "none" }}>
@@ -25,6 +29,7 @@ export const Sidebar = () => (
           backgroundColor="default2"
           data-test-id="sidebar-drawer-content"
           paddingTop={0}
+          __width="260px"
         >
           <SidebarContent />
         </Drawer.Content>
