@@ -1,5 +1,35 @@
 # Changelog
 
+## 3.20.20
+
+### Patch Changes
+
+- a40691f: Environments created via Saleor Cloud now identify and report to PostHog. This means Dashboard now sends telemetry data regarding home page onboarding steps and links.
+- da3e53b: Removed unnecessary expect that was waiting for the success banner, as it was causing delays on CI. Instead, the test rely on other assertions to verify that changes have been applied
+- 3f2ca21: Onboarding state is now stored in user metadata, that means that onboarding state is persisted between logins on different machines
+- c40fdf7: Add environment variables to GitHub Workflow to control when to show onboarding for new users
+- d677431: Now the list app page shows footer that allows the user to sumbmit a demanded app.
+- 479ae66: Merged expectSuccessBannerMessage and expectSuccessBanner into a single method, removed the redundant method, and updated tests to use the new unified method.
+- 24691c4: Rename newHome to wecomePage to allow seamlessly removing a feature flag
+- 13f63c2: New home page layout is now reponsive, it means that layout adjusts to desktop, tablet and mobile devices
+- 67687b3: User onboardng steps are now checking when user does required actions
+- e947997: E2E tests are now updated for new home page meaing that they don't fail when new home page is enabled.
+- 18a4eae: Activity section in home page now has uniform padding with header, stock and sales.
+- f1e5f34: Enhanced success banner verification in basePage.ts by adding network idle state check and parallel assertions, while modernizing array operations in shipping methods tests using spread syntax instead of .concat()
+- 0c2971b: Add integration test for new home sidebar
+- fab4b4e: Refactored tests by replacing direct banner visibility checks with `expectSuccessBanner()`.
+  Removed unnecessary `waitForNetworkIdleAfterAction` wrappers.
+  Simplified test scope for `staffMembers` and removed explicit timeouts where appropriate.
+- f9130c4: You can now see an onboarding component that guides the user through Saleor Dashboard features.
+- 9cd4da2: You can now see new sidebar with analytics and activities
+- 981a0bc: Removed waitForNetworkIdleAfterAction and replaced it with a direct navigation call.Added blur actions on metadataKeyInput and metadataValueInput to ensure input stability before saving in scope of SALEOR_128
+- 6990b1e: New home page with onboarding is now enabled, old home page code has been removed
+- d9600ab: Removed waitForNetworkIdleAfterAction and added direct element waits to ensure readiness before actions.
+- e48622c: Test set now includes tests for welcome page onboarding component.
+- 8bc92e3: You can now see information tiles regarding Saleor Docs, community, and technical help in the home page.
+- 4d9d127: Adjust inline discount test for precise floating-point comparison with .toFixed(2)
+- 7250d03: Padding under home page tiles is now increased to prevent clipping
+
 ## 3.20.19
 
 ### Patch Changes
