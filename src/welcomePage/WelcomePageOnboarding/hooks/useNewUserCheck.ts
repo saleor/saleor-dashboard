@@ -3,7 +3,7 @@ import moment from "moment";
 
 export const useNewUserCheck = () => {
   const { user } = useUser();
-  const thresholdDateString = process.env.ONBOARDING_USER_JOINED_DATE_THRESHOLD || "2024-01-01";
+  const thresholdDateString = process.env.ONBOARDING_USER_JOINED_DATE_THRESHOLD || "2024-11-29";
 
   if (!user) {
     return {
