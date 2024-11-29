@@ -4,7 +4,6 @@ import "./index.css";
 import { ApolloProvider } from "@apollo/client";
 import DemoBanner from "@dashboard/components/DemoBanner";
 import { history, Route, Router } from "@dashboard/components/Router";
-import { useFlag } from "@dashboard/featureFlags";
 import { PermissionEnum } from "@dashboard/graphql";
 import useAppState from "@dashboard/hooks/useAppState";
 import { ThemeProvider } from "@dashboard/theme";
@@ -58,7 +57,6 @@ import { FeatureFlagsProviderWithUser } from "./featureFlags/FeatureFlagsProvide
 import GiftCardSection from "./giftCards";
 import { giftCardsSectionUrlName } from "./giftCards/urls";
 import { apolloClient, saleorClient } from "./graphql/client";
-import OldHomePage from "./home";
 import { useLocationState } from "./hooks/useLocationState";
 import { commonMessages } from "./intl";
 import NavigationSection from "./navigation";
@@ -158,8 +156,6 @@ const Routes: React.FC = () => {
   const homePageLoaded = channelLoaded && authenticated;
   const homePageLoading = (authenticated && !channelLoaded) || authenticating;
   const { isAppPath } = useLocationState();
-  const { enabled: isNewHomePageEnabled } = useFlag("new_home_page");
-  const HomePageComponent = isNewHomePageEnabled ? WelcomePage : OldHomePage;
 
   return (
     <>
@@ -185,7 +181,7 @@ const Routes: React.FC = () => {
               )}
             >
               <Switch>
-                <SectionRoute exact path="/" component={HomePageComponent} />
+                <SectionRoute exact path="/" component={WelcomePage} />
                 <SectionRoute
                   permissions={[PermissionEnum.MANAGE_PRODUCTS]}
                   path="/categories"

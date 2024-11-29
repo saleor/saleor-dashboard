@@ -1,4 +1,3 @@
-import { useFlag } from "@dashboard/featureFlags";
 import {
   handleStateChangeAfterStepCompleted,
   handleStateChangeAfterToggle,
@@ -30,7 +29,6 @@ export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
   });
   const loaded = useRef(false);
   const { isNewUser, isUserLoading } = useNewUserCheck();
-  const newHomePageFlag = useFlag("new_home_page");
 
   const storageService = useOnboardingStorage();
 
@@ -63,7 +61,7 @@ export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
   const extendedStepId = useExpandedOnboardingId(onboardingState, loaded.current);
 
   const markOnboardingStepAsCompleted = (id: OnboardingStepsIDs) => {
-    if (!newHomePageFlag.enabled || onboardingState.stepsCompleted.includes(id)) return;
+    if (onboardingState.stepsCompleted.includes(id)) return;
 
     setOnboardingState(prevOnboardingState =>
       handleStateChangeAfterStepCompleted(prevOnboardingState, id),
