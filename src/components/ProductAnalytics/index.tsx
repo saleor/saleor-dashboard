@@ -1,3 +1,4 @@
+import { PostHogConfig } from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
 import React from "react";
 
@@ -7,7 +8,10 @@ const useConfig = () => {
     capture_pageview: false,
     autocapture: false,
     advanced_disable_decide: true,
-  };
+    loaded: posthog => {
+      if (process.env.NODE_ENV === "development") posthog.debug();
+    },
+  } satisfies Partial<PostHogConfig>;
   const apiKey = process.env.POSTHOG_KEY;
   const isCloudInstance = process.env.IS_CLOUD_INSTANCE;
   const canRenderAnalytics = () => {

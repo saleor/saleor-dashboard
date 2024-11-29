@@ -7,9 +7,10 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
+import { PrimaryActionProps } from "./type";
 import { WelcomePageFakeDisabledButton } from "./WelcomePageFakeDisabledButton";
 
-export const WelcomePageInviteStaffButton = () => {
+export const WelcomePageInviteStaffButton = ({ onClick }: PrimaryActionProps) => {
   const { user } = useUser();
   const userPermissions = user?.userPermissions || [];
   const hasPermissionToManageStaff = hasPermissions(userPermissions, [PermissionEnum.MANAGE_STAFF]);
@@ -35,7 +36,7 @@ export const WelcomePageInviteStaffButton = () => {
   }
 
   return (
-    <Link to={staffListUrl({ action: "add" })}>
+    <Link to={staffListUrl({ action: "add" })} onClick={onClick}>
       <Button variant="primary">
         <FormattedMessage defaultMessage="Invite members" id="BBt3jD" description="btn label" />
       </Button>

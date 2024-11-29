@@ -1,3 +1,4 @@
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { Button } from "@saleor/macaw-ui-next";
 import React, { ReactNode } from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
@@ -22,10 +23,12 @@ const getStepsData = ({
   intl,
   isStepCompleted,
   onStepComplete,
+  trackOnboardingEvent,
 }: {
   intl: IntlShape;
   isStepCompleted: (step: OnboardingStepsIDs) => boolean;
   onStepComplete: (step: OnboardingStepsIDs) => void;
+  trackOnboardingEvent: (event: OnboardingStepsIDs) => void;
 }): OnboardingStepData[] => [
   {
     id: "get-started",
@@ -44,8 +47,11 @@ const getStepsData = ({
     actions: !isStepCompleted("get-started") ? (
       <Button
         variant="primary"
-        onClick={() => onStepComplete("get-started")}
         data-test-id="get-started-next-step-btn"
+        onClick={() => {
+          onStepComplete("get-started");
+          trackOnboardingEvent("get-started");
+        }}
       >
         <FormattedMessage defaultMessage="Next step" id="d+qgix" />
       </Button>
@@ -67,7 +73,7 @@ const getStepsData = ({
     isCompleted: isStepCompleted("create-product"),
     actions: (
       <>
-        <WelcomePageCreateProductButton />
+        <WelcomePageCreateProductButton onClick={() => trackOnboardingEvent("create-product")} />
         {!isStepCompleted("create-product") && (
           <Button
             variant="secondary"
@@ -96,7 +102,7 @@ const getStepsData = ({
     isCompleted: isStepCompleted("explore-orders"),
     actions: (
       <>
-        <WelcomePageOrdersButton />
+        <WelcomePageOrdersButton onClick={() => trackOnboardingEvent("explore-orders")} />
         {!isStepCompleted("explore-orders") && (
           <Button
             variant="secondary"
@@ -125,7 +131,7 @@ const getStepsData = ({
     isCompleted: isStepCompleted("graphql-playground"),
     actions: (
       <>
-        <WelcomePageCheckGraphQLButton />
+        <WelcomePageCheckGraphQLButton onClick={() => trackOnboardingEvent("graphql-playground")} />
         {!isStepCompleted("graphql-playground") && (
           <Button
             variant="secondary"
@@ -154,7 +160,7 @@ const getStepsData = ({
     isCompleted: isStepCompleted("view-webhooks"),
     actions: (
       <>
-        <WelcomePageWebhooksButton />
+        <WelcomePageWebhooksButton onClick={() => trackOnboardingEvent("view-webhooks")} />
         {!isStepCompleted("view-webhooks") && (
           <Button
             variant="secondary"
@@ -183,7 +189,7 @@ const getStepsData = ({
     isCompleted: isStepCompleted("invite-staff"),
     actions: (
       <>
-        <WelcomePageInviteStaffButton />
+        <WelcomePageInviteStaffButton onClick={() => trackOnboardingEvent("invite-staff")} />
         {!isStepCompleted("invite-staff") && (
           <Button
             variant="secondary"
@@ -200,12 +206,18 @@ const getStepsData = ({
 
 export const useOnboardingData = () => {
   const intl = useIntl();
+  const analytics = useAnalytics();
   const { markOnboardingStepAsCompleted, onboardingState } = useOnboarding();
 
   const steps = getStepsData({
     intl,
     isStepCompleted: (step: OnboardingStepsIDs) => onboardingState.stepsCompleted.includes(step),
-    onStepComplete: markOnboardingStepAsCompleted,
+    onStepComplete: (step: OnboardingStepsIDs) => {
+      markOnboardingStepAsCompleted(step);
+      analytics.trackEvent("home_onboarding_step_complete_click", { step_id: step });
+    },
+    trackOnboardingEvent: (step_id: OnboardingStepsIDs) =>
+      analytics.trackEvent("home_onboarding_step_click", { step_id: step_id }),
   });
 
   return {

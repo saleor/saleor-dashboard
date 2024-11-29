@@ -7,9 +7,10 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
+import { PrimaryActionProps } from "./type";
 import { WelcomePageFakeDisabledButton } from "./WelcomePageFakeDisabledButton";
 
-export const WelcomePageOrdersButton = () => {
+export const WelcomePageOrdersButton = ({ onClick }: PrimaryActionProps) => {
   const { user } = useUser();
   const userPermissions = user?.userPermissions || [];
   const hasPermissionToManageOrders = hasPermissions(userPermissions, [
@@ -36,7 +37,7 @@ export const WelcomePageOrdersButton = () => {
   }
 
   return (
-    <Link to={orderListUrl()}>
+    <Link to={orderListUrl()} onClick={onClick}>
       <Button variant="primary">
         <FormattedMessage defaultMessage="Go to orders" id="kv3FWU" description="btn label" />
       </Button>

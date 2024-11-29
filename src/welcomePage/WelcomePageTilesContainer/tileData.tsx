@@ -33,7 +33,13 @@ const GitHubIcon = () => <SVG src={github} className={noShrink} />;
 const DiscordIcon = () => <SVG src={discord} className={noShrink} />;
 const ExternalLinkIcon = () => <SVG src={externalLink} className={noShrink} />;
 
-export const getTilesData = ({ intl }: { intl: IntlShape }): WelcomePageInfoTileProps[] => [
+export const getTilesData = ({
+  intl,
+  onTileButtonClick,
+}: {
+  intl: IntlShape;
+  onTileButtonClick: (tileId: string) => void;
+}): WelcomePageInfoTileProps[] => [
   {
     id: "technical-help",
     header: (
@@ -55,6 +61,7 @@ export const getTilesData = ({ intl }: { intl: IntlShape }): WelcomePageInfoTile
         as="a"
         target="_blank"
         href={TECHNICAL_HELP_CTA_URL}
+        onClick={() => onTileButtonClick("technical-help")}
         variant="primary"
         alignSelf="start"
       >
@@ -87,6 +94,7 @@ export const getTilesData = ({ intl }: { intl: IntlShape }): WelcomePageInfoTile
         as="a"
         target="_blank"
         href={DASHBOARD_DOCS_URL}
+        onClick={() => onTileButtonClick("dashboard-updates")}
         variant="secondary"
         alignSelf="start"
       >
@@ -116,7 +124,14 @@ export const getTilesData = ({ intl }: { intl: IntlShape }): WelcomePageInfoTile
       </Paragraph>
     ),
     bottomActions: (
-      <Button as="a" target="_blank" href={APPS_DOCS_URL} variant="secondary" alignSelf="start">
+      <Button
+        as="a"
+        target="_blank"
+        href={APPS_DOCS_URL}
+        variant="secondary"
+        alignSelf="start"
+        onClick={() => onTileButtonClick("saleor-app-store")}
+      >
         <FormattedMessage
           defaultMessage="View Documentation"
           id="a+WuZg"
@@ -143,7 +158,14 @@ export const getTilesData = ({ intl }: { intl: IntlShape }): WelcomePageInfoTile
       </Paragraph>
     ),
     bottomActions: (
-      <Button as="a" target="_blank" href={CHECKOUT_DOCS_URL} variant="secondary" alignSelf="start">
+      <Button
+        as="a"
+        target="_blank"
+        href={CHECKOUT_DOCS_URL}
+        variant="secondary"
+        alignSelf="start"
+        onClick={() => onTileButtonClick("learn-checkout")}
+      >
         <FormattedMessage
           defaultMessage="View Documentation"
           id="a+WuZg"
@@ -175,6 +197,7 @@ export const getTilesData = ({ intl }: { intl: IntlShape }): WelcomePageInfoTile
           as="a"
           target="_blank"
           href={SALEOR_GITHUB_URL}
+          onClick={() => onTileButtonClick("community-github")}
           variant="secondary"
           alignSelf="start"
           marginTop="auto"
@@ -190,6 +213,7 @@ export const getTilesData = ({ intl }: { intl: IntlShape }): WelcomePageInfoTile
           as="a"
           target="_blank"
           href={SALEOR_DISCORD_URL}
+          onClick={() => onTileButtonClick("community-discord")}
           variant="secondary"
           alignSelf="start"
           marginTop="auto"
