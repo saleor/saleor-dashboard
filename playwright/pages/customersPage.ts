@@ -28,6 +28,7 @@ export class CustomersPage extends BasePage {
     readonly emailPageTitleText = page.getByTestId("user-email-title"),
     readonly customerActiveCheckbox = page.getByTestId("customer-active-checkbox").locator("input"),
     readonly amountDropdown = page.locator('div[name="balanceCurrency"]'),
+    readonly customerList = page.locator('div[data-test-id="list"]'),
   ) {
     super(page);
     this.addressForm = new AddressForm(page);
@@ -37,9 +38,8 @@ export class CustomersPage extends BasePage {
   }
 
   async goToCustomersListView() {
-    await this.waitForNetworkIdleAfterAction(async () => {
-      await this.page.goto(URL_LIST.customers);
-    });
+    await this.page.goto(URL_LIST.customers);
+    await this.customerList.waitFor({ state: "visible" });
   }
 
   async searchForCustomer(customer: string) {
@@ -47,9 +47,8 @@ export class CustomersPage extends BasePage {
   }
 
   async gotoCustomerDetailsPage(customerId: string) {
-    await this.waitForNetworkIdleAfterAction(async () => {
-      await this.page.goto(`${URL_LIST.customers}${customerId}`);
-    });
+    await this.page.goto(`${URL_LIST.customers}${customerId}`);
+    await this.customerFirstNameInput.waitFor({ state: "visible" });
   }
 
   async clickOnCreateCustomer() {
@@ -78,9 +77,8 @@ export class CustomersPage extends BasePage {
   }
 
   async clickIssueNewGiftCard() {
-    await this.waitForNetworkIdleAfterAction(async () => {
-      await this.issueNewGiftCardButton.click();
-    });
+    await this.issueNewGiftCardButton.waitFor({ state: "visible" });
+    await this.issueNewGiftCardButton.click();
   }
 
   async clickCustomerActiveCheckbox() {

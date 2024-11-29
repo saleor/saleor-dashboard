@@ -233,11 +233,9 @@ test("TC: SALEOR_60 As an admin I should be able update existing variant @basic-
   const variantName = `TC: SALEOR_60 - variant name - ${new Date().toISOString()}`;
   const sku = `SALEOR_60-sku-${new Date().toISOString()}`;
 
-  await productPage.waitForNetworkIdleAfterAction(() =>
-    variantsPage.gotoExistingVariantPage(
-      PRODUCTS.productWithVariantWhichWillBeUpdated.id,
-      PRODUCTS.productWithVariantWhichWillBeUpdated.variantId,
-    ),
+  await variantsPage.gotoExistingVariantPage(
+    PRODUCTS.productWithVariantWhichWillBeUpdated.id,
+    PRODUCTS.productWithVariantWhichWillBeUpdated.variantId,
   );
   await variantsPage.typeVariantName(variantName);
   await variantsPage.clickMageChannelsButton();
@@ -263,11 +261,9 @@ test("TC: SALEOR_60 As an admin I should be able update existing variant @basic-
   await productPage.productImage.waitFor({ state: "visible" });
 });
 test("TC: SALEOR_61 As an admin I should be able to delete existing variant @basic-regression @product @e2e", async () => {
-  await productPage.waitForNetworkIdleAfterAction(() =>
-    variantsPage.gotoExistingVariantPage(
-      PRODUCTS.singleVariantDeleteProduct.productId,
-      PRODUCTS.singleVariantDeleteProduct.variantId,
-    ),
+  await variantsPage.gotoExistingVariantPage(
+    PRODUCTS.singleVariantDeleteProduct.productId,
+    PRODUCTS.singleVariantDeleteProduct.variantId,
   );
   await variantsPage.clickDeleteVariantButton();
   await variantsPage.deleteVariantDialog.clickDeleteVariantButton();
@@ -282,9 +278,7 @@ test("TC: SALEOR_61 As an admin I should be able to delete existing variant @bas
   ).toContain(PRODUCTS.singleVariantDeleteProduct.productId);
 });
 test("TC: SALEOR_62 As an admin I should be able to bulk delete existing variants @basic-regression @product @e2e", async () => {
-  await productPage.waitForNetworkIdleAfterAction(() =>
-    productPage.gotoExistingProductPage(PRODUCTS.multipleVariantsBulkDeleteProduct.productId),
-  );
+  await productPage.gotoExistingProductPage(PRODUCTS.multipleVariantsBulkDeleteProduct.productId);
   await productPage.waitForGrid();
   await productPage.gridCanvas.scrollIntoViewIfNeeded();
   await productPage.clickGridCell(0, 0);
