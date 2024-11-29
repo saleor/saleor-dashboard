@@ -1,6 +1,6 @@
 import { ApolloClient, ApolloError } from "@apollo/client";
 import { IMessageContext } from "@dashboard/components/messages";
-import { useDashboardAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { DEMO_MODE } from "@dashboard/config";
 import { useUserDetailsQuery } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
@@ -37,7 +37,7 @@ export interface UseAuthProviderOpts {
 
 export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderOpts): UserContext {
   const { login, getExternalAuthUrl, getExternalAccessToken, logout } = useAuth();
-  const analytics = useDashboardAnalytics();
+  const analytics = useAnalytics();
   const navigate = useNavigator();
   const { authenticated, authenticating, user } = useAuthState();
   const [requestedExternalPluginId] = useLocalStorage("requestedExternalPluginId", null);

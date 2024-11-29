@@ -1,4 +1,4 @@
-import { useDashboardAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -8,7 +8,7 @@ import { WelcomePageInfoTile } from "./WelcomePageInfoTile";
 
 export const WelcomePageTilesContainer = () => {
   const intl = useIntl();
-  const analytics = useDashboardAnalytics();
+  const analytics = useAnalytics();
 
   const handleTileButtonClick = (tileId: string) => {
     analytics.trackEvent("home_tile_click", {

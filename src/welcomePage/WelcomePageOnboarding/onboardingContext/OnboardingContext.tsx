@@ -1,4 +1,4 @@
-import { useDashboardAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import {
   handleStateChangeAfterStepCompleted,
   handleStateChangeAfterToggle,
@@ -23,7 +23,7 @@ import { useOnboardingStorage } from "./useOnboardingStorage";
 const OnboardingContext = React.createContext<OnboardingContextType | null>(null);
 
 export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
-  const analytics = useDashboardAnalytics();
+  const analytics = useAnalytics();
   const [onboardingState, setOnboardingState] = React.useState<OnboardingState>({
     onboardingExpanded: true,
     stepsCompleted: [],

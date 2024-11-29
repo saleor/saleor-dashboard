@@ -1,6 +1,6 @@
 import { usePostHog } from "posthog-js/react";
 
-export function useDashboardAnalytics() {
+export function useAnalytics() {
   const posthog = usePostHog();
 
   function initialize(details: Record<string, any>) {

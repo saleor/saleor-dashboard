@@ -1,4 +1,4 @@
-import { useDashboardAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { Button } from "@saleor/macaw-ui-next";
 import React, { ReactNode } from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
@@ -23,12 +23,12 @@ const getStepsData = ({
   intl,
   isStepCompleted,
   onStepComplete,
-  posthogCapture,
+  trackOnboardingEvent,
 }: {
   intl: IntlShape;
   isStepCompleted: (step: OnboardingStepsIDs) => boolean;
   onStepComplete: (step: OnboardingStepsIDs) => void;
-  posthogCapture: (event: OnboardingStepsIDs) => void;
+  trackOnboardingEvent: (event: OnboardingStepsIDs) => void;
 }): OnboardingStepData[] => [
   {
     id: "get-started",
@@ -50,7 +50,7 @@ const getStepsData = ({
         data-test-id="get-started-next-step-btn"
         onClick={() => {
           onStepComplete("get-started");
-          posthogCapture("get-started");
+          trackOnboardingEvent("get-started");
         }}
       >
         <FormattedMessage defaultMessage="Next step" id="d+qgix" />
@@ -73,7 +73,7 @@ const getStepsData = ({
     isCompleted: isStepCompleted("create-product"),
     actions: (
       <>
-        <WelcomePageCreateProductButton onClick={() => posthogCapture("create-product")} />
+        <WelcomePageCreateProductButton onClick={() => trackOnboardingEvent("create-product")} />
         {!isStepCompleted("create-product") && (
           <Button
             variant="secondary"
@@ -102,7 +102,7 @@ const getStepsData = ({
     isCompleted: isStepCompleted("explore-orders"),
     actions: (
       <>
-        <WelcomePageOrdersButton onClick={() => posthogCapture("explore-orders")} />
+        <WelcomePageOrdersButton onClick={() => trackOnboardingEvent("explore-orders")} />
         {!isStepCompleted("explore-orders") && (
           <Button
             variant="secondary"
@@ -131,7 +131,7 @@ const getStepsData = ({
     isCompleted: isStepCompleted("graphql-playground"),
     actions: (
       <>
-        <WelcomePageCheckGraphQLButton onClick={() => posthogCapture("graphql-playground")} />
+        <WelcomePageCheckGraphQLButton onClick={() => trackOnboardingEvent("graphql-playground")} />
         {!isStepCompleted("graphql-playground") && (
           <Button
             variant="secondary"
@@ -160,7 +160,7 @@ const getStepsData = ({
     isCompleted: isStepCompleted("view-webhooks"),
     actions: (
       <>
-        <WelcomePageWebhooksButton onClick={() => posthogCapture("view-webhooks")} />
+        <WelcomePageWebhooksButton onClick={() => trackOnboardingEvent("view-webhooks")} />
         {!isStepCompleted("view-webhooks") && (
           <Button
             variant="secondary"
@@ -189,7 +189,7 @@ const getStepsData = ({
     isCompleted: isStepCompleted("invite-staff"),
     actions: (
       <>
-        <WelcomePageInviteStaffButton onClick={() => posthogCapture("invite-staff")} />
+        <WelcomePageInviteStaffButton onClick={() => trackOnboardingEvent("invite-staff")} />
         {!isStepCompleted("invite-staff") && (
           <Button
             variant="secondary"
@@ -206,7 +206,7 @@ const getStepsData = ({
 
 export const useOnboardingData = () => {
   const intl = useIntl();
-  const analytics = useDashboardAnalytics();
+  const analytics = useAnalytics();
   const { markOnboardingStepAsCompleted, onboardingState } = useOnboarding();
 
   const steps = getStepsData({
@@ -216,7 +216,7 @@ export const useOnboardingData = () => {
       markOnboardingStepAsCompleted(step);
       analytics.trackEvent("home_onboarding_step_complete_click", { step_id: step });
     },
-    posthogCapture: (step_id: OnboardingStepsIDs) =>
+    trackOnboardingEvent: (step_id: OnboardingStepsIDs) =>
       analytics.trackEvent("home_onboarding_step_click", { step_id: step_id }),
   });
 

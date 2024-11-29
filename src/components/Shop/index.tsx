@@ -8,7 +8,7 @@ import { ShopInfoQuery, useShopInfoQuery } from "@dashboard/graphql";
 import React, { useEffect } from "react";
 import Helmet from "react-helmet";
 
-import { useDashboardAnalytics } from "../ProductAnalytics/useAnalytics";
+import { useAnalytics } from "../ProductAnalytics/useAnalytics";
 import { extractEmailDomain } from "../ProductAnalytics/utils";
 
 type ShopContext = ShopInfoQuery["shop"];
@@ -17,7 +17,7 @@ export const ShopContext = React.createContext<ShopContext>(undefined);
 
 export const ShopProvider: React.FC = ({ children }) => {
   const { authenticated, user } = useUser();
-  const analytics = useDashboardAnalytics();
+  const analytics = useAnalytics();
   const { data } = useShopInfoQuery({
     skip: !authenticated || !user,
   });
