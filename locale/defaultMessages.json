@@ -225,9 +225,6 @@
     "context": "section description",
     "string": "Strategy defines the preference of warehouses for stock allocations and reservations."
   },
-  "/Fa+RP": {
-    "string": "Couldn't load top products"
-  },
   "/H9LeU": {
     "string": "Explore Saleor App Store"
   },
@@ -2080,10 +2077,6 @@
   "BvGp1I": {
     "string": "between"
   },
-  "By5ZBp": {
-    "context": "header",
-    "string": "Hello there, {userName}"
-  },
   "ByYtFB": {
     "string": "Invalid or expired token. Please check your token in URL"
   },
@@ -3298,10 +3291,6 @@
   "J4NBVR": {
     "context": "link",
     "string": "View Orders"
-  },
-  "J5R1SI": {
-    "context": "home get in touch card title",
-    "string": "Need technical help?"
   },
   "J7mFhU": {
     "context": "currency code select",
@@ -5957,10 +5946,6 @@
     "context": "warehouse",
     "string": "Name"
   },
-  "aCX8rl": {
-    "context": "subheader",
-    "string": "Here is some information we gathered about your store"
-  },
   "aEc9Ar": {
     "context": "gift card history message",
     "string": "Gift card balance was reset by {resetBy}"
@@ -6511,10 +6496,6 @@
   "e/61NZ": {
     "context": "current balance filter label",
     "string": "Current balance"
-  },
-  "e08xWz": {
-    "context": "header",
-    "string": "Top products"
   },
   "e0RKe+": {
     "context": "generate invoice button",
@@ -7890,10 +7871,6 @@
     "context": "order history message",
     "string": "Fulfilled {quantity} items"
   },
-  "nII/qB": {
-    "context": "number of ordered products",
-    "string": "{amount, plural,one {One ordered}other {{amount} ordered}}"
-  },
   "nIrjSR": {
     "context": "section header",
     "string": "Ongoing Installations"
@@ -8827,10 +8804,6 @@
   },
   "u0V06N": {
     "string": "Max. Order Weight"
-  },
-  "u0hKaa": {
-    "context": "home get in touch card description",
-    "string": "Save hours of evaluating Saleor on your own by speaking with our solution engineer."
   },
   "u24Ppd": {
     "string": "This attribute cannot be assigned to this product type"

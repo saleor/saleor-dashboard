@@ -1,5 +1,6 @@
 import { ApolloClient, ApolloError } from "@apollo/client";
 import { IMessageContext } from "@dashboard/components/messages";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { DEMO_MODE } from "@dashboard/config";
 import { AccountErrorCode, useUserDetailsQuery } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
@@ -37,6 +38,7 @@ type AuthErrorCodes = `${AccountErrorCode}`;
 
 export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderOpts): UserContext {
   const { login, getExternalAuthUrl, getExternalAccessToken, logout } = useAuth();
+  const analytics = useAnalytics();
   const navigate = useNavigator();
   const { authenticated, authenticating, user } = useAuthState();
   const [requestedExternalPluginId] = useLocalStorage("requestedExternalPluginId", null);
@@ -83,6 +85,8 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
     }
   };
   const handleLogout = async () => {
+    analytics.reset();
+
     const returnTo = urlJoin(window.location.origin, getAppMountUriForRedirect());
     const result = await logout({
       input: JSON.stringify({

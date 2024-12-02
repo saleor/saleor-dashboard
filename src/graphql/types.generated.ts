@@ -10338,6 +10338,8 @@ export type OrderFulfillmentGrantRefundFragment = { __typename: 'Fulfillment', i
 
 export type OrderDetailsGrantRefundFragment = { __typename: 'Order', id: string, number: string, lines: Array<{ __typename: 'OrderLine', id: string, productName: string, quantity: number, quantityToFulfill: number, variantName: string, thumbnail: { __typename: 'Image', url: string } | null, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, fulfillmentOrder: number, status: FulfillmentStatus, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, orderLine: { __typename: 'OrderLine', id: string, productName: string, quantity: number, quantityToFulfill: number, variantName: string, thumbnail: { __typename: 'Image', url: string } | null, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } } | null }> | null }>, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, grantedRefunds: Array<{ __typename: 'OrderGrantedRefund', id: string, reason: string | null, shippingCostsIncluded: boolean, status: OrderGrantedRefundStatusEnum, amount: { __typename: 'Money', amount: number, currency: string }, transaction: { __typename: 'TransactionItem', id: string } | null, lines: Array<{ __typename: 'OrderGrantedRefundLine', id: string, quantity: number, reason: string | null, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, thumbnail: { __typename: 'Image', url: string } | null } }> | null }>, transactions: Array<{ __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string } }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }> };
 
+export type ActivitiesFragment = { __typename: 'OrderEvent', date: any | null, email: string | null, message: string | null, orderNumber: string | null, type: OrderEventsEnum | null, user: { __typename: 'User', email: string } | null };
+
 export type PageInfoFragment = { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null };
 
 export type PageTypeFragment = { __typename: 'PageType', id: string, name: string, hasPages: boolean | null };
@@ -10744,36 +10746,6 @@ export type MenuDetailsQueryVariables = Exact<{
 
 
 export type MenuDetailsQuery = { __typename: 'Query', menu: { __typename: 'Menu', id: string, name: string, items: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null } | null };
-
-export type UpdateUserMetadataMutationVariables = Exact<{
-  id: Scalars['ID'];
-  input: Array<MetadataInput> | MetadataInput;
-}>;
-
-
-export type UpdateUserMetadataMutation = { __typename: 'Mutation', updateMetadata: { __typename: 'UpdateMetadata', errors: Array<{ __typename: 'MetadataError', code: MetadataErrorCode, field: string | null, message: string | null }> } | null };
-
-export type WelcomePageActivitiesQueryVariables = Exact<{
-  hasPermissionToManageOrders: Scalars['Boolean'];
-}>;
-
-
-export type WelcomePageActivitiesQuery = { __typename: 'Query', activities: { __typename: 'OrderEventCountableConnection', edges: Array<{ __typename: 'OrderEventCountableEdge', node: { __typename: 'OrderEvent', date: any | null, email: string | null, message: string | null, orderNumber: string | null, type: OrderEventsEnum | null, user: { __typename: 'User', email: string } | null } }> } | null };
-
-export type WelcomePageAnalyticsQueryVariables = Exact<{
-  channel: Scalars['String'];
-  hasPermissionToManageOrders: Scalars['Boolean'];
-}>;
-
-
-export type WelcomePageAnalyticsQuery = { __typename: 'Query', salesToday: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } | null };
-
-export type WelcomePageNotificationsQueryVariables = Exact<{
-  channel: Scalars['String'];
-}>;
-
-
-export type WelcomePageNotificationsQuery = { __typename: 'Query', productsOutOfStock: { __typename: 'ProductCountableConnection', totalCount: number | null } | null };
 
 export type OrderCancelMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -12657,3 +12629,33 @@ export type WarehousesCountQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type WarehousesCountQuery = { __typename: 'Query', warehouses: { __typename: 'WarehouseCountableConnection', totalCount: number | null } | null };
+
+export type SaveOnBoardingStateMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: Array<MetadataInput> | MetadataInput;
+}>;
+
+
+export type SaveOnBoardingStateMutation = { __typename: 'Mutation', updateMetadata: { __typename: 'UpdateMetadata', errors: Array<{ __typename: 'MetadataError', code: MetadataErrorCode, field: string | null, message: string | null }> } | null };
+
+export type WelcomePageActivitiesQueryVariables = Exact<{
+  hasPermissionToManageOrders: Scalars['Boolean'];
+}>;
+
+
+export type WelcomePageActivitiesQuery = { __typename: 'Query', activities: { __typename: 'OrderEventCountableConnection', edges: Array<{ __typename: 'OrderEventCountableEdge', node: { __typename: 'OrderEvent', date: any | null, email: string | null, message: string | null, orderNumber: string | null, type: OrderEventsEnum | null, user: { __typename: 'User', email: string } | null } }> } | null };
+
+export type WelcomePageAnalyticsQueryVariables = Exact<{
+  channel: Scalars['String'];
+  hasPermissionToManageOrders: Scalars['Boolean'];
+}>;
+
+
+export type WelcomePageAnalyticsQuery = { __typename: 'Query', salesToday: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } | null };
+
+export type WelcomePageNotificationsQueryVariables = Exact<{
+  channel: Scalars['String'];
+}>;
+
+
+export type WelcomePageNotificationsQuery = { __typename: 'Query', productsOutOfStock: { __typename: 'ProductCountableConnection', totalCount: number | null } | null };
