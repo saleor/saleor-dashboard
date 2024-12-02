@@ -56,9 +56,7 @@ test("TC: SALEOR_85 Create voucher with manual code and percentage discount @vou
 
   const manualCodesRows = await vouchersPage.getNumberOfGridRowsWithText(code);
 
-  await expect(manualCodesRows, `Manually added code: ${code} should be visible on grid`).toEqual(
-    1,
-  );
+  expect(manualCodesRows, `Manually added code: ${code} should be visible on grid`).toEqual(1);
   await vouchersPage.clickPercentDiscountTypeButton();
   await vouchersPage.rightSideDetailsPage.selectOneChannelAsAvailableWhenMoreSelected(
     "Channel-PLN",
