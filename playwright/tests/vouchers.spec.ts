@@ -27,7 +27,7 @@ test("TC: SALEOR_40 Create voucher with auto-generated codes and fixed amount di
 
   const generatedCodesRows = await vouchersPage.getNumberOfGridRowsWithText(codesPrefix);
 
-  await expect(
+  expect(
     generatedCodesRows,
     `Auto-generated number of codes: ${codesQuantity} should be visible on grid`,
   ).toEqual(codesQuantity);
@@ -38,7 +38,7 @@ test("TC: SALEOR_40 Create voucher with auto-generated codes and fixed amount di
 
   const activeCodesRows = await vouchersPage.getNumberOfGridRowsWithText("Active");
 
-  await expect(
+  expect(
     activeCodesRows,
     `Given codes quantity: ${codesQuantity} should have status Active displayed on grid`,
   ).toEqual(codesQuantity);
@@ -68,7 +68,7 @@ test("TC: SALEOR_85 Create voucher with manual code and percentage discount @vou
 
   const manualActiveCodesRows = await vouchersPage.getNumberOfGridRowsWithText("Active");
 
-  await expect(
+  expect(
     manualActiveCodesRows,
     `Given codes: ${code} should have status Active displayed on grid`,
   ).toEqual(1);
@@ -92,7 +92,7 @@ test("TC: SALEOR_86 Edit voucher to have free shipping discount @vouchers @e2e",
 
   const codesRowsAfterSave = await vouchersPage.getNumberOfGridRows();
 
-  await expect(
+  expect(
     codesRows,
     `Same amount of codes should have status Active displayed on grid after switching to free shipping`,
   ).toEqual(codesRowsAfterSave);
@@ -126,9 +126,7 @@ test("TC: SALEOR_89 Create voucher with minimum value of order @vouchers @e2e", 
 
   const manualCodesRows = await vouchersPage.getNumberOfGridRowsWithText(code);
 
-  await expect(manualCodesRows, `Manually added code: ${code} should be visible on grid`).toEqual(
-    1,
-  );
+  expect(manualCodesRows, `Manually added code: ${code} should be visible on grid`).toEqual(1);
   await vouchersPage.clickMinimalOrderValueButton();
   await vouchersPage.typeMinimumOrderValue("Channel-PLN", "50");
   await vouchersPage.clickSaveButton();
@@ -137,7 +135,7 @@ test("TC: SALEOR_89 Create voucher with minimum value of order @vouchers @e2e", 
 
   const manualActiveCodesRows = await vouchersPage.getNumberOfGridRowsWithText("Active");
 
-  await expect(
+  expect(
     manualActiveCodesRows,
     `Given codes: ${code} should have status Active displayed on grid`,
   ).toEqual(1);
@@ -157,7 +155,7 @@ test("TC: SALEOR_92 Delete voucher @vouchers @e2e", async () => {
   await vouchersPage.expectSuccessBanner();
   await vouchersPage.createVoucherButton.waitFor({ state: "visible" });
   await vouchersPage.waitForGrid();
-  await expect(
+  expect(
     await vouchersPage.findRowIndexBasedOnText([VOUCHERS.vouchers.voucherToBeDeleted.name]),
     `Given vouchers: ${VOUCHERS.vouchers.voucherToBeBulkDeleted.names} should be deleted from the list`,
   ).toEqual([]);
@@ -171,7 +169,7 @@ test("TC: SALEOR_93 Bulk delete voucher @vouchers @e2e", async () => {
   await vouchersPage.deleteVoucherDialog.clickDeleteButton();
   await vouchersPage.expectSuccessBanner();
   await vouchersPage.gotoVouchersListPage();
-  await expect(
+  expect(
     await vouchersPage.findRowIndexBasedOnText(VOUCHERS.vouchers.voucherToBeBulkDeleted.names),
     `Given vouchers: ${VOUCHERS.vouchers.voucherToBeBulkDeleted.names} should be deleted from the list`,
   ).toEqual([]);
