@@ -1,6 +1,5 @@
 import { AppsInstallationsQuery } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
-import { waitFor } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 
 import useActiveAppsInstallations from "./useActiveAppsInstallations";
@@ -18,6 +17,12 @@ jest.mock("@apollo/client", () => ({
 }));
 
 jest.mock("@dashboard/hooks/useLocalStorage");
+jest.mock("@dashboard/graphql", () => ({
+  useAppRetryInstallMutation: jest.fn(() => [jest.fn(), {}]),
+  useAppDeleteFailedInstallationMutation: jest.fn(() => [jest.fn(), {}]),
+}));
+
+jest.useFakeTimers();
 
 describe("useActiveAppsInstallations", () => {
   it("install app notify should not be called when apps in progress data loading", () => {
@@ -53,7 +58,7 @@ describe("useActiveAppsInstallations", () => {
     expect(mockNotify).not.toHaveBeenCalled();
   });
 
-  it("should call install app notify when apps in progress data loaded and no item found", async () => {
+  it("should call install app notify when apps in progress data loaded and no item found", () => {
     // Arrange
     const mockedActiveInstallations = [
       {
@@ -62,13 +67,7 @@ describe("useActiveAppsInstallations", () => {
       },
     ];
     const appsInProgressData = {
-      appsInstallations: [
-        {
-          id: "1",
-          appName: "app1",
-          status: "PENDING",
-        },
-      ],
+      appsInstallations: [],
     } as unknown as AppsInstallationsQuery;
     const mockNotify = jest.fn();
 
@@ -105,10 +104,6 @@ describe("useActiveAppsInstallations", () => {
       appInProgressLoading: false,
     });
 
-    await waitFor(() => {
-      expect(mockNotify).toHaveBeenCalled();
-    });
-
-    jest.useRealTimers();
+    expect(mockNotify).toHaveBeenCalled();
   });
 });
