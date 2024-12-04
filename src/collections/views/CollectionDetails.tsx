@@ -33,7 +33,6 @@ import useProductSearch from "@dashboard/searches/useProductSearch";
 import { arrayDiff } from "@dashboard/utils/arrays";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -47,7 +46,7 @@ import {
   CollectionUrlDialog,
   CollectionUrlQueryParams,
 } from "../urls";
-import { getAssignedProductIdsToCollection } from "../utils";
+import { getAssignedProductIdsToCollection, getProductsFromSearchResults } from "../utils";
 import { COLLECTION_DETAILS_FORM_ID } from "./consts";
 
 interface CollectionDetailsProps {
@@ -342,9 +341,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({ id, params
         loading={result.loading}
         onClose={closeModal}
         onSubmit={handleAssignationChange}
-        products={mapEdgesToItems(result?.data?.search)?.filter(
-          suggestedProduct => suggestedProduct.id,
-        )}
+        products={getProductsFromSearchResults(result?.data)}
       />
 
       <ActionDialog
