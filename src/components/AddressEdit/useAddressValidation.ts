@@ -48,11 +48,19 @@ const useAllowedFields = (data: AddressValidationRulesQuery) => {
 };
 const useDisplayValues = (areas: AreaChoices[]) => {
   const isProvinceCode = (code: string) => code.length === 2 && code.toLocaleUpperCase() === code;
-  const getDisplayValue = (value: string) => {
+  const getDisplayValue = (value: string | null | undefined) => {
+    if (!value) {
+      return "";
+    }
+
     if (isProvinceCode(value)) {
       const area = areas.find(area => area.raw === value);
 
-      return area.value;
+      if (area) {
+        return area.value;
+      }
+
+      return value;
     }
 
     return value;

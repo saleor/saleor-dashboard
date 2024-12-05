@@ -69,7 +69,11 @@ export const AppListView: React.FC<Props> = ({ params }) => {
     installedAppsData?.apps?.pageInfo,
     paginationState,
   );
-  const { data: appsInProgressData, refetch: appsInProgressRefetch } = useAppsInstallationsQuery({
+  const {
+    data: appsInProgressData,
+    refetch: appsInProgressRefetch,
+    loading: appInProgressLoading,
+  } = useAppsInstallationsQuery({
     displayLoader: false,
     skip: !hasManagedAppsPermission,
   });
@@ -98,6 +102,7 @@ export const AppListView: React.FC<Props> = ({ params }) => {
   const { handleAppInstallRetry, handleRemoveInProgress, deleteInProgressAppOpts } =
     useActiveAppsInstallations({
       appsInProgressData,
+      appInProgressLoading,
       appsInProgressRefetch,
       appsRefetch,
       installedAppNotify,
