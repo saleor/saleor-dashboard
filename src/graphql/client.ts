@@ -8,15 +8,22 @@ import { getApiUrl } from "../config";
 import introspectionQueryResultData from "./fragmentTypes.generated";
 import { TypedTypePolicies } from "./typePolicies.generated";
 
-const attachVariablesLink = new ApolloLink((operation, forward) =>
-  forward(operation).map(data => ({
+const attachVariablesLink = new ApolloLink((operation, forward) => {
+  operation.setContext(({ headers = {} }) => ({
+    headers: {
+      ...headers,
+      source: "dashboard",
+    },
+  }));
+
+  return forward(operation).map(data => ({
     ...data,
     extensions: {
       ...data.extensions,
       variables: operation.variables,
     },
-  })),
-);
+  }));
+});
 
 export const link = attachVariablesLink.concat(
   createUploadLink({
