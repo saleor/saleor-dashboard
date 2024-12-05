@@ -2,7 +2,7 @@ import { ProductChannels, SelectedChannel } from "./types";
 import { isProductAvailableInVoucherChannels } from "./utils";
 
 describe("isProductAvailableInVoucherChannels", () => {
-  it("should return trun when product has at least one channel common with voucher", () => {
+  it("should return true when product has at least one channel common with voucher", () => {
     // Arrange
     const mockProductChannels = [
       { channel: { id: "1" } },
@@ -82,5 +82,17 @@ describe("isProductAvailableInVoucherChannels", () => {
 
     // Assert
     expect(result).toBe(true);
+  });
+
+  it("should return false when no products channels", () => {
+    // Arrange
+    const mockProductChannels = undefined;
+    const mockVariantChannels = [] as SelectedChannel[];
+
+    // Act
+    const result = isProductAvailableInVoucherChannels(mockProductChannels, mockVariantChannels);
+
+    // Assert
+    expect(result).toBe(false);
   });
 });
