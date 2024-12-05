@@ -12,7 +12,7 @@ const attachVariablesLink = new ApolloLink((operation, forward) => {
   operation.setContext(({ headers = {} }) => ({
     headers: {
       ...headers,
-      source: "dashboard",
+      "x-source": "dashboard",
     },
   }));
 
