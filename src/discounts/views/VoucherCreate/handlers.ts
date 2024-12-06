@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FetchResult } from "@apollo/client";
 import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
 import { getChannelsVariables } from "@dashboard/discounts/handlers";
@@ -68,6 +67,12 @@ export function createHandler(
 
     if (errors.length > 0) {
       return { errors };
+    }
+
+    if (!response?.data?.voucherCreate?.voucher) {
+      return {
+        errors: ["Could not update channels"],
+      };
     }
 
     const channelsUpdateErrors = await extractMutationErrors(
