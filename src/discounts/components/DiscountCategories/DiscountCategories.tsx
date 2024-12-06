@@ -119,7 +119,10 @@ const DiscountCategories = (props: DiscountCategoriesProps) => {
                           onCategoryUnassign(category.id);
                         }}
                       >
-                        <DeleteIcon />
+                        <DeleteIcon
+                          onPointerEnterCapture={undefined}
+                          onPointerLeaveCapture={undefined}
+                        />
                       </IconButton>
                     </TableButtonWrapper>
                   </TableCell>

@@ -41,6 +41,8 @@ export const AppManifestTableDisplay = ({ manifestUrl }: AppManifestTableDisplay
               className={clsx(styles.copyIcon, {
                 [styles.copyIconColorful]: copied,
               })}
+              onPointerEnterCapture={undefined}
+              onPointerLeaveCapture={undefined}
             />
           )}
         </Text>

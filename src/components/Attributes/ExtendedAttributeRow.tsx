@@ -1,10 +1,12 @@
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { ReactNode } from "react";
 
 interface ExtendedAttributeRowProps {
   label: string;
   selectLabel: string;
   disabled: boolean;
   onSelect: () => void;
+  children: ReactNode;
 }
 
 const ExtendedAttributeRow = (props: ExtendedAttributeRowProps) => {

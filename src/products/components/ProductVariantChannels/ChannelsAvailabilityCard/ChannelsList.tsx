@@ -1,7 +1,9 @@
 import { Accordion, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { ReactNode } from "react";
 
 interface ChannelListProps {
   summary: string;
+  children: ReactNode;
 }
 
 export const ChannelsList = ({ summary, children }: ChannelListProps) => (

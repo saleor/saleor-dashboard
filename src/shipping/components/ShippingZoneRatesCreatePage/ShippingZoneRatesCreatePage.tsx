@@ -29,7 +29,7 @@ import { createChannelsChangeHandler } from "@dashboard/shipping/handlers";
 import { FetchMoreProps } from "@dashboard/types";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import { useState, FormEventHandler } from "react";
+import { FormEventHandler, useState } from "react";
 import { useIntl } from "react-intl";
 
 import ShippingMethodTaxes from "../ShippingMethodTaxes";

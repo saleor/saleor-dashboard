@@ -8,7 +8,7 @@ import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
 import { TextField } from "@material-ui/core";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { Mono } from "./Mono";

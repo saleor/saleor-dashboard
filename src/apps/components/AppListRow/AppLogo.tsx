@@ -1,7 +1,9 @@
 import { Box } from "@saleor/macaw-ui-next";
+import { ReactNode } from "react";
 
 interface AppLogoProps {
   backgroundColor: string;
+  children: ReactNode;
 }
 
 export const AppLogo = ({ backgroundColor, children }: AppLogoProps) => (

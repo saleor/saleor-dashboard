@@ -22,7 +22,7 @@ const RefundShipmentCheckbox = ({
   onChange,
 }: RefundShipmentCheckboxProps) => {
   const handleRefundShipmentCosts = useCallback(
-    checked => {
+    (checked: string | boolean) => {
       onChange({
         target: {
           name: "refundShipmentCosts",

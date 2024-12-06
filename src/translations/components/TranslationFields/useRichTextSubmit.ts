@@ -28,10 +28,7 @@ export function useRichTextSubmit(
     return errors;
   }, [getValue, onSubmit, setIsDirty]);
 
-  useEffect(
-    () => setExitDialogSubmitRef(handleSubmit),
-    [handleSubmit, setExitDialogSubmitRef],
-  );
+  useEffect(() => setExitDialogSubmitRef(handleSubmit), [handleSubmit, setExitDialogSubmitRef]);
 
   return {
     defaultValue,

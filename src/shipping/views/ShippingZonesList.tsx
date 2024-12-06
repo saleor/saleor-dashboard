@@ -22,7 +22,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Text } from "@saleor/macaw-ui-next";
 import isEqual from "lodash/isEqual";
-import { useMemo, useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ShippingWeightUnitDialog } from "../components/ShippingWeightUnitDialog";

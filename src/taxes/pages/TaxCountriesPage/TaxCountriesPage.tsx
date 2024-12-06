@@ -29,7 +29,7 @@ import {
   SearchIcon,
 } from "@saleor/macaw-ui";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
-import { useState, useMemo, Fragment } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TaxInput from "../../components/TaxInput";
@@ -134,7 +134,10 @@ export const TaxCountriesPage = (props: TaxCountriesPageProps) => {
                             InputProps={{
                               startAdornment: (
                                 <InputAdornment position="start">
-                                  <SearchIcon />
+                                  <SearchIcon
+                                    onPointerEnterCapture={undefined}
+                                    onPointerLeaveCapture={undefined}
+                                  />
                                 </InputAdornment>
                               ),
                             }}

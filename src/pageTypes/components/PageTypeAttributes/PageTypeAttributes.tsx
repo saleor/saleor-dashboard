@@ -156,7 +156,11 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
                           variant="secondary"
                           onClick={() => onAttributeUnassign(attribute.id)}
                         >
-                          <DeleteIcon color="primary" />
+                          <DeleteIcon
+                            color="primary"
+                            onPointerEnterCapture={undefined}
+                            onPointerLeaveCapture={undefined}
+                          />
                         </IconButton>
                       </TableButtonWrapper>
                     </TableCell>

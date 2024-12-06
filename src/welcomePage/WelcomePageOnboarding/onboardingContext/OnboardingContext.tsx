@@ -3,7 +3,7 @@ import {
   handleStateChangeAfterStepCompleted,
   handleStateChangeAfterToggle,
 } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/utils";
-import { createContext, useState, useEffect, useContext, useRef } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 import { useNewUserCheck } from "../hooks/useNewUserCheck";
 import {

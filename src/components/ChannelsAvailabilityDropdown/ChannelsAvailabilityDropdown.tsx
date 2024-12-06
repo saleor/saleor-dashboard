@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { Popper } from "@material-ui/core";
-import { useState, useRef, useMemo } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { DashboardCard } from "../Card";

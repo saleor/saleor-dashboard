@@ -9,6 +9,8 @@ type GridTableColgroupProps = GridTableProps<ColgroupHTMLAttributes<HTMLElement>
 
 export const GridTableColgroup = React.forwardRef<GridTableColgroupElement, GridTableColgroupProps>(
   ({ children, ...props }, forwardedRef) => (
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     <Box as="colgroup" ref={forwardedRef} {...props}>
       {children}
     </Box>

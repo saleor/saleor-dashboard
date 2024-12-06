@@ -175,7 +175,10 @@ export const TaxClassesPage = (props: TaxClassesPageProps) => {
                                 InputProps={{
                                   startAdornment: (
                                     <InputAdornment position="start">
-                                      <SearchIcon />
+                                      <SearchIcon
+                                        onPointerEnterCapture={undefined}
+                                        onPointerLeaveCapture={undefined}
+                                      />
                                     </InputAdornment>
                                   ),
                                 }}

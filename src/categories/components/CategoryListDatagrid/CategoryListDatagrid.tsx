@@ -47,7 +47,7 @@ export const CategoryListDatagrid = ({
     [intl, sort],
   );
   const handleColumnChange = useCallback(
-    picked => {
+    (picked: string[]) => {
       if (onUpdateListSettings) {
         onUpdateListSettings("columns", picked.filter(Boolean));
       }

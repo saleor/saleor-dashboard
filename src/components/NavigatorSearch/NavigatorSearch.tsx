@@ -4,7 +4,7 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import { Box, Divider } from "@saleor/macaw-ui-next";
 import Downshift, { GetItemPropsOptions } from "downshift";
 import hotkeys from "hotkeys-js";
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 import { DashboardModal } from "../Modal";

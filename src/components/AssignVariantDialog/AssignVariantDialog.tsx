@@ -12,7 +12,7 @@ import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle
 import { DialogProps, FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import { useState, Fragment } from "react";
+import { Fragment, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 

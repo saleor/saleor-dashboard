@@ -52,7 +52,7 @@ import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { Box, Option } from "@saleor/macaw-ui-next";
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { AttributeValuesMetadata, getChoices } from "../../utils/data";

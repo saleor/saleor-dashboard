@@ -176,7 +176,7 @@ export const PageTypeList = ({ params }: PageTypeListProps) => {
               })
             }
           >
-            <DeleteIcon />
+            <DeleteIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
           </IconButton>
         }
       />

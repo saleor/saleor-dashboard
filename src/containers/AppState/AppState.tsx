@@ -1,4 +1,5 @@
 import * as React from "react";
+import { ReactNode } from "react";
 import useRouter from "use-react-router";
 
 import appStateReducer, { AppStateReducerAction } from "./reducer";
@@ -10,7 +11,7 @@ export const AppStateContext = React.createContext<AppStateContextType>([
   () => undefined,
 ]);
 
-const AppStateProvider = ({ children }) => {
+const AppStateProvider = ({ children }: { children: ReactNode }) => {
   const { location } = useRouter();
   const stateAndDispatch = React.useReducer(appStateReducer, initialAppState);
   const [state, dispatch] = stateAndDispatch;

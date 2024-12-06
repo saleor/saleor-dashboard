@@ -1,10 +1,12 @@
 import { DashboardModal } from "@dashboard/components/Modal";
 import { Box } from "@saleor/macaw-ui-next";
+import { ReactNode } from "react";
 
 interface AppDialogProps {
   title?: string;
   onClose: () => void;
   open: boolean;
+  children: ReactNode;
 }
 
 export const AppDialog = ({ children, title, onClose, ...props }: AppDialogProps) => {

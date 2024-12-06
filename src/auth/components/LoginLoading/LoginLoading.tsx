@@ -12,8 +12,8 @@ const useStyles = makeStyles(
   },
   { name: "LoginLoading" },
 );
-const LoginLoading = props => {
-  const classes = useStyles(props);
+const LoginLoading = () => {
+  const classes = useStyles();
 
   return (
     <div className={classes.root}>

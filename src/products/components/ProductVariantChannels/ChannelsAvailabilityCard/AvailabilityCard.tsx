@@ -4,6 +4,7 @@ import {
 } from "@dashboard/channels/utils";
 import { Divider } from "@dashboard/components/Divider";
 import { FormsetData } from "@dashboard/hooks/useFormset";
+import { ReactNode } from "react";
 
 import { ProductChannelListing } from "./../types";
 import { ChannelsListItem } from "./ChannelsListItem";
@@ -13,6 +14,7 @@ import CardContainer from "./VariantDetailsChannelsAvailabilityCardContainer";
 interface AvailabilityCardProps {
   allAvailableListings: FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>;
   productChannelListings: ProductChannelListing | undefined;
+  children: ReactNode;
 }
 
 export const AvailabilityCard = ({

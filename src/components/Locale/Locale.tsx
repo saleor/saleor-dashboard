@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
-import { createContext, useState, useEffect } from "react";
+import { createContext, useEffect, useState } from "react";
 import { IntlProvider, ReactIntlErrorCode } from "react-intl";
 
 export enum Locale {
@@ -147,6 +147,8 @@ const LocaleProvider = ({ children }) => {
   }, [locale]);
 
   return (
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     <IntlProvider
       defaultLocale={defaultLocale}
       locale={locale}

@@ -142,7 +142,10 @@ const CountryList = (props: CountryListProps) => {
                       disabled={!country || disabled}
                       onClick={() => onCountryUnassign(country.code)}
                     >
-                      <DeleteIcon />
+                      <DeleteIcon
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
+                      />
                     </IconButton>
                   </TableCell>
                 </TableRowLink>

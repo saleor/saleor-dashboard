@@ -1,6 +1,6 @@
 import { Grow, Paper, Popper } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { Pill } from "../Pill";

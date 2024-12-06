@@ -19,7 +19,7 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Item } from "@glideapps/glide-data-grid";
 import { Button } from "@saleor/macaw-ui";
 import { Option } from "@saleor/macaw-ui-next";
-import { useMemo, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductVariantsHeader } from "./components/ProductVariantsHeader";
@@ -103,7 +103,7 @@ export const ProductVariants = ({
   }, [columnSettings]);
 
   const handleColumnChange = useCallback(
-    picked => {
+    (picked: string[]) => {
       setColumnSettings(picked);
     },
     [setColumnSettings],

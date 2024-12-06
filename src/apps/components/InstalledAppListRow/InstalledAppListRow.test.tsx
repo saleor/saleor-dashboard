@@ -10,6 +10,8 @@ import InstalledAppListRow from "./InstalledAppListRow";
 
 const Component = ({ data, context }: { data: InstalledApp; context: AppListContextValues }) => (
   <Wrapper>
+    {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+    {/* @ts-ignore */}
     <Router>
       <AppListContext.Provider value={context}>
         <InstalledAppListRow {...data} />

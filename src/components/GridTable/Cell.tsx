@@ -10,6 +10,8 @@ type GridTableCellProps = GridTableProps<TdHTMLAttributes<HTMLTableCellElement>>
 export const GridTableCell = React.forwardRef<GridTableCellElement, GridTableCellProps>(
   ({ children, ...props }, forwardedRef) => {
     return (
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       <Box
         as="td"
         ref={forwardedRef}

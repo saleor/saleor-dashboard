@@ -97,7 +97,10 @@ const WebhooksList = ({ webhooks, createHref, onRemove }: WebhooksListProps) => 
                         color="primary"
                         onClick={webhook ? stopPropagation(() => onRemove(webhook.id)) : undefined}
                       >
-                        <DeleteIcon />
+                        <DeleteIcon
+                          onPointerEnterCapture={undefined}
+                          onPointerLeaveCapture={undefined}
+                        />
                       </IconButton>
                     </TableButtonWrapper>
                   </TableCell>

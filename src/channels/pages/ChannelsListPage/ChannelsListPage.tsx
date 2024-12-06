@@ -121,7 +121,10 @@ export const ChannelsListPage = ({ channelsList, limits, onRemove }: ChannelsLis
                             channel ? stopPropagation(() => onRemove(channel.id)) : undefined
                           }
                         >
-                          <DeleteIcon />
+                          <DeleteIcon
+                            onPointerEnterCapture={undefined}
+                            onPointerLeaveCapture={undefined}
+                          />
                         </IconButton>
                       </TableButtonWrapper>
                     )}

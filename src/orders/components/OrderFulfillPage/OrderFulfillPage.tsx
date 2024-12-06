@@ -37,7 +37,7 @@ import {
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Box, Skeleton, Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderFulfillLine from "../OrderFulfillLine/OrderFulfillLine";

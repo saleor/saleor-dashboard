@@ -59,6 +59,8 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
         variantsWithProductDataMock,
       ]}
     >
+      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+      {/* @ts-ignore */}
       <LegacyThemeProvider>
         <ThemeProvider>{children}</ThemeProvider>
       </LegacyThemeProvider>

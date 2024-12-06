@@ -4,7 +4,7 @@ import { ChannelFragment, useBaseChannelsQuery } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import { getById } from "@dashboard/misc";
 import { useSaleorConfig } from "@saleor/sdk";
-import { createContext, useState, useEffect, useContext } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 interface UseAppChannel {
   availableChannels: ChannelFragment[];

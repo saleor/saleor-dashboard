@@ -35,7 +35,11 @@ const CustomerAddressChoiceCard = (props: CustomerAddressChoiceCardProps) => {
         <AddressFormatter address={address} />
         {editable && (
           <div onClick={onEditClick}>
-            <EditIcon className={classes.editIcon} />
+            <EditIcon
+              className={classes.editIcon}
+              onPointerEnterCapture={undefined}
+              onPointerLeaveCapture={undefined}
+            />
           </div>
         )}
         {selected && (

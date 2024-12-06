@@ -85,7 +85,10 @@ const CustomAppListPage = ({ appsList, onRemove, getCustomAppHref }: CustomAppLi
                           color="primary"
                           onClick={() => onRemove(app.id)}
                         >
-                          <DeleteIcon />
+                          <DeleteIcon
+                            onPointerEnterCapture={undefined}
+                            onPointerLeaveCapture={undefined}
+                          />
                         </IconButton>
                       </TableButtonWrapper>
                     </TableCell>

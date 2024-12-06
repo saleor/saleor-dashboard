@@ -179,7 +179,10 @@ const CollectionProducts = (props: CollectionProductsProps) => {
                         disabled={!product}
                         onClick={event => onProductUnassign(product.id, event)}
                       >
-                        <DeleteIcon />
+                        <DeleteIcon
+                          onPointerEnterCapture={undefined}
+                          onPointerLeaveCapture={undefined}
+                        />
                       </IconButton>
                     </TableButtonWrapper>
                   </TableCell>

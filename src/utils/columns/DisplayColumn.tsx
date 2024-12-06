@@ -1,10 +1,11 @@
-import { useMemo } from "react";
+import { ReactNode, useMemo } from "react";
 
 import { isSelected } from "../lists";
 
 export interface DisplayColumnProps<TColumn extends string = string> {
   displayColumns: TColumn[];
   column: TColumn;
+  children: ReactNode;
 }
 
 const DisplayColumn = ({ displayColumns, children, column }: DisplayColumnProps) => {

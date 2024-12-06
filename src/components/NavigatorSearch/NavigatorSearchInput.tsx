@@ -30,6 +30,8 @@ const NavigatorSearchInput = forwardRef<HTMLInputElement, NavigatorSearchInputPr
             })}
           />
         )}
+        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+        {/* @ts-ignore */}
         <Box
           as="input"
           role="input"

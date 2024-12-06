@@ -104,7 +104,7 @@ const WebhookHeadersTableBody = ({ onChange, headers }: WebhookHeadersTableBodyP
                 })
               }
             >
-              <DeleteIcon />
+              <DeleteIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
             </IconButton>
           </TableCell>
         </TableRowLink>

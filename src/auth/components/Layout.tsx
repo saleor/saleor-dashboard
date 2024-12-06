@@ -2,6 +2,7 @@ import backgroundArt from "@assets/images/login-background.svg";
 import saleorDarkLogo from "@assets/images/logo-dark.svg";
 import saleorLightLogo from "@assets/images/logo-light.svg";
 import { makeStyles, useTheme } from "@saleor/macaw-ui";
+import { ReactNode } from "react";
 import SVG from "react-inlinesvg";
 
 import { useUser } from "..";
@@ -71,7 +72,7 @@ const useStyles = makeStyles(
     name: "Layout",
   },
 );
-const Layout = props => {
+const Layout = (props: { children: ReactNode }) => {
   const { children } = props;
   const { errors } = useUser();
   const classes = useStyles(props);

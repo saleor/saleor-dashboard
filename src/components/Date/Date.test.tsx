@@ -12,6 +12,8 @@ describe("Date", () => {
   it("Render plain date with timezone GMT-11", () => {
     // Arrange & Act
     render(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       <ThemeProvider>
         <TimezoneProvider value="Pacific/Midway">
           <Date date={testDate} plain />
@@ -24,6 +26,8 @@ describe("Date", () => {
   it("Render plain date with timezone GMT+13", () => {
     // Arrange & Act
     render(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       <ThemeProvider>
         <TimezoneProvider value="Pacific/Tongatapu">
           <Date date={testDate} plain />
@@ -36,6 +40,8 @@ describe("Date", () => {
   it("Render humanized date with timezone GMT-11", () => {
     // Arrange & Act
     render(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       <ThemeProvider>
         <TimezoneProvider value="Pacific/Midway">
           <Date date={testDate} />
@@ -48,6 +54,8 @@ describe("Date", () => {
   it("Render humanized date with timezone GMT+13", () => {
     // Arrange & Act
     render(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       <ThemeProvider>
         <TimezoneProvider value="Pacific/Tongatapu">
           <Date date={testDate} />

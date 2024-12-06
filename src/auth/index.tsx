@@ -1,7 +1,7 @@
 import { Route } from "@dashboard/components/Router";
 import { parse as parseQs } from "qs";
 import { createContext, useContext } from "react";
-import { RouteComponentProps, Switch } from "react-router-dom";
+import { Switch } from "react-router-dom";
 
 import Layout from "./components/Layout";
 import { UserContext as Context } from "./types";

@@ -145,7 +145,10 @@ const MenuList = (props: MenuListProps) => {
                       disabled={disabled}
                       onClick={() => onDelete(menu.id)}
                     >
-                      <DeleteIcon />
+                      <DeleteIcon
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
+                      />
                     </IconButtonTableCell>
                   </TableButtonWrapper>
                 </TableRowLink>

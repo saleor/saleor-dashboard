@@ -3,13 +3,13 @@ import { APP_VERSION } from "@dashboard/config";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useShop from "@dashboard/hooks/useShop";
-import { useState, useContext } from "react";
+import { ReactNode, useContext, useState } from "react";
 
 import { AppDialog } from "../AppDialog";
 import { AppFrame } from "../AppFrame";
 import { AppData, ExternalAppContext } from "./context";
 
-export const ExternalAppProvider = ({ children }) => {
+export const ExternalAppProvider = ({ children }: { children: ReactNode }) => {
   const [open, setOpen] = useState(false);
   const [appData, setAppData] = useState<AppData | undefined>();
   const shop = useShop();

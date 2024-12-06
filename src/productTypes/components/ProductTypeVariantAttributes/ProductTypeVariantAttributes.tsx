@@ -266,7 +266,10 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
                           onClick={() => onAttributeUnassign(attribute.id)}
                           variant="secondary"
                         >
-                          <DeleteIcon />
+                          <DeleteIcon
+                            onPointerEnterCapture={undefined}
+                            onPointerLeaveCapture={undefined}
+                          />
                         </IconButton>
                       </TableButtonWrapper>
                     </TableCell>

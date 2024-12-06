@@ -21,20 +21,6 @@ export interface MetadataProps extends Omit<MetadataCardProps, "data" | "isPriva
   hidePrivateMetadata?: boolean;
 }
 
-const propsCompare = (_, newProps: MetadataProps) => {
-  /**
-    If we pass `isLoading` render only when the loading finishes
-  */
-  if (typeof newProps.isLoading !== "undefined") {
-    return newProps.isLoading;
-  }
-
-  /*
-    If `isLoading` is not present, keep the old behavior
-  */
-  return false;
-};
-
 // TODO: Refactor loading state logic
 // TODO: Split "Metadata" component into "Metadata" and "PrivateMetadata" components
 export const Metadata = memo(

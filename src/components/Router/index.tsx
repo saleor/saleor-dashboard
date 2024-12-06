@@ -14,5 +14,7 @@ export const history = createBrowserHistory({
 export const Route = Sentry.withSentryRouting(BaseRoute);
 
 export const Router = (props: RouterProps) => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   return <BaseRouter history={history}>{props.children}</BaseRouter>;
 };

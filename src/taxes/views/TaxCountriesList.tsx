@@ -13,7 +13,7 @@ import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import TaxCountryDialog from "../components/TaxCountryDialog";

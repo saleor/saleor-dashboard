@@ -219,7 +219,10 @@ const PermissionGroupMemberList = (props: PermissionGroupProps) => {
                             color="primary"
                             onClick={stopPropagation(() => onUnassign([user.id]))}
                           >
-                            <DeleteIcon />
+                            <DeleteIcon
+                              onPointerEnterCapture={undefined}
+                              onPointerLeaveCapture={undefined}
+                            />
                           </IconButton>
                         </>
                       ) : (

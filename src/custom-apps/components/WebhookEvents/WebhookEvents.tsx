@@ -85,9 +85,13 @@ const WebhookEvents = ({
           </PageTabs>
 
           <Text fontSize={2} style={{ padding: "1rem 0" }}>
+            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+            {/* @ts-ignore */}
             <PageTabPanel show={tab === "sync"}>
               <FormattedMessage {...messages.synchronousDescription} />
             </PageTabPanel>
+            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+            {/* @ts-ignore */}
             <PageTabPanel show={tab === "async"}>
               <FormattedMessage {...messages.asynchronousDescription} />
             </PageTabPanel>
@@ -96,6 +100,8 @@ const WebhookEvents = ({
         <Hr />
         <Grid variant="uniform">
           <div className={classes.objectsWrapper}>
+            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+            {/* @ts-ignore */}
             <PageTabPanel show={true}>
               <List gridTemplate={["1fr 50px"]}>
                 <ListHeader>

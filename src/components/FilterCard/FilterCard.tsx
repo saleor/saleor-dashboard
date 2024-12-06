@@ -2,12 +2,14 @@
 import { CardHeader } from "@material-ui/core";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import { IconButton } from "@saleor/macaw-ui";
+import { ReactNode } from "react";
 import { useIntl } from "react-intl";
 
 import { DashboardCard } from "../Card";
 
 export interface FilterCardProps {
   handleClear: () => any;
+  children: ReactNode;
 }
 
 const FilterCard = ({ children, handleClear }: FilterCardProps) => {

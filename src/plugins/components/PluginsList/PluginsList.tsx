@@ -86,7 +86,7 @@ const PluginList = (props: PluginListProps) => {
                 <PluginChannelConfigurationCell plugin={plugin} />
                 <PluginChannelAvailabilityCell plugin={plugin} />
                 <TableCell align="right">
-                  <EditIcon />
+                  <EditIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
                 </TableCell>
               </TableRowLink>
             ) : (

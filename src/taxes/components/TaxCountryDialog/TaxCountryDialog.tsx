@@ -8,7 +8,7 @@ import { taxesMessages } from "@dashboard/taxes/messages";
 import { Divider, FormControlLabel, InputAdornment, Radio, TextField } from "@material-ui/core";
 import { SearchIcon } from "@saleor/macaw-ui";
 import { Box, Button } from "@saleor/macaw-ui-next";
-import { useState, Fragment } from "react";
+import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
@@ -60,7 +60,7 @@ export const TaxCountryDialog = ({
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon />
+                <SearchIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
               </InputAdornment>
             ),
           }}

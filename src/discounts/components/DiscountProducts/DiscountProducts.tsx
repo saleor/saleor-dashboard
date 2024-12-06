@@ -144,7 +144,10 @@ const DiscountProducts = (props: SaleProductsProps) => {
                           onProductUnassign(product.id);
                         }}
                       >
-                        <DeleteIcon />
+                        <DeleteIcon
+                          onPointerEnterCapture={undefined}
+                          onPointerLeaveCapture={undefined}
+                        />
                       </IconButton>
                     </TableButtonWrapper>
                   </TableCell>

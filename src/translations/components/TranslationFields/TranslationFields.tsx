@@ -13,7 +13,7 @@ import ArrowIcon from "@material-ui/icons/ArrowDropDown";
 import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import { useState, Fragment } from "react";
+import { Fragment, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import TranslationFieldsLong from "./TranslationFieldsLong";

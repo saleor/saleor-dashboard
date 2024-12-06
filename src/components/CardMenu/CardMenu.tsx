@@ -147,7 +147,7 @@ const CardMenu = (props: CardMenuProps) => {
         state={open ? "active" : "default"}
         {...IconButtonProps}
       >
-        <Icon />
+        <Icon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
       </IconButton>
       <Popper
         placement="bottom-end"

@@ -1,8 +1,15 @@
 import { Box } from "@saleor/macaw-ui-next";
+import { ReactNode } from "react";
 
 import { topBarHeight } from "../consts";
 
-export const TopNavWrapper = ({ children, withoutBorder }: { withoutBorder?: boolean }) => (
+export const TopNavWrapper = ({
+  children,
+  withoutBorder,
+}: {
+  withoutBorder?: boolean;
+  children: ReactNode;
+}) => (
   <Box
     display="flex"
     alignItems="center"

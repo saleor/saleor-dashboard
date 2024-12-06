@@ -176,7 +176,11 @@ const ShippingZoneRates = (props: ShippingZoneRatesProps) => {
                       onClick={() => onRateRemove(rate.id)}
                       className={classes.buttonColumn}
                     >
-                      <DeleteIcon data-test-id="delete-button" />
+                      <DeleteIcon
+                        data-test-id="delete-button"
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
+                      />
                     </IconButtonTableCell>
                   </TableButtonWrapper>
                 </TableRowLink>

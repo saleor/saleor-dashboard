@@ -10,7 +10,7 @@ import useFilter from "@dashboard/components/Filter/useFilter";
 import { extractInvalidFilters } from "@dashboard/components/Filter/utils";
 import { ClickAwayListener, Grow, Popper } from "@material-ui/core";
 import { DropdownButton, sprinkles } from "@saleor/macaw-ui-next";
-import { useRef, useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { getSelectedFilterAmount } from "../utils";

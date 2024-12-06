@@ -112,7 +112,7 @@ export const FilterKeyValueField = <K extends string = string>({
                 });
               }}
             >
-              <DeleteIcon />
+              <DeleteIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
             </IconButton>
           </div>
         ))}

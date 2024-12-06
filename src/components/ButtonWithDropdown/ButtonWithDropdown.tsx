@@ -1,4 +1,5 @@
 import { Box, Button, ChervonDownIcon, Dropdown, List, Text } from "@saleor/macaw-ui-next";
+import { ReactNode } from "react";
 
 interface ButtonWithDropdownProps {
   onClick: () => void;
@@ -9,6 +10,7 @@ interface ButtonWithDropdownProps {
   }>;
   testId?: string;
   disabled?: boolean;
+  children: ReactNode;
 }
 
 export const ButtonWithDropdown = ({

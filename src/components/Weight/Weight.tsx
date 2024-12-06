@@ -17,5 +17,4 @@ const Weight = ({ weight }: WeightProps) => (
   />
 );
 
-Weight.displayName = "Weight";
 export default Weight;

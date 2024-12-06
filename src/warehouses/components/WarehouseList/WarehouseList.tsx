@@ -141,7 +141,10 @@ const WarehouseList = (props: WarehouseListProps) => {
                       color="primary"
                       onClick={stopPropagation(() => onRemove(warehouse?.id))}
                     >
-                      <DeleteIcon />
+                      <DeleteIcon
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
+                      />
                     </IconButton>
                   </TableButtonWrapper>
                 </div>

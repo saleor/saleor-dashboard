@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { ReactNode } from "react";
 
 import { useDiscountFilterAPIProvider } from "../API/DiscountFiltersAPIProvider";
 import { useInitialOrderState } from "../API/initialState/orders/useInitialOrderState";
@@ -21,6 +21,7 @@ export const ConditionalProductFilterProvider = ({
   locationSearch,
 }: {
   locationSearch: string;
+  children: ReactNode;
 }) => {
   const apiProvider = useProductFilterAPIProvider();
   const initialState = useProductInitialAPIState();
@@ -49,6 +50,7 @@ export const ConditionalDiscountFilterProvider = ({
   locationSearch,
 }: {
   locationSearch: string;
+  children: ReactNode;
 }) => {
   const apiProvider = useDiscountFilterAPIProvider();
   const valueProvider = useUrlValueProvider(locationSearch, "discount");
@@ -76,6 +78,7 @@ export const ConditionalOrderFilterProvider = ({
   locationSearch,
 }: {
   locationSearch: string;
+  children: ReactNode;
 }) => {
   const apiProvider = useOrderFilterAPIProvider();
 

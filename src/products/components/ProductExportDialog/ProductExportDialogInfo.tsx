@@ -15,6 +15,7 @@ import { toggle } from "@dashboard/utils/lists";
 import { Button, CircularProgress, FormControlLabel, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Option, Text } from "@saleor/macaw-ui-next";
+import { ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import useProductExportFieldMessages from "./messages";
@@ -110,6 +111,7 @@ const Option = ({
   checked: boolean;
   name: string;
   onChange: (event: ChangeEvent) => void;
+  children: ReactNode;
 }) => {
   const classes = useStyles({});
 
@@ -139,6 +141,7 @@ const FieldAccordion = ({
   fields: ProductFieldEnum[];
   onChange: (event: ChangeEvent) => void;
   onToggleAll: (field: ProductFieldEnum[], setTo: boolean) => void;
+  children?: ReactNode;
 }) => {
   const classes = useStyles({});
   const getFieldLabel = useProductExportFieldMessages();

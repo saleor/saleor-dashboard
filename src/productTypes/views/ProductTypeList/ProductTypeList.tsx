@@ -179,7 +179,7 @@ export const ProductTypeList = ({ params }: ProductTypeListProps) => {
               })
             }
           >
-            <DeleteIcon />
+            <DeleteIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
           </IconButton>
         }
       />

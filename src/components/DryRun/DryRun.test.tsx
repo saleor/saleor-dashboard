@@ -28,6 +28,8 @@ describe("DryRun", () => {
     // Act
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
+        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+        {/* @ts-ignore */}
         <ThemeProvider>
           <DryRun {...props} />
         </ThemeProvider>

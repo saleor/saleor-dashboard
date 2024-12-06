@@ -1,5 +1,5 @@
 import { Accordion as AccordionMacaw, Box, Divider, sprinkles, Text } from "@saleor/macaw-ui-next";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import * as React from "react";
 
 export interface AccordionProps {
@@ -8,6 +8,7 @@ export interface AccordionProps {
   quickPeek?: React.ReactNode;
   title: string;
   dataTestId?: string;
+  children?: ReactNode;
 }
 
 const AccordionItemId = "accordionItemId";

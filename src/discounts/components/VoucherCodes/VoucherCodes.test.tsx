@@ -30,7 +30,11 @@ jest.mock("@dashboard/components/Datagrid/persistance/usePersistance", () => ({
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     <BrowserRouter>
+      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+      {/* @ts-ignore */}
       <LegacyThemeProvider>
         <ThemeProvider>{children}</ThemeProvider>
       </LegacyThemeProvider>

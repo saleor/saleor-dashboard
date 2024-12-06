@@ -34,8 +34,12 @@ mockResizeObserver();
 const getWrapper = (mocks: MockedResponse[] = []) => {
   const WrapperComponent = ({ children }: { children: ReactNode }) => {
     return (
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       <BrowserRouter>
         <MockedProvider mocks={mocks}>
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+          {/* @ts-ignore */}
           <LegacyThemeProvider>
             <ThemeProvider>{children}</ThemeProvider>
           </LegacyThemeProvider>

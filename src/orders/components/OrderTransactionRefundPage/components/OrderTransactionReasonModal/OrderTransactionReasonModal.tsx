@@ -1,7 +1,7 @@
 import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
 import { Button, Textarea } from "@saleor/macaw-ui-next";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { refundTableMessages } from "../OrderTransactionRefundTable/messages";

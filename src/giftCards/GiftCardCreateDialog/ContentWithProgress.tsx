@@ -1,9 +1,11 @@
 import { CircularProgress } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
+import { ReactNode } from "react";
 
 interface ContentWithProgressProps {
   containerClassName?: string;
+  children: ReactNode;
 }
 
 export const useStyles = makeStyles(

@@ -21,8 +21,12 @@ const mockGiftCards = [
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     <BrowserRouter>
       <ThemeWrapper>
+        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+        {/* @ts-ignore */}
         <IntlProvider
           locale="EN"
           messages={{

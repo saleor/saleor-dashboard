@@ -121,7 +121,10 @@ const DiscountCollections = (props: DiscountCollectionsProps) => {
                           onCollectionUnassign(collection.id);
                         }}
                       >
-                        <DeleteIcon />
+                        <DeleteIcon
+                          onPointerEnterCapture={undefined}
+                          onPointerLeaveCapture={undefined}
+                        />
                       </IconButton>
                     </TableButtonWrapper>
                   </TableCell>

@@ -109,6 +109,8 @@ const Link = (props: LinkProps) => {
           {children}
         </RouterLink>
       ) : (
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         <Text as="a" href={disabled ? undefined : href} display="block" {...commonLinkProps}>
           {children}
         </Text>

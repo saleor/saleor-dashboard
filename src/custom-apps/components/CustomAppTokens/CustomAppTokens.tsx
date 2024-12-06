@@ -79,7 +79,10 @@ const CustomAppTokens = (props: CustomAppTokensProps) => {
                       color="primary"
                       onClick={() => onDelete(token.id)}
                     >
-                      <DeleteIcon />
+                      <DeleteIcon
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
+                      />
                     </IconButton>
                   </TableCell>
                 </TableRowLink>

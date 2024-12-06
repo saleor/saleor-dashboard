@@ -15,6 +15,8 @@ describe("EventCreatedBy", () => {
   });
   it("displays a link to the app if app is passed", () => {
     render(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       <MemoryRouter>
         <EventCreatedBy createdBy={appAvatar} />
       </MemoryRouter>,
@@ -30,6 +32,8 @@ describe("EventCreatedBy", () => {
   });
   it("displays a link to the user settings if user is passed", () => {
     render(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       <MemoryRouter>
         <EventCreatedBy createdBy={staffMemberAvatar} />
       </MemoryRouter>,

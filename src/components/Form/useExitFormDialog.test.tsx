@@ -34,6 +34,8 @@ const setup = (submitFn: () => SubmitPromise, confirmLeave = true) =>
     },
     {
       wrapper: ({ children }) => (
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         <MemoryRouter initialEntries={[{ pathname: "/" }]}>
           <MockExitFormDialogProvider>{children}</MockExitFormDialogProvider>
         </MemoryRouter>

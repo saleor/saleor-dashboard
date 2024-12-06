@@ -55,7 +55,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortUrlVariables } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
-import { useMemo, useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductListPage, { ProductFilterKeys } from "../../components/ProductListPage";

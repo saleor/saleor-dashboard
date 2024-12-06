@@ -15,7 +15,7 @@ import { ListViews, ReorderEvent } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { add, isSelected, move, remove, updateAtIndex } from "@dashboard/utils/lists";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";
 

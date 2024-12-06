@@ -87,12 +87,12 @@ function useCategoryUpdateForm(
     ({
       ...formData,
       description: await richText.getValue(),
-    } as CategoryUpdateData);
+    }) as CategoryUpdateData;
   const getSubmitData = async (): Promise<CategoryUpdateData> =>
     ({
       ...(await getData()),
       ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),
-    } as CategoryUpdateData);
+    }) as CategoryUpdateData;
   const submit = async () => handleFormSubmit(await getSubmitData());
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);

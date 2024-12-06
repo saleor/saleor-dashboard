@@ -36,10 +36,7 @@ const OrderTransactionPayment = ({
   const authorized = payment?.availableCaptureAmount?.amount ?? 0;
   const refunded = total - captured - authorized;
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const fakeEvents = useMemo(
-    () => mapPaymentToTransactionEvents(payment),
-    [payment.transactions],
-  );
+  const fakeEvents = useMemo(() => mapPaymentToTransactionEvents(payment), [payment.transactions]);
   const transactionFromPayment: FakeTransaction = {
     id: payment.id,
     name: findMethodName(payment.gateway, allPaymentMethods),

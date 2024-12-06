@@ -6,9 +6,13 @@ import { Link } from "react-router-dom";
 
 const _Button: React.FC<any> = React.forwardRef(({ href, ...props }, ref) => {
   if (href && !isExternalURL(href)) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     return <MacawButton {...props} to={href} component={Link} ref={ref} />;
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   return <MacawButton href={href} {...props} ref={ref} />;
 });
 
