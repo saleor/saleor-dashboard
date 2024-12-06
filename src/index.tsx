@@ -11,7 +11,7 @@ import { OnboardingProvider } from "@dashboard/welcomePage/WelcomePageOnboarding
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { SaleorProvider } from "@saleor/sdk";
 import React from "react";
-import { render } from "react-dom";
+import { createRoot } from "react-dom/client";
 import { ErrorBoundary } from "react-error-boundary";
 import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
@@ -314,4 +314,7 @@ const Routes: React.FC = () => {
   );
 };
 
-render(<App />, document.querySelector("#dashboard-app"));
+const container = document.querySelector("#dashboard-app");
+const root = createRoot(container!);
+
+root.render(<App />);
