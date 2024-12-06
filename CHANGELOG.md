@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.19.12
+
+### Patch Changes
+
+- 2e624b9d3: Prevent a call update channel after voucher create when no voucher id returns from response
+
 ## 3.19.11
 
 ### Patch Changes
