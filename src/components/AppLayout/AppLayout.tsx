@@ -14,7 +14,7 @@ interface AppLayoutProps {
   fullSize?: boolean;
 }
 
-const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
+const AppLayout = ({ children }: AppLayoutProps) => {
   const classes = useStyles();
   const { setAnchor } = useSavebarRef();
   const [appState] = useAppState();

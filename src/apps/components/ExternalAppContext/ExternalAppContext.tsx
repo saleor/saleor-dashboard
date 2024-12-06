@@ -9,7 +9,7 @@ import { AppDialog } from "../AppDialog";
 import { AppFrame } from "../AppFrame";
 import { AppData, ExternalAppContext } from "./context";
 
-export const ExternalAppProvider: React.FC = ({ children }) => {
+export const ExternalAppProvider = ({ children }) => {
   const [open, setOpen] = React.useState(false);
   const [appData, setAppData] = React.useState<AppData | undefined>();
   const shop = useShop();

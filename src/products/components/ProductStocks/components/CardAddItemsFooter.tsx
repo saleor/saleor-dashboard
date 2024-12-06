@@ -29,13 +29,7 @@ interface CardAddItemsFooterProps {
   ref?: MutableRefObject<HTMLDivElement>;
 }
 
-const CardAddItemsFooter: React.FC<CardAddItemsFooterProps> = ({
-  title,
-  onAdd,
-  testIds,
-  ref,
-  children,
-}) => {
+const CardAddItemsFooter = ({ title, onAdd, testIds, ref, children }: CardAddItemsFooterProps) => {
   const classes = useStyles({});
 
   return (

@@ -53,7 +53,7 @@ export interface CustomerDetailsPageProps {
   onDelete: () => void;
 }
 
-const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
+const CustomerDetailsPage = ({
   customerId,
   customer,
   disabled,

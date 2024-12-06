@@ -34,7 +34,7 @@ export interface CustomerListPageProps
   onCustomersDelete: () => void;
 }
 
-const CustomerListPage: React.FC<CustomerListPageProps> = ({
+const CustomerListPage = ({
   selectedFilterPreset,
   filterOpts,
   initialSearch,
@@ -50,7 +50,7 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
   hasPresetsChanged,
   onCustomersDelete,
   ...customerListProps
-}) => {
+}: CustomerListPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const userPermissions = useUserPermissions();

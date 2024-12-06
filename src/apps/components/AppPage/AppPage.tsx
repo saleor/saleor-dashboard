@@ -16,7 +16,7 @@ export interface AppPageProps {
   refetch?: () => void;
 }
 
-export const AppPage: React.FC<AppPageProps> = ({ data, url, onError, refetch }) => {
+export const AppPage = ({ data, url, onError, refetch }: AppPageProps) => {
   const shop = useShop();
 
   /**

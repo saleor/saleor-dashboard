@@ -11,14 +11,7 @@ interface CardTitleProps {
   onClose?: () => void;
 }
 
-const CardTitle: React.FC<CardTitleProps> = ({
-  className,
-  children,
-  title,
-  subtitle,
-  toolbar,
-  ...rest
-}) => (
+const CardTitle = ({ className, children, title, subtitle, toolbar, ...rest }: CardTitleProps) => (
   <CardHeader action={toolbar} className={className} title={title} subheader={subtitle} {...rest}>
     {children}
   </CardHeader>

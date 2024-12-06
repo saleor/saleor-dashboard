@@ -24,12 +24,12 @@ interface OrderTransactionPaymentProps {
   onVoid: () => void;
 }
 
-const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
+const OrderTransactionPayment = ({
   payment,
   allPaymentMethods,
   onCapture,
   onVoid,
-}) => {
+}: OrderTransactionPaymentProps) => {
   const currency = payment.total.currency;
   const total = payment?.total?.amount ?? 0;
   const captured = payment?.capturedAmount?.amount ?? 0;

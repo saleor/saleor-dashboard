@@ -60,7 +60,7 @@ interface ProductMediaNavigationProps {
   onRowClick: (id: string) => () => void;
 }
 
-const ProductMediaNavigation: React.FC<ProductMediaNavigationProps> = props => {
+const ProductMediaNavigation = (props: ProductMediaNavigationProps) => {
   const { highlighted, media, onRowClick } = props;
   const classes = useStyles(props);
   const intl = useIntl();

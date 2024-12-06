@@ -15,7 +15,7 @@ type ShopContext = ShopInfoQuery["shop"];
 
 export const ShopContext = React.createContext<ShopContext>(undefined);
 
-export const ShopProvider: React.FC = ({ children }) => {
+export const ShopProvider = ({ children }) => {
   const { authenticated, user } = useUser();
   const analytics = useAnalytics();
   const { data } = useShopInfoQuery({

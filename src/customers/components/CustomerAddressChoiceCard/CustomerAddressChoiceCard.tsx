@@ -19,7 +19,7 @@ export interface CustomerAddressChoiceCardProps {
   onEditClick?: () => void;
 }
 
-const CustomerAddressChoiceCard: React.FC<CustomerAddressChoiceCardProps> = props => {
+const CustomerAddressChoiceCard = (props: CustomerAddressChoiceCardProps) => {
   const { address, selected, editable, onSelect, onEditClick } = props;
   const classes = useStyles(props);
   const intl = useIntl();

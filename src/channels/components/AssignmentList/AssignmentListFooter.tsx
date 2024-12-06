@@ -19,7 +19,7 @@ const messages = defineMessages({
 
 type AssignmentListFooterProps = AssignmentListProps;
 
-const AssignmentListFooter: React.FC<AssignmentListFooterProps> = ({
+const AssignmentListFooter = ({
   items,
   itemsChoices,
   itemsName,
@@ -28,7 +28,7 @@ const AssignmentListFooter: React.FC<AssignmentListFooterProps> = ({
   addItem,
   searchItems,
   fetchMoreItems,
-}) => {
+}: AssignmentListFooterProps) => {
   const intl = useIntl();
   const [isChoicesSelectShown, setIsChoicesSelectShown] = useState(false);
   const itemsRef = useRef<AssignItem[]>(items);

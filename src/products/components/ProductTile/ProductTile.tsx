@@ -18,7 +18,7 @@ const commonThumbnailProps = {
   aspectRatio: "1 / 1",
 } as const;
 
-export const ProductTile: React.FC<ProductTileProps> = ({ product, onClick }) => (
+export const ProductTile = ({ product, onClick }: ProductTileProps) => (
   <Box
     display="flex"
     flexDirection="column"

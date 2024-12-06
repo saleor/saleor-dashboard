@@ -27,7 +27,7 @@ const useStyles = makeStyles(
   { name: "SummaryList" },
 );
 
-export const SummaryList: React.FC<{ className?: string }> = ({ children, className }) => {
+export const SummaryList = ({ children, className }: { className?: string }) => {
   const classes = useStyles();
 
   return <ul className={clsx(classes.list, className)}>{children}</ul>;

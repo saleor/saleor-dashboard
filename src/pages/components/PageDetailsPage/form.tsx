@@ -302,7 +302,7 @@ function usePageForm(
   };
 }
 
-const PageForm: React.FC<PageFormProps> = ({ children, page, onSubmit, disabled, ...rest }) => {
+const PageForm = ({ children, page, onSubmit, disabled, ...rest }: PageFormProps) => {
   const { richText, ...props } = usePageForm(page, onSubmit, disabled, rest);
 
   return (

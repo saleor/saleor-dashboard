@@ -17,7 +17,7 @@ import {
 import StaffDetailsComponent from "./views/StaffDetails";
 import StaffListComponent from "./views/StaffList";
 
-const StaffList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
+const StaffList = ({ location }: RouteComponentProps<{}>) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: StaffListUrlQueryParams = asSortParams(qs, StaffListUrlSortField);
 
@@ -28,7 +28,7 @@ interface StaffDetailsRouteProps {
   id: string;
 }
 
-const StaffDetails: React.FC<RouteComponentProps<StaffDetailsRouteProps>> = ({ match }) => {
+const StaffDetails = ({ match }: RouteComponentProps<StaffDetailsRouteProps>) => {
   const qs = parseQs(location.search.substr(1));
   const params: StaffMemberDetailsUrlQueryParams = qs;
 

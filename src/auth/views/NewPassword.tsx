@@ -8,7 +8,7 @@ import { RouteComponentProps } from "react-router";
 import NewPasswordPage, { NewPasswordPageFormData } from "../components/NewPasswordPage";
 import { NewPasswordUrlQueryParams } from "../urls";
 
-const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
+const NewPassword = ({ location }: RouteComponentProps) => {
   const navigate = useNavigator();
   const { setPassword } = useAuth();
   const [loading, setLoading] = useState(false);

@@ -49,7 +49,7 @@ export interface VoucherCreatePageProps {
   onSubmit: (data: FormData) => SubmitPromise;
 }
 
-const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
+const VoucherCreatePage = ({
   allChannelsCount,
   channelListings = [],
   disabled,
@@ -58,7 +58,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   onChannelsChange,
   onSubmit,
   openChannelsModal,
-}) => {
+}: VoucherCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();

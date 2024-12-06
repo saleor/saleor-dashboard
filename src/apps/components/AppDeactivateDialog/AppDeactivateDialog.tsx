@@ -17,14 +17,14 @@ export interface AppDeactivateDialogProps {
   onConfirm: () => void;
 }
 
-const AppDeactivateDialog: React.FC<AppDeactivateDialogProps> = ({
+const AppDeactivateDialog = ({
   confirmButtonState,
   open,
   name,
   thirdParty = true,
   onClose,
   onConfirm,
-}) => {
+}: AppDeactivateDialogProps) => {
   const intl = useIntl();
   const isNameMissing = name === null || name === "";
   const getMainText = () => {

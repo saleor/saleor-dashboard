@@ -18,22 +18,22 @@ import {
 import { WindowTitle } from "../components/WindowTitle";
 import { AppListUrlQueryParams, AppPaths } from "./urls";
 
-const AppManageRoute: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
+const AppManageRoute = ({ match }: RouteComponentProps<{ id: string }>) => {
   const qs = parseQs(location.search.substr(1));
   const params: AppDetailsUrlQueryParams = qs;
 
   return <AppManageView id={decodeURIComponent(match.params.id)} params={params} />;
 };
-const AppViewRoute: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => (
+const AppViewRoute = ({ match }: RouteComponentProps<{ id: string }>) => (
   <AppView id={decodeURIComponent(match.params.id)} />
 );
-const AppInstallRoute: React.FC<RouteComponentProps> = props => {
+const AppInstallRoute = (props: RouteComponentProps) => {
   const qs = parseQs(location.search.substr(1));
   const params: AppInstallUrlQueryParams = qs;
 
   return <AppInstallView params={params} {...props} />;
 };
-const AppListRoute: React.FC<RouteComponentProps> = () => {
+const AppListRoute = () => {
   const qs = parseQs(location.search.substr(1));
   const params: AppListUrlQueryParams = qs;
 

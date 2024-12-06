@@ -43,11 +43,11 @@ const useStyles = makeStyles(
   { name: "TransactionCard" },
 );
 
-export const TransactionCard: React.FC<TransactionCardProps> = ({
+export const TransactionCard = ({
   transaction,
   orderId,
   totalRemainingGrant,
-}) => {
+}: TransactionCardProps) => {
   const classes = useStyles();
   const intl = useIntl();
   const id = useId();

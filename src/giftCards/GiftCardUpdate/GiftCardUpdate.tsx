@@ -11,7 +11,7 @@ interface GiftCardUpdateProps {
   id: string;
 }
 
-const GiftCardUpdate: React.FC<GiftCardUpdateProps> = ({ id, params }) => (
+const GiftCardUpdate = ({ id, params }: GiftCardUpdateProps) => (
   <GiftCardDetailsProvider id={id}>
     <GiftCardUpdateFormProvider>
       <GiftCardUpdateDialogsProvider id={id} params={params}>

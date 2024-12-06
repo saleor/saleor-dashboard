@@ -24,7 +24,7 @@ const useStyles = makeStyles(
   }),
   { name: "IconButtonTableCell" },
 );
-const IconButtonTableCell: React.FC<IconButtonTableCellProps> = props => {
+const IconButtonTableCell = (props: IconButtonTableCellProps) => {
   const { children, className, disabled, onClick } = props;
   const classes = useStyles(props);
 

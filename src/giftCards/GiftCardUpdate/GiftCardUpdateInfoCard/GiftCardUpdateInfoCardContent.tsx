@@ -20,7 +20,7 @@ import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGi
 import { PLACEHOLDER } from "../types";
 import { giftCardUpdateInfoCardMessages as messages } from "./messages";
 
-const GiftCardUpdateInfoCardContent: React.FC = () => {
+const GiftCardUpdateInfoCardContent = () => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
   const { giftCard } = useGiftCardDetails();

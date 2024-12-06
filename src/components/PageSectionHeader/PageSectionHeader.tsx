@@ -7,7 +7,7 @@ interface PageSectionHeaderProps {
   description?: string;
 }
 
-const PageSectionHeader: React.FC<PageSectionHeaderProps> = props => {
+const PageSectionHeader = (props: PageSectionHeaderProps) => {
   const { title, description } = props;
 
   return (

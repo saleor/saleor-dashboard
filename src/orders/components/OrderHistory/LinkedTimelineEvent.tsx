@@ -39,7 +39,7 @@ interface LinkedTimelineEventProps {
   hasPlainDate?: boolean;
 }
 
-const LinkedTimelineEvent: React.FC<LinkedTimelineEventProps> = ({ event, hasPlainDate }) => {
+const LinkedTimelineEvent = ({ event, hasPlainDate }: LinkedTimelineEventProps) => {
   const intl = useIntl();
   const getTitleElements = (): TitleElement[] => {
     const { type, relatedOrder, lines } = event;

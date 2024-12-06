@@ -4,9 +4,7 @@ import React from "react";
 /**
  * @deprecated use `Divider` component from `@saleor/macaw-ui-next`
  */
-export const Hr: React.FC<{
-  className?: string;
-}> = ({ className }) => (
+export const Hr = ({ className }: { className?: string }) => (
   <Box
     as="hr"
     className={className}

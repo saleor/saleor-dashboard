@@ -28,7 +28,7 @@ interface CustomerDetailsViewProps {
   params: CustomerUrlQueryParams;
 }
 
-const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({ id, params }) => {
+const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -147,7 +147,7 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({ id, para
   );
 };
 
-export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({ id, params }) => (
+export const CustomerDetailsView = ({ id, params }: CustomerDetailsViewProps) => (
   <CustomerDetailsProvider id={id}>
     <CustomerDetailsViewInner id={id} params={params} />
   </CustomerDetailsProvider>

@@ -11,7 +11,7 @@ interface TaxAppLabelProps {
   id: string;
 }
 
-export const TaxAppLabel: React.FC<TaxAppLabelProps> = ({ name, logoUrl, created }) => {
+export const TaxAppLabel = ({ name, logoUrl, created }: TaxAppLabelProps) => {
   const logo = logoUrl ? { source: logoUrl } : undefined;
 
   return (

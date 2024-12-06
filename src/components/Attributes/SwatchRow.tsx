@@ -20,7 +20,7 @@ type SwatchRowProps = Pick<
   | "fetchMoreAttributeValues"
 >;
 
-export const SwatchRow: React.FC<SwatchRowProps> = ({
+export const SwatchRow = ({
   attributeValues,
   fetchAttributeValues,
   fetchMoreAttributeValues,
@@ -28,7 +28,7 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
   disabled,
   error,
   onChange,
-}) => {
+}: SwatchRowProps) => {
   const intl = useIntl();
   const value = attribute.data.values.find(getBySlug(attribute.value[0]));
   const options = useMemo(

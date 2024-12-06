@@ -34,7 +34,7 @@ interface MenuListProps {
   params: MenuListUrlQueryParams;
 }
 
-const MenuList: React.FC<MenuListProps> = ({ params }) => {
+const MenuList = ({ params }: MenuListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);

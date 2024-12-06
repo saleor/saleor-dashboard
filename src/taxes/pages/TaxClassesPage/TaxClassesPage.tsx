@@ -52,7 +52,7 @@ interface TaxClassesPageProps {
   onTaxClassUpdate: (data: TaxClassesPageFormData) => SubmitPromise;
 }
 
-export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
+export const TaxClassesPage = (props: TaxClassesPageProps) => {
   const {
     taxClasses,
     selectedTaxClassId,

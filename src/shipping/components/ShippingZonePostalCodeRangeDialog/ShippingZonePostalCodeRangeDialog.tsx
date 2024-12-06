@@ -15,12 +15,12 @@ export interface ShippingZonePostalCodeRangeDialogProps extends DialogProps {
   onSubmit: (range: MinMax) => void;
 }
 
-const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDialogProps> = ({
+const ShippingZonePostalCodeRangeDialog = ({
   confirmButtonState,
   open,
   onClose,
   onSubmit,
-}) => {
+}: ShippingZonePostalCodeRangeDialogProps) => {
   const intl = useIntl();
   const initial: MinMax = {
     max: "",

@@ -33,11 +33,11 @@ export interface PluginDetailsChannelsCardProps {
   plugin: PluginsDetailsFragment;
 }
 
-const PluginDetailsChannelsCardContent: React.FC<PluginDetailsChannelsCardProps> = ({
+const PluginDetailsChannelsCardContent = ({
   plugin,
   selectedChannelId,
   setSelectedChannelId,
-}) => {
+}: PluginDetailsChannelsCardProps) => {
   const classes = useStyles({});
 
   if (!plugin) {

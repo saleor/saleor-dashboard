@@ -17,7 +17,7 @@ interface ProductShippingProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-export const ProductShipping: React.FC<ProductShippingProps> = props => {
+export const ProductShipping = (props: ProductShippingProps) => {
   const { data, disabled, errors, weightUnit, onChange } = props;
   const intl = useIntl();
   const formErrors = getFormErrors(["weight"], errors);

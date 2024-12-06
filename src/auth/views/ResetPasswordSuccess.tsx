@@ -4,7 +4,7 @@ import React from "react";
 
 import ResetPasswordSuccessPage from "../components/ResetPasswordSuccessPage";
 
-const ResetPasswordSuccessView: React.FC = () => {
+const ResetPasswordSuccessView = () => {
   const navigate = useNavigator();
 
   return <ResetPasswordSuccessPage onBack={() => navigate(getAppMountUri())} />;

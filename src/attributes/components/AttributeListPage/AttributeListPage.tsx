@@ -26,7 +26,7 @@ export interface AttributeListPageProps
   onSelectAttributesIds: (rows: number[], clearSelection: () => void) => void;
 }
 
-const AttributeListPage: React.FC<AttributeListPageProps> = ({
+const AttributeListPage = ({
   filterOpts,
   initialSearch,
   onFilterChange,
@@ -43,7 +43,7 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
   selectedAttributesIds,
   currencySymbol,
   ...listProps
-}) => {
+}: AttributeListPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const structure = createFilterStructure(intl, filterOpts);

@@ -44,7 +44,7 @@ export interface CollectionDetailsPageProps extends PageListProps, ListActions, 
   openChannelsModal: () => void;
 }
 
-const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
+const CollectionDetailsPage = ({
   channelsCount,
   channelsErrors,
   collection,

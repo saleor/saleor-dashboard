@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 import { giftCardsListHeaderMenuItemsMessages as messages } from "../messages";
 import GiftCardsListHeaderAlertContent from "./GiftCardsListHeaderAlertContent";
 
-const GiftCardsListHeaderAlert: React.FC = () => {
+const GiftCardsListHeaderAlert = () => {
   const intl = useIntl();
   const [selectedChannel] = useLocalStorage("channel", "");
   const { data: giftCardProductsCount, loading: giftCardProductsCountLoading } =

@@ -11,7 +11,7 @@ import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGi
 import { giftCardUpdateDetailsCardMessages as messages } from "./messages";
 import { useGiftCardDetailsBalanceStyles as useStyles } from "./styles";
 
-const GiftCardUpdateDetailsBalanceSection: React.FC = () => {
+const GiftCardUpdateDetailsBalanceSection = () => {
   const classes = useStyles({});
   const intl = useIntl();
   const {

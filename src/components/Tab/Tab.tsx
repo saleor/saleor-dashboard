@@ -42,7 +42,7 @@ interface TabProps<T> {
 }
 
 export function Tab<T>(value: T) {
-  const Component: React.FC<TabProps<T>> = props => {
+  const Component = (props: TabProps<T>) => {
     const { children, isActive, changeTab, testId } = props;
     const classes = useStyles(props);
 

@@ -13,7 +13,7 @@ interface GlobalConfigPluginPopupBodyProps {
   plugin: PluginBaseFragment;
 }
 
-const GlobalConfigPluginPopupBody: React.FC<GlobalConfigPluginPopupBodyProps> = ({ plugin }) => {
+const GlobalConfigPluginPopupBody = ({ plugin }: GlobalConfigPluginPopupBodyProps) => {
   const intl = useIntl();
   const { active } = plugin.globalConfiguration;
 

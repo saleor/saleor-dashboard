@@ -396,13 +396,13 @@ function useProductVariantUpdateForm(
   };
 }
 
-const ProductVariantUpdateForm: React.FC<ProductVariantUpdateFormProps> = ({
+const ProductVariantUpdateForm = ({
   children,
   variant,
   onSubmit,
   loading,
   ...rest
-}) => {
+}: ProductVariantUpdateFormProps) => {
   const props = useProductVariantUpdateForm(variant, onSubmit, loading, rest);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;

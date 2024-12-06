@@ -18,7 +18,7 @@ export interface WebhookHeadersProps {
   onChange: FormChange;
 }
 
-const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data: { customHeaders }, onChange }) => {
+const WebhookHeaders = ({ data: { customHeaders }, onChange }: WebhookHeadersProps) => {
   const intl = useIntl();
   const [expanded, setExpanded] = useState(false);
   const classes = useStyles();

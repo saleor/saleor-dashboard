@@ -23,7 +23,7 @@ interface WebhookInfoProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const WebhookInfo: React.FC<WebhookInfoProps> = ({ data, disabled, errors, onChange }) => {
+const WebhookInfo = ({ data, disabled, errors, onChange }: WebhookInfoProps) => {
   const intl = useIntl();
   const classes = useStyles();
   const formErrors = getFormErrors(["name", "targetUrl", "secretKey"], errors);

@@ -99,7 +99,7 @@ export function useBackgroundTasks(
   };
 }
 
-const BackgroundTasksProvider: React.FC = ({ children }) => {
+const BackgroundTasksProvider = ({ children }) => {
   const apolloClient = useApolloClient();
   const notify = useNotifier();
   const intl = useIntl();

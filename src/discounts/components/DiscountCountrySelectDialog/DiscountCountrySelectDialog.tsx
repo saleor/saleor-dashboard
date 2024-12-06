@@ -31,7 +31,7 @@ export interface DiscountCountrySelectDialogProps {
   onConfirm: (data: FormData) => SubmitPromise;
 }
 
-const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = props => {
+const DiscountCountrySelectDialog = (props: DiscountCountrySelectDialogProps) => {
   const { confirmButtonState, onClose, countries, open, initial, onConfirm } = props;
   const classes = useStyles(props);
   const intl = useIntl();

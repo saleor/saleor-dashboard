@@ -34,7 +34,7 @@ export interface WarehouseDetailsProps {
   params: WarehouseUrlQueryParams;
 }
 
-const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
+const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const notify = useNotifier();

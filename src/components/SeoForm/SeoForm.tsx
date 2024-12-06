@@ -39,7 +39,7 @@ interface SeoFormProps {
   onClick?: () => any;
 }
 
-export const SeoForm: React.FC<SeoFormProps> = props => {
+export const SeoForm = (props: SeoFormProps) => {
   const {
     description,
     descriptionPlaceholder,

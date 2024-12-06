@@ -68,7 +68,7 @@ interface VoucherDetailsProps {
   params: VoucherUrlQueryParams;
 }
 
-export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) => {
+export const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

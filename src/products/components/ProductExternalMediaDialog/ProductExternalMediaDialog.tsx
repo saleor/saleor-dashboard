@@ -25,11 +25,11 @@ const messages = defineMessages({
     description: "modal button",
   },
 });
-const ProductExternalMediaDialog: React.FC<ProductExternalMediaDialogProps> = ({
+const ProductExternalMediaDialog = ({
   open,
   onClose,
   onSubmit,
-}) => {
+}: ProductExternalMediaDialogProps) => {
   const intl = useIntl();
   const initialValues: FormValues = {
     mediaUrl: "",

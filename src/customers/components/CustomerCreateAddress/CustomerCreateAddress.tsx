@@ -29,7 +29,7 @@ export interface CustomerCreateAddressProps {
   onCountryChange: (event: React.ChangeEvent<any>) => any;
 }
 
-const CustomerCreateAddress: React.FC<CustomerCreateAddressProps> = props => {
+const CustomerCreateAddress = (props: CustomerCreateAddressProps) => {
   const { countries, countryDisplayName, data, disabled, errors, onChange, onCountryChange } =
     props;
   const classes = useStyles(props);

@@ -20,7 +20,7 @@ export interface CustomAppTokensProps {
 }
 
 const numberOfColumns = 3;
-const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
+const CustomAppTokens = (props: CustomAppTokensProps) => {
   const { tokens, onCreate, onDelete } = props;
   const classes = useStyles(props);
   const intl = useIntl();

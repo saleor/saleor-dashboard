@@ -48,7 +48,7 @@ interface MenuDetailsProps {
   params: MenuUrlQueryParams;
 }
 
-const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
+const MenuDetails = ({ id, params }: MenuDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

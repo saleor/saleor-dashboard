@@ -28,7 +28,7 @@ interface StaffPropertiesProps {
   onImageUpload: (file: File) => void;
 }
 
-const StaffProperties: React.FC<StaffPropertiesProps> = props => {
+const StaffProperties = (props: StaffPropertiesProps) => {
   const {
     canEditAvatar,
     className,

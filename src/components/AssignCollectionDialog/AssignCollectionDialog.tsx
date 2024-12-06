@@ -12,10 +12,7 @@ interface AssignCollectionDialogProps
   collections: RelayToFlat<SearchCollectionsQuery["search"]>;
 }
 
-const AssignCollectionDialog: React.FC<AssignCollectionDialogProps> = ({
-  collections,
-  ...rest
-}) => {
+const AssignCollectionDialog = ({ collections, ...rest }: AssignCollectionDialogProps) => {
   const intl = useIntl();
 
   return (

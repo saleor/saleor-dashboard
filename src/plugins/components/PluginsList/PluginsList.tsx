@@ -35,7 +35,7 @@ export interface PluginListProps extends ListProps, SortPage<PluginListUrlSortFi
 }
 
 const totalColSpan = 10;
-const PluginList: React.FC<PluginListProps> = props => {
+const PluginList = (props: PluginListProps) => {
   const { settings, plugins, disabled, sort, onSort, onUpdateListSettings } = props;
   const classes = useStyles(props);
   const navigate = useNavigator();

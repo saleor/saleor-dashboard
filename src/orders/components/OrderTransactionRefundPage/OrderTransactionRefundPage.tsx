@@ -73,7 +73,7 @@ export interface OrderTransactionRefundPageFormData {
   reason: string;
 }
 
-const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
+const OrderTransactionRefundPage = ({
   errors,
   order,
   draftRefund,
@@ -82,7 +82,7 @@ const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
   onTransferFunds,
   onSaveDraftState,
   onTransferFundsState,
-}) => {
+}: OrderTransactionRefundPageProps) => {
   const navigate = useNavigator();
   const intl = useIntl();
 

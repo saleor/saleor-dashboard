@@ -31,7 +31,7 @@ export interface ExportDialogSettingsProps {
 }
 
 const formFields: Array<keyof ExportSettingsInput> = ["fileType", "scope"];
-const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
+const ExportDialogSettings = ({
   data,
   errors,
   onChange,
@@ -39,7 +39,7 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
   itemsQuantity,
   exportScopeLabels,
   allowScopeSelection = true,
-}) => {
+}: ExportDialogSettingsProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(formFields, errors);
   const productExportTypeChoices: Array<RadioGroupFieldChoice<FileTypesEnum>> = [

@@ -30,7 +30,7 @@ export interface SaleProductsProps extends ListProps, ListActions {
 }
 
 const numberOfColumns = 5;
-const DiscountProducts: React.FC<SaleProductsProps> = props => {
+const DiscountProducts = (props: SaleProductsProps) => {
   const {
     discount,
     disabled,

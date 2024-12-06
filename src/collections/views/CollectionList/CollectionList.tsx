@@ -39,7 +39,7 @@ interface CollectionListProps {
   params: CollectionListUrlQueryParams;
 }
 
-export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
+export const CollectionList = ({ params }: CollectionListProps) => {
   const navigate = useNavigator();
   const intl = useIntl();
   const notify = useNotifier();

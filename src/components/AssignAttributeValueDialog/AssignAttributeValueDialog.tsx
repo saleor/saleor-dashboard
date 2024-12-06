@@ -38,13 +38,13 @@ type AssignAttributeValueDialogProps = AssignProductDialogProps & {
   pages: RelayToFlat<SearchPagesQuery["search"]>;
 };
 
-const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
+const AssignAttributeValueDialog = ({
   entityType,
   pages,
   products,
   attribute,
   ...rest
-}) => {
+}: AssignAttributeValueDialogProps) => {
   const intl = useIntl();
   const filteredProducts = filterProductsByAttributeValues(products, attribute);
   const filteredPages = filterPagesByAttributeValues(pages, attribute);

@@ -28,7 +28,7 @@ export interface GiftCardResendCodeFormData {
   channelSlug: string;
 }
 
-const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
+const GiftCardResendCodeDialog = ({ open, onClose }: DialogProps) => {
   const intl = useIntl();
   const notify = useNotifier();
   const classes = useStyles();

@@ -47,7 +47,7 @@ export interface CategoryBackgroundProps {
   onImageUpload: (file: File | null) => void;
 }
 
-const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
+const CategoryBackground = (props: CategoryBackgroundProps) => {
   const classes = useStyles(props);
   const intl = useIntl();
   const anchor = React.useRef<HTMLInputElement>(null);

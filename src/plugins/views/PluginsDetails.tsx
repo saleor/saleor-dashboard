@@ -43,7 +43,7 @@ export function getConfigurationInput(
     }));
 }
 
-export const PluginsDetails: React.FC<PluginsDetailsProps> = ({ id, params }) => {
+export const PluginsDetails = ({ id, params }: PluginsDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

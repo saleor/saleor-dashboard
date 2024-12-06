@@ -8,7 +8,7 @@ interface OrderAlertsProps {
   values?: Record<string, any>;
 }
 
-export const OrderAlerts: React.FC<OrderAlertsProps> = ({ alertsHeader, alerts, values }) => {
+export const OrderAlerts = ({ alertsHeader, alerts, values }: OrderAlertsProps) => {
   const intl = useIntl();
   const formattedAlerts = alerts.map((alert, index) => {
     if (typeof alert === "string") {

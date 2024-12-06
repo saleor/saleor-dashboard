@@ -33,11 +33,11 @@ interface ChannelsSectionProps {
   allChannels?: ChannelFragment[];
 }
 
-const ChannelsSection: React.FC<ChannelsSectionProps> = ({
+const ChannelsSection = ({
   onChange,
   allChannels = [],
   selectedChannels,
-}) => {
+}: ChannelsSectionProps) => {
   const { onQueryChange, filteredChannels } = useChannelsSearch(allChannels);
   const intl = useIntl();
 

@@ -12,7 +12,7 @@ interface AssignCategoryDialogProps
   categories: RelayToFlat<SearchCategoriesQuery["search"]>;
 }
 
-const AssignCategoryDialog: React.FC<AssignCategoryDialogProps> = ({ categories, ...rest }) => {
+const AssignCategoryDialog = ({ categories, ...rest }: AssignCategoryDialogProps) => {
   const intl = useIntl();
 
   return (

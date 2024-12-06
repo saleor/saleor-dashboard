@@ -61,7 +61,7 @@ interface WarehouseListProps extends ListProps, SortPage<WarehouseListUrlSortFie
 }
 
 const numberOfColumns = 3;
-const WarehouseList: React.FC<WarehouseListProps> = props => {
+const WarehouseList = (props: WarehouseListProps) => {
   const { warehouses, disabled, settings, sort, onUpdateListSettings, onRemove, onSort } = props;
   const classes = useStyles(props);
   const location = useLocation();

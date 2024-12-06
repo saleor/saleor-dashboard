@@ -36,7 +36,7 @@ export enum VoucherType {
 }
 
 const numberOfColumns = 2;
-const VoucherValue: React.FC<VoucherValueProps> = props => {
+const VoucherValue = (props: VoucherValueProps) => {
   const { data, disabled, errors, variant, onChange, onChannelChange } = props;
   const classes = useStyles(props);
   const intl = useIntl();

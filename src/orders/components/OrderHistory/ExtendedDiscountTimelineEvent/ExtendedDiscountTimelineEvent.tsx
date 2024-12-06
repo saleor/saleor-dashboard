@@ -38,10 +38,7 @@ interface ExtendedTimelineEventProps {
   titleElements: TitleElement[];
 }
 
-const ExtendedDiscountTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
-  event,
-  titleElements,
-}) => {
+const ExtendedDiscountTimelineEvent = ({ event, titleElements }: ExtendedTimelineEventProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const { lines, date, type } = event;

@@ -17,14 +17,14 @@ export interface OrderDraftCancelDialogProps {
   orderNumber: string;
 }
 
-const OrderDraftCancelDialog: React.FC<OrderDraftCancelDialogProps> = ({
+const OrderDraftCancelDialog = ({
   confirmButtonState,
   errors: apiErrors,
   onClose,
   onConfirm,
   open,
   orderNumber,
-}) => {
+}: OrderDraftCancelDialogProps) => {
   const intl = useIntl();
   const errors = useModalDialogErrors(apiErrors, open);
 

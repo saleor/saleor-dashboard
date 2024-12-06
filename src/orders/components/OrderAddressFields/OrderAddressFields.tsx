@@ -32,7 +32,7 @@ interface OrderAddressFieldsProps {
   orderBillingAddress: AddressFragment;
 }
 
-const OrderAddressFields: React.FC<OrderAddressFieldsProps> = ({
+const OrderAddressFields = ({
   action,
   isDraft,
   customerAddressesLoading,
@@ -44,7 +44,7 @@ const OrderAddressFields: React.FC<OrderAddressFieldsProps> = ({
   errors,
   orderShippingAddress,
   orderBillingAddress,
-}) => {
+}: OrderAddressFieldsProps) => {
   const addressFieldCommonProps: Omit<OrderCustomerAddressesEditDialogProps, "open" | "variant"> = {
     loading: customerAddressesLoading,
     confirmButtonState,

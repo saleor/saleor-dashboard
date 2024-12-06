@@ -32,14 +32,14 @@ export interface OrderValueProps {
 
 const numberOfColumns = 3;
 
-export const OrderValue: React.FC<OrderValueProps> = ({
+export const OrderValue = ({
   channels,
   errors,
   orderValueRestricted,
   disabled,
   onChannelsChange,
   onChange,
-}) => {
+}: OrderValueProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const formErrors = getFormChannelErrors(

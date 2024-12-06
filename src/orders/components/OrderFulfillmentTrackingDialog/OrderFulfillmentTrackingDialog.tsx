@@ -26,14 +26,14 @@ export interface OrderFulfillmentTrackingDialogProps {
   onConfirm: (data: FormData) => any;
 }
 
-const OrderFulfillmentTrackingDialog: React.FC<OrderFulfillmentTrackingDialogProps> = ({
+const OrderFulfillmentTrackingDialog = ({
   confirmButtonState,
   errors: apiErrors,
   open,
   trackingNumber,
   onConfirm,
   onClose,
-}) => {
+}: OrderFulfillmentTrackingDialogProps) => {
   const intl = useIntl();
   const errors = useModalDialogErrors(apiErrors, open);
   const formFields = ["trackingNumber"];

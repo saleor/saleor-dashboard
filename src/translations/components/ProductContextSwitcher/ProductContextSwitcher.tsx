@@ -67,11 +67,11 @@ const useStyles = makeStyles(
   }),
   { name: "ProductContextSwitcher" },
 );
-const ProductContextSwitcher: React.FC<ProductContextSwitcherProps> = ({
+const ProductContextSwitcher = ({
   languageCode,
   productId,
   selectedId,
-}) => {
+}: ProductContextSwitcherProps) => {
   const classes = useStyles();
   const navigate = useNavigator();
   const intl = useIntl();

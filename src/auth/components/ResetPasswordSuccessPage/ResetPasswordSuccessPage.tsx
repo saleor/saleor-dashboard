@@ -10,7 +10,7 @@ export interface ResetPasswordSuccessPageProps {
   onBack: () => void;
 }
 
-const ResetPasswordSuccessPage: React.FC<ResetPasswordSuccessPageProps> = props => {
+const ResetPasswordSuccessPage = (props: ResetPasswordSuccessPageProps) => {
   const { onBack } = props;
 
   return (

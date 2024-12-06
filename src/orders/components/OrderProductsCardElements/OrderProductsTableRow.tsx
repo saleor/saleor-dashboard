@@ -54,7 +54,7 @@ interface TableLineProps {
   isOrderLine?: boolean;
 }
 
-const TableLine: React.FC<TableLineProps> = ({ line: lineData, isOrderLine = false }) => {
+const TableLine = ({ line: lineData, isOrderLine = false }: TableLineProps) => {
   const classes = useStyles({});
   const { quantity, quantityToFulfill } = lineData as OrderLineFragment;
 

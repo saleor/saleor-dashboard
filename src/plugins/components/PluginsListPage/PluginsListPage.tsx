@@ -26,7 +26,7 @@ export interface PluginsListPageProps
   plugins: PluginBaseFragment[];
 }
 
-const PluginsListPage: React.FC<PluginsListPageProps> = ({
+const PluginsListPage = ({
   currentTab,
   initialSearch,
   filterOpts,
@@ -38,7 +38,7 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
   onTabDelete,
   onTabSave,
   ...listProps
-}) => {
+}: PluginsListPageProps) => {
   const intl = useIntl();
   const { theme: currentTheme } = useTheme();
   const filterStructure = createFilterStructure(intl, filterOpts);

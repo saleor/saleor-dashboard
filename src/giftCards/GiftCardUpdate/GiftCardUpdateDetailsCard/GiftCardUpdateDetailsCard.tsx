@@ -15,7 +15,7 @@ import useGiftCardUpdateForm from "../providers/GiftCardUpdateFormProvider/hooks
 import GiftCardUpdateDetailsBalanceSection from "./GiftCardUpdateDetailsBalanceSection";
 import { giftCardUpdateDetailsCardMessages as messages } from "./messages";
 
-const GiftCardUpdateDetailsCard: React.FC = () => {
+const GiftCardUpdateDetailsCard = () => {
   const intl = useIntl();
   const { loading, giftCard } = useGiftCardDetails();
   const { openSetBalanceDialog } = useGiftCardUpdateDialogs();

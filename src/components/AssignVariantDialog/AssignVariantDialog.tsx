@@ -43,7 +43,7 @@ export interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
 }
 
 const scrollableTargetId = "assignVariantScrollableDialog";
-const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
+const AssignVariantDialog = (props: AssignVariantDialogProps) => {
   const {
     confirmButtonState,
     hasMore,

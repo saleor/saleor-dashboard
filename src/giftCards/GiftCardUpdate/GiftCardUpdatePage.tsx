@@ -14,7 +14,7 @@ import useGiftCardUpdateDialogs from "./providers/GiftCardUpdateDialogsProvider/
 import useGiftCardUpdate from "./providers/GiftCardUpdateFormProvider/hooks/useGiftCardUpdate";
 import useGiftCardUpdateForm from "./providers/GiftCardUpdateFormProvider/hooks/useGiftCardUpdateForm";
 
-const GiftCardUpdatePage: React.FC = () => {
+const GiftCardUpdatePage = () => {
   const { openDeleteDialog } = useGiftCardUpdateDialogs();
   const navigate = useNavigator();
   const {

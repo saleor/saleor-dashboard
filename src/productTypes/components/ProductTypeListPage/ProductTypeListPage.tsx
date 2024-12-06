@@ -29,7 +29,7 @@ export interface ProductTypeListPageProps
   productTypes: ProductTypeFragment[];
 }
 
-const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
+const ProductTypeListPage = ({
   currentTab,
   filterOpts,
   initialSearch,
@@ -41,7 +41,7 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
   onTabSave,
   tabs,
   ...listProps
-}) => {
+}: ProductTypeListPageProps) => {
   const intl = useIntl();
   const structure = createFilterStructure(intl, filterOpts);
 

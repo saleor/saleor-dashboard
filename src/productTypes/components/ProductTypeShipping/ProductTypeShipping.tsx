@@ -14,12 +14,12 @@ interface ProductTypeShippingProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const ProductTypeShipping: React.FC<ProductTypeShippingProps> = ({
+const ProductTypeShipping = ({
   data,
   weightUnit,
   disabled,
   onChange,
-}) => {
+}: ProductTypeShippingProps) => {
   const intl = useIntl();
 
   return (

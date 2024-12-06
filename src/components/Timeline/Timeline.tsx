@@ -63,14 +63,14 @@ interface TimelineAddNoteProps {
   onSubmit: (event: React.FormEvent<any>) => any;
 }
 
-export const Timeline: React.FC<TimelineProps> = props => {
+export const Timeline = (props: TimelineProps) => {
   const { children } = props;
   const classes = useStyles(props);
 
   return <div className={classes.root}>{children}</div>;
 };
 
-export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
+export const TimelineAddNote = (props: TimelineAddNoteProps) => {
   const { message, onChange, onSubmit, reset, disabled } = props;
   const classes = useStyles(props);
   const { user } = useUser();

@@ -19,14 +19,14 @@ export interface GiftCardSettingsExpirySelectProps {
   errors?: Record<"expiryPeriod", GiftCardSettingsErrorFragment>;
 }
 
-const GiftCardSettingsExpirySelect: React.FC<GiftCardSettingsExpirySelectProps> = ({
+const GiftCardSettingsExpirySelect = ({
   errors,
   change,
   disabled,
   expiryPeriodActive,
   expiryPeriodType,
   expiryPeriodAmount,
-}) => {
+}: GiftCardSettingsExpirySelectProps) => {
   const intl = useIntl();
 
   return (

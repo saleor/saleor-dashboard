@@ -9,7 +9,7 @@ import React from "react";
 import { TranslationsEntityListProps } from "./types";
 import { sumCompleted } from "./utils";
 
-const TranslationsPageList: React.FC<TranslationsEntityListProps> = ({ params, variables }) => {
+const TranslationsPageList = ({ params, variables }: TranslationsEntityListProps) => {
   const { data, loading } = usePageTranslationsQuery({
     displayLoader: true,
     variables,

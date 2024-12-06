@@ -7,7 +7,7 @@ import PluginDetailsChannelsCardContent, {
   PluginDetailsChannelsCardProps,
 } from "./PluginDetailsChannelsCardContent";
 
-const PluginDetailsChannelsCard: React.FC<PluginDetailsChannelsCardProps> = props => {
+const PluginDetailsChannelsCard = (props: PluginDetailsChannelsCardProps) => {
   const intl = useIntl();
 
   return (

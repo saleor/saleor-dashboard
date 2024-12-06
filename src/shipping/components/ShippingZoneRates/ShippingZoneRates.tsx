@@ -48,7 +48,7 @@ const useStyles = makeStyles(
   }),
   { name: "ShippingZoneRates" },
 );
-const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
+const ShippingZoneRates = (props: ShippingZoneRatesProps) => {
   const {
     disabled,
     onRateAdd,

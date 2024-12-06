@@ -16,7 +16,7 @@ import GiftCardEnableDisableSection from "./GiftCardEnableDisableSection";
 import { giftCardUpdatePageHeaderMessages as messages } from "./messages";
 import useStyles from "./styles";
 
-const GiftCardUpdatePageHeader: React.FC = () => {
+const GiftCardUpdatePageHeader = () => {
   const classes = useStyles();
   const giftCardBackLink = useBackLinkWithState({
     path: giftCardsListPath,

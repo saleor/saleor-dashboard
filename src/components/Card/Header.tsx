@@ -1,11 +1,11 @@
 import { Box, PropsWithBox } from "@saleor/macaw-ui-next";
 import React from "react";
 
-export const Header: React.FC<PropsWithBox<{ children: React.ReactNode }>> = ({
+export const Header = ({
   children,
   className,
   ...rest
-}) => (
+}: PropsWithBox<{ children: React.ReactNode }>) => (
   <Box
     paddingX={6}
     paddingTop={6}

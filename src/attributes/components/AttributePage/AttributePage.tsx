@@ -71,7 +71,7 @@ export interface AttributePageFormData extends MetadataFormData {
   visibleInStorefront: boolean;
 }
 
-const AttributePage: React.FC<AttributePageProps> = ({
+const AttributePage = ({
   attribute,
   disabled,
   errors: apiErrors,
@@ -89,7 +89,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
   onNextPage,
   onPreviousPage,
   children,
-}) => {
+}: AttributePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();

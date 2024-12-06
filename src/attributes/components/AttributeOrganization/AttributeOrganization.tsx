@@ -42,7 +42,7 @@ const useStyles = makeStyles(
   }),
   { name: "AttributeOrganization" },
 );
-const AttributeOrganization: React.FC<AttributeOrganizationProps> = props => {
+const AttributeOrganization = (props: AttributeOrganizationProps) => {
   const { canChangeType, data, disabled, onChange } = props;
   const classes = useStyles(props);
   const intl = useIntl();

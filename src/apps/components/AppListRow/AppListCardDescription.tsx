@@ -8,7 +8,7 @@ interface AppListCardDescriptionProps {
   app: AppstoreApi.SaleorApp;
 }
 
-const AppListCardDescription: React.FC<AppListCardDescriptionProps> = ({ app }) => (
+const AppListCardDescription = ({ app }: AppListCardDescriptionProps) => (
   <Box>
     <Box display="flex" flexDirection="row" alignItems="center" marginBottom={5} gap={3}>
       <AppLogo backgroundColor={app.logo.color}>

@@ -45,7 +45,7 @@ export interface CreatorStepsProps<T> {
 }
 
 function makeCreatorSteps<T extends string | number>() {
-  const CreatorSteps: React.FC<CreatorStepsProps<T>> = ({ currentStep, steps, onStepClick }) => {
+  const CreatorSteps = ({ currentStep, steps, onStepClick }: CreatorStepsProps<T>) => {
     const classes = useStyles({});
 
     return (

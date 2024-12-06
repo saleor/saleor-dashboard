@@ -87,12 +87,7 @@ function useTaxCountriesForm(
   return { data: formset.data, handlers: { handleRateChange }, submit };
 }
 
-const TaxCountriesForm: React.FC<TaxCountriesFormProps> = ({
-  children,
-  country,
-  onSubmit,
-  disabled,
-}) => {
+const TaxCountriesForm = ({ children, country, onSubmit, disabled }: TaxCountriesFormProps) => {
   const props = useTaxCountriesForm(country, onSubmit, disabled);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;

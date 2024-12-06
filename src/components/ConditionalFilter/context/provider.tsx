@@ -16,9 +16,12 @@ import { useFilterWindow } from "../useFilterWindow";
 import { useUrlValueProvider } from "../ValueProvider/useUrlValueProvider";
 import { ConditionalFilterContext } from "./context";
 
-export const ConditionalProductFilterProvider: FC<{
+export const ConditionalProductFilterProvider = ({
+  children,
+  locationSearch,
+}: {
   locationSearch: string;
-}> = ({ children, locationSearch }) => {
+}) => {
   const apiProvider = useProductFilterAPIProvider();
   const initialState = useProductInitialAPIState();
   const valueProvider = useUrlValueProvider(locationSearch, "product", initialState);
@@ -41,9 +44,12 @@ export const ConditionalProductFilterProvider: FC<{
   );
 };
 
-export const ConditionalDiscountFilterProvider: FC<{
+export const ConditionalDiscountFilterProvider = ({
+  children,
+  locationSearch,
+}: {
   locationSearch: string;
-}> = ({ children, locationSearch }) => {
+}) => {
   const apiProvider = useDiscountFilterAPIProvider();
   const valueProvider = useUrlValueProvider(locationSearch, "discount");
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_DISCOUNT_OPTIONS);
@@ -65,9 +71,12 @@ export const ConditionalDiscountFilterProvider: FC<{
   );
 };
 
-export const ConditionalOrderFilterProvider: FC<{
+export const ConditionalOrderFilterProvider = ({
+  children,
+  locationSearch,
+}: {
   locationSearch: string;
-}> = ({ children, locationSearch }) => {
+}) => {
   const apiProvider = useOrderFilterAPIProvider();
 
   const initialState = useInitialOrderState();

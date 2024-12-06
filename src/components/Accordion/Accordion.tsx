@@ -10,14 +10,14 @@ export interface AccordionProps {
 }
 
 const AccordionItemId = "accordionItemId";
-const Accordion: React.FC<AccordionProps> = ({
+const Accordion = ({
   children,
   initialExpand,
   quickPeek,
   title,
   className,
   dataTestId = "expand-icon",
-}) => {
+}: AccordionProps) => {
   const [openedAccordionId, setOpendAccordionId] = useState<undefined | string>(
     initialExpand ? AccordionItemId : undefined,
   );

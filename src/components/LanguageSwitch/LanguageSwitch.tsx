@@ -57,7 +57,7 @@ const useStyles = makeStyles(
   }),
   { name: "LanguageSwitch" },
 );
-const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
+const LanguageSwitch = (props: LanguageSwitchProps) => {
   const { currentLanguage, languages, getLanguageUrl } = props;
   const classes = useStyles(props);
   const [isExpanded, setExpandedState] = React.useState(false);

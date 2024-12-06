@@ -17,14 +17,14 @@ export interface ProductListTilesProps extends ListProps<ProductListColumns> {
   onTileClick: (id: string) => void;
 }
 
-export const ProductListTiles: React.FC<ProductListTilesProps> = ({
+export const ProductListTiles = ({
   products,
   onTileClick,
   settings,
   disabled,
   loading,
   onUpdateListSettings,
-}) => {
+}: ProductListTilesProps) => {
   const intl = useIntl();
   const renderContent = useCallback(() => {
     if (loading) {

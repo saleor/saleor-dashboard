@@ -16,7 +16,7 @@ export interface SaleInfoProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const SaleInfo: React.FC<SaleInfoProps> = ({ data, disabled, errors, onChange }) => {
+const SaleInfo = ({ data, disabled, errors, onChange }: SaleInfoProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["name"], errors);
 

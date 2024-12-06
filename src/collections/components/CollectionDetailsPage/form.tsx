@@ -129,14 +129,14 @@ function useCollectionUpdateForm(
   };
 }
 
-const CollectionUpdateForm: React.FC<CollectionUpdateFormProps> = ({
+const CollectionUpdateForm = ({
   collection,
   currentChannels,
   setChannels,
   children,
   onSubmit,
   disabled,
-}) => {
+}: CollectionUpdateFormProps) => {
   const { richText, ...props } = useCollectionUpdateForm(
     collection,
     currentChannels,

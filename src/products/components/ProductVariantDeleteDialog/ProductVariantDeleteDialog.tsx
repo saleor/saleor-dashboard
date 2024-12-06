@@ -13,7 +13,7 @@ export interface ProductVariantDeleteDialogProps {
   onConfirm?: () => any;
 }
 
-const ProductVariantDeleteDialog: React.FC<ProductVariantDeleteDialogProps> = props => {
+const ProductVariantDeleteDialog = (props: ProductVariantDeleteDialogProps) => {
   const { confirmButtonState, name, open, onConfirm, onClose } = props;
 
   return (

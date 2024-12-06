@@ -49,7 +49,7 @@ const PossibleFormFields = {
 } as const;
 const formFields: Array<keyof AddressTypeInput> = Object.values(PossibleFormFields);
 
-const AddressEdit: React.FC<AddressEditProps> = props => {
+const AddressEdit = (props: AddressEditProps) => {
   const { countries, countryDisplayValue, data, disabled, errors, onChange, onCountryChange } =
     props;
   const classes = useStyles(props);

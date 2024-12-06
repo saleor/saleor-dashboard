@@ -37,7 +37,7 @@ interface WarehousesSectionProps extends FetchMoreProps, SearchProps {
   selectedWarehouses: Option[];
 }
 
-const WarehousesSection: React.FC<WarehousesSectionProps> = ({
+const WarehousesSection = ({
   onAdd,
   onSearchChange,
   onChange,
@@ -46,7 +46,7 @@ const WarehousesSection: React.FC<WarehousesSectionProps> = ({
   selectedWarehouses,
   hasMore,
   loading,
-}) => {
+}: WarehousesSectionProps) => {
   const intl = useIntl();
 
   return (

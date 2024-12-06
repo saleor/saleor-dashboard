@@ -10,7 +10,7 @@ import urlJoin from "url-join";
 import ResetPasswordPage, { ResetPasswordPageFormData } from "../components/ResetPasswordPage";
 import { newPasswordUrl, passwordResetSuccessUrl } from "../urls";
 
-const ResetPasswordView: React.FC = () => {
+const ResetPasswordView = () => {
   const [error, setError] = React.useState<string>();
   const navigate = useNavigator();
   const intl = useIntl();

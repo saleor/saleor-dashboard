@@ -16,10 +16,10 @@ interface GiftCardsListHeaderAlertContentProps {
 const alertLinkClassName = sprinkles({
   fontSize: 1,
 });
-const GiftCardsListHeaderAlertContent: React.FC<GiftCardsListHeaderAlertContentProps> = ({
+const GiftCardsListHeaderAlertContent = ({
   giftCardProductTypesExist,
   giftCardProductsExist,
-}) => {
+}: GiftCardsListHeaderAlertContentProps) => {
   const giftCardProductTypeUrl = productTypeAddUrl({
     kind: ProductTypeKindEnum.GIFT_CARD,
   });

@@ -222,7 +222,7 @@ function useOrderReturnForm(
   };
 }
 
-const OrderReturnForm: React.FC<OrderReturnProps> = ({ children, order, onSubmit }) => {
+const OrderReturnForm = ({ children, order, onSubmit }: OrderReturnProps) => {
   const props = useOrderReturnForm(order as OrderDetailsFragment, onSubmit);
 
   return <form>{children(props)}</form>;

@@ -29,7 +29,7 @@ interface OrderPaymentProps {
   onVoid: () => void;
 }
 
-const OrderPayment: React.FC<OrderPaymentProps> = props => {
+const OrderPayment = (props: OrderPaymentProps) => {
   const { order, onCapture, onMarkAsPaid, onRefund, onVoid } = props;
   const classes = useStyles(props);
   const intl = useIntl();

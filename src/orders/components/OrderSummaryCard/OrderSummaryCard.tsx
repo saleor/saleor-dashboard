@@ -32,7 +32,7 @@ const useStyles = makeStyles(
   }),
   { name: "OrderSummaryCard" },
 );
-const OrderSummaryCard: React.FC<OrderPaymentProps> = ({ order }) => {
+const OrderSummaryCard = ({ order }: OrderPaymentProps) => {
   const classes = useStyles();
   const intl = useIntl();
   const giftCardAmount = extractOrderGiftCardUsedAmount(order);

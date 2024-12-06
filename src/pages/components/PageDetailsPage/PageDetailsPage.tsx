@@ -65,7 +65,7 @@ export interface PageDetailsPageProps {
   onAttributeSelectBlur: () => void;
 }
 
-const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
+const PageDetailsPage = ({
   loading,
   errors: apiErrors,
   page,
@@ -90,7 +90,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   onCloseDialog,
   onSelectPageType,
   onAttributeSelectBlur,
-}) => {
+}: PageDetailsPageProps) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
   const navigate = useNavigator();

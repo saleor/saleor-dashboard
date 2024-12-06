@@ -11,7 +11,7 @@ export interface PermissionAlertProps {
   query: string;
 }
 
-const PermissionAlert: React.FC<PermissionAlertProps> = ({ query }) => {
+const PermissionAlert = ({ query }: PermissionAlertProps) => {
   const intl = useIntl();
   const introQuery = getIntrospectionQuery();
   const { data } = useQuery(gql(introQuery), {

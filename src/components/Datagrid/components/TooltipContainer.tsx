@@ -12,11 +12,7 @@ interface TooltipContainerProps {
   };
 }
 
-export const TooltipContainer: React.FC<TooltipContainerProps> = ({
-  title,
-  bounds,
-  clearTooltip,
-}) => {
+export const TooltipContainer = ({ title, bounds, clearTooltip }: TooltipContainerProps) => {
   if (!bounds || !title) {
     return null;
   }

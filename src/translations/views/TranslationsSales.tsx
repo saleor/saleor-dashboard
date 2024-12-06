@@ -26,7 +26,7 @@ export interface TranslationsSalesProps {
   params: TranslationsSalesQueryParams;
 }
 
-const TranslationsSales: React.FC<TranslationsSalesProps> = ({ id, languageCode, params }) => {
+const TranslationsSales = ({ id, languageCode, params }: TranslationsSalesProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

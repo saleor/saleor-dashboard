@@ -11,13 +11,13 @@ export interface WarehouseDeleteDialogProps {
   name: string;
 }
 
-const WarehouseDeleteDialog: React.FC<WarehouseDeleteDialogProps> = ({
+const WarehouseDeleteDialog = ({
   name,
   confirmButtonState,
   onClose,
   onConfirm,
   open,
-}) => {
+}: WarehouseDeleteDialogProps) => {
   const intl = useIntl();
 
   return (

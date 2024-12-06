@@ -69,7 +69,7 @@ export interface FilterContentProps<K extends string = string> {
   errorMessages?: FilterErrorMessages<K>;
 }
 
-const FilterContent: React.FC<FilterContentProps> = ({
+const FilterContent = ({
   currencySymbol,
   errors,
   errorMessages,
@@ -79,7 +79,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
   onFilterAttributeFocus,
   onSubmit,
   dataStructure,
-}) => {
+}: FilterContentProps) => {
   const expanderClasses = useExpanderStyles({});
   const summaryClasses = useSummaryStyles({});
   const [openedFilter, setOpenedFilter] = useState<FilterElement<string>>();

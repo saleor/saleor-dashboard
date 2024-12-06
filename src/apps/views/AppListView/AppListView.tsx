@@ -32,7 +32,7 @@ interface Props {
   params: AppListUrlQueryParams;
 }
 
-export const AppListView: React.FC<Props> = ({ params }) => {
+export const AppListView = ({ params }: Props) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

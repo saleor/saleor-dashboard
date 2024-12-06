@@ -51,7 +51,7 @@ export interface AttributeDetailsProps
   onChange: (event: ChangeEvent) => void;
 }
 
-const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
+const AttributeDetails = (props: AttributeDetailsProps) => {
   const { canChangeType, errors, clearErrors, setError, data, disabled, apiErrors, onChange, set } =
     props;
   const intl = useIntl();

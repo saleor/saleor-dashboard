@@ -19,7 +19,7 @@ interface EventDeliveryItemProps {
 
 const MAX_ATTEMPTS = 6;
 
-export const EventDeliveryItem: React.FC<EventDeliveryItemProps> = ({
+export const EventDeliveryItem = ({
   createdAt,
   status,
   attemptsCount,
@@ -27,7 +27,7 @@ export const EventDeliveryItem: React.FC<EventDeliveryItemProps> = ({
   lastAttemptDate,
   hasMore,
   dataTestId,
-}) => {
+}: EventDeliveryItemProps) => {
   const intl = useIntl();
 
   return (

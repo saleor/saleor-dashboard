@@ -9,10 +9,14 @@ interface CollectionWithDividersProps<T> {
   renderItem: (item: T | undefined, index: number | undefined, collection: T[]) => any;
 }
 
-const Wrapper: React.FC<{
+const Wrapper = ({
+  withOuterDividers,
+  SelectedDivider,
+  children,
+}: {
   withOuterDividers?: boolean;
   SelectedDivider?: React.FunctionComponent;
-}> = ({ withOuterDividers, SelectedDivider, children }) => (
+}) => (
   <div>
     {withOuterDividers && SelectedDivider ? (
       <>

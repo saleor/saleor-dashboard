@@ -16,11 +16,11 @@ interface AvailabilityCardProps {
   productChannelListings: ProductChannelListing | undefined;
 }
 
-export const AvailabilityCard: React.FC<AvailabilityCardProps> = ({
+export const AvailabilityCard = ({
   allAvailableListings,
   productChannelListings,
   children,
-}) => {
+}: AvailabilityCardProps) => {
   const filteredListings = useFilteredChannelListing({
     allAvailableListings,
     channelListing: productChannelListings,

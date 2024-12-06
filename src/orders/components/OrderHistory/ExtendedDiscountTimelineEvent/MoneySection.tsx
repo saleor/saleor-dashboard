@@ -65,12 +65,12 @@ interface MoneySectionProps {
   sectionType?: MoneySectionType;
 }
 
-const MoneySection: React.FC<MoneySectionProps> = ({
+const MoneySection = ({
   value,
   calculationMode,
   moneyData,
   sectionType = MoneySectionType.ONLY,
-}) => {
+}: MoneySectionProps) => {
   const classes = useStyles({});
   const intl = useIntl();
 

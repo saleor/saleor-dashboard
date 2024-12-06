@@ -74,7 +74,7 @@ export interface ConfigurationPageProps {
   versionInfo: VersionInfo;
 }
 
-export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
+export const ConfigurationPage = (props: ConfigurationPageProps) => {
   const {
     menu: menus,
     user,

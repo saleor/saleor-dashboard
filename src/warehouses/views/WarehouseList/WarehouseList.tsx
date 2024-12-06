@@ -45,7 +45,7 @@ export interface WarehouseListProps {
   params: WarehouseListUrlQueryParams;
 }
 
-const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
+const WarehouseList = ({ params }: WarehouseListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.SALES_LIST);

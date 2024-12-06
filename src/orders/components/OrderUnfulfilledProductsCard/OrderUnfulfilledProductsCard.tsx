@@ -20,14 +20,14 @@ interface OrderUnfulfilledProductsCardProps {
   onShowMetadata: (id: string) => void;
 }
 
-const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> = ({
+const OrderUnfulfilledProductsCard = ({
   showFulfillmentAction,
   notAllowedToFulfillUnpaid,
   onShowMetadata,
   lines,
   onFulfill,
   loading,
-}) => {
+}: OrderUnfulfilledProductsCardProps) => {
   const classes = useStyles();
 
   if (!lines.length) {

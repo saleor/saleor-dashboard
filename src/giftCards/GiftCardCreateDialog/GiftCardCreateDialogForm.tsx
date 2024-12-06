@@ -55,13 +55,13 @@ interface GiftCardCreateDialogFormProps {
 
 const defaultInitialCustomer = { email: "", name: "" };
 
-const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
+const GiftCardCreateDialogForm = ({
   onSubmit,
   opts,
   onClose,
   apiErrors,
   initialCustomer,
-}) => {
+}: GiftCardCreateDialogFormProps) => {
   const intl = useIntl();
   const { data: settingsData, loading: loadingSettings } = useGiftCardSettingsQuery();
   const [selectedCustomer, setSelectedCustomer] = useState<GiftCardCreateFormCustomer>(

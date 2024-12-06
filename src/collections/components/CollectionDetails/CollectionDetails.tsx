@@ -22,12 +22,7 @@ export interface CollectionDetailsProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const CollectionDetails: React.FC<CollectionDetailsProps> = ({
-  disabled,
-  data,
-  onChange,
-  errors,
-}) => {
+const CollectionDetails = ({ disabled, data, onChange, errors }: CollectionDetailsProps) => {
   const intl = useIntl();
   const { defaultValue, editorRef, isReadyForMount, handleChange } = useRichTextContext();
   const formErrors = getFormErrors(["name", "description"], errors);

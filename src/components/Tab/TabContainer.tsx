@@ -15,7 +15,7 @@ const useStyles = makeStyles(
   }),
   { name: "TabContainer" },
 );
-const TabContainer: React.FC<TabContainerProps> = props => {
+const TabContainer = (props: TabContainerProps) => {
   const { children } = props;
   const classes = useStyles(props);
 

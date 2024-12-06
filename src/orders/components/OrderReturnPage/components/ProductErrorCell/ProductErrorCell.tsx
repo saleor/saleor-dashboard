@@ -11,7 +11,7 @@ interface ProductErrorCellProps {
   hasVariant: boolean;
 }
 
-export const ProductErrorCell: React.FC<ProductErrorCellProps> = ({ hasVariant }) => {
+export const ProductErrorCell = ({ hasVariant }: ProductErrorCellProps) => {
   const classes = useProductErrorCellStyles({});
   const intl = useIntl();
   const popperAnchorRef = React.useRef<HTMLButtonElement | null>(null);

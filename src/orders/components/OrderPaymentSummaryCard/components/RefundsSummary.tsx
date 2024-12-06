@@ -12,7 +12,7 @@ interface RefundsSummary {
   order: OrderDetailsFragment;
 }
 
-export const RefundsSummary: React.FC<RefundsSummary> = ({ order }) => {
+export const RefundsSummary = ({ order }: RefundsSummary) => {
   const classes = useStyles();
   const { totalRefunded, totalRefundPending, totalGrantedRefund } = order;
   const refundedAmount = totalRefunded?.amount ?? 0;

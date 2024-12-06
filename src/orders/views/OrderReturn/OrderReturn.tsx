@@ -21,7 +21,7 @@ interface OrderReturnProps {
   orderId: string;
 }
 
-const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
+const OrderReturn = ({ orderId }: OrderReturnProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

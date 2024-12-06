@@ -41,7 +41,7 @@ export interface OrderFulfillmentCancelDialogProps {
   onConfirm: (data: OrderFulfillmentCancelDialogFormData) => any;
 }
 
-const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> = props => {
+const OrderFulfillmentCancelDialog = (props: OrderFulfillmentCancelDialogProps) => {
   const { confirmButtonState, errors, open, warehouses, onConfirm, onClose } = props;
   const classes = useStyles(props);
   const intl = useIntl();

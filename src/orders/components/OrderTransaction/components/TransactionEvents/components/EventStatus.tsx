@@ -10,7 +10,7 @@ export interface EventStatusProps {
   status: TransactionEventStatus | null;
 }
 
-export const EventStatus: React.FC<EventStatusProps> = ({ status }) => {
+export const EventStatus = ({ status }: EventStatusProps) => {
   const intl = useIntl();
 
   switch (status) {

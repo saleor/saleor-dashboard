@@ -30,7 +30,7 @@ interface AppPageNavProps {
   showMangeAppButton?: boolean;
 }
 
-export const AppPageNav: React.FC<AppPageNavProps> = ({
+export const AppPageNav = ({
   name,
   supportUrl,
   homepageUrl,
@@ -39,7 +39,7 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
   goBackUrl,
   appId,
   showMangeAppButton = true,
-}) => {
+}: AppPageNavProps) => {
   const navigate = useNavigator();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const navigateToManageAppScreen = () => {

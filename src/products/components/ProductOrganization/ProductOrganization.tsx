@@ -49,7 +49,7 @@ interface ProductOrganizationProps {
   selectedProductCategory?: Option;
 }
 
-export const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
+export const ProductOrganization = (props: ProductOrganizationProps) => {
   const {
     canChangeType,
     categories,

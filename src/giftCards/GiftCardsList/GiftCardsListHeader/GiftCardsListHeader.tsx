@@ -12,7 +12,7 @@ import { useGiftCardListDialogs } from "../providers/GiftCardListDialogsProvider
 import { useGiftCardList } from "../providers/GiftCardListProvider";
 import GiftCardsListHeaderAlert from "./GiftCardsListHeaderAlert";
 
-const GiftCardsListHeader: React.FC = () => {
+const GiftCardsListHeader = () => {
   const intl = useIntl();
   const navigate = useNavigator();
   const {

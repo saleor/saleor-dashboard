@@ -35,7 +35,7 @@ interface VoucherListProps {
   params: VoucherListUrlQueryParams;
 }
 
-export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
+export const VoucherList = ({ params }: VoucherListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.VOUCHER_LIST);

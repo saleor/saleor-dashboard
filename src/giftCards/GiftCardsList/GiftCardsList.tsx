@@ -9,7 +9,7 @@ interface GiftCardsListProps {
   params: GiftCardListUrlQueryParams;
 }
 
-const GiftCardsList: React.FC<GiftCardsListProps> = ({ params }) => (
+const GiftCardsList = ({ params }: GiftCardsListProps) => (
   <GiftCardsListProvider params={params}>
     <GiftCardListDialogsProvider params={params}>
       <GiftCardListPage />

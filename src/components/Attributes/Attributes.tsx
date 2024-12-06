@@ -62,7 +62,7 @@ const messages = defineMessages({
   },
 });
 
-export const Attributes: React.FC<AttributesProps> = ({
+export const Attributes = ({
   attributes,
   attributeValues,
   errors,
@@ -70,7 +70,7 @@ export const Attributes: React.FC<AttributesProps> = ({
   onAttributeSelectBlur,
   richTextGetters,
   ...props
-}) => {
+}: AttributesProps) => {
   const intl = useIntl();
 
   return (

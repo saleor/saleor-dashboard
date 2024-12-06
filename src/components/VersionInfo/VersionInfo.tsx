@@ -8,7 +8,7 @@ interface VersionInfoProps {
   coreVersion: string;
 }
 
-const VersionInfo: React.FC<VersionInfoProps> = ({ dashboardVersion, coreVersion }) => {
+const VersionInfo = ({ dashboardVersion, coreVersion }: VersionInfoProps) => {
   const classes = useStyles({});
 
   if (!dashboardVersion || !coreVersion) {

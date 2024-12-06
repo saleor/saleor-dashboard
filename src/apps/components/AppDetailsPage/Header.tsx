@@ -12,12 +12,7 @@ interface HeaderProps {
   onAppDeleteOpen: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({
-  data,
-  onAppActivateOpen,
-  onAppDeactivateOpen,
-  onAppDeleteOpen,
-}) => {
+const Header = ({ data, onAppActivateOpen, onAppDeactivateOpen, onAppDeleteOpen }: HeaderProps) => {
   const getBackButtonUrl = () => {
     /**
      * App is null with first render so fallback with HTML-safe fallback

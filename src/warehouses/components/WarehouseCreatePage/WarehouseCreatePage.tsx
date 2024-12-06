@@ -43,13 +43,13 @@ const initialForm: WarehouseCreatePageFormData = {
   streetAddress1: "",
   streetAddress2: "",
 };
-const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
+const WarehouseCreatePage = ({
   countries,
   disabled,
   errors,
   saveButtonBarState,
   onSubmit,
-}) => {
+}: WarehouseCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const [displayCountry, setDisplayCountry] = useStateFromProps("");

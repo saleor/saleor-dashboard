@@ -69,7 +69,7 @@ interface OrderDetailsMessages {
   params: OrderUrlQueryParams;
 }
 
-export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children, id, params }) => {
+export const OrderDetailsMessages = ({ children, id, params }: OrderDetailsMessages) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

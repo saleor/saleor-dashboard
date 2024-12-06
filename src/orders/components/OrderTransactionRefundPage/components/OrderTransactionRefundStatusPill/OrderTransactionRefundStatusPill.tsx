@@ -23,10 +23,10 @@ const getStatusColor = (status: OrderGrantedRefundStatusEnum) => {
   }
 };
 
-export const OrderTransactionRefundStatusPill: React.FC<OrderTransactionRefundStatusPillProps> = ({
+export const OrderTransactionRefundStatusPill = ({
   status,
   label,
   size,
-}) => {
+}: OrderTransactionRefundStatusPillProps) => {
   return <Pill color={getStatusColor(status)} label={label ?? status} size={size} />;
 };

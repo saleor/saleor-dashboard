@@ -12,7 +12,7 @@ interface ExitFormDialogProps {
   isOpen: boolean;
 }
 
-const ExitFormDialog: React.FC<ExitFormDialogProps> = ({ onLeave, onClose, isOpen }) => {
+const ExitFormDialog = ({ onLeave, onClose, isOpen }: ExitFormDialogProps) => {
   const intl = useIntl();
 
   return (

@@ -22,7 +22,7 @@ interface OrderPaymementProps {
   onMarkAsPaid: () => void;
 }
 
-const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkAsPaid }) => {
+const OrderPaymentSummaryCard = ({ order, onMarkAsPaid }: OrderPaymementProps) => {
   const classes = useStyles();
   const intl = useIntl();
 

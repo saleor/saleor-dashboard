@@ -75,12 +75,7 @@ export interface AttributePropertiesProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const AttributeProperties: React.FC<AttributePropertiesProps> = ({
-  data,
-  errors,
-  disabled,
-  onChange,
-}) => {
+const AttributeProperties = ({ data, errors, disabled, onChange }: AttributePropertiesProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["storefrontSearchPosition"], errors);
   const storefrontFacetedNavigationProperties =

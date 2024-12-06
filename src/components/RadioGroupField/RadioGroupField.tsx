@@ -37,7 +37,7 @@ interface RadioGroupFieldProps {
 
 export const NewRadioGroupField = SimpleRadioGroupField;
 
-export const RadioGroupField: React.FC<RadioGroupFieldProps> = props => {
+export const RadioGroupField = (props: RadioGroupFieldProps) => {
   const {
     alignTop,
     className,

@@ -36,7 +36,7 @@ interface AttributeListProps {
   params: AttributeListUrlQueryParams;
 }
 
-const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
+const AttributeList = ({ params }: AttributeListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

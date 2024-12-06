@@ -12,7 +12,7 @@ interface AvatarImageProps {
   avatarProps?: string;
 }
 
-const AvatarImage: React.FC<AvatarImageProps> = ({ initials, thumbnail, avatarProps }) => {
+const AvatarImage = ({ initials, thumbnail, avatarProps }: AvatarImageProps) => {
   const classes = useAvatarImageStyles();
 
   if (!thumbnail && initials) {

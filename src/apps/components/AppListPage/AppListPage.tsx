@@ -27,7 +27,7 @@ export interface AppListPageProps extends AppListPageSections, ListProps {
   marketplaceError?: Error;
 }
 
-export const AppListPage: React.FC<AppListPageProps> = props => {
+export const AppListPage = (props: AppListPageProps) => {
   const {
     appsInstallations,
     installedApps,

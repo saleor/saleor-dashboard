@@ -6,7 +6,7 @@ interface WindowTitleProps {
   title: string;
 }
 
-export const WindowTitle: React.FC<WindowTitleProps> = ({ title }) => {
+export const WindowTitle = ({ title }: WindowTitleProps) => {
   const shop = useShop();
 
   return shop === undefined || !title ? null : <Helmet title={`${title} | ${shop.name}`} />;

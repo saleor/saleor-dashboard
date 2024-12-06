@@ -32,7 +32,7 @@ const statusesToMergeLines = [
   FulfillmentStatus.REPLACED,
 ];
 const cancelableStatuses = [FulfillmentStatus.FULFILLED, FulfillmentStatus.WAITING_FOR_APPROVAL];
-const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = props => {
+const OrderFulfilledProductsCard = (props: OrderFulfilledProductsCardProps) => {
   const {
     fulfillment,
     fulfillmentAllowUnpaid,

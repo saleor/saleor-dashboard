@@ -107,7 +107,7 @@ interface ProductVariantCreatePageProps {
   searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
 }
 
-const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
+const ProductVariantCreatePage = ({
   productId,
   defaultVariantId,
   disabled,
@@ -134,7 +134,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   onAttributeSelectBlur,
   fetchMoreWarehouses,
   searchWarehousesResult,
-}) => {
+}: ProductVariantCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const { isOpen: isManageChannelsModalOpen, toggle: toggleManageChannels } = useManageChannels();

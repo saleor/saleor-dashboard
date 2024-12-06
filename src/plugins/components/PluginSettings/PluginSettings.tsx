@@ -20,13 +20,7 @@ interface PluginSettingsProps {
   fields: ConfigurationItemFragment[];
 }
 
-const PluginSettings: React.FC<PluginSettingsProps> = ({
-  data,
-  disabled,
-  errors,
-  onChange,
-  fields,
-}) => {
+const PluginSettings = ({ data, disabled, errors, onChange, fields }: PluginSettingsProps) => {
   const intl = useIntl();
 
   return (

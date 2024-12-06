@@ -16,7 +16,7 @@ const messages = defineMessages({
     description: "all selected items message",
   },
 });
-const AssignmentList: React.FC<AssignmentListProps> = props => {
+const AssignmentList = (props: AssignmentListProps) => {
   const { items, itemsName, totalCount = 0, loading, removeItem, reorderItem } = props;
   const intl = useIntl();
   const classes = useStyles();

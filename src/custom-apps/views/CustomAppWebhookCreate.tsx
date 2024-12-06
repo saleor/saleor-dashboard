@@ -19,7 +19,7 @@ export interface CustomAppWebhookCreateProps {
   appId: string;
 }
 
-export const CustomAppWebhookCreate: React.FC<CustomAppWebhookCreateProps> = ({ appId }) => {
+export const CustomAppWebhookCreate = ({ appId }: CustomAppWebhookCreateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

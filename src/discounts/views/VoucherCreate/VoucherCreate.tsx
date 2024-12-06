@@ -33,7 +33,7 @@ interface VoucherCreateProps {
   params: VoucherCreateUrlQueryParams;
 }
 
-export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
+export const VoucherCreateView = ({ params }: VoucherCreateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

@@ -54,7 +54,7 @@ export interface CustomAppDetailsPageProps {
   onAppDeactivateOpen: () => void;
 }
 
-const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
+const CustomAppDetailsPage = (props: CustomAppDetailsPageProps) => {
   const {
     apiUrl,
     disabled,

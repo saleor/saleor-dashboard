@@ -93,7 +93,7 @@ interface OrderUnconfirmedDetailsProps {
   closeModal: any;
 }
 
-export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = ({
+export const OrderUnconfirmedDetails = ({
   id,
   params,
   data,
@@ -119,7 +119,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
   orderAddManualTransaction,
   openModal,
   closeModal,
-}) => {
+}: OrderUnconfirmedDetailsProps) => {
   const order = data.order;
   const shop = data.shop;
   const navigate = useNavigator();

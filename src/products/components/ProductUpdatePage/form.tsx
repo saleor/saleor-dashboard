@@ -297,14 +297,14 @@ export function useProductUpdateForm(
   };
 }
 
-const ProductUpdateForm: React.FC<ProductUpdateFormProps> = ({
+const ProductUpdateForm = ({
   children,
   product,
   onSubmit,
   refetch,
   disabled,
   ...rest
-}) => {
+}: ProductUpdateFormProps) => {
   const { datagrid, richText, ...props } = useProductUpdateForm(
     product,
     onSubmit,

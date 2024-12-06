@@ -22,7 +22,7 @@ export interface MoneyProps {
   money: IMoney | null;
 }
 
-export const Money: React.FC<MoneyProps> = props => {
+export const Money = (props: MoneyProps) => {
   const { money, ...rest } = props;
   const { locale } = useLocale();
   const classes = useStyles();

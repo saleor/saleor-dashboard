@@ -36,12 +36,12 @@ interface WebhookEventsProps {
   onAsyncEventChange: (event: ChangeEvent) => void;
 }
 
-const WebhookEvents: React.FC<WebhookEventsProps> = ({
+const WebhookEvents = ({
   data,
   setQuery,
   onSyncEventChange,
   onAsyncEventChange,
-}) => {
+}: WebhookEventsProps) => {
   const intl = useIntl();
   const { checkbox } = useListWidths();
   const classes = useStyles({ checkbox });

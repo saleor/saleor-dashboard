@@ -33,7 +33,7 @@ const isValidChannel = (channelId: string, channelList?: ChannelFragment[]) => {
   return channelList?.some(getById(channelId));
 };
 
-export const AppChannelProvider: React.FC = ({ children }) => {
+export const AppChannelProvider = ({ children }) => {
   const { setChannel } = useSaleorConfig();
   const { authenticated, user } = useUser();
   const [selectedChannel, setSelectedChannel] = useLocalStorage("channel", "");

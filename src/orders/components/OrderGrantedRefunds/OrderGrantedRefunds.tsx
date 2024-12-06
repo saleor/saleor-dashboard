@@ -23,7 +23,7 @@ interface OrderGrantedRefundsProps {
   order: OrderDetailsFragment;
 }
 
-const OrderGrantedRefunds: React.FC<OrderGrantedRefundsProps> = ({ order }) => {
+const OrderGrantedRefunds = ({ order }: OrderGrantedRefundsProps) => {
   const classes = useStyles();
   const intl = useIntl();
   const { locale } = useLocale();

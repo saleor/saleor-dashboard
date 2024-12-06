@@ -19,9 +19,10 @@ type AttributeSwatchFieldProps<T> = Pick<
 
 type SwatchType = "picker" | "image";
 
-const AttributeSwatchField: React.FC<
-  AttributeSwatchFieldProps<AttributeValueEditDialogFormData>
-> = ({ set, ...props }) => {
+const AttributeSwatchField = ({
+  set,
+  ...props
+}: AttributeSwatchFieldProps<AttributeValueEditDialogFormData>) => {
   const { data } = props;
   const { formatMessage } = useIntl();
   const [type, setType] = useState<SwatchType>(data.fileUrl ? "image" : "picker");

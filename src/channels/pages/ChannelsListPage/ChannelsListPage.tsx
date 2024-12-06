@@ -31,11 +31,7 @@ export interface ChannelsListPageProps {
 
 const numberOfColumns = 2;
 
-export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
-  channelsList,
-  limits,
-  onRemove,
-}) => {
+export const ChannelsListPage = ({ channelsList, limits, onRemove }: ChannelsListPageProps) => {
   const intl = useIntl();
   const classes = useStyles({});
   const limitReached = isLimitReached(limits, "channels");

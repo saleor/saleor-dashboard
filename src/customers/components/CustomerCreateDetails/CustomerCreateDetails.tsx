@@ -30,7 +30,7 @@ export interface CustomerCreateDetailsProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const CustomerCreateDetails: React.FC<CustomerCreateDetailsProps> = props => {
+const CustomerCreateDetails = (props: CustomerCreateDetailsProps) => {
   const { data, disabled, errors, onChange } = props;
 
   const classes = useStyles(props);

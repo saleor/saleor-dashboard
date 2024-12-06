@@ -18,12 +18,12 @@ interface AppListRowProps {
   navigateToGithubForkPage?: (githubForkUrl: string) => void;
 }
 
-const AppListRow: React.FC<AppListRowProps> = ({
+const AppListRow = ({
   app,
   appInstallationList,
   navigateToAppInstallPage,
   navigateToGithubForkPage,
-}) => {
+}: AppListRowProps) => {
   const intl = useIntl();
   const { retryAppInstallation, removeAppInstallation } = useAppListContext();
   const appDetails = React.useCallback(

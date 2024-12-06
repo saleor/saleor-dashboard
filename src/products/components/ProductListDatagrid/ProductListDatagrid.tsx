@@ -64,7 +64,7 @@ interface ProductListDatagridProps
   loading: boolean;
 }
 
-export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
+export const ProductListDatagrid = ({
   products,
   onRowClick,
   disabled,
@@ -81,7 +81,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   onSelectProductIds,
   hasRowHover,
   rowAnchor,
-}) => {
+}: ProductListDatagridProps) => {
   const isChannelSelected = !!selectedChannelId;
   const intl = useIntl();
   const { theme } = useTheme();

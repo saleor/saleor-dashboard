@@ -10,7 +10,7 @@ interface AppInstallErrorPageProps {
   onBack: () => void;
 }
 
-export const AppInstallErrorPage: React.FC<AppInstallErrorPageProps> = ({ onBack }) => {
+export const AppInstallErrorPage = ({ onBack }: AppInstallErrorPageProps) => {
   return (
     <Box alignItems="center" display="flex" height="100vh">
       <Box

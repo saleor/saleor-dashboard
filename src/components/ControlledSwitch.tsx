@@ -14,7 +14,7 @@ interface ControlledSwitchProps {
   onChange?: (event: React.ChangeEvent<any>) => any;
 }
 
-export const ControlledSwitch: React.FC<ControlledSwitchProps> = props => {
+export const ControlledSwitch = (props: ControlledSwitchProps) => {
   const { checked, disabled, onChange, label, name, secondLabel, uncheckedLabel, className } =
     props;
 

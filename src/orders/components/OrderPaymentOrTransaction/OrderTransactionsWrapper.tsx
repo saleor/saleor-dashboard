@@ -31,7 +31,7 @@ interface OrderTransactionsWrapper {
   onRefundAdd: () => void;
 }
 
-export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
+export const OrderTransactionsWrapper = ({
   order,
   shop,
   onTransactionAction,
@@ -40,7 +40,7 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
   onPaymentVoid,
   onAddManualTransaction,
   onRefundAdd,
-}) => {
+}: OrderTransactionsWrapper) => {
   const filteredPayments = React.useMemo(() => getFilteredPayments(order), [order]);
   const { enabled } = useFlag("improved_refunds");
 

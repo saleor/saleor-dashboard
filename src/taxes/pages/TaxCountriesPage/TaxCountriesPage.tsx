@@ -48,7 +48,7 @@ export interface TaxCountriesPageProps {
   disabled: boolean;
 }
 
-export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
+export const TaxCountriesPage = (props: TaxCountriesPageProps) => {
   const {
     countryTaxesData,
     selectedCountryId,

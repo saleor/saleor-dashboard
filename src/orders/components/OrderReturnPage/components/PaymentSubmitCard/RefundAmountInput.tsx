@@ -67,7 +67,7 @@ const messages = defineMessages({
     description: "order refund amount, input label",
   },
 });
-const RefundAmountInput: React.FC<RefundAmountInputProps> = props => {
+const RefundAmountInput = (props: RefundAmountInputProps) => {
   const {
     data,
     maxRefund,

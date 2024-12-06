@@ -11,7 +11,7 @@ import { pluginsListTableHeadMessages as messages } from "./messages";
 
 type PluginListTableHeadProps = SortPage<PluginListUrlSortField>;
 
-const PluginListTableHead: React.FC<PluginListTableHeadProps> = ({ sort, onSort }) => {
+const PluginListTableHead = ({ sort, onSort }: PluginListTableHeadProps) => {
   const intl = useIntl();
 
   return (

@@ -7,7 +7,7 @@ interface OrderCustomerNoteProps {
   note: string;
 }
 
-export const OrderCustomerNote: React.FC<OrderCustomerNoteProps> = ({ note }) => {
+export const OrderCustomerNote = ({ note }: OrderCustomerNoteProps) => {
   const intl = useIntl();
 
   return (

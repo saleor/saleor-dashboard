@@ -13,7 +13,7 @@ import { AppAvatar } from "../AppAvatar/AppAvatar";
 import { AppManifestUrl } from "./AppManifestUrl";
 import { messages } from "./messages";
 
-export const InstalledAppListRow: React.FC<InstalledApp> = props => {
+export const InstalledAppListRow = (props: InstalledApp) => {
   const { app, isExternal, logo } = props;
   const intl = useIntl();
   const location = useLocation();

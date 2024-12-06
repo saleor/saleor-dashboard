@@ -75,7 +75,7 @@ interface OrderListProps extends ListProps, SortPage<OrderListUrlSortField> {
 
 const numberOfColumns = 6;
 
-export const OrderList: React.FC<OrderListProps> = props => {
+export const OrderList = (props: OrderListProps) => {
   const { disabled, settings, orders, onUpdateListSettings, onSort, sort } = props;
   const classes = useStyles(props);
   const intl = useIntl();

@@ -82,7 +82,7 @@ const useStyles = makeStyles(
   }),
   { name: "Filter" },
 );
-const Filter: React.FC<FilterProps> = props => {
+const Filter = (props: FilterProps) => {
   const { currencySymbol, menu, onFilterAdd, onFilterAttributeFocus, errorMessages } = props;
   const classes = useStyles(props);
   const anchor = React.useRef<HTMLDivElement>();

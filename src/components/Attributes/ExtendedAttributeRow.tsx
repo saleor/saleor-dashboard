@@ -8,7 +8,7 @@ interface ExtendedAttributeRowProps {
   onSelect: () => void;
 }
 
-const ExtendedAttributeRow: React.FC<ExtendedAttributeRowProps> = props => {
+const ExtendedAttributeRow = (props: ExtendedAttributeRowProps) => {
   const { label, selectLabel, disabled, onSelect, children } = props;
 
   return (

@@ -24,7 +24,7 @@ export const fieldNames = {
   name: "name",
 };
 
-const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
+const TranslationsSalesPage = ({
   translationId,
   activeField,
   disabled,
@@ -35,7 +35,7 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
   onDiscard,
   onEdit,
   onSubmit,
-}) => {
+}: TranslationsSalesPageProps) => {
   const intl = useIntl();
 
   return (

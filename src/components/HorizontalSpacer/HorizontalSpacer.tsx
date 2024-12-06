@@ -13,7 +13,7 @@ const useStyles = makeStyles(
   }),
   { name: "HorizontalSpacer" },
 );
-const HorizontalSpacer: React.FC<HorizontalSpacerProps> = ({ spacing = 1 }) => {
+const HorizontalSpacer = ({ spacing = 1 }: HorizontalSpacerProps) => {
   const classes = useStyles({ spacing });
 
   return <div className={classes.container} />;

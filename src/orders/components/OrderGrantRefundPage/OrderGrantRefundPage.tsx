@@ -46,14 +46,14 @@ export interface OrderGrantRefundPageProps {
   initialData?: OrderDetailsGrantedRefundFragment;
 }
 
-const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
+const OrderGrantRefundPage = ({
   order,
   loading,
   submitState,
   onSubmit,
   isEdit,
   initialData,
-}) => {
+}: OrderGrantRefundPageProps) => {
   const intl = useIntl();
   const { locale } = useLocale();
   const navigate = useNavigator();

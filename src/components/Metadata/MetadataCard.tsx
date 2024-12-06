@@ -16,12 +16,12 @@ export interface MetadataCardProps {
   readonly?: boolean;
 }
 
-export const MetadataCard: React.FC<MetadataCardProps> = ({
+export const MetadataCard = ({
   data,
   isPrivate,
   onChange,
   readonly = false,
-}) => {
+}: MetadataCardProps) => {
   const intl = useIntl();
   const [expanded, setExpanded] = useState(readonly ? "metadata-accordion" : undefined);
 

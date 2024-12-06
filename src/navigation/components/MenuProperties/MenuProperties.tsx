@@ -16,7 +16,7 @@ export interface MenuPropertiesProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const MenuProperties: React.FC<MenuPropertiesProps> = ({ data, disabled, errors, onChange }) => {
+const MenuProperties = ({ data, disabled, errors, onChange }: MenuPropertiesProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["name"], errors);
 

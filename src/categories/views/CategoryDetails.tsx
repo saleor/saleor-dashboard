@@ -54,7 +54,7 @@ export function getActiveTab(tabName: string): CategoryPageTab {
     : CategoryPageTab.categories;
 }
 
-export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) => {
+export const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

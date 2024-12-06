@@ -13,7 +13,7 @@ const useStyles = makeStyles(
   },
   { name: "LoginLoading" },
 );
-const LoginLoading: React.FC = props => {
+const LoginLoading = props => {
   const classes = useStyles(props);
 
   return (

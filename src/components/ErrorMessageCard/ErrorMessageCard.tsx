@@ -8,7 +8,7 @@ interface ErrorMessageCardProps {
   message: string;
 }
 
-const ErrorMessageCard: React.FC<ErrorMessageCardProps> = ({ message }) => (
+const ErrorMessageCard = ({ message }: ErrorMessageCardProps) => (
   <DashboardCard>
     <DashboardCard.Content>
       <Text size={3} fontWeight="bold" lineHeight={2} as="h2">

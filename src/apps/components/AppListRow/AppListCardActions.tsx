@@ -18,7 +18,7 @@ interface AppListCardActionsProps {
   removeInstallHandler?: () => void;
 }
 
-const AppListCardActions: React.FC<AppListCardActionsProps> = ({
+const AppListCardActions = ({
   releaseDate,
   installationPending = false,
   appInstallation,
@@ -26,7 +26,7 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
   githubForkHandler,
   retryInstallHandler,
   removeInstallHandler,
-}) => {
+}: AppListCardActionsProps) => {
   if (
     !installHandler &&
     !githubForkHandler &&

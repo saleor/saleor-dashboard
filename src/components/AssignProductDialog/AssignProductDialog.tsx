@@ -40,7 +40,7 @@ export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
 }
 
 const scrollableTargetId = "assignProductScrollableDialog";
-const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
+const AssignProductDialog = (props: AssignProductDialogProps) => {
   const {
     confirmButtonState,
     selectedChannels,

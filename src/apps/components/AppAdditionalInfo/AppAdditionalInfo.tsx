@@ -6,10 +6,13 @@ import { FormattedMessage } from "react-intl";
 
 import { messages } from "./messages";
 
-export const AppAdditionalInfo: React.FC<{
+export const AppAdditionalInfo = ({
+  permissions,
+  created,
+}: {
   permissions?: AppPermissionFragment[] | null;
   created: string | null;
-}> = ({ permissions, created }) => {
+}) => {
   return (
     <Tooltip>
       <Tooltip.Trigger>

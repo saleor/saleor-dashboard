@@ -22,7 +22,7 @@ interface OrderGrantRefundProps {
   grantRefundId: string;
 }
 
-const OrderEditGrantRefund: React.FC<OrderGrantRefundProps> = ({ orderId, grantRefundId }) => {
+const OrderEditGrantRefund = ({ orderId, grantRefundId }: OrderGrantRefundProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const notify = useNotifier();

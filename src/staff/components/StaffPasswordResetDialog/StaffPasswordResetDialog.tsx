@@ -29,13 +29,13 @@ const initialForm: StaffPasswordResetDialogFormData = {
   newPassword: "",
   oldPassword: "",
 };
-const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
+const StaffPasswordResetDialog = ({
   confirmButtonState,
   errors,
   open,
   onClose,
   onSubmit,
-}) => {
+}: StaffPasswordResetDialogProps) => {
   const intl = useIntl();
   const dialogErrors = useModalDialogErrors(errors, open);
   const formErrors = getFormErrors(["oldPassword", "newPassword"], dialogErrors);

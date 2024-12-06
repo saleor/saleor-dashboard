@@ -19,7 +19,7 @@ interface ProductVariantCheckoutSettingsProps {
   onChange: FormChange;
 }
 
-const ProductVariantCheckoutSettings: React.FC<ProductVariantCheckoutSettingsProps> = props => {
+const ProductVariantCheckoutSettings = (props: ProductVariantCheckoutSettingsProps) => {
   const { data, disabled, errors, onChange } = props;
   const intl = useIntl();
   const classes = useStyles();

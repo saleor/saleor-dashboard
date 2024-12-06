@@ -8,10 +8,10 @@ import { useIntl } from "react-intl";
 
 type FilterSingleSelectFieldProps = FilterFieldBaseProps<string>;
 
-export const FilterSingleSelectField: React.FC<FilterSingleSelectFieldProps> = ({
+export const FilterSingleSelectField = ({
   filter,
   onFilterPropertyChange,
-}) => {
+}: FilterSingleSelectFieldProps) => {
   const intl = useIntl();
 
   return (

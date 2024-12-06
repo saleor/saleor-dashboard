@@ -13,13 +13,13 @@ export interface DeleteFilterTabDialogProps {
   onSubmit: () => void;
 }
 
-const DeleteFilterTabDialog: React.FC<DeleteFilterTabDialogProps> = ({
+const DeleteFilterTabDialog = ({
   confirmButtonState,
   onClose,
   onSubmit,
   open,
   tabName,
-}) => {
+}: DeleteFilterTabDialogProps) => {
   const intl = useIntl();
 
   return (

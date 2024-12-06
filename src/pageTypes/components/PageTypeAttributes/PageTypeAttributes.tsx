@@ -52,7 +52,7 @@ interface PageTypeAttributesProps extends ListActions {
 }
 
 const numberOfColumns = 5;
-const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
+const PageTypeAttributes = (props: PageTypeAttributesProps) => {
   const {
     attributes,
     disabled,

@@ -13,10 +13,7 @@ interface CustomerDetailsConsumerProps {
 
 export const CustomerDetailsContext = createContext<CustomerDetailsConsumerProps>(null);
 
-export const CustomerDetailsProvider: React.FC<CustomerDetailsProviderProps> = ({
-  children,
-  id,
-}) => {
+export const CustomerDetailsProvider = ({ children, id }: CustomerDetailsProviderProps) => {
   const { data, loading } = useCustomerDetailsQuery({
     displayLoader: true,
     variables: {

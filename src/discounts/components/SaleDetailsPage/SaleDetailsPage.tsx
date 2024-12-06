@@ -99,7 +99,7 @@ const CategoriesTab = Tab(SaleDetailsPageTab.categories);
 const CollectionsTab = Tab(SaleDetailsPageTab.collections);
 const ProductsTab = Tab(SaleDetailsPageTab.products);
 const VariantsTab = Tab(SaleDetailsPageTab.variants);
-const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
+const SaleDetailsPage = ({
   activeTab,
   tabItemsCount = {},
   allChannelsCount,
@@ -130,7 +130,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   selectedChannelId,
   toggle,
   toggleAll,
-}) => {
+}: SaleDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const [localErrors, setLocalErrors] = React.useState<DiscountErrorFragment[]>([]);

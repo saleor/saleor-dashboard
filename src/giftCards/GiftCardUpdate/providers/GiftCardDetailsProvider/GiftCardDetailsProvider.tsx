@@ -17,7 +17,7 @@ export interface GiftCardDetailsConsumerProps {
 
 export const GiftCardDetailsContext = createContext<GiftCardDetailsConsumerProps>(null);
 
-const GiftCardDetailsProvider: React.FC<GiftCardDetailsProviderProps> = ({ children, id }) => {
+const GiftCardDetailsProvider = ({ children, id }: GiftCardDetailsProviderProps) => {
   const { data, loading } = useGiftCardDetailsQuery({
     displayLoader: true,
     variables: { id },

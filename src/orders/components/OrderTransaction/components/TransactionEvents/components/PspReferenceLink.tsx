@@ -15,7 +15,7 @@ const useStyles = makeStyles(
   { name: "PspReferenceLink" },
 );
 
-export const PspReferenceLink: React.FC<PspRerefenceLinkProps> = ({ href, children }) => {
+export const PspReferenceLink = ({ href, children }: PspRerefenceLinkProps) => {
   const classes = useStyles();
 
   if (href) {

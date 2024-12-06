@@ -32,7 +32,7 @@ export type ChannelsAvailabilityCardProps = RequireOnlyOne<
   "channels" | "channelsList"
 >;
 
-const ChannelsAvailability: React.FC<ChannelsAvailabilityCardProps> = props => {
+const ChannelsAvailability = (props: ChannelsAvailabilityCardProps) => {
   const {
     channelsList,
     errors = [],

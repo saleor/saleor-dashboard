@@ -29,7 +29,7 @@ import {
 } from "./types";
 import { validateForm } from "./utils";
 
-const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
+const GiftCardBulkCreateDialog = ({ onClose, open }: DialogProps) => {
   const intl = useIntl();
   const notify = useNotifier();
   const [formErrors, setFormErrors] = useState<GiftCardBulkCreateFormErrors>(null);

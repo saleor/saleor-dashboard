@@ -5,10 +5,7 @@ import React from "react";
 type Logo = AppLogo | undefined;
 type Size = 4 | 8 | 12;
 
-export const AppAvatar: React.FC<{
-  logo?: Logo;
-  size?: Size;
-}> = ({ logo, size = 8 }) =>
+export const AppAvatar = ({ logo, size = 8 }: { logo?: Logo; size?: Size }) =>
   logo ? (
     <Box width={size} height={size} display="flex" placeItems="center" borderRadius={2}>
       <Box as="img" src={logo.source} width="100%" />

@@ -121,7 +121,7 @@ export interface VoucherDetailsPageProps
 const CategoriesTab = Tab(VoucherDetailsPageTab.categories);
 const CollectionsTab = Tab(VoucherDetailsPageTab.collections);
 const ProductsTab = Tab(VoucherDetailsPageTab.products);
-const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
+const VoucherDetailsPage = ({
   activeTab,
   tabItemsCount = {},
   allChannelsCount,
@@ -162,7 +162,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   voucherCodesPagination,
   onVoucherCodesSettingsChange,
   voucherCodesSettings,
-}) => {
+}: VoucherDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const [localErrors, setLocalErrors] = React.useState<DiscountErrorFragment[]>([]);

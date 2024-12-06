@@ -7,7 +7,7 @@ import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGi
 import GiftCardUpdateInfoCardContent from "./GiftCardUpdateInfoCardContent";
 import { giftCardUpdateInfoCardMessages as messages } from "./messages";
 
-const GiftCardUpdateInfoCard: React.FC = () => {
+const GiftCardUpdateInfoCard = () => {
   const intl = useIntl();
   const { loading } = useGiftCardDetails();
 

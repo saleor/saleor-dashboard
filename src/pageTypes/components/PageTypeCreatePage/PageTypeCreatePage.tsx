@@ -46,7 +46,7 @@ const useStyles = makeStyles(
     name: "PageTypeCreatePage",
   },
 );
-const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
+const PageTypeCreatePage = (props: PageTypeCreatePageProps) => {
   const { disabled, errors, saveButtonBarState, onSubmit } = props;
   const classes = useStyles(props);
   const intl = useIntl();

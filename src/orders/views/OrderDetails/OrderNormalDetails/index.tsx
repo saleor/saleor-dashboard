@@ -104,7 +104,7 @@ interface ApprovalState {
   notifyCustomer: boolean;
 }
 
-export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
+export const OrderNormalDetails = ({
   id,
   params,
   data,
@@ -127,7 +127,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   updatePrivateMetadataOpts,
   openModal,
   closeModal,
-}) => {
+}: OrderNormalDetailsProps) => {
   const order = data?.order;
   const shop = data?.shop;
   const navigate = useNavigator();

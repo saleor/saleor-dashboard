@@ -33,7 +33,7 @@ const isInputValid = (value: string) => {
   return isValid && isAfterMin && isBeforeMax;
 };
 
-export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
+export const DateTimeTimezoneField = ({
   disabled,
   name,
   onChange,
@@ -42,7 +42,7 @@ export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
   label,
   helperText,
   value: initialValue,
-}) => {
+}: DateTimeFieldProps) => {
   const intl = useIntl();
   const [value, setValue] = useState<string>(
     initialValue ? convertToDateTimeLocal(initialValue) : "",

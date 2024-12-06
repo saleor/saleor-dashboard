@@ -24,7 +24,7 @@ export interface TranslationsCollectionsPageProps extends TranslationsEntitiesPa
   data: CollectionTranslationFragment;
 }
 
-const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = ({
+const TranslationsCollectionsPage = ({
   translationId,
   activeField,
   disabled,
@@ -35,7 +35,7 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
   onDiscard,
   onEdit,
   onSubmit,
-}) => {
+}: TranslationsCollectionsPageProps) => {
   const intl = useIntl();
 
   return (

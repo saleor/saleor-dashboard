@@ -23,11 +23,12 @@ import { getExportGiftCardsInput } from "./utils";
 
 type IdsToExport = string[] | null;
 
-const GiftCardExportDialog: React.FC<
-  Pick<DialogProps, "onClose"> & {
-    idsToExport?: IdsToExport;
-  }
-> = ({ onClose, idsToExport }) => {
+const GiftCardExportDialog = ({
+  onClose,
+  idsToExport,
+}: Pick<DialogProps, "onClose"> & {
+  idsToExport?: IdsToExport;
+}) => {
   const intl = useIntl();
   const notify = useNotifier();
   const { queue } = useBackgroundTask();

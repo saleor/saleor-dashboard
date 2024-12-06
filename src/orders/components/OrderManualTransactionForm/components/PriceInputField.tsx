@@ -4,9 +4,10 @@ import React from "react";
 
 import { useManualTransactionContext } from "../context";
 
-export const PriceInputField: React.FC<
-  Omit<PriceFieldProps, "currencySymbol" | "onChange" | "value">
-> = ({ disabled, ...props }) => {
+export const PriceInputField = ({
+  disabled,
+  ...props
+}: Omit<PriceFieldProps, "currencySymbol" | "onChange" | "value">) => {
   const { currency, submitState, handleChangeAmount, amount } = useManualTransactionContext();
 
   return (

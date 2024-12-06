@@ -29,11 +29,11 @@ interface ChannelAllocationStrategyProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
+const ChannelAllocationStrategy = ({
   data,
   disabled,
   onChange,
-}) => {
+}: ChannelAllocationStrategyProps) => {
   const classes = useStyles();
 
   return (

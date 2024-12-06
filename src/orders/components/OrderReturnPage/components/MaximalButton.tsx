@@ -17,7 +17,7 @@ interface MaximalButtonProps {
   onClick: () => void;
 }
 
-export const MaximalButton: React.FC<MaximalButtonProps> = ({ onClick }) => {
+export const MaximalButton = ({ onClick }: MaximalButtonProps) => {
   const classes = useStyles({});
 
   return (

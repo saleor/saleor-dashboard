@@ -18,7 +18,7 @@ interface Props extends RouteComponentProps {
   params: AppInstallUrlQueryParams;
 }
 
-export const AppInstallView: React.FC<Props> = ({ params }) => {
+export const AppInstallView = ({ params }: Props) => {
   const [, setActiveInstallations] = useLocalStorage<Array<Record<"id" | "name", string>>>(
     "activeInstallations",
     [],

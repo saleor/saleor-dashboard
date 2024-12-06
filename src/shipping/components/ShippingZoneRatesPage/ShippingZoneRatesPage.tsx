@@ -71,7 +71,7 @@ export interface ShippingZoneRatesPageProps
   fetchMoreTaxClasses: FetchMoreProps;
 }
 
-export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
+export const ShippingZoneRatesPage = ({
   allChannelsCount,
   shippingChannels,
   channelErrors,
@@ -95,7 +95,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   taxClasses,
   fetchMoreTaxClasses,
   ...listProps
-}) => {
+}: ShippingZoneRatesPageProps) => {
   const navigate = useNavigator();
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
   const initialForm: Omit<ShippingZoneRateUpdateFormData, "description"> = React.useMemo(

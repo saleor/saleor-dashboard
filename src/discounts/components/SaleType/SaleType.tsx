@@ -48,7 +48,7 @@ function createChoices(intl: IntlShape): RadioGroupFieldChoice[] {
   ];
 }
 
-const SaleType: React.FC<SaleTypeProps> = props => {
+const SaleType = (props: SaleTypeProps) => {
   const { data, disabled, onChange } = props;
   const classes = useStyles(props);
   const intl = useIntl();

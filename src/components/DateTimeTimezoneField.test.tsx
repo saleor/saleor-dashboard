@@ -5,7 +5,7 @@ import { IntlProvider } from "react-intl";
 
 import { DateTimeTimezoneField } from "./DateTimeTimezoneField";
 
-const Wrapper: React.FC<React.PropsWithChildren<{}>> = ({ children }) => (
+const Wrapper = ({ children }: React.PropsWithChildren<{}>) => (
   <ThemeProvider>
     <IntlProvider locale="en">{children}</IntlProvider>
   </ThemeProvider>

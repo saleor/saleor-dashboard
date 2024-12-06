@@ -33,7 +33,7 @@ const useStyles = makeStyles(
   }),
   { name: "PluginAuthorization" },
 );
-const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
+const PluginAuthorization = (props: PluginAuthorizationProps) => {
   const { fields, onClear, onEdit } = props;
   const classes = useStyles(props);
   const intl = useIntl();

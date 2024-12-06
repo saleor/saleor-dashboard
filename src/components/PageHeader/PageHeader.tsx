@@ -54,7 +54,7 @@ interface PageHeaderProps {
   preview?: boolean;
 }
 
-const PageHeader: React.FC<PageHeaderProps> = props => {
+const PageHeader = (props: PageHeaderProps) => {
   const { children, className, inline, underline, limitText, title, cardMenu, preview } = props;
   const classes = useStyles(props);
 

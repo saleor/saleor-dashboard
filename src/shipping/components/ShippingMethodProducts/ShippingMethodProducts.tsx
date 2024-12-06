@@ -49,7 +49,7 @@ export interface ShippingMethodProductsProps
 }
 
 const numberOfColumns = 3;
-const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
+const ShippingMethodProducts = (props: ShippingMethodProductsProps) => {
   const {
     disabled,
     products,

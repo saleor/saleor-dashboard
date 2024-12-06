@@ -25,7 +25,7 @@ export interface FileUploadFieldProps {
   onFileDelete: () => void;
 }
 
-const FileUploadField: React.FC<FileUploadFieldProps> = props => {
+const FileUploadField = (props: FileUploadFieldProps) => {
   const { loading, disabled, file, error, helperText, onFileUpload, onFileDelete, inputProps } =
     props;
   const intl = useIntl();

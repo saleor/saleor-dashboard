@@ -27,7 +27,7 @@ export interface StaffListPageProps
   onAdd: () => void;
 }
 
-const StaffListPage: React.FC<StaffListPageProps> = ({
+const StaffListPage = ({
   filterOpts,
   initialSearch,
   limits,
@@ -44,7 +44,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
   onFilterPresetUpdate,
   onFilterPresetsAll,
   ...listProps
-}) => {
+}: StaffListPageProps) => {
   const intl = useIntl();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const structure = createFilterStructure(intl, filterOpts);

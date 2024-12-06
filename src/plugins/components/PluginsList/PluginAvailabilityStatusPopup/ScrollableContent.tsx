@@ -16,7 +16,7 @@ interface ScrollableContentProps {
   children: React.ReactNode | React.ReactNode[];
 }
 
-const ScrollableContent: React.FC<ScrollableContentProps> = ({ children }) => {
+const ScrollableContent = ({ children }: ScrollableContentProps) => {
   const classes = useStyles({});
 
   return (

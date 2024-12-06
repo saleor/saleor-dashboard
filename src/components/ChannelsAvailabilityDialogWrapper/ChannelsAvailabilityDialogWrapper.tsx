@@ -86,7 +86,7 @@ export interface ChannelsAvailabilityContentProps {
   hasAllSelected: boolean;
 }
 
-export const ChannelsAvailabilityContentWrapper: React.FC<ChannelsAvailabilityContentProps> = ({
+export const ChannelsAvailabilityContentWrapper = ({
   contentType = "",
   toggleAll,
   toggleAllLabel,
@@ -95,7 +95,7 @@ export const ChannelsAvailabilityContentWrapper: React.FC<ChannelsAvailabilityCo
   query,
   onQueryChange,
   hasAllSelected,
-}) => {
+}: ChannelsAvailabilityContentProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const searchText = intl.formatMessage({

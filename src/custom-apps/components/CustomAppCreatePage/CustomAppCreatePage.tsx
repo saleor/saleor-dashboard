@@ -29,7 +29,7 @@ export interface CustomAppCreatePageProps {
   onSubmit: (data: CustomAppCreatePageFormData) => SubmitPromise<AppErrorFragment[]>;
 }
 
-const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
+const CustomAppCreatePage = (props: CustomAppCreatePageProps) => {
   const { disabled, errors, permissions, saveButtonBarState, onSubmit } = props;
   const intl = useIntl();
   const navigate = useNavigator();

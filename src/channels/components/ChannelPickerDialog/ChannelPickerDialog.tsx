@@ -18,14 +18,14 @@ export interface ChannelPickerDialogProps {
   onConfirm: (choice: string) => void;
 }
 
-const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
+const ChannelPickerDialog = ({
   channelsChoices = [],
   confirmButtonState,
   defaultChoice,
   open,
   onClose,
   onConfirm,
-}) => {
+}: ChannelPickerDialogProps) => {
   const intl = useIntl();
   const [choice, setChoice] = useState("");
   const { result, search } = useChoiceSearch(channelsChoices);

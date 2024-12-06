@@ -12,7 +12,7 @@ interface StaffPreferencesProps {
   onLocaleChange: (locale: Locale) => void;
 }
 
-const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleChange }) => {
+const StaffPreferences = ({ locale, onLocaleChange }: StaffPreferencesProps) => {
   const intl = useIntl();
   const handleLocaleChange = async (locale: Locale) => {
     if (!locale) {

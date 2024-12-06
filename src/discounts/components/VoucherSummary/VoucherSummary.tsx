@@ -18,7 +18,7 @@ export interface VoucherSummaryProps extends ChannelProps {
   voucher: VoucherDetailsFragment;
 }
 
-const VoucherSummary: React.FC<VoucherSummaryProps> = ({ selectedChannelId, voucher }) => {
+const VoucherSummary = ({ selectedChannelId, voucher }: VoucherSummaryProps) => {
   const intl = useIntl();
   const translatedVoucherTypes = translateVoucherTypes(intl);
   const channel = voucher?.channelListings?.find(

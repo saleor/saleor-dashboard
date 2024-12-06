@@ -29,7 +29,7 @@ export interface OrderFulfillStockExceededDialogProps {
   onClose: () => any;
 }
 
-const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogProps> = props => {
+const OrderFulfillStockExceededDialog = (props: OrderFulfillStockExceededDialogProps) => {
   const { lines, open, formsetData, confirmButtonState, onClose, onSubmit } = props;
   const intl = useIntl();
   const classes = useStyles(props);

@@ -12,7 +12,7 @@ interface ColumnPickerSearchProps {
   query: string;
 }
 
-export const ColumnPickerSearch: React.FC<ColumnPickerSearchProps> = ({
+export const ColumnPickerSearch = ({
   currentCategory,
   setQuery,
   query,

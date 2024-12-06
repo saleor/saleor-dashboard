@@ -18,7 +18,7 @@ interface ProductsCardProps {
   lines: OrderLineGrantRefundFragment[];
 }
 
-export const ProductsCard: React.FC<ProductsCardProps> = ({ title, subtitle, lines }) => {
+export const ProductsCard = ({ title, subtitle, lines }: ProductsCardProps) => {
   const classes = useProductsCardStyles();
   const { dispatch, state } = useGrantRefundContext();
 

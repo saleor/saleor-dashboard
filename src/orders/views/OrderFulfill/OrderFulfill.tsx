@@ -27,7 +27,7 @@ export interface OrderFulfillProps {
   params: OrderFulfillUrlQueryParams;
 }
 
-const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
+const OrderFulfill = ({ orderId, params }: OrderFulfillProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

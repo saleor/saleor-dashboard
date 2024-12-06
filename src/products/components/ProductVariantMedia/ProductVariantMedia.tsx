@@ -31,7 +31,7 @@ interface ProductVariantMediaProps {
   onImageAdd: () => any;
 }
 
-export const ProductVariantMedia: React.FC<ProductVariantMediaProps> = props => {
+export const ProductVariantMedia = (props: ProductVariantMediaProps) => {
   const intl = useIntl();
   const { disabled, media, onImageAdd } = props;
 

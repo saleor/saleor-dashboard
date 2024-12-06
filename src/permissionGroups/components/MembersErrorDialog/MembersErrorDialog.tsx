@@ -10,12 +10,12 @@ export interface MembersErrorDialogProps {
   onClose: () => void;
 }
 
-const MembersErrorDialog: React.FC<MembersErrorDialogProps> = ({
+const MembersErrorDialog = ({
   confirmButtonState,
   onClose,
   onConfirm,
   open,
-}) => {
+}: MembersErrorDialogProps) => {
   const intl = useIntl();
 
   return (

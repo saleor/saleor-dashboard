@@ -28,7 +28,7 @@ interface Props {
   params: AppDetailsUrlQueryParams;
 }
 
-export const AppManageView: React.FC<Props> = ({ id, params }) => {
+export const AppManageView = ({ id, params }: Props) => {
   const client = useApolloClient();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const { data, loading, refetch } = useAppQuery({

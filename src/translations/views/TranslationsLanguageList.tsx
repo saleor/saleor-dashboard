@@ -5,7 +5,7 @@ import React from "react";
 import { maybe } from "../../misc";
 import TranslationsLanguageListPage from "../components/TranslationsLanguageListPage";
 
-const TranslationsLanguageList: React.FC = () => {
+const TranslationsLanguageList = () => {
   const shop = useShop();
 
   return <TranslationsLanguageListPage languages={maybe(() => shop.languages)} />;

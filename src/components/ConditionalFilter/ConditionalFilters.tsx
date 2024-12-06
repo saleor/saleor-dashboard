@@ -7,7 +7,7 @@ import { FiltersArea } from "./FiltersArea";
 import { LoadingFiltersArea } from "./LoadingFiltersArea";
 import { ErrorEntry, Validator } from "./Validation";
 
-export const ConditionalFilters: FC<{ onClose: () => void }> = ({ onClose }) => {
+export const ConditionalFilters = ({ onClose }: { onClose: () => void }) => {
   const { valueProvider, containerState } = useConditionalFilterContext();
   const [errors, setErrors] = useState<ErrorEntry[]>([]);
   const handleConfirm = (value: FilterContainer) => {

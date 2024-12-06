@@ -28,7 +28,7 @@ import { Combobox, Multiselect } from "../Combobox";
 import { DateTimeField } from "../DateTimeField";
 import { AttributeRowProps } from "./types";
 
-const AttributeRow: React.FC<AttributeRowProps> = ({
+const AttributeRow = ({
   attribute,
   attributeValues,
   disabled,
@@ -44,7 +44,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
   fetchMoreAttributeValues,
   onAttributeSelectBlur,
   richTextGetters,
-}) => {
+}: AttributeRowProps) => {
   const intl = useIntl();
 
   switch (attribute.data.inputType) {

@@ -17,7 +17,7 @@ interface FormData {
   message: string;
 }
 
-const GiftCardHistory: React.FC = () => {
+const GiftCardHistory = () => {
   const intl = useIntl();
   const notify = useNotifier();
   const { id, events } = useGiftCardHistoryEvents();

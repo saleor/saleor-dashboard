@@ -65,7 +65,7 @@ interface OrderDraftDetailsSummaryProps extends OrderDiscountContextConsumerProp
   onShippingMethodEdit: () => void;
 }
 
-const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props => {
+const OrderDraftDetailsSummary = (props: OrderDraftDetailsSummaryProps) => {
   const {
     order,
     errors,

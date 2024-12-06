@@ -43,7 +43,7 @@ function useLoginForm(onSubmit: (data: LoginFormData) => SubmitPromise): UseLogi
   };
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ children, onSubmit }) => {
+const LoginForm = ({ children, onSubmit }: LoginFormProps) => {
   const props = useLoginForm(onSubmit);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     // Cypress tests blow up without it

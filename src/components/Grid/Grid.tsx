@@ -39,7 +39,7 @@ const useStyles = makeStyles(
   { name: "Grid" },
 );
 
-export const Grid: React.FC<GridProps> = props => {
+export const Grid = (props: GridProps) => {
   const { className, children, variant, richText } = props;
   const classes = useStyles(props);
 

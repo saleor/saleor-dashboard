@@ -35,7 +35,7 @@ export interface CustomerInfoProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const CustomerInfo: React.FC<CustomerInfoProps> = props => {
+const CustomerInfo = (props: CustomerInfoProps) => {
   const { data, disabled, errors, onChange } = props;
 
   const classes = useStyles(props);

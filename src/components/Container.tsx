@@ -26,7 +26,7 @@ interface ContainerProps {
   className?: string;
 }
 
-export const Container: React.FC<ContainerProps> = props => {
+export const Container = (props: ContainerProps) => {
   const { className, ...rest } = props;
   const classes = useStyles(props);
 

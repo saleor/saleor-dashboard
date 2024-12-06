@@ -52,7 +52,7 @@ function getErrorMessage(
   }
 }
 
-const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
+const CompanyAddressForm = (props: CompanyAddressFormProps) => {
   const { countries, data, disabled, displayCountry, errors, onChange, onCountryChange } = props;
   const { areas, isFieldAllowed, getDisplayValue } = useAddressValidation(data.country);
   const classes = useStyles(props);

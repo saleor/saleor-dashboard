@@ -22,7 +22,7 @@ import CustomerGiftCardsCardListItem from "./CustomerGiftCardsCardListItem";
 import { giftCardCustomerCardMessages as messages } from "./messages";
 import { CUSTOMER_GIFT_CARD_LIST_QUERY } from "./queries";
 
-const CustomerGiftCardsCard: React.FC = () => {
+const CustomerGiftCardsCard = () => {
   const intl = useIntl();
   const [openCreateDialog, setOpenCreateDialog] = useState(false);
   const customerDetails = useCustomerDetails();

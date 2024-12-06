@@ -20,7 +20,7 @@ interface PermissionGroupListProps {
   params: PermissionGroupListUrlQueryParams;
 }
 
-export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({ params }) => {
+export const PermissionGroupList = ({ params }: PermissionGroupListProps) => {
   const navigate = useNavigator();
   const { updateListSettings, settings } = useListSettings(ListViews.PERMISSION_GROUP_LIST);
 

@@ -11,7 +11,7 @@ interface Props {
   menuItem: SidebarMenuItem;
 }
 
-export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
+export const ItemGroup = ({ menuItem }: Props) => {
   const hasSubmenuActive = menuItem?.children.some(item => isMenuActive(location.pathname, item));
   const isActive = isMenuActive(location.pathname, menuItem) && !hasSubmenuActive;
   const isExpanded = isActive || hasSubmenuActive;

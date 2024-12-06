@@ -46,7 +46,7 @@ export interface PageListPageProps
   onPageCreate: () => void;
 }
 
-const PageListPage: React.FC<PageListPageProps> = ({
+const PageListPage = ({
   selectedFilterPreset,
   filterOpts,
   initialSearch,
@@ -65,7 +65,7 @@ const PageListPage: React.FC<PageListPageProps> = ({
   onPagesUnpublish,
   onPageCreate,
   ...listProps
-}) => {
+}: PageListPageProps) => {
   const intl = useIntl();
   const location = useLocation();
   const navigate = useNavigator();

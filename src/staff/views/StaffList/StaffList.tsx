@@ -42,7 +42,7 @@ interface StaffListProps {
   params: StaffListUrlQueryParams;
 }
 
-export const StaffList: React.FC<StaffListProps> = ({ params }) => {
+export const StaffList = ({ params }: StaffListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.STAFF_MEMBERS_LIST);

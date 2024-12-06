@@ -34,7 +34,7 @@ export interface CustomerOrdersProps {
   viewAllHref: string;
 }
 
-const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
+const CustomerOrders = (props: CustomerOrdersProps) => {
   const { orders, viewAllHref } = props;
   const classes = useStyles(props);
   const intl = useIntl();

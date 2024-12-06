@@ -28,7 +28,7 @@ export interface PageTypeListPageProps
   pageTypes: PageTypeFragment[];
 }
 
-const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
+const PageTypeListPage = ({
   currentTab,
   initialSearch,
   onAll,
@@ -38,7 +38,7 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
   onTabSave,
   tabs,
   ...listProps
-}) => {
+}: PageTypeListPageProps) => {
   const intl = useIntl();
 
   return (

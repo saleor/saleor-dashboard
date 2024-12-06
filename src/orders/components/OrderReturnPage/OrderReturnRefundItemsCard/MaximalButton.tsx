@@ -17,7 +17,7 @@ interface MaximalButtonProps {
   onClick: () => void;
 }
 
-const MaximalButton: React.FC<MaximalButtonProps> = ({ onClick }) => {
+const MaximalButton = ({ onClick }: MaximalButtonProps) => {
   const classes = useStyles({});
 
   return (

@@ -12,13 +12,13 @@ interface ButtonWithDropdownProps {
   disabled?: boolean;
 }
 
-export const ButtonWithDropdown: React.FC<ButtonWithDropdownProps> = ({
+export const ButtonWithDropdown = ({
   onClick,
   options,
   children,
   testId,
   disabled = false,
-}) => (
+}: ButtonWithDropdownProps) => (
   <Dropdown>
     <Dropdown.Trigger>
       <Button data-test-id={testId} onClick={onClick} disabled={disabled}>

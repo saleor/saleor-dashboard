@@ -87,7 +87,7 @@ export interface OrderDetailsPageProps {
   onSubmit: (data: MetadataIdSchema) => SubmitPromise;
 }
 
-const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
+const OrderDetailsPage = (props: OrderDetailsPageProps) => {
   const {
     loading,
     order,

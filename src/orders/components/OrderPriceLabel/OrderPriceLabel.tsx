@@ -11,7 +11,7 @@ interface OrderPriceLabelProps {
   pricing: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"][0]["pricing"];
 }
 
-const OrderPriceLabel: React.FC<OrderPriceLabelProps> = ({ pricing }) => {
+const OrderPriceLabel = ({ pricing }: OrderPriceLabelProps) => {
   const classes = useStyles();
 
   if (pricing.onSale) {

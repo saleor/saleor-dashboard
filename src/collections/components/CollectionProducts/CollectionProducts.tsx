@@ -57,7 +57,7 @@ export interface CollectionProductsProps extends PageListProps, ListActions {
   onAdd: () => void;
 }
 
-const CollectionProducts: React.FC<CollectionProductsProps> = props => {
+const CollectionProducts = (props: CollectionProductsProps) => {
   const {
     collection,
     disabled,

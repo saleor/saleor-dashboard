@@ -15,12 +15,12 @@ export interface RichTextEditorContentProps extends Omit<EditorJsProps, "default
 }
 
 const ReactEditorJS = createReactEditorJS();
-const RichTextEditorContent: React.FC<RichTextEditorContentProps> = ({
+const RichTextEditorContent = ({
   id: defaultId,
   className,
   value,
   ...props
-}) => {
+}: RichTextEditorContentProps) => {
   const classes = useStyles({});
   const id = useId(defaultId);
   // We need to render FormControl first to get id from @reach/auto-id

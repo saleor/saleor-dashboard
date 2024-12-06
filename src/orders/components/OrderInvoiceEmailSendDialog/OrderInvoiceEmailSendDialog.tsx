@@ -17,14 +17,14 @@ export interface OrderInvoiceEmailSendDialogProps extends DialogProps {
   onSend: () => void;
 }
 
-const OrderInvoiceEmailSendDialog: React.FC<OrderInvoiceEmailSendDialogProps> = ({
+const OrderInvoiceEmailSendDialog = ({
   confirmButtonState,
   errors,
   open,
   invoice,
   onClose,
   onSend,
-}) => {
+}: OrderInvoiceEmailSendDialogProps) => {
   const intl = useIntl();
 
   return (

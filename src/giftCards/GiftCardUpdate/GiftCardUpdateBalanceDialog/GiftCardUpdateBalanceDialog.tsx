@@ -24,7 +24,7 @@ export interface GiftCardBalanceUpdateFormData {
   balanceAmount: number;
 }
 
-const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({ open, onClose }) => {
+const GiftCardUpdateBalanceDialog = ({ open, onClose }: DialogProps) => {
   const intl = useIntl();
   const classes = useStyles({});
   const notify = useNotifier();

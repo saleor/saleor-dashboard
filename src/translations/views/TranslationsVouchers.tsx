@@ -26,11 +26,7 @@ export interface TranslationsVouchersProps {
   params: TranslationsVouchersQueryParams;
 }
 
-const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
-  id,
-  languageCode,
-  params,
-}) => {
+const TranslationsVouchers = ({ id, languageCode, params }: TranslationsVouchersProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

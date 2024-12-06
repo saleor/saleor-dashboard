@@ -43,7 +43,7 @@ interface OrderDraftListProps {
   params: OrderDraftListUrlQueryParams;
 }
 
-export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
+export const OrderDraftList = ({ params }: OrderDraftListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

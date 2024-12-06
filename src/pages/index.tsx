@@ -20,7 +20,7 @@ import PageCreateComponent from "./views/PageCreate";
 import PageDetailsComponent from "./views/PageDetails";
 import PageListComponent from "./views/PageList";
 
-const PageList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
+const PageList = ({ location }: RouteComponentProps<{}>) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: PageListUrlQueryParams = asSortParams(
     qs,
@@ -30,13 +30,13 @@ const PageList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
 
   return <PageListComponent params={params} />;
 };
-const PageCreate: React.FC<RouteComponentProps<any>> = ({ match }) => {
+const PageCreate = ({ match }: RouteComponentProps<any>) => {
   const qs = parseQs(location.search.substr(1));
   const params: PageCreateUrlQueryParams = qs;
 
   return <PageCreateComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
-const PageDetails: React.FC<RouteComponentProps<any>> = ({ match }) => {
+const PageDetails = ({ match }: RouteComponentProps<any>) => {
   const qs = parseQs(location.search.substr(1));
   const params: PageUrlQueryParams = qs;
 

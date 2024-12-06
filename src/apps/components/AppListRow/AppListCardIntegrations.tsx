@@ -7,7 +7,7 @@ interface AppListCardIntegrationsProps {
   integrations: AppstoreApi.SaleorApp["integrations"];
 }
 
-const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({ integrations }) => {
+const AppListCardIntegrations = ({ integrations }: AppListCardIntegrationsProps) => {
   const { themeType } = useTheme();
 
   if (!integrations) {

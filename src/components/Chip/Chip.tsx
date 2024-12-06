@@ -32,7 +32,7 @@ const useStyles = makeStyles(
   }),
   { name: "Chip" },
 );
-const Chip: React.FC<ChipProps> = props => {
+const Chip = (props: ChipProps) => {
   const { className, label, onClose } = props;
   const classes = useStyles(props);
 

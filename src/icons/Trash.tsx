@@ -2,7 +2,7 @@ import { createSvgIcon } from "@material-ui/core/utils";
 import { useTheme } from "@saleor/macaw-ui";
 import React from "react";
 
-const Trash: React.FC = () => {
+const Trash = () => {
   const { themeType } = useTheme();
   const TrashComponent = createSvgIcon(
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

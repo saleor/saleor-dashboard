@@ -72,7 +72,7 @@ const createPageInput = (
   title: data.title,
 });
 
-export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
+export const PageDetails = ({ id, params }: PageDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

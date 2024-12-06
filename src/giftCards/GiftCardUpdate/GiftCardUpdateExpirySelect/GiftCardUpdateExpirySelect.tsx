@@ -11,7 +11,7 @@ import { useIntl } from "react-intl";
 import { giftCardExpirySelectMessages as messages } from "./messages";
 import { useGiftCardExpirySelectStyles as useStyles } from "./styles";
 
-const GiftCardUpdateExpirySelect: React.FC = () => {
+const GiftCardUpdateExpirySelect = () => {
   const intl = useIntl();
   const classes = useStyles({});
   const {

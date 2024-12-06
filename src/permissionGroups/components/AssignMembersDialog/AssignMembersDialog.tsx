@@ -107,7 +107,7 @@ function handleStaffMemberAssign(
 
 const scrollableTargetId = "assignMemberScrollableDialog";
 
-const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
+const AssignMembersDialog = ({
   confirmButtonState,
   disabled,
   loading,
@@ -118,7 +118,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
   onSubmit,
   open,
   staffMembers,
-}) => {
+}: AssignMembersDialogProps) => {
   const intl = useIntl();
   const classes = useStyles({});
   const [query, onQueryChange] = useSearchQuery(onSearchChange);

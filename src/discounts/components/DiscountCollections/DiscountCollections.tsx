@@ -28,7 +28,7 @@ export interface DiscountCollectionsProps extends ListProps, ListActions {
 }
 
 const numberOfColumns = 4;
-const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
+const DiscountCollections = (props: DiscountCollectionsProps) => {
   const {
     discount: sale,
     disabled,

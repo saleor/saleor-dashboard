@@ -9,7 +9,7 @@ import { IntlProvider } from "react-intl";
 import { ApolloMockedProvider } from "./ApolloMockedProvider";
 import { ThemeWrapper } from "./themeWrapper";
 
-const Wrapper: React.FC = ({ children }) => (
+const Wrapper = ({ children }) => (
   <ApolloMockedProvider>
     <IntlProvider defaultLocale={Locale.EN} locale={Locale.EN}>
       <RawLocaleProvider

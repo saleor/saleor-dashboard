@@ -18,12 +18,12 @@ type PermissionsCardProps = {
   appId: string; // todo wrap with App Context
 } & BoxProps;
 
-export const PermissionsCard: React.FC<PermissionsCardProps> = ({
+export const PermissionsCard = ({
   permissions,
   loading,
   appId,
   ...boxProps
-}) => {
+}: PermissionsCardProps) => {
   const [editPermissionDialogOpen, setEditPermissionDialogOpen] = useState(false);
   const intl = useIntl();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();

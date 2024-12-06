@@ -18,7 +18,7 @@ export interface ResetPasswordPageProps {
   onSubmit: (data: ResetPasswordPageFormData) => SubmitPromise<AccountErrorCode[]>;
 }
 
-const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
+const ResetPasswordPage = (props: ResetPasswordPageProps) => {
   const { disabled, error, onSubmit } = props;
   const intl = useIntl();
 

@@ -12,7 +12,7 @@ interface ExtraInfoLinesProps {
   fulfillment?: OrderDetailsFragment["fulfillments"][0];
 }
 
-const ExtraInfoLines: React.FC<ExtraInfoLinesProps> = ({ fulfillment }) => {
+const ExtraInfoLines = ({ fulfillment }: ExtraInfoLinesProps) => {
   const intl = useIntl();
   const classes = useStyles({});
 

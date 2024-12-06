@@ -10,7 +10,7 @@ interface Props {
   menuItem: SidebarMenuItem;
 }
 
-export const SingleItem: React.FC<Props> = ({ menuItem }) => {
+export const SingleItem = ({ menuItem }: Props) => {
   const extensions = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);
   const active = isMenuActive(location.pathname, menuItem);
   const handleMenuItemClick = () => {

@@ -43,13 +43,13 @@ const useStyles = makeStyles(
     name: "WarehouseInfoProps",
   },
 );
-const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
+const WarehouseSettings = ({
   zones,
   disabled,
   data,
   onChange,
   setData,
-}) => {
+}: WarehouseSettingsProps) => {
   React.useEffect(() => {
     if (data.isPrivate && data.clickAndCollectOption === WarehouseClickAndCollectOptionEnum.LOCAL) {
       setData({

@@ -93,7 +93,7 @@ const Sections = ({
   );
 };
 
-const NavigatorSearch: React.FC = () => {
+const NavigatorSearch = () => {
   const { isNavigatorVisible, setNavigatorVisibility } = useNavigatorSearchContext();
   const input = React.useRef<HTMLInputElement>(null);
   const [query, mode, change, actions] = useQuickSearch(isNavigatorVisible, input);

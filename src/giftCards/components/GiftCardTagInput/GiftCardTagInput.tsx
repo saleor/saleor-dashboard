@@ -23,14 +23,14 @@ interface GiftCardTagInputProps {
   loading?: boolean;
 }
 
-const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
+const GiftCardTagInput = ({
   onChange,
   name,
   values,
   error,
   optional = true,
   loading,
-}) => {
+}: GiftCardTagInputProps) => {
   const intl = useIntl();
   const { loadMore, search, result } = useGiftCardTagsSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,

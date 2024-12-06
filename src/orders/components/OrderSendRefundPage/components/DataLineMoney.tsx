@@ -9,7 +9,7 @@ interface DataLineMoneyProps {
   money: IMoney;
 }
 
-export const DataLineMoney: React.FC<DataLineMoneyProps> = ({ money }) => {
+export const DataLineMoney = ({ money }: DataLineMoneyProps) => {
   const { locale } = useLocale();
   const classes = useDataLineMoneyStyles();
 

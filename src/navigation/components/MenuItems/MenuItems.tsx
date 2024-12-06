@@ -21,7 +21,7 @@ export interface MenuItemsProps {
   onUndo: () => void;
 }
 
-const MenuItems: React.FC<MenuItemsProps> = props => {
+const MenuItems = (props: MenuItemsProps) => {
   const { canUndo, items, onChange, onItemAdd, onItemClick, onItemEdit, onUndo } = props;
   const intl = useIntl();
   const currentTree = useMemo(() => items.map(getNodeData), [items]);

@@ -51,7 +51,7 @@ export interface OrderCustomerProps extends Partial<FetchMoreProps> {
   onShippingAddressEdit?: () => void;
 }
 
-const OrderCustomer: React.FC<OrderCustomerProps> = props => {
+const OrderCustomer = (props: OrderCustomerProps) => {
   const {
     canEditAddresses,
     canEditCustomer,

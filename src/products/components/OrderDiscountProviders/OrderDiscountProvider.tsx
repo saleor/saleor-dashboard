@@ -31,10 +31,7 @@ interface OrderDiscountProviderProps {
   order?: OrderDetailsFragment;
 }
 
-export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
-  children,
-  order,
-}) => {
+export const OrderDiscountProvider = ({ children, order }: OrderDiscountProviderProps) => {
   const intl = useIntl();
   const notify = useNotifier();
   const { id: orderId } = order;

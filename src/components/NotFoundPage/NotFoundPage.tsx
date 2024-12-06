@@ -59,7 +59,7 @@ type NotFoundPageProps =
       backHref: string;
     };
 
-const NotFoundPage: React.FC<NotFoundPageProps> = props => {
+const NotFoundPage = (props: NotFoundPageProps) => {
   const { onBack, backHref } = props;
   const classes = useStyles(props);
 

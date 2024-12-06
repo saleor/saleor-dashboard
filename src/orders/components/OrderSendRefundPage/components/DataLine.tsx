@@ -7,7 +7,7 @@ interface DataLineProps {
   children: React.ReactNode;
 }
 
-export const DataLine: React.FC<DataLineProps> = ({ label, children }) => {
+export const DataLine = ({ label, children }: DataLineProps) => {
   const classes = useDataLineStyles();
 
   return (

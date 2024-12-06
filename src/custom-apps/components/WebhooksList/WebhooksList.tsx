@@ -26,7 +26,7 @@ export interface WebhooksListProps {
   createHref?: string;
 }
 
-const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref, onRemove }) => {
+const WebhooksList = ({ webhooks, createHref, onRemove }: WebhooksListProps) => {
   const intl = useIntl();
   const classes = useStyles();
   const numberOfColumns = webhooks?.length === 0 ? 2 : 3;

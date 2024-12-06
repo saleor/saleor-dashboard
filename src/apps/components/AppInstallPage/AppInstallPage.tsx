@@ -24,12 +24,12 @@ export interface AppInstallPageProps {
   onSubmit: () => SubmitPromise<NonNullable<AppInstallMutation["appInstall"]>["errors"]>;
 }
 
-export const AppInstallPage: React.FC<AppInstallPageProps> = ({
+export const AppInstallPage = ({
   data,
   loading,
   navigateToAppsList,
   onSubmit,
-}) => {
+}: AppInstallPageProps) => {
   const intl = useIntl();
   const classes = useStyles();
   const { theme } = useTheme();

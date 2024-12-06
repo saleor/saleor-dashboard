@@ -11,7 +11,7 @@ export interface PreviewPillProps {
   className?: string;
 }
 
-export const PreviewPill: React.FC<PreviewPillProps> = ({ className }) => {
+export const PreviewPill = ({ className }: PreviewPillProps) => {
   const intl = useIntl();
   const [active, setActive] = React.useState(false);
   const anchor = React.useRef<HTMLDivElement>(null);

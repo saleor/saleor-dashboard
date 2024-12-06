@@ -14,9 +14,7 @@ export interface ChannelsAvailabilityWrapperProps {
   openModal: () => void;
 }
 
-export const ChannelsAvailabilityCardWrapper: React.FC<
-  ChannelsAvailabilityWrapperProps
-> = props => {
+export const ChannelsAvailabilityCardWrapper = (props: ChannelsAvailabilityWrapperProps) => {
   const { selectedChannelsCount, allChannelsCount, children, managePermissions, openModal } = props;
   const intl = useIntl();
   const channelsAvailabilityText = intl.formatMessage(

@@ -37,8 +37,8 @@ const propsCompare = (_, newProps: MetadataProps) => {
 
 // TODO: Refactor loading state logic
 // TODO: Split "Metadata" component into "Metadata" and "PrivateMetadata" components
-export const Metadata: React.FC<MetadataProps> = memo(
-  ({ data, onChange, isLoading, readonly = false, hidePrivateMetadata = false }) => {
+export const Metadata = memo(
+  ({ data, onChange, isLoading, readonly = false, hidePrivateMetadata = false }: MetadataProps) => {
     const change = (event: ChangeEvent, isPrivate: boolean) => {
       const { action, field, fieldIndex, value } = parseEventData(event);
       const key = getDataKey(isPrivate);
@@ -99,7 +99,6 @@ export const Metadata: React.FC<MetadataProps> = memo(
       </Box>
     );
   },
-  propsCompare,
 );
 
 Metadata.displayName = "Metadata";

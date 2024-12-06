@@ -29,7 +29,7 @@ export interface OrderShippingMethodEditDialogProps {
   onSubmit?: (data: FormData) => any;
 }
 
-const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps> = props => {
+const OrderShippingMethodEditDialog = (props: OrderShippingMethodEditDialogProps) => {
   const {
     confirmButtonState,
     errors: apiErrors,

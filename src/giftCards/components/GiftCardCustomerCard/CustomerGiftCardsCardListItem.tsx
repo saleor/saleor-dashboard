@@ -20,9 +20,7 @@ interface CustomerGiftCardsCardListItemProps {
   giftCard: ExtendedGiftCard<CustomerGiftCardFragment>;
 }
 
-const CustomerGiftCardsCardListItem: React.FC<CustomerGiftCardsCardListItemProps> = ({
-  giftCard,
-}) => {
+const CustomerGiftCardsCardListItem = ({ giftCard }: CustomerGiftCardsCardListItemProps) => {
   const intl = useIntl();
   const classes = useListWrapperStyles();
   const [openDeleteGiftCard, setOpenDeleteGiftCard] = useState(false);

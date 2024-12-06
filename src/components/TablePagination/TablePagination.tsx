@@ -30,7 +30,7 @@ export interface PaginationProps
   disabled?: boolean;
   labels?: PaginationRowNumberSelectLabels;
 }
-export const TablePagination: React.FC<PaginationProps> = ({
+export const TablePagination = ({
   component,
   colSpan,
   settings,
@@ -42,7 +42,7 @@ export const TablePagination: React.FC<PaginationProps> = ({
   disabled,
   labels,
   ...rest
-}) => {
+}: PaginationProps) => {
   const intl = useIntl();
   const Wrapper = component || TableCell;
 

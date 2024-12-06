@@ -19,7 +19,7 @@ export interface TimelineEventHeaderProps {
   children?: ReactNode;
 }
 
-export const TimelineEventHeader: React.FC<TimelineEventHeaderProps> = props => {
+export const TimelineEventHeader = (props: TimelineEventHeaderProps) => {
   const { title, date, titleElements, secondaryTitle, hasPlainDate, children } = props;
   const navigate = useNavigator();
 

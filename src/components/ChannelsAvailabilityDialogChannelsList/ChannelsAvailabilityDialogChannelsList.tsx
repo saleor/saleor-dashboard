@@ -28,11 +28,11 @@ export interface ChannelsAvailabilityContentProps {
   onChange: (option: Channel) => void;
 }
 
-const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentProps> = ({
+const ChannelsAvailabilityContent = ({
   isChannelSelected,
   channels,
   onChange,
-}) => {
+}: ChannelsAvailabilityContentProps) => {
   const classes = useStyles({});
 
   return (

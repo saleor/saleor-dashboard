@@ -9,7 +9,7 @@ import React from "react";
 import { TranslationsEntityListProps } from "./types";
 import { sumCompleted } from "./utils";
 
-const TranslationsCategoryList: React.FC<TranslationsEntityListProps> = ({ params, variables }) => {
+const TranslationsCategoryList = ({ params, variables }: TranslationsEntityListProps) => {
   const { data, loading } = useCategoryTranslationsQuery({
     displayLoader: true,
     variables,

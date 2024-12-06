@@ -37,7 +37,7 @@ export interface PageCreateProps {
   params: PageCreateUrlQueryParams;
 }
 
-export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
+export const PageCreate = ({ params }: PageCreateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

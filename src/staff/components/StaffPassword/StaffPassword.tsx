@@ -8,7 +8,7 @@ interface StaffPasswordProps {
   onChangePassword: () => void;
 }
 
-const StaffPassword: React.FC<StaffPasswordProps> = ({ onChangePassword }) => {
+const StaffPassword = ({ onChangePassword }: StaffPasswordProps) => {
   const intl = useIntl();
 
   return (

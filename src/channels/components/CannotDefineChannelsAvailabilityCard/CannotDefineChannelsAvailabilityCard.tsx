@@ -15,7 +15,7 @@ const messages = defineMessages({
     description: "CannotDefineChannelsAvailabilityCard subtitle",
   },
 });
-const CannotDefineChannelsAvailabilityCard: React.FC = () => (
+const CannotDefineChannelsAvailabilityCard = () => (
   <DashboardCard gap={2}>
     <DashboardCard.Header>
       <DashboardCard.Title>

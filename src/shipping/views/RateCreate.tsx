@@ -34,7 +34,7 @@ export interface RateCreateProps {
   params: ShippingRateCreateUrlQueryParams;
 }
 
-export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
+export const RateCreate = ({ id, params }: RateCreateProps) => {
   const navigate = useNavigator();
   const intl = useIntl();
   const [openModal, closeModal] = createDialogActionHandlers<

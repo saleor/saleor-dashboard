@@ -17,12 +17,12 @@ interface SiteCheckoutSettingsCardProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
+const SiteCheckoutSettingsCard = ({
   data,
   disabled,
   errors,
   onChange,
-}) => {
+}: SiteCheckoutSettingsCardProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(
     [

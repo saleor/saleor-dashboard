@@ -65,7 +65,7 @@ interface ProductMediaProps {
   openMediaUrlModal: () => any;
 }
 
-const ProductMedia: React.FC<ProductMediaProps> = props => {
+const ProductMedia = (props: ProductMediaProps) => {
   const {
     media,
     getImageEditUrl,

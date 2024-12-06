@@ -36,7 +36,7 @@ const useStyles = makeStyles<{ withoutBorder?: boolean }>(
     name: "FilterBar",
   },
 );
-const FilterBar: React.FC<FilterBarProps> = props => {
+const FilterBar = (props: FilterBarProps) => {
   const {
     allTabLabel,
     currencySymbol,

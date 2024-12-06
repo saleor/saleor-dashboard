@@ -146,11 +146,11 @@ interface ExtendedTimelineEventProps {
   hasPlainDate?: boolean;
 }
 
-const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
+const ExtendedTimelineEvent = ({
   event,
   orderCurrency,
   hasPlainDate,
-}) => {
+}: ExtendedTimelineEventProps) => {
   const { id, date, type, lines, amount, transactionReference, shippingCostsIncluded } = event;
   const classes = useStyles({});
   const intl = useIntl();

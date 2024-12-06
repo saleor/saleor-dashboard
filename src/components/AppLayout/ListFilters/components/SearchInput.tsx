@@ -7,7 +7,7 @@ export interface SearchInputProps extends SearchPageProps {
   placeholder: string;
 }
 
-const SearchInput: React.FC<SearchInputProps> = props => {
+const SearchInput = (props: SearchInputProps) => {
   const { initialSearch, onSearchChange, placeholder } = props;
   const [search, setSearch] = React.useState(initialSearch);
 

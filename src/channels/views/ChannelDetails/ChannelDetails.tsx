@@ -38,7 +38,7 @@ interface ChannelDetailsProps {
   params: ChannelUrlQueryParams;
 }
 
-export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id, params }) => {
+export const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

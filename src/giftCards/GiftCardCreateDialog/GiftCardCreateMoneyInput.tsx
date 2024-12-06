@@ -22,12 +22,12 @@ interface GiftCardCreateMoneyInputProps {
   set: (data: Partial<GiftCardCreateCommonFormData>) => void;
 }
 
-const GiftCardCreateMoneyInput: React.FC<GiftCardCreateMoneyInputProps> = ({
+const GiftCardCreateMoneyInput = ({
   errors,
   data: { balanceAmount, balanceCurrency },
   change,
   set,
-}) => {
+}: GiftCardCreateMoneyInputProps) => {
   const intl = useIntl();
   const { data: channelCurrenciesData } = useChannelCurrenciesQuery({});
   const { channelCurrencies } = channelCurrenciesData?.shop ?? {};

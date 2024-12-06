@@ -48,14 +48,14 @@ export interface ShippingZoneCreatePageProps {
   onSubmit: (data: ShippingZoneCreateFormData) => SubmitPromise;
 }
 
-const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
+const ShippingZoneCreatePage = ({
   countries,
   restWorldCountries,
   disabled,
   errors,
   onSubmit,
   saveButtonBarState,
-}) => {
+}: ShippingZoneCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const [isModalOpened, setModalStatus] = React.useState(false);

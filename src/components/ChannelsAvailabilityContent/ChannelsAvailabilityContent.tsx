@@ -20,7 +20,7 @@ export interface ChannelsAvailabilityContentProps {
   toggleAll?: (items: Channel[], selected: number) => void;
 }
 
-export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentProps> = ({
+export const ChannelsAvailabilityContent = ({
   isSelected,
   channels,
   contentType = "",
@@ -28,7 +28,7 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
   selected = 0,
   toggleAll,
   toggleAllText,
-}) => {
+}: ChannelsAvailabilityContentProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const searchText = intl.formatMessage({

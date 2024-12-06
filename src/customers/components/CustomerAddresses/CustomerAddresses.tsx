@@ -28,7 +28,7 @@ export interface CustomerAddressesProps {
   manageAddressHref: string;
 }
 
-const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
+const CustomerAddresses = (props: CustomerAddressesProps) => {
   const { customer, disabled, manageAddressHref } = props;
   const classes = useStyles(props);
   const intl = useIntl();

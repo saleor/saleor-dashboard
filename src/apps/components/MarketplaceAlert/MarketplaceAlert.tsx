@@ -11,7 +11,7 @@ interface MarketplaceAlertProps {
   error?: Error;
 }
 
-export const MarketplaceAlert: React.FC<MarketplaceAlertProps> = ({ error }) => {
+export const MarketplaceAlert = ({ error }: MarketplaceAlertProps) => {
   const classes = useStyles();
   const intl = useIntl();
 

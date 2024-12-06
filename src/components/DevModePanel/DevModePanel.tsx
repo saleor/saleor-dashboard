@@ -13,7 +13,7 @@ import { messages } from "./messages";
 
 const authorizedFetch = createFetch();
 
-export const DevModePanel: React.FC = () => {
+export const DevModePanel = () => {
   const intl = useIntl();
   const { rootStyle } = useDashboardTheme();
   const { markOnboardingStepAsCompleted } = useOnboarding();

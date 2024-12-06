@@ -26,7 +26,7 @@ export interface RichTextEditorProps extends Omit<EditorJsProps, "onChange"> {
   onBlur?: () => void;
 }
 
-const RichTextEditor: React.FC<RichTextEditorProps> = ({
+const RichTextEditor = ({
   id: defaultId,
   disabled,
   error,
@@ -38,7 +38,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   onChange,
   onBlur,
   ...props
-}) => {
+}: RichTextEditorProps) => {
   const classes = useStyles({});
   const id = useId(defaultId);
   const [isFocused, setIsFocused] = React.useState(false);

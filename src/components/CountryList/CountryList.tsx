@@ -71,7 +71,7 @@ const useStyles = makeStyles(
   }),
   { name: "CountryList" },
 );
-const CountryList: React.FC<CountryListProps> = props => {
+const CountryList = (props: CountryListProps) => {
   const { countries, disabled, emptyText, title, onCountryAssign, onCountryUnassign } = props;
   const classes = useStyles(props);
   const [isCollapsed, setCollapseStatus] = React.useState(true);

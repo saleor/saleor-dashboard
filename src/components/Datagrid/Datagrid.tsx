@@ -101,7 +101,7 @@ export interface DatagridProps {
   navigatorOpts?: NavigatorOpts;
 }
 
-export const Datagrid: React.FC<DatagridProps> = ({
+export const Datagrid = ({
   availableColumns,
   emptyText,
   getCellContent,
@@ -133,7 +133,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   renderHeader,
   navigatorOpts,
   ...datagridProps
-}): ReactElement => {
+}: DatagridProps): ReactElement => {
   const classes = useStyles({ actionButtonPosition });
   const { themeValues, theme } = useTheme();
   const datagridTheme = useDatagridTheme(readonly, readonly);

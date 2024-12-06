@@ -14,13 +14,13 @@ interface TopNavProps {
   isAlignToRight?: boolean;
 }
 
-export const Root: React.FC<PropsWithChildren<TopNavProps>> = ({
+export const Root = ({
   title,
   href,
   withoutBorder = false,
   isAlignToRight = true,
   children,
-}) => {
+}: PropsWithChildren<TopNavProps>) => {
   const { channel, isPickerActive, setChannel } = useAppChannel(false);
   const user = useUser();
   const channels = user?.user?.accessibleChannels ?? [];

@@ -26,11 +26,7 @@ export interface TranslationsMenuItemProps {
   params: TranslationsMenuItemQueryParams;
 }
 
-const TranslationsMenuItem: React.FC<TranslationsMenuItemProps> = ({
-  id,
-  languageCode,
-  params,
-}) => {
+const TranslationsMenuItem = ({ id, languageCode, params }: TranslationsMenuItemProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

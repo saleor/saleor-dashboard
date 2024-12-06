@@ -6,7 +6,7 @@ interface DeletableItemProps {
   id: string;
 }
 
-const DeletableItem: React.FC<DeletableItemProps> = ({ onDelete, id }) => {
+const DeletableItem = ({ onDelete, id }: DeletableItemProps) => {
   const handleDelete = () => onDelete(id);
 
   return (

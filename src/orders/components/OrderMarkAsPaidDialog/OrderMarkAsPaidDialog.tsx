@@ -18,7 +18,7 @@ export interface OrderMarkAsPaidDialogProps {
   handleTransactionReference: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const OrderMarkAsPaidDialog: React.FC<OrderMarkAsPaidDialogProps> = ({
+const OrderMarkAsPaidDialog = ({
   confirmButtonState,
   errors: apiErrors,
   handleTransactionReference,
@@ -26,7 +26,7 @@ const OrderMarkAsPaidDialog: React.FC<OrderMarkAsPaidDialogProps> = ({
   onConfirm,
   open,
   transactionReference,
-}) => {
+}: OrderMarkAsPaidDialogProps) => {
   const intl = useIntl();
   const errors = useModalDialogErrors(apiErrors, open);
 

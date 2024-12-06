@@ -12,7 +12,7 @@ interface TopNavMenuProps {
   dataTestId?: string;
 }
 
-export const Menu: React.FC<TopNavMenuProps> = ({ items, dataTestId }) => (
+export const Menu = ({ items, dataTestId }: TopNavMenuProps) => (
   <Dropdown data-test-id={dataTestId}>
     <Dropdown.Trigger>
       <Button icon={<ConfigurationIcon />} variant="secondary" data-test-id="show-more-button" />

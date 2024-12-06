@@ -26,11 +26,11 @@ export interface TranslationsShippingMethodProps {
   params: TranslationsShippingMethodQueryParams;
 }
 
-const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({
+const TranslationsShippingMethod = ({
   id,
   languageCode,
   params,
-}) => {
+}: TranslationsShippingMethodProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

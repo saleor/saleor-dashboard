@@ -28,7 +28,7 @@ export interface OrderCustomerAddressesSearchProps {
   exitSearch: () => any;
 }
 
-const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> = props => {
+const OrderCustomerAddressesSearch = (props: OrderCustomerAddressesSearchProps) => {
   const {
     type,
     cloneAddress,

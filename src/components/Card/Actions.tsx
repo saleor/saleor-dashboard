@@ -1,12 +1,12 @@
 import { Box, PropsWithBox } from "@saleor/macaw-ui-next";
 import React from "react";
 
-export const Actions: React.FC<PropsWithBox<{ children: React.ReactNode }>> = ({
+export const Actions = ({
   children,
   className,
   style,
   ...rest
-}) => (
+}: PropsWithBox<{ children: React.ReactNode }>) => (
   <Box
     display="flex"
     flexDirection="row"

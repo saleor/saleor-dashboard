@@ -15,7 +15,7 @@ export interface BulkAttributeUnassignDialogProps {
   onConfirm: () => void;
 }
 
-const BulkAttributeUnassignDialog: React.FC<BulkAttributeUnassignDialogProps> = ({
+const BulkAttributeUnassignDialog = ({
   title,
   attributeQuantity,
   confirmButtonState,
@@ -23,7 +23,7 @@ const BulkAttributeUnassignDialog: React.FC<BulkAttributeUnassignDialogProps> = 
   itemTypeName,
   onClose,
   onConfirm,
-}) => {
+}: BulkAttributeUnassignDialogProps) => {
   const intl = useIntl();
 
   return (

@@ -33,13 +33,13 @@ export interface OrderChangeWarehouseDialogProps {
   onClose: () => any;
 }
 
-export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProps> = ({
+export const OrderChangeWarehouseDialog = ({
   open,
   line,
   currentWarehouseId,
   onConfirm,
   onClose,
-}) => {
+}: OrderChangeWarehouseDialogProps) => {
   const classes = useStyles();
   const intl = useIntl();
   const { anchor, position, setAnchor } = useElementScroll();

@@ -53,7 +53,7 @@ export interface AssignAttributeDialogProps extends FetchMoreProps {
 }
 
 const scrollableTargetId = "assignAttributeScrollableDialog";
-const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
+const AssignAttributeDialog = ({
   attributes,
   confirmButtonState,
   errors: apiErrors,

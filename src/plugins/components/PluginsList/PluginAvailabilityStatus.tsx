@@ -12,9 +12,9 @@ interface PluginAvailabilityStatusProps {
   plugin: PluginBaseFragment;
 }
 
-const PluginAvailabilityStatus: React.FC<PluginAvailabilityStatusProps> = ({
+const PluginAvailabilityStatus = ({
   plugin: { globalConfiguration, channelConfigurations },
-}) => {
+}: PluginAvailabilityStatusProps) => {
   const intl = useIntl();
   const isGlobalPlugin = isPluginGlobal(globalConfiguration);
   const activeChannelsCount = getActiveChannelConfigsCount(channelConfigurations);

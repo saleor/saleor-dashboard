@@ -12,12 +12,12 @@ interface AllAppListProps {
   navigateToGithubForkPage?: (githubForkUrl: string) => void;
 }
 
-const AllAppList: React.FC<AllAppListProps> = ({
+const AllAppList = ({
   appList,
   appInstallationList,
   navigateToAppInstallPage,
   navigateToGithubForkPage,
-}) => {
+}: AllAppListProps) => {
   const { themeValues } = useTheme();
 
   return (

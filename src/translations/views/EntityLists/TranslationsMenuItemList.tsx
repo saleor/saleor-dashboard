@@ -9,7 +9,7 @@ import React from "react";
 import { TranslationsEntityListProps } from "./types";
 import { sumCompleted } from "./utils";
 
-const TranslationsMenuItemList: React.FC<TranslationsEntityListProps> = ({ params, variables }) => {
+const TranslationsMenuItemList = ({ params, variables }: TranslationsEntityListProps) => {
   const { data, loading } = useMenuItemTranslationsQuery({
     displayLoader: true,
     variables,

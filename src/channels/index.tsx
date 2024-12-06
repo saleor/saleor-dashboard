@@ -18,19 +18,19 @@ import ChannelCreateComponent from "./views/ChannelCreate";
 import ChannelDetailsComponent from "./views/ChannelDetails";
 import ChannelsListComponent from "./views/ChannelsList";
 
-const ChannelDetails: React.FC<RouteComponentProps<any>> = ({ match }) => {
+const ChannelDetails = ({ match }: RouteComponentProps<any>) => {
   const params = parseQs(location.search.substr(1));
 
   return <ChannelDetailsComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
-const ChannelsList: React.FC<RouteComponentProps> = ({ location }) => {
+const ChannelsList = ({ location }: RouteComponentProps) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: ChannelsListUrlQueryParams = asSortParams(qs, ChannelsListUrlSortField);
 
   return <ChannelsListComponent params={params} />;
 };
 
-export const ChannelsSection: React.FC<{}> = () => {
+export const ChannelsSection = () => {
   const intl = useIntl();
 
   return (

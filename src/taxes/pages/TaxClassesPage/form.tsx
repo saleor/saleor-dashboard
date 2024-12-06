@@ -107,13 +107,13 @@ function useTaxClassesForm(
   };
 }
 
-const TaxClassesForm: React.FC<TaxClassesFormProps> = ({
+const TaxClassesForm = ({
   children,
   taxClass,
   onTaxClassCreate,
   onTaxClassUpdate,
   disabled,
-}) => {
+}: TaxClassesFormProps) => {
   const props = useTaxClassesForm(taxClass, onTaxClassCreate, onTaxClassUpdate, disabled);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;

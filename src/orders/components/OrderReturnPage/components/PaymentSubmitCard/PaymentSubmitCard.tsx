@@ -87,7 +87,7 @@ interface PaymentSubmitCardProps {
   onRefund: () => void;
 }
 
-export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
+export const PaymentSubmitCard = (props: PaymentSubmitCardProps) => {
   const {
     data,
     order,

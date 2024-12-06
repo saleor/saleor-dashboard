@@ -16,12 +16,12 @@ interface HeaderOptionsProps {
   onAppDeleteOpen: () => void;
 }
 
-const HeaderOptions: React.FC<HeaderOptionsProps> = ({
+const HeaderOptions = ({
   isActive,
   onAppActivateOpen,
   onAppDeactivateOpen,
   onAppDeleteOpen,
-}) => {
+}: HeaderOptionsProps) => {
   const intl = useIntl();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const tooltipContent = !hasManagedAppsPermission

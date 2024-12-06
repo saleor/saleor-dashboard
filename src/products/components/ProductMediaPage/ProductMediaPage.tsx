@@ -82,7 +82,7 @@ interface ProductMediaPageProps {
   onSubmit: (data: { description: string }) => void;
 }
 
-const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
+const ProductMediaPage = (props: ProductMediaPageProps) => {
   const {
     productId,
     disabled,

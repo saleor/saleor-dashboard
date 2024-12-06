@@ -10,7 +10,7 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 
-const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+const AuthProvider = ({ children }: AuthProviderProps) => {
   const apolloClient = useApolloClient();
   const intl = useIntl();
   const notify = useNotifier();

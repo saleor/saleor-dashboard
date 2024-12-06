@@ -27,7 +27,7 @@ const statusesToShow = [
   FulfillmentStatus.RETURNED,
   FulfillmentStatus.WAITING_FOR_APPROVAL,
 ];
-const ActionButtons: React.FC<AcionButtonsProps> = ({
+const ActionButtons = ({
   orderId,
   status,
   trackingNumber,
@@ -36,7 +36,7 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
   hasTransactions,
   onTrackingCodeAdd,
   onApprove,
-}) => {
+}: AcionButtonsProps) => {
   const classes = useStyles();
   const hasTrackingNumber = !!trackingNumber;
 

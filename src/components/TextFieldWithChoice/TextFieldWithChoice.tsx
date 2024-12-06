@@ -40,7 +40,7 @@ const useStyles = makeStyles(
   },
   { name: "TextFieldWithChoice" },
 );
-const TextFieldWithChoice: React.FC<TextFieldWithChoiceProps> = props => {
+const TextFieldWithChoice = (props: TextFieldWithChoiceProps) => {
   const { ChoiceProps, InputProps, onChange, ...rest } = props;
   const classes = useStyles(props);
   const anchor = React.useRef<HTMLDivElement>();

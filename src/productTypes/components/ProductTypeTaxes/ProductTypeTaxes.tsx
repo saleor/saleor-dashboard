@@ -28,7 +28,7 @@ const useStyles = makeStyles(
   },
   { name: "ProductTypeTaxes" },
 );
-const ProductTypeTaxes: React.FC<ProductTypeTaxesProps> = props => {
+const ProductTypeTaxes = (props: ProductTypeTaxesProps) => {
   const { data, disabled, taxClasses, taxClassDisplayName, onChange, onFetchMore } = props;
   const classes = useStyles(props);
   const intl = useIntl();

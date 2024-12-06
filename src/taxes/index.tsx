@@ -16,17 +16,17 @@ import TaxChannelsListComponent from "./views/TaxChannelsList";
 import TaxClassesListComponent from "./views/TaxClassesList";
 import TaxCountriesListComponent from "./views/TaxCountriesList";
 
-const TaxChannelsList: React.FC<RouteComponentProps<{ id: string }>> = ({ match, location }) => {
+const TaxChannelsList = ({ match, location }: RouteComponentProps<{ id: string }>) => {
   const qs: TaxesUrlQueryParams = parseQs(location.search.substring(1));
 
   return <TaxChannelsListComponent id={decodeURIComponent(match.params.id)} params={qs} />;
 };
-const TaxCountriesList: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
+const TaxCountriesList = ({ match }: RouteComponentProps<{ id: string }>) => {
   const qs: TaxesUrlQueryParams = parseQs(location.search.substring(1));
 
   return <TaxCountriesListComponent id={decodeURIComponent(match.params.id)} params={qs} />;
 };
-const TaxClassesList: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => (
+const TaxClassesList = ({ match }: RouteComponentProps<{ id: string }>) => (
   <TaxClassesListComponent id={decodeURIComponent(match.params.id)} />
 );
 const Component = () => {

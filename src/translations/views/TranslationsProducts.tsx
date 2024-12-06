@@ -30,11 +30,7 @@ export interface TranslationsProductsProps {
   params: TranslationsProductsQueryParams;
 }
 
-const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
-  id,
-  languageCode,
-  params,
-}) => {
+const TranslationsProducts = ({ id, languageCode, params }: TranslationsProductsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

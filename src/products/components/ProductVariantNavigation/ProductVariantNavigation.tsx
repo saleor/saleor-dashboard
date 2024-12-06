@@ -28,7 +28,7 @@ interface ProductVariantNavigationProps {
   onReorder: ReorderAction;
 }
 
-const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props => {
+const ProductVariantNavigation = (props: ProductVariantNavigationProps) => {
   const { current, defaultVariantId, productId, isCreate, variants, onReorder } = props;
   const navigate = useNavigator();
   const intl = useIntl();

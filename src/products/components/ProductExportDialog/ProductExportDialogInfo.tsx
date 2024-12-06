@@ -102,11 +102,16 @@ const useStyles = makeStyles(
     name: "ProductExportDialogInfo",
   },
 );
-const Option: React.FC<{
+const Option = ({
+  checked,
+  children,
+  name,
+  onChange,
+}: {
   checked: boolean;
   name: string;
   onChange: (event: ChangeEvent) => void;
-}> = ({ checked, children, name, onChange }) => {
+}) => {
   const classes = useStyles({});
 
   return (
@@ -124,14 +129,18 @@ const Option: React.FC<{
     />
   );
 };
-const FieldAccordion: React.FC<
-  AccordionProps & {
-    data: ExportProductsInput;
-    fields: ProductFieldEnum[];
-    onChange: (event: ChangeEvent) => void;
-    onToggleAll: (field: ProductFieldEnum[], setTo: boolean) => void;
-  }
-> = ({ data, fields, onChange, onToggleAll, ...props }) => {
+const FieldAccordion = ({
+  data,
+  fields,
+  onChange,
+  onToggleAll,
+  ...props
+}: AccordionProps & {
+  data: ExportProductsInput;
+  fields: ProductFieldEnum[];
+  onChange: (event: ChangeEvent) => void;
+  onToggleAll: (field: ProductFieldEnum[], setTo: boolean) => void;
+}) => {
   const classes = useStyles({});
   const getFieldLabel = useProductExportFieldMessages();
   const selectedAll = fields.every(field => data.exportInfo.fields.includes(field));
@@ -211,7 +220,7 @@ export interface ProductExportDialogInfoProps extends FetchMoreProps {
   onChannelSelect: (option: ChannelFragment) => void;
 }
 
-const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
+const ProductExportDialogInfo = ({
   attributes,
   channels,
   data,
@@ -228,7 +237,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
   onFetchMore,
   onSelectAllChannels,
   onSelectAllWarehouses,
-}) => {
+}: ProductExportDialogInfoProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const [query, onQueryChange] = useSearchQuery(onFetch);

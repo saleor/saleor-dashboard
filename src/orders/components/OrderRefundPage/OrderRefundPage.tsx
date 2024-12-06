@@ -34,7 +34,7 @@ export interface OrderRefundPageProps {
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
 
-const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
+const OrderRefundPage = (props: OrderRefundPageProps) => {
   const { order, defaultType = OrderRefundType.PRODUCTS, disabled, errors = [], onSubmit } = props;
   const intl = useIntl();
   const unfulfilledLines = order?.lines.filter(line => line.quantityToFulfill > 0);

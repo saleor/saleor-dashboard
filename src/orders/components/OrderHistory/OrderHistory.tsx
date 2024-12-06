@@ -29,7 +29,7 @@ interface OrderHistoryProps {
   onNoteAdd: (data: FormData) => SubmitPromise;
 }
 
-const OrderHistory: React.FC<OrderHistoryProps> = props => {
+const OrderHistory = (props: OrderHistoryProps) => {
   const { history, orderCurrency, onNoteAdd } = props;
   const intl = useIntl();
   const getTimelineEventTitleProps = (event: OrderEventFragment): Partial<TimelineEventProps> => {

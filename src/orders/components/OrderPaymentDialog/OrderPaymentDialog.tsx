@@ -26,14 +26,14 @@ export interface OrderPaymentDialogProps {
   onSubmit: (data: FormData) => void;
 }
 
-const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
+const OrderPaymentDialog = ({
   confirmButtonState,
   errors,
   open,
   initial,
   onClose,
   onSubmit,
-}) => {
+}: OrderPaymentDialogProps) => {
   const intl = useIntl();
   const formFields = ["payment"];
   const formErrors = getFormErrors(formFields, errors);

@@ -34,7 +34,7 @@ interface SaleListProps {
   params: SaleListUrlQueryParams;
 }
 
-export const SaleList: React.FC<SaleListProps> = ({ params }) => {
+export const SaleList = ({ params }: SaleListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.SALES_LIST);

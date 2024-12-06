@@ -22,13 +22,13 @@ export interface CategoryCreatePageProps {
   onSubmit: (data: CategoryCreateData) => any;
 }
 
-export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
+export const CategoryCreatePage = ({
   disabled,
   onSubmit,
   errors,
   saveButtonBarState,
   backUrl,
-}) => {
+}: CategoryCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
 

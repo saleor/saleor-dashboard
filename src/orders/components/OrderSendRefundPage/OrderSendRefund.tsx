@@ -29,13 +29,13 @@ export interface OrderSendRefundPageProps {
   addManualRefundError: string | undefined;
 }
 
-const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
+const OrderSendRefundPage = ({
   order,
   loading,
   onAddManualRefund,
   addManualRefundState,
   addManualRefundError,
-}) => {
+}: OrderSendRefundPageProps) => {
   const classes = useStyles();
   const currency = order?.totalBalance?.currency || "";
   const transactions = order?.transactions ?? [];

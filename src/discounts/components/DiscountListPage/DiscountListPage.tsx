@@ -31,7 +31,7 @@ export interface DiscountListPageProps
   promotions: PromotionFragment[];
 }
 
-const DiscountListPage: React.FC<DiscountListPageProps> = ({
+const DiscountListPage = ({
   initialSearch,
   onSearchChange,
   onFilterPresetChange,
@@ -42,9 +42,8 @@ const DiscountListPage: React.FC<DiscountListPageProps> = ({
   hasPresetsChanged,
   filterPresets,
   selectedFilterPreset,
-
   ...listProps
-}) => {
+}: DiscountListPageProps) => {
   const intl = useIntl();
   const navigation = useNavigator();
   const location = useLocation();
