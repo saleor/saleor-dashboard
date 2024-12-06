@@ -1,7 +1,6 @@
 import { CircularProgress } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React from "react";
 
 interface ContentWithProgressProps {
   containerClassName?: string;

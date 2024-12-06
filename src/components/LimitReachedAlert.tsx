@@ -1,7 +1,6 @@
 import { Alert, AlertProps } from "@saleor/macaw-ui";
 import { sprinkles } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
 
 export type LimitReachedAlertProps = Omit<AlertProps, "variant" | "close">;
 

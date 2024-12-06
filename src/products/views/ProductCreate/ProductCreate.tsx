@@ -46,7 +46,7 @@ import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreat
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseAddPath } from "@dashboard/warehouses/urls";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
-import React, { useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { PRODUCT_CREATE_FORM_ID } from "./consts";
@@ -62,7 +62,7 @@ export const ProductCreateView = ({ params }: ProductCreateProps) => {
   const shop = useShop();
   const { markOnboardingStepAsCompleted } = useOnboarding();
   const intl = useIntl();
-  const [productCreateComplete, setProductCreateComplete] = React.useState(false);
+  const [productCreateComplete, setProductCreateComplete] = useState(false);
   const selectedProductTypeId = params["product-type-id"];
   const handleSelectProductType = (productTypeId: string) =>
     navigate(
@@ -224,7 +224,7 @@ export const ProductCreateView = ({ params }: ProductCreateProps) => {
       }),
     );
 
-  React.useEffect(() => {
+  useEffect(() => {
     const productId = productCreateOpts.data?.productCreate?.product?.id;
 
     if (productCreateComplete && productId) {

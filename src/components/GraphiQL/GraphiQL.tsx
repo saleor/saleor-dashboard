@@ -21,7 +21,8 @@ import {
   WriteableEditorProps,
 } from "@graphiql/react";
 import clsx from "clsx";
-import React, { ComponentType, PropsWithChildren, ReactNode, useState } from "react";
+import { ComponentType, PropsWithChildren, ReactNode, useState } from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import DryRun from "../DryRun";

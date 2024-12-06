@@ -13,7 +13,7 @@ import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
+import { useState, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import TaxCountryDialog from "../components/TaxCountryDialog";
@@ -73,14 +73,14 @@ export const TaxCountriesList = ({ id, params }: TaxCountriesListProps) => {
     params => taxCountriesListUrl(id, params),
     params,
   );
-  const [newCountry, setNewCountry] = React.useState<TaxCountryConfigurationFragment>();
+  const [newCountry, setNewCountry] = useState<TaxCountryConfigurationFragment>();
   const { data, refetch, loading: queryInProgress } = useTaxCountriesListQuery();
   const { data: taxClassesData } = useTaxClassesListQuery({
     variables: { first: 100 },
   });
   const taxCountryConfigurations = data?.taxCountryConfigurations;
   const taxClasses = mapEdgesToItems(taxClassesData?.taxClasses);
-  const allCountryTaxes: TaxCountryConfigurationFragment[] = React.useMemo(() => {
+  const allCountryTaxes: TaxCountryConfigurationFragment[] = useMemo(() => {
     if (taxClasses && taxCountryConfigurations) {
       return [
         ...(newCountry ? [newCountry] : []),

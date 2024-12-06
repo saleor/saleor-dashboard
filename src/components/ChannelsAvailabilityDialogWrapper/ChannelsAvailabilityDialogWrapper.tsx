@@ -4,7 +4,7 @@ import Label from "@dashboard/orders/components/OrderHistory/Label";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 export const useStyles = makeStyles(

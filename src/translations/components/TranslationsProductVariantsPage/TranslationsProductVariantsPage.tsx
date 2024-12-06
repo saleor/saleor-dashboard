@@ -15,7 +15,6 @@ import {
   TranslatableEntities,
 } from "@dashboard/translations/urls";
 import { mapAttributeValuesToTranslationFields } from "@dashboard/translations/utils";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import ProductContextSwitcher from "../ProductContextSwitcher";

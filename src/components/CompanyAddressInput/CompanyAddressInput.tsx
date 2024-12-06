@@ -1,5 +1,3 @@
-import React from "react";
-
 import { DashboardCard } from "../Card";
 import CompanyAddressForm, { CompanyAddressFormProps } from "./CompanyAddressForm";
 

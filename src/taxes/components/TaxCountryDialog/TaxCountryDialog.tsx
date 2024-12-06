@@ -8,7 +8,7 @@ import { taxesMessages } from "@dashboard/taxes/messages";
 import { Divider, FormControlLabel, InputAdornment, Radio, TextField } from "@material-ui/core";
 import { SearchIcon } from "@saleor/macaw-ui";
 import { Box, Button } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState, Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
@@ -28,7 +28,7 @@ export const TaxCountryDialog = ({
 }: TaxCountryDialogProps) => {
   const classes = useStyles();
   const intl = useIntl();
-  const [selectedCountry, setSelectedCountry] = React.useState<CountryFragment>();
+  const [selectedCountry, setSelectedCountry] = useState<CountryFragment>();
 
   useModalDialogOpen(open, {
     onClose: () => {
@@ -76,7 +76,7 @@ export const TaxCountryDialog = ({
           __paddingLeft={15}
         >
           {filteredCountries.map(country => (
-            <React.Fragment key={country.code}>
+            <Fragment key={country.code}>
               <FormControlLabel
                 data-test-id="country-row"
                 label={country.country}
@@ -85,7 +85,7 @@ export const TaxCountryDialog = ({
                 control={<Radio />}
               />
               <Divider />
-            </React.Fragment>
+            </Fragment>
           ))}
         </Box>
 

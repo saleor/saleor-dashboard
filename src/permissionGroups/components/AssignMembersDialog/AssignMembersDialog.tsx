@@ -14,7 +14,7 @@ import { DialogProps, FetchMoreProps, RelayToFlat, SearchPageProps } from "@dash
 import { Checkbox, CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -122,7 +122,7 @@ const AssignMembersDialog = ({
   const intl = useIntl();
   const classes = useStyles({});
   const [query, onQueryChange] = useSearchQuery(onSearchChange);
-  const [selectedMembers, setSelectedMembers] = React.useState<
+  const [selectedMembers, setSelectedMembers] = useState<
     RelayToFlat<SearchStaffMembersQuery["search"]>
   >([]);
 

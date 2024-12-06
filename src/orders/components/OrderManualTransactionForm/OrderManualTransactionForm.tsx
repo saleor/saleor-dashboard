@@ -1,5 +1,4 @@
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import React from "react";
 
 import { ManualTransactionContext } from "./context";
 import { useManualRefund } from "./hooks";

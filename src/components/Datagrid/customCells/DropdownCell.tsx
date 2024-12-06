@@ -8,7 +8,7 @@ import {
 } from "@glideapps/glide-data-grid";
 import { Option } from "@saleor/macaw-ui-next";
 import pick from "lodash/pick";
-import React from "react";
+import { useState, useCallback } from "react";
 
 export type DropdownCellGetSuggestionsFn = (text: string) => Promise<Option[]>;
 export interface DropdownCellProps {
@@ -31,9 +31,9 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
   value: cell,
   onFinishedEditing,
 }) => {
-  const [data, setData] = React.useState<Option[]>([]);
+  const [data, setData] = useState<Option[]>([]);
 
-  const getChoices = React.useCallback(
+  const getChoices = useCallback(
     async (text: string) => {
       setData((await cell.data?.update?.(text)) ?? []);
     },

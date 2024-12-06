@@ -6,7 +6,6 @@ import FormSpacer from "@dashboard/components/FormSpacer";
 import { Select } from "@dashboard/components/Select";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { Option } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 interface ProductCategoryAndCollectionsFormProps {

@@ -12,7 +12,7 @@ import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle
 import { DialogProps, FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState, Fragment } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -59,7 +59,7 @@ const AssignVariantDialog = (props: AssignVariantDialogProps) => {
   const scrollableDialogClasses = useScrollableDialogStyle({});
   const intl = useIntl();
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
-  const [variants, setVariants] = React.useState<VariantWithProductLabel[]>([]);
+  const [variants, setVariants] = useState<VariantWithProductLabel[]>([]);
   const productChoices = products?.filter(product => product?.variants?.length > 0) || [];
   const selectedVariantsToProductsMap = productChoices
     ? productChoices.map(product =>
@@ -119,7 +119,7 @@ const AssignVariantDialog = (props: AssignVariantDialogProps) => {
                 {renderCollection(
                   productChoices,
                   (product, productIndex) => (
-                    <React.Fragment key={product ? product.id : "skeleton"}>
+                    <Fragment key={product ? product.id : "skeleton"}>
                       <TableRowLink>
                         <TableCell padding="checkbox" className={classes.productCheckboxCell}>
                           <Checkbox
@@ -183,7 +183,7 @@ const AssignVariantDialog = (props: AssignVariantDialogProps) => {
                           </TableCell>
                         </TableRowLink>
                       ))}
-                    </React.Fragment>
+                    </Fragment>
                   ),
                   () => (
                     <Text className={classes.noContentText}>

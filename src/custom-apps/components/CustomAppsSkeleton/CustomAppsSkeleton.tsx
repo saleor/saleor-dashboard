@@ -1,7 +1,6 @@
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { TableCell } from "@material-ui/core";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { useStyles } from "./styles";
 

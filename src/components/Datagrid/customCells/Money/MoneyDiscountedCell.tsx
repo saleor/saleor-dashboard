@@ -7,7 +7,7 @@ import {
 } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
 import { useOrderLineDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import { CustomCell, CustomRenderer, GridCellKind } from "@glideapps/glide-data-grid";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 
 import { cellHeight } from "../../styles";
 import { drawCurrency, drawLineCrossedPrice, drawPrice, getFormattedMoney } from "./utils";

@@ -6,7 +6,6 @@ import { useGiftCardPermissions } from "@dashboard/giftCards/hooks/useGiftCardPe
 import { giftCardsListPath } from "@dashboard/giftCards/urls";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { getStringOrPlaceholder } from "@dashboard/misc";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { giftCardsListTableMessages as tableMessages } from "../../GiftCardsList/messages";

@@ -11,7 +11,7 @@ import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle
 import { DialogProps, FetchMoreProps } from "@dashboard/types";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect } from "react";
+import { useState, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -59,7 +59,7 @@ const AssignProductDialog = (props: AssignProductDialogProps) => {
   const scrollableDialogClasses = useScrollableDialogStyle({});
   const intl = useIntl();
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
-  const [productsDict, setProductsDict] = React.useState(selectedIds || {});
+  const [productsDict, setProductsDict] = useState(selectedIds || {});
 
   useEffect(() => {
     if (selectedIds) {

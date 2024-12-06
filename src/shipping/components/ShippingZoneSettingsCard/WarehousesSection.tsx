@@ -3,7 +3,6 @@ import { Multiselect } from "@dashboard/components/Combobox";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { FetchMoreProps, SearchProps } from "@dashboard/types";
 import { Box, Button, Option } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 const messages = defineMessages({

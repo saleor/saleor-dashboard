@@ -5,7 +5,8 @@ import useForm, { CommonUseFormResultWithHandlers, SubmitPromise } from "@dashbo
 import useFormset, { FormsetChange, FormsetData } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { getById } from "@dashboard/misc";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+import * as React from "react";
 
 import { OrderRefundAmountCalculationMode } from "../OrderRefundPage/form";
 import { useFulfillmentFormset } from "./useFulfillmentFormset";

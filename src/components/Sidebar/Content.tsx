@@ -1,6 +1,5 @@
 import { useCloud } from "@dashboard/auth/hooks/useCloud";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { Menu } from "./menu";
 import { EnvironmentLink } from "./menu/EnvironmentLink";

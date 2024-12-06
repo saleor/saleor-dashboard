@@ -5,7 +5,7 @@ import {
   Props as ReactEditorJSProps,
   ReactEditorJS as BaseReactEditorJS,
 } from "@react-editor-js/core";
-import React from "react";
+import { useCallback } from "react";
 
 // Source of @react-editor-js
 class ClientEditorCore implements EditorCore {
@@ -58,7 +58,7 @@ class ClientEditorCore implements EditorCore {
 export type Props = Omit<ReactEditorJSProps, "factory">;
 
 function ReactEditorJSClient(props: Props) {
-  const factory = React.useCallback((config: EditorConfig) => new ClientEditorCore(config), []);
+  const factory = useCallback((config: EditorConfig) => new ClientEditorCore(config), []);
 
   return <BaseReactEditorJS factory={factory} {...props} />;
 }

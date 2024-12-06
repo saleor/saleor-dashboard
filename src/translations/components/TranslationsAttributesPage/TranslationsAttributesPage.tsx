@@ -14,7 +14,6 @@ import {
   TranslatableEntities,
 } from "@dashboard/translations/urls";
 import { ListSettings } from "@dashboard/types";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { getTranslationFields } from "../../utils";

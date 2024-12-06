@@ -8,7 +8,7 @@ import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { OutputData } from "@editorjs/editorjs";
 import { TextField } from "@material-ui/core";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 interface CategoryDetailsFormProps {

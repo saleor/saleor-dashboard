@@ -1,5 +1,4 @@
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 
 export enum LabelSizes {
   sm = 12,

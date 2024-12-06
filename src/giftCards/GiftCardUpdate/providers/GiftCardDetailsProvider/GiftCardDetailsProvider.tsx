@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { GiftCardDetailsQuery, useGiftCardDetailsQuery } from "@dashboard/graphql";
-import React, { createContext } from "react";
+import { createContext } from "react";
+import * as React from "react";
 
 import { ExtendedGiftCard } from "./types";
 import { getExtendedGiftCard } from "./utils";

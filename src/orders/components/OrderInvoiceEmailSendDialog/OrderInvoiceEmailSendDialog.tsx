@@ -7,7 +7,6 @@ import { buttonMessages } from "@dashboard/intl";
 import { DialogProps } from "@dashboard/types";
 import getInvoiceErrorMessage from "@dashboard/utils/errors/invoice";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface OrderInvoiceEmailSendDialogProps extends DialogProps {

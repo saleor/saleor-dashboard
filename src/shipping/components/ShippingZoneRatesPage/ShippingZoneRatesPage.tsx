@@ -34,7 +34,7 @@ import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import React, { FormEventHandler } from "react";
+import { useMemo, FormEventHandler } from "react";
 
 import ShippingMethodTaxes from "../ShippingMethodTaxes";
 import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
@@ -98,7 +98,7 @@ export const ShippingZoneRatesPage = ({
 }: ShippingZoneRatesPageProps) => {
   const navigate = useNavigator();
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
-  const initialForm: Omit<ShippingZoneRateUpdateFormData, "description"> = React.useMemo(
+  const initialForm: Omit<ShippingZoneRateUpdateFormData, "description"> = useMemo(
     () => ({
       channelListings: shippingChannels,
       maxDays: rate?.maximumDeliveryDays?.toString() || "",

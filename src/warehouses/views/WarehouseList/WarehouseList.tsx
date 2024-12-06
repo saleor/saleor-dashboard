@@ -28,7 +28,7 @@ import {
   WarehouseListUrlDialog,
   WarehouseListUrlQueryParams,
 } from "@dashboard/warehouses/urls";
-import React from "react";
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -54,7 +54,7 @@ const WarehouseList = ({ params }: WarehouseListProps) => {
   usePaginationReset(warehouseListUrl, params, settings.rowNumber);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = React.useMemo(
+  const queryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),

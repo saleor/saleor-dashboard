@@ -3,7 +3,7 @@ import {
   handleStateChangeAfterStepCompleted,
   handleStateChangeAfterToggle,
 } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/utils";
-import React, { useRef } from "react";
+import { createContext, useState, useEffect, useContext, useRef } from "react";
 
 import { useNewUserCheck } from "../hooks/useNewUserCheck";
 import {
@@ -20,11 +20,11 @@ import {
 import { useExpandedOnboardingId } from "./useExpandedOnboardingId";
 import { useOnboardingStorage } from "./useOnboardingStorage";
 
-const OnboardingContext = React.createContext<OnboardingContextType | null>(null);
+const OnboardingContext = createContext<OnboardingContextType | null>(null);
 
 export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
   const analytics = useAnalytics();
-  const [onboardingState, setOnboardingState] = React.useState<OnboardingState>({
+  const [onboardingState, setOnboardingState] = useState<OnboardingState>({
     onboardingExpanded: true,
     stepsCompleted: [],
     stepsExpanded: {} as OnboardingState["stepsExpanded"],
@@ -34,7 +34,7 @@ export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
 
   const storageService = useOnboardingStorage();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (loaded.current || isUserLoading) return;
 
     const onboardingStateFromUserMetadata = storageService.getOnboardingState();
@@ -49,7 +49,7 @@ export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
     loaded.current = true;
   }, [isNewUser, isUserLoading, loaded, storageService]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (loaded.current) {
       storageService.saveOnboardingState(onboardingState);
     }
@@ -121,7 +121,7 @@ export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
 };
 
 export const useOnboarding = () => {
-  const context = React.useContext(OnboardingContext);
+  const context = useContext(OnboardingContext);
 
   if (context === null) {
     throw new Error("useOnboarding must be used within a OnboardingProvider");

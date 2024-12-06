@@ -8,7 +8,8 @@ import { useUpdateEffect } from "@dashboard/hooks/useUpdateEffect";
 import { buttonMessages } from "@dashboard/intl";
 import { toFixed } from "@dashboard/utils/toFixed";
 import { Button, CloseIcon, Input, Text } from "@saleor/macaw-ui-next";
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import * as React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { ORDER_LINE_DISCOUNT, OrderDiscountCommonInput, OrderDiscountType } from "./types";

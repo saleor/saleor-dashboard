@@ -1,6 +1,5 @@
 import { AppLogo } from "@dashboard/apps/types";
 import { Box, GenericAppIcon } from "@saleor/macaw-ui-next";
-import React from "react";
 
 type Logo = AppLogo | undefined;
 type Size = 4 | 8 | 12;

@@ -32,7 +32,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { splitDateTime } from "../../../misc";
@@ -165,7 +165,7 @@ const VoucherDetailsPage = ({
 }: VoucherDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const [localErrors, setLocalErrors] = React.useState<DiscountErrorFragment[]>([]);
+  const [localErrors, setLocalErrors] = useState<DiscountErrorFragment[]>([]);
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const channel = voucher?.channelListings?.find(
     listing => listing.channel.id === selectedChannelId,

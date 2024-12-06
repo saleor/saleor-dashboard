@@ -10,7 +10,6 @@ import { renderCollection } from "@dashboard/misc";
 import { Table, TableBody, TableCell, TableHead, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderRefundFormData } from "../OrderRefundPage/form";

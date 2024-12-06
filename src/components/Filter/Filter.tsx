@@ -4,7 +4,7 @@ import { alpha } from "@material-ui/core/styles";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import { Text, vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React, { useMemo, useState } from "react";
+import { useRef, useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { FilterContent } from ".";
@@ -85,7 +85,7 @@ const useStyles = makeStyles(
 const Filter = (props: FilterProps) => {
   const { currencySymbol, menu, onFilterAdd, onFilterAttributeFocus, errorMessages } = props;
   const classes = useStyles(props);
-  const anchor = React.useRef<HTMLDivElement>();
+  const anchor = useRef<HTMLDivElement>();
   const [isFilterMenuOpened, setFilterMenuOpened] = useState(false);
   const [filterErrors, setFilterErrors] = useState<InvalidFilters<string>>({});
   const [data, dispatch, reset] = useFilter(menu);

@@ -32,7 +32,6 @@ import { siteSettingsUrl } from "@dashboard/siteSettings/urls";
 import { staffListUrl } from "@dashboard/staff/urls";
 import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
 import { warehouseSection } from "@dashboard/warehouses/urls";
-import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 import { ConfigurationPage } from "./ConfigurationPage";

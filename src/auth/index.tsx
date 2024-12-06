@@ -1,6 +1,6 @@
 import { Route } from "@dashboard/components/Router";
 import { parse as parseQs } from "qs";
-import React, { useContext } from "react";
+import { createContext, useContext } from "react";
 import { RouteComponentProps, Switch } from "react-router-dom";
 
 import Layout from "./components/Layout";
@@ -23,7 +23,7 @@ const LoginView = () => {
   return <LoginViewComponent params={params} />;
 };
 
-export const UserContext = React.createContext<Context>({
+export const UserContext = createContext<Context>({
   login: undefined,
   loginByExternalPlugin: undefined,
   logout: undefined,

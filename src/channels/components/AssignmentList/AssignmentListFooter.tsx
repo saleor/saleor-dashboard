@@ -4,7 +4,7 @@ import CardAddItemsFooter from "@dashboard/products/components/ProductStocks/com
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { ClickAwayListener } from "@material-ui/core";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { AssignItem, AssignmentListProps } from "./types";

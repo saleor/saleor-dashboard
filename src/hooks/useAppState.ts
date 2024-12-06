@@ -1,9 +1,9 @@
-import React from "react";
+import { useContext } from "react";
 
 import { AppStateContext } from "../containers/AppState";
 
 function useAppState() {
-  const stateAndDispatch = React.useContext(AppStateContext);
+  const stateAndDispatch = useContext(AppStateContext);
 
   return stateAndDispatch;
 }

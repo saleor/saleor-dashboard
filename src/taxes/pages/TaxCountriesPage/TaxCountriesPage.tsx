@@ -29,7 +29,7 @@ import {
   SearchIcon,
 } from "@saleor/macaw-ui";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState, useMemo, Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TaxInput from "../../components/TaxInput";
@@ -62,8 +62,8 @@ export const TaxCountriesPage = (props: TaxCountriesPageProps) => {
   const intl = useIntl();
   const classes = useStyles();
   const navigate = useNavigator();
-  const [query, setQuery] = React.useState("");
-  const currentCountry = React.useMemo(
+  const [query, setQuery] = useState("");
+  const currentCountry = useMemo(
     () => countryTaxesData?.find(country => country.country.code === selectedCountryId),
     [selectedCountryId, countryTaxesData],
   );
@@ -154,7 +154,7 @@ export const TaxCountriesPage = (props: TaxCountriesPageProps) => {
                           </ListHeader>
                           <Divider />
                           {filteredRates?.map((rate, rateIndex) => (
-                            <React.Fragment key={rate.id}>
+                            <Fragment key={rate.id}>
                               <ListItem
                                 hover={false}
                                 className={classes.noDivider}
@@ -170,7 +170,7 @@ export const TaxCountriesPage = (props: TaxCountriesPageProps) => {
                                 </ListItemCell>
                               </ListItem>
                               {!isLastElement(filteredRates, rateIndex) && <Divider />}
-                            </React.Fragment>
+                            </Fragment>
                           )) ?? <Skeleton />}
                         </List>
                       </>

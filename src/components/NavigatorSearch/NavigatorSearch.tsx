@@ -4,7 +4,7 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import { Box, Divider } from "@saleor/macaw-ui-next";
 import Downshift, { GetItemPropsOptions } from "downshift";
 import hotkeys from "hotkeys-js";
-import React from "react";
+import { useRef, useEffect } from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 import { DashboardModal } from "../Modal";
@@ -95,7 +95,7 @@ const Sections = ({
 
 const NavigatorSearch = () => {
   const { isNavigatorVisible, setNavigatorVisibility } = useNavigatorSearchContext();
-  const input = React.useRef<HTMLInputElement>(null);
+  const input = useRef<HTMLInputElement>(null);
   const [query, mode, change, actions] = useQuickSearch(isNavigatorVisible, input);
   const intl = useIntl();
   const notify = useNotifier();
@@ -104,7 +104,7 @@ const NavigatorSearch = () => {
     false,
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     hotkeys(navigatorHotkey, event => {
       event.preventDefault();
       setNavigatorVisibility(!isNavigatorVisible);

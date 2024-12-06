@@ -1,6 +1,5 @@
 import { useOrderTransactionsDataQuery } from "@dashboard/graphql";
 import { OrderManualTransactionRefundPage } from "@dashboard/orders/components/OrderManualTransactionRefundPage";
-import React from "react";
 
 interface OrderManualTransactionRefundProps {
   orderId: string;

@@ -3,7 +3,7 @@ import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { sectionNames } from "@dashboard/intl";
 import { parse as parseQs } from "qs";
-import React from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 import { RouteComponentProps, Switch } from "react-router-dom";
 
@@ -76,7 +76,7 @@ const CustomAppWebhookDetails = ({ match }: RouteComponentProps<MatchParamsWebho
 };
 const Component = () => {
   const intl = useIntl();
-  const [token, setToken] = React.useState<string>(null);
+  const [token, setToken] = useState<string>(null);
 
   return (
     <>

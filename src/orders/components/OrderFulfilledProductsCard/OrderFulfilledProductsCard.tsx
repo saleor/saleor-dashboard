@@ -6,7 +6,6 @@ import { orderHasTransactions } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
 import { IconButton } from "@saleor/macaw-ui";
 import { Box, Divider } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import OrderCardTitle from "../OrderCardTitle";
 import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid";

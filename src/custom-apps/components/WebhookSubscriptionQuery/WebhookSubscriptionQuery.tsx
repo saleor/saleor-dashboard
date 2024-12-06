@@ -6,7 +6,7 @@ import { WebhookErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { useExplorerPlugin } from "@graphiql/plugin-explorer";
 import { createGraphiQLFetcher } from "@graphiql/toolkit";
-import React from "react";
+import * as React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import GraphiQL from "../../../components/GraphiQL";

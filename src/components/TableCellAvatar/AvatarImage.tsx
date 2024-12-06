@@ -2,7 +2,6 @@ import { Avatar as MuiAvatar } from "@material-ui/core";
 import { ImageIcon } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
 
 import { useAvatarImageStyles } from "./styles";
 

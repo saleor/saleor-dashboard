@@ -14,7 +14,6 @@ import { TableBody, TableCell, TableFooter, TableHead } from "@material-ui/core"
 import EditIcon from "@material-ui/icons/Edit";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 import { useLocation } from "react-router";
 

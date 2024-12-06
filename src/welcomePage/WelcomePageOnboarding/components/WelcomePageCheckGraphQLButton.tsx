@@ -1,6 +1,5 @@
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { Button } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { PrimaryActionProps } from "./type";

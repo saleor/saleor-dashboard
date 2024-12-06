@@ -7,7 +7,6 @@ import { sectionNames } from "@dashboard/intl";
 import { productVariantAddUrl, productVariantEditUrl } from "@dashboard/products/urls";
 import { ReorderAction } from "@dashboard/types";
 import { Box, Button, GripIcon, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 

@@ -12,7 +12,7 @@ import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import { useState, useRef } from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
@@ -60,8 +60,8 @@ const useStyles = makeStyles(
 const LanguageSwitch = (props: LanguageSwitchProps) => {
   const { currentLanguage, languages, getLanguageUrl } = props;
   const classes = useStyles(props);
-  const [isExpanded, setExpandedState] = React.useState(false);
-  const anchor = React.useRef();
+  const [isExpanded, setExpandedState] = useState(false);
+  const anchor = useRef();
 
   return (
     <div className={classes.container} ref={anchor}>

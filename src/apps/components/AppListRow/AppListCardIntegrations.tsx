@@ -1,7 +1,6 @@
 import { AppstoreApi } from "@dashboard/apps/appstore.types";
 import { useTheme } from "@saleor/macaw-ui";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 
 interface AppListCardIntegrationsProps {
   integrations: AppstoreApi.SaleorApp["integrations"];

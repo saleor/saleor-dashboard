@@ -4,7 +4,7 @@ import { ChannelFragment, useBaseChannelsQuery } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import { getById } from "@dashboard/misc";
 import { useSaleorConfig } from "@saleor/sdk";
-import React from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 
 interface UseAppChannel {
   availableChannels: ChannelFragment[];
@@ -17,7 +17,7 @@ export interface AppChannelContextData extends UseAppChannel {
   setPickerActive: (isActive: boolean) => void;
 }
 
-const AppChannelContext = React.createContext<AppChannelContextData>({
+const AppChannelContext = createContext<AppChannelContextData>({
   availableChannels: [],
   channel: undefined,
   isPickerActive: false,
@@ -40,9 +40,9 @@ export const AppChannelProvider = ({ children }) => {
   const { data: channelData, refetch } = useBaseChannelsQuery({
     skip: !authenticated || !user,
   });
-  const [isPickerActive, setPickerActive] = React.useState(false);
+  const [isPickerActive, setPickerActive] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const channels = user?.accessibleChannels ?? [];
     const isValid = isValidChannel(selectedChannel, channels);
 
@@ -54,7 +54,7 @@ export const AppChannelProvider = ({ children }) => {
       setSelectedChannel("");
     }
   }, [selectedChannel, setSelectedChannel, user]);
-  React.useEffect(() => {
+  useEffect(() => {
     setChannel(selectedChannel);
   }, [selectedChannel]);
 
@@ -80,9 +80,9 @@ export const AppChannelProvider = ({ children }) => {
 AppChannelProvider.displayName = "AppChannelProvider";
 
 function useAppChannel(enablePicker = true): UseAppChannel {
-  const { setPickerActive, ...data } = React.useContext(AppChannelContext);
+  const { setPickerActive, ...data } = useContext(AppChannelContext);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (enablePicker) {
       setPickerActive(true);
     }

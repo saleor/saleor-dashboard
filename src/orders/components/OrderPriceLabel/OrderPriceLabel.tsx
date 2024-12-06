@@ -3,7 +3,6 @@ import DiscountedPrice from "@dashboard/components/DiscountedPrice/DiscountedPri
 import Money from "@dashboard/components/Money";
 import { SearchOrderVariantQuery } from "@dashboard/graphql";
 import { Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
 
 import { useStyles } from "./styles";
 

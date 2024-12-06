@@ -2,7 +2,6 @@ import useForm from "@dashboard/hooks/useForm";
 import Wrapper from "@test/wrapper";
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import React from "react";
 
 import { customHeaders } from "./utils.test";
 import WebhookHeaders, { WebhookHeadersProps } from "./WebhookHeaders";

@@ -1,5 +1,3 @@
-import React from "react";
-
 import { LocaleConsumer } from "../Locale";
 import { formatPercantage } from "./utils";
 

@@ -5,7 +5,7 @@ import { ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/
 import { GiftCardDataFragment } from "@dashboard/graphql";
 import { getById } from "@dashboard/misc";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { giftCardDeleteDialogMessages as messages } from "./messages";

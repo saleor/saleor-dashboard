@@ -7,7 +7,6 @@ import { configurationMenuUrl } from "@dashboard/configuration";
 import { PageTypeFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { pageTypeAddUrl, PageTypeListUrlSortField } from "@dashboard/pageTypes/urls";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {

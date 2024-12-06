@@ -5,7 +5,6 @@ import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import camelCase from "lodash/camelCase";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import ExtendedDiscountTimelineEvent from "./ExtendedDiscountTimelineEvent";

@@ -9,7 +9,7 @@ import Hue from "@uiw/react-color-hue";
 import Saturation from "@uiw/react-color-saturation";
 import convert from "color-convert";
 import { RGB } from "color-convert/conversions";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 const useStyles = makeStyles(

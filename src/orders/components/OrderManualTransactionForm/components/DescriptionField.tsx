@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { TextField, TextFieldProps } from "@material-ui/core";
-import React from "react";
 
 import { useManualTransactionContext } from "../context";
 

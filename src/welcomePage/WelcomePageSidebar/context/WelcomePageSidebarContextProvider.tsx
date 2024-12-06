@@ -1,5 +1,5 @@
 import { ChannelFragment } from "@dashboard/graphql";
-import React from "react";
+import * as React from "react";
 
 import { WelcomePageSidebarContext } from "./welcomePageSidebarContext";
 

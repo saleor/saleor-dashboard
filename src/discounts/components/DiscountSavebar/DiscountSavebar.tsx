@@ -2,7 +2,6 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import { Savebar } from "@dashboard/components/Savebar";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
-import React from "react";
 import { useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 

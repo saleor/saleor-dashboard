@@ -1,5 +1,6 @@
 import { Accordion as AccordionMacaw, Box, Divider, sprinkles, Text } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
+import * as React from "react";
 
 export interface AccordionProps {
   className?: string;

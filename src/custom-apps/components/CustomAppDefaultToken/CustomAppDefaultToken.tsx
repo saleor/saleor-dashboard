@@ -3,7 +3,6 @@ import Link from "@dashboard/components/Link";
 import useClipboard from "@dashboard/hooks/useClipboard";
 import CloseIcon from "@material-ui/icons/Close";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { Mono } from "../TokenCreateDialog/Mono";

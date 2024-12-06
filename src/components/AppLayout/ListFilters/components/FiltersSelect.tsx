@@ -10,7 +10,7 @@ import useFilter from "@dashboard/components/Filter/useFilter";
 import { extractInvalidFilters } from "@dashboard/components/Filter/utils";
 import { ClickAwayListener, Grow, Popper } from "@material-ui/core";
 import { DropdownButton, sprinkles } from "@saleor/macaw-ui-next";
-import React, { useMemo, useState } from "react";
+import { useRef, useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { getSelectedFilterAmount } from "../utils";
@@ -30,7 +30,7 @@ export const FiltersSelect = <TFilterKeys extends string = string>({
   onFilterAttributeFocus,
   errorMessages,
 }: FilterProps<TFilterKeys>) => {
-  const anchor = React.useRef<HTMLDivElement>();
+  const anchor = useRef<HTMLDivElement>();
   const [isFilterMenuOpened, setFilterMenuOpened] = useState(false);
   const [filterErrors, setFilterErrors] = useState<InvalidFilters<string>>({});
   const [data, dispatch, reset] = useFilter(menu);

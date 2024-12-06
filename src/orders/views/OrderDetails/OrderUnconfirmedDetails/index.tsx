@@ -30,7 +30,7 @@ import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderD
 import { useOrderVariantSearch } from "@dashboard/searches/useOrderVariantSearch";
 import { PartialMutationProviderOutput } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { customerUrl } from "../../../../customers/urls";
@@ -153,7 +153,7 @@ export const OrderUnconfirmedDetails = ({
       input: data,
     });
   const intl = useIntl();
-  const [transactionReference, setTransactionReference] = React.useState("");
+  const [transactionReference, setTransactionReference] = useState("");
   const errors = orderUpdate.opts.data?.orderUpdate.errors || [];
 
   const hasOrderFulfillmentsFulFilled = order?.fulfillments.some(

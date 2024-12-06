@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useMemo } from "react";
 
 /**
  * This function removes characters which break
@@ -21,8 +21,8 @@ export function useLocalSearch<T>(
   array: T[] | undefined,
   getStringToSearch: (element: T) => string,
 ) {
-  const [query, setQuery] = React.useState("");
-  const searchResult = React.useMemo(
+  const [query, setQuery] = useState("");
+  const searchResult = useMemo(
     () =>
       array?.filter(
         element => getStringToSearch(element).search(new RegExp(parseQuery(query), "i")) >= 0,

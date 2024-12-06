@@ -2,7 +2,8 @@
 import { commonMessages } from "@dashboard/intl";
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 interface DateTimeFieldProps {

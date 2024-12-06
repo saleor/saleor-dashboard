@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { Tooltip } from "@saleor/macaw-ui-next";
 import moment from "moment-timezone";
-import React from "react";
 import ReactMoment from "react-moment";
 
 import { LocaleConsumer } from "../Locale";

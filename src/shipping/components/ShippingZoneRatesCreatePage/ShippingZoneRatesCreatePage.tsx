@@ -29,7 +29,7 @@ import { createChannelsChangeHandler } from "@dashboard/shipping/handlers";
 import { FetchMoreProps } from "@dashboard/types";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import React, { FormEventHandler } from "react";
+import { useState, FormEventHandler } from "react";
 import { useIntl } from "react-intl";
 
 import ShippingMethodTaxes from "../ShippingMethodTaxes";
@@ -93,7 +93,7 @@ export const ShippingZoneRatesCreatePage = ({
     type: null,
     taxClassId: "",
   };
-  const [taxClassDisplayName, setTaxClassDisplayName] = React.useState("");
+  const [taxClassDisplayName, setTaxClassDisplayName] = useState("");
   const {
     change,
     data: formData,

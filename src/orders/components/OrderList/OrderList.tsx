@@ -20,7 +20,6 @@ import { TableBody, TableCell, TableFooter, TableHead } from "@material-ui/core"
 import { CSSProperties } from "@material-ui/styles";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(

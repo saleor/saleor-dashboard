@@ -5,7 +5,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { ListProps } from "@dashboard/types";
 import { Box, Skeleton, sprinkles, Text } from "@saleor/macaw-ui-next";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import AllAppList from "../AllAppList";

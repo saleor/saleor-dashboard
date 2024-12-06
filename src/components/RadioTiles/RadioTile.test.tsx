@@ -1,6 +1,5 @@
 import * as RadixRadioGroup from "@radix-ui/react-radio-group";
 import { render, screen } from "@testing-library/react";
-import React from "react";
 
 import { RadioTile } from "./RadioTile";
 

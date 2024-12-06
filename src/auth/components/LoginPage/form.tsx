@@ -1,7 +1,7 @@
 import { DEMO_MODE } from "@dashboard/config";
 import useForm, { FormChange, SubmitPromise } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
-import React from "react";
+import * as React from "react";
 
 export interface LoginFormData {
   email: string;

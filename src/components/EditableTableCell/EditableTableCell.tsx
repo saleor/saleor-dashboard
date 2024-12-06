@@ -4,7 +4,7 @@ import { TextFieldProps } from "@material-ui/core/TextField";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import { useState } from "react";
 
 import { DashboardCard } from "../Card";
 
@@ -63,7 +63,7 @@ export const EditableTableCell = (props: EditableTableCellProps) => {
   //   onConfirm(data.value);
   // };
 
-  const [opened, setOpenStatus] = React.useState(focused);
+  const [opened, setOpenStatus] = useState(focused);
   const { change, data } = useForm({ value } /* commenting out temporarily handleConfirm */);
   const enable = () => setOpenStatus(true);
   const disable = () => setOpenStatus(false);

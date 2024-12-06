@@ -3,7 +3,6 @@ import { channelsList } from "@dashboard/channels/fixtures";
 import { ChannelFragment, PermissionEnum } from "@dashboard/graphql";
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import React from "react";
 
 import { activities } from "../fixtures";
 import { WelcomePageSidebar } from "./WelcomePageSidebar";

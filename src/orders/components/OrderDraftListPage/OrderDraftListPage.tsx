@@ -7,7 +7,7 @@ import { OrderDraftListUrlSortField } from "@dashboard/orders/urls";
 import { FilterPagePropsWithPresets, PageListProps, RelayToFlat, SortPage } from "@dashboard/types";
 import { isLimitReached } from "@dashboard/utils/limits";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { OrderDraftListDatagrid } from "../OrderDraftListDatagrid";

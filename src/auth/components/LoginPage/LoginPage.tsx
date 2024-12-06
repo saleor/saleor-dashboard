@@ -7,7 +7,7 @@ import { commonMessages } from "@dashboard/intl";
 import { CircularProgress, Divider, TextField } from "@material-ui/core";
 import { EyeIcon, IconButton } from "@saleor/macaw-ui";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState, Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
@@ -35,7 +35,7 @@ const LoginPage = (props: LoginCardProps) => {
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   if (loading) {
     return (
@@ -150,7 +150,7 @@ const LoginPage = (props: LoginCardProps) => {
             </>
           )}
           {externalAuthentications.map(externalAuthentication => (
-            <React.Fragment key={externalAuthentication.id}>
+            <Fragment key={externalAuthentication.id}>
               <FormSpacer />
               <Button
                 width="100%"
@@ -161,7 +161,7 @@ const LoginPage = (props: LoginCardProps) => {
               >
                 {externalAuthentication.name}
               </Button>
-            </React.Fragment>
+            </Fragment>
           ))}
         </Box>
       )}

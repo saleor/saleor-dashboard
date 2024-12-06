@@ -5,7 +5,6 @@ import { useOverflowDetection } from "@dashboard/hooks/useOverflowDetection/useO
 import { getUserInitials, getUserName, User } from "@dashboard/misc";
 import { orderTransactionRefundEditUrl } from "@dashboard/orders/urls";
 import { Box, Button, EditIcon, Text, Tooltip } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 

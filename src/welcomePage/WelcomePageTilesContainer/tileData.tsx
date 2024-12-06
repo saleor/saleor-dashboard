@@ -6,7 +6,6 @@ import github from "@assets/images/github-logo.svg";
 import externalLink from "@assets/images/rounded-external-link-icon.svg";
 import star from "@assets/images/star-icon.svg";
 import { Button, HelpIcon, Paragraph, sprinkles } from "@saleor/macaw-ui-next";
-import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, IntlShape } from "react-intl";
 

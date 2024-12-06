@@ -1,5 +1,6 @@
 import { Button, Tooltip, TrashBinIcon } from "@saleor/macaw-ui-next";
-import React, { forwardRef, useState } from "react";
+import { forwardRef, useState } from "react";
+import * as React from "react";
 
 interface ProductListDeleteButtonProps {
   onClick: () => void;

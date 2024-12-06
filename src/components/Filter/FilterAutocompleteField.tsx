@@ -3,7 +3,6 @@ import { toggle } from "@dashboard/utils/lists";
 import { FormControlLabel, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Option, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import Checkbox from "../Checkbox";

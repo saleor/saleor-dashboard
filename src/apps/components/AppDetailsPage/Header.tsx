@@ -1,7 +1,6 @@
 import { AppPageNav } from "@dashboard/apps/components/AppPage/AppPageNav";
 import { AppUrls } from "@dashboard/apps/urls";
 import { AppQuery } from "@dashboard/graphql";
-import React from "react";
 
 import HeaderOptions from "./HeaderOptions";
 

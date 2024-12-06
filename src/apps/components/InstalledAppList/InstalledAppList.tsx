@@ -2,7 +2,6 @@ import { AppInstallation, InstalledApp } from "@dashboard/apps/types";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { ListProps } from "@dashboard/types";
 import { Box, List, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import InstalledAppListRow from "../InstalledAppListRow";

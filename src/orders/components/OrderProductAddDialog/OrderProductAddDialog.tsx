@@ -17,7 +17,7 @@ import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState, Fragment } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -55,7 +55,7 @@ const OrderProductAddDialog = (props: OrderProductAddDialogProps) => {
   const classes = useStyles(props);
   const intl = useIntl();
   const [query, onQueryChange] = useSearchQuery(onFetch);
-  const [variants, setVariants] = React.useState<
+  const [variants, setVariants] = useState<
     SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"]
   >([]);
   const errors = useModalDialogErrors(apiErrors, open);
@@ -142,7 +142,7 @@ const OrderProductAddDialog = (props: OrderProductAddDialogProps) => {
                 {renderCollection(
                   productChoicesWithValidVariants,
                   (product, productIndex) => (
-                    <React.Fragment key={product ? product.id : "skeleton"}>
+                    <Fragment key={product ? product.id : "skeleton"}>
                       <TableRowLink data-test-id="product">
                         <TableCell padding="checkbox" className={classes.productCheckboxCell}>
                           <Checkbox
@@ -211,7 +211,7 @@ const OrderProductAddDialog = (props: OrderProductAddDialogProps) => {
                             </TableCell>
                           </TableRowLink>
                         ))}
-                    </React.Fragment>
+                    </Fragment>
                   ),
                   () => (
                     <Text marginBottom={3}>

@@ -1,5 +1,5 @@
 import { Text } from "@saleor/macaw-ui-next";
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 
 export const Mono = ({ children }: PropsWithChildren<{}>) => (
   <Text

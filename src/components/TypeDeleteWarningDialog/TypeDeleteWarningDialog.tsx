@@ -3,7 +3,7 @@ import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/componen
 import { buttonMessages } from "@dashboard/intl";
 import { getById } from "@dashboard/misc";
 import { Box, Spinner } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 

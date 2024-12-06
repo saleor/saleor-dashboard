@@ -3,7 +3,6 @@ import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
 import { staffListUrl } from "@dashboard/staff/urls";
 import { Button, Tooltip } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 

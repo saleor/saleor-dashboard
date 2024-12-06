@@ -1,7 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
 import { TextField } from "@material-ui/core";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 interface ProductTypeShippingProps {

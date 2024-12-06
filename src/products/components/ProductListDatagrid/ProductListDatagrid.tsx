@@ -24,7 +24,7 @@ import { ChannelProps, ListProps, PageListProps, RelayToFlat, SortPage } from "@
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box, useTheme } from "@saleor/macaw-ui-next";
-import React, { useCallback, useMemo } from "react";
+import { useEffect, useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
@@ -146,7 +146,7 @@ export const ProductListDatagrid = ({
   // Logic for updating sort icon in dynamic columns
   // This is workaround before sorting is abstracted into useColumns
   // Tracked in https://github.com/saleor/saleor-dashboard/issues/3685
-  React.useEffect(() => {
+  useEffect(() => {
     handlers.onCustomUpdateVisible(prevColumns =>
       prevColumns?.map(column => {
         if (isAttributeColumnValue(column.id)) {

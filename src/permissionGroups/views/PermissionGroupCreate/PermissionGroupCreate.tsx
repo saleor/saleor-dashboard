@@ -7,7 +7,7 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { extractMutationErrors } from "@dashboard/misc";
 import { PermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -76,7 +76,7 @@ export const PermissionGroupCreate = () => {
           ...p,
           disabled: !userPermissions.includes(p.code),
           lastSource: false,
-        }) as PermissionData,
+        } as PermissionData),
     ) || [];
 
   return (

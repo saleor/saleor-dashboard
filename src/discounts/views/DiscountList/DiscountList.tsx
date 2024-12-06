@@ -20,7 +20,7 @@ import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import React, { useEffect } from "react";
+import { useMemo, useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -46,7 +46,7 @@ export const DiscountList = ({ params }: DiscountListProps) => {
   const { valueProvider } = useConditionalFilterContext();
   const where = createDiscountsQueryVariables(valueProvider.value);
 
-  const queryVariables = React.useMemo(
+  const queryVariables = useMemo(
     () => ({
       ...paginationState,
       sort: getSortQueryVariables(params),

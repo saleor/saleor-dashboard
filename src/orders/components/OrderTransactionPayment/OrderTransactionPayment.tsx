@@ -7,7 +7,7 @@ import {
 import { OrderTransactionProps } from "@dashboard/orders/components/OrderTransaction/OrderTransaction";
 import { FakeTransaction } from "@dashboard/orders/types";
 import { prepareMoney } from "@dashboard/orders/utils/data";
-import React from "react";
+import { useMemo } from "react";
 
 import OrderTransaction from "../OrderTransaction/OrderTransaction";
 import {
@@ -36,7 +36,7 @@ const OrderTransactionPayment = ({
   const authorized = payment?.availableCaptureAmount?.amount ?? 0;
   const refunded = total - captured - authorized;
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const fakeEvents = React.useMemo(
+  const fakeEvents = useMemo(
     () => mapPaymentToTransactionEvents(payment),
     [payment.transactions],
   );

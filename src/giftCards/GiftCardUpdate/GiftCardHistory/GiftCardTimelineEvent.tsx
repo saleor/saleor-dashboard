@@ -6,7 +6,6 @@ import { customerPath } from "@dashboard/customers/urls";
 import { GiftCardEventsEnum, GiftCardEventsQuery } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
-import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 import { giftCardHistoryTimelineMessages as timelineMessages } from "./messages";

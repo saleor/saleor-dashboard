@@ -1,5 +1,5 @@
 import { Box, InputProps, SearchIcon, sprinkles, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { forwardRef } from "react";
 import { useIntl } from "react-intl";
 
 import { getModePlaceholder, getModeSymbol } from "./modes/utils";
@@ -10,7 +10,7 @@ interface NavigatorSearchInputProps
   mode: QuickSearchMode;
 }
 
-const NavigatorSearchInput = React.forwardRef<HTMLInputElement, NavigatorSearchInputProps>(
+const NavigatorSearchInput = forwardRef<HTMLInputElement, NavigatorSearchInputProps>(
   (props, ref) => {
     const { mode, ...rest } = props;
     const intl = useIntl();

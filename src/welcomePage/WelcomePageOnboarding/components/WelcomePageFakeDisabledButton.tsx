@@ -1,9 +1,9 @@
 import { Button, ButtonProps, vars } from "@saleor/macaw-ui-next";
-import React from "react";
+import { forwardRef, useState } from "react";
 
-export const WelcomePageFakeDisabledButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
+export const WelcomePageFakeDisabledButton = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ children, ...props }, ref) => {
-    const [isHovered, setIsHovered] = React.useState(false);
+    const [isHovered, setIsHovered] = useState(false);
 
     return (
       <Button

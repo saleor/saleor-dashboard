@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { render, screen } from "@testing-library/react";
-import React from "react";
 
 import { TimezoneProvider } from "../Timezone";
 import Date from "./Date";

@@ -20,7 +20,8 @@ import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import getMetadata from "@dashboard/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import difference from "lodash/difference";
-import React, { createContext } from "react";
+import { createContext } from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import {

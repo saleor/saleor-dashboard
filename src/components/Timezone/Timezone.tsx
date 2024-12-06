@@ -1,7 +1,7 @@
 // @ts-strict-ignore
-import React from "react";
+import { createContext } from "react";
 
-export const TimezoneContext = React.createContext<string>(undefined);
+export const TimezoneContext = createContext<string>(undefined);
 
 const { Consumer: TimezoneConsumer, Provider: TimezoneProvider } = TimezoneContext;
 

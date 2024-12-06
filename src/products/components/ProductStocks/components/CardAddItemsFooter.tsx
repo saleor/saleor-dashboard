@@ -1,7 +1,7 @@
 import Link from "@dashboard/components/Link";
 import AddIcon from "@material-ui/icons/Add";
 import { IconButton, makeStyles } from "@saleor/macaw-ui";
-import React, { MutableRefObject } from "react";
+import { MutableRefObject } from "react";
 
 const useStyles = makeStyles(
   theme => ({

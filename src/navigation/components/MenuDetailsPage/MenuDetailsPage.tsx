@@ -12,7 +12,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { menuListUrl } from "@dashboard/navigation/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { MenuItemType } from "../MenuItemDialog";
@@ -56,7 +56,7 @@ const MenuDetailsPage = ({
   const initialForm: MenuDetailsFormData = {
     name: menu?.name ?? "",
   };
-  const [treeOperations, setTreeOperations] = React.useState<TreeOperation[]>([]);
+  const [treeOperations, setTreeOperations] = useState<TreeOperation[]>([]);
   const removeSimulatedMoves = (operations: TreeOperation[]) =>
     operations.filter(operation => !operation.simulatedMove);
   const handleSubmit = async (data: MenuDetailsFormData) => {

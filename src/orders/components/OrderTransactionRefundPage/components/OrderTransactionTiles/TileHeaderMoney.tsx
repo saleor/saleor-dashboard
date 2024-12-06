@@ -2,7 +2,6 @@ import { formatMoney } from "@dashboard/components/Money";
 import { TransactionItemFragment } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { transactionRefundTilesMessages } from "./messages";

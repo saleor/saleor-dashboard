@@ -1,6 +1,6 @@
 import { MenuItem, SubMenu } from "@dashboard/components/SubMenu";
 import { ArrowDownIcon, Box, Button, PlusIcon, Popover } from "@saleor/macaw-ui-next";
-import React, { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";

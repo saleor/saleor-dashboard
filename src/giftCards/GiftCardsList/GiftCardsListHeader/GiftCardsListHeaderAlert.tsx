@@ -1,7 +1,6 @@
 import { useGiftCardProductsCountQuery } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import { Alert } from "@saleor/macaw-ui";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { giftCardsListHeaderMenuItemsMessages as messages } from "../messages";

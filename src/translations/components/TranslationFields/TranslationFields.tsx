@@ -13,7 +13,7 @@ import ArrowIcon from "@material-ui/icons/ArrowDropDown";
 import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import { useState, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
 
 import TranslationFieldsLong from "./TranslationFieldsLong";
@@ -116,7 +116,7 @@ const TranslationFields = (props: TranslationFieldsProps) => {
     onSubmit,
   } = props;
   const classes = useStyles(props);
-  const [expanded, setExpandedState] = React.useState(initialState);
+  const [expanded, setExpandedState] = useState(initialState);
 
   return (
     <DashboardCard>
@@ -146,7 +146,7 @@ const TranslationFields = (props: TranslationFieldsProps) => {
               />
             </Text>
             {fields.map(field => (
-              <React.Fragment key={field.name}>
+              <Fragment key={field.name}>
                 <Hr className={classes.hr} />
                 <Text className={classes.fieldName} fontSize={3}>
                   {field.displayName}
@@ -226,7 +226,7 @@ const TranslationFields = (props: TranslationFieldsProps) => {
                     <Skeleton />
                   )}
                 </Text>
-              </React.Fragment>
+              </Fragment>
             ))}
           </Grid>
           {pagination && (

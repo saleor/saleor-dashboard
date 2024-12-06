@@ -1,6 +1,5 @@
 import { OrderDetailsFragment } from "@dashboard/graphql";
 import { Box, Button, PlusIcon, Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { addTransactionMessages } from "./messages";

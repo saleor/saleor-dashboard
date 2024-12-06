@@ -5,7 +5,6 @@ import Timeline, { TimelineAddNote, TimelineNote } from "@dashboard/components/T
 import { GiftCardEventsEnum, useGiftCardAddNoteMutation } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { HistoryComponentLoader } from "@dashboard/orders/components/OrderHistory/HistoryComponentLoader";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { GIFT_CARD_DETAILS_QUERY } from "../queries";

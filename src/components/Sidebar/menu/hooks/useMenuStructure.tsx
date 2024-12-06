@@ -25,7 +25,7 @@ import { productListUrl } from "@dashboard/products/urls";
 import { languageListUrl } from "@dashboard/translations/urls";
 import { Box } from "@saleor/macaw-ui-next";
 import isEmpty from "lodash/isEmpty";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { SidebarMenuItem } from "../types";

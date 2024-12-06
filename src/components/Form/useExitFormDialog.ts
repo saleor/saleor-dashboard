@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import { useEffect, useContext, useRef } from "react";
 
 import { ExitFormDialogContext } from "./ExitFormDialogProvider";
 import { ExitFormDialogData, SubmitFn, WithFormId } from "./types";
@@ -22,7 +22,7 @@ export const useExitFormDialog = (
   const exitDialogProps = useContext(ExitFormDialogContext);
   const { setIsDirty, setIsSubmitDisabled, setExitDialogSubmitRef } = exitDialogProps;
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isDisabled !== undefined) {
       setIsSubmitDisabled(isDisabled);
     }

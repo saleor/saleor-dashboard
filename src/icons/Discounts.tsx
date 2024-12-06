@@ -1,5 +1,3 @@
-import React from "react";
-
 export const DiscountsIcon = () => (
   <svg
     width="20"

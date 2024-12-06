@@ -1,4 +1,3 @@
-import React from "react";
 import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({

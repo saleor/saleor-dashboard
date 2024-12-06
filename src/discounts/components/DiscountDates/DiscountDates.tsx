@@ -3,7 +3,8 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { CommonError, getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
 import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui-next";
-import React, { ChangeEvent } from "react";
+import { ChangeEvent } from "react";
+import * as React from "react";
 import { FieldError } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 

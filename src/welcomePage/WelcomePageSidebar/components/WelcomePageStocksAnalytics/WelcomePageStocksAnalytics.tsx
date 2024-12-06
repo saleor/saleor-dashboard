@@ -1,5 +1,4 @@
 import { Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { useWelcomePageSidebarContext } from "../../context/welcomePageSidebarContext";

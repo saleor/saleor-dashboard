@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 
 import { OnboardingState, OnboardingStepsIDs } from "./types";
 import {
@@ -8,8 +8,8 @@ import {
 } from "./utils";
 
 export const useExpandedOnboardingId = (onboardingState: OnboardingState, loaded: boolean) => {
-  const hasBeenCalled = React.useRef(false);
-  const [expandedStepId, setExpandedStepId] = React.useState<OnboardingStepsIDs | "">("");
+  const hasBeenCalled = useRef(false);
+  const [expandedStepId, setExpandedStepId] = useState<OnboardingStepsIDs | "">("");
 
   useEffect(() => {
     if (hasBeenCalled.current) {

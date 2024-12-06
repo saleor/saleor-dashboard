@@ -8,7 +8,6 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { transformAddressToForm } from "@dashboard/misc";
-import React from "react";
 
 import OrderCustomerAddressesEditDialog, {
   OrderCustomerAddressesEditDialogProps,

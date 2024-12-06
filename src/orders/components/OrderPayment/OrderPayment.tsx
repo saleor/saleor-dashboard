@@ -7,7 +7,6 @@ import { OrderAction, OrderDetailsFragment, OrderStatus } from "@dashboard/graph
 import { getDiscountTypeLabel } from "@dashboard/orders/utils/data";
 import { Divider, Skeleton, sprinkles } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { transformPaymentStatus } from "../../../misc";

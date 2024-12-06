@@ -20,7 +20,7 @@ import getExportErrorMessage from "@dashboard/utils/errors/export";
 import { toggle } from "@dashboard/utils/lists";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { Box, Option, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ExportDialogSettings, { ExportItemsQuantity } from "./ExportDialogSettings";
@@ -103,8 +103,8 @@ const ProductExportDialog = ({
   const dialogErrors = useModalDialogErrors(errors, open);
   const notFormErrors = dialogErrors.filter(err => !err.field);
   const intl = useIntl();
-  const [selectedAttributes, setSelectedAttributes] = React.useState<Option[]>([]);
-  const [selectedChannels, setSelectedChannels] = React.useState([]);
+  const [selectedAttributes, setSelectedAttributes] = useState<Option[]>([]);
+  const [selectedChannels, setSelectedChannels] = useState([]);
   const { change, data, reset, submit } = useForm(initialForm, onSubmit);
 
   useModalDialogOpen(open, {

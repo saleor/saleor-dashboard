@@ -37,7 +37,7 @@ import {
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Box, Skeleton, Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import { useState, useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderFulfillLine from "../OrderFulfillLine/OrderFulfillLine";
@@ -102,7 +102,7 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
       };
     }),
   );
-  const [displayStockExceededDialog, setDisplayStockExceededDialog] = React.useState(false);
+  const [displayStockExceededDialog, setDisplayStockExceededDialog] = useState(false);
   const handleSubmit = ({
     formData,
     allowStockToBeExceeded,
@@ -127,7 +127,7 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
     });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (errors && errors.every(err => err.code === OrderErrorCode.INSUFFICIENT_STOCK)) {
       setDisplayStockExceededDialog(true);
     }

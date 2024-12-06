@@ -1,7 +1,7 @@
 import { FormChange } from "@dashboard/hooks/useForm";
 import { IMoney } from "@dashboard/utils/intl";
 import { Checkbox, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { submitCardMessages } from "./messages";
@@ -21,7 +21,7 @@ const RefundShipmentCheckbox = ({
   shipmentCost,
   onChange,
 }: RefundShipmentCheckboxProps) => {
-  const handleRefundShipmentCosts = React.useCallback(
+  const handleRefundShipmentCosts = useCallback(
     checked => {
       onChange({
         target: {

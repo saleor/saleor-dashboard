@@ -5,7 +5,7 @@ import FileUploadField from "@dashboard/components/FileUploadField";
 import { SimpleRadioGroupField } from "@dashboard/components/SimpleRadioGroupField";
 import { UseFormResult } from "@dashboard/hooks/useForm";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { swatchFieldMessages } from "./messages";

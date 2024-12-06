@@ -1,6 +1,5 @@
 import { SaleType } from "@dashboard/graphql";
 import { TextField } from "@material-ui/core";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { ChannelSaleFormData } from "../SaleDetailsPage";

@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { commonMessages } from "@dashboard/intl";
 import { ConfirmButton } from "@saleor/macaw-ui";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { bulkEnableDisableSectionMessages as buttonMessages } from "../../GiftCardsList/messages";

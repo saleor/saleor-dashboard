@@ -6,7 +6,6 @@ import { MenuFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { menuListUrl, MenuListUrlSortField } from "@dashboard/navigation/urls";
 import { ListActions, PageListProps, SortPage } from "@dashboard/types";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import MenuList from "../MenuList";

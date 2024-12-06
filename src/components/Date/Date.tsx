@@ -1,7 +1,6 @@
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { Tooltip } from "@saleor/macaw-ui-next";
 import moment from "moment-timezone";
-import React from "react";
 
 import { LocaleConsumer } from "../Locale";
 import { Consumer } from "./DateContext";

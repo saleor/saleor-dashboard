@@ -23,7 +23,7 @@ import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -114,7 +114,7 @@ export const AppListView = ({ params }: Props) => {
       onInstallError: onAppInstallError,
       onRemoveInProgressAppSuccess: closeModal,
     });
-  const context: AppListContextValues = React.useMemo(
+  const context: AppListContextValues = useMemo(
     () => ({
       retryAppInstallation: handleAppInstallRetry,
       removeAppInstallation: id => openModal("app-installation-remove", { id }),

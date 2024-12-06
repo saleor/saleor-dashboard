@@ -4,7 +4,6 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { createGraphiQLFetcher, FetcherOpts, FetcherParams } from "@graphiql/toolkit";
 import { createFetch } from "@saleor/sdk";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import PlainGraphiQL from "../GraphiQLPlain";

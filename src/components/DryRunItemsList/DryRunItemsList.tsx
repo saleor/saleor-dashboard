@@ -14,7 +14,7 @@ import {
 } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import camelCase from "lodash/camelCase";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import Avatar from "../TableCellAvatar/Avatar";

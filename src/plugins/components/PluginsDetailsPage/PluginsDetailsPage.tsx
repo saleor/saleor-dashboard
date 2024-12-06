@@ -17,7 +17,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { pluginListUrl } from "@dashboard/plugins/urls";
 import { isSecretField } from "@dashboard/plugins/utils";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import PluginAuthorization from "../PluginAuthorization";

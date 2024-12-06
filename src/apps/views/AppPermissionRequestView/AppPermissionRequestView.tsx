@@ -4,7 +4,7 @@ import { useGetAvailableAppPermissions } from "@dashboard/apps/hooks/useGetAvail
 import Link from "@dashboard/components/Link";
 import { PermissionEnum, useAppQuery, useAppUpdatePermissionsMutation } from "@dashboard/graphql";
 import { Box, BoxProps, Button, Text, TextProps } from "@saleor/macaw-ui-next";
-import React, { useEffect } from "react";
+import { useMemo, useEffect } from "react";
 import { useIntl } from "react-intl";
 import { useLocation, useParams } from "react-router";
 
@@ -30,7 +30,7 @@ const WrapperBox = (props: BoxProps) => (
 function usePageQuery() {
   const { search } = useLocation();
 
-  return React.useMemo(() => {
+  return useMemo(() => {
     const params = new URLSearchParams(search);
     const permissionsParams = params.get("requestedPermissions");
     const requestedPermissions = permissionsParams

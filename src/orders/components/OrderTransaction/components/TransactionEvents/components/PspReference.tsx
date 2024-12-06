@@ -4,7 +4,6 @@ import useClipboard from "@dashboard/hooks/useClipboard";
 import { commonMessages } from "@dashboard/intl";
 import { CheckIcon, CopyIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { PspReferenceLink } from "./PspReferenceLink";

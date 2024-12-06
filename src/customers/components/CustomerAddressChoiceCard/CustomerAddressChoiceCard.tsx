@@ -6,7 +6,6 @@ import { commonMessages } from "@dashboard/intl";
 import { EditIcon } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { useStyles } from "./styles";

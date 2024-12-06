@@ -10,7 +10,6 @@ import { appInstallationStatusMessages } from "@dashboard/apps/messages";
 import Wrapper from "@test/wrapper";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import React from "react";
 
 import AppListRow from "./AppListRow";
 

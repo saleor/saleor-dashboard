@@ -2,7 +2,6 @@ import { AppUrls } from "@dashboard/apps/urls";
 import { TaxCalculationStrategy, useTaxStrategyChoicesQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box, Button, ExternalLinkIcon, Option, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { FlatTaxRateLabel, PluginLabel, TaxAppLabel } from "../../components";
 

@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { act, renderHook } from "@testing-library/react-hooks";
-import React from "react";
 
 import { AvailableColumn } from "../types";
 import useDatagridChange, {

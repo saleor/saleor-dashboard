@@ -3,15 +3,15 @@ import { APP_VERSION } from "@dashboard/config";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useShop from "@dashboard/hooks/useShop";
-import React from "react";
+import { useState, useContext } from "react";
 
 import { AppDialog } from "../AppDialog";
 import { AppFrame } from "../AppFrame";
 import { AppData, ExternalAppContext } from "./context";
 
 export const ExternalAppProvider = ({ children }) => {
-  const [open, setOpen] = React.useState(false);
-  const [appData, setAppData] = React.useState<AppData | undefined>();
+  const [open, setOpen] = useState(false);
+  const [appData, setAppData] = useState<AppData | undefined>();
   const shop = useShop();
   const handleClose = () => {
     setOpen(false);
@@ -38,7 +38,7 @@ export const ExternalAppProvider = ({ children }) => {
 };
 
 export const useExternalApp = () => {
-  const { open, setOpen, setAppData } = React.useContext(ExternalAppContext);
+  const { open, setOpen, setAppData } = useContext(ExternalAppContext);
   const navigate = useNavigator();
   const openApp = (appData: AppData) => {
     if (appData.target === AppExtensionTargetEnum.POPUP) {

@@ -1,5 +1,4 @@
 import { Box, Button, ChervonDownIcon, Dropdown, List, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 
 interface ButtonWithDropdownProps {
   onClick: () => void;

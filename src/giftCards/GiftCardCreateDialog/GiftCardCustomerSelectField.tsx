@@ -5,7 +5,7 @@ import { commonMessages } from "@dashboard/intl";
 import { getFullName } from "@dashboard/misc";
 import useCustomerSearch from "@dashboard/searches/useCustomerSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { giftCardCreateMessages as messages } from "./messages";

@@ -1,6 +1,6 @@
 import { Grow, Paper, Popper } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState, useRef } from "react";
 import { useIntl } from "react-intl";
 
 import { Pill } from "../Pill";
@@ -13,8 +13,8 @@ export interface PreviewPillProps {
 
 export const PreviewPill = ({ className }: PreviewPillProps) => {
   const intl = useIntl();
-  const [active, setActive] = React.useState(false);
-  const anchor = React.useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(false);
+  const anchor = useRef<HTMLDivElement>(null);
   const classes = useStyles();
 
   return (

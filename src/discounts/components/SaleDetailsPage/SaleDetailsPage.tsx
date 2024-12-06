@@ -28,7 +28,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { sprinkles } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { splitDateTime } from "../../../misc";
@@ -133,7 +133,7 @@ const SaleDetailsPage = ({
 }: SaleDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const [localErrors, setLocalErrors] = React.useState<DiscountErrorFragment[]>([]);
+  const [localErrors, setLocalErrors] = useState<DiscountErrorFragment[]>([]);
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const initialForm: SaleDetailsPageFormData = {
     channelListings,

@@ -14,7 +14,7 @@ import {
   ListItemCell,
 } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useIntl } from "react-intl";
 
 import DryRunItemsList from "../DryRunItemsList/DryRunItemsList";

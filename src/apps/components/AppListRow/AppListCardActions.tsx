@@ -1,7 +1,6 @@
 import { appInstallationStatusMessages } from "@dashboard/apps/messages";
 import { AppInstallationFragment } from "@dashboard/graphql";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { AppListCardInstallButton } from "./AppListCardInstallButton";

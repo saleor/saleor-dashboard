@@ -13,7 +13,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { renderCollection } from "@dashboard/misc";
 import { orderHasTransactions } from "@dashboard/orders/types";
 import { orderUrl } from "@dashboard/orders/urls";
-import React from "react";
+import { Fragment } from "react";
 import { useIntl } from "react-intl";
 
 import { calculateCanRefundShipping } from "../OrderGrantRefundPage/utils";
@@ -82,7 +82,7 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
             {renderCollection(
               getWaitingFulfillments(order as OrderDetailsFragment),
               ({ id, lines }) => (
-                <React.Fragment key={id}>
+                <Fragment key={id}>
                   <ItemsCard
                     errors={returnErrors}
                     order={order}
@@ -95,13 +95,13 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
                     onChangeSelected={handlers.changeItemsToBeReplaced}
                   />
                   <CardSpacer />
-                </React.Fragment>
+                </Fragment>
               ),
             )}
             {renderCollection(
               getFulfilledFulfillemnts(order as OrderDetailsFragment),
               ({ id, lines }) => (
-                <React.Fragment key={id}>
+                <Fragment key={id}>
                   <ItemsCard
                     errors={returnErrors}
                     order={order}
@@ -114,7 +114,7 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
                     onChangeSelected={handlers.changeItemsToBeReplaced}
                   />
                   <CardSpacer />
-                </React.Fragment>
+                </Fragment>
               ),
             )}
           </DetailPageLayout.Content>

@@ -1,5 +1,6 @@
 import { Box } from "@saleor/macaw-ui-next";
-import React, { HTMLAttributes } from "react";
+import { HTMLAttributes } from "react";
+import * as React from "react";
 
 import { GridTableProps } from "./types";
 

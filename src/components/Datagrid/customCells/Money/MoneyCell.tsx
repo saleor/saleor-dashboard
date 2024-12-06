@@ -6,7 +6,6 @@ import {
   GridCellKind,
   ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
-import React from "react";
 
 import { usePriceField } from "../../../PriceField/usePriceField";
 import { hasDiscountValue } from "./utils";

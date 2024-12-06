@@ -1,5 +1,4 @@
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
 
 export interface HorizontalSpacerProps {
   spacing?: number;

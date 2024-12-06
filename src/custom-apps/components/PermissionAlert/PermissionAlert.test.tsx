@@ -3,7 +3,6 @@ import "@testing-library/jest-dom";
 import { Fetcher } from "@graphiql/toolkit";
 import { ApolloMockedProvider } from "@test/ApolloMockedProvider";
 import { render, screen } from "@testing-library/react";
-import React from "react";
 
 import PermissionAlert from "./PermissionAlert";
 

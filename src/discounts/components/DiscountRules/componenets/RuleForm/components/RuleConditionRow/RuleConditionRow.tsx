@@ -1,6 +1,5 @@
 import { Condition } from "@dashboard/discounts/models";
 import { Box, Button, RemoveIcon } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { RuleConditionName } from "../RuleConditionName/";
 import { RuleConditionType } from "../RuleConditionType/";

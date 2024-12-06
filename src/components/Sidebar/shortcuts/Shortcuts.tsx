@@ -1,5 +1,3 @@
-import React from "react";
-
 import { ShortcutsItems } from "../ShotcutsItems";
 import { useShortcuts } from "./useShortcuts";
 

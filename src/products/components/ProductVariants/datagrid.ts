@@ -10,7 +10,7 @@ import {
 } from "@dashboard/graphql";
 import { useClientPagination } from "@dashboard/hooks/useClientPagination";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
+import { useState } from "react";
 import { IntlShape } from "react-intl";
 
 import messages from "./messages";
@@ -39,7 +39,7 @@ export const useChannelAdapter = ({
   selectedColumns: string[] | undefined;
   listings: ChannelData[] | undefined;
 }): ColumnCategory => {
-  const [channelQuery, setChannelQuery] = React.useState("");
+  const [channelQuery, setChannelQuery] = useState("");
   const { paginate, currentPage, changeCurrentPage } = useClientPagination();
   const paginatedChannels = paginate(
     (listings ?? [])?.filter(channel =>
@@ -74,7 +74,7 @@ export const useChannelAvailabilityAdapter = ({
   selectedColumns: string[] | undefined;
   listings: ChannelData[];
 }): ColumnCategory => {
-  const [channelQuery, setChannelQuery] = React.useState("");
+  const [channelQuery, setChannelQuery] = useState("");
   const { paginate, currentPage, changeCurrentPage } = useClientPagination();
   const paginatedChannels = paginate(
     (listings ?? []).filter(channel =>
@@ -138,7 +138,7 @@ export const useAttributesAdapter = ({
       attribute.inputType,
     );
   });
-  const [attributeQuery, setAttributeQuery] = React.useState("");
+  const [attributeQuery, setAttributeQuery] = useState("");
   const { paginate, currentPage, changeCurrentPage } = useClientPagination();
   const paginatedAttributes = paginate(
     (supportedAttributes ?? []).filter(attribute =>
@@ -184,7 +184,7 @@ export const useWarehouseAdapter = ({
   selectedColumns: string[] | undefined;
   warehouses: WarehouseFragment[] | undefined;
 }) => {
-  const [warehouseQuery, setWarehouseQuery] = React.useState("");
+  const [warehouseQuery, setWarehouseQuery] = useState("");
   const { paginate, currentPage, changeCurrentPage } = useClientPagination();
   const paginatedWarehouses = paginate(
     (warehouses ?? []).filter(warehouse =>

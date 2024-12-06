@@ -1,7 +1,7 @@
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn } from "@glideapps/glide-data-grid";
-import React from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 
 import { PersistedColumn } from "../persistance/persistedColumn";
 import { usePersistance } from "../persistance/usePersistance";
@@ -50,7 +50,7 @@ export const useColumns = ({
   columnCategories,
   onSave: handleSave,
 }: UseColumnsProps) => {
-  const [dynamicColumns, updateDynamicColumns] = React.useState<AvailableColumn[] | null>(null);
+  const [dynamicColumns, updateDynamicColumns] = useState<AvailableColumn[] | null>(null);
 
   const { columns: persistedColumns, update } = usePersistance(gridName);
   const selectedColumns = selectedWithPersistance(_selectedColumns, persistedColumns);
@@ -58,7 +58,7 @@ export const useColumns = ({
   // Dynamic columns are loaded from the API, thus they need to be updated
   // after query resolves with data. Then we also sort them by order of addition
   // by the user, which is saved in LS (columnPickerSettings).
-  React.useEffect(() => {
+  useEffect(() => {
     if (dynamicColumns === null && areCategoriesLoaded(columnCategories)) {
       updateDynamicColumns(
         sortColumns(extractSelectedNodesFromCategories(columnCategories), selectedColumns),
@@ -66,11 +66,11 @@ export const useColumns = ({
     }
   }, [columnCategories, selectedColumns, dynamicColumns]);
 
-  const initialColumnsState = React.useMemo(
+  const initialColumnsState = useMemo(
     () => mergeSelectedColumns({ staticColumns, dynamicColumns, selectedColumns }),
     [dynamicColumns, staticColumns, selectedColumns],
   );
-  const [recentlyAddedColumn, setRecentlyAddedColumn] = React.useState<string | null>(null);
+  const [recentlyAddedColumn, setRecentlyAddedColumn] = useState<string | null>(null);
   const [visibleColumns, setVisibleColumns] = useStateFromProps(initialColumnsState);
 
   const onSave = (columnsIds: string[]) => {
@@ -100,7 +100,7 @@ export const useColumns = ({
     return currentColumns;
   };
 
-  const onMove = React.useCallback(
+  const onMove = useCallback(
     (startIndex: number, endIndex: number): void => {
       // When empty column prevent to rearrange it order
       if (visibleColumns[0]?.id === "empty") {
@@ -126,7 +126,7 @@ export const useColumns = ({
     },
     [visibleColumns, setVisibleColumns],
   );
-  const onResize = React.useCallback(
+  const onResize = useCallback(
     (column: GridColumn, newSize: number) => {
       if (column.id === "empty") {
         return;

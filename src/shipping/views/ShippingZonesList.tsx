@@ -22,7 +22,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Text } from "@saleor/macaw-ui-next";
 import isEqual from "lodash/isEqual";
-import React, { useCallback } from "react";
+import { useMemo, useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ShippingWeightUnitDialog } from "../components/ShippingWeightUnitDialog";
@@ -54,7 +54,7 @@ export const ShippingZonesList = ({ params }: ShippingZonesListProps) => {
 
   const intl = useIntl();
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = React.useMemo(
+  const queryVariables = useMemo(
     () => ({
       ...paginationState,
       ...(!!params.query && { filter: { search: params.query } }),

@@ -29,7 +29,7 @@ import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import React from "react";
+import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import CustomAppDetailsPage, {
@@ -50,7 +50,7 @@ export const CustomAppDetails = ({ id, params, token, onTokenClose }: OrderListP
   const intl = useIntl();
   const shop = useShop();
 
-  React.useEffect(() => onTokenClose, []);
+  useEffect(() => onTokenClose, []);
 
   const [openModal, closeModal] = createDialogActionHandlers<
     CustomAppDetailsUrlDialog,

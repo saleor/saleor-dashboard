@@ -1,11 +1,11 @@
-import React from "react";
+import { useState, useEffect } from "react";
 
 import { ColumnCategory } from "./useColumns";
 
 export const useAvailableColumnsQuery = (currentCategory: ColumnCategory | undefined) => {
-  const [query, setQuery] = React.useState<string>("");
+  const [query, setQuery] = useState<string>("");
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (currentCategory) {
       setQuery(currentCategory.initialSearch ?? "");
     }

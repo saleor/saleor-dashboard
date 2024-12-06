@@ -3,7 +3,7 @@ import { getStatusColor } from "@dashboard/misc";
 import { makeStyles, Pill as MacawuiPill, PillProps } from "@saleor/macaw-ui";
 import { useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import { forwardRef } from "react";
 
 const useStyles = makeStyles<{
   color: string;
@@ -21,7 +21,7 @@ const useStyles = makeStyles<{
 // Main purpose of this component is to override default Pill component
 // from macaw-ui to add custom styles
 // TODO: migrate to Pill component from new macaw-ui when it will be ready
-export const Pill = React.forwardRef<HTMLDivElement, PillProps>(
+export const Pill = forwardRef<HTMLDivElement, PillProps>(
   ({ color: status, ...props }, ref) => {
     const { theme: currentTheme } = useTheme();
     const color = getStatusColor({

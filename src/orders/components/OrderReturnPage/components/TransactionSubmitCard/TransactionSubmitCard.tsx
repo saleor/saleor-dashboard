@@ -10,7 +10,6 @@ import { FormChange } from "@dashboard/hooks/useForm";
 import { PaymentSubmitCardValuesProps } from "@dashboard/orders/components/OrderReturnPage/components/PaymentSubmitCard/PaymentSubmitCardValues";
 import { IMoney } from "@dashboard/utils/intl";
 import { Box, InfoIcon, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { canSendRefundDuringReturn, getReturnRefundValue } from "../../utils";

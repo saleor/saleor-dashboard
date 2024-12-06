@@ -10,7 +10,6 @@ import {
 } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { DataLine } from "./components/DataLine";

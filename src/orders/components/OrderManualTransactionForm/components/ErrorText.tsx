@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { Text, TextProps } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { useManualTransactionContext } from "../context";
 

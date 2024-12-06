@@ -1,5 +1,5 @@
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
 interface WelcomePageAnalyticsCardProps {

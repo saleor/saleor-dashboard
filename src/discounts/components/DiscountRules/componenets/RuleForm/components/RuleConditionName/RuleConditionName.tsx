@@ -1,7 +1,6 @@
 import { Combobox } from "@dashboard/components/Combobox";
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
 import { Condition, Rule } from "@dashboard/discounts/models";
-import React from "react";
 import { useController, useFormContext } from "react-hook-form";
 
 import { useConditionNames } from "./hooks/useConditionNames";

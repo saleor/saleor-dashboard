@@ -15,7 +15,7 @@ import { ListViews, ReorderEvent } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { add, isSelected, move, remove, updateAtIndex } from "@dashboard/utils/lists";
-import React from "react";
+import { useState, useEffect } from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";
 
@@ -51,8 +51,8 @@ const AttributeDetails = ({ params }: AttributeDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const [values, setValues] = React.useState<AttributeValueEditDialogFormData[]>([]);
-  const [valueErrors, setValueErrors] = React.useState<AttributeErrorFragment[]>([]);
+  const [values, setValues] = useState<AttributeValueEditDialogFormData[]>([]);
+  const [valueErrors, setValueErrors] = useState<AttributeErrorFragment[]>([]);
   const { updateListSettings, settings } = useListSettings(ListViews.ATTRIBUTE_VALUE_LIST);
   const { pageInfo, pageValues, loadNextPage, loadPreviousPage, loadPage } = useLocalPageInfo(
     values,
@@ -80,7 +80,7 @@ const AttributeDetails = ({ params }: AttributeDetailsProps) => {
     AttributeAddUrlQueryParams
   >(navigate, attributeAddUrl, params);
 
-  React.useEffect(() => setValueErrors([]), [params.action]);
+  useEffect(() => setValueErrors([]), [params.action]);
 
   const handleValueDelete = () => {
     if (id !== undefined) {

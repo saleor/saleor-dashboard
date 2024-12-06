@@ -3,7 +3,6 @@ import { formatMoney } from "@dashboard/components/Money";
 import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { AlreadyRefundedHelper } from "./AlreadyRefundedHelper";
 

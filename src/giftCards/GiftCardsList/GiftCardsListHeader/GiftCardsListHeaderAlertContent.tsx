@@ -3,7 +3,6 @@ import { ProductTypeKindEnum } from "@dashboard/graphql";
 import { productAddUrl } from "@dashboard/products/urls";
 import { productTypeAddUrl } from "@dashboard/productTypes/urls";
 import { sprinkles } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { giftCardsListHeaderMenuItemsMessages as messages } from "../messages";

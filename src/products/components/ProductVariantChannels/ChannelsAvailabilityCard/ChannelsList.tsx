@@ -1,5 +1,4 @@
 import { Accordion, sprinkles, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 
 interface ChannelListProps {
   summary: string;

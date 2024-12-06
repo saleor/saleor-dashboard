@@ -4,7 +4,6 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import { Pill } from "@dashboard/components/Pill";
 import { PluginBaseFragment } from "@dashboard/graphql";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { globalConfigPluginMessages as messages, pluginStatusMessages } from "../messages";

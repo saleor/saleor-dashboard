@@ -45,7 +45,8 @@ import {
   VariableEditor,
   WriteableEditorProps,
 } from "@graphiql/react";
-import React, { ComponentType, PropsWithChildren, ReactNode, useState } from "react";
+import { ComponentType, PropsWithChildren, ReactNode, useState } from "react";
+import * as React from "react";
 
 import { useDashboardTheme, useGraphiQLThemeSwitcher } from "../GraphiQL/styles";
 

@@ -19,7 +19,7 @@ import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import { useState, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface ProductContextSwitcherProps {
@@ -78,8 +78,8 @@ const ProductContextSwitcher = ({
   const { data } = useProductVariantListQuery({
     variables: { id: productId },
   });
-  const [isExpanded, setExpandedState] = React.useState(false);
-  const anchor = React.useRef();
+  const [isExpanded, setExpandedState] = useState(false);
+  const anchor = useRef();
   const items = [
     {
       label: intl.formatMessage({

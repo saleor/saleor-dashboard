@@ -12,7 +12,6 @@ import { renderCollection } from "@dashboard/misc";
 import { TableBody, TableCell } from "@material-ui/core";
 import { DeleteIcon, IconButton, ResponsiveTable } from "@saleor/macaw-ui";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CustomAppsSkeleton from "../CustomAppsSkeleton";

@@ -4,7 +4,6 @@ import {
 } from "@dashboard/channels/utils";
 import { Divider } from "@dashboard/components/Divider";
 import { FormsetData } from "@dashboard/hooks/useFormset";
-import React from "react";
 
 import { ProductChannelListing } from "./../types";
 import { ChannelsListItem } from "./ChannelsListItem";

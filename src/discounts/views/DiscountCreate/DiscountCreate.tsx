@@ -7,7 +7,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationErrors } from "@dashboard/misc";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { EmpptyLabelsMapsProvider } from "../DiscountDetails/context/provider";

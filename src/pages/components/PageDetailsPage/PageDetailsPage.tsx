@@ -29,7 +29,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { pagesSection } from "@dashboard/pages/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import PageInfo from "../PageInfo";

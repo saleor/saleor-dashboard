@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react-hooks";
-import React from "react";
+import * as React from "react";
 
 import { giftCardsMocks } from "../../../../../testUtils/mocks/giftCards";
 import { useUser } from "../../../../auth";

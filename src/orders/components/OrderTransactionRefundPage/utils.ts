@@ -1,7 +1,7 @@
 import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { OrderDetailsGrantRefundFragment, OrderGrantedRefundStatusEnum } from "@dashboard/graphql";
 import { ConfirmButtonTransitionState, SavebarLabels } from "@saleor/macaw-ui";
-import React from "react";
+import { useEffect } from "react";
 import { UseFieldArrayUpdate, UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import { IntlShape } from "react-intl";
 
@@ -142,7 +142,7 @@ export const useRecalculateTotalAmount = ({
   linesToRefund: LineToRefund[];
   isFormDirty: boolean;
 }) => {
-  React.useEffect(() => {
+  useEffect(() => {
     if (isFormDirty) {
       const customAmount = getValues("amount");
 
