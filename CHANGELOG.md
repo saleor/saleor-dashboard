@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.20.21
+
+### Patch Changes
+
+- 8d08677: Removing value from area input in address form no more cause error
+- c48e50b: The app no longer changes the url when it is already been updated.
+- 38d9a92: Selecting sale entries no longer fails when browsing the sales list
+- 315676c: The double success banner no longer appears during app installation
+- 3e89b07: Assign product dialog no more crash when product has no channels
+- 36fb327: Prevent a call update channel after voucher create when no voucher id returns from response
+- 917c0f8: Adding tranalstions to shipping methods no more cause error
+- 5013483: Assigning product to collection no more cause error
+- 749a09f: Update variant file attribute value no more cause error
+
 ## 3.20.20
 
 ### Patch Changes
