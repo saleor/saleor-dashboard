@@ -12,7 +12,7 @@ import { StaffListUrlSortField } from "@dashboard/staff/urls";
 import { FilterPagePropsWithPresets, ListProps, SortPage } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { StaffListDatagrid } from "../StaffListDatagrid";
@@ -27,7 +27,7 @@ export interface StaffListPageProps
   onAdd: () => void;
 }
 
-const StaffListPage: React.FC<StaffListPageProps> = ({
+const StaffListPage = ({
   filterOpts,
   initialSearch,
   limits,
@@ -44,7 +44,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
   onFilterPresetUpdate,
   onFilterPresetsAll,
   ...listProps
-}) => {
+}: StaffListPageProps) => {
   const intl = useIntl();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const structure = createFilterStructure(intl, filterOpts);

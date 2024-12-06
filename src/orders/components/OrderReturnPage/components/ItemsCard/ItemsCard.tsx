@@ -10,7 +10,7 @@ import OrderCardTitle from "@dashboard/orders/components/OrderCardTitle";
 import { Checkbox, TableBody, TableCell, TableHead, TextField } from "@material-ui/core";
 import { ResponsiveTable } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { FormsetQuantityData, FormsetReplacementData } from "../../form";
@@ -33,7 +33,7 @@ interface OrderReturnRefundLinesCardProps {
   onSetMaxQuantity: () => any;
 }
 
-export const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
+export const ItemsCard = ({
   lines,
   onSetMaxQuantity,
   onChangeQuantity,
@@ -42,7 +42,7 @@ export const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
   itemsQuantities,
   fulfilmentId,
   order,
-}) => {
+}: OrderReturnRefundLinesCardProps) => {
   const classes = useItemCardStyles({});
   const intl = useIntl();
   const handleChangeQuantity = (id: string) => (event: React.ChangeEvent<HTMLInputElement>) =>

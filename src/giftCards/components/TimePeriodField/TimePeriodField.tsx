@@ -1,7 +1,6 @@
 import TextWithSelectField from "@dashboard/components/TextWithSelectField";
 import { TimePeriodTypeEnum } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { timePeriodTextWithSelectFieldMessages as messages } from "./messages";
@@ -16,7 +15,7 @@ interface TimePeriodFieldProps {
   isError?: boolean;
 }
 
-const TimePeriodField: React.FC<TimePeriodFieldProps> = ({
+const TimePeriodField = ({
   change,
   periodAmount,
   periodType,
@@ -24,7 +23,7 @@ const TimePeriodField: React.FC<TimePeriodFieldProps> = ({
   typeFieldName,
   helperText,
   isError,
-}) => {
+}: TimePeriodFieldProps) => {
   const intl = useIntl();
   const options = [
     {

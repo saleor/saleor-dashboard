@@ -8,7 +8,6 @@ import { SeoForm } from "@dashboard/components/SeoForm";
 import { ProductErrorFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import CategoryDetailsForm from "../../components/CategoryDetailsForm";
@@ -22,13 +21,13 @@ export interface CategoryCreatePageProps {
   onSubmit: (data: CategoryCreateData) => any;
 }
 
-export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
+export const CategoryCreatePage = ({
   disabled,
   onSubmit,
   errors,
   saveButtonBarState,
   backUrl,
-}) => {
+}: CategoryCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
 

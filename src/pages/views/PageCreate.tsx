@@ -25,7 +25,6 @@ import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeV
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import PageDetailsPage from "../components/PageDetailsPage";
@@ -37,7 +36,7 @@ export interface PageCreateProps {
   params: PageCreateUrlQueryParams;
 }
 
-export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
+export const PageCreate = ({ params }: PageCreateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

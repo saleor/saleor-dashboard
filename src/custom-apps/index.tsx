@@ -3,7 +3,7 @@ import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { sectionNames } from "@dashboard/intl";
 import { parse as parseQs } from "qs";
-import React from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 import { RouteComponentProps, Switch } from "react-router-dom";
 
@@ -26,7 +26,7 @@ interface MatchParamsWebhookDetails {
   id?: string;
 }
 
-const CustomAppList: React.FC<RouteComponentProps> = () => {
+const CustomAppList = () => {
   const qs = parseQs(location.search.substr(1));
   const params: CustomAppListUrlQueryParams = qs;
 
@@ -38,7 +38,7 @@ interface CustomAppDetailsProps extends RouteComponentProps<{ id?: string }> {
   onTokenClose: () => void;
 }
 
-const CustomAppDetails: React.FC<CustomAppDetailsProps> = ({ match, token, onTokenClose }) => {
+const CustomAppDetails = ({ match, token, onTokenClose }: CustomAppDetailsProps) => {
   const qs = parseQs(location.search.substr(1));
   const params: CustomAppDetailsUrlQueryParams = qs;
   const id = match.params.id;
@@ -56,7 +56,7 @@ const CustomAppDetails: React.FC<CustomAppDetailsProps> = ({ match, token, onTok
     />
   );
 };
-const CustomAppWebhookCreate: React.FC<RouteComponentProps<MatchParams>> = ({ match }) => {
+const CustomAppWebhookCreate = ({ match }: RouteComponentProps<MatchParams>) => {
   const appId = match.params.appId;
 
   if (!appId) {
@@ -65,9 +65,7 @@ const CustomAppWebhookCreate: React.FC<RouteComponentProps<MatchParams>> = ({ ma
 
   return <CustomAppWebhookCreateView appId={decodeURIComponent(appId)} />;
 };
-const CustomAppWebhookDetails: React.FC<RouteComponentProps<MatchParamsWebhookDetails>> = ({
-  match,
-}) => {
+const CustomAppWebhookDetails = ({ match }: RouteComponentProps<MatchParamsWebhookDetails>) => {
   const id = match.params.id;
 
   if (!id) {
@@ -78,7 +76,7 @@ const CustomAppWebhookDetails: React.FC<RouteComponentProps<MatchParamsWebhookDe
 };
 const Component = () => {
   const intl = useIntl();
-  const [token, setToken] = React.useState<string>(null);
+  const [token, setToken] = useState<string>(null);
 
   return (
     <>

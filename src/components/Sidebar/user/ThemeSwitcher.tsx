@@ -1,5 +1,4 @@
 import { DarkModeIcon, DefaultTheme, LightModeIcon, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 export const ThemeSwitcher = ({ theme }: { theme: DefaultTheme }) => {

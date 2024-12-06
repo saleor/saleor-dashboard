@@ -1,6 +1,5 @@
 import { Button } from "@dashboard/components/Button";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { FilterProps } from "../../types";
@@ -36,7 +35,7 @@ const useStyles = makeStyles<{ withoutBorder?: boolean }>(
     name: "FilterBar",
   },
 );
-const FilterBar: React.FC<FilterBarProps> = props => {
+const FilterBar = (props: FilterBarProps) => {
   const {
     allTabLabel,
     currencySymbol,

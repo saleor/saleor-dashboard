@@ -1,5 +1,5 @@
 import { Box, Button, ChervonDownIcon, Dropdown, List, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ReactNode } from "react";
 
 interface ButtonWithDropdownProps {
   onClick: () => void;
@@ -10,15 +10,16 @@ interface ButtonWithDropdownProps {
   }>;
   testId?: string;
   disabled?: boolean;
+  children: ReactNode;
 }
 
-export const ButtonWithDropdown: React.FC<ButtonWithDropdownProps> = ({
+export const ButtonWithDropdown = ({
   onClick,
   options,
   children,
   testId,
   disabled = false,
-}) => (
+}: ButtonWithDropdownProps) => (
   <Dropdown>
     <Dropdown.Trigger>
       <Button data-test-id={testId} onClick={onClick} disabled={disabled}>

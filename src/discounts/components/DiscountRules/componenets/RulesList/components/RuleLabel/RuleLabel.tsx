@@ -1,7 +1,7 @@
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
 import { messages } from "@dashboard/discounts/components/DiscountRules/messages";
 import { PromotionTypeEnum } from "@dashboard/graphql";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 interface RuleLabelProps {

@@ -14,7 +14,7 @@ import useLocale from "@dashboard/hooks/useLocale";
 import { ChannelProps, ListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { canBeSorted } from "../../views/SaleList/sort";

@@ -14,7 +14,7 @@ import OrderTransactionRefundPage, {
   OrderTransactionRefundPageFormData,
 } from "@dashboard/orders/components/OrderTransactionRefundPage/OrderTransactionRefundPage";
 import { orderUrl } from "@dashboard/orders/urls";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -30,7 +30,7 @@ interface OrderTransactionRefundProps {
   refundId: string;
 }
 
-const OrderTransactionRefund: React.FC<OrderTransactionRefundProps> = ({ orderId, refundId }) => {
+const OrderTransactionRefund = ({ orderId, refundId }: OrderTransactionRefundProps) => {
   const notify = useNotifier();
   const navigate = useNavigator();
   const intl = useIntl();

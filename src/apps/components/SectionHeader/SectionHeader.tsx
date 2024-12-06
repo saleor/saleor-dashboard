@@ -1,5 +1,5 @@
 import { Text } from "@saleor/macaw-ui-next";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 import { useStyles } from "./styles";
 
@@ -7,7 +7,7 @@ interface SectionHeaderProps {
   title: ReactNode;
 }
 
-export const SectionHeader: React.FC<SectionHeaderProps> = ({ title }) => {
+export const SectionHeader = ({ title }: SectionHeaderProps) => {
   const classes = useStyles();
 
   return (

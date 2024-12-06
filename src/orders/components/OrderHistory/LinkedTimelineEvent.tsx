@@ -3,7 +3,6 @@ import { TimelineEvent } from "@dashboard/components/Timeline";
 import { TitleElement } from "@dashboard/components/Timeline/TimelineEventHeader";
 import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { getEmployeeNameLink } from "./utils";
@@ -39,7 +38,7 @@ interface LinkedTimelineEventProps {
   hasPlainDate?: boolean;
 }
 
-const LinkedTimelineEvent: React.FC<LinkedTimelineEventProps> = ({ event, hasPlainDate }) => {
+const LinkedTimelineEvent = ({ event, hasPlainDate }: LinkedTimelineEventProps) => {
   const intl = useIntl();
   const getTitleElements = (): TitleElement[] => {
     const { type, relatedOrder, lines } = event;

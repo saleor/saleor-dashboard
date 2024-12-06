@@ -1,5 +1,5 @@
 import { Box } from "@saleor/macaw-ui-next";
-import React, { memo } from "react";
+import { memo } from "react";
 
 import { ShortcutItem } from "./shortcuts/ShortcutItem";
 import { Shortcut } from "./shortcuts/useShortcuts";

@@ -14,7 +14,6 @@ import {
   languageEntityUrl,
   TranslatableEntities,
 } from "@dashboard/translations/urls";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import TranslationFields from "../TranslationFields";
@@ -23,7 +22,7 @@ export interface TranslationsMenuItemPageProps extends TranslationsEntitiesPageP
   data: MenuItemTranslationFragment;
 }
 
-const TranslationsMenuItemPage: React.FC<TranslationsMenuItemPageProps> = ({
+const TranslationsMenuItemPage = ({
   translationId,
   activeField,
   disabled,
@@ -34,7 +33,7 @@ const TranslationsMenuItemPage: React.FC<TranslationsMenuItemPageProps> = ({
   onDiscard,
   onEdit,
   onSubmit,
-}) => {
+}: TranslationsMenuItemPageProps) => {
   const intl = useIntl();
 
   return (

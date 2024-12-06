@@ -65,7 +65,8 @@ import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichTe
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { OutputData } from "@editorjs/editorjs";
 import { Option } from "@saleor/macaw-ui-next";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { createPreorderEndDateChangeHandler } from "../../utils/handlers";
@@ -429,13 +430,13 @@ function useProductCreateForm(
   };
 }
 
-const ProductCreateForm: React.FC<ProductCreateFormProps> = ({
+const ProductCreateForm = ({
   children,
   initial,
   onSubmit,
   loading,
   ...rest
-}) => {
+}: ProductCreateFormProps) => {
   const { richText, ...props } = useProductCreateForm(initial || {}, onSubmit, loading, rest);
 
   return (

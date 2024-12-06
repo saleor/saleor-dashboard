@@ -1,5 +1,4 @@
 import { Chip, useTheme } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { conditionTypeToHue } from "../../utils";
 

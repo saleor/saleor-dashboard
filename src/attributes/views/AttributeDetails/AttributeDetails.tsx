@@ -22,7 +22,6 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { move } from "@dashboard/utils/lists";
 import omit from "lodash/omit";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import AttributeDeleteDialog from "../../components/AttributeDeleteDialog";
@@ -41,7 +40,7 @@ interface AttributeDetailsProps {
   params: AttributeUrlQueryParams;
 }
 
-const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
+const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

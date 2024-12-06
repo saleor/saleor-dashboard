@@ -6,7 +6,6 @@ import {
 } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages, sectionNames } from "@dashboard/intl";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, findInEnum } from "../../misc";
@@ -20,7 +19,7 @@ export interface SiteSettingsProps {
   params: SiteSettingsUrlQueryParams;
 }
 
-export const SiteSettings: React.FC<SiteSettingsProps> = () => {
+export const SiteSettings = () => {
   const notify = useNotifier();
   const intl = useIntl();
   const siteSettings = useSiteSettingsQuery({

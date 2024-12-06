@@ -7,7 +7,6 @@ import {
 } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, getStringOrPlaceholder } from "../../misc";
@@ -19,7 +18,7 @@ export interface CustomAppWebhookDetailsProps {
   id: string;
 }
 
-export const CustomAppWebhookDetails: React.FC<CustomAppWebhookDetailsProps> = ({ id }) => {
+export const CustomAppWebhookDetails = ({ id }: CustomAppWebhookDetailsProps) => {
   const notify = useNotifier();
   const intl = useIntl();
   const availableEvents = useAvailableEvents();

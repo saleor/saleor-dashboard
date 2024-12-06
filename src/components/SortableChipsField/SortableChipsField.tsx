@@ -1,7 +1,6 @@
 import { ReorderAction, ReorderEvent } from "@dashboard/types";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { SortableContainerProps } from "react-sortable-hoc";
 
 import DraggableChip from "../SortableChip";
@@ -46,7 +45,7 @@ export interface SortableChipsFieldProps extends SortableContainerProps {
   onValueReorder: ReorderAction;
 }
 
-const SortableChipsField: React.FC<SortableChipsFieldProps> = props => {
+const SortableChipsField = (props: SortableChipsFieldProps) => {
   const { loading, values, error, helperText, onValueDelete, onValueReorder } = props;
   const classes = useStyles(props);
   const handleSortStart = () => {
@@ -58,6 +57,8 @@ const SortableChipsField: React.FC<SortableChipsFieldProps> = props => {
   };
 
   return (
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     <SortableContainer
       axis="xy"
       lockAxis="xy"
@@ -69,6 +70,8 @@ const SortableChipsField: React.FC<SortableChipsFieldProps> = props => {
       <div>
         {values.map((value, valueIndex) => (
           <DraggableChip
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             className={classes.chip}
             loading={loading}
             disabled={loading}

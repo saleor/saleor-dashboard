@@ -12,7 +12,7 @@ import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { FetchMoreProps } from "@dashboard/types";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { Box, Option, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface ProductType {
@@ -49,7 +49,7 @@ interface ProductOrganizationProps {
   selectedProductCategory?: Option;
 }
 
-export const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
+export const ProductOrganization = (props: ProductOrganizationProps) => {
   const {
     canChangeType,
     categories,

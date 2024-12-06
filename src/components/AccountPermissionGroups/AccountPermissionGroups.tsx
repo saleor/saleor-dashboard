@@ -5,7 +5,6 @@ import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getStaffErrorMessage from "@dashboard/utils/errors/staff";
 import { Option, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { Multiselect } from "../Combobox";
@@ -20,7 +19,7 @@ export interface AccountPermissionGroupsProps extends FetchMoreProps, SearchPage
   onChange: FormChange;
 }
 
-const AccountPermissionGroups: React.FC<AccountPermissionGroupsProps> = props => {
+const AccountPermissionGroups = (props: AccountPermissionGroupsProps) => {
   const {
     availablePermissionGroups,
     disabled,

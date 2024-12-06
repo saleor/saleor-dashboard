@@ -5,7 +5,6 @@ import {
 } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { Checkbox, Text, Tooltip } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { OrderReturnData } from "../../form";

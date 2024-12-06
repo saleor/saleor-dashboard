@@ -3,7 +3,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { createPaginationState } from "@dashboard/hooks/usePaginator";
 import useShop from "@dashboard/hooks/useShop";
 import { stringifyQs } from "@dashboard/utils/urls";
-import React from "react";
+import { useMemo } from "react";
 
 import { PAGINATE_BY } from "../../config";
 import { maybe } from "../../misc";
@@ -24,7 +24,7 @@ interface TranslationsEntitiesProps {
   params: LanguageEntitiesUrlQueryParams;
 }
 
-const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({ language, params }) => {
+const TranslationsEntities = ({ language, params }: TranslationsEntitiesProps) => {
   const navigate = useNavigator();
   const shop = useShop();
 
@@ -107,7 +107,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({ language, p
     shop.languages.find(languageFromList => languageFromList.code === language),
   );
   const paginationState = createPaginationState(PAGINATE_BY, params);
-  const queryVariables = React.useMemo(
+  const queryVariables = useMemo(
     () => ({
       ...paginationState,
       language: language as any,

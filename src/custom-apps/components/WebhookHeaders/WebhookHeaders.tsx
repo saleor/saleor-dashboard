@@ -4,7 +4,7 @@ import { FormChange } from "@dashboard/hooks/useForm";
 import { Table, TableCell, TableHead } from "@material-ui/core";
 import { Button, ChervonDownIcon, Skeleton, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { WebhookFormData } from "../WebhookDetailsPage";
@@ -18,7 +18,7 @@ export interface WebhookHeadersProps {
   onChange: FormChange;
 }
 
-const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data: { customHeaders }, onChange }) => {
+const WebhookHeaders = ({ data: { customHeaders }, onChange }: WebhookHeadersProps) => {
   const intl = useIntl();
   const [expanded, setExpanded] = useState(false);
   const classes = useStyles();

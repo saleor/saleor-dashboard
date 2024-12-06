@@ -11,7 +11,6 @@ import {
 import useForm from "@dashboard/hooks/useForm";
 import { Divider, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import GiftCardCreateExpirySelect from "../GiftCardCreateDialog/GiftCardCreateExpirySelect";
@@ -45,12 +44,12 @@ interface GiftCardBulkCreateDialogFormProps {
   onClose: () => void;
 }
 
-const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> = ({
+const GiftCardBulkCreateDialogForm = ({
   onSubmit,
   opts,
   onClose,
   formErrors = {},
-}) => {
+}: GiftCardBulkCreateDialogFormProps) => {
   const intl = useIntl();
   const { data: settingsData, loading: loadingSettings } = useGiftCardSettingsQuery();
   const getInitialExpirySettingsData = (): Partial<GiftCardBulkCreateFormData> => {

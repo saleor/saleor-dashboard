@@ -13,7 +13,6 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import PluginsDetailsPage, { PluginDetailsPageFormData } from "../components/PluginsDetailsPage";
@@ -43,7 +42,7 @@ export function getConfigurationInput(
     }));
 }
 
-export const PluginsDetails: React.FC<PluginsDetailsProps> = ({ id, params }) => {
+export const PluginsDetails = ({ id, params }: PluginsDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

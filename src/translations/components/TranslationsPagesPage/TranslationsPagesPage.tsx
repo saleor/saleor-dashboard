@@ -16,7 +16,6 @@ import {
   TranslatableEntities,
 } from "@dashboard/translations/urls";
 import { mapAttributeValuesToTranslationFields } from "@dashboard/translations/utils";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import TranslationFields from "../TranslationFields";
@@ -26,7 +25,7 @@ export interface TranslationsPagesPageProps extends TranslationsEntitiesPageProp
   onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];
 }
 
-const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
+const TranslationsPagesPage = ({
   translationId,
   activeField,
   disabled,
@@ -38,7 +37,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
   onEdit,
   onSubmit,
   onAttributeValueSubmit,
-}) => {
+}: TranslationsPagesPageProps) => {
   const intl = useIntl();
 
   return (

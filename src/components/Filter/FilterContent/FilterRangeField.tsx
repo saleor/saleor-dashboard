@@ -1,5 +1,4 @@
 import { TextField } from "@material-ui/core";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { FieldType, FilterFieldBaseProps } from "../types";
@@ -13,11 +12,11 @@ export type FilterRangeFieldProps = FilterFieldBaseProps<
   currencySymbol: string;
 };
 
-const FilterRangeField: React.FC<FilterRangeFieldProps> = ({
+const FilterRangeField = ({
   currencySymbol,
   filter,
   onFilterPropertyChange,
-}) => {
+}: FilterRangeFieldProps) => {
   const classes = useStyles();
 
   return (

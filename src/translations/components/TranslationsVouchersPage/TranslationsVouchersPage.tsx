@@ -11,7 +11,6 @@ import {
   languageEntityUrl,
   TranslatableEntities,
 } from "@dashboard/translations/urls";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import TranslationFields from "../TranslationFields";
@@ -24,7 +23,7 @@ export const fieldNames = {
   name: "name",
 };
 
-const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
+const TranslationsVouchersPage = ({
   translationId,
   activeField,
   disabled,
@@ -35,7 +34,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
   onDiscard,
   onEdit,
   onSubmit,
-}) => {
+}: TranslationsVouchersPageProps) => {
   const intl = useIntl();
 
   return (

@@ -5,7 +5,7 @@ import { ProductListQuery } from "@dashboard/graphql";
 import { ListProps, RelayToFlat } from "@dashboard/types";
 import { CircularProgress } from "@material-ui/core";
 import { Box, Text, vars } from "@saleor/macaw-ui-next";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../ProductListDatagrid/messages";
@@ -17,14 +17,14 @@ export interface ProductListTilesProps extends ListProps<ProductListColumns> {
   onTileClick: (id: string) => void;
 }
 
-export const ProductListTiles: React.FC<ProductListTilesProps> = ({
+export const ProductListTiles = ({
   products,
   onTileClick,
   settings,
   disabled,
   loading,
   onUpdateListSettings,
-}) => {
+}: ProductListTilesProps) => {
   const intl = useIntl();
   const renderContent = useCallback(() => {
     if (loading) {

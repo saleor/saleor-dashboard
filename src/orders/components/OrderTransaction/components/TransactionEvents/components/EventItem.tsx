@@ -4,7 +4,6 @@ import { TransactionFakeEvent } from "@dashboard/orders/types";
 import { TableCell, TableRow } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React from "react";
 
 import { mapTransactionEvent } from "../../../utils";
 import { EventCreatedBy } from "./EventCreatedBy";
@@ -107,12 +106,12 @@ const shouldShowAmount = (event: TransactionEventFragment | TransactionFakeEvent
   return true;
 };
 
-export const EventItem: React.FC<EventItemProps> = ({
+export const EventItem = ({
   event,
   onHover,
   hoveredPspReference,
   hasCreatedBy,
-}) => {
+}: EventItemProps) => {
   const classes = useStyles();
   const { type, status } = mapTransactionEvent(event);
   const isHovered = event.pspReference && event.pspReference === hoveredPspReference;

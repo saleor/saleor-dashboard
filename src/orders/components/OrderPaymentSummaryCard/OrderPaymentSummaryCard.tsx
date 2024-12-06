@@ -7,7 +7,6 @@ import { OrderAction, OrderDetailsFragment } from "@dashboard/graphql";
 import { transformPaymentStatus } from "@dashboard/misc";
 import { orderGrantRefundUrl, orderSendRefundUrl } from "@dashboard/orders/urls";
 import { Divider, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { extractOrderGiftCardUsedAmount } from "../OrderSummaryCard/utils";
@@ -22,7 +21,7 @@ interface OrderPaymementProps {
   onMarkAsPaid: () => void;
 }
 
-const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkAsPaid }) => {
+const OrderPaymentSummaryCard = ({ order, onMarkAsPaid }: OrderPaymementProps) => {
   const classes = useStyles();
   const intl = useIntl();
 

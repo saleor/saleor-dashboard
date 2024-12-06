@@ -1,14 +1,11 @@
 import { Box, Button } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 interface ProductVariantSetDefaultProps {
   onSetDefaultVariant: () => void;
 }
 
-const ProductVariantSetDefault: React.FC<ProductVariantSetDefaultProps> = ({
-  onSetDefaultVariant,
-}) => {
+const ProductVariantSetDefault = ({ onSetDefaultVariant }: ProductVariantSetDefaultProps) => {
   const intl = useIntl();
 
   return (

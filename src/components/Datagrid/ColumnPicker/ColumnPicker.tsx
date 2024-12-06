@@ -8,7 +8,7 @@ import {
   Text,
   vars,
 } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { AvailableColumn } from "../types";

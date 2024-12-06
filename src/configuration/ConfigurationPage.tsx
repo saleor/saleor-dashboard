@@ -7,7 +7,6 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { makeStyles, NavigationCard } from "@saleor/macaw-ui";
 import { Box, Text, vars } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
@@ -74,7 +73,7 @@ export interface ConfigurationPageProps {
   versionInfo: VersionInfo;
 }
 
-export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
+export const ConfigurationPage = (props: ConfigurationPageProps) => {
   const {
     menu: menus,
     user,

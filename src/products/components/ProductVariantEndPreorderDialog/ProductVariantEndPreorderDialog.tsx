@@ -1,6 +1,5 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { productVariantEndPreorderDialogMessages } from "./messages";
@@ -13,13 +12,13 @@ export interface ProductVariantEndPreorderDialogProps {
   variantGlobalSoldUnits?: number;
 }
 
-const ProductVariantEndPreorderDialog: React.FC<ProductVariantEndPreorderDialogProps> = ({
+const ProductVariantEndPreorderDialog = ({
   confirmButtonState,
   open,
   onClose,
   onConfirm,
   variantGlobalSoldUnits,
-}) => {
+}: ProductVariantEndPreorderDialogProps) => {
   const intl = useIntl();
 
   return (

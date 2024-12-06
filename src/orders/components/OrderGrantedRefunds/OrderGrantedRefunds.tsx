@@ -13,7 +13,6 @@ import { getUserInitials, renderCollection } from "@dashboard/misc";
 import { orderGrantRefundEditUrl } from "@dashboard/orders/urls";
 import { TableCell, TableRow } from "@material-ui/core";
 import { Avatar } from "@saleor/macaw-ui";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { orderGrantedRefundsMessages } from "./messages";
@@ -23,7 +22,7 @@ interface OrderGrantedRefundsProps {
   order: OrderDetailsFragment;
 }
 
-const OrderGrantedRefunds: React.FC<OrderGrantedRefundsProps> = ({ order }) => {
+const OrderGrantedRefunds = ({ order }: OrderGrantedRefundsProps) => {
   const classes = useStyles();
   const intl = useIntl();
   const { locale } = useLocale();

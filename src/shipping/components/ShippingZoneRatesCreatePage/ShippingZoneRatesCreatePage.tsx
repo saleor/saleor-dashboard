@@ -29,7 +29,7 @@ import { createChannelsChangeHandler } from "@dashboard/shipping/handlers";
 import { FetchMoreProps } from "@dashboard/types";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import React, { FormEventHandler } from "react";
+import { FormEventHandler, useState } from "react";
 import { useIntl } from "react-intl";
 
 import ShippingMethodTaxes from "../ShippingMethodTaxes";
@@ -57,7 +57,7 @@ export interface ShippingZoneRatesCreatePageProps extends WithFormId {
   fetchMoreTaxClasses: FetchMoreProps;
 }
 
-export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePageProps> = ({
+export const ShippingZoneRatesCreatePage = ({
   allChannelsCount,
   shippingChannels,
   channelErrors,
@@ -77,7 +77,7 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
   formId,
   taxClasses,
   fetchMoreTaxClasses,
-}) => {
+}: ShippingZoneRatesCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
@@ -93,7 +93,7 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
     type: null,
     taxClassId: "",
   };
-  const [taxClassDisplayName, setTaxClassDisplayName] = React.useState("");
+  const [taxClassDisplayName, setTaxClassDisplayName] = useState("");
   const {
     change,
     data: formData,

@@ -1,6 +1,5 @@
 import { extensionMountPoints, useExtensions } from "@dashboard/apps/hooks/useExtensions";
 import { Box, List, sprinkles, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { Link } from "react-router-dom";
 
 import { SidebarMenuItem } from "./types";
@@ -10,7 +9,7 @@ interface Props {
   menuItem: SidebarMenuItem;
 }
 
-export const SingleItem: React.FC<Props> = ({ menuItem }) => {
+export const SingleItem = ({ menuItem }: Props) => {
   const extensions = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);
   const active = isMenuActive(location.pathname, menuItem);
   const handleMenuItemClick = () => {

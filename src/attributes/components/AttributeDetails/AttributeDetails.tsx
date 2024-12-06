@@ -14,7 +14,6 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
 import { TextField } from "@material-ui/core";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 import slugify from "slugify";
 
@@ -51,7 +50,7 @@ export interface AttributeDetailsProps
   onChange: (event: ChangeEvent) => void;
 }
 
-const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
+const AttributeDetails = (props: AttributeDetailsProps) => {
   const { canChangeType, errors, clearErrors, setError, data, disabled, apiErrors, onChange, set } =
     props;
   const intl = useIntl();

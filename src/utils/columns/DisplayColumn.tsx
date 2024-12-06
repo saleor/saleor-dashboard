@@ -1,14 +1,15 @@
-import React from "react";
+import { ReactNode, useMemo } from "react";
 
 import { isSelected } from "../lists";
 
 export interface DisplayColumnProps<TColumn extends string = string> {
   displayColumns: TColumn[];
   column: TColumn;
+  children: ReactNode;
 }
 
-const DisplayColumn: React.FC<DisplayColumnProps> = ({ displayColumns, children, column }) => {
-  const display = React.useMemo(
+const DisplayColumn = ({ displayColumns, children, column }: DisplayColumnProps) => {
+  const display = useMemo(
     () => isSelected(column, displayColumns, (a, b) => a === b),
     [column, displayColumns],
   );

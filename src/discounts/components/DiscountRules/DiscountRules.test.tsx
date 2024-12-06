@@ -5,7 +5,7 @@ import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 import {
   searchCategoriesMock,
@@ -59,6 +59,8 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
         variantsWithProductDataMock,
       ]}
     >
+      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+      {/* @ts-ignore */}
       <LegacyThemeProvider>
         <ThemeProvider>{children}</ThemeProvider>
       </LegacyThemeProvider>

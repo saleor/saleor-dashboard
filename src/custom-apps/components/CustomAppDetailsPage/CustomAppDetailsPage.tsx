@@ -19,7 +19,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
 import { Button } from "@saleor/macaw-ui";
-import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -54,7 +53,7 @@ export interface CustomAppDetailsPageProps {
   onAppDeactivateOpen: () => void;
 }
 
-const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
+const CustomAppDetailsPage = (props: CustomAppDetailsPageProps) => {
   const {
     apiUrl,
     disabled,

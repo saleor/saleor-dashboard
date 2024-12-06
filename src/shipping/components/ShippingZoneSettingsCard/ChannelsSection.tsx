@@ -5,7 +5,6 @@ import { useChannelsSearch } from "@dashboard/hooks/useChannelsSearch";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { Option } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 const messages = defineMessages({
@@ -33,11 +32,11 @@ interface ChannelsSectionProps {
   allChannels?: ChannelFragment[];
 }
 
-const ChannelsSection: React.FC<ChannelsSectionProps> = ({
+const ChannelsSection = ({
   onChange,
   allChannels = [],
   selectedChannels,
-}) => {
+}: ChannelsSectionProps) => {
   const { onQueryChange, filteredChannels } = useChannelsSearch(allChannels);
   const intl = useIntl();
 

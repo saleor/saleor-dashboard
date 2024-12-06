@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { SearchCategoriesQuery } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import AssignContainerDialog, { AssignContainerDialogProps } from "../AssignContainerDialog";
@@ -12,7 +11,7 @@ interface AssignCategoryDialogProps
   categories: RelayToFlat<SearchCategoriesQuery["search"]>;
 }
 
-const AssignCategoryDialog: React.FC<AssignCategoryDialogProps> = ({ categories, ...rest }) => {
+const AssignCategoryDialog = ({ categories, ...rest }: AssignCategoryDialogProps) => {
   const intl = useIntl();
 
   return (

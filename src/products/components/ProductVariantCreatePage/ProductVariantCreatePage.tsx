@@ -32,7 +32,6 @@ import { ProductDetailsChannelsAvailabilityCard } from "@dashboard/products/comp
 import { productUrl } from "@dashboard/products/urls";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { ProductShipping } from "../ProductShipping";
@@ -107,7 +106,7 @@ interface ProductVariantCreatePageProps {
   searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
 }
 
-const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
+const ProductVariantCreatePage = ({
   productId,
   defaultVariantId,
   disabled,
@@ -134,7 +133,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   onAttributeSelectBlur,
   fetchMoreWarehouses,
   searchWarehousesResult,
-}) => {
+}: ProductVariantCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const { isOpen: isManageChannelsModalOpen, toggle: toggleManageChannels } = useManageChannels();
