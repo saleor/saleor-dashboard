@@ -91,6 +91,7 @@
     ],
     // Decided to turn off:
     "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
     "@typescript-eslint/prefer-nullish-coalescing": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-floating-promises": "off",
