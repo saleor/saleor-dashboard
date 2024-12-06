@@ -1,5 +1,9 @@
 import "@testing-library/jest-dom";
+
 import { configure } from "@testing-library/react";
+import React from "react";
+
+global.React = React;
 
 jest.mock("@sentry/react");
 
@@ -40,6 +44,7 @@ configure({ testIdAttribute: "data-test-id" });
  * Fixes (hacks) "TextEncoder is not defined" error which is likely bug in jsdom
  */
 import { TextDecoder, TextEncoder } from "util";
+
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder as typeof global.TextDecoder;
 
