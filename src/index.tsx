@@ -10,7 +10,7 @@ import { ThemeProvider } from "@dashboard/theme";
 import { OnboardingProvider } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { SaleorProvider } from "@saleor/sdk";
-import { render } from "react-dom";
+import { createRoot } from "react-dom/client";
 import { ErrorBoundary } from "react-error-boundary";
 import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
@@ -317,4 +317,7 @@ const Routes = () => {
   );
 };
 
-render(<App />, document.querySelector("#dashboard-app"));
+const container = document.querySelector("#dashboard-app");
+const root = createRoot(container!);
+
+root.render(<App />);
