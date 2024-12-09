@@ -14,20 +14,37 @@ export class AddNavigationMenuItemDialog extends BasePage {
     super(page);
   }
 
-  async selectLinkOption(option: string, optionName: string) {
+  async selectLinkTypeOption(linkType: string) {
     await this.menuLinkType.click();
     await this.waitForDOMToFullyLoad();
-    await this.menuLinkOptions.filter({ hasText: "Categories" }).waitFor({ state: "visible" });
-    await this.menuLinkOptions.filter({ hasText: "Collections" }).waitFor({ state: "visible" });
-    await this.menuLinkOptions.filter({ hasText: "Pages" }).waitFor({ state: "visible" });
-    await expect(this.menuLinkOptions.filter({ hasText: option })).toBeEnabled();
-    await this.menuLinkOptions.filter({ hasText: option }).click({ force: true });
-    await this.waitForDOMToFullyLoad();
+
+    // Ensure the link type option is visible and select it
+    const linkTypeOption = this.menuLinkOptions.filter({ hasText: linkType });
+
+    await linkTypeOption.waitFor({ state: "visible" });
+    await expect(linkTypeOption).toBeEnabled();
+    await linkTypeOption.click({ force: true });
+
+    // Verify the correct link type is selected
+    const selectedLinkType = await this.menuLinkType.inputValue();
+
+    if (selectedLinkType !== linkType) {
+      throw new Error(`Expected link type "${linkType}" but found "${selectedLinkType}"`);
+    }
+  }
+
+  async selectLinkTypeValue(optionName: string) {
     await this.menuLinkValue.click();
-    await this.menuLinkOptions.filter({ hasText: optionName }).waitFor({ state: "visible" });
-    await expect(this.menuLinkOptions.filter({ hasText: optionName })).toBeEnabled();
-    await this.menuLinkOptions.filter({ hasText: optionName }).click({ force: true });
     await this.waitForDOMToFullyLoad();
+
+    // Ensure the option is present and select it
+    const option = this.menuLinkOptions.filter({ hasText: optionName });
+
+    await option.waitFor({ state: "visible" });
+    await expect(option).toBeEnabled();
+    await option.click({ force: true });
+
+    // Verify the correct option is selected
     await expect(this.menuLinkValue).toHaveValue(optionName);
   }
 
