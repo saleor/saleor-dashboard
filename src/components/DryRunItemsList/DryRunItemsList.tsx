@@ -72,7 +72,7 @@ const DryRunItemsList: React.FC<DryRunItemsListProps> = ({
             </ListItemCell>
           </ListItem>
         ) : (
-          (mapEdgesToItems<any>(data[objectCollection]) || []).map((item, idx) => (
+          (mapEdgesToItems<any>(data?.[objectCollection]) || []).map((item, idx) => (
             <ListItem className={classes.listItem} key={idx} onClick={() => setObjectId(item.id)}>
               <ListItemCell className={classes.listItemCell}>
                 {item.name || item[objectDocument.displayedAttribute] || item.id || item.__typename}
