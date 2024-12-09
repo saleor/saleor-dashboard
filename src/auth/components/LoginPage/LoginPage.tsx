@@ -58,7 +58,7 @@ const LoginPage: React.FC<LoginCardProps> = props => {
               padding={4}
               backgroundColor="critical1"
               width="100%"
-              marginBottom={5}
+              marginBottom={2}
               key={error}
               data-test-id="login-error-message"
             >
