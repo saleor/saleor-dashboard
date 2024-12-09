@@ -58,11 +58,11 @@ const LoginPage: React.FC<LoginCardProps> = props => {
               padding={4}
               backgroundColor="critical1"
               width="100%"
-              marginBottom={2}
+              marginBottom={5}
               key={error}
               data-test-id="login-error-message"
             >
-              <Text>{getErrorMessage(error, intl)}</Text>
+              <Text color="warning1">{getErrorMessage(error, intl)}</Text>
             </Box>
           ))}
           <TextField
