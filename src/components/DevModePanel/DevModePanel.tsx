@@ -21,6 +21,9 @@ export const DevModePanel: React.FC = () => {
   const baseFetcher = createGraphiQLFetcher({
     url: process.env.API_URL,
     fetch: authorizedFetch,
+    headers: {
+      "x-source": "dashboard-plg",
+    },
   });
   const fetcher = async (graphQLParams: FetcherParams, opts: FetcherOpts) => {
     if (graphQLParams.operationName !== "IntrospectionQuery") {
