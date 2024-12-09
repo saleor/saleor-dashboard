@@ -1,4 +1,3 @@
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { Weight } from "../Weight";
@@ -8,7 +7,7 @@ export interface WeightRangeProps {
   to?: Weight;
 }
 
-const WeightRange: React.FC<WeightRangeProps> = ({ from, to }) =>
+const WeightRange = ({ from, to }: WeightRangeProps) =>
   from && to ? (
     <FormattedMessage
       id="5x6yT9"

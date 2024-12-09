@@ -14,7 +14,8 @@ import commonErrorMessages from "@dashboard/utils/errors/common";
 import { mapSlugNodeToChoice } from "@dashboard/utils/maps";
 import { TextField } from "@material-ui/core";
 import { Box, Spinner, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { useUpdateBalanceDialogStyles as useStyles } from "../GiftCardUpdateBalanceDialog/styles";
@@ -28,7 +29,7 @@ export interface GiftCardResendCodeFormData {
   channelSlug: string;
 }
 
-const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
+const GiftCardResendCodeDialog = ({ open, onClose }: DialogProps) => {
   const intl = useIntl();
   const notify = useNotifier();
   const classes = useStyles();

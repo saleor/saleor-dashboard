@@ -11,7 +11,6 @@ import {
 } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { DiscountCreateForm } from "../DiscountCreateForm";

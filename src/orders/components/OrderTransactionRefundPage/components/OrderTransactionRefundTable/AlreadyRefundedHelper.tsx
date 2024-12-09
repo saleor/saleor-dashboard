@@ -1,5 +1,4 @@
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { refundTableMessages } from "./messages";
@@ -9,10 +8,10 @@ interface AlreadyRefundedHelperProps {
   qtyToRefund: number;
 }
 
-export const AlreadyRefundedHelper: React.FC<AlreadyRefundedHelperProps> = ({
+export const AlreadyRefundedHelper = ({
   maxQtyToRefund,
   qtyToRefund,
-}) => {
+}: AlreadyRefundedHelperProps) => {
   if (maxQtyToRefund === qtyToRefund) {
     return null;
   }

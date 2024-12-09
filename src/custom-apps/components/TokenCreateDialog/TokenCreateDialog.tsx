@@ -8,7 +8,7 @@ import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
 import { TextField } from "@material-ui/core";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { Mono } from "./Mono";
@@ -36,13 +36,13 @@ const tokenPaperStyles = {
 
 const createHeadersString = (token: string) => `{\n  "authorization": "Bearer ${token}"\n}`;
 
-const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
+const TokenCreateDialog = (props: TokenCreateDialogProps) => {
   const { confirmButtonState, open, token, onClose, onCreate } = props;
-  const [step, setStep] = React.useState<TokenCreateStep>("form");
+  const [step, setStep] = useState<TokenCreateStep>("form");
   const intl = useIntl();
   const headers = createHeadersString(token ?? "");
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (token !== undefined) {
       setStep("summary");
     }

@@ -2,7 +2,6 @@ import { ActionDialogProps } from "@dashboard/components/ActionDialog";
 import { useGiftCardList } from "@dashboard/giftCards/GiftCardsList/providers/GiftCardListProvider";
 import { GIFT_CARD_LIST_QUERY } from "@dashboard/giftCards/GiftCardsList/queries";
 import { DialogProps } from "@dashboard/types";
-import React from "react";
 
 import GiftCardDeleteDialogContent, { SINGLE } from "./GiftCardDeleteDialogContent";
 import useGiftCardBulkDelete from "./useGiftCardBulkDelete";
@@ -12,11 +11,11 @@ interface GiftCardDeleteDialogProps extends DialogProps {
   refetchQueries?: string[];
 }
 
-const GiftCardDeleteDialog: React.FC<GiftCardDeleteDialogProps> = ({
+const GiftCardDeleteDialog = ({
   open,
   onClose,
   refetchQueries = [],
-}) => {
+}: GiftCardDeleteDialogProps) => {
   const listProps = useGiftCardList();
   const { giftCards, loading, selectedRowIds, clearRowSelection } = listProps;
   const singleDeletion = selectedRowIds.length === SINGLE;

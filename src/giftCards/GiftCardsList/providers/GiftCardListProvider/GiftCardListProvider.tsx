@@ -20,7 +20,8 @@ import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import React, { createContext, Dispatch, SetStateAction, useContext, useState } from "react";
+import { createContext, Dispatch, SetStateAction, useContext, useState } from "react";
+import * as React from "react";
 
 import { getFilterQueryParam, getFilterVariables, storageUtils } from "../../filters";
 import {
@@ -70,10 +71,7 @@ export const useGiftCardList = () => {
   return context;
 };
 
-export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
-  children,
-  params,
-}) => {
+export const GiftCardsListProvider = ({ children, params }: GiftCardsListProviderProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);

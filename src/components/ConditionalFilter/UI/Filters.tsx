@@ -1,5 +1,4 @@
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { ExperimentalFiltersProps } from ".";
 import { createErrorLookup, getErrorByRowIndex } from "./errors";

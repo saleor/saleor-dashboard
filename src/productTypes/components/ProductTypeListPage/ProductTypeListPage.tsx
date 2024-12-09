@@ -8,7 +8,6 @@ import { ProductTypeFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import ProductTypeList from "@dashboard/productTypes/components/ProductTypeList/ProductTypeList";
 import { productTypeAddUrl, ProductTypeListUrlSortField } from "@dashboard/productTypes/urls";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
@@ -29,7 +28,7 @@ export interface ProductTypeListPageProps
   productTypes: ProductTypeFragment[];
 }
 
-const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
+const ProductTypeListPage = ({
   currentTab,
   filterOpts,
   initialSearch,
@@ -41,7 +40,7 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
   onTabSave,
   tabs,
   ...listProps
-}) => {
+}: ProductTypeListPageProps) => {
   const intl = useIntl();
   const structure = createFilterStructure(intl, filterOpts);
 

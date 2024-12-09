@@ -1,6 +1,5 @@
 import { Button } from "@dashboard/components/Button";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
@@ -17,7 +16,7 @@ interface MaximalButtonProps {
   onClick: () => void;
 }
 
-const MaximalButton: React.FC<MaximalButtonProps> = ({ onClick }) => {
+const MaximalButton = ({ onClick }: MaximalButtonProps) => {
   const classes = useStyles({});
 
   return (

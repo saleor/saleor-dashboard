@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { SearchCollectionsQuery } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import AssignContainerDialog, { AssignContainerDialogProps } from "../AssignContainerDialog";
@@ -12,10 +11,7 @@ interface AssignCollectionDialogProps
   collections: RelayToFlat<SearchCollectionsQuery["search"]>;
 }
 
-const AssignCollectionDialog: React.FC<AssignCollectionDialogProps> = ({
-  collections,
-  ...rest
-}) => {
+const AssignCollectionDialog = ({ collections, ...rest }: AssignCollectionDialogProps) => {
   const intl = useIntl();
 
   return (

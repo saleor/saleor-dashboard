@@ -7,7 +7,7 @@ import { getFieldError } from "@dashboard/utils/errors";
 import { TextField } from "@material-ui/core";
 import InfoIcon from "@material-ui/icons/Info";
 import { Box, Tooltip } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { PluginDetailsPageFormData } from "../PluginsDetailsPage";
@@ -20,13 +20,7 @@ interface PluginSettingsProps {
   fields: ConfigurationItemFragment[];
 }
 
-const PluginSettings: React.FC<PluginSettingsProps> = ({
-  data,
-  disabled,
-  errors,
-  onChange,
-  fields,
-}) => {
+const PluginSettings = ({ data, disabled, errors, onChange, fields }: PluginSettingsProps) => {
   const intl = useIntl();
 
   return (

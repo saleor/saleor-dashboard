@@ -38,7 +38,6 @@ import { ProductCreateUrlQueryParams, productListUrl } from "@dashboard/products
 import { getChoices } from "@dashboard/products/utils/data";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, Option } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { FetchMoreProps, RelayToFlat } from "../../../types";
@@ -96,7 +95,7 @@ interface ProductCreatePageProps {
   searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
 }
 
-export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
+export const ProductCreatePage = ({
   allChannelsCount,
   channelsErrors,
   currentChannels,

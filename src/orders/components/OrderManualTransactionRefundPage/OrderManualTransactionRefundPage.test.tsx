@@ -11,7 +11,7 @@ import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { BrowserRouter } from "react-router-dom";
 
 import { OrderManualTransactionRefundPage } from "./OrderManualTransactionRefundPage";
@@ -34,8 +34,12 @@ mockResizeObserver();
 const getWrapper = (mocks: MockedResponse[] = []) => {
   const WrapperComponent = ({ children }: { children: ReactNode }) => {
     return (
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       <BrowserRouter>
         <MockedProvider mocks={mocks}>
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+          {/* @ts-ignore */}
           <LegacyThemeProvider>
             <ThemeProvider>{children}</ThemeProvider>
           </LegacyThemeProvider>

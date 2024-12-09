@@ -2,7 +2,6 @@ import Link from "@dashboard/components/Link";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { DOCS_ULRS } from "@dashboard/links";
 import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "./messages";

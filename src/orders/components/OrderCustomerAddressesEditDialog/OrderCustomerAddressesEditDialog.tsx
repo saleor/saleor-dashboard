@@ -20,7 +20,7 @@ import { getById, transformAddressToAddressInput } from "@dashboard/misc";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { Divider, FormControlLabel } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState } from "react";
 import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
 import OrderCustomerAddressesEditForm, {
@@ -57,7 +57,7 @@ const defaultSearchState: OrderCustomerSearchAddressState = {
   open: false,
   type: undefined,
 };
-const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialogProps> = props => {
+const OrderCustomerAddressesEditDialog = (props: OrderCustomerAddressesEditDialogProps) => {
   const {
     open: defaultOpen,
     variant,
@@ -196,7 +196,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
   };
   const countryChoices = mapCountriesToChoices(countries);
   const [addressSearchState, setAddressSearchState] =
-    React.useState<OrderCustomerSearchAddressState>(defaultSearchState);
+    useState<OrderCustomerSearchAddressState>(defaultSearchState);
   const validatedDefaultShippingAddress = validateDefaultAddress(
     defaultShippingAddress,
     customerAddresses,

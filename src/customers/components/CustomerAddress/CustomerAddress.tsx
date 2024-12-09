@@ -5,7 +5,6 @@ import CardMenu from "@dashboard/components/CardMenu";
 import { AddressFragment, AddressTypeEnum } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 export interface CustomerAddressProps {
@@ -72,7 +71,7 @@ const useStyles = makeStyles(
   },
   { name: "CustomerAddress" },
 );
-const CustomerAddress: React.FC<CustomerAddressProps> = props => {
+const CustomerAddress = (props: CustomerAddressProps) => {
   const {
     address,
     disabled,

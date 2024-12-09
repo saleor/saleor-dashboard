@@ -13,7 +13,6 @@ import {
 } from "@dashboard/orders/utils/data";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import OrderFulfillStockExceededDialogLine from "../OrderFulfillStockExceededDialogLine";
@@ -29,7 +28,7 @@ export interface OrderFulfillStockExceededDialogProps {
   onClose: () => any;
 }
 
-const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogProps> = props => {
+const OrderFulfillStockExceededDialog = (props: OrderFulfillStockExceededDialogProps) => {
   const { lines, open, formsetData, confirmButtonState, onClose, onSubmit } = props;
   const intl = useIntl();
   const classes = useStyles(props);

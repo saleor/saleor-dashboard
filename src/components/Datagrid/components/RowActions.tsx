@@ -1,5 +1,4 @@
 import { IconButton, MoreHorizontalIcon } from "@saleor/macaw-ui";
-import React from "react";
 
 import CardMenu, { CardMenuItem } from "../../CardMenu";
 import useStyles from "../styles";
@@ -38,6 +37,8 @@ export const RowActions = ({ menuItems, disabled }: RowActionsProps) => {
           disabled={disabled}
           autoFocusItem={false}
           showMenuIcon={true}
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           Icon={MoreHorizontalIcon}
           IconButtonProps={{
             className: classes.ghostIcon,

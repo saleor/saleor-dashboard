@@ -3,7 +3,6 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import { PermissionGroupErrorCode, PermissionGroupErrorFragment } from "@dashboard/graphql";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface PermissionDeleteDialogProps {
@@ -15,14 +14,14 @@ export interface PermissionDeleteDialogProps {
   open: boolean;
 }
 
-const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
+const PermissionGroupDeleteDialog = ({
   confirmButtonState,
   error,
   name,
   onClose,
   onConfirm,
   open,
-}) => {
+}: PermissionDeleteDialogProps) => {
   const intl = useIntl();
 
   let errorMessage;

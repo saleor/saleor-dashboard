@@ -1,6 +1,5 @@
 import { messages } from "@dashboard/discounts/components/DiscountRules/messages";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface AddConditionsSectionProps {

@@ -2,7 +2,6 @@ import { TransactionItemFragment } from "@dashboard/graphql";
 import { TileHeaderMoney } from "@dashboard/orders/components/OrderTransactionRefundPage/components/OrderTransactionTiles/TileHeaderMoney";
 import { OrderTransactionTile } from "@dashboard/orders/components/OrderTransactionTile";
 import { Box, RadioGroup, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
-import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 

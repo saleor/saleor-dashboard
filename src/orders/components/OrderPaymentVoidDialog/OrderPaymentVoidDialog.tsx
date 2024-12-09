@@ -7,7 +7,6 @@ import { OrderErrorFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface OrderPaymentVoidDialogProps {
@@ -18,13 +17,13 @@ export interface OrderPaymentVoidDialogProps {
   onConfirm?: () => any;
 }
 
-const OrderPaymentVoidDialog: React.FC<OrderPaymentVoidDialogProps> = ({
+const OrderPaymentVoidDialog = ({
   confirmButtonState,
   errors,
   open,
   onConfirm,
   onClose,
-}) => {
+}: OrderPaymentVoidDialogProps) => {
   const intl = useIntl();
 
   return (

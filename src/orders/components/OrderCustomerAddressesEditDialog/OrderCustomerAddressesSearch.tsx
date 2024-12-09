@@ -8,7 +8,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { getById } from "@dashboard/misc";
 import { Checkbox, FormControlLabel, InputAdornment, TextField } from "@material-ui/core";
 import { Button, SearchIcon } from "@saleor/macaw-ui";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { dialogMessages as messages } from "./messages";
@@ -28,7 +28,7 @@ export interface OrderCustomerAddressesSearchProps {
   exitSearch: () => any;
 }
 
-const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> = props => {
+const OrderCustomerAddressesSearch = (props: OrderCustomerAddressesSearchProps) => {
   const {
     type,
     cloneAddress,
@@ -79,7 +79,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <SearchIcon />
+              <SearchIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
             </InputAdornment>
           ),
         }}

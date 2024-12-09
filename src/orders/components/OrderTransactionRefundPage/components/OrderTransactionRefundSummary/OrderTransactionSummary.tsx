@@ -2,7 +2,6 @@ import { DashboardCard } from "@dashboard/components/Card";
 import Money from "@dashboard/components/Money";
 import { IMoney } from "@dashboard/utils/intl";
 import { Box, Checkbox, Input, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
-import React from "react";
 import { Control, FieldError, useController } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
@@ -21,7 +20,7 @@ interface OrderTransactionSummaryProps {
   currency: string | undefined;
 }
 
-export const OrderTransactionSummary: React.FC<OrderTransactionSummaryProps> = ({
+export const OrderTransactionSummary = ({
   amountError,
   control,
   selectedProductsValue,

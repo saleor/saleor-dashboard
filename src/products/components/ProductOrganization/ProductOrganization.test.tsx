@@ -1,7 +1,7 @@
 import { getChoicesWithAncestors } from "@dashboard/products/utils/utils";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { MemoryRouter as Router } from "react-router-dom";
 
 import { ProductOrganization } from "./ProductOrganization";
@@ -98,8 +98,12 @@ const categoriesWithAncestors = getChoicesWithAncestors([
   },
 ]);
 
-const Wrapper: React.FC<PropsWithChildren<{}>> = ({ children }) => (
+const Wrapper = ({ children }: PropsWithChildren<{}>) => (
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   <Router>
+    {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+    {/* @ts-ignore */}
     <ThemeProvider>{children}</ThemeProvider>
   </Router>
 );

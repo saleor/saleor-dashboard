@@ -20,7 +20,6 @@ import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSe
 import { orderDraftListUrl } from "@dashboard/orders/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import OrderCustomer, { CustomerEditData } from "../OrderCustomer";
@@ -54,7 +53,7 @@ export interface OrderDraftPageProps extends FetchMoreProps {
 
 const draftOrderListUrl = orderDraftListUrl();
 
-const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
+const OrderDraftPage = (props: OrderDraftPageProps) => {
   const {
     loading,
     fetchUsers,

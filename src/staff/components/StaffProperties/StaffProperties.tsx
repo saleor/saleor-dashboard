@@ -8,7 +8,7 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getStaffErrorMessage from "@dashboard/utils/errors/staff";
 import { TextField } from "@material-ui/core";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -28,7 +28,7 @@ interface StaffPropertiesProps {
   onImageUpload: (file: File) => void;
 }
 
-const StaffProperties: React.FC<StaffPropertiesProps> = props => {
+const StaffProperties = (props: StaffPropertiesProps) => {
   const {
     canEditAvatar,
     className,

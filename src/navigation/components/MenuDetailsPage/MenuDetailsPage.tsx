@@ -12,7 +12,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { menuListUrl } from "@dashboard/navigation/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { MenuItemType } from "../MenuItemDialog";
@@ -40,7 +40,7 @@ export interface MenuDetailsPageProps {
   onSubmit: (data: MenuDetailsSubmitData) => SubmitPromise;
 }
 
-const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
+const MenuDetailsPage = ({
   disabled,
   errors,
   menu,
@@ -50,13 +50,13 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   onItemClick,
   onItemEdit,
   onSubmit,
-}) => {
+}: MenuDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const initialForm: MenuDetailsFormData = {
     name: menu?.name ?? "",
   };
-  const [treeOperations, setTreeOperations] = React.useState<TreeOperation[]>([]);
+  const [treeOperations, setTreeOperations] = useState<TreeOperation[]>([]);
   const removeSimulatedMoves = (operations: TreeOperation[]) =>
     operations.filter(operation => !operation.simulatedMove);
   const handleSubmit = async (data: MenuDetailsFormData) => {
