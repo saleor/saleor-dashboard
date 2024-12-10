@@ -1,5 +1,5 @@
 import DeactivatedText from "@dashboard/apps/components/DeactivatedText";
-import { getContextualSubtitle } from "@dashboard/components/AppLayout/ContextualLinks/ContextualSubtitle";
+import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLinks/useContextualLink";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
@@ -33,12 +33,13 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
   const intl = useIntl();
   const classes = useStyles();
   const navigate = useNavigator();
+  const subtitle = useContextualLink("extending_saleor");
 
   return (
     <ListPageLayout>
       <TopNav
         title={intl.formatMessage(sectionNames.webhooksAndEvents)}
-        subtitle={getContextualSubtitle("extending_saleor", intl)}
+        subtitle={subtitle}
         href={configurationMenuUrl}
       >
         <Button

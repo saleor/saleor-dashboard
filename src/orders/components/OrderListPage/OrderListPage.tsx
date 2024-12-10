@@ -5,7 +5,7 @@ import {
   useExtensions,
 } from "@dashboard/apps/hooks/useExtensions";
 import { useUserAccessibleChannels } from "@dashboard/auth/hooks/useUserAccessibleChannels";
-import { getContextualSubtitle } from "@dashboard/components/AppLayout/ContextualLinks/ContextualSubtitle";
+import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLinks/useContextualLink";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -69,6 +69,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
+  const subtitle = useContextualLink("order_list");
   const userAccessibleChannels = useUserAccessibleChannels();
   const hasAccessibleChannels = userAccessibleChannels.length > 0;
   const limitsReached = isLimitReached(limits, "orders");
@@ -103,7 +104,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
     <ListPageLayout>
       <TopNav
         title={intl.formatMessage(sectionNames.orders)}
-        subtitle={getContextualSubtitle("order_list", intl)}
+        subtitle={subtitle}
         withoutBorder
         isAlignToRight={false}
       >

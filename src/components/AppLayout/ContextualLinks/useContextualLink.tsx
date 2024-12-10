@@ -1,3 +1,4 @@
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import {
   API_GUIDE_DOCS,
   API_REFERENCE_DOCS,
@@ -7,7 +8,7 @@ import {
   USER_PERMISSIONS_DOCS_URL,
 } from "@dashboard/links";
 import * as React from "react";
-import { IntlShape } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { ContextualLine } from "./ContextualLine";
 import { contextualLinks } from "./messages";
@@ -20,12 +21,21 @@ type SubtitleType =
   | "webhooks_events"
   | "staff_members";
 
-export const getContextualSubtitle = (type: SubtitleType, intl: IntlShape) => {
+const EVENT = "contextual_link_clicked";
+
+export const useContextualLink = (type: SubtitleType) => {
+  const { trackEvent: track } = useAnalytics();
+  const intl = useIntl();
+  const trackEvent = (type: string) => track(EVENT, { type });
+
   switch (type) {
     case "staff_members":
       return intl.formatMessage(contextualLinks.staffMembers, {
         userPermissions: (
-          <ContextualLine.Link href={USER_PERMISSIONS_DOCS_URL}>
+          <ContextualLine.Link
+            href={USER_PERMISSIONS_DOCS_URL}
+            onClick={() => trackEvent("user_permissions_docs")}
+          >
             {intl.formatMessage(contextualLinks.userPermissions)}
           </ContextualLine.Link>
         ),
@@ -33,7 +43,10 @@ export const getContextualSubtitle = (type: SubtitleType, intl: IntlShape) => {
     case "extending_saleor":
       return intl.formatMessage(contextualLinks.webhooks, {
         extendingSaleor: (
-          <ContextualLine.Link href={EXTENDING_WITH_WEBHOOKS_DOCS_URL}>
+          <ContextualLine.Link
+            href={EXTENDING_WITH_WEBHOOKS_DOCS_URL}
+            onClick={() => trackEvent("extending_saleor_docs")}
+          >
             {intl.formatMessage(contextualLinks.extendingSaleor)}
           </ContextualLine.Link>
         ),
@@ -41,12 +54,15 @@ export const getContextualSubtitle = (type: SubtitleType, intl: IntlShape) => {
     case "dev_panel":
       return intl.formatMessage(contextualLinks.devModePanel, {
         apiReference: (
-          <ContextualLine.Link href={API_REFERENCE_DOCS}>
+          <ContextualLine.Link
+            href={API_REFERENCE_DOCS}
+            onClick={() => trackEvent("api_reference_docs")}
+          >
             {intl.formatMessage(contextualLinks.apiReference)}
           </ContextualLine.Link>
         ),
         apiGuide: (
-          <ContextualLine.Link href={API_GUIDE_DOCS}>
+          <ContextualLine.Link href={API_GUIDE_DOCS} onClick={() => trackEvent("api_guide_docs")}>
             {intl.formatMessage(contextualLinks.apiGuide)}
           </ContextualLine.Link>
         ),
@@ -54,7 +70,10 @@ export const getContextualSubtitle = (type: SubtitleType, intl: IntlShape) => {
     case "order_list":
       return intl.formatMessage(contextualLinks.orders, {
         orderManagement: (
-          <ContextualLine.Link href={ORDER_MANAGEMENT_DOCS_URL}>
+          <ContextualLine.Link
+            href={ORDER_MANAGEMENT_DOCS_URL}
+            onClick={() => trackEvent("order_management_docs")}
+          >
             {intl.formatMessage(contextualLinks.orderManagement)}
           </ContextualLine.Link>
         ),
@@ -67,7 +86,10 @@ export const getContextualSubtitle = (type: SubtitleType, intl: IntlShape) => {
         },
         {
           configurationLink: (
-            <ContextualLine.Link href={PRODUCT_CONFIGURATION_DOCS_URL}>
+            <ContextualLine.Link
+              href={PRODUCT_CONFIGURATION_DOCS_URL}
+              onClick={() => trackEvent("product_configuration_docs")}
+            >
               {intl.formatMessage({
                 defaultMessage: "product configurations",
                 id: "dVk241",

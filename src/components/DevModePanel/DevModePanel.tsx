@@ -8,7 +8,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { ContextualLine } from "../AppLayout/ContextualLinks/ContextualLine";
-import { getContextualSubtitle } from "../AppLayout/ContextualLinks/ContextualSubtitle";
+import { useContextualLink } from "../AppLayout/ContextualLinks/useContextualLink";
 import PlainGraphiQL from "../GraphiQLPlain";
 import { useDevModeContext } from "./hooks";
 import { messages } from "./messages";
@@ -17,6 +17,7 @@ const authorizedFetch = createFetch();
 
 export const DevModePanel: React.FC = () => {
   const intl = useIntl();
+  const subtitle = useContextualLink("dev_panel");
   const { rootStyle } = useDashboardTheme();
   const { markOnboardingStepAsCompleted } = useOnboarding();
   const { isDevModeVisible, variables, devModeContent, setDevModeVisibility } = useDevModeContext();
@@ -53,7 +54,7 @@ export const DevModePanel: React.FC = () => {
           <>
             {intl.formatMessage(messages.title)}
 
-            <ContextualLine>{getContextualSubtitle("dev_panel", intl)}</ContextualLine>
+            <ContextualLine>{subtitle}</ContextualLine>
           </>
         </DashboardModal.Header>
 

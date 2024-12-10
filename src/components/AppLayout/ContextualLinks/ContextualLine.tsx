@@ -7,8 +7,23 @@ const Root = ({ children, ...rest }: React.ComponentProps<typeof Paragraph>) => 
   </Paragraph>
 );
 
-const ContextualLineLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
-  <Box as="a" textDecoration="underline" href={href} target="_blank" rel="noopener noreferrer">
+const ContextualLineLink = ({
+  href,
+  children,
+  onClick,
+}: {
+  href: string;
+  children: React.ReactNode;
+  onClick?: () => void;
+}) => (
+  <Box
+    as="a"
+    textDecoration="underline"
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    onClick={onClick}
+  >
     {children}
   </Box>
 );
