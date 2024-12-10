@@ -2,7 +2,6 @@ import { TokenType } from "@dashboard/components/ConditionalFilter/ValueProvider
 import { getStatusColor } from "@dashboard/misc";
 import { storageUtils } from "@dashboard/products/views/ProductList/filters";
 import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 export const LegacyFiltersPresetsAlert = () => {

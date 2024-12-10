@@ -12,7 +12,6 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import { TextField } from "@material-ui/core";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface StaffPasswordResetDialogFormData {
@@ -29,13 +28,13 @@ const initialForm: StaffPasswordResetDialogFormData = {
   newPassword: "",
   oldPassword: "",
 };
-const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
+const StaffPasswordResetDialog = ({
   confirmButtonState,
   errors,
   open,
   onClose,
   onSubmit,
-}) => {
+}: StaffPasswordResetDialogProps) => {
   const intl = useIntl();
   const dialogErrors = useModalDialogErrors(errors, open);
   const formErrors = getFormErrors(["oldPassword", "newPassword"], dialogErrors);

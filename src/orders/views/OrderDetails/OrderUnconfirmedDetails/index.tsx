@@ -30,7 +30,7 @@ import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderD
 import { useOrderVariantSearch } from "@dashboard/searches/useOrderVariantSearch";
 import { PartialMutationProviderOutput } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { customerUrl } from "../../../../customers/urls";
@@ -93,7 +93,7 @@ interface OrderUnconfirmedDetailsProps {
   closeModal: any;
 }
 
-export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = ({
+export const OrderUnconfirmedDetails = ({
   id,
   params,
   data,
@@ -119,7 +119,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
   orderAddManualTransaction,
   openModal,
   closeModal,
-}) => {
+}: OrderUnconfirmedDetailsProps) => {
   const order = data.order;
   const shop = data.shop;
   const navigate = useNavigator();
@@ -153,7 +153,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
       input: data,
     });
   const intl = useIntl();
-  const [transactionReference, setTransactionReference] = React.useState("");
+  const [transactionReference, setTransactionReference] = useState("");
   const errors = orderUpdate.opts.data?.orderUpdate.errors || [];
 
   const hasOrderFulfillmentsFulFilled = order?.fulfillments.some(

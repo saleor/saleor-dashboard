@@ -8,7 +8,6 @@ import { renderCollection } from "@dashboard/misc";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
@@ -20,7 +19,7 @@ export interface CustomAppTokensProps {
 }
 
 const numberOfColumns = 3;
-const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
+const CustomAppTokens = (props: CustomAppTokensProps) => {
   const { tokens, onCreate, onDelete } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -80,7 +79,10 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
                       color="primary"
                       onClick={() => onDelete(token.id)}
                     >
-                      <DeleteIcon />
+                      <DeleteIcon
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
+                      />
                     </IconButton>
                   </TableCell>
                 </TableRowLink>

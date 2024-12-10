@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import React from "react";
+import * as React from "react";
 
 export interface DebounceProps<T> {
   children: (props: (...args: T[]) => void) => React.ReactNode;

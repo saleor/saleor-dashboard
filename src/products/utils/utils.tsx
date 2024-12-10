@@ -1,6 +1,5 @@
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Option, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 
 type Choice = {
   id: string;

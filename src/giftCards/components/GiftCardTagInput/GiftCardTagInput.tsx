@@ -9,7 +9,6 @@ import { mapEdgesToItems, mapMultiValueNodeToChoice } from "@dashboard/utils/map
 import { Box, Option } from "@saleor/macaw-ui-next";
 import compact from "lodash/compact";
 import uniq from "lodash/uniq";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { giftCardTagInputMessages as messages } from "./messages";
@@ -23,14 +22,14 @@ interface GiftCardTagInputProps {
   loading?: boolean;
 }
 
-const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
+const GiftCardTagInput = ({
   onChange,
   name,
   values,
   error,
   optional = true,
   loading,
-}) => {
+}: GiftCardTagInputProps) => {
   const intl = useIntl();
   const { loadMore, search, result } = useGiftCardTagsSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,

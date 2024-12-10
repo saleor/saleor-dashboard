@@ -9,7 +9,6 @@ import { buttonMessages } from "@dashboard/intl";
 import { TableBody, TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, sprinkles, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
@@ -46,7 +45,7 @@ export interface OrderInvoiceListProps {
   onInvoiceSend: (invoiceId: string) => void;
 }
 
-const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
+const OrderInvoiceList = (props: OrderInvoiceListProps) => {
   const { invoices, onInvoiceGenerate, onInvoiceClick, onInvoiceSend } = props;
   const classes = useStyles(props);
   const intl = useIntl();

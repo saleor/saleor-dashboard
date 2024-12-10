@@ -1,6 +1,5 @@
 import { EventDeliveryStatusEnum, WebhookEventTypeEnum } from "@dashboard/graphql";
 import { render } from "@testing-library/react";
-import React from "react";
 
 import { EventDeliveriesList, EventDelivery } from "./EventDeliveriesList";
 

@@ -1,5 +1,4 @@
 import { createSvgIcon } from "@material-ui/core/utils";
-import React from "react";
 
 const ArrowDropdown = createSvgIcon(
   <g style={{ fillRule: "evenodd" }}>

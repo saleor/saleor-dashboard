@@ -20,7 +20,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { shippingZonesListPath } from "@dashboard/shipping/urls";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Option } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { getStringOrPlaceholder } from "../../../misc";
@@ -74,7 +73,7 @@ function warehouseToChoice(warehouse: Record<"id" | "name", string>): Option {
   };
 }
 
-const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
+const ShippingZoneDetailsPage = ({
   disabled,
   errors,
   hasMore,
@@ -96,7 +95,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   shippingZone,
   warehouses,
   allChannels,
-}) => {
+}: ShippingZoneDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const initialForm = getInitialFormData(shippingZone);

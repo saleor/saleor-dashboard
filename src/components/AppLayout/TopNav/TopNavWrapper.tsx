@@ -1,11 +1,14 @@
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ReactNode } from "react";
 
 import { topBarHeight } from "../consts";
 
-export const TopNavWrapper: React.FC<{ withoutBorder?: boolean }> = ({
+export const TopNavWrapper = ({
   children,
   withoutBorder,
+}: {
+  withoutBorder?: boolean;
+  children: ReactNode;
 }) => (
   <Box
     display="flex"

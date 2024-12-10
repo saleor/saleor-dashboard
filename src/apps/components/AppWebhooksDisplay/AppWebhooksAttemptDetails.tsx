@@ -1,15 +1,12 @@
 import { DateTime } from "@dashboard/components/Date";
 import { EventDeliveryAttemptFragment } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 
 interface AppWebhooksAttemptDetailsProps {
   attempt: EventDeliveryAttemptFragment;
 }
 
-export const AppWebhooksAttemptDetails: React.FC<AppWebhooksAttemptDetailsProps> = ({
-  attempt,
-}) => {
+export const AppWebhooksAttemptDetails = ({ attempt }: AppWebhooksAttemptDetailsProps) => {
   const { createdAt, status, responseStatusCode, response, id } = attempt;
 
   return (

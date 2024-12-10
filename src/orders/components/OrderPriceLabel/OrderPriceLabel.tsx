@@ -3,7 +3,6 @@ import DiscountedPrice from "@dashboard/components/DiscountedPrice/DiscountedPri
 import Money from "@dashboard/components/Money";
 import { SearchOrderVariantQuery } from "@dashboard/graphql";
 import { Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
 
 import { useStyles } from "./styles";
 
@@ -11,7 +10,7 @@ interface OrderPriceLabelProps {
   pricing: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"][0]["pricing"];
 }
 
-const OrderPriceLabel: React.FC<OrderPriceLabelProps> = ({ pricing }) => {
+const OrderPriceLabel = ({ pricing }: OrderPriceLabelProps) => {
   const classes = useStyles();
 
   if (pricing.onSale) {

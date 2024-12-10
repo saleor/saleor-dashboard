@@ -18,7 +18,6 @@ import { commonMessages } from "@dashboard/intl";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { Box, Checkbox, Divider, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import SiteCheckoutSettingsCard from "../SiteCheckoutSettingsCard";
@@ -67,7 +66,7 @@ export function areAddressInputFieldsModified(data: SiteSettingsPageAddressFormD
     .some(field => field !== "");
 }
 
-const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
+const SiteSettingsPage = (props: SiteSettingsPageProps) => {
   const { disabled, errors, saveButtonBarState, shop, onSubmit } = props;
   const intl = useIntl();
   const navigate = useNavigator();

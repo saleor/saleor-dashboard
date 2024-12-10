@@ -1,7 +1,6 @@
 import { Tab } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React from "react";
 
 const useStyles = makeStyles(
   theme => ({
@@ -35,7 +34,7 @@ interface FilterTabProps {
   value?: number;
 }
 
-export const FilterTab: React.FC<FilterTabProps> = props => {
+export const FilterTab = (props: FilterTabProps) => {
   const { onClick, label, selected, value } = props;
   const classes = useStyles(props);
 

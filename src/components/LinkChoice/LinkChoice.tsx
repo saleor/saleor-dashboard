@@ -5,7 +5,7 @@ import { ClickAwayListener, MenuItem, Paper, Popper } from "@material-ui/core";
 import { Option } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { codes } from "keycode";
-import React from "react";
+import * as React from "react";
 
 import Link from "../Link";
 import { useStyles } from "./styles";
@@ -18,7 +18,7 @@ export interface LinkChoiceProps {
   onChange: FormChange;
 }
 
-const LinkChoice: React.FC<LinkChoiceProps> = ({ className, choices, name, value, onChange }) => {
+const LinkChoice = ({ className, choices, name, value, onChange }: LinkChoiceProps) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchor = React.useRef<HTMLInputElement>(null);

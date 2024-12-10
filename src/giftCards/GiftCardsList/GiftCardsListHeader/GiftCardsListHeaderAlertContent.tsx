@@ -3,7 +3,6 @@ import { ProductTypeKindEnum } from "@dashboard/graphql";
 import { productAddUrl } from "@dashboard/products/urls";
 import { productTypeAddUrl } from "@dashboard/productTypes/urls";
 import { sprinkles } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { giftCardsListHeaderMenuItemsMessages as messages } from "../messages";
@@ -16,10 +15,10 @@ interface GiftCardsListHeaderAlertContentProps {
 const alertLinkClassName = sprinkles({
   fontSize: 1,
 });
-const GiftCardsListHeaderAlertContent: React.FC<GiftCardsListHeaderAlertContentProps> = ({
+const GiftCardsListHeaderAlertContent = ({
   giftCardProductTypesExist,
   giftCardProductsExist,
-}) => {
+}: GiftCardsListHeaderAlertContentProps) => {
   const giftCardProductTypeUrl = productTypeAddUrl({
     kind: ProductTypeKindEnum.GIFT_CARD,
   });

@@ -5,7 +5,6 @@ import ArrowLeft from "@material-ui/icons/ArrowLeft";
 import ArrowRight from "@material-ui/icons/ArrowRight";
 import { IconButton, makeStyles, useTheme } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React from "react";
 
 const useStyles = makeStyles(
   theme => ({
@@ -62,7 +61,7 @@ export interface TablePaginationActionsProps {
   onPreviousPage: (event) => any;
 }
 
-export const TablePaginationActions: React.FC<TablePaginationActionsProps> = props => {
+export const TablePaginationActions = (props: TablePaginationActionsProps) => {
   const {
     backIconButtonProps,
     className,

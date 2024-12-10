@@ -9,7 +9,6 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
 import { stringifyQs } from "@dashboard/utils/urls";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, maybe } from "../../misc";
@@ -26,11 +25,7 @@ export interface TranslationsVouchersProps {
   params: TranslationsVouchersQueryParams;
 }
 
-const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
-  id,
-  languageCode,
-  params,
-}) => {
+const TranslationsVouchers = ({ id, languageCode, params }: TranslationsVouchersProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

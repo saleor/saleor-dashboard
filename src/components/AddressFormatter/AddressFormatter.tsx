@@ -1,5 +1,4 @@
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { AddressType } from "../../customers/types";
 
@@ -7,7 +6,7 @@ interface AddressFormatterProps {
   address?: AddressType;
 }
 
-const AddressFormatter: React.FC<AddressFormatterProps> = ({ address }) => {
+const AddressFormatter = ({ address }: AddressFormatterProps) => {
   if (!address) {
     return <Skeleton />;
   }

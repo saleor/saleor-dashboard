@@ -1,7 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import * as React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { OrderRefundFormData, OrderRefundType } from "../OrderRefundPage/form";
@@ -31,7 +31,7 @@ const messages = defineMessages({
     description: "refund type",
   },
 });
-const OrderRefund: React.FC<OrderRefundProps> = props => {
+const OrderRefund = (props: OrderRefundProps) => {
   const { data, disabled, onChange } = props;
   const classes = useStyles(props);
   const intl = useIntl();

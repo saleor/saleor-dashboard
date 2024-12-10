@@ -17,7 +17,7 @@ import {
   SortPage,
 } from "@dashboard/types";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
@@ -35,7 +35,7 @@ export interface SaleListPageProps
   onSelectSaleIds: (rows: number[], clearSelection: () => void) => void;
 }
 
-const SaleListPage: React.FC<SaleListPageProps> = ({
+const SaleListPage = ({
   filterOpts,
   initialSearch,
   onFilterChange,
@@ -52,7 +52,7 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
   selectedFilterPreset,
   currencySymbol,
   ...listProps
-}) => {
+}: SaleListPageProps) => {
   const intl = useIntl();
   const location = useLocation();
   const navigation = useNavigator();

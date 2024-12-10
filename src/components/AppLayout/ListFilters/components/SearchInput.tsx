@@ -1,13 +1,13 @@
 import Debounce from "@dashboard/components/Debounce";
 import { SearchPageProps } from "@dashboard/types";
 import { Box, SearchInput as MacawSearchInput } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 
 export interface SearchInputProps extends SearchPageProps {
   placeholder: string;
 }
 
-const SearchInput: React.FC<SearchInputProps> = props => {
+const SearchInput = (props: SearchInputProps) => {
   const { initialSearch, onSearchChange, placeholder } = props;
   const [search, setSearch] = React.useState(initialSearch);
 

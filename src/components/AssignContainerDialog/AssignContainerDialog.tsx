@@ -7,7 +7,7 @@ import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle
 import { DialogProps, FetchMoreProps, Node } from "@dashboard/types";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import BackButton from "../BackButton";
@@ -49,7 +49,7 @@ function handleContainerAssign(
 }
 
 const scrollableTargetId = "assignContainerScrollableDialog";
-const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
+const AssignContainerDialog = (props: AssignContainerDialogProps) => {
   const {
     confirmButtonState,
     containers,
@@ -65,7 +65,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
   const classes = useStyles(props);
   const scrollableDialogClasses = useScrollableDialogStyle({});
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
-  const [selectedContainers, setSelectedContainers] = React.useState<Container[]>([]);
+  const [selectedContainers, setSelectedContainers] = useState<Container[]>([]);
   const handleSubmit = () => onSubmit(selectedContainers);
   const handleClose = () => {
     queryReset();

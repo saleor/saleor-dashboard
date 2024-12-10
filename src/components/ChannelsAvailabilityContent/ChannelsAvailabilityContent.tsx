@@ -4,7 +4,7 @@ import Hr from "@dashboard/components/Hr";
 import { fuzzySearch } from "@dashboard/misc";
 import { TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
@@ -20,7 +20,7 @@ export interface ChannelsAvailabilityContentProps {
   toggleAll?: (items: Channel[], selected: number) => void;
 }
 
-export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentProps> = ({
+export const ChannelsAvailabilityContent = ({
   isSelected,
   channels,
   contentType = "",
@@ -28,14 +28,14 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
   selected = 0,
   toggleAll,
   toggleAllText,
-}) => {
+}: ChannelsAvailabilityContentProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const searchText = intl.formatMessage({
     id: "ybaLoZ",
     defaultMessage: "Search through channels",
   });
-  const [query, onQueryChange] = React.useState("");
+  const [query, onQueryChange] = useState("");
   const searchResults = fuzzySearch(channels, query, ["name"]);
 
   return (

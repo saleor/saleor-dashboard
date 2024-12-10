@@ -7,7 +7,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { renderCollection } from "@dashboard/misc";
 import { OrderRefundData } from "@dashboard/orders/types";
 import { orderUrl } from "@dashboard/orders/urls";
-import React from "react";
+import { Fragment } from "react";
 import { useIntl } from "react-intl";
 
 import OrderRefund from "../OrderRefund";
@@ -34,7 +34,7 @@ export interface OrderRefundPageProps {
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
 
-const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
+const OrderRefundPage = (props: OrderRefundPageProps) => {
   const { order, defaultType = OrderRefundType.PRODUCTS, disabled, errors = [], onSubmit } = props;
   const intl = useIntl();
   const unfulfilledLines = order?.lines.filter(line => line.quantityToFulfill > 0);
@@ -83,7 +83,7 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
                     </>
                   )}
                   {renderCollection(fulfilledFulfillemnts, fulfillment => (
-                    <React.Fragment key={fulfillment?.id}>
+                    <Fragment key={fulfillment?.id}>
                       <CardSpacer />
                       <OrderRefundFulfilledProducts
                         fulfillment={fulfillment}
@@ -97,7 +97,7 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
                           handlers.setMaximalRefundedFulfilledProductQuantities(fulfillment?.id)
                         }
                       />
-                    </React.Fragment>
+                    </Fragment>
                   ))}
                 </>
               )}

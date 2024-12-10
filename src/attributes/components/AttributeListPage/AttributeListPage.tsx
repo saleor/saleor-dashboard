@@ -9,7 +9,7 @@ import { AttributeFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { FilterPagePropsWithPresets, PageListProps, SortPage } from "../../../types";
@@ -26,7 +26,7 @@ export interface AttributeListPageProps
   onSelectAttributesIds: (rows: number[], clearSelection: () => void) => void;
 }
 
-const AttributeListPage: React.FC<AttributeListPageProps> = ({
+const AttributeListPage = ({
   filterOpts,
   initialSearch,
   onFilterChange,
@@ -43,7 +43,7 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
   selectedAttributesIds,
   currencySymbol,
   ...listProps
-}) => {
+}: AttributeListPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const structure = createFilterStructure(intl, filterOpts);

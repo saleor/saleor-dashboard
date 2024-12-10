@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import React, { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 /**
  * Hook that prevents hostory-back when use touchpad on Mac.
@@ -29,7 +29,7 @@ export const usePreventHistoryBack = (
     offsetY.current = window.scrollY;
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!scroller) {
       return;
     }

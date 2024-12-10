@@ -16,11 +16,11 @@ export interface ShippingWeightUnitFormProps {
   onSubmit: (unit: WeightUnitsEnum | null) => SubmitPromise;
 }
 
-const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
+const ShippingWeightUnitForm = ({
   defaultWeightUnit,
   disabled,
   onSubmit,
-}) => {
+}: ShippingWeightUnitFormProps) => {
   const intl = useIntl();
   const initialForm: FormData = {
     unit: defaultWeightUnit

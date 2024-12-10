@@ -3,7 +3,6 @@ import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { productsMocks } from "@test/mocks/products";
 import { render, screen } from "@testing-library/react";
-import React from "react";
 
 import DryRunItemsList from "./DryRunItemsList";
 
@@ -27,6 +26,8 @@ describe("DryRunItemsList", () => {
     // Act
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
+        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+        {/* @ts-ignore */}
         <ThemeProvider>
           <DryRunItemsList {...props} />
         </ThemeProvider>

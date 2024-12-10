@@ -5,7 +5,6 @@ import { PluginsDetailsFragment } from "@dashboard/graphql";
 import { isPluginGlobal } from "@dashboard/plugins/views/utils";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { pluginDetailsChannelsCardMessages as messages } from "./messages";
@@ -33,11 +32,11 @@ export interface PluginDetailsChannelsCardProps {
   plugin: PluginsDetailsFragment;
 }
 
-const PluginDetailsChannelsCardContent: React.FC<PluginDetailsChannelsCardProps> = ({
+const PluginDetailsChannelsCardContent = ({
   plugin,
   selectedChannelId,
   setSelectedChannelId,
-}) => {
+}: PluginDetailsChannelsCardProps) => {
   const classes = useStyles({});
 
   if (!plugin) {

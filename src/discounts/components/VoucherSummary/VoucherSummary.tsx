@@ -9,7 +9,6 @@ import { DiscountValueTypeEnum, VoucherDetailsFragment } from "@dashboard/graphq
 import { commonMessages } from "@dashboard/intl";
 import { ChannelProps } from "@dashboard/types";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { translateVoucherTypes } from "../../translations";
@@ -18,7 +17,7 @@ export interface VoucherSummaryProps extends ChannelProps {
   voucher: VoucherDetailsFragment;
 }
 
-const VoucherSummary: React.FC<VoucherSummaryProps> = ({ selectedChannelId, voucher }) => {
+const VoucherSummary = ({ selectedChannelId, voucher }: VoucherSummaryProps) => {
   const intl = useIntl();
   const translatedVoucherTypes = translateVoucherTypes(intl);
   const channel = voucher?.channelListings?.find(

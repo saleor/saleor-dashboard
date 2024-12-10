@@ -1,5 +1,6 @@
 import { Box } from "@saleor/macaw-ui-next";
-import React, { TableHTMLAttributes } from "react";
+import { TableHTMLAttributes } from "react";
+import * as React from "react";
 
 import { GridTableProps } from "./types";
 
@@ -11,6 +12,8 @@ export const GridTableRoot = React.forwardRef<GridTableRootElement, GridTableRoo
     const { children, ...rest } = props;
 
     return (
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       <Box
         ref={forwardedRef}
         as="table"

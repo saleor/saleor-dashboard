@@ -1,13 +1,12 @@
 import { useGiftCardProductsCountQuery } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import { Alert } from "@saleor/macaw-ui";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { giftCardsListHeaderMenuItemsMessages as messages } from "../messages";
 import GiftCardsListHeaderAlertContent from "./GiftCardsListHeaderAlertContent";
 
-const GiftCardsListHeaderAlert: React.FC = () => {
+const GiftCardsListHeaderAlert = () => {
   const intl = useIntl();
   const [selectedChannel] = useLocalStorage("channel", "");
   const { data: giftCardProductsCount, loading: giftCardProductsCountLoading } =

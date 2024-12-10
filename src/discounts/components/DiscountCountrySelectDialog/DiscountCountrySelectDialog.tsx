@@ -11,7 +11,6 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { fuzzySearch } from "@dashboard/misc";
 import { TableBody, TableCell, TextField } from "@material-ui/core";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
@@ -31,7 +30,7 @@ export interface DiscountCountrySelectDialogProps {
   onConfirm: (data: FormData) => SubmitPromise;
 }
 
-const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = props => {
+const DiscountCountrySelectDialog = (props: DiscountCountrySelectDialogProps) => {
   const { confirmButtonState, onClose, countries, open, initial, onConfirm } = props;
   const classes = useStyles(props);
   const intl = useIntl();

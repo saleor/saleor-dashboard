@@ -4,7 +4,7 @@ import CardAddItemsFooter from "@dashboard/products/components/ProductStocks/com
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { ClickAwayListener } from "@material-ui/core";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { AssignItem, AssignmentListProps } from "./types";
@@ -19,7 +19,7 @@ const messages = defineMessages({
 
 type AssignmentListFooterProps = AssignmentListProps;
 
-const AssignmentListFooter: React.FC<AssignmentListFooterProps> = ({
+const AssignmentListFooter = ({
   items,
   itemsChoices,
   itemsName,
@@ -28,7 +28,7 @@ const AssignmentListFooter: React.FC<AssignmentListFooterProps> = ({
   addItem,
   searchItems,
   fetchMoreItems,
-}) => {
+}: AssignmentListFooterProps) => {
   const intl = useIntl();
   const [isChoicesSelectShown, setIsChoicesSelectShown] = useState(false);
   const itemsRef = useRef<AssignItem[]>(items);

@@ -1,6 +1,5 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import { Button } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FieldArrayWithId } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
@@ -13,11 +12,11 @@ interface RefundTableReasonCellProps {
   field: FieldArrayWithId<OrderTransactionRefundPageFormData, "linesToRefund", "id">;
 }
 
-export const RefundTableReasonCell: React.FC<RefundTableReasonCellProps> = ({
+export const RefundTableReasonCell = ({
   index,
   field,
   onEditReasonModal,
-}) => {
+}: RefundTableReasonCellProps) => {
   return (
     <GridTable.Cell>
       <Button

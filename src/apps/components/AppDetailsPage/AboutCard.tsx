@@ -1,5 +1,4 @@
 import { Box, BoxProps, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import messages from "./messages";
@@ -9,7 +8,7 @@ type AboutCardProps = {
   loading: boolean;
 } & BoxProps;
 
-export const AboutCard: React.FC<AboutCardProps> = ({ aboutApp, loading, ...boxProps }) => {
+export const AboutCard = ({ aboutApp, loading, ...boxProps }: AboutCardProps) => {
   const intl = useIntl();
   const renderContent = () => {
     if (loading) {

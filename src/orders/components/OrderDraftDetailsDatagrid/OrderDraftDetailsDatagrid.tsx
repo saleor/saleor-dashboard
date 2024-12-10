@@ -13,7 +13,7 @@ import useListSettings from "@dashboard/hooks/useListSettings";
 import { productUrl } from "@dashboard/products/urls";
 import { ListViews } from "@dashboard/types";
 import { Box, ExternalLinkIcon, sprinkles, TrashBinIcon } from "@saleor/macaw-ui-next";
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 

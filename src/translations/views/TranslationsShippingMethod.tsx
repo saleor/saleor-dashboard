@@ -10,7 +10,6 @@ import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
 import { stringifyQs } from "@dashboard/utils/urls";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import TranslationsShippingMethodPage from "../components/TranslationsShippingMethodPage";
@@ -26,11 +25,11 @@ export interface TranslationsShippingMethodProps {
   params: TranslationsShippingMethodQueryParams;
 }
 
-const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({
+const TranslationsShippingMethod = ({
   id,
   languageCode,
   params,
-}) => {
+}: TranslationsShippingMethodProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

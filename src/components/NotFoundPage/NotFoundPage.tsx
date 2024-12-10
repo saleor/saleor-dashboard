@@ -2,7 +2,6 @@ import notFoundImage from "@assets/images/not-found-404.svg";
 import { Button } from "@dashboard/components/Button";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";
 
@@ -59,7 +58,7 @@ type NotFoundPageProps =
       backHref: string;
     };
 
-const NotFoundPage: React.FC<NotFoundPageProps> = props => {
+const NotFoundPage = (props: NotFoundPageProps) => {
   const { onBack, backHref } = props;
   const classes = useStyles(props);
 

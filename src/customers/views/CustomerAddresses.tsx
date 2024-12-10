@@ -14,7 +14,6 @@ import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CustomerAddressDialog from "../components/CustomerAddressDialog";
@@ -30,7 +29,7 @@ interface CustomerAddressesProps {
   params: CustomerAddressesUrlQueryParams;
 }
 
-const CustomerAddresses: React.FC<CustomerAddressesProps> = ({ id, params }) => {
+const CustomerAddresses = ({ id, params }: CustomerAddressesProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

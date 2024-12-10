@@ -11,7 +11,6 @@ import { getStatusColor } from "@dashboard/misc";
 import { PluginListUrlSortField } from "@dashboard/plugins/urls";
 import { FilterPageProps, PageListProps, SortPage, TabPageProps } from "@dashboard/types";
 import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import PluginsList from "../PluginsList/PluginsList";
@@ -26,7 +25,7 @@ export interface PluginsListPageProps
   plugins: PluginBaseFragment[];
 }
 
-const PluginsListPage: React.FC<PluginsListPageProps> = ({
+const PluginsListPage = ({
   currentTab,
   initialSearch,
   filterOpts,
@@ -38,7 +37,7 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
   onTabDelete,
   onTabSave,
   ...listProps
-}) => {
+}: PluginsListPageProps) => {
   const intl = useIntl();
   const { theme: currentTheme } = useTheme();
   const filterStructure = createFilterStructure(intl, filterOpts);

@@ -11,7 +11,7 @@ import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface ShippingZonePostalCodesProps {
@@ -50,14 +50,14 @@ const useStyles = makeStyles(
     name: "ShippingZonePostalCodes",
   },
 );
-const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
+const ShippingZonePostalCodes = ({
   disabled,
   initialExpanded = true,
   postalCodes,
   onPostalCodeDelete,
   onPostalCodeInclusionChange,
   onPostalCodeRangeAdd,
-}) => {
+}: ShippingZonePostalCodesProps) => {
   const [expanded, setExpanded] = React.useState(initialExpanded);
   const [inclusionType, setInclusionType] = React.useState(null);
   const intl = useIntl();
@@ -212,7 +212,10 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
                       onClick={() => onPostalCodeDelete(postalCodeRange)}
                       data-test-id={"delete-postal-code-" + postalCodeRange?.id}
                     >
-                      <DeleteIcon />
+                      <DeleteIcon
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
+                      />
                     </IconButton>
                   </TableCell>
                 </TableRowLink>

@@ -9,7 +9,7 @@ import {
 import { useId } from "@reach/auto-id";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderTransaction from "../../OrderTransaction";
@@ -43,11 +43,11 @@ const useStyles = makeStyles(
   { name: "TransactionCard" },
 );
 
-export const TransactionCard: React.FC<TransactionCardProps> = ({
+export const TransactionCard = ({
   transaction,
   orderId,
   totalRemainingGrant,
-}) => {
+}: TransactionCardProps) => {
   const classes = useStyles();
   const intl = useIntl();
   const id = useId();
