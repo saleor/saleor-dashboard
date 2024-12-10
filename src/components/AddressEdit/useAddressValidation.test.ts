@@ -29,6 +29,7 @@ describe("useAddressValidation", () => {
     });
     expect(current.isFieldAllowed("country")).toBeFalsy();
   });
+
   it("loads validation rules when country is provided", () => {
     // Arrange
     (useAddressValidationRulesQuery as jest.Mock).mockReturnValue({
@@ -61,5 +62,80 @@ describe("useAddressValidation", () => {
     });
     expect(current.isFieldAllowed("country")).toBeTruthy();
     expect(current.isFieldAllowed("countryArea")).toBeFalsy();
+  });
+
+  it("getDisplayValue should return display value for area code when valid", () => {
+    // Arrange
+    (useAddressValidationRulesQuery as jest.Mock).mockReturnValue({
+      data: {
+        addressValidationRules: {
+          countryAreaChoices: [
+            { raw: "AL", verbose: "Alabama" },
+            { raw: "AN", verbose: "Ancona" },
+          ],
+          allowedFields: ["country"],
+        },
+      },
+      loading: false,
+    });
+
+    const {
+      result: { current },
+    } = renderHook(() => useAddressValidation("US"));
+
+    const displayValue = current.getDisplayValue("AL");
+
+    // Assert
+    expect(displayValue).toEqual("Alabama");
+  });
+
+  it("getDisplayValue should return value when area code invalid", () => {
+    // Arrange
+    (useAddressValidationRulesQuery as jest.Mock).mockReturnValue({
+      data: {
+        addressValidationRules: {
+          countryAreaChoices: [
+            { raw: "AL", verbose: "Alabama" },
+            { raw: "AN", verbose: "Ancona" },
+          ],
+          allowedFields: ["country"],
+        },
+      },
+      loading: false,
+    });
+
+    const {
+      result: { current },
+    } = renderHook(() => useAddressValidation("US"));
+
+    const displayValue = current.getDisplayValue("XX");
+
+    // Assert
+    expect(displayValue).toEqual("XX");
+  });
+
+  it("getDisplayValue should return empty string when value is null", () => {
+    // Arrange
+    (useAddressValidationRulesQuery as jest.Mock).mockReturnValue({
+      data: {
+        addressValidationRules: {
+          countryAreaChoices: [
+            { raw: "AL", verbose: "Alabama" },
+            { raw: "AN", verbose: "Ancona" },
+          ],
+          allowedFields: ["country"],
+        },
+      },
+      loading: false,
+    });
+
+    const {
+      result: { current },
+    } = renderHook(() => useAddressValidation("US"));
+
+    const displayValue = current.getDisplayValue(null);
+
+    // Assert
+    expect(displayValue).toEqual("");
   });
 });
