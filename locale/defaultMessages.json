@@ -313,9 +313,6 @@
     "context": "page subtitle",
     "string": "Issue refund"
   },
-  "/noPjR": {
-    "string": "Learn more about {configurationLink}"
-  },
   "/oaqFS": {
     "context": "section header",
     "string": "Value"
@@ -2142,6 +2139,9 @@
   "C90nKP": {
     "context": "error with deactivatation alert message",
     "string": "Errors deactivating gift {count,plural,one{card} other{cards}}"
+  },
+  "C9cgck": {
+    "string": "Learn more about {productConfigurations}"
   },
   "C9pcQx": {
     "context": "dialog content",

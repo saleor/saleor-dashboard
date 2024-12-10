@@ -79,25 +79,16 @@ export const useContextualLink = (type: SubtitleType) => {
         ),
       });
     case "product_list":
-      return intl.formatMessage(
-        {
-          defaultMessage: "Learn more about {configurationLink}",
-          id: "/noPjR",
-        },
-        {
-          configurationLink: (
-            <ContextualLine.Link
-              href={PRODUCT_CONFIGURATION_DOCS_URL}
-              onClick={() => trackEvent("product_configuration_docs")}
-            >
-              {intl.formatMessage({
-                defaultMessage: "product configurations",
-                id: "dVk241",
-              })}
-            </ContextualLine.Link>
-          ),
-        },
-      );
+      return intl.formatMessage(contextualLinks.products, {
+        productConfigurations: (
+          <ContextualLine.Link
+            href={PRODUCT_CONFIGURATION_DOCS_URL}
+            onClick={() => trackEvent("product_configuration_docs")}
+          >
+            {intl.formatMessage(contextualLinks.productConfigurations)}
+          </ContextualLine.Link>
+        ),
+      });
     default:
       return null;
   }

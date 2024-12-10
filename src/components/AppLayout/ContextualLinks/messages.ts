@@ -37,4 +37,12 @@ export const contextualLinks = defineMessages({
     defaultMessage: "order management",
     id: "91vQMc",
   },
+  products: {
+    defaultMessage: "Learn more about {productConfigurations}",
+    id: "C9cgck",
+  },
+  productConfigurations: {
+    defaultMessage: "product configurations",
+    id: "dVk241",
+  },
 });
