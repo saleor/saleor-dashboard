@@ -1,3 +1,4 @@
+import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLinks/useContextualLink";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
@@ -45,6 +46,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
   onFilterPresetsAll,
   ...listProps
 }) => {
+  const subtitle = useContextualLink("staff_members");
   const intl = useIntl();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const structure = createFilterStructure(intl, filterOpts);
@@ -55,6 +57,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
       <TopNav
         href={configurationMenuUrl}
         title={intl.formatMessage(sectionNames.staff)}
+        subtitle={subtitle}
         isAlignToRight={false}
         withoutBorder
       >
