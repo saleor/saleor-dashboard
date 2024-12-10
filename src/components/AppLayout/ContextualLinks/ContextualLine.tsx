@@ -8,7 +8,7 @@ const Root = ({ children, ...rest }: React.ComponentProps<typeof Paragraph>) => 
 );
 
 const ContextualLineLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
-  <Box as="a" textDecoration="underline" href={href}>
+  <Box as="a" textDecoration="underline" href={href} target="_blank" rel="noopener noreferrer">
     {children}
   </Box>
 );
