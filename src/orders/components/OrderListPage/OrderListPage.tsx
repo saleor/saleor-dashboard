@@ -5,6 +5,7 @@ import {
   useExtensions,
 } from "@dashboard/apps/hooks/useExtensions";
 import { useUserAccessibleChannels } from "@dashboard/auth/hooks/useUserAccessibleChannels";
+import { getContextualSubtitle } from "@dashboard/components/AppLayout/ContextualLinks/ContextualSubtitle";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -100,7 +101,12 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
 
   return (
     <ListPageLayout>
-      <TopNav title={intl.formatMessage(sectionNames.orders)} withoutBorder isAlignToRight={false}>
+      <TopNav
+        title={intl.formatMessage(sectionNames.orders)}
+        subtitle={getContextualSubtitle("order_list", intl)}
+        withoutBorder
+        isAlignToRight={false}
+      >
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <Box marginX={3} display="flex" alignItems="center">

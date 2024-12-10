@@ -7,6 +7,8 @@ import { createFetch } from "@saleor/sdk";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { ContextualLine } from "../AppLayout/ContextualLinks/ContextualLine";
+import { getContextualSubtitle } from "../AppLayout/ContextualLinks/ContextualSubtitle";
 import PlainGraphiQL from "../GraphiQLPlain";
 import { useDevModeContext } from "./hooks";
 import { messages } from "./messages";
@@ -47,7 +49,13 @@ export const DevModePanel: React.FC = () => {
     <DashboardModal open={isDevModeVisible} onChange={() => setDevModeVisibility(false)}>
       <DashboardModal.Content size="xl" __gridTemplateRows="auto 1fr" height="100%">
         <style dangerouslySetInnerHTML={overwriteCodeMirrorCSSVariables}></style>
-        <DashboardModal.Header>{intl.formatMessage(messages.title)}</DashboardModal.Header>
+        <DashboardModal.Header>
+          <>
+            {intl.formatMessage(messages.title)}
+
+            <ContextualLine>{getContextualSubtitle("dev_panel", intl)}</ContextualLine>
+          </>
+        </DashboardModal.Header>
 
         <PlainGraphiQL query={devModeContent} variables={variables} fetcher={fetcher} />
       </DashboardModal.Content>

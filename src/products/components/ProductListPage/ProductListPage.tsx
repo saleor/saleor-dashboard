@@ -6,6 +6,7 @@ import {
   mapToMenuItemsForProductOverviewActions,
   useExtensions,
 } from "@dashboard/apps/hooks/useExtensions";
+import { getContextualSubtitle } from "@dashboard/components/AppLayout/ContextualLinks/ContextualSubtitle";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
@@ -133,6 +134,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
         withoutBorder
         isAlignToRight={false}
         title={intl.formatMessage(sectionNames.products)}
+        subtitle={getContextualSubtitle("product_list", intl)}
       >
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">

@@ -1,3 +1,4 @@
+import { getContextualSubtitle } from "@dashboard/components/AppLayout/ContextualLinks/ContextualSubtitle";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
@@ -55,6 +56,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
       <TopNav
         href={configurationMenuUrl}
         title={intl.formatMessage(sectionNames.staff)}
+        subtitle={getContextualSubtitle("staff_members", intl)}
         isAlignToRight={false}
         withoutBorder
       >
