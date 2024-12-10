@@ -51,11 +51,9 @@ export const DevModePanel: React.FC = () => {
       <DashboardModal.Content size="xl" __gridTemplateRows="auto 1fr" height="100%">
         <style dangerouslySetInnerHTML={overwriteCodeMirrorCSSVariables}></style>
         <DashboardModal.Header>
-          <>
-            {intl.formatMessage(messages.title)}
+          {intl.formatMessage(messages.title)}
 
-            <ContextualLine>{subtitle}</ContextualLine>
-          </>
+          <ContextualLine>{subtitle}</ContextualLine>
         </DashboardModal.Header>
 
         <PlainGraphiQL query={devModeContent} variables={variables} fetcher={fetcher} />
