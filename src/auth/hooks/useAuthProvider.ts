@@ -2,7 +2,7 @@ import { ApolloClient, ApolloError } from "@apollo/client";
 import { IMessageContext } from "@dashboard/components/messages";
 import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { DEMO_MODE } from "@dashboard/config";
-import { useUserDetailsQuery } from "@dashboard/graphql";
+import { AccountErrorCode, useUserDetailsQuery } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
@@ -34,6 +34,7 @@ export interface UseAuthProviderOpts {
   notify: IMessageContext;
   apolloClient: ApolloClient<any>;
 }
+type AuthErrorCodes = `${AccountErrorCode}`;
 
 export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderOpts): UserContext {
   const { login, getExternalAuthUrl, getExternalAccessToken, logout } = useAuth();
@@ -41,6 +42,7 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
   const navigate = useNavigator();
   const { authenticated, authenticating, user } = useAuthState();
   const [requestedExternalPluginId] = useLocalStorage("requestedExternalPluginId", null);
+  const [isAuthRequestRunning, setIsAuthRequestRunning] = useState(false);
   const [errors, setErrors] = useState<UserContextError[]>([]);
   const permitCredentialsAPI = useRef(true);
 
@@ -116,27 +118,45 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
       }
     }
   };
+
   const handleLogin = async (email: string, password: string) => {
+    if (isAuthRequestRunning) {
+      return;
+    }
+
     try {
+      setIsAuthRequestRunning(true);
+
       const result = await login({
         email,
         password,
         includeDetails: false,
       });
 
+      const errorList = result.data?.tokenCreate?.errors?.map(
+        ({ code }) => code,
+        // SDK is deprecated and has outdated types - we need to use ones from Dashboard
+      ) as AuthErrorCodes[];
+
       if (isEmpty(result.data?.tokenCreate?.user?.userPermissions)) {
         setErrors(["noPermissionsError"]);
         await handleLogout();
       }
 
-      if (result && !result.data?.tokenCreate?.errors.length) {
+      if (result && !errorList?.length) {
         if (DEMO_MODE) {
           displayDemoMessage(intl, notify);
         }
 
         saveCredentials(result.data?.tokenCreate?.user!, password);
       } else {
-        setErrors(["loginError"]);
+        // While login page can show multiple errors, "loginError" doesn't match "attemptDelay"
+        // and should be shown when no other error is present
+        if (errorList?.includes(AccountErrorCode.LOGIN_ATTEMPT_DELAYED)) {
+          setErrors(["loginAttemptDelay"]);
+        } else {
+          setErrors(["loginError"]);
+        }
       }
 
       await logoutNonStaffUser(result.data?.tokenCreate!);
@@ -148,6 +168,8 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
       } else {
         setErrors(["unknownLoginError"]);
       }
+    } finally {
+      setIsAuthRequestRunning(false);
     }
   };
   const handleRequestExternalLogin = async (pluginId: string, input: RequestExternalLoginInput) => {
