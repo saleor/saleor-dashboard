@@ -2,7 +2,15 @@ import { Box, Paragraph, TextProps } from "@saleor/macaw-ui-next";
 import React from "react";
 
 const Root = ({ children, ...rest }: TextProps) => (
-  <Paragraph width="100%" color="default2" fontWeight="medium" fontSize={2} paddingY={2} {...rest}>
+  <Paragraph
+    width="100%"
+    color="default2"
+    fontWeight="medium"
+    fontSize={2}
+    paddingBottom={2}
+    paddingTop={1}
+    {...rest}
+  >
     {children}
   </Paragraph>
 );

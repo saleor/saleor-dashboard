@@ -46,7 +46,16 @@ export const Root: React.FC<PropsWithChildren<TopNavProps>> = ({
           {children}
         </Box>
       </Box>
-      {subtitle ? <ContextualLine gridColumn="8">{subtitle}</ContextualLine> : null}
+      {subtitle ? (
+        <ContextualLine
+          gridColumn="8"
+          // The subtitle should be aligned with the title, not back button
+          marginLeft={href ? 12 : 0}
+          __marginTop={href ? "-0.6rem" : 0}
+        >
+          {subtitle}
+        </ContextualLine>
+      ) : null}
     </TopNavWrapper>
   );
 };
