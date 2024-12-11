@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.20.23
+
+### Patch Changes
+
+- 3c4462a: App buttons no longer clip with app contents
+- ea74e8a: Warning banner in tax settings and delete app modal now display properly in dark mode
+
 ## 3.20.22
 
 ### Patch Changes
