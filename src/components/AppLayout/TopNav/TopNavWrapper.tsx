@@ -3,13 +3,12 @@ import React from "react";
 
 import { topBarHeight, topBarHeightSubtitle } from "../consts";
 
-export const TopNavWrapper: React.FC<{
-  withoutBorder?: boolean;
-  hasSubtitle?: boolean;
-}> = ({ children, withoutBorder, hasSubtitle }) => (
+export const TopNavWrapper: React.FC<{ withoutBorder?: boolean; hasSubtitle?: boolean }> = ({
+  children,
+  withoutBorder,
+  hasSubtitle,
+}) => (
   <Box
-    display={hasSubtitle ? "block" : "flex"}
-    alignItems="center"
     paddingX={6}
     paddingY={5}
     borderBottomWidth={withoutBorder ? 0 : 1}
