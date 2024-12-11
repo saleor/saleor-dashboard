@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.20.22
+
+### Patch Changes
+
+- e964e95: You can now see contextual links to documentation in product, webhooks, order, staff members lists and Graphql Playground panel.
+- fb56837: Now there can only be one login request running at a time. This means using a password manager to log in no longer cause an error. If there are too many login requests Dashboard now shows a corresponding error message.
+- 20b10c7: Removed waitFor and set expanded metadata section to avoid flakyness
+- 3299739: Run test by cron workflow has been removed
+- 1b5b001: Now webhooks permission alert displays appropriately in dark mode
+
 ## 3.20.21
 
 ### Patch Changes
