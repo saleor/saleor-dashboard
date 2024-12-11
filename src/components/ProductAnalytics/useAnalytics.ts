@@ -1,6 +1,12 @@
 import { usePostHog } from "posthog-js/react";
 
-export function useAnalytics() {
+interface Analytics {
+  initialize: (details: Record<string, any>) => void;
+  reset: () => void;
+  trackEvent: (event: string, properties?: Record<string, any>) => void;
+}
+
+export function useAnalytics(): Analytics {
   const posthog = usePostHog();
 
   function initialize(details: Record<string, any>) {
