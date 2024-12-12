@@ -44,7 +44,7 @@ const PermissionAlert: React.FC<PermissionAlertProps> = ({ query }) => {
                       description: "alert message",
                     })}
                   </Text>
-                  <Chip color="info1" backgroundColor="info1">
+                  <Chip backgroundColor="info1" color="default1">
                     {subscription}
                   </Chip>
                   <Text>
@@ -64,6 +64,7 @@ const PermissionAlert: React.FC<PermissionAlertProps> = ({ query }) => {
                     <Chip
                       key={permission}
                       backgroundColor={isOneOfRequired ? "warning1" : "critical1"}
+                      color={isOneOfRequired ? "warning1" : "critical1"}
                     >
                       {permission}
                     </Chip>

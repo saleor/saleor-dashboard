@@ -66,7 +66,9 @@ const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
           borderColor="warning1"
           borderStyle="solid"
         >
-          <Text size={2}>{intl.formatMessage(msgs.deleteAppWarning)}</Text>
+          <Text size={2} color="warning1">
+            {intl.formatMessage(msgs.deleteAppWarning)}
+          </Text>
         </Box>
         {getMainText()} <FormattedMessage {...msgs.deleteAppQuestion} />
       </Box>

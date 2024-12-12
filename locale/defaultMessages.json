@@ -548,6 +548,9 @@
   "19/lwV": {
     "string": "Determine attributes used to create product types"
   },
+  "19o9WS": {
+    "string": "Learn more about {userPermissions}"
+  },
   "1BNKCZ": {
     "context": "sale channel",
     "string": "Channel"
@@ -1134,6 +1137,9 @@
     "context": "vat not included in order price",
     "string": "does not apply"
   },
+  "5M+hLZ": {
+    "string": "User permissions"
+  },
   "5O8EIz": {
     "context": "Authorize transactions instead of charging",
     "string": "Authorize transactions instead of charging"
@@ -1616,6 +1622,9 @@
     "context": "service accounts section name",
     "string": "Service Accounts"
   },
+  "91vQMc": {
+    "string": "order management"
+  },
   "945a4a": {
     "context": "column header",
     "string": "Customer e-mail"
@@ -1965,8 +1974,14 @@
     "context": "dialog header",
     "string": "Unassign Categories From Sale"
   },
+  "B8PvdI": {
+    "string": "extending Saleor with Webhooks"
+  },
   "B9yrkK": {
     "string": "No Channels found"
+  },
+  "BA4leV": {
+    "string": "API guide"
   },
   "BBt3jD": {
     "context": "btn label",
@@ -2124,6 +2139,9 @@
   "C90nKP": {
     "context": "error with deactivatation alert message",
     "string": "Errors deactivating gift {count,plural,one{card} other{cards}}"
+  },
+  "C9cgck": {
+    "string": "Learn more about {productConfigurations}"
   },
   "C9pcQx": {
     "context": "dialog content",
@@ -4612,6 +4630,10 @@
     "context": "order does not require shipping",
     "string": "does not apply"
   },
+  "RyZd9J": {
+    "context": "error message",
+    "string": "Please wait a moment before trying again."
+  },
   "Ryh3iR": {
     "context": "header",
     "string": "Create Webhook"
@@ -5888,6 +5910,9 @@
     "context": "note input subtitle",
     "string": "Why was this gift card issued. This note will not be shown to the customer. Note will be stored in gift card history"
   },
+  "Zvo5iu": {
+    "string": "API reference"
+  },
   "Zz67wc": {
     "string": "View and update your webhooks and events."
   },
@@ -6464,6 +6489,9 @@
   "dTkmON": {
     "context": "edit tracking button",
     "string": "Edit tracking"
+  },
+  "dVk241": {
+    "string": "product configurations"
   },
   "dWK/Ck": {
     "string": "Choose countries, you want voucher to be limited to, from the list below"
@@ -8745,6 +8773,9 @@
   "tiY7bx": {
     "string": "Add new product"
   },
+  "tl1/1E": {
+    "string": "Learn more about {orderManagement}"
+  },
   "tlGXkh": {
     "context": "input description",
     "string": "Unlimited"
@@ -9639,6 +9670,9 @@
     "context": "select all channels label",
     "string": "Select All Channels"
   },
+  "zRIsjN": {
+    "string": "Learn more about {apiReference} and view {apiGuide}"
+  },
   "zRrcOG": {
     "context": "order history message",
     "string": "Order was cancelled"
@@ -9648,6 +9682,9 @@
   },
   "zSOvI0": {
     "string": "Filters"
+  },
+  "zT1CvH": {
+    "string": "Learn more about {extendingSaleor}"
   },
   "zWM89r": {
     "context": "numeric attribute units of",
