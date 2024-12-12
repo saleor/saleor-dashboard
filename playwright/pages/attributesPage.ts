@@ -18,6 +18,8 @@ export class AttributesPage extends BasePage {
 
   readonly editAttributeValueDialog: EditAttributeValueDialog;
 
+  keyboard: any;
+
   constructor(
     page: Page,
     readonly createAttributeButton = page.getByTestId("create-attribute-button"),
