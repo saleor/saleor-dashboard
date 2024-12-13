@@ -4,6 +4,9 @@ on:
     types:
       - opened
       - synchronize
+      # Labels are needed to handle external contributors
+      - labeled
+      - unlabeled
     paths:
       # Self
       - ".github/workflows/check-licenses.yaml"
