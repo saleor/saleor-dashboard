@@ -189,6 +189,8 @@ export const DocumentMap: Record<string, Document> = {
     variables: {
       first: 100,
       hasChannel: true,
+      includeCategories: false,
+      includeCollections: false,
     },
     displayedAttribute: "name",
   },
