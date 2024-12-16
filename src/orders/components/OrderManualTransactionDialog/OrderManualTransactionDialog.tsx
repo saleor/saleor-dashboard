@@ -25,7 +25,7 @@ export const OrderManualTransactionDialog: React.FC<OrderManualTransactionDialog
 
   return (
     <OrderManualTransactionForm {...props}>
-      <DashboardModal {...dialogProps}>
+      <DashboardModal {...dialogProps} onChange={onClose}>
         <DashboardModal.Content size="xs">
           <DashboardModal.Header>
             <FormattedMessage {...manualTransactionMessages.dialogTitle} />
