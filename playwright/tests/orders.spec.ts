@@ -251,9 +251,13 @@ test("TC: SALEOR_84 Create draft order @e2e @draft", async () => {
   await draftOrdersPage.expectSuccessBanner();
   await draftOrdersPage.addressDialog.clickConfirmButton();
   await draftOrdersPage.expectSuccessBanner();
+
+  await draftOrdersPage.addShippingCarrierLink.waitFor({ state: "visible", timeout: 10000 });
+  // Ensure the button is in viewport before clicking
+  await draftOrdersPage.addShippingCarrierLink.scrollIntoViewIfNeeded();
   await draftOrdersPage.clickAddShippingCarrierButton();
+
   await draftOrdersPage.shippingAddressDialog.pickAndConfirmFirstShippingMethod();
-  //await draftOrdersPage.expectSuccessBanner();
   await draftOrdersPage.clickFinalizeButton();
   await draftOrdersPage.expectSuccessBanner({ message: "finalized" });
 });
