@@ -60,15 +60,9 @@ export class DraftOrdersPage extends BasePage {
   }
 
   async clickAddShippingCarrierButton() {
-    await this.page.waitForLoadState("networkidle");
-
-    await this.addShippingCarrierLink.waitFor({
-      state: "visible",
-      timeout: 10000,
-    });
-
     await this.addShippingCarrierLink.scrollIntoViewIfNeeded();
     await this.addShippingCarrierLink.click();
+
     await this.waitForDOMToFullyLoad();
   }
 

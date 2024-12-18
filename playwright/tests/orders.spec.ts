@@ -252,9 +252,11 @@ test("TC: SALEOR_84 Create draft order @e2e @draft", async () => {
   await draftOrdersPage.addressDialog.clickConfirmButton();
   await draftOrdersPage.expectSuccessBanner();
 
-  await draftOrdersPage.addShippingCarrierLink.waitFor({ state: "visible", timeout: 10000 });
+  await draftOrdersPage.addShippingCarrierLink.waitFor({ state: "visible" });
   // Ensure the button is in viewport before clicking
   await draftOrdersPage.addShippingCarrierLink.scrollIntoViewIfNeeded();
+
+  await expect(draftOrdersPage.addShippingCarrierLink).toBeVisible();
   await draftOrdersPage.clickAddShippingCarrierButton();
 
   await draftOrdersPage.shippingAddressDialog.pickAndConfirmFirstShippingMethod();
