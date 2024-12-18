@@ -90,17 +90,17 @@ runs:
         done
         npx playwright test --grep @e2e $PROJECT_PARAMS --shard "$SHARD_NUMBER"
 
-    - name: Extract shard index
-      id: extract-shard-index
+    - name: Generate report name
+      id: generate-report-name
       shell: bash
       run: |
           input=${{ inputs.SHARD }}
-          echo "shardIndex=${input%%/*}" >> $GITHUB_ENV
+          echo "raportName=all-blob-reports-${input%%/*}" >> $GITHUB_ENV
 
     - name: Upload blob report to GitHub Actions Artifacts
       uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: all-blob-reports-${{ env.shardIndex }}
+        name: ${{ env.raportName }}
         path: blob-report
         retention-days: 1
