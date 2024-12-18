@@ -181,6 +181,7 @@ jobs:
         uses: ./.github/actions/run-pw-tests
         with:
           SHARD: ${{ matrix.shard }}
+          SHARD_INDEX: ${{ matrix.shardIndex }}
           BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
           API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
           E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}

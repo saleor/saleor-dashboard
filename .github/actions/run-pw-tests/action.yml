@@ -19,6 +19,9 @@ inputs:
   SHARD:
     description: "Shard number"
     required: true
+  SHARD_INDEX:
+    description: "Shard index"
+    required: true
   MAILPITURL:
     description: "mailpit uri"
     required: true
@@ -91,9 +94,9 @@ runs:
         npx playwright test --grep @e2e $PROJECT_PARAMS --shard "$SHARD_NUMBER"
 
     - name: Upload blob report to GitHub Actions Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: all-blob-reports
+        name: all-blob-reports-${{ inputs.SHARD_INDEX }}
         path: blob-report
         retention-days: 1
