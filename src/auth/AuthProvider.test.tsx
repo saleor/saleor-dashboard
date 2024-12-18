@@ -211,4 +211,49 @@ describe("AuthProvider", () => {
     expect(hook.result.current.errors).toEqual(["noPermissionsError"]);
     expect(hook.result.current.authenticated).toBe(false);
   });
+
+  it("should handle concurrent login attempts correctly", async () => {
+    const intl = useIntl();
+    const notify = useNotifier();
+    const apolloClient = useApolloClient();
+
+    (useAuthState as jest.Mock).mockImplementation(() => ({
+      authenticated: false,
+      authenticating: false,
+    }));
+
+    const loginMock = jest.fn(
+      () =>
+        new Promise(resolve => {
+          return resolve({
+            data: {
+              tokenCreate: {
+                errors: [],
+                user: {
+                  userPermissions: [
+                    {
+                      code: "MANAGE_USERS",
+                      name: "Handle checkouts",
+                    },
+                  ],
+                },
+              },
+            },
+          });
+        }),
+    );
+
+    (useAuth as jest.Mock).mockImplementation(() => ({
+      login: loginMock,
+      logout: jest.fn(),
+    }));
+
+    const { result } = renderHook(() => useAuthProvider({ intl, notify, apolloClient }));
+
+    // Simulate two concurrent login attempts
+    result.current.login!("email", "password");
+    result.current.login!("email", "password");
+
+    expect(loginMock).toHaveBeenCalledTimes(1);
+  });
 });
