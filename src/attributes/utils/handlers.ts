@@ -353,16 +353,22 @@ export const handleUploadMultipleFiles = async (
 
 export const handleDeleteMultipleAttributeValues = async (
   attributesWithNewFileValue: FormsetData<null, File>,
-  attributes: Array<
-    | PageSelectedAttributeFragment
-    | ProductFragment["attributes"][0]
-    | NonNullable<ProductVariantDetailsQuery["productVariant"]>["nonSelectionAttributes"][0]
-  >,
+  attributes:
+    | Array<
+        | PageSelectedAttributeFragment
+        | ProductFragment["attributes"][0]
+        | NonNullable<ProductVariantDetailsQuery["productVariant"]>["nonSelectionAttributes"][0]
+      >
+    | undefined,
   deleteAttributeValue: (
     variables: AttributeValueDeleteMutationVariables,
   ) => Promise<FetchResult<AttributeValueDeleteMutation>>,
-) =>
-  Promise.all(
+) => {
+  if (!attributes) {
+    return [];
+  }
+
+  return Promise.all(
     attributes.map(existingAttribute => {
       const fileValueUnused = isFileValueUnused(attributesWithNewFileValue, existingAttribute);
 
@@ -376,3 +382,4 @@ export const handleDeleteMultipleAttributeValues = async (
       return undefined;
     }),
   );
+};

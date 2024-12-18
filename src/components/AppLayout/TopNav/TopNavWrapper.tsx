@@ -1,14 +1,14 @@
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
-import { topBarHeight } from "../consts";
+import { topBarHeight, topBarHeightSubtitle } from "../consts";
 
-export const TopNavWrapper: React.FC<{ withoutBorder?: boolean }> = ({
-  children,
-  withoutBorder,
-}) => (
+export const TopNavWrapper: React.FC<{
+  withoutBorder?: boolean;
+  hasSubtitle?: boolean;
+}> = ({ children, withoutBorder, hasSubtitle }) => (
   <Box
-    display="flex"
+    display={hasSubtitle ? "block" : "flex"}
     alignItems="center"
     paddingX={6}
     paddingY={5}
@@ -17,7 +17,7 @@ export const TopNavWrapper: React.FC<{ withoutBorder?: boolean }> = ({
     borderColor="default1"
     position="relative"
     data-test-id="page-header"
-    __height={topBarHeight}
+    __height={hasSubtitle ? topBarHeightSubtitle : topBarHeight}
     gridColumn="8"
     gridRowStart="1"
     backgroundColor="default1"
