@@ -92,6 +92,7 @@ runs:
 
     - name: Extract shard index
       id: extract-shard-index
+      shell: bash
       run: |
           input=${{ inputs.SHARD }}
           echo "shardIndex=${input%%/*}" >> $GITHUB_ENV
