@@ -169,6 +169,8 @@ for (const attr of ATTRIBUTES.attributesToBeUpdated) {
     await attributesPage.metadataAddFieldButton.click();
 
     await attributesPage.fillMetadataFields("new key", "new value");
+    //Clicking tab only to change focus from the input, allowing to save metadata
+    await attributesPage.page.keyboard.press("Tab");
 
     await attributesPage.clickSaveButton();
     await attributesPage.expectSuccessBanner();
