@@ -89,7 +89,7 @@ runs:
           PROJECT_PARAMS+="--project=${PROJECT} "
         done
         npx playwright test --grep @e2e $PROJECT_PARAMS --shard "$SHARD_NUMBER"
-        echo "reportName=all-blob-reports-${$SHARD_NUMBER%%/*}" >> $GITHUB_ENV
+        echo "reportName=all-blob-reports-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
 
     - name: Upload blob report to GitHub Actions Artifacts
       uses: actions/upload-artifact@v4
