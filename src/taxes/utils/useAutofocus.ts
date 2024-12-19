@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 
 /**
  * Autofocuses DOM element when it's mounted.

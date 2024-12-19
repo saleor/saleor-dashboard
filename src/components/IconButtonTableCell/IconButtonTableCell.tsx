@@ -1,7 +1,7 @@
 import { TableCell } from "@material-ui/core";
 import { IconButton, ICONBUTTON_SIZE, makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React from "react";
+import * as React from "react";
 
 import { stopPropagation } from "../../misc";
 
@@ -24,7 +24,7 @@ const useStyles = makeStyles(
   }),
   { name: "IconButtonTableCell" },
 );
-const IconButtonTableCell: React.FC<IconButtonTableCellProps> = props => {
+const IconButtonTableCell = (props: IconButtonTableCellProps) => {
   const { children, className, disabled, onClick } = props;
   const classes = useStyles(props);
 

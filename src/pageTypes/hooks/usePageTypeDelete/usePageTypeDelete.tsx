@@ -2,7 +2,7 @@
 import { PageCountQueryVariables, usePageCountQuery } from "@dashboard/graphql";
 import { pageListUrl } from "@dashboard/pages/urls";
 import { PageTypeListUrlQueryParams, PageTypeUrlQueryParams } from "@dashboard/pageTypes/urls";
-import React from "react";
+import { useMemo } from "react";
 
 import * as messages from "./messages";
 import { UseTypeDeleteData, UseTypeDeleteProps } from "./types";
@@ -17,7 +17,7 @@ function usePageTypeDelete({
 }: UsePageTypeDeleteProps): UseTypeDeleteData {
   const pageTypes = selectedTypes || [singleId];
   const isDeleteDialogOpen = params.action === "remove";
-  const pagesAssignedToSelectedTypesQueryVars = React.useMemo<PageCountQueryVariables>(
+  const pagesAssignedToSelectedTypesQueryVars = useMemo<PageCountQueryVariables>(
     () => ({
       filter: {
         pageTypes,

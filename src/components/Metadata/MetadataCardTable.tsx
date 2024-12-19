@@ -3,7 +3,6 @@ import { MetadataInput } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Box, Button, Input, Text, Textarea, TrashBinIcon, vars } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { EventDataAction } from "./types";

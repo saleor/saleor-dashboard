@@ -4,8 +4,7 @@ import { useChannelCurrenciesQuery } from "@dashboard/graphql";
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import { mapSingleValueNodeToChoice } from "@dashboard/utils/maps";
-import * as React from "react";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -22,18 +21,18 @@ interface GiftCardCreateMoneyInputProps {
   set: (data: Partial<GiftCardCreateCommonFormData>) => void;
 }
 
-const GiftCardCreateMoneyInput: React.FC<GiftCardCreateMoneyInputProps> = ({
+const GiftCardCreateMoneyInput = ({
   errors,
   data: { balanceAmount, balanceCurrency },
   change,
   set,
-}) => {
+}: GiftCardCreateMoneyInputProps) => {
   const intl = useIntl();
   const { data: channelCurrenciesData } = useChannelCurrenciesQuery({});
   const { channelCurrencies } = channelCurrenciesData?.shop ?? {};
   const [savedCurrency, setCurrency] = useLocalStorage("giftCardCreateCurrency", undefined);
 
-  const getInitialCurrency = React.useCallback(() => {
+  const getInitialCurrency = useCallback(() => {
     if (
       savedCurrency &&
       !!channelCurrencies?.find((currency: string) => currency === savedCurrency)

@@ -14,7 +14,6 @@ import { ListActions, ReorderAction } from "@dashboard/types";
 import { TableCell } from "@material-ui/core";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
@@ -53,7 +52,7 @@ interface ProductTypeAttributesProps extends ListActions {
 }
 
 const numberOfColumns = 5;
-const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
+const ProductTypeAttributes = (props: ProductTypeAttributesProps) => {
   const {
     attributes,
 
@@ -163,7 +162,10 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
                           variant="secondary"
                           onClick={() => onAttributeUnassign(attribute.id)}
                         >
-                          <DeleteIcon />
+                          <DeleteIcon
+                            onPointerEnterCapture={undefined}
+                            onPointerLeaveCapture={undefined}
+                          />
                         </IconButton>
                       </TableButtonWrapper>
                     </TableCell>

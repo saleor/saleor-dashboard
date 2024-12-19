@@ -9,7 +9,6 @@ import {
   OrderLineDiscountContext,
   OrderLineDiscountContextConsumerProps,
 } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
-import React from "react";
 
 export const getDiscountsProvidersWrapper = (order: OrderDetailsQuery["order"]) => {
   const mockedCommonDiscountProviderValues = {

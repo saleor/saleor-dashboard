@@ -16,7 +16,7 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
@@ -57,7 +57,7 @@ export interface CollectionProductsProps extends PageListProps, ListActions {
   onAdd: () => void;
 }
 
-const CollectionProducts: React.FC<CollectionProductsProps> = props => {
+const CollectionProducts = (props: CollectionProductsProps) => {
   const {
     collection,
     disabled,
@@ -179,7 +179,10 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
                         disabled={!product}
                         onClick={event => onProductUnassign(product.id, event)}
                       >
-                        <DeleteIcon />
+                        <DeleteIcon
+                          onPointerEnterCapture={undefined}
+                          onPointerLeaveCapture={undefined}
+                        />
                       </IconButton>
                     </TableButtonWrapper>
                   </TableCell>

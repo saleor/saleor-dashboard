@@ -1,5 +1,4 @@
 import { Box } from "@saleor/macaw-ui-next";
-import React, { FC } from "react";
 
 import { useConditionalFilterContext } from "./context";
 import { FilterContainer } from "./FilterElement";
@@ -18,7 +17,7 @@ interface FiltersAreaProps {
 
 const MAX_VALUE_ITEMS = 12;
 
-export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel, errors }) => {
+export const FiltersArea = ({ onConfirm, onCancel, errors }: FiltersAreaProps) => {
   const { apiProvider, leftOperandsProvider } = useConditionalFilterContext();
   const translations = useFiltersAreaTranslations();
   const { translateOperandOptions, translateSelectedOperands } = useTranslate();

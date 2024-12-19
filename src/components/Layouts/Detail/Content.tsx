@@ -1,12 +1,12 @@
 import { Box, BoxProps } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 
 interface DetailPageLayoutContentProps extends BoxProps {
   [key: `data-${string}`]: string;
   children: React.ReactNode;
 }
 
-export const Content: React.FC<DetailPageLayoutContentProps> = ({ children, ...rest }) => (
+export const Content = ({ children, ...rest }: DetailPageLayoutContentProps) => (
   <Box
     height="100%"
     overflowY="auto"

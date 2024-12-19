@@ -14,7 +14,6 @@ import { ListProps, PaginateListProps, RelayToFlat, ReorderAction } from "@dashb
 import { TableCell, TableFooter, TableHead } from "@material-ui/core";
 import { IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface AttributeValuesProps
@@ -71,7 +70,7 @@ const getSwatchCellStyle = (value?: AttributeValueFragment | undefined) => {
     ? { backgroundImage: `url(${value.file.url})` }
     : { backgroundColor: value.value ?? undefined };
 };
-const AttributeValues: React.FC<AttributeValuesProps> = ({
+const AttributeValues = ({
   disabled,
   onValueAdd,
   onValueDelete,
@@ -84,7 +83,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
   onNextPage,
   onPreviousPage,
   inputType,
-}) => {
+}: AttributeValuesProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const isSwatch = inputType === AttributeInputTypeEnum.SWATCH;

@@ -8,7 +8,6 @@ import { FormsetAtomicData, FormsetChange } from "@dashboard/hooks/useFormset";
 import { commonMessages } from "@dashboard/intl";
 import { getProductVariantAttributeErrorMessage } from "@dashboard/utils/errors/product";
 import { Option, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 export interface VariantAttributeInputData {
@@ -56,12 +55,12 @@ function getAttributeValueChoices(id: string, attributes: VariantAttributeInput[
   }));
 }
 
-const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
+const ProductVariantAttributes = ({
   attributes,
   disabled,
   errors,
   onChange,
-}) => {
+}: ProductVariantAttributesProps) => {
   const intl = useIntl();
 
   return (

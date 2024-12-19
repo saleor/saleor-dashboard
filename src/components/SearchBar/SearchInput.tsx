@@ -1,6 +1,6 @@
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import * as React from "react";
 
 import { SearchPageProps } from "../../types";
 import Debounce from "../Debounce";
@@ -22,7 +22,7 @@ const useStyles = makeStyles(
     name: "SearchInput",
   },
 );
-const SearchInput: React.FC<SearchInputProps> = props => {
+const SearchInput = (props: SearchInputProps) => {
   const { initialSearch, onSearchChange, placeholder } = props;
   const classes = useStyles(props);
   const [search, setSearch] = React.useState(initialSearch);

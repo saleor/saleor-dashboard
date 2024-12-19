@@ -14,7 +14,6 @@ import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -26,7 +25,7 @@ export interface WebhooksListProps {
   createHref?: string;
 }
 
-const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref, onRemove }) => {
+const WebhooksList = ({ webhooks, createHref, onRemove }: WebhooksListProps) => {
   const intl = useIntl();
   const classes = useStyles();
   const numberOfColumns = webhooks?.length === 0 ? 2 : 3;
@@ -98,7 +97,10 @@ const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref, onRem
                         color="primary"
                         onClick={webhook ? stopPropagation(() => onRemove(webhook.id)) : undefined}
                       >
-                        <DeleteIcon />
+                        <DeleteIcon
+                          onPointerEnterCapture={undefined}
+                          onPointerLeaveCapture={undefined}
+                        />
                       </IconButton>
                     </TableButtonWrapper>
                   </TableCell>

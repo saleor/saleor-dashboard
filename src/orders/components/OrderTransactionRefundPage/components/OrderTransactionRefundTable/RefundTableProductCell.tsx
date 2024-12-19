@@ -2,13 +2,12 @@ import { GridTable } from "@dashboard/components/GridTable";
 import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
 import { useOverflowDetection } from "@dashboard/hooks/useOverflowDetection/useOverflowDetection";
 import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
-import React from "react";
 
 interface RefundTableProductCellProps {
   line: OrderDetailsGrantRefundFragment["lines"][number];
 }
 
-export const RefundTableProductCell: React.FC<RefundTableProductCellProps> = ({ line }) => {
+export const RefundTableProductCell = ({ line }: RefundTableProductCellProps) => {
   const { elementRef: productElementRef, isOverflowing: isProductOverflowing } =
     useOverflowDetection<HTMLDivElement>();
   const { elementRef: variantElementRef, isOverflowing: isVariantOverflowing } =

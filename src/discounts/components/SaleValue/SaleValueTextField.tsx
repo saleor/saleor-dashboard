@@ -1,6 +1,5 @@
 import { SaleType } from "@dashboard/graphql";
 import { TextField } from "@material-ui/core";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { ChannelSaleFormData } from "../SaleDetailsPage";
@@ -15,14 +14,14 @@ interface SaleValueTextFieldProps {
   onChange: SaleValueInputOnChangeType;
 }
 
-const SaleValueTextField: React.FC<SaleValueTextFieldProps> = ({
+const SaleValueTextField = ({
   dataType,
   helperText,
   disabled,
   error,
   listing,
   onChange,
-}) => {
+}: SaleValueTextFieldProps) => {
   const intl = useIntl();
   const { id, percentageValue, fixedValue } = listing;
   const getTextFieldValue = (dataType: SaleType) =>

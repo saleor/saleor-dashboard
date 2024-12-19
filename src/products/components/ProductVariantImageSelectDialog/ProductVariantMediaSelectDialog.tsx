@@ -5,7 +5,7 @@ import { ProductMediaFragment } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 interface ProductVariantImageSelectDialogProps {
@@ -16,7 +16,7 @@ interface ProductVariantImageSelectDialogProps {
   onConfirm: (selectedIds: string[]) => void;
 }
 
-const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogProps> = props => {
+const ProductVariantMediaSelectDialog = (props: ProductVariantImageSelectDialogProps) => {
   const { media, open, selectedMedia: initialMedia, onClose, onConfirm } = props;
   const [selectedMedia, setSelectedMedia] = useState(initialMedia);
 

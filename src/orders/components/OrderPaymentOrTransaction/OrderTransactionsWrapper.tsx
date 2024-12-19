@@ -7,7 +7,7 @@ import {
   TransactionActionEnum,
 } from "@dashboard/graphql/types.generated";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 
 import OrderAddTransaction from "../OrderAddTransaction";
@@ -31,7 +31,7 @@ interface OrderTransactionsWrapper {
   onRefundAdd: () => void;
 }
 
-export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
+export const OrderTransactionsWrapper = ({
   order,
   shop,
   onTransactionAction,
@@ -40,8 +40,8 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
   onPaymentVoid,
   onAddManualTransaction,
   onRefundAdd,
-}) => {
-  const filteredPayments = React.useMemo(() => getFilteredPayments(order), [order]);
+}: OrderTransactionsWrapper) => {
+  const filteredPayments = useMemo(() => getFilteredPayments(order), [order]);
   const { enabled } = useFlag("improved_refunds");
 
   const hasAnyTransactions = [order?.transactions, filteredPayments, order?.giftCards].some(

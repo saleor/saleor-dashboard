@@ -9,7 +9,7 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
 import { TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { AttributePageFormData } from "../AttributePage";
@@ -75,12 +75,7 @@ export interface AttributePropertiesProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const AttributeProperties: React.FC<AttributePropertiesProps> = ({
-  data,
-  errors,
-  disabled,
-  onChange,
-}) => {
+const AttributeProperties = ({ data, errors, disabled, onChange }: AttributePropertiesProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["storefrontSearchPosition"], errors);
   const storefrontFacetedNavigationProperties =

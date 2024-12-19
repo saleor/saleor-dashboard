@@ -14,7 +14,6 @@ import { getLoadableList, mapEdgesToItems } from "@dashboard/utils/maps";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
@@ -29,7 +28,7 @@ export interface SaleVariantsProps extends ListProps, ListActions {
 }
 
 const numberOfColumns = 5;
-const DiscountVariants: React.FC<SaleVariantsProps> = props => {
+const DiscountVariants = (props: SaleVariantsProps) => {
   const {
     discount,
     disabled,
@@ -136,7 +135,11 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
                           onVariantUnassign(variant.id);
                         }}
                       >
-                        <DeleteIcon color="primary" />
+                        <DeleteIcon
+                          color="primary"
+                          onPointerEnterCapture={undefined}
+                          onPointerLeaveCapture={undefined}
+                        />
                       </IconButton>
                     </TableButtonWrapper>
                   </TableCell>

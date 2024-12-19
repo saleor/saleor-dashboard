@@ -34,7 +34,6 @@ import { arrayDiff } from "@dashboard/utils/arrays";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getMutationErrors, getMutationState, maybe } from "../../misc";
@@ -54,7 +53,7 @@ interface CollectionDetailsProps {
   params: CollectionUrlQueryParams;
 }
 
-export const CollectionDetails: React.FC<CollectionDetailsProps> = ({ id, params }) => {
+export const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);

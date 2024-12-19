@@ -1,6 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { Text, Textarea } from "@saleor/macaw-ui-next";
-import React from "react";
 import { Control, useController } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -11,9 +10,7 @@ interface OrderTransactionReasonProps {
   control: Control<OrderTransactionRefundPageFormData, any>;
 }
 
-export const OrderTransactionReason: React.FC<OrderTransactionReasonProps> = ({
-  control,
-}: OrderTransactionReasonProps) => {
+export const OrderTransactionReason = ({ control }: OrderTransactionReasonProps) => {
   const { field } = useController({ name: "reason", control });
   const intl = useIntl();
 

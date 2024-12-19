@@ -24,7 +24,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { ListSettings, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";
 
@@ -71,7 +71,7 @@ export interface AttributePageFormData extends MetadataFormData {
   visibleInStorefront: boolean;
 }
 
-const AttributePage: React.FC<AttributePageProps> = ({
+const AttributePage = ({
   attribute,
   disabled,
   errors: apiErrors,
@@ -89,7 +89,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
   onNextPage,
   onPreviousPage,
   children,
-}) => {
+}: AttributePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();

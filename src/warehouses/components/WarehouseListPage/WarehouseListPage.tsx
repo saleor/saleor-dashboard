@@ -12,7 +12,6 @@ import { sectionNames } from "@dashboard/intl";
 import { PageListProps, SearchPageProps, SortPage, TabPageProps } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { warehouseAddUrl, WarehouseListUrlSortField } from "@dashboard/warehouses/urls";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import WarehouseList from "../WarehouseList";
@@ -27,7 +26,7 @@ export interface WarehouseListPageProps
   onRemove: (id: string | undefined) => void;
 }
 
-export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
+export const WarehouseListPage = ({
   warehouses,
   currentTab,
   disabled,
@@ -43,7 +42,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
   onTabSave,
   onUpdateListSettings,
   ...listProps
-}) => {
+}: WarehouseListPageProps) => {
   const intl = useIntl();
   const limitReached = isLimitReached(limits, "warehouses");
 
