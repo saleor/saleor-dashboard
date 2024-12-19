@@ -7,6 +7,7 @@ import {
   Rectangle,
   Theme,
 } from "@glideapps/glide-data-grid";
+import type { FullTheme } from "@glideapps/glide-data-grid/src/common/styles";
 
 export const numberCellEmptyValue = Symbol("date-cell-empty-value");
 interface DateCellProps {
@@ -155,7 +156,7 @@ function drawText({
   ctx.fillText(text, x, y);
 }
 
-function getCellMiddleY(ctx: CanvasRenderingContext2D, rect: Rectangle, theme: Theme) {
+function getCellMiddleY(ctx: CanvasRenderingContext2D, rect: Rectangle, theme: string | FullTheme) {
   const bias = getMiddleCenterBias(ctx, theme);
 
   return rect.y + rect.height / 2 + bias;

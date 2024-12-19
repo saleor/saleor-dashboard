@@ -8,6 +8,7 @@ import DataEditor, {
   DataEditorProps,
   DataEditorRef,
   EditableGridCell,
+  GetRowThemeCallback,
   GridCell,
   GridColumn,
   GridSelection,
@@ -15,7 +16,6 @@ import DataEditor, {
   Item,
   Theme,
 } from "@glideapps/glide-data-grid";
-import { GetRowThemeCallback } from "@glideapps/glide-data-grid/dist/ts/data-grid/data-grid-render";
 import { CircularProgress } from "@material-ui/core";
 import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";

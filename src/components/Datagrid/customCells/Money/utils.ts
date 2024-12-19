@@ -1,6 +1,7 @@
 import { Locale } from "@dashboard/components/Locale";
 import { formatMoneyAmount } from "@dashboard/components/Money";
-import { getMiddleCenterBias, Rectangle, Theme } from "@glideapps/glide-data-grid";
+import { getMiddleCenterBias, Rectangle } from "@glideapps/glide-data-grid";
+import type { FullTheme } from "@glideapps/glide-data-grid/src/common/styles";
 
 const OFFSET = 8;
 
@@ -23,11 +24,11 @@ export function drawLineCrossedPrice(
 
 export function drawPrice(
   ctx: CanvasRenderingContext2D,
-  theme: Theme,
+  theme: string | FullTheme,
   rect: Rectangle,
   text: string,
 ) {
-  ctx.fillStyle = theme.textDark;
+  ctx.fillStyle = (theme as FullTheme).textDark;
   ctx.textAlign = "right";
   ctx.fillText(
     text,
@@ -38,13 +39,16 @@ export function drawPrice(
 
 export function drawCurrency(
   ctx: CanvasRenderingContext2D,
-  theme: Theme,
+  theme: string | FullTheme,
   rect: Rectangle,
   currency: string,
 ) {
-  ctx.fillStyle = theme.textMedium;
+  ctx.fillStyle = (theme as FullTheme).textMedium;
   ctx.textAlign = "left";
-  ctx.font = [theme.baseFontStyle.replace(/bold/g, "normal"), theme.fontFamily].join(" ");
+  ctx.font = [
+    (theme as FullTheme).baseFontStyle.replace(/bold/g, "normal"),
+    (theme as FullTheme).fontFamily,
+  ].join(" ");
   ctx.fillText(currency, rect.x + 8, rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme));
 }
 
