@@ -129,3 +129,42 @@ export const collectionChannelListingUpdate = gql`
     }
   }
 `;
+
+export const reorderProductsInCollection = gql`
+  mutation ReorderProductsInCollection(
+    $collectionId: ID!
+    $moves: [MoveProductInput!]!
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+  ) {
+    collectionReorderProducts(collectionId: $collectionId, moves: $moves) {
+      collection {
+        id
+        products(
+          first: $first
+          after: $after
+          before: $before
+          last: $last
+          sortBy: { field: COLLECTION, direction: DESC }
+        ) {
+          edges {
+            node {
+              ...CollectionProduct
+            }
+          }
+          pageInfo {
+            endCursor
+            hasNextPage
+            hasPreviousPage
+            startCursor
+          }
+        }
+      }
+      errors {
+        message
+      }
+    }
+  }
+`;
