@@ -57,6 +57,7 @@ describe("useRowAnchor", () => {
       localEventY: 39,
       button: 0,
       scrollEdge: [0, 0],
+      buttons: 0,
     });
 
     // Assert
@@ -99,6 +100,7 @@ describe("useRowAnchor", () => {
       localEventY: 39,
       button: 0,
       scrollEdge: [0, 0],
+      buttons: 0,
     } as GridMouseEventArgs);
 
     // Assert

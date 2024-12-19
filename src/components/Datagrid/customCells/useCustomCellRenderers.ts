@@ -1,6 +1,6 @@
 import { dateCellRenderer } from "@dashboard/components/Datagrid/customCells/DateCell";
 import useLocale from "@dashboard/hooks/useLocale";
-import { useExtraCells } from "@glideapps/glide-data-grid-cells";
+import { allCells } from "@glideapps/glide-data-grid-cells";
 import { useTheme } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 
@@ -14,7 +14,6 @@ import { thumbnailCellRenderer } from "./ThumbnailCell";
 
 export function useCustomCellRenderers() {
   const { locale } = useLocale();
-  const { customRenderers } = useExtraCells();
   const { themeValues } = useTheme();
   const renderers = useMemo(
     () => [
@@ -26,9 +25,9 @@ export function useCustomCellRenderers() {
       dateCellRenderer(locale),
       dropdownCellRenderer,
       thumbnailCellRenderer,
-      ...customRenderers,
+      ...allCells,
     ],
-    [customRenderers, locale],
+    [allCells, locale],
   );
 
   return renderers;
