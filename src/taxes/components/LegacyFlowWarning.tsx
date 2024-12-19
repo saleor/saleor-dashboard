@@ -17,6 +17,7 @@ export const LegacyFlowWarning = ({
       display="flex"
       alignItems="center"
       backgroundColor="warning1"
+      color="warning1"
       padding={2}
       gap={1}
       borderRadius={3}
@@ -24,7 +25,7 @@ export const LegacyFlowWarning = ({
       marginBottom={1}
     >
       <WarningIcon size="small" color="warning1" />
-      <Text size={2}>
+      <Text size={2} color="warning1">
         {intl.formatMessage({
           defaultMessage: "Legacy flow detected -  select tax strategy from dropdown",
           id: "k20lqw",

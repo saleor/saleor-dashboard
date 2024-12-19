@@ -43,7 +43,7 @@ const PermissionAlert = ({ query }: PermissionAlertProps) => {
                       description: "alert message",
                     })}
                   </Text>
-                  <Chip color="info1" backgroundColor="info1">
+                  <Chip backgroundColor="info1" color="default1">
                     {subscription}
                   </Chip>
                   <Text>
@@ -63,6 +63,7 @@ const PermissionAlert = ({ query }: PermissionAlertProps) => {
                     <Chip
                       key={permission}
                       backgroundColor={isOneOfRequired ? "warning1" : "critical1"}
+                      color={isOneOfRequired ? "warning1" : "critical1"}
                     >
                       {permission}
                     </Chip>

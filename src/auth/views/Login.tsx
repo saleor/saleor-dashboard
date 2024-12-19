@@ -32,7 +32,11 @@ const LoginView = ({ params }: LoginViewProps) => {
     setRequestedExternalPluginId,
   } = useAuthParameters();
   const handleSubmit = async (data: LoginFormData) => {
-    const result = await login!(data.email, data.password);
+    if (!login) {
+      return;
+    }
+
+    const result = await login(data.email, data.password);
     const errors = result?.errors || [];
 
     return errors;

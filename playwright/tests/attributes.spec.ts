@@ -162,20 +162,25 @@ for (const attribute of attributesWithValuesToBeUpdated) {
 for (const attr of ATTRIBUTES.attributesToBeUpdated) {
   test(`TC: SALEOR_128 User should be able to edit existing ${attr.name} attribute @e2e @attributes`, async () => {
     await attributesPage.gotoExistingAttributePage(attr.id, attr.name);
-    await attributesPage.attributeDefaultLabelInput.waitFor({ state: "visible" });
-    await attributesPage.attributeDefaultLabelInput.clear();
-    await attributesPage.typeAttributeDefaultLabel(`updated ${attr.name}`);
+
+    await attributesPage.attributeDefaultLabelInput.fill(`updated ${attr.name}`);
+
     await attributesPage.expandMetadataSection();
     await attributesPage.metadataAddFieldButton.click();
-    await attributesPage.metadataKeyInput.waitFor({ state: "visible" });
-    await attributesPage.metadataValueInput.waitFor({ state: "visible" });
+
     await attributesPage.fillMetadataFields("new key", "new value");
-    await attributesPage.metadataValueInput.blur();
+    //Clicking tab only to change focus from the input, allowing to save metadata
+    await attributesPage.page.keyboard.press("Tab");
+
     await attributesPage.clickSaveButton();
     await attributesPage.expectSuccessBanner();
     await attributesPage.expectElementIsHidden(attributesPage.successBanner);
-    await attributesPage.attributeSelect.waitFor({ state: "visible" });
+
+    await attributesPage.expandMetadataSection();
+
+    await expect(attributesPage.attributeSelect).toBeVisible();
     await expect(attributesPage.attributeSelect).toHaveAttribute("aria-disabled", "true");
+    await expect(attributesPage.metadataKeyInput).toBeVisible();
     await expect(attributesPage.metadataKeyInput).toHaveValue("new key");
     await expect(attributesPage.metadataValueInput).toHaveValue("new value");
     await expect(attributesPage.attributeDefaultLabelInput).toHaveValue(`updated ${attr.name}`);

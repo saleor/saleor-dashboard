@@ -62,7 +62,7 @@ const LoginPage = (props: LoginCardProps) => {
               key={error}
               data-test-id="login-error-message"
             >
-              <Text>{getErrorMessage(error, intl)}</Text>
+              <Text color="warning1">{getErrorMessage(error, intl)}</Text>
             </Box>
           ))}
           <TextField

@@ -7,7 +7,7 @@ import clsx from "clsx";
 import * as React from "react";
 
 import { tools } from "./consts";
-import { useHasRendered } from "./hooks";
+import { useHasRendered, useUpdateOnRerender } from "./hooks";
 import { ReactEditorJS } from "./ReactEditorJS";
 import useStyles from "./styles";
 
@@ -41,6 +41,7 @@ const RichTextEditor = ({
 }: RichTextEditorProps) => {
   const classes = useStyles({});
   const id = useId(defaultId);
+  const ref = React.useRef<EditorCore | null>(null);
   const [isFocused, setIsFocused] = React.useState(false);
   const [hasValue, setHasValue] = React.useState(false);
   const isTyped = Boolean(hasValue || isFocused);
@@ -54,11 +55,21 @@ const RichTextEditor = ({
     }
 
     if (editorRef) {
+      ref.current = editor;
+
       return (editorRef.current = editor);
     }
   }, []);
   // We need to render FormControl first to get id from @reach/auto-id
   const hasRendered = useHasRendered();
+
+  // EditorJS does not rerender when default value changes,
+  // so we need to manually update it
+  useUpdateOnRerender({
+    render: ref.current?.render.bind(ref.current),
+    defaultValue: props.defaultValue,
+    hasRendered,
+  });
 
   return (
     <FormControl
