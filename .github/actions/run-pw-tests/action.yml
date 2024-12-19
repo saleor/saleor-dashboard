@@ -89,18 +89,12 @@ runs:
           PROJECT_PARAMS+="--project=${PROJECT} "
         done
         npx playwright test --grep @e2e $PROJECT_PARAMS --shard "$SHARD_NUMBER"
-
-    - name: Generate report name
-      id: generate-report-name
-      shell: bash
-      run: |
-          input=${{ inputs.SHARD }}
-          echo "raportName=all-blob-reports-${input%%/*}" >> $GITHUB_ENV
+        echo "reportName=all-blob-reports-${$SHARD_NUMBER%%/*}" >> $GITHUB_ENV
 
     - name: Upload blob report to GitHub Actions Artifacts
       uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: ${{ env.raportName }}
+        name: ${{ env.reportName }}
         path: blob-report
         retention-days: 1
