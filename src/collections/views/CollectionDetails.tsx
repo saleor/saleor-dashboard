@@ -4,7 +4,6 @@ import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { Container } from "@dashboard/components/AssignContainerDialog";
 import AssignProductDialog from "@dashboard/components/AssignProductDialog";
-import { Button } from "@dashboard/components/Button";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -34,12 +33,14 @@ import { arrayDiff } from "@dashboard/utils/arrays";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
+import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getMutationErrors, getMutationState, maybe } from "../../misc";
 import CollectionDetailsPage from "../components/CollectionDetailsPage/CollectionDetailsPage";
 import { CollectionUpdateData } from "../components/CollectionDetailsPage/form";
+import { ReorderPopover } from "../components/ProductReorder/ReorderPopover";
 import {
   collectionListUrl,
   collectionUrl,
@@ -302,19 +303,24 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({ id, params
         }}
         saveButtonBarState={formTransitionState}
         toolbar={
-          <Button
-            onClick={() =>
-              openModal("unassign", {
-                ids: listElements,
-              })
-            }
-          >
-            <FormattedMessage
-              id="67V0c0"
-              defaultMessage="Unassign"
-              description="unassign product from collection, button"
-            />
-          </Button>
+          <>
+            <ReorderPopover listElements={listElements} onReorder={reset} />
+            <Button
+              variant="secondary"
+              size="small"
+              onClick={() =>
+                openModal("unassign", {
+                  ids: listElements,
+                })
+              }
+            >
+              <FormattedMessage
+                id="67V0c0"
+                defaultMessage="Unassign"
+                description="unassign product from collection, button"
+              />
+            </Button>
+          </>
         }
         isChecked={isSelected}
         selected={listElements.length}
