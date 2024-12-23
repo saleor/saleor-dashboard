@@ -1,0 +1,44 @@
+name: Test workflow
+run-name: Test workflow
+
+on:
+  push
+
+jobs:
+  get-environment-variables:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    outputs:
+      VERSION: "3.19"
+    env:
+      REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      CUSTOM_VERSION: "3.19.4-5a41d18"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Install dependencies
+        run: |
+          cd .github/workflows
+          npm ci
+
+      - name: get environment variables
+        id: get-environment-variables
+        run: |
+          node .github/workflows/getEnvironmentVariables.js \
+            --custom_version "$CUSTOM_VERSION" \
+            --repo_token "$REPO_TOKEN" 
+
+  run-tests-on-release:
+    needs: get-environment-variables
+    uses: ./.github/workflows/run-tests-on-release.yml
+    with:
+      VERSION: ${{needs.get-environment-variables.outputs.VERSION}}
+      CUSTOM_VERSION: "3.19.4-5a41d18"
+      ADDITIONAL_TITLE: "Core automation test"
+    secrets: inherit

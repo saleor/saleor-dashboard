@@ -1,20 +1,6 @@
 name: Run automation tests on release
 on:
-  workflow_dispatch: # TODO - Remove after tests
-    inputs:
-      VERSION:
-        type: string
-        required: true
-        description: Version of run eg. "3.19"
-      CUSTOM_VERSION:
-        type: string
-        required: true
-        description: Version of run eg. "3.19.4-5a41d18"
-      ADDITIONAL_TITLE:
-        type: string
-        required: false
-        default: "Dashboard Automation test run "
-
+  
   workflow_call:
     inputs:
       VERSION:
