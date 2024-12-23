@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Split select link option to 2 differen one to avoid flakyness
+Split select link option into 2 different ones to avoid flakyness in tests
