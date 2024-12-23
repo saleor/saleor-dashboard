@@ -2,15 +2,12 @@ import { useApolloClient } from "@apollo/client";
 import { PAGINATE_BY } from "@dashboard/config";
 import { CollectionDetailsDocument, CollectionDetailsQuery } from "@dashboard/graphql";
 import { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
-import useRouter from "use-react-router";
+
+import { useCollectionId } from "./useCollectionId";
 
 export const useProductEdges = () => {
   const client = useApolloClient();
-  const {
-    match: {
-      params: { id: collectionId },
-    },
-  } = useRouter<{ id: string }>();
+  const collectionId = useCollectionId();
   const [paginationState] = useLocalPaginationState(PAGINATE_BY);
 
   const queryData = client.readQuery<CollectionDetailsQuery>({

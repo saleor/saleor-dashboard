@@ -1,16 +1,12 @@
 import { PAGINATE_BY } from "@dashboard/config";
 import { useReorderProductsInCollectionMutation } from "@dashboard/graphql";
 import { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
-import useRouter from "use-react-router";
 
+import { useCollectionId } from "./useCollectionId";
 import { useProductReorderOptimistic } from "./useProductReorderOptimistic";
 
 export const useProductReorder = () => {
-  const {
-    match: {
-      params: { id: collectionId },
-    },
-  } = useRouter<{ id: string }>();
+  const collectionId = useCollectionId();
   const [paginationState] = useLocalPaginationState(PAGINATE_BY);
   const { createOptimisticResponse } = useProductReorderOptimistic();
 
