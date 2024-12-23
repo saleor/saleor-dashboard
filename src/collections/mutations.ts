@@ -25,7 +25,13 @@ export const assignCollectionProduct = gql`
     collectionAddProducts(collectionId: $collectionId, products: $productIds) {
       collection {
         id
-        products(first: $first, after: $after, before: $before, last: $last) {
+        products(
+          first: $first
+          after: $after
+          before: $before
+          last: $last
+          sortBy: { field: COLLECTION, direction: DESC }
+        ) {
           edges {
             node {
               ...CollectionProduct
@@ -81,7 +87,13 @@ export const unassignCollectionProduct = gql`
     collectionRemoveProducts(collectionId: $collectionId, products: $productIds) {
       collection {
         id
-        products(first: $first, after: $after, before: $before, last: $last) {
+        products(
+          first: $first
+          after: $after
+          before: $before
+          last: $last
+          sortBy: { field: COLLECTION, direction: DESC }
+        ) {
           edges {
             node {
               id
