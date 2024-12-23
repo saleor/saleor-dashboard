@@ -1,6 +1,6 @@
 name: Run automation tests on release
 on:
-  
+
   workflow_call:
     inputs:
       VERSION:
@@ -300,38 +300,38 @@ jobs:
           testmoToken: ${{ secrets.TESTMO_TOKEN }}
           testmoRunId: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
 
-      - name: send message on slack
-        working-directory: ".github"
-        id: send-slack-message
-        env:
-          RUN_ID: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
-          URL_TO_ACTION: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
-          ENVIRONMENT: ${{ needs.add-check-and-prepare-instance.outputs.BASE_URL }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_QA_STATUSES_WEBHOOK_URL }}
-          REF_NAME: ${{github.ref_name}}
-          ADDITIONAL_TITLE: "${{inputs.ADDITIONAL_TITLE}} ${{inputs.CUSTOM_VERSION}}"
-        run: |
-          node workflows/postTestsResults.js \
-          --run_id "$RUN_ID" \
-          --testmo_token "$TESTMO_TOKEN" \
-          --slack_webhook_url "$SLACK_WEBHOOK_URL" \
-          --environment "$ENVIRONMENT" \
-          --url_to_action "$URL_TO_ACTION" \
-          --ref_name "$REF_NAME" \
-          --additional_title "$ADDITIONAL_TITLE"
+      # - name: send message on slack
+      #   working-directory: ".github"
+      #   id: send-slack-message
+      #   env:
+      #     RUN_ID: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
+      #     URL_TO_ACTION: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      #     TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
+      #     ENVIRONMENT: ${{ needs.add-check-and-prepare-instance.outputs.BASE_URL }}
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_QA_STATUSES_WEBHOOK_URL }}
+      #     REF_NAME: ${{github.ref_name}}
+      #     ADDITIONAL_TITLE: "${{inputs.ADDITIONAL_TITLE}} ${{inputs.CUSTOM_VERSION}}"
+      #   run: |
+      #     node workflows/postTestsResults.js \
+      #     --run_id "$RUN_ID" \
+      #     --testmo_token "$TESTMO_TOKEN" \
+      #     --slack_webhook_url "$SLACK_WEBHOOK_URL" \
+      #     --environment "$ENVIRONMENT" \
+      #     --url_to_action "$URL_TO_ACTION" \
+      #     --ref_name "$REF_NAME" \
+      #     --additional_title "$ADDITIONAL_TITLE"
 
-      - id: update-check
-        if: always() && ${{ needs.add-check-and-prepare-instance.outputs.CHECK_ID }}
-        uses: ./.github/actions/checks/update-pull-request-check
-        with:
-          CHECK_ID: ${{ needs.add-check-and-prepare-instance.outputs.CHECK_ID }}
-          CHECK_NAME: "Automation_tests_run"
-          STATUS: "completed"
-          CONCLUSION: "${{ steps.send-slack-message.outputs.status }}"
-          TITLE: "Automation tests run"
-          SUMMARY: "${{ steps.send-slack-message.outputs.message }}. Run details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+      # - id: update-check
+      #   if: always() && ${{ needs.add-check-and-prepare-instance.outputs.CHECK_ID }}
+      #   uses: ./.github/actions/checks/update-pull-request-check
+      #   with:
+      #     CHECK_ID: ${{ needs.add-check-and-prepare-instance.outputs.CHECK_ID }}
+      #     CHECK_NAME: "Automation_tests_run"
+      #     STATUS: "completed"
+      #     CONCLUSION: "${{ steps.send-slack-message.outputs.status }}"
+      #     TITLE: "Automation tests run"
+      #     SUMMARY: "${{ steps.send-slack-message.outputs.message }}. Run details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+      #     DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
   update-check-status-if-previous-job-fails:
     runs-on: ubuntu-latest
