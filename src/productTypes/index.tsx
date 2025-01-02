@@ -21,7 +21,13 @@ import ProductTypeListComponent from "./views/ProductTypeList";
 import ProductTypeUpdateComponent from "./views/ProductTypeUpdate";
 
 const ProductTypeList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
-  const qs = parseQs(location.search.substr(1)) as any;
+  const qs = parseQs(location.search, {
+    ignoreQueryPrefix: true,
+    // As a product types list still keeps ids to remove in query params,
+    // we need to increase the array limit to 100, default 20,
+    // because qs library return object instead of an array when limit is exceeded
+    arrayLimit: 100,
+  }) as any;
   const params: ProductTypeListUrlQueryParams = asSortParams(qs, ProductTypeListUrlSortField);
 
   return <ProductTypeListComponent params={params} />;
