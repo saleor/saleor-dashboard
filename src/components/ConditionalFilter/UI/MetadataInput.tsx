@@ -1,4 +1,4 @@
-import { Box, Input, sprinkles } from "@saleor/macaw-ui-next";
+import { Box, Input } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { FilterEventEmitter } from "./EventEmitter";
