@@ -1,5 +1,4 @@
 import {
-  Box,
   DynamicCombobox,
   DynamicMultiselect,
   Input,
@@ -10,6 +9,7 @@ import React from "react";
 
 import BulkSelect from "./BulkSelect";
 import { FilterEventEmitter } from "./EventEmitter";
+import { MetadataInput } from "./MetadataInput";
 import {
   isBulkSelect,
   isCombobox,
@@ -265,40 +265,13 @@ export const RightOperator = ({
 
   if (isDoubleText(selected)) {
     return (
-      <Box>
-        <Input
-          data-test-id={`right-${index}-1`}
-          value={selected.value[0] || ""}
-          onChange={e => {
-            emitter.changeRightOperator(index, [e.target.value, selected.value[1]]);
-          }}
-          onFocus={() => {
-            emitter.focusRightOperator(index);
-          }}
-          onBlur={() => {
-            emitter.blurRightOperator(index);
-          }}
-          error={error}
-          helperText={helperText}
-          disabled={disabled}
-        />
-        <Input
-          data-test-id={`right-${index}-2`}
-          value={selected.value[1] || ""}
-          onChange={e => {
-            emitter.changeRightOperator(index, [selected.value[0], e.target.value]);
-          }}
-          onFocus={() => {
-            emitter.focusRightOperator(index);
-          }}
-          onBlur={() => {
-            emitter.blurRightOperator(index);
-          }}
-          error={error}
-          helperText={helperText}
-          disabled={disabled}
-        />
-      </Box>
+      <MetadataInput
+        index={index}
+        selected={selected}
+        emitter={emitter}
+        error={error}
+        disabled={disabled}
+      />
     );
   }
 
