@@ -43,7 +43,8 @@ export const EventType = ({ type, message }: EventTypeProps) => {
           </Tooltip.Trigger>
           <Tooltip.Content side="bottom">
             <Tooltip.Arrow />
-            {message}
+            {/* Set to explicit value in order to avoid long message from overflowing */}
+            <Box __maxWidth="500px">{message}</Box>
           </Tooltip.Content>
         </Tooltip>
       )}
