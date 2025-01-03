@@ -114,7 +114,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
         return;
       }
 
-      const rowsIds = rows.map(row => customers[row].id);
+      const rowsIds = rows.map(row => customers[row]?.id).filter(id => id !== undefined);
       const haveSaveValues = isEqual(rowsIds, selectedRowIds);
 
       if (!haveSaveValues) {

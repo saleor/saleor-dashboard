@@ -1,12 +1,13 @@
-import { useAddressValidationRulesQuery } from "@dashboard/graphql";
+import { AddressValidationRulesQuery, useAddressValidationRulesQuery } from "@dashboard/graphql";
 import { renderHook } from "@testing-library/react-hooks";
 
-import { useAddressValidation } from "./useAddressValidation";
+import { selectRules, useAddressValidation } from "./useAddressValidation";
 
 jest.mock("@dashboard/graphql", () => ({
   CountryCode: jest.requireActual("@dashboard/graphql").CountryCode,
   useAddressValidationRulesQuery: jest.fn(),
 }));
+
 describe("useAddressValidation", () => {
   it("skips loading validation rules when country is not provided", () => {
     // Arrange
@@ -137,5 +138,56 @@ describe("useAddressValidation", () => {
 
     // Assert
     expect(displayValue).toEqual("");
+  });
+});
+
+describe("selectRules", () => {
+  it("should return select rules when available", () => {
+    // Arrange
+    const data = {
+      addressValidationRules: {
+        countryAreaChoices: [
+          { raw: "AL", verbose: "Alabama" },
+          { raw: "AN", verbose: "Ancona" },
+        ],
+        allowedFields: ["country"],
+      },
+    } as AddressValidationRulesQuery;
+
+    // Act
+    const rules = selectRules(data);
+
+    // Assert
+    expect(rules).toEqual({
+      countryAreaChoices: [
+        { raw: "AL", verbose: "Alabama" },
+        { raw: "AN", verbose: "Ancona" },
+      ],
+      allowedFields: ["country"],
+    });
+  });
+
+  it("should return empty array when addressValidationRules is not provided", () => {
+    // Arrange
+    const data = {
+      addressValidationRules: null,
+    } as AddressValidationRulesQuery;
+
+    // Act
+    const rules = selectRules(data);
+
+    // Assert
+    expect(rules).toEqual({ countryAreaChoices: [], allowedFields: [] });
+  });
+
+  it("should return empty array when data is not provided", () => {
+    // Arrange
+    const data = undefined;
+
+    // Act
+    const rules = selectRules(data);
+
+    // Assert
+    expect(rules).toEqual({ countryAreaChoices: [], allowedFields: [] });
   });
 });

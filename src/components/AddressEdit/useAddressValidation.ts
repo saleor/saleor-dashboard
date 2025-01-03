@@ -18,8 +18,15 @@ const prepareChoices = (values: ChoiceValue[]): AreaChoices[] =>
     value: v.verbose,
     raw: v.raw,
   }));
-const selectRules = (data: AddressValidationRulesQuery) =>
-  data ? data.addressValidationRules : { countryAreaChoices: [], allowedFields: [] };
+
+export const selectRules = (data: AddressValidationRulesQuery | null | undefined) => {
+  if (!data || !data.addressValidationRules) {
+    return { countryAreaChoices: [], allowedFields: [] };
+  }
+
+  return data.addressValidationRules;
+};
+
 const useValidationRules = (country?: string) => {
   const countryCode = CountryCode[country];
   const { data, loading } = useAddressValidationRulesQuery({
@@ -30,7 +37,7 @@ const useValidationRules = (country?: string) => {
   return { data, loading };
 };
 const useAreas = (data: AddressValidationRulesQuery) => {
-  const rawChoices = selectRules(data).countryAreaChoices;
+  const rawChoices = selectRules(data)?.countryAreaChoices ?? [];
   const choices = prepareChoices(rawChoices);
 
   return choices;
