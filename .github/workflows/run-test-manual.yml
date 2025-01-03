@@ -94,6 +94,7 @@ jobs:
           testmoUrl: ${{ secrets.TESTMO_URL }}
           testmoToken: ${{ secrets.TESTMO_TOKEN }}
           testmoRunName: "Playwright run ${{github.ref_name}}"
+          source: "Playwright-tests"
         id: init-testmo
 
   run-tests:
