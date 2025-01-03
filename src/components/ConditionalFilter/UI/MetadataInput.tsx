@@ -1,6 +1,8 @@
 import { Box, Input } from "@saleor/macaw-ui-next";
 import React from "react";
+import { useIntl } from "react-intl";
 
+import { metadataInputMessages } from "../intl";
 import { FilterEventEmitter } from "./EventEmitter";
 import { DoubleTextOperator } from "./types";
 
@@ -19,6 +21,8 @@ export const MetadataInput = ({
   error,
   disabled,
 }: MetadataInputProps) => {
+  const intl = useIntl();
+
   return (
     <Box
       display="flex"
@@ -44,7 +48,7 @@ export const MetadataInput = ({
           emitter.blurRightOperator(index);
         }}
         error={error}
-        placeholder="Key"
+        placeholder={intl.formatMessage(metadataInputMessages.keyPlaceholder)}
         disabled={disabled}
       />
       <Box __width="1px" backgroundColor="default1Focused" />
@@ -61,7 +65,7 @@ export const MetadataInput = ({
           emitter.blurRightOperator(index);
         }}
         error={error}
-        placeholder="Value"
+        placeholder={intl.formatMessage(metadataInputMessages.valuePlaceholder)}
         disabled={disabled}
       />
     </Box>

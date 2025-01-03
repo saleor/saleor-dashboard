@@ -7525,6 +7525,9 @@
   "kdRcqU": {
     "string": "Search customers..."
   },
+  "keyPlaceholder": {
+    "string": "Key"
+  },
   "kfvvnM": {
     "string": "Provided amount cannot exceed charged amount for the selected transaction"
   },
@@ -9100,6 +9103,9 @@
   "vZMs8f": {
     "context": "default product variant indicator",
     "string": "Default"
+  },
+  "valuePlaceholder": {
+    "string": "Value"
   },
   "vcwrgW": {
     "string": "No translatable entities found"
