@@ -25,7 +25,13 @@ export const assignCollectionProduct = gql`
     collectionAddProducts(collectionId: $collectionId, products: $productIds) {
       collection {
         id
-        products(first: $first, after: $after, before: $before, last: $last) {
+        products(
+          first: $first
+          after: $after
+          before: $before
+          last: $last
+          sortBy: { field: COLLECTION, direction: DESC }
+        ) {
           edges {
             node {
               ...CollectionProduct
@@ -81,7 +87,13 @@ export const unassignCollectionProduct = gql`
     collectionRemoveProducts(collectionId: $collectionId, products: $productIds) {
       collection {
         id
-        products(first: $first, after: $after, before: $before, last: $last) {
+        products(
+          first: $first
+          after: $after
+          before: $before
+          last: $last
+          sortBy: { field: COLLECTION, direction: DESC }
+        ) {
           edges {
             node {
               id
@@ -125,6 +137,45 @@ export const collectionChannelListingUpdate = gql`
     collectionChannelListingUpdate(id: $id, input: $input) {
       errors {
         ...CollectionChannelListingError
+      }
+    }
+  }
+`;
+
+export const reorderProductsInCollection = gql`
+  mutation ReorderProductsInCollection(
+    $collectionId: ID!
+    $moves: [MoveProductInput!]!
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+  ) {
+    collectionReorderProducts(collectionId: $collectionId, moves: $moves) {
+      collection {
+        id
+        products(
+          first: $first
+          after: $after
+          before: $before
+          last: $last
+          sortBy: { field: COLLECTION, direction: DESC }
+        ) {
+          edges {
+            node {
+              ...CollectionProduct
+            }
+          }
+          pageInfo {
+            endCursor
+            hasNextPage
+            hasPreviousPage
+            startCursor
+          }
+        }
+      }
+      errors {
+        message
       }
     }
   }
