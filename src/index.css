@@ -74,3 +74,8 @@ body {
 .noBorder {
   border: none;
 }
+
+
+.conditional-metadata label {
+  border: none;
+}

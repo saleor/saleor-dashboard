@@ -111,6 +111,13 @@ export const STATIC_CONDITIONS = {
       value: "input-1",
     },
   ],
+  metadata: [
+    {
+      type: "text.double",
+      label: "is",
+      value: "input-1",
+    },
+  ],
 };
 
 export const CONSTRAINTS = {
@@ -257,6 +264,12 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
     label: "Customer",
     type: "customer",
     slug: "customer",
+  },
+  {
+    value: "metadata",
+    label: "Metadata",
+    type: "metadata",
+    slug: "metadata",
   },
 ];
 

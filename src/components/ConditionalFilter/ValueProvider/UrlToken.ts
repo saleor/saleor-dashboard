@@ -16,7 +16,6 @@ const ORDER_STATICS = [
   "isPreorder",
   "isClickAndCollect",
   "channels",
-  "customer",
   "ids",
 ];
 

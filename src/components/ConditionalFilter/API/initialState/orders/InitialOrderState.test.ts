@@ -31,34 +31,6 @@ describe("ConditionalFilter / API / Orders / InitialOrderState", () => {
     expect(result).toEqual(expectedOutput);
   });
 
-  it("should filter by customer", () => {
-    // Arrange
-    const initialOrderState = InitialOrderStateResponse.empty();
-
-    initialOrderState.customer = [
-      {
-        label: "Customer",
-        slug: "customer",
-        value: "test",
-      },
-    ];
-
-    const token = UrlToken.fromUrlEntry(new UrlEntry("s0.customer", "test"));
-    const expectedOutput = [
-      {
-        label: "Customer",
-        slug: "customer",
-        value: "test",
-      },
-    ];
-
-    // Act
-    const result = initialOrderState.filterByUrlToken(token);
-
-    // Assert
-    expect(result).toEqual(expectedOutput);
-  });
-
   it("should filter by click and collect", () => {
     // Arrange
     const initialOrderState = InitialOrderStateResponse.empty();

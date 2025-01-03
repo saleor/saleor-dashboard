@@ -1,6 +1,9 @@
 // @ts-strict-ignore
 import { FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
-import { createOrderQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
+import {
+  createOrderQueryVariables,
+  OrderQueryVars,
+} from "@dashboard/components/ConditionalFilter/queryVariables";
 import { OrderFilterInput, OrderStatusFilter, PaymentChargeStatusEnum } from "@dashboard/graphql";
 import { findInEnum, parseBoolean } from "@dashboard/misc";
 import {
@@ -36,7 +39,7 @@ export const ORDER_FILTERS_KEY = "orderFiltersPresets";
 const whereInputTypes = ["oneOf", "eq", "range", "gte", "lte"];
 const orderBooleanFilters = ["isClickAndCollect", "isPreorder"];
 
-const _whereToLegacyVariables = (where: OrderFilterInput) => {
+const _whereToLegacyVariables = (where: OrderQueryVars) => {
   return where
     ? Object.keys(where).reduce((acc, key) => {
         if (typeof where[key] === "object") {
@@ -59,6 +62,10 @@ const _whereToLegacyVariables = (where: OrderFilterInput) => {
         }
 
         if (typeof where[key] === "boolean") {
+          acc[key] = where[key];
+        }
+
+        if (Array.isArray(where[key])) {
           acc[key] = where[key];
         }
 

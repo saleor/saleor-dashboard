@@ -116,7 +116,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
       filter: filterVariables,
       sort: getSortQueryVariables(params),
     }),
-    [params, settings.rowNumber, valueProvider.value, paginationState],
+    [params, settings.rowNumber, valueProvider.value],
   );
   const { data } = useOrderListQuery({
     displayLoader: true,

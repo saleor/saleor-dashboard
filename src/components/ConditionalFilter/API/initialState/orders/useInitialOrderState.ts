@@ -17,14 +17,6 @@ import { createInitialOrderState } from "../helpers";
 import { InitialOrderAPIResponse } from "../types";
 import { InitialOrderStateResponse } from "./InitialOrderState";
 
-const getCustomer = (customer: string[]) => {
-  if (Array.isArray(customer) && customer.length > 0) {
-    return customer.at(-1) ?? "";
-  }
-
-  return "";
-};
-
 const mapIDsToOptions = (ids: string[]) =>
   ids.map(id => ({
     type: "ids",
@@ -53,7 +45,6 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
     paymentStatus,
     status,
     authorizeStatus,
-    customer,
     ids,
   }: OrderFetchingParams) => {
     if (channels.length > 0) {
@@ -93,14 +84,6 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
       status: await statusInit.fetch(),
       authorizeStatus: await authorizeStatusInit.fetch(),
       chargeStatus: await chargeStatusInit.fetch(),
-      customer: [
-        {
-          type: "customer",
-          label: "Customer",
-          value: getCustomer(customer),
-          slug: "customer",
-        },
-      ],
       ids: mapIDsToOptions(ids),
     };
 
@@ -115,7 +98,6 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
         initialState.isClickAndCollect,
         initialState.giftCardBought,
         initialState.giftCardUsed,
-        initialState.customer,
         initialState.created,
         initialState.updatedAt,
         initialState.ids,

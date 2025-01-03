@@ -11,6 +11,7 @@ export const CONTROL_DEFAULTS = {
   datetime: "",
   "date.range": ["", ""] as [string, string],
   "datetime.range": ["", ""] as [string, string],
+  "text.double": ["", ""] as [string, string],
 };
 
 export const getDefaultByControlName = (name: string): ConditionValue =>
