@@ -4,13 +4,14 @@ import { InstalledApp } from "@dashboard/apps/types";
 import { getAppsConfig } from "@dashboard/config";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
-import React from "react";
 import { MemoryRouter as Router } from "react-router-dom";
 
 import InstalledAppListRow from "./InstalledAppListRow";
 
 const Component = ({ data, context }: { data: InstalledApp; context: AppListContextValues }) => (
   <Wrapper>
+    {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+    {/* @ts-ignore */}
     <Router>
       <AppListContext.Provider value={context}>
         <InstalledAppListRow {...data} />

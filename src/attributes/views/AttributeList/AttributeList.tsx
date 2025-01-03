@@ -23,7 +23,7 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
-import React, { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import AttributeBulkDeleteDialog from "../../components/AttributeBulkDeleteDialog";
@@ -36,7 +36,7 @@ interface AttributeListProps {
   params: AttributeListUrlQueryParams;
 }
 
-const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
+const AttributeList = ({ params }: AttributeListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -45,7 +45,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
   usePaginationReset(attributeListUrl, params, settings.rowNumber);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = React.useMemo(
+  const queryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),

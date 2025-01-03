@@ -3,7 +3,6 @@ import { formatMoney } from "@dashboard/components/Money";
 import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { AlreadyRefundedHelper } from "./AlreadyRefundedHelper";
 
@@ -12,10 +11,7 @@ interface RefundTablePriceCellProps {
   maxQtyToRefund: number;
 }
 
-export const RefundTablePriceCell: React.FC<RefundTablePriceCellProps> = ({
-  line,
-  maxQtyToRefund,
-}) => {
+export const RefundTablePriceCell = ({ line, maxQtyToRefund }: RefundTablePriceCellProps) => {
   const locale = useLocale();
 
   return (

@@ -8,7 +8,7 @@ import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { getStringOrPlaceholder, maybe, renderCollection } from "../../misc";
@@ -71,7 +71,7 @@ const useStyles = makeStyles(
   }),
   { name: "CountryList" },
 );
-const CountryList: React.FC<CountryListProps> = props => {
+const CountryList = (props: CountryListProps) => {
   const { countries, disabled, emptyText, title, onCountryAssign, onCountryUnassign } = props;
   const classes = useStyles(props);
   const [isCollapsed, setCollapseStatus] = React.useState(true);
@@ -142,7 +142,10 @@ const CountryList: React.FC<CountryListProps> = props => {
                       disabled={!country || disabled}
                       onClick={() => onCountryUnassign(country.code)}
                     >
-                      <DeleteIcon />
+                      <DeleteIcon
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
+                      />
                     </IconButton>
                   </TableCell>
                 </TableRowLink>

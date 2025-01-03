@@ -11,7 +11,6 @@ import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { TextField } from "@material-ui/core";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ExtendedFormHelperTextProps } from "./types";
@@ -41,7 +40,7 @@ interface StaffAddMemberDialogProps extends SearchPageProps {
   onConfirm: (data: AddMemberFormData) => SubmitPromise;
 }
 
-const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
+const StaffAddMemberDialog = (props: StaffAddMemberDialogProps) => {
   const { confirmButtonState, errors, onClose, onConfirm, open } = props;
   const dialogErrors = useModalDialogErrors(errors, open);
   const intl = useIntl();

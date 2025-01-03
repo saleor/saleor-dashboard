@@ -5,8 +5,10 @@ import { IntlProvider } from "react-intl";
 
 import { DateTimeTimezoneField } from "./DateTimeTimezoneField";
 
-const Wrapper: React.FC<React.PropsWithChildren<{}>> = ({ children }) => (
+const Wrapper = ({ children }: React.PropsWithChildren<{}>) => (
   <ThemeProvider>
+    {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+    {/* @ts-ignore */}
     <IntlProvider locale="en">{children}</IntlProvider>
   </ThemeProvider>
 );

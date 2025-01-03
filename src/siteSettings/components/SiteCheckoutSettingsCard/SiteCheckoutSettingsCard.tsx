@@ -4,7 +4,7 @@ import { ShopErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { SiteSettingsPageFormData } from "../SiteSettingsPage";
@@ -17,12 +17,12 @@ interface SiteCheckoutSettingsCardProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
+const SiteCheckoutSettingsCard = ({
   data,
   disabled,
   errors,
   onChange,
-}) => {
+}: SiteCheckoutSettingsCardProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(
     [

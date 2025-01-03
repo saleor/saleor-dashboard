@@ -3,7 +3,6 @@ import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { giftCardSettingsUrl } from "../../urls";
@@ -12,7 +11,7 @@ import { useGiftCardListDialogs } from "../providers/GiftCardListDialogsProvider
 import { useGiftCardList } from "../providers/GiftCardListProvider";
 import GiftCardsListHeaderAlert from "./GiftCardsListHeaderAlert";
 
-const GiftCardsListHeader: React.FC = () => {
+const GiftCardsListHeader = () => {
   const intl = useIntl();
   const navigate = useNavigator();
   const {

@@ -16,7 +16,7 @@ import HelpOutline from "@material-ui/icons/HelpOutline";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, Tooltip } from "@saleor/macaw-ui-next";
 import capitalize from "lodash/capitalize";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
@@ -88,7 +88,7 @@ function handleContainerAssign(
 }
 
 const numberOfColumns = 6;
-const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> = props => {
+const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) => {
   const {
     assignedVariantAttributes,
     disabled,
@@ -266,7 +266,10 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                           onClick={() => onAttributeUnassign(attribute.id)}
                           variant="secondary"
                         >
-                          <DeleteIcon />
+                          <DeleteIcon
+                            onPointerEnterCapture={undefined}
+                            onPointerLeaveCapture={undefined}
+                          />
                         </IconButton>
                       </TableButtonWrapper>
                     </TableCell>

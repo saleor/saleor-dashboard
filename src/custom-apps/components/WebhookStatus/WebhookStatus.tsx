@@ -1,6 +1,5 @@
 import ControlledSwitch from "@dashboard/components/ControlledSwitch";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { WebhookFormData } from "../WebhookDetailsPage";
@@ -12,7 +11,7 @@ interface WebhookStatusProps {
   onChange: (event: ChangeEvent, cb?: () => void) => void;
 }
 
-const WebhookStatus: React.FC<WebhookStatusProps> = ({ data, disabled, onChange }) => {
+const WebhookStatus = ({ data, disabled, onChange }: WebhookStatusProps) => {
   const intl = useIntl();
 
   return (

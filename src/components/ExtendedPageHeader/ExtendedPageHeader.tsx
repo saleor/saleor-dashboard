@@ -1,7 +1,7 @@
 import { Divider } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React from "react";
+import * as React from "react";
 
 const useStyles = makeStyles(
   theme => ({
@@ -63,7 +63,7 @@ interface ExtendedPageHeaderProps {
   testId?: string;
 }
 
-const ExtendedPageHeader: React.FC<ExtendedPageHeaderProps> = props => {
+const ExtendedPageHeader = (props: ExtendedPageHeaderProps) => {
   const { children, className, childrenWrapperClassName, inline, underline, title, testId } = props;
   const classes = useStyles(props);
 

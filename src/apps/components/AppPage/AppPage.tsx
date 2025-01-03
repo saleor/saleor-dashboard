@@ -4,7 +4,6 @@ import { APP_VERSION } from "@dashboard/config";
 import { AppQuery } from "@dashboard/graphql";
 import useShop from "@dashboard/hooks/useShop";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { AppFrame } from "../AppFrame";
 import { AppPageNav } from "./AppPageNav";
@@ -16,7 +15,7 @@ export interface AppPageProps {
   refetch?: () => void;
 }
 
-export const AppPage: React.FC<AppPageProps> = ({ data, url, onError, refetch }) => {
+export const AppPage = ({ data, url, onError, refetch }: AppPageProps) => {
   const shop = useShop();
 
   /**

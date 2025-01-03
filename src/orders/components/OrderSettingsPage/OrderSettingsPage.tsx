@@ -8,7 +8,6 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import OrderFulfillmentSettings from "../OrderFulfillmentSettings";
@@ -24,7 +23,7 @@ export interface OrderSettingsPageProps {
   onSubmit: (data: OrderSettingsFormData) => SubmitPromise;
 }
 
-const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
+const OrderSettingsPage = (props: OrderSettingsPageProps) => {
   const { orderSettings, shop, disabled, saveButtonBarState, onSubmit } = props;
   const intl = useIntl();
   const navigate = useNavigator();

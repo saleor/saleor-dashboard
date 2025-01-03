@@ -9,7 +9,7 @@ import { commonMessages } from "@dashboard/intl";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, vars } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
@@ -59,7 +59,7 @@ export interface CollectionImageProps {
   onImageUpload: (file: File) => void;
 }
 
-export const CollectionImage: React.FC<CollectionImageProps> = props => {
+export const CollectionImage = (props: CollectionImageProps) => {
   const { data, onImageUpload, image, onChange, onImageDelete } = props;
   const anchor = React.useRef<HTMLInputElement>();
   const classes = useStyles(props);

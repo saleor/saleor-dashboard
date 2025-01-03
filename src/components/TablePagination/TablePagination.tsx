@@ -5,7 +5,7 @@ import {
   PaginationProps as MacawPaginationProps,
   PaginationRowNumberSelectLabels,
 } from "@saleor/macaw-ui";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 import { Link, LinkProps } from "react-router-dom";
 
@@ -30,7 +30,7 @@ export interface PaginationProps
   disabled?: boolean;
   labels?: PaginationRowNumberSelectLabels;
 }
-export const TablePagination: React.FC<PaginationProps> = ({
+export const TablePagination = ({
   component,
   colSpan,
   settings,
@@ -42,7 +42,7 @@ export const TablePagination: React.FC<PaginationProps> = ({
   disabled,
   labels,
   ...rest
-}) => {
+}: PaginationProps) => {
   const intl = useIntl();
   const Wrapper = component || TableCell;
 

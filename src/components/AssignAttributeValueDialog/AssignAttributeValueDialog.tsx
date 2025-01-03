@@ -1,6 +1,5 @@
 import { AttributeEntityTypeEnum, SearchPagesQuery } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import AssignContainerDialog from "../AssignContainerDialog";
@@ -38,13 +37,13 @@ type AssignAttributeValueDialogProps = AssignProductDialogProps & {
   pages: RelayToFlat<SearchPagesQuery["search"]>;
 };
 
-const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
+const AssignAttributeValueDialog = ({
   entityType,
   pages,
   products,
   attribute,
   ...rest
-}) => {
+}: AssignAttributeValueDialogProps) => {
   const intl = useIntl();
   const filteredProducts = filterProductsByAttributeValues(products, attribute);
   const filteredPages = filterPagesByAttributeValues(pages, attribute);

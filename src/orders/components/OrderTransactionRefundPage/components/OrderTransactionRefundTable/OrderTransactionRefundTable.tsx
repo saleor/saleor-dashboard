@@ -1,6 +1,6 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
-import React from "react";
+import * as React from "react";
 import { Control, FieldArrayWithId, UseFieldArrayUpdate } from "react-hook-form";
 
 import { LineToRefund, OrderTransactionRefundPageFormData } from "../../OrderTransactionRefundPage";
@@ -24,7 +24,7 @@ export interface OrderRefundTransactionDatagridError {
   lineId: string;
 }
 
-export const OrderTransactionRefundTable: React.FC<OrderTransactionRefundTableProps> = ({
+export const OrderTransactionRefundTable = ({
   order,
   draftRefund,
   control,
@@ -33,7 +33,7 @@ export const OrderTransactionRefundTable: React.FC<OrderTransactionRefundTablePr
   linesToRefund,
   refundFields,
   refundFieldsUpdate,
-}) => {
+}: OrderTransactionRefundTableProps) => {
   return (
     <GridTable height="100%" paddingX={6}>
       <GridTable.Colgroup>

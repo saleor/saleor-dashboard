@@ -45,7 +45,8 @@ import {
   VariableEditor,
   WriteableEditorProps,
 } from "@graphiql/react";
-import React, { ComponentType, PropsWithChildren, ReactNode, useState } from "react";
+import { ComponentType, PropsWithChildren, ReactNode, useState } from "react";
+import * as React from "react";
 
 import { useDashboardTheme, useGraphiQLThemeSwitcher } from "../GraphiQL/styles";
 
@@ -530,7 +531,13 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
           </div>
         </div>
       </div>
-      <Dialog isOpen={showDialog === "short-keys"} onDismiss={() => setShowDialog(null)}>
+      <Dialog
+        isOpen={showDialog === "short-keys"}
+        onDismiss={() => setShowDialog(null)}
+        placeholder={undefined}
+        onPointerEnterCapture={undefined}
+        onPointerLeaveCapture={undefined}
+      >
         <div className="graphiql-dialog-header">
           <div className="graphiql-dialog-title">Short Keys</div>
           <Dialog.Close onClick={() => setShowDialog(null)} />
@@ -632,6 +639,9 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
           setShowDialog(null);
           setClearStorageStatus(null);
         }}
+        placeholder={undefined}
+        onPointerEnterCapture={undefined}
+        onPointerLeaveCapture={undefined}
       >
         <div className="graphiql-dialog-header">
           <div className="graphiql-dialog-title">Settings</div>

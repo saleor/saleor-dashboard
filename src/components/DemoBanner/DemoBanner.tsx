@@ -1,6 +1,6 @@
 import ExternalLink from "@dashboard/components/ExternalLink";
 import { OrdersIcon } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";
 
@@ -9,7 +9,7 @@ import graphQl from "../../../assets/images/graphql.svg";
 import { SALEOR_GRAPHQL_URL, SALEOR_STOREFRONT_URL } from "./constants";
 import styles from "./styles";
 
-export const DemoBanner: React.FC = () => {
+export const DemoBanner = () => {
   const classes = styles();
   const [isHidden, setIsHidden] = useState(false);
 

@@ -4,7 +4,6 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { createGraphiQLFetcher, FetcherOpts, FetcherParams } from "@graphiql/toolkit";
 import { createFetch } from "@saleor/sdk";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { ContextualLine } from "../AppLayout/ContextualLinks/ContextualLine";
@@ -15,7 +14,7 @@ import { messages } from "./messages";
 
 const authorizedFetch = createFetch();
 
-export const DevModePanel: React.FC = () => {
+export const DevModePanel = () => {
   const intl = useIntl();
   const subtitle = useContextualLink("dev_panel");
   const { rootStyle } = useDashboardTheme();

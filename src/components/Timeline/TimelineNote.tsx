@@ -2,7 +2,6 @@ import { GiftCardEventsQuery, OrderEventFragment } from "@dashboard/graphql";
 import { getUserInitials, getUserName } from "@dashboard/misc";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { DashboardCard } from "../Card";
 import { DateTime } from "../Date";
@@ -47,7 +46,7 @@ interface NoteMessageProps {
   message: string | null;
 }
 
-const NoteMessage: React.FC<NoteMessageProps> = ({ message }) => (
+const NoteMessage = ({ message }: NoteMessageProps) => (
   <>
     {message?.split("\n").map(string => {
       if (string === "") {
@@ -87,13 +86,7 @@ const TimelineAvatar = ({
   return null;
 };
 
-export const TimelineNote: React.FC<TimelineNoteProps> = ({
-  date,
-  user,
-  message,
-  hasPlainDate,
-  app,
-}) => {
+export const TimelineNote = ({ date, user, message, hasPlainDate, app }: TimelineNoteProps) => {
   const classes = useStyles();
 
   const userDisplayName = getUserName(user, true) ?? app?.name;

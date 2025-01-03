@@ -1,6 +1,5 @@
 import { Name } from "@dashboard/featureFlags/availableFlags";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { ToggleButton } from "./ToggleButton";
 

@@ -5,7 +5,6 @@ import { TableBody, TableCell, TableFooter, TableHead } from "@material-ui/core"
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
@@ -39,7 +38,7 @@ const useStyles = makeStyles(
   },
   { name: "TranslationsEntitiesList" },
 );
-const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props => {
+const TranslationsEntitiesList = (props: TranslationsEntitiesListProps) => {
   const { disabled, entities, getRowHref } = props;
   const classes = useStyles(props);
   const intl = useIntl();

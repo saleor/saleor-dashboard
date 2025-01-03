@@ -4,7 +4,7 @@ import { Rule } from "@dashboard/discounts/models";
 import { buttonMessages } from "@dashboard/intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 

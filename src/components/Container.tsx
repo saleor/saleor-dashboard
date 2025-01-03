@@ -1,6 +1,5 @@
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React from "react";
 
 const useStyles = makeStyles(
   theme => ({
@@ -26,7 +25,7 @@ interface ContainerProps {
   className?: string;
 }
 
-export const Container: React.FC<ContainerProps> = props => {
+export const Container = (props: ContainerProps) => {
   const { className, ...rest } = props;
   const classes = useStyles(props);
 

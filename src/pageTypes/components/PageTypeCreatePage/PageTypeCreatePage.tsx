@@ -14,7 +14,6 @@ import { pageTypeListUrl } from "@dashboard/pageTypes/urls";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { makeStyles } from "@saleor/macaw-ui";
 import { sprinkles, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import PageTypeDetails from "../PageTypeDetails/PageTypeDetails";
@@ -46,7 +45,7 @@ const useStyles = makeStyles(
     name: "PageTypeCreatePage",
   },
 );
-const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
+const PageTypeCreatePage = (props: PageTypeCreatePageProps) => {
   const { disabled, errors, saveButtonBarState, onSubmit } = props;
   const classes = useStyles(props);
   const intl = useIntl();

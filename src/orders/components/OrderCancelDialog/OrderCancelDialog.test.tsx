@@ -1,6 +1,5 @@
 import { OrderErrorCode, OrderErrorFragment } from "@dashboard/graphql";
 import { render, screen } from "@testing-library/react";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { OrderCancelDialog } from "./OrderCancelDialog";

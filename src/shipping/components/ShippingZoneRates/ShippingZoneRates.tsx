@@ -14,7 +14,6 @@ import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import { Button, DeleteIcon, ICONBUTTON_SIZE, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
@@ -48,7 +47,7 @@ const useStyles = makeStyles(
   }),
   { name: "ShippingZoneRates" },
 );
-const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
+const ShippingZoneRates = (props: ShippingZoneRatesProps) => {
   const {
     disabled,
     onRateAdd,
@@ -177,7 +176,11 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                       onClick={() => onRateRemove(rate.id)}
                       className={classes.buttonColumn}
                     >
-                      <DeleteIcon data-test-id="delete-button" />
+                      <DeleteIcon
+                        data-test-id="delete-button"
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
+                      />
                     </IconButtonTableCell>
                   </TableButtonWrapper>
                 </TableRowLink>

@@ -14,7 +14,7 @@ import { RelayToFlat } from "@dashboard/types";
 import { Divider } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { WarehouseDetailsPageFormData } from "../WarehouseDetailsPage";
@@ -43,13 +43,13 @@ const useStyles = makeStyles(
     name: "WarehouseInfoProps",
   },
 );
-const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
+const WarehouseSettings = ({
   zones,
   disabled,
   data,
   onChange,
   setData,
-}) => {
+}: WarehouseSettingsProps) => {
   React.useEffect(() => {
     if (data.isPrivate && data.clickAndCollectOption === WarehouseClickAndCollectOptionEnum.LOCAL) {
       setData({

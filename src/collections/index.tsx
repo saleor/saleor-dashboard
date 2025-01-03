@@ -2,7 +2,6 @@ import { Route } from "@dashboard/components/Router";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
-import React from "react";
 import { useIntl } from "react-intl";
 import { RouteComponentProps, Switch } from "react-router-dom";
 
@@ -20,7 +19,7 @@ import CollectionCreateView from "./views/CollectionCreate";
 import CollectionDetailsView from "./views/CollectionDetails";
 import CollectionListView from "./views/CollectionList";
 
-const CollectionList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
+const CollectionList = ({ location }: RouteComponentProps<{}>) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: CollectionListUrlQueryParams = asSortParams(qs, CollectionListUrlSortField);
 
@@ -31,16 +30,16 @@ interface CollectionDetailsRouteProps {
   id: string;
 }
 
-const CollectionDetails: React.FC<RouteComponentProps<CollectionDetailsRouteProps>> = ({
+const CollectionDetails = ({
   location,
   match,
-}) => {
+}: RouteComponentProps<CollectionDetailsRouteProps>) => {
   const qs = parseQs(location.search.substr(1));
   const params: CollectionUrlQueryParams = qs;
 
   return <CollectionDetailsView id={decodeURIComponent(match.params.id)} params={params} />;
 };
-const CollectionCreate: React.FC<RouteComponentProps> = ({ location }) => {
+const CollectionCreate = ({ location }: RouteComponentProps) => {
   const qs = parseQs(location.search.substr(1));
   const params: CollectionCreateUrlQueryParams = qs;
 

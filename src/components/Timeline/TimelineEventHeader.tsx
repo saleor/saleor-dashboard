@@ -1,6 +1,7 @@
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
+import * as React from "react";
 
 import { DateTime } from "../Date";
 import Link from "../Link";
@@ -19,7 +20,7 @@ export interface TimelineEventHeaderProps {
   children?: ReactNode;
 }
 
-export const TimelineEventHeader: React.FC<TimelineEventHeaderProps> = props => {
+export const TimelineEventHeader = (props: TimelineEventHeaderProps) => {
   const { title, date, titleElements, secondaryTitle, hasPlainDate, children } = props;
   const navigate = useNavigator();
 
