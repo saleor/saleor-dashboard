@@ -230,13 +230,27 @@ export const voucherDetailsFragment = gql`
   }
 `;
 
+export const promotionRuleChannelFragment = gql`
+  fragment PromotionRuleChannel on Channel {
+    id
+    isActive
+    name
+    slug
+    currencyCode
+    defaultCountry {
+      code
+      country
+    }
+  }
+`;
+
 export const promotionRuleDetailsFragment = gql`
   fragment PromotionRuleDetails on PromotionRule {
     id
     name
     description
     channels {
-      ...ChannelDetails
+      ...PromotionRuleChannel
     }
     giftIds
     rewardType
