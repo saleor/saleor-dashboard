@@ -285,6 +285,8 @@ jobs:
       - name: Merge playwright reports
         if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"playwright"'
         uses: ./.github/actions/merge-pw-reports
+        with:
+           PASSWORD_FOR_DECODING_ARTIFACT: ${{ secrets.E2E_USER_PASSWORD }}
 
       - name: Merge cypress reports
         if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"cypress"'
