@@ -173,9 +173,19 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
     }
   };
   const handleRequestExternalLogin = async (pluginId: string, input: RequestExternalLoginInput) => {
+    let stringifyInput: string;
+
+    try {
+      stringifyInput = JSON.stringify(input);
+    } catch (error) {
+      setErrors(["externalLoginError"]);
+
+      return;
+    }
+
     const result = await getExternalAuthUrl({
       pluginId,
-      input: JSON.stringify(input),
+      input: stringifyInput,
     });
 
     return result?.data?.externalAuthenticationUrl;
