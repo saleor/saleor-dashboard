@@ -58,7 +58,7 @@ export const useAnnouncement = <T extends DataTypePlaceholder>({
 
       if (!previousItem && nextItem) {
         announcement = `${activeId} was ${movedVerb} before ${nextItem.id}.`;
-      } else if (projected.depth > previousItem.depth) {
+      } else if (projected?.depth > previousItem?.depth) {
         announcement = `${activeId} was ${nestedVerb} under ${previousItem.id}.`;
       } else {
         const previousSibling = findPreviousSibling(projected, previousItem, sortedItems);

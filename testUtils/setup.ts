@@ -1,4 +1,5 @@
 import "@testing-library/jest-dom";
+
 import { configure } from "@testing-library/react";
 
 jest.mock("@sentry/react");
@@ -40,9 +41,24 @@ configure({ testIdAttribute: "data-test-id" });
  * Fixes (hacks) "TextEncoder is not defined" error which is likely bug in jsdom
  */
 import { TextDecoder, TextEncoder } from "util";
+
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder as typeof global.TextDecoder;
 
 global.CSS = {
   supports: () => false,
 } as any;
+
+/**
+ *
+ * Fixes (hacks) "crypto is not defined" error which is likely missing implementation in jsdom
+ */
+import nodeCrypto from "crypto";
+
+global.crypto = {
+  getRandomValues: function (buffer: any) {
+    return nodeCrypto.randomFillSync(buffer);
+  },
+  subtle: {} as SubtleCrypto,
+  randomUUID: () => nodeCrypto.randomUUID(),
+};
