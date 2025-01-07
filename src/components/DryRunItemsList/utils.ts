@@ -8,14 +8,12 @@ import {
   AttributeListQueryVariables,
   CategoryDetailsQuery,
   CategoryDetailsQueryVariables,
-  ChannelListDocument,
   CheckoutListDocument,
   CheckoutListQuery,
   CheckoutListQueryVariables,
   CollectionListDocument,
   CollectionListQuery,
   CollectionListQueryVariables,
-  CustomerAddressesDocument,
   CustomerAddressesQuery,
   CustomerAddressesQueryVariables,
   CustomerDetailsQuery,
@@ -29,7 +27,6 @@ import {
   MenuListDocument,
   MenuListQuery,
   MenuListQueryVariables,
-  OrderFulfillDataDocument,
   OrderFulfillDataQuery,
   OrderFulfillDataQueryVariables,
   OrderListDocument,
@@ -41,7 +38,6 @@ import {
   ProductListDocument,
   ProductListQuery,
   ProductListQueryVariables,
-  ProductVariantListDocument,
   ProductVariantListQuery,
   ProductVariantListQueryVariables,
   RootCategoriesDocument,
@@ -162,13 +158,6 @@ export const DocumentMap: Record<string, Document> = {
     displayedAttribute: "email",
     // TODO inverted name
   },
-
-  INVOICE: {
-    document: OrderListDocument,
-    variables: DefaultVariables,
-    collection: "orders",
-    displayedAttribute: "number",
-  },
   MENU: {
     document: MenuListDocument,
     variables: DefaultVariables,
@@ -189,6 +178,8 @@ export const DocumentMap: Record<string, Document> = {
     variables: {
       first: 100,
       hasChannel: true,
+      includeCategories: false,
+      includeCollections: false,
     },
     displayedAttribute: "name",
   },
@@ -228,35 +219,29 @@ export const DocumentMap: Record<string, Document> = {
 
 // Documents which require parent object or can't be handled ATM
 //
-export const ExcludedDocumentMap: Record<string, Document> = {
-  ADDRESS: {
-    document: CustomerAddressesDocument,
-    variables: {
-      // USER ID REQUIRED
-      first: 100,
-    },
-  },
+export const ExcludedDocumentKeys = [
+  // USER ID REQUIRED
+  "ADDRESS",
   // it's not a countable collection
-  CHANNEL: {
-    document: ChannelListDocument,
-    variables: {},
-  },
-  FULFILLMENT: {
-    document: OrderFulfillDataDocument,
-    variables: {
-      // ORDER ID REQUIRED
-      first: 100,
-    },
-  },
-  PRODUCT_VARIANT: {
-    document: ProductVariantListDocument,
-    variables: {
-      // PRODUCT ID REQUIRED
-      first: 100,
-    },
-  },
-  TRANSLATION: {
-    document: null,
-    variables: {},
-  },
-};
+  "CHANNEL",
+  // ORDER ID REQUIRED
+  "FULFILLMENT",
+  // PRODUCT ID REQUIRED
+  "PRODUCT_VARIANT",
+  "PRODUCT_EXPORT_COMPLETED",
+  "PRODUCT_MEDIA_CREATED",
+  "PRODUCT_MEDIA_DELETED",
+  "PRODUCT_MEDIA_UPDATED",
+  "PRODUCT_VARIANT_BACK_IN_STOCK",
+  "PRODUCT_VARIANT_CREATED",
+  "PRODUCT_VARIANT_DELETED",
+  "PRODUCT_VARIANT_METADATA_UPDATED",
+  "PRODUCT_VARIANT_OUT_OF_STOCK",
+  "PRODUCT_VARIANT_STOCK_UPDATED",
+  "PRODUCT_VARIANT_UPDATED",
+  "VOUCHER_CODES_CREATED",
+  "VOUCHER_CODES_DELETED",
+  "VOUCHER_CODE_EXPORT_COMPLETED",
+  "ORDER_BULK_CREATED",
+  "TRANSLATION",
+];
