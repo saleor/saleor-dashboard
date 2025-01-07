@@ -250,7 +250,7 @@ function getProductTypeCellContent(
   theme: DefaultTheme,
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
 ) {
-  const hue = stringToHue(rowData.productType?.name);
+  const hue = stringToHue(rowData?.productType?.name);
   const color = theme === "defaultDark" ? hueToPillColorDark(hue) : hueToPillColorLight(hue);
 
   return pillCell(rowData.productType?.name, color, COMMON_CELL_PROPS);
