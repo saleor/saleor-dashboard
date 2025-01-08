@@ -61,7 +61,7 @@ const ChannelsAvailability: React.FC<ChannelsAvailabilityCardProps> = props => {
     >
       {channels
         ? channels.map(data => {
-            const channelErrors = errors?.filter(error => error.channels.includes(data.id)) || [];
+            const channelErrors = errors?.filter(error => error.channels?.includes(data.id)) || [];
 
             return (
               <ChannelAvailabilityItemWrapper messages={messages} data={data} key={data.id}>
