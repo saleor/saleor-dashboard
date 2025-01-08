@@ -2495,6 +2495,9 @@
     "context": "transaction reference",
     "string": "Transaction reference"
   },
+  "EcglP9": {
+    "string": "Key"
+  },
   "Ediw6/": {
     "context": "button label",
     "string": "Assign references"
@@ -2927,6 +2930,9 @@
   },
   "GsBRWL": {
     "string": "Languages"
+  },
+  "GufXy5": {
+    "string": "Value"
   },
   "GuihaP": {
     "context": "order transaction refund summary label",
@@ -7525,9 +7531,6 @@
   "kdRcqU": {
     "string": "Search customers..."
   },
-  "keyPlaceholder": {
-    "string": "Key"
-  },
   "kfvvnM": {
     "string": "Provided amount cannot exceed charged amount for the selected transaction"
   },
@@ -9103,9 +9106,6 @@
   "vZMs8f": {
     "context": "default product variant indicator",
     "string": "Default"
-  },
-  "valuePlaceholder": {
-    "string": "Value"
   },
   "vcwrgW": {
     "string": "No translatable entities found"
