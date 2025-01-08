@@ -93,6 +93,10 @@ const createAPIHandler = (
     return new NoopValuesHandler([]);
   }
 
+  if (rowType === "metadata") {
+    return new NoopValuesHandler([]);
+  }
+
   throw new Error(`Unknown filter element: "${rowType}"`);
 };
 

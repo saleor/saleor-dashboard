@@ -5,7 +5,6 @@ import {
   DateTimeRangeInput,
   DecimalFilterInput,
   GlobalIdFilterInput,
-  OrderFilterInput,
   ProductWhereInput,
   PromotionWhereInput,
 } from "@dashboard/graphql";
@@ -133,6 +132,11 @@ const createAttributeQueryPart = (
 
 type ProductQueryVars = ProductWhereInput & { channel?: { eq: string } };
 
+/*
+  Map to ProductQueryVars as long as it does not have "where" filter - it would use mostly same keys.
+*/
+export type OrderQueryVars = ProductQueryVars & { created?: DateTimeRangeInput | DateRangeInput };
+
 export const createProductQueryVariables = (value: FilterContainer): ProductQueryVars => {
   return value.reduce((p, c) => {
     if (typeof c === "string" || Array.isArray(c)) return p;
@@ -163,8 +167,18 @@ export const createDiscountsQueryVariables = (value: FilterContainer): Promotion
 };
 
 export const createOrderQueryVariables = (value: FilterContainer) => {
-  return value.reduce((p, c) => {
+  return value.reduce((p: OrderQueryVars, c) => {
     if (typeof c === "string" || Array.isArray(c)) {
+      return p;
+    }
+
+    if (c.value.type === "metadata") {
+      p.metadata = p.metadata || [];
+
+      const [key, value] = c.condition.selected.value as [string, string];
+
+      p.metadata.push({ key, value });
+
       return p;
     }
 
@@ -172,14 +186,16 @@ export const createOrderQueryVariables = (value: FilterContainer) => {
       p[c.value.value as "updatedAt" | "created"] = createStaticQueryPart(c.condition.selected) as
         | DateTimeRangeInput
         | DateRangeInput;
+
+      return p;
     }
 
     if (c.isStatic()) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore - seems to be a bug in TS, works fine in 5.4.5
-      p[c.value.value] = createStaticQueryPart(c.condition.selected);
+      p[c.value.value as keyof OrderQueryVars] = createStaticQueryPart(c.condition.selected);
+
+      return p;
     }
 
     return p;
-  }, {} as OrderFilterInput);
+  }, {} as OrderQueryVars);
 };
