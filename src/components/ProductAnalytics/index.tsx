@@ -13,7 +13,7 @@ const useConfig = () => {
     },
   } satisfies Partial<PostHogConfig>;
   const apiKey = process.env.POSTHOG_KEY;
-  const isCloudInstance = true;
+  const isCloudInstance = process.env.IS_CLOUD_INSTANCE;
   const canRenderAnalytics = () => {
     if (!isCloudInstance) {
       return false;
