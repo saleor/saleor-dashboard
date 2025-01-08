@@ -33,6 +33,7 @@ type ConditionOptionTypes = ConditionOption<
   | "datetime"
   | "date.range"
   | "datetime.range"
+  | "text.double"
 >;
 
 export interface Row {
@@ -60,7 +61,8 @@ export type SelectedOperator =
   | DateOperator
   | DateTimeOperator
   | DateRangeOperator
-  | DateTimeRangeOperator;
+  | DateTimeRangeOperator
+  | DoubleTextOperator;
 
 export interface InputOperator {
   value: string | RightOperatorOption;
@@ -117,6 +119,11 @@ export interface DateRangeOperator {
 export interface DateTimeRangeOperator {
   value: RangeValue;
   conditionValue: ConditionOption<"datetime.range"> | null;
+}
+
+export interface DoubleTextOperator {
+  value: [string, string];
+  conditionValue: ConditionOption<"text.double"> | null;
 }
 
 export interface FilterEvent extends Event {
