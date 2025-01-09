@@ -76,4 +76,20 @@ describe("getFetcher", () => {
       fetch: fetch,
     });
   });
+
+  it("should return fetcher with fetch when lowercase header present", () => {
+    // Arrange
+    const opts: FetcherOpts = {
+      headers: { "authorization-bearer": "token" },
+    };
+
+    // Act
+    getFetcher(opts);
+
+    // Assert
+    expect(mockCreateGraphiQLFetcher).toHaveBeenCalledWith({
+      url: mockApiUrl,
+      fetch: fetch,
+    });
+  });
 });

@@ -8,7 +8,9 @@ const authorizedFetch = createFetch();
 export const getFetcher = (opts: FetcherOpts) => {
   let httpFetch = authorizedFetch;
 
-  const hasAuthorizationHeaders = opts.headers && authHeaders.some(header => opts.headers![header]);
+  const hasAuthorizationHeaders =
+    opts.headers &&
+    authHeaders.some(header => opts.headers![header] || opts.headers![header.toLowerCase()]);
 
   if (hasAuthorizationHeaders) {
     httpFetch = fetch;
