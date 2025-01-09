@@ -17,7 +17,7 @@ import { Button, Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe, renderCollection } from "../../../misc";
+import { renderCollection } from "../../../misc";
 import { ListActions, PageListProps } from "../../../types";
 
 const useStyles = makeStyles(
@@ -84,7 +84,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
                 description: "products in collection",
               },
               {
-                name: maybe(() => collection.name, "..."),
+                name: collection?.name ?? "...",
               },
             )
           ) : (
