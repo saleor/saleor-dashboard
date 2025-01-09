@@ -59,10 +59,10 @@ export interface CollectionImageProps {
 
 export const CollectionImage: React.FC<CollectionImageProps> = props => {
   const { data, onImageUpload, image, onChange, onImageDelete } = props;
-  const anchor = React.useRef<HTMLInputElement>();
+  const anchor = React.useRef<HTMLInputElement | null>(null);
   const classes = useStyles(props);
   const intl = useIntl();
-  const handleImageUploadButtonClick = () => anchor.current.click();
+  const handleImageUploadButtonClick = () => anchor?.current?.click();
 
   return (
     <DashboardCard>
@@ -86,7 +86,7 @@ export const CollectionImage: React.FC<CollectionImageProps> = props => {
             <input
               className={classes.fileField}
               id="fileUpload"
-              onChange={event => onImageUpload(event.target.files[0])}
+              onChange={event => event?.target?.files && onImageUpload(event.target.files[0])}
               type="file"
               ref={anchor}
               accept="image/*"
