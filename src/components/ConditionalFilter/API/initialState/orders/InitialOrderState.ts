@@ -11,13 +11,11 @@ export interface InitialOrderState {
   isPreorder: ItemOption[];
   giftCardBought: ItemOption[];
   giftCardUsed: ItemOption[];
-  customer: ItemOption[];
   created: string | string[];
   updatedAt: string | string[];
   ids: ItemOption[];
 }
 
-const isTextInput = (name: string) => ["customer"].includes(name);
 const isDateField = (name: string) => ["created", "updatedAt"].includes(name);
 
 export class InitialOrderStateResponse implements InitialOrderState {
@@ -31,7 +29,6 @@ export class InitialOrderStateResponse implements InitialOrderState {
     public isPreorder: ItemOption[] = [],
     public giftCardBought: ItemOption[] = [],
     public giftCardUsed: ItemOption[] = [],
-    public customer: ItemOption[] = [],
     public created: string | string[] = [],
     public updatedAt: string | string[] = [],
     public ids: ItemOption[] = [],
@@ -48,8 +45,8 @@ export class InitialOrderStateResponse implements InitialOrderState {
 
     const entry = this.getEntryByName(token.name);
 
-    if (isTextInput(token.name)) {
-      return entry;
+    if (!token.isLoadable()) {
+      return [token.value] as string[];
     }
 
     return (entry as ItemOption[]).filter(({ slug }) => slug && token.value.includes(slug));
@@ -75,8 +72,6 @@ export class InitialOrderStateResponse implements InitialOrderState {
         return this.giftCardBought;
       case "giftCardUsed":
         return this.giftCardUsed;
-      case "customer":
-        return this.customer;
       case "ids":
         return this.ids;
       default:

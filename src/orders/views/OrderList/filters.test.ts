@@ -18,7 +18,7 @@ describe("Filtering URL params", () => {
   it("should not be empty object if params given", () => {
     // Arrange
     const params = new URLSearchParams(
-      "0%5Bs2.status%5D%5B0%5D=FULFILLED&0%5Bs2.status%5D%5B1%5D=CANCELED&1=AND&2%5Bs0.customer%5D=customer&3=AND&4%5Bs0.isClickAndCollect%5D=false",
+      "0%5Bs2.status%5D%5B0%5D=FULFILLED&0%5Bs2.status%5D%5B1%5D=CANCELED&1=AND&2%5Bs0.customer%5D=test&3=AND&4%5Bs0.isClickAndCollect%5D=false",
     );
     const tokenizedUrl = new TokenArray(params.toString());
     const initialOrderState = InitialOrderStateResponse.empty();
@@ -40,13 +40,6 @@ describe("Filtering URL params", () => {
         value: "UNCONFIRMED",
       },
     ];
-    initialOrderState.customer = [
-      {
-        label: "Customer",
-        slug: "customer",
-        value: "test",
-      },
-    ];
     initialOrderState.isClickAndCollect = [
       {
         label: "No",
@@ -66,5 +59,25 @@ describe("Filtering URL params", () => {
     expect(filterVariables.customer).toBe("test");
     expect(filterVariables.status).toEqual(["FULFILLED", "CANCELED"]);
     expect(filterVariables.isClickAndCollect).toBe(false);
+  });
+
+  it("should filter by the metadata", () => {
+    // Arrange
+    const params = new URLSearchParams(
+      "0%5Bs0.metadata%5D%5B0%5D=key1&0%5Bs0.metadata%5D%5B1%5D=value1&1=AND&2%5Bs0.metadata%5D%5B0%5D=key2&2%5Bs0.metadata%5D%5B1%5D=value2&asc=false&sort=number",
+    );
+    const tokenizedUrl = new TokenArray(params.toString());
+
+    // Act
+    const filterVariables = getFilterVariables(
+      {},
+      tokenizedUrl.asFilterValuesFromResponse(InitialOrderStateResponse.empty()),
+    );
+
+    // Assert
+    expect(filterVariables.metadata).toEqual([
+      { key: "key1", value: "value1" },
+      { key: "key2", value: "value2" },
+    ]);
   });
 });
