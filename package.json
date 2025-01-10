@@ -260,7 +260,6 @@
     "serve:lhci": "cross-env NODE_ENV=production npm run server",
     "prestart": "npm run build-types",
     "test": "jest src/",
-    "posttest": "node scripts/pika.js",
     "test:watch": "jest --watch src/",
     "lint": "eslint \"{src,playwright}/**/*.@(tsx|ts|jsx|js)\" --fix",
     "lint:check-progress": "eslint-nibble \"src/**/*.@(tsx|ts|jsx|js)\"",

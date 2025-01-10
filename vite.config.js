@@ -51,6 +51,7 @@ export default defineConfig(({ command, mode }) => {
     FLAGS_SERVICE_ENABLED,
     LOCALE_CODE,
     POSTHOG_KEY,
+    POSTHOG_EXCLUDED_DOMAINS,
     POSTHOG_HOST,
     SENTRY_AUTH_TOKEN,
     SENTRY_ORG,
@@ -84,6 +85,7 @@ export default defineConfig(({ command, mode }) => {
           IS_CLOUD_INSTANCE,
           LOCALE_CODE,
           POSTHOG_KEY,
+          POSTHOG_EXCLUDED_DOMAINS,
           POSTHOG_HOST,
           ONBOARDING_USER_JOINED_DATE_THRESHOLD,
           injectOgTags:
@@ -161,6 +163,7 @@ export default defineConfig(({ command, mode }) => {
         SENTRY_RELEASE,
         STATIC_URL,
         POSTHOG_KEY,
+        POSTHOG_EXCLUDED_DOMAINS,
         POSTHOG_HOST,
         ONBOARDING_USER_JOINED_DATE_THRESHOLD,
         // eslint-disable-next-line camelcase
