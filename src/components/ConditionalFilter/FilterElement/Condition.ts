@@ -57,7 +57,6 @@ export class Condition {
       const isMultiSelect = selectedOption?.type === "multiselect" && valueItems.length > 0;
       const isBulkSelect = selectedOption?.type === "bulkselect" && valueItems.length > 0;
       const isDate = ["created", "updatedAt", "startDate", "endDate"].includes(token.name);
-
       const value = isMultiSelect || isDate || isBulkSelect ? valueItems : valueItems[0];
 
       if (!selectedOption) {
