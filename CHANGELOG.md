@@ -1,5 +1,36 @@
 # Changelog
 
+## 3.20.24
+
+### Patch Changes
+
+- f986ca7: You can now see contextual links to documentation in product, webhooks, order, staff members lists and Graphql Playground panel.
+- 3c9889b: Some sentry errors have been fixed.
+- 4ea5566: Now CI workflows use updated action to upload and download artifacts
+- b44516b: You can now use custom auth headers in graphiql dev mode panel.
+- 5717954: Now there can only be one login request running at a time. This means using a password manager to log in no longer cause an error. If there are too many login requests Dashboard now shows a corresponding error message.
+- e2ce3c4: Product data is now properly displayed in webhook dry run modal.
+  Add warning alert in webhook dry run modal for webhooks that don't have a valid object ids.
+- 65ae19b: Batch of sentry errors has been fixed
+- 109565e: Added explicit max width to transaction event tooltip. Thanks to that longer message won't overflow.
+- d939e6b: Added switch focus using tab button, that may delay saving before input is filled.
+- 0be566e: Posthog no longer collect the events from the staging environments. This means we track the data only in production environments.
+- d56c9a5: Prevent a call update channel after voucher create when no voucher id returns from response
+- f1f9898: App buttons no longer clip with app contents
+- d120bae: Removed waitFor and set expanded metadata section to avoid flakyness
+- 081c5c0: Now category and subcategories show proper description
+- ffaa00f: You can now close order manual transaction modal by clicking the close button
+- 4b42974: Split select link option into 2 different ones to avoid flakyness in tests
+- 184297b: Now it's possible to filter orders by its metadata.
+- 35b508d: Warning banner in tax settings and delete app modal now display properly in dark mode
+- 6a89f7a: Add GitHub Workflow to check licenses
+- 752b988: Playwright tests raport is generated even test failed
+- 85fd37c: Add explicit waits for draft order shipping carrier button interaction
+- f0cd832: Run test by cron workflow has been removed
+- 35a74fb: Now webhooks permission alert displays appropriately in dark mode
+- 47d93f0: Increased the maximum display length for `plainText` attribute to 10,000 characters.
+- 7b0c73b: Discounts no longer blocks the UI when the user has no permissions for managing channels.
+
 ## 3.20.23
 
 ### Patch Changes
