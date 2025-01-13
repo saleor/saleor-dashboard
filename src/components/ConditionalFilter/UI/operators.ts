@@ -3,6 +3,7 @@ import {
   ComboboxOperator,
   DateOperator,
   DateTimeOperator,
+  DoubleTextOperator,
   InputOperator,
   MultiselectOperator,
   NumberRangeOperator,
@@ -42,3 +43,6 @@ export const isDateRange = (value: SelectedOperator): value is DateOperator =>
 
 export const isDateTimeRange = (value: SelectedOperator): value is DateTimeOperator =>
   value.conditionValue?.type === "datetime.range";
+
+export const isDoubleText = (value: SelectedOperator): value is DoubleTextOperator =>
+  value.conditionValue?.type === "text.double";

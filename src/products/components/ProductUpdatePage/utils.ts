@@ -58,7 +58,7 @@ function updateVaraintWithPriceFormat(
   const channelId = dataChange.column.split(":")[1];
   const currencyCode = getChannelCurrencyCodeById(channelId, product.channelListings);
 
-  dataChange.data.value = parseCurrency(`${dataChange.data.value}`, locale, currencyCode);
+  dataChange.data.value = parseCurrency(`${String(dataChange.data.value)}`, locale, currencyCode);
 
   return dataChange;
 }

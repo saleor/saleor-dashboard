@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import Date from "@dashboard/components/Date";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
@@ -8,7 +7,7 @@ import { InvoiceFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { TableBody, TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Skeleton, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -64,7 +63,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
           {onInvoiceGenerate && (
-            <Button onClick={onInvoiceGenerate} className={sprinkles({ marginRight: 0.5 })}>
+            <Button variant="secondary" onClick={onInvoiceGenerate}>
               <FormattedMessage
                 id="e0RKe+"
                 defaultMessage="Generate"
