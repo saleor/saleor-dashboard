@@ -1,10 +1,9 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
 import { FulfillmentStatus } from "@dashboard/graphql";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { orderPaymentRefundUrl } from "@dashboard/orders/urls";
 import { CardActions } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Button, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
 import { actionButtonsMessages } from "./messages";
@@ -48,7 +47,7 @@ const ActionButtons = ({
 
     return (
       <CardActions className={classes.actions}>
-        <Button color="primary" onClick={onApprove} disabled={cannotFulfill}>
+        <Button variant="primary" onClick={onApprove} disabled={cannotFulfill}>
           <FormattedMessage {...buttonMessages.approve} />
         </Button>
         {cannotFulfill && (

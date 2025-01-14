@@ -131,10 +131,12 @@ const AttributeRow = ({
         />
       );
     case AttributeInputTypeEnum.PLAIN_TEXT: {
-      const MAX_LENGTH = 255;
-      const isTooLong = attribute.value[0]?.length > MAX_LENGTH;
+      // Since the API doesn't enforce a limit for plain text attribute length, we need to set one here. If we don't, the dashboard will freeze when the user tries to display a product with a long attribute value.
+      const MAX_LENGTH = 10000; // This is an arbitrary number. Dashboard will still work with a higher number, but it gets significantly slower.
+      const attributeValue = attribute.value[0];
+      const isTooLong = attributeValue?.length > MAX_LENGTH;
 
-      const value = getTruncatedTextValue(attribute.value[0], MAX_LENGTH);
+      const value = isTooLong ? getTruncatedTextValue(attributeValue, MAX_LENGTH) : attributeValue;
 
       return (
         <BasicAttributeRow

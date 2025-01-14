@@ -8,6 +8,7 @@ import {
 
 import BulkSelect from "./BulkSelect";
 import { FilterEventEmitter } from "./EventEmitter";
+import { MetadataInput } from "./MetadataInput";
 import {
   isBulkSelect,
   isCombobox,
@@ -15,6 +16,7 @@ import {
   isDateRange,
   isDateTime,
   isDateTimeRange,
+  isDoubleText,
   isMultiselect,
   isNumberInput,
   isNumberRange,
@@ -257,6 +259,18 @@ export const RightOperator = ({
           width="100%"
         />
       </RangeInputWrapper>
+    );
+  }
+
+  if (isDoubleText(selected)) {
+    return (
+      <MetadataInput
+        index={index}
+        selected={selected}
+        emitter={emitter}
+        error={error}
+        disabled={disabled}
+      />
     );
   }
 

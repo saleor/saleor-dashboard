@@ -2495,6 +2495,9 @@
     "context": "transaction reference",
     "string": "Transaction reference"
   },
+  "EcglP9": {
+    "string": "Key"
+  },
   "Ediw6/": {
     "context": "button label",
     "string": "Assign references"
@@ -2927,6 +2930,9 @@
   },
   "GsBRWL": {
     "string": "Languages"
+  },
+  "GufXy5": {
+    "string": "Value"
   },
   "GuihaP": {
     "context": "order transaction refund summary label",

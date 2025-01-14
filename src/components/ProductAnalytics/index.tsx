@@ -2,6 +2,18 @@ import { PostHogConfig } from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
 import React from "react";
 
+const isDomainExcluded = () => {
+  const domainsString = process.env.POSTHOG_EXCLUDED_DOMAINS;
+
+  if (!domainsString) {
+    return false;
+  }
+
+  const excludedDomains = domainsString.split(",");
+
+  return excludedDomains.some(domain => window.location.hostname.includes(domain));
+};
+
 const useConfig = () => {
   const options = {
     api_host: process.env.POSTHOG_HOST,
@@ -14,8 +26,13 @@ const useConfig = () => {
   } satisfies Partial<PostHogConfig>;
   const apiKey = process.env.POSTHOG_KEY;
   const isCloudInstance = process.env.IS_CLOUD_INSTANCE;
+
   const canRenderAnalytics = () => {
     if (!isCloudInstance) {
+      return false;
+    }
+
+    if (isDomainExcluded()) {
       return false;
     }
 

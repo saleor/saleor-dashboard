@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
@@ -8,8 +7,7 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { OutputData } from "@editorjs/editorjs";
-import { TextField } from "@material-ui/core";
-import * as React from "react";
+import { Input } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 export interface CollectionDetailsProps {
@@ -35,7 +33,7 @@ const CollectionDetails = ({ disabled, data, onChange, errors }: CollectionDetai
         </DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <TextField
+        <Input
           data-test-id="collection-name-input"
           label={intl.formatMessage({
             id: "/WXs6H",
@@ -48,7 +46,6 @@ const CollectionDetails = ({ disabled, data, onChange, errors }: CollectionDetai
           onChange={onChange}
           error={!!formErrors.name}
           helperText={getProductErrorMessage(formErrors.name, intl)}
-          fullWidth
         />
         <FormSpacer />
         {isReadyForMount ? (

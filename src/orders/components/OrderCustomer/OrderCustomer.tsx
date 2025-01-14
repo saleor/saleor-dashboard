@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import AddressFormatter from "@dashboard/components/AddressFormatter";
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import { Combobox } from "@dashboard/components/Combobox";
 import ExternalLink from "@dashboard/components/ExternalLink";
@@ -20,7 +19,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { orderListUrlWithCustomer } from "@dashboard/orders/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -98,7 +97,7 @@ const OrderCustomer = (props: OrderCustomerProps) => {
             <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
               <Button
                 data-test-id="edit-customer"
-                variant="tertiary"
+                variant="secondary"
                 disabled={!onCustomerEdit}
                 onClick={toggleEditMode}
               >
@@ -247,7 +246,7 @@ const OrderCustomer = (props: OrderCustomerProps) => {
             <div>
               <Button
                 data-test-id="edit-shipping-address"
-                variant="tertiary"
+                variant="secondary"
                 onClick={onShippingAddressEdit}
                 disabled={!onShippingAddressEdit && user === undefined}
               >
@@ -288,7 +287,7 @@ const OrderCustomer = (props: OrderCustomerProps) => {
             <div>
               <Button
                 data-test-id="edit-billing-address"
-                variant="tertiary"
+                variant="secondary"
                 onClick={onBillingAddressEdit}
                 disabled={!onBillingAddressEdit && user === undefined}
               >

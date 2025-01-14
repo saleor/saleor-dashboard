@@ -51,3 +51,17 @@ global.TextDecoder = TextDecoder as typeof global.TextDecoder;
 global.CSS = {
   supports: () => false,
 } as any;
+
+/**
+ *
+ * Fixes (hacks) "crypto is not defined" error which is likely missing implementation in jsdom
+ */
+import nodeCrypto from "crypto";
+
+global.crypto = {
+  getRandomValues: function (buffer: any) {
+    return nodeCrypto.randomFillSync(buffer);
+  },
+  subtle: {} as SubtleCrypto,
+  randomUUID: () => nodeCrypto.randomUUID(),
+};
