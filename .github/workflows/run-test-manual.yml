@@ -140,6 +140,8 @@ jobs:
 
       - name: Merge playwright reports
         uses: ./.github/actions/merge-pw-reports
+        with:
+           PASSWORD_FOR_DECODING_ARTIFACT: ${{ secrets.E2E_USER_PASSWORD }}
 
       - name: complete testmo report
         uses: ./.github/actions/testmo/testmo-finish

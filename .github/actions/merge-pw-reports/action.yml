@@ -1,6 +1,11 @@
 name: Merge playwright reports
 description: Merge reports from all shards
 
+inputs:
+  PASSWORD_FOR_DECODING_ARTIFACT: 
+    description: "Password for decoding artifact"
+    required: true
+
 runs:
   using: "composite"
   steps:
@@ -21,11 +26,15 @@ runs:
 
     - name: Merge into HTML Report
       shell: bash
-      run: npx playwright merge-reports --reporter html ./all-blob-reports
+      env:
+        PASSWORD_FOR_DECODING_ARTIFACT: ${{ inputs.PASSWORD_FOR_DECODING_ARTIFACT }}
+      run: |
+        npx playwright merge-reports --reporter html ./all-blob-reports
+        zip -P $PASSWORD_FOR_DECODING_ARTIFACT secure-report.zip -r ./playwright-report
 
     - name: Upload HTML report
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v3
       with:
         name: html-report--attempt-${{ github.run_attempt }}
-        path: playwright-report
+        path: secure-report.zip
         retention-days: 14
