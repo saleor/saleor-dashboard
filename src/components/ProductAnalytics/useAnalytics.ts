@@ -1,27 +1,35 @@
+import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import { usePostHog } from "posthog-js/react";
 
+interface UserProperties {
+  domain: string;
+  email_domain: string;
+}
+
 interface Analytics {
-  initialize: (details: Record<string, any>) => void;
-  reset: () => void;
+  initialize: (userProperties: UserProperties) => void;
   trackEvent: (event: string, properties?: Record<string, any>) => void;
 }
 
 export function useAnalytics(): Analytics {
   const posthog = usePostHog();
+  const [hasBeenUserSet, setHasBeenUserSet] = useLocalStorage<boolean>(
+    "analyticsHasBeenUserSet",
+    false,
+  );
 
-  function initialize(details: Record<string, any>) {
-    // According to docs, posthog can be briefly undefined
+  function initialize(userProperties: UserProperties) {
     if (!posthog) return;
+
+    // initialize function is called on each reload that cause generates new used id by identify function
+    // to avoid this we need to check if user has been set
+    if (hasBeenUserSet) return;
 
     const id = posthog.get_distinct_id();
 
-    posthog.identify(id, details);
-  }
+    posthog.identify(id, userProperties);
 
-  function reset() {
-    if (!posthog) return;
-
-    posthog.reset();
+    setHasBeenUserSet(true);
   }
 
   function trackEvent(event: string, properties?: Record<string, any>) {
@@ -30,5 +38,5 @@ export function useAnalytics(): Analytics {
     posthog.capture(event, properties);
   }
 
-  return { initialize, reset, trackEvent };
+  return { trackEvent, initialize };
 }
