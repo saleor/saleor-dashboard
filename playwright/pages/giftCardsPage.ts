@@ -36,7 +36,7 @@ export class GiftCardsPage extends BasePage {
       .locator('button[role="checkbox"]'),
     readonly giftCardExpiresCheckbox = page
       .getByTestId("gift-card-expire-section")
-      .locator("input"),
+      .locator("button"),
     readonly exportCardCodesButton = page.getByTestId("exportCodesMenuItem"),
     readonly setBalanceButton = page.getByTestId("set-balance-button"),
     readonly showMoreMenuButton = page.getByTestId("show-more-button"),
