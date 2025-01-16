@@ -73,6 +73,7 @@ jobs:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
     outputs:
       ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
+      TESTMO_RUN_ID: ${{ steps.init-testmo.outputs.testmo-run-id }}
     runs-on: ubuntu-22.04
     needs: initialize-cloud
     permissions:
@@ -154,7 +155,17 @@ jobs:
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
 
+      - uses: ./.github/actions/testmo/testmo-init
+        if: ${{ contains(github.event.pull_request.labels.*.name, 'run pw-e2e') }}
+        with:
+          testmoUrl: ${{ secrets.TESTMO_URL }}
+          testmoToken: ${{ secrets.TESTMO_TOKEN }}
+          testmoRunName: "Playwright run ${{github.ref_name}}"
+          source: "Playwright-tests"
+        id: init-testmo
+
       - name: Prepare accounts
+        if: ${{ contains(github.event.pull_request.labels.*.name, 'run pw-e2e') }}
         id: accounts
         uses: ./.github/actions/prepare-accounts
         with:
@@ -192,13 +203,28 @@ jobs:
           ACCOUNTS: ${{ needs.deploy-dashboard.outputs.ACCOUNTS }}
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
 
+      - name: submit-results-to-testmo
+        if: always()
+        uses: ./.github/actions/testmo/testmo-threads-submit-playwright
+        with:
+          testmoUrl: ${{ secrets.TESTMO_URL }}
+          testmoToken: ${{ secrets.TESTMO_TOKEN }}
+          testmoRunId: ${{ needs.deploy-dashboard.outputs.TESTMO_RUN_ID }}
+
   merge-reports:
     if: "!cancelled() && contains(github.event.pull_request.labels.*.name, 'run pw-e2e')"
 
-    needs: run-tests
+    needs: [run-tests,  deploy-dashboard]
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
 
       - name: Merge playwright reports
         uses: ./.github/actions/merge-pw-reports
+
+      - name: complete testmo report
+        uses: ./.github/actions/testmo/testmo-finish
+        with:
+          testmoUrl: ${{ secrets.TESTMO_URL }}
+          testmoToken: ${{ secrets.TESTMO_TOKEN }}
+          testmoRunId: ${{ needs.deploy-dashboard.outputs.TESTMO_RUN_ID }}
