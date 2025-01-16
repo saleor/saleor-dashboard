@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.20.25
+
+### Patch Changes
+
+- c9df392: Order sidebar now uses buttons from new macaw
+- 9737ff3: Collection details page uses now Buttons from new macaw
+- 616ad52: You can now see buttons from macaw-ui-next in customer details view and gift card details view.
+- cb5fd4f: Add tracking button on order details uses button from new macaw
+- 1053db7: Users are now properly anonymously identified
+- ba9d6f5: This Pr is separating sources in testmo for playwright and cypress tests, and adding results for runs on PR to testmo
+
 ## 3.20.24
 
 ### Patch Changes
