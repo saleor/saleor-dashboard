@@ -1,5 +1,6 @@
 name: Run automation tests on release
 on:
+
   workflow_call:
     inputs:
       VERSION:
@@ -93,13 +94,14 @@ jobs:
         env:
           VERSION: "${{inputs.VERSION}}"
         with:
+          result-encoding: string
           script: |
             const { VERSION } = process.env
             const versionWithoutDot = VERSION.replaceAll(/\./g, "")
             if(versionWithoutDot >= 319){
-              return "playwright"
+              return "Playwright-tests"
             }else{
-              return "cypress"
+              return "Cypress-tests"
             }
 
       - name: Create check if release PR exists
@@ -137,6 +139,7 @@ jobs:
           testmoUrl: ${{ secrets.TESTMO_URL }}
           testmoToken: ${{ secrets.TESTMO_TOKEN }}
           testmoRunName: "${{ steps.check-framework.outputs.result }} run ${{ env.CUSTOM_VERSION }}"
+          source: ${{ steps.check-framework.outputs.result }}
         id: init-testmo
 
       - name: get environment variables
@@ -163,7 +166,7 @@ jobs:
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
 
   run-cy-tests:
-    if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"cypress"'
+    if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == 'Cypress-tests'
     needs: add-check-and-prepare-instance
     runs-on: ubuntu-22.04
     timeout-minutes: 30
@@ -227,7 +230,7 @@ jobs:
     runs-on: ubuntu-22.04
     needs: "add-check-and-prepare-instance"
     timeout-minutes: 30
-    if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"playwright"'
+    if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == 'Playwright-tests'
     strategy:
       fail-fast: false
       matrix:
@@ -283,11 +286,11 @@ jobs:
         run: npm ci
 
       - name: Merge playwright reports
-        if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"playwright"'
+        if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == 'Playwright-tests'
         uses: ./.github/actions/merge-pw-reports
 
       - name: Merge cypress reports
-        if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"cypress"'
+        if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == 'Cypress-tests'
         uses: ./.github/actions/combineReportsFromE2E
 
       - name: complete testmo report
@@ -336,7 +339,7 @@ jobs:
     if: |
       always() &&
       (needs.tests-complete != 'success' && cancelled()) &&
-      needs.add-check-and-prepare-instance.outputs.FRAMEWORK   == '"playwright"'
+      needs.add-check-and-prepare-instance.outputs.FRAMEWORK   == 'Playwright-tests'
 
     steps:
       - uses: actions/checkout@v4
