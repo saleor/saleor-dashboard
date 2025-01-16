@@ -13,24 +13,23 @@ interface Analytics {
 
 export function useAnalytics(): Analytics {
   const posthog = usePostHog();
-  const [lastUserProperties, setLastUserProperties] = useLocalStorage<UserProperties>(
-    "analyticsUserProperties",
-    {
-      domain: "",
-      email_domain: "",
-    },
+  const [hasBeenUserSet, setHasBeenUserSet] = useLocalStorage<boolean>(
+    "analyticsHasBeenUserSet",
+    false,
   );
 
   function initialize(userProperties: UserProperties) {
     if (!posthog) return;
 
-    if (!hasUserPropertiesChanged(userProperties, lastUserProperties)) return;
+    // initialize function is called on each reload that cause generates new used id by identify function
+    // to avoid this we need to check if user has been set
+    if (hasBeenUserSet) return;
 
     const id = posthog.get_distinct_id();
 
     posthog.identify(id, userProperties);
 
-    setLastUserProperties(userProperties);
+    setHasBeenUserSet(true);
   }
 
   function trackEvent(event: string, properties?: Record<string, any>) {
@@ -40,14 +39,4 @@ export function useAnalytics(): Analytics {
   }
 
   return { trackEvent, initialize };
-}
-
-function hasUserPropertiesChanged(
-  userProperties: UserProperties,
-  lastInitializedUserProperties: UserProperties,
-) {
-  return (
-    userProperties.domain !== lastInitializedUserProperties.domain ||
-    userProperties.email_domain !== lastInitializedUserProperties.email_domain
-  );
 }
