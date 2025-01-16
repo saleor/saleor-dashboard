@@ -300,7 +300,7 @@ jobs:
         run: npx playwright test --shard ${{ matrix.shard }}
 
       - name: Upload blob report to GitHub Actions Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: all-blob-reports
@@ -330,7 +330,7 @@ jobs:
         run: npx playwright merge-reports --reporter html ./all-blob-reports
 
       - name: Upload HTML report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: html-report--attempt-${{ github.run_attempt }}
           path: playwright-report
