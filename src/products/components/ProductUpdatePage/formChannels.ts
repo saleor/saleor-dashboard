@@ -30,7 +30,6 @@ export const updateChannelsInput = (
       return {
         ...listing,
         ...data,
-        availableForPurchaseAt: data.availableForPurchase,
       };
     }
 

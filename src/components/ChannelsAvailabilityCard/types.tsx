@@ -1,15 +1,10 @@
 import {
   CollectionChannelListingErrorFragment,
+  ProductChannelListingCreateInput,
   ProductChannelListingErrorFragment,
 } from "@dashboard/graphql";
 
-export interface ChannelOpts {
-  availableForPurchase?: string;
-  isAvailableForPurchase?: boolean;
-  isPublished: boolean;
-  publishedAt: string | null;
-  visibleInListings?: boolean;
-}
+export type ChannelOpts = Omit<ProductChannelListingCreateInput, "channelId">;
 
 export interface Messages {
   visibleLabel: string;
