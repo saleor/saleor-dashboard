@@ -821,6 +821,9 @@
     "context": "price or ordered products",
     "string": "Price"
   },
+  "32uBJ8": {
+    "string": "Move products by their positions."
+  },
   "34F7Jk": {
     "context": "filter range separator",
     "string": "and"
@@ -2964,6 +2967,9 @@
   "H/o4Ex": {
     "context": "dialog content",
     "string": "You are not able to modify this group members. Solve this problem to continue with request."
+  },
+  "H/r5m6": {
+    "string": "Move down"
   },
   "H/xj8R": {
     "context": "VariantDetailsChannelsAvailabilityCard item subtitle published",
@@ -7443,6 +7449,9 @@
   "kFsTMN": {
     "string": "Delete customers"
   },
+  "kGQJcD": {
+    "string": "Reorder"
+  },
   "kIcyUo": {
     "context": "column header",
     "string": "Slug"
@@ -9250,6 +9259,9 @@
     "context": "order history message",
     "string": "Restocked {quantity} items"
   },
+  "wPayk9": {
+    "string": "Reorder selected products"
+  },
   "wQdR8M": {
     "string": "Add search engine title and description to make this category easier to find"
   },
@@ -9297,6 +9309,9 @@
   "wlr0Si": {
     "context": "button",
     "string": "Create Webhook"
+  },
+  "wmFdws": {
+    "string": "Move up"
   },
   "wmdHhD": {
     "context": "button",
@@ -9761,6 +9776,9 @@
   "zp9VHt": {
     "context": "cta button label",
     "string": "Explore Updates"
+  },
+  "zpbMmC": {
+    "string": "Move by positions"
   },
   "zqarUF": {
     "context": "modal information under title",

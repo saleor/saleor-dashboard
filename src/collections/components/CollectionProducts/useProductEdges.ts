@@ -20,25 +20,30 @@ export const useProductEdges = () => {
 
   const edges = queryData?.collection?.products?.edges || [];
 
-  const shift = (productIds: string[], shiftAmount: number) => {
-    const idsSet = new Set(productIds);
-    const shiftedArray = [...edges];
+  const shift = (idsToShift: string[], shiftAmount: number) => {
+    const edgesIds = edges.map(edge => edge.node.id);
+    const newArray = [...edgesIds];
 
-    const indicesToShift = shiftedArray
-      .map((item, index) => (idsSet.has(item.node.id) ? index : -1))
-      .filter(index => index !== -1);
+    idsToShift.sort((a, b) => {
+      if (shiftAmount > 0) {
+        return newArray.indexOf(b) - newArray.indexOf(a);
+      }
 
-    indicesToShift.forEach(index => {
-      const newIndex = index + shiftAmount;
+      return newArray.indexOf(a) - newArray.indexOf(b);
+    });
 
-      if (newIndex >= 0 && newIndex < shiftedArray.length) {
-        const [movedItem] = shiftedArray.splice(index, 1);
+    idsToShift.forEach(id => {
+      const index = newArray.indexOf(id);
 
-        shiftedArray.splice(newIndex, 0, movedItem);
+      if (index !== -1) {
+        const newIndex = index + shiftAmount;
+
+        newArray.splice(index, 1);
+        newArray.splice(newIndex, 0, id);
       }
     });
 
-    return shiftedArray;
+    return newArray.map(id => edges.find(edge => edge.node.id === id)).filter(Boolean);
   };
 
   const isShiftExceedPage = (productIds: string[], shiftAmount: number) => {

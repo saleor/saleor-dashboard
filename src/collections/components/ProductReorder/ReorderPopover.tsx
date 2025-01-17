@@ -1,16 +1,19 @@
 import { Box, Button, Input, Popover, Text } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
+import { FormattedMessage } from "react-intl";
 
+import { CollectionProducts, keepProductOrder } from "../CollectionProducts/keepProductOrder";
 import { useProductReorder } from "../CollectionProducts/useProductReorder";
 
 interface ReorderPopoverProps {
   listElements: string[];
-  onReorder: () => void;
+  collectionProducts: CollectionProducts;
 }
 
-export const ReorderPopover = ({ listElements, onReorder }: ReorderPopoverProps) => {
+export const ReorderPopover = ({ listElements, collectionProducts }: ReorderPopoverProps) => {
   const [position, setPosition] = useState(1);
   const { move } = useProductReorder();
+  const orderElementsByPosition = keepProductOrder(listElements, collectionProducts);
 
   const handlePositionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(event.target.value);
@@ -21,34 +24,32 @@ export const ReorderPopover = ({ listElements, onReorder }: ReorderPopoverProps)
   };
 
   const handleMoveUp = () => {
-    move(listElements, position);
-    onReorder();
+    move(orderElementsByPosition(position), position);
   };
 
   const handleMoveDown = () => {
-    move(listElements, -position);
-    onReorder();
+    move(orderElementsByPosition(-position), -position);
   };
 
   return (
     <Popover>
       <Popover.Trigger>
         <Button size="small" variant="secondary">
-          Reorder
+          <FormattedMessage id="kGQJcD" defaultMessage="Reorder" />
         </Button>
       </Popover.Trigger>
       <Popover.Content>
         <Box padding={2} __width="300px">
           <Popover.Arrow fill="default1" />
           <Text display="block" width="100%" fontWeight="medium">
-            Reorder selected products
+            <FormattedMessage id="wPayk9" defaultMessage="Reorder selected products" />
           </Text>
           <Text display="block" width="100%" size={2} fontWeight="light" marginBottom={3}>
-            Move products by their positions.
+            <FormattedMessage id="32uBJ8" defaultMessage="Move products by their positions." />
           </Text>
 
           <Text display="block" width="100%" size={3} fontWeight="medium" paddingY={1}>
-            Move by positions
+            <FormattedMessage id="zpbMmC" defaultMessage="Move by positions" />
           </Text>
           <Box display="flex" gap={5}>
             <Input
@@ -60,17 +61,17 @@ export const ReorderPopover = ({ listElements, onReorder }: ReorderPopoverProps)
             />
             <Box display="flex" alignItems="center" gap={2} flexShrink="0">
               <Button size="small" variant="secondary" onClick={handleMoveUp}>
-                Move up
+                <FormattedMessage id="wmFdws" defaultMessage="Move up" />
               </Button>
               <Button size="small" variant="secondary" onClick={handleMoveDown}>
-                Move down
+                <FormattedMessage id="H/r5m6" defaultMessage="Move down" />
               </Button>
             </Box>
           </Box>
           <Box display="flex" justifyContent="flex-end" alignItems="center" marginTop={5}>
             <Popover.Close>
               <Button variant="tertiary" size="small">
-                Close
+                <FormattedMessage id="rbrahO" defaultMessage="Close" />
               </Button>
             </Popover.Close>
           </Box>

@@ -1,5 +1,7 @@
 import { CollectionDetailsQuery } from "@dashboard/graphql";
 
-export type Product = NonNullable<
+export type Edges = NonNullable<
   NonNullable<NonNullable<CollectionDetailsQuery["collection"]>["products"]>["edges"]
->[number]["node"];
+>;
+
+export type Product = Edges[number]["node"];
