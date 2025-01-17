@@ -1,8 +1,6 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
-import Link from "@dashboard/components/Link";
 import { DashboardModal } from "@dashboard/components/Modal";
 import PreviewPill from "@dashboard/components/PreviewPill";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
@@ -13,9 +11,10 @@ import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import { useCustomerGiftCardListQuery } from "@dashboard/graphql";
 import { getFullName } from "@dashboard/misc";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Skeleton, sprinkles } from "@saleor/macaw-ui-next";
+import { Button, Skeleton, sprinkles } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { Link } from "react-router-dom";
 
 import CustomerGiftCardsCardListItem from "./CustomerGiftCardsCardListItem";
 import { giftCardCustomerCardMessages as messages } from "./messages";
@@ -65,9 +64,11 @@ const CustomerGiftCardsCard = () => {
           <DashboardCard.Toolbar>
             <>
               {!!giftCards?.length && (
-                <Button variant="tertiary" href={viewAllGiftCardsUrl} component={Link}>
-                  <FormattedMessage {...messages.customerGiftCardsViewAllButton} />
-                </Button>
+                <Link to={viewAllGiftCardsUrl}>
+                  <Button variant="tertiary">
+                    <FormattedMessage {...messages.customerGiftCardsViewAllButton} />
+                  </Button>
+                </Link>
               )}
               <PreviewPill className={sprinkles({ marginLeft: 2 })} />
             </>
@@ -87,7 +88,7 @@ const CustomerGiftCardsCard = () => {
         )}
         <DashboardCard.BottomActions paddingX={6} paddingY={0}>
           <Button
-            variant="tertiary"
+            variant="secondary"
             onClick={handleCreateNewCardButton}
             data-test-id="issue-new-gift-card"
           >

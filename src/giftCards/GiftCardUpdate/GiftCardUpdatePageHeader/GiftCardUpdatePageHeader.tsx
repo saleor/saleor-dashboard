@@ -1,11 +1,11 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { Button } from "@dashboard/components/Button";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import GiftCardStatusChip from "@dashboard/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
 import { useGiftCardPermissions } from "@dashboard/giftCards/hooks/useGiftCardPermissions";
 import { giftCardsListPath } from "@dashboard/giftCards/urls";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { getStringOrPlaceholder } from "@dashboard/misc";
+import { Button } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { giftCardsListTableMessages as tableMessages } from "../../GiftCardsList/messages";

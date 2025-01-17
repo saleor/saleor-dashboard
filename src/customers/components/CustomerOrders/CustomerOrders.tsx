@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import { DateTime } from "@dashboard/components/Date";
 import Money from "@dashboard/components/Money";
@@ -11,8 +10,9 @@ import { orderUrl } from "@dashboard/orders/urls";
 import { RelayToFlat } from "@dashboard/types";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Button, Skeleton } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
+import { Link } from "react-router-dom";
 
 import { maybe, renderCollection, transformPaymentStatus } from "../../../misc";
 
@@ -55,9 +55,11 @@ const CustomerOrders = (props: CustomerOrdersProps) => {
           })}
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
-          <Button variant="tertiary" href={viewAllHref}>
-            <FormattedMessage id="3+990c" defaultMessage="View all orders" description="button" />
-          </Button>
+          <Link to={viewAllHref}>
+            <Button variant="secondary">
+              <FormattedMessage id="3+990c" defaultMessage="View all orders" description="button" />
+            </Button>
+          </Link>
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <ResponsiveTable>

@@ -1,6 +1,6 @@
 // @ts-strict-ignore
+import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
 import { commonMessages } from "@dashboard/intl";
-import { ConfirmButton } from "@saleor/macaw-ui";
 import { useIntl } from "react-intl";
 
 import { bulkEnableDisableSectionMessages as buttonMessages } from "../../GiftCardsList/messages";
@@ -24,15 +24,13 @@ const GiftCardEnableDisableSection = () => {
   }
 
   return (
-    <ConfirmButton
+    <ButtonWithLoader
       data-test-id="enable-button"
       onClick={handleClick}
       transitionState={currentOpts?.status}
-      labels={{
-        confirm: intl.formatMessage(buttonLabel),
-        error: intl.formatMessage(commonMessages.error),
-      }}
-    />
+    >
+      {intl.formatMessage(currentOpts?.status === "error" ? commonMessages.error : buttonLabel)}
+    </ButtonWithLoader>
   );
 };
 

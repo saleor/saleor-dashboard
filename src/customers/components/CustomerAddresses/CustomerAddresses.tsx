@@ -1,13 +1,13 @@
 // @ts-strict-ignore
 import AddressFormatter from "@dashboard/components/AddressFormatter";
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import { Hr } from "@dashboard/components/Hr";
 import { CustomerDetailsFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Button, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
+import { Link } from "react-router-dom";
 
 import { maybe } from "../../../misc";
 
@@ -43,14 +43,11 @@ const CustomerAddresses = (props: CustomerAddressesProps) => {
           })}
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
-          <Button
-            data-test-id="manage-addresses"
-            disabled={disabled}
-            variant="tertiary"
-            href={manageAddressHref}
-          >
-            <FormattedMessage {...buttonMessages.manage} />
-          </Button>
+          <Link to={manageAddressHref}>
+            <Button data-test-id="manage-addresses" disabled={disabled} variant="secondary">
+              <FormattedMessage {...buttonMessages.manage} />
+            </Button>
+          </Link>
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       {maybe(() => customer.defaultBillingAddress.id) !==
