@@ -1,13 +1,12 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
 import { AccountErrorFragment, CustomerDetailsQuery } from "@dashboard/graphql";
 import { maybe } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Checkbox, Skeleton, Text } from "@saleor/macaw-ui-next";
 import moment from "moment-timezone";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -78,19 +77,29 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
         </DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content className={classes.content}>
-        <ControlledCheckbox
+        <Checkbox
           data-test-id="customer-active-checkbox"
           checked={data.isActive}
           className={classes.checkbox}
           disabled={disabled}
-          label={intl.formatMessage({
-            id: "+NUzaQ",
-            defaultMessage: "User account active",
-            description: "check to mark this account as active",
-          })}
           name="isActive"
-          onChange={onChange}
-        />
+          onCheckedChange={value => {
+            onChange({
+              target: {
+                name: "isActive",
+                value,
+              },
+            } as React.ChangeEvent<any>);
+          }}
+        >
+          <Text fontSize={3}>
+            {intl.formatMessage({
+              id: "+NUzaQ",
+              defaultMessage: "User account active",
+              description: "check to mark this account as active",
+            })}
+          </Text>
+        </Checkbox>
         <TextField
           data-test-id="customer-note"
           disabled={disabled}

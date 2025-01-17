@@ -26,7 +26,9 @@ export class CustomersPage extends BasePage {
     readonly deleteButton = page.getByTestId("button-bar-delete"),
     readonly issueNewGiftCardButton = page.getByTestId("issue-new-gift-card"),
     readonly emailPageTitleText = page.getByTestId("user-email-title"),
-    readonly customerActiveCheckbox = page.getByTestId("customer-active-checkbox").locator("input"),
+    readonly customerActiveCheckbox = page
+      .getByTestId("customer-active-checkbox")
+      .locator("button"),
     readonly amountDropdown = page.locator('div[name="balanceCurrency"]'),
     readonly customerList = page.locator('div[data-test-id="list"]'),
   ) {

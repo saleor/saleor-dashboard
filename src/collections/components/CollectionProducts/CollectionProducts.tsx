@@ -43,7 +43,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
                 description: "products in collection",
               },
               {
-                name: collection.name || "...",
+                name: collection?.name ?? "...",
               },
             )
           ) : (

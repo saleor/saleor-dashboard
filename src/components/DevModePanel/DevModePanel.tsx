@@ -2,30 +2,29 @@
 import { useDashboardTheme } from "@dashboard/components/GraphiQL/styles";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
-import { createGraphiQLFetcher, FetcherOpts, FetcherParams } from "@graphiql/toolkit";
-import { createFetch } from "@saleor/sdk";
+import { FetcherOpts, FetcherParams } from "@graphiql/toolkit";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { ContextualLine } from "../AppLayout/ContextualLinks/ContextualLine";
+import { useContextualLink } from "../AppLayout/ContextualLinks/useContextualLink";
 import PlainGraphiQL from "../GraphiQLPlain";
 import { useDevModeContext } from "./hooks";
 import { messages } from "./messages";
-
-const authorizedFetch = createFetch();
+import { getFetcher } from "./utils";
 
 export const DevModePanel: React.FC = () => {
   const intl = useIntl();
+  const subtitle = useContextualLink("dev_panel");
   const { rootStyle } = useDashboardTheme();
   const { markOnboardingStepAsCompleted } = useOnboarding();
   const { isDevModeVisible, variables, devModeContent, setDevModeVisibility } = useDevModeContext();
-  const baseFetcher = createGraphiQLFetcher({
-    url: process.env.API_URL,
-    fetch: authorizedFetch,
-  });
   const fetcher = async (graphQLParams: FetcherParams, opts: FetcherOpts) => {
     if (graphQLParams.operationName !== "IntrospectionQuery") {
       markOnboardingStepAsCompleted("graphql-playground");
     }
+
+    const baseFetcher = getFetcher(opts);
 
     const result = await baseFetcher(graphQLParams, opts); // Call the base fetcher
 
@@ -47,7 +46,11 @@ export const DevModePanel: React.FC = () => {
     <DashboardModal open={isDevModeVisible} onChange={() => setDevModeVisibility(false)}>
       <DashboardModal.Content size="xl" __gridTemplateRows="auto 1fr" height="100%">
         <style dangerouslySetInnerHTML={overwriteCodeMirrorCSSVariables}></style>
-        <DashboardModal.Header>{intl.formatMessage(messages.title)}</DashboardModal.Header>
+        <DashboardModal.Header>
+          {intl.formatMessage(messages.title)}
+
+          <ContextualLine>{subtitle}</ContextualLine>
+        </DashboardModal.Header>
 
         <PlainGraphiQL query={devModeContent} variables={variables} fetcher={fetcher} />
       </DashboardModal.Content>

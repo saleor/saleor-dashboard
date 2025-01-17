@@ -286,6 +286,33 @@ export const ChannelErrorFragmentDoc = gql`
   message
 }
     `;
+export const WarehouseFragmentDoc = gql`
+    fragment Warehouse on Warehouse {
+  id
+  name
+}
+    `;
+export const ChannelDetailsFragmentDoc = gql`
+    fragment ChannelDetails on Channel {
+  ...Channel
+  hasOrders
+  warehouses {
+    ...Warehouse
+  }
+  orderSettings {
+    markAsPaidStrategy
+    deleteExpiredOrdersAfter
+    allowUnpaidOrders
+  }
+  paymentSettings {
+    defaultTransactionFlowStrategy
+  }
+  checkoutSettings {
+    automaticallyCompleteFullyPaidCheckouts
+  }
+}
+    ${ChannelFragmentDoc}
+${WarehouseFragmentDoc}`;
 export const CollectionFragmentDoc = gql`
     fragment Collection on Collection {
   id
@@ -635,40 +662,26 @@ export const VoucherDetailsFragmentDoc = gql`
     ${VoucherFragmentDoc}
 ${ChannelListingProductWithoutPricingFragmentDoc}
 ${PageInfoFragmentDoc}`;
-export const WarehouseFragmentDoc = gql`
-    fragment Warehouse on Warehouse {
+export const PromotionRuleChannelFragmentDoc = gql`
+    fragment PromotionRuleChannel on Channel {
   id
+  isActive
   name
+  slug
+  currencyCode
+  defaultCountry {
+    code
+    country
+  }
 }
     `;
-export const ChannelDetailsFragmentDoc = gql`
-    fragment ChannelDetails on Channel {
-  ...Channel
-  hasOrders
-  warehouses {
-    ...Warehouse
-  }
-  orderSettings {
-    markAsPaidStrategy
-    deleteExpiredOrdersAfter
-    allowUnpaidOrders
-  }
-  paymentSettings {
-    defaultTransactionFlowStrategy
-  }
-  checkoutSettings {
-    automaticallyCompleteFullyPaidCheckouts
-  }
-}
-    ${ChannelFragmentDoc}
-${WarehouseFragmentDoc}`;
 export const PromotionRuleDetailsFragmentDoc = gql`
     fragment PromotionRuleDetails on PromotionRule {
   id
   name
   description
   channels {
-    ...ChannelDetails
+    ...PromotionRuleChannel
   }
   giftIds
   rewardType
@@ -677,7 +690,7 @@ export const PromotionRuleDetailsFragmentDoc = gql`
   cataloguePredicate
   orderPredicate
 }
-    ${ChannelDetailsFragmentDoc}`;
+    ${PromotionRuleChannelFragmentDoc}`;
 export const PromotionDetailsFragmentDoc = gql`
     fragment PromotionDetails on Promotion {
   id
@@ -8745,27 +8758,7 @@ export const PromotionDetailsQueryDocument = gql`
       name
       description
       channels {
-        id
-        isActive
-        name
-        slug
-        currencyCode
-        defaultCountry {
-          code
-          country
-        }
-        stockSettings {
-          allocationStrategy
-        }
-        hasOrders
-        orderSettings {
-          markAsPaidStrategy
-          deleteExpiredOrdersAfter
-          allowUnpaidOrders
-        }
-        paymentSettings {
-          defaultTransactionFlowStrategy
-        }
+        ...PromotionRuleChannel
       }
       giftIds
       rewardType
@@ -8776,7 +8769,7 @@ export const PromotionDetailsQueryDocument = gql`
     }
   }
 }
-    `;
+    ${PromotionRuleChannelFragmentDoc}`;
 
 /**
  * __usePromotionDetailsQueryQuery__

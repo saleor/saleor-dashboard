@@ -1,6 +1,6 @@
 // @ts-strict-ignore
+import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
 import { commonMessages } from "@dashboard/intl";
-import { ConfirmButton } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -25,15 +25,13 @@ const GiftCardEnableDisableSection: React.FC = () => {
   }
 
   return (
-    <ConfirmButton
+    <ButtonWithLoader
       data-test-id="enable-button"
       onClick={handleClick}
       transitionState={currentOpts?.status}
-      labels={{
-        confirm: intl.formatMessage(buttonLabel),
-        error: intl.formatMessage(commonMessages.error),
-      }}
-    />
+    >
+      {intl.formatMessage(currentOpts?.status === "error" ? commonMessages.error : buttonLabel)}
+    </ButtonWithLoader>
   );
 };
 
