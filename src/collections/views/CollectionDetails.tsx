@@ -40,7 +40,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { getMutationErrors, getMutationState, maybe } from "../../misc";
 import CollectionDetailsPage from "../components/CollectionDetailsPage/CollectionDetailsPage";
 import { CollectionUpdateData } from "../components/CollectionDetailsPage/form";
-import { keepProductOrder } from "../components/CollectionProducts/keepProductOrder";
 import { ReorderPopover } from "../components/ProductReorder/ReorderPopover";
 import {
   collectionListUrl,
