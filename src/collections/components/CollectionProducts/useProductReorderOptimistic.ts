@@ -39,13 +39,14 @@ export const useProductReorderOptimistic = () => {
     const shifted = shift(productIds, -shiftOffset);
 
     const exceededEdges = shifted.map(edge => {
-      const isExceededId = exceededProductIds.includes(edge.node.id);
-      const newId = isExceededId ? "optimistic_" + edge.node.id : edge.node.id;
+      const nodeId = edge?.node?.id || "";
+      const isExceededId = exceededProductIds.includes(nodeId);
+      const newId = isExceededId ? "optimistic_" + nodeId : nodeId;
 
       return {
         ...edge,
         node: {
-          ...edge.node,
+          ...edge?.node,
           id: newId,
         },
       };
