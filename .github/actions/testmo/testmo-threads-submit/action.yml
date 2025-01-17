@@ -50,3 +50,4 @@ runs:
         TESTMO_URL: ${{ inputs.testmoUrl }}
         TESTMO_TOKEN: ${{ inputs.testmoToken }}
         TESTMO_RUN_ID: ${{ inputs.testmoRunId}}
+
