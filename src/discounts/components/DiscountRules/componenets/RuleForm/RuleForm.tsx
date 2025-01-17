@@ -61,14 +61,7 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
     }
   }, [currencySymbol]);
 
-  const handleChannelChange = (e: ChangeEvent) => {
-    const channelId = e.target.value;
-    const channel = channels.find(channel => channel.id === channelId);
-
-    if (channel) {
-      setValue("channel", { value: channel.id, label: channel.name }, { shouldValidate: true });
-    }
-
+  useEffect(() => {
     setValue("rewardGifts", []);
 
     // Restart conditions when catalog promotion
@@ -76,6 +69,15 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
       if (conditions.length > 0) {
         setValue("conditions", [createEmptyCodition()]);
       }
+    }
+  }, [selectedChannel]);
+
+  const handleChannelChange = (e: ChangeEvent) => {
+    const channelId = e.target.value;
+    const channel = channels.find(channel => channel.id === channelId);
+
+    if (channel) {
+      channelfield.onChange({ value: channel.id, label: channel.name });
     }
   };
 
