@@ -51,7 +51,7 @@ runs:
         TESTMO_TOKEN: ${{ inputs.testmoToken }}
         TESTMO_RUN_ID: ${{ inputs.testmoRunId}}
     - name: Download reports artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         path: ./cypress/reports
     - name: Create reports dir
