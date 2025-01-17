@@ -228,3 +228,6 @@ jobs:
           testmoUrl: ${{ secrets.TESTMO_URL }}
           testmoToken: ${{ secrets.TESTMO_TOKEN }}
           testmoRunId: ${{ needs.deploy-dashboard.outputs.TESTMO_RUN_ID }}
+
+      - name: Create flaky report
+        uses: ./.github/actions/flaky-tests-report
