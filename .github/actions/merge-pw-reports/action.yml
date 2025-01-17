@@ -29,29 +29,3 @@ runs:
         name: html-report--attempt-${{ github.run_attempt }}
         path: playwright-report
         retention-days: 14
-
-    - name: Merge ctrf reports 
-      shell: bash
-      run: npx ctrf merge ./ctrf --output merged-ctrf-report.json
-
-    - name: Publish Test Report
-      uses: ctrf-io/github-test-reporter@v1
-      with:
-        report-path: './ctrf/*.json'
-        summary-report: true
-        previous-results-report: true
-        failed-report: true
-        flaky-report: true
-      if: always()
-    
-    - name: Upload test results
-      uses: actions/upload-artifact@v4
-      with:
-        name: ctrf-report
-        path: ctrf-reports/merged-ctrf-report.json
-    
-    - name: Upload test results
-      uses: actions/upload-artifact@v4
-      with:
-        name: custom-artifact-name
-        path: ctrf-reports/ctrf-report-no-fails.json
