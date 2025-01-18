@@ -34,15 +34,11 @@ export class AddNavigationMenuItemDialog extends BasePage {
   }
 
   async selectLinkTypeValue(optionName: string) {
-    await this.menuLinkValue.click();
-    await this.waitForDOMToFullyLoad();
+    await this.menuLinkValue.fill(optionName);
 
     // Ensure the option is present and select it
-    const option = this.menuLinkOptions.filter({ hasText: optionName });
-
-    await option.waitFor({ state: "visible" });
-    await expect(option).toBeEnabled();
-    await option.click({ force: true });
+    await this.menuLinkOptions.filter({ hasText: optionName }).waitFor({ state: "visible" });
+    await this.menuLinkOptions.filter({ hasText: optionName }).click();
 
     // Verify the correct option is selected
     await expect(this.menuLinkValue).toHaveValue(optionName);
