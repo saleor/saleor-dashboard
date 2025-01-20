@@ -14,21 +14,24 @@ runs:
     - name: Download CTRF reports from GitHub Actions Artifacts
       uses: actions/download-artifact@v4
       with:
-        pattern: ctrf*
+        pattern: ctrf-report-*
         path: ctrf
 
     - name: List downloaded files
       shell: bash
       run: ls -R ./ctrf
 
-    - name: Merge CTRF reports
-      shell: bash
-      run: npx ctrf merge ctrf --output merged-report.json
+    # - name: Merge CTRF reports
+    #   shell: bash
+    #   run: npx ctrf merge ctrf/ --output merged-report.json
+
+    - name: Merge the blobs into one single HTML Report
+        run: npx playwright merge-reports --reporter playwright-ctrf-json-reporter ./ctrf
 
     - name: Upload CTRF report
       uses: actions/upload-artifact@v4
       with:
-        name: merged-report.json
+        name: ctrf-report.json
         path: ctrf
         retention-days: 14
 
