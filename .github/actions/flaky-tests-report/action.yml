@@ -11,37 +11,37 @@ runs:
       shell: bash
       run: npm install -g ctrf
 
-    - name: Download CTRF reports from GitHub Actions Artifacts
+    - name: Download CTRF reports
       uses: actions/download-artifact@v4
       with:
         pattern: ctrf-report-*
-        path: ctrf
+        path: ctrf-reports
 
-    - name: List downloaded files
+    - name: Move and Rename Files
       shell: bash
-      run: ls -R ./ctrf
+      run: |
+        mv ctrf-reports/ctrf-report-1/ctrf-report.json ctrf-reports/ctrf-report-1.json
+        mv ctrf-reports/ctrf-report-2/ctrf-report.json ctrf-reports/ctrf-report-2.json
 
-    # - name: Merge CTRF reports
-    #   shell: bash
-    #   run: npx ctrf merge ctrf/ --output merged-report.json
-
-    - name: Merge the blobs into one single HTML Report
-        run: npx playwright merge-reports --reporter playwright-ctrf-json-reporter ./ctrf
+    - name: Merge CTRF reports
+      shell: bash
+      run: npx ctrf merge ./ctrf-reports --output merged-report.json
 
     - name: Upload CTRF report
       uses: actions/upload-artifact@v4
       with:
-        name: ctrf-report.json
-        path: ctrf
+        name:  merged-report.json
+        path: ctrf-reports
         retention-days: 14
 
     - name: Publish Test Report
       uses: ctrf-io/github-test-reporter@v1
       with:
-        report-path: ctrf/*.json
+        report-path: ctrf-reports/merged-report.json
         summary-report: true
-        failed-folded-report: true
-        flaky-report: true
+        pull-request: true
+        overwriteComment: true
+        failed-report: true
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
       if: always()
