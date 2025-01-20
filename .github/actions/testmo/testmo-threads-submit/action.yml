@@ -50,27 +50,3 @@ runs:
         TESTMO_URL: ${{ inputs.testmoUrl }}
         TESTMO_TOKEN: ${{ inputs.testmoToken }}
         TESTMO_RUN_ID: ${{ inputs.testmoRunId}}
-    - name: Download reports artifacts
-      uses: actions/download-artifact@v3
-      with:
-        path: ./cypress/reports
-    - name: Create reports dir
-      continue-on-error: true
-      shell: bash
-      run: npm run qa:create-artifacts-dirs
-    - name: Merge report files
-      continue-on-error: true
-      shell: bash
-      run: npm run qa:generate-html-report
-    - name: Move artifacts screenshots into reports dir
-      continue-on-error: true
-      shell: bash
-      run: npm run qa:artifact-move-screenshots
-    - name: Upload reports
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: combined-report
-        path: ./cypress/reports
-        retention-days: 5
-        if-no-files-found: ignore
