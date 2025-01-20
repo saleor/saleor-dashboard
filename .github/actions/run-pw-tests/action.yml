@@ -89,6 +89,7 @@ runs:
           PROJECT_PARAMS+="--project=${PROJECT} "
         done
         echo "reportName=all-blob-reports-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
+        echo "ctrfReport=ctrf-report-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
         npx playwright test --grep @e2e $PROJECT_PARAMS --shard "$SHARD_NUMBER"
 
     - name: Upload blob report to GitHub Actions Artifacts
@@ -103,7 +104,6 @@ runs:
       uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: ctrf-reports-${{ env.SHARD_NUMBER }}
+        name: ${{ env.ctrfReport }}
         path: ctrf
-        compression-level: 0
         retention-days: 1
