@@ -26,7 +26,7 @@ runs:
       shell: bash
       working-directory: .github/workflows
     - name: Download reports artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         path: ./cypress/reports
     - name: Create reports dir
