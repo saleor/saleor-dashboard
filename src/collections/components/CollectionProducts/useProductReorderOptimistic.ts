@@ -1,5 +1,4 @@
 import { PaginationState } from "@dashboard/hooks/useLocalPaginator";
-import useRouter from "use-react-router";
 
 import { useCollectionId } from "./useCollectionId";
 import { useProductEdges } from "./useProductEdges";
