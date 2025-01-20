@@ -231,3 +231,5 @@ jobs:
 
       - name: Create flaky report
         uses: ./.github/actions/flaky-tests-report
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
