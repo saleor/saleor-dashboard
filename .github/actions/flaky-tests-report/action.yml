@@ -20,7 +20,7 @@ runs:
 
     - name: Merge CTRF reports
       shell: bash
-      run: npx ctrf merge ./ctrf --output ctrf/merged-report.json
+      run: npx ctrf merge ./ctrf --output merged-report.json
 
     - name: Upload CTRF report
       uses: actions/upload-artifact@v4
@@ -33,6 +33,9 @@ runs:
       uses: ctrf-io/github-test-reporter@v1
       with:
         report-path: ctrf/*.json
+        summary-report: true
+        failed-folded-report: true
+        flaky-report: true
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
       if: always()
