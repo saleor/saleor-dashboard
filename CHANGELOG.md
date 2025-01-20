@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.18.4
+
+### Patch Changes
+
+- 28a942055: Now CI workflows use updated action to upload and download artifacts
+- 25165ff8c: Now CI workflows use updated action to upload and download artifacts
+
 ## 3.18.3
 
 ### Patch Changes
