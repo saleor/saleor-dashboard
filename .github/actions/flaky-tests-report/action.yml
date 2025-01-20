@@ -15,12 +15,15 @@ runs:
       uses: actions/download-artifact@v4
       with:
         pattern: ctrf*
-        path: ctrf
-        merge-multiple: true
+        path: ctrf/ctrf-reports-*/
+
+    - name: List downloaded files
+      shell: bash
+      run: ls -R ./ctrf
 
     - name: Merge CTRF reports
       shell: bash
-      run: npx ctrf merge ./ctrf --output merged-report.json
+      run: npx ctrf merge ctrf --output merged-report.json
 
     - name: Upload CTRF report
       uses: actions/upload-artifact@v4
