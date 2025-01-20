@@ -304,7 +304,11 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({ id, params
         saveButtonBarState={formTransitionState}
         toolbar={
           <>
-            <ReorderPopover listElements={listElements} collectionProducts={collection?.products} />
+            <ReorderPopover
+              listElements={listElements}
+              collectionProducts={collection?.products}
+              paginationState={paginationState}
+            />
             <Button
               variant="secondary"
               size="small"
@@ -331,6 +335,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({ id, params
         selectedChannelId={selectedChannel}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
+        paginationState={paginationState}
       />
       <AssignProductDialog
         selectedChannels={currentChannels}

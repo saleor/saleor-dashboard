@@ -40,7 +40,9 @@ describe("CollectionProducts/useProductReorder", () => {
 
   it("should call reorder with correct variables when move is called", () => {
     // Arrange
-    const { result } = renderHook(() => useProductReorder());
+    const { result } = renderHook(() =>
+      useProductReorder({ paginationState: { first: 10, after: "1" } }),
+    );
     const productIds = ["1", "2", "3"];
     const shift = 1;
 
@@ -52,7 +54,9 @@ describe("CollectionProducts/useProductReorder", () => {
     // Assert
     expect(mockReorder).toHaveBeenCalledWith({
       variables: {
+        after: "1",
         collectionId: "collection-id-1",
+        first: 10,
         moves: [
           {
             productId: "1",
@@ -67,14 +71,14 @@ describe("CollectionProducts/useProductReorder", () => {
             sortOrder: 1,
           },
         ],
-        page: 1,
-        pageSize: 10,
       },
     });
   });
 
   it("should return data from the mutation", () => {
-    const { result } = renderHook(() => useProductReorder());
+    const { result } = renderHook(() =>
+      useProductReorder({ paginationState: { first: 10, after: "1" } }),
+    );
 
     expect(result.current.data).toEqual({});
   });

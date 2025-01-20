@@ -1,5 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { CollectionDetailsQuery } from "@dashboard/graphql";
+import { PaginationState } from "@dashboard/hooks/useLocalPaginator";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -13,6 +14,7 @@ export interface CollectionProductsProps extends PageListProps, ListActions {
   collection: CollectionDetailsQuery["collection"];
   onProductUnassign: (id: string, event: React.MouseEvent<any>) => void;
   onAdd: () => void;
+  paginationState: PaginationState;
 }
 
 const CollectionProducts: React.FC<CollectionProductsProps> = props => {
@@ -26,6 +28,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
     toggle,
     toggleAll,
     toolbar,
+    paginationState,
   } = props;
   const intl = useIntl();
   const products = mapEdgesToItems(collection?.products);
@@ -64,6 +67,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
 
       {products ? (
         <ProductsTable
+          paginationState={paginationState}
           selected={selected}
           products={products || []}
           isChecked={isChecked}

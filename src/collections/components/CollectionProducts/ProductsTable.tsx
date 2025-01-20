@@ -1,4 +1,5 @@
 import { GridTable } from "@dashboard/components/GridTable";
+import { PaginationState } from "@dashboard/hooks/useLocalPaginator";
 import { renderCollection } from "@dashboard/misc";
 import { Node } from "@dashboard/types";
 import { closestCenter, DndContext } from "@dnd-kit/core";
@@ -22,6 +23,7 @@ interface ProductsTableProps {
   numberOfColumns: number;
   selected: number;
   toolbar: React.ReactNode;
+  paginationState: PaginationState;
 }
 
 const areAllChecked = (products: Product[], selected: number) => {
@@ -41,9 +43,10 @@ export const ProductsTable = ({
   onProductUnassign,
   selected,
   toolbar,
+  paginationState,
 }: ProductsTableProps) => {
   const allChecked = areAllChecked(products, selected);
-  const { items, sensors, isSaving, handleDragEnd } = useProductDrag(products);
+  const { items, sensors, isSaving, handleDragEnd } = useProductDrag({ products, paginationState });
 
   if (items.length === 0) {
     return (

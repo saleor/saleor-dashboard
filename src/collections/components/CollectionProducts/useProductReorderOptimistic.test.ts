@@ -39,7 +39,9 @@ describe("CollectionProducts/useProductReorderOptimistic", () => {
     });
 
     // Act
-    const { result } = renderHook(() => useProductReorderOptimistic());
+    const { result } = renderHook(() =>
+      useProductReorderOptimistic({ paginationState: { first: 10, after: "1" } }),
+    );
 
     const response = result.current.createOptimisticResponse(["product3"], 1);
 
@@ -94,7 +96,9 @@ describe("CollectionProducts/useProductReorderOptimistic", () => {
       isShiftExceedPage: mockIsShiftExceedPage,
     });
 
-    const { result } = renderHook(() => useProductReorderOptimistic());
+    const { result } = renderHook(() =>
+      useProductReorderOptimistic({ paginationState: { first: 10, after: "1" } }),
+    );
 
     const response = result.current.createOptimisticResponse(["product3"], 3);
 

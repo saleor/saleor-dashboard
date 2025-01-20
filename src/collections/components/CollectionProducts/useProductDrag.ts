@@ -1,3 +1,4 @@
+import { PaginationState } from "@dashboard/hooks/useLocalPaginator";
 import { DragEndEvent, KeyboardSensor, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import { useEffect, useState } from "react";
@@ -5,9 +6,14 @@ import { useEffect, useState } from "react";
 import { Product } from "./types";
 import { useProductReorder } from "./useProductReorder";
 
-export const useProductDrag = (products: Product[]) => {
+interface ProductDragProps {
+  products: Product[];
+  paginationState: PaginationState;
+}
+
+export const useProductDrag = ({ products, paginationState }: ProductDragProps) => {
   const [items, setItems] = useState(products);
-  const { move, data } = useProductReorder();
+  const { move, data } = useProductReorder({ paginationState });
 
   const sensors = useSensors(
     useSensor(PointerSensor),

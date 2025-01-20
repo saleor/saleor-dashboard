@@ -24,7 +24,9 @@ describe("CollectionProducts/useProductDrag", () => {
       data: { loading: false },
     });
 
-    const { result } = renderHook(() => useProductDrag(initialProducts));
+    const { result } = renderHook(() =>
+      useProductDrag({ products: initialProducts, paginationState: { first: 10, after: "1" } }),
+    );
 
     const dragEndEvent = {
       active: { id: "1" },

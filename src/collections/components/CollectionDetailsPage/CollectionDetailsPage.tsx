@@ -17,6 +17,7 @@ import {
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { PaginationState } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -42,6 +43,7 @@ export interface CollectionDetailsPageProps extends PageListProps, ListActions, 
   onSubmit: (data: CollectionUpdateData) => SubmitPromise;
   onChannelsChange: (data: ChannelCollectionData[]) => void;
   openChannelsModal: () => void;
+  paginationState: PaginationState;
 }
 
 const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({

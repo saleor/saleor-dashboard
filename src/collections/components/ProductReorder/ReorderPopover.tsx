@@ -1,3 +1,4 @@
+import { PaginationState } from "@dashboard/hooks/useLocalPaginator";
 import { Box, Button, Input, Popover, Text } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
@@ -8,11 +9,16 @@ import { useProductReorder } from "../CollectionProducts/useProductReorder";
 interface ReorderPopoverProps {
   listElements: string[];
   collectionProducts: CollectionProducts;
+  paginationState: PaginationState;
 }
 
-export const ReorderPopover = ({ listElements, collectionProducts }: ReorderPopoverProps) => {
+export const ReorderPopover = ({
+  listElements,
+  collectionProducts,
+  paginationState,
+}: ReorderPopoverProps) => {
   const [position, setPosition] = useState(1);
-  const { move } = useProductReorder();
+  const { move } = useProductReorder({ paginationState });
   const orderElementsByPosition = keepProductOrder(listElements, collectionProducts);
 
   const handlePositionChange = (event: React.ChangeEvent<HTMLInputElement>) => {

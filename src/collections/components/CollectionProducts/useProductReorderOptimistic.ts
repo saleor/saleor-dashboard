@@ -1,5 +1,7 @@
+import { PaginationState } from "@dashboard/hooks/useLocalPaginator";
 import useRouter from "use-react-router";
 
+import { useCollectionId } from "./useCollectionId";
 import { useProductEdges } from "./useProductEdges";
 
 const createOptimisticResponseForEdges = (collectionId: string, edges: any) => ({
@@ -25,13 +27,13 @@ const createOptimisticResponseForEdges = (collectionId: string, edges: any) => (
   __typename: "Mutation" as const,
 });
 
-export const useProductReorderOptimistic = () => {
-  const {
-    match: {
-      params: { id: collectionId },
-    },
-  } = useRouter<{ id: string }>();
-  const { shift, isShiftExceedPage } = useProductEdges();
+interface ProductReorderOptimisticProps {
+  paginationState: PaginationState;
+}
+
+export const useProductReorderOptimistic = ({ paginationState }: ProductReorderOptimisticProps) => {
+  const collectionId = useCollectionId();
+  const { shift, isShiftExceedPage } = useProductEdges({ paginationState });
 
   const createOptimisticResponse = (productIds: string[], shiftOffset: number) => {
     const { exceededProductIds } = isShiftExceedPage(productIds, -shiftOffset);

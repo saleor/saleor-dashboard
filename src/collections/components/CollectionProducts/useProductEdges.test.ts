@@ -28,7 +28,9 @@ describe("CollectionProducts/useProductEdges", () => {
       },
     });
 
-    const { result } = renderHook(() => useProductEdges());
+    const { result } = renderHook(() =>
+      useProductEdges({ paginationState: { first: 10, after: "1" } }),
+    );
     const shiftedEdges = result.current.shift(["3"], 1);
 
     expect(shiftedEdges).toEqual([
@@ -56,7 +58,9 @@ describe("CollectionProducts/useProductEdges", () => {
       },
     });
 
-    const { result } = renderHook(() => useProductEdges());
+    const { result } = renderHook(() =>
+      useProductEdges({ paginationState: { first: 10, after: "1" } }),
+    );
     const shiftedEdges = result.current.shift(["1", "2"], 1);
 
     expect(shiftedEdges).toEqual([
@@ -87,7 +91,9 @@ describe("CollectionProducts/useProductEdges", () => {
       },
     });
 
-    const { result } = renderHook(() => useProductEdges());
+    const { result } = renderHook(() =>
+      useProductEdges({ paginationState: { first: 10, after: "1" } }),
+    );
     const shiftedEdges = result.current.shift(["1", "4", "6"], 1);
 
     expect(shiftedEdges).toEqual([
@@ -118,7 +124,9 @@ describe("CollectionProducts/useProductEdges", () => {
       },
     });
 
-    const { result } = renderHook(() => useProductEdges());
+    const { result } = renderHook(() =>
+      useProductEdges({ paginationState: { first: 10, after: "1" } }),
+    );
     const shiftedEdges = result.current.shift(["5", "6"], -1);
 
     expect(shiftedEdges).toEqual([
@@ -149,7 +157,9 @@ describe("CollectionProducts/useProductEdges", () => {
       },
     });
 
-    const { result } = renderHook(() => useProductEdges());
+    const { result } = renderHook(() =>
+      useProductEdges({ paginationState: { first: 10, after: "1" } }),
+    );
     const shiftedEdges = result.current.shift(["2", "3", "6"], -1);
 
     expect(shiftedEdges).toEqual([
@@ -177,7 +187,9 @@ describe("CollectionProducts/useProductEdges", () => {
       },
     });
 
-    const { result } = renderHook(() => useProductEdges());
+    const { result } = renderHook(() =>
+      useProductEdges({ paginationState: { first: 10, after: "1" } }),
+    );
     const { isExceed, exceededProductIds } = result.current.isShiftExceedPage(["1"], -1);
 
     expect(isExceed).toBe(true);
