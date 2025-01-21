@@ -26,7 +26,7 @@ runs:
       shell: bash
       working-directory: .github/workflows
     - name: Download reports artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         path: ./cypress/reports
     - name: Create reports dir
@@ -42,7 +42,7 @@ runs:
       continue-on-error: true
       run: npm run qa:artifact-move-screenshots
     - name: Upload reports
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: combined-report
