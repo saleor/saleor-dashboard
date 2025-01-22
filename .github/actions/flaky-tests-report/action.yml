@@ -40,7 +40,7 @@ runs:
         report-path: ctrf-reports/merged-report.json
         summary-report: true
         pull-request: true
-        overwriteComment: true
+        overwrite-comment: true
         failed-report: true
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
