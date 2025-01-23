@@ -16,12 +16,14 @@ runs:
       with:
         pattern: ctrf-report-*
         path: ctrf-reports
+        merge-multiple: true
 
-    - name: Move and Rename Files
-      shell: bash
-      run: |
-        mv ctrf-reports/ctrf-report-1/ctrf-report.json ctrf-reports/ctrf-report-1.json
-        mv ctrf-reports/ctrf-report-2/ctrf-report.json ctrf-reports/ctrf-report-2.json
+
+    # - name: Move and Rename Files
+    #   shell: bash
+    #   run: |
+    #     mv ctrf-report-1/ctrf-report-1.json ctrf-reports/ctrf-report-1.json
+    #     mv ctrf-report-2/ctrf-report-2.json ctrf-reports/ctrf-report-2.json
 
     - name: Merge CTRF reports
       shell: bash

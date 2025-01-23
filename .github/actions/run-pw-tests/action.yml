@@ -105,5 +105,5 @@ runs:
       if: always()
       with:
         name: ${{ env.ctrfReport }}
-        path: ctrf
+        path: ctrf/ctrf-report-*.json
         retention-days: 1
