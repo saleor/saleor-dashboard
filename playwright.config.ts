@@ -37,8 +37,15 @@ export default defineConfig({
             process.env.URL_TO_RUN ? process.env.URL_TO_RUN : "",
         },
       ],
-      ["playwright-ctrf-json-reporter", {}]
-    ]
+      ['playwright-ctrf-json-reporter', {
+        outputFile: `ctrf-report-${process.env.SHARD_NUMBER.match(/^\d*/)[0]}.json`, // Optional: Output file name. Defaults to 'ctrf-report.json'.
+        minimal: true,                  // Optional: Generate a minimal report. Defaults to 'false'. Overrides screenshot and testType when set to true
+        annotations: false,             // Optional: Include annotations in the report. Defaults to 'false'.
+        appName: 'Saleor Dashboard',    // Optional: Specify the name of the application under test.
+        appVersion: 'main',             // Optional: Specify the version of the application under test.
+        branchName: "main",             // Optional: Specify the branch name.
+        testEnvironment: "staging"      // Optional: Specify the test environment (e.g. staging, production).
+      }]]
     : [["html"], ["list"]],
   expect: { timeout: 10 * 1000 },
   maxFailures: 10,
