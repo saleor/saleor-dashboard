@@ -27,10 +27,10 @@ interface OrderHistoryProps {
   history: OrderEventFragment[];
   orderCurrency: string;
   onNoteAdd: (data: FormData) => SubmitPromise;
+  onNoteUpdate: (id: string, message: string) => void;
 }
 
-const OrderHistory: React.FC<OrderHistoryProps> = props => {
-  const { history, orderCurrency, onNoteAdd } = props;
+const OrderHistory = ({ history, orderCurrency, onNoteAdd, onNoteUpdate }: OrderHistoryProps) => {
   const intl = useIntl();
   const getTimelineEventTitleProps = (event: OrderEventFragment): Partial<TimelineEventProps> => {
     const { type, message } = event;
@@ -78,6 +78,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
                 if (isTimelineEventOfType("note", type)) {
                   return (
                     <TimelineNote
+                      onNoteUpdate={onNoteUpdate}
                       id={id}
                       date={date}
                       user={user}
@@ -91,6 +92,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
                 if (isTimelineEventOfType("note_updated", type)) {
                   return (
                     <TimelineNote
+                      onNoteUpdate={onNoteUpdate}
                       relatedId={related.id}
                       id={id}
                       date={date}

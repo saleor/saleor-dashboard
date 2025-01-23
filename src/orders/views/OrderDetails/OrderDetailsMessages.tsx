@@ -20,6 +20,7 @@ import {
   OrderLinesAddMutation,
   OrderLineUpdateMutation,
   OrderMarkAsPaidMutation,
+  OrderNoteUpdateMutation,
   OrderShippingMethodUpdateMutation,
   OrderTransactionRequestActionMutation,
   OrderUpdateMutation,
@@ -47,6 +48,7 @@ interface OrderDetailsMessages {
     handleDraftFinalize: (data: OrderDraftFinalizeMutation) => void;
     handleDraftUpdate: (data: OrderDraftUpdateMutation) => void;
     handleNoteAdd: (data: OrderAddNoteMutation) => void;
+    handleNoteUpdate: (data: OrderNoteUpdateMutation) => void;
     handleOrderCancel: (data: OrderCancelMutation) => void;
     handleOrderFulfillmentApprove: (data: OrderFulfillmentApproveMutation) => void;
     handleOrderFulfillmentCancel: (data: OrderFulfillmentCancelMutation) => void;
@@ -158,6 +160,19 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
         text: intl.formatMessage({
           id: "KmPicj",
           defaultMessage: "Note successfully added",
+        }),
+      });
+    }
+  };
+  const handleNoteUpdate = (data: OrderNoteUpdateMutation) => {
+    const errs = data.orderNoteUpdate?.errors;
+
+    if (errs.length === 0) {
+      notify({
+        status: "success",
+        text: intl.formatMessage({
+          id: "9Th87u",
+          defaultMessage: "Note successfully updated",
         }),
       });
     }
@@ -402,6 +417,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
     handleInvoiceGeneratePending,
     handleInvoiceSend,
     handleNoteAdd,
+    handleNoteUpdate,
     handleOrderCancel,
     handleOrderFulfillmentApprove,
     handleOrderFulfillmentCancel,

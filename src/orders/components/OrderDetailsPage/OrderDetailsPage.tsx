@@ -76,6 +76,7 @@ export interface OrderDetailsPageProps {
   onShippingAddressEdit: () => any;
   onOrderCancel: () => any;
   onNoteAdd: (data: HistoryFormData) => any;
+  onNoteUpdate: (id: string, message: string) => any;
   onProfileView: () => any;
   onOrderReturn: () => any;
   onInvoiceClick: (invoiceId: string) => any;
@@ -99,6 +100,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onFulfillmentCancel,
     onFulfillmentTrackingNumberUpdate,
     onNoteAdd,
+    onNoteUpdate,
     onOrderCancel,
     onOrderFulfill,
     onPaymentCapture,
@@ -262,6 +264,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 history={order?.events}
                 orderCurrency={order?.total?.gross.currency}
                 onNoteAdd={onNoteAdd}
+                onNoteUpdate={onNoteUpdate}
               />
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>

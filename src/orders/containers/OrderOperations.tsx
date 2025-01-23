@@ -31,6 +31,8 @@ import {
   OrderMarkAsPaidMutationVariables,
   OrderNoteAddMutation,
   OrderNoteAddMutationVariables,
+  OrderNoteUpdateMutation,
+  OrderNoteUpdateMutationVariables,
   OrderShippingMethodUpdateMutation,
   OrderShippingMethodUpdateMutationVariables,
   OrderTransactionRequestActionMutation,
@@ -55,6 +57,7 @@ import {
   useOrderLineUpdateMutation,
   useOrderMarkAsPaidMutation,
   useOrderNoteAddMutation,
+  useOrderNoteUpdateMutation,
   useOrderShippingMethodUpdateMutation,
   useOrderTransactionRequestActionMutation,
   useOrderUpdateMutation,
@@ -71,6 +74,10 @@ interface OrderOperationsProps {
     orderAddNote: PartialMutationProviderOutput<
       OrderNoteAddMutation,
       OrderNoteAddMutationVariables
+    >;
+    orderUpdateNote: PartialMutationProviderOutput<
+      OrderNoteUpdateMutation,
+      OrderNoteUpdateMutationVariables
     >;
     orderCancel: PartialMutationProviderOutput<OrderCancelMutation, OrderCancelMutationVariables>;
     orderFulfillmentApprove: PartialMutationProviderOutput<
@@ -147,6 +154,7 @@ interface OrderOperationsProps {
   onOrderVoid: (data: OrderVoidMutation) => void;
   onOrderMarkAsPaid: (data: OrderMarkAsPaidMutation) => void;
   onNoteAdd: (data: OrderNoteAddMutation) => void;
+  onNoteUpdate: (data: OrderNoteUpdateMutation) => void;
   onPaymentCapture: (data: OrderCaptureMutation) => void;
   onUpdate: (data: OrderUpdateMutation) => void;
   onDraftCancel: (data: OrderDraftCancelMutation) => void;
@@ -166,6 +174,7 @@ const OrderOperations: React.FC<OrderOperationsProps> = ({
   children,
   onDraftUpdate,
   onNoteAdd,
+  onNoteUpdate,
   onOrderCancel,
   onOrderLinesAdd,
   onOrderLineDelete,
@@ -196,6 +205,9 @@ const OrderOperations: React.FC<OrderOperationsProps> = ({
   });
   const addNote = useOrderNoteAddMutation({
     onCompleted: onNoteAdd,
+  });
+  const updateNote = useOrderNoteUpdateMutation({
+    onCompleted: onNoteUpdate,
   });
   const update = useOrderUpdateMutation({
     onCompleted: onUpdate,
@@ -251,6 +263,7 @@ const OrderOperations: React.FC<OrderOperationsProps> = ({
     <>
       {children({
         orderAddNote: getMutationProviderData(...addNote),
+        orderUpdateNote: getMutationProviderData(...updateNote),
         orderCancel: getMutationProviderData(...orderCancel),
         orderDraftCancel: getMutationProviderData(...cancelDraft),
         orderDraftFinalize: getMutationProviderData(...finalizeDraft),

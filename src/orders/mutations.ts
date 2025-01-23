@@ -279,6 +279,24 @@ export const orderNoteAddMutation = gql`
   }
 `;
 
+export const orderNoteUpdateMutation = gql`
+  mutation OrderNoteUpdate($order: ID!, $input: OrderNoteInput!) {
+    orderNoteUpdate(note: $order, input: $input) {
+      errors {
+        code
+        field
+        message
+      }
+      order {
+        id
+        events {
+          ...OrderEvent
+        }
+      }
+    }
+  }
+`;
+
 export const orderUpdateMutation = gql`
   mutation OrderUpdate($id: ID!, $input: OrderUpdateInput!) {
     orderUpdate(id: $id, input: $input) {

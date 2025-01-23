@@ -1,7 +1,8 @@
+import { TimelineNoteEdit } from "@dashboard/components/Timeline/TimelineNoteEdit";
 import { GiftCardEventsQuery, OrderEventFragment } from "@dashboard/graphql";
 import { getUserInitials, getUserName } from "@dashboard/misc";
-import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Box, Button, EditIcon, Text } from "@saleor/macaw-ui-next";
+import React, { useState } from "react";
 import { FormattedMessage } from "react-intl/lib";
 
 import { DashboardCard } from "../Card";
@@ -20,6 +21,7 @@ interface TimelineNoteProps {
   hasPlainDate?: boolean;
   id: string;
   relatedId?: string;
+  onNoteUpdate?: (id: string, message: string) => void;
 }
 
 interface NoteMessageProps {
@@ -74,8 +76,10 @@ export const TimelineNote: React.FC<TimelineNoteProps> = ({
   app,
   id,
   relatedId,
+  onNoteUpdate,
 }) => {
   const userDisplayName = getUserName(user, true) ?? app?.name;
+  const [showEdit, setShowEdit] = useState(false);
 
   return (
     <Box position="relative">
@@ -93,34 +97,50 @@ export const TimelineNote: React.FC<TimelineNoteProps> = ({
           <DateTime date={date} plain={hasPlainDate} />
         </Text>
       </Box>
-      <DashboardCard
-        marginBottom={2}
-        position="relative"
-        boxShadow="defaultOverlay"
-        backgroundColor="default1"
-      >
-        <DashboardCard.Content
-          wordBreak="break-all"
-          borderRadius={2}
-          borderStyle="solid"
-          borderWidth={1}
-          borderColor="default1"
-          padding={4}
-        >
-          <NoteMessage message={message} />
-        </DashboardCard.Content>
-      </DashboardCard>
 
-      <Box marginBottom={6} display="flex" justifyContent="space-between" alignItems="center">
-        <Text size={2} color="defaultDisabled">
-          <FormattedMessage defaultMessage="Note id" id="/n+NRO" />: {id}
-        </Text>
-        {relatedId && (
-          <Text size={2} color="defaultDisabled">
-            <FormattedMessage defaultMessage="Related note id" id="dVSBW6" /> : {relatedId}
-          </Text>
-        )}
-      </Box>
+      {showEdit ? (
+        <TimelineNoteEdit
+          id={id}
+          note={message!}
+          onSubmit={onNoteUpdate}
+          onCancel={() => setShowEdit(false)}
+        />
+      ) : (
+        <>
+          <DashboardCard marginBottom={2} position="relative" backgroundColor="default1">
+            <DashboardCard.Content
+              wordBreak="break-all"
+              borderRadius={2}
+              borderStyle="solid"
+              borderWidth={1}
+              borderColor="default1"
+              padding={4}
+              display="flex"
+              justifyContent="space-between"
+            >
+              <NoteMessage message={message} />
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  setShowEdit(true);
+                }}
+                icon={<EditIcon />}
+              />
+            </DashboardCard.Content>
+          </DashboardCard>
+
+          <Box marginBottom={6} display="flex" justifyContent="space-between" alignItems="center">
+            <Text size={2} color="defaultDisabled">
+              <FormattedMessage defaultMessage="Note id" id="/n+NRO" />: {id}
+            </Text>
+            {relatedId && (
+              <Text size={2} color="defaultDisabled">
+                <FormattedMessage defaultMessage="Related note id" id="dVSBW6" /> : {relatedId}
+              </Text>
+            )}
+          </Box>
+        </>
+      )}
     </Box>
   );
 };

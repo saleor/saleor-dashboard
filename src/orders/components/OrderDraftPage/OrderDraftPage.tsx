@@ -42,6 +42,7 @@ export interface OrderDraftPageProps extends FetchMoreProps {
   onDraftFinalize: () => void;
   onDraftRemove: () => void;
   onNoteAdd: (data: HistoryFormData) => SubmitPromise<any[]>;
+  onNoteUpdate: (id: string, message: string) => void;
   onOrderLineAdd: () => void;
   onOrderLineChange: (id: string, data: OrderLineInput) => void;
   onOrderLineRemove: (id: string) => void;
@@ -66,6 +67,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
     onDraftRemove,
     onFetchMore,
     onNoteAdd,
+    onNoteUpdate,
     onOrderLineAdd,
     onOrderLineChange,
     onOrderLineRemove,
@@ -134,6 +136,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           history={order?.events}
           orderCurrency={order?.total?.gross.currency}
           onNoteAdd={onNoteAdd}
+          onNoteEdit={onNoteUpdate}
         />
       </DetailPageLayout.Content>
       <DetailPageLayout.RightSidebar>

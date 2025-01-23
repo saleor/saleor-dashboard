@@ -51,6 +51,7 @@ interface OrderDraftDetailsProps {
   loading: any;
   data: OrderDetailsWithMetadataQueryResult["data"];
   orderAddNote: any;
+  orderUpdateNote: any;
   orderLineUpdate: PartialMutationProviderOutput<
     OrderLineUpdateMutation,
     OrderLineUpdateMutationVariables
@@ -80,6 +81,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   loading,
   data,
   orderAddNote,
+  orderUpdateNote,
   orderLineUpdate,
   orderLineDelete,
   orderShippingMethodUpdate,
@@ -195,6 +197,16 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
             loading={loading}
             disabled={loading}
             errors={errors}
+            onNoteUpdate={(id, message) =>
+              extractMutationErrors(
+                orderUpdateNote.mutate({
+                  order: id,
+                  input: {
+                    message,
+                  },
+                }),
+              )
+            }
             onNoteAdd={variables =>
               extractMutationErrors(
                 orderAddNote.mutate({
