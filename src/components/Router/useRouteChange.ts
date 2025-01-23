@@ -1,4 +1,4 @@
-import { Location } from "history";
+import { Location, UnregisterCallback } from "history";
 import { useRef } from "react";
 import useRouter from "use-react-router";
 
@@ -9,7 +9,7 @@ const compareLocations = (a: Location, b: Location) => {
 export const useRouteChange = (onChange: (location: Location) => void) => {
   const router = useRouter();
   const location = useRef<Location>(router.history.location);
-  const listener = useRef<() => void>(null);
+  const listener = useRef<UnregisterCallback | null>(null);
 
   const register = () => {
     if (listener.current) return;
