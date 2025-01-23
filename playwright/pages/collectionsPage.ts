@@ -28,7 +28,7 @@ export class CollectionsPage extends BasePage {
     readonly assignProductButton = page.getByTestId("add-product"),
     readonly collectionImages = page.getByTestId("product-image"),
     readonly uploadImageButton = page.getByTestId("upload-image-button"),
-    readonly collectionNameInput = page.getByTestId("collection-name-input").locator("input"),
+    readonly collectionNameInput = page.getByTestId("collection-name-input"),
     readonly collectionDescriptionEditor = page.getByTestId("rich-text-editor-description"),
     readonly descriptionLoader = page.locator(".codex-editor__loader"),
   ) {

@@ -2,7 +2,6 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { useChannelsSearch } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
 import { Combobox } from "@dashboard/components/Combobox";
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import { IMessage } from "@dashboard/components/messages";
 import { useGiftCardPermissions } from "@dashboard/giftCards/hooks/useGiftCardPermissions";
 import { useChannelsQuery, useGiftCardResendMutation } from "@dashboard/graphql";
@@ -12,12 +11,10 @@ import { getBySlug } from "@dashboard/misc";
 import { DialogProps } from "@dashboard/types";
 import commonErrorMessages from "@dashboard/utils/errors/common";
 import { mapSlugNodeToChoice } from "@dashboard/utils/maps";
-import { TextField } from "@material-ui/core";
-import { Box, Spinner, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Input, Spinner, Text } from "@saleor/macaw-ui-next";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { useUpdateBalanceDialogStyles as useStyles } from "../GiftCardUpdateBalanceDialog/styles";
 import { getGiftCardErrorMessage } from "../messages";
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import { giftCardResendCodeDialogMessages as messages } from "./messages";
@@ -31,7 +28,6 @@ export interface GiftCardResendCodeFormData {
 const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
   const intl = useIntl();
   const notify = useNotifier();
-  const classes = useStyles();
   const {
     giftCard: { boughtInChannel: initialChannelSlug },
   } = useGiftCardDetails();
@@ -124,23 +120,22 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
             }}
             onChange={change}
           />
-          <ControlledCheckbox
+          <Checkbox
             name="differentMailConsent"
-            label={intl.formatMessage(messages.consentCheckboxLabel)}
             checked={consentSelected}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setConsentSelected(!!event.target.value)
-            }
-          />
-          <TextField
+            onCheckedChange={value => setConsentSelected(value as boolean)}
+          >
+            <Text fontSize={3}>{intl.formatMessage(messages.consentCheckboxLabel)}</Text>
+          </Checkbox>
+          <Input
             disabled={!consentSelected}
             error={!!formErrors?.email}
             helperText={getGiftCardErrorMessage(formErrors?.email, intl)}
             name="email"
             value={data.email}
             onChange={change}
-            className={classes.inputContainer}
             label={intl.formatMessage(messages.emailInputPlaceholder)}
+            width="100%"
           />
         </Box>
       )}

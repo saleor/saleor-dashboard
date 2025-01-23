@@ -2,8 +2,7 @@
 import { useDashboardTheme } from "@dashboard/components/GraphiQL/styles";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
-import { createGraphiQLFetcher, FetcherOpts, FetcherParams } from "@graphiql/toolkit";
-import { createFetch } from "@saleor/sdk";
+import { FetcherOpts, FetcherParams } from "@graphiql/toolkit";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -12,8 +11,7 @@ import { useContextualLink } from "../AppLayout/ContextualLinks/useContextualLin
 import PlainGraphiQL from "../GraphiQLPlain";
 import { useDevModeContext } from "./hooks";
 import { messages } from "./messages";
-
-const authorizedFetch = createFetch();
+import { getFetcher } from "./utils";
 
 export const DevModePanel: React.FC = () => {
   const intl = useIntl();
@@ -21,17 +19,12 @@ export const DevModePanel: React.FC = () => {
   const { rootStyle } = useDashboardTheme();
   const { markOnboardingStepAsCompleted } = useOnboarding();
   const { isDevModeVisible, variables, devModeContent, setDevModeVisibility } = useDevModeContext();
-  const baseFetcher = createGraphiQLFetcher({
-    url: process.env.API_URL,
-    fetch: authorizedFetch,
-    headers: {
-      "x-source": "dashboard-plg",
-    },
-  });
   const fetcher = async (graphQLParams: FetcherParams, opts: FetcherOpts) => {
     if (graphQLParams.operationName !== "IntrospectionQuery") {
       markOnboardingStepAsCompleted("graphql-playground");
     }
+
+    const baseFetcher = getFetcher(opts);
 
     const result = await baseFetcher(graphQLParams, opts); // Call the base fetcher
 

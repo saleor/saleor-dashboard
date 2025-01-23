@@ -54,7 +54,8 @@ export default makeSearch<SearchAttributeValuesQuery, SearchAttributeValuesQuery
       result.loadMore(
         (prev, next) => {
           if (
-            prev.attribute.choices.pageInfo.endCursor === next.attribute.choices.pageInfo.endCursor
+            prev?.attribute?.choices?.pageInfo?.endCursor ===
+            next?.attribute?.choices?.pageInfo?.endCursor
           ) {
             return prev;
           }
@@ -64,7 +65,7 @@ export default makeSearch<SearchAttributeValuesQuery, SearchAttributeValuesQuery
             attribute: {
               ...prev.attribute,
               choices: {
-                ...prev.attribute.choices,
+                ...prev?.attribute.choices,
                 edges: [...prev.attribute.choices.edges, ...next.attribute.choices.edges],
                 pageInfo: next.attribute.choices.pageInfo,
               },

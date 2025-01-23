@@ -10,6 +10,9 @@ inputs:
   testmoRunName:
     description: "Displayed name in testmo"
     required: true
+  source:
+    description: "Source for tests"
+    required: true
 
 outputs:
   testmo-run-id:
@@ -34,10 +37,11 @@ runs:
           --instance "$TESTMO_URL" \
           --project-id 1 \
           --name "$RUN_NAME" \
-          --source frontend-e2e-tests)
+          --source "$SOURCE")
         echo "TESTMO_RUN_ID=$ID" >> $GITHUB_OUTPUT
       env:
         TESTMO_URL: ${{ inputs.testmoUrl }}
         TESTMO_TOKEN: ${{ inputs.testmoToken }}
         RUN_NAME: ${{inputs.testmoRunName}}
+        SOURCE: ${{inputs.source}}
       id: run-tests
