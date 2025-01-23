@@ -73,17 +73,32 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
               .slice()
               .reverse()
               .map(event => {
-                const { id, user, date, message, type, app } = event;
+                const { id, user, date, message, type, app, related } = event;
 
                 if (isTimelineEventOfType("note", type)) {
                   return (
-                    <TimelineNote date={date} user={user} message={message} key={id} app={app} />
+                    <TimelineNote
+                      id={id}
+                      date={date}
+                      user={user}
+                      message={message}
+                      key={id}
+                      app={app}
+                    />
                   );
                 }
 
                 if (isTimelineEventOfType("note_updated", type)) {
                   return (
-                    <TimelineNote date={date} user={user} message={message} key={id} app={app} />
+                    <TimelineNote
+                      relatedId={related.id}
+                      id={id}
+                      date={date}
+                      user={user}
+                      message={message}
+                      key={id}
+                      app={app}
+                    />
                   );
                 }
 

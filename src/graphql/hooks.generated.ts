@@ -1701,6 +1701,9 @@ export const OrderEventFragmentDoc = gql`
     id
     number
   }
+  related {
+    id
+  }
   message
   quantity
   transactionReference

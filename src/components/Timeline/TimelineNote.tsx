@@ -1,35 +1,12 @@
 import { GiftCardEventsQuery, OrderEventFragment } from "@dashboard/graphql";
 import { getUserInitials, getUserName } from "@dashboard/misc";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
+import { FormattedMessage } from "react-intl/lib";
 
 import { DashboardCard } from "../Card";
 import { DateTime } from "../Date";
 import { UserAvatar } from "../UserAvatar";
-
-const useStyles = makeStyles(
-  theme => ({
-    avatar: {
-      left: -40,
-      position: "absolute",
-      top: 0,
-    },
-    root: {
-      position: "relative",
-    },
-    title: {
-      "& p": {
-        fontSize: "14px",
-      },
-      alignItems: "center",
-      display: "flex",
-      justifyContent: "space-between",
-      marginBottom: theme.spacing(),
-    },
-  }),
-  { name: "TimelineNote" },
-);
 
 type TimelineAppType =
   | NonNullable<GiftCardEventsQuery["giftCard"]>["events"][0]["app"]
@@ -41,6 +18,8 @@ interface TimelineNoteProps {
   user: OrderEventFragment["user"];
   app: TimelineAppType;
   hasPlainDate?: boolean;
+  id: string;
+  relatedId?: string;
 }
 
 interface NoteMessageProps {
@@ -66,7 +45,7 @@ const TimelineAvatar = ({
 }: {
   user: OrderEventFragment["user"];
   app: TimelineAppType;
-  className: string;
+  className?: string;
 }) => {
   if (user) {
     return (
@@ -93,22 +72,29 @@ export const TimelineNote: React.FC<TimelineNoteProps> = ({
   message,
   hasPlainDate,
   app,
+  id,
+  relatedId,
 }) => {
-  const classes = useStyles();
-
   const userDisplayName = getUserName(user, true) ?? app?.name;
 
   return (
-    <div className={classes.root}>
-      <TimelineAvatar user={user} app={app} className={classes.avatar} />
-      <div className={classes.title}>
+    <Box position="relative">
+      <Box position="absolute" top={0} __left={-40}>
+        <TimelineAvatar user={user} app={app} />
+      </Box>
+      <Box marginBottom={2} display="flex" alignItems="center" justifyContent="space-between">
         <Text size={3}>{userDisplayName}</Text>
-        <Text size={3} color="default2" whiteSpace="nowrap">
+        <Text size={3} color="default2" display="flex" gap={1} whiteSpace="nowrap">
+          {relatedId ? (
+            <FormattedMessage defaultMessage="updated" id="fM7xZh" />
+          ) : (
+            <FormattedMessage defaultMessage="added" id="xJEaxW" />
+          )}
           <DateTime date={date} plain={hasPlainDate} />
         </Text>
-      </div>
+      </Box>
       <DashboardCard
-        marginBottom={6}
+        marginBottom={2}
         position="relative"
         boxShadow="defaultOverlay"
         backgroundColor="default1"
@@ -124,7 +110,18 @@ export const TimelineNote: React.FC<TimelineNoteProps> = ({
           <NoteMessage message={message} />
         </DashboardCard.Content>
       </DashboardCard>
-    </div>
+
+      <Box marginBottom={6} display="flex" justifyContent="space-between" alignItems="center">
+        <Text size={2} color="defaultDisabled">
+          <FormattedMessage defaultMessage="Note id" id="/n+NRO" />: {id}
+        </Text>
+        {relatedId && (
+          <Text size={2} color="defaultDisabled">
+            <FormattedMessage defaultMessage="Related note id" id="dVSBW6" /> : {relatedId}
+          </Text>
+        )}
+      </Box>
+    </Box>
   );
 };
 TimelineNote.displayName = "TimelineNote";
