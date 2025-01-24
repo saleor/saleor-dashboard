@@ -20,6 +20,7 @@ const useConfig = () => {
     capture_pageview: false,
     autocapture: false,
     advanced_disable_decide: true,
+    cookie_expiration: 30, // 30 days,
     loaded: posthog => {
       if (process.env.NODE_ENV === "development") posthog.debug();
     },
