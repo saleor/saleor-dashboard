@@ -309,6 +309,9 @@
     "context": "channels alphabetically title",
     "string": "Channels from A to Z"
   },
+  "/n+NRO": {
+    "string": "Note id"
+  },
   "/nZy6A": {
     "context": "page subtitle",
     "string": "Issue refund"
@@ -1710,6 +1713,9 @@
   "9TbDQD": {
     "context": "order number label",
     "string": "Order number"
+  },
+  "9Th87u": {
+    "string": "Note successfully updated"
   },
   "9Tl/bT": {
     "context": "export items as spreadsheet",
@@ -6496,6 +6502,9 @@
     "context": "edit tracking button",
     "string": "Edit tracking"
   },
+  "dVSBW6": {
+    "string": "Related note id"
+  },
   "dVk241": {
     "string": "product configurations"
   },
@@ -6698,6 +6707,9 @@
   "fLhj3a": {
     "context": "gift card history message",
     "string": "Gift card expiry date was updated"
+  },
+  "fM7xZh": {
+    "string": "updated"
   },
   "fNFEkh": {
     "string": "No of Rows:"
@@ -9366,6 +9378,9 @@
   "xHj9Qe": {
     "context": "gift card settings header",
     "string": "Gift Cards Settings"
+  },
+  "xJEaxW": {
+    "string": "added"
   },
   "xJQX5t": {
     "string": "No staff members found"
