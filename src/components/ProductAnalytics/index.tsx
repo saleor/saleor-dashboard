@@ -5,22 +5,13 @@ import React from "react";
 const isDomainExcluded = () => {
   const domainsString = process.env.POSTHOG_EXCLUDED_DOMAINS;
 
-  // eslint-disable-next-line no-console
-  console.log("domainsString", domainsString);
-
   if (!domainsString) {
     return false;
   }
 
-  // eslint-disable-next-line no-console
-  console.log("domainsString", domainsString);
-
   const excludedDomains = domainsString.split(",");
 
-  // eslint-disable-next-line no-console
-  console.log("excludedDomains", excludedDomains);
-
-  return excludedDomains.some(domain => "glassette-sandbox.eu.saleor.cloud".includes(domain));
+  return excludedDomains.some(domain => window.location.hostname.includes(domain));
 };
 
 const useConfig = () => {

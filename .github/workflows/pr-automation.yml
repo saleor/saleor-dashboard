@@ -122,7 +122,6 @@ jobs:
           APP_MOUNT_URI: /
           STATIC_URL: /
           IS_CLOUD_INSTANCE: true
-          POSTHOG_EXCLUDED_DOMAINS: ${{ vars.EXCLUDED_DOMAINS }}
           ONBOARDING_USER_JOINED_DATE_THRESHOLD: ${{ vars.STAGING_ONBOARDING_USER_JOINED_DATE_THRESHOLD }}
 
         run: npm run build
