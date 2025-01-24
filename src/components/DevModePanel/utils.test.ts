@@ -69,7 +69,6 @@ describe("getFetcher", () => {
     const opts: FetcherOpts = {
       headers: {
         "Authorization-Bearer": "token",
-        "source-service-name": "saleor.dashboard.playground",
       },
     };
 
@@ -80,6 +79,9 @@ describe("getFetcher", () => {
     expect(mockCreateGraphiQLFetcher).toHaveBeenCalledWith({
       url: mockApiUrl,
       fetch: fetch,
+      headers: {
+        "source-service-name": "saleor.dashboard.playground",
+      },
     });
   });
 
@@ -88,7 +90,6 @@ describe("getFetcher", () => {
     const opts: FetcherOpts = {
       headers: {
         "authorization-bearer": "token",
-        "source-service-name": "saleor.dashboard.playground",
       },
     };
 
@@ -99,6 +100,9 @@ describe("getFetcher", () => {
     expect(mockCreateGraphiQLFetcher).toHaveBeenCalledWith({
       url: mockApiUrl,
       fetch: fetch,
+      headers: {
+        "source-service-name": "saleor.dashboard.playground",
+      },
     });
   });
 });
