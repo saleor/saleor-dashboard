@@ -6,7 +6,6 @@ import {
   CreateManualTransactionCaptureMutation,
   InvoiceEmailSendMutation,
   InvoiceRequestMutation,
-  OrderAddNoteMutation,
   OrderCancelMutation,
   OrderCaptureMutation,
   OrderDraftCancelMutation,
@@ -20,6 +19,7 @@ import {
   OrderLinesAddMutation,
   OrderLineUpdateMutation,
   OrderMarkAsPaidMutation,
+  OrderNoteAddMutation,
   OrderNoteUpdateMutation,
   OrderShippingMethodUpdateMutation,
   OrderTransactionRequestActionMutation,
@@ -47,7 +47,7 @@ interface OrderDetailsMessages {
     handleDraftCancel: (data: OrderDraftCancelMutation) => void;
     handleDraftFinalize: (data: OrderDraftFinalizeMutation) => void;
     handleDraftUpdate: (data: OrderDraftUpdateMutation) => void;
-    handleNoteAdd: (data: OrderAddNoteMutation) => void;
+    handleNoteAdd: (data: OrderNoteAddMutation) => void;
     handleNoteUpdate: (data: OrderNoteUpdateMutation) => void;
     handleOrderCancel: (data: OrderCancelMutation) => void;
     handleOrderFulfillmentApprove: (data: OrderFulfillmentApproveMutation) => void;
@@ -151,8 +151,8 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
       closeModal();
     }
   };
-  const handleNoteAdd = (data: OrderAddNoteMutation) => {
-    const errs = data.orderAddNote?.errors;
+  const handleNoteAdd = (data: OrderNoteAddMutation) => {
+    const errs = data.orderNoteAdd?.errors;
 
     if (errs.length === 0) {
       notify({
