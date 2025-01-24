@@ -20,7 +20,7 @@ export const getFetcher = (opts: FetcherOpts) => {
     url: process.env.API_URL as string,
     fetch: httpFetch as typeof fetch,
     headers: {
-      "x-source": "dashboard-plg",
+      "source-service-name": "saleor.dashboard.playground",
     },
   });
 };
