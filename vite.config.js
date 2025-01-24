@@ -68,8 +68,6 @@ export default defineConfig(({ command, mode }) => {
 
   const sourcemap = !SKIP_SOURCEMAPS;
 
-  console.log("POSTHOG_EXCLUDED_DOMAINS print: ", POSTHOG_EXCLUDED_DOMAINS);
-
   const plugins = [
     react(),
     CodeInspectorPlugin({

@@ -123,7 +123,6 @@ jobs:
           STATIC_URL: /
           IS_CLOUD_INSTANCE: true
           ONBOARDING_USER_JOINED_DATE_THRESHOLD: ${{ vars.STAGING_ONBOARDING_USER_JOINED_DATE_THRESHOLD }}
-
         run: npm run build
 
       - name: Configure AWS credentials
