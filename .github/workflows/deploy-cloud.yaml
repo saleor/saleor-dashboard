@@ -24,6 +24,9 @@ jobs:
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       APPS_MARKETPLACE_API_URL: "https://apps.saleor.io/api/v2/saleor-apps"
       IS_CLOUD_INSTANCE: true
+      POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
+      POSTHOG_HOST: ${{ secrets.POSTHOG_HOST }}
+      POSTHOG_EXCLUDED_DOMAINS: ${{ vars.POSTHOG_EXCLUDED_DOMAINS }}
       ONBOARDING_USER_JOINED_DATE_THRESHOLD: ${{ vars.CLOUD_ONBOARDING_USER_JOINED_DATE_THRESHOLD }}
     steps:
       - name: Check region
