@@ -58,13 +58,19 @@ describe("getFetcher", () => {
     expect(mockCreateGraphiQLFetcher).toHaveBeenCalledWith({
       url: mockApiUrl,
       fetch: fetch,
+      headers: {
+        "source-service-name": "saleor.dashboard.playground",
+      },
     });
   });
 
   it("should return fetcher with fetch when Authorization-Bearer header present", () => {
     // Arrange
     const opts: FetcherOpts = {
-      headers: { "Authorization-Bearer": "token" },
+      headers: {
+        "Authorization-Bearer": "token",
+        "source-service-name": "saleor.dashboard.playground",
+      },
     };
 
     // Act
@@ -80,7 +86,10 @@ describe("getFetcher", () => {
   it("should return fetcher with fetch when lowercase header present", () => {
     // Arrange
     const opts: FetcherOpts = {
-      headers: { "authorization-bearer": "token" },
+      headers: {
+        "authorization-bearer": "token",
+        "source-service-name": "saleor.dashboard.playground",
+      },
     };
 
     // Act
