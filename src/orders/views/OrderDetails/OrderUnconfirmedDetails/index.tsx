@@ -190,15 +190,14 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
                 }),
               )
             }
+            onNoteUpdateLoading={orderUpdateNote.opts.loading}
             onNoteUpdate={(id, message) =>
-              extractMutationErrors(
-                orderUpdateNote.mutate({
-                  order: id,
-                  input: {
-                    message,
-                  },
-                }),
-              )
+              orderUpdateNote.mutate({
+                order: id,
+                input: {
+                  message,
+                },
+              })
             }
             order={order}
             shop={shop}

@@ -189,15 +189,14 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         onOrderReturn={() => navigate(orderReturnUrl(id))}
         loading={loading || updateMetadataOpts.loading || updatePrivateMetadataOpts.loading}
         errors={errors}
+        onNoteUpdateLoading={orderUpdateNote.opts.loading}
         onNoteUpdate={(id, message) =>
-          extractMutationErrors(
-            orderUpdateNote.mutate({
-              order: id,
-              input: {
-                message,
-              },
-            }),
-          )
+          orderUpdateNote.mutate({
+            order: id,
+            input: {
+              message,
+            },
+          })
         }
         onNoteAdd={variables =>
           extractMutationErrors(

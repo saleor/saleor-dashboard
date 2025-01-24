@@ -19,9 +19,10 @@ interface TimelineNoteProps {
   user: OrderEventFragment["user"];
   app: TimelineAppType;
   hasPlainDate?: boolean;
-  id: string;
+  id?: string;
   relatedId?: string;
-  onNoteUpdate?: (id: string, message: string) => void;
+  onNoteUpdate?: (id: string, message: string) => Promise<void>;
+  onNoteUpdateLoading?: boolean;
 }
 
 interface NoteMessageProps {
@@ -77,6 +78,7 @@ export const TimelineNote: React.FC<TimelineNoteProps> = ({
   id,
   relatedId,
   onNoteUpdate,
+  onNoteUpdateLoading,
 }) => {
   const userDisplayName = getUserName(user, true) ?? app?.name;
   const [showEdit, setShowEdit] = useState(false);
@@ -98,11 +100,12 @@ export const TimelineNote: React.FC<TimelineNoteProps> = ({
         </Text>
       </Box>
 
-      {showEdit ? (
+      {showEdit && id ? (
         <TimelineNoteEdit
           id={id}
           note={message!}
-          onSubmit={onNoteUpdate}
+          onSubmit={onNoteUpdate!}
+          loading={onNoteUpdateLoading!}
           onCancel={() => setShowEdit(false)}
         />
       ) : (
@@ -115,24 +118,31 @@ export const TimelineNote: React.FC<TimelineNoteProps> = ({
               borderWidth={1}
               borderColor="default1"
               padding={4}
+              paddingRight={2}
               display="flex"
               justifyContent="space-between"
+              gap={3}
             >
               <NoteMessage message={message} />
-              <Button
-                variant="secondary"
-                onClick={() => {
-                  setShowEdit(true);
-                }}
-                icon={<EditIcon />}
-              />
+              {onNoteUpdate && (
+                <Button
+                  variant="tertiary"
+                  size="small"
+                  onClick={() => {
+                    setShowEdit(true);
+                  }}
+                  icon={<EditIcon size="small" />}
+                />
+              )}
             </DashboardCard.Content>
           </DashboardCard>
 
           <Box marginBottom={6} display="flex" justifyContent="space-between" alignItems="center">
-            <Text size={2} color="defaultDisabled">
-              <FormattedMessage defaultMessage="Note id" id="/n+NRO" />: {id}
-            </Text>
+            {id && (
+              <Text size={2} color="defaultDisabled">
+                <FormattedMessage defaultMessage="Note id" id="/n+NRO" />: {id}
+              </Text>
+            )}
             {relatedId && (
               <Text size={2} color="defaultDisabled">
                 <FormattedMessage defaultMessage="Related note id" id="dVSBW6" /> : {relatedId}

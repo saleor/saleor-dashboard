@@ -197,15 +197,14 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
             loading={loading}
             disabled={loading}
             errors={errors}
+            onNoteUpdateLoading={orderUpdateNote.opts.loading}
             onNoteUpdate={(id, message) =>
-              extractMutationErrors(
-                orderUpdateNote.mutate({
-                  order: id,
-                  input: {
-                    message,
-                  },
-                }),
-              )
+              orderUpdateNote.mutate({
+                order: id,
+                input: {
+                  message,
+                },
+              })
             }
             onNoteAdd={variables =>
               extractMutationErrors(

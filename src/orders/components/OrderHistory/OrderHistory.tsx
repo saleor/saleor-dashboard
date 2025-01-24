@@ -27,10 +27,17 @@ interface OrderHistoryProps {
   history: OrderEventFragment[];
   orderCurrency: string;
   onNoteAdd: (data: FormData) => SubmitPromise;
-  onNoteUpdate: (id: string, message: string) => void;
+  onNoteUpdate: (id: string, message: string) => Promise<void>;
+  onNoteUpdateLoading: boolean;
 }
 
-const OrderHistory = ({ history, orderCurrency, onNoteAdd, onNoteUpdate }: OrderHistoryProps) => {
+const OrderHistory = ({
+  history,
+  orderCurrency,
+  onNoteAdd,
+  onNoteUpdate,
+  onNoteUpdateLoading,
+}: OrderHistoryProps) => {
   const intl = useIntl();
   const getTimelineEventTitleProps = (event: OrderEventFragment): Partial<TimelineEventProps> => {
     const { type, message } = event;
@@ -79,6 +86,7 @@ const OrderHistory = ({ history, orderCurrency, onNoteAdd, onNoteUpdate }: Order
                   return (
                     <TimelineNote
                       onNoteUpdate={onNoteUpdate}
+                      onNoteUpdateLoading={onNoteUpdateLoading!}
                       id={id}
                       date={date}
                       user={user}
@@ -93,6 +101,7 @@ const OrderHistory = ({ history, orderCurrency, onNoteAdd, onNoteUpdate }: Order
                   return (
                     <TimelineNote
                       onNoteUpdate={onNoteUpdate}
+                      onNoteUpdateLoading={onNoteUpdateLoading!}
                       relatedId={related.id}
                       id={id}
                       date={date}
