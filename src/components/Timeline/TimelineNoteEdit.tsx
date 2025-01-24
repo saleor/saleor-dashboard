@@ -9,7 +9,7 @@ interface TimelineNoteEditProps {
   id: string;
   note: string;
   loading: boolean;
-  onSubmit: (id: string, message: string) => Promise<void>;
+  onSubmit: (id: string, message: string) => Promise<unknown>;
   onCancel: () => void;
 }
 

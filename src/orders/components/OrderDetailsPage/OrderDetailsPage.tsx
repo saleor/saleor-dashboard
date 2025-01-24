@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { FetchResult } from "@apollo/client";
 import {
   extensionMountPoints,
   mapToMenuItemsForOrderDetails,
@@ -17,6 +18,7 @@ import {
   OrderDetailsFragment,
   OrderDetailsQuery,
   OrderErrorFragment,
+  OrderNoteUpdateMutation,
   OrderStatus,
   TransactionActionEnum,
 } from "@dashboard/graphql";
@@ -76,7 +78,7 @@ export interface OrderDetailsPageProps {
   onShippingAddressEdit: () => any;
   onOrderCancel: () => any;
   onNoteAdd: (data: HistoryFormData) => any;
-  onNoteUpdate: (id: string, message: string) => Promise<void>;
+  onNoteUpdate: (id: string, message: string) => Promise<FetchResult<OrderNoteUpdateMutation>>;
   onNoteUpdateLoading: boolean;
   onProfileView: () => any;
   onOrderReturn: () => any;

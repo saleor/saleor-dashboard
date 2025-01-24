@@ -9,6 +9,8 @@ import {
   OrderDetailsWithMetadataQueryResult,
   OrderFulfillmentApproveMutation,
   OrderFulfillmentApproveMutationVariables,
+  OrderNoteUpdateMutation,
+  OrderNoteUpdateMutationVariables,
   OrderTransactionRequestActionMutation,
   OrderTransactionRequestActionMutationVariables,
   OrderUpdateMutation,
@@ -72,7 +74,10 @@ interface OrderNormalDetailsProps {
   data: OrderDetailsWithMetadataQueryResult["data"];
   loading: boolean;
   orderAddNote: any;
-  orderUpdateNote: any;
+  orderUpdateNote: PartialMutationProviderOutput<
+    OrderNoteUpdateMutation,
+    OrderNoteUpdateMutationVariables
+  >;
   orderInvoiceRequest: any;
   handleSubmit: any;
   orderUpdate: PartialMutationProviderOutput<OrderUpdateMutation, OrderUpdateMutationVariables>;

@@ -12,6 +12,8 @@ import {
   OrderDraftUpdateMutationVariables,
   OrderLineUpdateMutation,
   OrderLineUpdateMutationVariables,
+  OrderNoteUpdateMutation,
+  OrderNoteUpdateMutationVariables,
   StockAvailability,
   useChannelUsabilityDataQuery,
   useCustomerAddressesQuery,
@@ -51,7 +53,10 @@ interface OrderDraftDetailsProps {
   loading: any;
   data: OrderDetailsWithMetadataQueryResult["data"];
   orderAddNote: any;
-  orderUpdateNote: any;
+  orderUpdateNote: PartialMutationProviderOutput<
+    OrderNoteUpdateMutation,
+    OrderNoteUpdateMutationVariables
+  >;
   orderLineUpdate: PartialMutationProviderOutput<
     OrderLineUpdateMutation,
     OrderLineUpdateMutationVariables

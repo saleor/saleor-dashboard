@@ -21,7 +21,7 @@ interface TimelineNoteProps {
   hasPlainDate?: boolean;
   id?: string;
   relatedId?: string;
-  onNoteUpdate?: (id: string, message: string) => Promise<void>;
+  onNoteUpdate?: (id: string, message: string) => Promise<unknown>;
   onNoteUpdateLoading?: boolean;
 }
 

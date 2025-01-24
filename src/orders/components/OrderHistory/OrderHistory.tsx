@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { FetchResult } from "@apollo/client";
 import { DashboardCard } from "@dashboard/components/Card";
 import Form from "@dashboard/components/Form";
 import {
@@ -8,7 +9,7 @@ import {
   TimelineEventProps,
   TimelineNote,
 } from "@dashboard/components/Timeline";
-import { OrderEventFragment } from "@dashboard/graphql";
+import { OrderEventFragment, OrderNoteUpdateMutation } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -27,7 +28,7 @@ interface OrderHistoryProps {
   history: OrderEventFragment[];
   orderCurrency: string;
   onNoteAdd: (data: FormData) => SubmitPromise;
-  onNoteUpdate: (id: string, message: string) => Promise<void>;
+  onNoteUpdate: (id: string, message: string) => Promise<FetchResult<OrderNoteUpdateMutation>>;
   onNoteUpdateLoading: boolean;
 }
 

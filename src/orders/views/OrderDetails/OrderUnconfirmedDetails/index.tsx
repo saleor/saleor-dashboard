@@ -8,6 +8,8 @@ import {
   FulfillmentStatus,
   OrderFulfillmentApproveMutation,
   OrderFulfillmentApproveMutationVariables,
+  OrderNoteUpdateMutation,
+  OrderNoteUpdateMutationVariables,
   OrderTransactionRequestActionMutation,
   OrderTransactionRequestActionMutationVariables,
   OrderUpdateMutation,
@@ -61,7 +63,10 @@ interface OrderUnconfirmedDetailsProps {
   params: OrderUrlQueryParams;
   data: any;
   orderAddNote: any;
-  orderUpdateNote: any;
+  orderUpdateNote: PartialMutationProviderOutput<
+    OrderNoteUpdateMutation,
+    OrderNoteUpdateMutationVariables
+  >;
   orderLineUpdate: any;
   orderLineDelete: any;
   orderInvoiceRequest: any;
