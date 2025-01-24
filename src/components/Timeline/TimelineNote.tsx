@@ -126,6 +126,7 @@ export const TimelineNote: React.FC<TimelineNoteProps> = ({
               <NoteMessage message={message} />
               {onNoteUpdate && (
                 <Button
+                  data-test-id="edit-note"
                   variant="tertiary"
                   size="small"
                   onClick={() => {

@@ -43,6 +43,7 @@ export const TimelineNoteEdit = ({
           <FormattedMessage {...buttonMessages.cancel} />
         </Button>
         <ConfirmButton
+          data-test-id="save-note"
           disabled={loading}
           transitionState={loading ? "loading" : "default"}
           variant="primary"
