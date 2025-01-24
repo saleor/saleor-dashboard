@@ -1,13 +1,13 @@
-import { TimelineNoteEdit } from "@dashboard/components/Timeline/TimelineNoteEdit";
 import { GiftCardEventsQuery, OrderEventFragment } from "@dashboard/graphql";
 import { getUserInitials, getUserName } from "@dashboard/misc";
 import { Box, Button, EditIcon, Text } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
-import { FormattedMessage } from "react-intl/lib";
+import { FormattedMessage } from "react-intl";
 
 import { DashboardCard } from "../Card";
 import { DateTime } from "../Date";
 import { UserAvatar } from "../UserAvatar";
+import { TimelineNoteEdit } from "./TimelineNoteEdit";
 
 type TimelineAppType =
   | NonNullable<GiftCardEventsQuery["giftCard"]>["events"][0]["app"]
