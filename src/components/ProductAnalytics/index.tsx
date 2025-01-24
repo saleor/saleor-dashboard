@@ -20,7 +20,7 @@ const isDomainExcluded = () => {
   // eslint-disable-next-line no-console
   console.log("excludedDomains", excludedDomains);
 
-  return excludedDomains.some(domain => window.location.hostname.includes(domain));
+  return excludedDomains.some(domain => "glassette-sandbox.eu.saleor.cloud".includes(domain));
 };
 
 const useConfig = () => {
