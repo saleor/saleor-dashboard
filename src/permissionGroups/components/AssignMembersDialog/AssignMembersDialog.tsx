@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
-import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
@@ -62,13 +61,6 @@ const useStyles = makeStyles(
     },
     inputContainer: {
       overflowY: "visible",
-    },
-    loadMoreLoaderContainer: {
-      alignItems: "center",
-      display: "flex",
-      gridColumnEnd: "span 3",
-      height: theme.spacing(4),
-      justifyContent: "center",
     },
     overflow: {
       overflowY: "visible",
@@ -155,14 +147,6 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
           hasMore={hasMore}
           scrollThreshold="100px"
           scrollableTarget={scrollableTargetId}
-          loader={
-            <>
-              {staffMembers?.length > 0 && <CardSpacer />}
-              <div className={classes.loadMoreLoaderContainer}>
-                <CircularProgress size={24} />
-              </div>
-            </>
-          }
         >
           <ResponsiveTable className={classes.table}>
             <TableBody data-test-id="search-results">

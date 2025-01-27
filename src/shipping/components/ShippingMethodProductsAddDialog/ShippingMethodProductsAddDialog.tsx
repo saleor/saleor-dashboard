@@ -135,18 +135,6 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
           hasMore={hasMore}
           scrollThreshold="100px"
           scrollableTarget={scrollableTargetId}
-          loader={
-            <Box
-              alignItems="center"
-              display="flex"
-              height={5}
-              justifyContent="center"
-              marginTop={5}
-              key="loader"
-            >
-              <CircularProgress size={16} />
-            </Box>
-          }
         >
           <ResponsiveTable key="table">
             <TableBody data-test-id="assign-product-list">
