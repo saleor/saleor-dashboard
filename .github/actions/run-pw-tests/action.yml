@@ -41,7 +41,12 @@ inputs:
   E2E_ENCODE_PASS:
     description: "Password for encoding credentials"
     required: true
-
+  POOL_NAME:
+    description: "Pull request number for test reporting"
+    required: true
+  SALEOR_CLOUD_SERVICE:
+    description: "Saleor cloud service for test reporting"
+    required: true
 runs:
   using: "composite"
   steps:
@@ -82,6 +87,9 @@ runs:
         WORKERS: ${{ inputs.PW_WORKERS }}
         RETRIES: ${{ inputs.PW_RETRIES }}
         PROJECT: ${{ inputs.PROJECT }}
+        POOL_NAME: ${{ inputs.POOL_NAME }}
+        SALEOR_CLOUD_SERVICE: ${{ inputs.SALEOR_CLOUD_SERVICE }}
+
       run: |
         PROJECTS=($PROJECT)
         PROJECT_PARAMS=""
