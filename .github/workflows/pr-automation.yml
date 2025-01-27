@@ -203,7 +203,7 @@ jobs:
           ACCOUNTS: ${{ needs.deploy-dashboard.outputs.ACCOUNTS }}
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
           POOL_NAME: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
-          SALEOR_CLOUD_SERVICE: ${{ needs.initialize-cloud.outputs.SALEOR_CLOUD_SERVICE }}
+          SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
 
       - name: submit-results-to-testmo
         if: always()
