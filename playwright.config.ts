@@ -43,8 +43,8 @@ export default defineConfig({
         annotations: false,             // Optional: Include annotations in the report. Defaults to 'false'.
         appName: 'Saleor Dashboard',    // Optional: Specify the name of the application under test.
         appVersion: 'main',             // Optional: Specify the version of the application under test.
-        branchName: "main",             // Optional: Specify the branch name.
-        testEnvironment: "staging"      // Optional: Specify the test environment (e.g. staging, production).
+        branchName: process.env.POOL_NAME,    // Optional: Specify the branch name.
+        testEnvironment: process.env.SALEOR_CLOUD_SERVICE      // Optional: Specify the test environment (e.g. staging, production).
       }]]
     : [["html"], ["list"]],
   expect: { timeout: 10 * 1000 },
