@@ -38,7 +38,7 @@
     "@material-ui/styles": "^4.11.4",
     "@reach/auto-id": "^0.16.0",
     "@saleor/macaw-ui": "npm:@saleor/macaw-ui@0.7.4",
-    "@saleor/macaw-ui-next": "npm:@saleor/macaw-ui@0.0.0-pr-20250122093605",
+    "@saleor/macaw-ui-next": "npm:@saleor/macaw-ui@0.0.0-pr-20250127234423",
     "@saleor/sdk": "0.6.0",
     "@sentry/react": "^8.21.0",
     "@sentry/vite-plugin": "^2.21.1",
