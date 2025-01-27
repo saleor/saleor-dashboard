@@ -3,6 +3,7 @@ import { Channel, isAvailableInChannel } from "@dashboard/channels/utils";
 import BackButton from "@dashboard/components/BackButton";
 import Checkbox from "@dashboard/components/Checkbox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
@@ -16,7 +17,6 @@ import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { Product, Products } from "./types";
@@ -128,96 +128,95 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
           />
         </Box>
 
-        <Box id={scrollableTargetId} overflowY="auto">
-          <InfiniteScroll
-            dataLength={products?.length ?? 0}
-            next={onFetchMore}
-            hasMore={hasMore}
-            scrollThreshold="100px"
-            scrollableTarget={scrollableTargetId}
-            loader={
-              <Box
-                alignItems="center"
-                display="flex"
-                height={5}
-                justifyContent="center"
-                marginTop={5}
-                key="loader"
-              >
-                <CircularProgress size={16} />
-              </Box>
-            }
-          >
-            <ResponsiveTable key="table">
-              <TableBody data-test-id="assign-product-list">
-                {renderCollection(
-                  products,
-                  (product, productIndex) => {
-                    const isSelected = isProductSelected(selectedProducts, product?.id);
+        <InfiniteScroll
+          id={scrollableTargetId}
+          dataLength={products?.length ?? 0}
+          next={onFetchMore}
+          hasMore={hasMore}
+          scrollThreshold="100px"
+          scrollableTarget={scrollableTargetId}
+          loader={
+            <Box
+              alignItems="center"
+              display="flex"
+              height={5}
+              justifyContent="center"
+              marginTop={5}
+              key="loader"
+            >
+              <CircularProgress size={16} />
+            </Box>
+          }
+        >
+          <ResponsiveTable key="table">
+            <TableBody data-test-id="assign-product-list">
+              {renderCollection(
+                products,
+                (product, productIndex) => {
+                  const isSelected = isProductSelected(selectedProducts, product?.id);
 
-                    const isProductAvailable = isAvailableInChannel({
-                      availableChannels,
-                      channelListings: product?.channelListings ?? [],
-                    });
+                  const isProductAvailable = isAvailableInChannel({
+                    availableChannels,
+                    channelListings: product?.channelListings ?? [],
+                  });
 
-                    const isProductDisabled = loading || !isProductAvailable;
+                  const isProductDisabled = loading || !isProductAvailable;
 
-                    return (
-                      <React.Fragment key={product ? product.id : `skeleton-${productIndex}`}>
-                        <TableRowLink data-test-id="product-row">
-                          <TableCell padding="checkbox" className={classes.productCheckboxCell}>
-                            {product && (
-                              <Checkbox
-                                checked={isSelected}
-                                disabled={isProductDisabled}
-                                onChange={() =>
-                                  handleProductAssign(
-                                    product,
-                                    isSelected,
-                                    selectedProducts,
-                                    setSelectedProducts,
-                                  )
-                                }
-                              />
-                            )}
-                          </TableCell>
-                          <TableCellAvatar
-                            className={classes.avatar}
-                            thumbnail={product?.thumbnail?.url}
-                            style={{
-                              opacity: isProductDisabled ? 0.5 : 1,
-                            }}
-                          />
-                          <TableCell className={classes.colName} colSpan={2}>
-                            {product?.name || <Skeleton />}
-                            {!isProductAvailable && (
-                              <Text display="block" size={1} color="default2">
-                                {intl.formatMessage({
-                                  defaultMessage: "Product is not available in selected channels",
-                                  id: "jmZSK1",
-                                })}
-                              </Text>
-                            )}
-                          </TableCell>
-                        </TableRowLink>
-                      </React.Fragment>
-                    );
-                  },
-                  () => (
-                    <TableRowLink>
-                      <TableCell colSpan={4}>
-                        <FormattedMessage
-                          id="5ZvuVw"
-                          defaultMessage="No products matching given query"
+                  return (
+                    <React.Fragment key={product ? product.id : `skeleton-${productIndex}`}>
+                      <TableRowLink data-test-id="product-row">
+                        <TableCell padding="checkbox" className={classes.productCheckboxCell}>
+                          {product && (
+                            <Checkbox
+                              checked={isSelected}
+                              disabled={isProductDisabled}
+                              onChange={() =>
+                                handleProductAssign(
+                                  product,
+                                  isSelected,
+                                  selectedProducts,
+                                  setSelectedProducts,
+                                )
+                              }
+                            />
+                          )}
+                        </TableCell>
+                        <TableCellAvatar
+                          className={classes.avatar}
+                          thumbnail={product?.thumbnail?.url}
+                          style={{
+                            opacity: isProductDisabled ? 0.5 : 1,
+                          }}
                         />
-                      </TableCell>
-                    </TableRowLink>
-                  ),
-                )}
-              </TableBody>
-            </ResponsiveTable>
-          </InfiniteScroll>
-        </Box>
+                        <TableCell className={classes.colName} colSpan={2}>
+                          {product?.name || <Skeleton />}
+                          {!isProductAvailable && (
+                            <Text display="block" size={1} color="default2">
+                              {intl.formatMessage({
+                                defaultMessage: "Product is not available in selected channels",
+                                id: "jmZSK1",
+                              })}
+                            </Text>
+                          )}
+                        </TableCell>
+                      </TableRowLink>
+                    </React.Fragment>
+                  );
+                },
+                () => (
+                  <TableRowLink>
+                    <TableCell colSpan={4}>
+                      <FormattedMessage
+                        id="5ZvuVw"
+                        defaultMessage="No products matching given query"
+                      />
+                    </TableCell>
+                  </TableRowLink>
+                ),
+              )}
+            </TableBody>
+          </ResponsiveTable>
+        </InfiniteScroll>
 
         <DashboardModal.Actions>
           <BackButton onClick={handleClose} />

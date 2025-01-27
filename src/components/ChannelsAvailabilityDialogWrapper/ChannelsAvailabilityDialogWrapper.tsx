@@ -4,6 +4,7 @@ import Label from "@dashboard/orders/components/OrderHistory/Label";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -32,10 +33,6 @@ export const useStyles = makeStyles(
       paddingBottom: theme.spacing(2),
     },
     scrollArea: {
-      maxHeight: "calc(100vh - 400px)",
-      "@media (min-height: 800px)": {
-        maxHeight: 400,
-      },
       overflowY: "scroll",
       overflowX: "hidden",
       // overflowX can't be "visible" when overflowY is "scroll"
@@ -139,7 +136,7 @@ export const ChannelsAvailabilityContentWrapper: React.FC<ChannelsAvailabilityCo
           <FormattedMessage {...messages.channelsAlphabeticallyTitle} />
         </Text>
         <div
-          className={classes.scrollArea}
+          className={clsx(classes.scrollArea, "scrollArea")}
           data-test-id="manage-products-channels-availiability-list"
         >
           {hasAnyChannelsToDisplay ? (

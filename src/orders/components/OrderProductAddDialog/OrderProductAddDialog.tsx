@@ -3,6 +3,7 @@ import BackButton from "@dashboard/components/BackButton";
 import Checkbox from "@dashboard/components/Checkbox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import FormSpacer from "@dashboard/components/FormSpacer";
+import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
@@ -18,7 +19,6 @@ import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderPriceLabel from "../OrderPriceLabel/OrderPriceLabel";
@@ -118,123 +118,111 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
           />
         </Box>
 
-        <Box overflowY="auto" id={scrollableTargetId}>
-          <InfiniteScroll
-            dataLength={productChoicesWithValidVariants?.length}
-            next={onFetchMore}
-            hasMore={hasMore}
-            scrollThreshold="100px"
-            loader={
-              <Box
-                display="flex"
-                alignItems="center"
-                height={6}
-                justifyContent="center"
-                marginTop={3}
-              >
-                <CircularProgress size={16} />
-              </Box>
-            }
-            scrollableTarget={scrollableTargetId}
-          >
-            <ResponsiveTable key="table">
-              <TableBody data-test-id="add-products-table">
-                {renderCollection(
-                  productChoicesWithValidVariants,
-                  (product, productIndex) => (
-                    <React.Fragment key={product ? product.id : "skeleton"}>
-                      <TableRowLink data-test-id="product">
-                        <TableCell padding="checkbox" className={classes.productCheckboxCell}>
-                          <Checkbox
-                            checked={productsWithAllVariantsSelected[productIndex]}
-                            disabled={loading}
-                            onChange={() =>
-                              onProductAdd(
-                                product,
-                                productIndex,
-                                productsWithAllVariantsSelected,
-                                variants,
-                                setVariants,
-                              )
-                            }
-                          />
-                        </TableCell>
-                        <TableCellAvatar
-                          className={classes.avatar}
-                          thumbnail={maybe(() => product.thumbnail.url)}
+        <InfiniteScroll
+          id={scrollableTargetId}
+          dataLength={productChoicesWithValidVariants?.length}
+          next={onFetchMore}
+          hasMore={hasMore}
+          scrollThreshold="100px"
+          scrollableTarget={scrollableTargetId}
+        >
+          <ResponsiveTable key="table">
+            <TableBody data-test-id="add-products-table">
+              {renderCollection(
+                productChoicesWithValidVariants,
+                (product, productIndex) => (
+                  <React.Fragment key={product ? product.id : "skeleton"}>
+                    <TableRowLink data-test-id="product">
+                      <TableCell padding="checkbox" className={classes.productCheckboxCell}>
+                        <Checkbox
+                          checked={productsWithAllVariantsSelected[productIndex]}
+                          disabled={loading}
+                          onChange={() =>
+                            onProductAdd(
+                              product,
+                              productIndex,
+                              productsWithAllVariantsSelected,
+                              variants,
+                              setVariants,
+                            )
+                          }
                         />
-                        <TableCell
-                          className={classes.colName}
-                          colSpan={2}
-                          data-test-id="product-name"
-                        >
-                          {maybe(() => product.name)}
-                        </TableCell>
-                      </TableRowLink>
-                      {maybe(() => product.variants, [])
-                        .filter(isValidVariant)
-                        .map((variant, variantIndex) => (
-                          <TableRowLink key={variant.id} data-test-id="variant">
-                            <TableCell />
-                            <TableCell className={classes.colVariantCheckbox}>
-                              <Checkbox
-                                className={classes.variantCheckbox}
-                                checked={selectedVariantsToProductsMap[productIndex][variantIndex]}
-                                disabled={loading}
-                                onChange={() =>
-                                  onVariantAdd(
-                                    variant,
-                                    variantIndex,
-                                    productIndex,
-                                    variants,
-                                    selectedVariantsToProductsMap,
-                                    setVariants,
-                                  )
-                                }
-                              />
-                            </TableCell>
-                            <TableCell className={classes.colName}>
-                              <div>{variant.name}</div>
-                              {variant.sku && (
-                                <Box color="default2">
-                                  <FormattedMessage
-                                    {...messages.sku}
-                                    values={{
-                                      sku: variant.sku,
-                                    }}
-                                  />
-                                </Box>
-                              )}
-                            </TableCell>
-                            <TableCell className={classes.textRight} data-test-id="variant-price">
-                              <OrderPriceLabel pricing={variant.pricing} />
-                            </TableCell>
-                          </TableRowLink>
-                        ))}
-                    </React.Fragment>
-                  ),
-                  () => (
-                    <Text marginBottom={3}>
-                      {query
-                        ? intl.formatMessage(messages.noProductsInQuery)
-                        : intl.formatMessage(messages.noProductsInChannel)}
-                    </Text>
-                  ),
-                )}
-              </TableBody>
-            </ResponsiveTable>
-          </InfiniteScroll>
-          {errors.length > 0 && (
-            <>
-              <FormSpacer />
-              {errors.map((err, index) => (
-                <Text display="block" color="critical1" key={index}>
-                  {getOrderErrorMessage(err, intl)}
-                </Text>
-              ))}
-            </>
-          )}
-        </Box>
+                      </TableCell>
+                      <TableCellAvatar
+                        className={classes.avatar}
+                        thumbnail={maybe(() => product.thumbnail.url)}
+                      />
+                      <TableCell
+                        className={classes.colName}
+                        colSpan={2}
+                        data-test-id="product-name"
+                      >
+                        {maybe(() => product.name)}
+                      </TableCell>
+                    </TableRowLink>
+                    {maybe(() => product.variants, [])
+                      .filter(isValidVariant)
+                      .map((variant, variantIndex) => (
+                        <TableRowLink key={variant.id} data-test-id="variant">
+                          <TableCell />
+                          <TableCell className={classes.colVariantCheckbox}>
+                            <Checkbox
+                              className={classes.variantCheckbox}
+                              checked={selectedVariantsToProductsMap[productIndex][variantIndex]}
+                              disabled={loading}
+                              onChange={() =>
+                                onVariantAdd(
+                                  variant,
+                                  variantIndex,
+                                  productIndex,
+                                  variants,
+                                  selectedVariantsToProductsMap,
+                                  setVariants,
+                                )
+                              }
+                            />
+                          </TableCell>
+                          <TableCell className={classes.colName}>
+                            <div>{variant.name}</div>
+                            {variant.sku && (
+                              <Box color="default2">
+                                <FormattedMessage
+                                  {...messages.sku}
+                                  values={{
+                                    sku: variant.sku,
+                                  }}
+                                />
+                              </Box>
+                            )}
+                          </TableCell>
+                          <TableCell className={classes.textRight} data-test-id="variant-price">
+                            <OrderPriceLabel pricing={variant.pricing} />
+                          </TableCell>
+                        </TableRowLink>
+                      ))}
+                  </React.Fragment>
+                ),
+                () => (
+                  <Text marginBottom={3}>
+                    {query
+                      ? intl.formatMessage(messages.noProductsInQuery)
+                      : intl.formatMessage(messages.noProductsInChannel)}
+                  </Text>
+                ),
+              )}
+            </TableBody>
+          </ResponsiveTable>
+        </InfiniteScroll>
+        {errors.length > 0 && (
+          <>
+            <FormSpacer />
+            {errors.map((err, index) => (
+              <Text display="block" color="critical1" key={index}>
+                {getOrderErrorMessage(err, intl)}
+              </Text>
+            ))}
+          </>
+        )}
 
         <DashboardModal.Actions>
           <BackButton onClick={onClose} data-test-id="back-button" />

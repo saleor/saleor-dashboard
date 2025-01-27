@@ -104,7 +104,7 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
                   />
                 </Text>
 
-                <Box height="100%" overflowY="auto">
+                <Box height="100%" overflowY="auto" className="scrollArea">
                   <ResponsiveTable>
                     <TableBody>
                       {fuzzySearch(countries, data.query, ["country"]).map(country => {
