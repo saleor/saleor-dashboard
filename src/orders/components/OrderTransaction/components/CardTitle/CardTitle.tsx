@@ -16,6 +16,38 @@ interface CardTitleProps {
   showActions?: boolean;
 }
 
+const TransactionTitle = ({
+  transaction,
+  index,
+}: {
+  transaction: ExtendedOrderTransaction;
+  index: number;
+}) => {
+  const intl = useIntl();
+
+  const transactionTitle = intl.formatMessage(
+    {
+      defaultMessage: "Transaction #{index} on {date}",
+      id: "nYD7NT",
+    },
+    {
+      date: <EventTime date={transaction.createdAt} />,
+      index: index + 1,
+    },
+  );
+
+  return (
+    <Box display="flex" flexDirection="column" width="100%">
+      <span>{transactionTitle}</span>
+      {transaction.name && (
+        <Text __fontSize="inherit" color="defaultDisabled" fontStyle="italic">
+          {transaction.name}
+        </Text>
+      )}
+    </Box>
+  );
+};
+
 export const OrderTransactionCardTitle = ({
   transaction,
   onTransactionAction,
@@ -38,17 +70,6 @@ export const OrderTransactionCardTitle = ({
   const actions = transaction.actions.filter(action => action !== TransactionActionEnum.REFUND);
   const showActionButtons = showActions && actions.length > 0;
 
-  const transactionTitle = intl.formatMessage(
-    {
-      defaultMessage: "Transaction #{index} on {date}",
-      id: "nYD7NT",
-    },
-    {
-      date: <EventTime date={transaction.createdAt} />,
-      index: index + 1,
-    },
-  );
-
   return (
     <Box width="100%" display="flex" justifyContent="space-between" alignItems="center">
       {transaction.externalUrl ? (
@@ -59,14 +80,15 @@ export const OrderTransactionCardTitle = ({
           gap={2}
           alignItems="center"
           size="large"
+          __flex={1}
         >
           <ExternalLinkIcon size="small" />
 
-          {transactionTitle}
+          <TransactionTitle transaction={transaction} index={index} />
         </ButtonLink>
       ) : (
-        <Text size={3} fontWeight="bold">
-          {transactionTitle}
+        <Text size={3} fontWeight="bold" __flex={1}>
+          <TransactionTitle transaction={transaction} index={index} />
         </Text>
       )}
 
