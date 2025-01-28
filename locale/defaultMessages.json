@@ -7069,6 +7069,9 @@
     "context": "docs link label",
     "string": "Learn more..."
   },
+  "hniz8Z": {
+    "string": "here"
+  },
   "ho75Lr": {
     "context": "status label deactivated",
     "string": "Deactivated"
@@ -8324,6 +8327,9 @@
   "qCH2eZ": {
     "context": "header",
     "string": "Add Value to Authorization Field"
+  },
+  "qD1kvF": {
+    "string": "The timeline below shows the history of all events related to this order. Each entry represents a single event along with its content or readable description. For more information regarding order events, you can find {link}."
   },
   "qDfaDI": {
     "string": "No app or plugin is configured to handle requested transaction action"
