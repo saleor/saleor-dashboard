@@ -821,9 +821,6 @@
     "context": "price or ordered products",
     "string": "Price"
   },
-  "32uBJ8": {
-    "string": "Move products by their positions."
-  },
   "34F7Jk": {
     "context": "filter range separator",
     "string": "and"
@@ -2967,9 +2964,6 @@
   "H/o4Ex": {
     "context": "dialog content",
     "string": "You are not able to modify this group members. Solve this problem to continue with request."
-  },
-  "H/r5m6": {
-    "string": "Move down"
   },
   "H/xj8R": {
     "context": "VariantDetailsChannelsAvailabilityCard item subtitle published",
@@ -5488,6 +5482,9 @@
     "context": "card update success alert title",
     "string": "Successfully updated card balance"
   },
+  "XAvER/": {
+    "string": "Product reordered"
+  },
   "XB2Jj9": {
     "context": "create app button",
     "string": "Create App"
@@ -7449,9 +7446,6 @@
   "kFsTMN": {
     "string": "Delete customers"
   },
-  "kGQJcD": {
-    "string": "Reorder"
-  },
   "kIcyUo": {
     "context": "column header",
     "string": "Slug"
@@ -7890,6 +7884,9 @@
   "nA2g2e": {
     "context": "label",
     "string": "External app"
+  },
+  "nABmvC": {
+    "string": "No. of rows"
   },
   "nBzIBG": {
     "string": "Delete permission group"
@@ -9259,9 +9256,6 @@
     "context": "order history message",
     "string": "Restocked {quantity} items"
   },
-  "wPayk9": {
-    "string": "Reorder selected products"
-  },
   "wQdR8M": {
     "string": "Add search engine title and description to make this category easier to find"
   },
@@ -9309,9 +9303,6 @@
   "wlr0Si": {
     "context": "button",
     "string": "Create Webhook"
-  },
-  "wmFdws": {
-    "string": "Move up"
   },
   "wmdHhD": {
     "context": "button",
@@ -9776,9 +9767,6 @@
   "zp9VHt": {
     "context": "cta button label",
     "string": "Explore Updates"
-  },
-  "zpbMmC": {
-    "string": "Move by positions"
   },
   "zqarUF": {
     "context": "modal information under title",
