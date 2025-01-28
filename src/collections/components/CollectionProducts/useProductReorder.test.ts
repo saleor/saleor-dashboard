@@ -31,14 +31,14 @@ jest.mock("./useCollectionId", () => ({
 
 describe("CollectionProducts/useProductReorder", () => {
   const mockReorder = jest.fn();
-  const mockCreateOptimisticResponse = jest.fn();
+  const createForDroppedItem = jest.fn();
   const mockPaginationState = { page: 1, pageSize: 10 };
 
   beforeEach(() => {
     (useReorderProductsInCollectionMutation as jest.Mock).mockReturnValue([mockReorder, {}]);
     (useLocalPaginationState as jest.Mock).mockReturnValue([mockPaginationState]);
     (useProductReorderOptimistic as jest.Mock).mockReturnValue({
-      createOptimisticResponse: mockCreateOptimisticResponse,
+      createForDroppedItem: createForDroppedItem,
     });
   });
 
