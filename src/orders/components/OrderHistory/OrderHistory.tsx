@@ -11,6 +11,8 @@ import {
 } from "@dashboard/components/Timeline";
 import { OrderEventFragment, OrderNoteUpdateMutation } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { ORDER_EVENTS_DOCS_URL } from "@dashboard/links";
+import { Box, vars } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -58,10 +60,32 @@ const OrderHistory = ({
 
   return (
     <DashboardCard>
-      <DashboardCard.Header>
+      <DashboardCard.Header flexDirection="column" alignItems="start">
         <DashboardCard.Title>
           <FormattedMessage id="XBfvKN" defaultMessage="Order History" />
         </DashboardCard.Title>
+        <DashboardCard.Subtitle fontSize={3} color="default2">
+          <FormattedMessage
+            defaultMessage="The timeline below shows the history of all events related to this order. Each entry represents a single event along with its content or readable description. For more information regarding order events, you can find {link}."
+            values={{
+              link: (
+                <Box
+                  as="a"
+                  target="_blank"
+                  rel="noopener noreferer"
+                  textDecoration="underline"
+                  style={{
+                    textUnderlineOffset: vars.spacing[1],
+                  }}
+                  href={ORDER_EVENTS_DOCS_URL}
+                >
+                  <FormattedMessage defaultMessage="here" id="hniz8Z" />
+                </Box>
+              ),
+            }}
+            id="qD1kvF"
+          />
+        </DashboardCard.Subtitle>
       </DashboardCard.Header>
 
       <DashboardCard.Content>
