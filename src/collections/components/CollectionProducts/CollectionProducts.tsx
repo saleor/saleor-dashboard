@@ -12,7 +12,7 @@ import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
 import { Container } from "@dashboard/components/AssignContainerDialog";
 import AssignProductDialog from "@dashboard/components/AssignProductDialog/AssignProductDialog";
 import { DashboardCard } from "@dashboard/components/Card";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
+import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
 import {
   CollectionDetailsQuery,
   useCollectionAssignProductMutation,
@@ -60,7 +60,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = ({
   const intl = useIntl();
   const id = useCollectionId();
   const { settings, updateListSettings } = useListSettings(ListViews.COLLECTION_PRODUCTS_LIST);
-  const numberOfRows = settings.rowNumber;
+  const numberOfRows = settings ? settings.rowNumber : PAGINATE_BY;
   const [paginationState, setPaginationState] = useLocalPaginationState(numberOfRows);
   const notify = useNotifier();
 
