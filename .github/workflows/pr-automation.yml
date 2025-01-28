@@ -202,6 +202,8 @@ jobs:
           PW_RETRIES: ${{ vars.PW_RETRIES }}
           ACCOUNTS: ${{ needs.deploy-dashboard.outputs.ACCOUNTS }}
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
+          BRANCH_NAME: ${{ github.ref_name }}
+          SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
 
       - name: submit-results-to-testmo
         if: always()

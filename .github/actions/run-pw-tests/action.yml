@@ -82,6 +82,8 @@ runs:
         WORKERS: ${{ inputs.PW_WORKERS }}
         RETRIES: ${{ inputs.PW_RETRIES }}
         PROJECT: ${{ inputs.PROJECT }}
+        BRANCH_NAME: ${{ inputs.BRANCH_NAME }}
+        SALEOR_CLOUD_SERVICE: ${{ inputs.DASHBOARD_VERSION }}
 
       run: |
         PROJECTS=($PROJECT)
