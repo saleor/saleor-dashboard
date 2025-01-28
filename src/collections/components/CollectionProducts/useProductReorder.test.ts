@@ -29,6 +29,8 @@ jest.mock("./useCollectionId", () => ({
   useCollectionId: jest.fn(() => "collection-id-1"),
 }));
 
+jest.mock("@dashboard/hooks/useNotifier", () => jest.fn());
+
 describe("CollectionProducts/useProductReorder", () => {
   const mockReorder = jest.fn();
   const createForDroppedItem = jest.fn();
