@@ -5053,10 +5053,6 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this collection?} other{Are you sure you want to unassign {displayQuantity} collections?}}"
   },
-  "UjsI4o": {
-    "context": "date",
-    "string": "since {date}"
-  },
   "Um3g00": {
     "context": "send to customer selected label",
     "string": "Send gift card to customer"
@@ -6221,6 +6217,10 @@
   "biVFKU": {
     "context": "subsection header",
     "string": "Billing Address"
+  },
+  "bidZKr": {
+    "context": "date",
+    "string": "Since {date}"
   },
   "bj1U23": {
     "string": "Are you sure you want to delete {menuName}?"

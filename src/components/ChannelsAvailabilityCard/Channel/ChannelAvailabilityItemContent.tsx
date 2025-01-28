@@ -93,67 +93,72 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
           disabled={disabled}
           display="flex"
           flexDirection="column"
-          gap={3}
         >
           <RadioGroup.Item id={`${id}-isPublished-true`} value="true" name="isPublished">
-            <Box display="flex" alignItems="baseline" gap={2}>
-              <Text>{messages.visibleLabel}</Text>
-              {isPublished && publishedAt && Date.parse(publishedAt) < dateNow && (
-                <Text size={2} color="default2">
-                  {messages.visibleSecondLabel || visibleMessage(publishedAt)}
-                </Text>
+            <Text>{messages.visibleLabel}</Text>
+          </RadioGroup.Item>
+          {isPublished && publishedAt && Date.parse(publishedAt) < dateNow && (
+            <Text size={2} color="default2">
+              {messages.visibleSecondLabel || visibleMessage(publishedAt)}
+            </Text>
+          )}
+
+          {/* Should be visible all the time, product can be published and this should show since when */}
+          {isPublished && (
+            <Box display="flex" flexDirection="column" alignItems="start" gap={1} marginTop={2}>
+              <Checkbox
+                onCheckedChange={(checked: boolean) => {
+                  if (!checked) {
+                    onChange(id, {
+                      ...formData,
+                      publishedAt: null,
+                    });
+                  }
+
+                  setPublishedAt(checked);
+                }}
+                checked={isPublishedAt}
+              >
+                {intl.formatMessage(availabilityItemMessages.setPublicationDate)}
+              </Checkbox>
+              {isPublishedAt && (
+                <DateTimeTimezoneField
+                  error={!!formErrors.publishedAt}
+                  helperText={
+                    formErrors.publishedAt
+                      ? getProductErrorMessage(formErrors.publishedAt, intl)
+                      : ""
+                  }
+                  disabled={disabled}
+                  name={`channel:publicationTime:${id}`}
+                  value={publishedAt || ""}
+                  onChange={dateTime => {
+                    onChange(id, {
+                      ...formData,
+                      publishedAt: dateTime,
+                    });
+                  }}
+                  fullWidth
+                />
               )}
             </Box>
+          )}
+
+          <RadioGroup.Item
+            id={`${id}-isPublished-false`}
+            value="false"
+            name="isPublished"
+            marginTop={3}
+          >
+            <Text>{messages.hiddenLabel}</Text>
           </RadioGroup.Item>
-          <RadioGroup.Item id={`${id}-isPublished-false`} value="false" name="isPublished">
-            <Box display="flex" alignItems="baseline" gap={2}>
-              <Text>{messages.hiddenLabel}</Text>
-              {publishedAt && !isPublished && Date.parse(publishedAt) >= dateNow && (
-                <Text size={2} color="default2">
-                  {messages.hiddenSecondLabel}
-                </Text>
-              )}
-            </Box>
-          </RadioGroup.Item>
+          {publishedAt && !isPublished && Date.parse(publishedAt) >= dateNow && (
+            <Text size={2} color="default2">
+              {messages.hiddenSecondLabel}
+            </Text>
+          )}
         </RadioGroup>
       </StopPropagation>
-
-      {/* Should be visible all the time, product can be published and this should show since when */}
-      <Box display="flex" flexDirection="column" alignItems="start" gap={1}>
-        <Checkbox
-          onCheckedChange={(checked: boolean) => {
-            if (!checked) {
-              onChange(id, {
-                ...formData,
-                publishedAt: null,
-              });
-            }
-
-            setPublishedAt(checked);
-          }}
-          checked={isPublishedAt}
-        >
-          {intl.formatMessage(availabilityItemMessages.setPublicationDate)}
-        </Checkbox>
-        {isPublishedAt && (
-          <DateTimeTimezoneField
-            error={!!formErrors.publishedAt}
-            helperText={
-              formErrors.publishedAt ? getProductErrorMessage(formErrors.publishedAt, intl) : ""
-            }
-            disabled={disabled}
-            name={`channel:publicationTime:${id}`}
-            value={publishedAt || ""}
-            onChange={dateTime => {
-              onChange(id, {
-                ...formData,
-                publishedAt: dateTime,
-              });
-            }}
-            fullWidth
-          />
-        )}
-      </Box>
 
       {/* Available/unavailable for purchase */}
       <Divider />
@@ -169,65 +174,65 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
         }}
         display="flex"
         flexDirection="column"
-        gap={3}
       >
         <RadioGroup.Item id={`channel:isAvailableForPurchase:${id}-true`} value="true">
-          <Box display="flex" __alignItems="baseline" gap={2}>
-            <Text>{messages.availableLabel}</Text>
-            {isAvailable &&
-              availableForPurchaseAt &&
-              Date.parse(availableForPurchaseAt) < dateNow && (
-                <Text size={2} color="default2">
-                  {visibleMessage(availableForPurchaseAt)}
-                </Text>
-              )}
-          </Box>
+          <Text>{messages.availableLabel}</Text>
         </RadioGroup.Item>
-        <RadioGroup.Item id={`channel:isAvailableForPurchase:${id}-false`} value="false">
-          <Box display="flex" __alignItems="baseline" gap={2}>
-            <Text>{messages.unavailableLabel}</Text>
-            {availableForPurchaseAt && !isAvailable && (
-              <Text size={2} color="default2">
-                {messages.availableSecondLabel}
-              </Text>
-            )}
-          </Box>
+        {isAvailable && availableForPurchaseAt && Date.parse(availableForPurchaseAt) < dateNow && (
+          <Text size={2} color="default2">
+            {visibleMessage(availableForPurchaseAt)}
+          </Text>
+        )}
+
+        <RadioGroup.Item
+          id={`channel:isAvailableForPurchase:${id}-false`}
+          value="false"
+          marginTop={3}
+        >
+          <Text>{messages.unavailableLabel}</Text>
         </RadioGroup.Item>
+        {availableForPurchaseAt && !isAvailable && (
+          <Text size={2} color="default2">
+            {messages.availableSecondLabel}
+          </Text>
+        )}
       </RadioGroup>
 
       {/* Should be visible only when product is available for purchase */}
-      <Box display="flex" gap={1} flexDirection="column" alignItems="start">
-        <Checkbox
-          onCheckedChange={(checked: boolean) => {
-            if (!checked) {
-              onChange(id, {
-                ...formData,
-                availableForPurchaseAt: null,
-              });
-            }
+      {!isAvailable && (
+        <Box display="flex" gap={1} flexDirection="column" alignItems="start">
+          <Checkbox
+            onCheckedChange={(checked: boolean) => {
+              if (!checked) {
+                onChange(id, {
+                  ...formData,
+                  availableForPurchaseAt: null,
+                });
+              }
 
-            setAvailableDate(checked);
-          }}
-          checked={isAvailableDate}
-        >
-          {messages.setAvailabilityDateLabel}
-        </Checkbox>
-        {isAvailableDate && (
-          <DateTimeTimezoneField
-            error={!!formErrors.availableForPurchaseAt}
-            disabled={disabled}
-            name={`channel:availableForPurchaseAt:${id}`}
-            value={availableForPurchaseAt || ""}
-            onChange={dateTime => {
-              onChange(id, {
-                ...formData,
-                availableForPurchaseAt: dateTime,
-              });
+              setAvailableDate(checked);
             }}
-            fullWidth
-          />
-        )}
-      </Box>
+            checked={isAvailableDate}
+          >
+            {messages.setAvailabilityDateLabel}
+          </Checkbox>
+          {isAvailableDate && (
+            <DateTimeTimezoneField
+              error={!!formErrors.availableForPurchaseAt}
+              disabled={disabled}
+              name={`channel:availableForPurchaseAt:${id}`}
+              value={availableForPurchaseAt || ""}
+              onChange={dateTime => {
+                onChange(id, {
+                  ...formData,
+                  availableForPurchaseAt: dateTime,
+                });
+              }}
+              fullWidth
+            />
+          )}
+        </Box>
+      )}
 
       {/* Hide in product listings */}
       <Divider />
