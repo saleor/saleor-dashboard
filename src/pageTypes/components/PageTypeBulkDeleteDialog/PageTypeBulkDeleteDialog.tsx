@@ -1,6 +1,5 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface PageTypeBulkDeleteDialogProps {
@@ -12,14 +11,14 @@ export interface PageTypeBulkDeleteDialogProps {
   onConfirm: () => void;
 }
 
-const PageTypeBulkDeleteDialog: React.FC<PageTypeBulkDeleteDialogProps> = ({
+const PageTypeBulkDeleteDialog = ({
   confirmButtonState,
   open,
   quantity,
   hasPages,
   onClose,
   onConfirm,
-}) => {
+}: PageTypeBulkDeleteDialogProps) => {
   const intl = useIntl();
 
   return (

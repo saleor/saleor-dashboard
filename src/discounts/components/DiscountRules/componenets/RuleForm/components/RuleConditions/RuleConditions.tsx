@@ -2,7 +2,6 @@ import { useConditionNames } from "@dashboard/discounts/components/DiscountRules
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
 import { createEmptyCodition, Rule } from "@dashboard/discounts/models";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 

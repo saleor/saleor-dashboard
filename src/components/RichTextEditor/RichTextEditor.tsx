@@ -4,7 +4,7 @@ import { useId } from "@reach/auto-id";
 import { EditorCore, Props as ReactEditorJSProps } from "@react-editor-js/core";
 import { Box } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import * as React from "react";
 
 import { tools } from "./consts";
 import { useHasRendered, useUpdateOnRerender } from "./hooks";
@@ -26,7 +26,7 @@ export interface RichTextEditorProps extends Omit<EditorJsProps, "onChange"> {
   onBlur?: () => void;
 }
 
-const RichTextEditor: React.FC<RichTextEditorProps> = ({
+const RichTextEditor = ({
   id: defaultId,
   disabled,
   error,
@@ -38,7 +38,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   onChange,
   onBlur,
   ...props
-}) => {
+}: RichTextEditorProps) => {
   const classes = useStyles({});
   const id = useId(defaultId);
   const ref = React.useRef<EditorCore | null>(null);

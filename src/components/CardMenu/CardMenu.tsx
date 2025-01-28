@@ -11,7 +11,8 @@ import {
 import { IconButtonProps, makeStyles, SettingsIcon } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { IconButton } from "../IconButton";
@@ -72,7 +73,7 @@ const useStyles = makeStyles(
 /**
  * @deprecated use [`TopNav.Menu`](https://github.com/saleor/saleor-dashboard/blob/main/src/components/AppLayout/TopNav/Menu.tsx) instead
  */
-const CardMenu: React.FC<CardMenuProps> = props => {
+const CardMenu = (props: CardMenuProps) => {
   const {
     className,
     disabled,
@@ -146,7 +147,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
         state={open ? "active" : "default"}
         {...IconButtonProps}
       >
-        <Icon />
+        <Icon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
       </IconButton>
       <Popper
         placement="bottom-end"

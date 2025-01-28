@@ -1,5 +1,3 @@
-import React from "react";
-
 export const Cloud = () => (
   <svg fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-macaw-ui-candidate>
     <g clipPath="url(#a)">

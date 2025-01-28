@@ -5,7 +5,8 @@ import useForm, { CommonUseFormResultWithHandlers, SubmitPromise } from "@dashbo
 import useFormset, { FormsetChange, FormsetData } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { getById } from "@dashboard/misc";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+import * as React from "react";
 
 import { OrderRefundAmountCalculationMode } from "../OrderRefundPage/form";
 import { useFulfillmentFormset } from "./useFulfillmentFormset";
@@ -222,7 +223,7 @@ function useOrderReturnForm(
   };
 }
 
-const OrderReturnForm: React.FC<OrderReturnProps> = ({ children, order, onSubmit }) => {
+const OrderReturnForm = ({ children, order, onSubmit }: OrderReturnProps) => {
   const props = useOrderReturnForm(order as OrderDetailsFragment, onSubmit);
 
   return <form>{children(props)}</form>;

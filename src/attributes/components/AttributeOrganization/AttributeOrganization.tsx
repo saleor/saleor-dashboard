@@ -3,7 +3,7 @@ import RadioGroupField from "@dashboard/components/RadioGroupField";
 import { AttributeTypeEnum } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { AttributePageFormData } from "../AttributePage";
@@ -42,7 +42,7 @@ const useStyles = makeStyles(
   }),
   { name: "AttributeOrganization" },
 );
-const AttributeOrganization: React.FC<AttributeOrganizationProps> = props => {
+const AttributeOrganization = (props: AttributeOrganizationProps) => {
   const { canChangeType, data, disabled, onChange } = props;
   const classes = useStyles(props);
   const intl = useIntl();

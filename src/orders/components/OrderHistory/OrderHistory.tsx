@@ -10,7 +10,6 @@ import {
 } from "@dashboard/components/Timeline";
 import { OrderEventFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ExtendedTimelineEvent from "./ExtendedTimelineEvent";
@@ -29,7 +28,7 @@ interface OrderHistoryProps {
   onNoteAdd: (data: FormData) => SubmitPromise;
 }
 
-const OrderHistory: React.FC<OrderHistoryProps> = props => {
+const OrderHistory = (props: OrderHistoryProps) => {
   const { history, orderCurrency, onNoteAdd } = props;
   const intl = useIntl();
   const getTimelineEventTitleProps = (event: OrderEventFragment): Partial<TimelineEventProps> => {

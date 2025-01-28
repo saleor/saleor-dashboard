@@ -1,7 +1,7 @@
 import { useUser } from "@dashboard/auth";
 import { ApolloMockedProvider } from "@test/ApolloMockedProvider";
 import { render, screen, waitFor } from "@testing-library/react";
-import React from "react";
+import * as React from "react";
 
 import { onboardingCompletedMock, onboardingInitState } from "./mocks";
 import { OnboardingProvider } from "./onboardingContext";

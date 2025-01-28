@@ -5,7 +5,7 @@ import FileUploadField from "@dashboard/components/FileUploadField";
 import { SimpleRadioGroupField } from "@dashboard/components/SimpleRadioGroupField";
 import { UseFormResult } from "@dashboard/hooks/useForm";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { swatchFieldMessages } from "./messages";
@@ -19,9 +19,10 @@ type AttributeSwatchFieldProps<T> = Pick<
 
 type SwatchType = "picker" | "image";
 
-const AttributeSwatchField: React.FC<
-  AttributeSwatchFieldProps<AttributeValueEditDialogFormData>
-> = ({ set, ...props }) => {
+const AttributeSwatchField = ({
+  set,
+  ...props
+}: AttributeSwatchFieldProps<AttributeValueEditDialogFormData>) => {
   const { data } = props;
   const { formatMessage } = useIntl();
   const [type, setType] = useState<SwatchType>(data.fileUrl ? "image" : "picker");

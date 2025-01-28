@@ -47,7 +47,7 @@ test("TC: SALEOR_122 Should be able to edit translation  @e2e @translations", as
   await translationsPage.editTranslationDescriptionButton.click();
   await translationsPage.translationRichText.clear();
   await translationsPage.translationRichText.fill(newDescription);
-  await translationsPage.saveButton.click();
+  await translationsPage.saveButton.click({ force: true });
   await translationsPage.expectSuccessBanner();
   await translationsPage.goToDirectTranslationPage(
     "PL_PL",

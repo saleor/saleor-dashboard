@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 
 export const CancelButton = ({ children, ...props }: { children?: React.ReactNode }) => (
   <button {...props}>cancel</button>

@@ -5,7 +5,7 @@ import { DiscountTypeEnum } from "@dashboard/discounts/types";
 import { DiscountErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";

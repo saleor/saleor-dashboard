@@ -14,7 +14,7 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Button, Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { renderCollection } from "../../../misc";
@@ -55,7 +55,7 @@ export interface CollectionProductsProps extends PageListProps, ListActions {
   onAdd: () => void;
 }
 
-const CollectionProducts: React.FC<CollectionProductsProps> = props => {
+const CollectionProducts = (props: CollectionProductsProps) => {
   const {
     collection,
     disabled,

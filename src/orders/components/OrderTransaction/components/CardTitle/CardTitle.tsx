@@ -1,7 +1,6 @@
 import { ButtonLink } from "@dashboard/components/ButtonLink";
 import { TransactionActionEnum } from "@dashboard/graphql";
 import { Box, Button, ExternalLinkIcon, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderTransactionProps } from "../../OrderTransaction";
@@ -49,11 +48,11 @@ const TransactionTitle = ({
   );
 };
 
-export const OrderTransactionCardTitle: React.FC<CardTitleProps> = ({
+export const OrderTransactionCardTitle = ({
   transaction,
   onTransactionAction,
   showActions = true,
-}) => {
+}: CardTitleProps) => {
   const intl = useIntl();
 
   const {

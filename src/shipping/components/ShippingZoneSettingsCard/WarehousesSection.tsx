@@ -3,7 +3,6 @@ import { Multiselect } from "@dashboard/components/Combobox";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { FetchMoreProps, SearchProps } from "@dashboard/types";
 import { Box, Button, Option } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 const messages = defineMessages({
@@ -37,7 +36,7 @@ interface WarehousesSectionProps extends FetchMoreProps, SearchProps {
   selectedWarehouses: Option[];
 }
 
-const WarehousesSection: React.FC<WarehousesSectionProps> = ({
+const WarehousesSection = ({
   onAdd,
   onSearchChange,
   onChange,
@@ -46,7 +45,7 @@ const WarehousesSection: React.FC<WarehousesSectionProps> = ({
   selectedWarehouses,
   hasMore,
   loading,
-}) => {
+}: WarehousesSectionProps) => {
   const intl = useIntl();
 
   return (

@@ -13,7 +13,6 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Popover, sprinkles, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import OrderDiscountCommonModal from "../OrderDiscountCommonModal";
@@ -65,7 +64,7 @@ interface OrderDraftDetailsSummaryProps extends OrderDiscountContextConsumerProp
   onShippingMethodEdit: () => void;
 }
 
-const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props => {
+const OrderDraftDetailsSummary = (props: OrderDraftDetailsSummaryProps) => {
   const {
     order,
     errors,

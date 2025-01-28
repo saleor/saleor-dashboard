@@ -32,7 +32,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { splitDateTime } from "../../../misc";
@@ -121,7 +121,7 @@ export interface VoucherDetailsPageProps
 const CategoriesTab = Tab(VoucherDetailsPageTab.categories);
 const CollectionsTab = Tab(VoucherDetailsPageTab.collections);
 const ProductsTab = Tab(VoucherDetailsPageTab.products);
-const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
+const VoucherDetailsPage = ({
   activeTab,
   tabItemsCount = {},
   allChannelsCount,
@@ -162,10 +162,10 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   voucherCodesPagination,
   onVoucherCodesSettingsChange,
   voucherCodesSettings,
-}) => {
+}: VoucherDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const [localErrors, setLocalErrors] = React.useState<DiscountErrorFragment[]>([]);
+  const [localErrors, setLocalErrors] = useState<DiscountErrorFragment[]>([]);
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const channel = voucher?.channelListings?.find(
     listing => listing.channel.id === selectedChannelId,

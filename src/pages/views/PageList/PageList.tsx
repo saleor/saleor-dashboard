@@ -28,7 +28,7 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
-import React, { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import PageListPage from "../../components/PageListPage/PageListPage";
@@ -40,7 +40,7 @@ interface PageListProps {
   params: PageListUrlQueryParams;
 }
 
-export const PageList: React.FC<PageListProps> = ({ params }) => {
+export const PageList = ({ params }: PageListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -79,7 +79,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
     storageUtils,
   });
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = React.useMemo(
+  const queryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),

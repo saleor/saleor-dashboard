@@ -11,7 +11,6 @@ import { RelayToFlat } from "@dashboard/types";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
@@ -34,7 +33,7 @@ export interface CustomerOrdersProps {
   viewAllHref: string;
 }
 
-const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
+const CustomerOrders = (props: CustomerOrdersProps) => {
   const { orders, viewAllHref } = props;
   const classes = useStyles(props);
   const intl = useIntl();

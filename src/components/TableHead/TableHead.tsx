@@ -5,7 +5,7 @@ import { TableHeadProps as MuiTableHeadProps } from "@material-ui/core/TableHead
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { Node } from "../../types";
@@ -66,7 +66,7 @@ function getColSpan(colSpan: number, dragRows: boolean): number {
   return colSpan - 1;
 }
 
-const TableHead: React.FC<TableHeadProps> = props => {
+const TableHead = (props: TableHeadProps) => {
   const {
     children,
     colSpan,

@@ -14,7 +14,6 @@ import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import usePageSearch from "@dashboard/searches/usePageSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { categoryUrl } from "../../../categories/urls";
@@ -48,7 +47,7 @@ interface MenuDetailsProps {
   params: MenuUrlQueryParams;
 }
 
-const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
+const MenuDetails = ({ id, params }: MenuDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

@@ -1,6 +1,5 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import messages from "./messages";
@@ -15,7 +14,7 @@ export interface BulkAttributeUnassignDialogProps {
   onConfirm: () => void;
 }
 
-const BulkAttributeUnassignDialog: React.FC<BulkAttributeUnassignDialogProps> = ({
+const BulkAttributeUnassignDialog = ({
   title,
   attributeQuantity,
   confirmButtonState,
@@ -23,7 +22,7 @@ const BulkAttributeUnassignDialog: React.FC<BulkAttributeUnassignDialogProps> = 
   itemTypeName,
   onClose,
   onConfirm,
-}) => {
+}: BulkAttributeUnassignDialogProps) => {
   const intl = useIntl();
 
   return (

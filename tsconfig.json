@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "esModuleInterop": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "lib": ["es2020", "dom", "esnext"],
     "skipLibCheck": true,
     "sourceMap": true,

@@ -1,7 +1,6 @@
 import { LogLevels } from "@editorjs/editorjs";
 import { useId } from "@reach/auto-id";
 import clsx from "clsx";
-import React from "react";
 import { createReactEditorJS } from "react-editor-js";
 
 import { tools } from "./consts";
@@ -15,12 +14,12 @@ export interface RichTextEditorContentProps extends Omit<EditorJsProps, "default
 }
 
 const ReactEditorJS = createReactEditorJS();
-const RichTextEditorContent: React.FC<RichTextEditorContentProps> = ({
+const RichTextEditorContent = ({
   id: defaultId,
   className,
   value,
   ...props
-}) => {
+}: RichTextEditorContentProps) => {
   const classes = useStyles({});
   const id = useId(defaultId);
   // We need to render FormControl first to get id from @reach/auto-id

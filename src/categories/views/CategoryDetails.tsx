@@ -30,7 +30,7 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 import { Box } from "@saleor/macaw-ui-next";
 import isEqual from "lodash/isEqual";
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { PAGINATE_BY } from "../../config";
@@ -54,7 +54,7 @@ export function getActiveTab(tabName: string): CategoryPageTab {
     : CategoryPageTab.categories;
 }
 
-export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) => {
+export const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
