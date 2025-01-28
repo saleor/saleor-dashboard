@@ -43,11 +43,7 @@ export default defineConfig({
       ['playwright-ctrf-json-reporter', {
         outputFile: `ctrf-report-${shardNumber}.json`, // Optional: Output file name. Defaults to 'ctrf-report.json'.
         minimal: true,                  // Optional: Generate a minimal report. Defaults to 'false'. Overrides screenshot and testType when set to true
-        annotations: false,             // Optional: Include annotations in the report. Defaults to 'false'.
         appName: 'Saleor Dashboard',    // Optional: Specify the name of the application under test.
-        appVersion: 'main',             // Optional: Specify the version of the application under test.
-        branchName: env.POOL_NAME,    // Optional: Specify the branch name.
-        testEnvironment: env.SALEOR_CLOUD_SERVICE      // Optional: Specify the test environment (e.g. staging, production).
       }]]
     : [["html"], ["list"]],
   expect: { timeout: 10 * 1000 },
