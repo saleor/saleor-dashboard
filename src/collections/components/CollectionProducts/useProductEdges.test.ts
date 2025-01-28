@@ -43,9 +43,11 @@ describe("CollectionProducts/useProductEdges", () => {
     mockReadQuery.mockReturnValue(mockQueryResponse);
   });
 
-  it("should return product edges when query is successful", () => {
+  it("should return product edges when query cache exists", () => {
+    // Arrange & Act
     const { result } = renderHook(() => useProductEdges({ paginationState: mockPaginationState }));
 
+    // Assert
     expect(mockReadQuery).toHaveBeenCalledWith({
       query: "CollectionProductsDocument",
       variables: {
@@ -57,40 +59,52 @@ describe("CollectionProducts/useProductEdges", () => {
     expect(result.current.edges).toEqual(mockProductEdges);
   });
 
-  it("should return empty array when query returns null", () => {
+  it("should return empty array when query cache is empty", () => {
+    // Arrange
     mockReadQuery.mockReturnValue(null);
 
+    // Act
     const { result } = renderHook(() => useProductEdges({ paginationState: mockPaginationState }));
 
+    // Assert
     expect(result.current.edges).toEqual([]);
   });
 
-  it("should return empty array when collection is null", () => {
+  it("should return empty array when collection is empty", () => {
+    // Arrange
     mockReadQuery.mockReturnValue({ collection: null });
 
+    // Act
     const { result } = renderHook(() => useProductEdges({ paginationState: mockPaginationState }));
 
+    // Assert
     expect(result.current.edges).toEqual([]);
   });
 
-  it("should return empty array when products is null", () => {
+  it("should return empty array when there are no products", () => {
+    // Arrange
     mockReadQuery.mockReturnValue({
       collection: { products: null },
     });
 
+    // Act
     const { result } = renderHook(() => useProductEdges({ paginationState: mockPaginationState }));
 
+    // Assert
     expect(result.current.edges).toEqual([]);
   });
 
   it("should pass pagination state to query", () => {
+    // Arrange
     const customPaginationState = {
       first: 20,
       after: "cursor-123",
     };
 
+    // Act
     renderHook(() => useProductEdges({ paginationState: customPaginationState }));
 
+    // Assert
     expect(mockReadQuery).toHaveBeenCalledWith({
       query: expect.anything(),
       variables: {

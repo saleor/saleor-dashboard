@@ -35,6 +35,7 @@ const mockEdges = [
 (useProductEdges as jest.Mock).mockReturnValue({ edges: mockEdges });
 
 describe("CollectionProducts/useProductReorderOptimistic", () => {
+  // Arrange
   const defaultPaginationState = {
     first: 10,
     after: null,
@@ -49,6 +50,7 @@ describe("CollectionProducts/useProductReorderOptimistic", () => {
   });
 
   it("should create proper optimistic response for reordered products", () => {
+    // Arrange & Act
     const { result } = renderHook(() =>
       useProductReorderOptimistic({ paginationState: defaultPaginationState }),
     );
@@ -62,6 +64,7 @@ describe("CollectionProducts/useProductReorderOptimistic", () => {
     const activeNodeId = "product-1";
     const response = result.current.createForDroppedItem(products, activeNodeId);
 
+    // Assert
     expect(response).toEqual({
       collectionReorderProducts: {
         __typename: "CollectionReorderProducts",
@@ -106,6 +109,7 @@ describe("CollectionProducts/useProductReorderOptimistic", () => {
   });
 
   it("should handle empty product list", () => {
+    // Arrange & Act
     const { result } = renderHook(() =>
       useProductReorderOptimistic({ paginationState: defaultPaginationState }),
     );
@@ -114,10 +118,12 @@ describe("CollectionProducts/useProductReorderOptimistic", () => {
     const activeNodeId = "product-1";
     const response = result.current.createForDroppedItem(products, activeNodeId);
 
+    // Assert
     expect(response.collectionReorderProducts.collection.products.edges).toEqual([]);
   });
 
   it("should handle product not found in edges", () => {
+    // Arrange & Act
     const { result } = renderHook(() =>
       useProductReorderOptimistic({ paginationState: defaultPaginationState }),
     );
@@ -130,6 +136,7 @@ describe("CollectionProducts/useProductReorderOptimistic", () => {
     const activeNodeId = "product-1";
     const response = result.current.createForDroppedItem(products, activeNodeId);
 
+    // Assert
     expect(response.collectionReorderProducts.collection.products.edges).toEqual([
       {
         node: {
@@ -141,6 +148,7 @@ describe("CollectionProducts/useProductReorderOptimistic", () => {
   });
 
   it("should use correct collection ID from hook", () => {
+    // Arrange
     const customCollectionId = "custom-collection-123";
 
     (useCollectionId as jest.Mock).mockReturnValue(customCollectionId);
@@ -153,10 +161,12 @@ describe("CollectionProducts/useProductReorderOptimistic", () => {
     const activeNodeId = "product-1";
     const response = result.current.createForDroppedItem(products, activeNodeId);
 
+    // Assert
     expect(response.collectionReorderProducts.collection.id).toBe(customCollectionId);
   });
 
   it("should preserve edge properties when creating optimistic response", () => {
+    // Arrange
     const edgesWithExtraProps = [
       {
         node: {
@@ -168,6 +178,7 @@ describe("CollectionProducts/useProductReorderOptimistic", () => {
       },
     ];
 
+    // Act
     (useProductEdges as jest.Mock).mockReturnValue({ edges: edgesWithExtraProps });
 
     const { result } = renderHook(() =>
@@ -178,6 +189,7 @@ describe("CollectionProducts/useProductReorderOptimistic", () => {
     const activeNodeId = "product-1";
     const response = result.current.createForDroppedItem(products, activeNodeId);
 
+    // Assert
     expect(response.collectionReorderProducts.collection.products.edges[0]).toMatchObject({
       node: {
         id: "moved_product-1",

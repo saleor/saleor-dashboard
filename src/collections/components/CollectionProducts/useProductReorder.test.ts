@@ -88,10 +88,12 @@ describe("CollectionProducts/useProductReorder", () => {
   });
 
   it("should return data from the mutation", () => {
+    // Arrange & Act
     const { result } = renderHook(() =>
       useProductReorder({ paginationState: { first: 10, after: "1" } }),
     );
 
+    // Assert
     expect(result.current.data).toEqual({});
   });
 });
