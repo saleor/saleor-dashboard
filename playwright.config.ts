@@ -44,6 +44,9 @@ export default defineConfig({
         outputFile: `ctrf-report-${shardNumber}.json`, // Optional: Output file name. Defaults to 'ctrf-report.json'.
         minimal: true,                  // Optional: Generate a minimal report. Defaults to 'false'. Overrides screenshot and testType when set to true
         appName: 'Saleor Dashboard',    // Optional: Specify the name of the application under test.
+        appVersion: env.DASHBOARD_VERSION || '',     // Optional: Specify the version of the application under test.
+        branchName: env.BRANCH_NAME || '',    // Optional: Specify the branch name.
+        testEnvironment: env.SALEOR_CLOUD_SERVICE || ''     // Optional: Specify the test environment (e.g. staging, production).
       }]]
     : [["html"], ["list"]],
   expect: { timeout: 10 * 1000 },
