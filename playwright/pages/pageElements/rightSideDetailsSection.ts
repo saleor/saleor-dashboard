@@ -190,7 +190,7 @@ export class RightSideDetailsPage extends BasePage {
     await this.selectCustomerOption
       .filter({ hasText: customerEmail })
       .waitFor({ state: "visible" });
-    await this.selectCustomerOption.filter({ hasText: customerEmail }).click();
+    await this.selectCustomerOption.filter({ hasText: customerEmail }).click({ force: true });
   }
 
   async selectOneChannelAsAvailableWhenMoreSelected(channel: string) {

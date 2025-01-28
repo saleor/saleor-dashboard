@@ -24,6 +24,8 @@ export class AddNavigationMenuItemDialog extends BasePage {
     await linkTypeOption.waitFor({ state: "visible" });
     await expect(linkTypeOption).toBeEnabled();
     await linkTypeOption.click({ force: true });
+    await linkTypeOption.waitFor({ state: "hidden" });
+    await this.menuLinkValue.blur();
 
     // Verify the correct link type is selected
     const selectedLinkType = await this.menuLinkType.inputValue();
@@ -39,9 +41,11 @@ export class AddNavigationMenuItemDialog extends BasePage {
     // Ensure the option is present and select it
     await this.menuLinkOptions.filter({ hasText: optionName }).waitFor({ state: "visible" });
     await this.menuLinkOptions.filter({ hasText: optionName }).click();
+    await this.menuLinkOptions.waitFor({ state: "hidden" });
+    await this.menuLinkValue.blur();
 
     // Verify the correct option is selected
-    await expect(this.menuLinkValue).toHaveValue(optionName);
+    await expect(this.menuLinkValue).toHaveValue(optionName, { timeout: 5000 });
   }
 
   async typeMenuItemName(name: string) {
