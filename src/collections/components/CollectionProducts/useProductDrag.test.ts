@@ -45,6 +45,14 @@ describe("CollectionProducts/useProductDrag", () => {
       { id: "3", name: "Product 3" },
     ]);
 
-    expect(move).toHaveBeenCalledWith(["1"], -1);
+    expect(move).toHaveBeenCalledWith(
+      [
+        { id: "2", name: "Product 2" },
+        { id: "1", name: "Product 1" },
+        { id: "3", name: "Product 3" },
+      ],
+      "1",
+      -1,
+    );
   });
 });

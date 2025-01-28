@@ -96,15 +96,7 @@ export const unassignCollectionProduct = gql`
         ) {
           edges {
             node {
-              id
-              name
-              productType {
-                id
-                name
-              }
-              thumbnail {
-                url
-              }
+              ...CollectionProduct
             }
           }
           pageInfo {

@@ -1,198 +1,102 @@
 import { useApolloClient } from "@apollo/client";
+import { PaginationState } from "@dashboard/hooks/usePaginator";
 import { renderHook } from "@testing-library/react-hooks";
 
+import { useCollectionId } from "./useCollectionId";
 import { useProductEdges } from "./useProductEdges";
 
 jest.mock("@apollo/client");
+jest.mock("@dashboard/graphql", () => ({
+  CollectionProductsDocument: "CollectionProductsDocument",
+}));
 jest.mock("./useCollectionId");
 
 describe("CollectionProducts/useProductEdges", () => {
+  const mockCollectionId = "collection-123";
+  const mockPaginationState = {
+    first: 10,
+    after: null,
+  } as unknown as PaginationState;
+
+  const mockProductEdges = [
+    { node: { id: "1", name: "Product 1" } },
+    { node: { id: "2", name: "Product 2" } },
+  ];
+
+  const mockQueryResponse = {
+    collection: {
+      products: {
+        edges: mockProductEdges,
+      },
+    },
+  };
+
   const mockReadQuery = jest.fn();
-  const mockClient = { readQuery: mockReadQuery };
+  const mockApolloClient = {
+    readQuery: mockReadQuery,
+  };
 
   beforeEach(() => {
-    (useApolloClient as jest.Mock).mockReturnValue(mockClient);
+    jest.clearAllMocks();
+    (useApolloClient as jest.Mock).mockReturnValue(mockApolloClient);
+    (useCollectionId as jest.Mock).mockReturnValue(mockCollectionId);
+    mockReadQuery.mockReturnValue(mockQueryResponse);
   });
 
-  it("shifts a single product", () => {
-    mockReadQuery.mockReturnValue({
-      collection: {
-        products: {
-          edges: [
-            { node: { id: "1" } },
-            { node: { id: "2" } },
-            { node: { id: "3" } },
-            { node: { id: "4" } },
-          ],
-        },
+  it("should return product edges when query is successful", () => {
+    const { result } = renderHook(() => useProductEdges({ paginationState: mockPaginationState }));
+
+    expect(mockReadQuery).toHaveBeenCalledWith({
+      query: "CollectionProductsDocument",
+      variables: {
+        id: mockCollectionId,
+        ...mockPaginationState,
       },
     });
 
-    const { result } = renderHook(() =>
-      useProductEdges({ paginationState: { first: 10, after: "1" } }),
-    );
-    const shiftedEdges = result.current.shift(["3"], 1);
-
-    expect(shiftedEdges).toEqual([
-      { node: { id: "1" } },
-      { node: { id: "2" } },
-      { node: { id: "4" } },
-      { node: { id: "3" } },
-    ]);
+    expect(result.current.edges).toEqual(mockProductEdges);
   });
 
-  it("shifts multiple products down", () => {
-    mockReadQuery.mockReturnValue({
-      collection: {
-        products: {
-          edges: [
-            { node: { id: "1" } },
-            { node: { id: "2" } },
-            { node: { id: "3" } },
-            { node: { id: "4" } },
-            { node: { id: "5" } },
-            { node: { id: "6" } },
-            { node: { id: "7" } },
-          ],
-        },
-      },
-    });
+  it("should return empty array when query returns null", () => {
+    mockReadQuery.mockReturnValue(null);
 
-    const { result } = renderHook(() =>
-      useProductEdges({ paginationState: { first: 10, after: "1" } }),
-    );
-    const shiftedEdges = result.current.shift(["1", "2"], 1);
+    const { result } = renderHook(() => useProductEdges({ paginationState: mockPaginationState }));
 
-    expect(shiftedEdges).toEqual([
-      { node: { id: "3" } },
-      { node: { id: "1" } },
-      { node: { id: "2" } },
-      { node: { id: "4" } },
-      { node: { id: "5" } },
-      { node: { id: "6" } },
-      { node: { id: "7" } },
-    ]);
+    expect(result.current.edges).toEqual([]);
   });
 
-  it("shifts multiple and random products down", () => {
-    mockReadQuery.mockReturnValue({
-      collection: {
-        products: {
-          edges: [
-            { node: { id: "1" } },
-            { node: { id: "2" } },
-            { node: { id: "3" } },
-            { node: { id: "4" } },
-            { node: { id: "5" } },
-            { node: { id: "6" } },
-            { node: { id: "7" } },
-          ],
-        },
-      },
-    });
+  it("should return empty array when collection is null", () => {
+    mockReadQuery.mockReturnValue({ collection: null });
 
-    const { result } = renderHook(() =>
-      useProductEdges({ paginationState: { first: 10, after: "1" } }),
-    );
-    const shiftedEdges = result.current.shift(["1", "4", "6"], 1);
+    const { result } = renderHook(() => useProductEdges({ paginationState: mockPaginationState }));
 
-    expect(shiftedEdges).toEqual([
-      { node: { id: "2" } },
-      { node: { id: "1" } },
-      { node: { id: "3" } },
-      { node: { id: "5" } },
-      { node: { id: "4" } },
-      { node: { id: "7" } },
-      { node: { id: "6" } },
-    ]);
+    expect(result.current.edges).toEqual([]);
   });
 
-  it("shifts multiple single products up", () => {
+  it("should return empty array when products is null", () => {
     mockReadQuery.mockReturnValue({
-      collection: {
-        products: {
-          edges: [
-            { node: { id: "1" } },
-            { node: { id: "2" } },
-            { node: { id: "3" } },
-            { node: { id: "4" } },
-            { node: { id: "5" } },
-            { node: { id: "6" } },
-            { node: { id: "7" } },
-          ],
-        },
-      },
+      collection: { products: null },
     });
 
-    const { result } = renderHook(() =>
-      useProductEdges({ paginationState: { first: 10, after: "1" } }),
-    );
-    const shiftedEdges = result.current.shift(["5", "6"], -1);
+    const { result } = renderHook(() => useProductEdges({ paginationState: mockPaginationState }));
 
-    expect(shiftedEdges).toEqual([
-      { node: { id: "1" } },
-      { node: { id: "2" } },
-      { node: { id: "3" } },
-      { node: { id: "5" } },
-      { node: { id: "6" } },
-      { node: { id: "4" } },
-      { node: { id: "7" } },
-    ]);
+    expect(result.current.edges).toEqual([]);
   });
 
-  it("shifts multiple random products up", () => {
-    mockReadQuery.mockReturnValue({
-      collection: {
-        products: {
-          edges: [
-            { node: { id: "1" } },
-            { node: { id: "2" } },
-            { node: { id: "3" } },
-            { node: { id: "4" } },
-            { node: { id: "5" } },
-            { node: { id: "6" } },
-            { node: { id: "7" } },
-          ],
-        },
+  it("should pass pagination state to query", () => {
+    const customPaginationState = {
+      first: 20,
+      after: "cursor-123",
+    };
+
+    renderHook(() => useProductEdges({ paginationState: customPaginationState }));
+
+    expect(mockReadQuery).toHaveBeenCalledWith({
+      query: expect.anything(),
+      variables: {
+        id: mockCollectionId,
+        ...customPaginationState,
       },
     });
-
-    const { result } = renderHook(() =>
-      useProductEdges({ paginationState: { first: 10, after: "1" } }),
-    );
-    const shiftedEdges = result.current.shift(["2", "3", "6"], -1);
-
-    expect(shiftedEdges).toEqual([
-      { node: { id: "2" } },
-      { node: { id: "3" } },
-      { node: { id: "1" } },
-      { node: { id: "4" } },
-      { node: { id: "6" } },
-      { node: { id: "5" } },
-      { node: { id: "7" } },
-    ]);
-  });
-
-  it("should identify if shift exceeds page", () => {
-    mockReadQuery.mockReturnValue({
-      collection: {
-        products: {
-          edges: [
-            { node: { id: "1" } },
-            { node: { id: "2" } },
-            { node: { id: "3" } },
-            { node: { id: "4" } },
-          ],
-        },
-      },
-    });
-
-    const { result } = renderHook(() =>
-      useProductEdges({ paginationState: { first: 10, after: "1" } }),
-    );
-    const { isExceed, exceededProductIds } = result.current.isShiftExceedPage(["1"], -1);
-
-    expect(isExceed).toBe(true);
-    expect(exceededProductIds).toEqual(["1"]);
   });
 });

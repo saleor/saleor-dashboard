@@ -4,7 +4,7 @@ import { renderCollection } from "@dashboard/misc";
 import { Node } from "@dashboard/types";
 import { closestCenter, DndContext } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
-import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Checkbox, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -22,8 +22,10 @@ interface ProductsTableProps {
   onProductUnassign: (id: string, event: React.MouseEvent<HTMLButtonElement>) => void;
   numberOfColumns: number;
   selected: number;
-  toolbar: React.ReactNode;
+  onUnassignClick: () => void;
   paginationState: PaginationState;
+  updateListSettings: (key: "rowNumber", value: number) => void;
+  numberOfRows: number;
 }
 
 const areAllChecked = (products: Product[], selected: number) => {
@@ -42,8 +44,10 @@ export const ProductsTable = ({
   disabled,
   onProductUnassign,
   selected,
-  toolbar,
+  onUnassignClick,
   paginationState,
+  updateListSettings,
+  numberOfRows,
 }: ProductsTableProps) => {
   const allChecked = areAllChecked(products, selected);
   const { items, sensors, isSaving, handleDragEnd } = useProductDrag({ products, paginationState });
@@ -129,7 +133,15 @@ export const ProductsTable = ({
                 justifyContent="flex-end"
                 gap={2}
               >
-                {selected ? toolbar : null}
+                {!!selected && (
+                  <Button variant="secondary" size="small" onClick={onUnassignClick}>
+                    <FormattedMessage
+                      id="67V0c0"
+                      defaultMessage="Unassign"
+                      description="unassign product from collection, button"
+                    />
+                  </Button>
+                )}
               </Box>
             </GridTable.Cell>
           </GridTable.Row>
@@ -155,7 +167,7 @@ export const ProductsTable = ({
           </SortableContext>
         </GridTable.Body>
       </GridTable>
-      <Pagination />
+      <Pagination numberOfRows={numberOfRows} onUpdateListSettings={updateListSettings} />
     </DndContext>
   );
 };

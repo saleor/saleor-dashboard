@@ -1,7 +1,7 @@
-import { CollectionDetailsQuery } from "@dashboard/graphql";
+import { CollectionProductsQuery } from "@dashboard/graphql";
 
 export type CollectionProducts = NonNullable<
-  NonNullable<CollectionDetailsQuery["collection"]>["products"]
+  NonNullable<CollectionProductsQuery["collection"]>["products"]
 >;
 
 /*

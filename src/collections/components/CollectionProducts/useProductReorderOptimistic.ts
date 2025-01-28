@@ -1,5 +1,6 @@
 import { PaginationState } from "@dashboard/hooks/useLocalPaginator";
 
+import { Product } from "./types";
 import { useCollectionId } from "./useCollectionId";
 import { useProductEdges } from "./useProductEdges";
 
@@ -32,31 +33,30 @@ interface ProductReorderOptimisticProps {
 
 export const useProductReorderOptimistic = ({ paginationState }: ProductReorderOptimisticProps) => {
   const collectionId = useCollectionId();
-  const { shift, isShiftExceedPage } = useProductEdges({ paginationState });
+  const { edges } = useProductEdges({ paginationState });
 
-  const createOptimisticResponse = (productIds: string[], shiftOffset: number) => {
-    const { exceededProductIds } = isShiftExceedPage(productIds, -shiftOffset);
+  const createForDroppedItem = (listAfterSort: Product[], activeNodeId: string) => {
+    const exceededEdges = listAfterSort
+      .map(product => edges.find(edge => edge?.node?.id === product.id))
+      .filter(Boolean)
+      .map(edge => {
+        const nodeId = edge?.node?.id || "";
+        const isMoved = activeNodeId == nodeId;
+        const newId = isMoved ? "moved_" + nodeId : nodeId;
 
-    const shifted = shift(productIds, -shiftOffset);
-
-    const exceededEdges = shifted.map(edge => {
-      const nodeId = edge?.node?.id || "";
-      const isExceededId = exceededProductIds.includes(nodeId);
-      const newId = isExceededId ? "optimistic_" + nodeId : nodeId;
-
-      return {
-        ...edge,
-        node: {
-          ...edge?.node,
-          id: newId,
-        },
-      };
-    });
+        return {
+          ...edge,
+          node: {
+            ...edge?.node,
+            id: newId,
+          },
+        };
+      });
 
     return createOptimisticResponseForEdges(collectionId, exceededEdges);
   };
 
   return {
-    createOptimisticResponse,
+    createForDroppedItem,
   };
 };

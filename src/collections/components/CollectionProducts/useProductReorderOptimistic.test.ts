@@ -1,65 +1,94 @@
+import { PaginationState } from "@dashboard/hooks/usePaginator";
 import { renderHook } from "@testing-library/react-hooks";
-import useRouter from "use-react-router";
 
+import { Product } from "./types";
+import { useCollectionId } from "./useCollectionId";
 import { useProductEdges } from "./useProductEdges";
 import { useProductReorderOptimistic } from "./useProductReorderOptimistic";
 
-jest.mock("use-react-router");
+jest.mock("./useCollectionId");
 jest.mock("./useProductEdges");
 
+const mockCollectionId = "collection-123";
+const mockEdges = [
+  {
+    node: {
+      id: "product-1",
+      name: "Product 1",
+    },
+  },
+  {
+    node: {
+      id: "product-2",
+      name: "Product 2",
+    },
+  },
+  {
+    node: {
+      id: "product-3",
+      name: "Product 3",
+    },
+  },
+];
+
+(useCollectionId as jest.Mock).mockReturnValue(mockCollectionId);
+(useProductEdges as jest.Mock).mockReturnValue({ edges: mockEdges });
+
 describe("CollectionProducts/useProductReorderOptimistic", () => {
+  const defaultPaginationState = {
+    first: 10,
+    after: null,
+    last: null,
+    before: null,
+  } as unknown as PaginationState;
+
   beforeEach(() => {
-    (useRouter as jest.Mock).mockReturnValue({
-      match: {
-        params: { id: "collection-id-1" },
-      },
-    });
-    (useProductEdges as jest.Mock).mockReturnValue({
-      shift: jest.fn(),
-      isShiftExceedPage: jest.fn(),
-    });
+    jest.clearAllMocks();
+    (useCollectionId as jest.Mock).mockReturnValue(mockCollectionId);
+    (useProductEdges as jest.Mock).mockReturnValue({ edges: mockEdges });
   });
 
-  it("should create optimistic response correctly when product is not moved to the next page", () => {
-    // Arrange
-    const mockShift = jest
-      .fn()
-      .mockReturnValue([
-        { node: { id: "product1" } },
-        { node: { id: "product3" } },
-        { node: { id: "product2" } },
-        { node: { id: "product4" } },
-        { node: { id: "product5" } },
-      ]);
-    const mockIsShiftExceedPage = jest.fn().mockReturnValue({ exceededProductIds: [] });
-
-    (useProductEdges as jest.Mock).mockReturnValue({
-      shift: mockShift,
-      isShiftExceedPage: mockIsShiftExceedPage,
-    });
-
-    // Act
+  it("should create proper optimistic response for reordered products", () => {
     const { result } = renderHook(() =>
-      useProductReorderOptimistic({ paginationState: { first: 10, after: "1" } }),
+      useProductReorderOptimistic({ paginationState: defaultPaginationState }),
     );
 
-    const response = result.current.createOptimisticResponse(["product3"], 1);
+    const products = [
+      { id: "product-2", name: "Product 2" },
+      { id: "product-1", name: "Product 1" },
+      { id: "product-3", name: "Product 3" },
+    ] as Product[];
 
-    // Assert
+    const activeNodeId = "product-1";
+    const response = result.current.createForDroppedItem(products, activeNodeId);
+
     expect(response).toEqual({
       collectionReorderProducts: {
         __typename: "CollectionReorderProducts",
         collection: {
           __typename: "Collection",
-          id: "collection-id-1",
+          id: mockCollectionId,
           products: {
             __typename: "ProductCountableConnection",
             edges: [
-              { node: { id: "product1" } },
-              { node: { id: "product3" } },
-              { node: { id: "product2" } },
-              { node: { id: "product4" } },
-              { node: { id: "product5" } },
+              {
+                node: {
+                  id: "product-2",
+                  name: "Product 2",
+                },
+              },
+              {
+                node: {
+                  id: "moved_product-1",
+                  name: "Product 1",
+                },
+              },
+              {
+                node: {
+                  id: "product-3",
+                  name: "Product 3",
+                },
+              },
             ],
             pageInfo: {
               __typename: "PageInfo",
@@ -76,60 +105,86 @@ describe("CollectionProducts/useProductReorderOptimistic", () => {
     });
   });
 
-  it("should create optimistic response correctly when product is moved to the next page", () => {
-    // Arrange
-    const mockShift = jest
-      .fn()
-      .mockReturnValue([
-        { node: { id: "product3" } },
-        { node: { id: "product1" } },
-        { node: { id: "product2" } },
-        { node: { id: "product4" } },
-        { node: { id: "product5" } },
-      ]);
-
-    // Act
-    const mockIsShiftExceedPage = jest.fn().mockReturnValue({ exceededProductIds: ["product3"] });
-
-    (useProductEdges as jest.Mock).mockReturnValue({
-      shift: mockShift,
-      isShiftExceedPage: mockIsShiftExceedPage,
-    });
-
+  it("should handle empty product list", () => {
     const { result } = renderHook(() =>
-      useProductReorderOptimistic({ paginationState: { first: 10, after: "1" } }),
+      useProductReorderOptimistic({ paginationState: defaultPaginationState }),
     );
 
-    const response = result.current.createOptimisticResponse(["product3"], 3);
+    const products: Product[] = [];
+    const activeNodeId = "product-1";
+    const response = result.current.createForDroppedItem(products, activeNodeId);
 
-    // Assert
-    expect(response).toEqual({
-      collectionReorderProducts: {
-        __typename: "CollectionReorderProducts",
-        collection: {
-          __typename: "Collection",
-          id: "collection-id-1",
-          products: {
-            __typename: "ProductCountableConnection",
-            edges: [
-              { node: { id: "optimistic_product3" } },
-              { node: { id: "product1" } },
-              { node: { id: "product2" } },
-              { node: { id: "product4" } },
-              { node: { id: "product5" } },
-            ],
-            pageInfo: {
-              __typename: "PageInfo",
-              endCursor: null,
-              hasNextPage: false,
-              hasPreviousPage: false,
-              startCursor: null,
-            },
-          },
+    expect(response.collectionReorderProducts.collection.products.edges).toEqual([]);
+  });
+
+  it("should handle product not found in edges", () => {
+    const { result } = renderHook(() =>
+      useProductReorderOptimistic({ paginationState: defaultPaginationState }),
+    );
+
+    const products = [
+      { id: "non-existent", name: "Non Existent Product" },
+      { id: "product-1", name: "Product 1" },
+    ] as Product[];
+
+    const activeNodeId = "product-1";
+    const response = result.current.createForDroppedItem(products, activeNodeId);
+
+    expect(response.collectionReorderProducts.collection.products.edges).toEqual([
+      {
+        node: {
+          id: "moved_product-1",
+          name: "Product 1",
         },
-        errors: [],
       },
-      __typename: "Mutation",
+    ]);
+  });
+
+  it("should use correct collection ID from hook", () => {
+    const customCollectionId = "custom-collection-123";
+
+    (useCollectionId as jest.Mock).mockReturnValue(customCollectionId);
+
+    const { result } = renderHook(() =>
+      useProductReorderOptimistic({ paginationState: defaultPaginationState }),
+    );
+
+    const products = [{ id: "product-1", name: "Product 1" }] as Product[];
+    const activeNodeId = "product-1";
+    const response = result.current.createForDroppedItem(products, activeNodeId);
+
+    expect(response.collectionReorderProducts.collection.id).toBe(customCollectionId);
+  });
+
+  it("should preserve edge properties when creating optimistic response", () => {
+    const edgesWithExtraProps = [
+      {
+        node: {
+          id: "product-1",
+          name: "Product 1",
+          extraProp: "extra value",
+        },
+        cursor: "cursor-1",
+      },
+    ];
+
+    (useProductEdges as jest.Mock).mockReturnValue({ edges: edgesWithExtraProps });
+
+    const { result } = renderHook(() =>
+      useProductReorderOptimistic({ paginationState: defaultPaginationState }),
+    );
+
+    const products = [{ id: "product-1", name: "Product 1" }] as Product[];
+    const activeNodeId = "product-1";
+    const response = result.current.createForDroppedItem(products, activeNodeId);
+
+    expect(response.collectionReorderProducts.collection.products.edges[0]).toMatchObject({
+      node: {
+        id: "moved_product-1",
+        name: "Product 1",
+        extraProp: "extra value",
+      },
+      cursor: "cursor-1",
     });
   });
 });

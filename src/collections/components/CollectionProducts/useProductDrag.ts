@@ -34,10 +34,12 @@ export const useProductDrag = ({ products, paginationState }: ProductDragProps) 
         const oldIndex = items.findIndex(item => item.id === active.id);
         const newIndex = items.findIndex(item => item.id === over?.id);
         const diff = oldIndex - newIndex;
+        const moved = arrayMove(items, oldIndex, newIndex);
+        const productId = active.id as string;
 
-        move([active.id as string], diff);
+        move(moved, productId, diff);
 
-        return arrayMove(items, oldIndex, newIndex);
+        return moved;
       });
     }
   };

@@ -5567,15 +5567,7 @@ export const UnassignCollectionProductDocument = gql`
       ) {
         edges {
           node {
-            id
-            name
-            productType {
-              id
-              name
-            }
-            thumbnail {
-              url
-            }
+            ...CollectionProduct
           }
         }
         pageInfo {
@@ -5591,7 +5583,8 @@ export const UnassignCollectionProductDocument = gql`
     }
   }
 }
-    ${CollectionErrorFragmentDoc}`;
+    ${CollectionProductFragmentDoc}
+${CollectionErrorFragmentDoc}`;
 export type UnassignCollectionProductMutationFn = Apollo.MutationFunction<Types.UnassignCollectionProductMutation, Types.UnassignCollectionProductMutationVariables>;
 
 /**
@@ -5819,9 +5812,44 @@ export type CollectionListQueryHookResult = ReturnType<typeof useCollectionListQ
 export type CollectionListLazyQueryHookResult = ReturnType<typeof useCollectionListLazyQuery>;
 export type CollectionListQueryResult = Apollo.QueryResult<Types.CollectionListQuery, Types.CollectionListQueryVariables>;
 export const CollectionDetailsDocument = gql`
-    query CollectionDetails($id: ID!, $first: Int, $after: String, $last: Int, $before: String) {
+    query CollectionDetails($id: ID) {
   collection(id: $id) {
     ...CollectionDetails
+  }
+}
+    ${CollectionDetailsFragmentDoc}`;
+
+/**
+ * __useCollectionDetailsQuery__
+ *
+ * To run a query within a React component, call `useCollectionDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCollectionDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCollectionDetailsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useCollectionDetailsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.CollectionDetailsQuery, Types.CollectionDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.CollectionDetailsQuery, Types.CollectionDetailsQueryVariables>(CollectionDetailsDocument, options);
+      }
+export function useCollectionDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CollectionDetailsQuery, Types.CollectionDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.CollectionDetailsQuery, Types.CollectionDetailsQueryVariables>(CollectionDetailsDocument, options);
+        }
+export type CollectionDetailsQueryHookResult = ReturnType<typeof useCollectionDetailsQuery>;
+export type CollectionDetailsLazyQueryHookResult = ReturnType<typeof useCollectionDetailsLazyQuery>;
+export type CollectionDetailsQueryResult = Apollo.QueryResult<Types.CollectionDetailsQuery, Types.CollectionDetailsQueryVariables>;
+export const CollectionProductsDocument = gql`
+    query CollectionProducts($id: ID!, $first: Int, $after: String, $last: Int, $before: String) {
+  collection(id: $id) {
+    id
     products(
       first: $first
       after: $after
@@ -5843,20 +5871,19 @@ export const CollectionDetailsDocument = gql`
     }
   }
 }
-    ${CollectionDetailsFragmentDoc}
-${CollectionProductFragmentDoc}`;
+    ${CollectionProductFragmentDoc}`;
 
 /**
- * __useCollectionDetailsQuery__
+ * __useCollectionProductsQuery__
  *
- * To run a query within a React component, call `useCollectionDetailsQuery` and pass it any options that fit your needs.
- * When your component renders, `useCollectionDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useCollectionProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCollectionProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useCollectionDetailsQuery({
+ * const { data, loading, error } = useCollectionProductsQuery({
  *   variables: {
  *      id: // value for 'id'
  *      first: // value for 'first'
@@ -5866,17 +5893,17 @@ ${CollectionProductFragmentDoc}`;
  *   },
  * });
  */
-export function useCollectionDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.CollectionDetailsQuery, Types.CollectionDetailsQueryVariables>) {
+export function useCollectionProductsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.CollectionProductsQuery, Types.CollectionProductsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.CollectionDetailsQuery, Types.CollectionDetailsQueryVariables>(CollectionDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.CollectionProductsQuery, Types.CollectionProductsQueryVariables>(CollectionProductsDocument, options);
       }
-export function useCollectionDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CollectionDetailsQuery, Types.CollectionDetailsQueryVariables>) {
+export function useCollectionProductsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CollectionProductsQuery, Types.CollectionProductsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.CollectionDetailsQuery, Types.CollectionDetailsQueryVariables>(CollectionDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.CollectionProductsQuery, Types.CollectionProductsQueryVariables>(CollectionProductsDocument, options);
         }
-export type CollectionDetailsQueryHookResult = ReturnType<typeof useCollectionDetailsQuery>;
-export type CollectionDetailsLazyQueryHookResult = ReturnType<typeof useCollectionDetailsLazyQuery>;
-export type CollectionDetailsQueryResult = Apollo.QueryResult<Types.CollectionDetailsQuery, Types.CollectionDetailsQueryVariables>;
+export type CollectionProductsQueryHookResult = ReturnType<typeof useCollectionProductsQuery>;
+export type CollectionProductsLazyQueryHookResult = ReturnType<typeof useCollectionProductsLazyQuery>;
+export type CollectionProductsQueryResult = Apollo.QueryResult<Types.CollectionProductsQuery, Types.CollectionProductsQueryVariables>;
 export const AddressValidationRulesDocument = gql`
     query addressValidationRules($countryCode: CountryCode!) {
   addressValidationRules(countryCode: $countryCode) {

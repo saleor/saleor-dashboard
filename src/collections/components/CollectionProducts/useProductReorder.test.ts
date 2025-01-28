@@ -2,8 +2,16 @@ import { useReorderProductsInCollectionMutation } from "@dashboard/graphql";
 import { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
 import { act, renderHook } from "@testing-library/react-hooks";
 
+import { Product } from "./types";
 import { useProductReorder } from "./useProductReorder";
 import { useProductReorderOptimistic } from "./useProductReorderOptimistic";
+
+jest.mock("react-intl", () => ({
+  useIntl: jest.fn(() => ({
+    formatMessage: jest.fn(x => x.defaultMessage),
+  })),
+  defineMessages: (x: unknown) => x,
+}));
 
 jest.mock("@dashboard/graphql", () => ({
   useReorderProductsInCollectionMutation: jest.fn(),
@@ -43,12 +51,16 @@ describe("CollectionProducts/useProductReorder", () => {
     const { result } = renderHook(() =>
       useProductReorder({ paginationState: { first: 10, after: "1" } }),
     );
-    const productIds = ["1", "2", "3"];
+    const productIds = [
+      { id: "1", name: "Product 1" },
+      { id: "2", name: "Product 2" },
+      { id: "3", name: "Product 3" },
+    ] as Product[];
     const shift = 1;
 
     // Act
     act(() => {
-      result.current.move(productIds, shift);
+      result.current.move(productIds, "2", shift);
     });
 
     // Assert

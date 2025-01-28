@@ -7,7 +7,6 @@ import { CSS } from "@dnd-kit/utilities";
 import { Box, Button, Checkbox, Skeleton, Text, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 
-import { ProductTableItemSkeleton } from "./ProductTableSkeleton";
 import { Product } from "./types";
 
 interface ItemProps {
@@ -29,17 +28,12 @@ export const ProductTableItem = ({
     id: product.id,
     disabled: !draggable,
   });
-
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
   };
-
   const href = product ? productUrl(product.id) : "";
-
-  if (product.id.includes("optimistic")) {
-    return <ProductTableItemSkeleton />;
-  }
+  const isSaving = product.id.includes("moved_");
 
   return (
     <GridTable.Row
@@ -49,6 +43,7 @@ export const ProductTableItem = ({
         hover: "default1Hovered",
         default: "default1",
       }}
+      __opacity={isSaving ? 0.5 : 1}
       key={product.id}
       selected={isSelected}
       ref={setNodeRef}

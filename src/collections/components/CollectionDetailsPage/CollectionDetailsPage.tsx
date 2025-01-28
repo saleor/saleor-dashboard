@@ -1,8 +1,7 @@
 // @ts-strict-ignore
 import { ChannelCollectionData } from "@dashboard/channels/utils";
-import { collectionListPath } from "@dashboard/collections/urls";
+import { collectionListPath, CollectionUrlQueryParams } from "@dashboard/collections/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { CardSpacer } from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -17,19 +16,17 @@ import {
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
-import { PaginationState } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { ChannelProps, ListActions, PageListProps } from "../../../types";
+import { ChannelProps, PageListProps } from "../../../types";
 import CollectionDetails from "../CollectionDetails/CollectionDetails";
 import { CollectionImage } from "../CollectionImage/CollectionImage";
 import CollectionProducts from "../CollectionProducts/CollectionProducts";
 import CollectionUpdateForm, { CollectionUpdateData } from "./form";
 
-export interface CollectionDetailsPageProps extends PageListProps, ListActions, ChannelProps {
-  onAdd: () => void;
+export interface CollectionDetailsPageProps extends PageListProps, ChannelProps {
   channelsCount: number;
   channelsErrors: CollectionChannelListingErrorFragment[];
   collection: CollectionDetailsQuery["collection"];
@@ -39,11 +36,10 @@ export interface CollectionDetailsPageProps extends PageListProps, ListActions, 
   onCollectionRemove: () => void;
   onImageDelete: () => void;
   onImageUpload: (file: File) => void;
-  onProductUnassign: (id: string, event: React.MouseEvent<any>) => void;
   onSubmit: (data: CollectionUpdateData) => SubmitPromise;
   onChannelsChange: (data: ChannelCollectionData[]) => void;
   openChannelsModal: () => void;
-  paginationState: PaginationState;
+  params: CollectionUrlQueryParams;
 }
 
 const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
@@ -82,7 +78,6 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
           <TopNav href={collectionListBackLink} title={collection?.name} />
           <DetailPageLayout.Content>
             <CollectionDetails data={data} disabled={disabled} errors={errors} onChange={change} />
-            <CardSpacer />
             <CollectionImage
               data={data}
               image={collection?.backgroundImage}
@@ -90,15 +85,13 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
               onImageUpload={onImageUpload}
               onChange={change}
             />
-            <CardSpacer />
             <Metadata data={data} onChange={handlers.changeMetadata} />
-            <CardSpacer />
             <CollectionProducts
               disabled={disabled}
               collection={collection}
+              currentChannels={currentChannels}
               {...collectionProductsProps}
             />
-            <CardSpacer />
             <SeoForm
               description={data.seoDescription}
               disabled={disabled}
