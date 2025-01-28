@@ -1,5 +1,6 @@
 import { useReorderProductsInCollectionMutation } from "@dashboard/graphql";
 import { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
+import useNotifier from "@dashboard/hooks/useNotifier";
 import { act, renderHook } from "@testing-library/react-hooks";
 
 import { Product } from "./types";
@@ -33,7 +34,8 @@ jest.mock("@dashboard/hooks/useNotifier", () => jest.fn());
 
 describe("CollectionProducts/useProductReorder", () => {
   const mockReorder = jest.fn();
-  const createForDroppedItem = jest.fn();
+  const mockNotifier = jest.fn();
+  const createForDroppedItem = jest.fn(() => "optimistic-response");
   const mockPaginationState = { page: 1, pageSize: 10 };
 
   beforeEach(() => {
@@ -42,6 +44,7 @@ describe("CollectionProducts/useProductReorder", () => {
     (useProductReorderOptimistic as jest.Mock).mockReturnValue({
       createForDroppedItem: createForDroppedItem,
     });
+    (useNotifier as jest.Mock).mockReturnValue(mockNotifier);
   });
 
   afterEach(() => {
@@ -73,19 +76,12 @@ describe("CollectionProducts/useProductReorder", () => {
         first: 10,
         moves: [
           {
-            productId: "1",
-            sortOrder: 1,
-          },
-          {
             productId: "2",
-            sortOrder: 1,
-          },
-          {
-            productId: "3",
             sortOrder: 1,
           },
         ],
       },
+      optimisticResponse: "optimistic-response",
     });
   });
 
