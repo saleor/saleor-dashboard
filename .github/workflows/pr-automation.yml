@@ -202,8 +202,6 @@ jobs:
           PW_RETRIES: ${{ vars.PW_RETRIES }}
           ACCOUNTS: ${{ needs.deploy-dashboard.outputs.ACCOUNTS }}
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
-          POOL_NAME: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
-          SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
 
       - name: submit-results-to-testmo
         if: always()
@@ -235,4 +233,3 @@ jobs:
         uses: ./.github/actions/flaky-tests-report
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-
