@@ -7,7 +7,7 @@ import { test } from "utils/testWithPermission";
 
 test.use({ permissionName: "customer" });
 
-test("TC: SALEOR_13 User should be able to navigate to customer list as a staff member using CUSTOMER permission @e2e", async ({
+test("TC: SALEOR_13 User should be able to navigate to customer list as a staff member using CUSTOMER permission #e2e", async ({
   page,
 }) => {
   const basePage = new BasePage(page);

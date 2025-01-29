@@ -13,7 +13,7 @@ const permissionList = permissions.filter(item => item !== permissionToExclude);
 for (const permission of permissionList) {
   test.use({ permissionName: permission });
 
-  test(`TC: SALEOR_131 User with ${permission} permissions should have readonly access to Apps @e2e @apps`, async ({
+  test(`TC: SALEOR_131 User with ${permission} permissions should have readonly access to Apps #e2e #apps`, async ({
     page,
   }) => {
     const mainMenuPage = new MainMenuPage(page);

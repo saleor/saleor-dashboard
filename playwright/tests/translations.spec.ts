@@ -10,8 +10,7 @@ let translationsPage: TranslationsPage;
 test.beforeEach(({ page }) => {
   translationsPage = new TranslationsPage(page);
 });
-
-test("TC: SALEOR_121 Should be able to add translation  @e2e @translations", async () => {
+test("TC: SALEOR_121 Should be able to add translation  #e2e #translations", async () => {
   await translationsPage.gotoTranslationsPage();
   await translationsPage.translationPl_PL.click();
   await translationsPage.page.getByText("CategoryToTranslate").click();
@@ -30,8 +29,7 @@ test("TC: SALEOR_121 Should be able to add translation  @e2e @translations", asy
     translationsPage.page.getByText("Kategoria do Translacji"),
   ).toBeVisible();
 });
-
-test("TC: SALEOR_122 Should be able to edit translation  @e2e @translations", async () => {
+test("TC: SALEOR_122 Should be able to edit translation  #e2e #translations", async () => {
   const newDescription =
     "Brukselka, szpinak, groszek, jarmuż, sałata, kapusta, cukinia, więcej brukselki. Wszystkie warzywa, jakich będziesz potrzebować, w jednym pysznym soku.";
   await translationsPage.goToDirectTranslationPage(
@@ -62,8 +60,7 @@ test("TC: SALEOR_122 Should be able to edit translation  @e2e @translations", as
   await translationsPage.waitForDOMToFullyLoad();
   await expect(translationsPage.page.getByText(newDescription)).toBeVisible();
 });
-
-test("TC: SALEOR_123 Should be able to clear translation  @e2e @translations", async () => {
+test("TC: SALEOR_123 Should be able to clear translation  #e2e #translations", async () => {
   const description =
     "Letnia kolekcja Saleor obejmuje gamę produktów, które cieszą się popularnością na rynku.Sklep demonstracyjny na każdą porę roku.Saleor uchwycił słońce open source, e-commerce.";
 
