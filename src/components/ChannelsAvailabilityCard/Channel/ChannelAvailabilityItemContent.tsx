@@ -245,6 +245,7 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
           <Checkbox
             name={`channel:visibleInListings:${id}`}
             id={`channel:visibleInListings:${id}`}
+            data-test-id={`channel:visibleInListings:${id}`}
             checked={!visibleInListings}
             disabled={disabled}
             onCheckedChange={checked => {
