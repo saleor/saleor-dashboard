@@ -60,6 +60,7 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
 
   const dateNow = useCurrentDate();
   const localizeDate = useDateLocalize();
+  const hasAvailableProps = isAvailable !== undefined && availableForPurchaseAt !== undefined;
   const [isPublishedAt, setPublishedAt] = useState(!!publishedAt);
   const [isAvailableDate, setAvailableDate] = useState(!!availableForPurchaseAt);
   const intl = useIntl();
@@ -160,99 +161,108 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
         </RadioGroup>
       </StopPropagation>
 
-      {/* Available/unavailable for purchase */}
-      <Divider />
-      <RadioGroup
-        disabled={disabled}
-        name={`channel:isAvailableForPurchase:${id}`}
-        value={String(isAvailable)}
-        onValueChange={value => {
-          onChange(id, {
-            ...formData,
-            isAvailableForPurchase: value === "true",
-          });
-        }}
-        display="flex"
-        flexDirection="column"
-      >
-        <RadioGroup.Item id={`channel:isAvailableForPurchase:${id}-true`} value="true">
-          <Text>{messages.availableLabel}</Text>
-        </RadioGroup.Item>
-        {isAvailable && availableForPurchaseAt && Date.parse(availableForPurchaseAt) < dateNow && (
-          <Text size={2} color="default2">
-            {visibleMessage(availableForPurchaseAt)}
-          </Text>
-        )}
-
-        <RadioGroup.Item
-          id={`channel:isAvailableForPurchase:${id}-false`}
-          value="false"
-          marginTop={3}
-        >
-          <Text>{messages.unavailableLabel}</Text>
-        </RadioGroup.Item>
-        {availableForPurchaseAt && !isAvailable && (
-          <Text size={2} color="default2">
-            {messages.availableSecondLabel}
-          </Text>
-        )}
-      </RadioGroup>
-
-      {/* Should be visible only when product is available for purchase */}
-      {!isAvailable && (
-        <Box display="flex" gap={1} flexDirection="column" alignItems="start">
-          <Checkbox
-            onCheckedChange={(checked: boolean) => {
-              if (!checked) {
-                onChange(id, {
-                  ...formData,
-                  availableForPurchaseAt: null,
-                });
-              }
-
-              setAvailableDate(checked);
+      {hasAvailableProps && (
+        <>
+          <Divider />
+          <RadioGroup
+            disabled={disabled}
+            name={`channel:isAvailableForPurchase:${id}`}
+            value={String(isAvailable)}
+            onValueChange={value => {
+              onChange(id, {
+                ...formData,
+                isAvailableForPurchase: value === "true",
+              });
             }}
-            checked={isAvailableDate}
+            display="flex"
+            flexDirection="column"
           >
-            {messages.setAvailabilityDateLabel}
-          </Checkbox>
-          {isAvailableDate && (
-            <DateTimeTimezoneField
-              error={!!formErrors.availableForPurchaseAt}
-              disabled={disabled}
-              name={`channel:availableForPurchaseAt:${id}`}
-              value={availableForPurchaseAt || ""}
-              onChange={dateTime => {
-                onChange(id, {
-                  ...formData,
-                  availableForPurchaseAt: dateTime,
-                });
-              }}
-              fullWidth
-            />
+            <RadioGroup.Item id={`channel:isAvailableForPurchase:${id}-true`} value="true">
+              <Text>{messages.availableLabel}</Text>
+            </RadioGroup.Item>
+            {isAvailable &&
+              availableForPurchaseAt &&
+              Date.parse(availableForPurchaseAt) < dateNow && (
+                <Text size={2} color="default2">
+                  {visibleMessage(availableForPurchaseAt)}
+                </Text>
+              )}
+
+            <RadioGroup.Item
+              id={`channel:isAvailableForPurchase:${id}-false`}
+              value="false"
+              marginTop={3}
+            >
+              <Text>{messages.unavailableLabel}</Text>
+            </RadioGroup.Item>
+            {availableForPurchaseAt && !isAvailable && (
+              <Text size={2} color="default2">
+                {messages.availableSecondLabel}
+              </Text>
+            )}
+          </RadioGroup>
+
+          {!isAvailable && (
+            <Box display="flex" gap={1} flexDirection="column" alignItems="start">
+              <Checkbox
+                onCheckedChange={(checked: boolean) => {
+                  if (!checked) {
+                    onChange(id, {
+                      ...formData,
+                      availableForPurchaseAt: null,
+                    });
+                  }
+
+                  setAvailableDate(checked);
+                }}
+                checked={isAvailableDate}
+              >
+                {messages.setAvailabilityDateLabel}
+              </Checkbox>
+              {isAvailableDate && (
+                <DateTimeTimezoneField
+                  error={!!formErrors.availableForPurchaseAt}
+                  disabled={disabled}
+                  name={`channel:availableForPurchaseAt:${id}`}
+                  value={availableForPurchaseAt || ""}
+                  onChange={dateTime => {
+                    onChange(id, {
+                      ...formData,
+                      availableForPurchaseAt: dateTime,
+                    });
+                  }}
+                  fullWidth
+                />
+              )}
+            </Box>
           )}
-        </Box>
+        </>
       )}
 
-      {/* Hide in product listings */}
-      <Divider />
-      <Checkbox
-        name={`channel:visibleInListings:${id}`}
-        id={`channel:visibleInListings:${id}`}
-        checked={!visibleInListings}
-        disabled={disabled}
-        onCheckedChange={checked => {
-          onChange(id, {
-            ...formData,
-            visibleInListings: !checked,
-          });
-        }}
-      >
-        <Text cursor="pointer">{intl.formatMessage(availabilityItemMessages.hideInListings)}</Text>
-      </Checkbox>
-      <Text size={2} color="default2">
-        {intl.formatMessage(availabilityItemMessages.hideInListingsDescription)}
-      </Text>
+      {visibleInListings !== undefined && (
+        <>
+          <Divider />
+          <Checkbox
+            name={`channel:visibleInListings:${id}`}
+            id={`channel:visibleInListings:${id}`}
+            checked={!visibleInListings}
+            disabled={disabled}
+            onCheckedChange={checked => {
+              onChange(id, {
+                ...formData,
+                visibleInListings: !checked,
+              });
+            }}
+          >
+            <Text cursor="pointer">
+              {intl.formatMessage(availabilityItemMessages.hideInListings)}
+            </Text>
+          </Checkbox>
+          <Text size={2} color="default2">
+            {intl.formatMessage(availabilityItemMessages.hideInListingsDescription)}
+          </Text>
+        </>
+      )}
     </Box>
   );
 };
