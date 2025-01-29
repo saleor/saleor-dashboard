@@ -15,7 +15,7 @@ test.beforeEach(({ page }) => {
 const discountType = ["Order", "Catalog"];
 
 for (const type of discountType) {
-  test(`TC: SALEOR_149 Create promotion with ${type} predicate @discounts @e2e`, async () => {
+  test(`TC: SALEOR_149 Create promotion with ${type} predicate #discounts #e2e`, async () => {
     const discountName = `${faker.lorem.word()}+${type}`;
 
     await discounts.gotoListView();
@@ -36,7 +36,7 @@ for (const type of discountType) {
   });
 }
 
-test(`TC: SALEOR_151 Update existing promotion @discounts @e2e`, async () => {
+test(`TC: SALEOR_151 Update existing promotion #discounts #e2e`, async () => {
   const newDiscountName = `${faker.lorem.word()}`;
 
   await discounts.gotoExistingDiscount(DISCOUNTS.promotionToBeEdited.id);
@@ -67,7 +67,7 @@ const promotions = [
 ];
 
 for (const promotion of promotions) {
-  test(`TC: SALEOR_153 Delete existing ${promotion.name} @discounts @e2e`, async () => {
+  test(`TC: SALEOR_153 Delete existing ${promotion.name} #discounts #e2e`, async () => {
     await discounts.gotoExistingDiscount(promotion.id);
     await discounts.ruleSection.waitFor({
       state: "visible",
@@ -108,7 +108,7 @@ const rewardValue = "10";
 const channelName = CHANNELS.channelPLN.name;
 
 for (const { promotionRule, predicateValue } of predicateValues) {
-  test(`TC: SALEOR_155 Create ${promotionRule} rule for ${predicateValue} in a catalogue promotion @discounts @e2e`, async () => {
+  test(`TC: SALEOR_155 Create ${promotionRule} rule for ${predicateValue} in a catalogue promotion #discounts #e2e`, async () => {
     await discounts.gotoExistingDiscount(promotion.id);
     await discounts.ruleSection.waitFor({
       state: "visible",
@@ -155,7 +155,7 @@ const notEqConditions = [conditionLte, conditionGte];
 const orderPromotion = DISCOUNTS.orderPromotion;
 
 for (const { conditionType, value, conditionDesc } of notEqConditions) {
-  test(`TC: SALEOR_157 Create subtotal type rule with multiple conditions with ${conditionDesc} in order promotion @discounts @e2e`, async () => {
+  test(`TC: SALEOR_157 Create subtotal type rule with multiple conditions with ${conditionDesc} in order promotion #discounts #e2e`, async () => {
     await discounts.gotoExistingDiscount(orderPromotion.id);
     await discounts.ruleSection.waitFor({
       state: "visible",
@@ -196,7 +196,7 @@ const condition2 = { condition: "Total", gte: "20.00", lte: "50.00" };
 const conditionsBetween = [condition1, condition2];
 
 for (const { condition, lte, gte } of conditionsBetween) {
-  test(`TC: SALEOR_160 Create gift reward rule with ${condition} between ${gte} and ${lte} in order promotion @discounts @e2e`, async () => {
+  test(`TC: SALEOR_160 Create gift reward rule with ${condition} between ${gte} and ${lte} in order promotion #discounts #e2e`, async () => {
     await discounts.gotoExistingDiscount(orderPromotion.id);
     await discounts.ruleSection.waitFor({
       state: "visible",
@@ -236,7 +236,7 @@ const orderRules = [
 ];
 
 for (const rule of orderRules) {
-  test(`TC: SALEOR_163 Update promotion ${rule.name} from Order promotion @discounts @e2e`, async () => {
+  test(`TC: SALEOR_163 Update promotion ${rule.name} from Order promotion #discounts #e2e`, async () => {
     await discounts.gotoExistingDiscount(DISCOUNTS.orderPromotionWithRulesToBeUpdated.id);
     await discounts.ruleSection.waitFor({
       state: "visible",
@@ -288,7 +288,7 @@ const catalogRules = [
 ];
 
 for (const rule of catalogRules) {
-  test(`TC: SALEOR_166 Update promotion ${rule.name} from Catalog promotion @discounts @e2e`, async () => {
+  test(`TC: SALEOR_166 Update promotion ${rule.name} from Catalog promotion #discounts #e2e`, async () => {
     await discounts.gotoExistingDiscount(DISCOUNTS.catalogPromotionWithRulesToBeUpdated.id);
     await discounts.ruleSection.waitFor({
       state: "visible",
@@ -341,7 +341,7 @@ const promotionsWithRules = [
 
 for (const promotion of promotionsWithRules) {
   for (const rule of promotion.rules) {
-    test(`TC: SALEOR_167 Delete promotion ${rule.name} from ${promotion.type} promotion @discounts @e2e`, async () => {
+    test(`TC: SALEOR_167 Delete promotion ${rule.name} from ${promotion.type} promotion #discounts #e2e`, async () => {
       await discounts.gotoExistingDiscount(promotion.id);
       await discounts.ruleSection.waitFor({
         state: "visible",
