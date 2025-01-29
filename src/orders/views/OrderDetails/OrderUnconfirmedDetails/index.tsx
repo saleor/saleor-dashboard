@@ -8,6 +8,8 @@ import {
   FulfillmentStatus,
   OrderFulfillmentApproveMutation,
   OrderFulfillmentApproveMutationVariables,
+  OrderNoteUpdateMutation,
+  OrderNoteUpdateMutationVariables,
   OrderTransactionRequestActionMutation,
   OrderTransactionRequestActionMutationVariables,
   OrderUpdateMutation,
@@ -61,6 +63,10 @@ interface OrderUnconfirmedDetailsProps {
   params: OrderUrlQueryParams;
   data: any;
   orderAddNote: any;
+  orderUpdateNote: PartialMutationProviderOutput<
+    OrderNoteUpdateMutation,
+    OrderNoteUpdateMutationVariables
+  >;
   orderLineUpdate: any;
   orderLineDelete: any;
   orderInvoiceRequest: any;
@@ -98,6 +104,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
   params,
   data,
   orderAddNote,
+  orderUpdateNote,
   orderLineUpdate,
   orderLineDelete,
   orderInvoiceRequest,
@@ -187,6 +194,15 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
                   order: id,
                 }),
               )
+            }
+            onNoteUpdateLoading={orderUpdateNote.opts.loading}
+            onNoteUpdate={(id, message) =>
+              orderUpdateNote.mutate({
+                order: id,
+                input: {
+                  message,
+                },
+              })
             }
             order={order}
             shop={shop}

@@ -1701,6 +1701,9 @@ export const OrderEventFragmentDoc = gql`
     id
     number
   }
+  related {
+    id
+  }
   message
   quantity
   transactionReference
@@ -10723,11 +10726,13 @@ export function useOrderFulfillmentCancelMutation(baseOptions?: ApolloReactHooks
 export type OrderFulfillmentCancelMutationHookResult = ReturnType<typeof useOrderFulfillmentCancelMutation>;
 export type OrderFulfillmentCancelMutationResult = Apollo.MutationResult<Types.OrderFulfillmentCancelMutation>;
 export type OrderFulfillmentCancelMutationOptions = Apollo.BaseMutationOptions<Types.OrderFulfillmentCancelMutation, Types.OrderFulfillmentCancelMutationVariables>;
-export const OrderAddNoteDocument = gql`
-    mutation OrderAddNote($order: ID!, $input: OrderAddNoteInput!) {
-  orderAddNote(order: $order, input: $input) {
+export const OrderNoteAddDocument = gql`
+    mutation OrderNoteAdd($order: ID!, $input: OrderNoteInput!) {
+  orderNoteAdd(order: $order, input: $input) {
     errors {
-      ...OrderError
+      code
+      field
+      message
     }
     order {
       id
@@ -10737,35 +10742,78 @@ export const OrderAddNoteDocument = gql`
     }
   }
 }
-    ${OrderErrorFragmentDoc}
-${OrderEventFragmentDoc}`;
-export type OrderAddNoteMutationFn = Apollo.MutationFunction<Types.OrderAddNoteMutation, Types.OrderAddNoteMutationVariables>;
+    ${OrderEventFragmentDoc}`;
+export type OrderNoteAddMutationFn = Apollo.MutationFunction<Types.OrderNoteAddMutation, Types.OrderNoteAddMutationVariables>;
 
 /**
- * __useOrderAddNoteMutation__
+ * __useOrderNoteAddMutation__
  *
- * To run a mutation, you first call `useOrderAddNoteMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useOrderAddNoteMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useOrderNoteAddMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useOrderNoteAddMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [orderAddNoteMutation, { data, loading, error }] = useOrderAddNoteMutation({
+ * const [orderNoteAddMutation, { data, loading, error }] = useOrderNoteAddMutation({
  *   variables: {
  *      order: // value for 'order'
  *      input: // value for 'input'
  *   },
  * });
  */
-export function useOrderAddNoteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderAddNoteMutation, Types.OrderAddNoteMutationVariables>) {
+export function useOrderNoteAddMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderNoteAddMutation, Types.OrderNoteAddMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderAddNoteMutation, Types.OrderAddNoteMutationVariables>(OrderAddNoteDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderNoteAddMutation, Types.OrderNoteAddMutationVariables>(OrderNoteAddDocument, options);
       }
-export type OrderAddNoteMutationHookResult = ReturnType<typeof useOrderAddNoteMutation>;
-export type OrderAddNoteMutationResult = Apollo.MutationResult<Types.OrderAddNoteMutation>;
-export type OrderAddNoteMutationOptions = Apollo.BaseMutationOptions<Types.OrderAddNoteMutation, Types.OrderAddNoteMutationVariables>;
+export type OrderNoteAddMutationHookResult = ReturnType<typeof useOrderNoteAddMutation>;
+export type OrderNoteAddMutationResult = Apollo.MutationResult<Types.OrderNoteAddMutation>;
+export type OrderNoteAddMutationOptions = Apollo.BaseMutationOptions<Types.OrderNoteAddMutation, Types.OrderNoteAddMutationVariables>;
+export const OrderNoteUpdateDocument = gql`
+    mutation OrderNoteUpdate($order: ID!, $input: OrderNoteInput!) {
+  orderNoteUpdate(note: $order, input: $input) {
+    errors {
+      code
+      field
+      message
+    }
+    order {
+      id
+      events {
+        ...OrderEvent
+      }
+    }
+  }
+}
+    ${OrderEventFragmentDoc}`;
+export type OrderNoteUpdateMutationFn = Apollo.MutationFunction<Types.OrderNoteUpdateMutation, Types.OrderNoteUpdateMutationVariables>;
+
+/**
+ * __useOrderNoteUpdateMutation__
+ *
+ * To run a mutation, you first call `useOrderNoteUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useOrderNoteUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [orderNoteUpdateMutation, { data, loading, error }] = useOrderNoteUpdateMutation({
+ *   variables: {
+ *      order: // value for 'order'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useOrderNoteUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderNoteUpdateMutation, Types.OrderNoteUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.OrderNoteUpdateMutation, Types.OrderNoteUpdateMutationVariables>(OrderNoteUpdateDocument, options);
+      }
+export type OrderNoteUpdateMutationHookResult = ReturnType<typeof useOrderNoteUpdateMutation>;
+export type OrderNoteUpdateMutationResult = Apollo.MutationResult<Types.OrderNoteUpdateMutation>;
+export type OrderNoteUpdateMutationOptions = Apollo.BaseMutationOptions<Types.OrderNoteUpdateMutation, Types.OrderNoteUpdateMutationVariables>;
 export const OrderUpdateDocument = gql`
     mutation OrderUpdate($id: ID!, $input: OrderUpdateInput!) {
   orderUpdate(id: $id, input: $input) {
