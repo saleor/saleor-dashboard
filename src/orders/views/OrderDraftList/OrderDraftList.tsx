@@ -3,6 +3,7 @@ import { useUser } from "@dashboard/auth";
 import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDialog";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
@@ -35,7 +36,7 @@ import {
   OrderDraftListUrlQueryParams,
   orderUrl,
 } from "../../urls";
-import { getFilterOpts, getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
+import { getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
 import { getSortQueryVariables } from "./sort";
 import { useBulkDeletion } from "./useBulkDeletion";
 
@@ -48,6 +49,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   const notify = useNotifier();
   const intl = useIntl();
   const { updateListSettings, settings } = useListSettings(ListViews.DRAFT_LIST);
+  const { valueProvider } = useConditionalFilterContext();
 
   usePaginationReset(orderDraftListUrl, params, settings.rowNumber);
 
@@ -82,7 +84,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
       orders: true,
     },
   });
-  const [changeFilters, resetFilters, handleSearchChange] = createFilterHandlers({
+  const [_, resetFilters, handleSearchChange] = createFilterHandlers({
     cleanupFn: clearRowSelection,
     createUrl: orderDraftListUrl,
     getFilterQueryParam,
@@ -114,7 +116,10 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
-      filter: getFilterVariables(params),
+      filter: getFilterVariables({
+        params,
+        filterContainer: valueProvider.value,
+      }),
       sort: getSortQueryVariables(params),
     }),
     [paginationState, params],
@@ -152,11 +157,9 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     <PaginatorContext.Provider value={paginationValues}>
       <OrderDraftListPage
         selectedFilterPreset={selectedPreset}
-        filterOpts={getFilterOpts(params)}
         limits={limitOpts.data?.shop.limits}
         initialSearch={params.query || ""}
         onSearchChange={handleSearchChange}
-        onFilterChange={changeFilters}
         onFilterPresetsAll={resetFilters}
         onFilterPresetChange={onPresetChange}
         onFilterPresetDelete={(id: number) => {
@@ -172,7 +175,6 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         onAdd={() => openModal("create-order")}
         onSort={handleSort}
         sort={getSortParams(params)}
-        currencySymbol={channel?.currencyCode}
         hasPresetsChanged={hasPresetsChanged}
         onDraftOrdersDelete={() =>
           openModal("remove", {

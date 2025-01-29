@@ -4,7 +4,13 @@ import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { DashboardCard } from "@dashboard/components/Card";
 import { OrderDraftListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
 import { OrderDraftListUrlSortField } from "@dashboard/orders/urls";
-import { FilterPagePropsWithPresets, PageListProps, RelayToFlat, SortPage } from "@dashboard/types";
+import {
+  FilterPresetsProps,
+  PageListProps,
+  RelayToFlat,
+  SearchPageProps,
+  SortPage,
+} from "@dashboard/types";
 import { isLimitReached } from "@dashboard/utils/limits";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
@@ -13,11 +19,11 @@ import { useIntl } from "react-intl";
 import { OrderDraftListDatagrid } from "../OrderDraftListDatagrid";
 import { OrderDraftListHeader } from "../OrderDraftListHeader/OrderDraftListHeader";
 import OrderLimitReached from "../OrderLimitReached";
-import { createFilterStructure, OrderDraftFilterKeys, OrderDraftListFilterOpts } from "./filters";
 
 export interface OrderDraftListPageProps
   extends PageListProps,
-    FilterPagePropsWithPresets<OrderDraftFilterKeys, OrderDraftListFilterOpts>,
+    SearchPageProps,
+    FilterPresetsProps,
     SortPage<OrderDraftListUrlSortField> {
   limits: RefreshLimitsQuery["shop"]["limits"];
   orders: RelayToFlat<OrderDraftListQuery["draftOrders"]>;
@@ -31,12 +37,10 @@ export interface OrderDraftListPageProps
 const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
   selectedFilterPreset,
   disabled,
-  filterOpts,
   initialSearch,
   limits,
   onAdd,
   onFilterPresetsAll,
-  onFilterChange,
   onSearchChange,
   onFilterPresetChange,
   onFilterPresetDelete,
@@ -45,14 +49,11 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
   filterPresets,
   hasPresetsChanged,
   onDraftOrdersDelete,
-  onFilterAttributeFocus,
-  currencySymbol,
   selectedOrderDraftIds,
   ...listProps
 }) => {
   const intl = useIntl();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
-  const filterStructure = createFilterStructure(intl, filterOpts);
   const limitsReached = isLimitReached(limits, "orders");
 
   return (
@@ -84,12 +85,9 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
           justifyContent="space-between"
         >
           <ListFilters
-            currencySymbol={currencySymbol}
+            type="expression-filter"
             initialSearch={initialSearch}
-            onFilterChange={onFilterChange}
-            onFilterAttributeFocus={onFilterAttributeFocus}
             onSearchChange={onSearchChange}
-            filterStructure={filterStructure}
             searchPlaceholder={intl.formatMessage({
               id: "IzECoP",
               defaultMessage: "Search draft orders...",

@@ -13,7 +13,7 @@ import { FilterContainer } from "./FilterElement";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
 import { isItemOption, isItemOptionArray, isTuple } from "./FilterElement/ConditionValue";
 
-type StaticQueryPart = string | GlobalIdFilterInput | boolean | DecimalFilterInput;
+type StaticQueryPart = string | GlobalIdFilterInput | boolean | DecimalFilterInput | DateRangeInput;
 
 const createStaticQueryPart = (selected: ConditionSelected): StaticQueryPart => {
   if (!selected.conditionValue) return "";
@@ -198,4 +198,45 @@ export const createOrderQueryVariables = (value: FilterContainer) => {
 
     return p;
   }, {} as OrderQueryVars);
+};
+
+export type DraftOrderQueryVars = {
+  customer: string;
+  created: DateRangeInput;
+};
+
+export const creatDraftOrderQueryVariables = (value: FilterContainer): DraftOrderQueryVars => {
+  return value.reduce((p, c) => {
+    if (typeof c === "string" || Array.isArray(c)) return p;
+
+    if (c.isStatic()) {
+      const label = c.condition.selected.conditionValue?.label;
+      const value = c.condition.selected.value;
+
+      if (c.value.value === "customer") {
+        p.customer = value as string;
+      }
+
+      if (c.value.value === "created") {
+        if (isTuple(value) && label === "between") {
+          const [gte, lte] = value;
+
+          p.created = {
+            gte,
+            lte,
+          };
+        }
+
+        if (label === "greater") {
+          p.created = { gte: value as string };
+        }
+
+        if (label == "lower") {
+          p.created = { lte: value as string };
+        }
+      }
+    }
+
+    return p;
+  }, {} as DraftOrderQueryVars);
 };
