@@ -106,6 +106,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
         <OrderOperations
           order={id}
           onNoteAdd={orderMessages.handleNoteAdd}
+          onNoteUpdate={orderMessages.handleNoteUpdate}
           onOrderCancel={orderMessages.handleOrderCancel}
           onOrderVoid={orderMessages.handleOrderVoid}
           onPaymentCapture={orderMessages.handlePaymentCapture}
@@ -148,6 +149,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
         >
           {({
             orderAddNote,
+            orderUpdateNote,
             orderCancel,
             orderDraftUpdate,
             orderLinesAdd,
@@ -176,6 +178,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   loading={loading}
                   data={data}
                   orderAddNote={orderAddNote}
+                  orderUpdateNote={orderUpdateNote}
                   orderInvoiceRequest={orderInvoiceRequest}
                   handleSubmit={handleSubmit}
                   orderUpdate={orderUpdate}
@@ -202,6 +205,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   loading={loading}
                   data={data}
                   orderAddNote={orderAddNote}
+                  orderUpdateNote={orderUpdateNote}
                   orderLineUpdate={orderLineUpdate}
                   orderLineDelete={orderLineDelete}
                   orderShippingMethodUpdate={orderShippingMethodUpdate}
@@ -219,6 +223,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   params={params}
                   data={data}
                   orderAddNote={orderAddNote}
+                  orderUpdateNote={orderUpdateNote}
                   orderLineUpdate={orderLineUpdate}
                   orderLineDelete={orderLineDelete}
                   orderInvoiceRequest={orderInvoiceRequest}
