@@ -1,5 +1,1 @@
-* @saleor/ui-guild
-/.github/ @saleor/SRE
-
-/playwright @saleor/qa-guild
-/cypress @saleor/qa-guild
+* @saleor/backoffice
