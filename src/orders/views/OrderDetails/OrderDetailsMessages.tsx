@@ -6,7 +6,6 @@ import {
   CreateManualTransactionCaptureMutation,
   InvoiceEmailSendMutation,
   InvoiceRequestMutation,
-  OrderAddNoteMutation,
   OrderCancelMutation,
   OrderCaptureMutation,
   OrderDraftCancelMutation,
@@ -20,6 +19,8 @@ import {
   OrderLinesAddMutation,
   OrderLineUpdateMutation,
   OrderMarkAsPaidMutation,
+  OrderNoteAddMutation,
+  OrderNoteUpdateMutation,
   OrderShippingMethodUpdateMutation,
   OrderTransactionRequestActionMutation,
   OrderUpdateMutation,
@@ -46,7 +47,8 @@ interface OrderDetailsMessages {
     handleDraftCancel: (data: OrderDraftCancelMutation) => void;
     handleDraftFinalize: (data: OrderDraftFinalizeMutation) => void;
     handleDraftUpdate: (data: OrderDraftUpdateMutation) => void;
-    handleNoteAdd: (data: OrderAddNoteMutation) => void;
+    handleNoteAdd: (data: OrderNoteAddMutation) => void;
+    handleNoteUpdate: (data: OrderNoteUpdateMutation) => void;
     handleOrderCancel: (data: OrderCancelMutation) => void;
     handleOrderFulfillmentApprove: (data: OrderFulfillmentApproveMutation) => void;
     handleOrderFulfillmentCancel: (data: OrderFulfillmentCancelMutation) => void;
@@ -149,8 +151,8 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
       closeModal();
     }
   };
-  const handleNoteAdd = (data: OrderAddNoteMutation) => {
-    const errs = data.orderAddNote?.errors;
+  const handleNoteAdd = (data: OrderNoteAddMutation) => {
+    const errs = data.orderNoteAdd?.errors;
 
     if (errs.length === 0) {
       notify({
@@ -158,6 +160,19 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
         text: intl.formatMessage({
           id: "KmPicj",
           defaultMessage: "Note successfully added",
+        }),
+      });
+    }
+  };
+  const handleNoteUpdate = (data: OrderNoteUpdateMutation) => {
+    const errs = data.orderNoteUpdate?.errors;
+
+    if (errs.length === 0) {
+      notify({
+        status: "success",
+        text: intl.formatMessage({
+          id: "9Th87u",
+          defaultMessage: "Note successfully updated",
         }),
       });
     }
@@ -402,6 +417,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children,
     handleInvoiceGeneratePending,
     handleInvoiceSend,
     handleNoteAdd,
+    handleNoteUpdate,
     handleOrderCancel,
     handleOrderFulfillmentApprove,
     handleOrderFulfillmentCancel,

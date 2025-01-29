@@ -309,6 +309,9 @@
     "context": "channels alphabetically title",
     "string": "Channels from A to Z"
   },
+  "/n+NRO": {
+    "string": "Note id"
+  },
   "/nZy6A": {
     "context": "page subtitle",
     "string": "Issue refund"
@@ -1710,6 +1713,9 @@
   "9TbDQD": {
     "context": "order number label",
     "string": "Order number"
+  },
+  "9Th87u": {
+    "string": "Note successfully updated"
   },
   "9Tl/bT": {
     "context": "export items as spreadsheet",
@@ -6496,6 +6502,9 @@
     "context": "edit tracking button",
     "string": "Edit tracking"
   },
+  "dVSBW6": {
+    "string": "Related note id"
+  },
   "dVk241": {
     "string": "product configurations"
   },
@@ -6698,6 +6707,9 @@
   "fLhj3a": {
     "context": "gift card history message",
     "string": "Gift card expiry date was updated"
+  },
+  "fM7xZh": {
+    "string": "updated"
   },
   "fNFEkh": {
     "string": "No of Rows:"
@@ -7056,6 +7068,9 @@
   "hnRRUe": {
     "context": "docs link label",
     "string": "Learn more..."
+  },
+  "hniz8Z": {
+    "string": "here"
   },
   "ho75Lr": {
     "context": "status label deactivated",
@@ -8313,6 +8328,9 @@
     "context": "header",
     "string": "Add Value to Authorization Field"
   },
+  "qD1kvF": {
+    "string": "The timeline below shows the history of all events related to this order. Each entry represents a single event along with its content or readable description. For more information regarding order events, you can find {link}."
+  },
   "qDfaDI": {
     "string": "No app or plugin is configured to handle requested transaction action"
   },
@@ -9366,6 +9384,9 @@
   "xHj9Qe": {
     "context": "gift card settings header",
     "string": "Gift Cards Settings"
+  },
+  "xJEaxW": {
+    "string": "added"
   },
   "xJQX5t": {
     "string": "No staff members found"
