@@ -533,12 +533,10 @@ export const Datagrid: React.FC<DatagridProps> = ({
             e.preventDefault();
 
             if (e.currentTarget.dataset.reactRouterPath) {
-              const url = e.currentTarget.dataset.reactRouterPath;
-
               if (e.metaKey || e.ctrlKey) {
-                window.open(url, "_blank");
+                window.open(e.currentTarget.href, "_blank");
               } else {
-                navigate(url, navigatorOpts);
+                navigate(e.currentTarget.dataset.reactRouterPath, navigatorOpts);
               }
             }
           }}
