@@ -5,6 +5,7 @@ import {
   DateTimeRangeInput,
   DecimalFilterInput,
   GlobalIdFilterInput,
+  OrderDraftFilterInput,
   ProductWhereInput,
   PromotionWhereInput,
 } from "@dashboard/graphql";
@@ -13,7 +14,8 @@ import { FilterContainer } from "./FilterElement";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
 import { isItemOption, isItemOptionArray, isTuple } from "./FilterElement/ConditionValue";
 
-type StaticQueryPart = string | GlobalIdFilterInput | boolean | DecimalFilterInput | DateRangeInput;
+type StaticQueryPart = string | GlobalIdFilterInput | boolean | DecimalFilterInput;
+type StaticQueryPartForOldAPIFilters = string | DateRangeInput | string[] | boolean;
 
 const createStaticQueryPart = (selected: ConditionSelected): StaticQueryPart => {
   if (!selected.conditionValue) return "";
@@ -53,6 +55,50 @@ const createStaticQueryPart = (selected: ConditionSelected): StaticQueryPart => 
 
   if (Array.isArray(value)) {
     return { eq: value };
+  }
+
+  return value;
+};
+const createStaticQueryPartForOldAPIFilters = (
+  selected: ConditionSelected,
+): StaticQueryPartForOldAPIFilters => {
+  if (!selected.conditionValue) return "";
+
+  const { label } = selected.conditionValue;
+  const { value } = selected;
+
+  if (label === "lower") {
+    return { lte: value };
+  }
+
+  if (label === "greater") {
+    return { gte: value };
+  }
+
+  if (isTuple(value) && label === "between") {
+    const [gte, lte] = value;
+
+    return { lte, gte };
+  }
+
+  if (isItemOption(value) && ["true", "false"].includes(value.value)) {
+    return value.value === "true";
+  }
+
+  if (isItemOption(value)) {
+    return value.value;
+  }
+
+  if (isItemOptionArray(value)) {
+    return value.map(x => x.value);
+  }
+
+  if (typeof value === "string") {
+    return value;
+  }
+
+  if (Array.isArray(value)) {
+    return value;
   }
 
   return value;
@@ -200,43 +246,18 @@ export const createOrderQueryVariables = (value: FilterContainer) => {
   }, {} as OrderQueryVars);
 };
 
-export type DraftOrderQueryVars = {
-  customer: string;
-  created: DateRangeInput;
-};
-
-export const creatDraftOrderQueryVariables = (value: FilterContainer): DraftOrderQueryVars => {
+export const creatDraftOrderQueryVariables = (value: FilterContainer): OrderDraftFilterInput => {
   return value.reduce((p, c) => {
     if (typeof c === "string" || Array.isArray(c)) return p;
 
     if (c.isStatic()) {
-      const label = c.condition.selected.conditionValue?.label;
-      const value = c.condition.selected.value;
+      p[c.value.value as keyof OrderDraftFilterInput] = createStaticQueryPartForOldAPIFilters(
+        c.condition.selected,
+      ) as any;
 
-      if (c.value.value === "customer") {
-        p.customer = value as string;
-      }
-
-      if (c.value.value === "created") {
-        if (isTuple(value) && label === "between") {
-          const [gte, lte] = value;
-
-          p.created = {
-            gte,
-            lte,
-          };
-        }
-
-        if (label === "greater") {
-          p.created = { gte: value as string };
-        }
-
-        if (label == "lower") {
-          p.created = { lte: value as string };
-        }
-      }
+      return p;
     }
 
     return p;
-  }, {} as DraftOrderQueryVars);
+  }, {} as OrderDraftFilterInput);
 };
