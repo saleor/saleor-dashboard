@@ -8,7 +8,6 @@ import { Box, Button, Checkbox, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { Pagination } from "./Pagination";
 import { ProductTableItem } from "./ProductTableItem";
 import { Product } from "./types";
 import { useProductDrag } from "./useProductDrag";
@@ -46,8 +45,6 @@ export const ProductsTable = ({
   selected,
   onUnassignClick,
   paginationState,
-  updateListSettings,
-  numberOfRows,
 }: ProductsTableProps) => {
   const allChecked = areAllChecked(products, selected);
   const { items, sensors, isSaving, handleDragEnd } = useProductDrag({ products, paginationState });
@@ -167,7 +164,6 @@ export const ProductsTable = ({
           </SortableContext>
         </GridTable.Body>
       </GridTable>
-      <Pagination numberOfRows={numberOfRows} onUpdateListSettings={updateListSettings} />
     </DndContext>
   );
 };

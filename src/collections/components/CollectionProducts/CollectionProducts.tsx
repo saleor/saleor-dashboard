@@ -33,6 +33,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ListViews } from "../../../types";
+import { Pagination } from "./Pagination";
 import { ProductsTable } from "./ProductsTable";
 import { ProductTableSkeleton } from "./ProductTableSkeleton";
 import { useCollectionId } from "./useCollectionId";
@@ -202,6 +203,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = ({
         ) : (
           <ProductTableSkeleton />
         )}
+        <Pagination numberOfRows={numberOfRows} onUpdateListSettings={updateListSettings} />
       </DashboardCard>
       <AssignProductDialog
         selectedChannels={currentChannels}
