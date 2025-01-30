@@ -7151,10 +7151,6 @@
     "context": "button",
     "string": "Apply"
   },
-  "iEeIhY": {
-    "context": "draft order",
-    "string": "Customer"
-  },
   "iFM716": {
     "context": "grant refund, refund card subtitle",
     "string": "How much money do you want to return to the customer for the order?"
@@ -9181,10 +9177,6 @@
   },
   "vuKrlW": {
     "string": "Stock"
-  },
-  "vwMO04": {
-    "context": "draft order",
-    "string": "Created"
   },
   "vz3yxp": {
     "string": "Channels permissions"

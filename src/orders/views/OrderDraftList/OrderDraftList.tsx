@@ -36,7 +36,7 @@ import {
   OrderDraftListUrlQueryParams,
   orderUrl,
 } from "../../urls";
-import { getFilterVariables, storageUtils } from "./filters";
+import { getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
 import { getSortQueryVariables } from "./sort";
 import { useBulkDeletion } from "./useBulkDeletion";
 
@@ -84,9 +84,10 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
       orders: true,
     },
   });
-  const [resetFilters, handleSearchChange] = createFilterHandlers({
+  const [_, resetFilters, handleSearchChange] = createFilterHandlers({
     cleanupFn: clearRowSelection,
     createUrl: orderDraftListUrl,
+    getFilterQueryParam,
     navigate,
     params,
     keepActiveTab: true,

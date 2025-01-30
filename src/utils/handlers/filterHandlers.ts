@@ -1,18 +1,26 @@
+import { IFilter } from "@dashboard/components/Filter";
 import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
 import { ActiveTab, Pagination, Search, Sort } from "@dashboard/types";
 
+import { GetFilterQueryParam, getFilterQueryParams } from "../filters";
+
 type RequiredParams = ActiveTab & Search & Sort<any> & Pagination & { presestesChanged?: string };
 type CreateUrl = (params: RequiredParams) => string;
-type CreateFilterHandlers = [() => void, (query: string) => void];
+type CreateFilterHandlers<TFilterKeys extends string> = [
+  (filter: IFilter<TFilterKeys>) => void,
+  () => void,
+  (query: string) => void,
+];
 
-function createFilterHandlers(opts: {
+function createFilterHandlers<TFilterKeys extends string, TFilters extends {}>(opts: {
+  getFilterQueryParam: GetFilterQueryParam<TFilterKeys, TFilters>;
   navigate: UseNavigatorResult;
   createUrl: CreateUrl;
   params: RequiredParams;
   cleanupFn?: () => void;
   keepActiveTab?: boolean;
-}): CreateFilterHandlers {
-  const { navigate, createUrl, params, cleanupFn, keepActiveTab } = opts;
+}): CreateFilterHandlers<TFilterKeys> {
+  const { getFilterQueryParam, navigate, createUrl, params, cleanupFn, keepActiveTab } = opts;
   const getActiveTabValue = (removeActiveTab: boolean) => {
     if (!keepActiveTab || removeActiveTab) {
       return undefined;
@@ -20,7 +28,23 @@ function createFilterHandlers(opts: {
 
     return params.activeTab;
   };
+  const changeFilters = (filters: IFilter<TFilterKeys>) => {
+    if (cleanupFn) {
+      cleanupFn();
+    }
 
+    const filtersQueryParams = getFilterQueryParams(filters, getFilterQueryParam);
+
+    navigate(
+      createUrl({
+        ...params,
+        ...filtersQueryParams,
+        activeTab: getActiveTabValue(
+          checkIfParamsEmpty(filtersQueryParams) && !params.query?.length,
+        ),
+      }),
+    );
+  };
   const resetFilters = () => {
     if (cleanupFn) {
       cleanupFn();
@@ -51,7 +75,7 @@ function createFilterHandlers(opts: {
     );
   };
 
-  return [resetFilters, handleSearchChange];
+  return [changeFilters, resetFilters, handleSearchChange];
 }
 
 function checkIfParamsEmpty(params: RequiredParams): boolean {
