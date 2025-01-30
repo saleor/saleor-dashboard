@@ -65,7 +65,8 @@ const createStaticQueryPartForOldAPIFilters = (
   if (!selected.conditionValue) return "";
 
   const { label } = selected.conditionValue;
-  const { value } = selected;
+  const { value: selectedValue } = selected;
+  const value = Array.isArray(selectedValue) ? selectedValue[0] : selectedValue;
 
   if (label === "lower") {
     return { lte: value };
