@@ -1,10 +1,10 @@
 import { PaginationState } from "@dashboard/hooks/useLocalPaginator";
 
-import { Product } from "./types";
+import { Edges, Product } from "./types";
 import { useCollectionId } from "./useCollectionId";
 import { useProductEdges } from "./useProductEdges";
 
-const createOptimisticResponseForEdges = (collectionId: string, edges: any) => ({
+const createOptimisticResponseForEdges = (collectionId: string, edges: Edges) => ({
   collectionReorderProducts: {
     __typename: "CollectionReorderProducts" as const,
     collection: {
@@ -53,7 +53,7 @@ export const useProductReorderOptimistic = ({ paginationState }: ProductReorderO
         };
       });
 
-    return createOptimisticResponseForEdges(collectionId, exceededEdges);
+    return createOptimisticResponseForEdges(collectionId, exceededEdges as Edges);
   };
 
   return {

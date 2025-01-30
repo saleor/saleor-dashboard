@@ -200,7 +200,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = ({
             numberOfRows={numberOfRows}
           />
         ) : (
-          <ProductTableSkeleton numberOfRows={numberOfRows} />
+          <ProductTableSkeleton />
         )}
       </DashboardCard>
       <AssignProductDialog

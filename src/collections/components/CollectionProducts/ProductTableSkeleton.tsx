@@ -47,7 +47,7 @@ export const ProductTableItemSkeleton = () => (
   </GridTable.Row>
 );
 
-export const ProductTableSkeleton = ({ numberOfRows }: { numberOfRows: number }) => (
+export const ProductTableSkeleton = () => (
   <GridTable borderWidth={0}>
     <GridTable.Colgroup>
       <GridTable.Col __width="40px" />
@@ -58,7 +58,7 @@ export const ProductTableSkeleton = ({ numberOfRows }: { numberOfRows: number })
       <GridTable.Col __width="100px" />
     </GridTable.Colgroup>
     <GridTable.Body>
-      {Array.from({ length: numberOfRows }, (_, index) => (
+      {Array.from({ length: 10 }, (_, index) => (
         <ProductTableItemSkeleton key={index} />
       ))}
     </GridTable.Body>
