@@ -28,6 +28,9 @@ export const fragmentOrderEvent = gql`
       id
       number
     }
+    related {
+      id
+    }
     message
     quantity
     transactionReference
