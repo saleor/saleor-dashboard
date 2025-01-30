@@ -21,7 +21,7 @@ test.beforeEach(async ({ page, request }) => {
   permissionGroupsPage = new PermissionGroupsPage(page);
   basicApiService = new BasicApiService(request);
 });
-test("TC: SALEOR_137 Admin User should be able to deactivate other user @e2e @staff-members", async () => {
+test("TC: SALEOR_137 Admin User should be able to deactivate other user #e2e #staff-members", async () => {
   await staffMembersPage.goToStaffDetailsPage(USERS.userToBeDeactivated.id);
   await staffMembersPage.clickIsActiveCheckbox();
   await staffMembersPage.clickSaveButton();
@@ -39,7 +39,7 @@ test("TC: SALEOR_137 Admin User should be able to deactivate other user @e2e @st
     loginViaApiDeactivatedUserResponse.data.tokenCreate.errors[0].code,
   ).toEqual("INACTIVE");
 });
-test("TC: SALEOR_38 Admin User should be able to activate other user @e2e @staff-members", async () => {
+test("TC: SALEOR_38 Admin User should be able to activate other user #e2e #staff-members", async () => {
   await staffMembersPage.goToStaffDetailsPage(USERS.userToBeActivated.id);
   await staffMembersPage.clickIsActiveCheckbox();
   await staffMembersPage.clickSaveButton();
@@ -58,7 +58,7 @@ test("TC: SALEOR_38 Admin User should be able to activate other user @e2e @staff
 // Something went wrong
 // https://pr-4947.dashboard.saleor.rocks/new-password/ is not allowed.
 // Please check `Trusted client origins` configuration in Saleor Cloud.
-test.skip("TC: SALEOR_211 Create a staff member @e2e @staff-members", async () => {
+test.skip("TC: SALEOR_211 Create a staff member #e2e #staff-members", async () => {
   const name = faker.name.firstName();
   const lastName = faker.name.lastName();
   const email = faker.internet.email().toLowerCase();
@@ -81,7 +81,7 @@ test.skip("TC: SALEOR_211 Create a staff member @e2e @staff-members", async () =
   await staffMembersPage.verifyAssignedPermission("Customer Support");
   await staffMembersPage.verifyAssignedPermission("Channels management");
 });
-test("TC: SALEOR_212 Edit a staff member @e2e @staff-members", async () => {
+test("TC: SALEOR_212 Edit a staff member #e2e #staff-members", async () => {
   const newName = faker.name.firstName();
   const newLastName = faker.name.lastName();
   const newEmail = faker.internet.email().toLowerCase();
@@ -100,7 +100,7 @@ test("TC: SALEOR_212 Edit a staff member @e2e @staff-members", async () => {
   await staffMembersPage.verifyAssignedPermission("Channels management");
   await staffMembersPage.verifyAssignedPermission(USERS.staffToBeEdited.permission);
 });
-test("TC: SALEOR_213 Delete a single staff member @e2e @staff-members", async () => {
+test("TC: SALEOR_213 Delete a single staff member #e2e #staff-members", async () => {
   await staffMembersPage.gotToExistingStaffMemberPage(USERS.staffToBeDeleted.id);
   await staffMembersPage.clickDeleteButton();
   await staffMembersPage.clickSubmitButton();

@@ -6,7 +6,7 @@ import { test } from "utils/testWithPermission";
 
 test.use({ permissionName: "translations" });
 
-test("TC: SALEOR_22 User should be able to navigate to translations page as a staff member using TRANSLATION permission @e2e", async ({
+test("TC: SALEOR_22 User should be able to navigate to translations page as a staff member using TRANSLATION permission #e2e", async ({
   page,
 }) => {
   const mainMenuPage = new MainMenuPage(page);
