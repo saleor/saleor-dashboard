@@ -530,16 +530,16 @@ export const Datagrid: React.FC<DatagridProps> = ({
           aria-hidden={true}
           onWheelCapture={hideLinkAndShowAfterDelay}
           onClick={e => {
+            // When someone clicks with CMD key to open in new tab we should not prevent default
+            if (e.metaKey || e.ctrlKey) {
+              return;
+            }
+
+            // Prevent default when navigate with react-router
             e.preventDefault();
 
             if (e.currentTarget.dataset.reactRouterPath) {
-              if (e.metaKey || e.ctrlKey) {
-                // eslint-disable-next-line no-console
-                console.log("Current url", e.currentTarget.href);
-                window.open(e.currentTarget.href, "_blank");
-              } else {
-                navigate(e.currentTarget.dataset.reactRouterPath, navigatorOpts);
-              }
+              navigate(e.currentTarget.dataset.reactRouterPath, navigatorOpts);
             }
           }}
         />
