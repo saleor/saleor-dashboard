@@ -147,11 +147,11 @@ export const ProductsTable = ({
           </GridTable.Row>
           <SortableContext items={items} strategy={verticalListSortingStrategy}>
             {renderCollection(items, product => {
-              const isSelected = product ? isChecked(product.id) : false;
-
               if (!product) {
                 return null;
               }
+
+              const isSelected = isChecked(product.id);
 
               return (
                 <ProductTableItem

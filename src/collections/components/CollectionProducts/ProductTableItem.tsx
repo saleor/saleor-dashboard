@@ -4,9 +4,18 @@ import Drag from "@dashboard/icons/Drag";
 import { productUrl } from "@dashboard/products/urls";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Box, Button, Checkbox, Skeleton, Text, TrashBinIcon } from "@saleor/macaw-ui-next";
+import {
+  Box,
+  Button,
+  Checkbox,
+  Skeleton,
+  Text,
+  TrashBinIcon,
+  useTheme,
+} from "@saleor/macaw-ui-next";
 import React from "react";
 
+import { EmptyImage } from "./EmptyImage";
 import { Product } from "./types";
 
 interface ItemProps {
@@ -78,15 +87,19 @@ export const ProductTableItem = ({
           gap={2}
           height="100%"
         >
-          <Box borderColor="default1" borderWidth={1} borderStyle="solid">
-            <Box
-              as="img"
-              src={product?.thumbnail?.url}
-              alt={product?.name}
-              __width="31px"
-              __height="31px"
-            />
-          </Box>
+          {product?.thumbnail ? (
+            <Box borderColor="default1" borderWidth={1} borderRadius={2} borderStyle="solid">
+              <Box
+                as="img"
+                src={product?.thumbnail?.url}
+                alt={product?.name}
+                __width="31px"
+                __height="31px"
+              />
+            </Box>
+          ) : (
+            <EmptyImage />
+          )}
           <Text>{product?.name}</Text>
         </Box>
       </GridTable.Cell>
