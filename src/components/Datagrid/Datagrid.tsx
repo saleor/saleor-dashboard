@@ -534,6 +534,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
             if (e.currentTarget.dataset.reactRouterPath) {
               if (e.metaKey || e.ctrlKey) {
+                // eslint-disable-next-line no-console
+                console.log("Current url", e.currentTarget.href);
                 window.open(e.currentTarget.href, "_blank");
               } else {
                 navigate(e.currentTarget.dataset.reactRouterPath, navigatorOpts);
