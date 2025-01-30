@@ -4,15 +4,7 @@ import Drag from "@dashboard/icons/Drag";
 import { productUrl } from "@dashboard/products/urls";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import {
-  Box,
-  Button,
-  Checkbox,
-  Skeleton,
-  Text,
-  TrashBinIcon,
-  useTheme,
-} from "@saleor/macaw-ui-next";
+import { Box, Button, Checkbox, Skeleton, Text, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { EmptyImage } from "./EmptyImage";
