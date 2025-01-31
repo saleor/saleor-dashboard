@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-List of draft orders now used new filters
+List of draft orders now use new filters
