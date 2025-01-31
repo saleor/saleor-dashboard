@@ -23,7 +23,9 @@ const createStaticQueryPart = (selected: ConditionSelected): StaticQueryPart => 
   const { value: selectedValue } = selected;
 
   const value =
-    Array.isArray(selectedValue) && !isTuple(selectedValue) ? selectedValue[0] : selectedValue;
+    Array.isArray(selectedValue) && !isTuple(selectedValue) && !isItemOptionArray(selectedValue)
+      ? selectedValue[0]
+      : selectedValue;
 
   if (label === "lower") {
     return { range: { lte: value } };

@@ -51,7 +51,6 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   const intl = useIntl();
   const { updateListSettings, settings } = useListSettings(ListViews.DRAFT_LIST);
   const { valueProvider } = useConditionalFilterContext();
-  const where = creatDraftOrderQueryVariables(valueProvider.value);
 
   usePaginationReset(orderDraftListUrl, params, settings.rowNumber);
 
@@ -116,16 +115,18 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   });
 
   const paginationState = createPaginationState(settings.rowNumber, params);
+  const filter = creatDraftOrderQueryVariables(valueProvider.value);
+
   const queryVariables = React.useMemo(() => {
     return {
       ...paginationState,
       filter: {
-        ...where,
+        ...filter,
         search: params.query,
       },
       sort: getSortQueryVariables(params),
     };
-  }, [params]);
+  }, [params, settings.rowNumber]);
   const { data, refetch } = useOrderDraftListQuery({
     displayLoader: true,
     variables: queryVariables,
