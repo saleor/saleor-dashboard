@@ -1,10 +1,9 @@
-import { NavigatorOpts, UseNavigatorResult } from "@dashboard/hooks/useNavigator";
+import useNavigator, { NavigatorOpts } from "@dashboard/hooks/useNavigator";
 import { MouseEvent } from "react";
 
-export const useRowAnchorHandler = (
-  navigate: UseNavigatorResult,
-  navigatorOpts?: NavigatorOpts,
-) => {
+export const useRowAnchorHandler = (navigatorOpts?: NavigatorOpts) => {
+  const navigate = useNavigator();
+
   return (e: MouseEvent<HTMLAnchorElement>) => {
     // When someone clicks with CMD key to open in new tab, we should not prevent default
     if (e.metaKey || e.ctrlKey) {
