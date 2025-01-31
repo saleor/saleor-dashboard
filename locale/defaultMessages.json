@@ -5488,6 +5488,9 @@
     "context": "card update success alert title",
     "string": "Successfully updated card balance"
   },
+  "XAvER/": {
+    "string": "Product reordered"
+  },
   "XB2Jj9": {
     "context": "create app button",
     "string": "Create App"
@@ -7896,6 +7899,9 @@
   "nA2g2e": {
     "context": "label",
     "string": "External app"
+  },
+  "nABmvC": {
+    "string": "No. of rows"
   },
   "nBzIBG": {
     "string": "Delete permission group"
