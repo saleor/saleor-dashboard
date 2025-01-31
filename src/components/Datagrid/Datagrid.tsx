@@ -1,5 +1,6 @@
 import "@glideapps/glide-data-grid/dist/index.css";
 
+import { useRowAnchorHandler } from "@dashboard/components/Datagrid/hooks/useRowAnchorHandler";
 import useNavigator, { NavigatorOpts } from "@dashboard/hooks/useNavigator";
 import { usePreventHistoryBack } from "@dashboard/hooks/usePreventHistoryBack";
 import { getCellAction } from "@dashboard/products/components/ProductListDatagrid/datagrid";
@@ -152,6 +153,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
     rowMarkers,
     availableColumns,
   });
+  const rowAnchorHandler = useRowAnchorHandler(navigate, navigatorOpts);
 
   const { handleRowHover, hoverRow } = useRowHover({
     hasRowHover,
@@ -529,19 +531,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
           tabIndex={-1}
           aria-hidden={true}
           onWheelCapture={hideLinkAndShowAfterDelay}
-          onClick={e => {
-            // When someone clicks with CMD key to open in new tab we should not prevent default
-            if (e.metaKey || e.ctrlKey) {
-              return;
-            }
-
-            // Prevent default when navigate with react-router
-            e.preventDefault();
-
-            if (e.currentTarget.dataset.reactRouterPath) {
-              navigate(e.currentTarget.dataset.reactRouterPath, navigatorOpts);
-            }
-          }}
+          onClick={rowAnchorHandler}
         />
       )}
     </FullScreenContainer>
