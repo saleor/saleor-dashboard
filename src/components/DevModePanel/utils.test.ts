@@ -11,6 +11,10 @@ jest.mock("@saleor/sdk", () => ({
   createFetch: jest.fn().mockReturnValue(jest.fn()),
 }));
 
+jest.mock("@dashboard/config", () => ({
+  ENABLED_SERVICE_NAME_HEADER: true,
+}));
+
 const mockCreateGraphiQLFetcher = createGraphiQLFetcher as jest.Mock;
 const authorizedFetch = createFetch as jest.Mock;
 
@@ -58,13 +62,18 @@ describe("getFetcher", () => {
     expect(mockCreateGraphiQLFetcher).toHaveBeenCalledWith({
       url: mockApiUrl,
       fetch: fetch,
+      headers: {
+        "source-service-name": "saleor.dashboard.playground",
+      },
     });
   });
 
   it("should return fetcher with fetch when Authorization-Bearer header present", () => {
     // Arrange
     const opts: FetcherOpts = {
-      headers: { "Authorization-Bearer": "token" },
+      headers: {
+        "Authorization-Bearer": "token",
+      },
     };
 
     // Act
@@ -74,13 +83,18 @@ describe("getFetcher", () => {
     expect(mockCreateGraphiQLFetcher).toHaveBeenCalledWith({
       url: mockApiUrl,
       fetch: fetch,
+      headers: {
+        "source-service-name": "saleor.dashboard.playground",
+      },
     });
   });
 
   it("should return fetcher with fetch when lowercase header present", () => {
     // Arrange
     const opts: FetcherOpts = {
-      headers: { "authorization-bearer": "token" },
+      headers: {
+        "authorization-bearer": "token",
+      },
     };
 
     // Act
@@ -90,6 +104,9 @@ describe("getFetcher", () => {
     expect(mockCreateGraphiQLFetcher).toHaveBeenCalledWith({
       url: mockApiUrl,
       fetch: fetch,
+      headers: {
+        "source-service-name": "saleor.dashboard.playground",
+      },
     });
   });
 });

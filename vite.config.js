@@ -56,6 +56,7 @@ export default defineConfig(({ command, mode }) => {
     SENTRY_AUTH_TOKEN,
     SENTRY_ORG,
     SENTRY_PROJECT,
+    ENABLED_SERVICE_NAME_HEADER,
     ONBOARDING_USER_JOINED_DATE_THRESHOLD,
     // eslint-disable-next-line camelcase
     npm_package_version,
@@ -88,6 +89,7 @@ export default defineConfig(({ command, mode }) => {
           POSTHOG_EXCLUDED_DOMAINS,
           POSTHOG_HOST,
           ONBOARDING_USER_JOINED_DATE_THRESHOLD,
+          ENABLED_SERVICE_NAME_HEADER,
           injectOgTags:
             DEMO_MODE &&
             `
@@ -165,6 +167,7 @@ export default defineConfig(({ command, mode }) => {
         POSTHOG_KEY,
         POSTHOG_EXCLUDED_DOMAINS,
         POSTHOG_HOST,
+        ENABLED_SERVICE_NAME_HEADER,
         ONBOARDING_USER_JOINED_DATE_THRESHOLD,
         // eslint-disable-next-line camelcase
         RELEASE_NAME: npm_package_version,
