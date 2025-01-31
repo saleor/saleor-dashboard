@@ -5420,8 +5420,13 @@ export type CollectionUpdateMutationHookResult = ReturnType<typeof useCollection
 export type CollectionUpdateMutationResult = Apollo.MutationResult<Types.CollectionUpdateMutation>;
 export type CollectionUpdateMutationOptions = Apollo.BaseMutationOptions<Types.CollectionUpdateMutation, Types.CollectionUpdateMutationVariables>;
 export const CollectionAssignProductDocument = gql`
-    mutation CollectionAssignProduct($collectionId: ID!, $productIds: [ID!]!, $first: Int, $after: String, $last: Int, $before: String) {
+    mutation CollectionAssignProduct($collectionId: ID!, $productIds: [ID!]!, $moves: [MoveProductInput!]!, $first: Int, $after: String, $last: Int, $before: String) {
   collectionAddProducts(collectionId: $collectionId, products: $productIds) {
+    errors {
+      ...CollectionError
+    }
+  }
+  collectionReorderProducts(collectionId: $collectionId, moves: $moves) {
     collection {
       id
       products(
@@ -5429,7 +5434,7 @@ export const CollectionAssignProductDocument = gql`
         after: $after
         before: $before
         last: $last
-        sortBy: {field: COLLECTION, direction: DESC}
+        sortBy: {field: COLLECTION, direction: ASC}
       ) {
         edges {
           node {
@@ -5445,12 +5450,12 @@ export const CollectionAssignProductDocument = gql`
       }
     }
     errors {
-      ...CollectionError
+      message
     }
   }
 }
-    ${CollectionProductFragmentDoc}
-${CollectionErrorFragmentDoc}`;
+    ${CollectionErrorFragmentDoc}
+${CollectionProductFragmentDoc}`;
 export type CollectionAssignProductMutationFn = Apollo.MutationFunction<Types.CollectionAssignProductMutation, Types.CollectionAssignProductMutationVariables>;
 
 /**
@@ -5468,6 +5473,7 @@ export type CollectionAssignProductMutationFn = Apollo.MutationFunction<Types.Co
  *   variables: {
  *      collectionId: // value for 'collectionId'
  *      productIds: // value for 'productIds'
+ *      moves: // value for 'moves'
  *      first: // value for 'first'
  *      after: // value for 'after'
  *      last: // value for 'last'
@@ -5566,7 +5572,7 @@ export const UnassignCollectionProductDocument = gql`
         after: $after
         before: $before
         last: $last
-        sortBy: {field: COLLECTION, direction: DESC}
+        sortBy: {field: COLLECTION, direction: ASC}
       ) {
         edges {
           node {
@@ -5700,7 +5706,7 @@ export const ReorderProductsInCollectionDocument = gql`
         after: $after
         before: $before
         last: $last
-        sortBy: {field: COLLECTION, direction: DESC}
+        sortBy: {field: COLLECTION, direction: ASC}
       ) {
         edges {
           node {
@@ -5858,7 +5864,7 @@ export const CollectionProductsDocument = gql`
       after: $after
       before: $before
       last: $last
-      sortBy: {field: COLLECTION, direction: DESC}
+      sortBy: {field: COLLECTION, direction: ASC}
     ) {
       edges {
         node {

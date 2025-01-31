@@ -13,16 +13,35 @@ export const collectionUpdate = gql`
   }
 `;
 
+/*
+  The mutation below has two simultaneous mutations:
+  - collectionAddProducts, for adding products to the collection
+  - collectionReorderProducts, for resetting its reorder position
+
+  The collectionReorderProducts is used here as a workaround due to issues on the API.
+  It does the reorder by moving product by 0, which sets the initial reorder position.
+
+  Additionally, collectionAddProducts gets only the errors as requested field,
+  while collectionReorderProducts takes the desired response (products and collection id) - this is
+  intentional as we are interested only in the response from reorder mutation, and
+  only that will invalidate the apollo cache (because of request collection id presence, required for cache key)
+*/
 export const assignCollectionProduct = gql`
   mutation CollectionAssignProduct(
     $collectionId: ID!
     $productIds: [ID!]!
+    $moves: [MoveProductInput!]!
     $first: Int
     $after: String
     $last: Int
     $before: String
   ) {
     collectionAddProducts(collectionId: $collectionId, products: $productIds) {
+      errors {
+        ...CollectionError
+      }
+    }
+    collectionReorderProducts(collectionId: $collectionId, moves: $moves) {
       collection {
         id
         products(
@@ -30,7 +49,7 @@ export const assignCollectionProduct = gql`
           after: $after
           before: $before
           last: $last
-          sortBy: { field: COLLECTION, direction: DESC }
+          sortBy: { field: COLLECTION, direction: ASC }
         ) {
           edges {
             node {
@@ -46,7 +65,7 @@ export const assignCollectionProduct = gql`
         }
       }
       errors {
-        ...CollectionError
+        message
       }
     }
   }
@@ -92,7 +111,7 @@ export const unassignCollectionProduct = gql`
           after: $after
           before: $before
           last: $last
-          sortBy: { field: COLLECTION, direction: DESC }
+          sortBy: { field: COLLECTION, direction: ASC }
         ) {
           edges {
             node {
@@ -151,7 +170,7 @@ export const reorderProductsInCollection = gql`
           after: $after
           before: $before
           last: $last
-          sortBy: { field: COLLECTION, direction: DESC }
+          sortBy: { field: COLLECTION, direction: ASC }
         ) {
           edges {
             node {

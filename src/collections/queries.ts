@@ -54,7 +54,7 @@ export const collectionProducts = gql`
         after: $after
         before: $before
         last: $last
-        sortBy: { field: COLLECTION, direction: DESC }
+        sortBy: { field: COLLECTION, direction: ASC }
       ) {
         edges {
           node {

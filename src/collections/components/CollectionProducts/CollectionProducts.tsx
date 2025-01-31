@@ -17,6 +17,7 @@ import {
   CollectionDetailsQuery,
   useCollectionAssignProductMutation,
   useCollectionProductsQuery,
+  useReorderProductsInCollectionMutation,
   useUnassignCollectionProductMutation,
 } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
@@ -64,6 +65,8 @@ const CollectionProducts: React.FC<CollectionProductsProps> = ({
   const numberOfRows = settings ? settings.rowNumber : PAGINATE_BY;
   const [paginationState, setPaginationState] = useLocalPaginationState(numberOfRows);
   const notify = useNotifier();
+
+  const [reorder, reorderData] = useReorderProductsInCollectionMutation();
 
   const [assignProduct, assignProductOpts] = useCollectionAssignProductMutation({
     onCompleted: data => {
@@ -134,7 +137,11 @@ const CollectionProducts: React.FC<CollectionProductsProps> = ({
 
     if (productIds.length > 0) {
       await assignProduct({
-        variables: { ...baseVariables, productIds },
+        variables: {
+          ...baseVariables,
+          productIds,
+          moves: productIds.map(id => ({ productId: id, sortOrder: 0 })),
+        },
       });
     }
 

@@ -26,7 +26,7 @@ export const useProductReorder = ({ paginationState }: ProductReorderProps) => {
         moves: [
           {
             productId,
-            sortOrder: shift,
+            sortOrder: -shift,
           },
         ],
         ...paginationState,

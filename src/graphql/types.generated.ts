@@ -9300,6 +9300,7 @@ export type CollectionUpdateMutation = { __typename: 'Mutation', collectionUpdat
 export type CollectionAssignProductMutationVariables = Exact<{
   collectionId: Scalars['ID'];
   productIds: Array<Scalars['ID']> | Scalars['ID'];
+  moves: Array<MoveProductInput> | MoveProductInput;
   first?: InputMaybe<Scalars['Int']>;
   after?: InputMaybe<Scalars['String']>;
   last?: InputMaybe<Scalars['Int']>;
@@ -9307,7 +9308,7 @@ export type CollectionAssignProductMutationVariables = Exact<{
 }>;
 
 
-export type CollectionAssignProductMutation = { __typename: 'Mutation', collectionAddProducts: { __typename: 'CollectionAddProducts', collection: { __typename: 'Collection', id: string, products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, productType: { __typename: 'ProductType', id: string, name: string }, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, isPublished: boolean, publishedAt: any | null, isAvailableForPurchase: boolean | null, availableForPurchaseAt: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null } | null, errors: Array<{ __typename: 'CollectionError', code: CollectionErrorCode, field: string | null, message: string | null }> } | null };
+export type CollectionAssignProductMutation = { __typename: 'Mutation', collectionAddProducts: { __typename: 'CollectionAddProducts', errors: Array<{ __typename: 'CollectionError', code: CollectionErrorCode, field: string | null, message: string | null }> } | null, collectionReorderProducts: { __typename: 'CollectionReorderProducts', collection: { __typename: 'Collection', id: string, products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, productType: { __typename: 'ProductType', id: string, name: string }, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, isPublished: boolean, publishedAt: any | null, isAvailableForPurchase: boolean | null, availableForPurchaseAt: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null } | null, errors: Array<{ __typename: 'CollectionError', message: string | null }> } | null };
 
 export type CreateCollectionMutationVariables = Exact<{
   input: CollectionCreateInput;
