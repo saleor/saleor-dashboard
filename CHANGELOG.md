@@ -1,5 +1,22 @@
 # Changelog
 
+## 3.20.26
+
+### Patch Changes
+
+- f0870c5: Opening item in new tab using cmd key on datagrid now takes into account mounting point
+- 87b8124: Now you can re-order products within the collection.
+- 19bdcd4: Order transaction list now displays the name of a transaction
+- e0f586e: Now you can see pageviews in the posthog.
+- 1c3a125: You can now edit note in order details. Notes in order details now show id of note, id of related note and type of note "added" or "updated"
+- 41dfb69: You can now open datagrid list item in new tab using cmd/ctrl button
+- a3a1eca: After creating a new collection, you should see a list of assigned channels
+- 79b8255: Modals in the Dashboard are now aligned, all have the same max height. Loading items on scroll works when the dialog is displayed in large screen.
+- 08e3449: Dashboard now sends source header to API, when ENABLED_SERVICE_NAME_HEADER=true. Requires core >=3.20.68.
+- 36bc1be: Activates list items on the welcome page no longer implies that they are clickable
+- 52cf576: Editor.js no more cause error during saving
+- 6a4f082: You can now navigate back from collection details to collection list
+
 ## 3.20.25
 
 ### Patch Changes
