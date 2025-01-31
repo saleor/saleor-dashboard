@@ -1,6 +1,4 @@
 // @ts-strict-ignore
-import { FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
-import { creatDraftOrderQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { FilterElement } from "@dashboard/components/Filter";
 
 import {
@@ -16,21 +14,6 @@ import {
 } from "../../urls";
 
 export const ORDER_DRAFT_FILTERS_KEY = "orderDraftFilters";
-
-export const getFilterVariables = ({
-  filterContainer,
-  params,
-}: {
-  filterContainer: FilterContainer;
-  params: OrderDraftListUrlFilters;
-}) => {
-  const queryVars = creatDraftOrderQueryVariables(filterContainer);
-
-  return {
-    ...queryVars,
-    search: params.query,
-  };
-};
 
 export enum OrderDraftFilterKeys {
   created = "created",

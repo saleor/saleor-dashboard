@@ -4,6 +4,7 @@ import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDia
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { creatDraftOrderQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
@@ -36,7 +37,7 @@ import {
   OrderDraftListUrlQueryParams,
   orderUrl,
 } from "../../urls";
-import { getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
+import { getFilterQueryParam, storageUtils } from "./filters";
 import { getSortQueryVariables } from "./sort";
 import { useBulkDeletion } from "./useBulkDeletion";
 
@@ -50,6 +51,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   const intl = useIntl();
   const { updateListSettings, settings } = useListSettings(ListViews.DRAFT_LIST);
   const { valueProvider } = useConditionalFilterContext();
+  const where = creatDraftOrderQueryVariables(valueProvider.value);
 
   usePaginationReset(orderDraftListUrl, params, settings.rowNumber);
 
@@ -112,18 +114,18 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     getUrl: orderDraftListUrl,
     storageUtils,
   });
+
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = React.useMemo(
-    () => ({
+  const queryVariables = React.useMemo(() => {
+    return {
       ...paginationState,
-      filter: getFilterVariables({
-        params,
-        filterContainer: valueProvider.value,
-      }),
+      filter: {
+        ...where,
+        search: params.query,
+      },
       sort: getSortQueryVariables(params),
-    }),
-    [params],
-  );
+    };
+  }, [params]);
   const { data, refetch } = useOrderDraftListQuery({
     displayLoader: true,
     variables: queryVariables,
