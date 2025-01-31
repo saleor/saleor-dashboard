@@ -77,7 +77,7 @@ describe("CollectionProducts/useProductReorder", () => {
         moves: [
           {
             productId: "2",
-            sortOrder: 1,
+            sortOrder: -1,
           },
         ],
       },
