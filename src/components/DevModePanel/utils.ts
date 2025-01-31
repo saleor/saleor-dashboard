@@ -16,11 +16,16 @@ export const getFetcher = (opts: FetcherOpts) => {
     httpFetch = fetch;
   }
 
+  const enabledServiceName = process.env.ENABLED_SERVICE_NAME_HEADER;
+  const headers = {};
+
+  if (enabledServiceName) {
+    headers["source-service-name"] = "saleor.dashboard.playground";
+  }
+
   return createGraphiQLFetcher({
     url: process.env.API_URL as string,
     fetch: httpFetch as typeof fetch,
-    headers: {
-      "source-service-name": "saleor.dashboard.playground",
-    },
+    headers,
   });
 };

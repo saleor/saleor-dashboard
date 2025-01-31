@@ -9,12 +9,19 @@ import introspectionQueryResultData from "./fragmentTypes.generated";
 import { TypedTypePolicies } from "./typePolicies.generated";
 
 const attachVariablesLink = new ApolloLink((operation, forward) => {
-  operation.setContext(({ headers = {} }) => ({
-    headers: {
-      ...headers,
-      "source-service-name": "saleor.dashboard",
-    },
-  }));
+  const enabledServiceName = process.env.ENABLED_SERVICE_NAME_HEADER;
+
+  operation.setContext(({ headers = {} }) => {
+    const contextHeaders = { ...headers };
+
+    if (enabledServiceName) {
+      contextHeaders["source-service-name"] = "saleor.dashboard";
+    }
+
+    return {
+      headers: contextHeaders,
+    };
+  });
 
   return forward(operation).map(data => ({
     ...data,
