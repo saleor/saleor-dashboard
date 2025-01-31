@@ -69,4 +69,26 @@ describe("useBackLinkWithState", () => {
     // Assert
     expect(result.current).toBe("/orders/drafts?asc=false&after=cursor");
   });
+
+  it("should omit /dashboard from pathname when returning the previous URL", () => {
+    // Arrange
+    (useLocation as jest.Mock).mockReturnValue({
+      state: {
+        prevLocation: {
+          pathname: "/dashboard/collections/Q29sbGVjdGlvbjoxNjY",
+          search: "",
+        },
+      },
+    });
+
+    // Act
+    const { result } = renderHook(() =>
+      useBackLinkWithState({
+        path: "/collections",
+      }),
+    );
+
+    // Assert
+    expect(result.current).toBe("/collections/Q29sbGVjdGlvbjoxNjY");
+  });
 });

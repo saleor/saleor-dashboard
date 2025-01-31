@@ -73,6 +73,10 @@ export const WelcomePageActivities = () => {
                 cursor="auto"
                 paddingY={1}
                 marginBottom={3}
+                backgroundColor={{
+                  default: "transparent",
+                  hover: "default1Hovered",
+                }}
               >
                 {activity ? (
                   <>

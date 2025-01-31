@@ -26,7 +26,7 @@ export const createChannelsChangeHandler =
 
 export const getAssignedProductIdsToCollection = (
   collection: CollectionDetailsQuery["collection"],
-  queryData: SearchProductsQuery["search"],
+  queryData?: SearchProductsQuery["search"],
 ) => {
   if (!queryData || !collection) {
     return {};

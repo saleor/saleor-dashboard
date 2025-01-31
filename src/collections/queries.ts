@@ -38,10 +38,24 @@ export const collectionList = gql`
 `;
 
 export const collectionDetails = gql`
-  query CollectionDetails($id: ID!, $first: Int, $after: String, $last: Int, $before: String) {
+  query CollectionDetails($id: ID) {
     collection(id: $id) {
       ...CollectionDetails
-      products(first: $first, after: $after, before: $before, last: $last) {
+    }
+  }
+`;
+
+export const collectionProducts = gql`
+  query CollectionProducts($id: ID!, $first: Int, $after: String, $last: Int, $before: String) {
+    collection(id: $id) {
+      id
+      products(
+        first: $first
+        after: $after
+        before: $before
+        last: $last
+        sortBy: { field: COLLECTION, direction: ASC }
+      ) {
         edges {
           node {
             ...CollectionProduct
