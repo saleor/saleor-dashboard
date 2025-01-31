@@ -199,3 +199,5 @@ export const DEMO_MODE = process.env.DEMO_MODE === "true";
 export const GTM_ID = process.env.GTM_ID;
 
 export const DEFAULT_NOTIFICATION_SHOW_TIME = 3000;
+export const ENABLED_SERVICE_NAME_HEADER =
+  (process.env.ENABLED_SERVICE_NAME_HEADER as string) === "true";
