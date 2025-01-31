@@ -67,6 +67,10 @@ export class InitialStateResponse implements InitialState {
     }
 
     if (!token.isLoadable()) {
+      if (Array.isArray(token.value)) {
+        return token.value;
+      }
+
       return [token.value] as string[];
     }
 
