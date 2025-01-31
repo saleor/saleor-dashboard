@@ -997,6 +997,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
   events: [
     {
       __typename: "OrderEvent",
+      related: null,
       amount: null,
       date: "2018-09-17T13:22:24.376193+00:00",
       discount: null,
@@ -1029,6 +1030,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     },
     {
       __typename: "OrderEvent",
+      related: null,
       amount: null,
       date: "2018-09-17T13:22:24.376193+00:00",
       discount: null,
@@ -1086,6 +1088,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     },
     {
       __typename: "OrderEvent",
+      related: null,
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
       discount: null,
@@ -1105,6 +1108,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     },
     {
       __typename: "OrderEvent",
+      related: null,
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
       discount: null,
@@ -1124,6 +1128,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     },
     {
       __typename: "OrderEvent",
+      related: null,
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
       discount: null,
@@ -1143,6 +1148,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     },
     {
       __typename: "OrderEvent",
+      related: null,
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
       discount: null,
@@ -1162,6 +1168,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     },
     {
       __typename: "OrderEvent",
+      related: null,
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
       discount: null,
@@ -1181,6 +1188,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     },
     {
       __typename: "OrderEvent",
+      related: null,
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
       discount: null,

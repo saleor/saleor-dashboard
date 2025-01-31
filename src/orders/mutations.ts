@@ -261,11 +261,31 @@ export const orderFulfillmentCancelMutation = gql`
   }
 `;
 
-export const orderAddNoteMutation = gql`
-  mutation OrderAddNote($order: ID!, $input: OrderAddNoteInput!) {
-    orderAddNote(order: $order, input: $input) {
+export const orderNoteAddMutation = gql`
+  mutation OrderNoteAdd($order: ID!, $input: OrderNoteInput!) {
+    orderNoteAdd(order: $order, input: $input) {
       errors {
-        ...OrderError
+        code
+        field
+        message
+      }
+      order {
+        id
+        events {
+          ...OrderEvent
+        }
+      }
+    }
+  }
+`;
+
+export const orderNoteUpdateMutation = gql`
+  mutation OrderNoteUpdate($order: ID!, $input: OrderNoteInput!) {
+    orderNoteUpdate(note: $order, input: $input) {
+      errors {
+        code
+        field
+        message
       }
       order {
         id
