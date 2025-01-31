@@ -11,6 +11,10 @@ jest.mock("@saleor/sdk", () => ({
   createFetch: jest.fn().mockReturnValue(jest.fn()),
 }));
 
+jest.mock("@dashboard/config", () => ({
+  ENABLED_SERVICE_NAME_HEADER: true,
+}));
+
 const mockCreateGraphiQLFetcher = createGraphiQLFetcher as jest.Mock;
 const authorizedFetch = createFetch as jest.Mock;
 

@@ -1,20 +1,18 @@
 // DON'T TOUCH THIS
 // These are separate clients and do not share configs between themselves
 import { ApolloClient, ApolloLink, InMemoryCache } from "@apollo/client";
+import { ENABLED_SERVICE_NAME_HEADER, getApiUrl } from "@dashboard/config";
 import { createFetch, createSaleorClient } from "@saleor/sdk";
 import { createUploadLink } from "apollo-upload-client";
 
-import { getApiUrl } from "../config";
 import introspectionQueryResultData from "./fragmentTypes.generated";
 import { TypedTypePolicies } from "./typePolicies.generated";
 
 const attachVariablesLink = new ApolloLink((operation, forward) => {
-  const enabledServiceName = process.env.ENABLED_SERVICE_NAME_HEADER;
-
   operation.setContext(({ headers = {} }) => {
-    const contextHeaders = { ...headers };
+    const contextHeaders: Record<string, string> = { ...headers };
 
-    if (enabledServiceName) {
+    if (ENABLED_SERVICE_NAME_HEADER) {
       contextHeaders["source-service-name"] = "saleor.dashboard";
     }
 
