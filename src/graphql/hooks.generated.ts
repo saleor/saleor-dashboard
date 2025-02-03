@@ -5420,11 +5420,22 @@ export type CollectionUpdateMutationHookResult = ReturnType<typeof useCollection
 export type CollectionUpdateMutationResult = Apollo.MutationResult<Types.CollectionUpdateMutation>;
 export type CollectionUpdateMutationOptions = Apollo.BaseMutationOptions<Types.CollectionUpdateMutation, Types.CollectionUpdateMutationVariables>;
 export const CollectionAssignProductDocument = gql`
-    mutation CollectionAssignProduct($collectionId: ID!, $productIds: [ID!]!, $first: Int, $after: String, $last: Int, $before: String) {
+    mutation CollectionAssignProduct($collectionId: ID!, $productIds: [ID!]!, $moves: [MoveProductInput!]!, $first: Int, $after: String, $last: Int, $before: String) {
   collectionAddProducts(collectionId: $collectionId, products: $productIds) {
+    errors {
+      ...CollectionError
+    }
+  }
+  collectionReorderProducts(collectionId: $collectionId, moves: $moves) {
     collection {
       id
-      products(first: $first, after: $after, before: $before, last: $last) {
+      products(
+        first: $first
+        after: $after
+        before: $before
+        last: $last
+        sortBy: {field: COLLECTION, direction: ASC}
+      ) {
         edges {
           node {
             ...CollectionProduct
@@ -5439,12 +5450,12 @@ export const CollectionAssignProductDocument = gql`
       }
     }
     errors {
-      ...CollectionError
+      message
     }
   }
 }
-    ${CollectionProductFragmentDoc}
-${CollectionErrorFragmentDoc}`;
+    ${CollectionErrorFragmentDoc}
+${CollectionProductFragmentDoc}`;
 export type CollectionAssignProductMutationFn = Apollo.MutationFunction<Types.CollectionAssignProductMutation, Types.CollectionAssignProductMutationVariables>;
 
 /**
@@ -5462,6 +5473,7 @@ export type CollectionAssignProductMutationFn = Apollo.MutationFunction<Types.Co
  *   variables: {
  *      collectionId: // value for 'collectionId'
  *      productIds: // value for 'productIds'
+ *      moves: // value for 'moves'
  *      first: // value for 'first'
  *      after: // value for 'after'
  *      last: // value for 'last'
@@ -5555,18 +5567,16 @@ export const UnassignCollectionProductDocument = gql`
   collectionRemoveProducts(collectionId: $collectionId, products: $productIds) {
     collection {
       id
-      products(first: $first, after: $after, before: $before, last: $last) {
+      products(
+        first: $first
+        after: $after
+        before: $before
+        last: $last
+        sortBy: {field: COLLECTION, direction: ASC}
+      ) {
         edges {
           node {
-            id
-            name
-            productType {
-              id
-              name
-            }
-            thumbnail {
-              url
-            }
+            ...CollectionProduct
           }
         }
         pageInfo {
@@ -5582,7 +5592,8 @@ export const UnassignCollectionProductDocument = gql`
     }
   }
 }
-    ${CollectionErrorFragmentDoc}`;
+    ${CollectionProductFragmentDoc}
+${CollectionErrorFragmentDoc}`;
 export type UnassignCollectionProductMutationFn = Apollo.MutationFunction<Types.UnassignCollectionProductMutation, Types.UnassignCollectionProductMutationVariables>;
 
 /**
@@ -5685,6 +5696,68 @@ export function useCollectionChannelListingUpdateMutation(baseOptions?: ApolloRe
 export type CollectionChannelListingUpdateMutationHookResult = ReturnType<typeof useCollectionChannelListingUpdateMutation>;
 export type CollectionChannelListingUpdateMutationResult = Apollo.MutationResult<Types.CollectionChannelListingUpdateMutation>;
 export type CollectionChannelListingUpdateMutationOptions = Apollo.BaseMutationOptions<Types.CollectionChannelListingUpdateMutation, Types.CollectionChannelListingUpdateMutationVariables>;
+export const ReorderProductsInCollectionDocument = gql`
+    mutation ReorderProductsInCollection($collectionId: ID!, $moves: [MoveProductInput!]!, $first: Int, $after: String, $last: Int, $before: String) {
+  collectionReorderProducts(collectionId: $collectionId, moves: $moves) {
+    collection {
+      id
+      products(
+        first: $first
+        after: $after
+        before: $before
+        last: $last
+        sortBy: {field: COLLECTION, direction: ASC}
+      ) {
+        edges {
+          node {
+            ...CollectionProduct
+          }
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+    }
+    errors {
+      message
+    }
+  }
+}
+    ${CollectionProductFragmentDoc}`;
+export type ReorderProductsInCollectionMutationFn = Apollo.MutationFunction<Types.ReorderProductsInCollectionMutation, Types.ReorderProductsInCollectionMutationVariables>;
+
+/**
+ * __useReorderProductsInCollectionMutation__
+ *
+ * To run a mutation, you first call `useReorderProductsInCollectionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useReorderProductsInCollectionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [reorderProductsInCollectionMutation, { data, loading, error }] = useReorderProductsInCollectionMutation({
+ *   variables: {
+ *      collectionId: // value for 'collectionId'
+ *      moves: // value for 'moves'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *      last: // value for 'last'
+ *      before: // value for 'before'
+ *   },
+ * });
+ */
+export function useReorderProductsInCollectionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ReorderProductsInCollectionMutation, Types.ReorderProductsInCollectionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.ReorderProductsInCollectionMutation, Types.ReorderProductsInCollectionMutationVariables>(ReorderProductsInCollectionDocument, options);
+      }
+export type ReorderProductsInCollectionMutationHookResult = ReturnType<typeof useReorderProductsInCollectionMutation>;
+export type ReorderProductsInCollectionMutationResult = Apollo.MutationResult<Types.ReorderProductsInCollectionMutation>;
+export type ReorderProductsInCollectionMutationOptions = Apollo.BaseMutationOptions<Types.ReorderProductsInCollectionMutation, Types.ReorderProductsInCollectionMutationVariables>;
 export const CollectionListDocument = gql`
     query CollectionList($first: Int, $after: String, $last: Int, $before: String, $filter: CollectionFilterInput, $sort: CollectionSortingInput, $channel: String) {
   collections(
@@ -5748,26 +5821,12 @@ export type CollectionListQueryHookResult = ReturnType<typeof useCollectionListQ
 export type CollectionListLazyQueryHookResult = ReturnType<typeof useCollectionListLazyQuery>;
 export type CollectionListQueryResult = Apollo.QueryResult<Types.CollectionListQuery, Types.CollectionListQueryVariables>;
 export const CollectionDetailsDocument = gql`
-    query CollectionDetails($id: ID!, $first: Int, $after: String, $last: Int, $before: String) {
+    query CollectionDetails($id: ID) {
   collection(id: $id) {
     ...CollectionDetails
-    products(first: $first, after: $after, before: $before, last: $last) {
-      edges {
-        node {
-          ...CollectionProduct
-        }
-      }
-      pageInfo {
-        endCursor
-        hasNextPage
-        hasPreviousPage
-        startCursor
-      }
-    }
   }
 }
-    ${CollectionDetailsFragmentDoc}
-${CollectionProductFragmentDoc}`;
+    ${CollectionDetailsFragmentDoc}`;
 
 /**
  * __useCollectionDetailsQuery__
@@ -5782,14 +5841,10 @@ ${CollectionProductFragmentDoc}`;
  * const { data, loading, error } = useCollectionDetailsQuery({
  *   variables: {
  *      id: // value for 'id'
- *      first: // value for 'first'
- *      after: // value for 'after'
- *      last: // value for 'last'
- *      before: // value for 'before'
  *   },
  * });
  */
-export function useCollectionDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.CollectionDetailsQuery, Types.CollectionDetailsQueryVariables>) {
+export function useCollectionDetailsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.CollectionDetailsQuery, Types.CollectionDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return ApolloReactHooks.useQuery<Types.CollectionDetailsQuery, Types.CollectionDetailsQueryVariables>(CollectionDetailsDocument, options);
       }
@@ -5800,6 +5855,64 @@ export function useCollectionDetailsLazyQuery(baseOptions?: ApolloReactHooks.Laz
 export type CollectionDetailsQueryHookResult = ReturnType<typeof useCollectionDetailsQuery>;
 export type CollectionDetailsLazyQueryHookResult = ReturnType<typeof useCollectionDetailsLazyQuery>;
 export type CollectionDetailsQueryResult = Apollo.QueryResult<Types.CollectionDetailsQuery, Types.CollectionDetailsQueryVariables>;
+export const CollectionProductsDocument = gql`
+    query CollectionProducts($id: ID!, $first: Int, $after: String, $last: Int, $before: String) {
+  collection(id: $id) {
+    id
+    products(
+      first: $first
+      after: $after
+      before: $before
+      last: $last
+      sortBy: {field: COLLECTION, direction: ASC}
+    ) {
+      edges {
+        node {
+          ...CollectionProduct
+        }
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+  }
+}
+    ${CollectionProductFragmentDoc}`;
+
+/**
+ * __useCollectionProductsQuery__
+ *
+ * To run a query within a React component, call `useCollectionProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCollectionProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCollectionProductsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *      last: // value for 'last'
+ *      before: // value for 'before'
+ *   },
+ * });
+ */
+export function useCollectionProductsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.CollectionProductsQuery, Types.CollectionProductsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.CollectionProductsQuery, Types.CollectionProductsQueryVariables>(CollectionProductsDocument, options);
+      }
+export function useCollectionProductsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CollectionProductsQuery, Types.CollectionProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.CollectionProductsQuery, Types.CollectionProductsQueryVariables>(CollectionProductsDocument, options);
+        }
+export type CollectionProductsQueryHookResult = ReturnType<typeof useCollectionProductsQuery>;
+export type CollectionProductsLazyQueryHookResult = ReturnType<typeof useCollectionProductsLazyQuery>;
+export type CollectionProductsQueryResult = Apollo.QueryResult<Types.CollectionProductsQuery, Types.CollectionProductsQueryVariables>;
 export const AddressValidationRulesDocument = gql`
     query addressValidationRules($countryCode: CountryCode!) {
   addressValidationRules(countryCode: $countryCode) {
