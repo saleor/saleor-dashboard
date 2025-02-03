@@ -4,7 +4,7 @@ describe("ProductUpdatePage - fromChannels", () => {
   describe("updateChannelsInput", () => {
     const channel = {
       channelId: "Q2hhbm5lbDox",
-      availableForPurchaseAt: null,
+      availableForPurchaseAt: "2020-10-01",
       __typename: "ProductChannelListing",
       isPublished: true,
       publishedAt: "2020-01-01",
@@ -25,7 +25,6 @@ describe("ProductUpdatePage - fromChannels", () => {
         updateChannels: [channel],
       };
       const data = {
-        availableForPurchase: "2020-10-01",
         isAvailableForPurchase: true,
         isPublished: true,
         publishedAt: "2020-01-01",
@@ -40,7 +39,6 @@ describe("ProductUpdatePage - fromChannels", () => {
             ...channel,
             isAvailableForPurchase: true,
             availableForPurchaseAt: "2020-10-01",
-            availableForPurchase: "2020-10-01",
           },
         ],
       });
@@ -51,7 +49,6 @@ describe("ProductUpdatePage - fromChannels", () => {
         updateChannels: [channel],
       };
       const newData = {
-        availableForPurchase: "2020-10-01",
         isAvailableForPurchase: false,
         isPublished: true,
         publishedAt: "2020-01-01",
@@ -65,7 +62,6 @@ describe("ProductUpdatePage - fromChannels", () => {
           {
             ...channel,
             availableForPurchaseAt: "2020-10-01",
-            availableForPurchase: "2020-10-01",
           },
         ],
       });
