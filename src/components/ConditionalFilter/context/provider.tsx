@@ -1,3 +1,4 @@
+import { useDraftOrderFilterAPIProvider } from "@dashboard/components/ConditionalFilter/API/DraftOrderFilterAPIProvider";
 import React, { FC } from "react";
 
 import { useDiscountFilterAPIProvider } from "../API/DiscountFiltersAPIProvider";
@@ -7,6 +8,7 @@ import { useOrderFilterAPIProvider } from "../API/OrderFilterAPIProvider";
 import { useProductFilterAPIProvider } from "../API/ProductFilterAPIProvider";
 import {
   STATIC_DISCOUNT_OPTIONS,
+  STATIC_DRAFT_ORDER_OPTIONS,
   STATIC_ORDER_OPTIONS,
   STATIC_PRODUCT_OPTIONS,
 } from "../constants";
@@ -73,6 +75,31 @@ export const ConditionalOrderFilterProvider: FC<{
   const initialState = useInitialOrderState();
   const valueProvider = useUrlValueProvider(locationSearch, "order", initialState);
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_ORDER_OPTIONS);
+  const containerState = useContainerState(valueProvider);
+  const filterWindow = useFilterWindow();
+
+  return (
+    <ConditionalFilterContext.Provider
+      value={{
+        apiProvider,
+        valueProvider,
+        leftOperandsProvider,
+        containerState,
+        filterWindow,
+      }}
+    >
+      {children}
+    </ConditionalFilterContext.Provider>
+  );
+};
+
+export const ConditionalDraftOrderFilterProvider: FC<{
+  locationSearch: string;
+}> = ({ children, locationSearch }) => {
+  const apiProvider = useDraftOrderFilterAPIProvider();
+
+  const valueProvider = useUrlValueProvider(locationSearch, "draft-order");
+  const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_DRAFT_ORDER_OPTIONS);
   const containerState = useContainerState(valueProvider);
   const filterWindow = useFilterWindow();
 
