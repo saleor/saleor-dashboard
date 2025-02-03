@@ -13,7 +13,7 @@ test.beforeEach(async ({ page }) => {
   await giftCardsPage.gotoGiftCardsListView();
   await giftCardsPage.waitForDOMToFullyLoad();
 });
-test("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
+test("TC: SALEOR_105 Issue gift card #e2e #gift", async () => {
   await giftCardsPage.clickIssueCardButton();
   await expect(giftCardsPage.issueGiftCardDialog.amountDropdown).toBeVisible();
   await giftCardsPage.issueGiftCardDialog.typeAmount("50");
@@ -35,7 +35,7 @@ test("TC: SALEOR_105 Issue gift card @e2e @gift", async () => {
     .getByText(`Code ending with ${code}`)
     .waitFor({ state: "attached", timeout: 30000 });
 });
-test("TC: SALEOR_106 Issue gift card with specific customer and expiry date @e2e @gift", async () => {
+test("TC: SALEOR_106 Issue gift card with specific customer and expiry date #e2e #gift", async () => {
   await giftCardsPage.clickIssueCardButton();
 
   await giftCardsPage.issueGiftCardDialog.clickSendExpireDateCheckbox();
@@ -57,7 +57,7 @@ test("TC: SALEOR_106 Issue gift card with specific customer and expiry date @e2e
     "There should be only one gift card visible on list",
   ).toEqual(1);
 });
-test("TC: SALEOR_107 Resend code @e2e @gift", async () => {
+test("TC: SALEOR_107 Resend code #e2e #gift", async () => {
   await giftCardsPage.clickListRowBasedOnContainingText(GIFT_CARDS.giftCardToResendCode.name);
   await giftCardsPage.clickResendCodeButton();
   // This is a workaround for the issue with the dropdown focusing on dialog open
@@ -66,19 +66,19 @@ test("TC: SALEOR_107 Resend code @e2e @gift", async () => {
   await giftCardsPage.resendGiftCardCodeDialog.clickResendButton();
   await giftCardsPage.expectSuccessBanner();
 });
-test("TC: SALEOR_108 Deactivate gift card @e2e @gift", async () => {
+test("TC: SALEOR_108 Deactivate gift card #e2e #gift", async () => {
   await giftCardsPage.gotoExistingGiftCardView(GIFT_CARDS.giftCardToBeDeactivated.id);
   await giftCardsPage.clickDeactivateButton();
   await giftCardsPage.expectSuccessBanner();
   await expect(giftCardsPage.pageHeader).toContainText("Disabled");
 });
-test("TC: SALEOR_109 Activate gift card @e2e @gift", async () => {
+test("TC: SALEOR_109 Activate gift card #e2e #gift", async () => {
   await giftCardsPage.gotoExistingGiftCardView(GIFT_CARDS.giftCardToBeActivated.id);
   await giftCardsPage.clickDeactivateButton();
   await giftCardsPage.expectSuccessBanner();
   await expect(giftCardsPage.pageHeader).not.toContainText("Disabled");
 });
-test("TC: SALEOR_110 Edit gift card @e2e @gift", async () => {
+test("TC: SALEOR_110 Edit gift card #e2e #gift", async () => {
   await giftCardsPage.gotoExistingGiftCardView(GIFT_CARDS.giftCardToBeEdited.id);
   await giftCardsPage.openTagInput();
   await giftCardsPage.selectFirstTag();
@@ -89,7 +89,7 @@ test("TC: SALEOR_110 Edit gift card @e2e @gift", async () => {
   await giftCardsPage.clickSaveButton();
   await giftCardsPage.expectSuccessBanner();
 });
-test("TC: SALEOR_111 Bulk delete gift cards @e2e @gift", async () => {
+test("TC: SALEOR_111 Bulk delete gift cards #e2e #gift", async () => {
   await giftCardsPage.checkListRowsBasedOnContainingText(GIFT_CARDS.giftCardsToBeDeleted.names);
   await giftCardsPage.clickBulkDeleteButton();
   await giftCardsPage.deleteDialog.clickConfirmDeletionCheckbox();
@@ -100,13 +100,13 @@ test("TC: SALEOR_111 Bulk delete gift cards @e2e @gift", async () => {
     await expect(giftCardsPage.gridCanvas).not.toContainText(`Code ending with ${last4Code}`);
   }
 });
-test("TC: SALEOR_181 Set gift card balance @e2e @gift", async () => {
+test("TC: SALEOR_181 Set gift card balance #e2e #gift", async () => {
   await giftCardsPage.gotoExistingGiftCardView(GIFT_CARDS.giftCardToBeEdited.id);
   await giftCardsPage.clickSetBalance();
   await giftCardsPage.setGiftCardsBalanceDialog.setBalance("34");
   await giftCardsPage.expectSuccessBanner();
 });
-test("TC: SALEOR_182 Export gift card codes in XLSX file @e2e @gift", async () => {
+test("TC: SALEOR_182 Export gift card codes in XLSX file #e2e #gift", async () => {
   await giftCardsPage.clickShowMoreMenu();
   await giftCardsPage.clickExportGiftCards();
   await giftCardsPage.exportGiftCardsDialog.exportGiftCardCodes("XLSX");
@@ -115,7 +115,7 @@ test("TC: SALEOR_182 Export gift card codes in XLSX file @e2e @gift", async () =
     timeout: 30000,
   });
 });
-test("TC: SALEOR_183 Export gift card codes in CSV file @e2e @gift", async () => {
+test("TC: SALEOR_183 Export gift card codes in CSV file #e2e #gift", async () => {
   await giftCardsPage.clickShowMoreMenu();
   await giftCardsPage.clickExportGiftCards();
   await giftCardsPage.exportGiftCardsDialog.exportGiftCardCodes("CSV");

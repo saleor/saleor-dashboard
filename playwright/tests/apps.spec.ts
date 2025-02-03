@@ -21,7 +21,7 @@ const PRE_INSTALLATION_TIMEOUT = 20 * 1000;
 const INSTALLATION_PENDING_TIMEOUT = 50 * 1000;
 const APP_EXPECT_UI_TIMEOUT = 15 * 1000;
 
-test("TC: SALEOR_119 User should be able to install and configure app from manifest @e2e", async ({
+test("TC: SALEOR_119 User should be able to install and configure app from manifest #e2e", async ({
   page,
 }) => {
   await appsPage.gotoAppsList();
@@ -56,7 +56,7 @@ test("TC: SALEOR_119 User should be able to install and configure app from manif
   await iframeLocator.getByText("Save").click();
   await appsPage.expectSuccessBanner({ timeout: INSTALLATION_PENDING_TIMEOUT });
 });
-test("TC: SALEOR_120 User should be able to delete thirdparty app @e2e", async () => {
+test("TC: SALEOR_120 User should be able to delete thirdparty app #e2e", async () => {
   await appPage.waitForNetworkIdleAfterAction(() =>
     appPage.goToExistingAppPage(APPS.appToBeDeleted.id),
   );
