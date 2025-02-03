@@ -1,0 +1,47 @@
+name: Flaky test report
+description: Extract flaky tests from PW test reports
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 20
+
+    - name: Install CTRF package globally
+      shell: bash
+      run: npm install -g ctrf
+
+    - name: Download CTRF reports
+      uses: actions/download-artifact@v4
+      with:
+        pattern: ctrf-report-*
+        path: ctrf-reports
+        merge-multiple: true
+        
+    - name: Merge CTRF reports
+      shell: bash
+      run: npx ctrf merge ./ctrf-reports --output merged-report.json
+
+    - name: Upload CTRF report
+      uses: actions/upload-artifact@v4
+      with:
+        name:  merged-report.json
+        path: ctrf-reports
+        retention-days: 14
+
+    - name: Publish Test Report
+      uses: ctrf-io/github-test-reporter@v1
+      with:
+        report-path: ctrf-reports/merged-report.json
+        summary-report: true
+        pull-request: true
+        overwrite-comment: true
+        failed-report: true
+      env:
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+      if: always()
+
+inputs:
+  github_token:
+    description: "GitHub token for accessing APIs"
+    required: true

@@ -28,6 +28,7 @@ jobs:
       BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
       BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
       SHARD_MATRIX: ${{ steps.generate-shard-matrix.outputs.SHARD_MATRIX }}
+      SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -74,6 +75,7 @@ jobs:
     outputs:
       ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
       TESTMO_RUN_ID: ${{ steps.init-testmo.outputs.testmo-run-id }}
+      DASHBOARD_VERSION: ${{ steps.build-dashboard.outputs.DASHBOARD_VERSION }}
     runs-on: ubuntu-22.04
     needs: initialize-cloud
     permissions:
@@ -111,6 +113,7 @@ jobs:
         run: npm ci
 
       - name: Build dashboard
+        id: build-dashboard
         env:
           ## backward compatibility for older versions
           API_URI: ${{ needs.initialize-cloud.outputs.API_URL }}
@@ -124,7 +127,13 @@ jobs:
           IS_CLOUD_INSTANCE: true
           ENABLED_SERVICE_NAME_HEADER: true
           ONBOARDING_USER_JOINED_DATE_THRESHOLD: ${{ vars.STAGING_ONBOARDING_USER_JOINED_DATE_THRESHOLD }}
-        run: npm run build
+        run: |
+          npm run build
+          # Extract version from package.json
+          VERSION=$(cat package.json | jq -r .version)
+          echo "VERSION=$VERSION"
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "DASHBOARD_VERSION=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
@@ -203,6 +212,9 @@ jobs:
           PW_RETRIES: ${{ vars.PW_RETRIES }}
           ACCOUNTS: ${{ needs.deploy-dashboard.outputs.ACCOUNTS }}
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
+          DASHBOARD_VERSION: ${{ needs.deploy-dashboard.outputs.DASHBOARD_VERSION }}
+          BRANCH_NAME: ${{ github.ref}}
+          SALEOR_CLOUD_SERVICE: ${{ needs.initialize-cloud.outputs.SALEOR_CLOUD_SERVICE }}
 
       - name: submit-results-to-testmo
         if: always()
@@ -229,3 +241,8 @@ jobs:
           testmoUrl: ${{ secrets.TESTMO_URL }}
           testmoToken: ${{ secrets.TESTMO_TOKEN }}
           testmoRunId: ${{ needs.deploy-dashboard.outputs.TESTMO_RUN_ID }}
+
+      - name: Create flaky report
+        uses: ./.github/actions/flaky-tests-report
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
