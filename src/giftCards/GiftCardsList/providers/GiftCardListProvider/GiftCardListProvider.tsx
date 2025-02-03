@@ -1,4 +1,6 @@
 import { ApolloError } from "@apollo/client";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { createGiftCardQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
 import { getExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
@@ -21,7 +23,7 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import React, { createContext, Dispatch, SetStateAction, useContext, useState } from "react";
 
-import { getFilterQueryParam, getFilterVariables, storageUtils } from "../../filters";
+import { getFilterQueryParam, storageUtils } from "../../filters";
 import {
   GiftCardListColummns,
   GiftCardListUrlQueryParams,
@@ -76,6 +78,9 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
   const notify = useNotifier();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const { clearRowSelection, ...rowSelectionUtils } = useRowSelection(params);
+  const { valueProvider } = useConditionalFilterContext();
+  const filters = createGiftCardQueryVariables(valueProvider.value);
+
   const filterUtils = useFilterPresets({
     reset: clearRowSelection,
     params,
@@ -101,7 +106,7 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
   const queryVariables = React.useMemo<GiftCardListQueryVariables>(
     () => ({
       ...paginationState,
-      filter: getFilterVariables(params),
+      filter: filters,
       sort: getSortQueryVariables(params),
     }),
     [params, paginationState],

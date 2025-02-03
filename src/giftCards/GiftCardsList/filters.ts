@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { FilterElement } from "@dashboard/components/Filter";
-import { GiftCardFilterInput } from "@dashboard/graphql";
 import {
   createFilterTabUtils,
   createFilterUtils,
@@ -111,45 +110,3 @@ export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = cre
   GiftCardListUrlQueryParams,
   GiftCardListUrlFilters
 >(GiftCardListUrlFiltersEnum);
-
-export function getFilterVariables({
-  status,
-  tag,
-  usedBy,
-  product,
-  currency,
-  currentBalanceAmountTo,
-  currentBalanceAmountFrom,
-  initialBalanceAmountTo,
-  initialBalanceAmountFrom,
-  query,
-}: GiftCardListUrlQueryParams): GiftCardFilterInput {
-  const balanceData = currency
-    ? {
-        currentBalance:
-          currentBalanceAmountFrom && currentBalanceAmountTo
-            ? {
-                gte: parseFloat(currentBalanceAmountFrom),
-                lte: parseFloat(currentBalanceAmountTo),
-              }
-            : undefined,
-        initialBalance:
-          initialBalanceAmountFrom && initialBalanceAmountTo
-            ? {
-                gte: parseFloat(initialBalanceAmountFrom),
-                lte: parseFloat(initialBalanceAmountTo),
-              }
-            : undefined,
-      }
-    : {};
-
-  return {
-    code: query,
-    isActive: status ? status === "enabled" : undefined,
-    tags: tag,
-    usedBy,
-    products: product,
-    currency,
-    ...balanceData,
-  };
-}
