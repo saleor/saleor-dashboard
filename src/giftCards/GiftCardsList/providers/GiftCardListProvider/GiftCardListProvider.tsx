@@ -1,5 +1,4 @@
 import { ApolloError } from "@apollo/client";
-import { IFilter } from "@dashboard/components/Filter";
 import { ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
 import { getExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
@@ -51,7 +50,6 @@ export interface GiftCardsListConsumerProps
   paginationState: PaginationState;
   numberOfColumns: number;
   totalCount: number;
-  changeFilters: (filter: IFilter<any>) => void;
   resetFilters: () => void;
   handleSearchChange: (query: string) => void;
   isFilterPresetOpen: boolean;
@@ -84,7 +82,7 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
     getUrl: giftCardListUrl,
     storageUtils,
   });
-  const [changeFilters, resetFilters, handleSearchChange] = createFilterHandlers({
+  const [_, resetFilters, handleSearchChange] = createFilterHandlers({
     createUrl: giftCardListUrl,
     getFilterQueryParam,
     navigate,
@@ -139,7 +137,6 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
     settings,
     updateListSettings,
     numberOfColumns,
-    changeFilters,
     resetFilters,
     handleSearchChange,
     isFilterPresetOpen,
