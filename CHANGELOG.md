@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.20.27
+
+### Patch Changes
+
+- a4041bb: Now product links on the collection points to the correct url.
+
 ## 3.20.26
 
 ### Patch Changes
