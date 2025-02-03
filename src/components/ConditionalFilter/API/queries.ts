@@ -153,4 +153,40 @@ export const dynamicOperandsQueries = gql`
       }
     }
   }
+
+  query _GetProductChoices($first: Int!, $query: String!) {
+    products(first: $first, filter: { search: $query }) {
+      edges {
+        node {
+          id
+          name
+          slug
+        }
+      }
+    }
+  }
+
+  query _GetGiftCardTagsChoices($first: Int!, $query: String!) {
+    giftCardTags(first: $first, filter: { search: $query }) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+  }
+
+  query _GetCustomersChoices($first: Int!, $query: String!) {
+    customers(first: $first, filter: { search: $query }) {
+      edges {
+        node {
+          id
+          email
+          firstName
+          lastName
+        }
+      }
+    }
+  }
 `;

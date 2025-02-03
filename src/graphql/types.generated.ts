@@ -9487,6 +9487,30 @@ export type _GetProductTypesChoicesQueryVariables = Exact<{
 
 export type _GetProductTypesChoicesQuery = { __typename: 'Query', productTypes: { __typename: 'ProductTypeCountableConnection', edges: Array<{ __typename: 'ProductTypeCountableEdge', node: { __typename: 'ProductType', id: string, name: string, slug: string } }> } | null };
 
+export type _GetProductChoicesQueryVariables = Exact<{
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type _GetProductChoicesQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, slug: string } }> } | null };
+
+export type _GetGiftCardTagsChoicesQueryVariables = Exact<{
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type _GetGiftCardTagsChoicesQuery = { __typename: 'Query', giftCardTags: { __typename: 'GiftCardTagCountableConnection', edges: Array<{ __typename: 'GiftCardTagCountableEdge', node: { __typename: 'GiftCardTag', id: string, name: string } }> } | null };
+
+export type _GetCustomersChoicesQueryVariables = Exact<{
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type _GetCustomersChoicesQuery = { __typename: 'Query', customers: { __typename: 'UserCountableConnection', edges: Array<{ __typename: 'UserCountableEdge', node: { __typename: 'User', id: string, email: string, firstName: string, lastName: string } }> } | null };
+
 export type TriggerWebhookDryRunMutationVariables = Exact<{
   objectId: Scalars['ID'];
   query: Scalars['String'];

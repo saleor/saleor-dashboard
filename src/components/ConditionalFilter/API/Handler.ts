@@ -12,13 +12,25 @@ import {
   _GetCollectionsChoicesDocument,
   _GetCollectionsChoicesQuery,
   _GetCollectionsChoicesQueryVariables,
+  _GetCustomersChoicesDocument,
+  _GetCustomersChoicesQuery,
+  _GetCustomersChoicesQueryVariables,
   _GetDynamicLeftOperandsDocument,
   _GetDynamicLeftOperandsQuery,
   _GetDynamicLeftOperandsQueryVariables,
+  _GetGiftCardTagsChoicesDocument,
+  _GetGiftCardTagsChoicesQuery,
+  _GetGiftCardTagsChoicesQueryVariables,
   _GetLegacyChannelOperandsDocument,
+  _GetProductChoicesDocument,
+  _GetProductChoicesQuery,
+  _GetProductChoicesQueryVariables,
   _GetProductTypesChoicesDocument,
   _GetProductTypesChoicesQuery,
   _GetProductTypesChoicesQueryVariables,
+  ChannelCurrenciesDocument,
+  ChannelCurrenciesQuery,
+  ChannelCurrenciesQueryVariables,
 } from "@dashboard/graphql";
 import { IntlShape } from "react-intl";
 
@@ -94,6 +106,33 @@ export class CollectionHandler implements Handler {
   };
 }
 
+export class CurrencyHandler implements Handler {
+  constructor(
+    public client: ApolloClient<unknown>,
+    public query: string,
+  ) {}
+
+  fetch = async () => {
+    const { data } = await this.client.query<
+      ChannelCurrenciesQuery,
+      ChannelCurrenciesQueryVariables
+    >({
+      query: ChannelCurrenciesDocument,
+      variables: {},
+    });
+
+    return data.shop.channelCurrencies
+      .map(currency => ({
+        label: currency,
+        value: currency,
+        slug: currency,
+      }))
+      .filter(({ label }) => {
+        return label.toLowerCase().includes(this.query.toLowerCase());
+      });
+  };
+}
+
 export class CategoryHandler implements Handler {
   constructor(
     public client: ApolloClient<unknown>,
@@ -138,6 +177,56 @@ export class ProductTypeHandler implements Handler {
   };
 }
 
+export class ProductHandler implements Handler {
+  constructor(
+    public client: ApolloClient<unknown>,
+    public query: string,
+  ) {}
+
+  fetch = async () => {
+    const { data } = await this.client.query<
+      _GetProductChoicesQuery,
+      _GetProductChoicesQueryVariables
+    >({
+      query: _GetProductChoicesDocument,
+      variables: {
+        first: 5,
+        query: this.query,
+      },
+    });
+
+    return createOptionsFromAPI(data.products?.edges ?? []);
+  };
+}
+
+export class GiftCardTagsHandler implements Handler {
+  constructor(
+    public client: ApolloClient<unknown>,
+    public query: string,
+  ) {}
+
+  fetch = async () => {
+    const { data } = await this.client.query<
+      _GetGiftCardTagsChoicesQuery,
+      _GetGiftCardTagsChoicesQueryVariables
+    >({
+      query: _GetGiftCardTagsChoicesDocument,
+      variables: {
+        first: 5,
+        query: this.query,
+      },
+    });
+
+    return (
+      data?.giftCardTags?.edges.map(({ node }) => ({
+        label: node.name ?? "",
+        value: node.id,
+        slug: node.id,
+      })) ?? []
+    );
+  };
+}
+
 export class ChannelHandler implements Handler {
   constructor(
     public client: ApolloClient<unknown>,
@@ -160,6 +249,34 @@ export class ChannelHandler implements Handler {
       })) ?? [];
 
     return options.filter(({ label }) => label.toLowerCase().includes(this.query.toLowerCase()));
+  };
+}
+
+export class CustomerHandler implements Handler {
+  constructor(
+    public client: ApolloClient<unknown>,
+    public query: string,
+  ) {}
+
+  fetch = async () => {
+    const { data } = await this.client.query<
+      _GetCustomersChoicesQuery,
+      _GetCustomersChoicesQueryVariables
+    >({
+      query: _GetCustomersChoicesDocument,
+      variables: {
+        first: 5,
+        query: this.query,
+      },
+    });
+
+    return (
+      data?.customers?.edges.map(({ node }) => ({
+        label: node.email,
+        value: node.id,
+        slug: node.id,
+      })) ?? []
+    );
   };
 }
 

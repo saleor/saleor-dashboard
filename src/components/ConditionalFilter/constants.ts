@@ -20,6 +20,7 @@ export const STATIC_CONDITIONS = {
     { type: "combobox", label: "is", value: "input-1" },
     { type: "multiselect", label: "in", value: "input-2" },
   ],
+  isActive: [{ type: "select", label: "is", value: "input-1" }],
   isAvailable: [{ type: "select", label: "is", value: "input-1" }],
   isPublished: [{ type: "select", label: "is", value: "input-1" }],
   isVisibleInListing: [{ type: "select", label: "is", value: "input-1" }],
@@ -118,11 +119,26 @@ export const STATIC_CONDITIONS = {
       value: "input-1",
     },
   ],
+  currency: [
+    {
+      type: "select",
+      label: "is",
+      value: "input-1",
+    },
+  ],
+  product: [{ type: "multiselect", label: "in", value: "input-1" }],
+  tags: [{ type: "multiselect", label: "in", value: "input-1" }],
+  usedBy: [{ type: "multiselect", label: "in", value: "input-1" }],
 };
 
 export const CONSTRAINTS = {
   channel: {
     dependsOn: ["price", "isVisibleInListing", "isAvailable", "isPublished"],
+    removable: false,
+    disabled: ["left", "condition"],
+  },
+  currency: {
+    dependsOn: ["currentBalance", "initialBalance"],
     removable: false,
     disabled: ["left", "condition"],
   },
@@ -273,10 +289,56 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
   },
 ];
 
+export const STATIC_GIFTCARDS_OPTIONS: LeftOperand[] = [
+  {
+    value: "currency",
+    label: "Currency",
+    type: "currency",
+    slug: "currency",
+  },
+  {
+    value: "currentBalance",
+    label: "Current balance",
+    type: "price",
+    slug: "currentBalance",
+  },
+  {
+    value: "initialBalance",
+    label: "Initial balance",
+    type: "price",
+    slug: "initialBalance",
+  },
+  {
+    value: "product",
+    label: "Product",
+    type: "product",
+    slug: "product",
+  },
+  {
+    value: "isActive",
+    label: "Is active",
+    type: "isActive",
+    slug: "isActive",
+  },
+  {
+    value: "tags",
+    label: "Tags",
+    type: "tags",
+    slug: "tags",
+  },
+  {
+    value: "usedBy",
+    label: "Used by",
+    type: "usedBy",
+    slug: "usedBy",
+  },
+];
+
 export const STATIC_OPTIONS = [
   ...STATIC_PRODUCT_OPTIONS,
   ...STATIC_DISCOUNT_OPTIONS,
   ...STATIC_ORDER_OPTIONS,
+  ...STATIC_GIFTCARDS_OPTIONS,
 ];
 
 export const ATTRIBUTE_INPUT_TYPE_CONDITIONS = {
