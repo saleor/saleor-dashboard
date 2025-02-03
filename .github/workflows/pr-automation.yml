@@ -130,7 +130,7 @@ jobs:
         run: |
           npm run build
           # Extract version from package.json
-          VERSION=$(node -p "require('./package.json').version")
+          VERSION=$(cat package.json | jq -r .version)
           echo "VERSION=$VERSION"
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "DASHBOARD_VERSION=$VERSION" >> $GITHUB_OUTPUT
