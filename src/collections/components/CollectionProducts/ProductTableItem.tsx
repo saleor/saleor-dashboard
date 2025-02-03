@@ -72,7 +72,7 @@ export const ProductTableItem = ({
       </GridTable.Cell>
       <GridTable.Cell __height="inherit" padding={0}>
         <Link href={href}>
-          <Box href={href} padding={2} display="flex" alignItems="center" gap={2} height="100%">
+          <Box padding={2} display="flex" alignItems="center" gap={2} height="100%">
             {product?.thumbnail ? (
               <Box borderColor="default1" borderWidth={1} borderRadius={2} borderStyle="solid">
                 <Box
