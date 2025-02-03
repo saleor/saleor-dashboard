@@ -91,12 +91,14 @@ export const ProductTableItem = ({
         </Link>
       </GridTable.Cell>
       <GridTable.Cell __height="inherit" padding={0}>
-        <Box as="a" href={href} padding={2} display="flex" alignItems="center" height="100%">
-          <Text>{product?.productType.name || <Skeleton />}</Text>
-        </Box>
+        <Link href={href}>
+          <Box padding={2} display="flex" alignItems="center" height="100%">
+            <Text>{product?.productType.name || <Skeleton />}</Text>
+          </Box>
+        </Link>
       </GridTable.Cell>
       <GridTable.Cell __height="inherit" padding={0}>
-        <Box as="a" display="block" height="100%" padding={2}>
+        <Box display="block" height="100%" padding={2}>
           {product && !product?.channelListings?.length ? (
             "-"
           ) : product?.channelListings !== undefined ? (
