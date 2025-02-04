@@ -1,5 +1,6 @@
 import {
   AttributeInput,
+  CollectionFilterInput,
   DateRangeInput,
   DateTimeFilterInput,
   DateTimeRangeInput,
@@ -57,6 +58,27 @@ const createStaticQueryPart = (selected: ConditionSelected): StaticQueryPart => 
 
   return value;
 };
+
+const mapStaticQueryPartToLegacyVariables = (queryPart: StaticQueryPart) => {
+  if (typeof queryPart !== "object") {
+    return queryPart;
+  }
+
+  if ("range" in queryPart) {
+    return queryPart.range;
+  }
+
+  if ("eq" in queryPart) {
+    return queryPart.eq;
+  }
+
+  if ("oneOf" in queryPart) {
+    return queryPart.oneOf;
+  }
+
+  return queryPart;
+};
+
 const getRangeQueryPartByType = (value: [string, string], type: string) => {
   const [gte, lte] = value;
 
@@ -198,4 +220,18 @@ export const createOrderQueryVariables = (value: FilterContainer) => {
 
     return p;
   }, {} as OrderQueryVars);
+};
+
+type CollectionQueryVars = CollectionFilterInput & { channel?: { eq: string } };
+
+export const createCollectionsQueryVariables = (value: FilterContainer): CollectionQueryVars => {
+  return value.reduce((p, c) => {
+    if (typeof c === "string" || Array.isArray(c)) return p;
+
+    p[c.value.value as keyof CollectionFilterInput] = mapStaticQueryPartToLegacyVariables(
+      createStaticQueryPart(c.condition.selected),
+    );
+
+    return p;
+  }, {} as CollectionQueryVars);
 };

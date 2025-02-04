@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
-import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useCollectionBulkDeleteMutation, useCollectionListQuery } from "@dashboard/graphql";
@@ -20,10 +20,10 @@ import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
-import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CollectionListPage from "../../components/CollectionListPage/CollectionListPage";
@@ -32,8 +32,8 @@ import {
   CollectionListUrlDialog,
   CollectionListUrlQueryParams,
 } from "../../urls";
-import { getFilterOpts, getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
-import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
+import { getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
+import { getSortQueryVariables } from "./sort";
 
 interface CollectionListProps {
   params: CollectionListUrlQueryParams;
@@ -47,14 +47,14 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
 
   usePaginationReset(collectionListUrl, params, settings.rowNumber);
 
-  const { channel } = useAppChannel(false);
   const {
     clearRowSelection,
     selectedRowIds,
     setClearDatagridRowSelectionCallback,
     setSelectedRowIds,
   } = useRowSelection(params);
-  const [changeFilters, resetFilters, handleSearchChange] = createFilterHandlers({
+  const { valueProvider } = useConditionalFilterContext();
+  const [_, resetFilters, handleSearchChange] = createFilterHandlers({
     cleanupFn: clearRowSelection,
     createUrl: collectionListUrl,
     getFilterQueryParam,
@@ -62,11 +62,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     params,
     keepActiveTab: true,
   });
-  const { availableChannels } = useAppChannel(false);
-  const channelOpts = availableChannels
-    ? mapNodeToChoice(availableChannels, channel => channel.slug)
-    : null;
-  const selectedChannel = availableChannels.find(channel => channel.slug === params.channel);
+  // const selectedChannel = availableChannels.find(channel => channel.slug === params.channel);
   const {
     selectedPreset,
     presets,
@@ -87,9 +83,12 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
-      filter: getFilterVariables(params),
+      filter: getFilterVariables({
+        params,
+        filterContainer: valueProvider.value,
+      }),
       sort: getSortQueryVariables(params),
-      channel: selectedChannel?.slug,
+      // channel: selectedChannel?.slug,
     }),
     [params, settings.rowNumber],
   );
@@ -111,18 +110,17 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
       }
     },
   });
-  const filterOpts = getFilterOpts(params, channelOpts);
 
-  useEffect(() => {
-    if (!canBeSorted(params.sort, !!selectedChannel)) {
-      navigate(
-        collectionListUrl({
-          ...params,
-          sort: DEFAULT_SORT_KEY,
-        }),
-      );
-    }
-  }, [params]);
+  // useEffect(() => {
+  //   if (!canBeSorted(params.sort, !!selectedChannel)) {
+  //     navigate(
+  //       collectionListUrl({
+  //         ...params,
+  //         sort: DEFAULT_SORT_KEY,
+  //       }),
+  //     );
+  //   }
+  // }, [params]);
 
   const [openModal, closeModal] = createDialogActionHandlers<
     CollectionListUrlDialog,
@@ -164,7 +162,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     <PaginatorContext.Provider value={paginationValues}>
       <CollectionListPage
         currentTab={selectedPreset}
-        currencySymbol={channel?.currencyCode}
+        // currencySymbol={channel?.currencyCode}
         initialSearch={params.query || ""}
         onSearchChange={handleSearchChange}
         onAll={resetFilters}
@@ -183,9 +181,9 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         onSort={handleSort}
         onUpdateListSettings={updateListSettings}
         sort={getSortParams(params)}
-        selectedChannelId={selectedChannel?.id}
-        filterOpts={filterOpts}
-        onFilterChange={changeFilters}
+        selectedChannelId={""} // TODO
+        // filterOpts={filterOpts}
+        // onFilterChange={changeFilters}
         selectedCollectionIds={selectedRowIds}
         onSelectCollectionIds={handleSetSelectedCollectionIds}
         hasPresetsChanged={hasPresetsChanged}

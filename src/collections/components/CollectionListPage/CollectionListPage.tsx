@@ -9,24 +9,23 @@ import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { DashboardCard } from "@dashboard/components/Card";
-import { getByName } from "@dashboard/components/Filter/utils";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { FilterPageProps, PageListProps, SortPage } from "@dashboard/types";
+import { PageListProps, SearchPageProps, SortPage, TabPageProps } from "@dashboard/types";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
 import { CollectionListDatagrid } from "../CollectionListDatagrid";
-import { CollectionFilterKeys, CollectionListFilterOpts, createFilterStructure } from "./filters";
 
 export interface CollectionListPageProps
   extends PageListProps,
-    Omit<FilterPageProps<CollectionFilterKeys, CollectionListFilterOpts>, "onTabDelete">,
+    Omit<TabPageProps, "onTabDelete">,
+    SearchPageProps,
     SortPage<CollectionListUrlSortField> {
   onTabUpdate: (tabName: string) => void;
   selectedChannelId: string;
@@ -51,21 +50,16 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
   onTabUpdate,
   selectedChannelId,
   tabs,
-  filterOpts,
-  onFilterChange,
-  onFilterAttributeFocus,
   hasPresetsChanged,
-  currencySymbol,
   selectedCollectionIds,
   onCollectionsDelete,
+
   ...listProps
 }) => {
   const intl = useIntl();
   const location = useLocation();
   const navigate = useNavigator();
-  const filterStructure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
-  const filterDependency = filterStructure.find(getByName("channel"));
 
   return (
     <ListPageLayout>
@@ -117,12 +111,9 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
 
       <DashboardCard>
         <ListFilters
-          currencySymbol={currencySymbol}
+          type="expression-filter"
           initialSearch={initialSearch}
-          onFilterChange={onFilterChange}
-          onFilterAttributeFocus={onFilterAttributeFocus}
           onSearchChange={onSearchChange}
-          filterStructure={filterStructure}
           searchPlaceholder={intl.formatMessage({
             id: "eRqx44",
             defaultMessage: "Search collections...",
@@ -141,7 +132,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
         <CollectionListDatagrid
           disabled={disabled}
           selectedChannelId={selectedChannelId}
-          filterDependency={filterDependency}
+          // filterDependency={filterDependency} // TODO: sort
           onRowClick={id => {
             navigate(collectionUrl(id), {
               state: getPrevLocationState(location),

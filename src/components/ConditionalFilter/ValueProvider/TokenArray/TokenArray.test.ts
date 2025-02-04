@@ -15,7 +15,7 @@ describe("ConditionalFilter / ValueProvider / TokenArray", () => {
     // Arrange
     const url = new TokenArray("");
     // Act
-    const fetchingParams = url.getFetchingParams(productParams);
+    const fetchingParams = url.getFetchingParams(productParams, "product");
 
     // Assert
     expect(fetchingParams).toEqual({
@@ -44,7 +44,7 @@ describe("ConditionalFilter / ValueProvider / TokenArray", () => {
     });
     // Act
     const url = new TokenArray(params.toString());
-    const fetchingParams = url.getFetchingParams(productParams);
+    const fetchingParams = url.getFetchingParams(productParams, "product");
 
     // Assert
     expect(fetchingParams).toEqual({

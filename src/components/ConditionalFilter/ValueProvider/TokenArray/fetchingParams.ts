@@ -1,5 +1,7 @@
 import { TokenType, UrlToken } from "../UrlToken";
 
+export type FilterProviderType = "product" | "collection" | "order" | "discount";
+
 export interface FetchingParams {
   category: string[];
   collection: string[];
@@ -16,6 +18,10 @@ export interface OrderFetchingParams {
   channels: string[];
   customer: string[];
   ids: string[];
+}
+
+export interface CollectionFetchingParams {
+  channel: string[];
 }
 
 type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute">;
@@ -37,6 +43,23 @@ export const emptyOrderFetchingParams: OrderFetchingParams = {
   channels: [],
   customer: [],
   ids: [],
+};
+
+export const emptyCollectionFetchingParams: CollectionFetchingParams = {
+  channel: [],
+};
+
+export type FetchingParamsType = OrderFetchingParams | FetchingParams | CollectionFetchingParams;
+
+export const getEmptyFetchingParams = (type: FilterProviderType) => {
+  switch (type) {
+    case "order":
+      return emptyOrderFetchingParams;
+    case "collection":
+      return emptyCollectionFetchingParams;
+    default:
+      return emptyFetchingParams;
+  }
 };
 
 const unique = <T>(array: Iterable<T>) => Array.from(new Set(array));
@@ -82,6 +105,18 @@ export const toOrderFetchingParams = (p: OrderFetchingParams, c: UrlToken) => {
     p[key] = unique(c.value);
 
     return p;
+  }
+
+  p[key] = unique(p[key].concat(c.value));
+
+  return p;
+};
+
+export const toCollectionFetchingParams = (p: CollectionFetchingParams, c: UrlToken) => {
+  const key = c.name as keyof CollectionFetchingParams;
+
+  if (!p[key]) {
+    p[key] = [];
   }
 
   p[key] = unique(p[key].concat(c.value));

@@ -15,3 +15,4 @@ export type InitialAPIResponse = ApolloQueryResult<
   | _SearchAttributeOperandsQuery
 >;
 export type InitialOrderAPIResponse = ApolloQueryResult<_GetChannelOperandsQuery>;
+export type InitialCollectionAPIResponse = ApolloQueryResult<_GetChannelOperandsQuery>;

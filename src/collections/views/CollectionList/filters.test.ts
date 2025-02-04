@@ -1,5 +1,4 @@
 import { createFilterStructure } from "@dashboard/collections/components/CollectionListPage";
-import { CollectionListUrlFilters } from "@dashboard/collections/urls";
 import { CollectionPublished } from "@dashboard/graphql";
 import { FilterOpts } from "@dashboard/types";
 import { getFilterQueryParams } from "@dashboard/utils/filters";
@@ -9,24 +8,8 @@ import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { config } from "@test/intl";
 import { createIntl } from "react-intl";
 
-import { getFilterQueryParam, getFilterVariables } from "./filters";
+import { getFilterQueryParam } from "./filters";
 
-describe("Filtering query params", () => {
-  it("should be empty object if no params given", () => {
-    const params: CollectionListUrlFilters = {};
-    const filterVariables = getFilterVariables(params);
-
-    expect(getExistingKeys(filterVariables)).toHaveLength(0);
-  });
-  it("should not be empty object if params given", () => {
-    const params: CollectionListUrlFilters = {
-      status: CollectionPublished.PUBLISHED,
-    };
-    const filterVariables = getFilterVariables(params);
-
-    expect(getExistingKeys(filterVariables)).toHaveLength(1);
-  });
-});
 describe("Filtering URL params", () => {
   const intl = createIntl(config);
   const filters = createFilterStructure(intl, {

@@ -4,22 +4,24 @@ import { useEffect, useState } from "react";
 import useRouter from "use-react-router";
 
 import { InitialAPIState } from "../API";
+import { InitialCollectionAPIState } from "../API/initialState/collections/useInitialCollectionsState";
 import { InitialOrderAPIState } from "../API/initialState/orders/useInitialOrderState";
 import { FilterContainer, FilterElement } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
 import { TokenArray } from "./TokenArray";
 import {
-  emptyFetchingParams,
-  emptyOrderFetchingParams,
+  CollectionFetchingParams,
   FetchingParams,
+  FilterProviderType,
+  getEmptyFetchingParams,
   OrderFetchingParams,
 } from "./TokenArray/fetchingParams";
 import { prepareStructure } from "./utils";
 
 export const useUrlValueProvider = (
   locationSearch: string,
-  type: "product" | "order" | "discount",
-  initialState?: InitialAPIState | InitialOrderAPIState,
+  type: FilterProviderType,
+  initialState?: InitialAPIState | InitialOrderAPIState | InitialCollectionAPIState,
 ): FilterValueProvider => {
   const router = useRouter();
   const params = new URLSearchParams(locationSearch);
@@ -37,8 +39,8 @@ export const useUrlValueProvider = (
   params.delete("after");
 
   const tokenizedUrl = new TokenArray(params.toString());
-  const paramsFromType = type === "product" ? emptyFetchingParams : emptyOrderFetchingParams;
-  const fetchingParams = tokenizedUrl.getFetchingParams(paramsFromType);
+  const paramsFromType = getEmptyFetchingParams(type);
+  const fetchingParams = tokenizedUrl.getFetchingParams(paramsFromType, type);
 
   useEffect(() => {
     if (initialState) {
@@ -49,6 +51,11 @@ export const useUrlValueProvider = (
         case "order":
           (initialState as InitialOrderAPIState).fetchQueries(
             fetchingParams as OrderFetchingParams,
+          );
+          break;
+        case "collection":
+          (initialState as InitialCollectionAPIState).fetchQueries(
+            fetchingParams as CollectionFetchingParams,
           );
           break;
       }

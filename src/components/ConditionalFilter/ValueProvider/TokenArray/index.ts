@@ -1,12 +1,16 @@
 import { parse, ParsedQs } from "qs";
 
-import { InitialOrderStateResponse } from "../../API/initialState/orders/InitialOrderState";
 import { InitialStateResponse } from "../../API/InitialStateResponse";
 import { FilterContainer, FilterElement } from "../../FilterElement";
+import { InitialResponseType } from "../../types";
 import { UrlEntry, UrlToken } from "../UrlToken";
 import {
+  CollectionFetchingParams,
   FetchingParams,
+  FetchingParamsType,
+  FilterProviderType,
   OrderFetchingParams,
+  toCollectionFetchingParams,
   toFetchingParams,
   toOrderFetchingParams,
 } from "./fetchingParams";
@@ -43,7 +47,7 @@ const tokenizeUrl = (urlParams: string) => {
 };
 const mapUrlTokensToFilterValues = (
   urlTokens: TokenArray,
-  response: InitialStateResponse | InitialOrderStateResponse,
+  response: InitialResponseType,
 ): FilterContainer =>
   urlTokens.map(el => {
     if (typeof el === "string") {
@@ -62,25 +66,31 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
     super(...tokenizeUrl(url));
   }
 
-  public getFetchingParams(params: OrderFetchingParams | FetchingParams) {
-    if ("paymentStatus" in params) {
-      return this.asFlatArray()
-        .filter(token => token.isLoadable())
-        .reduce<OrderFetchingParams>(toOrderFetchingParams, params);
+  public getFetchingParams(params: FetchingParamsType, type: FilterProviderType) {
+    switch (type) {
+      case "order":
+        return this.asFlatArray()
+          .filter(token => token.isLoadable())
+          .reduce<OrderFetchingParams>(toOrderFetchingParams, params as OrderFetchingParams);
+      case "collection":
+        return this.asFlatArray()
+          .filter(token => token.isLoadable())
+          .reduce<CollectionFetchingParams>(
+            toCollectionFetchingParams,
+            params as CollectionFetchingParams,
+          );
+      default:
+        return this.asFlatArray()
+          .filter(token => token.isLoadable())
+          .reduce<FetchingParams>(toFetchingParams, params as FetchingParams);
     }
-
-    return this.asFlatArray()
-      .filter(token => token.isLoadable())
-      .reduce<FetchingParams>(toFetchingParams, params);
   }
 
   public asFlatArray() {
     return flatenate(this);
   }
 
-  public asFilterValuesFromResponse(
-    response: InitialStateResponse | InitialOrderStateResponse,
-  ): FilterContainer {
+  public asFilterValuesFromResponse(response: InitialResponseType): FilterContainer {
     return this.map(el => {
       if (typeof el === "string") {
         return el;

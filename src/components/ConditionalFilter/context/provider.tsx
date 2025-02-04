@@ -1,11 +1,14 @@
 import React, { FC } from "react";
 
+import { useCollectionFilterAPIProvider } from "../API/CollectionFilterAPIProvider";
 import { useDiscountFilterAPIProvider } from "../API/DiscountFiltersAPIProvider";
+import { useInitialCollectionState } from "../API/initialState/collections/useInitialCollectionsState";
 import { useInitialOrderState } from "../API/initialState/orders/useInitialOrderState";
 import { useProductInitialAPIState } from "../API/initialState/useInitialAPIState";
 import { useOrderFilterAPIProvider } from "../API/OrderFilterAPIProvider";
 import { useProductFilterAPIProvider } from "../API/ProductFilterAPIProvider";
 import {
+  STATIC_COLLECTION_OPTIONS,
   STATIC_DISCOUNT_OPTIONS,
   STATIC_ORDER_OPTIONS,
   STATIC_PRODUCT_OPTIONS,
@@ -73,6 +76,33 @@ export const ConditionalOrderFilterProvider: FC<{
   const initialState = useInitialOrderState();
   const valueProvider = useUrlValueProvider(locationSearch, "order", initialState);
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_ORDER_OPTIONS);
+  const containerState = useContainerState(valueProvider);
+  const filterWindow = useFilterWindow();
+
+  return (
+    <ConditionalFilterContext.Provider
+      value={{
+        apiProvider,
+        valueProvider,
+        leftOperandsProvider,
+        containerState,
+        filterWindow,
+      }}
+    >
+      {children}
+    </ConditionalFilterContext.Provider>
+  );
+};
+
+export const ConditionalCollectionFilterProvider: FC<{
+  locationSearch: string;
+}> = ({ children, locationSearch }) => {
+  const apiProvider = useCollectionFilterAPIProvider();
+
+  const initialState = useInitialCollectionState();
+
+  const valueProvider = useUrlValueProvider(locationSearch, "collection", initialState);
+  const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_COLLECTION_OPTIONS);
   const containerState = useContainerState(valueProvider);
   const filterWindow = useFilterWindow();
 

@@ -118,6 +118,20 @@ export const STATIC_CONDITIONS = {
       value: "input-1",
     },
   ],
+  published: [
+    {
+      type: "select",
+      label: "is",
+      value: "input-1",
+    },
+  ],
+  slugs: [
+    {
+      type: "text",
+      label: "is",
+      value: "input-1",
+    },
+  ],
 };
 
 export const CONSTRAINTS = {
@@ -273,10 +287,44 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
   },
 ];
 
+export const STATIC_COLLECTION_OPTIONS: LeftOperand[] = [
+  {
+    value: "published",
+    label: "Published",
+    type: "published",
+    slug: "published",
+  },
+  {
+    value: "metadata",
+    label: "Metadata",
+    type: "metadata",
+    slug: "metadata",
+  },
+  {
+    value: "ids",
+    label: "IDs",
+    type: "ids",
+    slug: "ids",
+  },
+  {
+    value: "channel",
+    label: "Channel",
+    type: "channel",
+    slug: "channel",
+  },
+  {
+    value: "slugs",
+    label: "Slug",
+    type: "slugs", // TODO - its [String!] not String!
+    slug: "slugs",
+  },
+];
+
 export const STATIC_OPTIONS = [
   ...STATIC_PRODUCT_OPTIONS,
   ...STATIC_DISCOUNT_OPTIONS,
   ...STATIC_ORDER_OPTIONS,
+  ...STATIC_COLLECTION_OPTIONS, // ??
 ];
 
 export const ATTRIBUTE_INPUT_TYPE_CONDITIONS = {
