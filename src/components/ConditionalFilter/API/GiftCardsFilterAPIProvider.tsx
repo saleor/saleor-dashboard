@@ -6,7 +6,7 @@ import {
   CustomerHandler,
   GiftCardTagsHandler,
   Handler,
-  ProductHandler,
+  ProductsHandler,
 } from "@dashboard/components/ConditionalFilter/API/Handler";
 import {
   FilterContainer,
@@ -34,8 +34,8 @@ const createAPIHandler = (
     return new CurrencyHandler(client, inputValue);
   }
 
-  if (rowType === "product") {
-    return new ProductHandler(client, inputValue);
+  if (rowType === "products") {
+    return new ProductsHandler(client, inputValue);
   }
 
   if (rowType === "tags") {

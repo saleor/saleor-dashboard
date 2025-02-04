@@ -1,13 +1,16 @@
 import { parse, ParsedQs } from "qs";
 
+import { InitialGiftCardsStateResponse } from "../../API/initialState/giftCards/InitialGiftCardsState";
 import { InitialOrderStateResponse } from "../../API/initialState/orders/InitialOrderState";
 import { InitialStateResponse } from "../../API/InitialStateResponse";
 import { FilterContainer, FilterElement } from "../../FilterElement";
 import { UrlEntry, UrlToken } from "../UrlToken";
 import {
   FetchingParams,
+  GiftCardsFetchingParams,
   OrderFetchingParams,
   toFetchingParams,
+  toGiftCardsFetchingParams,
   toOrderFetchingParams,
 } from "./fetchingParams";
 
@@ -43,7 +46,7 @@ const tokenizeUrl = (urlParams: string) => {
 };
 const mapUrlTokensToFilterValues = (
   urlTokens: TokenArray,
-  response: InitialStateResponse | InitialOrderStateResponse,
+  response: InitialStateResponse | InitialOrderStateResponse | InitialGiftCardsStateResponse,
 ): FilterContainer =>
   urlTokens.map(el => {
     if (typeof el === "string") {
@@ -62,11 +65,17 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
     super(...tokenizeUrl(url));
   }
 
-  public getFetchingParams(params: OrderFetchingParams | FetchingParams) {
+  public getFetchingParams(params: OrderFetchingParams | FetchingParams | GiftCardsFetchingParams) {
     if ("paymentStatus" in params) {
       return this.asFlatArray()
         .filter(token => token.isLoadable())
         .reduce<OrderFetchingParams>(toOrderFetchingParams, params);
+    }
+
+    if ("currency" in params) {
+      return this.asFlatArray()
+        .filter(token => token.isLoadable())
+        .reduce<GiftCardsFetchingParams>(toGiftCardsFetchingParams, params);
     }
 
     return this.asFlatArray()
@@ -79,7 +88,7 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
   }
 
   public asFilterValuesFromResponse(
-    response: InitialStateResponse | InitialOrderStateResponse,
+    response: InitialStateResponse | InitialOrderStateResponse | InitialGiftCardsStateResponse,
   ): FilterContainer {
     return this.map(el => {
       if (typeof el === "string") {

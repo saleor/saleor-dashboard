@@ -177,7 +177,7 @@ export class ProductTypeHandler implements Handler {
   };
 }
 
-export class ProductHandler implements Handler {
+export class ProductsHandler implements Handler {
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
@@ -219,9 +219,9 @@ export class GiftCardTagsHandler implements Handler {
 
     return (
       data?.giftCardTags?.edges.map(({ node }) => ({
-        label: node.name ?? "",
-        value: node.id,
-        slug: node.id,
+        label: node.name,
+        value: node.name,
+        slug: node.name,
       })) ?? []
     );
   };

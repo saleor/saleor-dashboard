@@ -30,7 +30,7 @@ const GiftCardList: React.FC<RouteComponentProps<any>> = () => {
   );
 
   return (
-    <ConditionalGiftCardsFilterProver locationSearch={qs}>
+    <ConditionalGiftCardsFilterProver locationSearch={location.search}>
       <GiftCardListComponent params={params} />
     </ConditionalGiftCardsFilterProver>
   );

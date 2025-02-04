@@ -1,3 +1,4 @@
+import { InitialGiftCardsStateResponse } from "../API/initialState/giftCards/InitialGiftCardsState";
 import { InitialOrderStateResponse } from "../API/initialState/orders/InitialOrderState";
 import { InitialStateResponse } from "../API/InitialStateResponse";
 import { RowType, STATIC_OPTIONS } from "../constants";
@@ -177,7 +178,7 @@ export class FilterElement {
 
   public static fromUrlToken(
     token: UrlToken,
-    response: InitialStateResponse | InitialOrderStateResponse,
+    response: InitialStateResponse | InitialOrderStateResponse | InitialGiftCardsStateResponse,
   ) {
     if (token.isStatic()) {
       return new FilterElement(

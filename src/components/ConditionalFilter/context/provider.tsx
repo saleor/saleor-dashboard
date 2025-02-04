@@ -1,4 +1,5 @@
 import { useGiftCardsFiltersAPIProvider } from "@dashboard/components/ConditionalFilter/API/GiftCardsFilterAPIProvider";
+import { useInitialGiftCardsState } from "@dashboard/components/ConditionalFilter/API/initialState/giftCards/useInitialGiftCardsState";
 import React, { FC } from "react";
 
 import { useDiscountFilterAPIProvider } from "../API/DiscountFiltersAPIProvider";
@@ -97,8 +98,9 @@ export const ConditionalGiftCardsFilterProver: FC<{ locationSearch: string }> = 
   children,
   locationSearch,
 }) => {
+  const initialState = useInitialGiftCardsState();
   const apiProvider = useGiftCardsFiltersAPIProvider();
-  const valueProvider = useUrlValueProvider(locationSearch, "gift-cards");
+  const valueProvider = useUrlValueProvider(locationSearch, "gift-cards", initialState);
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_GIFTCARDS_OPTIONS);
   const containerState = useContainerState(valueProvider);
   const filterWindow = useFilterWindow();

@@ -49,6 +49,10 @@ const createStaticQueryPart = (selected: ConditionSelected): StaticQueryPart => 
   }
 
   if (typeof value === "string") {
+    if (["true", "false"].includes(value)) {
+      return value === "true";
+    }
+
     return { eq: value };
   }
 
@@ -227,13 +231,9 @@ export const createGiftCardQueryVariables = (value: FilterContainer) => {
       return p;
     }
 
-    if (c.isStatic()) {
-      p[c.value.value as keyof GiftCardFilterInput] = mapStaticQueryPartToLegacyVariables(
-        createStaticQueryPart(c.condition.selected),
-      );
-
-      return p;
-    }
+    p[c.value.value as keyof GiftCardFilterInput] = mapStaticQueryPartToLegacyVariables(
+      createStaticQueryPart(c.condition.selected),
+    );
 
     return p;
   }, {} as GiftCardFilterInput);

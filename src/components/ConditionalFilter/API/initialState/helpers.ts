@@ -1,4 +1,5 @@
 import { ApolloQueryResult } from "@apollo/client";
+import { InitialGiftCardsStateResponse } from "@dashboard/components/ConditionalFilter/API/initialState/giftCards/InitialGiftCardsState";
 import {
   _GetChannelOperandsQuery,
   _GetLegacyChannelOperandsQuery,
@@ -136,3 +137,12 @@ export const createInitialOrderState = (data: InitialOrderAPIResponse[]) =>
       updatedAt: "",
     },
   );
+
+export const createInitialGiftCardsState = (data: InitialGiftCardsStateResponse[]) => {
+  return {
+    currency: [],
+    products: [],
+    tags: [],
+    usedBy: [],
+  };
+};

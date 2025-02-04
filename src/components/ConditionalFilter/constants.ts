@@ -13,6 +13,11 @@ export const STATIC_CONDITIONS = {
     { type: "number", label: "greater", value: "input-3" },
     { type: "number.range", label: "between", value: "input-4" },
   ],
+  balance: [
+    { type: "number", label: "lower", value: "input-1" },
+    { type: "number", label: "greater", value: "input-2" },
+    { type: "number.range", label: "between", value: "input-3" },
+  ],
   collection: [{ type: "multiselect", label: "in", value: "input-4" }],
   channel: [{ type: "select", label: "is", value: "input-5" }],
   channels: [{ type: "multiselect", label: "in", value: "input-1" }],
@@ -126,7 +131,7 @@ export const STATIC_CONDITIONS = {
       value: "input-1",
     },
   ],
-  product: [{ type: "multiselect", label: "in", value: "input-1" }],
+  products: [{ type: "multiselect", label: "in", value: "input-1" }],
   tags: [{ type: "multiselect", label: "in", value: "input-1" }],
   usedBy: [{ type: "multiselect", label: "in", value: "input-1" }],
 };
@@ -299,20 +304,20 @@ export const STATIC_GIFTCARDS_OPTIONS: LeftOperand[] = [
   {
     value: "currentBalance",
     label: "Current balance",
-    type: "price",
+    type: "balance",
     slug: "currentBalance",
   },
   {
     value: "initialBalance",
     label: "Initial balance",
-    type: "price",
+    type: "balance",
     slug: "initialBalance",
   },
   {
-    value: "product",
-    label: "Product",
-    type: "product",
-    slug: "product",
+    value: "products",
+    label: "Products",
+    type: "products",
+    slug: "products",
   },
   {
     value: "isActive",
