@@ -1,5 +1,6 @@
 import { ChannelsAvailabilityDropdown } from "@dashboard/components/ChannelsAvailabilityDropdown";
 import { GridTable } from "@dashboard/components/GridTable";
+import Link from "@dashboard/components/Link";
 import Drag from "@dashboard/icons/Drag";
 import { productUrl } from "@dashboard/products/urls";
 import { useSortable } from "@dnd-kit/sortable";
@@ -70,38 +71,34 @@ export const ProductTableItem = ({
         </Box>
       </GridTable.Cell>
       <GridTable.Cell __height="inherit" padding={0}>
-        <Box
-          as="a"
-          href={href}
-          padding={2}
-          display="flex"
-          alignItems="center"
-          gap={2}
-          height="100%"
-        >
-          {product?.thumbnail ? (
-            <Box borderColor="default1" borderWidth={1} borderRadius={2} borderStyle="solid">
-              <Box
-                as="img"
-                src={product?.thumbnail?.url}
-                alt={product?.name}
-                __width="31px"
-                __height="31px"
-              />
-            </Box>
-          ) : (
-            <EmptyImage />
-          )}
-          <Text>{product?.name}</Text>
-        </Box>
+        <Link href={href}>
+          <Box padding={2} display="flex" alignItems="center" gap={2} height="100%">
+            {product?.thumbnail ? (
+              <Box borderColor="default1" borderWidth={1} borderRadius={2} borderStyle="solid">
+                <Box
+                  as="img"
+                  src={product?.thumbnail?.url}
+                  alt={product?.name}
+                  __width="31px"
+                  __height="31px"
+                />
+              </Box>
+            ) : (
+              <EmptyImage />
+            )}
+            <Text>{product?.name}</Text>
+          </Box>
+        </Link>
       </GridTable.Cell>
       <GridTable.Cell __height="inherit" padding={0}>
-        <Box as="a" href={href} padding={2} display="flex" alignItems="center" height="100%">
-          <Text>{product?.productType.name || <Skeleton />}</Text>
-        </Box>
+        <Link href={href}>
+          <Box padding={2} display="flex" alignItems="center" height="100%">
+            <Text>{product?.productType.name || <Skeleton />}</Text>
+          </Box>
+        </Link>
       </GridTable.Cell>
       <GridTable.Cell __height="inherit" padding={0}>
-        <Box as="a" display="block" height="100%" padding={2}>
+        <Box display="block" height="100%" padding={2}>
           {product && !product?.channelListings?.length ? (
             "-"
           ) : product?.channelListings !== undefined ? (
