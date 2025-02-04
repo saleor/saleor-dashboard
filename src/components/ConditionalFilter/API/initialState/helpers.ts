@@ -1,19 +1,22 @@
 import { ApolloQueryResult } from "@apollo/client";
-import { InitialGiftCardsStateResponse } from "@dashboard/components/ConditionalFilter/API/initialState/giftCards/InitialGiftCardsState";
+import { InitialGiftCardsState } from "@dashboard/components/ConditionalFilter/API/initialState/giftCards/InitialGiftCardsState";
 import {
   _GetChannelOperandsQuery,
   _GetLegacyChannelOperandsQuery,
   _SearchAttributeOperandsQuery,
   _SearchCategoriesOperandsQuery,
   _SearchCollectionsOperandsQuery,
+  _SearchCustomersOperandsQuery,
+  _SearchProductOperandsQuery,
   _SearchProductTypesOperandsQuery,
+  ChannelCurrenciesQuery,
 } from "@dashboard/graphql";
 
 import { createBooleanOptions } from "../../constants";
 import { createOptionsFromAPI } from "../Handler";
 import { InitialState } from "../InitialStateResponse";
 import { InitialOrderState } from "./orders/InitialOrderState";
-import { InitialAPIResponse, InitialOrderAPIResponse } from "./types";
+import { InitialAPIResponse, InitialGiftCardsAPIResponse, InitialOrderAPIResponse } from "./types";
 
 const isChannelQuery = (
   query: InitialAPIResponse,
@@ -33,6 +36,15 @@ const isProductTypeQuery = (
 const isAttributeQuery = (
   query: InitialAPIResponse,
 ): query is ApolloQueryResult<_SearchAttributeOperandsQuery> => "attributes" in query.data;
+const isCustomerQuery = (
+  query: InitialGiftCardsAPIResponse,
+): query is ApolloQueryResult<_SearchCustomersOperandsQuery> => "customers" in query.data;
+const isProductQuery = (
+  query: InitialGiftCardsAPIResponse,
+): query is ApolloQueryResult<_SearchProductOperandsQuery> => "products" in query.data;
+const isCurrencyQuery = (
+  query: InitialGiftCardsAPIResponse,
+): query is ApolloQueryResult<ChannelCurrenciesQuery> => "shop" in query.data;
 
 export const createInitialStateFromData = (data: InitialAPIResponse[], channel: string[]) =>
   data.reduce<InitialState>(
@@ -138,11 +150,49 @@ export const createInitialOrderState = (data: InitialOrderAPIResponse[]) =>
     },
   );
 
-export const createInitialGiftCardsState = (data: InitialGiftCardsStateResponse[]) => {
-  return {
-    currency: [],
-    products: [],
-    tags: [],
-    usedBy: [],
-  };
+export const createInitialGiftCardsState = (
+  data: InitialGiftCardsAPIResponse[],
+): InitialGiftCardsState => {
+  return data.reduce(
+    (acc, query) => {
+      if (isCustomerQuery(query)) {
+        return {
+          ...acc,
+          usedBy:
+            query.data?.customers?.edges.map(({ node }) => ({
+              label: node.email,
+              value: node.id,
+              slug: node.id,
+            })) ?? [],
+        };
+      }
+
+      if (isProductQuery(query)) {
+        return {
+          ...acc,
+          products: createOptionsFromAPI(query.data?.products?.edges ?? []),
+        };
+      }
+
+      if (isCurrencyQuery(query)) {
+        return {
+          ...acc,
+          currency: query.data.shop.channelCurrencies.map(currency => ({
+            label: currency,
+            value: currency,
+            slug: currency,
+          })),
+        };
+      }
+
+      return acc;
+    },
+    {
+      currency: [],
+      isActive: createBooleanOptions(),
+      products: [],
+      tags: [],
+      usedBy: [],
+    } as InitialGiftCardsState,
+  );
 };

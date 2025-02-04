@@ -272,7 +272,8 @@ export class CustomerHandler implements Handler {
 
     return (
       data?.customers?.edges.map(({ node }) => ({
-        label: node.email,
+        label:
+          node?.firstName && node?.lastName ? `${node.firstName} ${node.lastName}` : node.email,
         value: node.id,
         slug: node.id,
       })) ?? []

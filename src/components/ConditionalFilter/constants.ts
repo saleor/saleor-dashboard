@@ -13,7 +13,12 @@ export const STATIC_CONDITIONS = {
     { type: "number", label: "greater", value: "input-3" },
     { type: "number.range", label: "between", value: "input-4" },
   ],
-  balance: [
+  currentBalance: [
+    { type: "number", label: "lower", value: "input-1" },
+    { type: "number", label: "greater", value: "input-2" },
+    { type: "number.range", label: "between", value: "input-3" },
+  ],
+  initialBalance: [
     { type: "number", label: "lower", value: "input-1" },
     { type: "number", label: "greater", value: "input-2" },
     { type: "number.range", label: "between", value: "input-3" },
@@ -304,13 +309,13 @@ export const STATIC_GIFTCARDS_OPTIONS: LeftOperand[] = [
   {
     value: "currentBalance",
     label: "Current balance",
-    type: "balance",
+    type: "currentBalance",
     slug: "currentBalance",
   },
   {
     value: "initialBalance",
     label: "Initial balance",
-    type: "balance",
+    type: "initialBalance",
     slug: "initialBalance",
   },
   {

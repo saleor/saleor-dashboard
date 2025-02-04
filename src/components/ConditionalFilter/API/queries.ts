@@ -189,4 +189,28 @@ export const dynamicOperandsQueries = gql`
       }
     }
   }
+
+  query _SearchCustomersOperands($first: Int!, $customersIds: [ID!]) {
+    customers(first: $first, filter: { ids: $customersIds }) {
+      edges {
+        node {
+          id
+          email
+          firstName
+          lastName
+        }
+      }
+    }
+  }
+  query _SearchProductOperands($first: Int!, $productsIds: [ID!]) {
+    products(first: $first, filter: { ids: $productsIds }) {
+      edges {
+        node {
+          id
+          name
+          slug
+        }
+      }
+    }
+  }
 `;

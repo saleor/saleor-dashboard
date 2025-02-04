@@ -9511,6 +9511,22 @@ export type _GetCustomersChoicesQueryVariables = Exact<{
 
 export type _GetCustomersChoicesQuery = { __typename: 'Query', customers: { __typename: 'UserCountableConnection', edges: Array<{ __typename: 'UserCountableEdge', node: { __typename: 'User', id: string, email: string, firstName: string, lastName: string } }> } | null };
 
+export type _SearchCustomersOperandsQueryVariables = Exact<{
+  first: Scalars['Int'];
+  customersIds?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
+}>;
+
+
+export type _SearchCustomersOperandsQuery = { __typename: 'Query', customers: { __typename: 'UserCountableConnection', edges: Array<{ __typename: 'UserCountableEdge', node: { __typename: 'User', id: string, email: string, firstName: string, lastName: string } }> } | null };
+
+export type _SearchProductOperandsQueryVariables = Exact<{
+  first: Scalars['Int'];
+  productsIds?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
+}>;
+
+
+export type _SearchProductOperandsQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, slug: string } }> } | null };
+
 export type TriggerWebhookDryRunMutationVariables = Exact<{
   objectId: Scalars['ID'];
   query: Scalars['String'];

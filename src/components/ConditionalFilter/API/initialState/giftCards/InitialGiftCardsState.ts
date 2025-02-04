@@ -26,6 +26,10 @@ export class InitialGiftCardsStateResponse implements InitialGiftCardsState {
     const entry = this.getEntryByName(token.name);
 
     if (!token.isLoadable()) {
+      if (Array.isArray(token.value)) {
+        return token.value;
+      }
+
       return [token.value] as string[];
     }
 
