@@ -53,7 +53,6 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
   hasPresetsChanged,
   selectedCollectionIds,
   onCollectionsDelete,
-
   ...listProps
 }) => {
   const intl = useIntl();

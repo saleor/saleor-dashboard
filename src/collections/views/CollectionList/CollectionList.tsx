@@ -23,7 +23,7 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CollectionListPage from "../../components/CollectionListPage/CollectionListPage";
@@ -33,7 +33,7 @@ import {
   CollectionListUrlQueryParams,
 } from "../../urls";
 import { getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
-import { getSortQueryVariables } from "./sort";
+import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 
 interface CollectionListProps {
   params: CollectionListUrlQueryParams;
@@ -80,18 +80,20 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     storageUtils,
   });
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = React.useMemo(
-    () => ({
+  const queryVariables = React.useMemo(() => {
+    const { channel, ...variables } = getFilterVariables({
+      params,
+      filterContainer: valueProvider.value,
+    });
+
+    return {
       ...paginationState,
-      filter: getFilterVariables({
-        params,
-        filterContainer: valueProvider.value,
-      }),
+      filter: variables,
       sort: getSortQueryVariables(params),
-      // channel: selectedChannel?.slug,
-    }),
-    [params, settings.rowNumber],
-  );
+      channel, // Saleor docs say 'channel' in filter is deprecated and should be moved to root
+    };
+  }, [params, settings.rowNumber, valueProvider.value]);
+
   const { data, refetch } = useCollectionListQuery({
     displayLoader: true,
     variables: queryVariables,
@@ -111,16 +113,16 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     },
   });
 
-  // useEffect(() => {
-  //   if (!canBeSorted(params.sort, !!selectedChannel)) {
-  //     navigate(
-  //       collectionListUrl({
-  //         ...params,
-  //         sort: DEFAULT_SORT_KEY,
-  //       }),
-  //     );
-  //   }
-  // }, [params]);
+  useEffect(() => {
+    if (!canBeSorted(params.sort, !!queryVariables.channel)) {
+      navigate(
+        collectionListUrl({
+          ...params,
+          sort: DEFAULT_SORT_KEY,
+        }),
+      );
+    }
+  }, [params]);
 
   const [openModal, closeModal] = createDialogActionHandlers<
     CollectionListUrlDialog,
@@ -162,7 +164,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     <PaginatorContext.Provider value={paginationValues}>
       <CollectionListPage
         currentTab={selectedPreset}
-        // currencySymbol={channel?.currencyCode}
         initialSearch={params.query || ""}
         onSearchChange={handleSearchChange}
         onAll={resetFilters}
@@ -182,8 +183,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         onUpdateListSettings={updateListSettings}
         sort={getSortParams(params)}
         selectedChannelId={""} // TODO
-        // filterOpts={filterOpts}
-        // onFilterChange={changeFilters}
         selectedCollectionIds={selectedRowIds}
         onSelectCollectionIds={handleSetSelectedCollectionIds}
         hasPresetsChanged={hasPresetsChanged}

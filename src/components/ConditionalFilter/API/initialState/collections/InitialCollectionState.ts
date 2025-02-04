@@ -15,7 +15,11 @@ export class InitialCollectionStateResponse implements InitialCollectionState {
   public filterByUrlToken(token: UrlToken) {
     const entry = this.getEntryByName(token.name);
 
-    return entry.filter(item => item.value === token.value);
+    if (!token.isLoadable()) {
+      return [token.value] as string[];
+    }
+
+    return entry.filter(item => item.slug === token.value);
   }
 
   private getEntryByName(name: string): ItemOption[] {
