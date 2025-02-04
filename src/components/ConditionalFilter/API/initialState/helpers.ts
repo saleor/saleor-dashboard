@@ -152,6 +152,7 @@ export const createInitialOrderState = (data: InitialOrderAPIResponse[]) =>
 
 export const createInitialGiftCardsState = (
   data: InitialGiftCardsAPIResponse[],
+  tags: string[],
 ): InitialGiftCardsState => {
   return data.reduce(
     (acc, query) => {
@@ -191,7 +192,7 @@ export const createInitialGiftCardsState = (
       currency: [],
       isActive: createBooleanOptions(),
       products: [],
-      tags: [],
+      tags: tags?.map(tag => ({ label: tag, value: tag, slug: tag })) ?? [],
       usedBy: [],
     } as InitialGiftCardsState,
   );
