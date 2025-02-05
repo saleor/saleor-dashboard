@@ -103,14 +103,16 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const handleSort = createSortHandler(navigate, giftCardListUrl, params);
-  const queryVariables = React.useMemo<GiftCardListQueryVariables>(
-    () => ({
+  const queryVariables = React.useMemo<GiftCardListQueryVariables>(() => {
+    return {
       ...paginationState,
-      filter: filters,
+      filter: {
+        ...filters,
+        code: params.query,
+      },
       sort: getSortQueryVariables(params),
-    }),
-    [params, paginationState],
-  );
+    };
+  }, [params, settings.rowNumber, valueProvider.value]);
   const handleGiftCardListError = (error: ApolloError) => {
     const graphqlErrors = error?.graphQLErrors[0];
 
