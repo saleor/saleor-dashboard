@@ -7,7 +7,7 @@ import { test } from "utils/testWithPermission";
 
 test.use({ permissionName: "settings" });
 
-test("TC: SALEOR_18 User should be able to navigate to configuration as a staff member using SETTINGS permission @e2e", async ({
+test("TC: SALEOR_18 User should be able to navigate to configuration as a staff member using SETTINGS permission #e2e", async ({
   page,
 }) => {
   const mainMenuPage = new MainMenuPage(page);
