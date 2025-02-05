@@ -34,9 +34,16 @@ runs:
       with:
         report-path: ctrf-reports/merged-report.json
         summary-report: true
-        pull-request: true
-        overwrite-comment: true
-        failed-report: true
+        commit-report: true
+      env:
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+      if: always()
+      
+    - name: Publish PR Comment
+      uses: ctrf-io/github-test-reporter@v1
+      with:
+        report-path: ctrf-reports/merged-report.json
+        pull-request-report: true
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
       if: always()
