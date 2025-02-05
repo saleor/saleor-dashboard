@@ -1,13 +1,10 @@
 import { ApolloClient, useApolloClient } from "@apollo/client";
+import { CollectionPublished } from "@dashboard/graphql/types.generated";
+import { IntlShape, useIntl } from "react-intl";
 
-import { RowType } from "../constants";
 import { FilterContainer, FilterElement } from "../FilterElement";
 import { FilterAPIProvider } from "./FilterAPIProvider";
-import { BooleanValuesHandler, ChannelHandler, Handler, NoopValuesHandler } from "./Handler";
-
-const isStaticBoolean = (rowType: RowType) => {
-  return ["published"].includes(rowType);
-};
+import { ChannelHandler, EnumValuesHandler, Handler, NoopValuesHandler } from "./Handler";
 
 const getFilterElement = (value: FilterContainer, index: number): FilterElement => {
   const possibleFilterElement = value[index];
@@ -22,24 +19,12 @@ const createAPIHandler = (
   selectedRow: FilterElement,
   client: ApolloClient<unknown>,
   inputValue: string,
+  intl: IntlShape,
 ): Handler => {
   const rowType = selectedRow.rowType();
 
-  if (rowType && isStaticBoolean(rowType) && rowType !== "attribute") {
-    return new BooleanValuesHandler([
-      {
-        label: "True",
-        value: "PUBLISHED",
-        type: rowType,
-        slug: "published",
-      },
-      {
-        label: "False",
-        value: "HIDDEN",
-        type: rowType,
-        slug: "hidden",
-      },
-    ]);
+  if (rowType === "published") {
+    return new EnumValuesHandler(CollectionPublished, "published", intl);
   }
 
   if (rowType === "ids") {
@@ -58,6 +43,7 @@ const createAPIHandler = (
 };
 
 export const useCollectionFilterAPIProvider = (): FilterAPIProvider => {
+  const intl = useIntl();
   const client = useApolloClient();
 
   const fetchRightOptions = async (
@@ -68,7 +54,7 @@ export const useCollectionFilterAPIProvider = (): FilterAPIProvider => {
     const index = parseInt(position, 10);
     const filterElement = getFilterElement(value, index);
 
-    const handler = createAPIHandler(filterElement, client, inputValue);
+    const handler = createAPIHandler(filterElement, client, inputValue, intl);
 
     return handler.fetch();
   };

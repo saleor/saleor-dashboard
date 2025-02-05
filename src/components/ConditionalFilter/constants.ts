@@ -136,7 +136,7 @@ export const STATIC_CONDITIONS = {
 
 export const CONSTRAINTS = {
   channel: {
-    dependsOn: ["price", "isVisibleInListing", "isAvailable", "isPublished"],
+    dependsOn: ["price", "isVisibleInListing", "isAvailable", "isPublished", "published"],
     removable: false,
     disabled: ["left", "condition"],
   },

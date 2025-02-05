@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
+import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
@@ -62,7 +63,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     params,
     keepActiveTab: true,
   });
-  // const selectedChannel = availableChannels.find(channel => channel.slug === params.channel);
+  const { availableChannels } = useAppChannel(false);
   const {
     selectedPreset,
     presets,
@@ -93,6 +94,9 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
       channel, // Saleor docs say 'channel' in filter is deprecated and should be moved to root
     };
   }, [params, settings.rowNumber, valueProvider.value]);
+  const selectedChannel = availableChannels.find(
+    channel => channel.slug === queryVariables.channel,
+  );
 
   const { data, refetch } = useCollectionListQuery({
     displayLoader: true,
@@ -182,7 +186,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         onSort={handleSort}
         onUpdateListSettings={updateListSettings}
         sort={getSortParams(params)}
-        selectedChannelId={""} // TODO
+        selectedChannelId={selectedChannel?.id}
         selectedCollectionIds={selectedRowIds}
         onSelectCollectionIds={handleSetSelectedCollectionIds}
         hasPresetsChanged={hasPresetsChanged}

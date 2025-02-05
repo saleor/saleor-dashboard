@@ -40,3 +40,14 @@ export const chargeStatusMessages = defineMessages({
     description: "charge status none",
   },
 });
+
+export const collectionFilterMessages = defineMessages({
+  published: {
+    defaultMessage: "Published",
+    id: "w7tf2z",
+  },
+  hidden: {
+    defaultMessage: "Hidden",
+    id: "ThUvIL",
+  },
+});

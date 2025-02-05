@@ -6,7 +6,13 @@ export interface InitialCollectionState {
 }
 
 export class InitialCollectionStateResponse implements InitialCollectionState {
-  constructor(public channel: ItemOption[] = []) {}
+  constructor(
+    public channel: ItemOption[] = [],
+    // public published: ItemOption[] = [],
+    // public ids: ItemOption[] = [],
+    // public metadata: ItemOption[] = [],
+    // public slugs: ItemOption[] = [],
+  ) {}
 
   static empty() {
     return new InitialCollectionStateResponse();
@@ -19,13 +25,21 @@ export class InitialCollectionStateResponse implements InitialCollectionState {
       return [token.value] as string[];
     }
 
-    return entry.filter(item => item.slug === token.value);
+    return entry.filter(({ slug }) => slug === token.value);
   }
 
   private getEntryByName(name: string): ItemOption[] {
     switch (name) {
       case "channel":
         return this.channel;
+      // case "published":
+      //   return this.published;
+      // case "ids":
+      //   return this.ids;
+      // case "metadata":
+      //   return this.metadata;
+      // case "slugs":
+      //   return this.slugs;
       default:
         return [];
     }

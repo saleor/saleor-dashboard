@@ -1,9 +1,9 @@
 import { useApolloClient } from "@apollo/client";
 import { CollectionFetchingParams } from "@dashboard/components/ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
 import {
-  _GetLegacyChannelOperandsDocument,
-  _GetLegacyChannelOperandsQuery,
-  _GetLegacyChannelOperandsQueryVariables,
+  _GetChannelOperandsDocument,
+  _GetChannelOperandsQuery,
+  _GetChannelOperandsQueryVariables,
 } from "@dashboard/graphql";
 import { useState } from "react";
 
@@ -30,8 +30,8 @@ export const useInitialCollectionState = (): InitialCollectionAPIState => {
   const fetchQueries = async ({ channel }: CollectionFetchingParams) => {
     if (channel?.length > 0) {
       queriesToRun.push(
-        client.query<_GetLegacyChannelOperandsQuery, _GetLegacyChannelOperandsQueryVariables>({
-          query: _GetLegacyChannelOperandsDocument,
+        client.query<_GetChannelOperandsQuery, _GetChannelOperandsQueryVariables>({
+          query: _GetChannelOperandsDocument,
         }),
       );
     }
@@ -43,12 +43,9 @@ export const useInitialCollectionState = (): InitialCollectionAPIState => {
     }
 
     const data = await Promise.all(queriesToRun);
-
     const initialState = createInitialCollectionState(data, channel);
 
-    const collectionResponse = new InitialCollectionStateResponse(initialState.channel);
-
-    setData(collectionResponse);
+    setData(new InitialCollectionStateResponse(initialState.channel));
     setLoading(false);
   };
 
