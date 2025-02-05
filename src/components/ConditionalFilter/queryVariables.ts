@@ -226,14 +226,14 @@ export const createOrderQueryVariables = (value: FilterContainer) => {
 };
 
 export const createGiftCardQueryVariables = (value: FilterContainer) => {
-  return value.reduce((p, c) => {
-    if (typeof c === "string" || Array.isArray(c)) {
-      return p;
-    }
+  return value.reduce<GiftCardFilterInput>((p, c) => {
+    if (typeof c === "string" || Array.isArray(c)) return p;
 
-    p[c.value.value as keyof GiftCardFilterInput] = mapStaticQueryPartToLegacyVariables(
-      createStaticQueryPart(c.condition.selected),
-    );
+    if (c.isStatic()) {
+      (p[c.value.value as keyof GiftCardFilterInput] as any) = mapStaticQueryPartToLegacyVariables(
+        createStaticQueryPart(c.condition.selected),
+      );
+    }
 
     return p;
   }, {} as GiftCardFilterInput);
