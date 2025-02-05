@@ -23,13 +23,13 @@ test.beforeEach(({ page }) => {
   assignmentDialog = new AssignPermissionGroupMembersDialog(page);
   unassignDialog = new UnassignPermissionGroupMembersDialog(page);
 });
-test("TC: SALEOR_139 Should be able to navigate to permission groups page @permissions @e2e", async () => {
+test("TC: SALEOR_139 Should be able to navigate to permission groups page #permissions #e2e", async () => {
   await config.goToConfigurationView();
   await config.permissionGroupsButton.scrollIntoViewIfNeeded();
   await config.openPermissionGroups();
   await expect(permissions.permissionGroupsList).toBeVisible();
 });
-test("TC: SALEOR_133 Should be able to create new permission group @permissions @e2e", async () => {
+test("TC: SALEOR_133 Should be able to create new permission group #permissions #e2e", async () => {
   await permissions.gotoPermissionGroupsView();
   await permissions.clickCreatePermissionGroupButton();
 
@@ -79,7 +79,7 @@ test("TC: SALEOR_133 Should be able to create new permission group @permissions 
     ).toBeChecked();
   }
 });
-test("TC: SALEOR_134 Should be able to edit existing permission group @permissions @e2e", async () => {
+test("TC: SALEOR_134 Should be able to edit existing permission group #permissions #e2e", async () => {
   await permissions.gotoPermissionGroupsView();
 
   const permission = PERMISSION_GROUPS.permissionGroupToBeEdited;
@@ -162,7 +162,7 @@ test("TC: SALEOR_134 Should be able to edit existing permission group @permissio
     timeout: 50000,
   });
 });
-test("TC: SALEOR_135 Should be able to delete single permission group @permissions @e2e", async () => {
+test("TC: SALEOR_135 Should be able to delete single permission group #permissions #e2e", async () => {
   await permissions.gotoPermissionGroupsView();
 
   const permission = PERMISSION_GROUPS.permissionGroupToBeDeleted;
