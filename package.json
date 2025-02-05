@@ -281,7 +281,7 @@
     "qa:move-videos": "find cypress/videos -type f -name \"*.js.mp4\" -exec mv {} cypress/reports/mochareports/videos \\;",
     "qa:artifact-move-screenshots": "find cypress/reports/*/mochareports -type d -name \"*.js\" -exec mv {} cypress/reports/mochareports \\;",
     "qa:artifact-move-videos": "find cypress/reports/*/mochareports/videos -type f -name \"*.js.mp4\" -exec mv {} cypress/reports/mochareports/videos \\;",
-    "qa:pw-e2e": "npx playwright test --grep @e2e",
+    "qa:pw-e2e": "npx playwright test --grep \"#e2e\"",
     "qa:pw-ui": "npx playwright test --ui",
     "knip": "knip --reporter markdown",
     "knip:fix": "knip --fix"

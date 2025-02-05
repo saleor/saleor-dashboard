@@ -7,7 +7,7 @@ import { test } from "utils/testWithPermission";
 
 test.use({ permissionName: "productTypeAndAttribute" });
 
-test("TC: SALEOR_17 User should be able to navigate to product type list as a staff member using PRODUCT TYPE permission @e2e", async ({
+test("TC: SALEOR_17 User should be able to navigate to product type list as a staff member using PRODUCT TYPE permission #e2e", async ({
   page,
 }) => {
   const configurationPage = new ConfigurationPage(page);
