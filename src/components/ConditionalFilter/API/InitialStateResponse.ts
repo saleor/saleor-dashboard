@@ -31,6 +31,9 @@ export interface InitialState {
   giftCard: ItemOption[];
 }
 
+const isDateField = (name: string) =>
+  ["created", "updatedAt", "startDate", "endDate"].includes(name);
+
 export class InitialStateResponse implements InitialState {
   constructor(
     public category: ItemOption[] = [],
@@ -58,6 +61,10 @@ export class InitialStateResponse implements InitialState {
       return this.attribute[token.name].choices.filter(({ value }) => token.value.includes(value));
     }
 
+    if (isDateField(token.name)) {
+      return token.value;
+    }
+
     if (token.isAttribute()) {
       const attr = this.attribute[token.name];
 
@@ -67,10 +74,6 @@ export class InitialStateResponse implements InitialState {
     }
 
     if (!token.isLoadable()) {
-      if (Array.isArray(token.value)) {
-        return token.value;
-      }
-
       return [token.value] as string[];
     }
 
