@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.20.28
+
+### Patch Changes
+
+- 5640a9d: Test reports no longer mention users due to test tags matching GitHub usernames.
+
 ## 3.20.27
 
 ### Patch Changes
