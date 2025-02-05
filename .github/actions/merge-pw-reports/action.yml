@@ -33,7 +33,7 @@ runs:
         zip -P $PASSWORD_FOR_DECODING_ARTIFACT secure-report.zip -r ./playwright-report
 
     - name: Upload HTML report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: html-report--attempt-${{ github.run_attempt }}
         path: secure-report.zip
