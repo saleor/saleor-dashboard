@@ -119,7 +119,10 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
   const newQueryVariables = React.useMemo<GiftCardListQueryVariables>(
     () => ({
       ...paginationState,
-      filter: filters,
+      filter: {
+        ...filters,
+        code: params.query,
+      },
       sort: getSortQueryVariables(params),
     }),
     [params, settings.rowNumber, valueProvider.value],
