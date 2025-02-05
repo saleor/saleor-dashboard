@@ -15,7 +15,7 @@ test.beforeEach(({ page }) => {
   shippingMethodsPage = new ShippingMethodsPage(page);
   shippingRatesPage = new ShippingRatesPage(page);
 });
-test("TC: SALEOR_31 Create basic shipping method @shipping-method @e2e", async () => {
+test("TC: SALEOR_31 Create basic shipping method #shipping-method #e2e", async () => {
   await shippingMethodsPage.gotoListView();
   await shippingMethodsPage.clickCreateShippingZoneButton();
   await shippingMethodsPage.typeShippingZoneName();
@@ -31,8 +31,7 @@ test("TC: SALEOR_31 Create basic shipping method @shipping-method @e2e", async (
   await shippingMethodsPage.saveShippingZone();
   await shippingMethodsPage.expectSuccessBanner();
 });
-
-test("TC: SALEOR_32 Add price rate to shipping method - with excluded zip codes and excluded product @shipping-method @e2e", async () => {
+test("TC: SALEOR_32 Add price rate to shipping method - with excluded zip codes and excluded product #shipping-method #e2e", async () => {
   await shippingMethodsPage.gotoExistingShippingMethod(
     SHIPPING_METHODS.shippingMethodWithoutRates.id,
   );
@@ -53,8 +52,7 @@ test("TC: SALEOR_32 Add price rate to shipping method - with excluded zip codes 
   await expect(shippingRatesPage.excludedProductsRows).toContainText("Bean Juice");
   await expect(await shippingRatesPage.assignedPostalCodesRows.count()).toEqual(1);
 });
-
-test("TC: SALEOR_33 Add weight rate to shipping method - with included zip codes and excluded product @shipping-method @e2e", async () => {
+test("TC: SALEOR_33 Add weight rate to shipping method - with included zip codes and excluded product #shipping-method #e2e", async () => {
   await shippingMethodsPage.gotoExistingShippingMethod(
     SHIPPING_METHODS.shippingMethodWithoutRates.id,
   );
@@ -75,7 +73,7 @@ test("TC: SALEOR_33 Add weight rate to shipping method - with included zip codes
   await shippingRatesPage.excludedProductsRows.waitFor({ state: "visible" });
   await expect(shippingRatesPage.excludedProductsRows).toContainText("Bean Juice");
 });
-test("TC: SALEOR_34 Delete a single shipping rate from the shipping zone details page @shipping-method @e2e", async () => {
+test("TC: SALEOR_34 Delete a single shipping rate from the shipping zone details page #shipping-method #e2e", async () => {
   await shippingMethodsPage.gotoExistingShippingMethod(
     SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.id,
   );
@@ -95,7 +93,7 @@ test("TC: SALEOR_34 Delete a single shipping rate from the shipping zone details
     priceBasedRate,
   );
 });
-test("TC: SALEOR_35 Delete a single shipping rate from its details page @shipping-method @e2e", async () => {
+test("TC: SALEOR_35 Delete a single shipping rate from its details page #shipping-method #e2e", async () => {
   const shippingMethodId = SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.id;
   const shippingRateId =
     SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.rates.weightBasedRateToBeDeleted.id;
@@ -114,7 +112,7 @@ test("TC: SALEOR_35 Delete a single shipping rate from its details page @shippin
   );
   await expect(shippingMethodsPage.weightBasedRatesSection).not.toContainText(weightBasedRate);
 });
-test("TC: SALEOR_36 Delete shipping zones in bulk @shipping-method @e2e", async () => {
+test("TC: SALEOR_36 Delete shipping zones in bulk #shipping-method #e2e", async () => {
   const shippingZone1 = SHIPPING_METHODS.shippingMethodToBeBulkDeleted1.name;
   const shippingZone2 = SHIPPING_METHODS.shippingMethodToBeBulkDeleted2.name;
   const shippingZone3 = SHIPPING_METHODS.shippingMethodToBeBulkDeleted3.name;
@@ -129,7 +127,7 @@ test("TC: SALEOR_36 Delete shipping zones in bulk @shipping-method @e2e", async 
   await shippingMethodsPage.deleteShippingMethodDialog.clickDeleteButton();
   await shippingMethodsPage.expectSuccessBanner();
 });
-test("TC: SALEOR_37 Update a shipping method @shipping-method @e2e", async () => {
+test("TC: SALEOR_37 Update a shipping method #shipping-method #e2e", async () => {
   const channelSection = shippingMethodsPage.rightSideDetailsPage.channelSection;
   const warehouseSection = shippingMethodsPage.rightSideDetailsPage.warehouseSection;
   const alreadyAssignedChannels = [CHANNELS.channelUSD.name];

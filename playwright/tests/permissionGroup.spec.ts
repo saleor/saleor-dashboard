@@ -23,15 +23,13 @@ test.beforeEach(({ page }) => {
   assignmentDialog = new AssignPermissionGroupMembersDialog(page);
   unassignDialog = new UnassignPermissionGroupMembersDialog(page);
 });
-
-test("TC: SALEOR_139 Should be able to navigate to permission groups page @permissions @e2e", async () => {
+test("TC: SALEOR_139 Should be able to navigate to permission groups page #permissions #e2e", async () => {
   await config.goToConfigurationView();
   await config.permissionGroupsButton.scrollIntoViewIfNeeded();
   await config.openPermissionGroups();
   await expect(permissions.permissionGroupsList).toBeVisible();
 });
-
-test("TC: SALEOR_133 Should be able to create new permission group @permissions @e2e", async () => {
+test("TC: SALEOR_133 Should be able to create new permission group #permissions #e2e", async () => {
   await permissions.gotoPermissionGroupsView();
   await permissions.clickCreatePermissionGroupButton();
   const name = faker.random.words(2);
@@ -75,8 +73,7 @@ test("TC: SALEOR_133 Should be able to create new permission group @permissions 
     ).toBeChecked();
   }
 });
-
-test("TC: SALEOR_134 Should be able to edit existing permission group @permissions @e2e", async () => {
+test("TC: SALEOR_134 Should be able to edit existing permission group #permissions #e2e", async () => {
   await permissions.gotoPermissionGroupsView();
   const permission = PERMISSION_GROUPS.permissionGroupToBeEdited;
   await permissions.gotoExistingPermissionGroupPage(permission.id);
@@ -140,7 +137,7 @@ test("TC: SALEOR_134 Should be able to edit existing permission group @permissio
     assignedMembers.names[2],
   );
   await permissionDetails.membersSection.getByTestId("select-all-checkbox")
-      .locator("input").click();;
+    .locator("input").click();;
   await permissionDetails.clickUnassignMembersButton();
   await permissionDetails.unassignMembersDialog.waitFor({
     state: "visible",
@@ -154,8 +151,7 @@ test("TC: SALEOR_134 Should be able to edit existing permission group @permissio
     timeout: 50000,
   });
 });
-
-test("TC: SALEOR_135 Should be able to delete single permission group @permissions @e2e", async () => {
+test("TC: SALEOR_135 Should be able to delete single permission group #permissions #e2e", async () => {
   await permissions.gotoPermissionGroupsView();
   const permission = PERMISSION_GROUPS.permissionGroupToBeDeleted;
   await permissions.gotoExistingPermissionGroupPage(permission.id);
