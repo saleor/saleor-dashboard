@@ -1,13 +1,18 @@
 // @ts-nocheck
 
-import V24493 from "./images/discounts-list.png"
-import J49162 from "./images/improved_refunds.png"
+import Z20421 from "./images/discounts-list.png"
+import B67283 from "./images/draft-orders-filters.png"
+import P58973 from "./images/improved_refunds.png"
 
-const discounts_rules = () => (<><p><img src={V24493} alt="Discount rules"/></p>
+const discounts_rules = () => (<><p><img src={Z20421} alt="Discount rules"/></p>
 <p>Apply the new discounts rules to narrow your promotions audience.
 Set up conditions and channels that must be fulfilled to apply defined reward.</p>
 </>)
-const improved_refunds = () => (<><p><img src={J49162} alt="Improved refunds"/></p>
+const draft_orders_filters = () => (<><p><img src={B67283} alt="new filters"/>
+Experience the new look and enhanced abilities of new fitering mechanism.
+Easily combine any criteria you want, and quickly browse their values.</p>
+</>)
+const improved_refunds = () => (<><p><img src={P58973} alt="Improved refunds"/></p>
 <h3 id="enable-the-enhanced-refund-feature-to-streamline-your-refund-process">Enable the enhanced refund feature to streamline your refund process:</h3>
 <ul>
 <li><p>• Choose between automatic calculations based on selected items or enter refund amounts directly for overcharges and custom adjustments.</p>
@@ -22,6 +27,15 @@ export const AVAILABLE_FLAGS = [{
   name: "discounts_rules",
   displayName: "Discounts rules",
   component: discounts_rules,
+  visible: true,
+  content: {
+    enabled: true,
+    payload: "default",
+  }
+},{
+  name: "draft_orders_filters",
+  displayName: "Draft orders filtering",
+  component: draft_orders_filters,
   visible: true,
   content: {
     enabled: true,
