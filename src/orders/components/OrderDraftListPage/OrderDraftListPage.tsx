@@ -2,15 +2,10 @@
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { DashboardCard } from "@dashboard/components/Card";
+import { useFlag } from "@dashboard/featureFlags";
 import { OrderDraftListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
 import { OrderDraftListUrlSortField } from "@dashboard/orders/urls";
-import {
-  FilterPresetsProps,
-  PageListProps,
-  RelayToFlat,
-  SearchPageProps,
-  SortPage,
-} from "@dashboard/types";
+import { FilterPagePropsWithPresets, PageListProps, RelayToFlat, SortPage } from "@dashboard/types";
 import { isLimitReached } from "@dashboard/utils/limits";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
@@ -19,11 +14,11 @@ import { useIntl } from "react-intl";
 import { OrderDraftListDatagrid } from "../OrderDraftListDatagrid";
 import { OrderDraftListHeader } from "../OrderDraftListHeader/OrderDraftListHeader";
 import OrderLimitReached from "../OrderLimitReached";
+import { createFilterStructure, OrderDraftFilterKeys, OrderDraftListFilterOpts } from "./filters";
 
 export interface OrderDraftListPageProps
   extends PageListProps,
-    SearchPageProps,
-    FilterPresetsProps,
+    FilterPagePropsWithPresets<OrderDraftFilterKeys, OrderDraftListFilterOpts>,
     SortPage<OrderDraftListUrlSortField> {
   limits: RefreshLimitsQuery["shop"]["limits"];
   orders: RelayToFlat<OrderDraftListQuery["draftOrders"]>;
@@ -37,10 +32,12 @@ export interface OrderDraftListPageProps
 const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
   selectedFilterPreset,
   disabled,
+  filterOpts,
   initialSearch,
   limits,
   onAdd,
   onFilterPresetsAll,
+  onFilterChange,
   onSearchChange,
   onFilterPresetChange,
   onFilterPresetDelete,
@@ -49,12 +46,16 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
   filterPresets,
   hasPresetsChanged,
   onDraftOrdersDelete,
+  onFilterAttributeFocus,
+  currencySymbol,
   selectedOrderDraftIds,
   ...listProps
 }) => {
   const intl = useIntl();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
+  const filterStructure = createFilterStructure(intl, filterOpts);
   const limitsReached = isLimitReached(limits, "orders");
+  const { enabled: isDraftOrdersFilteringEnabled } = useFlag("draft_orders_filters");
 
   return (
     <>
@@ -84,27 +85,54 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
           alignItems="stretch"
           justifyContent="space-between"
         >
-          <ListFilters
-            type="expression-filter"
-            initialSearch={initialSearch}
-            onSearchChange={onSearchChange}
-            searchPlaceholder={intl.formatMessage({
-              id: "IzECoP",
-              defaultMessage: "Search draft orders...",
-            })}
-            actions={
-              <Box display="flex" gap={4}>
-                {selectedOrderDraftIds.length > 0 && (
-                  <BulkDeleteButton onClick={onDraftOrdersDelete}>
-                    {intl.formatMessage({
-                      id: "+b/qJ9",
-                      defaultMessage: "Delete draft orders",
-                    })}
-                  </BulkDeleteButton>
-                )}
-              </Box>
-            }
-          />
+          {isDraftOrdersFilteringEnabled ? (
+            <ListFilters
+              type="expression-filter"
+              initialSearch={initialSearch}
+              onSearchChange={onSearchChange}
+              searchPlaceholder={intl.formatMessage({
+                id: "IzECoP",
+                defaultMessage: "Search draft orders...",
+              })}
+              actions={
+                <Box display="flex" gap={4}>
+                  {selectedOrderDraftIds.length > 0 && (
+                    <BulkDeleteButton onClick={onDraftOrdersDelete}>
+                      {intl.formatMessage({
+                        id: "+b/qJ9",
+                        defaultMessage: "Delete draft orders",
+                      })}
+                    </BulkDeleteButton>
+                  )}
+                </Box>
+              }
+            />
+          ) : (
+            <ListFilters
+              currencySymbol={currencySymbol}
+              initialSearch={initialSearch}
+              onFilterChange={onFilterChange}
+              onFilterAttributeFocus={onFilterAttributeFocus}
+              onSearchChange={onSearchChange}
+              filterStructure={filterStructure}
+              searchPlaceholder={intl.formatMessage({
+                id: "IzECoP",
+                defaultMessage: "Search draft orders...",
+              })}
+              actions={
+                <Box display="flex" gap={4}>
+                  {selectedOrderDraftIds.length > 0 && (
+                    <BulkDeleteButton onClick={onDraftOrdersDelete}>
+                      {intl.formatMessage({
+                        id: "+b/qJ9",
+                        defaultMessage: "Delete draft orders",
+                      })}
+                    </BulkDeleteButton>
+                  )}
+                </Box>
+              }
+            />
+          )}
         </Box>
 
         <OrderDraftListDatagrid
