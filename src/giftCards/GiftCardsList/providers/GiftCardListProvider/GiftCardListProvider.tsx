@@ -1,6 +1,8 @@
 import { ApolloError } from "@apollo/client";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { createGiftCardQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
+import { IFilter } from "@dashboard/components/Filter";
+import { useFlag } from "@dashboard/featureFlags";
 import { ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
 import { getExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
@@ -23,7 +25,7 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import React, { createContext, Dispatch, SetStateAction, useContext, useState } from "react";
 
-import { getFilterQueryParam, storageUtils } from "../../filters";
+import { getFilterQueryParam, getFilterVariables, storageUtils } from "../../filters";
 import {
   GiftCardListColummns,
   GiftCardListUrlQueryParams,
@@ -52,6 +54,7 @@ export interface GiftCardsListConsumerProps
   paginationState: PaginationState;
   numberOfColumns: number;
   totalCount: number;
+  changeFilters: (filter: IFilter<any>) => void;
   resetFilters: () => void;
   handleSearchChange: (query: string) => void;
   isFilterPresetOpen: boolean;
@@ -76,6 +79,7 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
+  const { enabled: isNewGiftCardsFilterEnabled } = useFlag("gift_cards_filters");
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const { clearRowSelection, ...rowSelectionUtils } = useRowSelection(params);
   const { valueProvider } = useConditionalFilterContext();
@@ -87,7 +91,7 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
     getUrl: giftCardListUrl,
     storageUtils,
   });
-  const [_, resetFilters, handleSearchChange] = createFilterHandlers({
+  const [changeFilters, resetFilters, handleSearchChange] = createFilterHandlers({
     createUrl: giftCardListUrl,
     getFilterQueryParam,
     navigate,
@@ -103,16 +107,24 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const handleSort = createSortHandler(navigate, giftCardListUrl, params);
-  const queryVariables = React.useMemo<GiftCardListQueryVariables>(() => {
-    return {
+  const queryVariables = React.useMemo<GiftCardListQueryVariables>(
+    () => ({
       ...paginationState,
-      filter: {
-        ...filters,
-        code: params.query,
-      },
+      filter: getFilterVariables(params),
       sort: getSortQueryVariables(params),
-    };
-  }, [params, settings.rowNumber, valueProvider.value]);
+    }),
+    [params, paginationState],
+  );
+
+  const newQueryVariables = React.useMemo<GiftCardListQueryVariables>(
+    () => ({
+      ...paginationState,
+      filter: filters,
+      sort: getSortQueryVariables(params),
+    }),
+    [params, settings.rowNumber, valueProvider.value],
+  );
+
   const handleGiftCardListError = (error: ApolloError) => {
     const graphqlErrors = error?.graphQLErrors[0];
 
@@ -125,7 +137,7 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
   };
   const { data } = useGiftCardListQuery({
     displayLoader: true,
-    variables: queryVariables,
+    variables: isNewGiftCardsFilterEnabled ? newQueryVariables : queryVariables,
     handleError: handleGiftCardListError,
   });
   const giftCards = mapEdgesToItems(data?.giftCards)?.map(getExtendedGiftCard) ?? [];
@@ -144,6 +156,7 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
     settings,
     updateListSettings,
     numberOfColumns,
+    changeFilters,
     resetFilters,
     handleSearchChange,
     isFilterPresetOpen,
