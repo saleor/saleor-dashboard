@@ -5,7 +5,7 @@ import { test } from "utils/testWithPermission";
 
 test.use({ permissionName: "admin" });
 
-test("TC: SALEOR_29 Correct information on dashboard home page @e2e", async ({ page }) => {
+test("TC: SALEOR_29 Correct information on dashboard home page #e2e", async ({ page }) => {
   const homePage = new HomePage(page);
 
   await page.goto(URL_LIST.homePage);

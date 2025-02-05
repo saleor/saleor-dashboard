@@ -7,7 +7,7 @@ import { test } from "utils/testWithPermission";
 
 test.use({ permissionName: "shipping" });
 
-test("TC: SALEOR_21 User should be able to navigate to shipping zones page as a staff member using SHIPPING permission @e2e", async ({
+test("TC: SALEOR_21 User should be able to navigate to shipping zones page as a staff member using SHIPPING permission #e2e", async ({
   page,
 }) => {
   const mainMenuPage = new MainMenuPage(page);
