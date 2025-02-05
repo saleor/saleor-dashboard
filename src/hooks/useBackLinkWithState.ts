@@ -24,7 +24,9 @@ const getPreviousUrl = (location: LocationWithState) => {
 
   const { pathname, search } = location.state.prevLocation;
 
-  return urljoin(pathname, search);
+  const withRemovedDashboard = pathname.replace(/^\/dashboard/, "");
+
+  return urljoin(withRemovedDashboard, search);
 };
 
 interface UseBackLinkWithState {

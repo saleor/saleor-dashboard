@@ -8,8 +8,7 @@ import useForm from "@dashboard/hooks/useForm";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { DialogProps } from "@dashboard/types";
 import commonErrorMessages from "@dashboard/utils/errors/common";
-import { TextField } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -18,7 +17,6 @@ import { useDialogFormReset } from "../GiftCardResendCodeDialog/utils";
 import { getGiftCardErrorMessage } from "../messages";
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import { giftCardUpdateBalanceDialogMessages as messages } from "./messages";
-import { useUpdateBalanceDialogStyles as useStyles } from "./styles";
 
 export interface GiftCardBalanceUpdateFormData {
   balanceAmount: number;
@@ -26,7 +24,6 @@ export interface GiftCardBalanceUpdateFormData {
 
 const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({ open, onClose }) => {
   const intl = useIntl();
-  const classes = useStyles({});
   const notify = useNotifier();
   const { canSeeCreatedBy } = useGiftCardPermissions();
   const {
@@ -92,25 +89,20 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({ open, onClose }) =
     >
       <Text>{intl.formatMessage(messages.subtitle)}</Text>
       <CardSpacer />
-      <TextField
-        inputProps={{ min: 0 }}
+      <Input
         error={!!formErrors?.initialBalanceAmount}
         helperText={getGiftCardErrorMessage(formErrors?.initialBalanceAmount, intl)}
         name="balanceAmount"
         value={data.balanceAmount}
         onChange={change}
-        className={classes.inputContainer}
         label={intl.formatMessage(tableMessages.giftCardsTableColumnBalanceTitle)}
-        type="float"
-        InputProps={{
-          startAdornment: (
-            <div className={classes.currencyCodeContainer}>
-              <Text size={2} fontWeight="light">
-                {currency}
-              </Text>
-            </div>
-          ),
-        }}
+        min={0}
+        endAdornment={
+          <Text size={2} fontWeight="light">
+            {currency}
+          </Text>
+        }
+        width="100%"
       />
     </ActionDialog>
   );

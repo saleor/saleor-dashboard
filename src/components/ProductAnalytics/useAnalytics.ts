@@ -1,27 +1,34 @@
 import { usePostHog } from "posthog-js/react";
 
+import { useRouteChange } from "../Router/useRouteChange";
+
+interface UserProperties {
+  domain: string;
+  email_domain: string;
+}
+
 interface Analytics {
-  initialize: (details: Record<string, any>) => void;
-  reset: () => void;
+  initialize: (userProperties: UserProperties) => void;
   trackEvent: (event: string, properties?: Record<string, any>) => void;
 }
 
 export function useAnalytics(): Analytics {
   const posthog = usePostHog();
 
-  function initialize(details: Record<string, any>) {
-    // According to docs, posthog can be briefly undefined
+  const { register } = useRouteChange(location => {
+    trackEvent("$pageview", {
+      normalized_path: location.pathname,
+    });
+  });
+
+  function initialize(userProperties: UserProperties) {
     if (!posthog) return;
+
+    register();
 
     const id = posthog.get_distinct_id();
 
-    posthog.identify(id, details);
-  }
-
-  function reset() {
-    if (!posthog) return;
-
-    posthog.reset();
+    posthog.identify(id, userProperties);
   }
 
   function trackEvent(event: string, properties?: Record<string, any>) {
@@ -30,5 +37,5 @@ export function useAnalytics(): Analytics {
     posthog.capture(event, properties);
   }
 
-  return { initialize, reset, trackEvent };
+  return { trackEvent, initialize };
 }

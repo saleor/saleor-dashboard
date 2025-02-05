@@ -1,14 +1,12 @@
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
-import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle";
 import { DialogProps, FetchMoreProps, Node } from "@dashboard/types";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
 
 import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
@@ -63,7 +61,6 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
     onSubmit,
   } = props;
   const classes = useStyles(props);
-  const scrollableDialogClasses = useScrollableDialogStyle({});
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
   const [selectedContainers, setSelectedContainers] = React.useState<Container[]>([]);
   const handleSubmit = () => onSubmit(selectedContainers);
@@ -90,51 +87,45 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
           }}
         />
 
-        <Box className={scrollableDialogClasses.scrollArea} id={scrollableTargetId}>
-          <InfiniteScroll
-            dataLength={containers?.length}
-            next={onFetchMore}
-            hasMore={hasMore}
-            scrollThreshold="100px"
-            loader={
-              <div className={scrollableDialogClasses.loadMoreLoaderContainer}>
-                <CircularProgress size={16} />
-              </div>
-            }
-            scrollableTarget={scrollableTargetId}
-          >
-            <ResponsiveTable>
-              <TableBody>
-                {containers?.map(container => {
-                  const isSelected = !!selectedContainers.find(
-                    selectedContainer => selectedContainer.id === container.id,
-                  );
+        <InfiniteScroll
+          id={scrollableTargetId}
+          dataLength={containers?.length}
+          next={onFetchMore}
+          hasMore={hasMore}
+          scrollThreshold="100px"
+          scrollableTarget={scrollableTargetId}
+        >
+          <ResponsiveTable>
+            <TableBody>
+              {containers?.map(container => {
+                const isSelected = !!selectedContainers.find(
+                  selectedContainer => selectedContainer.id === container.id,
+                );
 
-                  return (
-                    <TableRowLink key={container.id} data-test-id="dialog-row">
-                      <TableCell padding="checkbox" className={classes.checkboxCell}>
-                        <Checkbox
-                          checked={isSelected}
-                          onChange={() =>
-                            handleContainerAssign(
-                              container,
-                              isSelected,
-                              selectedContainers,
-                              setSelectedContainers,
-                            )
-                          }
-                        />
-                      </TableCell>
-                      <TableCell className={classes.wideCell} data-test-id={container.name}>
-                        {container.name}
-                      </TableCell>
-                    </TableRowLink>
-                  );
-                })}
-              </TableBody>
-            </ResponsiveTable>
-          </InfiniteScroll>
-        </Box>
+                return (
+                  <TableRowLink key={container.id} data-test-id="dialog-row">
+                    <TableCell padding="checkbox" className={classes.checkboxCell}>
+                      <Checkbox
+                        checked={isSelected}
+                        onChange={() =>
+                          handleContainerAssign(
+                            container,
+                            isSelected,
+                            selectedContainers,
+                            setSelectedContainers,
+                          )
+                        }
+                      />
+                    </TableCell>
+                    <TableCell className={classes.wideCell} data-test-id={container.name}>
+                      {container.name}
+                    </TableCell>
+                  </TableRowLink>
+                );
+              })}
+            </TableBody>
+          </ResponsiveTable>
+        </InfiniteScroll>
 
         <DashboardModal.Actions>
           <BackButton onClick={onClose} />

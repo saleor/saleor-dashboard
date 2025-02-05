@@ -8,6 +8,11 @@ import { OnboardingProvider } from "./onboardingContext";
 import { useOnboardingStorage } from "./onboardingContext/useOnboardingStorage";
 import { WelcomePageOnboarding } from "./WelcomePageOnboarding";
 
+jest.mock("@dashboard/components/Router/useRouteChange", () => ({
+  useRouteChange: () => ({
+    register: jest.fn(),
+  }),
+}));
 jest.mock("@dashboard/auth");
 jest.mock("@dashboard/featureFlags", () => ({
   useFlag: jest.fn().mockReturnValue({

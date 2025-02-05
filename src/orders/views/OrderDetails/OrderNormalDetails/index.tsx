@@ -9,6 +9,8 @@ import {
   OrderDetailsWithMetadataQueryResult,
   OrderFulfillmentApproveMutation,
   OrderFulfillmentApproveMutationVariables,
+  OrderNoteUpdateMutation,
+  OrderNoteUpdateMutationVariables,
   OrderTransactionRequestActionMutation,
   OrderTransactionRequestActionMutationVariables,
   OrderUpdateMutation,
@@ -72,6 +74,10 @@ interface OrderNormalDetailsProps {
   data: OrderDetailsWithMetadataQueryResult["data"];
   loading: boolean;
   orderAddNote: any;
+  orderUpdateNote: PartialMutationProviderOutput<
+    OrderNoteUpdateMutation,
+    OrderNoteUpdateMutationVariables
+  >;
   orderInvoiceRequest: any;
   handleSubmit: any;
   orderUpdate: PartialMutationProviderOutput<OrderUpdateMutation, OrderUpdateMutationVariables>;
@@ -110,6 +116,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   data,
   loading,
   orderAddNote,
+  orderUpdateNote,
   orderInvoiceRequest,
   handleSubmit,
   orderUpdate,
@@ -187,6 +194,15 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         onOrderReturn={() => navigate(orderReturnUrl(id))}
         loading={loading || updateMetadataOpts.loading || updatePrivateMetadataOpts.loading}
         errors={errors}
+        onNoteUpdateLoading={orderUpdateNote.opts.loading}
+        onNoteUpdate={(id, message) =>
+          orderUpdateNote.mutate({
+            order: id,
+            input: {
+              message,
+            },
+          })
+        }
         onNoteAdd={variables =>
           extractMutationErrors(
             orderAddNote.mutate({

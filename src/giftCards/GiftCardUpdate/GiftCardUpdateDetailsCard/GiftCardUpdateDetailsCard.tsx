@@ -1,11 +1,10 @@
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import GiftCardTagInput from "@dashboard/giftCards/components/GiftCardTagInput";
 import GiftCardUpdateExpirySelect from "@dashboard/giftCards/GiftCardUpdate/GiftCardUpdateExpirySelect";
 import { Divider } from "@material-ui/core";
-import { Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -31,7 +30,11 @@ const GiftCardUpdateDetailsCard: React.FC = () => {
         <DashboardCard.Title>{intl.formatMessage(messages.title)}</DashboardCard.Title>
         <DashboardCard.Toolbar>
           {!loading && !giftCard?.isExpired && (
-            <Button data-test-id="set-balance-button" onClick={openSetBalanceDialog}>
+            <Button
+              variant="secondary"
+              data-test-id="set-balance-button"
+              onClick={openSetBalanceDialog}
+            >
               {intl.formatMessage(messages.setBalanceButtonLabel)}
             </Button>
           )}
