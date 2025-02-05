@@ -13,6 +13,10 @@ export const STATIC_CONDITIONS = {
     { type: "number", label: "greater", value: "input-3" },
     { type: "number.range", label: "between", value: "input-4" },
   ],
+  timesUsed: [
+    { type: "number", label: "is", value: "input-1" },
+    { type: "number.range", label: "between", value: "input-2" },
+  ],
   collection: [{ type: "multiselect", label: "in", value: "input-4" }],
   channel: [{ type: "select", label: "is", value: "input-5" }],
   channels: [{ type: "multiselect", label: "in", value: "input-1" }],
@@ -20,6 +24,8 @@ export const STATIC_CONDITIONS = {
     { type: "combobox", label: "is", value: "input-1" },
     { type: "multiselect", label: "in", value: "input-2" },
   ],
+  discountType: [{ type: "select", label: "is", value: "input-1" }],
+  isActive: [{ type: "select", label: "is", value: "input-1" }],
   isAvailable: [{ type: "select", label: "is", value: "input-1" }],
   isPublished: [{ type: "select", label: "is", value: "input-1" }],
   isVisibleInListing: [{ type: "select", label: "is", value: "input-1" }],
@@ -273,10 +279,44 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
   },
 ];
 
+export const STATIC_VOUCHER_OPTIONS: LeftOperand[] = [
+  {
+    value: "channel",
+    label: "Channel",
+    type: "channel",
+    slug: "channel",
+  },
+  {
+    value: "discountType",
+    label: "Discount type",
+    type: "discountType",
+    slug: "discountType",
+  },
+  {
+    value: "startDate",
+    label: "Start date",
+    type: "startDate",
+    slug: "startDate",
+  },
+  {
+    value: "isActive",
+    label: "Is active",
+    type: "isActive",
+    slug: "isActive",
+  },
+  {
+    value: "timesUsed",
+    label: "Times used",
+    type: "timesUsed",
+    slug: "timesUsed",
+  },
+];
+
 export const STATIC_OPTIONS = [
   ...STATIC_PRODUCT_OPTIONS,
   ...STATIC_DISCOUNT_OPTIONS,
   ...STATIC_ORDER_OPTIONS,
+  ...STATIC_VOUCHER_OPTIONS,
 ];
 
 export const ATTRIBUTE_INPUT_TYPE_CONDITIONS = {
