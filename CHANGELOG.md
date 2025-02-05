@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.19.13
+
+### Patch Changes
+
+- 53cb75ee9: Now CI workflows use updated action to upload and download artifacts
+- e62b553a2: Test reports no longer mention users due to test tags matching GitHub usernames.
+
 ## 3.19.12
 
 ### Patch Changes
