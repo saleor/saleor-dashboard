@@ -30,7 +30,7 @@ export const useInitialVouchersState = (): InitialVoucherAPIState => {
   const [loading, setLoading] = useState(true);
   const queriesToRun: Array<Promise<InitialVoucherAPIResponse>> = [];
 
-  const fetchQueries = async ({ discountType, status, channel }: VoucherFetchingParams) => {
+  const fetchQueries = async ({ discountType, voucherStatus, channel }: VoucherFetchingParams) => {
     if (channel) {
       queriesToRun.push(
         client.query<_GetLegacyChannelOperandsQuery, _GetLegacyChannelOperandsQueryVariables>({
@@ -46,20 +46,25 @@ export const useInitialVouchersState = (): InitialVoucherAPIState => {
       discountType,
     );
 
-    const statusInit = new EnumValuesHandler(DiscountStatusEnum, "status", intl, status);
+    const voucherStatusInit = new EnumValuesHandler(
+      DiscountStatusEnum,
+      "voucherStatus",
+      intl,
+      voucherStatus,
+    );
 
     const data = await Promise.all(queriesToRun);
     const initialState = {
       ...createInitialVoucherState(data),
       discountType: await discountTypeInit.fetch(),
-      status: await statusInit.fetch(),
+      voucherStatus: await voucherStatusInit.fetch(),
     };
 
     setData(
       new InitialVouchersStateResponse(
         initialState.channels,
         initialState.discountType,
-        initialState.status,
+        initialState.voucherStatus,
       ),
     );
     setLoading(false);

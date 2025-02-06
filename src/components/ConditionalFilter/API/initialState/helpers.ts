@@ -157,6 +157,6 @@ export const createInitialVoucherState = (data: InitialVoucherAPIResponse[]) =>
     {
       channels: [],
       discountType: [],
-      status: [],
+      voucherStatus: [],
     },
   );

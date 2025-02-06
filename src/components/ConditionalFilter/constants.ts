@@ -319,10 +319,10 @@ export const STATIC_VOUCHER_OPTIONS: LeftOperand[] = [
     slug: "started",
   },
   {
-    value: "status",
+    value: "voucherStatus",
     label: "Status",
     type: "voucherStatus",
-    slug: "status",
+    slug: "voucherStatus",
   },
   {
     value: "timesUsed",

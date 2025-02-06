@@ -19,7 +19,7 @@ const ORDER_STATICS = [
   "ids",
 ];
 
-const VOUCHER_STATICS = ["channel", "discountType", "status"];
+const VOUCHER_STATICS = ["channel", "discountType", "voucherStatus"];
 
 const STATIC_TO_LOAD = [
   "category",

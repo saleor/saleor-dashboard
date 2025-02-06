@@ -4,7 +4,7 @@ import { UrlToken } from "@dashboard/components/ConditionalFilter/ValueProvider/
 export interface InitialVouchersState {
   channels: ItemOption[];
   discountType: ItemOption[];
-  status: ItemOption[];
+  voucherStatus: ItemOption[];
 }
 
 const isDateField = (name: string) => ["started"].includes(name);
@@ -13,7 +13,7 @@ export class InitialVouchersStateResponse implements InitialVouchersState {
   constructor(
     public channels: ItemOption[] = [],
     public discountType: ItemOption[] = [],
-    public status: ItemOption[] = [],
+    public voucherStatus: ItemOption[] = [],
   ) {}
 
   public static empty() {
@@ -40,8 +40,8 @@ export class InitialVouchersStateResponse implements InitialVouchersState {
         return this.channels;
       case "discountType":
         return this.discountType;
-      case "status":
-        return this.status;
+      case "voucherStatus":
+        return this.voucherStatus;
       default:
         return [];
     }

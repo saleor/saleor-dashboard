@@ -251,6 +251,14 @@ export const creatVoucherQueryVariables = (
       }
     }
 
+    if (c.value.type === "voucherStatus") {
+      p["status"] = mapStaticQueryPartToLegacyVariables(
+        createStaticQueryPart(c.condition.selected),
+      );
+
+      return p;
+    }
+
     p[c.value.value as keyof VoucherFilterInput] = mapStaticQueryPartToLegacyVariables(
       createStaticQueryPart(c.condition.selected),
     );

@@ -39,8 +39,8 @@ const createAPIHandler = (
     return new EnumValuesHandler(VoucherDiscountType, "discountType", intl);
   }
 
-  if (rowType === "status") {
-    return new EnumValuesHandler(DiscountStatusEnum, "status", intl);
+  if (rowType === "voucherStatus") {
+    return new EnumValuesHandler(DiscountStatusEnum, "voucherStatus", intl);
   }
 
   throw new Error(`Unknown filter element: "${rowType}"`);

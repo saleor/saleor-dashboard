@@ -21,7 +21,7 @@ export interface OrderFetchingParams {
 export interface VoucherFetchingParams {
   channel: string[];
   discountType: string[];
-  status: string[];
+  voucherStatus: string[];
 }
 
 type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute">;
@@ -49,7 +49,7 @@ export const emptyOrderFetchingParams: OrderFetchingParams = {
 export const emptyVoucherFetchingParams: VoucherFetchingParams = {
   channel: [],
   discountType: [],
-  status: [],
+  voucherStatus: [],
 };
 
 const unique = <T>(array: Iterable<T>) => Array.from(new Set(array));
