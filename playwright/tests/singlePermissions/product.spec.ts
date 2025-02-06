@@ -21,7 +21,7 @@ test.beforeEach(({ page }) => {
   categoriesPage = new CategoriesPage(page);
   collectionsPage = new CollectionsPage(page);
 });
-test("TC: SALEOR_23 User should be able to navigate to product list as a staff member using PRODUCT permission @e2e", async () => {
+test("TC: SALEOR_23 User should be able to navigate to product list as a staff member using PRODUCT permission #e2e", async () => {
   await home.goto();
   await home.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });
   await mainMenuPage.openProducts();
@@ -29,7 +29,7 @@ test("TC: SALEOR_23 User should be able to navigate to product list as a staff m
   await mainMenuPage.expectMenuItemsCount(6);
   await productPage.expectGridToBeAttached();
 });
-test("TC: SALEOR_24 User should be able to navigate to collections list as a staff member using PRODUCT permission @e2e", async () => {
+test("TC: SALEOR_24 User should be able to navigate to collections list as a staff member using PRODUCT permission #e2e", async () => {
   await home.goto();
   await home.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });
   await mainMenuPage.openCollections();
@@ -37,7 +37,7 @@ test("TC: SALEOR_24 User should be able to navigate to collections list as a sta
   await mainMenuPage.expectMenuItemsCount(6);
   await collectionsPage.expectGridToBeAttached();
 });
-test("TC: SALEOR_25 User should be able to navigate to categories list as a staff member using PRODUCT permission @e2e", async () => {
+test("TC: SALEOR_25 User should be able to navigate to categories list as a staff member using PRODUCT permission #e2e", async () => {
   await home.goto();
   await home.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });
   await mainMenuPage.openCategories();
