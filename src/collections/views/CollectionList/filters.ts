@@ -52,8 +52,15 @@ export function getFilterVariables({
 
   return {
     ...vars,
-    search: params.query, // TODO: change to 'search'
+    search: params.query,
     channel: channel,
+  };
+}
+
+export function getFilterVariables_legacy(params: CollectionListUrlFilters): CollectionFilterInput {
+  return {
+    published: params.status ? findValueInEnum(params.status, CollectionPublished) : undefined,
+    search: params.query,
   };
 }
 

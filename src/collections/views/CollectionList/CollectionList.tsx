@@ -4,6 +4,7 @@ import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
+import { useFlag } from "@dashboard/featureFlags";
 import { useCollectionBulkDeleteMutation, useCollectionListQuery } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
@@ -21,7 +22,7 @@ import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
 import React, { useCallback, useEffect } from "react";
@@ -33,7 +34,13 @@ import {
   CollectionListUrlDialog,
   CollectionListUrlQueryParams,
 } from "../../urls";
-import { getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
+import {
+  getFilterOpts,
+  getFilterQueryParam,
+  getFilterVariables,
+  getFilterVariables_legacy,
+  storageUtils,
+} from "./filters";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 
 interface CollectionListProps {
@@ -45,6 +52,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const intl = useIntl();
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.COLLECTION_LIST);
+  const { enabled: isNewGiftCardsFilterEnabled } = useFlag("collection_list_new_filters");
 
   usePaginationReset(collectionListUrl, params, settings.rowNumber);
 
@@ -55,7 +63,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     setSelectedRowIds,
   } = useRowSelection(params);
   const { valueProvider } = useConditionalFilterContext();
-  const [_, resetFilters, handleSearchChange] = createFilterHandlers({
+  const [changeFilters, resetFilters, handleSearchChange] = createFilterHandlers({
     cleanupFn: clearRowSelection,
     createUrl: collectionListUrl,
     getFilterQueryParam,
@@ -63,7 +71,11 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     params,
     keepActiveTab: true,
   });
-  const { availableChannels } = useAppChannel(false);
+  const { availableChannels, channel } = useAppChannel(false);
+  const channelOpts = availableChannels
+    ? mapNodeToChoice(availableChannels, channel => channel.slug)
+    : null;
+  // const selectedChannel = availableChannels.find(channel => channel.slug === params.channel);
   const {
     selectedPreset,
     presets,
@@ -81,7 +93,17 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     storageUtils,
   });
   const paginationState = createPaginationState(settings.rowNumber, params);
+  const selectedChannel_legacy = availableChannels.find(channel => channel.slug === params.channel);
   const queryVariables = React.useMemo(() => {
+    if (!isNewGiftCardsFilterEnabled) {
+      return {
+        ...paginationState,
+        filter: getFilterVariables_legacy(params),
+        sort: getSortQueryVariables(params),
+        channel: selectedChannel_legacy?.slug,
+      };
+    }
+
     const { channel, ...variables } = getFilterVariables({
       params,
       filterContainer: valueProvider.value,
@@ -93,11 +115,10 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
       sort: getSortQueryVariables(params),
       channel, // Saleor docs say 'channel' in filter is deprecated and should be moved to root
     };
-  }, [params, settings.rowNumber, valueProvider.value]);
+  }, [params, settings.rowNumber, valueProvider.value, isNewGiftCardsFilterEnabled]);
   const selectedChannel = availableChannels.find(
     channel => channel.slug === queryVariables.channel,
   );
-
   const { data, refetch } = useCollectionListQuery({
     displayLoader: true,
     variables: queryVariables,
@@ -164,10 +185,16 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     clearRowSelection();
   }, [selectedRowIds]);
 
+  const filterOpts = getFilterOpts(params, channelOpts);
+  const selectedChannelId = isNewGiftCardsFilterEnabled
+    ? selectedChannel?.id
+    : selectedChannel_legacy?.id;
+
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <CollectionListPage
         currentTab={selectedPreset}
+        currencySymbol={channel?.currencyCode}
         initialSearch={params.query || ""}
         onSearchChange={handleSearchChange}
         onAll={resetFilters}
@@ -186,7 +213,9 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         onSort={handleSort}
         onUpdateListSettings={updateListSettings}
         sort={getSortParams(params)}
-        selectedChannelId={selectedChannel?.id}
+        selectedChannelId={selectedChannelId}
+        filterOpts={filterOpts}
+        onFilterChange={changeFilters}
         selectedCollectionIds={selectedRowIds}
         onSelectCollectionIds={handleSetSelectedCollectionIds}
         hasPresetsChanged={hasPresetsChanged}

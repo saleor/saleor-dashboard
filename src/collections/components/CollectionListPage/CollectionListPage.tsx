@@ -9,22 +9,32 @@ import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { DashboardCard } from "@dashboard/components/Card";
+import { getByName } from "@dashboard/components/Filter/utils";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
+import { useFlag } from "@dashboard/featureFlags";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { PageListProps, SearchPageProps, SortPage, TabPageProps } from "@dashboard/types";
+import {
+  FilterPageProps,
+  PageListProps,
+  SearchPageProps,
+  SortPage,
+  TabPageProps,
+} from "@dashboard/types";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
 import { CollectionListDatagrid } from "../CollectionListDatagrid";
+import { CollectionFilterKeys, CollectionListFilterOpts, createFilterStructure } from "./filters";
 
 export interface CollectionListPageProps
   extends PageListProps,
     Omit<TabPageProps, "onTabDelete">,
+    Omit<FilterPageProps<CollectionFilterKeys, CollectionListFilterOpts>, "onTabDelete">,
     SearchPageProps,
     SortPage<CollectionListUrlSortField> {
   onTabUpdate: (tabName: string) => void;
@@ -50,7 +60,11 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
   onTabUpdate,
   selectedChannelId,
   tabs,
+  filterOpts,
+  onFilterChange,
+  onFilterAttributeFocus,
   hasPresetsChanged,
+  currencySymbol,
   selectedCollectionIds,
   onCollectionsDelete,
   ...listProps
@@ -59,6 +73,9 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
   const location = useLocation();
   const navigate = useNavigator();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
+  const { enabled: isNewCollectionListEnabled } = useFlag("collection_list_new_filters");
+  const filterStructure = createFilterStructure(intl, filterOpts);
+  const filterDependency = filterStructure.find(getByName("channel"));
 
   return (
     <ListPageLayout>
@@ -109,29 +126,52 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
       </TopNav>
 
       <DashboardCard>
-        <ListFilters
-          type="expression-filter"
-          initialSearch={initialSearch}
-          onSearchChange={onSearchChange}
-          searchPlaceholder={intl.formatMessage({
-            id: "eRqx44",
-            defaultMessage: "Search collections...",
-          })}
-          actions={
-            <Box display="flex" gap={4}>
-              {selectedCollectionIds.length > 0 && (
-                <BulkDeleteButton onClick={onCollectionsDelete}>
-                  <FormattedMessage defaultMessage="Delete collections" id="FTYkgw" />
-                </BulkDeleteButton>
-              )}
-            </Box>
-          }
-        />
+        {isNewCollectionListEnabled ? (
+          <ListFilters
+            type="expression-filter"
+            initialSearch={initialSearch}
+            onSearchChange={onSearchChange}
+            searchPlaceholder={intl.formatMessage({
+              id: "eRqx44",
+              defaultMessage: "Search collections...",
+            })}
+            actions={
+              <Box display="flex" gap={4}>
+                {selectedCollectionIds.length > 0 && (
+                  <BulkDeleteButton onClick={onCollectionsDelete}>
+                    <FormattedMessage defaultMessage="Delete collections" id="FTYkgw" />
+                  </BulkDeleteButton>
+                )}
+              </Box>
+            }
+          />
+        ) : (
+          <ListFilters
+            initialSearch={initialSearch}
+            onSearchChange={onSearchChange}
+            searchPlaceholder={intl.formatMessage({
+              id: "eRqx44",
+              defaultMessage: "Search collections...",
+            })}
+            actions={
+              <Box display="flex" gap={4}>
+                {selectedCollectionIds.length > 0 && (
+                  <BulkDeleteButton onClick={onCollectionsDelete}>
+                    <FormattedMessage defaultMessage="Delete collections" id="FTYkgw" />
+                  </BulkDeleteButton>
+                )}
+              </Box>
+            }
+            onFilterChange={onFilterChange}
+            onFilterAttributeFocus={onFilterAttributeFocus}
+            filterStructure={filterStructure}
+          />
+        )}
 
         <CollectionListDatagrid
           disabled={disabled}
           selectedChannelId={selectedChannelId}
-          // filterDependency={filterDependency} // TODO: sort
+          filterDependency={filterDependency}
           onRowClick={id => {
             navigate(collectionUrl(id), {
               state: getPrevLocationState(location),
