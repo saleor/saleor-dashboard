@@ -7,6 +7,7 @@ import {
   GlobalIdFilterInput,
   ProductWhereInput,
   PromotionWhereInput,
+  VoucherFilterInput,
 } from "@dashboard/graphql";
 
 import { FilterContainer } from "./FilterElement";
@@ -57,6 +58,27 @@ const createStaticQueryPart = (selected: ConditionSelected): StaticQueryPart => 
 
   return value;
 };
+
+const mapStaticQueryPartToLegacyVariables = (queryPart: StaticQueryPart) => {
+  if (typeof queryPart !== "object") {
+    return queryPart;
+  }
+
+  if ("range" in queryPart) {
+    return queryPart.range;
+  }
+
+  if ("eq" in queryPart) {
+    return queryPart.eq;
+  }
+
+  if ("oneOf" in queryPart) {
+    return queryPart.oneOf;
+  }
+
+  return queryPart;
+};
+
 const getRangeQueryPartByType = (value: [string, string], type: string) => {
   const [gte, lte] = value;
 
@@ -198,4 +220,31 @@ export const createOrderQueryVariables = (value: FilterContainer) => {
 
     return p;
   }, {} as OrderQueryVars);
+};
+
+export const creatVoucherQueryVariables = (
+  value: FilterContainer,
+): { filters: VoucherFilterInput; channel: string | undefined } => {
+  let channel: string | undefined;
+
+  const filters = value.reduce((p, c) => {
+    if (typeof c === "string" || Array.isArray(c)) return p;
+
+    if (c.value.type === "channel") {
+      channel = c.condition.selected.value as string;
+
+      return p;
+    }
+
+    p[c.value.value as keyof VoucherFilterInput] = mapStaticQueryPartToLegacyVariables(
+      createStaticQueryPart(c.condition.selected),
+    );
+
+    return p;
+  }, {} as VoucherFilterInput);
+
+  return {
+    channel,
+    filters,
+  };
 };

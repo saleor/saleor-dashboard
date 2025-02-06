@@ -1,3 +1,5 @@
+import { InitialVouchersStateResponse } from "@dashboard/components/ConditionalFilter/API/initialState/vouchers/InitialVouchersState";
+
 import { InitialOrderStateResponse } from "../API/initialState/orders/InitialOrderState";
 import { InitialStateResponse } from "../API/InitialStateResponse";
 import { LeftOperand } from "../LeftOperandsProvider";
@@ -47,7 +49,7 @@ export class Condition {
 
   public static fromUrlToken(
     token: UrlToken,
-    response: InitialStateResponse | InitialOrderStateResponse,
+    response: InitialStateResponse | InitialOrderStateResponse | InitialVouchersStateResponse,
   ) {
     if (ConditionOptions.isStaticName(token.name)) {
       const staticOptions = ConditionOptions.fromStaticElementName(token.name);

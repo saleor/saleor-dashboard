@@ -24,7 +24,10 @@ export const STATIC_CONDITIONS = {
     { type: "combobox", label: "is", value: "input-1" },
     { type: "multiselect", label: "in", value: "input-2" },
   ],
-  discountType: [{ type: "select", label: "is", value: "input-1" }],
+  discountType: [
+    { type: "select", label: "is", value: "input-1" },
+    { type: "multiselect", label: "in", value: "input-2" },
+  ],
   isActive: [{ type: "select", label: "is", value: "input-1" }],
   isAvailable: [{ type: "select", label: "is", value: "input-1" }],
   isPublished: [{ type: "select", label: "is", value: "input-1" }],
@@ -299,10 +302,10 @@ export const STATIC_VOUCHER_OPTIONS: LeftOperand[] = [
     slug: "startDate",
   },
   {
-    value: "isActive",
-    label: "Is active",
-    type: "isActive",
-    slug: "isActive",
+    value: "status",
+    label: "Status",
+    type: "status",
+    slug: "status",
   },
   {
     value: "timesUsed",

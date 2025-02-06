@@ -1,3 +1,4 @@
+import { useInitialVouchersState } from "@dashboard/components/ConditionalFilter/API/initialState/vouchers/useInitialVouchersState";
 import { useVoucherAPIProvider } from "@dashboard/components/ConditionalFilter/API/VoucherFilterAPIProvider";
 import React, { FC } from "react";
 
@@ -99,7 +100,8 @@ export const ConditionalVoucherFilterProvider: FC<{ locationSearch: string }> = 
 }) => {
   const apiProvider = useVoucherAPIProvider();
 
-  const valueProvider = useUrlValueProvider(locationSearch, "voucher");
+  const initialState = useInitialVouchersState();
+  const valueProvider = useUrlValueProvider(locationSearch, "voucher", initialState);
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_VOUCHER_OPTIONS);
   const containerState = useContainerState(valueProvider);
   const filterWindow = useFilterWindow();

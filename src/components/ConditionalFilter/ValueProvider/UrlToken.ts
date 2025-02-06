@@ -19,6 +19,8 @@ const ORDER_STATICS = [
   "ids",
 ];
 
+const VOUCHER_STATICS = ["channel", "discountType", "status"];
+
 const STATIC_TO_LOAD = [
   "category",
   "collection",
@@ -30,6 +32,7 @@ const STATIC_TO_LOAD = [
   "hasCategory",
   "giftCard",
   ...ORDER_STATICS,
+  ...VOUCHER_STATICS,
 ];
 
 export const TokenType = {

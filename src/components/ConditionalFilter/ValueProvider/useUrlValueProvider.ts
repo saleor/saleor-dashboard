@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { InitialVoucherAPIState } from "@dashboard/components/ConditionalFilter/API/initialState/vouchers/useInitialVouchersState";
 import { stringify } from "qs";
 import { useEffect, useState } from "react";
 import useRouter from "use-react-router";
@@ -13,13 +14,14 @@ import {
   emptyOrderFetchingParams,
   FetchingParams,
   OrderFetchingParams,
+  VoucherFetchingParams,
 } from "./TokenArray/fetchingParams";
 import { prepareStructure } from "./utils";
 
 export const useUrlValueProvider = (
   locationSearch: string,
   type: "product" | "order" | "discount" | "voucher",
-  initialState?: InitialAPIState | InitialOrderAPIState,
+  initialState?: InitialAPIState | InitialOrderAPIState | InitialVoucherAPIState,
 ): FilterValueProvider => {
   const router = useRouter();
   const params = new URLSearchParams(locationSearch);
@@ -49,6 +51,11 @@ export const useUrlValueProvider = (
         case "order":
           (initialState as InitialOrderAPIState).fetchQueries(
             fetchingParams as OrderFetchingParams,
+          );
+          break;
+        case "voucher":
+          (initialState as InitialVoucherAPIState).fetchQueries(
+            fetchingParams as VoucherFetchingParams,
           );
           break;
       }
