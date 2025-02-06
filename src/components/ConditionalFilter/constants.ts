@@ -77,6 +77,11 @@ export const STATIC_CONDITIONS = {
     { type: "date", label: "greater", value: "input-2" },
     { type: "date.range", label: "between", value: "input-3" },
   ],
+  started: [
+    { type: "datetime", label: "lower", value: "input-1" },
+    { type: "datetime", label: "greater", value: "input-2" },
+    { type: "datetime.range", label: "between", value: "input-3" },
+  ],
   authorizeStatus: [
     {
       type: "combobox",
@@ -296,10 +301,10 @@ export const STATIC_VOUCHER_OPTIONS: LeftOperand[] = [
     slug: "discountType",
   },
   {
-    value: "startDate",
-    label: "Start date",
+    value: "started",
+    label: "Started",
     type: "startDate",
-    slug: "startDate",
+    slug: "started",
   },
   {
     value: "status",

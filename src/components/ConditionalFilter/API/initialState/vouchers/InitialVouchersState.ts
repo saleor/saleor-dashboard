@@ -7,6 +7,8 @@ export interface InitialVouchersState {
   status: ItemOption[];
 }
 
+const isDateField = (name: string) => ["started"].includes(name);
+
 export class InitialVouchersStateResponse implements InitialVouchersState {
   constructor(
     public channels: ItemOption[] = [],
@@ -20,6 +22,10 @@ export class InitialVouchersStateResponse implements InitialVouchersState {
 
   public filterByUrlToken(token: UrlToken) {
     const entry = this.getEntryByName(token.name);
+
+    if (isDateField(token.name)) {
+      return token.value;
+    }
 
     if (!token.isLoadable()) {
       return [token.value] as string[];
