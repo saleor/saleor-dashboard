@@ -4,9 +4,12 @@ import {
   _GetChannelOperandsDocument,
   _GetChannelOperandsQuery,
   _GetChannelOperandsQueryVariables,
+  CollectionPublished,
 } from "@dashboard/graphql";
 import { useState } from "react";
+import { useIntl } from "react-intl";
 
+import { EnumValuesHandler } from "../../Handler";
 import { createInitialCollectionState } from "../helpers";
 import { InitialCollectionAPIResponse } from "../types";
 import { InitialCollectionStateResponse } from "./InitialCollectionState";
@@ -17,8 +20,17 @@ export interface InitialCollectionAPIState {
   fetchQueries: (params: CollectionFetchingParams) => Promise<void>;
 }
 
+const mapToOptions = (data: string[], type: "ids" | "slugs") =>
+  data.map(el => ({
+    type,
+    label: el,
+    value: el,
+    slug: el,
+  }));
+
 export const useInitialCollectionState = (): InitialCollectionAPIState => {
   const client = useApolloClient();
+  const intl = useIntl();
 
   const [data, setData] = useState<InitialCollectionStateResponse>(
     InitialCollectionStateResponse.empty(),
@@ -27,7 +39,7 @@ export const useInitialCollectionState = (): InitialCollectionAPIState => {
 
   const queriesToRun: Array<Promise<InitialCollectionAPIResponse>> = [];
 
-  const fetchQueries = async ({ channel }: CollectionFetchingParams) => {
+  const fetchQueries = async ({ channel, ids, slugs }: CollectionFetchingParams) => {
     if (channel?.length > 0) {
       queriesToRun.push(
         client.query<_GetChannelOperandsQuery, _GetChannelOperandsQueryVariables>({
@@ -36,16 +48,25 @@ export const useInitialCollectionState = (): InitialCollectionAPIState => {
       );
     }
 
-    if (queriesToRun.length === 0) {
-      setLoading(false);
-
-      return;
-    }
+    const publishedInit = new EnumValuesHandler(CollectionPublished, "published", intl);
 
     const data = await Promise.all(queriesToRun);
-    const initialState = createInitialCollectionState(data, channel);
+    const initialState = {
+      ...createInitialCollectionState(data, channel),
+      published: await publishedInit.fetch(),
+      slugs: mapToOptions(slugs, "slugs"),
+      ids: mapToOptions(ids, "ids"),
+    };
 
-    setData(new InitialCollectionStateResponse(initialState.channel));
+    setData(
+      new InitialCollectionStateResponse(
+        initialState.channel,
+        initialState.published,
+        initialState.ids,
+        initialState.metadata,
+        initialState.slugs,
+      ),
+    );
     setLoading(false);
   };
 

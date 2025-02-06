@@ -3,15 +3,19 @@ import { UrlToken } from "@dashboard/components/ConditionalFilter/ValueProvider/
 
 export interface InitialCollectionState {
   channel: ItemOption[];
+  published: ItemOption[];
+  ids: ItemOption[];
+  metadata: ItemOption[];
+  slugs: ItemOption[];
 }
 
 export class InitialCollectionStateResponse implements InitialCollectionState {
   constructor(
     public channel: ItemOption[] = [],
-    // public published: ItemOption[] = [],
-    // public ids: ItemOption[] = [],
-    // public metadata: ItemOption[] = [],
-    // public slugs: ItemOption[] = [],
+    public published: ItemOption[] = [],
+    public ids: ItemOption[] = [],
+    public metadata: ItemOption[] = [],
+    public slugs: ItemOption[] = [],
   ) {}
 
   static empty() {
@@ -25,21 +29,27 @@ export class InitialCollectionStateResponse implements InitialCollectionState {
       return [token.value] as string[];
     }
 
-    return entry.filter(({ slug }) => slug === token.value);
+    return entry.filter(({ slug }) => {
+      if (Array.isArray(token.value)) {
+        return token.value.includes(slug);
+      }
+
+      return slug === token.value;
+    });
   }
 
   private getEntryByName(name: string): ItemOption[] {
     switch (name) {
       case "channel":
         return this.channel;
-      // case "published":
-      //   return this.published;
-      // case "ids":
-      //   return this.ids;
-      // case "metadata":
-      //   return this.metadata;
-      // case "slugs":
-      //   return this.slugs;
+      case "published":
+        return this.published;
+      case "ids":
+        return this.ids;
+      case "metadata":
+        return this.metadata;
+      case "slugs":
+        return this.slugs;
       default:
         return [];
     }

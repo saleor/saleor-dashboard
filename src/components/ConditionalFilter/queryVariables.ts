@@ -228,13 +228,15 @@ export const createCollectionsQueryVariables = (value: FilterContainer): Collect
   return value.reduce((p, c) => {
     if (typeof c === "string" || Array.isArray(c)) return p;
 
-    // console.log({ c, p });
+    if (c.value.type === "metadata") {
+      p.metadata = p.metadata || [];
 
-    // if (c.value.type === "channel") {
-    //   p[c.value.value as keyof CollectionFilterInput] = c.condition.selected.value.slug;
+      const [key, value] = c.condition.selected.value as [string, string];
 
-    //   return p;
-    // }
+      p.metadata.push({ key, value });
+
+      return p;
+    }
 
     p[c.value.value as keyof CollectionFilterInput] = mapStaticQueryPartToLegacyVariables(
       createStaticQueryPart(c.condition.selected),

@@ -22,6 +22,10 @@ export interface OrderFetchingParams {
 
 export interface CollectionFetchingParams {
   channel: string[];
+  ids: string[];
+  metadata: string[];
+  slugs: string[];
+  published: string[];
 }
 
 type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute">;
@@ -47,6 +51,10 @@ export const emptyOrderFetchingParams: OrderFetchingParams = {
 
 export const emptyCollectionFetchingParams: CollectionFetchingParams = {
   channel: [],
+  ids: [],
+  metadata: [],
+  slugs: [],
+  published: [],
 };
 
 export type FetchingParamsType = OrderFetchingParams | FetchingParams | CollectionFetchingParams;
@@ -117,6 +125,12 @@ export const toCollectionFetchingParams = (p: CollectionFetchingParams, c: UrlTo
 
   if (!p[key]) {
     p[key] = [];
+  }
+
+  if (key === "ids" || key === "slugs") {
+    p[key] = unique(c.value);
+
+    return p;
   }
 
   p[key] = unique(p[key].concat(c.value));

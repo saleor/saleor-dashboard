@@ -31,7 +31,7 @@ const createAPIHandler = (
     return new NoopValuesHandler([]);
   }
 
-  if (rowType === "metadata") {
+  if (rowType && ["ids", "slugs", "metadata"].includes(rowType)) {
     return new NoopValuesHandler([]);
   }
 

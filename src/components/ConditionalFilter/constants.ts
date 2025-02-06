@@ -127,8 +127,8 @@ export const STATIC_CONDITIONS = {
   ],
   slugs: [
     {
-      type: "text",
-      label: "is",
+      type: "bulkselect",
+      label: "in",
       value: "input-1",
     },
   ],
@@ -314,8 +314,8 @@ export const STATIC_COLLECTION_OPTIONS: LeftOperand[] = [
   },
   {
     value: "slugs",
-    label: "Slug",
-    type: "slugs", // TODO - its [String!] not String!
+    label: "Slugs",
+    type: "slugs",
     slug: "slugs",
   },
 ];
@@ -324,7 +324,7 @@ export const STATIC_OPTIONS = [
   ...STATIC_PRODUCT_OPTIONS,
   ...STATIC_DISCOUNT_OPTIONS,
   ...STATIC_ORDER_OPTIONS,
-  ...STATIC_COLLECTION_OPTIONS, // ??
+  ...STATIC_COLLECTION_OPTIONS,
 ];
 
 export const ATTRIBUTE_INPUT_TYPE_CONDITIONS = {
