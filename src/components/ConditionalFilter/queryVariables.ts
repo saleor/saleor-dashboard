@@ -240,6 +240,17 @@ export const creatVoucherQueryVariables = (
       return p;
     }
 
+    if (c.value.type === "timesUsed") {
+      if (typeof c.condition.selected.value === "string") {
+        p["timesUsed"] = {
+          gte: Number(c.condition.selected.value),
+          lte: Number(c.condition.selected.value),
+        };
+
+        return p;
+      }
+    }
+
     p[c.value.value as keyof VoucherFilterInput] = mapStaticQueryPartToLegacyVariables(
       createStaticQueryPart(c.condition.selected),
     );
