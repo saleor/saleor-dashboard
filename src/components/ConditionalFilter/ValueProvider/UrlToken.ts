@@ -19,7 +19,7 @@ const ORDER_STATICS = [
   "ids",
 ];
 
-const COLLECTION_STATICS = ["published", "slugs"];
+const COLLECTION_STATICS = ["published"];
 
 const STATIC_TO_LOAD = [
   "category",

@@ -301,22 +301,10 @@ export const STATIC_COLLECTION_OPTIONS: LeftOperand[] = [
     slug: "metadata",
   },
   {
-    value: "ids",
-    label: "IDs",
-    type: "ids",
-    slug: "ids",
-  },
-  {
     value: "channel",
     label: "Channel",
     type: "channel",
     slug: "channel",
-  },
-  {
-    value: "slugs",
-    label: "Slugs",
-    type: "slugs",
-    slug: "slugs",
   },
 ];
 

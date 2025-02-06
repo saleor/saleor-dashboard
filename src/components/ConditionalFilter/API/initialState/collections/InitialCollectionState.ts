@@ -4,18 +4,14 @@ import { UrlToken } from "@dashboard/components/ConditionalFilter/ValueProvider/
 export interface InitialCollectionState {
   channel: ItemOption[];
   published: ItemOption[];
-  ids: ItemOption[];
   metadata: ItemOption[];
-  slugs: ItemOption[];
 }
 
 export class InitialCollectionStateResponse implements InitialCollectionState {
   constructor(
     public channel: ItemOption[] = [],
     public published: ItemOption[] = [],
-    public ids: ItemOption[] = [],
     public metadata: ItemOption[] = [],
-    public slugs: ItemOption[] = [],
   ) {}
 
   static empty() {
@@ -44,12 +40,8 @@ export class InitialCollectionStateResponse implements InitialCollectionState {
         return this.channel;
       case "published":
         return this.published;
-      case "ids":
-        return this.ids;
       case "metadata":
         return this.metadata;
-      case "slugs":
-        return this.slugs;
       default:
         return [];
     }

@@ -158,8 +158,6 @@ export const createInitialCollectionState = (
     {
       channel: [],
       published: [],
-      ids: [],
       metadata: [],
-      slugs: [],
     },
   );

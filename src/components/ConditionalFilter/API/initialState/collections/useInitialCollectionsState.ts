@@ -20,14 +20,6 @@ export interface InitialCollectionAPIState {
   fetchQueries: (params: CollectionFetchingParams) => Promise<void>;
 }
 
-const mapToOptions = (data: string[], type: "ids" | "slugs") =>
-  data.map(el => ({
-    type,
-    label: el,
-    value: el,
-    slug: el,
-  }));
-
 export const useInitialCollectionState = (): InitialCollectionAPIState => {
   const client = useApolloClient();
   const intl = useIntl();
@@ -39,7 +31,7 @@ export const useInitialCollectionState = (): InitialCollectionAPIState => {
 
   const queriesToRun: Array<Promise<InitialCollectionAPIResponse>> = [];
 
-  const fetchQueries = async ({ channel, ids, slugs }: CollectionFetchingParams) => {
+  const fetchQueries = async ({ channel }: CollectionFetchingParams) => {
     if (channel?.length > 0) {
       queriesToRun.push(
         client.query<_GetChannelOperandsQuery, _GetChannelOperandsQueryVariables>({
@@ -54,17 +46,13 @@ export const useInitialCollectionState = (): InitialCollectionAPIState => {
     const initialState = {
       ...createInitialCollectionState(data, channel),
       published: await publishedInit.fetch(),
-      slugs: mapToOptions(slugs, "slugs"),
-      ids: mapToOptions(ids, "ids"),
     };
 
     setData(
       new InitialCollectionStateResponse(
         initialState.channel,
         initialState.published,
-        initialState.ids,
         initialState.metadata,
-        initialState.slugs,
       ),
     );
     setLoading(false);

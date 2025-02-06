@@ -127,12 +127,6 @@ export const toCollectionFetchingParams = (p: CollectionFetchingParams, c: UrlTo
     p[key] = [];
   }
 
-  if (key === "ids" || key === "slugs") {
-    p[key] = unique(c.value);
-
-    return p;
-  }
-
   p[key] = unique(p[key].concat(c.value));
 
   return p;

@@ -75,7 +75,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const channelOpts = availableChannels
     ? mapNodeToChoice(availableChannels, channel => channel.slug)
     : null;
-  // const selectedChannel = availableChannels.find(channel => channel.slug === params.channel);
   const {
     selectedPreset,
     presets,

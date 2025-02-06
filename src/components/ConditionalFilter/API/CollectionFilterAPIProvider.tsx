@@ -27,11 +27,7 @@ const createAPIHandler = (
     return new EnumValuesHandler(CollectionPublished, "published", intl);
   }
 
-  if (rowType === "ids") {
-    return new NoopValuesHandler([]);
-  }
-
-  if (rowType && ["ids", "slugs", "metadata"].includes(rowType)) {
+  if (rowType === "metadata") {
     return new NoopValuesHandler([]);
   }
 
