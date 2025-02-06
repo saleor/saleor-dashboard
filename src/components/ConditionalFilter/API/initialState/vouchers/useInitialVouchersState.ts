@@ -1,12 +1,4 @@
 import { useApolloClient } from "@apollo/client";
-import { EnumValuesHandler } from "@dashboard/components/ConditionalFilter/API/Handler";
-import { createInitialVoucherState } from "@dashboard/components/ConditionalFilter/API/initialState/helpers";
-import { InitialVoucherAPIResponse } from "@dashboard/components/ConditionalFilter/API/initialState/types";
-import {
-  InitialVouchersState,
-  InitialVouchersStateResponse,
-} from "@dashboard/components/ConditionalFilter/API/initialState/vouchers/InitialVouchersState";
-import { VoucherFetchingParams } from "@dashboard/components/ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
 import {
   _GetLegacyChannelOperandsDocument,
   _GetLegacyChannelOperandsQuery,
@@ -17,8 +9,14 @@ import {
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
+import { VoucherFetchingParams } from "../../../ValueProvider/TokenArray/fetchingParams";
+import { EnumValuesHandler } from "../../Handler";
+import { createInitialVoucherState } from "../helpers";
+import { InitialVoucherAPIResponse } from "../types";
+import { InitialVouchersStateResponse } from "./InitialVouchersState";
+
 export interface InitialVoucherAPIState {
-  data: InitialVouchersState;
+  data: InitialVouchersStateResponse;
   loading: boolean;
   fetchQueries: (params: VoucherFetchingParams) => Promise<void>;
 }

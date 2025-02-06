@@ -231,7 +231,11 @@ export const creatVoucherQueryVariables = (
     if (typeof c === "string" || Array.isArray(c)) return p;
 
     if (c.value.type === "channel") {
-      channel = c.condition.selected.value as string;
+      if (isItemOption(c.condition.selected.value)) {
+        channel = c.condition.selected.value.slug;
+      } else {
+        channel = c.condition.selected.value as string;
+      }
 
       return p;
     }

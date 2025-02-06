@@ -30,7 +30,7 @@ export class InitialVouchersStateResponse implements InitialVouchersState {
 
   private getEntryByName(name: string): ItemOption[] {
     switch (name) {
-      case "channels":
+      case "channel":
         return this.channels;
       case "discountType":
         return this.discountType;
