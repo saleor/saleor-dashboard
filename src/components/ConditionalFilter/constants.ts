@@ -72,6 +72,18 @@ export const STATIC_CONDITIONS = {
       value: "input-2",
     },
   ],
+  voucherStatus: [
+    {
+      type: "combobox",
+      label: "is",
+      value: "input-1",
+    },
+    {
+      type: "multiselect",
+      label: "in",
+      value: "input-2",
+    },
+  ],
   created: [
     { type: "date", label: "lower", value: "input-1" },
     { type: "date", label: "greater", value: "input-2" },
@@ -309,7 +321,7 @@ export const STATIC_VOUCHER_OPTIONS: LeftOperand[] = [
   {
     value: "status",
     label: "Status",
-    type: "status",
+    type: "voucherStatus",
     slug: "status",
   },
   {
