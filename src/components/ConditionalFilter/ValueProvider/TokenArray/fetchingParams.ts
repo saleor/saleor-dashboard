@@ -18,8 +18,13 @@ export interface OrderFetchingParams {
   ids: string[];
 }
 
+export interface PageFetchingParams {
+  pageTypes: string[];
+}
+
 type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute">;
 type OrderParamsKeys = keyof OrderFetchingParams;
+type PageParamsKeys = keyof PageFetchingParams;
 
 export const emptyFetchingParams: FetchingParams = {
   category: [],
@@ -37,6 +42,10 @@ export const emptyOrderFetchingParams: OrderFetchingParams = {
   channels: [],
   customer: [],
   ids: [],
+};
+
+export const emptyPageFetchingParams: PageFetchingParams = {
+  pageTypes: [],
 };
 
 const unique = <T>(array: Iterable<T>) => Array.from(new Set(array));
@@ -87,4 +96,27 @@ export const toOrderFetchingParams = (p: OrderFetchingParams, c: UrlToken) => {
   p[key] = unique(p[key].concat(c.value));
 
   return p;
+};
+
+export const toPageFetchingParams = (p: PageFetchingParams, c: UrlToken) => {
+  const key = c.name as PageParamsKeys;
+
+  if (!p[key]) {
+    p[key] = [];
+  }
+
+  p[key] = unique(p[key].concat(c.value));
+
+  return p;
+};
+
+export const getFetchingPrams = (type: "product" | "order" | "discount" | "page") => {
+  switch (type) {
+    case "product":
+      return emptyFetchingParams;
+    case "order":
+      return emptyOrderFetchingParams;
+    case "page":
+      return emptyPageFetchingParams;
+  }
 };

@@ -118,6 +118,13 @@ export const STATIC_CONDITIONS = {
       value: "input-1",
     },
   ],
+  pageTypes: [
+    {
+      type: "multiselect",
+      label: "in",
+      value: "input-1",
+    },
+  ],
 };
 
 export const CONSTRAINTS = {
@@ -273,10 +280,20 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
   },
 ];
 
+export const STATIC_PAGE_OPTIONS: LeftOperand[] = [
+  {
+    value: "pageTypes",
+    label: "Page types",
+    type: "pageTypes",
+    slug: "pageTypes",
+  },
+];
+
 export const STATIC_OPTIONS = [
   ...STATIC_PRODUCT_OPTIONS,
   ...STATIC_DISCOUNT_OPTIONS,
   ...STATIC_ORDER_OPTIONS,
+  ...STATIC_PAGE_OPTIONS,
 ];
 
 export const ATTRIBUTE_INPUT_TYPE_CONDITIONS = {

@@ -1,9 +1,11 @@
 import { ApolloQueryResult } from "@apollo/client";
 import {
   _GetChannelOperandsQuery,
+  _GetPageTypesChoicesQuery,
   _SearchAttributeOperandsQuery,
   _SearchCategoriesOperandsQuery,
   _SearchCollectionsOperandsQuery,
+  _SearchPageTypesOperandsQuery,
   _SearchProductTypesOperandsQuery,
 } from "@dashboard/graphql";
 
@@ -15,3 +17,5 @@ export type InitialAPIResponse = ApolloQueryResult<
   | _SearchAttributeOperandsQuery
 >;
 export type InitialOrderAPIResponse = ApolloQueryResult<_GetChannelOperandsQuery>;
+
+export type InitialPageAPIResponse = ApolloQueryResult<_SearchPageTypesOperandsQuery>;

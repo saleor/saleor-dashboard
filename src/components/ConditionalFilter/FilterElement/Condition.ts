@@ -1,4 +1,5 @@
 import { InitialOrderStateResponse } from "../API/initialState/orders/InitialOrderState";
+import { InitialPageStateResponse } from "../API/initialState/page/InitialPageState";
 import { InitialStateResponse } from "../API/InitialStateResponse";
 import { LeftOperand } from "../LeftOperandsProvider";
 import { UrlToken } from "./../ValueProvider/UrlToken";
@@ -47,7 +48,7 @@ export class Condition {
 
   public static fromUrlToken(
     token: UrlToken,
-    response: InitialStateResponse | InitialOrderStateResponse,
+    response: InitialStateResponse | InitialOrderStateResponse | InitialPageStateResponse,
   ) {
     if (ConditionOptions.isStaticName(token.name)) {
       const staticOptions = ConditionOptions.fromStaticElementName(token.name);
