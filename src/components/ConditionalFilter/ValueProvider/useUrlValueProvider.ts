@@ -18,7 +18,7 @@ import { prepareStructure } from "./utils";
 
 export const useUrlValueProvider = (
   locationSearch: string,
-  type: "product" | "order" | "discount",
+  type: "product" | "order" | "discount" | "customer",
   initialState?: InitialAPIState | InitialOrderAPIState,
 ): FilterValueProvider => {
   const router = useRouter();

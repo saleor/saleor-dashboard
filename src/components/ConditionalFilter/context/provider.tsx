@@ -1,3 +1,4 @@
+import { useCustomerAPIProvider } from "@dashboard/components/ConditionalFilter/API/CustomerFilterAPIProvider";
 import React, { FC } from "react";
 
 import { useDiscountFilterAPIProvider } from "../API/DiscountFiltersAPIProvider";
@@ -6,6 +7,7 @@ import { useProductInitialAPIState } from "../API/initialState/useInitialAPIStat
 import { useOrderFilterAPIProvider } from "../API/OrderFilterAPIProvider";
 import { useProductFilterAPIProvider } from "../API/ProductFilterAPIProvider";
 import {
+  STATIC_CUSTOMER_OPTIONS,
   STATIC_DISCOUNT_OPTIONS,
   STATIC_ORDER_OPTIONS,
   STATIC_PRODUCT_OPTIONS,
@@ -73,6 +75,31 @@ export const ConditionalOrderFilterProvider: FC<{
   const initialState = useInitialOrderState();
   const valueProvider = useUrlValueProvider(locationSearch, "order", initialState);
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_ORDER_OPTIONS);
+  const containerState = useContainerState(valueProvider);
+  const filterWindow = useFilterWindow();
+
+  return (
+    <ConditionalFilterContext.Provider
+      value={{
+        apiProvider,
+        valueProvider,
+        leftOperandsProvider,
+        containerState,
+        filterWindow,
+      }}
+    >
+      {children}
+    </ConditionalFilterContext.Provider>
+  );
+};
+
+export const ConditionalCustomerFilterProvider: FC<{
+  locationSearch: string;
+}> = ({ children, locationSearch }) => {
+  const apiProvider = useCustomerAPIProvider();
+
+  const valueProvider = useUrlValueProvider(locationSearch, "customer");
+  const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_CUSTOMER_OPTIONS);
   const containerState = useContainerState(valueProvider);
   const filterWindow = useFilterWindow();
 
