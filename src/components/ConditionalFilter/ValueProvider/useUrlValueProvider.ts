@@ -10,9 +10,8 @@ import { FilterContainer, FilterElement } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
 import { TokenArray } from "./TokenArray";
 import {
-  emptyFetchingParams,
-  emptyOrderFetchingParams,
   FetchingParams,
+  getFetchingPrams,
   OrderFetchingParams,
   VoucherFetchingParams,
 } from "./TokenArray/fetchingParams";
@@ -39,8 +38,8 @@ export const useUrlValueProvider = (
   params.delete("after");
 
   const tokenizedUrl = new TokenArray(params.toString());
-  const paramsFromType = type === "product" ? emptyFetchingParams : emptyOrderFetchingParams;
-  const fetchingParams = tokenizedUrl.getFetchingParams(paramsFromType);
+  const paramsFromType = getFetchingPrams(type);
+  const fetchingParams = paramsFromType ? tokenizedUrl.getFetchingParams(paramsFromType) : null;
 
   useEffect(() => {
     if (initialState) {
