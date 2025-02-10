@@ -2,7 +2,11 @@ import { Condition, FilterContainer, FilterElement } from "./FilterElement";
 import { ConditionOptions } from "./FilterElement/ConditionOptions";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
 import { ExpressionValue } from "./FilterElement/FilterElement";
-import { createProductQueryVariables } from "./queryVariables";
+import {
+  createPageQueryVariables,
+  createProductQueryVariables,
+  mapStaticQueryPartToLegacyVariables,
+} from "./queryVariables";
 
 describe("ConditionalFilter / queryVariables / createProductQueryVariables", () => {
   it("should return empty variables for empty filters", () => {
@@ -70,6 +74,97 @@ describe("ConditionalFilter / queryVariables / createProductQueryVariables", () 
     };
     // Act
     const result = createProductQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+});
+
+describe("ConditionalFilter / queryVariables / createPageQueryVariables", () => {
+  it("should return empty variables for empty filters", () => {
+    // Arrange
+    const filters: FilterContainer = [];
+    const expectedOutput = {};
+    // Act
+    const result = createPageQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+  it("should create variables with selected filters", () => {
+    // Arrange
+    const filters: FilterContainer = [
+      new FilterElement(
+        new ExpressionValue("pageTypes", "Product types", "pageTypes"),
+        new Condition(
+          ConditionOptions.fromStaticElementName("pageTypes"),
+          new ConditionSelected(
+            [
+              { label: "pageTypes1", slug: "pageTypes1", value: "value1" },
+              { label: "pageTypes2", slug: "pageTypes2", value: "value2" },
+            ],
+            { type: "multiselect", label: "in", value: "input-1" },
+            [],
+            false,
+          ),
+          false,
+        ),
+        false,
+      ),
+    ];
+    const expectedOutput = {
+      pageTypes: ["value1", "value2"],
+    };
+    // Act
+    const result = createPageQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+});
+
+describe("ConditionalFilter / queryVariables / mapStaticQueryPartToLegacyVariables", () => {
+  it("should return queryPart if it is not an object", () => {
+    // Arrange
+    const queryPart = "queryPart";
+    const expectedOutput = "queryPart";
+
+    // Act
+    const result = mapStaticQueryPartToLegacyVariables(queryPart);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+
+  it("should transform range input to legacy format", () => {
+    // Arrange
+    const queryPart = { range: { lte: "value" } };
+    const expectedOutput = { lte: "value" };
+
+    // Act
+    const result = mapStaticQueryPartToLegacyVariables(queryPart);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+
+  it("should transform eq input to legacy format", () => {
+    // Arrange
+    const queryPart = { eq: "value" };
+    const expectedOutput = "value";
+    // Act
+    const result = mapStaticQueryPartToLegacyVariables(queryPart);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+
+  it("should transform oneOf input to legacy format", () => {
+    // Arrange
+    const queryPart = { oneOf: ["value1", "value2"] };
+    const expectedOutput = ["value1", "value2"];
+    // Act
+    const result = mapStaticQueryPartToLegacyVariables(queryPart);
 
     // Assert
     expect(result).toEqual(expectedOutput);

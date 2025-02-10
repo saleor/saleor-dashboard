@@ -59,7 +59,7 @@ const createStaticQueryPart = (selected: ConditionSelected): StaticQueryPart => 
   return value;
 };
 
-const mapStaticQueryPartToLegacyVariables = (queryPart: StaticQueryPart) => {
+export const mapStaticQueryPartToLegacyVariables = (queryPart: StaticQueryPart) => {
   if (typeof queryPart !== "object") {
     return queryPart;
   }
