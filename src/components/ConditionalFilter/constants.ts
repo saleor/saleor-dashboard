@@ -299,7 +299,7 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
   },
 ];
 
-export const STATIC_GIFTCARDS_OPTIONS: LeftOperand[] = [
+export const STATIC_GIFT_CARDS_OPTIONS: LeftOperand[] = [
   {
     value: "currency",
     label: "Currency",
@@ -348,7 +348,7 @@ export const STATIC_OPTIONS = [
   ...STATIC_PRODUCT_OPTIONS,
   ...STATIC_DISCOUNT_OPTIONS,
   ...STATIC_ORDER_OPTIONS,
-  ...STATIC_GIFTCARDS_OPTIONS,
+  ...STATIC_GIFT_CARDS_OPTIONS,
 ];
 
 export const ATTRIBUTE_INPUT_TYPE_CONDITIONS = {

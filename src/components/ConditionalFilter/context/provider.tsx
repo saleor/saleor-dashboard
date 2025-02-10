@@ -9,7 +9,7 @@ import { useOrderFilterAPIProvider } from "../API/OrderFilterAPIProvider";
 import { useProductFilterAPIProvider } from "../API/ProductFilterAPIProvider";
 import {
   STATIC_DISCOUNT_OPTIONS,
-  STATIC_GIFTCARDS_OPTIONS,
+  STATIC_GIFT_CARDS_OPTIONS,
   STATIC_ORDER_OPTIONS,
   STATIC_PRODUCT_OPTIONS,
 } from "../constants";
@@ -101,7 +101,7 @@ export const ConditionalGiftCardsFilterProver: FC<{ locationSearch: string }> = 
   const initialState = useInitialGiftCardsState();
   const apiProvider = useGiftCardsFiltersAPIProvider();
   const valueProvider = useUrlValueProvider(locationSearch, "gift-cards", initialState);
-  const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_GIFTCARDS_OPTIONS);
+  const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_GIFT_CARDS_OPTIONS);
   const containerState = useContainerState(valueProvider);
   const filterWindow = useFilterWindow();
 
