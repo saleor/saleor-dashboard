@@ -1,3 +1,6 @@
+import { InitialOrderStateResponse } from "../API/initialState/orders/InitialOrderState";
+import { InitialPageStateResponse } from "../API/initialState/page/InitialPageState";
+import { InitialVouchersStateResponse } from "../API/initialState/vouchers/InitialVouchersState";
 import { InitialStateResponse } from "../API/InitialStateResponse";
 import { RowType, STATIC_OPTIONS } from "../constants";
 import { LeftOperand } from "../LeftOperandsProvider";
@@ -175,7 +178,15 @@ export class FilterElement {
     return new FilterElement(ExpressionValue.fromSlug(slug), Condition.emptyFromSlug(slug), false);
   }
 
-  public static fromUrlToken(token: UrlToken, response: InitialResponseType) {
+  public static fromUrlToken(
+    token: UrlToken,
+    response:
+      | InitialResponseType
+      | InitialStateResponse
+      | InitialOrderStateResponse
+      | InitialVouchersStateResponse
+      | InitialPageStateResponse,
+  ) {
     if (token.isStatic()) {
       return new FilterElement(
         ExpressionValue.fromUrlToken(token),

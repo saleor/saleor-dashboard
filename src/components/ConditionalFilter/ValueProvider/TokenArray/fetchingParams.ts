@@ -1,6 +1,13 @@
 import { TokenType, UrlToken } from "../UrlToken";
 
-export type FilterProviderType = "product" | "collection" | "order" | "discount";
+export type FilterProviderType =
+  | "product"
+  | "order"
+  | "discount"
+  | "voucher"
+  | "page"
+  | "draft-order"
+  | "collection";
 
 export interface FetchingParams {
   category: string[];
@@ -20,6 +27,16 @@ export interface OrderFetchingParams {
   ids: string[];
 }
 
+export interface VoucherFetchingParams {
+  channel: string[];
+  discountType: string[];
+  voucherStatus: string[];
+}
+
+export interface PageFetchingParams {
+  pageTypes: string[];
+}
+
 export interface CollectionFetchingParams {
   channel: string[];
   ids: string[];
@@ -30,6 +47,8 @@ export interface CollectionFetchingParams {
 
 type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute">;
 type OrderParamsKeys = keyof OrderFetchingParams;
+type VoucherParamsKeys = keyof VoucherFetchingParams;
+type PageParamsKeys = keyof PageFetchingParams;
 
 export const emptyFetchingParams: FetchingParams = {
   category: [],
@@ -49,25 +68,22 @@ export const emptyOrderFetchingParams: OrderFetchingParams = {
   ids: [],
 };
 
+export const emptyVoucherFetchingParams: VoucherFetchingParams = {
+  channel: [],
+  discountType: [],
+  voucherStatus: [],
+};
+
+export const emptyPageFetchingParams: PageFetchingParams = {
+  pageTypes: [],
+};
+
 export const emptyCollectionFetchingParams: CollectionFetchingParams = {
   channel: [],
   ids: [],
   metadata: [],
   slugs: [],
   published: [],
-};
-
-export type FetchingParamsType = OrderFetchingParams | FetchingParams | CollectionFetchingParams;
-
-export const getEmptyFetchingParams = (type: FilterProviderType) => {
-  switch (type) {
-    case "order":
-      return emptyOrderFetchingParams;
-    case "collection":
-      return emptyCollectionFetchingParams;
-    default:
-      return emptyFetchingParams;
-  }
 };
 
 const unique = <T>(array: Iterable<T>) => Array.from(new Set(array));
@@ -120,6 +136,30 @@ export const toOrderFetchingParams = (p: OrderFetchingParams, c: UrlToken) => {
   return p;
 };
 
+export const toVouchersFetchingParams = (p: VoucherFetchingParams, c: UrlToken) => {
+  const key = c.name as VoucherParamsKeys;
+
+  if (!p[key]) {
+    p[key] = [];
+  }
+
+  p[key] = unique(p[key].concat(c.value));
+
+  return p;
+};
+
+export const toPageFetchingParams = (p: PageFetchingParams, c: UrlToken) => {
+  const key = c.name as PageParamsKeys;
+
+  if (!p[key]) {
+    p[key] = [];
+  }
+
+  p[key] = unique(p[key].concat(c.value));
+
+  return p;
+};
+
 export const toCollectionFetchingParams = (p: CollectionFetchingParams, c: UrlToken) => {
   const key = c.name as keyof CollectionFetchingParams;
 
@@ -130,4 +170,26 @@ export const toCollectionFetchingParams = (p: CollectionFetchingParams, c: UrlTo
   p[key] = unique(p[key].concat(c.value));
 
   return p;
+};
+
+export type FetchingParamsType =
+  | OrderFetchingParams
+  | FetchingParams
+  | CollectionFetchingParams
+  | PageFetchingParams
+  | VoucherFetchingParams;
+
+export const getFetchingPrams = (type: FilterProviderType) => {
+  switch (type) {
+    case "product":
+      return emptyFetchingParams;
+    case "order":
+      return emptyOrderFetchingParams;
+    case "voucher":
+      return emptyVoucherFetchingParams;
+    case "page":
+      return emptyPageFetchingParams;
+    case "collection":
+      return emptyCollectionFetchingParams;
+  }
 };

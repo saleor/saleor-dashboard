@@ -1,3 +1,6 @@
+import { InitialOrderStateResponse } from "../API/initialState/orders/InitialOrderState";
+import { InitialPageStateResponse } from "../API/initialState/page/InitialPageState";
+import { InitialVouchersStateResponse } from "../API/initialState/vouchers/InitialVouchersState";
 import { InitialStateResponse } from "../API/InitialStateResponse";
 import { LeftOperand } from "../LeftOperandsProvider";
 import { InitialResponseType } from "../types";
@@ -45,7 +48,15 @@ export class Condition {
     return new Condition(options, ConditionSelected.fromConditionItem(options.first()), false);
   }
 
-  public static fromUrlToken(token: UrlToken, response: InitialResponseType) {
+  public static fromUrlToken(
+    token: UrlToken,
+    response:
+      | InitialResponseType
+      | InitialStateResponse
+      | InitialOrderStateResponse
+      | InitialVouchersStateResponse
+      | InitialPageStateResponse,
+  ) {
     if (ConditionOptions.isStaticName(token.name)) {
       const staticOptions = ConditionOptions.fromStaticElementName(token.name);
       const selectedOption = staticOptions.findByLabel(token.conditionKind);
@@ -53,7 +64,9 @@ export class Condition {
 
       const isMultiSelect = selectedOption?.type === "multiselect" && valueItems.length > 0;
       const isBulkSelect = selectedOption?.type === "bulkselect" && valueItems.length > 0;
-      const isDate = ["created", "updatedAt", "startDate", "endDate"].includes(token.name);
+      const isDate = ["created", "updatedAt", "startDate", "endDate", "started"].includes(
+        token.name,
+      );
       const value = isMultiSelect || isDate || isBulkSelect ? valueItems : valueItems[0];
 
       if (!selectedOption) {

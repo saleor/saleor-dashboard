@@ -1,5 +1,8 @@
 import { parse, ParsedQs } from "qs";
 
+import { InitialOrderStateResponse } from "../../API/initialState/orders/InitialOrderState";
+import { InitialPageStateResponse } from "../../API/initialState/page/InitialPageState";
+import { InitialVouchersStateResponse } from "../../API/initialState/vouchers/InitialVouchersState";
 import { InitialStateResponse } from "../../API/InitialStateResponse";
 import { FilterContainer, FilterElement } from "../../FilterElement";
 import { InitialResponseType } from "../../types";
@@ -10,9 +13,13 @@ import {
   FetchingParamsType,
   FilterProviderType,
   OrderFetchingParams,
+  PageFetchingParams,
   toCollectionFetchingParams,
   toFetchingParams,
   toOrderFetchingParams,
+  toPageFetchingParams,
+  toVouchersFetchingParams,
+  VoucherFetchingParams,
 } from "./fetchingParams";
 
 const toFlatUrlTokens = (p: UrlToken[], c: TokenArray[number]) => {
@@ -47,7 +54,12 @@ const tokenizeUrl = (urlParams: string) => {
 };
 const mapUrlTokensToFilterValues = (
   urlTokens: TokenArray,
-  response: InitialResponseType,
+  response:
+    | InitialResponseType
+    | InitialStateResponse
+    | InitialOrderStateResponse
+    | InitialVouchersStateResponse
+    | InitialPageStateResponse,
 ): FilterContainer =>
   urlTokens.map(el => {
     if (typeof el === "string") {
@@ -79,6 +91,14 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
             toCollectionFetchingParams,
             params as CollectionFetchingParams,
           );
+      case "voucher":
+        return this.asFlatArray()
+          .filter(token => token.isLoadable())
+          .reduce<VoucherFetchingParams>(toVouchersFetchingParams, params as VoucherFetchingParams);
+      case "page":
+        return this.asFlatArray()
+          .filter(token => token.isLoadable())
+          .reduce<PageFetchingParams>(toPageFetchingParams, params as PageFetchingParams);
       default:
         return this.asFlatArray()
           .filter(token => token.isLoadable())
@@ -90,7 +110,14 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
     return flatenate(this);
   }
 
-  public asFilterValuesFromResponse(response: InitialResponseType): FilterContainer {
+  public asFilterValuesFromResponse(
+    response:
+      | InitialResponseType
+      | InitialStateResponse
+      | InitialOrderStateResponse
+      | InitialVouchersStateResponse
+      | InitialPageStateResponse,
+  ): FilterContainer {
     return this.map(el => {
       if (typeof el === "string") {
         return el;
