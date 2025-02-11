@@ -1,3 +1,4 @@
+import { InitialVouchersStateResponse } from "@dashboard/components/ConditionalFilter/API/initialState/vouchers/InitialVouchersState";
 import { parse, ParsedQs } from "qs";
 
 import { InitialOrderStateResponse } from "../../API/initialState/orders/InitialOrderState";
@@ -9,6 +10,8 @@ import {
   OrderFetchingParams,
   toFetchingParams,
   toOrderFetchingParams,
+  toVouchersFetchingParams,
+  VoucherFetchingParams,
 } from "./fetchingParams";
 
 const toFlatUrlTokens = (p: UrlToken[], c: TokenArray[number]) => {
@@ -43,7 +46,7 @@ const tokenizeUrl = (urlParams: string) => {
 };
 const mapUrlTokensToFilterValues = (
   urlTokens: TokenArray,
-  response: InitialStateResponse | InitialOrderStateResponse,
+  response: InitialStateResponse | InitialOrderStateResponse | InitialVouchersStateResponse,
 ): FilterContainer =>
   urlTokens.map(el => {
     if (typeof el === "string") {
@@ -62,11 +65,17 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
     super(...tokenizeUrl(url));
   }
 
-  public getFetchingParams(params: OrderFetchingParams | FetchingParams) {
+  public getFetchingParams(params: OrderFetchingParams | FetchingParams | VoucherFetchingParams) {
     if ("paymentStatus" in params) {
       return this.asFlatArray()
         .filter(token => token.isLoadable())
         .reduce<OrderFetchingParams>(toOrderFetchingParams, params);
+    }
+
+    if ("discountType" in params) {
+      return this.asFlatArray()
+        .filter(token => token.isLoadable())
+        .reduce<VoucherFetchingParams>(toVouchersFetchingParams, params);
     }
 
     return this.asFlatArray()
@@ -79,7 +88,7 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
   }
 
   public asFilterValuesFromResponse(
-    response: InitialStateResponse | InitialOrderStateResponse,
+    response: InitialStateResponse | InitialOrderStateResponse | InitialVouchersStateResponse,
   ): FilterContainer {
     return this.map(el => {
       if (typeof el === "string") {

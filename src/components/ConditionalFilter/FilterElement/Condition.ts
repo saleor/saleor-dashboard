@@ -1,3 +1,5 @@
+import { InitialVouchersStateResponse } from "@dashboard/components/ConditionalFilter/API/initialState/vouchers/InitialVouchersState";
+
 import { InitialOrderStateResponse } from "../API/initialState/orders/InitialOrderState";
 import { InitialStateResponse } from "../API/InitialStateResponse";
 import { LeftOperand } from "../LeftOperandsProvider";
@@ -47,7 +49,7 @@ export class Condition {
 
   public static fromUrlToken(
     token: UrlToken,
-    response: InitialStateResponse | InitialOrderStateResponse,
+    response: InitialStateResponse | InitialOrderStateResponse | InitialVouchersStateResponse,
   ) {
     if (ConditionOptions.isStaticName(token.name)) {
       const staticOptions = ConditionOptions.fromStaticElementName(token.name);
@@ -56,7 +58,9 @@ export class Condition {
 
       const isMultiSelect = selectedOption?.type === "multiselect" && valueItems.length > 0;
       const isBulkSelect = selectedOption?.type === "bulkselect" && valueItems.length > 0;
-      const isDate = ["created", "updatedAt", "startDate", "endDate"].includes(token.name);
+      const isDate = ["created", "updatedAt", "startDate", "endDate", "started"].includes(
+        token.name,
+      );
       const value = isMultiSelect || isDate || isBulkSelect ? valueItems : valueItems[0];
 
       if (!selectedOption) {

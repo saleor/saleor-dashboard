@@ -1,9 +1,12 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { creatVoucherQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { useFlag } from "@dashboard/featureFlags";
 import { useVoucherBulkDeleteMutation, useVoucherListQuery } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
@@ -39,6 +42,9 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.VOUCHER_LIST);
+  const { enabled: isNewGiftCardsFilterEnabled } = useFlag("vouchers_filters");
+  const { valueProvider } = useConditionalFilterContext();
+  const { filters, channel } = creatVoucherQueryVariables(valueProvider.value);
 
   usePaginationReset(voucherListUrl, params, settings.rowNumber);
 
@@ -62,9 +68,22 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber],
   );
+  const newFiltersQueryVariables = React.useMemo(
+    () => ({
+      ...paginationState,
+      filter: {
+        ...filters,
+        search: params.query,
+      },
+      sort: getSortQueryVariables(params),
+      channel,
+    }),
+    [params, settings.rowNumber, valueProvider.value],
+  );
+
   const { data, refetch } = useVoucherListQuery({
     displayLoader: true,
-    variables: queryVariables,
+    variables: isNewGiftCardsFilterEnabled ? newFiltersQueryVariables : queryVariables,
   });
   const {
     clearRowSelection,
