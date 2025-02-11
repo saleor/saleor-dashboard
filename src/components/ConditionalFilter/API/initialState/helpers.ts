@@ -1,10 +1,13 @@
 import { ApolloQueryResult } from "@apollo/client";
+import { InitialPageState } from "@dashboard/components/ConditionalFilter/API/initialState/page/InitialPageState";
+import { InitialVouchersState } from "@dashboard/components/ConditionalFilter/API/initialState/vouchers/InitialVouchersState";
 import {
   _GetChannelOperandsQuery,
   _GetLegacyChannelOperandsQuery,
   _SearchAttributeOperandsQuery,
   _SearchCategoriesOperandsQuery,
   _SearchCollectionsOperandsQuery,
+  _SearchPageTypesOperandsQuery,
   _SearchProductTypesOperandsQuery,
 } from "@dashboard/graphql";
 
@@ -12,7 +15,12 @@ import { createBooleanOptions } from "../../constants";
 import { createOptionsFromAPI } from "../Handler";
 import { InitialState } from "../InitialStateResponse";
 import { InitialOrderState } from "./orders/InitialOrderState";
-import { InitialAPIResponse, InitialOrderAPIResponse } from "./types";
+import {
+  InitialAPIResponse,
+  InitialOrderAPIResponse,
+  InitialPageAPIResponse,
+  InitialVoucherAPIResponse,
+} from "./types";
 
 const isChannelQuery = (
   query: InitialAPIResponse,
@@ -32,6 +40,9 @@ const isProductTypeQuery = (
 const isAttributeQuery = (
   query: InitialAPIResponse,
 ): query is ApolloQueryResult<_SearchAttributeOperandsQuery> => "attributes" in query.data;
+const isPageTypesQuery = (
+  query: InitialPageAPIResponse,
+): query is ApolloQueryResult<_SearchPageTypesOperandsQuery> => "pageTypes" in query.data;
 
 export const createInitialStateFromData = (data: InitialAPIResponse[], channel: string[]) =>
   data.reduce<InitialState>(
@@ -134,5 +145,45 @@ export const createInitialOrderState = (data: InitialOrderAPIResponse[]) =>
       ids: [],
       created: "",
       updatedAt: "",
+    },
+  );
+
+export const createInitialVoucherState = (data: InitialVoucherAPIResponse[]) =>
+  data.reduce<InitialVouchersState>(
+    (acc, query) => {
+      if (isChannelsQuery(query)) {
+        return {
+          ...acc,
+          channels: (query.data?.channels ?? []).map(({ id, name, slug }) => ({
+            label: name,
+            value: id,
+            slug,
+          })),
+        };
+      }
+
+      return acc;
+    },
+    {
+      channels: [],
+      discountType: [],
+      voucherStatus: [],
+    },
+  );
+
+export const createInitialPageState = (data: InitialPageAPIResponse[]) =>
+  data.reduce<InitialPageState>(
+    (acc, query) => {
+      if (isPageTypesQuery(query)) {
+        return {
+          ...acc,
+          pageTypes: createOptionsFromAPI(query.data?.pageTypes?.edges ?? []),
+        };
+      }
+
+      return acc;
+    },
+    {
+      pageTypes: [],
     },
   );
