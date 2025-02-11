@@ -12,6 +12,8 @@ import {
   OrderDraftUpdateMutationVariables,
   OrderLineUpdateMutation,
   OrderLineUpdateMutationVariables,
+  OrderNoteUpdateMutation,
+  OrderNoteUpdateMutationVariables,
   StockAvailability,
   useChannelUsabilityDataQuery,
   useCustomerAddressesQuery,
@@ -50,6 +52,10 @@ interface OrderDraftDetailsProps {
   loading: any;
   data: OrderDetailsWithMetadataQueryResult["data"];
   orderAddNote: any;
+  orderUpdateNote: PartialMutationProviderOutput<
+    OrderNoteUpdateMutation,
+    OrderNoteUpdateMutationVariables
+  >;
   orderLineUpdate: PartialMutationProviderOutput<
     OrderLineUpdateMutation,
     OrderLineUpdateMutationVariables
@@ -79,6 +85,7 @@ export const OrderDraftDetails = ({
   loading,
   data,
   orderAddNote,
+  orderUpdateNote,
   orderLineUpdate,
   orderLineDelete,
   orderShippingMethodUpdate,
@@ -194,6 +201,15 @@ export const OrderDraftDetails = ({
             loading={loading}
             disabled={loading}
             errors={errors}
+            onNoteUpdateLoading={orderUpdateNote.opts.loading}
+            onNoteUpdate={(id, message) =>
+              orderUpdateNote.mutate({
+                order: id,
+                input: {
+                  message,
+                },
+              })
+            }
             onNoteAdd={variables =>
               extractMutationErrors(
                 orderAddNote.mutate({

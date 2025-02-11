@@ -115,7 +115,7 @@ const ShippingZoneCountriesAssignDialog = (props: ShippingZoneCountriesAssignDia
                   <FormattedMessage {...messages.countriesSubtitle} />
                 </Text>
 
-                <Box overflowY="auto" __maxHeight="calc(100vh - 580px)">
+                <Box overflowY="auto" __maxHeight={400}>
                   <ResponsiveTable className={classes.table}>
                     <TableBody>
                       {displayCountries.map(country => {

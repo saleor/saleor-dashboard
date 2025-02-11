@@ -62,28 +62,7 @@ export const CollectionCreate = ({ params }: CollectionCreateProps) => {
     { closeModal, openModal },
     { formId: COLLECTION_CREATE_FORM_ID },
   );
-  const [createCollection, createCollectionOpts] = useCreateCollectionMutation({
-    onCompleted: data => {
-      if (data.collectionCreate.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        navigate(collectionUrl(data.collectionCreate.collection.id));
-      } else {
-        const backgroundImageError = data.collectionCreate.errors.find(
-          error => error.field === ("backgroundImage" as keyof CollectionCreateInput),
-        );
-
-        if (backgroundImageError) {
-          notify({
-            status: "error",
-            text: intl.formatMessage(commonMessages.somethingWentWrong),
-          });
-        }
-      }
-    },
-  });
+  const [createCollection, createCollectionOpts] = useCreateCollectionMutation({});
   const handleCreate = async (formData: CollectionCreateData) => {
     const result = await createCollection({
       variables: {
@@ -102,7 +81,7 @@ export const CollectionCreate = ({ params }: CollectionCreateProps) => {
     const id = result.data?.collectionCreate.collection?.id || null;
 
     if (id) {
-      updateChannels({
+      await updateChannels({
         variables: {
           id,
           input: {
@@ -115,6 +94,25 @@ export const CollectionCreate = ({ params }: CollectionCreateProps) => {
           },
         },
       });
+    }
+
+    if (result.data.collectionCreate.errors.length === 0) {
+      notify({
+        status: "success",
+        text: intl.formatMessage(commonMessages.savedChanges),
+      });
+      navigate(collectionUrl(id));
+    } else {
+      const backgroundImageError = result.data.collectionCreate.errors.find(
+        error => error.field === ("backgroundImage" as keyof CollectionCreateInput),
+      );
+
+      if (backgroundImageError) {
+        notify({
+          status: "error",
+          text: intl.formatMessage(commonMessages.somethingWentWrong),
+        });
+      }
     }
 
     return { id, errors: getMutationErrors(result) };

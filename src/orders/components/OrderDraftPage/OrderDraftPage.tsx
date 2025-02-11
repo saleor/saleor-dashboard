@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { FetchResult } from "@apollo/client";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardMenu from "@dashboard/components/CardMenu";
 import CardSpacer from "@dashboard/components/CardSpacer";
@@ -11,6 +12,7 @@ import {
   OrderDetailsFragment,
   OrderErrorFragment,
   OrderLineInput,
+  OrderNoteUpdateMutation,
   SearchCustomersQuery,
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
@@ -41,6 +43,8 @@ export interface OrderDraftPageProps extends FetchMoreProps {
   onDraftFinalize: () => void;
   onDraftRemove: () => void;
   onNoteAdd: (data: HistoryFormData) => SubmitPromise<any[]>;
+  onNoteUpdateLoading: boolean;
+  onNoteUpdate: (id: string, message: string) => Promise<FetchResult<OrderNoteUpdateMutation>>;
   onOrderLineAdd: () => void;
   onOrderLineChange: (id: string, data: OrderLineInput) => void;
   onOrderLineRemove: (id: string) => void;
@@ -65,6 +69,8 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
     onDraftRemove,
     onFetchMore,
     onNoteAdd,
+    onNoteUpdateLoading,
+    onNoteUpdate,
     onOrderLineAdd,
     onOrderLineChange,
     onOrderLineRemove,
@@ -133,6 +139,8 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
           history={order?.events}
           orderCurrency={order?.total?.gross.currency}
           onNoteAdd={onNoteAdd}
+          onNoteUpdate={onNoteUpdate}
+          onNoteUpdateLoading={onNoteUpdateLoading}
         />
       </DetailPageLayout.Content>
       <DetailPageLayout.RightSidebar>

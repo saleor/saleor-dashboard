@@ -58,7 +58,7 @@ export const Metadata = memo(
     };
 
     return (
-      <Box display="grid" gap={2} paddingBottom={6}>
+      <Box display="grid" gap={2} paddingBottom={10}>
         {isLoading ? (
           <>
             <MetadataLoadingCard />

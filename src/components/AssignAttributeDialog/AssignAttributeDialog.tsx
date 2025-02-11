@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import Checkbox from "@dashboard/components/Checkbox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -13,8 +14,6 @@ import { FetchMoreProps } from "@dashboard/types";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import { useRef } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import BackButton from "../BackButton";
@@ -72,7 +71,6 @@ const AssignAttributeDialog = ({
   const classes = useStyles({});
   const [query, onQueryChange, resetQuery] = useSearchQuery(onFetch);
   const errors = useModalDialogErrors(apiErrors, open);
-  const anchor = useRef(null);
 
   useModalDialogOpen(open, {
     onClose: resetQuery,
@@ -100,59 +98,53 @@ const AssignAttributeDialog = ({
           }}
         />
 
-        <Box id={scrollableTargetId} ref={anchor} overflowY="auto">
-          <InfiniteScroll
-            dataLength={attributes?.length || 0}
-            next={onFetchMore}
-            hasMore={hasMore}
-            scrollThreshold="100px"
-            loader={
-              <div className={classes.loadMoreLoaderContainer}>
-                <CircularProgress size={16} />
-              </div>
-            }
-            scrollableTarget={scrollableTargetId}
-          >
-            <ResponsiveTable key="table">
-              <TableBody data-test-id="attributes-list">
-                {renderCollection(
-                  attributes,
-                  attribute => {
-                    if (!attribute) {
-                      return null;
-                    }
+        <InfiniteScroll
+          id={scrollableTargetId}
+          dataLength={attributes?.length || 0}
+          next={onFetchMore}
+          hasMore={hasMore}
+          scrollThreshold="100px"
+          scrollableTarget={scrollableTargetId}
+        >
+          <ResponsiveTable key="table">
+            <TableBody data-test-id="attributes-list">
+              {renderCollection(
+                attributes,
+                attribute => {
+                  if (!attribute) {
+                    return null;
+                  }
 
-                    const isChecked = !!selected.find(
-                      selectedAttribute => selectedAttribute === attribute.id,
-                    );
+                  const isChecked = !!selected.find(
+                    selectedAttribute => selectedAttribute === attribute.id,
+                  );
 
-                    return (
-                      <TableRowLink key={maybe(() => attribute.id)}>
-                        <TableCell padding="checkbox" className={classes.checkboxCell}>
-                          <Checkbox checked={isChecked} onChange={() => onToggle(attribute.id)} />
-                        </TableCell>
-                        <TableCell className={classes.wideCell}>
-                          {attribute.name}
-                          <Text size={2} fontWeight="light" display="block">
-                            {attribute.slug}
-                          </Text>
-                        </TableCell>
-                      </TableRowLink>
-                    );
-                  },
-                  () =>
-                    !loading && (
-                      <TableRowLink>
-                        <TableCell colSpan={2}>
-                          <FormattedMessage {...messages.noMembersFound} />
-                        </TableCell>
-                      </TableRowLink>
-                    ),
-                )}
-              </TableBody>
-            </ResponsiveTable>
-          </InfiniteScroll>
-        </Box>
+                  return (
+                    <TableRowLink key={maybe(() => attribute.id)}>
+                      <TableCell padding="checkbox" className={classes.checkboxCell}>
+                        <Checkbox checked={isChecked} onChange={() => onToggle(attribute.id)} />
+                      </TableCell>
+                      <TableCell className={classes.wideCell}>
+                        {attribute.name}
+                        <Text size={2} fontWeight="light" display="block">
+                          {attribute.slug}
+                        </Text>
+                      </TableCell>
+                    </TableRowLink>
+                  );
+                },
+                () =>
+                  !loading && (
+                    <TableRowLink>
+                      <TableCell colSpan={2}>
+                        <FormattedMessage {...messages.noMembersFound} />
+                      </TableCell>
+                    </TableRowLink>
+                  ),
+              )}
+            </TableBody>
+          </ResponsiveTable>
+        </InfiniteScroll>
 
         <Box>
           {errors.length > 0 &&

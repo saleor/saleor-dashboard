@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { FetchResult } from "@apollo/client";
 import {
   extensionMountPoints,
   mapToMenuItemsForOrderDetails,
@@ -17,6 +18,7 @@ import {
   OrderDetailsFragment,
   OrderDetailsQuery,
   OrderErrorFragment,
+  OrderNoteUpdateMutation,
   OrderStatus,
   TransactionActionEnum,
 } from "@dashboard/graphql";
@@ -75,6 +77,8 @@ export interface OrderDetailsPageProps {
   onShippingAddressEdit: () => any;
   onOrderCancel: () => any;
   onNoteAdd: (data: HistoryFormData) => any;
+  onNoteUpdate: (id: string, message: string) => Promise<FetchResult<OrderNoteUpdateMutation>>;
+  onNoteUpdateLoading: boolean;
   onProfileView: () => any;
   onOrderReturn: () => any;
   onInvoiceClick: (invoiceId: string) => any;
@@ -98,6 +102,8 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
     onFulfillmentCancel,
     onFulfillmentTrackingNumberUpdate,
     onNoteAdd,
+    onNoteUpdate,
+    onNoteUpdateLoading,
     onOrderCancel,
     onOrderFulfill,
     onPaymentCapture,
@@ -259,8 +265,10 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
               />
               <OrderHistory
                 history={order?.events}
+                onNoteUpdateLoading={onNoteUpdateLoading}
                 orderCurrency={order?.total?.gross.currency}
                 onNoteAdd={onNoteAdd}
+                onNoteUpdate={onNoteUpdate}
               />
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>
