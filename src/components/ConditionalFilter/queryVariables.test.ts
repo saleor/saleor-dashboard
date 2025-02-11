@@ -3,6 +3,7 @@ import { ConditionOptions } from "./FilterElement/ConditionOptions";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
 import { ExpressionValue } from "./FilterElement/FilterElement";
 import {
+  creatDraftOrderQueryVariables,
   createPageQueryVariables,
   createProductQueryVariables,
   creatVoucherQueryVariables,
@@ -237,6 +238,63 @@ describe("ConditionalFilter / queryVariables / createPageQueryVariables", () => 
     };
     // Act
     const result = createPageQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+});
+
+describe("ConditionalFilter / queryVariables / creatDraftOrderQueryVariables", () => {
+  it("should return empty variables for empty filters", () => {
+    // Arrange
+    const filters: FilterContainer = [];
+    const expectedOutput = {};
+    // Act
+    const result = creatDraftOrderQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+
+  it("should create variables with selected filters", () => {
+    // Arrange
+    const filters: FilterContainer = [
+      new FilterElement(
+        new ExpressionValue("customer", "Customer", "customer"),
+        new Condition(
+          ConditionOptions.fromStaticElementName("customer"),
+          new ConditionSelected(
+            { label: "customer1", slug: "customer1", value: "value1" },
+            { type: "text", label: "is", value: "input-1" },
+            [],
+            false,
+          ),
+          false,
+        ),
+        false,
+      ),
+      "AND",
+      new FilterElement(
+        new ExpressionValue("created", "Created", "created"),
+        new Condition(
+          ConditionOptions.fromStaticElementName("customer"),
+          new ConditionSelected(
+            ["2025-02-01", "2025-02-05"],
+            { type: "date.range", label: "between", value: "input-3" },
+            [],
+            false,
+          ),
+          false,
+        ),
+        false,
+      ),
+    ];
+    const expectedOutput = {
+      created: { gte: "2025-02-01", lte: "2025-02-05" },
+      customer: "value1",
+    };
+    // Act
+    const result = creatDraftOrderQueryVariables(filters);
 
     // Assert
     expect(result).toEqual(expectedOutput);

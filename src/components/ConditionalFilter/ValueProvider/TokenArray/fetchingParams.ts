@@ -133,7 +133,9 @@ export const toPageFetchingParams = (p: PageFetchingParams, c: UrlToken) => {
 
   return p;
 };
-export const getFetchingPrams = (type: "product" | "order" | "discount" | "voucher" | "page") => {
+export const getFetchingPrams = (
+  type: "product" | "order" | "discount" | "voucher" | "page" | "draft-order",
+) => {
   switch (type) {
     case "product":
       return emptyFetchingParams;

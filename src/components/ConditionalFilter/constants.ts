@@ -348,12 +348,28 @@ export const STATIC_PAGE_OPTIONS: LeftOperand[] = [
   },
 ];
 
+export const STATIC_DRAFT_ORDER_OPTIONS: LeftOperand[] = [
+  {
+    value: "customer",
+    label: "Customer",
+    type: "customer",
+    slug: "customer",
+  },
+  {
+    value: "created",
+    label: "Created",
+    type: "created",
+    slug: "created",
+  },
+];
+
 export const STATIC_OPTIONS = [
   ...STATIC_PRODUCT_OPTIONS,
   ...STATIC_DISCOUNT_OPTIONS,
   ...STATIC_ORDER_OPTIONS,
   ...STATIC_VOUCHER_OPTIONS,
   ...STATIC_PAGE_OPTIONS,
+  ...STATIC_DRAFT_ORDER_OPTIONS,
 ];
 
 export const ATTRIBUTE_INPUT_TYPE_CONDITIONS = {
