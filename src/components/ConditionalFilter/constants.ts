@@ -13,6 +13,20 @@ export const STATIC_CONDITIONS = {
     { type: "number", label: "greater", value: "input-3" },
     { type: "number.range", label: "between", value: "input-4" },
   ],
+  timesUsed: [
+    { type: "number", label: "is", value: "input-1" },
+    { type: "number.range", label: "between", value: "input-2" },
+  ],
+  currentBalance: [
+    { type: "number", label: "lower", value: "input-1" },
+    { type: "number", label: "greater", value: "input-2" },
+    { type: "number.range", label: "between", value: "input-3" },
+  ],
+  initialBalance: [
+    { type: "number", label: "lower", value: "input-1" },
+    { type: "number", label: "greater", value: "input-2" },
+    { type: "number.range", label: "between", value: "input-3" },
+  ],
   collection: [{ type: "multiselect", label: "in", value: "input-4" }],
   channel: [{ type: "select", label: "is", value: "input-5" }],
   channels: [{ type: "multiselect", label: "in", value: "input-1" }],
@@ -20,6 +34,11 @@ export const STATIC_CONDITIONS = {
     { type: "combobox", label: "is", value: "input-1" },
     { type: "multiselect", label: "in", value: "input-2" },
   ],
+  discountType: [
+    { type: "select", label: "is", value: "input-1" },
+    { type: "multiselect", label: "in", value: "input-2" },
+  ],
+  isActive: [{ type: "select", label: "is", value: "input-1" }],
   isAvailable: [{ type: "select", label: "is", value: "input-1" }],
   isPublished: [{ type: "select", label: "is", value: "input-1" }],
   isVisibleInListing: [{ type: "select", label: "is", value: "input-1" }],
@@ -63,6 +82,18 @@ export const STATIC_CONDITIONS = {
       value: "input-2",
     },
   ],
+  voucherStatus: [
+    {
+      type: "combobox",
+      label: "is",
+      value: "input-1",
+    },
+    {
+      type: "multiselect",
+      label: "in",
+      value: "input-2",
+    },
+  ],
   created: [
     { type: "date", label: "lower", value: "input-1" },
     { type: "date", label: "greater", value: "input-2" },
@@ -78,6 +109,11 @@ export const STATIC_CONDITIONS = {
     { type: "number", label: "lower", value: "input-1" },
     { type: "number", label: "greater", value: "input-2" },
     { type: "number.range", label: "between", value: "input-2" },
+  ],
+  started: [
+    { type: "datetime", label: "lower", value: "input-1" },
+    { type: "datetime", label: "greater", value: "input-2" },
+    { type: "datetime.range", label: "between", value: "input-3" },
   ],
   authorizeStatus: [
     {
@@ -129,11 +165,33 @@ export const STATIC_CONDITIONS = {
       value: "input-1",
     },
   ],
+  pageTypes: [
+    {
+      type: "multiselect",
+      label: "in",
+      value: "input-1",
+    },
+  ],
+  currency: [
+    {
+      type: "select",
+      label: "is",
+      value: "input-1",
+    },
+  ],
+  products: [{ type: "multiselect", label: "in", value: "input-1" }],
+  tags: [{ type: "multiselect", label: "in", value: "input-1" }],
+  usedBy: [{ type: "multiselect", label: "in", value: "input-1" }],
 };
 
 export const CONSTRAINTS = {
   channel: {
     dependsOn: ["price", "isVisibleInListing", "isAvailable", "isPublished"],
+    removable: false,
+    disabled: ["left", "condition"],
+  },
+  currency: {
+    dependsOn: ["currentBalance", "initialBalance"],
     removable: false,
     disabled: ["left", "condition"],
   },
@@ -284,6 +342,108 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
   },
 ];
 
+export const STATIC_VOUCHER_OPTIONS: LeftOperand[] = [
+  {
+    value: "channel",
+    label: "Channel",
+    type: "channel",
+    slug: "channel",
+  },
+  {
+    value: "discountType",
+    label: "Discount type",
+    type: "discountType",
+    slug: "discountType",
+  },
+  {
+    value: "started",
+    label: "Started",
+    type: "startDate",
+    slug: "started",
+  },
+  {
+    value: "voucherStatus",
+    label: "Status",
+    type: "voucherStatus",
+    slug: "voucherStatus",
+  },
+  {
+    value: "timesUsed",
+    label: "Times used",
+    type: "timesUsed",
+    slug: "timesUsed",
+  },
+];
+
+export const STATIC_PAGE_OPTIONS: LeftOperand[] = [
+  {
+    value: "pageTypes",
+    label: "Page types",
+    type: "pageTypes",
+    slug: "pageTypes",
+  },
+];
+
+export const STATIC_DRAFT_ORDER_OPTIONS: LeftOperand[] = [
+  {
+    value: "customer",
+    label: "Customer",
+    type: "customer",
+    slug: "customer",
+  },
+  {
+    value: "created",
+    label: "Created",
+    type: "created",
+    slug: "created",
+  },
+];
+
+export const STATIC_GIFT_CARDS_OPTIONS: LeftOperand[] = [
+  {
+    value: "currency",
+    label: "Currency",
+    type: "currency",
+    slug: "currency",
+  },
+  {
+    value: "currentBalance",
+    label: "Current balance",
+    type: "currentBalance",
+    slug: "currentBalance",
+  },
+  {
+    value: "initialBalance",
+    label: "Initial balance",
+    type: "initialBalance",
+    slug: "initialBalance",
+  },
+  {
+    value: "products",
+    label: "Products",
+    type: "products",
+    slug: "products",
+  },
+  {
+    value: "isActive",
+    label: "Is active",
+    type: "isActive",
+    slug: "isActive",
+  },
+  {
+    value: "tags",
+    label: "Tags",
+    type: "tags",
+    slug: "tags",
+  },
+  {
+    value: "usedBy",
+    label: "Used by",
+    type: "usedBy",
+    slug: "usedBy",
+  },
+];
+
 export const STATIC_CUSTOMER_OPTIONS: LeftOperand[] = [
   {
     value: "dateJoined",
@@ -303,6 +463,10 @@ export const STATIC_OPTIONS = [
   ...STATIC_PRODUCT_OPTIONS,
   ...STATIC_DISCOUNT_OPTIONS,
   ...STATIC_ORDER_OPTIONS,
+  ...STATIC_VOUCHER_OPTIONS,
+  ...STATIC_PAGE_OPTIONS,
+  ...STATIC_DRAFT_ORDER_OPTIONS,
+  ...STATIC_GIFT_CARDS_OPTIONS,
   ...STATIC_CUSTOMER_OPTIONS,
 ];
 
