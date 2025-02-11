@@ -1,4 +1,5 @@
 import { ApolloQueryResult } from "@apollo/client";
+import { InitialPageState } from "@dashboard/components/ConditionalFilter/API/initialState/page/InitialPageState";
 import { InitialVouchersState } from "@dashboard/components/ConditionalFilter/API/initialState/vouchers/InitialVouchersState";
 import {
   _GetChannelOperandsQuery,
@@ -6,6 +7,7 @@ import {
   _SearchAttributeOperandsQuery,
   _SearchCategoriesOperandsQuery,
   _SearchCollectionsOperandsQuery,
+  _SearchPageTypesOperandsQuery,
   _SearchProductTypesOperandsQuery,
 } from "@dashboard/graphql";
 
@@ -13,7 +15,12 @@ import { createBooleanOptions } from "../../constants";
 import { createOptionsFromAPI } from "../Handler";
 import { InitialState } from "../InitialStateResponse";
 import { InitialOrderState } from "./orders/InitialOrderState";
-import { InitialAPIResponse, InitialOrderAPIResponse, InitialVoucherAPIResponse } from "./types";
+import {
+  InitialAPIResponse,
+  InitialOrderAPIResponse,
+  InitialPageAPIResponse,
+  InitialVoucherAPIResponse,
+} from "./types";
 
 const isChannelQuery = (
   query: InitialAPIResponse,
@@ -33,6 +40,9 @@ const isProductTypeQuery = (
 const isAttributeQuery = (
   query: InitialAPIResponse,
 ): query is ApolloQueryResult<_SearchAttributeOperandsQuery> => "attributes" in query.data;
+const isPageTypesQuery = (
+  query: InitialPageAPIResponse,
+): query is ApolloQueryResult<_SearchPageTypesOperandsQuery> => "pageTypes" in query.data;
 
 export const createInitialStateFromData = (data: InitialAPIResponse[], channel: string[]) =>
   data.reduce<InitialState>(
@@ -158,5 +168,22 @@ export const createInitialVoucherState = (data: InitialVoucherAPIResponse[]) =>
       channels: [],
       discountType: [],
       voucherStatus: [],
+    },
+  );
+
+export const createInitialPageState = (data: InitialPageAPIResponse[]) =>
+  data.reduce<InitialPageState>(
+    (acc, query) => {
+      if (isPageTypesQuery(query)) {
+        return {
+          ...acc,
+          pageTypes: createOptionsFromAPI(query.data?.pageTypes?.edges ?? []),
+        };
+      }
+
+      return acc;
+    },
+    {
+      pageTypes: [],
     },
   );

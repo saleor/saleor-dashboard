@@ -1,8 +1,11 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { createPageQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
+import { useFlag } from "@dashboard/featureFlags";
 import {
   usePageBulkPublishMutation,
   usePageBulkRemoveMutation,
@@ -45,6 +48,9 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
   const notify = useNotifier();
   const intl = useIntl();
   const { updateListSettings, settings } = useListSettings(ListViews.PAGES_LIST);
+  const { enabled: isPageFiltersEnabled } = useFlag("pages_filters");
+  const { valueProvider } = useConditionalFilterContext();
+  const filter = createPageQueryVariables(valueProvider.value);
 
   usePaginationReset(pageListUrl, params, settings.rowNumber);
 
@@ -87,9 +93,20 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber],
   );
+  const newQueryVariables = React.useMemo(
+    () => ({
+      ...paginationState,
+      filter: {
+        ...filter,
+        search: params.query,
+      },
+      sort: getSortQueryVariables(params),
+    }),
+    [params, settings.rowNumber, valueProvider.value],
+  );
   const { data, refetch } = usePageListQuery({
     displayLoader: true,
-    variables: queryVariables,
+    variables: isPageFiltersEnabled ? newQueryVariables : queryVariables,
   });
   const pages = mapEdgesToItems(data?.pages);
   const paginationValues = usePaginator({

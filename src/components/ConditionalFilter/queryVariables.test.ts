@@ -3,6 +3,7 @@ import { ConditionOptions } from "./FilterElement/ConditionOptions";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
 import { ExpressionValue } from "./FilterElement/FilterElement";
 import {
+  createPageQueryVariables,
   createProductQueryVariables,
   creatVoucherQueryVariables,
   mapStaticQueryPartToLegacyVariables,
@@ -196,6 +197,49 @@ describe("ConditionalFilter / queryVariables / creatVoucherQueryVariables", () =
       filters: expectedOutput,
       channel: expectedChannel,
     });
+  });
+});
+
+describe("ConditionalFilter / queryVariables / createPageQueryVariables", () => {
+  it("should return empty variables for empty filters", () => {
+    // Arrange
+    const filters: FilterContainer = [];
+    const expectedOutput = {};
+    // Act
+    const result = createPageQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+  it("should create variables with selected filters", () => {
+    // Arrange
+    const filters: FilterContainer = [
+      new FilterElement(
+        new ExpressionValue("pageTypes", "Product types", "pageTypes"),
+        new Condition(
+          ConditionOptions.fromStaticElementName("pageTypes"),
+          new ConditionSelected(
+            [
+              { label: "pageTypes1", slug: "pageTypes1", value: "value1" },
+              { label: "pageTypes2", slug: "pageTypes2", value: "value2" },
+            ],
+            { type: "multiselect", label: "in", value: "input-1" },
+            [],
+            false,
+          ),
+          false,
+        ),
+        false,
+      ),
+    ];
+    const expectedOutput = {
+      pageTypes: ["value1", "value2"],
+    };
+    // Act
+    const result = createPageQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
   });
 });
 

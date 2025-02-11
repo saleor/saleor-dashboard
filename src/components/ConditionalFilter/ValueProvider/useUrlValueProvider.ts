@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { InitialVoucherAPIState } from "@dashboard/components/ConditionalFilter/API/initialState/vouchers/useInitialVouchersState";
 import { stringify } from "qs";
 import { useEffect, useState } from "react";
 import useRouter from "use-react-router";
 
 import { InitialAPIState } from "../API";
 import { InitialOrderAPIState } from "../API/initialState/orders/useInitialOrderState";
+import { InitialPageAPIState } from "../API/initialState/page/useInitialPageState";
+import { InitialVoucherAPIState } from "../API/initialState/vouchers/useInitialVouchersState";
 import { FilterContainer, FilterElement } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
 import { TokenArray } from "./TokenArray";
@@ -13,14 +14,19 @@ import {
   FetchingParams,
   getFetchingPrams,
   OrderFetchingParams,
+  PageFetchingParams,
   VoucherFetchingParams,
 } from "./TokenArray/fetchingParams";
 import { prepareStructure } from "./utils";
 
 export const useUrlValueProvider = (
   locationSearch: string,
-  type: "product" | "order" | "discount" | "voucher",
-  initialState?: InitialAPIState | InitialOrderAPIState | InitialVoucherAPIState,
+  type: "product" | "order" | "discount" | "voucher" | "page",
+  initialState?:
+    | InitialAPIState
+    | InitialOrderAPIState
+    | InitialVoucherAPIState
+    | InitialPageAPIState,
 ): FilterValueProvider => {
   const router = useRouter();
   const params = new URLSearchParams(locationSearch);
@@ -56,6 +62,9 @@ export const useUrlValueProvider = (
           (initialState as InitialVoucherAPIState).fetchQueries(
             fetchingParams as VoucherFetchingParams,
           );
+          break;
+        case "page":
+          (initialState as InitialPageAPIState).fetchQueries(fetchingParams as PageFetchingParams);
           break;
       }
     }
