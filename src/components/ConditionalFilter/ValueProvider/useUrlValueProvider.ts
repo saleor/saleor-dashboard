@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { InitialVoucherAPIState } from "@dashboard/components/ConditionalFilter/API/initialState/vouchers/useInitialVouchersState";
 import { stringify } from "qs";
 import { useEffect, useState } from "react";
 import useRouter from "use-react-router";
@@ -9,17 +10,17 @@ import { FilterContainer, FilterElement } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
 import { TokenArray } from "./TokenArray";
 import {
-  emptyFetchingParams,
-  emptyOrderFetchingParams,
   FetchingParams,
+  getFetchingPrams,
   OrderFetchingParams,
+  VoucherFetchingParams,
 } from "./TokenArray/fetchingParams";
 import { prepareStructure } from "./utils";
 
 export const useUrlValueProvider = (
   locationSearch: string,
-  type: "product" | "order" | "discount",
-  initialState?: InitialAPIState | InitialOrderAPIState,
+  type: "product" | "order" | "discount" | "voucher",
+  initialState?: InitialAPIState | InitialOrderAPIState | InitialVoucherAPIState,
 ): FilterValueProvider => {
   const router = useRouter();
   const params = new URLSearchParams(locationSearch);
@@ -37,8 +38,8 @@ export const useUrlValueProvider = (
   params.delete("after");
 
   const tokenizedUrl = new TokenArray(params.toString());
-  const paramsFromType = type === "product" ? emptyFetchingParams : emptyOrderFetchingParams;
-  const fetchingParams = tokenizedUrl.getFetchingParams(paramsFromType);
+  const paramsFromType = getFetchingPrams(type);
+  const fetchingParams = paramsFromType ? tokenizedUrl.getFetchingParams(paramsFromType) : null;
 
   useEffect(() => {
     if (initialState) {
@@ -49,6 +50,11 @@ export const useUrlValueProvider = (
         case "order":
           (initialState as InitialOrderAPIState).fetchQueries(
             fetchingParams as OrderFetchingParams,
+          );
+          break;
+        case "voucher":
+          (initialState as InitialVoucherAPIState).fetchQueries(
+            fetchingParams as VoucherFetchingParams,
           );
           break;
       }

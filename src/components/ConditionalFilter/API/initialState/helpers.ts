@@ -1,4 +1,5 @@
 import { ApolloQueryResult } from "@apollo/client";
+import { InitialVouchersState } from "@dashboard/components/ConditionalFilter/API/initialState/vouchers/InitialVouchersState";
 import {
   _GetChannelOperandsQuery,
   _GetLegacyChannelOperandsQuery,
@@ -12,7 +13,7 @@ import { createBooleanOptions } from "../../constants";
 import { createOptionsFromAPI } from "../Handler";
 import { InitialState } from "../InitialStateResponse";
 import { InitialOrderState } from "./orders/InitialOrderState";
-import { InitialAPIResponse, InitialOrderAPIResponse } from "./types";
+import { InitialAPIResponse, InitialOrderAPIResponse, InitialVoucherAPIResponse } from "./types";
 
 const isChannelQuery = (
   query: InitialAPIResponse,
@@ -134,5 +135,28 @@ export const createInitialOrderState = (data: InitialOrderAPIResponse[]) =>
       ids: [],
       created: "",
       updatedAt: "",
+    },
+  );
+
+export const createInitialVoucherState = (data: InitialVoucherAPIResponse[]) =>
+  data.reduce<InitialVouchersState>(
+    (acc, query) => {
+      if (isChannelsQuery(query)) {
+        return {
+          ...acc,
+          channels: (query.data?.channels ?? []).map(({ id, name, slug }) => ({
+            label: name,
+            value: id,
+            slug,
+          })),
+        };
+      }
+
+      return acc;
+    },
+    {
+      channels: [],
+      discountType: [],
+      voucherStatus: [],
     },
   );
