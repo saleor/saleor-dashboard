@@ -21,7 +21,7 @@ import { prepareStructure } from "./utils";
 
 export const useUrlValueProvider = (
   locationSearch: string,
-  type: "product" | "order" | "discount" | "voucher" | "page",
+  type: "product" | "order" | "discount" | "voucher" | "page" | "draft-order",
   initialState?:
     | InitialAPIState
     | InitialOrderAPIState

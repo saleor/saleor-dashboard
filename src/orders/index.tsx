@@ -1,4 +1,7 @@
-import { ConditionalOrderFilterProvider } from "@dashboard/components/ConditionalFilter";
+import {
+  ConditionalDraftOrderFilterProvider,
+  ConditionalOrderFilterProvider,
+} from "@dashboard/components/ConditionalFilter";
 import { Route } from "@dashboard/components/Router";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
@@ -71,7 +74,11 @@ const OrderDraftList: React.FC<RouteComponentProps<any>> = ({ location }) => {
     false,
   );
 
-  return <OrderDraftListComponent params={params} />;
+  return (
+    <ConditionalDraftOrderFilterProvider locationSearch={location.search}>
+      <OrderDraftListComponent params={params} />
+    </ConditionalDraftOrderFilterProvider>
+  );
 };
 const OrderDetails: React.FC<RouteComponentProps<any>> = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1)) as any;
