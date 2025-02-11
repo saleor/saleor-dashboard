@@ -1,6 +1,6 @@
-import { InitialVouchersStateResponse } from "@dashboard/components/ConditionalFilter/API/initialState/vouchers/InitialVouchersState";
-
 import { InitialOrderStateResponse } from "../API/initialState/orders/InitialOrderState";
+import { InitialPageStateResponse } from "../API/initialState/page/InitialPageState";
+import { InitialVouchersStateResponse } from "../API/initialState/vouchers/InitialVouchersState";
 import { InitialStateResponse } from "../API/InitialStateResponse";
 import { RowType, STATIC_OPTIONS } from "../constants";
 import { LeftOperand } from "../LeftOperandsProvider";
@@ -179,7 +179,11 @@ export class FilterElement {
 
   public static fromUrlToken(
     token: UrlToken,
-    response: InitialStateResponse | InitialOrderStateResponse | InitialVouchersStateResponse,
+    response:
+      | InitialStateResponse
+      | InitialOrderStateResponse
+      | InitialVouchersStateResponse
+      | InitialPageStateResponse,
   ) {
     if (token.isStatic()) {
       return new FilterElement(

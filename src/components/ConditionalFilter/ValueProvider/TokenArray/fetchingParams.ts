@@ -24,9 +24,13 @@ export interface VoucherFetchingParams {
   voucherStatus: string[];
 }
 
+export interface PageFetchingParams {
+  pageTypes: string[];
+}
 type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute">;
 type OrderParamsKeys = keyof OrderFetchingParams;
 type VoucherParamsKeys = keyof VoucherFetchingParams;
+type PageParamsKeys = keyof PageFetchingParams;
 
 export const emptyFetchingParams: FetchingParams = {
   category: [],
@@ -50,6 +54,10 @@ export const emptyVoucherFetchingParams: VoucherFetchingParams = {
   channel: [],
   discountType: [],
   voucherStatus: [],
+};
+
+export const emptyPageFetchingParams: PageFetchingParams = {
+  pageTypes: [],
 };
 
 const unique = <T>(array: Iterable<T>) => Array.from(new Set(array));
@@ -114,7 +122,18 @@ export const toVouchersFetchingParams = (p: VoucherFetchingParams, c: UrlToken) 
   return p;
 };
 
-export const getFetchingPrams = (type: "product" | "order" | "discount" | "voucher") => {
+export const toPageFetchingParams = (p: PageFetchingParams, c: UrlToken) => {
+  const key = c.name as PageParamsKeys;
+
+  if (!p[key]) {
+    p[key] = [];
+  }
+
+  p[key] = unique(p[key].concat(c.value));
+
+  return p;
+};
+export const getFetchingPrams = (type: "product" | "order" | "discount" | "voucher" | "page") => {
   switch (type) {
     case "product":
       return emptyFetchingParams;
@@ -122,5 +141,7 @@ export const getFetchingPrams = (type: "product" | "order" | "discount" | "vouch
       return emptyOrderFetchingParams;
     case "voucher":
       return emptyVoucherFetchingParams;
+    case "page":
+      return emptyPageFetchingParams;
   }
 };
