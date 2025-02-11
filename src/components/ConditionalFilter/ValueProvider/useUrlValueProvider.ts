@@ -5,21 +5,28 @@ import useRouter from "use-react-router";
 
 import { InitialAPIState } from "../API";
 import { InitialOrderAPIState } from "../API/initialState/orders/useInitialOrderState";
+import { InitialPageAPIState } from "../API/initialState/page/useInitialPageState";
+import { InitialVoucherAPIState } from "../API/initialState/vouchers/useInitialVouchersState";
 import { FilterContainer, FilterElement } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
 import { TokenArray } from "./TokenArray";
 import {
-  emptyFetchingParams,
-  emptyOrderFetchingParams,
   FetchingParams,
+  getFetchingPrams,
   OrderFetchingParams,
+  PageFetchingParams,
+  VoucherFetchingParams,
 } from "./TokenArray/fetchingParams";
 import { prepareStructure } from "./utils";
 
 export const useUrlValueProvider = (
   locationSearch: string,
-  type: "product" | "order" | "discount",
-  initialState?: InitialAPIState | InitialOrderAPIState,
+  type: "product" | "order" | "discount" | "voucher" | "page",
+  initialState?:
+    | InitialAPIState
+    | InitialOrderAPIState
+    | InitialVoucherAPIState
+    | InitialPageAPIState,
 ): FilterValueProvider => {
   const router = useRouter();
   const params = new URLSearchParams(locationSearch);
@@ -37,8 +44,8 @@ export const useUrlValueProvider = (
   params.delete("after");
 
   const tokenizedUrl = new TokenArray(params.toString());
-  const paramsFromType = type === "product" ? emptyFetchingParams : emptyOrderFetchingParams;
-  const fetchingParams = tokenizedUrl.getFetchingParams(paramsFromType);
+  const paramsFromType = getFetchingPrams(type);
+  const fetchingParams = paramsFromType ? tokenizedUrl.getFetchingParams(paramsFromType) : null;
 
   useEffect(() => {
     if (initialState) {
@@ -50,6 +57,14 @@ export const useUrlValueProvider = (
           (initialState as InitialOrderAPIState).fetchQueries(
             fetchingParams as OrderFetchingParams,
           );
+          break;
+        case "voucher":
+          (initialState as InitialVoucherAPIState).fetchQueries(
+            fetchingParams as VoucherFetchingParams,
+          );
+          break;
+        case "page":
+          (initialState as InitialPageAPIState).fetchQueries(fetchingParams as PageFetchingParams);
           break;
       }
     }
