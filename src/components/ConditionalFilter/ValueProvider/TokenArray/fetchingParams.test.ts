@@ -1,5 +1,10 @@
 import { UrlToken } from "../UrlToken";
-import { getFetchingPrams, toGiftCardsFetchingParams } from "./fetchingParams";
+import {
+  getFetchingPrams,
+  toGiftCardsFetchingParams,
+  toPageFetchingParams,
+  toVouchersFetchingParams,
+} from "./fetchingParams";
 
 describe("TokenArray / fetchingParams / getFetchingPrams", () => {
   it("should return product fetching params", () => {
@@ -38,6 +43,34 @@ describe("TokenArray / fetchingParams / getFetchingPrams", () => {
     });
   });
 
+  it("should return voucher fetching params", () => {
+    // Arrange
+    const type = "voucher";
+
+    // Act
+    const fetchingParams = getFetchingPrams(type);
+
+    // Assert
+    expect(fetchingParams).toEqual({
+      channel: [],
+      discountType: [],
+      voucherStatus: [],
+    });
+  });
+
+  it("should return page fetching params", () => {
+    // Arrange
+    const type = "page";
+
+    // Act
+    const fetchingParams = getFetchingPrams(type);
+
+    // Assert
+    expect(fetchingParams).toEqual({
+      pageTypes: [],
+    });
+  });
+
   it("should return gift cards fetching params", () => {
     // Arrange
     const type = "gift-cards";
@@ -51,6 +84,58 @@ describe("TokenArray / fetchingParams / getFetchingPrams", () => {
       products: [],
       tags: [],
       usedBy: [],
+    });
+  });
+});
+
+describe("TokenArray / fetchingParams / toVouchersFetchingParams", () => {
+  it("should return fetching params", () => {
+    // Arrange
+    const params = {
+      channel: [],
+      discountType: [],
+      voucherStatus: [],
+    };
+
+    const token = {
+      conditionKind: "is",
+      name: "channel",
+      type: "s",
+      value: "channel-1",
+    } as UrlToken;
+
+    // Act
+    const fetchingParams = toVouchersFetchingParams(params, token);
+
+    // Assert
+    expect(fetchingParams).toEqual({
+      channel: ["channel-1"],
+      discountType: [],
+      voucherStatus: [],
+    });
+  });
+});
+
+describe("TokenArray / fetchingParams / toPageFetchingParams", () => {
+  it("should return fetching params", () => {
+    // Arrange
+    const params = {
+      pageTypes: ["page-type-1", "page-type-2"],
+    };
+
+    const token = {
+      conditionKind: "in",
+      name: "pageTypes",
+      type: "s",
+      value: ["page-type-1", "page-type-2"],
+    } as UrlToken;
+
+    // Act
+    const fetchingParams = toPageFetchingParams(params, token);
+
+    // Assert
+    expect(fetchingParams).toEqual({
+      pageTypes: ["page-type-1", "page-type-2"],
     });
   });
 });

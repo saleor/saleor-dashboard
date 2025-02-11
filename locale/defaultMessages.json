@@ -15,6 +15,10 @@
     "context": "header",
     "string": "Products in {categoryName}"
   },
+  "+470FM": {
+    "context": "voucher status expired",
+    "string": "Expired"
+  },
   "+5HkZN": {
     "context": "order, button",
     "string": "Mark as paid"
@@ -92,6 +96,10 @@
   "+WTmpr": {
     "context": "disabled status option label",
     "string": "Disabled"
+  },
+  "+Wm2vY": {
+    "context": "discount type percentage",
+    "string": "Percentage"
   },
   "+a+2ug": {
     "string": "Members"
@@ -504,6 +512,10 @@
   },
   "1+ROfp": {
     "string": "Transaction"
+  },
+  "1/bAgt": {
+    "context": "discount type fixed",
+    "string": "Fixed"
   },
   "1/oG76": {
     "context": "dialog header",
@@ -2446,6 +2458,10 @@
   },
   "EEW+ND": {
     "string": "Navigator"
+  },
+  "EGycu/": {
+    "context": "voucher status active",
+    "string": "Active"
   },
   "EHsnZX": {
     "context": "dialog description",
@@ -5038,6 +5054,10 @@
   "USS3Q7": {
     "context": "filters error messages unknown error",
     "string": "Unknown error occurred"
+  },
+  "UVDfTs": {
+    "context": "discount type shipping",
+    "string": "Shipping"
   },
   "Uf3oHA": {
     "context": "add new menu item",
@@ -8379,6 +8399,10 @@
   },
   "qPSWmL": {
     "string": "Enter usage"
+  },
+  "qQih8j": {
+    "context": "voucher status scheduled",
+    "string": "Scheduled"
   },
   "qSCmIG": {
     "string": "lower than {value}"

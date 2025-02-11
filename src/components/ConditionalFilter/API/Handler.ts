@@ -22,6 +22,9 @@ import {
   _GetGiftCardTagsChoicesQuery,
   _GetGiftCardTagsChoicesQueryVariables,
   _GetLegacyChannelOperandsDocument,
+  _GetPageTypesChoicesDocument,
+  _GetPageTypesChoicesQuery,
+  _GetPageTypesChoicesQueryVariables,
   _GetProductChoicesDocument,
   _GetProductChoicesQuery,
   _GetProductChoicesQueryVariables,
@@ -396,6 +399,28 @@ export class TextInputValuesHandler implements Handler {
 
   fetch = async (): Promise<LeftOperand[]> => {
     return this.options;
+  };
+}
+
+export class PageTypesHandler implements Handler {
+  constructor(
+    public client: ApolloClient<unknown>,
+    public query: string,
+  ) {}
+
+  fetch = async () => {
+    const { data } = await this.client.query<
+      _GetPageTypesChoicesQuery,
+      _GetPageTypesChoicesQueryVariables
+    >({
+      query: _GetPageTypesChoicesDocument,
+      variables: {
+        first: 5,
+        query: this.query,
+      },
+    });
+
+    return createOptionsFromAPI(data.pageTypes?.edges ?? []);
   };
 }
 
