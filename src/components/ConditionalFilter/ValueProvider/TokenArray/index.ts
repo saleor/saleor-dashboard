@@ -1,5 +1,6 @@
 import { parse, ParsedQs } from "qs";
 
+import { InitialGiftCardsStateResponse } from "../../API/initialState/giftCards/InitialGiftCardsState";
 import { InitialOrderStateResponse } from "../../API/initialState/orders/InitialOrderState";
 import { InitialPageStateResponse } from "../../API/initialState/page/InitialPageState";
 import { InitialVouchersStateResponse } from "../../API/initialState/vouchers/InitialVouchersState";
@@ -8,9 +9,11 @@ import { FilterContainer, FilterElement } from "../../FilterElement";
 import { UrlEntry, UrlToken } from "../UrlToken";
 import {
   FetchingParams,
+  GiftCardsFetchingParams,
   OrderFetchingParams,
   PageFetchingParams,
   toFetchingParams,
+  toGiftCardsFetchingParams,
   toOrderFetchingParams,
   toPageFetchingParams,
   toVouchersFetchingParams,
@@ -53,7 +56,8 @@ const mapUrlTokensToFilterValues = (
     | InitialStateResponse
     | InitialOrderStateResponse
     | InitialVouchersStateResponse
-    | InitialPageStateResponse,
+    | InitialPageStateResponse
+    | InitialGiftCardsStateResponse,
 ): FilterContainer =>
   urlTokens.map(el => {
     if (typeof el === "string") {
@@ -73,7 +77,12 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
   }
 
   public getFetchingParams(
-    params: OrderFetchingParams | FetchingParams | VoucherFetchingParams | PageFetchingParams,
+    params:
+      | OrderFetchingParams
+      | FetchingParams
+      | VoucherFetchingParams
+      | PageFetchingParams
+      | GiftCardsFetchingParams,
   ) {
     if ("paymentStatus" in params) {
       return this.asFlatArray()
@@ -93,6 +102,12 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
         .reduce<PageFetchingParams>(toPageFetchingParams, params);
     }
 
+    if ("currency" in params) {
+      return this.asFlatArray()
+        .filter(token => token.isLoadable())
+        .reduce<GiftCardsFetchingParams>(toGiftCardsFetchingParams, params);
+    }
+
     return this.asFlatArray()
       .filter(token => token.isLoadable())
       .reduce<FetchingParams>(toFetchingParams, params);
@@ -107,7 +122,8 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
       | InitialStateResponse
       | InitialOrderStateResponse
       | InitialVouchersStateResponse
-      | InitialPageStateResponse,
+      | InitialPageStateResponse
+      | InitialGiftCardsStateResponse,
   ): FilterContainer {
     return this.map(el => {
       if (typeof el === "string") {
