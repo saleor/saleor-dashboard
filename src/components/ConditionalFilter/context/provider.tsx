@@ -1,16 +1,22 @@
-import { useDraftOrderFilterAPIProvider } from "@dashboard/components/ConditionalFilter/API/DraftOrderFilterAPIProvider";
 import React, { FC } from "react";
 
 import { useDiscountFilterAPIProvider } from "../API/DiscountFiltersAPIProvider";
+import { useDraftOrderFilterAPIProvider } from "../API/DraftOrderFilterAPIProvider";
 import { useInitialOrderState } from "../API/initialState/orders/useInitialOrderState";
+import { useInitialPageState } from "../API/initialState/page/useInitialPageState";
 import { useProductInitialAPIState } from "../API/initialState/useInitialAPIState";
+import { useInitialVouchersState } from "../API/initialState/vouchers/useInitialVouchersState";
 import { useOrderFilterAPIProvider } from "../API/OrderFilterAPIProvider";
+import { usePageAPIProvider } from "../API/PageFilterAPIProvider";
 import { useProductFilterAPIProvider } from "../API/ProductFilterAPIProvider";
+import { useVoucherAPIProvider } from "../API/VoucherFilterAPIProvider";
 import {
   STATIC_DISCOUNT_OPTIONS,
   STATIC_DRAFT_ORDER_OPTIONS,
   STATIC_ORDER_OPTIONS,
+  STATIC_PAGE_OPTIONS,
   STATIC_PRODUCT_OPTIONS,
+  STATIC_VOUCHER_OPTIONS,
 } from "../constants";
 import { useContainerState } from "../useContainerState";
 import { useFilterLeftOperandsProvider } from "../useFilterLeftOperands";
@@ -75,6 +81,59 @@ export const ConditionalOrderFilterProvider: FC<{
   const initialState = useInitialOrderState();
   const valueProvider = useUrlValueProvider(locationSearch, "order", initialState);
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_ORDER_OPTIONS);
+  const containerState = useContainerState(valueProvider);
+  const filterWindow = useFilterWindow();
+
+  return (
+    <ConditionalFilterContext.Provider
+      value={{
+        apiProvider,
+        valueProvider,
+        leftOperandsProvider,
+        containerState,
+        filterWindow,
+      }}
+    >
+      {children}
+    </ConditionalFilterContext.Provider>
+  );
+};
+
+export const ConditionalVoucherFilterProvider: FC<{ locationSearch: string }> = ({
+  children,
+  locationSearch,
+}) => {
+  const apiProvider = useVoucherAPIProvider();
+
+  const initialState = useInitialVouchersState();
+  const valueProvider = useUrlValueProvider(locationSearch, "voucher", initialState);
+  const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_VOUCHER_OPTIONS);
+  const containerState = useContainerState(valueProvider);
+  const filterWindow = useFilterWindow();
+
+  return (
+    <ConditionalFilterContext.Provider
+      value={{
+        apiProvider,
+        valueProvider,
+        leftOperandsProvider,
+        containerState,
+        filterWindow,
+      }}
+    >
+      {children}
+    </ConditionalFilterContext.Provider>
+  );
+};
+
+export const ConditionalPageFilterProvider: FC<{
+  locationSearch: string;
+}> = ({ children, locationSearch }) => {
+  const apiProvider = usePageAPIProvider();
+
+  const initialState = useInitialPageState();
+  const valueProvider = useUrlValueProvider(locationSearch, "page", initialState);
+  const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_PAGE_OPTIONS);
   const containerState = useContainerState(valueProvider);
   const filterWindow = useFilterWindow();
 
