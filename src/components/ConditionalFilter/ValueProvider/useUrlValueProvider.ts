@@ -6,6 +6,7 @@ import useRouter from "use-react-router";
 import { InitialAPIState } from "../API";
 import { InitialOrderAPIState } from "../API/initialState/orders/useInitialOrderState";
 import { InitialPageAPIState } from "../API/initialState/page/useInitialPageState";
+import { InitialVoucherAPIState } from "../API/initialState/vouchers/useInitialVouchersState";
 import { FilterContainer, FilterElement } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
 import { TokenArray } from "./TokenArray";
@@ -14,13 +15,18 @@ import {
   getFetchingPrams,
   OrderFetchingParams,
   PageFetchingParams,
+  VoucherFetchingParams,
 } from "./TokenArray/fetchingParams";
 import { prepareStructure } from "./utils";
 
 export const useUrlValueProvider = (
   locationSearch: string,
-  type: "product" | "order" | "discount" | "page",
-  initialState?: InitialAPIState | InitialOrderAPIState | InitialPageAPIState,
+  type: "product" | "order" | "discount" | "voucher" | "page",
+  initialState?:
+    | InitialAPIState
+    | InitialOrderAPIState
+    | InitialVoucherAPIState
+    | InitialPageAPIState,
 ): FilterValueProvider => {
   const router = useRouter();
   const params = new URLSearchParams(locationSearch);
@@ -50,6 +56,11 @@ export const useUrlValueProvider = (
         case "order":
           (initialState as InitialOrderAPIState).fetchQueries(
             fetchingParams as OrderFetchingParams,
+          );
+          break;
+        case "voucher":
+          (initialState as InitialVoucherAPIState).fetchQueries(
+            fetchingParams as VoucherFetchingParams,
           );
           break;
         case "page":

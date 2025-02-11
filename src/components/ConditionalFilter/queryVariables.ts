@@ -8,6 +8,7 @@ import {
   PageFilterInput,
   ProductWhereInput,
   PromotionWhereInput,
+  VoucherFilterInput,
 } from "@dashboard/graphql";
 
 import { FilterContainer } from "./FilterElement";
@@ -220,6 +221,56 @@ export const createOrderQueryVariables = (value: FilterContainer) => {
 
     return p;
   }, {} as OrderQueryVars);
+};
+
+export const creatVoucherQueryVariables = (
+  value: FilterContainer,
+): { filters: VoucherFilterInput; channel: string | undefined } => {
+  let channel: string | undefined;
+
+  const filters = value.reduce((p, c) => {
+    if (typeof c === "string" || Array.isArray(c)) return p;
+
+    if (c.value.type === "channel") {
+      if (isItemOption(c.condition.selected.value)) {
+        channel = c.condition.selected.value.slug;
+      } else {
+        channel = c.condition.selected.value as string;
+      }
+
+      return p;
+    }
+
+    if (c.value.type === "timesUsed") {
+      if (typeof c.condition.selected.value === "string") {
+        p["timesUsed"] = {
+          gte: Number(c.condition.selected.value),
+          lte: Number(c.condition.selected.value),
+        };
+
+        return p;
+      }
+    }
+
+    if (c.value.type === "voucherStatus") {
+      p["status"] = mapStaticQueryPartToLegacyVariables(
+        createStaticQueryPart(c.condition.selected),
+      );
+
+      return p;
+    }
+
+    p[c.value.value as keyof VoucherFilterInput] = mapStaticQueryPartToLegacyVariables(
+      createStaticQueryPart(c.condition.selected),
+    );
+
+    return p;
+  }, {} as VoucherFilterInput);
+
+  return {
+    channel,
+    filters,
+  };
 };
 
 export const createPageQueryVariables = (value: FilterContainer): PageFilterInput => {

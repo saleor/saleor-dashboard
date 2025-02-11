@@ -19,6 +19,8 @@ const ORDER_STATICS = [
   "ids",
 ];
 
+const VOUCHER_STATICS = ["channel", "discountType", "voucherStatus"];
+
 const PAGE_STATIC = ["pageTypes"];
 
 const STATIC_TO_LOAD = [
@@ -32,6 +34,7 @@ const STATIC_TO_LOAD = [
   "hasCategory",
   "giftCard",
   ...ORDER_STATICS,
+  ...VOUCHER_STATICS,
   ...PAGE_STATIC,
 ];
 

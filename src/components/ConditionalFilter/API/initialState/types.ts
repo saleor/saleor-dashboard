@@ -1,7 +1,6 @@
 import { ApolloQueryResult } from "@apollo/client";
 import {
   _GetChannelOperandsQuery,
-  _GetPageTypesChoicesQuery,
   _SearchAttributeOperandsQuery,
   _SearchCategoriesOperandsQuery,
   _SearchCollectionsOperandsQuery,
@@ -17,5 +16,7 @@ export type InitialAPIResponse = ApolloQueryResult<
   | _SearchAttributeOperandsQuery
 >;
 export type InitialOrderAPIResponse = ApolloQueryResult<_GetChannelOperandsQuery>;
+
+export type InitialVoucherAPIResponse = ApolloQueryResult<_GetChannelOperandsQuery>;
 
 export type InitialPageAPIResponse = ApolloQueryResult<_SearchPageTypesOperandsQuery>;
