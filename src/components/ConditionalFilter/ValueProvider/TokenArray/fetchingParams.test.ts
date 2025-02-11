@@ -1,7 +1,7 @@
 import { UrlToken } from "../UrlToken";
 import { getFetchingPrams, toVouchersFetchingParams } from "./fetchingParams";
 
-describe("TokenArray / fetchingParams", () => {
+describe("TokenArray / fetchingParams / getFetchingPrams", () => {
   it("should return product fetching params", () => {
     // Arrange
     const type = "product";
@@ -54,7 +54,7 @@ describe("TokenArray / fetchingParams", () => {
   });
 });
 
-describe("TokenArray / fetchingParams / toFetchingParams", () => {
+describe("TokenArray / fetchingParams / toVouchersFetchingParams", () => {
   it("should return fetching params", () => {
     // Arrange
     const params = {
