@@ -75,6 +75,8 @@ export const STATIC_CONDITIONS = {
   ],
   numberOfOrders: [
     { type: "number", label: "is", value: "input-1" },
+    { type: "number", label: "lower", value: "input-1" },
+    { type: "number", label: "greater", value: "input-2" },
     { type: "number.range", label: "between", value: "input-2" },
   ],
   authorizeStatus: [

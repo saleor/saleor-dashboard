@@ -226,15 +226,13 @@ export const createCustomerQueryVariables = (value: FilterContainer): CustomerFi
   return value.reduce((p, c) => {
     if (typeof c === "string" || Array.isArray(c)) return p;
 
-    if (c.value.type === "numberOfOrders") {
-      if (typeof c.condition.selected.value === "string") {
-        p["numberOfOrders"] = {
-          gte: Number(c.condition.selected.value),
-          lte: Number(c.condition.selected.value),
-        };
+    if (c.value.type === "numberOfOrders" && c.condition.selected.conditionValue?.label === "is") {
+      p["numberOfOrders"] = {
+        gte: Number(c.condition.selected.value),
+        lte: Number(c.condition.selected.value),
+      };
 
-        return p;
-      }
+      return p;
     }
 
     p[c.value.value as keyof CustomerFilterInput] = mapStaticQueryPartToLegacyVariables(
