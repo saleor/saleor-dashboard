@@ -17,7 +17,6 @@ export class AddNavigationMenuItemDialog extends BasePage {
   async selectLinkTypeOption(linkType: string) {
     await expect(async () => {
       await this.menuLinkType.click();
-      await this.waitForDOMToFullyLoad();
       await this.menuLinkOptions.first().waitFor({ state: "visible" });
     }).toPass();
 
@@ -37,8 +36,9 @@ export class AddNavigationMenuItemDialog extends BasePage {
   }
 
   async selectLinkTypeValue(optionName: string) {
-    await this.menuLinkValue.click();
-    await this.waitForDOMToFullyLoad();
+    await expect(async () => {
+      await this.menuLinkValue.click();
+    }).toPass();
 
     // Ensure the option is present and select it
     const option = this.menuLinkOptions.filter({ hasText: optionName });
@@ -57,6 +57,5 @@ export class AddNavigationMenuItemDialog extends BasePage {
 
   async clickSaveButton() {
     await this.saveButton.click();
-    await this.waitForDOMToFullyLoad();
   }
 }
