@@ -1,6 +1,5 @@
 import { ImageIcon } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
 
 export const ImagePlaceholder = () => {
   return (

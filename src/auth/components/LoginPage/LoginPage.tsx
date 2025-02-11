@@ -7,7 +7,7 @@ import { commonMessages } from "@dashboard/intl";
 import { CircularProgress, Divider, TextField } from "@material-ui/core";
 import { EyeIcon, IconButton } from "@saleor/macaw-ui";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
@@ -24,7 +24,7 @@ export interface LoginCardProps {
   onSubmit: (event: LoginFormData) => SubmitPromise;
 }
 
-const LoginPage: React.FC<LoginCardProps> = props => {
+const LoginPage = (props: LoginCardProps) => {
   const {
     errors,
     disabled,
@@ -35,7 +35,7 @@ const LoginPage: React.FC<LoginCardProps> = props => {
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   if (loading) {
     return (
@@ -106,7 +106,7 @@ const LoginPage: React.FC<LoginCardProps> = props => {
               onMouseDown={() => setShowPassword(true)}
               onMouseUp={() => setShowPassword(false)}
             >
-              <EyeIcon />
+              <EyeIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
             </IconButton>
           </div>
           <Text
@@ -150,7 +150,7 @@ const LoginPage: React.FC<LoginCardProps> = props => {
             </>
           )}
           {externalAuthentications.map(externalAuthentication => (
-            <React.Fragment key={externalAuthentication.id}>
+            <Fragment key={externalAuthentication.id}>
               <FormSpacer />
               <Button
                 width="100%"
@@ -161,7 +161,7 @@ const LoginPage: React.FC<LoginCardProps> = props => {
               >
                 {externalAuthentication.name}
               </Button>
-            </React.Fragment>
+            </Fragment>
           ))}
         </Box>
       )}

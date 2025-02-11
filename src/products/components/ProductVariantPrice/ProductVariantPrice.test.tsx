@@ -1,7 +1,7 @@
 import { ChannelData } from "@dashboard/channels/utils";
 import { ThemeWrapper } from "@test/themeWrapper";
 import { fireEvent, render, screen } from "@testing-library/react";
-import React from "react";
+import * as React from "react";
 
 import { ProductVariantPrice } from "./ProductVariantPrice";
 

@@ -4,7 +4,6 @@ import { AppPaths, AppUrls } from "@dashboard/apps/urls";
 import { isAppInTunnel } from "@dashboard/apps/utils";
 import Link from "@dashboard/components/Link";
 import { Box, Chip, List, sprinkles, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
@@ -13,7 +12,7 @@ import { AppAvatar } from "../AppAvatar/AppAvatar";
 import { AppManifestUrl } from "./AppManifestUrl";
 import { messages } from "./messages";
 
-export const InstalledAppListRow: React.FC<InstalledApp> = props => {
+export const InstalledAppListRow = (props: InstalledApp) => {
   const { app, isExternal, logo } = props;
   const intl = useIntl();
   const location = useLocation();

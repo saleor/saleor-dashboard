@@ -2,13 +2,15 @@ import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 import { singleRefundableTransaction } from "./fixtures";
 import { TransactionSubmitCard } from "./TransactionSubmitCard";
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     <LegacyThemeProvider>
       <ThemeProvider>{children}</ThemeProvider>
     </LegacyThemeProvider>

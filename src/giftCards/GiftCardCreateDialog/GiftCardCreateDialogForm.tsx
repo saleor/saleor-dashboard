@@ -14,7 +14,7 @@ import { commonMessages } from "@dashboard/intl";
 import Label from "@dashboard/orders/components/OrderHistory/Label";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { Box, Textarea } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import GiftCardSendToCustomer from "../components/GiftCardSendToCustomer/GiftCardSendToCustomer";
@@ -55,13 +55,13 @@ interface GiftCardCreateDialogFormProps {
 
 const defaultInitialCustomer = { email: "", name: "" };
 
-const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
+const GiftCardCreateDialogForm = ({
   onSubmit,
   opts,
   onClose,
   apiErrors,
   initialCustomer,
-}) => {
+}: GiftCardCreateDialogFormProps) => {
   const intl = useIntl();
   const { data: settingsData, loading: loadingSettings } = useGiftCardSettingsQuery();
   const [selectedCustomer, setSelectedCustomer] = useState<GiftCardCreateFormCustomer>(

@@ -1,6 +1,5 @@
 import { OrderDetailsFragment } from "@dashboard/graphql";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import SummaryLine from "../../OrderSummaryCard/SummaryLine";
@@ -12,7 +11,7 @@ interface RefundsSummary {
   order: OrderDetailsFragment;
 }
 
-export const RefundsSummary: React.FC<RefundsSummary> = ({ order }) => {
+export const RefundsSummary = ({ order }: RefundsSummary) => {
   const classes = useStyles();
   const { totalRefunded, totalRefundPending, totalGrantedRefund } = order;
   const refundedAmount = totalRefunded?.amount ?? 0;

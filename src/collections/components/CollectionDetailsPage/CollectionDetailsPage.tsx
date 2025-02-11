@@ -17,7 +17,7 @@ import {
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { ChannelProps, PageListProps } from "../../../types";
@@ -42,7 +42,7 @@ export interface CollectionDetailsPageProps extends PageListProps, ChannelProps 
   params: CollectionUrlQueryParams;
 }
 
-const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
+const CollectionDetailsPage = ({
   channelsCount,
   channelsErrors,
   collection,

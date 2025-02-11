@@ -9,7 +9,8 @@ import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChang
 import { RichTextContext, RichTextContextValues } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { OutputData } from "@editorjs/editorjs";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+import * as React from "react";
 
 export interface CategoryUpdateFormData extends MetadataFormData {
   backgroundImageAlt: string;
@@ -109,12 +110,12 @@ function useCategoryUpdateForm(
   };
 }
 
-const CategoryUpdateForm: React.FC<CategoryUpdateFormProps> = ({
+const CategoryUpdateForm = ({
   children,
   category,
   onSubmit,
   disabled,
-}) => {
+}: CategoryUpdateFormProps) => {
   const { richText, ...props } = useCategoryUpdateForm(category!, onSubmit, disabled);
 
   return (

@@ -1,7 +1,7 @@
 import { OrderDetailsFragment } from "@dashboard/graphql";
 import { ThemeWrapper } from "@test/themeWrapper";
 import { render, screen } from "@testing-library/react";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { IntlProvider } from "react-intl";
 import { BrowserRouter } from "react-router-dom";
 
@@ -21,8 +21,12 @@ const mockGiftCards = [
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     <BrowserRouter>
       <ThemeWrapper>
+        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+        {/* @ts-ignore */}
         <IntlProvider
           locale="EN"
           messages={{

@@ -12,7 +12,6 @@ import { getByType } from "@dashboard/orders/components/OrderReturnPage/utils";
 import { productUrl } from "@dashboard/products/urls";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 
 import useGiftCardHistoryEvents from "../GiftCardHistory/hooks/useGiftCardHistoryEvents";
@@ -20,7 +19,7 @@ import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGi
 import { PLACEHOLDER } from "../types";
 import { giftCardUpdateInfoCardMessages as messages } from "./messages";
 
-const GiftCardUpdateInfoCardContent: React.FC = () => {
+const GiftCardUpdateInfoCardContent = () => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
   const { giftCard } = useGiftCardDetails();

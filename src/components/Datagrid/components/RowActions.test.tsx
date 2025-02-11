@@ -1,7 +1,6 @@
 import { EditIcon, ThemeProvider } from "@saleor/macaw-ui";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import React from "react";
 
 import { RowActions } from "./RowActions";
 
@@ -9,6 +8,8 @@ describe("RowActions", () => {
   it("should render empty when menu items count equal to 0", () => {
     // Arrange & Act
     const { container } = render(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       <ThemeProvider>
         <RowActions menuItems={[]} disabled={false} />
       </ThemeProvider>,
@@ -20,13 +21,21 @@ describe("RowActions", () => {
   it("should render icon button when only one menu item and has icon props", () => {
     // Arrange & Act
     render(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       <ThemeProvider>
         <RowActions
           menuItems={[
             {
               label: "Edit",
               onSelect: jest.fn(),
-              Icon: <EditIcon data-test-id="edit-icon" />,
+              Icon: (
+                <EditIcon
+                  data-test-id="edit-icon"
+                  onPointerEnterCapture={undefined}
+                  onPointerLeaveCapture={undefined}
+                />
+              ),
             },
           ]}
           disabled={false}
@@ -40,6 +49,8 @@ describe("RowActions", () => {
   it("should render card meu when only one menu item and has no icon props", () => {
     // Arrange & Act
     render(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       <ThemeProvider>
         <RowActions
           menuItems={[
@@ -58,6 +69,8 @@ describe("RowActions", () => {
   it("should render card menu with multiple items", async () => {
     // Arrange
     render(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       <ThemeProvider>
         <RowActions
           menuItems={[
@@ -94,13 +107,17 @@ describe("RowActions", () => {
     const onSelectCallback = jest.fn();
 
     render(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       <ThemeProvider>
         <RowActions
           menuItems={[
             {
               label: "Edit",
               onSelect: onSelectCallback,
-              Icon: <EditIcon />,
+              Icon: (
+                <EditIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+              ),
             },
           ]}
           disabled={false}
@@ -117,6 +134,8 @@ describe("RowActions", () => {
     const onIconClickCallback = jest.fn();
 
     render(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       <ThemeProvider>
         <RowActions
           menuItems={[
@@ -147,6 +166,8 @@ describe("RowActions", () => {
   it("should disabled show more button when RowAction disabled", async () => {
     // Arrange & Act
     render(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       <ThemeProvider>
         <RowActions
           menuItems={[
@@ -169,13 +190,17 @@ describe("RowActions", () => {
   it("should disabled row action button when RowAction disabled", async () => {
     // Arrange & Act
     render(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       <ThemeProvider>
         <RowActions
           menuItems={[
             {
               label: "Edit",
               onSelect: jest.fn(),
-              Icon: <EditIcon />,
+              Icon: (
+                <EditIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+              ),
             },
           ]}
           disabled={true}

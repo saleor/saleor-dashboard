@@ -8,7 +8,6 @@ import { maybe } from "@dashboard/misc";
 import { TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
 
 const useStyles = makeStyles(
   theme => ({
@@ -54,7 +53,7 @@ interface TableLineProps {
   isOrderLine?: boolean;
 }
 
-const TableLine: React.FC<TableLineProps> = ({ line: lineData, isOrderLine = false }) => {
+const TableLine = ({ line: lineData, isOrderLine = false }: TableLineProps) => {
   const classes = useStyles({});
   const { quantity, quantityToFulfill } = lineData as OrderLineFragment;
 

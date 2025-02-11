@@ -19,7 +19,6 @@ import {
   orderUrl,
 } from "@dashboard/orders/urls";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import React from "react";
 import { useIntl } from "react-intl";
 
 export interface OrderFulfillProps {
@@ -27,7 +26,7 @@ export interface OrderFulfillProps {
   params: OrderFulfillUrlQueryParams;
 }
 
-const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
+const OrderFulfill = ({ orderId, params }: OrderFulfillProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

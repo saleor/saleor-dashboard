@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
 import { act, renderHook } from "@testing-library/react-hooks";
-import React from "react";
 import { useHistory } from "react-router";
 import { MemoryRouter } from "react-router-dom";
 
@@ -35,6 +34,8 @@ const setup = (submitFn: () => SubmitPromise, confirmLeave = true) =>
     },
     {
       wrapper: ({ children }) => (
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         <MemoryRouter initialEntries={[{ pathname: "/" }]}>
           <MockExitFormDialogProvider>{children}</MockExitFormDialogProvider>
         </MemoryRouter>

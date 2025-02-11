@@ -7,7 +7,6 @@ import { configurationMenuUrl } from "@dashboard/configuration";
 import { PageTypeFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { pageTypeAddUrl, PageTypeListUrlSortField } from "@dashboard/pageTypes/urls";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
@@ -28,7 +27,7 @@ export interface PageTypeListPageProps
   pageTypes: PageTypeFragment[];
 }
 
-const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
+const PageTypeListPage = ({
   currentTab,
   initialSearch,
   onAll,
@@ -38,7 +37,7 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
   onTabSave,
   tabs,
   ...listProps
-}) => {
+}: PageTypeListPageProps) => {
   const intl = useIntl();
 
   return (

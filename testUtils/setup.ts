@@ -1,6 +1,9 @@
 import "@testing-library/jest-dom";
 
 import { configure } from "@testing-library/react";
+import React from "react";
+
+global.React = React;
 
 jest.mock("@sentry/react");
 

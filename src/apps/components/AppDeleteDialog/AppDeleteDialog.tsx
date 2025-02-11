@@ -2,7 +2,6 @@ import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import msgs from "./messages";
@@ -16,14 +15,14 @@ export interface AppDeleteDialogProps {
   type: "CUSTOM" | "EXTERNAL";
 }
 
-const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
+const AppDeleteDialog = ({
   confirmButtonState,
   open,
   name,
   onClose,
   onConfirm,
   type,
-}) => {
+}: AppDeleteDialogProps) => {
   const intl = useIntl();
   const isNameMissing = name === null || name === "";
   const isExternal = type === "EXTERNAL";

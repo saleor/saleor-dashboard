@@ -1,6 +1,6 @@
 import { WarehouseFragment } from "@dashboard/graphql";
 import { Box, Button, Dropdown, List, Spinner, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "../messages";

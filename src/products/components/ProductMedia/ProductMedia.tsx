@@ -6,7 +6,7 @@ import { ProductMediaFragment, ProductMediaType } from "@dashboard/graphql";
 import { ReorderAction } from "@dashboard/types";
 import createMultiFileUploadHandler from "@dashboard/utils/handlers/multiFileUploadHandler";
 import { Box, Button, Dropdown, List, Skeleton, sprinkles, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 
@@ -65,7 +65,7 @@ interface ProductMediaProps {
   openMediaUrlModal: () => any;
 }
 
-const ProductMedia: React.FC<ProductMediaProps> = props => {
+const ProductMedia = (props: ProductMediaProps) => {
   const {
     media,
     getImageEditUrl,

@@ -3,7 +3,7 @@ import { MetadataInput } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { removeAtIndex, updateAtIndex } from "@dashboard/utils/lists";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { memo } from "react";
+import { memo } from "react";
 
 import { MetadataCard, MetadataCardProps } from "./MetadataCard";
 import { MetadataLoadingCard } from "./MetadataLoadingCard";
@@ -21,24 +21,10 @@ export interface MetadataProps extends Omit<MetadataCardProps, "data" | "isPriva
   hidePrivateMetadata?: boolean;
 }
 
-const propsCompare = (_, newProps: MetadataProps) => {
-  /**
-    If we pass `isLoading` render only when the loading finishes
-  */
-  if (typeof newProps.isLoading !== "undefined") {
-    return newProps.isLoading;
-  }
-
-  /*
-    If `isLoading` is not present, keep the old behavior
-  */
-  return false;
-};
-
 // TODO: Refactor loading state logic
 // TODO: Split "Metadata" component into "Metadata" and "PrivateMetadata" components
-export const Metadata: React.FC<MetadataProps> = memo(
-  ({ data, onChange, isLoading, readonly = false, hidePrivateMetadata = false }) => {
+export const Metadata = memo(
+  ({ data, onChange, isLoading, readonly = false, hidePrivateMetadata = false }: MetadataProps) => {
     const change = (event: ChangeEvent, isPrivate: boolean) => {
       const { action, field, fieldIndex, value } = parseEventData(event);
       const key = getDataKey(isPrivate);
@@ -99,7 +85,6 @@ export const Metadata: React.FC<MetadataProps> = memo(
       </Box>
     );
   },
-  propsCompare,
 );
 
 Metadata.displayName = "Metadata";

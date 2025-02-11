@@ -3,15 +3,15 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
-import React from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
 
 import ResetPasswordPage, { ResetPasswordPageFormData } from "../components/ResetPasswordPage";
 import { newPasswordUrl, passwordResetSuccessUrl } from "../urls";
 
-const ResetPasswordView: React.FC = () => {
-  const [error, setError] = React.useState<string>();
+const ResetPasswordView = () => {
+  const [error, setError] = useState<string>();
   const navigate = useNavigator();
   const intl = useIntl();
   const [requestPasswordReset, requestPasswordResetOpts] = useRequestPasswordResetMutation({

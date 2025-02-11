@@ -5,7 +5,7 @@ import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import * as React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 export const useStyles = makeStyles(
@@ -83,7 +83,7 @@ export interface ChannelsAvailabilityContentProps {
   hasAllSelected: boolean;
 }
 
-export const ChannelsAvailabilityContentWrapper: React.FC<ChannelsAvailabilityContentProps> = ({
+export const ChannelsAvailabilityContentWrapper = ({
   contentType = "",
   toggleAll,
   toggleAllLabel,
@@ -92,7 +92,7 @@ export const ChannelsAvailabilityContentWrapper: React.FC<ChannelsAvailabilityCo
   query,
   onQueryChange,
   hasAllSelected,
-}) => {
+}: ChannelsAvailabilityContentProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const searchText = intl.formatMessage({

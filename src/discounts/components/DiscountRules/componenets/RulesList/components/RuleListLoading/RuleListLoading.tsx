@@ -1,5 +1,4 @@
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { RuleListContainer } from "../RuleListContainer";
 import { RuleWrapper } from "../RuleWrapper";

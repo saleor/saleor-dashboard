@@ -1,6 +1,7 @@
 import { useUser } from "@dashboard/auth";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
+import * as React from "react";
 
 import useAppChannel from "../AppChannelContext";
 import AppChannelSelect from "../AppChannelSelect";
@@ -16,14 +17,14 @@ interface TopNavProps {
   isAlignToRight?: boolean;
 }
 
-export const Root: React.FC<PropsWithChildren<TopNavProps>> = ({
+export const Root = ({
   title,
   subtitle,
   href,
   withoutBorder = false,
   isAlignToRight = true,
   children,
-}) => {
+}: PropsWithChildren<TopNavProps>) => {
   const { channel, isPickerActive, setChannel } = useAppChannel(false);
   const user = useUser();
   const channels = user?.user?.accessibleChannels ?? [];

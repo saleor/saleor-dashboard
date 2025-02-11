@@ -1,5 +1,4 @@
 import { IMoney } from "@dashboard/utils/intl";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { LocaleConsumer } from "../Locale";
@@ -10,7 +9,7 @@ export interface MoneyRangeProps {
   to?: IMoney;
 }
 
-export const MoneyRange: React.FC<MoneyRangeProps> = ({ from, to }) => {
+export const MoneyRange = ({ from, to }: MoneyRangeProps) => {
   const intl = useIntl();
 
   return <LocaleConsumer>{({ locale }) => getMoneyRange(locale, intl, from, to)}</LocaleConsumer>;
