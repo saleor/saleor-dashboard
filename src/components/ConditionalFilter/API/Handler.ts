@@ -59,6 +59,25 @@ export const createOptionsFromAPI = (
     originalSlug: node.originalSlug,
   }));
 
+export const createCustomerOptionsFromAPI = (
+  data: Array<{
+    node: {
+      id: string;
+      email: string;
+      firstName: string;
+      lastName: string;
+    };
+  }>,
+) => {
+  return (
+    data.map(({ node }) => ({
+      label: node?.firstName && node?.lastName ? `${node.firstName} ${node.lastName}` : node.email,
+      value: node.id,
+      slug: node.id,
+    })) ?? []
+  );
+};
+
 export class AttributeChoicesHandler implements Handler {
   constructor(
     public client: ApolloClient<unknown>,
@@ -270,14 +289,7 @@ export class CustomerHandler implements Handler {
       },
     });
 
-    return (
-      data?.customers?.edges.map(({ node }) => ({
-        label:
-          node?.firstName && node?.lastName ? `${node.firstName} ${node.lastName}` : node.email,
-        value: node.id,
-        slug: node.id,
-      })) ?? []
-    );
+    return createCustomerOptionsFromAPI(data.customers?.edges ?? []);
   };
 }
 

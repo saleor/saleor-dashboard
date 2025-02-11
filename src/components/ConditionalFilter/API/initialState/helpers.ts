@@ -13,7 +13,7 @@ import {
 } from "@dashboard/graphql";
 
 import { createBooleanOptions } from "../../constants";
-import { createOptionsFromAPI } from "../Handler";
+import { createCustomerOptionsFromAPI, createOptionsFromAPI } from "../Handler";
 import { InitialState } from "../InitialStateResponse";
 import { InitialOrderState } from "./orders/InitialOrderState";
 import { InitialAPIResponse, InitialGiftCardsAPIResponse, InitialOrderAPIResponse } from "./types";
@@ -159,12 +159,7 @@ export const createInitialGiftCardsState = (
       if (isCustomerQuery(query)) {
         return {
           ...acc,
-          usedBy:
-            query.data?.customers?.edges.map(({ node }) => ({
-              label: node.email,
-              value: node.id,
-              slug: node.id,
-            })) ?? [],
+          usedBy: createCustomerOptionsFromAPI(query.data?.customers?.edges ?? []),
         };
       }
 
