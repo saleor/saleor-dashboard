@@ -52,7 +52,7 @@ describe("TokenArray / fetchingParams", () => {
   });
 });
 
-describe("TokenArray / fetchingParams / toFetchingParams", () => {
+describe("TokenArray / fetchingParams / toPageFetchingParams", () => {
   it("should return fetching params", () => {
     // Arrange
     const params = {
