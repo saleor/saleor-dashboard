@@ -4,6 +4,7 @@ import {
   DateTimeFilterInput,
   DateTimeRangeInput,
   DecimalFilterInput,
+  GiftCardFilterInput,
   GlobalIdFilterInput,
   OrderDraftFilterInput,
   PageFilterInput,
@@ -51,6 +52,10 @@ const createStaticQueryPart = (selected: ConditionSelected): StaticQueryPart => 
   }
 
   if (typeof value === "string") {
+    if (["true", "false"].includes(value)) {
+      return value === "true";
+    }
+
     return { eq: value };
   }
 
@@ -298,4 +303,18 @@ export const creatDraftOrderQueryVariables = (value: FilterContainer): OrderDraf
 
     return p;
   }, {} as OrderDraftFilterInput);
+};
+
+export const createGiftCardQueryVariables = (value: FilterContainer) => {
+  return value.reduce<GiftCardFilterInput>((p, c) => {
+    if (typeof c === "string" || Array.isArray(c)) return p;
+
+    if (c.isStatic()) {
+      (p[c.value.value as keyof GiftCardFilterInput] as any) = mapStaticQueryPartToLegacyVariables(
+        createStaticQueryPart(c.condition.selected),
+      );
+    }
+
+    return p;
+  }, {} as GiftCardFilterInput);
 };

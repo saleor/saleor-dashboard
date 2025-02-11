@@ -1,3 +1,4 @@
+import { InitialGiftCardsStateResponse } from "../API/initialState/giftCards/InitialGiftCardsState";
 import { InitialOrderStateResponse } from "../API/initialState/orders/InitialOrderState";
 import { InitialPageStateResponse } from "../API/initialState/page/InitialPageState";
 import { InitialVouchersStateResponse } from "../API/initialState/vouchers/InitialVouchersState";
@@ -53,7 +54,8 @@ export class Condition {
       | InitialStateResponse
       | InitialOrderStateResponse
       | InitialVouchersStateResponse
-      | InitialPageStateResponse,
+      | InitialPageStateResponse
+      | InitialGiftCardsStateResponse,
   ) {
     if (ConditionOptions.isStaticName(token.name)) {
       const staticOptions = ConditionOptions.fromStaticElementName(token.name);
