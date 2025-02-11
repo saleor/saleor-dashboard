@@ -23,6 +23,10 @@ export const STATIC_CONDITIONS = {
   isAvailable: [{ type: "select", label: "is", value: "input-1" }],
   isPublished: [{ type: "select", label: "is", value: "input-1" }],
   isVisibleInListing: [{ type: "select", label: "is", value: "input-1" }],
+  isVariantOnly: [{ type: "select", label: "is", value: "input-1" }],
+  valueRequired: [{ type: "select", label: "is", value: "input-1" }],
+  visibleInStorefront: [{ type: "select", label: "is", value: "input-1" }],
+  filterableInDashboard: [{ type: "select", label: "is", value: "input-1" }],
   hasCategory: [{ type: "select", label: "is", value: "input-1" }],
   giftCard: [{ type: "select", label: "is", value: "input-1" }],
   startDate: [
@@ -273,10 +277,38 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
   },
 ];
 
+export const STATIC_ATTRIBUTES_OPTIONS: LeftOperand[] = [
+  {
+    value: "filterableInDashboard",
+    label: "Filterable in Storefront",
+    type: "filterableInDashboard",
+    slug: "filterableInDashboard",
+  },
+  {
+    value: "isVariantOnly",
+    label: "Variant only",
+    type: "isVariantOnly",
+    slug: "isVariantOnly",
+  },
+  {
+    value: "valueRequired",
+    label: "Value Required",
+    type: "valueRequired",
+    slug: "valueRequired",
+  },
+  {
+    value: "visibleInStorefront",
+    label: "Visible on Product Page in Storefront",
+    type: "visibleInStorefront",
+    slug: "visibleInStorefront",
+  },
+];
+
 export const STATIC_OPTIONS = [
   ...STATIC_PRODUCT_OPTIONS,
   ...STATIC_DISCOUNT_OPTIONS,
   ...STATIC_ORDER_OPTIONS,
+  ...STATIC_ATTRIBUTES_OPTIONS,
 ];
 
 export const ATTRIBUTE_INPUT_TYPE_CONDITIONS = {
