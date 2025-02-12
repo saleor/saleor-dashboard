@@ -50,6 +50,7 @@ runs:
       with:
         report-path: ctrf-reports/merged-report.json
         pull-request-report: true
+        overwrite-comment: true
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
       if: always()
