@@ -30,7 +30,6 @@ export const updateChannelsInput = (
       return {
         ...listing,
         ...data,
-        availableForPurchaseAt: data.availableForPurchase,
       };
     }
 
@@ -51,7 +50,6 @@ export function useProductChannelListingsForm(
     removeChannels: [],
     updateChannels: product?.channelListings.map(listing => ({
       channelId: listing.channel.id,
-      availableForPurchaseAt: listing.availableForPurchaseAt,
       ...listing,
     })),
   });

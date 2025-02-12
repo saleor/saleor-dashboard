@@ -2,8 +2,8 @@ import { defineMessages } from "react-intl";
 
 export const availabilityItemMessages = defineMessages({
   sinceDate: {
-    id: "UjsI4o",
-    defaultMessage: "since {date}",
+    id: "bidZKr",
+    defaultMessage: "Since {date}",
     description: "date",
   },
   setPublicationDate: {
