@@ -163,7 +163,15 @@ export const toGiftCardsFetchingParams = (p: GiftCardsFetchingParams, c: UrlToke
 };
 
 export const getFetchingPrams = (
-  type: "product" | "order" | "discount" | "voucher" | "page" | "draft-order" | "gift-cards",
+  type:
+    | "product"
+    | "order"
+    | "discount"
+    | "voucher"
+    | "page"
+    | "draft-order"
+    | "gift-cards"
+    | "customer",
 ) => {
   switch (type) {
     case "product":

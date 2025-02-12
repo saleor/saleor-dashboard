@@ -1,5 +1,6 @@
 import {
   AttributeInput,
+  CustomerFilterInput,
   DateRangeInput,
   DateTimeFilterInput,
   DateTimeRangeInput,
@@ -317,4 +318,25 @@ export const createGiftCardQueryVariables = (value: FilterContainer) => {
 
     return p;
   }, {} as GiftCardFilterInput);
+};
+
+export const createCustomerQueryVariables = (value: FilterContainer): CustomerFilterInput => {
+  return value.reduce((p, c) => {
+    if (typeof c === "string" || Array.isArray(c)) return p;
+
+    if (c.value.type === "numberOfOrders" && c.condition.selected.conditionValue?.label === "is") {
+      p["numberOfOrders"] = {
+        gte: Number(c.condition.selected.value),
+        lte: Number(c.condition.selected.value),
+      };
+
+      return p;
+    }
+
+    p[c.value.value as keyof CustomerFilterInput] = mapStaticQueryPartToLegacyVariables(
+      createStaticQueryPart(c.condition.selected),
+    );
+
+    return p;
+  }, {} as CustomerFilterInput);
 };
