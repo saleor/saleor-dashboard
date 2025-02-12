@@ -28,6 +28,7 @@ export const SingleItem: React.FC<Props> = ({ menuItem }) => {
       active={active}
       onClick={handleMenuItemClick}
       data-test-id={`menu-item-label-${menuItem.id}`}
+      position="relative"
     >
       <Link
         to={menuItem.url || ""}
@@ -51,6 +52,11 @@ export const SingleItem: React.FC<Props> = ({ menuItem }) => {
           </Text>
         </Box>
       </Link>
+      {menuItem.endAdornment && (
+        <Box position="absolute" right={2} zIndex={"3"}>
+          {menuItem.endAdornment}
+        </Box>
+      )}
     </List.Item>
   );
 };
