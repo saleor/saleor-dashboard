@@ -4,8 +4,11 @@ import {
   _SearchAttributeOperandsQuery,
   _SearchCategoriesOperandsQuery,
   _SearchCollectionsOperandsQuery,
+  _SearchCustomersOperandsQuery,
   _SearchPageTypesOperandsQuery,
+  _SearchProductOperandsQuery,
   _SearchProductTypesOperandsQuery,
+  ChannelCurrenciesQuery,
 } from "@dashboard/graphql";
 
 export type InitialAPIResponse = ApolloQueryResult<
@@ -20,5 +23,9 @@ export type InitialOrderAPIResponse = ApolloQueryResult<_GetChannelOperandsQuery
 export type InitialVoucherAPIResponse = ApolloQueryResult<_GetChannelOperandsQuery>;
 
 export type InitialPageAPIResponse = ApolloQueryResult<_SearchPageTypesOperandsQuery>;
+
+export type InitialGiftCardsAPIResponse = ApolloQueryResult<
+  _SearchProductOperandsQuery | _SearchCustomersOperandsQuery | ChannelCurrenciesQuery
+>;
 
 export type InitialCollectionAPIResponse = ApolloQueryResult<_GetChannelOperandsQuery>;

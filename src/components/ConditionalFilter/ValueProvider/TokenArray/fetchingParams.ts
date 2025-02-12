@@ -4,9 +4,11 @@ export type FilterProviderType =
   | "product"
   | "order"
   | "discount"
+  | "customer"
   | "voucher"
   | "page"
   | "draft-order"
+  | "gift-cards"
   | "collection";
 
 export interface FetchingParams {
@@ -37,6 +39,13 @@ export interface PageFetchingParams {
   pageTypes: string[];
 }
 
+export interface GiftCardsFetchingParams {
+  currency: string[];
+  products: string[];
+  tags: string[];
+  usedBy: string[];
+}
+
 export interface CollectionFetchingParams {
   channel: string[];
   ids: string[];
@@ -49,6 +58,7 @@ type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute">;
 type OrderParamsKeys = keyof OrderFetchingParams;
 type VoucherParamsKeys = keyof VoucherFetchingParams;
 type PageParamsKeys = keyof PageFetchingParams;
+type GiftCardsParamKeys = keyof GiftCardsFetchingParams;
 
 export const emptyFetchingParams: FetchingParams = {
   category: [],
@@ -76,6 +86,13 @@ export const emptyVoucherFetchingParams: VoucherFetchingParams = {
 
 export const emptyPageFetchingParams: PageFetchingParams = {
   pageTypes: [],
+};
+
+export const emptyGiftCardsFetchingParams: GiftCardsFetchingParams = {
+  currency: [],
+  products: [],
+  tags: [],
+  usedBy: [],
 };
 
 export const emptyCollectionFetchingParams: CollectionFetchingParams = {
@@ -160,6 +177,18 @@ export const toPageFetchingParams = (p: PageFetchingParams, c: UrlToken) => {
   return p;
 };
 
+export const toGiftCardsFetchingParams = (p: GiftCardsFetchingParams, c: UrlToken) => {
+  const key = c.name as GiftCardsParamKeys;
+
+  if (!p[key]) {
+    p[key] = [];
+  }
+
+  p[key] = unique(p[key].concat(c.value));
+
+  return p;
+};
+
 export const toCollectionFetchingParams = (p: CollectionFetchingParams, c: UrlToken) => {
   const key = c.name as keyof CollectionFetchingParams;
 
@@ -176,10 +205,11 @@ export type FetchingParamsType =
   | OrderFetchingParams
   | FetchingParams
   | CollectionFetchingParams
+  | GiftCardsFetchingParams
   | PageFetchingParams
   | VoucherFetchingParams;
 
-export const getFetchingPrams = (type: FilterProviderType) => {
+export const getEmptyFetchingPrams = (type: FilterProviderType) => {
   switch (type) {
     case "product":
       return emptyFetchingParams;
@@ -189,6 +219,8 @@ export const getFetchingPrams = (type: FilterProviderType) => {
       return emptyVoucherFetchingParams;
     case "page":
       return emptyPageFetchingParams;
+    case "gift-cards":
+      return emptyGiftCardsFetchingParams;
     case "collection":
       return emptyCollectionFetchingParams;
   }

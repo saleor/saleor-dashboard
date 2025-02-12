@@ -1,10 +1,12 @@
 import {
   AttributeInput,
   CollectionFilterInput,
+  CustomerFilterInput,
   DateRangeInput,
   DateTimeFilterInput,
   DateTimeRangeInput,
   DecimalFilterInput,
+  GiftCardFilterInput,
   GlobalIdFilterInput,
   OrderDraftFilterInput,
   PageFilterInput,
@@ -52,6 +54,10 @@ const createStaticQueryPart = (selected: ConditionSelected): StaticQueryPart => 
   }
 
   if (typeof value === "string") {
+    if (["true", "false"].includes(value)) {
+      return value === "true";
+    }
+
     return { eq: value };
   }
 
@@ -299,6 +305,41 @@ export const creatDraftOrderQueryVariables = (value: FilterContainer): OrderDraf
 
     return p;
   }, {} as OrderDraftFilterInput);
+};
+
+export const createGiftCardQueryVariables = (value: FilterContainer) => {
+  return value.reduce<GiftCardFilterInput>((p, c) => {
+    if (typeof c === "string" || Array.isArray(c)) return p;
+
+    if (c.isStatic()) {
+      (p[c.value.value as keyof GiftCardFilterInput] as any) = mapStaticQueryPartToLegacyVariables(
+        createStaticQueryPart(c.condition.selected),
+      );
+    }
+
+    return p;
+  }, {} as GiftCardFilterInput);
+};
+
+export const createCustomerQueryVariables = (value: FilterContainer): CustomerFilterInput => {
+  return value.reduce((p, c) => {
+    if (typeof c === "string" || Array.isArray(c)) return p;
+
+    if (c.value.type === "numberOfOrders" && c.condition.selected.conditionValue?.label === "is") {
+      p["numberOfOrders"] = {
+        gte: Number(c.condition.selected.value),
+        lte: Number(c.condition.selected.value),
+      };
+
+      return p;
+    }
+
+    p[c.value.value as keyof CustomerFilterInput] = mapStaticQueryPartToLegacyVariables(
+      createStaticQueryPart(c.condition.selected),
+    );
+
+    return p;
+  }, {} as CustomerFilterInput);
 };
 
 type CollectionQueryVars = CollectionFilterInput & { channel?: { eq: string } };

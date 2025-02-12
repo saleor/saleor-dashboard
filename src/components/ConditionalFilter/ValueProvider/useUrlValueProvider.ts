@@ -5,6 +5,7 @@ import useRouter from "use-react-router";
 
 import { InitialAPIState } from "../API";
 import { InitialCollectionAPIState } from "../API/initialState/collections/useInitialCollectionsState";
+import { InitialGiftCardsAPIState } from "../API/initialState/giftCards/useInitialGiftCardsState";
 import { InitialOrderAPIState } from "../API/initialState/orders/useInitialOrderState";
 import { InitialPageAPIState } from "../API/initialState/page/useInitialPageState";
 import { InitialVoucherAPIState } from "../API/initialState/vouchers/useInitialVouchersState";
@@ -15,7 +16,8 @@ import {
   CollectionFetchingParams,
   FetchingParams,
   FilterProviderType,
-  getFetchingPrams,
+  getEmptyFetchingPrams,
+  GiftCardsFetchingParams,
   OrderFetchingParams,
   PageFetchingParams,
   VoucherFetchingParams,
@@ -30,6 +32,7 @@ export const useUrlValueProvider = (
     | InitialOrderAPIState
     | InitialVoucherAPIState
     | InitialPageAPIState
+    | InitialGiftCardsAPIState
     | InitialCollectionAPIState,
 ): FilterValueProvider => {
   const router = useRouter();
@@ -48,7 +51,7 @@ export const useUrlValueProvider = (
   params.delete("after");
 
   const tokenizedUrl = new TokenArray(params.toString());
-  const paramsFromType = getFetchingPrams(type);
+  const paramsFromType = getEmptyFetchingPrams(type);
   const fetchingParams = paramsFromType
     ? tokenizedUrl.getFetchingParams(paramsFromType, type)
     : null;
@@ -71,6 +74,11 @@ export const useUrlValueProvider = (
           break;
         case "page":
           (initialState as InitialPageAPIState).fetchQueries(fetchingParams as PageFetchingParams);
+          break;
+        case "gift-cards":
+          (initialState as InitialGiftCardsAPIState).fetchQueries(
+            fetchingParams as GiftCardsFetchingParams,
+          );
           break;
         case "collection":
           (initialState as InitialCollectionAPIState).fetchQueries(

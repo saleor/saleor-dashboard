@@ -1,9 +1,12 @@
 import React, { FC } from "react";
 
 import { useCollectionFilterAPIProvider } from "../API/CollectionFilterAPIProvider";
+import { useCustomerAPIProvider } from "../API/CustomerFilterAPIProvider";
 import { useDiscountFilterAPIProvider } from "../API/DiscountFiltersAPIProvider";
 import { useDraftOrderFilterAPIProvider } from "../API/DraftOrderFilterAPIProvider";
+import { useGiftCardsFiltersAPIProvider } from "../API/GiftCardsFilterAPIProvider";
 import { useInitialCollectionState } from "../API/initialState/collections/useInitialCollectionsState";
+import { useInitialGiftCardsState } from "../API/initialState/giftCards/useInitialGiftCardsState";
 import { useInitialOrderState } from "../API/initialState/orders/useInitialOrderState";
 import { useInitialPageState } from "../API/initialState/page/useInitialPageState";
 import { useProductInitialAPIState } from "../API/initialState/useInitialAPIState";
@@ -14,8 +17,10 @@ import { useProductFilterAPIProvider } from "../API/ProductFilterAPIProvider";
 import { useVoucherAPIProvider } from "../API/VoucherFilterAPIProvider";
 import {
   STATIC_COLLECTION_OPTIONS,
+  STATIC_CUSTOMER_OPTIONS,
   STATIC_DISCOUNT_OPTIONS,
   STATIC_DRAFT_ORDER_OPTIONS,
+  STATIC_GIFT_CARDS_OPTIONS,
   STATIC_ORDER_OPTIONS,
   STATIC_PAGE_OPTIONS,
   STATIC_PRODUCT_OPTIONS,
@@ -162,6 +167,57 @@ export const ConditionalDraftOrderFilterProvider: FC<{
 
   const valueProvider = useUrlValueProvider(locationSearch, "draft-order");
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_DRAFT_ORDER_OPTIONS);
+  const containerState = useContainerState(valueProvider);
+  const filterWindow = useFilterWindow();
+
+  return (
+    <ConditionalFilterContext.Provider
+      value={{
+        apiProvider,
+        valueProvider,
+        leftOperandsProvider,
+        containerState,
+        filterWindow,
+      }}
+    >
+      {children}
+    </ConditionalFilterContext.Provider>
+  );
+};
+
+export const ConditionalGiftCardsFilterProver: FC<{ locationSearch: string }> = ({
+  children,
+  locationSearch,
+}) => {
+  const initialState = useInitialGiftCardsState();
+  const apiProvider = useGiftCardsFiltersAPIProvider();
+  const valueProvider = useUrlValueProvider(locationSearch, "gift-cards", initialState);
+  const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_GIFT_CARDS_OPTIONS);
+  const containerState = useContainerState(valueProvider);
+  const filterWindow = useFilterWindow();
+
+  return (
+    <ConditionalFilterContext.Provider
+      value={{
+        apiProvider,
+        valueProvider,
+        leftOperandsProvider,
+        containerState,
+        filterWindow,
+      }}
+    >
+      {children}
+    </ConditionalFilterContext.Provider>
+  );
+};
+
+export const ConditionalCustomerFilterProvider: FC<{
+  locationSearch: string;
+}> = ({ children, locationSearch }) => {
+  const apiProvider = useCustomerAPIProvider();
+
+  const valueProvider = useUrlValueProvider(locationSearch, "customer");
+  const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_CUSTOMER_OPTIONS);
   const containerState = useContainerState(valueProvider);
   const filterWindow = useFilterWindow();
 
