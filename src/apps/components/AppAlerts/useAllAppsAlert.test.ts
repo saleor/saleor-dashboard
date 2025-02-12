@@ -13,6 +13,7 @@ describe("useAllAppsAlert", () => {
   });
 
   it("should handle null webhook data", () => {
+    // Arrange
     (useUserPermissions as jest.Mock).mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     (useAppFailedPendingWebhooksQuery as jest.Mock).mockReturnValue({
       data: {
@@ -28,26 +29,33 @@ describe("useAllAppsAlert", () => {
       },
     });
 
+    // Act
     const { result } = renderHook(() => useAllAppsAlert());
 
+    // Assert
     expect(result.current).toEqual({ hasFailed: false, hasPending: false });
   });
 
   it("should handle undefined permissions", () => {
+    // Arrange
     (useUserPermissions as jest.Mock).mockReturnValue(undefined);
     (useAppFailedPendingWebhooksQuery as jest.Mock).mockReturnValue({ data: null });
 
+    // Act
     const { result } = renderHook(() => useAllAppsAlert());
 
     expect(result.current).toEqual({ hasFailed: false, hasPending: false });
   });
 
   it("should return default counts when user has no permissions", () => {
+    // Arrange
     (useUserPermissions as jest.Mock).mockReturnValue([]);
     (useAppFailedPendingWebhooksQuery as jest.Mock).mockReturnValue({ data: null });
 
+    // Act
     const { result } = renderHook(() => useAllAppsAlert());
 
+    // Assert
     expect(result.current).toEqual({ hasFailed: false, hasPending: false });
     expect(useAppFailedPendingWebhooksQuery).toHaveBeenCalledWith({
       skip: true,
@@ -55,6 +63,7 @@ describe("useAllAppsAlert", () => {
   });
 
   it("should count webhooks correctly when user has permissions", () => {
+    // Arrange
     (useUserPermissions as jest.Mock).mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     (useAppFailedPendingWebhooksQuery as jest.Mock).mockReturnValue({
       data: {
@@ -79,8 +88,10 @@ describe("useAllAppsAlert", () => {
       },
     });
 
+    // Act
     const { result } = renderHook(() => useAllAppsAlert());
 
+    // Assert
     expect(result.current).toEqual({ hasFailed: true, hasPending: true });
     expect(useAppFailedPendingWebhooksQuery).toHaveBeenCalledWith({
       skip: false,

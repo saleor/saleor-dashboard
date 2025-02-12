@@ -3467,14 +3467,22 @@ export const AppFailedPendingWebhooksDocument = gql`
     edges {
       node {
         webhooks {
-          failedDelivers: eventDeliveries(first: 1, filter: {status: FAILED}) {
+          failedDelivers: eventDeliveries(
+            first: 1
+            filter: {status: FAILED}
+            sortBy: {field: CREATED_AT, direction: DESC}
+          ) {
             edges {
               node {
                 id
               }
             }
           }
-          pendingDelivers: eventDeliveries(first: 1, filter: {status: PENDING}) {
+          pendingDelivers: eventDeliveries(
+            first: 1
+            filter: {status: PENDING}
+            sortBy: {field: CREATED_AT, direction: DESC}
+          ) {
             edges {
               node {
                 id
