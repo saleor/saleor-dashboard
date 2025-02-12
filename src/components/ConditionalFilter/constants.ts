@@ -99,6 +99,17 @@ export const STATIC_CONDITIONS = {
     { type: "date", label: "greater", value: "input-2" },
     { type: "date.range", label: "between", value: "input-3" },
   ],
+  dateJoined: [
+    { type: "date", label: "lower", value: "input-1" },
+    { type: "date", label: "greater", value: "input-2" },
+    { type: "date.range", label: "between", value: "input-3" },
+  ],
+  numberOfOrders: [
+    { type: "number", label: "is", value: "input-1" },
+    { type: "number", label: "lower", value: "input-1" },
+    { type: "number", label: "greater", value: "input-2" },
+    { type: "number.range", label: "between", value: "input-2" },
+  ],
   started: [
     { type: "datetime", label: "lower", value: "input-1" },
     { type: "datetime", label: "greater", value: "input-2" },
@@ -433,6 +444,21 @@ export const STATIC_GIFT_CARDS_OPTIONS: LeftOperand[] = [
   },
 ];
 
+export const STATIC_CUSTOMER_OPTIONS: LeftOperand[] = [
+  {
+    value: "dateJoined",
+    label: "Join date",
+    type: "dateJoined",
+    slug: "dateJoined",
+  },
+  {
+    value: "numberOfOrders",
+    label: "Number of orders",
+    type: "numberOfOrders",
+    slug: "numberOfOrders",
+  },
+];
+
 export const STATIC_OPTIONS = [
   ...STATIC_PRODUCT_OPTIONS,
   ...STATIC_DISCOUNT_OPTIONS,
@@ -441,6 +467,7 @@ export const STATIC_OPTIONS = [
   ...STATIC_PAGE_OPTIONS,
   ...STATIC_DRAFT_ORDER_OPTIONS,
   ...STATIC_GIFT_CARDS_OPTIONS,
+  ...STATIC_CUSTOMER_OPTIONS,
 ];
 
 export const ATTRIBUTE_INPUT_TYPE_CONDITIONS = {
