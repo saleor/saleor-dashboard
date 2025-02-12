@@ -1,4 +1,7 @@
-import { ConditionalDiscountFilterProvider } from "@dashboard/components/ConditionalFilter";
+import {
+  ConditionalDiscountFilterProvider,
+  ConditionalVoucherFilterProvider,
+} from "@dashboard/components/ConditionalFilter";
 import { Route } from "@dashboard/components/Router";
 import { useFlag } from "@dashboard/featureFlags";
 import { sectionNames } from "@dashboard/intl";
@@ -81,7 +84,11 @@ const VoucherListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
     VoucherListUrlSortField.code,
   );
 
-  return <VoucherListViewComponent params={params} />;
+  return (
+    <ConditionalVoucherFilterProvider locationSearch={location.search}>
+      <VoucherListViewComponent params={params} />
+    </ConditionalVoucherFilterProvider>
+  );
 };
 const VoucherDetailsView: React.FC<RouteComponentProps<{ id: string }>> = ({ match, location }) => {
   const qs = parseQs(location.search.substr(1));

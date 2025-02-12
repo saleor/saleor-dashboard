@@ -17,11 +17,17 @@ runs:
         pattern: ctrf-report-*
         path: ctrf-reports
         merge-multiple: true
-        
+
     - name: Merge CTRF reports
       shell: bash
       run: npx ctrf merge ./ctrf-reports --output merged-report.json
 
+    - name: Add execution date to merged report
+      shell: bash
+      run: |
+        DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")  # ISO format
+        jq --arg date "$DATE" '.results.summary.extra = { "data": $date }' ctrf-reports/merged-report.json > ctrf-reports/tmp.json && mv ctrf-reports/tmp.json ctrf-reports/merged-report.json
+        
     - name: Upload CTRF report
       uses: actions/upload-artifact@v4
       with:
@@ -34,9 +40,17 @@ runs:
       with:
         report-path: ctrf-reports/merged-report.json
         summary-report: true
-        pull-request: true
+        commit-report: true
+      env:
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+      if: always()
+      
+    - name: Publish PR Comment
+      uses: ctrf-io/github-test-reporter@v1
+      with:
+        report-path: ctrf-reports/merged-report.json
+        pull-request-report: true
         overwrite-comment: true
-        failed-report: true
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
       if: always()

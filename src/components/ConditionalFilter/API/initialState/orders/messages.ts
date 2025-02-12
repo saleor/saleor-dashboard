@@ -40,3 +40,39 @@ export const chargeStatusMessages = defineMessages({
     description: "charge status none",
   },
 });
+
+export const discountTypeMessages = defineMessages({
+  fixed: {
+    defaultMessage: "Fixed",
+    id: "1/bAgt",
+    description: "discount type fixed",
+  },
+  percentage: {
+    defaultMessage: "Percentage",
+    id: "+Wm2vY",
+    description: "discount type percentage",
+  },
+  shipping: {
+    defaultMessage: "Shipping",
+    id: "UVDfTs",
+    description: "discount type shipping",
+  },
+});
+
+export const voucherStatusMessages = defineMessages({
+  active: {
+    defaultMessage: "Active",
+    id: "EGycu/",
+    description: "voucher status active",
+  },
+  expired: {
+    defaultMessage: "Expired",
+    id: "+470FM",
+    description: "voucher status expired",
+  },
+  scheduled: {
+    defaultMessage: "Scheduled",
+    id: "qQih8j",
+    description: "voucher status scheduled",
+  },
+});

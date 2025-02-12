@@ -31,6 +31,9 @@ export interface InitialState {
   giftCard: ItemOption[];
 }
 
+const isDateField = (name: string) =>
+  ["created", "updatedAt", "startDate", "endDate"].includes(name);
+
 export class InitialStateResponse implements InitialState {
   constructor(
     public category: ItemOption[] = [],
@@ -56,6 +59,10 @@ export class InitialStateResponse implements InitialState {
   public filterByUrlToken(token: UrlToken) {
     if (token.isAttribute() && token.hasDynamicValues()) {
       return this.attribute[token.name].choices.filter(({ value }) => token.value.includes(value));
+    }
+
+    if (isDateField(token.name)) {
+      return token.value;
     }
 
     if (token.isAttribute()) {

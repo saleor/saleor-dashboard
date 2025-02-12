@@ -18,8 +18,28 @@ export interface OrderFetchingParams {
   ids: string[];
 }
 
+export interface VoucherFetchingParams {
+  channel: string[];
+  discountType: string[];
+  voucherStatus: string[];
+}
+
+export interface PageFetchingParams {
+  pageTypes: string[];
+}
+
+export interface GiftCardsFetchingParams {
+  currency: string[];
+  products: string[];
+  tags: string[];
+  usedBy: string[];
+}
+
 type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute">;
 type OrderParamsKeys = keyof OrderFetchingParams;
+type VoucherParamsKeys = keyof VoucherFetchingParams;
+type PageParamsKeys = keyof PageFetchingParams;
+type GiftCardsParamKeys = keyof GiftCardsFetchingParams;
 
 export const emptyFetchingParams: FetchingParams = {
   category: [],
@@ -37,6 +57,23 @@ export const emptyOrderFetchingParams: OrderFetchingParams = {
   channels: [],
   customer: [],
   ids: [],
+};
+
+export const emptyVoucherFetchingParams: VoucherFetchingParams = {
+  channel: [],
+  discountType: [],
+  voucherStatus: [],
+};
+
+export const emptyPageFetchingParams: PageFetchingParams = {
+  pageTypes: [],
+};
+
+export const emptyGiftCardsFetchingParams: GiftCardsFetchingParams = {
+  currency: [],
+  products: [],
+  tags: [],
+  usedBy: [],
 };
 
 const unique = <T>(array: Iterable<T>) => Array.from(new Set(array));
@@ -87,4 +124,65 @@ export const toOrderFetchingParams = (p: OrderFetchingParams, c: UrlToken) => {
   p[key] = unique(p[key].concat(c.value));
 
   return p;
+};
+
+export const toVouchersFetchingParams = (p: VoucherFetchingParams, c: UrlToken) => {
+  const key = c.name as VoucherParamsKeys;
+
+  if (!p[key]) {
+    p[key] = [];
+  }
+
+  p[key] = unique(p[key].concat(c.value));
+
+  return p;
+};
+
+export const toPageFetchingParams = (p: PageFetchingParams, c: UrlToken) => {
+  const key = c.name as PageParamsKeys;
+
+  if (!p[key]) {
+    p[key] = [];
+  }
+
+  p[key] = unique(p[key].concat(c.value));
+
+  return p;
+};
+
+export const toGiftCardsFetchingParams = (p: GiftCardsFetchingParams, c: UrlToken) => {
+  const key = c.name as GiftCardsParamKeys;
+
+  if (!p[key]) {
+    p[key] = [];
+  }
+
+  p[key] = unique(p[key].concat(c.value));
+
+  return p;
+};
+
+export const getFetchingPrams = (
+  type:
+    | "product"
+    | "order"
+    | "discount"
+    | "voucher"
+    | "page"
+    | "draft-order"
+    | "gift-cards"
+    | "customer",
+) => {
+  switch (type) {
+    case "product":
+      return emptyFetchingParams;
+    case "order":
+      return emptyOrderFetchingParams;
+    case "voucher":
+      return emptyVoucherFetchingParams;
+    case "page":
+      return emptyPageFetchingParams;
+    case "gift-cards":
+      return emptyGiftCardsFetchingParams;
+  }
 };

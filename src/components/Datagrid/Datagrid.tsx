@@ -526,7 +526,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
       {rowAnchor && (
         <a
           ref={setRowAnchorRef}
-          style={{ position: "absolute" }}
+          style={{ position: "absolute", top: "-1000px", left: "-1000px" }}
           tabIndex={-1}
           aria-hidden={true}
           onWheelCapture={hideLinkAndShowAfterDelay}
