@@ -23,6 +23,8 @@ const VOUCHER_STATICS = ["channel", "discountType", "voucherStatus"];
 
 const PAGE_STATIC = ["pageTypes"];
 
+const GIFT_CARDS_STATICS = ["currency", "products", "isActive", "tags", "usedBy"];
+
 const STATIC_TO_LOAD = [
   "category",
   "collection",
@@ -36,6 +38,7 @@ const STATIC_TO_LOAD = [
   ...ORDER_STATICS,
   ...VOUCHER_STATICS,
   ...PAGE_STATIC,
+  ...GIFT_CARDS_STATICS,
 ];
 
 export const TokenType = {
