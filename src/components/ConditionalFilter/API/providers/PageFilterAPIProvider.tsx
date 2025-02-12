@@ -5,7 +5,7 @@ import {
   FilterElement,
 } from "@dashboard/components/ConditionalFilter/FilterElement";
 
-import { FilterAPIProvider } from "./FilterAPIProvider";
+import { FilterAPIProvider } from "../FilterAPIProvider";
 
 const getFilterElement = (value: FilterContainer, index: number): FilterElement => {
   const possibleFilterElement = value[index];
