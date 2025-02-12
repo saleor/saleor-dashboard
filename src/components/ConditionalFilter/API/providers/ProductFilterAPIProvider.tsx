@@ -1,9 +1,9 @@
 import { ApolloClient, useApolloClient } from "@apollo/client";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 
-import { RowType } from "../constants";
-import { FilterContainer, FilterElement } from "../FilterElement";
-import { FilterAPIProvider } from "./FilterAPIProvider";
+import { RowType } from "../../constants";
+import { FilterContainer, FilterElement } from "../../FilterElement";
+import { FilterAPIProvider } from "../FilterAPIProvider";
 import {
   AttributeChoicesHandler,
   AttributesHandler,
@@ -13,7 +13,7 @@ import {
   CollectionHandler,
   Handler,
   ProductTypeHandler,
-} from "./Handler";
+} from "../Handler";
 
 const getFilterElement = (value: FilterContainer, index: number): FilterElement => {
   const possibleFilterElement = value[index];
