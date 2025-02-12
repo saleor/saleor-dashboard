@@ -1,16 +1,17 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { PermissionEnum, useAppFailedPendingWebhooksQuery } from "@dashboard/graphql";
+import { useMemo } from "react";
 
 const requiredPermissions = [PermissionEnum.MANAGE_APPS];
 
 interface FailedWebhooksCount {
-  failed: number;
-  pending: number;
+  hasFailed: boolean;
+  hasPending: boolean;
 }
 
-const defaultFailedWebhooksCount: FailedWebhooksCount = {
-  failed: 0,
-  pending: 0,
+const defaultFailedWebhooksInfo: FailedWebhooksCount = {
+  hasFailed: false,
+  hasPending: false,
 };
 
 export const useAllAppsAlert = (): FailedWebhooksCount => {
@@ -23,25 +24,30 @@ export const useAllAppsAlert = (): FailedWebhooksCount => {
     skip: !hasRequiredPermissions,
   });
 
-  const failedWebhooksCount =
-    data?.apps?.edges.reduce((acc, app) => {
-      const failedWebhooks =
-        app.node.webhooks?.reduce(
-          (acc, webhook) => acc + (webhook?.failedDelivers?.edges?.length ?? 0),
-          0,
-        ) ?? 0;
+  const failedWebhooksInfo = useMemo(
+    () =>
+      data?.apps?.edges.reduce((acc, app) => {
+        const webhookInfo = defaultFailedWebhooksInfo;
 
-      const pendingWebhooks =
-        app.node.webhooks?.reduce(
-          (acc, webhook) => acc + (webhook?.pendingDelivers?.edges?.length ?? 0),
-          0,
-        ) ?? 0;
+        app.node.webhooks?.forEach(webhook => {
+          const { failedDelivers, pendingDelivers } = webhook;
 
-      return {
-        failed: acc.failed + failedWebhooks,
-        pending: acc.pending + pendingWebhooks,
-      };
-    }, defaultFailedWebhooksCount) ?? defaultFailedWebhooksCount;
+          if (failedDelivers && failedDelivers.edges?.length > 0) {
+            webhookInfo.hasFailed = true;
+          }
 
-  return failedWebhooksCount;
+          if (pendingDelivers && pendingDelivers.edges?.length > 0) {
+            webhookInfo.hasPending = true;
+          }
+        });
+
+        return {
+          hasFailed: webhookInfo.hasFailed || acc.hasFailed,
+          hasPending: webhookInfo.hasPending || acc.hasPending,
+        };
+      }, defaultFailedWebhooksInfo) ?? defaultFailedWebhooksInfo,
+    [data],
+  );
+
+  return failedWebhooksInfo;
 };
