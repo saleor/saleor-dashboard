@@ -154,6 +154,12 @@ export const fragmentOrderLine = gql`
 export const fragmentOrderLineWithMetadata = gql`
   fragment OrderLineWithMetadata on OrderLine {
     ...OrderLine
+    metadata {
+      ...MetadataItem
+    }
+    privateMetadata {
+      ...MetadataItem
+    }
     variant {
       metadata {
         ...MetadataItem

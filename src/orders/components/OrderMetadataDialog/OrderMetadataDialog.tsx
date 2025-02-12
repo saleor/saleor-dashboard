@@ -29,8 +29,8 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
           onChange={() => undefined}
           isLoading={loading}
           data={{
-            metadata: data?.variant?.metadata ?? [],
-            privateMetadata: data?.variant?.privateMetadata,
+            metadata: data?.metadata ?? [],
+            privateMetadata: data?.privateMetadata,
           }}
           hidePrivateMetadata={!hasManageProducts}
         />
