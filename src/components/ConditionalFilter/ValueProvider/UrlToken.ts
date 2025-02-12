@@ -18,6 +18,7 @@ const ORDER_STATICS = [
   "channels",
   "ids",
 ];
+const ATTRIBUTE_STATICS = ["channel", "attributeType"];
 
 const STATIC_TO_LOAD = [
   "category",
@@ -30,6 +31,7 @@ const STATIC_TO_LOAD = [
   "hasCategory",
   "giftCard",
   ...ORDER_STATICS,
+  ...ATTRIBUTE_STATICS,
 ];
 
 export const TokenType = {

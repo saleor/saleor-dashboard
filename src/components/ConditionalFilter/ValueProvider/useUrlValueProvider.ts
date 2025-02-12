@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { InitialAttributeAPIState } from "@dashboard/components/ConditionalFilter/API/initialState/attributes/useInitialAttributeState";
 import { stringify } from "qs";
 import { useEffect, useState } from "react";
 import useRouter from "use-react-router";
@@ -19,7 +20,7 @@ import { prepareStructure } from "./utils";
 export const useUrlValueProvider = (
   locationSearch: string,
   type: "product" | "order" | "discount" | "attributes",
-  initialState?: InitialAPIState | InitialOrderAPIState,
+  initialState?: InitialAPIState | InitialOrderAPIState | InitialAttributeAPIState,
 ): FilterValueProvider => {
   const router = useRouter();
   const params = new URLSearchParams(locationSearch);
@@ -50,6 +51,9 @@ export const useUrlValueProvider = (
           (initialState as InitialOrderAPIState).fetchQueries(
             fetchingParams as OrderFetchingParams,
           );
+          break;
+        case "attributes":
+          (initialState as InitialAttributeAPIState).fetchQueries(fetchingParams);
           break;
       }
     }

@@ -1,9 +1,17 @@
+import { ApolloClient, useApolloClient } from "@apollo/client";
 import { FilterAPIProvider } from "@dashboard/components/ConditionalFilter/API/FilterAPIProvider";
-import { BooleanValuesHandler, Handler } from "@dashboard/components/ConditionalFilter/API/Handler";
+import {
+  BooleanValuesHandler,
+  ChannelHandler,
+  EnumValuesHandler,
+  Handler,
+} from "@dashboard/components/ConditionalFilter/API/Handler";
 import {
   FilterContainer,
   FilterElement,
 } from "@dashboard/components/ConditionalFilter/FilterElement";
+import { AttributeTypeEnum } from "@dashboard/graphql";
+import { IntlShape, useIntl } from "react-intl";
 
 const getFilterElement = (value: FilterContainer, index: number): FilterElement => {
   const possibleFilterElement = value[index];
@@ -15,16 +23,31 @@ const getFilterElement = (value: FilterContainer, index: number): FilterElement 
   throw new Error("Unknown filter element used to create API handler");
 };
 
-const createAPIHandler = (selectedRow: FilterElement): Handler => {
+const booleanTypes = [
+  "filterableInDashboard",
+  "isVariantOnly",
+  "valueRequired",
+  "visibleInStorefront",
+  "filterableInStorefront",
+];
+
+const createAPIHandler = (
+  selectedRow: FilterElement,
+  client: ApolloClient<unknown>,
+  inputValue: string,
+  intl: IntlShape,
+): Handler => {
   const rowType = selectedRow.rowType();
 
-  if (
-    rowType &&
-    ["filterableInDashboard", "isVariantOnly", "valueRequired", "visibleInStorefront"].includes(
-      rowType,
-    ) &&
-    rowType !== "attribute"
-  ) {
+  if (rowType === "channel") {
+    return new ChannelHandler(client, inputValue);
+  }
+
+  if (rowType === "attributeType") {
+    return new EnumValuesHandler(AttributeTypeEnum, "attributeType", intl);
+  }
+
+  if (rowType && booleanTypes.includes(rowType) && rowType !== "attribute") {
     return new BooleanValuesHandler([
       {
         label: "Yes",
@@ -45,11 +68,18 @@ const createAPIHandler = (selectedRow: FilterElement): Handler => {
 };
 
 export const useAttributesFilterAPIProvider = (): FilterAPIProvider => {
-  const fetchRightOptions = async (position: string, value: FilterContainer) => {
+  const intl = useIntl();
+  const client = useApolloClient();
+
+  const fetchRightOptions = async (
+    position: string,
+    value: FilterContainer,
+    inputValue: string,
+  ) => {
     const index = parseInt(position, 10);
     const filterElement = getFilterElement(value, index);
 
-    const handler = createAPIHandler(filterElement);
+    const handler = createAPIHandler(filterElement, client, inputValue, intl);
 
     return handler.fetch();
   };

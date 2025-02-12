@@ -1,3 +1,5 @@
+import { InitialAttributeStateResponse } from "@dashboard/components/ConditionalFilter/API/initialState/attributes/InitialAttirbuteState";
+
 import { InitialOrderStateResponse } from "../API/initialState/orders/InitialOrderState";
 import { InitialStateResponse } from "../API/InitialStateResponse";
 import { RowType, STATIC_OPTIONS } from "../constants";
@@ -177,7 +179,7 @@ export class FilterElement {
 
   public static fromUrlToken(
     token: UrlToken,
-    response: InitialStateResponse | InitialOrderStateResponse,
+    response: InitialStateResponse | InitialOrderStateResponse | InitialAttributeStateResponse,
   ) {
     if (token.isStatic()) {
       return new FilterElement(

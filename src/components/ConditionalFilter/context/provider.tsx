@@ -1,4 +1,5 @@
 import { useAttributesFilterAPIProvider } from "@dashboard/components/ConditionalFilter/API/AttributesFilterAPIProvider";
+import { useInitialAttributeState } from "@dashboard/components/ConditionalFilter/API/initialState/attributes/useInitialAttributeState";
 import React, { FC } from "react";
 
 import { useDiscountFilterAPIProvider } from "../API/DiscountFiltersAPIProvider";
@@ -98,7 +99,8 @@ export const ConditionalAttributesFilterProvider: FC<{
 }> = ({ children, locationSearch }) => {
   const apiProvider = useAttributesFilterAPIProvider();
 
-  const valueProvider = useUrlValueProvider(locationSearch, "attributes");
+  const initialState = useInitialAttributeState();
+  const valueProvider = useUrlValueProvider(locationSearch, "attributes", initialState);
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_ATTRIBUTES_OPTIONS);
   const containerState = useContainerState(valueProvider);
   const filterWindow = useFilterWindow();

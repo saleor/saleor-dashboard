@@ -11,8 +11,9 @@ import {
 import { createBooleanOptions } from "../../constants";
 import { createOptionsFromAPI } from "../Handler";
 import { InitialState } from "../InitialStateResponse";
+import { InitialAttributeState } from "./attributes/InitialAttirbuteState";
 import { InitialOrderState } from "./orders/InitialOrderState";
-import { InitialAPIResponse, InitialOrderAPIResponse } from "./types";
+import { InitialAPIResponse, InitialAttributeAPIResponse, InitialOrderAPIResponse } from "./types";
 
 const isChannelQuery = (
   query: InitialAPIResponse,
@@ -134,5 +135,27 @@ export const createInitialOrderState = (data: InitialOrderAPIResponse[]) =>
       ids: [],
       created: "",
       updatedAt: "",
+    },
+  );
+
+export const createInitialAttributeState = (data: InitialAttributeAPIResponse[]) =>
+  data.reduce<InitialAttributeState>(
+    (acc, query) => {
+      if (isChannelsQuery(query)) {
+        return {
+          ...acc,
+          channels: (query.data?.channels ?? []).map(({ id, name, slug }) => ({
+            label: name,
+            value: id,
+            slug,
+          })),
+        };
+      }
+
+      return acc;
+    },
+    {
+      channels: [],
+      attributeTypes: [],
     },
   );

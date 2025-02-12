@@ -40,3 +40,16 @@ export const chargeStatusMessages = defineMessages({
     description: "charge status none",
   },
 });
+
+export const attributeTypeMessages = defineMessages({
+  productType: {
+    defaultMessage: "Product type",
+    id: "jzu97k",
+    description: "attribute product type",
+  },
+  pageType: {
+    defaultMessage: "Page type",
+    id: "qT0qr/",
+    description: "attribute page type",
+  },
+});

@@ -226,6 +226,12 @@ export const creatAttributesQueryVariables = (value: FilterContainer): Attribute
   return value.reduce((p, c) => {
     if (typeof c === "string" || Array.isArray(c)) return p;
 
+    if (c.value.type === "attributeType") {
+      p["type"] = mapStaticQueryPartToLegacyVariables(createStaticQueryPart(c.condition.selected));
+
+      return p;
+    }
+
     p[c.value.value as keyof AttributeFilterInput] = mapStaticQueryPartToLegacyVariables(
       createStaticQueryPart(c.condition.selected),
     );

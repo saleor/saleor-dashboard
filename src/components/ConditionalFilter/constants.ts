@@ -26,7 +26,9 @@ export const STATIC_CONDITIONS = {
   isVariantOnly: [{ type: "select", label: "is", value: "input-1" }],
   valueRequired: [{ type: "select", label: "is", value: "input-1" }],
   visibleInStorefront: [{ type: "select", label: "is", value: "input-1" }],
+  filterableInStorefront: [{ type: "select", label: "is", value: "input-1" }],
   filterableInDashboard: [{ type: "select", label: "is", value: "input-1" }],
+  attributeType: [{ type: "select", label: "is", value: "input-1" }],
   hasCategory: [{ type: "select", label: "is", value: "input-1" }],
   giftCard: [{ type: "select", label: "is", value: "input-1" }],
   startDate: [
@@ -279,8 +281,14 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
 
 export const STATIC_ATTRIBUTES_OPTIONS: LeftOperand[] = [
   {
-    value: "filterableInDashboard",
+    value: "filterableInStorefront",
     label: "Filterable in Storefront",
+    type: "filterableInStorefront",
+    slug: "filterableInStorefront",
+  },
+  {
+    value: "filterableInDashboard",
+    label: "Filterable in Dashboard",
     type: "filterableInDashboard",
     slug: "filterableInDashboard",
   },
@@ -301,6 +309,18 @@ export const STATIC_ATTRIBUTES_OPTIONS: LeftOperand[] = [
     label: "Visible on Product Page in Storefront",
     type: "visibleInStorefront",
     slug: "visibleInStorefront",
+  },
+  {
+    value: "attributeType",
+    label: "Type",
+    type: "attributeType",
+    slug: "attributeType",
+  },
+  {
+    value: "channel",
+    label: "Channel",
+    type: "channel",
+    slug: "channel",
   },
 ];
 
