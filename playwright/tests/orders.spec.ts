@@ -264,7 +264,7 @@ test("TC: SALEOR_84 Create draft order #e2e #draft", async () => {
   await draftOrdersPage.expectSuccessBanner({ message: "finalized" });
 });
 
-test("TC: SALEOR_191 Refund products from the fully paid order #e2e @refunds", async () => {
+test("TC: SALEOR_191 Refund products from the fully paid order #e2e #refunds", async () => {
   // All steps of this test pass (including after hooks), but Playwright
   // marks it as failed because of exceeding 30s timeout
   test.slow();
@@ -302,7 +302,7 @@ test("TC: SALEOR_191 Refund products from the fully paid order #e2e @refunds", a
   await refundPage.expectSuccessBanner({ message: "Refund has been sent" });
 });
 
-test("TC: SALEOR_192 Should create a manual refund with a custom amount #e2e @refunds", async () => {
+test("TC: SALEOR_192 Should create a manual refund with a custom amount #e2e #refunds", async () => {
   const order = ORDERS.fullyPaidOrderWithSeveralTransactions;
 
   await ordersPage.goToExistingOrderPage(order.id);
@@ -328,7 +328,7 @@ test("TC: SALEOR_192 Should create a manual refund with a custom amount #e2e @re
 const orderRefunds = ORDERS.orderWithRefundsInStatusOtherThanSuccess.refunds;
 
 for (const refund of orderRefunds) {
-  test(`TC: SALEOR_193 Update order with non-manual refund in ${refund.status} status #e2e @refunds`, async () => {
+  test(`TC: SALEOR_193 Update order with non-manual refund in ${refund.status} status #e2e #refunds`, async () => {
     await ordersPage.goToExistingOrderPage(ORDERS.orderWithRefundsInStatusOtherThanSuccess.id);
     await ordersPage.orderRefundList.scrollIntoViewIfNeeded();
 
