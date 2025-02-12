@@ -1,3 +1,4 @@
+import { SidebarAppAlert } from "@dashboard/apps/components/AppAlerts/SidebarAppAlert";
 import { extensionMountPoints, useExtensions } from "@dashboard/apps/hooks/useExtensions";
 import { AppPaths } from "@dashboard/apps/urls";
 import { useUser } from "@dashboard/auth";
@@ -48,6 +49,7 @@ export function useMenuStructure() {
     id: "apps",
     url: AppPaths.appListPath,
     type: "item",
+    endAdornment: <SidebarAppAlert />,
   });
   const menuItems: SidebarMenuItem[] = [
     {

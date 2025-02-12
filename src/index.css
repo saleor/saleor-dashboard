@@ -75,7 +75,6 @@ body {
   border: none;
 }
 
-
 .conditional-metadata label {
   border: none;
 }
@@ -85,7 +84,7 @@ body {
 }
 
 @media (min-height: 900px) {
-    .scrollArea {
-      max-height: 600px;
-    }
+  .scrollArea {
+    max-height: 600px;
+  }
 }
