@@ -3,19 +3,19 @@ import { stringify } from "qs";
 import { useEffect, useState } from "react";
 import useRouter from "use-react-router";
 
-import { InitialAPIState } from "../API";
 import { InitialCollectionAPIState } from "../API/initialState/collections/useInitialCollectionsState";
 import { InitialGiftCardsAPIState } from "../API/initialState/giftCards/useInitialGiftCardsState";
 import { InitialOrderAPIState } from "../API/initialState/orders/useInitialOrderState";
 import { InitialPageAPIState } from "../API/initialState/page/useInitialPageState";
+import { InitialProductAPIState } from "../API/initialState/product/useProductInitialAPIState";
 import { InitialVoucherAPIState } from "../API/initialState/vouchers/useInitialVouchersState";
 import { FilterContainer, FilterElement } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
+import { FilterProviderType, InitialAPIState } from "../types";
 import { TokenArray } from "./TokenArray";
 import {
   CollectionFetchingParams,
   FetchingParams,
-  FilterProviderType,
   getEmptyFetchingPrams,
   GiftCardsFetchingParams,
   OrderFetchingParams,
@@ -27,13 +27,7 @@ import { prepareStructure } from "./utils";
 export const useUrlValueProvider = (
   locationSearch: string,
   type: FilterProviderType,
-  initialState?:
-    | InitialAPIState
-    | InitialOrderAPIState
-    | InitialVoucherAPIState
-    | InitialPageAPIState
-    | InitialGiftCardsAPIState
-    | InitialCollectionAPIState,
+  initialState?: InitialAPIState,
 ): FilterValueProvider => {
   const router = useRouter();
   const params = new URLSearchParams(locationSearch);
@@ -60,7 +54,7 @@ export const useUrlValueProvider = (
     if (initialState) {
       switch (type) {
         case "product":
-          (initialState as InitialAPIState).fetchQueries(fetchingParams as FetchingParams);
+          (initialState as InitialProductAPIState).fetchQueries(fetchingParams as FetchingParams);
           break;
         case "order":
           (initialState as InitialOrderAPIState).fetchQueries(

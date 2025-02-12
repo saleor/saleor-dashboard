@@ -1,18 +1,13 @@
 import { parse, ParsedQs } from "qs";
 
-import { InitialGiftCardsStateResponse } from "../../API/initialState/giftCards/InitialGiftCardsState";
-import { InitialOrderStateResponse } from "../../API/initialState/orders/InitialOrderState";
-import { InitialPageStateResponse } from "../../API/initialState/page/InitialPageState";
-import { InitialVouchersStateResponse } from "../../API/initialState/vouchers/InitialVouchersState";
-import { InitialStateResponse } from "../../API/InitialStateResponse";
+import { InitialProductStateResponse } from "../../API/initialState/product/InitialProductStateResponse";
 import { FilterContainer, FilterElement } from "../../FilterElement";
-import { InitialResponseType } from "../../types";
+import { FilterProviderType, InitialResponseType } from "../../types";
 import { UrlEntry, UrlToken } from "../UrlToken";
 import {
   CollectionFetchingParams,
   FetchingParams,
   FetchingParamsType,
-  FilterProviderType,
   GiftCardsFetchingParams,
   OrderFetchingParams,
   PageFetchingParams,
@@ -57,13 +52,7 @@ const tokenizeUrl = (urlParams: string) => {
 };
 const mapUrlTokensToFilterValues = (
   urlTokens: TokenArray,
-  response:
-    | InitialResponseType
-    | InitialStateResponse
-    | InitialOrderStateResponse
-    | InitialVouchersStateResponse
-    | InitialPageStateResponse
-    | InitialGiftCardsStateResponse,
+  response: InitialResponseType,
 ): FilterContainer =>
   urlTokens.map(el => {
     if (typeof el === "string") {
@@ -121,15 +110,7 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
     return flatenate(this);
   }
 
-  public asFilterValuesFromResponse(
-    response:
-      | InitialResponseType
-      | InitialStateResponse
-      | InitialOrderStateResponse
-      | InitialVouchersStateResponse
-      | InitialPageStateResponse
-      | InitialGiftCardsStateResponse,
-  ): FilterContainer {
+  public asFilterValuesFromResponse(response: InitialResponseType): FilterContainer {
     return this.map(el => {
       if (typeof el === "string") {
         return el;
@@ -150,6 +131,6 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
   }
 
   public asFilterValueFromEmpty(): FilterContainer {
-    return this.asFilterValuesFromResponse(InitialStateResponse.empty());
+    return this.asFilterValuesFromResponse(InitialProductStateResponse.empty());
   }
 }

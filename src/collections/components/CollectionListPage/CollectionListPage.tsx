@@ -16,13 +16,7 @@ import { useFlag } from "@dashboard/featureFlags";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import {
-  FilterPageProps,
-  PageListProps,
-  SearchPageProps,
-  SortPage,
-  TabPageProps,
-} from "@dashboard/types";
+import { FilterPageProps, PageListProps, SortPage } from "@dashboard/types";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -33,9 +27,7 @@ import { CollectionFilterKeys, CollectionListFilterOpts, createFilterStructure }
 
 export interface CollectionListPageProps
   extends PageListProps,
-    Omit<TabPageProps, "onTabDelete">,
     Omit<FilterPageProps<CollectionFilterKeys, CollectionListFilterOpts>, "onTabDelete">,
-    SearchPageProps,
     SortPage<CollectionListUrlSortField> {
   onTabUpdate: (tabName: string) => void;
   selectedChannelId: string;
@@ -72,9 +64,9 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
   const intl = useIntl();
   const location = useLocation();
   const navigate = useNavigator();
+  const filterStructure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const { enabled: isNewCollectionListEnabled } = useFlag("collection_list_new_filters");
-  const filterStructure = createFilterStructure(intl, filterOpts);
   const filterDependency = filterStructure.find(getByName("channel"));
 
   return (

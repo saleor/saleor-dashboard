@@ -2,9 +2,9 @@ import { ApolloClient, useApolloClient } from "@apollo/client";
 import { CollectionPublished } from "@dashboard/graphql/types.generated";
 import { IntlShape, useIntl } from "react-intl";
 
-import { FilterContainer, FilterElement } from "../FilterElement";
-import { FilterAPIProvider } from "./FilterAPIProvider";
-import { ChannelHandler, EnumValuesHandler, Handler, NoopValuesHandler } from "./Handler";
+import { FilterContainer, FilterElement } from "../../FilterElement";
+import { FilterAPIProvider } from "../FilterAPIProvider";
+import { ChannelHandler, EnumValuesHandler, Handler, NoopValuesHandler } from "../Handler";
 
 const getFilterElement = (value: FilterContainer, index: number): FilterElement => {
   const possibleFilterElement = value[index];

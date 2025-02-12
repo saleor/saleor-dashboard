@@ -1,20 +1,20 @@
 import React, { FC } from "react";
 
-import { useCollectionFilterAPIProvider } from "../API/CollectionFilterAPIProvider";
-import { useCustomerAPIProvider } from "../API/CustomerFilterAPIProvider";
-import { useDiscountFilterAPIProvider } from "../API/DiscountFiltersAPIProvider";
-import { useDraftOrderFilterAPIProvider } from "../API/DraftOrderFilterAPIProvider";
-import { useGiftCardsFiltersAPIProvider } from "../API/GiftCardsFilterAPIProvider";
 import { useInitialCollectionState } from "../API/initialState/collections/useInitialCollectionsState";
 import { useInitialGiftCardsState } from "../API/initialState/giftCards/useInitialGiftCardsState";
 import { useInitialOrderState } from "../API/initialState/orders/useInitialOrderState";
 import { useInitialPageState } from "../API/initialState/page/useInitialPageState";
-import { useProductInitialAPIState } from "../API/initialState/useInitialAPIState";
+import { useProductInitialAPIState } from "../API/initialState/product/useProductInitialAPIState";
 import { useInitialVouchersState } from "../API/initialState/vouchers/useInitialVouchersState";
-import { useOrderFilterAPIProvider } from "../API/OrderFilterAPIProvider";
-import { usePageAPIProvider } from "../API/PageFilterAPIProvider";
-import { useProductFilterAPIProvider } from "../API/ProductFilterAPIProvider";
-import { useVoucherAPIProvider } from "../API/VoucherFilterAPIProvider";
+import { useCollectionFilterAPIProvider } from "../API/providers/CollectionFilterAPIProvider";
+import { useCustomerAPIProvider } from "../API/providers/CustomerFilterAPIProvider";
+import { useDiscountFilterAPIProvider } from "../API/providers/DiscountFiltersAPIProvider";
+import { useDraftOrderFilterAPIProvider } from "../API/providers/DraftOrderFilterAPIProvider";
+import { useGiftCardsFiltersAPIProvider } from "../API/providers/GiftCardsFilterAPIProvider";
+import { useOrderFilterAPIProvider } from "../API/providers/OrderFilterAPIProvider";
+import { usePageAPIProvider } from "../API/providers/PageFilterAPIProvider";
+import { useProductFilterAPIProvider } from "../API/providers/ProductFilterAPIProvider";
+import { useVoucherAPIProvider } from "../API/providers/VoucherFilterAPIProvider";
 import {
   STATIC_COLLECTION_OPTIONS,
   STATIC_CUSTOMER_OPTIONS,

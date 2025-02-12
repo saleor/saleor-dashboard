@@ -1,15 +1,5 @@
+import { FilterProviderType } from "../../types";
 import { TokenType, UrlToken } from "../UrlToken";
-
-export type FilterProviderType =
-  | "product"
-  | "order"
-  | "discount"
-  | "customer"
-  | "voucher"
-  | "page"
-  | "draft-order"
-  | "gift-cards"
-  | "collection";
 
 export interface FetchingParams {
   category: string[];
@@ -48,9 +38,7 @@ export interface GiftCardsFetchingParams {
 
 export interface CollectionFetchingParams {
   channel: string[];
-  ids: string[];
   metadata: string[];
-  slugs: string[];
   published: string[];
 }
 
@@ -97,9 +85,7 @@ export const emptyGiftCardsFetchingParams: GiftCardsFetchingParams = {
 
 export const emptyCollectionFetchingParams: CollectionFetchingParams = {
   channel: [],
-  ids: [],
   metadata: [],
-  slugs: [],
   published: [],
 };
 

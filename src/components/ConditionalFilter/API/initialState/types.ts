@@ -11,7 +11,7 @@ import {
   ChannelCurrenciesQuery,
 } from "@dashboard/graphql";
 
-export type InitialAPIResponse = ApolloQueryResult<
+export type InitialProductAPIResponse = ApolloQueryResult<
   | _GetChannelOperandsQuery
   | _SearchCollectionsOperandsQuery
   | _SearchCategoriesOperandsQuery

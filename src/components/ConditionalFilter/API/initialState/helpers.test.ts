@@ -7,7 +7,7 @@ import {
   _SearchProductTypesOperandsQuery,
 } from "@dashboard/graphql";
 
-import { createInitialStateFromData } from "./helpers";
+import { createInitialProductStateFromData } from "./helpers";
 
 describe("ConditionalFilter / API / createInitialStateFromData", () => {
   it("should create initial state from queries", () => {
@@ -99,7 +99,7 @@ describe("ConditionalFilter / API / createInitialStateFromData", () => {
     const data = [channelQuery, collectionQuery, categoryQuery, productTypeQuery, attributeQuery];
     const channel = ["channel-1"];
     // Act
-    const result = createInitialStateFromData(data, channel);
+    const result = createInitialProductStateFromData(data, channel);
 
     // Assert
     expect(result).toMatchSnapshot();

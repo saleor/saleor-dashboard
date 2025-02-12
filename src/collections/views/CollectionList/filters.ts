@@ -3,8 +3,6 @@ import {
   CollectionFilterKeys,
   CollectionListFilterOpts,
 } from "@dashboard/collections/components/CollectionListPage";
-import { FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
-import { createCollectionsQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { FilterElement, FilterElementRegular } from "@dashboard/components/Filter";
 import { CollectionFilterInput, CollectionPublished } from "@dashboard/graphql";
 import { findValueInEnum, maybe } from "@dashboard/misc";
@@ -41,23 +39,7 @@ export function getFilterOpts(
   };
 }
 
-export function getFilterVariables({
-  filterContainer,
-  params,
-}: {
-  filterContainer: FilterContainer;
-  params: CollectionListUrlFilters;
-}): CollectionFilterInput {
-  const { channel, ...vars } = createCollectionsQueryVariables(filterContainer);
-
-  return {
-    ...vars,
-    search: params.query,
-    channel: channel,
-  };
-}
-
-export function getFilterVariables_legacy(params: CollectionListUrlFilters): CollectionFilterInput {
+export function getFilterVariables(params: CollectionListUrlFilters): CollectionFilterInput {
   return {
     published: params.status ? findValueInEnum(params.status, CollectionPublished) : undefined,
     search: params.query,
