@@ -1,6 +1,9 @@
 import React, { FC } from "react";
 
 import { useDiscountFilterAPIProvider } from "../API/DiscountFiltersAPIProvider";
+import { useDraftOrderFilterAPIProvider } from "../API/DraftOrderFilterAPIProvider";
+import { useGiftCardsFiltersAPIProvider } from "../API/GiftCardsFilterAPIProvider";
+import { useInitialGiftCardsState } from "../API/initialState/giftCards/useInitialGiftCardsState";
 import { useInitialOrderState } from "../API/initialState/orders/useInitialOrderState";
 import { useInitialPageState } from "../API/initialState/page/useInitialPageState";
 import { useProductInitialAPIState } from "../API/initialState/useInitialAPIState";
@@ -11,6 +14,8 @@ import { useProductFilterAPIProvider } from "../API/ProductFilterAPIProvider";
 import { useVoucherAPIProvider } from "../API/VoucherFilterAPIProvider";
 import {
   STATIC_DISCOUNT_OPTIONS,
+  STATIC_DRAFT_ORDER_OPTIONS,
+  STATIC_GIFT_CARDS_OPTIONS,
   STATIC_ORDER_OPTIONS,
   STATIC_PAGE_OPTIONS,
   STATIC_PRODUCT_OPTIONS,
@@ -132,6 +137,57 @@ export const ConditionalPageFilterProvider: FC<{
   const initialState = useInitialPageState();
   const valueProvider = useUrlValueProvider(locationSearch, "page", initialState);
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_PAGE_OPTIONS);
+  const containerState = useContainerState(valueProvider);
+  const filterWindow = useFilterWindow();
+
+  return (
+    <ConditionalFilterContext.Provider
+      value={{
+        apiProvider,
+        valueProvider,
+        leftOperandsProvider,
+        containerState,
+        filterWindow,
+      }}
+    >
+      {children}
+    </ConditionalFilterContext.Provider>
+  );
+};
+
+export const ConditionalDraftOrderFilterProvider: FC<{
+  locationSearch: string;
+}> = ({ children, locationSearch }) => {
+  const apiProvider = useDraftOrderFilterAPIProvider();
+
+  const valueProvider = useUrlValueProvider(locationSearch, "draft-order");
+  const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_DRAFT_ORDER_OPTIONS);
+  const containerState = useContainerState(valueProvider);
+  const filterWindow = useFilterWindow();
+
+  return (
+    <ConditionalFilterContext.Provider
+      value={{
+        apiProvider,
+        valueProvider,
+        leftOperandsProvider,
+        containerState,
+        filterWindow,
+      }}
+    >
+      {children}
+    </ConditionalFilterContext.Provider>
+  );
+};
+
+export const ConditionalGiftCardsFilterProver: FC<{ locationSearch: string }> = ({
+  children,
+  locationSearch,
+}) => {
+  const initialState = useInitialGiftCardsState();
+  const apiProvider = useGiftCardsFiltersAPIProvider();
+  const valueProvider = useUrlValueProvider(locationSearch, "gift-cards", initialState);
+  const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_GIFT_CARDS_OPTIONS);
   const containerState = useContainerState(valueProvider);
   const filterWindow = useFilterWindow();
 
