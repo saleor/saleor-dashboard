@@ -47,7 +47,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const intl = useIntl();
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.COLLECTION_LIST);
-  const { enabled: isNewGiftCardsFilterEnabled } = useFlag("collection_list_new_filters");
+  const { enabled: isNewGiftCardsFilterEnabled } = useFlag("collection_filters");
   const { valueProvider } = useConditionalFilterContext();
   const filters = createCollectionsQueryVariables(valueProvider.value);
 
