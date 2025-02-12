@@ -12,13 +12,43 @@ describe("useAllAppsAlert", () => {
     jest.clearAllMocks();
   });
 
+  it("should handle null webhook data", () => {
+    (useUserPermissions as jest.Mock).mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
+    (useAppFailedPendingWebhooksQuery as jest.Mock).mockReturnValue({
+      data: {
+        apps: {
+          edges: [
+            {
+              node: {
+                webhooks: null,
+              },
+            },
+          ],
+        },
+      },
+    });
+
+    const { result } = renderHook(() => useAllAppsAlert());
+
+    expect(result.current).toEqual({ hasFailed: false, hasPending: false });
+  });
+
+  it("should handle undefined permissions", () => {
+    (useUserPermissions as jest.Mock).mockReturnValue(undefined);
+    (useAppFailedPendingWebhooksQuery as jest.Mock).mockReturnValue({ data: null });
+
+    const { result } = renderHook(() => useAllAppsAlert());
+
+    expect(result.current).toEqual({ hasFailed: false, hasPending: false });
+  });
+
   it("should return default counts when user has no permissions", () => {
     (useUserPermissions as jest.Mock).mockReturnValue([]);
     (useAppFailedPendingWebhooksQuery as jest.Mock).mockReturnValue({ data: null });
 
     const { result } = renderHook(() => useAllAppsAlert());
 
-    expect(result.current).toEqual({ failed: 0, pending: 0 });
+    expect(result.current).toEqual({ hasFailed: false, hasPending: false });
     expect(useAppFailedPendingWebhooksQuery).toHaveBeenCalledWith({
       skip: true,
     });
@@ -51,39 +81,9 @@ describe("useAllAppsAlert", () => {
 
     const { result } = renderHook(() => useAllAppsAlert());
 
-    expect(result.current).toEqual({ failed: 3, pending: 3 });
+    expect(result.current).toEqual({ hasFailed: true, hasPending: true });
     expect(useAppFailedPendingWebhooksQuery).toHaveBeenCalledWith({
       skip: false,
     });
-  });
-
-  it("should handle null webhook data", () => {
-    (useUserPermissions as jest.Mock).mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
-    (useAppFailedPendingWebhooksQuery as jest.Mock).mockReturnValue({
-      data: {
-        apps: {
-          edges: [
-            {
-              node: {
-                webhooks: null,
-              },
-            },
-          ],
-        },
-      },
-    });
-
-    const { result } = renderHook(() => useAllAppsAlert());
-
-    expect(result.current).toEqual({ failed: 0, pending: 0 });
-  });
-
-  it("should handle undefined permissions", () => {
-    (useUserPermissions as jest.Mock).mockReturnValue(undefined);
-    (useAppFailedPendingWebhooksQuery as jest.Mock).mockReturnValue({ data: null });
-
-    const { result } = renderHook(() => useAllAppsAlert());
-
-    expect(result.current).toEqual({ failed: 0, pending: 0 });
   });
 });

@@ -27,8 +27,8 @@ const ExclamationIconComponent = () => {
 };
 
 export const SidebarAppAlert = () => {
-  const { failed, pending } = useAllAppsAlert();
-  const hasIssues = failed > 0 || pending > 0;
+  const { hasFailed, hasPending } = useAllAppsAlert();
+  const hasIssues = hasFailed || hasPending;
 
   if (!hasIssues) {
     return null;
