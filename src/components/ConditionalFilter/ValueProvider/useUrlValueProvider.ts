@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import useRouter from "use-react-router";
 
 import { InitialAPIState } from "../API";
+import { InitialGiftCardsAPIState } from "../API/initialState/giftCards/useInitialGiftCardsState";
 import { InitialOrderAPIState } from "../API/initialState/orders/useInitialOrderState";
 import { InitialPageAPIState } from "../API/initialState/page/useInitialPageState";
 import { InitialVoucherAPIState } from "../API/initialState/vouchers/useInitialVouchersState";
@@ -13,6 +14,7 @@ import { TokenArray } from "./TokenArray";
 import {
   FetchingParams,
   getFetchingPrams,
+  GiftCardsFetchingParams,
   OrderFetchingParams,
   PageFetchingParams,
   VoucherFetchingParams,
@@ -21,12 +23,13 @@ import { prepareStructure } from "./utils";
 
 export const useUrlValueProvider = (
   locationSearch: string,
-  type: "product" | "order" | "discount" | "voucher" | "page",
+  type: "product" | "order" | "discount" | "voucher" | "page" | "draft-order" | "gift-cards",
   initialState?:
     | InitialAPIState
     | InitialOrderAPIState
     | InitialVoucherAPIState
-    | InitialPageAPIState,
+    | InitialPageAPIState
+    | InitialGiftCardsAPIState,
 ): FilterValueProvider => {
   const router = useRouter();
   const params = new URLSearchParams(locationSearch);
@@ -65,6 +68,11 @@ export const useUrlValueProvider = (
           break;
         case "page":
           (initialState as InitialPageAPIState).fetchQueries(fetchingParams as PageFetchingParams);
+          break;
+        case "gift-cards":
+          (initialState as InitialGiftCardsAPIState).fetchQueries(
+            fetchingParams as GiftCardsFetchingParams,
+          );
           break;
       }
     }

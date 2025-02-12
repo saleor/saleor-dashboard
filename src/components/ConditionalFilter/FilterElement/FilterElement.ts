@@ -1,3 +1,4 @@
+import { InitialGiftCardsStateResponse } from "../API/initialState/giftCards/InitialGiftCardsState";
 import { InitialOrderStateResponse } from "../API/initialState/orders/InitialOrderState";
 import { InitialPageStateResponse } from "../API/initialState/page/InitialPageState";
 import { InitialVouchersStateResponse } from "../API/initialState/vouchers/InitialVouchersState";
@@ -183,7 +184,8 @@ export class FilterElement {
       | InitialStateResponse
       | InitialOrderStateResponse
       | InitialVouchersStateResponse
-      | InitialPageStateResponse,
+      | InitialPageStateResponse
+      | InitialGiftCardsStateResponse,
   ) {
     if (token.isStatic()) {
       return new FilterElement(
