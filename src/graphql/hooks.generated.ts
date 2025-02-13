@@ -3485,7 +3485,13 @@ export const AppFailedPendingWebhooksDocument = gql`
           ) {
             edges {
               node {
-                id
+                attempts(first: 6, sortBy: {field: CREATED_AT, direction: DESC}) {
+                  edges {
+                    node {
+                      status
+                    }
+                  }
+                }
               }
             }
           }

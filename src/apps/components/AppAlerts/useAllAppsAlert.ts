@@ -1,17 +1,39 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
-import { PermissionEnum, useAppFailedPendingWebhooksQuery } from "@dashboard/graphql";
+import {
+  AppFailedPendingWebhooksQuery,
+  EventDeliveryStatusEnum,
+  PermissionEnum,
+  useAppFailedPendingWebhooksQuery,
+} from "@dashboard/graphql";
 import { useMemo } from "react";
 
-const requiredPermissions = [PermissionEnum.MANAGE_APPS];
-
+type Webhook = NonNullable<
+  NonNullable<AppFailedPendingWebhooksQuery["apps"]>["edges"][0]["node"]["webhooks"]
+>[0];
 interface FailedWebhooksCount {
   hasFailed: boolean;
   hasPending: boolean;
 }
 
+const requiredPermissions = [PermissionEnum.MANAGE_APPS];
+
 const defaultFailedWebhooksInfo: FailedWebhooksCount = {
   hasFailed: false,
   hasPending: false,
+};
+
+const hasFailedCheck = (webhook: Webhook) =>
+  webhook.failedDelivers && webhook.failedDelivers?.edges?.length > 0;
+const hasPendingCheck = (webhook: Webhook) => {
+  const preliminaryCheck = webhook.pendingDelivers && webhook.pendingDelivers?.edges?.length > 0;
+
+  if (!preliminaryCheck) return false;
+
+  return webhook.pendingDelivers?.edges.some(edge =>
+    edge.node?.attempts?.edges.some(
+      attempt => attempt.node.status === EventDeliveryStatusEnum.FAILED,
+    ),
+  );
 };
 
 export const useAllAppsAlert = (): FailedWebhooksCount => {
@@ -30,13 +52,11 @@ export const useAllAppsAlert = (): FailedWebhooksCount => {
         const webhookInfo = defaultFailedWebhooksInfo;
 
         app.node.webhooks?.forEach(webhook => {
-          const { failedDelivers, pendingDelivers } = webhook;
-
-          if (failedDelivers && failedDelivers.edges?.length > 0) {
+          if (hasFailedCheck(webhook)) {
             webhookInfo.hasFailed = true;
           }
 
-          if (pendingDelivers && pendingDelivers.edges?.length > 0) {
+          if (hasPendingCheck(webhook)) {
             webhookInfo.hasPending = true;
           }
         });
