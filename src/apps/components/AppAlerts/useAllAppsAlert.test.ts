@@ -62,7 +62,65 @@ describe("useAllAppsAlert", () => {
     });
   });
 
-  it("should count webhooks correctly when user has permissions", () => {
+  it("should check webhooks correctly for pending deliveries when user has permissions", () => {
+    // Arrange
+    (useUserPermissions as jest.Mock).mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
+    (useAppFailedPendingWebhooksQuery as jest.Mock).mockReturnValue({
+      data: {
+        apps: {
+          edges: [
+            {
+              node: {
+                webhooks: [
+                  {
+                    failedDelivers: { edges: [] },
+                    pendingDelivers: {
+                      edges: [
+                        {
+                          node: {
+                            attempts: {
+                              edges: [{ node: { status: "FAILED" } }],
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                  {
+                    failedDelivers: { edges: [] },
+                    pendingDelivers: {
+                      edges: [
+                        {
+                          node: {
+                            attempts: {
+                              edges: [{ node: { status: "FAILED" } }],
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    });
+
+    // Act
+    const { result } = renderHook(() => useAllAppsAlert());
+
+    // rerender();
+
+    // Assert
+    expect(result.current.hasPending).toEqual(true);
+    expect(useAppFailedPendingWebhooksQuery).toHaveBeenCalledWith({
+      skip: false,
+    });
+  });
+
+  it("should check webhooks correctly when user has permissions", () => {
     // Arrange
     (useUserPermissions as jest.Mock).mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     (useAppFailedPendingWebhooksQuery as jest.Mock).mockReturnValue({
@@ -74,11 +132,11 @@ describe("useAllAppsAlert", () => {
                 webhooks: [
                   {
                     failedDelivers: { edges: [1, 2] },
-                    pendingDelivers: { edges: [1] },
+                    pendingDelivers: [],
                   },
                   {
                     failedDelivers: { edges: [1] },
-                    pendingDelivers: { edges: [1, 2] },
+                    pendingDelivers: [],
                   },
                 ],
               },
@@ -92,7 +150,7 @@ describe("useAllAppsAlert", () => {
     const { result } = renderHook(() => useAllAppsAlert());
 
     // Assert
-    expect(result.current).toEqual({ hasFailed: true, hasPending: true });
+    expect(result.current.hasFailed).toEqual(true);
     expect(useAppFailedPendingWebhooksQuery).toHaveBeenCalledWith({
       skip: false,
     });
