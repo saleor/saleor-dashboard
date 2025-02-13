@@ -51,14 +51,18 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
         <Box gap={2} alignItems="center" display="grid" __gridTemplateColumns="1fr auto">
           <AppAvatar logo={logo} />
           <Box display="flex" gap={1} flexDirection="column" alignItems="flex-start">
-            <Box display="flex" gap={2}>
+            <Box display="flex" gap={2} alignItems="center">
               <Text
                 size={4}
                 fontWeight="bold"
                 data-test-id={"app-" + app.name?.toLowerCase().replace(" ", "")}
+                marginTop={0.5}
               >
                 {app.name}
               </Text>
+
+              <AppAdditionalInfo permissions={app.permissions} created={app.created} />
+
               {isExternal && (
                 <Chip
                   data-test-id="app-external-label"
@@ -93,7 +97,6 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
                 <FormattedMessage {...messages.appDisabled} />
               </Text>
             )}
-            <AppAdditionalInfo permissions={app.permissions} created={app.created} />
           </Box>
         </Box>
       </List.Item>
