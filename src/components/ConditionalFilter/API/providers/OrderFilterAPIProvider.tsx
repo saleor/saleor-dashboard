@@ -8,8 +8,8 @@ import {
 } from "@dashboard/graphql";
 import { IntlShape, useIntl } from "react-intl";
 
-import { RowType } from "../constants";
-import { FilterContainer, FilterElement } from "../FilterElement";
+import { RowType } from "../../constants";
+import { FilterContainer, FilterElement } from "../../FilterElement";
 import {
   BooleanValuesHandler,
   EnumValuesHandler,
@@ -17,7 +17,7 @@ import {
   LegacyChannelHandler,
   NoopValuesHandler,
   TextInputValuesHandler,
-} from "./Handler";
+} from "../Handler";
 
 const getFilterElement = (value: FilterContainer, index: number): FilterElement => {
   const possibleFilterElement = value[index];

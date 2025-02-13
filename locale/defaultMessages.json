@@ -4938,6 +4938,9 @@
     "context": "tax classes card header",
     "string": "General information"
   },
+  "ThUvIL": {
+    "string": "Hidden"
+  },
   "TjGYna": {
     "context": "product inventory, checkbox",
     "string": "Track Inventory"
@@ -9261,6 +9264,9 @@
   },
   "w7jT4W": {
     "string": "No channels selected"
+  },
+  "w7tf2z": {
+    "string": "Published"
   },
   "w9xgN9": {
     "context": "see error log label in notification",
