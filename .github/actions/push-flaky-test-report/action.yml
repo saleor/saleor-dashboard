@@ -10,7 +10,7 @@ runs:
     - name: Push Test Report
       shell: bash
       run: |
-        node .github/actions/push-flaky-test-report/send-report-to-repo.js \
+        node .github/workflows/send-report-to-repo.js \
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
       if: always()
