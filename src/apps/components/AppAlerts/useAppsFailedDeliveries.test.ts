@@ -2,12 +2,12 @@ import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { PermissionEnum, useAppFailedPendingWebhooksQuery } from "@dashboard/graphql";
 import { renderHook } from "@testing-library/react-hooks";
 
-import { useAllAppsAlert } from "./useAllAppsAlert";
+import { useAppsFailedDeliveries } from "./useAppsFailedDeliveries";
 
 jest.mock("@dashboard/auth/hooks/useUserPermissions");
 jest.mock("@dashboard/graphql");
 
-describe("useAllAppsAlert", () => {
+describe("useAppsFailedDeliveries", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -30,7 +30,7 @@ describe("useAllAppsAlert", () => {
     });
 
     // Act
-    const { result } = renderHook(() => useAllAppsAlert());
+    const { result } = renderHook(() => useAppsFailedDeliveries());
 
     // Assert
     expect(result.current).toEqual({ hasFailed: false, hasPending: false });
@@ -42,7 +42,7 @@ describe("useAllAppsAlert", () => {
     (useAppFailedPendingWebhooksQuery as jest.Mock).mockReturnValue({ data: null });
 
     // Act
-    const { result } = renderHook(() => useAllAppsAlert());
+    const { result } = renderHook(() => useAppsFailedDeliveries());
 
     expect(result.current).toEqual({ hasFailed: false, hasPending: false });
   });
@@ -53,7 +53,7 @@ describe("useAllAppsAlert", () => {
     (useAppFailedPendingWebhooksQuery as jest.Mock).mockReturnValue({ data: null });
 
     // Act
-    const { result } = renderHook(() => useAllAppsAlert());
+    const { result } = renderHook(() => useAppsFailedDeliveries());
 
     // Assert
     expect(result.current).toEqual({ hasFailed: false, hasPending: false });
@@ -109,12 +109,12 @@ describe("useAllAppsAlert", () => {
     });
 
     // Act
-    const { result } = renderHook(() => useAllAppsAlert());
+    const { result } = renderHook(() => useAppsFailedDeliveries());
 
     // rerender();
 
     // Assert
-    expect(result.current.hasPending).toEqual(true);
+    expect(result.current.hasPendingFailed).toEqual(true);
     expect(useAppFailedPendingWebhooksQuery).toHaveBeenCalledWith({
       skip: false,
     });
@@ -147,7 +147,7 @@ describe("useAllAppsAlert", () => {
     });
 
     // Act
-    const { result } = renderHook(() => useAllAppsAlert());
+    const { result } = renderHook(() => useAppsFailedDeliveries());
 
     // Assert
     expect(result.current.hasFailed).toEqual(true);

@@ -1,9 +1,9 @@
 ---
 name: app_alerts
 displayName: App alerts
-enabled: true
+enabled: false
 payload: "default"
-visible: true
+visible: false
 ---
 
 ![new filters](./images/app-alerts.jpg)
