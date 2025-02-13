@@ -6,3 +6,7 @@ coverage:
 
 ignore:
   - "src/graphql/**"
+  - ".featureFlags/**"
+  - "testUtils/**"
+  - "assets/**"
+
