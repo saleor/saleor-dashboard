@@ -1,4 +1,4 @@
-const { Octokit } = require("octokit");
+const { Octokit } = require("@octokit/core");
 const fs = require("fs");
 const { Command } = require("commander");
 const program = new Command();
