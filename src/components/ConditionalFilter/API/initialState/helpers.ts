@@ -1,7 +1,4 @@
 import { ApolloQueryResult } from "@apollo/client";
-import { InitialGiftCardsState } from "@dashboard/components/ConditionalFilter/API/initialState/giftCards/InitialGiftCardsState";
-import { InitialPageState } from "@dashboard/components/ConditionalFilter/API/initialState/page/InitialPageState";
-import { InitialVouchersState } from "@dashboard/components/ConditionalFilter/API/initialState/vouchers/InitialVouchersState";
 import {
   _GetChannelOperandsQuery,
   _GetLegacyChannelOperandsQuery,
@@ -17,33 +14,38 @@ import {
 
 import { createBooleanOptions } from "../../constants";
 import { createCustomerOptionsFromAPI, createOptionsFromAPI } from "../Handler";
-import { InitialState } from "../InitialStateResponse";
+import { InitialCollectionState } from "./collections/InitialCollectionState";
+import { InitialGiftCardsState } from "./giftCards/InitialGiftCardsState";
 import { InitialOrderState } from "./orders/InitialOrderState";
+import { InitialPageState } from "./page/InitialPageState";
+import { InitialProductState } from "./product/InitialProductStateResponse";
 import {
-  InitialAPIResponse,
+  InitialCollectionAPIResponse,
   InitialGiftCardsAPIResponse,
   InitialOrderAPIResponse,
   InitialPageAPIResponse,
+  InitialProductAPIResponse,
   InitialVoucherAPIResponse,
 } from "./types";
+import { InitialVouchersState } from "./vouchers/InitialVouchersState";
 
 const isChannelQuery = (
-  query: InitialAPIResponse,
+  query: InitialProductAPIResponse,
 ): query is ApolloQueryResult<_GetChannelOperandsQuery> => "channels" in query.data;
 const isChannelsQuery = (
   query: InitialOrderAPIResponse,
 ): query is ApolloQueryResult<_GetLegacyChannelOperandsQuery> => "channels" in query.data;
 const isCollectionQuery = (
-  query: InitialAPIResponse,
+  query: InitialProductAPIResponse,
 ): query is ApolloQueryResult<_SearchCollectionsOperandsQuery> => "collections" in query.data;
 const isCategoryQuery = (
-  query: InitialAPIResponse,
+  query: InitialProductAPIResponse,
 ): query is ApolloQueryResult<_SearchCategoriesOperandsQuery> => "categories" in query.data;
 const isProductTypeQuery = (
-  query: InitialAPIResponse,
+  query: InitialProductAPIResponse,
 ): query is ApolloQueryResult<_SearchProductTypesOperandsQuery> => "productTypes" in query.data;
 const isAttributeQuery = (
-  query: InitialAPIResponse,
+  query: InitialProductAPIResponse,
 ): query is ApolloQueryResult<_SearchAttributeOperandsQuery> => "attributes" in query.data;
 const isPageTypesQuery = (
   query: InitialPageAPIResponse,
@@ -58,8 +60,11 @@ const isCurrencyQuery = (
   query: InitialGiftCardsAPIResponse,
 ): query is ApolloQueryResult<ChannelCurrenciesQuery> => "shop" in query.data;
 
-export const createInitialStateFromData = (data: InitialAPIResponse[], channel: string[]) =>
-  data.reduce<InitialState>(
+export const createInitialProductStateFromData = (
+  data: InitialProductAPIResponse[],
+  channel: string[],
+) =>
+  data.reduce<InitialProductState>(
     (acc, query) => {
       if (isChannelQuery(query)) {
         return {
@@ -244,3 +249,27 @@ export const createInitialGiftCardsState = (
     } as InitialGiftCardsState,
   );
 };
+
+export const createInitialCollectionState = (
+  data: InitialCollectionAPIResponse[],
+  channel: string[],
+) =>
+  data.reduce<InitialCollectionState>(
+    (acc, query) => {
+      if (isChannelQuery(query)) {
+        return {
+          ...acc,
+          channel: (query.data?.channels ?? [])
+            .filter(({ slug }) => channel.includes(slug))
+            .map(({ id, name, slug }) => ({ label: name, value: id, slug })),
+        };
+      }
+
+      return acc;
+    },
+    {
+      channel: [],
+      published: [],
+      metadata: [],
+    },
+  );

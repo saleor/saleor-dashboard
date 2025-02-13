@@ -1,9 +1,6 @@
-import { InitialGiftCardsStateResponse } from "../API/initialState/giftCards/InitialGiftCardsState";
-import { InitialOrderStateResponse } from "../API/initialState/orders/InitialOrderState";
-import { InitialPageStateResponse } from "../API/initialState/page/InitialPageState";
-import { InitialVouchersStateResponse } from "../API/initialState/vouchers/InitialVouchersState";
-import { InitialStateResponse } from "../API/InitialStateResponse";
+import { InitialProductStateResponse } from "../API/initialState/product/InitialProductStateResponse";
 import { LeftOperand } from "../LeftOperandsProvider";
+import { InitialResponseType } from "../types";
 import { UrlToken } from "./../ValueProvider/UrlToken";
 import { ConditionOptions, StaticElementName } from "./ConditionOptions";
 import { ConditionSelected } from "./ConditionSelected";
@@ -48,15 +45,7 @@ export class Condition {
     return new Condition(options, ConditionSelected.fromConditionItem(options.first()), false);
   }
 
-  public static fromUrlToken(
-    token: UrlToken,
-    response:
-      | InitialStateResponse
-      | InitialOrderStateResponse
-      | InitialVouchersStateResponse
-      | InitialPageStateResponse
-      | InitialGiftCardsStateResponse,
-  ) {
+  public static fromUrlToken(token: UrlToken, response: InitialResponseType) {
     if (ConditionOptions.isStaticName(token.name)) {
       const staticOptions = ConditionOptions.fromStaticElementName(token.name);
       const selectedOption = staticOptions.findByLabel(token.conditionKind);
@@ -81,7 +70,7 @@ export class Condition {
     }
 
     if (token.isAttribute()) {
-      const attribute = (response as InitialStateResponse).attributeByName(token.name);
+      const attribute = (response as InitialProductStateResponse).attributeByName(token.name);
       const options = ConditionOptions.fromAttributeType(attribute.inputType);
       const option = options.find(item => item.label === token.conditionKind)!;
       const value = response.filterByUrlToken(token);

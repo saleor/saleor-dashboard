@@ -76,3 +76,14 @@ export const voucherStatusMessages = defineMessages({
     description: "voucher status scheduled",
   },
 });
+
+export const collectionFilterMessages = defineMessages({
+  published: {
+    defaultMessage: "Published",
+    id: "w7tf2z",
+  },
+  hidden: {
+    defaultMessage: "Hidden",
+    id: "ThUvIL",
+  },
+});

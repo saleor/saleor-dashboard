@@ -1,5 +1,6 @@
 import {
   AttributeInput,
+  CollectionFilterInput,
   CustomerFilterInput,
   DateRangeInput,
   DateTimeFilterInput,
@@ -339,4 +340,28 @@ export const createCustomerQueryVariables = (value: FilterContainer): CustomerFi
 
     return p;
   }, {} as CustomerFilterInput);
+};
+
+type CollectionQueryVars = CollectionFilterInput & { channel?: { eq: string } };
+
+export const createCollectionsQueryVariables = (value: FilterContainer): CollectionQueryVars => {
+  return value.reduce((p, c) => {
+    if (typeof c === "string" || Array.isArray(c)) return p;
+
+    if (c.value.type === "metadata") {
+      p.metadata = p.metadata || [];
+
+      const [key, value] = c.condition.selected.value as [string, string];
+
+      p.metadata.push({ key, value });
+
+      return p;
+    }
+
+    p[c.value.value as keyof CollectionFilterInput] = mapStaticQueryPartToLegacyVariables(
+      createStaticQueryPart(c.condition.selected),
+    );
+
+    return p;
+  }, {} as CollectionQueryVars);
 };

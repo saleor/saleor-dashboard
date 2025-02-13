@@ -116,6 +116,7 @@ TokenArray [
         "isVisibleInListing",
         "isAvailable",
         "isPublished",
+        "published",
       ],
       "disabled": Array [
         "left",

@@ -39,7 +39,7 @@ import { IntlShape } from "react-intl";
 
 import { ItemOption } from "../FilterElement/ConditionValue";
 import { LeftOperand } from "../LeftOperandsProvider";
-import { getLocalizedLabel } from "./initialState/orders/intl";
+import { getLocalizedLabel } from "./intl";
 
 export interface Handler {
   fetch: () => Promise<ItemOption[]>;

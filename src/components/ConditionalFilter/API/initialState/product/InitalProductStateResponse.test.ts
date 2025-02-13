@@ -1,10 +1,10 @@
-import { UrlEntry, UrlToken } from "../ValueProvider/UrlToken";
-import { InitialStateResponse } from "./InitialStateResponse";
+import { UrlEntry, UrlToken } from "../../../ValueProvider/UrlToken";
+import { InitialProductStateResponse } from "./InitialProductStateResponse";
 
-describe("ConditionalFilter / API / InitialStateResponse", () => {
+describe("ConditionalFilter / API / InitialProductStateResponse", () => {
   it("should filter by dynamic attribute token", () => {
     // Arrange
-    const initialState = InitialStateResponse.empty();
+    const initialState = InitialProductStateResponse.empty();
 
     initialState.attribute = {
       "attribute-1": {
@@ -29,7 +29,7 @@ describe("ConditionalFilter / API / InitialStateResponse", () => {
   });
   it("should filter by static token type", () => {
     // Arrange
-    const initialState = InitialStateResponse.empty();
+    const initialState = InitialProductStateResponse.empty();
 
     initialState.category = [{ label: "Category 1", value: "1", slug: "category-1" }];
 
@@ -43,7 +43,7 @@ describe("ConditionalFilter / API / InitialStateResponse", () => {
   });
   it("should filter by boolean attribute token", () => {
     // Arrange
-    const initialState = InitialStateResponse.empty();
+    const initialState = InitialProductStateResponse.empty();
 
     initialState.attribute = {
       "attribute-2": {
@@ -73,7 +73,7 @@ describe("ConditionalFilter / API / InitialStateResponse", () => {
   });
   it("should filter by static attribute token", () => {
     // Arrange
-    const initialState = InitialStateResponse.empty();
+    const initialState = InitialProductStateResponse.empty();
 
     initialState.attribute = {
       size: {

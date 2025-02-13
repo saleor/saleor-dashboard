@@ -1,18 +1,19 @@
 import { UrlToken } from "../UrlToken";
 import {
-  getFetchingPrams,
+  getEmptyFetchingPrams,
+  toCollectionFetchingParams,
   toGiftCardsFetchingParams,
   toPageFetchingParams,
   toVouchersFetchingParams,
 } from "./fetchingParams";
 
-describe("TokenArray / fetchingParams / getFetchingPrams", () => {
+describe("TokenArray / fetchingParams / getEmptyFetchingPrams", () => {
   it("should return product fetching params", () => {
     // Arrange
     const type = "product";
 
     // Act
-    const fetchingParams = getFetchingPrams(type);
+    const fetchingParams = getEmptyFetchingPrams(type);
 
     // Assert
     expect(fetchingParams).toEqual({
@@ -29,7 +30,7 @@ describe("TokenArray / fetchingParams / getFetchingPrams", () => {
     const type = "order";
 
     // Act
-    const fetchingParams = getFetchingPrams(type);
+    const fetchingParams = getEmptyFetchingPrams(type);
 
     // Assert
     expect(fetchingParams).toEqual({
@@ -48,7 +49,7 @@ describe("TokenArray / fetchingParams / getFetchingPrams", () => {
     const type = "voucher";
 
     // Act
-    const fetchingParams = getFetchingPrams(type);
+    const fetchingParams = getEmptyFetchingPrams(type);
 
     // Assert
     expect(fetchingParams).toEqual({
@@ -63,7 +64,7 @@ describe("TokenArray / fetchingParams / getFetchingPrams", () => {
     const type = "page";
 
     // Act
-    const fetchingParams = getFetchingPrams(type);
+    const fetchingParams = getEmptyFetchingPrams(type);
 
     // Assert
     expect(fetchingParams).toEqual({
@@ -76,7 +77,7 @@ describe("TokenArray / fetchingParams / getFetchingPrams", () => {
     const type = "gift-cards";
 
     // Act
-    const fetchingParams = getFetchingPrams(type);
+    const fetchingParams = getEmptyFetchingPrams(type);
 
     // Assert
     expect(fetchingParams).toEqual({
@@ -166,6 +167,34 @@ describe("TokenArray / fetchingParams / toGiftCardsFetchingParams", () => {
       products: ["product-1", "product-2", "product-3"],
       tags: [],
       usedBy: [],
+    });
+  });
+});
+
+describe("TokenArray / fetchingParams / toCollectionFetchingParams", () => {
+  it("should return  fetching params", () => {
+    // Arrange
+    const params = {
+      channel: [],
+      metadata: [],
+      published: [],
+    };
+
+    const token = {
+      conditionKind: "in",
+      name: "channel",
+      type: "s",
+      value: "chan-1",
+    } as UrlToken;
+
+    // Act
+    const fetchingParams = toCollectionFetchingParams(params, token);
+
+    // Assert
+    expect(fetchingParams).toEqual({
+      channel: ["chan-1"],
+      metadata: [],
+      published: [],
     });
   });
 });

@@ -1,3 +1,4 @@
+import { FilterProviderType } from "../../types";
 import { TokenType, UrlToken } from "../UrlToken";
 
 export interface FetchingParams {
@@ -33,6 +34,12 @@ export interface GiftCardsFetchingParams {
   products: string[];
   tags: string[];
   usedBy: string[];
+}
+
+export interface CollectionFetchingParams {
+  channel: string[];
+  metadata: string[];
+  published: string[];
 }
 
 type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute">;
@@ -74,6 +81,12 @@ export const emptyGiftCardsFetchingParams: GiftCardsFetchingParams = {
   products: [],
   tags: [],
   usedBy: [],
+};
+
+export const emptyCollectionFetchingParams: CollectionFetchingParams = {
+  channel: [],
+  metadata: [],
+  published: [],
 };
 
 const unique = <T>(array: Iterable<T>) => Array.from(new Set(array));
@@ -162,17 +175,27 @@ export const toGiftCardsFetchingParams = (p: GiftCardsFetchingParams, c: UrlToke
   return p;
 };
 
-export const getFetchingPrams = (
-  type:
-    | "product"
-    | "order"
-    | "discount"
-    | "voucher"
-    | "page"
-    | "draft-order"
-    | "gift-cards"
-    | "customer",
-) => {
+export const toCollectionFetchingParams = (p: CollectionFetchingParams, c: UrlToken) => {
+  const key = c.name as keyof CollectionFetchingParams;
+
+  if (!p[key]) {
+    p[key] = [];
+  }
+
+  p[key] = unique(p[key].concat(c.value));
+
+  return p;
+};
+
+export type FetchingParamsType =
+  | OrderFetchingParams
+  | FetchingParams
+  | CollectionFetchingParams
+  | GiftCardsFetchingParams
+  | PageFetchingParams
+  | VoucherFetchingParams;
+
+export const getEmptyFetchingPrams = (type: FilterProviderType) => {
   switch (type) {
     case "product":
       return emptyFetchingParams;
@@ -184,5 +207,7 @@ export const getFetchingPrams = (
       return emptyPageFetchingParams;
     case "gift-cards":
       return emptyGiftCardsFetchingParams;
+    case "collection":
+      return emptyCollectionFetchingParams;
   }
 };

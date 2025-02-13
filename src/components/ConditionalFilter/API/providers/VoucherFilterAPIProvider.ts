@@ -11,7 +11,7 @@ import {
 import { DiscountStatusEnum, VoucherDiscountType } from "@dashboard/graphql";
 import { IntlShape, useIntl } from "react-intl";
 
-import { FilterAPIProvider } from "./FilterAPIProvider";
+import { FilterAPIProvider } from "../FilterAPIProvider";
 
 const getFilterElement = (value: FilterContainer, index: number): FilterElement => {
   const possibleFilterElement = value[index];

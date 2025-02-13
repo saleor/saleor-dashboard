@@ -1,9 +1,9 @@
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 
-import { createBooleanOption } from "../constants";
-import { AttributeInputType } from "../FilterElement/ConditionOptions";
-import { ItemOption } from "../FilterElement/ConditionValue";
-import { UrlToken } from "../ValueProvider/UrlToken";
+import { createBooleanOption } from "../../../constants";
+import { AttributeInputType } from "../../../FilterElement/ConditionOptions";
+import { ItemOption } from "../../../FilterElement/ConditionValue";
+import { UrlToken } from "../../../ValueProvider/UrlToken";
 
 export interface AttributeDTO {
   choices: Array<{
@@ -18,7 +18,7 @@ export interface AttributeDTO {
   value: string;
 }
 
-export interface InitialState {
+export interface InitialProductState {
   category: ItemOption[];
   attribute: Record<string, AttributeDTO>;
   channel: ItemOption[];
@@ -34,7 +34,7 @@ export interface InitialState {
 const isDateField = (name: string) =>
   ["created", "updatedAt", "startDate", "endDate"].includes(name);
 
-export class InitialStateResponse implements InitialState {
+export class InitialProductStateResponse implements InitialProductState {
   constructor(
     public category: ItemOption[] = [],
     public attribute: Record<string, AttributeDTO> = {},
@@ -53,7 +53,7 @@ export class InitialStateResponse implements InitialState {
   }
 
   public static empty() {
-    return new InitialStateResponse();
+    return new InitialProductStateResponse();
   }
 
   public filterByUrlToken(token: UrlToken) {
