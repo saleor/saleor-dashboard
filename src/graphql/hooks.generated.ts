@@ -3463,7 +3463,7 @@ export const WebhookDetailsFragmentDoc = gql`
     ${WebhookFragmentDoc}`;
 export const AppFailedPendingWebhooksDocument = gql`
     query AppFailedPendingWebhooks {
-  apps(first: 50) {
+  apps(first: 50, filter: {type: THIRDPARTY}) {
     edges {
       node {
         webhooks {
