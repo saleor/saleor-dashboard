@@ -75,6 +75,47 @@ describe("useAppsFailedDeliveries", () => {
     expect(result.current.hasFailed).toEqual(false);
   });
 
+  it("should not flag as fails if there are no failed webhooks", () => {
+    // Arrange
+    (useUserPermissions as jest.Mock).mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
+    (useAppFailedPendingWebhooksLazyQuery as jest.Mock).mockReturnValue([
+      fetchingFunction,
+      {
+        data: {
+          apps: {
+            edges: [
+              {
+                node: {
+                  webhooks: [
+                    {
+                      failedDelivers: { edges: [] },
+                      pendingDelivers: {
+                        edges: [],
+                      },
+                    },
+                    {
+                      failedDelivers: { edges: [] },
+                      pendingDelivers: { edges: [] },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      },
+    ]);
+
+    // Act
+    const { result } = renderHook(() => useAppsFailedDeliveries());
+
+    result.current.fetchAppsWebhooks();
+
+    // Assert
+    expect(fetchingFunction).toHaveBeenCalled();
+    expect(result.current.hasFailed).toEqual(false);
+  });
+
   it("should check webhooks correctly for pending deliveries when user has permissions", () => {
     // Arrange
     (useUserPermissions as jest.Mock).mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
