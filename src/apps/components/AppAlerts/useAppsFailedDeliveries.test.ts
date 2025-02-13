@@ -33,7 +33,7 @@ describe("useAppsFailedDeliveries", () => {
     const { result } = renderHook(() => useAppsFailedDeliveries());
 
     // Assert
-    expect(result.current).toEqual({ hasFailed: false, hasPending: false });
+    expect(result.current).toEqual({ hasFailed: false, hasPendingFailed: false });
   });
 
   it("should handle undefined permissions", () => {
@@ -44,7 +44,7 @@ describe("useAppsFailedDeliveries", () => {
     // Act
     const { result } = renderHook(() => useAppsFailedDeliveries());
 
-    expect(result.current).toEqual({ hasFailed: false, hasPending: false });
+    expect(result.current).toEqual({ hasFailed: false, hasPendingFailed: false });
   });
 
   it("should return default counts when user has no permissions", () => {
@@ -56,7 +56,7 @@ describe("useAppsFailedDeliveries", () => {
     const { result } = renderHook(() => useAppsFailedDeliveries());
 
     // Assert
-    expect(result.current).toEqual({ hasFailed: false, hasPending: false });
+    expect(result.current).toEqual({ hasFailed: false, hasPendingFailed: false });
     expect(useAppFailedPendingWebhooksQuery).toHaveBeenCalledWith({
       skip: true,
     });
