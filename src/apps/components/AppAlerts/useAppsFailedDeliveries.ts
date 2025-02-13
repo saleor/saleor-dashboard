@@ -10,21 +10,21 @@ import { useMemo } from "react";
 type Webhook = NonNullable<
   NonNullable<AppFailedPendingWebhooksQuery["apps"]>["edges"][0]["node"]["webhooks"]
 >[0];
-interface FailedWebhooksCount {
+interface AppsFailedDeliveries {
   hasFailed: boolean;
-  hasPending: boolean;
+  hasPendingFailed: boolean;
 }
 
 const requiredPermissions = [PermissionEnum.MANAGE_APPS];
 
-const defaultFailedWebhooksInfo: FailedWebhooksCount = {
+const defaultFailedWebhooksInfo: AppsFailedDeliveries = {
   hasFailed: false,
-  hasPending: false,
+  hasPendingFailed: false,
 };
 
-const hasFailedCheck = (webhook: Webhook) =>
+const hasFailedAttemptsCheck = (webhook: Webhook) =>
   webhook.failedDelivers && webhook.failedDelivers?.edges?.length > 0;
-const hasPendingCheck = (webhook: Webhook) => {
+const hasFailedAttemptsInPendingCheck = (webhook: Webhook) => {
   const preliminaryCheck = webhook.pendingDelivers && webhook.pendingDelivers?.edges?.length > 0;
 
   if (!preliminaryCheck) return false;
@@ -36,7 +36,7 @@ const hasPendingCheck = (webhook: Webhook) => {
   );
 };
 
-export const useAllAppsAlert = (): FailedWebhooksCount => {
+export const useAppsFailedDeliveries = (): AppsFailedDeliveries => {
   const permissions = useUserPermissions();
   const hasRequiredPermissions = requiredPermissions.some(permission =>
     permissions?.map(e => e.code)?.includes(permission),
@@ -52,18 +52,18 @@ export const useAllAppsAlert = (): FailedWebhooksCount => {
         const webhookInfo = defaultFailedWebhooksInfo;
 
         app.node.webhooks?.forEach(webhook => {
-          if (hasFailedCheck(webhook)) {
+          if (hasFailedAttemptsCheck(webhook)) {
             webhookInfo.hasFailed = true;
           }
 
-          if (hasPendingCheck(webhook)) {
-            webhookInfo.hasPending = true;
+          if (hasFailedAttemptsInPendingCheck(webhook)) {
+            webhookInfo.hasPendingFailed = true;
           }
         });
 
         return {
           hasFailed: webhookInfo.hasFailed || acc.hasFailed,
-          hasPending: webhookInfo.hasPending || acc.hasPending,
+          hasPendingFailed: webhookInfo.hasPendingFailed || acc.hasPendingFailed,
         };
       }, defaultFailedWebhooksInfo) ?? defaultFailedWebhooksInfo,
     [data],
