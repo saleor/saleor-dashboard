@@ -39,6 +39,8 @@ const GIFT_CARDS_STATICS = ["currency", "products", "isActive", "tags", "usedBy"
 
 const COLLECTION_STATICS = ["channel", "published"];
 
+const ATTRIBUTES_STATICS = ["channel", "attributeType"];
+
 const STATIC_TO_LOAD = [
   ...PRODUCT_STATICS,
   ...ORDER_STATICS,
@@ -46,6 +48,7 @@ const STATIC_TO_LOAD = [
   ...PAGE_STATIC,
   ...GIFT_CARDS_STATICS,
   ...COLLECTION_STATICS,
+  ...ATTRIBUTES_STATICS,
 ];
 
 export const TokenType = {

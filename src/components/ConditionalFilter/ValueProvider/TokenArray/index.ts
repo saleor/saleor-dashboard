@@ -5,12 +5,14 @@ import { FilterContainer, FilterElement } from "../../FilterElement";
 import { FilterProviderType, InitialResponseType } from "../../types";
 import { UrlEntry, UrlToken } from "../UrlToken";
 import {
+  AttributesFetchingParams,
   CollectionFetchingParams,
   FetchingParams,
   FetchingParamsType,
   GiftCardsFetchingParams,
   OrderFetchingParams,
   PageFetchingParams,
+  toAttributesFetchingParams,
   toCollectionFetchingParams,
   toFetchingParams,
   toGiftCardsFetchingParams,
@@ -98,6 +100,13 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
           .reduce<GiftCardsFetchingParams>(
             toGiftCardsFetchingParams,
             params as GiftCardsFetchingParams,
+          );
+      case "attributes":
+        return this.asFlatArray()
+          .filter(token => token.isLoadable())
+          .reduce<AttributesFetchingParams>(
+            toAttributesFetchingParams,
+            params as AttributesFetchingParams,
           );
       default:
         return this.asFlatArray()

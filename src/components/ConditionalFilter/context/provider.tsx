@@ -1,11 +1,13 @@
 import React, { FC } from "react";
 
+import { useInitialAttributesState } from "../API/initialState/attributes/useInitialAttributesState";
 import { useInitialCollectionState } from "../API/initialState/collections/useInitialCollectionsState";
 import { useInitialGiftCardsState } from "../API/initialState/giftCards/useInitialGiftCardsState";
 import { useInitialOrderState } from "../API/initialState/orders/useInitialOrderState";
 import { useInitialPageState } from "../API/initialState/page/useInitialPageState";
 import { useProductInitialAPIState } from "../API/initialState/product/useProductInitialAPIState";
 import { useInitialVouchersState } from "../API/initialState/vouchers/useInitialVouchersState";
+import { useAttributesFilterAPIProvider } from "../API/providers/AttributesFilterAPIProvider";
 import { useCollectionFilterAPIProvider } from "../API/providers/CollectionFilterAPIProvider";
 import { useCustomerAPIProvider } from "../API/providers/CustomerFilterAPIProvider";
 import { useDiscountFilterAPIProvider } from "../API/providers/DiscountFiltersAPIProvider";
@@ -16,6 +18,7 @@ import { usePageAPIProvider } from "../API/providers/PageFilterAPIProvider";
 import { useProductFilterAPIProvider } from "../API/providers/ProductFilterAPIProvider";
 import { useVoucherAPIProvider } from "../API/providers/VoucherFilterAPIProvider";
 import {
+  STATIC_ATTRIBUTES_OPTIONS,
   STATIC_COLLECTION_OPTIONS,
   STATIC_CUSTOMER_OPTIONS,
   STATIC_DISCOUNT_OPTIONS,
@@ -245,6 +248,32 @@ export const ConditionalCollectionFilterProvider: FC<{
 
   const valueProvider = useUrlValueProvider(locationSearch, "collection", initialState);
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_COLLECTION_OPTIONS);
+  const containerState = useContainerState(valueProvider);
+  const filterWindow = useFilterWindow();
+
+  return (
+    <ConditionalFilterContext.Provider
+      value={{
+        apiProvider,
+        valueProvider,
+        leftOperandsProvider,
+        containerState,
+        filterWindow,
+      }}
+    >
+      {children}
+    </ConditionalFilterContext.Provider>
+  );
+};
+
+export const ConditionalAttributesFilterProvider: FC<{
+  locationSearch: string;
+}> = ({ children, locationSearch }) => {
+  const apiProvider = useAttributesFilterAPIProvider();
+
+  const initialState = useInitialAttributesState();
+  const valueProvider = useUrlValueProvider(locationSearch, "attributes", initialState);
+  const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_ATTRIBUTES_OPTIONS);
   const containerState = useContainerState(valueProvider);
   const filterWindow = useFilterWindow();
 

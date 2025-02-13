@@ -87,3 +87,16 @@ export const collectionFilterMessages = defineMessages({
     id: "ThUvIL",
   },
 });
+
+export const attributeTypesMessages = defineMessages({
+  productType: {
+    defaultMessage: "Product type",
+    id: "jzu97k",
+    description: "attribute product type",
+  },
+  pageType: {
+    defaultMessage: "Page type",
+    id: "qT0qr/",
+    description: "attribute page type",
+  },
+});

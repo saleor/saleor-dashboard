@@ -42,11 +42,17 @@ export interface CollectionFetchingParams {
   published: string[];
 }
 
+export interface AttributesFetchingParams {
+  channels: string[];
+  attributeTypes: string[];
+}
+
 type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute">;
 type OrderParamsKeys = keyof OrderFetchingParams;
 type VoucherParamsKeys = keyof VoucherFetchingParams;
 type PageParamsKeys = keyof PageFetchingParams;
 type GiftCardsParamKeys = keyof GiftCardsFetchingParams;
+type AttributesParamsKeys = keyof AttributesFetchingParams;
 
 export const emptyFetchingParams: FetchingParams = {
   category: [],
@@ -87,6 +93,11 @@ export const emptyCollectionFetchingParams: CollectionFetchingParams = {
   channel: [],
   metadata: [],
   published: [],
+};
+
+export const emptyAttributesFetchingParams: AttributesFetchingParams = {
+  channels: [],
+  attributeTypes: [],
 };
 
 const unique = <T>(array: Iterable<T>) => Array.from(new Set(array));
@@ -187,13 +198,39 @@ export const toCollectionFetchingParams = (p: CollectionFetchingParams, c: UrlTo
   return p;
 };
 
+export const toAttributesFetchingParams = (p: AttributesFetchingParams, c: UrlToken) => {
+  const key = c.name as AttributesParamsKeys;
+
+  if (!p[key]) {
+    p[key] = [];
+  }
+
+  p[key] = unique(p[key].concat(c.value));
+
+  return p;
+};
+
+export const getFetchingPrams = (
+  type: "product" | "order" | "discount" | "voucher" | "attribute",
+) => {
+  switch (type) {
+    case "product":
+      return emptyFetchingParams;
+    case "order":
+      return emptyOrderFetchingParams;
+    case "attribute":
+      return emptyAttributesFetchingParams;
+  }
+};
+
 export type FetchingParamsType =
   | OrderFetchingParams
   | FetchingParams
   | CollectionFetchingParams
   | GiftCardsFetchingParams
   | PageFetchingParams
-  | VoucherFetchingParams;
+  | VoucherFetchingParams
+  | AttributesFetchingParams;
 
 export const getEmptyFetchingPrams = (type: FilterProviderType) => {
   switch (type) {
@@ -209,5 +246,7 @@ export const getEmptyFetchingPrams = (type: FilterProviderType) => {
       return emptyGiftCardsFetchingParams;
     case "collection":
       return emptyCollectionFetchingParams;
+    case "attributes":
+      return emptyAttributesFetchingParams;
   }
 };

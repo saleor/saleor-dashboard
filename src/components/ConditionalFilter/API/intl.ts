@@ -1,5 +1,6 @@
 import { LeftOperand } from "@dashboard/components/ConditionalFilter/LeftOperandsProvider";
 import {
+  AttributeTypeEnum,
   CollectionPublished,
   DiscountStatusEnum,
   OrderAuthorizeStatusEnum,
@@ -12,6 +13,7 @@ import { transformOrderStatus, transformPaymentStatus } from "@dashboard/misc";
 import { IntlShape } from "react-intl";
 
 import {
+  attributeTypesMessages,
   authorizeStatusMessages,
   chargeStatusMessages,
   collectionFilterMessages,
@@ -94,6 +96,17 @@ const getPublishedLabel = (status: CollectionPublished, intl: IntlShape) => {
   }
 };
 
+const getAttributeTypeLabel = (type: AttributeTypeEnum, intl: IntlShape) => {
+  switch (type) {
+    case AttributeTypeEnum.PAGE_TYPE:
+      return intl.formatMessage(attributeTypesMessages.pageType);
+    case AttributeTypeEnum.PRODUCT_TYPE:
+      return intl.formatMessage(attributeTypesMessages.productType);
+    default:
+      return type;
+  }
+};
+
 export const getLocalizedLabel = (rowType: LeftOperand["type"], value: string, intl: IntlShape) => {
   switch (rowType) {
     case "paymentStatus":
@@ -110,6 +123,8 @@ export const getLocalizedLabel = (rowType: LeftOperand["type"], value: string, i
       return getDiscountTypeLabel(value as VoucherDiscountType, intl);
     case "voucherStatus":
       return getVoucherStatusLabel(value as DiscountStatusEnum, intl);
+    case "attributeType":
+      return getAttributeTypeLabel(value as AttributeTypeEnum, intl);
     default:
       return value;
   }

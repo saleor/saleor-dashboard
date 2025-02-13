@@ -7410,6 +7410,10 @@
     "context": "refunded fulfillment, section header",
     "string": "Replaced"
   },
+  "jzu97k": {
+    "context": "attribute product type",
+    "string": "Product type"
+  },
   "k+HcTv": {
     "context": "product type",
     "string": "Type"
@@ -8409,6 +8413,10 @@
   },
   "qSCmIG": {
     "string": "lower than {value}"
+  },
+  "qT0qr/": {
+    "context": "attribute page type",
+    "string": "Page type"
   },
   "qT6YYk": {
     "context": "order line total price",
