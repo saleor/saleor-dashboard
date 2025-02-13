@@ -3,7 +3,7 @@ import {
   AppFailedPendingWebhooksQuery,
   EventDeliveryStatusEnum,
   PermissionEnum,
-  useAppFailedPendingWebhooksQuery,
+  useAppFailedPendingWebhooksLazyQuery,
 } from "@dashboard/graphql";
 import { useMemo } from "react";
 
@@ -12,15 +12,10 @@ type Webhook = NonNullable<
 >[0];
 interface AppsFailedDeliveries {
   hasFailed: boolean;
-  hasPendingFailed: boolean;
+  fetchAppsWebhooks: () => void;
 }
 
 const requiredPermissions = [PermissionEnum.MANAGE_APPS];
-
-const defaultFailedWebhooksInfo: AppsFailedDeliveries = {
-  hasFailed: false,
-  hasPendingFailed: false,
-};
 
 const hasFailedAttemptsCheck = (webhook: Webhook) =>
   webhook.failedDelivers && webhook.failedDelivers?.edges?.length > 0;
@@ -42,32 +37,32 @@ export const useAppsFailedDeliveries = (): AppsFailedDeliveries => {
     permissions?.map(e => e.code)?.includes(permission),
   );
 
-  const { data } = useAppFailedPendingWebhooksQuery({
-    skip: !hasRequiredPermissions,
-  });
+  const [fetchAppsWebhooks, { data }] = useAppFailedPendingWebhooksLazyQuery();
 
-  const failedWebhooksInfo = useMemo(
+  const hasFailed = useMemo(
     () =>
-      data?.apps?.edges.reduce((acc, app) => {
-        const webhookInfo = defaultFailedWebhooksInfo;
+      data?.apps?.edges.some(
+        app =>
+          app.node.webhooks?.some(webhook => {
+            if (hasFailedAttemptsCheck(webhook) || hasFailedAttemptsInPendingCheck(webhook)) {
+              return true;
+            }
 
-        app.node.webhooks?.forEach(webhook => {
-          if (hasFailedAttemptsCheck(webhook)) {
-            webhookInfo.hasFailed = true;
-          }
-
-          if (hasFailedAttemptsInPendingCheck(webhook)) {
-            webhookInfo.hasPendingFailed = true;
-          }
-        });
-
-        return {
-          hasFailed: webhookInfo.hasFailed || acc.hasFailed,
-          hasPendingFailed: webhookInfo.hasPendingFailed || acc.hasPendingFailed,
-        };
-      }, defaultFailedWebhooksInfo) ?? defaultFailedWebhooksInfo,
+            return false;
+          }),
+        false,
+      ) ?? false,
     [data],
   );
 
-  return failedWebhooksInfo;
+  const handleFetchAppsWebhooks = () => {
+    if (hasRequiredPermissions) {
+      fetchAppsWebhooks();
+    }
+  };
+
+  return {
+    hasFailed,
+    fetchAppsWebhooks: handleFetchAppsWebhooks,
+  };
 };
