@@ -196,6 +196,7 @@ export const STATIC_CONDITIONS = {
       value: "input-1",
     },
   ],
+  staffMemberStatus: [{ type: "select", label: "is", value: "input-1" }],
 };
 
 export const CONSTRAINTS = {
@@ -494,6 +495,15 @@ export const STATIC_CUSTOMER_OPTIONS: LeftOperand[] = [
   },
 ];
 
+export const STAFF_MEMBER_OPTIONS: LeftOperand[] = [
+  {
+    value: "staffMemberStatus",
+    label: "Status",
+    type: "staffMemberStatus",
+    slug: "staffMemberStatus",
+  },
+];
+
 export const STATIC_OPTIONS = [
   ...STATIC_PRODUCT_OPTIONS,
   ...STATIC_DISCOUNT_OPTIONS,
@@ -504,6 +514,7 @@ export const STATIC_OPTIONS = [
   ...STATIC_GIFT_CARDS_OPTIONS,
   ...STATIC_CUSTOMER_OPTIONS,
   ...STATIC_COLLECTION_OPTIONS,
+  ...STAFF_MEMBER_OPTIONS,
 ];
 
 export const ATTRIBUTE_INPUT_TYPE_CONDITIONS = {

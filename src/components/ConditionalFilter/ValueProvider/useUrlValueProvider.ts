@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { InitialStaffMembersAPIState } from "@dashboard/components/ConditionalFilter/API/initialState/staffMembers/useInitialStaffMemebersState";
 import { stringify } from "qs";
 import { useEffect, useState } from "react";
 import useRouter from "use-react-router";
@@ -20,6 +21,7 @@ import {
   GiftCardsFetchingParams,
   OrderFetchingParams,
   PageFetchingParams,
+  StaffMembersFetchingParams,
   VoucherFetchingParams,
 } from "./TokenArray/fetchingParams";
 import { prepareStructure } from "./utils";
@@ -77,6 +79,11 @@ export const useUrlValueProvider = (
         case "collection":
           (initialState as InitialCollectionAPIState).fetchQueries(
             fetchingParams as CollectionFetchingParams,
+          );
+          break;
+        case "staff-members":
+          (initialState as InitialStaffMembersAPIState).fetchQueries(
+            fetchingParams as StaffMembersFetchingParams,
           );
           break;
       }

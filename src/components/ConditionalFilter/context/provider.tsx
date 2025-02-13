@@ -1,3 +1,5 @@
+import { useInitialStaffMembersState } from "@dashboard/components/ConditionalFilter/API/initialState/staffMembers/useInitialStaffMemebersState";
+import { useStaffMembersFilterAPIProvider } from "@dashboard/components/ConditionalFilter/API/providers/StaffMembersFilterAPIProvider";
 import React, { FC } from "react";
 
 import { useInitialCollectionState } from "../API/initialState/collections/useInitialCollectionsState";
@@ -16,6 +18,7 @@ import { usePageAPIProvider } from "../API/providers/PageFilterAPIProvider";
 import { useProductFilterAPIProvider } from "../API/providers/ProductFilterAPIProvider";
 import { useVoucherAPIProvider } from "../API/providers/VoucherFilterAPIProvider";
 import {
+  STAFF_MEMBER_OPTIONS,
   STATIC_COLLECTION_OPTIONS,
   STATIC_CUSTOMER_OPTIONS,
   STATIC_DISCOUNT_OPTIONS,
@@ -245,6 +248,32 @@ export const ConditionalCollectionFilterProvider: FC<{
 
   const valueProvider = useUrlValueProvider(locationSearch, "collection", initialState);
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_COLLECTION_OPTIONS);
+  const containerState = useContainerState(valueProvider);
+  const filterWindow = useFilterWindow();
+
+  return (
+    <ConditionalFilterContext.Provider
+      value={{
+        apiProvider,
+        valueProvider,
+        leftOperandsProvider,
+        containerState,
+        filterWindow,
+      }}
+    >
+      {children}
+    </ConditionalFilterContext.Provider>
+  );
+};
+
+export const ConditionalStaffMembersFilterProvider: FC<{
+  locationSearch: string;
+}> = ({ children, locationSearch }) => {
+  const apiProvider = useStaffMembersFilterAPIProvider();
+
+  const initialState = useInitialStaffMembersState();
+  const valueProvider = useUrlValueProvider(locationSearch, "staff-members", initialState);
+  const leftOperandsProvider = useFilterLeftOperandsProvider(STAFF_MEMBER_OPTIONS);
   const containerState = useContainerState(valueProvider);
   const filterWindow = useFilterWindow();
 
