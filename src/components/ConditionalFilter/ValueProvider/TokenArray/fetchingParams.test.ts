@@ -4,6 +4,7 @@ import {
   toCollectionFetchingParams,
   toGiftCardsFetchingParams,
   toPageFetchingParams,
+  toStaffMembersFetchingParams,
   toVouchersFetchingParams,
 } from "./fetchingParams";
 
@@ -195,6 +196,30 @@ describe("TokenArray / fetchingParams / toCollectionFetchingParams", () => {
       channel: ["chan-1"],
       metadata: [],
       published: [],
+    });
+  });
+});
+
+describe("TokenArray / fetchingParams / toStaffMembersFetchingParams", () => {
+  it("should return  fetching params", () => {
+    // Arrange
+    const params = {
+      staffMemberStatus: [],
+    };
+
+    const token = {
+      conditionKind: "in",
+      name: "staffMemberStatus",
+      type: "s",
+      value: "active",
+    } as UrlToken;
+
+    // Act
+    const fetchingParams = toStaffMembersFetchingParams(params, token);
+
+    // Assert
+    expect(fetchingParams).toEqual({
+      staffMemberStatus: ["active"],
     });
   });
 });
