@@ -377,7 +377,7 @@ export const creatAttributesQueryVariables = (value: FilterContainer): Attribute
       return p;
     }
 
-    p[c.value.value as keyof AttributeFilterInput] = mapStaticQueryPartToLegacyVariables(
+    (p[c.value.value as keyof AttributeFilterInput] as any) = mapStaticQueryPartToLegacyVariables(
       createStaticQueryPart(c.condition.selected),
     );
 
