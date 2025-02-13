@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
-import { useAppsFailedDeliveries } from "./useAppsFailedDeliveries";
+import { useAppsAlert } from "./useAppsAlert";
 
 const ExclamationIconComponent = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -27,10 +27,9 @@ const ExclamationIconComponent = () => {
 };
 
 export const SidebarAppAlert = () => {
-  const { hasFailed, hasPendingFailed } = useAppsFailedDeliveries();
-  const hasIssues = hasFailed || hasPendingFailed;
+  const { hasFailedAttempts } = useAppsAlert();
 
-  if (!hasIssues) {
+  if (!hasFailedAttempts) {
     return null;
   }
 
