@@ -1,5 +1,6 @@
-import { Octokit } from "octokit";
-import * as fs from "fs";
+const { Octokit } = require("octokit")
+const fs = require("fs");
+
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
 });
