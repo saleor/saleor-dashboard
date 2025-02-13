@@ -233,7 +233,8 @@
       "^@material-ui/icons$": "<rootDir>/node_modules/@material-ui/icons",
       "^@material-ui/styles$": "<rootDir>/node_modules/@material-ui/styles",
       "^react$": "<rootDir>/node_modules/react",
-      "^react-dom$": "<rootDir>/node_modules/react-dom"
+      "^react-dom$": "<rootDir>/node_modules/react-dom",
+      "collectCoverageFrom": ["<rootDir>/src/**/*.{ts,tsx}"]
     }
   },
   "overrides": {
