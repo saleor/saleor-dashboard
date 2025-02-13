@@ -1,8 +1,8 @@
 import { useApolloClient } from "@apollo/client";
 import {
-  _GetLegacyChannelOperandsDocument,
-  _GetLegacyChannelOperandsQuery,
-  _GetLegacyChannelOperandsQueryVariables,
+  _GetChannelOperandsDocument,
+  _GetChannelOperandsQuery,
+  _GetChannelOperandsQueryVariables,
   AttributeTypeEnum,
 } from "@dashboard/graphql";
 import { useState } from "react";
@@ -30,11 +30,11 @@ export const useInitialAttributesState = (): InitialAttributesAPIState => {
 
   const queriesToRun: Array<Promise<InitialAttributesAPIResponse>> = [];
 
-  const fetchQueries = async ({ channels, attributeTypes }: AttributesFetchingParams) => {
-    if (channels.length > 0) {
+  const fetchQueries = async ({ channel, attributeType }: AttributesFetchingParams) => {
+    if (channel.length > 0) {
       queriesToRun.push(
-        client.query<_GetLegacyChannelOperandsQuery, _GetLegacyChannelOperandsQueryVariables>({
-          query: _GetLegacyChannelOperandsDocument,
+        client.query<_GetChannelOperandsQuery, _GetChannelOperandsQueryVariables>({
+          query: _GetChannelOperandsDocument,
         }),
       );
     }
@@ -43,17 +43,27 @@ export const useInitialAttributesState = (): InitialAttributesAPIState => {
       AttributeTypeEnum,
       "attributeType",
       intl,
-      attributeTypes,
+      attributeType,
     );
 
     const data = await Promise.all(queriesToRun);
 
     const initialState = {
       ...createInitialAttributeState(data),
-      attributeTypes: await attributeTypeInit.fetch(),
+      attributeType: await attributeTypeInit.fetch(),
     };
 
-    setData(new InitialAttributesStateResponse(initialState.channels, initialState.attributeTypes));
+    setData(
+      new InitialAttributesStateResponse(
+        initialState.channels,
+        initialState.attributeType,
+        initialState.filterableInStorefront,
+        initialState.filterableInDashboard,
+        initialState.isVariantOnly,
+        initialState.valueRequired,
+        initialState.visibleInStorefront,
+      ),
+    );
     setLoading(false);
   };
 

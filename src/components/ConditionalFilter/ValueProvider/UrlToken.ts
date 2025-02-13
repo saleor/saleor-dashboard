@@ -39,7 +39,15 @@ const GIFT_CARDS_STATICS = ["currency", "products", "isActive", "tags", "usedBy"
 
 const COLLECTION_STATICS = ["channel", "published"];
 
-const ATTRIBUTES_STATICS = ["channel", "attributeType"];
+const ATTRIBUTES_STATICS = [
+  "channel",
+  "attributeType",
+  "filterableInStorefront",
+  "filterableInDashboard",
+  "isVariantOnly",
+  "valueRequired",
+  "visibleInStorefront",
+];
 
 const STATIC_TO_LOAD = [
   ...PRODUCT_STATICS,

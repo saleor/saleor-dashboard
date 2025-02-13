@@ -43,8 +43,8 @@ export interface CollectionFetchingParams {
 }
 
 export interface AttributesFetchingParams {
-  channels: string[];
-  attributeTypes: string[];
+  channel: string[];
+  attributeType: string[];
 }
 
 type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute">;
@@ -96,8 +96,8 @@ export const emptyCollectionFetchingParams: CollectionFetchingParams = {
 };
 
 export const emptyAttributesFetchingParams: AttributesFetchingParams = {
-  channels: [],
-  attributeTypes: [],
+  channel: [],
+  attributeType: [],
 };
 
 const unique = <T>(array: Iterable<T>) => Array.from(new Set(array));
@@ -208,19 +208,6 @@ export const toAttributesFetchingParams = (p: AttributesFetchingParams, c: UrlTo
   p[key] = unique(p[key].concat(c.value));
 
   return p;
-};
-
-export const getFetchingPrams = (
-  type: "product" | "order" | "discount" | "voucher" | "attribute",
-) => {
-  switch (type) {
-    case "product":
-      return emptyFetchingParams;
-    case "order":
-      return emptyOrderFetchingParams;
-    case "attribute":
-      return emptyAttributesFetchingParams;
-  }
 };
 
 export type FetchingParamsType =

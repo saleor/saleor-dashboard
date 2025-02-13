@@ -4,12 +4,22 @@ import { UrlToken } from "../../../ValueProvider/UrlToken";
 export interface InitialAttributesState {
   channels: ItemOption[];
   attributeTypes: ItemOption[];
+  filterableInStorefront: ItemOption[];
+  filterableInDashboard: ItemOption[];
+  isVariantOnly: ItemOption[];
+  valueRequired: ItemOption[];
+  visibleInStorefront: ItemOption[];
 }
 
 export class InitialAttributesStateResponse implements InitialAttributesState {
   constructor(
     public channels: ItemOption[] = [],
     public attributeTypes: ItemOption[] = [],
+    public filterableInStorefront: ItemOption[] = [],
+    public filterableInDashboard: ItemOption[] = [],
+    public isVariantOnly: ItemOption[] = [],
+    public valueRequired: ItemOption[] = [],
+    public visibleInStorefront: ItemOption[] = [],
   ) {}
 
   public static empty() {
@@ -32,6 +42,16 @@ export class InitialAttributesStateResponse implements InitialAttributesState {
         return this.channels;
       case "attributeType":
         return this.attributeTypes;
+      case "filterableInStorefront":
+        return this.filterableInStorefront;
+      case "filterableInDashboard":
+        return this.filterableInDashboard;
+      case "isVariantOnly":
+        return this.isVariantOnly;
+      case "valueRequired":
+        return this.valueRequired;
+      case "visibleInStorefront":
+        return this.visibleInStorefront;
       default:
         return [];
     }
