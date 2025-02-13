@@ -1,0 +1,21 @@
+name: Push flaky test report
+description: Push flaky test report to qa repository
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 20
+
+    - name: Push Test Report
+      shell: bash
+      run: |
+        node .github/actions/push-flaky-test-report/send-report-to-repo.js \
+      env:
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+      if: always()
+
+inputs:
+  github_token:
+    description: "GitHub token for accessing APIs"
+    required: true

@@ -246,3 +246,8 @@ jobs:
         uses: ./.github/actions/flaky-tests-report
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push flaky report
+        uses: .github/actions/push-flaky-test-report
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
