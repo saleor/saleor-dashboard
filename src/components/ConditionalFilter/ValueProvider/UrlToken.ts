@@ -6,6 +6,18 @@ import { slugFromConditionValue } from "../FilterElement/ConditionValue";
 
 export const CONDITIONS = ["is", "equals", "in", "between", "lower", "greater"];
 
+const PRODUCT_STATICS = [
+  "category",
+  "collection",
+  "channel",
+  "productType",
+  "isAvailable",
+  "isPublished",
+  "isVisibleInListing",
+  "hasCategory",
+  "giftCard",
+];
+
 const ORDER_STATICS = [
   "paymentStatus",
   "status",
@@ -25,20 +37,15 @@ const PAGE_STATIC = ["pageTypes"];
 
 const GIFT_CARDS_STATICS = ["currency", "products", "isActive", "tags", "usedBy"];
 
+const COLLECTION_STATICS = ["channel", "published"];
+
 const STATIC_TO_LOAD = [
-  "category",
-  "collection",
-  "channel",
-  "productType",
-  "isAvailable",
-  "isPublished",
-  "isVisibleInListing",
-  "hasCategory",
-  "giftCard",
+  ...PRODUCT_STATICS,
   ...ORDER_STATICS,
   ...VOUCHER_STATICS,
   ...PAGE_STATIC,
   ...GIFT_CARDS_STATICS,
+  ...COLLECTION_STATICS,
 ];
 
 export const TokenType = {

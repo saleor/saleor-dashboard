@@ -1,5 +1,6 @@
 import { LeftOperand } from "@dashboard/components/ConditionalFilter/LeftOperandsProvider";
 import {
+  CollectionPublished,
   DiscountStatusEnum,
   OrderAuthorizeStatusEnum,
   OrderChargeStatusEnum,
@@ -13,6 +14,7 @@ import { IntlShape } from "react-intl";
 import {
   authorizeStatusMessages,
   chargeStatusMessages,
+  collectionFilterMessages,
   discountTypeMessages,
   voucherStatusMessages,
 } from "./messages";
@@ -81,6 +83,17 @@ const getVoucherStatusLabel = (status: DiscountStatusEnum, intl: IntlShape) => {
   }
 };
 
+const getPublishedLabel = (status: CollectionPublished, intl: IntlShape) => {
+  switch (status) {
+    case CollectionPublished.PUBLISHED:
+      return intl.formatMessage(collectionFilterMessages.published);
+    case CollectionPublished.HIDDEN:
+      return intl.formatMessage(collectionFilterMessages.hidden);
+    default:
+      return status;
+  }
+};
+
 export const getLocalizedLabel = (rowType: LeftOperand["type"], value: string, intl: IntlShape) => {
   switch (rowType) {
     case "paymentStatus":
@@ -91,6 +104,8 @@ export const getLocalizedLabel = (rowType: LeftOperand["type"], value: string, i
       return getAuthorizeStatusLabel(value as OrderAuthorizeStatusEnum, intl);
     case "chargeStatus":
       return getChargeStatusLabel(value as OrderChargeStatusEnum, intl);
+    case "published":
+      return getPublishedLabel(value as CollectionPublished, intl);
     case "discountType":
       return getDiscountTypeLabel(value as VoucherDiscountType, intl);
     case "voucherStatus":
