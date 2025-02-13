@@ -1,47 +1,47 @@
 // @ts-nocheck
 
-import D98679 from "./images/app-alerts.jpg"
-import L14884 from "./images/attributes-filters.png"
-import T06069 from "./images/collection-filters.jpg"
-import V40974 from "./images/customers-filters.png"
-import X44216 from "./images/discounts-list.png"
-import U49299 from "./images/draft-orders-filters.png"
-import V75451 from "./images/gift-cards-filters.png"
-import E56968 from "./images/improved_refunds.png"
-import Q04356 from "./images/page-filters.png"
-import Q15221 from "./images/product-types-filters.png"
-import G40478 from "./images/staff-members-filters.png"
-import S05213 from "./images/vouchers-filters.png"
+import R72419 from "./images/app-alerts.jpg"
+import M15108 from "./images/attributes-filters.png"
+import N45760 from "./images/collection-filters.jpg"
+import W17316 from "./images/customers-filters.png"
+import J08003 from "./images/discounts-list.png"
+import O58901 from "./images/draft-orders-filters.png"
+import R03646 from "./images/gift-cards-filters.png"
+import B43610 from "./images/improved_refunds.png"
+import Q33597 from "./images/page-filters.png"
+import J35283 from "./images/product-types-filters.png"
+import D66886 from "./images/staff-members-filters.png"
+import D68101 from "./images/vouchers-filters.png"
 
-const app_alerts = () => (<><p><img src={D98679} alt="new filters"/>
+const app_alerts = () => (<><p><img src={R72419} alt="new filters"/>
 Experience new notifications displaying alerts for apps in the Dashboard. 
 Get meaningful information when Saleor detects issues with an app.</p>
 </>)
-const attributes_filters = () => (<><p><img src={L14884} alt="new filters"/>
+const attributes_filters = () => (<><p><img src={M15108} alt="new filters"/>
 Experience the new look and enhanced abilities of new fitering mechanism.
 Easily combine any criteria you want, and quickly browse their values.</p>
 </>)
-const collection_filters = () => (<><p><img src={T06069} alt="new filters"/>
+const collection_filters = () => (<><p><img src={N45760} alt="new filters"/>
 Experience the new look and enhanced abilities of new filtering mechanism.
 Easily combine any criteria you want, and quickly browse their values.</p>
 </>)
-const customers_filters = () => (<><p><img src={V40974} alt="new filters"/>
+const customers_filters = () => (<><p><img src={W17316} alt="new filters"/>
 Experience the new look and enhanced abilities of new fitering mechanism.
 Easily combine any criteria you want, and quickly browse their values.</p>
 </>)
-const discounts_rules = () => (<><p><img src={X44216} alt="Discount rules"/></p>
+const discounts_rules = () => (<><p><img src={J08003} alt="Discount rules"/></p>
 <p>Apply the new discounts rules to narrow your promotions audience.
 Set up conditions and channels that must be fulfilled to apply defined reward.</p>
 </>)
-const draft_orders_filters = () => (<><p><img src={U49299} alt="new filters"/>
+const draft_orders_filters = () => (<><p><img src={O58901} alt="new filters"/>
 Experience the new look and enhanced abilities of new fitering mechanism.
 Easily combine any criteria you want, and quickly browse their values.</p>
 </>)
-const gift_cards_filters = () => (<><p><img src={V75451} alt="new filters"/>
+const gift_cards_filters = () => (<><p><img src={R03646} alt="new filters"/>
 Experience the new look and enhanced abilities of new fitering mechanism.
 Easily combine any criteria you want, and quickly browse their values.</p>
 </>)
-const improved_refunds = () => (<><p><img src={E56968} alt="Improved refunds"/></p>
+const improved_refunds = () => (<><p><img src={B43610} alt="Improved refunds"/></p>
 <h3 id="enable-the-enhanced-refund-feature-to-streamline-your-refund-process">Enable the enhanced refund feature to streamline your refund process:</h3>
 <ul>
 <li><p>• Choose between automatic calculations based on selected items or enter refund amounts directly for overcharges and custom adjustments.</p>
@@ -51,19 +51,19 @@ const improved_refunds = () => (<><p><img src={E56968} alt="Improved refunds"/><
 </ul>
 
 </>)
-const pages_filters = () => (<><p><img src={Q04356} alt="new filters"/>
+const pages_filters = () => (<><p><img src={Q33597} alt="new filters"/>
 Experience the new look and enhanced abilities of new fitering mechanism.
 Easily combine any criteria you want, and quickly browse their values.</p>
 </>)
-const product_types_filters = () => (<><p><img src={Q15221} alt="new filters"/>
+const product_types_filters = () => (<><p><img src={J35283} alt="new filters"/>
 Experience the new look and enhanced abilities of new fitering mechanism.
 Easily combine any criteria you want, and quickly browse their values.</p>
 </>)
-const staff_members_filters = () => (<><p><img src={G40478} alt="new filters"/>
+const staff_members_filters = () => (<><p><img src={D66886} alt="new filters"/>
 Experience the new look and enhanced abilities of new filtering mechanism.
 Easily combine any criteria you want, and quickly browse their values.</p>
 </>)
-const vouchers_filters = () => (<><p><img src={S05213} alt="new filters"/>
+const vouchers_filters = () => (<><p><img src={D68101} alt="new filters"/>
 Experience the new look and enhanced abilities of new fitering mechanism.
 Easily combine any criteria you want, and quickly browse their values.</p>
 </>)
