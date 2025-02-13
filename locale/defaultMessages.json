@@ -582,10 +582,6 @@
     "context": "expiry date section header",
     "string": "Expiry date"
   },
-  "1KSqnn": {
-    "context": "tab name",
-    "string": "All Product Types"
-  },
   "1LBYpE": {
     "context": "dialog header",
     "string": "Delete Menus"
@@ -1674,6 +1670,9 @@
   "9C7PZE": {
     "context": "navigation section name",
     "string": "Navigation"
+  },
+  "9CC8JI": {
+    "string": "Search product types..."
   },
   "9CEu8k": {
     "context": "modal button images upload",
@@ -7270,6 +7269,10 @@
   "ivJ1qt": {
     "string": "Manage your permission groups and their permissions"
   },
+  "ivmwpV": {
+    "context": "tab name",
+    "string": "All product types"
+  },
   "ixjvkM": {
     "string": "We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
   },
@@ -8571,9 +8574,6 @@
   "rl1t+o": {
     "context": "expires in label",
     "string": "Expires in"
-  },
-  "rpFdD1": {
-    "string": "Search Product Type"
   },
   "rqiCWU": {
     "string": "Saved changes"
