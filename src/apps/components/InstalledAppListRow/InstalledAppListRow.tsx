@@ -3,6 +3,7 @@ import { InstalledApp } from "@dashboard/apps/types";
 import { AppPaths, AppUrls } from "@dashboard/apps/urls";
 import { isAppInTunnel } from "@dashboard/apps/utils";
 import Link from "@dashboard/components/Link";
+import { DisabledIcon } from "@dashboard/icons/Disabled";
 import { Box, Chip, List, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -93,9 +94,9 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
         >
           <Box marginLeft="auto" display="flex" alignItems="center" gap={5}>
             {!app.isActive && (
-              <Text size={2} color="default2">
-                <FormattedMessage {...messages.appDisabled} />
-              </Text>
+              <Box color="default2" __width={20} __height={20}>
+                <DisabledIcon />
+              </Box>
             )}
           </Box>
         </Box>
