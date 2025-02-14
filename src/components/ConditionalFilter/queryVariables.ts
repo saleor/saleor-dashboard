@@ -10,6 +10,7 @@ import {
   GlobalIdFilterInput,
   OrderDraftFilterInput,
   PageFilterInput,
+  ProductTypeFilterInput,
   ProductWhereInput,
   PromotionWhereInput,
   VoucherFilterInput,
@@ -364,4 +365,24 @@ export const createCollectionsQueryVariables = (value: FilterContainer): Collect
 
     return p;
   }, {} as CollectionQueryVars);
+};
+
+export const createProductTypesQueryVariables = (
+  value: FilterContainer,
+): ProductTypeFilterInput => {
+  return value.reduce((p, c) => {
+    if (typeof c === "string" || Array.isArray(c)) return p;
+
+    const value = mapStaticQueryPartToLegacyVariables(createStaticQueryPart(c.condition.selected));
+
+    if (c.value.type === "typeOfProduct") {
+      p["productType"] = value;
+
+      return p;
+    }
+
+    p[c.value.value as keyof ProductTypeFilterInput] = value;
+
+    return p;
+  }, {} as ProductTypeFilterInput);
 };

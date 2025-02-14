@@ -3745,6 +3745,10 @@
   "M59JhX": {
     "string": "Manual"
   },
+  "M61TN/": {
+    "context": "product type shippable",
+    "string": "Shippable"
+  },
   "M6mWHL": {
     "context": "tooltip helper text",
     "string": "You do not have permissions to create a manual refund."
@@ -4779,6 +4783,10 @@
   },
   "SceSNp": {
     "string": "Remove following permissions:"
+  },
+  "SgFE10": {
+    "context": "product type digital",
+    "string": "Digital"
   },
   "Sjd7wm": {
     "context": "product filter label",
