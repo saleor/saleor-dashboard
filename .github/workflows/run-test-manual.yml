@@ -19,7 +19,7 @@ jobs:
       BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
       ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
       SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
-      DASHBOARD_VERSION: ${{ steps.install-deps.outputs.DASHBOARD_VERSION }}
+
     steps:
       - uses: actions/checkout@v4
 
@@ -44,10 +44,6 @@ jobs:
         id: install-deps
         run: |
           npm ci
-          # Extract version from package.json
-          VERSION=$(cat package.json | jq -r .version)
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "DASHBOARD_VERSION=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Set variables mode
         id: set_variables_mode
@@ -65,8 +61,8 @@ jobs:
         with:
           CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
           # MODE: ${{ steps.set_variables_mode.outputs.MODE }}
-          MODE: "from-version"
-          VERSION: "3.20"
+          MODE: "main"
+          # VERSION: "3.20"
 
 
       - name: Prepare instances
@@ -119,6 +115,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Get Dashboard version
+        id: get-version
+        run: |
+          VERSION=$(cat package.json | jq -r .version)
+          echo "DASHBOARD_VERSION=$VERSION" >> $GITHUB_OUTPUT
+
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
         with:
@@ -136,7 +138,7 @@ jobs:
           ENABLED_SERVICE_NAME_HEADER: true
           URL_TO_RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           PROJECT: "e2e apps-e2e"
-          DASHBOARD_VERSION: ${{ needs.initialize-cloud.outputs.DASHBOARD_VERSION }}
+          DASHBOARD_VERSION: ${{ steps.get-version.outputs.DASHBOARD_VERSION }}
           BRANCH_NAME: ${{ github.ref}}
           SALEOR_CLOUD_SERVICE: ${{ needs.initialize-cloud.outputs.SALEOR_CLOUD_SERVICE }}
 
