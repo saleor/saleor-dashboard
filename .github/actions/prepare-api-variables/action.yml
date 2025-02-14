@@ -54,7 +54,9 @@ runs:
           echo "BASE_URL_DOMAIN=${PREFIX}${PULL_REQUEST_NUMBER}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
           echo "POOL_NAME=${PREFIX}${PULL_REQUEST_NUMBER}" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://${PREFIX}${PULL_REQUEST_NUMBER}.staging.saleor.cloud" >> $GITHUB_OUTPUT
-          echo "SALEOR_VERSION=${PREFIX}${PULL_REQUEST_NUMBER}" >> $GITHUB_OUTPUT
+          VERSION=$(cat package.json | jq -r .version)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "SALEOR_VERSION=$VERSION" >> $GITHUB_OUTPUT
 
           if [[ "$DESTINATION_BRANCH" == 'main' ]]; then
             echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
@@ -93,7 +95,9 @@ runs:
           echo "POOL_INSTANCE=https://automation-dashboard.staging.saleor.cloud" >> $GITHUB_OUTPUT
           echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
           echo "SALEOR_CLOUD_SERVICE=saleor-master-staging" >> $GITHUB_OUTPUT
-          echo "SALEOR_VERSION=main" >> $GITHUB_OUTPUT
+          VERSION=$(cat package.json | jq -r .version)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "SALEOR_VERSION=$VERSION" >> $GITHUB_OUTPUT
 
           exit 0
         fi
