@@ -1,8 +1,8 @@
 import { MetadataInput } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import { useController, UseControllerProps, useFieldArray, useFormContext } from "react-hook-form";
+import { useFieldArray, UseFormReturn } from "react-hook-form";
 
 import { MetadataCard, MetadataCardProps } from "./MetadataCard";
 import { MetadataLoadingCard } from "./MetadataLoadingCard";
@@ -14,28 +14,48 @@ type Data = {
   privateMetadata: MetadataInput[] | undefined;
 };
 
-export interface MetadataProps extends Omit<MetadataCardProps, "data" | "isPrivate" | "onChange"> {
+export interface MetadataProps
+  extends Omit<MetadataCardProps, "data" | "isPrivate" | "onChange">,
+    Pick<UseFormReturn<Data>, "getValues" | "control" | "trigger"> {
   isLoading?: boolean;
   readonly?: boolean;
   // This props is used to hide the private metadata section when user doesn't have enough permissions.
   hidePrivateMetadata?: boolean;
+  className?: string;
 }
+
+const validateDuplicateKeys = (metadata: MetadataInput[]) => {
+  const keys = metadata.map(entry => entry.key);
+  const uniqueKeys = new Set(keys);
+
+  return uniqueKeys.size !== keys.length
+    ? "Metadata keys must be unique, remove duplicate key"
+    : true;
+};
 
 export const MetadataHookForm = ({
   isLoading,
   readonly = false,
   hidePrivateMetadata = false,
+  control,
+  getValues,
+  trigger,
+  className,
 }: MetadataProps) => {
-  const { control, getValues } = useFormContext<Data>();
-
   const metadataControls = useFieldArray({
     control,
     name: "metadata",
+    rules: {
+      validate: validateDuplicateKeys,
+    },
   });
 
   const privateMetadataControls = useFieldArray({
     control,
     name: "privateMetadata",
+    rules: {
+      validate: validateDuplicateKeys,
+    },
   });
 
   const change = (event: ChangeEvent, isPrivate: boolean) => {
@@ -51,6 +71,9 @@ export const MetadataHookForm = ({
       const existingValue = getValues(`${metadataType}.${fieldIndex}`);
 
       calledMetadataControls.update(fieldIndex, { ...existingValue, [fieldObjKey]: value });
+
+      // Trigger re-validation of data
+      trigger(metadataType);
     }
 
     if (action === EventDataAction.add) {
@@ -63,7 +86,7 @@ export const MetadataHookForm = ({
   };
 
   return (
-    <Box display="grid" gap={2} paddingBottom={10}>
+    <Box display="grid" gap={2} paddingBottom={10} className={className}>
       {isLoading ? (
         <>
           <MetadataLoadingCard />

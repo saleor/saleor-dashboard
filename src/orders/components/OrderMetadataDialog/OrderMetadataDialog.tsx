@@ -10,7 +10,9 @@ import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 // import { ORDER_LINE_METADATA_UPDATE_FORM_ID } from "@dashboard/orders/views/OrderDetails/consts";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import { flattenErrors } from "@dashboard/utils/hook-form/errors";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
+import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Button, Divider, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -23,7 +25,17 @@ interface OrderMetadataDialogProps {
   loading?: boolean;
 }
 
+const useStyles = makeStyles(
+  {
+    metadata: {
+      paddingBottom: "0",
+    },
+  },
+  { name: "OrderMetadataDialog" },
+);
+
 export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetadataDialogProps) => {
+  const classes = useStyles();
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const hasManageProducts = useHasManageProductsPermission();
@@ -36,7 +48,7 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
     },
   });
 
-  const { handleSubmit } = formMethods;
+  const { handleSubmit, control, getValues, formState, trigger } = formMethods;
 
   const onSubmit = createMetadataUpdateHandler(
     data,
@@ -44,6 +56,8 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables }),
   );
+
+  const allFormErrors = flattenErrors(formState.errors);
 
   // TODO: Exit confirmation?
 
@@ -60,7 +74,7 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
               <Box
                 display="flex"
                 flexDirection="column"
-                __marginBottom="calc(var(--mu-spacing-10) * -1)" // remove Metadata padding
+                // __marginBottom="calc(var(--mu-spacing-10) * -1)" // remove Metadata padding
               >
                 <Box display="flex" flexDirection="column" marginLeft={6} gap={2}>
                   <Text as="h2" size={5} fontWeight="bold">
@@ -79,16 +93,24 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
                   </Text>
                 </Box>
 
-                <MetadataHookForm isLoading={loading} />
+                <MetadataHookForm
+                  isLoading={loading}
+                  control={control}
+                  getValues={getValues}
+                  trigger={trigger}
+                  className={classes.metadata}
+                />
+
+                {allFormErrors.length > 0 && (
+                  <Text color="critical1" marginLeft={6} marginTop={4}>
+                    {allFormErrors.join(", ")}
+                  </Text>
+                )}
               </Box>
 
               <Divider />
 
-              <Box
-                display="flex"
-                flexDirection="column"
-                __marginBottom="calc(var(--mu-spacing-10) * -1)" // Remove Metadata padding
-              >
+              <Box display="flex" flexDirection="column">
                 <Box display="flex" flexDirection="column" marginLeft={6} gap={2}>
                   <Text as="h2" size={5} fontWeight="bold">
                     <FormattedMessage
@@ -115,11 +137,17 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
                     privateMetadata: data?.variant?.privateMetadata,
                   }}
                   hidePrivateMetadata={!hasManageProducts}
+                  className={classes.metadata}
                 />
               </Box>
             </Box>
-            <DashboardModal.Actions paddingX={6}>
-              <Button data-test-id="save" variant="primary" type="submit">
+            <DashboardModal.Actions paddingX={6} marginTop={4}>
+              <Button
+                data-test-id="save"
+                variant={allFormErrors.length === 0 ? "primary" : "error"}
+                type="submit"
+                disabled={!formState.isDirty}
+              >
                 <FormattedMessage {...buttonMessages.save} />
               </Button>
               <Button data-test-id="back" variant="secondary" onClick={onClose}>
