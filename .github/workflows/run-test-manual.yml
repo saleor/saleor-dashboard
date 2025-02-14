@@ -65,7 +65,8 @@ jobs:
         with:
           CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
           # MODE: ${{ steps.set_variables_mode.outputs.MODE }}
-          MODE: "main"
+          MODE: "from-version"
+          VERSION: "3.20"
 
 
       - name: Prepare instances
