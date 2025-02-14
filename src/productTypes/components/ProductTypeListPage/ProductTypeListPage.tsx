@@ -84,7 +84,7 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
               disabled={disabled}
               variant="primary"
               onClick={() => navigate(productTypeAddUrl())}
-              data-test-id="create-product-type"
+              data-test-id="add-product-type"
             >
               <FormattedMessage
                 id="gksZwp"
