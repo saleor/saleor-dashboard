@@ -53,7 +53,7 @@ runs:
         overwrite-comment: true
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
-      if: always()
+      if: github.event_name == 'pull_request'
 
 inputs:
   github_token:

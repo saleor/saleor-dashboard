@@ -54,18 +54,17 @@ runs:
           echo "BASE_URL_DOMAIN=${PREFIX}${PULL_REQUEST_NUMBER}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
           echo "POOL_NAME=${PREFIX}${PULL_REQUEST_NUMBER}" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://${PREFIX}${PULL_REQUEST_NUMBER}.staging.saleor.cloud" >> $GITHUB_OUTPUT
-          VERSION=$(cat package.json | jq -r .version)
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "SALEOR_VERSION=$VERSION" >> $GITHUB_OUTPUT
 
           if [[ "$DESTINATION_BRANCH" == 'main' ]]; then
             echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
             echo "SALEOR_CLOUD_SERVICE=saleor-master-staging" >> $GITHUB_OUTPUT
+            echo "SALEOR_VERSION=${PREFIX}${PULL_REQUEST_NUMBER}" >> $GITHUB_OUTPUT
           else
             # it handles pull requests to the other branches than main, e.g. release branches
             VERSION_SLUG=$(echo "${DESTINATION_BRANCH}" | sed "s/\.//")
             echo "BACKUP_NAMESPACE=snapshot-automation-tests-${DESTINATION_BRANCH}" >> $GITHUB_OUTPUT
             echo "SALEOR_CLOUD_SERVICE=saleor-staging-v${VERSION_SLUG}" >> $GITHUB_OUTPUT
+            echo "SALEOR_VERSION=${DESTINATION_BRANCH}" >> $GITHUB_OUTPUT
           fi
 
           exit 0
@@ -103,7 +102,7 @@ runs:
         fi
 
         if [[ "$MODE" == 'from-version' ]]; then
-          VERSION_SLUG=$(echo "${VERSION/./}")
+          VERSION_SLUG=$(echo "${VERSION/./}") 
 
           echo "BASE_URL=https://v${VERSION_SLUG}.staging.saleor.cloud/dashboard/" >> "$GITHUB_OUTPUT"
           echo "API_URL=https://v${VERSION_SLUG}.staging.saleor.cloud/graphql/" >> "$GITHUB_OUTPUT"
@@ -111,8 +110,8 @@ runs:
           echo "POOL_NAME=${VERSION} Staging" >> "$GITHUB_OUTPUT"
           echo "POOL_INSTANCE=https://v${VERSION_SLUG}.staging.saleor.cloud/" >> "$GITHUB_OUTPUT"
           echo "BACKUP_NAMESPACE=snapshot-automation-tests-${VERSION}" >> "$GITHUB_OUTPUT"
-          echo "SALEOR_CLOUD_SERVICE=saleor-master-staging" >> $GITHUB_OUTPUT
-          echo "SALEOR_VERSION=${VERSION_SLUG}" >> $GITHUB_OUTPUT
+          echo "SALEOR_CLOUD_SERVICE=saleor-staging-v${VERSION_SLUG}" >> $GITHUB_OUTPUT
+          echo "SALEOR_VERSION=$VERSION" >> $GITHUB_OUTPUT
 
           exit 0
         fi
