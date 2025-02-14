@@ -1671,9 +1671,6 @@
     "context": "navigation section name",
     "string": "Navigation"
   },
-  "9CC8JI": {
-    "string": "Search product types..."
-  },
   "9CEu8k": {
     "context": "modal button images upload",
     "string": "Upload Images"
@@ -4017,6 +4014,10 @@
   "No4lyL": {
     "context": "header field name, header",
     "string": "Name"
+  },
+  "Nqh0na": {
+    "context": "Product types search input placeholder",
+    "string": "Search product types..."
   },
   "NqxvFh": {
     "context": "navigator placeholder",
