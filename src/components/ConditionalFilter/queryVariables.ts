@@ -381,7 +381,7 @@ export const createProductTypesQueryVariables = (
       return p;
     }
 
-    p[c.value.value as keyof ProductTypeFilterInput] = value;
+    (p[c.value.value as keyof ProductTypeFilterInput] as ProductTypeFilterInput) = value;
 
     return p;
   }, {} as ProductTypeFilterInput);
