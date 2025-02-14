@@ -31,6 +31,9 @@ outputs:
   SALEOR_CLOUD_SERVICE:
     description: "Which saleor cloud service will be used"
     value: ${{ steps.generate.outputs.SALEOR_CLOUD_SERVICE }}
+  SALEOR_VERSION:
+    description: "The version of Saleor"
+    value: ${{ steps.generate.outputs.SALEOR_VERSION }}
 
 runs:
   using: "composite"
@@ -51,6 +54,7 @@ runs:
           echo "BASE_URL_DOMAIN=${PREFIX}${PULL_REQUEST_NUMBER}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
           echo "POOL_NAME=${PREFIX}${PULL_REQUEST_NUMBER}" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://${PREFIX}${PULL_REQUEST_NUMBER}.staging.saleor.cloud" >> $GITHUB_OUTPUT
+          echo "SALEOR_VERSION=${PREFIX}${PULL_REQUEST_NUMBER}" >> $GITHUB_OUTPUT
 
           if [[ "$DESTINATION_BRANCH" == 'main' ]]; then
             echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
@@ -76,6 +80,7 @@ runs:
           echo "POOL_INSTANCE=https://v${VERSION_SLUG}.staging.saleor.cloud/" >> $GITHUB_OUTPUT
           echo "BACKUP_NAMESPACE=snapshot-automation-tests-${CURRENT_BRANCH}" >> $GITHUB_OUTPUT
           echo "SALEOR_CLOUD_SERVICE=saleor-master-staging" >> $GITHUB_OUTPUT
+          echo "SALEOR_VERSION=${VERSION_SLUG}" >> $GITHUB_OUTPUT
 
           exit 0
         fi
@@ -88,6 +93,7 @@ runs:
           echo "POOL_INSTANCE=https://automation-dashboard.staging.saleor.cloud" >> $GITHUB_OUTPUT
           echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
           echo "SALEOR_CLOUD_SERVICE=saleor-master-staging" >> $GITHUB_OUTPUT
+          echo "SALEOR_VERSION=main" >> $GITHUB_OUTPUT
 
           exit 0
         fi
@@ -102,6 +108,7 @@ runs:
           echo "POOL_INSTANCE=https://v${VERSION_SLUG}.staging.saleor.cloud/" >> "$GITHUB_OUTPUT"
           echo "BACKUP_NAMESPACE=snapshot-automation-tests-${VERSION}" >> "$GITHUB_OUTPUT"
           echo "SALEOR_CLOUD_SERVICE=saleor-master-staging" >> $GITHUB_OUTPUT
+          echo "SALEOR_VERSION=${VERSION_SLUG}" >> $GITHUB_OUTPUT
 
           exit 0
         fi

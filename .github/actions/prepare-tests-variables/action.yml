@@ -42,6 +42,9 @@ outputs:
   SALEOR_CLOUD_SERVICE:
     description: "Which saleor cloud service will be used"
     value: ${{ steps.api.outputs.SALEOR_CLOUD_SERVICE }}
+  SALEOR_VERSION:
+    description: "The version of Saleor"
+    value: ${{ steps.api.outputs.SALEOR_VERSION }}
 
 runs:
   using: "composite"

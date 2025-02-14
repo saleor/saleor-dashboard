@@ -19,6 +19,7 @@ jobs:
       BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
       ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
       SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
+      SALEOR_VERSION: ${{ steps.cloud_variables.outputs.SALEOR_VERSION }}
 
     steps:
       - uses: actions/checkout@v4
@@ -41,19 +42,17 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install deps
-        id: install-deps
-        run: |
-          npm ci
+        run: npm ci
 
-      - name: Set variables mode
-        id: set_variables_mode
-        shell: bash
-        run: |
-          if [[ "$GITHUB_REF" == "refs/heads/main" ]]; then
-            echo "MODE=main" >> $GITHUB_OUTPUT
-          else
-            echo "MODE=release" >> $GITHUB_OUTPUT
-          fi
+      # - name: Set variables mode
+      #   id: set_variables_mode
+      #   shell: bash
+      #   run: |
+      #     if [[ "$GITHUB_REF" == "refs/heads/main" ]]; then
+      #       echo "MODE=main" >> $GITHUB_OUTPUT
+      #     else
+      #       echo "MODE=release" >> $GITHUB_OUTPUT
+      #     fi
 
       - name: Generate variables
         id: cloud_variables
@@ -61,9 +60,7 @@ jobs:
         with:
           CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
           # MODE: ${{ steps.set_variables_mode.outputs.MODE }}
-          MODE: "main"
-          # VERSION: "3.20"
-
+          MODE: main
 
       - name: Prepare instances
         id: pool_variables
@@ -115,12 +112,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Get Dashboard version
-        id: get-version
-        run: |
-          VERSION=$(cat package.json | jq -r .version)
-          echo "DASHBOARD_VERSION=$VERSION" >> $GITHUB_OUTPUT
-
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
         with:
@@ -138,7 +129,7 @@ jobs:
           ENABLED_SERVICE_NAME_HEADER: true
           URL_TO_RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           PROJECT: "e2e apps-e2e"
-          DASHBOARD_VERSION: ${{ steps.get-version.outputs.DASHBOARD_VERSION }}
+          DASHBOARD_VERSION: ${{ needs.initialize-cloud.outputs.SALEOR_VERSION }}
           BRANCH_NAME: ${{ github.ref}}
           SALEOR_CLOUD_SERVICE: ${{ needs.initialize-cloud.outputs.SALEOR_CLOUD_SERVICE }}
 
