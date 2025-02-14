@@ -97,6 +97,42 @@ export const AppPermissionFragmentDoc = gql`
   code
 }
     `;
+export const AppEventDeliveriesFragmentDoc = gql`
+    fragment AppEventDeliveries on App {
+  webhooks {
+    failedDelivers: eventDeliveries(
+      first: 1
+      filter: {status: FAILED}
+      sortBy: {field: CREATED_AT, direction: DESC}
+    ) {
+      edges {
+        node {
+          id
+        }
+      }
+    }
+    pendingDelivers: eventDeliveries(
+      first: 1
+      filter: {status: PENDING}
+      sortBy: {field: CREATED_AT, direction: DESC}
+    ) {
+      edges {
+        node {
+          id
+          attempts(first: 6, sortBy: {field: CREATED_AT, direction: DESC}) {
+            edges {
+              node {
+                id
+                status
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
 export const AppListItemFragmentDoc = gql`
     fragment AppListItem on App {
   id
@@ -115,8 +151,10 @@ export const AppListItemFragmentDoc = gql`
   permissions {
     ...AppPermission
   }
+  ...AppEventDeliveries
 }
-    ${AppPermissionFragmentDoc}`;
+    ${AppPermissionFragmentDoc}
+${AppEventDeliveriesFragmentDoc}`;
 export const EventDeliveryAttemptFragmentDoc = gql`
     fragment EventDeliveryAttempt on EventDeliveryAttempt {
   id
@@ -3466,41 +3504,12 @@ export const AppFailedPendingWebhooksDocument = gql`
   apps(first: 50, filter: {type: THIRDPARTY}) {
     edges {
       node {
-        webhooks {
-          failedDelivers: eventDeliveries(
-            first: 1
-            filter: {status: FAILED}
-            sortBy: {field: CREATED_AT, direction: DESC}
-          ) {
-            edges {
-              node {
-                id
-              }
-            }
-          }
-          pendingDelivers: eventDeliveries(
-            first: 1
-            filter: {status: PENDING}
-            sortBy: {field: CREATED_AT, direction: DESC}
-          ) {
-            edges {
-              node {
-                attempts(first: 6, sortBy: {field: CREATED_AT, direction: DESC}) {
-                  edges {
-                    node {
-                      status
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
+        ...AppEventDeliveries
       }
     }
   }
 }
-    `;
+    ${AppEventDeliveriesFragmentDoc}`;
 
 /**
  * __useAppFailedPendingWebhooksQuery__

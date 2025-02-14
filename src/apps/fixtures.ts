@@ -29,6 +29,7 @@ export const activeApp: AppListItemFragment = {
     },
   ],
   brand: null,
+  webhooks: [],
 };
 
 export const inactiveApp: AppListItemFragment = {
@@ -54,6 +55,7 @@ export const inactiveApp: AppListItemFragment = {
     },
   ],
   brand: null,
+  webhooks: [],
 };
 
 export const installedAppsList: AppListItemFragment[] = [activeApp, inactiveApp];
