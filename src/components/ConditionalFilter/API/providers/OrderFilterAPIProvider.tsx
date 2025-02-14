@@ -1,5 +1,4 @@
 import { ApolloClient, useApolloClient } from "@apollo/client";
-import { FilterAPIProvider } from "@dashboard/components/ConditionalFilter/API/FilterAPIProvider";
 import {
   OrderAuthorizeStatusEnum,
   OrderChargeStatusEnum,
@@ -10,6 +9,7 @@ import { IntlShape, useIntl } from "react-intl";
 
 import { RowType } from "../../constants";
 import { FilterContainer, FilterElement } from "../../FilterElement";
+import { FilterAPIProvider } from "../FilterAPIProvider";
 import {
   BooleanValuesHandler,
   EnumValuesHandler,
@@ -18,16 +18,7 @@ import {
   NoopValuesHandler,
   TextInputValuesHandler,
 } from "../Handler";
-
-const getFilterElement = (value: FilterContainer, index: number): FilterElement => {
-  const possibleFilterElement = value[index];
-
-  if (typeof possibleFilterElement !== "string" && !Array.isArray(possibleFilterElement)) {
-    return possibleFilterElement;
-  }
-
-  throw new Error("Unknown filter element used to create API handler");
-};
+import { getFilterElement } from "../utils";
 
 const isStaticBoolean = (rowType: RowType) => {
   return ["isClickAndCollect", "isPreorder", "giftCardUsed", "giftCardBought"].includes(rowType);

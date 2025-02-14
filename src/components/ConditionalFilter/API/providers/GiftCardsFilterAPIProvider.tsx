@@ -1,5 +1,7 @@
 import { ApolloClient, useApolloClient } from "@apollo/client";
-import { FilterAPIProvider } from "@dashboard/components/ConditionalFilter/API/FilterAPIProvider";
+
+import { FilterContainer, FilterElement } from "../../FilterElement";
+import { FilterAPIProvider } from "../FilterAPIProvider";
 import {
   BooleanValuesHandler,
   CurrencyHandler,
@@ -7,21 +9,8 @@ import {
   GiftCardTagsHandler,
   Handler,
   ProductsHandler,
-} from "@dashboard/components/ConditionalFilter/API/Handler";
-import {
-  FilterContainer,
-  FilterElement,
-} from "@dashboard/components/ConditionalFilter/FilterElement";
-
-const getFilterElement = (value: FilterContainer, index: number): FilterElement => {
-  const possibleFilterElement = value[index];
-
-  if (typeof possibleFilterElement !== "string" && !Array.isArray(possibleFilterElement)) {
-    return possibleFilterElement;
-  }
-
-  throw new Error("Unknown filter element used to create API handler");
-};
+} from "../Handler";
+import { getFilterElement } from "../utils";
 
 const createAPIHandler = (
   selectedRow: FilterElement,

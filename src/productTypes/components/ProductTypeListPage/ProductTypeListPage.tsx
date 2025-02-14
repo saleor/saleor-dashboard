@@ -3,6 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
+import { useFlag } from "@dashboard/featureFlags";
 import { ProductTypeFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
@@ -46,6 +47,7 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
   const navigate = useNavigator();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const filterStructure = createFilterStructure(intl, filterOpts);
+  const { enabled: isProductTypesFilterEnabled } = useFlag("product_types_filters");
 
   return (
     <ListPageLayout>
@@ -96,17 +98,30 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
       </TopNav>
 
       <DashboardCard gap={0}>
-        <ListFilters
-          initialSearch={initialSearch}
-          onSearchChange={onSearchChange}
-          searchPlaceholder={intl.formatMessage({
-            id: "Nqh0na",
-            defaultMessage: "Search product types...",
-            description: "Product types search input placeholder",
-          })}
-          onFilterChange={onFilterChange}
-          filterStructure={filterStructure}
-        />
+        {isProductTypesFilterEnabled ? (
+          <ListFilters
+            type="expression-filter"
+            initialSearch={initialSearch}
+            onSearchChange={onSearchChange}
+            searchPlaceholder={intl.formatMessage({
+              id: "Nqh0na",
+              defaultMessage: "Search product types...",
+              description: "Product types search input placeholder",
+            })}
+          />
+        ) : (
+          <ListFilters
+            initialSearch={initialSearch}
+            onSearchChange={onSearchChange}
+            searchPlaceholder={intl.formatMessage({
+              id: "Nqh0na",
+              defaultMessage: "Search product types...",
+              description: "Product types search input placeholder",
+            })}
+            onFilterChange={onFilterChange}
+            filterStructure={filterStructure}
+          />
+        )}
 
         <ProductTypeList {...listProps} disabled={disabled} />
       </DashboardCard>

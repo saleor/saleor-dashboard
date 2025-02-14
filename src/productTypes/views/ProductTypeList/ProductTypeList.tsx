@@ -1,5 +1,8 @@
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { createProductTypesQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
+import { useFlag } from "@dashboard/featureFlags";
 import { useProductTypeBulkDeleteMutation, useProductTypeListQuery } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
@@ -40,6 +43,7 @@ interface ProductTypeListProps {
 
 export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
   const navigate = useNavigator();
+  const intl = useIntl();
   const notify = useNotifier();
   const {
     isSelected,
@@ -49,7 +53,9 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
     toggleAll,
   } = useBulkActions(params.ids);
   const { settings } = useListSettings(ListViews.PRODUCT_LIST);
-  const intl = useIntl();
+  const { enabled: isProductTypesFilterEnabled } = useFlag("product_types_filters");
+  const { valueProvider } = useConditionalFilterContext();
+  const filters = createProductTypesQueryVariables(valueProvider.value);
 
   usePaginationReset(productTypeListUrl, params, settings.rowNumber);
 
@@ -62,9 +68,20 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber],
   );
+  const newQueryVariables = React.useMemo(
+    () => ({
+      ...paginationState,
+      filter: {
+        ...filters,
+        search: params.query,
+      },
+      sort: getSortQueryVariables(params),
+    }),
+    [params, settings.rowNumber, valueProvider.value],
+  );
   const { data, loading, refetch } = useProductTypeListQuery({
     displayLoader: true,
-    variables: queryVariables,
+    variables: isProductTypesFilterEnabled ? newQueryVariables : queryVariables,
   });
   const [changeFilters, resetFilters, handleSearchChange] = createFilterHandlers({
     cleanupFn: reset,

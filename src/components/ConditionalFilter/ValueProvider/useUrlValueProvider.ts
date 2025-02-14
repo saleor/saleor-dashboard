@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { InitialProductTypesAPIState } from "@dashboard/components/ConditionalFilter/API/initialState/productTypes/useInitialProdutTypesState";
 import { stringify } from "qs";
 import { useEffect, useState } from "react";
 import useRouter from "use-react-router";
@@ -20,6 +21,7 @@ import {
   GiftCardsFetchingParams,
   OrderFetchingParams,
   PageFetchingParams,
+  ProductTypesFetchingParams,
   VoucherFetchingParams,
 } from "./TokenArray/fetchingParams";
 import { prepareStructure } from "./utils";
@@ -77,6 +79,11 @@ export const useUrlValueProvider = (
         case "collection":
           (initialState as InitialCollectionAPIState).fetchQueries(
             fetchingParams as CollectionFetchingParams,
+          );
+          break;
+        case "product-types":
+          (initialState as InitialProductTypesAPIState).fetchQueries(
+            fetchingParams as ProductTypesFetchingParams,
           );
           break;
       }

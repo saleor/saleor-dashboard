@@ -5,16 +5,8 @@ import { IntlShape, useIntl } from "react-intl";
 import { FilterContainer, FilterElement } from "../../FilterElement";
 import { FilterAPIProvider } from "../FilterAPIProvider";
 import { ChannelHandler, EnumValuesHandler, Handler, NoopValuesHandler } from "../Handler";
+import { getFilterElement } from "../utils";
 
-const getFilterElement = (value: FilterContainer, index: number): FilterElement => {
-  const possibleFilterElement = value[index];
-
-  if (typeof possibleFilterElement !== "string" && !Array.isArray(possibleFilterElement)) {
-    return possibleFilterElement;
-  }
-
-  throw new Error("Unknown filter element used to create API handler");
-};
 const createAPIHandler = (
   selectedRow: FilterElement,
   client: ApolloClient<unknown>,

@@ -1,4 +1,4 @@
-import { FilterAPIProvider } from "@dashboard/components/ConditionalFilter/API/FilterAPIProvider";
+import { FilterAPIProvider } from "../FilterAPIProvider";
 
 export const useDraftOrderFilterAPIProvider = (): FilterAPIProvider => {
   const fetchRightOptions = async () => {
