@@ -8,6 +8,7 @@ import {
   createGiftCardQueryVariables,
   createPageQueryVariables,
   createProductQueryVariables,
+  createStaffMembersQueryVariables,
   creatVoucherQueryVariables,
   mapStaticQueryPartToLegacyVariables,
 } from "./queryVariables";
@@ -520,6 +521,47 @@ describe("ConditionalFilter / queryVariables / createCustomerQueryVariables", ()
     };
     // Act
     const result = createCustomerQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+});
+
+describe("ConditionalFilter / queryVariables / createStaffMembersQueryVariables", () => {
+  it("should return empty variables for empty filters", () => {
+    // Arrange
+    const filters: FilterContainer = [];
+    const expectedOutput = {};
+    // Act
+    const result = createStaffMembersQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+
+  it("should create variables with selected filters", () => {
+    // Arrange
+    const filters: FilterContainer = [
+      new FilterElement(
+        new ExpressionValue("staffMemberStatus", "Status", "staffMemberStatus"),
+        new Condition(
+          ConditionOptions.fromStaticElementName("staffMemberStatus"),
+          new ConditionSelected(
+            "active",
+            { type: "select", label: "is", value: "input-1" },
+            [],
+            false,
+          ),
+          false,
+        ),
+        false,
+      ),
+    ];
+    const expectedOutput = {
+      status: "active",
+    };
+    // Act
+    const result = createStaffMembersQueryVariables(filters);
 
     // Assert
     expect(result).toEqual(expectedOutput);

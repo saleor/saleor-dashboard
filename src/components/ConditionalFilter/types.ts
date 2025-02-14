@@ -1,3 +1,6 @@
+import { InitialStaffMembersStateResponse } from "@dashboard/components/ConditionalFilter/API/initialState/staffMembers/InitialStaffMembersState";
+import { InitialStaffMembersAPIState } from "@dashboard/components/ConditionalFilter/API/initialState/staffMembers/useInitialStaffMemebersState";
+
 import { InitialCollectionStateResponse } from "./API/initialState/collections/InitialCollectionState";
 import { InitialCollectionAPIState } from "./API/initialState/collections/useInitialCollectionsState";
 import { InitialGiftCardsStateResponse } from "./API/initialState/giftCards/InitialGiftCardsState";
@@ -17,7 +20,8 @@ export type InitialResponseType =
   | InitialCollectionStateResponse
   | InitialVouchersStateResponse
   | InitialPageStateResponse
-  | InitialGiftCardsStateResponse;
+  | InitialGiftCardsStateResponse
+  | InitialStaffMembersStateResponse;
 
 export type InitialAPIState =
   | InitialProductAPIState
@@ -25,7 +29,8 @@ export type InitialAPIState =
   | InitialVoucherAPIState
   | InitialPageAPIState
   | InitialGiftCardsAPIState
-  | InitialCollectionAPIState;
+  | InitialCollectionAPIState
+  | InitialStaffMembersAPIState;
 
 export type FilterProviderType =
   | "product"
@@ -36,4 +41,5 @@ export type FilterProviderType =
   | "page"
   | "draft-order"
   | "gift-cards"
-  | "collection";
+  | "collection"
+  | "staff-members";

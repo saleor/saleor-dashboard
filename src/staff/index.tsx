@@ -1,3 +1,4 @@
+import { ConditionalStaffMembersFilterProvider } from "@dashboard/components/ConditionalFilter";
 import { Route } from "@dashboard/components/Router";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
@@ -21,7 +22,11 @@ const StaffList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: StaffListUrlQueryParams = asSortParams(qs, StaffListUrlSortField);
 
-  return <StaffListComponent params={params} />;
+  return (
+    <ConditionalStaffMembersFilterProvider locationSearch={location.search}>
+      <StaffListComponent params={params} />
+    </ConditionalStaffMembersFilterProvider>
+  );
 };
 
 interface StaffDetailsRouteProps {

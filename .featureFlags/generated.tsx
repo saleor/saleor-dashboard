@@ -1,35 +1,36 @@
 // @ts-nocheck
 
-import W24585 from "./images/collection-filters.jpg"
-import L16463 from "./images/customers-filters.png"
-import L94878 from "./images/discounts-list.png"
-import E09437 from "./images/draft-orders-filters.png"
-import E78766 from "./images/gift-cards-filters.png"
-import X68306 from "./images/improved_refunds.png"
-import E85468 from "./images/page-filters.png"
-import B37301 from "./images/vouchers-filters.png"
+import Y55433 from "./images/collection-filters.jpg"
+import V24896 from "./images/customers-filters.png"
+import R05043 from "./images/discounts-list.png"
+import C04432 from "./images/draft-orders-filters.png"
+import S34515 from "./images/gift-cards-filters.png"
+import A24675 from "./images/improved_refunds.png"
+import Y18941 from "./images/page-filters.png"
+import J32937 from "./images/staff-members-filters.png"
+import Y16331 from "./images/vouchers-filters.png"
 
-const collection_filters = () => (<><p><img src={W24585} alt="new filters"/>
+const collection_filters = () => (<><p><img src={Y55433} alt="new filters"/>
 Experience the new look and enhanced abilities of new filtering mechanism.
 Easily combine any criteria you want, and quickly browse their values.</p>
 </>)
-const customers_filters = () => (<><p><img src={L16463} alt="new filters"/>
+const customers_filters = () => (<><p><img src={V24896} alt="new filters"/>
 Experience the new look and enhanced abilities of new fitering mechanism.
 Easily combine any criteria you want, and quickly browse their values.</p>
 </>)
-const discounts_rules = () => (<><p><img src={L94878} alt="Discount rules"/></p>
+const discounts_rules = () => (<><p><img src={R05043} alt="Discount rules"/></p>
 <p>Apply the new discounts rules to narrow your promotions audience.
 Set up conditions and channels that must be fulfilled to apply defined reward.</p>
 </>)
-const draft_orders_filters = () => (<><p><img src={E09437} alt="new filters"/>
+const draft_orders_filters = () => (<><p><img src={C04432} alt="new filters"/>
 Experience the new look and enhanced abilities of new fitering mechanism.
 Easily combine any criteria you want, and quickly browse their values.</p>
 </>)
-const gift_cards_filters = () => (<><p><img src={E78766} alt="new filters"/>
+const gift_cards_filters = () => (<><p><img src={S34515} alt="new filters"/>
 Experience the new look and enhanced abilities of new fitering mechanism.
 Easily combine any criteria you want, and quickly browse their values.</p>
 </>)
-const improved_refunds = () => (<><p><img src={X68306} alt="Improved refunds"/></p>
+const improved_refunds = () => (<><p><img src={A24675} alt="Improved refunds"/></p>
 <h3 id="enable-the-enhanced-refund-feature-to-streamline-your-refund-process">Enable the enhanced refund feature to streamline your refund process:</h3>
 <ul>
 <li><p>• Choose between automatic calculations based on selected items or enter refund amounts directly for overcharges and custom adjustments.</p>
@@ -39,11 +40,15 @@ const improved_refunds = () => (<><p><img src={X68306} alt="Improved refunds"/><
 </ul>
 
 </>)
-const pages_filters = () => (<><p><img src={E85468} alt="new filters"/>
+const pages_filters = () => (<><p><img src={Y18941} alt="new filters"/>
 Experience the new look and enhanced abilities of new fitering mechanism.
 Easily combine any criteria you want, and quickly browse their values.</p>
 </>)
-const vouchers_filters = () => (<><p><img src={B37301} alt="new filters"/>
+const staff_members_filters = () => (<><p><img src={J32937} alt="new filters"/>
+Experience the new look and enhanced abilities of new filtering mechanism.
+Easily combine any criteria you want, and quickly browse their values.</p>
+</>)
+const vouchers_filters = () => (<><p><img src={Y16331} alt="new filters"/>
 Experience the new look and enhanced abilities of new fitering mechanism.
 Easily combine any criteria you want, and quickly browse their values.</p>
 </>)
@@ -106,6 +111,15 @@ export const AVAILABLE_FLAGS = [{
   name: "pages_filters",
   displayName: "Page filtering",
   component: pages_filters,
+  visible: true,
+  content: {
+    enabled: true,
+    payload: "default",
+  }
+},{
+  name: "staff_members_filters",
+  displayName: "Staff members filtering",
+  component: staff_members_filters,
   visible: true,
   content: {
     enabled: true,
