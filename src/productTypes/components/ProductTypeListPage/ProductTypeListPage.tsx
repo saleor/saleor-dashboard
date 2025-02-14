@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
@@ -101,8 +100,9 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
           initialSearch={initialSearch}
           onSearchChange={onSearchChange}
           searchPlaceholder={intl.formatMessage({
-            id: "9CC8JI",
+            id: "Nqh0na",
             defaultMessage: "Search product types...",
+            description: "Product types search input placeholder",
           })}
           onFilterChange={onFilterChange}
           filterStructure={filterStructure}

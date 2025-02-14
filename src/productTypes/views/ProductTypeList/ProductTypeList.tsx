@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useProductTypeBulkDeleteMutation, useProductTypeListQuery } from "@dashboard/graphql";
@@ -97,12 +96,12 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
   });
 
   const paginationValues = usePaginator({
-    pageInfo: maybe(() => data.productTypes.pageInfo),
+    pageInfo: maybe(() => data?.productTypes?.pageInfo),
     paginationState,
     queryString: params,
   });
   const handleSort = createSortHandler(navigate, productTypeListUrl, params);
-  const productTypesData = mapEdgesToItems(data?.productTypes);
+  const productTypesData = mapEdgesToItems(data?.productTypes) ?? [];
 
   const productTypeDeleteData = useProductTypeDelete({
     selectedTypes: selectedProductTypes,
@@ -111,7 +110,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
   });
   const [productTypeBulkDelete, productTypeBulkDeleteOpts] = useProductTypeBulkDeleteMutation({
     onCompleted: data => {
-      if (data.productTypeBulkDelete.errors.length === 0) {
+      if (data?.productTypeBulkDelete?.errors?.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -131,7 +130,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
   const onProductTypeBulkDelete = () =>
     productTypeBulkDelete({
       variables: {
-        ids: params.ids,
+        ids: params.ids ?? [],
       },
     });
 
