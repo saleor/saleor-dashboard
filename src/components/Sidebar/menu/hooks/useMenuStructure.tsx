@@ -1,3 +1,4 @@
+import { SidebarAppAlert } from "@dashboard/apps/components/AppAlerts/SidebarAppAlert";
 import { extensionMountPoints, useExtensions } from "@dashboard/apps/hooks/useExtensions";
 import { AppPaths } from "@dashboard/apps/urls";
 import { useUser } from "@dashboard/auth";
@@ -7,6 +8,7 @@ import { configurationMenuUrl } from "@dashboard/configuration";
 import { getConfigMenuItemsPermissions } from "@dashboard/configuration/utils";
 import { customerListUrl } from "@dashboard/customers/urls";
 import { saleListUrl, voucherListUrl } from "@dashboard/discounts/urls";
+import { useFlag } from "@dashboard/featureFlags";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import { PermissionEnum } from "@dashboard/graphql";
 import { ConfigurationIcon } from "@dashboard/icons/Configuration";
@@ -32,6 +34,8 @@ import { SidebarMenuItem } from "../types";
 import { mapToExtensionsItems } from "../utils";
 
 export function useMenuStructure() {
+  const { enabled: hasAppAlertsFeatureFlag } = useFlag("app_alerts");
+
   const extensions = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);
   const intl = useIntl();
   const { user } = useUser();
@@ -48,6 +52,7 @@ export function useMenuStructure() {
     id: "apps",
     url: AppPaths.appListPath,
     type: "item",
+    endAdornment: hasAppAlertsFeatureFlag ? <SidebarAppAlert /> : null,
   });
   const menuItems: SidebarMenuItem[] = [
     {
