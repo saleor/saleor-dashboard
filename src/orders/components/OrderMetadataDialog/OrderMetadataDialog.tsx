@@ -10,6 +10,7 @@ import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 // import { ORDER_LINE_METADATA_UPDATE_FORM_ID } from "@dashboard/orders/views/OrderDetails/consts";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { Box, Button, Divider, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -22,8 +23,6 @@ interface OrderMetadataDialogProps {
   loading?: boolean;
 }
 
-type FormData = MetadataFormData;
-
 export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetadataDialogProps) => {
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
@@ -31,8 +30,9 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
 
   const formMethods = useForm<MetadataFormData>({
     values: {
-      metadata: data?.metadata ?? [],
-      privateMetadata: data?.privateMetadata,
+      // Removes __typename from metadata item object
+      metadata: (data?.metadata ?? []).map(mapMetadataItemToInput),
+      privateMetadata: data?.privateMetadata?.map(mapMetadataItemToInput),
     },
   });
 
