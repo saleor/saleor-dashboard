@@ -4,7 +4,7 @@
   },
   "dependencies": {
     "@actions/core": "^1.9.1",
-    "@octokit/core": "^4.0.4",
+    "@octokit/core": "^6.1.4",
     "@testmo/testmo-cli": "^1.4.0",
     "commander": "^9.4.0",
     "graphql": "^16.8.1",
