@@ -7,6 +7,7 @@ import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { RefreshLimitsQuery, WarehouseWithShippingFragment } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { messages } from "@dashboard/shipping/components/ShippingZonesListPage/messages";
 import { PageListProps, SearchPageProps, SortPage, TabPageProps } from "@dashboard/types";
@@ -51,6 +52,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const limitReached = isLimitReached(limits, "warehouses");
 
@@ -89,9 +91,9 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
           <Box>
             <Button
               data-test-id="create-warehouse"
-              disabled={limitReached}
+              disabled={disabled || limitReached}
               variant="primary"
-              href={warehouseAddUrl}
+              onClick={() => navigate(warehouseAddUrl)}
             >
               <FormattedMessage
                 id="wmdHhD"
