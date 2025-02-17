@@ -4,17 +4,18 @@ import { StopPropagation } from "@dashboard/components/StopPropagation";
 import { AppListItemFragment } from "@dashboard/graphql";
 import { ExclamationIcon } from "@dashboard/icons/ExclamationIcon";
 import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
+import moment from "moment";
 import React, { useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { AlertExclamationIcon } from "../AppAlerts/AlertExclamationIcon";
 import { appFailedAttemptsCheck, getLatestFailedAttemptFromWebhooks } from "./utils";
 
-interface AppRowAlertProps {
+interface AppRowWebhookIssueAlertProps {
   app: AppListItemFragment;
 }
 
-export const AppRowAlert = ({ app }: AppRowAlertProps) => {
+export const AppRowWebhookIssueAlert = ({ app }: AppRowWebhookIssueAlertProps) => {
   const hasErrors = useMemo(() => app.webhooks && appFailedAttemptsCheck(app.webhooks), [app]);
   const latestFailedAttempt = useMemo(
     () => app.webhooks && getLatestFailedAttemptFromWebhooks(app.webhooks),
@@ -44,14 +45,14 @@ export const AppRowAlert = ({ app }: AppRowAlertProps) => {
 
             <Box display="flex" flexDirection="column" gap={1}>
               <Text fontSize={5} fontWeight="bold">
-                <FormattedMessage defaultMessage="Issues found." id="/BT/kk" />
+                <FormattedMessage defaultMessage="Issues found" id="t9sWqJ" />
               </Text>
               <Text>
                 <FormattedMessage
                   defaultMessage="Webhook errors detected. Last occurred at {date}. {viewDetails}."
                   id="FaRg9/"
                   values={{
-                    date: latestFailedAttempt?.createdAt,
+                    date: moment(latestFailedAttempt?.createdAt).format(),
                     viewDetails: (
                       <Link href={detailsLink} color="secondary" underline>
                         <FormattedMessage defaultMessage="View details" id="MnpUD7" />

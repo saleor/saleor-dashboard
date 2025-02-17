@@ -3,14 +3,14 @@ import { InstalledApp } from "@dashboard/apps/types";
 import { AppPaths, AppUrls } from "@dashboard/apps/urls";
 import { isAppInTunnel } from "@dashboard/apps/utils";
 import Link from "@dashboard/components/Link";
-import { DisabledIcon } from "@dashboard/icons/Disabled";
 import { Box, Chip, List, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
 import { AppAdditionalInfo } from "../AppAdditionalInfo/AppAdditionalInfo";
-import { AppRowAlert } from "../AppAlerts/AppRowAlert";
+import { AppRowDisabledAlert } from "../AppAlerts/AppRowDisabledAlert";
+import { AppRowWebhookIssueAlert } from "../AppAlerts/AppRowWebhookIssueAlert";
 import { AppAvatar } from "../AppAvatar/AppAvatar";
 import { AppManifestUrl } from "./AppManifestUrl";
 import { messages } from "./messages";
@@ -95,13 +95,9 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
           gap={3}
         >
           <Box marginLeft="auto" display="flex" alignItems="center" gap={5}>
-            {!app.isActive && (
-              <Box color="default2" __transform="scale(0.8)">
-                <DisabledIcon />
-              </Box>
-            )}
+            <AppRowDisabledAlert app={app} />
 
-            <AppRowAlert app={app} />
+            <AppRowWebhookIssueAlert app={app} />
           </Box>
         </Box>
       </List.Item>
