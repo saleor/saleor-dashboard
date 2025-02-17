@@ -10,12 +10,10 @@ runs:
     - name: Push Test Report
       shell: bash
       run: |
+        export GITHUB_TOKEN=$( \
+            curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
+          )
         node .github/workflows/send-report-to-repo.js 
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
       if: always()
-
-inputs:
-  github_token:
-    description: "GitHub token for accessing APIs"
-    required: true
