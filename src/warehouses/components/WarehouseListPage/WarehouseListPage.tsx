@@ -1,4 +1,3 @@
-import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
@@ -103,8 +102,8 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
             </Button>
 
             {hasLimits(limits, "warehouses") && (
-              <LimitsInfo
-                text={intl.formatMessage(
+              <Box position="absolute" left={16} paddingLeft={2.5} bottom={1}>
+                {intl.formatMessage(
                   {
                     id: "YkOzse",
                     defaultMessage: "{count}/{max} warehouses used",
@@ -115,27 +114,27 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
                     max: limits?.allowedUsage.warehouses,
                   },
                 )}
-              />
+              </Box>
             )}
           </Box>
         </Box>
       </TopNav>
-
-      {limitReached && (
-        <LimitReachedAlert
-          title={intl.formatMessage({
-            id: "5HwLx9",
-            defaultMessage: "Warehouse limit reached",
-            description: "alert",
-          })}
-        >
-          <FormattedMessage
-            id="kFQvXv"
-            defaultMessage="You have reached your warehouse limit, you will be no longer able to add warehouses to your store. If you would like to up your limit, contact your administration staff about raising your limits."
-          />
-        </LimitReachedAlert>
-      )}
       <DashboardCard gap={0}>
+        {limitReached && (
+          <LimitReachedAlert
+            title={intl.formatMessage({
+              id: "5HwLx9",
+              defaultMessage: "Warehouse limit reached",
+              description: "alert",
+            })}
+          >
+            <FormattedMessage
+              id="kFQvXv"
+              defaultMessage="You have reached your warehouse limit, you will be no longer able to add warehouses to your store. If you would like to up your limit, contact your administration staff about raising your limits."
+            />
+          </LimitReachedAlert>
+        )}
+
         <Box paddingX={6} marginY={2}>
           <Box __width="320px">
             {/*TODO:To be replaced by ListFilters BCK-1476*/}
