@@ -57,7 +57,7 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
   const userPermissions = useUserPermissions();
   const structure = createFilterStructure(intl, filterOpts, userPermissions);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
-  const { enabled: isCustomersFiltersEnabled } = useFlag("customers_filters");
+  const { enabled: isCustomersFiltersEnabled } = useFlag("new_filters");
   const { CUSTOMER_OVERVIEW_CREATE, CUSTOMER_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.CUSTOMER_LIST,
   );

@@ -47,7 +47,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const intl = useIntl();
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.COLLECTION_LIST);
-  const { enabled: isNewCollectionFilterEnabled } = useFlag("collection_filters");
+  const { enabled: isNewCollectionFilterEnabled } = useFlag("new_filters");
   const { valueProvider } = useConditionalFilterContext();
 
   usePaginationReset(collectionListUrl, params, settings.rowNumber);

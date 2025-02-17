@@ -51,7 +51,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(ListViews.STAFF_MEMBERS_LIST);
   const intl = useIntl();
   const { markOnboardingStepAsCompleted } = useOnboarding();
-  const { enabled: isStaffMembersFilteringEnabled } = useFlag("staff_members_filters");
+  const { enabled: isStaffMembersFilteringEnabled } = useFlag("new_filters");
   const { valueProvider } = useConditionalFilterContext();
   const filters = createStaffMembersQueryVariables(valueProvider.value);
 

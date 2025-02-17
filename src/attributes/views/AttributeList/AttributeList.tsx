@@ -44,7 +44,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
   const notify = useNotifier();
   const intl = useIntl();
   const { updateListSettings, settings } = useListSettings(ListViews.ATTRIBUTE_LIST);
-  const { enabled: isAttributesFilteringEnabled } = useFlag("attributes_filters");
+  const { enabled: isAttributesFilteringEnabled } = useFlag("new_filters");
   const { valueProvider } = useConditionalFilterContext();
   const filters = creatAttributesQueryVariables(valueProvider.value);
 

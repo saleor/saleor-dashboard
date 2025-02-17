@@ -41,7 +41,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
   const notify = useNotifier();
   const intl = useIntl();
   const { updateListSettings, settings } = useListSettings(ListViews.CUSTOMER_LIST);
-  const { enabled: isCustomersFiltersEnabled } = useFlag("customers_filters");
+  const { enabled: isCustomersFiltersEnabled } = useFlag("new_filters");
   const { valueProvider } = useConditionalFilterContext();
   const filter = createCustomerQueryVariables(valueProvider.value);
 
