@@ -52,7 +52,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const structure = createFilterStructure(intl, filterOpts);
   const reachedLimit = isLimitReached(limits, "staffUsers");
-  const { enabled: isStaffMembersFilteringEnabled } = useFlag("staff_members_filters");
+  const { enabled: isStaffMembersFilteringEnabled } = useFlag("new_filters");
 
   return (
     <ListPageLayout>
