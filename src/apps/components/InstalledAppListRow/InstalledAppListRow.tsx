@@ -95,7 +95,7 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
         >
           <Box marginLeft="auto" display="flex" alignItems="center" gap={5}>
             {!app.isActive && (
-              <Box color="default2" __width={20} __height={20}>
+              <Box color="default2" __transform="scale(0.8)">
                 <DisabledIcon />
               </Box>
             )}

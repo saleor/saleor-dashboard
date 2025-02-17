@@ -1,3 +1,4 @@
+import { AppPaths } from "@dashboard/apps/urls";
 import Link from "@dashboard/components/Link";
 import { StopPropagation } from "@dashboard/components/StopPropagation";
 import { AppListItemFragment } from "@dashboard/graphql";
@@ -23,6 +24,8 @@ export const AppRowAlert = ({ app }: AppRowAlertProps) => {
   if (!hasErrors) {
     return null;
   }
+
+  const detailsLink = AppPaths.resolveAppDetailsPath(app.id);
 
   return (
     <Tooltip>
@@ -50,7 +53,7 @@ export const AppRowAlert = ({ app }: AppRowAlertProps) => {
                   values={{
                     date: latestFailedAttempt?.createdAt,
                     viewDetails: (
-                      <Link href="#" color="secondary" underline>
+                      <Link href={detailsLink} color="secondary" underline>
                         <FormattedMessage defaultMessage="View details" id="MnpUD7" />
                       </Link>
                     ),
