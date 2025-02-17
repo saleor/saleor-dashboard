@@ -4,6 +4,7 @@ import {
   toCollectionFetchingParams,
   toGiftCardsFetchingParams,
   toPageFetchingParams,
+  toProductTypesFetchingParams,
   toStaffMembersFetchingParams,
   toVouchersFetchingParams,
 } from "./fetchingParams";
@@ -86,6 +87,20 @@ describe("TokenArray / fetchingParams / getEmptyFetchingPrams", () => {
       products: [],
       tags: [],
       usedBy: [],
+    });
+  });
+
+  it("should return gift product tyes fetching params", () => {
+    // Arrange
+    const type = "product-types";
+
+    // Act
+    const fetchingParams = getEmptyFetchingPrams(type);
+
+    // Assert
+    expect(fetchingParams).toEqual({
+      typeOfProduct: [],
+      configurable: [],
     });
   });
 });
@@ -196,6 +211,32 @@ describe("TokenArray / fetchingParams / toCollectionFetchingParams", () => {
       channel: ["chan-1"],
       metadata: [],
       published: [],
+    });
+  });
+});
+
+describe("TokenArray / fetchingParams / toProductTypesFetchingParams", () => {
+  it("should return  fetching params", () => {
+    // Arrange
+    const params = {
+      typeOfProduct: [],
+      configurable: [],
+    };
+
+    const token = {
+      conditionKind: "is",
+      name: "typeOfProduct",
+      type: "s",
+      value: "SHIPPABLE",
+    } as UrlToken;
+
+    // Act
+    const fetchingParams = toProductTypesFetchingParams(params, token);
+
+    // Assert
+    expect(fetchingParams).toEqual({
+      typeOfProduct: ["SHIPPABLE"],
+      configurable: [],
     });
   });
 });

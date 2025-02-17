@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { InitialStaffMembersAPIState } from "@dashboard/components/ConditionalFilter/API/initialState/staffMembers/useInitialStaffMemebersState";
 import { stringify } from "qs";
 import { useEffect, useState } from "react";
 import useRouter from "use-react-router";
@@ -9,6 +8,8 @@ import { InitialGiftCardsAPIState } from "../API/initialState/giftCards/useIniti
 import { InitialOrderAPIState } from "../API/initialState/orders/useInitialOrderState";
 import { InitialPageAPIState } from "../API/initialState/page/useInitialPageState";
 import { InitialProductAPIState } from "../API/initialState/product/useProductInitialAPIState";
+import { InitialProductTypesAPIState } from "../API/initialState/productTypes/useInitialProdutTypesState";
+import { InitialStaffMembersAPIState } from "../API/initialState/staffMembers/useInitialStaffMemebersState";
 import { InitialVoucherAPIState } from "../API/initialState/vouchers/useInitialVouchersState";
 import { FilterContainer, FilterElement } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
@@ -21,6 +22,7 @@ import {
   GiftCardsFetchingParams,
   OrderFetchingParams,
   PageFetchingParams,
+  ProductTypesFetchingParams,
   StaffMembersFetchingParams,
   VoucherFetchingParams,
 } from "./TokenArray/fetchingParams";
@@ -79,6 +81,11 @@ export const useUrlValueProvider = (
         case "collection":
           (initialState as InitialCollectionAPIState).fetchQueries(
             fetchingParams as CollectionFetchingParams,
+          );
+          break;
+        case "product-types":
+          (initialState as InitialProductTypesAPIState).fetchQueries(
+            fetchingParams as ProductTypesFetchingParams,
           );
           break;
         case "staff-members":

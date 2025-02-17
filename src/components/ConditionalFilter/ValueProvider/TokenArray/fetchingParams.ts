@@ -42,6 +42,11 @@ export interface CollectionFetchingParams {
   published: string[];
 }
 
+export interface ProductTypesFetchingParams {
+  typeOfProduct: string[];
+  configurable: string[];
+}
+
 export interface StaffMembersFetchingParams {
   staffMemberStatus: string[];
 }
@@ -51,6 +56,7 @@ type OrderParamsKeys = keyof OrderFetchingParams;
 type VoucherParamsKeys = keyof VoucherFetchingParams;
 type PageParamsKeys = keyof PageFetchingParams;
 type GiftCardsParamKeys = keyof GiftCardsFetchingParams;
+type ProductTypesParamsKeys = keyof ProductTypesFetchingParams;
 type StaffMembersParamsKeys = keyof StaffMembersFetchingParams;
 
 export const emptyFetchingParams: FetchingParams = {
@@ -92,6 +98,11 @@ export const emptyCollectionFetchingParams: CollectionFetchingParams = {
   channel: [],
   metadata: [],
   published: [],
+};
+
+export const emptyProductTypesFetchingParams: ProductTypesFetchingParams = {
+  typeOfProduct: [],
+  configurable: [],
 };
 
 export const emptyStaffMembersFetchingParams: StaffMembersFetchingParams = {
@@ -196,6 +207,18 @@ export const toCollectionFetchingParams = (p: CollectionFetchingParams, c: UrlTo
   return p;
 };
 
+export const toProductTypesFetchingParams = (p: ProductTypesFetchingParams, c: UrlToken) => {
+  const key = c.name as ProductTypesParamsKeys;
+
+  if (!p[key]) {
+    p[key] = [];
+  }
+
+  p[key] = unique(p[key].concat(c.value));
+
+  return p;
+};
+
 export const toStaffMembersFetchingParams = (p: StaffMembersFetchingParams, c: UrlToken) => {
   const key = c.name as StaffMembersParamsKeys;
 
@@ -215,6 +238,7 @@ export type FetchingParamsType =
   | GiftCardsFetchingParams
   | PageFetchingParams
   | VoucherFetchingParams
+  | ProductTypesFetchingParams
   | StaffMembersFetchingParams;
 
 export const getEmptyFetchingPrams = (type: FilterProviderType) => {
@@ -231,6 +255,8 @@ export const getEmptyFetchingPrams = (type: FilterProviderType) => {
       return emptyGiftCardsFetchingParams;
     case "collection":
       return emptyCollectionFetchingParams;
+    case "product-types":
+      return emptyProductTypesFetchingParams;
     case "staff-members":
       return emptyStaffMembersFetchingParams;
   }

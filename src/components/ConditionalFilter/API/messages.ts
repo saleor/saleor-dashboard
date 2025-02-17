@@ -102,3 +102,16 @@ export const staffMembersStatusMessages = defineMessages({
     id: "SPF/Zn",
   },
 });
+
+export const productTypeMessages = defineMessages({
+  digital: {
+    defaultMessage: "Digital",
+    description: "product type digital",
+    id: "SgFE10",
+  },
+  shippable: {
+    defaultMessage: "Shippable",
+    description: "product type shippable",
+    id: "M61TN/",
+  },
+});

@@ -1,5 +1,3 @@
-import { useInitialStaffMembersState } from "@dashboard/components/ConditionalFilter/API/initialState/staffMembers/useInitialStaffMemebersState";
-import { useStaffMembersFilterAPIProvider } from "@dashboard/components/ConditionalFilter/API/providers/StaffMembersFilterAPIProvider";
 import React, { FC } from "react";
 
 import { useInitialCollectionState } from "../API/initialState/collections/useInitialCollectionsState";
@@ -7,6 +5,8 @@ import { useInitialGiftCardsState } from "../API/initialState/giftCards/useIniti
 import { useInitialOrderState } from "../API/initialState/orders/useInitialOrderState";
 import { useInitialPageState } from "../API/initialState/page/useInitialPageState";
 import { useProductInitialAPIState } from "../API/initialState/product/useProductInitialAPIState";
+import { useInitialProductTypesState } from "../API/initialState/productTypes/useInitialProdutTypesState";
+import { useInitialStaffMembersState } from "../API/initialState/staffMembers/useInitialStaffMemebersState";
 import { useInitialVouchersState } from "../API/initialState/vouchers/useInitialVouchersState";
 import { useCollectionFilterAPIProvider } from "../API/providers/CollectionFilterAPIProvider";
 import { useCustomerAPIProvider } from "../API/providers/CustomerFilterAPIProvider";
@@ -16,6 +16,8 @@ import { useGiftCardsFiltersAPIProvider } from "../API/providers/GiftCardsFilter
 import { useOrderFilterAPIProvider } from "../API/providers/OrderFilterAPIProvider";
 import { usePageAPIProvider } from "../API/providers/PageFilterAPIProvider";
 import { useProductFilterAPIProvider } from "../API/providers/ProductFilterAPIProvider";
+import { useProductTypesFilterAPIProvider } from "../API/providers/ProductTypesFilterAPIProvider";
+import { useStaffMembersFilterAPIProvider } from "../API/providers/StaffMembersFilterAPIProvider";
 import { useVoucherAPIProvider } from "../API/providers/VoucherFilterAPIProvider";
 import {
   STAFF_MEMBER_OPTIONS,
@@ -27,6 +29,7 @@ import {
   STATIC_ORDER_OPTIONS,
   STATIC_PAGE_OPTIONS,
   STATIC_PRODUCT_OPTIONS,
+  STATIC_PRODUCT_TYPES_OPTIONS,
   STATIC_VOUCHER_OPTIONS,
 } from "../constants";
 import { useContainerState } from "../useContainerState";
@@ -248,6 +251,32 @@ export const ConditionalCollectionFilterProvider: FC<{
 
   const valueProvider = useUrlValueProvider(locationSearch, "collection", initialState);
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_COLLECTION_OPTIONS);
+  const containerState = useContainerState(valueProvider);
+  const filterWindow = useFilterWindow();
+
+  return (
+    <ConditionalFilterContext.Provider
+      value={{
+        apiProvider,
+        valueProvider,
+        leftOperandsProvider,
+        containerState,
+        filterWindow,
+      }}
+    >
+      {children}
+    </ConditionalFilterContext.Provider>
+  );
+};
+
+export const ConditionalProductTypesFilterProvider: FC<{
+  locationSearch: string;
+}> = ({ children, locationSearch }) => {
+  const apiProvider = useProductTypesFilterAPIProvider();
+
+  const initialState = useInitialProductTypesState();
+  const valueProvider = useUrlValueProvider(locationSearch, "product-types", initialState);
+  const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_PRODUCT_TYPES_OPTIONS);
   const containerState = useContainerState(valueProvider);
   const filterWindow = useFilterWindow();
 

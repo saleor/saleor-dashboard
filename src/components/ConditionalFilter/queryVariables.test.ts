@@ -1,3 +1,5 @@
+import { ProductTypeConfigurable, ProductTypeEnum } from "@dashboard/graphql";
+
 import { Condition, FilterContainer, FilterElement } from "./FilterElement";
 import { ConditionOptions } from "./FilterElement/ConditionOptions";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
@@ -8,6 +10,7 @@ import {
   createGiftCardQueryVariables,
   createPageQueryVariables,
   createProductQueryVariables,
+  createProductTypesQueryVariables,
   createStaffMembersQueryVariables,
   creatVoucherQueryVariables,
   mapStaticQueryPartToLegacyVariables,
@@ -521,6 +524,63 @@ describe("ConditionalFilter / queryVariables / createCustomerQueryVariables", ()
     };
     // Act
     const result = createCustomerQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+});
+
+describe("ConditionalFilter / queryVariables / createProductTypesQueryVariables", () => {
+  it("should return empty variables for empty filters", () => {
+    // Arrange
+    const filters: FilterContainer = [];
+    const expectedOutput = {};
+    // Act
+    const result = createProductTypesQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+
+  it("should create variables with selected filters", () => {
+    // Arrange
+    const filters: FilterContainer = [
+      new FilterElement(
+        new ExpressionValue("typeOfProduct", "Product type", "typeOfProduct"),
+        new Condition(
+          ConditionOptions.fromStaticElementName("typeOfProduct"),
+          new ConditionSelected(
+            ProductTypeEnum.DIGITAL,
+            { type: "select", label: "is", value: "input-1" },
+            [],
+            false,
+          ),
+          false,
+        ),
+        false,
+      ),
+      "AND",
+      new FilterElement(
+        new ExpressionValue("configurable", "Configurable", "configurable"),
+        new Condition(
+          ConditionOptions.fromStaticElementName("configurable"),
+          new ConditionSelected(
+            ProductTypeConfigurable.SIMPLE,
+            { type: "select", label: "is", value: "input-1" },
+            [],
+            false,
+          ),
+          false,
+        ),
+        false,
+      ),
+    ];
+    const expectedOutput = {
+      productType: "DIGITAL",
+      configurable: "SIMPLE",
+    };
+    // Act
+    const result = createProductTypesQueryVariables(filters);
 
     // Assert
     expect(result).toEqual(expectedOutput);
