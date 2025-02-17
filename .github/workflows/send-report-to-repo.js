@@ -15,7 +15,7 @@ program
       encoding: "base64",
     });
 
-    const path = `newReports/test-report-${new Date().valueOf()}`;
+    const path = `newReports/test-report-${new Date().valueOf()}.json`;
 
     await octokit.request("PUT /repos/{owner}/{repo}/contents/{path}", {
       owner: "saleor",
