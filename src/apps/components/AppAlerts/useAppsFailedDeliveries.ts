@@ -1,4 +1,5 @@
-import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { useUser } from "@dashboard/auth";
+import { hasAllPermissions } from "@dashboard/auth/misc";
 import { PermissionEnum, useAppFailedPendingWebhooksLazyQuery } from "@dashboard/graphql";
 import { useMemo } from "react";
 
@@ -12,10 +13,8 @@ interface AppsFailedDeliveries {
 const requiredPermissions = [PermissionEnum.MANAGE_APPS];
 
 export const useAppsFailedDeliveries = (): AppsFailedDeliveries => {
-  const permissions = useUserPermissions();
-  const hasRequiredPermissions = requiredPermissions.some(permission =>
-    permissions?.map(e => e.code)?.includes(permission),
-  );
+  const { user } = useUser();
+  const hasRequiredPermissions = user ? hasAllPermissions(requiredPermissions, user) : false;
 
   const [fetchAppsWebhooks, { data }] = useAppFailedPendingWebhooksLazyQuery();
 
