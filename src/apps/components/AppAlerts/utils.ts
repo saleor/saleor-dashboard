@@ -1,7 +1,7 @@
 import { AppEventDeliveriesFragment, EventDeliveryStatusEnum } from "@dashboard/graphql";
 import moment from "moment";
 
-type Webhook = NonNullable<AppEventDeliveriesFragment["webhooks"]>[0];
+export type Webhook = NonNullable<AppEventDeliveriesFragment["webhooks"]>[0];
 
 const hasFailedAttemptsCheck = (webhook: Webhook) =>
   webhook.failedDelivers && webhook.failedDelivers?.edges?.length > 0;
@@ -44,4 +44,4 @@ export const getLatestFailedAttemptFromWebhooks = (webhooks: Webhook[]) =>
   webhooks
     .map(getLatestFailedAttemptFromWebhook)
     .filter(Boolean)
-    .sort((a, b) => moment(b?.createdAt).diff(a?.createdAt))[0];
+    .sort((a, b) => moment(b?.createdAt).diff(a?.createdAt))[0] ?? null;
