@@ -50,6 +50,15 @@ inputs:
   DASHBOARD_VERSION:
     description: "Dashboard version"
     required: false 
+  BRANCH_NAME:
+    description: "Branch name"
+    required: true
+  SALEOR_CLOUD_SERVICE:
+    description: "Saleor Cloud service"
+    required: true
+  DASHBOARD_VERSION:
+    description: "Dashboard version"
+    required: false 
 
 runs:
   using: "composite"
@@ -94,7 +103,6 @@ runs:
         BRANCH_NAME: ${{ inputs.BRANCH_NAME }}
         SALEOR_CLOUD_SERVICE: ${{ inputs.SALEOR_CLOUD_SERVICE }}
         DASHBOARD_VERSION: ${{ inputs.DASHBOARD_VERSION }}
-
       run: |
         PROJECTS=($PROJECT)
         PROJECT_PARAMS=""
@@ -103,7 +111,7 @@ runs:
         done
         echo "reportName=all-blob-reports-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
         echo "ctrfReport=ctrf-report-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
-        npx playwright test --grep @e2e $PROJECT_PARAMS --shard "$SHARD_NUMBER"
+        npx playwright test --grep "#e2e" $PROJECT_PARAMS --shard "$SHARD_NUMBER"
 
     - name: Upload blob report to GitHub Actions Artifacts
       uses: actions/upload-artifact@v4
