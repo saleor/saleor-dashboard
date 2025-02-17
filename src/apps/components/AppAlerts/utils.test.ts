@@ -1,6 +1,7 @@
+import { InstalledApp } from "@dashboard/apps/types";
 import { EventDeliveryStatusEnum } from "@dashboard/graphql";
 
-import { getLatestFailedAttemptFromWebhooks } from "./utils";
+import { getLatestFailedAttemptFromWebhooks, sortInstalledAppsByIssues } from "./utils";
 
 describe("getLatestFailedAttemptFromWebhook", () => {
   it("should return the latest failed attempt from failedDelivers", () => {
@@ -139,5 +140,62 @@ describe("getLatestFailedAttemptFromWebhook", () => {
 
     // Assert
     expect(result?.id).toBe("new");
+  });
+});
+
+describe("sortInstalledAppsByIssues", () => {
+  const createInstalledApp = (webhooks: any[]): InstalledApp =>
+    ({
+      app: {
+        webhooks,
+      },
+    }) as InstalledApp;
+
+  it("should sort properly if first app has issues and second app does not", () => {
+    // Arrange
+    const app1 = createInstalledApp([{ failedDelivers: { edges: [{}] } }]);
+    const app2 = createInstalledApp([]);
+
+    // Act
+    const result = [app1, app2].sort(sortInstalledAppsByIssues);
+
+    // Assert
+    expect(result[0]).toBe(app1);
+  });
+
+  it("should sort properly if first app does not have issues and second app does", () => {
+    // Arrange
+    const app1 = createInstalledApp([]);
+    const app2 = createInstalledApp([{ failedDelivers: { edges: [{}] } }]);
+
+    // Act
+    const result = [app1, app2].sort(sortInstalledAppsByIssues);
+
+    // Assert
+    expect(result[0]).toBe(app2);
+  });
+
+  it("should return 0 if both apps have issues", () => {
+    // Arrange
+    const app1 = createInstalledApp([{ failedDelivers: { edges: [{}] } }]);
+    const app2 = createInstalledApp([{ failedDelivers: { edges: [{}] } }]);
+
+    // Act
+    const result = sortInstalledAppsByIssues(app1, app2);
+
+    // Assert
+    expect(result).toBe(0);
+  });
+
+  it("should return 0 if neither app has issues", () => {
+    // Arrange
+    const app1 = createInstalledApp([]);
+    const app2 = createInstalledApp([]);
+
+    // Act
+    const result = sortInstalledAppsByIssues(app1, app2);
+
+    // Assert
+    expect(result).toBe(0);
   });
 });

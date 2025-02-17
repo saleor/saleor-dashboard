@@ -5,6 +5,7 @@ import { Box, List, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { sortInstalledAppsByIssues } from "../AppAlerts/utils";
 import InstalledAppListRow from "../InstalledAppListRow";
 import NotInstalledAppListRow from "../NotInstalledAppListRow";
 import { messages } from "./messages";
@@ -45,14 +46,16 @@ const InstalledAppList: React.FC<InstalledAppListProps> = ({ appList, appInstall
           }
         />
       ))}
-      {appList?.map(({ app, isExternal, logo }) => (
-        <InstalledAppListRow
-          key={app.id}
-          app={app}
-          isExternal={isExternal}
-          logo={app.brand?.logo.default ? { source: app.brand?.logo.default } : logo}
-        />
-      ))}
+      {appList
+        ?.sort(sortInstalledAppsByIssues)
+        .map(({ app, isExternal, logo }) => (
+          <InstalledAppListRow
+            key={app.id}
+            app={app}
+            isExternal={isExternal}
+            logo={app.brand?.logo.default ? { source: app.brand?.logo.default } : logo}
+          />
+        ))}
     </List>
   );
 };

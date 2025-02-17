@@ -1,3 +1,4 @@
+import { InstalledApp } from "@dashboard/apps/types";
 import { AppEventDeliveriesFragment, EventDeliveryStatusEnum } from "@dashboard/graphql";
 import moment from "moment";
 
@@ -45,3 +46,19 @@ export const getLatestFailedAttemptFromWebhooks = (webhooks: Webhook[]) =>
     .map(getLatestFailedAttemptFromWebhook)
     .filter(Boolean)
     .sort((a, b) => moment(b?.createdAt).diff(a?.createdAt))[0] ?? null;
+
+export const sortInstalledAppsByIssues = (a: InstalledApp, b: InstalledApp) => {
+  const aWebhooks = a.app.webhooks ?? [];
+  const bWebhooks = b.app.webhooks ?? [];
+
+  const aHasIssues = appFailedAttemptsCheck(aWebhooks);
+  const bHasIssues = appFailedAttemptsCheck(bWebhooks);
+
+  if (aHasIssues && !bHasIssues) {
+    return -1;
+  } else if (!aHasIssues && bHasIssues) {
+    return 1;
+  } else {
+    return 0;
+  }
+};
