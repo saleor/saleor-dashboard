@@ -1,3 +1,5 @@
+import { InitialAttributesStateResponse } from "./API/initialState/attributes/InitialAttributesState";
+import { InitialAttributesAPIState } from "./API/initialState/attributes/useInitialAttributesState";
 import { InitialCollectionStateResponse } from "./API/initialState/collections/InitialCollectionState";
 import { InitialCollectionAPIState } from "./API/initialState/collections/useInitialCollectionsState";
 import { InitialGiftCardsStateResponse } from "./API/initialState/giftCards/InitialGiftCardsState";
@@ -23,7 +25,8 @@ export type InitialResponseType =
   | InitialPageStateResponse
   | InitialProductTypesStateResponse
   | InitialGiftCardsStateResponse
-  | InitialStaffMembersStateResponse;
+  | InitialStaffMembersStateResponse
+  | InitialAttributesStateResponse;
 
 export type InitialAPIState =
   | InitialProductAPIState
@@ -33,7 +36,8 @@ export type InitialAPIState =
   | InitialGiftCardsAPIState
   | InitialCollectionAPIState
   | InitialProductTypesAPIState
-  | InitialStaffMembersAPIState;
+  | InitialStaffMembersAPIState
+  | InitialAttributesAPIState;
 
 export type FilterProviderType =
   | "product"
@@ -46,4 +50,5 @@ export type FilterProviderType =
   | "gift-cards"
   | "collection"
   | "product-types"
-  | "staff-members";
+  | "staff-members"
+  | "attributes";

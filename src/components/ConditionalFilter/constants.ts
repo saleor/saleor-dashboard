@@ -42,6 +42,12 @@ export const STATIC_CONDITIONS = {
   isAvailable: [{ type: "select", label: "is", value: "input-1" }],
   isPublished: [{ type: "select", label: "is", value: "input-1" }],
   isVisibleInListing: [{ type: "select", label: "is", value: "input-1" }],
+  isVariantOnly: [{ type: "select", label: "is", value: "input-1" }],
+  valueRequired: [{ type: "select", label: "is", value: "input-1" }],
+  visibleInStorefront: [{ type: "select", label: "is", value: "input-1" }],
+  filterableInStorefront: [{ type: "select", label: "is", value: "input-1" }],
+  filterableInDashboard: [{ type: "select", label: "is", value: "input-1" }],
+  attributeType: [{ type: "select", label: "is", value: "input-1" }],
   hasCategory: [{ type: "select", label: "is", value: "input-1" }],
   giftCard: [{ type: "select", label: "is", value: "input-1" }],
   startDate: [
@@ -533,6 +539,51 @@ export const STAFF_MEMBER_OPTIONS: LeftOperand[] = [
   },
 ];
 
+export const STATIC_ATTRIBUTES_OPTIONS: LeftOperand[] = [
+  {
+    value: "filterableInStorefront",
+    label: "Filterable in Storefront",
+    type: "filterableInStorefront",
+    slug: "filterableInStorefront",
+  },
+  {
+    value: "filterableInDashboard",
+    label: "Filterable in Dashboard",
+    type: "filterableInDashboard",
+    slug: "filterableInDashboard",
+  },
+  {
+    value: "isVariantOnly",
+    label: "Variant only",
+    type: "isVariantOnly",
+    slug: "isVariantOnly",
+  },
+  {
+    value: "valueRequired",
+    label: "Value Required",
+    type: "valueRequired",
+    slug: "valueRequired",
+  },
+  {
+    value: "visibleInStorefront",
+    label: "Visible on Product Page in Storefront",
+    type: "visibleInStorefront",
+    slug: "visibleInStorefront",
+  },
+  {
+    value: "attributeType",
+    label: "Type",
+    type: "attributeType",
+    slug: "attributeType",
+  },
+  {
+    value: "channel",
+    label: "Channel",
+    type: "channel",
+    slug: "channel",
+  },
+];
+
 export const STATIC_OPTIONS = [
   ...STATIC_PRODUCT_OPTIONS,
   ...STATIC_DISCOUNT_OPTIONS,
@@ -545,6 +596,7 @@ export const STATIC_OPTIONS = [
   ...STATIC_COLLECTION_OPTIONS,
   ...STATIC_PRODUCT_TYPES_OPTIONS,
   ...STAFF_MEMBER_OPTIONS,
+  ...STATIC_ATTRIBUTES_OPTIONS,
 ];
 
 export const ATTRIBUTE_INPUT_TYPE_CONDITIONS = {
