@@ -42,11 +42,17 @@ export interface CollectionFetchingParams {
   published: string[];
 }
 
+export interface ProductTypesFetchingParams {
+  typeOfProduct: string[];
+  configurable: string[];
+}
+
 type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute">;
 type OrderParamsKeys = keyof OrderFetchingParams;
 type VoucherParamsKeys = keyof VoucherFetchingParams;
 type PageParamsKeys = keyof PageFetchingParams;
 type GiftCardsParamKeys = keyof GiftCardsFetchingParams;
+type ProductTypesParamsKeys = keyof ProductTypesFetchingParams;
 
 export const emptyFetchingParams: FetchingParams = {
   category: [],
@@ -87,6 +93,11 @@ export const emptyCollectionFetchingParams: CollectionFetchingParams = {
   channel: [],
   metadata: [],
   published: [],
+};
+
+export const emptyProductTypesFetchingParams: ProductTypesFetchingParams = {
+  typeOfProduct: [],
+  configurable: [],
 };
 
 const unique = <T>(array: Iterable<T>) => Array.from(new Set(array));
@@ -187,13 +198,26 @@ export const toCollectionFetchingParams = (p: CollectionFetchingParams, c: UrlTo
   return p;
 };
 
+export const toProductTypesFetchingParams = (p: ProductTypesFetchingParams, c: UrlToken) => {
+  const key = c.name as ProductTypesParamsKeys;
+
+  if (!p[key]) {
+    p[key] = [];
+  }
+
+  p[key] = unique(p[key].concat(c.value));
+
+  return p;
+};
+
 export type FetchingParamsType =
   | OrderFetchingParams
   | FetchingParams
   | CollectionFetchingParams
   | GiftCardsFetchingParams
   | PageFetchingParams
-  | VoucherFetchingParams;
+  | VoucherFetchingParams
+  | ProductTypesFetchingParams;
 
 export const getEmptyFetchingPrams = (type: FilterProviderType) => {
   switch (type) {
@@ -209,5 +233,7 @@ export const getEmptyFetchingPrams = (type: FilterProviderType) => {
       return emptyGiftCardsFetchingParams;
     case "collection":
       return emptyCollectionFetchingParams;
+    case "product-types":
+      return emptyProductTypesFetchingParams;
   }
 };

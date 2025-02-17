@@ -1,3 +1,5 @@
+import { useInitialProductTypesState } from "@dashboard/components/ConditionalFilter/API/initialState/productTypes/useInitialProdutTypesState";
+import { useProductTypesFilterAPIProvider } from "@dashboard/components/ConditionalFilter/API/providers/ProductTypesFilterAPIProvider";
 import React, { FC } from "react";
 
 import { useInitialCollectionState } from "../API/initialState/collections/useInitialCollectionsState";
@@ -24,6 +26,7 @@ import {
   STATIC_ORDER_OPTIONS,
   STATIC_PAGE_OPTIONS,
   STATIC_PRODUCT_OPTIONS,
+  STATIC_PRODUCT_TYPES_OPTIONS,
   STATIC_VOUCHER_OPTIONS,
 } from "../constants";
 import { useContainerState } from "../useContainerState";
@@ -245,6 +248,32 @@ export const ConditionalCollectionFilterProvider: FC<{
 
   const valueProvider = useUrlValueProvider(locationSearch, "collection", initialState);
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_COLLECTION_OPTIONS);
+  const containerState = useContainerState(valueProvider);
+  const filterWindow = useFilterWindow();
+
+  return (
+    <ConditionalFilterContext.Provider
+      value={{
+        apiProvider,
+        valueProvider,
+        leftOperandsProvider,
+        containerState,
+        filterWindow,
+      }}
+    >
+      {children}
+    </ConditionalFilterContext.Provider>
+  );
+};
+
+export const ConditionalProductTypesFilterProvider: FC<{
+  locationSearch: string;
+}> = ({ children, locationSearch }) => {
+  const apiProvider = useProductTypesFilterAPIProvider();
+
+  const initialState = useInitialProductTypesState();
+  const valueProvider = useUrlValueProvider(locationSearch, "product-types", initialState);
+  const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_PRODUCT_TYPES_OPTIONS);
   const containerState = useContainerState(valueProvider);
   const filterWindow = useFilterWindow();
 
