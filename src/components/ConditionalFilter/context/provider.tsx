@@ -6,6 +6,8 @@ import { useInitialGiftCardsState } from "../API/initialState/giftCards/useIniti
 import { useInitialOrderState } from "../API/initialState/orders/useInitialOrderState";
 import { useInitialPageState } from "../API/initialState/page/useInitialPageState";
 import { useProductInitialAPIState } from "../API/initialState/product/useProductInitialAPIState";
+import { useInitialProductTypesState } from "../API/initialState/productTypes/useInitialProdutTypesState";
+import { useInitialStaffMembersState } from "../API/initialState/staffMembers/useInitialStaffMemebersState";
 import { useInitialVouchersState } from "../API/initialState/vouchers/useInitialVouchersState";
 import { useAttributesFilterAPIProvider } from "../API/providers/AttributesFilterAPIProvider";
 import { useCollectionFilterAPIProvider } from "../API/providers/CollectionFilterAPIProvider";
@@ -16,8 +18,11 @@ import { useGiftCardsFiltersAPIProvider } from "../API/providers/GiftCardsFilter
 import { useOrderFilterAPIProvider } from "../API/providers/OrderFilterAPIProvider";
 import { usePageAPIProvider } from "../API/providers/PageFilterAPIProvider";
 import { useProductFilterAPIProvider } from "../API/providers/ProductFilterAPIProvider";
+import { useProductTypesFilterAPIProvider } from "../API/providers/ProductTypesFilterAPIProvider";
+import { useStaffMembersFilterAPIProvider } from "../API/providers/StaffMembersFilterAPIProvider";
 import { useVoucherAPIProvider } from "../API/providers/VoucherFilterAPIProvider";
 import {
+  STAFF_MEMBER_OPTIONS,
   STATIC_ATTRIBUTES_OPTIONS,
   STATIC_COLLECTION_OPTIONS,
   STATIC_CUSTOMER_OPTIONS,
@@ -27,6 +32,7 @@ import {
   STATIC_ORDER_OPTIONS,
   STATIC_PAGE_OPTIONS,
   STATIC_PRODUCT_OPTIONS,
+  STATIC_PRODUCT_TYPES_OPTIONS,
   STATIC_VOUCHER_OPTIONS,
 } from "../constants";
 import { useContainerState } from "../useContainerState";
@@ -248,6 +254,58 @@ export const ConditionalCollectionFilterProvider: FC<{
 
   const valueProvider = useUrlValueProvider(locationSearch, "collection", initialState);
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_COLLECTION_OPTIONS);
+  const containerState = useContainerState(valueProvider);
+  const filterWindow = useFilterWindow();
+
+  return (
+    <ConditionalFilterContext.Provider
+      value={{
+        apiProvider,
+        valueProvider,
+        leftOperandsProvider,
+        containerState,
+        filterWindow,
+      }}
+    >
+      {children}
+    </ConditionalFilterContext.Provider>
+  );
+};
+
+export const ConditionalProductTypesFilterProvider: FC<{
+  locationSearch: string;
+}> = ({ children, locationSearch }) => {
+  const apiProvider = useProductTypesFilterAPIProvider();
+
+  const initialState = useInitialProductTypesState();
+  const valueProvider = useUrlValueProvider(locationSearch, "product-types", initialState);
+  const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_PRODUCT_TYPES_OPTIONS);
+  const containerState = useContainerState(valueProvider);
+  const filterWindow = useFilterWindow();
+
+  return (
+    <ConditionalFilterContext.Provider
+      value={{
+        apiProvider,
+        valueProvider,
+        leftOperandsProvider,
+        containerState,
+        filterWindow,
+      }}
+    >
+      {children}
+    </ConditionalFilterContext.Provider>
+  );
+};
+
+export const ConditionalStaffMembersFilterProvider: FC<{
+  locationSearch: string;
+}> = ({ children, locationSearch }) => {
+  const apiProvider = useStaffMembersFilterAPIProvider();
+
+  const initialState = useInitialStaffMembersState();
+  const valueProvider = useUrlValueProvider(locationSearch, "staff-members", initialState);
+  const leftOperandsProvider = useFilterLeftOperandsProvider(STAFF_MEMBER_OPTIONS);
   const containerState = useContainerState(valueProvider);
   const filterWindow = useFilterWindow();
 

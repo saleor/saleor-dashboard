@@ -7,6 +7,8 @@ import {
   OrderChargeStatusEnum,
   OrderStatusFilter,
   PaymentChargeStatusEnum,
+  ProductTypeEnum,
+  StaffMemberStatus,
   VoucherDiscountType,
 } from "@dashboard/graphql";
 import { transformOrderStatus, transformPaymentStatus } from "@dashboard/misc";
@@ -18,6 +20,8 @@ import {
   chargeStatusMessages,
   collectionFilterMessages,
   discountTypeMessages,
+  productTypeMessages,
+  staffMembersStatusMessages,
   voucherStatusMessages,
 } from "./messages";
 
@@ -96,6 +100,28 @@ const getPublishedLabel = (status: CollectionPublished, intl: IntlShape) => {
   }
 };
 
+export const getProductTypeLabel = (type: ProductTypeEnum, intl: IntlShape) => {
+  switch (type) {
+    case ProductTypeEnum.DIGITAL:
+      return intl.formatMessage(productTypeMessages.digital);
+    case ProductTypeEnum.SHIPPABLE:
+      return intl.formatMessage(productTypeMessages.shippable);
+    default:
+      return type;
+  }
+};
+
+const getStaffMemberStatusLabel = (status: StaffMemberStatus, intl: IntlShape) => {
+  switch (status) {
+    case StaffMemberStatus.ACTIVE:
+      return intl.formatMessage(staffMembersStatusMessages.active);
+    case StaffMemberStatus.DEACTIVATED:
+      return intl.formatMessage(staffMembersStatusMessages.deactivated);
+    default:
+      return status;
+  }
+};
+
 const getAttributeTypeLabel = (type: AttributeTypeEnum, intl: IntlShape) => {
   switch (type) {
     case AttributeTypeEnum.PAGE_TYPE:
@@ -123,6 +149,10 @@ export const getLocalizedLabel = (rowType: LeftOperand["type"], value: string, i
       return getDiscountTypeLabel(value as VoucherDiscountType, intl);
     case "voucherStatus":
       return getVoucherStatusLabel(value as DiscountStatusEnum, intl);
+    case "typeOfProduct":
+      return getProductTypeLabel(value as ProductTypeEnum, intl);
+    case "staffMemberStatus":
+      return getStaffMemberStatusLabel(value as StaffMemberStatus, intl);
     case "attributeType":
       return getAttributeTypeLabel(value as AttributeTypeEnum, intl);
     default:

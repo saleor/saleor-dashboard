@@ -1,3 +1,4 @@
+import { ConditionalProductTypesFilterProvider } from "@dashboard/components/ConditionalFilter";
 import { Route } from "@dashboard/components/Router";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
@@ -30,7 +31,11 @@ const ProductTypeList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   }) as any;
   const params: ProductTypeListUrlQueryParams = asSortParams(qs, ProductTypeListUrlSortField);
 
-  return <ProductTypeListComponent params={params} />;
+  return (
+    <ConditionalProductTypesFilterProvider locationSearch={location.search}>
+      <ProductTypeListComponent params={params} />
+    </ConditionalProductTypesFilterProvider>
+  );
 };
 
 interface ProductTypeCreateRouteParams {
