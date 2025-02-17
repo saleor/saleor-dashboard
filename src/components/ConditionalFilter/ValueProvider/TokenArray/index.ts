@@ -5,6 +5,7 @@ import { FilterContainer, FilterElement } from "../../FilterElement";
 import { FilterProviderType, InitialResponseType } from "../../types";
 import { UrlEntry, UrlToken } from "../UrlToken";
 import {
+  AttributesFetchingParams,
   CollectionFetchingParams,
   FetchingParams,
   FetchingParamsType,
@@ -13,6 +14,7 @@ import {
   PageFetchingParams,
   ProductTypesFetchingParams,
   StaffMembersFetchingParams,
+  toAttributesFetchingParams,
   toCollectionFetchingParams,
   toFetchingParams,
   toGiftCardsFetchingParams,
@@ -116,6 +118,13 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
           .reduce<StaffMembersFetchingParams>(
             toStaffMembersFetchingParams,
             params as StaffMembersFetchingParams,
+          );
+      case "attributes":
+        return this.asFlatArray()
+          .filter(token => token.isLoadable())
+          .reduce<AttributesFetchingParams>(
+            toAttributesFetchingParams,
+            params as AttributesFetchingParams,
           );
       default:
         return this.asFlatArray()

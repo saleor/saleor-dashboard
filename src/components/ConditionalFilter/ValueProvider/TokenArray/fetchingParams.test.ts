@@ -1,6 +1,7 @@
 import { UrlToken } from "../UrlToken";
 import {
   getEmptyFetchingPrams,
+  toAttributesFetchingParams,
   toCollectionFetchingParams,
   toGiftCardsFetchingParams,
   toPageFetchingParams,
@@ -261,6 +262,32 @@ describe("TokenArray / fetchingParams / toStaffMembersFetchingParams", () => {
     // Assert
     expect(fetchingParams).toEqual({
       staffMemberStatus: ["active"],
+    });
+  });
+});
+
+describe("TokenArray / fetchingParams / toAttributesFetchingParams", () => {
+  it("should return  fetching params", () => {
+    // Arrange
+    const params = {
+      channel: [],
+      attributeType: [],
+    };
+
+    const token = {
+      conditionKind: "in",
+      name: "channel",
+      type: "s",
+      value: "chan-1",
+    } as UrlToken;
+
+    // Act
+    const fetchingParams = toAttributesFetchingParams(params, token);
+
+    // Assert
+    expect(fetchingParams).toEqual({
+      channel: ["chan-1"],
+      attributeType: [],
     });
   });
 });

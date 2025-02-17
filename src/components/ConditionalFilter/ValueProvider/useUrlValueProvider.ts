@@ -3,6 +3,7 @@ import { stringify } from "qs";
 import { useEffect, useState } from "react";
 import useRouter from "use-react-router";
 
+import { InitialAttributesAPIState } from "../API/initialState/attributes/useInitialAttributesState";
 import { InitialCollectionAPIState } from "../API/initialState/collections/useInitialCollectionsState";
 import { InitialGiftCardsAPIState } from "../API/initialState/giftCards/useInitialGiftCardsState";
 import { InitialOrderAPIState } from "../API/initialState/orders/useInitialOrderState";
@@ -16,6 +17,7 @@ import { FilterValueProvider } from "../FilterValueProvider";
 import { FilterProviderType, InitialAPIState } from "../types";
 import { TokenArray } from "./TokenArray";
 import {
+  AttributesFetchingParams,
   CollectionFetchingParams,
   FetchingParams,
   getEmptyFetchingPrams,
@@ -91,6 +93,11 @@ export const useUrlValueProvider = (
         case "staff-members":
           (initialState as InitialStaffMembersAPIState).fetchQueries(
             fetchingParams as StaffMembersFetchingParams,
+          );
+          break;
+        case "attributes":
+          (initialState as InitialAttributesAPIState).fetchQueries(
+            fetchingParams as AttributesFetchingParams,
           );
           break;
       }
