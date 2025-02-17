@@ -5,6 +5,7 @@ import {
   toGiftCardsFetchingParams,
   toPageFetchingParams,
   toProductTypesFetchingParams,
+  toStaffMembersFetchingParams,
   toVouchersFetchingParams,
 } from "./fetchingParams";
 
@@ -236,6 +237,30 @@ describe("TokenArray / fetchingParams / toProductTypesFetchingParams", () => {
     expect(fetchingParams).toEqual({
       typeOfProduct: ["SHIPPABLE"],
       configurable: [],
+    });
+  });
+});
+
+describe("TokenArray / fetchingParams / toStaffMembersFetchingParams", () => {
+  it("should return  fetching params", () => {
+    // Arrange
+    const params = {
+      staffMemberStatus: [],
+    };
+
+    const token = {
+      conditionKind: "in",
+      name: "staffMemberStatus",
+      type: "s",
+      value: "active",
+    } as UrlToken;
+
+    // Act
+    const fetchingParams = toStaffMembersFetchingParams(params, token);
+
+    // Assert
+    expect(fetchingParams).toEqual({
+      staffMemberStatus: ["active"],
     });
   });
 });

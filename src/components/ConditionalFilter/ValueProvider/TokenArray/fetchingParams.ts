@@ -47,12 +47,17 @@ export interface ProductTypesFetchingParams {
   configurable: string[];
 }
 
+export interface StaffMembersFetchingParams {
+  staffMemberStatus: string[];
+}
+
 type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute">;
 type OrderParamsKeys = keyof OrderFetchingParams;
 type VoucherParamsKeys = keyof VoucherFetchingParams;
 type PageParamsKeys = keyof PageFetchingParams;
 type GiftCardsParamKeys = keyof GiftCardsFetchingParams;
 type ProductTypesParamsKeys = keyof ProductTypesFetchingParams;
+type StaffMembersParamsKeys = keyof StaffMembersFetchingParams;
 
 export const emptyFetchingParams: FetchingParams = {
   category: [],
@@ -98,6 +103,10 @@ export const emptyCollectionFetchingParams: CollectionFetchingParams = {
 export const emptyProductTypesFetchingParams: ProductTypesFetchingParams = {
   typeOfProduct: [],
   configurable: [],
+};
+
+export const emptyStaffMembersFetchingParams: StaffMembersFetchingParams = {
+  staffMemberStatus: [],
 };
 
 const unique = <T>(array: Iterable<T>) => Array.from(new Set(array));
@@ -210,6 +219,18 @@ export const toProductTypesFetchingParams = (p: ProductTypesFetchingParams, c: U
   return p;
 };
 
+export const toStaffMembersFetchingParams = (p: StaffMembersFetchingParams, c: UrlToken) => {
+  const key = c.name as StaffMembersParamsKeys;
+
+  if (!p[key]) {
+    p[key] = [];
+  }
+
+  p[key] = unique(p[key].concat(c.value));
+
+  return p;
+};
+
 export type FetchingParamsType =
   | OrderFetchingParams
   | FetchingParams
@@ -217,7 +238,8 @@ export type FetchingParamsType =
   | GiftCardsFetchingParams
   | PageFetchingParams
   | VoucherFetchingParams
-  | ProductTypesFetchingParams;
+  | ProductTypesFetchingParams
+  | StaffMembersFetchingParams;
 
 export const getEmptyFetchingPrams = (type: FilterProviderType) => {
   switch (type) {
@@ -235,5 +257,7 @@ export const getEmptyFetchingPrams = (type: FilterProviderType) => {
       return emptyCollectionFetchingParams;
     case "product-types":
       return emptyProductTypesFetchingParams;
+    case "staff-members":
+      return emptyStaffMembersFetchingParams;
   }
 };

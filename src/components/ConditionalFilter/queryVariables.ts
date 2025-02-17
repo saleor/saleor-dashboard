@@ -13,6 +13,7 @@ import {
   ProductTypeFilterInput,
   ProductWhereInput,
   PromotionWhereInput,
+  StaffUserInput,
   VoucherFilterInput,
 } from "@dashboard/graphql";
 
@@ -385,4 +386,24 @@ export const createProductTypesQueryVariables = (
 
     return p;
   }, {} as ProductTypeFilterInput);
+};
+
+export const createStaffMembersQueryVariables = (value: FilterContainer): StaffUserInput => {
+  return value.reduce((p, c) => {
+    if (typeof c === "string" || Array.isArray(c)) return p;
+
+    if (c.value.type === "staffMemberStatus") {
+      p["status"] = mapStaticQueryPartToLegacyVariables(
+        createStaticQueryPart(c.condition.selected),
+      );
+
+      return p;
+    }
+
+    p[c.value.value as keyof StaffUserInput] = mapStaticQueryPartToLegacyVariables(
+      createStaticQueryPart(c.condition.selected),
+    );
+
+    return p;
+  }, {} as StaffUserInput);
 };
