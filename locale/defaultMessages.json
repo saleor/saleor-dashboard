@@ -4755,6 +4755,10 @@
     "context": "header",
     "string": "Translation Attribute \"{attribute}\" - {languageCode}"
   },
+  "SPF/Zn": {
+    "context": "staff members status deactivated",
+    "string": "Deactivated"
+  },
   "SPp3cx": {
     "context": "alert message",
     "string": "Orders cannot be placed in an inactive channel."
@@ -4946,9 +4950,6 @@
     "context": "tax classes card header",
     "string": "General information"
   },
-  "ThUvIL": {
-    "string": "Hidden"
-  },
   "TjGYna": {
     "context": "product inventory, checkbox",
     "string": "Track Inventory"
@@ -5069,6 +5070,10 @@
   "UVDfTs": {
     "context": "discount type shipping",
     "string": "Shipping"
+  },
+  "UYKEsx": {
+    "context": "collection filter published",
+    "string": "Published"
   },
   "Uf3oHA": {
     "context": "add new menu item",
@@ -7953,6 +7958,10 @@
     "context": "expiration date label",
     "string": "Expiration date"
   },
+  "nG1+Cz": {
+    "context": "staff members status active",
+    "string": "Active"
+  },
   "nHmugP": {
     "context": "order history message",
     "string": "Fulfilled {quantity} items"
@@ -8997,6 +9006,10 @@
   "ufD5Jr": {
     "string": "Content type"
   },
+  "ufahVh": {
+    "context": "collection filter hidden",
+    "string": "Hidden"
+  },
   "ufmuTp": {
     "context": "button",
     "string": "Delete"
@@ -9273,9 +9286,6 @@
   },
   "w7jT4W": {
     "string": "No channels selected"
-  },
-  "w7tf2z": {
-    "string": "Published"
   },
   "w9xgN9": {
     "context": "see error log label in notification",

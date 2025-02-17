@@ -80,11 +80,26 @@ export const voucherStatusMessages = defineMessages({
 export const collectionFilterMessages = defineMessages({
   published: {
     defaultMessage: "Published",
-    id: "w7tf2z",
+    description: "collection filter published",
+    id: "UYKEsx",
   },
   hidden: {
     defaultMessage: "Hidden",
-    id: "ThUvIL",
+    description: "collection filter hidden",
+    id: "ufahVh",
+  },
+});
+
+export const staffMembersStatusMessages = defineMessages({
+  active: {
+    defaultMessage: "Active",
+    description: "staff members status active",
+    id: "nG1+Cz",
+  },
+  deactivated: {
+    defaultMessage: "Deactivated",
+    description: "staff members status deactivated",
+    id: "SPF/Zn",
   },
 });
 

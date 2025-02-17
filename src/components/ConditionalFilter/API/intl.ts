@@ -7,6 +7,7 @@ import {
   OrderStatusFilter,
   PaymentChargeStatusEnum,
   ProductTypeEnum,
+  StaffMemberStatus,
   VoucherDiscountType,
 } from "@dashboard/graphql";
 import { transformOrderStatus, transformPaymentStatus } from "@dashboard/misc";
@@ -18,6 +19,7 @@ import {
   collectionFilterMessages,
   discountTypeMessages,
   productTypeMessages,
+  staffMembersStatusMessages,
   voucherStatusMessages,
 } from "./messages";
 
@@ -107,6 +109,17 @@ export const getProductTypeLabel = (type: ProductTypeEnum, intl: IntlShape) => {
   }
 };
 
+const getStaffMemberStatusLabel = (status: StaffMemberStatus, intl: IntlShape) => {
+  switch (status) {
+    case StaffMemberStatus.ACTIVE:
+      return intl.formatMessage(staffMembersStatusMessages.active);
+    case StaffMemberStatus.DEACTIVATED:
+      return intl.formatMessage(staffMembersStatusMessages.deactivated);
+    default:
+      return status;
+  }
+};
+
 export const getLocalizedLabel = (rowType: LeftOperand["type"], value: string, intl: IntlShape) => {
   switch (rowType) {
     case "paymentStatus":
@@ -125,6 +138,8 @@ export const getLocalizedLabel = (rowType: LeftOperand["type"], value: string, i
       return getVoucherStatusLabel(value as DiscountStatusEnum, intl);
     case "typeOfProduct":
       return getProductTypeLabel(value as ProductTypeEnum, intl);
+    case "staffMemberStatus":
+      return getStaffMemberStatusLabel(value as StaffMemberStatus, intl);
     default:
       return value;
   }
