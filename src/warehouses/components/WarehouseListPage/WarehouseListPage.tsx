@@ -1,18 +1,19 @@
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
+import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { Backlink } from "@dashboard/components/Backlink";
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
+import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
-import SearchBar from "@dashboard/components/SearchBar";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { RefreshLimitsQuery, WarehouseWithShippingFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
+import { messages } from "@dashboard/shipping/components/ShippingZonesListPage/messages";
 import { PageListProps, SearchPageProps, SortPage, TabPageProps } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { warehouseAddUrl, WarehouseListUrlSortField } from "@dashboard/warehouses/urls";
-import React from "react";
+import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import WarehouseList from "../WarehouseList";
@@ -21,10 +22,13 @@ export interface WarehouseListPageProps
   extends PageListProps,
     SearchPageProps,
     SortPage<WarehouseListUrlSortField>,
-    TabPageProps {
+    Omit<TabPageProps, "onTabDelete"> {
   limits: RefreshLimitsQuery["shop"]["limits"] | undefined;
   warehouses: WarehouseWithShippingFragment[] | undefined;
   onRemove: (id: string | undefined) => void;
+  onTabUpdate: (tabName: string) => void;
+  onTabDelete: (id: number) => void;
+  hasPresetsChanged: () => boolean;
 }
 
 export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
@@ -41,42 +45,80 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
   onTabChange,
   onTabDelete,
   onTabSave,
+  onTabUpdate,
+  hasPresetsChanged,
   onUpdateListSettings,
   ...listProps
 }) => {
   const intl = useIntl();
+  const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const limitReached = isLimitReached(limits, "warehouses");
 
   return (
     <ListPageLayout>
-      <Backlink href={configurationMenuUrl}>
-        <FormattedMessage {...sectionNames.configuration} />
-      </Backlink>
-      <TopNav href={configurationMenuUrl} title={intl.formatMessage(sectionNames.warehouses)}>
-        <Button
-          data-test-id="create-warehouse"
-          disabled={limitReached}
-          variant="primary"
-          href={warehouseAddUrl}
-        >
-          <FormattedMessage id="wmdHhD" defaultMessage="Create Warehouse" description="button" />
-        </Button>
-        {hasLimits(limits, "warehouses") && (
-          <LimitsInfo
-            text={intl.formatMessage(
-              {
-                id: "YkOzse",
-                defaultMessage: "{count}/{max} warehouses used",
-                description: "used warehouses counter",
-              },
-              {
-                count: limits?.currentUsage.warehouses,
-                max: limits?.allowedUsage.warehouses,
-              },
+      <TopNav
+        isAlignToRight={false}
+        withoutBorder
+        href={configurationMenuUrl}
+        title={intl.formatMessage(sectionNames.warehouses)}
+      >
+        <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
+          <Box display="flex">
+            <Box marginX={3} display="flex" alignItems="center">
+              <ChevronRightIcon />
+            </Box>
+
+            <FilterPresetsSelect
+              presetsChanged={hasPresetsChanged()}
+              onSelect={onTabChange}
+              onRemove={onTabDelete}
+              onUpdate={onTabUpdate}
+              savedPresets={tabs}
+              activePreset={currentTab}
+              onSelectAll={onAll}
+              onSave={onTabSave}
+              isOpen={isFilterPresetOpen}
+              onOpenChange={setFilterPresetOpen}
+              selectAllLabel={intl.formatMessage({
+                id: "eaoi2W",
+                defaultMessage: "All warehouses",
+                description: "tab name",
+              })}
+            />
+          </Box>
+          <Box>
+            <Button
+              data-test-id="create-warehouse"
+              disabled={limitReached}
+              variant="primary"
+              href={warehouseAddUrl}
+            >
+              <FormattedMessage
+                id="wmdHhD"
+                defaultMessage="Create Warehouse"
+                description="button"
+              />
+            </Button>
+
+            {hasLimits(limits, "warehouses") && (
+              <LimitsInfo
+                text={intl.formatMessage(
+                  {
+                    id: "YkOzse",
+                    defaultMessage: "{count}/{max} warehouses used",
+                    description: "used warehouses counter",
+                  },
+                  {
+                    count: limits?.currentUsage.warehouses,
+                    max: limits?.allowedUsage.warehouses,
+                  },
+                )}
+              />
             )}
-          />
-        )}
+          </Box>
+        </Box>
       </TopNav>
+
       {limitReached && (
         <LimitReachedAlert
           title={intl.formatMessage({
@@ -91,26 +133,18 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
           />
         </LimitReachedAlert>
       )}
-      <DashboardCard>
-        <SearchBar
-          allTabLabel={intl.formatMessage({
-            id: "2yU+q9",
-            defaultMessage: "All Warehouses",
-            description: "tab name",
-          })}
-          currentTab={currentTab}
-          initialSearch={initialSearch}
-          searchPlaceholder={intl.formatMessage({
-            id: "caMMWN",
-            defaultMessage: "Search Warehouse",
-          })}
-          tabs={tabs}
-          onAll={onAll}
-          onSearchChange={onSearchChange}
-          onTabChange={onTabChange}
-          onTabDelete={onTabDelete}
-          onTabSave={onTabSave}
-        />
+      <DashboardCard gap={0}>
+        <Box paddingX={6} marginY={2}>
+          <Box __width="320px">
+            {/*TODO:To be replaced by ListFilters BCK-1476*/}
+            <SearchInput
+              initialSearch={initialSearch}
+              placeholder={intl.formatMessage(messages.searchShippingZones)}
+              onSearchChange={onSearchChange}
+            />
+          </Box>
+        </Box>
+
         <WarehouseList
           warehouses={warehouses}
           disabled={disabled}
