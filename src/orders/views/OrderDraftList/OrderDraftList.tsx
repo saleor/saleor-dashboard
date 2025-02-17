@@ -51,7 +51,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   const notify = useNotifier();
   const intl = useIntl();
   const { updateListSettings, settings } = useListSettings(ListViews.DRAFT_LIST);
-  const { enabled: isDraftOrdersFilteringEnabled } = useFlag("draft_orders_filters");
+  const { enabled: isDraftOrdersFilteringEnabled } = useFlag("new_filters");
   const { valueProvider } = useConditionalFilterContext();
   const filter = creatDraftOrderQueryVariables(valueProvider.value);
 

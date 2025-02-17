@@ -49,7 +49,7 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
   const navigate = useNavigator();
   const structure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
-  const { enabled: isAttributesFilteringEnabled } = useFlag("attributes_filters");
+  const { enabled: isAttributesFilteringEnabled } = useFlag("new_filters");
 
   return (
     <>
