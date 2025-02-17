@@ -46,7 +46,8 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
         transition={"ease"}
         backgroundColor={{
           default: !app.isActive ? "default2" : undefined,
-          hover: "default2",
+          hover: "default1Hovered",
+          active: "default1Pressed",
         }}
         cursor={"pointer"}
       >
