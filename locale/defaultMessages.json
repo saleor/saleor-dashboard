@@ -2697,6 +2697,9 @@
   "FZTrzW": {
     "string": "Manual refund"
   },
+  "FaRg9/": {
+    "string": "Webhook errors detected. Last occurred at {date}. {viewDetails}."
+  },
   "Fbr4Vp": {
     "context": "dialog header",
     "string": "Permissions"
@@ -3142,6 +3145,9 @@
   },
   "HvJPcU": {
     "string": "Category deleted"
+  },
+  "HwHSeY": {
+    "string": "App disabled"
   },
   "I+1KzL": {
     "context": "tab name",
@@ -3862,6 +3868,9 @@
   "Mmo9k2": {
     "context": "table header warehouse stock label",
     "string": "Warehouse stock"
+  },
+  "MnpUD7": {
+    "string": "View details"
   },
   "MpR4zK": {
     "context": "customer details, header",
@@ -8131,6 +8140,9 @@
     "context": "order status",
     "string": "Unfulfilled"
   },
+  "oCrEdS": {
+    "string": "Activate the app from the settings. {viewDetails}."
+  },
   "oHbgcK": {
     "context": "PageTypeDeleteWarningDialog title",
     "string": "Delete page {selectedTypesCount,plural,one{type} other{types}}"
@@ -8796,6 +8808,9 @@
   "t7UwLY": {
     "context": "voucher status",
     "string": "Expired"
+  },
+  "t9sWqJ": {
+    "string": "Issues found"
   },
   "tA5HJx": {
     "context": "webhook input help text",
