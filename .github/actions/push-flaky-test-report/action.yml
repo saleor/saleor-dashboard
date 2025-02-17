@@ -11,9 +11,18 @@ runs:
       shell: bash
       run: |
         export GITHUB_TOKEN=$( \
-            curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
+            curl --request GET --url ${{ inputs.VAULT_URL}} --header "Authorization: JWT ${{ inputs.VAULT_JWT }}" | jq -r .token \
           )
-        node .github/workflows/send-report-to-repo.js 
+        node .github/workflows/send-report-to-repo.js \
       env:
-        GITHUB_TOKEN: ${{ inputs.github_token }}
+        VAULT_URL: ${{ inputs.VAULT_URL }}
+        VAULT_JWT: ${{ inputs.VAULT_JWT }}
       if: always()
+
+inputs:
+  VAULT_URL:
+    description: "Vault URL for GitHub token"
+    required: true
+  VAULT_JWT:
+    description: "Vault JWT for GitHub token"
+    required: true
