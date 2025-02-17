@@ -1,5 +1,5 @@
 import { AppListContext, AppListContextValues } from "@dashboard/apps/context";
-import { activeApp } from "@dashboard/apps/fixtures";
+import { activeApp, appWithFailedEventDeliveries } from "@dashboard/apps/fixtures";
 import { InstalledApp } from "@dashboard/apps/types";
 import { getAppsConfig } from "@dashboard/config";
 import Wrapper from "@test/wrapper";
@@ -103,5 +103,29 @@ describe("Apps InstalledAppListRow", () => {
 
     // Assert
     expect(tunnelLabel).toBeTruthy();
+  });
+  it("displays a warning dot when app has issues", async () => {
+    // Arrange
+    const removeAppInstallation = jest.fn();
+    const retryAppInstallation = jest.fn();
+
+    // Act
+    render(
+      <Component
+        data={{
+          app: appWithFailedEventDeliveries,
+          isExternal: false,
+        }}
+        context={{
+          removeAppInstallation,
+          retryAppInstallation,
+        }}
+      />,
+    );
+
+    // Assert
+    const warningDot = screen.getByTestId("app-warning-dot");
+
+    expect(warningDot).toBeInTheDocument();
   });
 });

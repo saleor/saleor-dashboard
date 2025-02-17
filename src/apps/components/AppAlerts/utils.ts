@@ -21,9 +21,6 @@ const hasFailedAttemptsInPendingCheck = (webhook: Webhook) => {
 export const webhookFailedAttemptsCheck = (webhook: Webhook) =>
   hasFailedAttemptsCheck(webhook) || hasFailedAttemptsInPendingCheck(webhook);
 
-export const appFailedAttemptsCheck = (webhooks: Webhook[]) =>
-  webhooks.some(webhookFailedAttemptsCheck);
-
 const getLatestFailedAttemptFromWebhook = (webhook: Webhook) => {
   const fromFailedDelivers = webhook.failedDelivers?.edges?.[0]?.node;
   const fromPendingDelivers = webhook.pendingDelivers?.edges?.[0]?.node.attempts?.edges?.[0]?.node;
@@ -51,8 +48,8 @@ export const sortInstalledAppsByIssues = (a: InstalledApp, b: InstalledApp) => {
   const aWebhooks = a.app.webhooks ?? [];
   const bWebhooks = b.app.webhooks ?? [];
 
-  const aHasIssues = appFailedAttemptsCheck(aWebhooks);
-  const bHasIssues = appFailedAttemptsCheck(bWebhooks);
+  const aHasIssues = aWebhooks.some(webhookFailedAttemptsCheck);
+  const bHasIssues = bWebhooks.some(webhookFailedAttemptsCheck);
 
   if (aHasIssues && !bHasIssues) {
     return -1;

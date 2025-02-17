@@ -9,20 +9,19 @@ import React, { useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { AlertExclamationIcon } from "../AppAlerts/AlertExclamationIcon";
-import { appFailedAttemptsCheck, getLatestFailedAttemptFromWebhooks } from "./utils";
+import { getLatestFailedAttemptFromWebhooks } from "./utils";
 
 interface AppRowWebhookIssueAlertProps {
   app: AppListItemFragment;
 }
 
 export const AppRowWebhookIssueAlert = ({ app }: AppRowWebhookIssueAlertProps) => {
-  const hasErrors = useMemo(() => app.webhooks && appFailedAttemptsCheck(app.webhooks), [app]);
   const latestFailedAttempt = useMemo(
     () => app.webhooks && getLatestFailedAttemptFromWebhooks(app.webhooks),
     [app],
   );
 
-  if (!hasErrors) {
+  if (!latestFailedAttempt) {
     return null;
   }
 
@@ -31,7 +30,7 @@ export const AppRowWebhookIssueAlert = ({ app }: AppRowWebhookIssueAlertProps) =
   return (
     <Tooltip>
       <Tooltip.Trigger>
-        <Box>
+        <Box data-test-id="app-warning-dot">
           <AlertExclamationIcon />
         </Box>
       </Tooltip.Trigger>

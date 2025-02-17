@@ -20,17 +20,8 @@ export const useAppsFailedDeliveries = (): AppsFailedDeliveries => {
 
   const hasFailed = useMemo(
     () =>
-      data?.apps?.edges.some(
-        app =>
-          app.node.webhooks?.some(webhook => {
-            if (webhookFailedAttemptsCheck(webhook)) {
-              return true;
-            }
-
-            return false;
-          }),
-        false,
-      ) ?? false,
+      data?.apps?.edges.some(app => app.node.webhooks?.some(webhookFailedAttemptsCheck), false) ??
+      false,
     [data],
   );
 

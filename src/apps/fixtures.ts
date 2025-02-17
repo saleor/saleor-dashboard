@@ -246,3 +246,42 @@ export const comingSoonApp: AppstoreApi.ComingSoonSaleorApp = {
     },
   ],
 };
+
+export const appWithFailedEventDeliveries: AppListItemFragment = {
+  __typename: "App",
+  id: "QXBwOjE3Ng==",
+  isActive: true,
+  name: "App with failed event deliveries",
+  type: AppTypeEnum.THIRDPARTY,
+  version: "1.0.0",
+  appUrl: "http://localhost:3000",
+  manifestUrl: "http://localhost:3000/api/manifest",
+  created: "2020-06-02T12:24:26.818138+00:00",
+  permissions: [
+    {
+      __typename: "Permission",
+      code: PermissionEnum.MANAGE_USERS,
+      name: "Manage customers.",
+    },
+  ],
+  brand: null,
+  webhooks: [
+    {
+      failedDelivers: {
+        __typename: "EventDeliveryCountableConnection",
+        edges: [
+          {
+            node: {
+              createdAt: "2021-06-02T12:24:26.818138+00:00",
+              id: "failedEvent",
+              __typename: "EventDelivery",
+            },
+            __typename: "EventDeliveryCountableEdge",
+          },
+        ],
+      },
+      __typename: "Webhook",
+      pendingDelivers: null,
+    },
+  ],
+};
