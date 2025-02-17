@@ -47,7 +47,7 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
   const navigate = useNavigator();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const filterStructure = createFilterStructure(intl, filterOpts);
-  const { enabled: isProductTypesFilterEnabled } = useFlag("product_types_filters");
+  const { enabled: isProductTypesFilterEnabled } = useFlag("new_filters");
 
   return (
     <ListPageLayout>
