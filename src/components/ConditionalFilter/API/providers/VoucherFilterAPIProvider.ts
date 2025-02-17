@@ -1,27 +1,11 @@
 import { ApolloClient, useApolloClient } from "@apollo/client";
-import {
-  ChannelHandler,
-  EnumValuesHandler,
-  Handler,
-} from "@dashboard/components/ConditionalFilter/API/Handler";
-import {
-  FilterContainer,
-  FilterElement,
-} from "@dashboard/components/ConditionalFilter/FilterElement";
 import { DiscountStatusEnum, VoucherDiscountType } from "@dashboard/graphql";
 import { IntlShape, useIntl } from "react-intl";
 
+import { FilterContainer, FilterElement } from "../../FilterElement";
 import { FilterAPIProvider } from "../FilterAPIProvider";
-
-const getFilterElement = (value: FilterContainer, index: number): FilterElement => {
-  const possibleFilterElement = value[index];
-
-  if (typeof possibleFilterElement !== "string" && !Array.isArray(possibleFilterElement)) {
-    return possibleFilterElement;
-  }
-
-  throw new Error("Unknown filter element used to create API handler");
-};
+import { ChannelHandler, EnumValuesHandler, Handler } from "../Handler";
+import { getFilterElement } from "../utils";
 
 const createAPIHandler = (
   selectedRow: FilterElement,

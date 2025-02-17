@@ -11,11 +11,13 @@ import {
   GiftCardsFetchingParams,
   OrderFetchingParams,
   PageFetchingParams,
+  ProductTypesFetchingParams,
   toCollectionFetchingParams,
   toFetchingParams,
   toGiftCardsFetchingParams,
   toOrderFetchingParams,
   toPageFetchingParams,
+  toProductTypesFetchingParams,
   toVouchersFetchingParams,
   VoucherFetchingParams,
 } from "./fetchingParams";
@@ -98,6 +100,13 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
           .reduce<GiftCardsFetchingParams>(
             toGiftCardsFetchingParams,
             params as GiftCardsFetchingParams,
+          );
+      case "product-types":
+        return this.asFlatArray()
+          .filter(token => token.isLoadable())
+          .reduce<ProductTypesFetchingParams>(
+            toProductTypesFetchingParams,
+            params as ProductTypesFetchingParams,
           );
       default:
         return this.asFlatArray()
