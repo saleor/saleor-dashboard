@@ -1,4 +1,5 @@
 import { AppEventDeliveriesFragment, EventDeliveryStatusEnum } from "@dashboard/graphql";
+import moment from "moment";
 
 type Webhook = NonNullable<AppEventDeliveriesFragment["webhooks"]>[0];
 
@@ -18,3 +19,29 @@ const hasFailedAttemptsInPendingCheck = (webhook: Webhook) => {
 
 export const webhookFailedAttemptsCheck = (webhook: Webhook) =>
   hasFailedAttemptsCheck(webhook) || hasFailedAttemptsInPendingCheck(webhook);
+
+export const appFailedAttemptsCheck = (webhooks: Webhook[]) =>
+  webhooks.some(webhookFailedAttemptsCheck);
+
+const getLatestFailedAttemptFromWebhook = (webhook: Webhook) => {
+  const fromFailedDelivers = webhook.failedDelivers?.edges?.[0]?.node;
+  const fromPendingDelivers = webhook.pendingDelivers?.edges?.[0]?.node.attempts?.edges?.[0]?.node;
+
+  if (fromFailedDelivers && fromPendingDelivers) {
+    return moment(fromFailedDelivers?.createdAt).isAfter(moment(fromPendingDelivers?.createdAt))
+      ? fromFailedDelivers
+      : fromPendingDelivers;
+  } else if (fromFailedDelivers) {
+    return fromFailedDelivers;
+  } else if (fromPendingDelivers) {
+    return fromPendingDelivers;
+  } else {
+    return null;
+  }
+};
+
+export const getLatestFailedAttemptFromWebhooks = (webhooks: Webhook[]) =>
+  webhooks
+    .map(getLatestFailedAttemptFromWebhook)
+    .filter(Boolean)
+    .sort((a, b) => moment(b?.createdAt).diff(a?.createdAt))[0];

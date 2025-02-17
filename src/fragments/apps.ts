@@ -136,6 +136,7 @@ export const appEventDeliveriesFragment = gql`
         edges {
           node {
             id
+            createdAt
           }
         }
       }
@@ -152,6 +153,7 @@ export const appEventDeliveriesFragment = gql`
                 node {
                   id
                   status
+                  createdAt
                 }
               }
             }
