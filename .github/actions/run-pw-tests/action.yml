@@ -50,16 +50,6 @@ inputs:
   DASHBOARD_VERSION:
     description: "Dashboard version"
     required: false 
-  BRANCH_NAME:
-    description: "Branch name"
-    required: true
-  SALEOR_CLOUD_SERVICE:
-    description: "Saleor Cloud service"
-    required: true
-  DASHBOARD_VERSION:
-    description: "Dashboard version"
-    required: false 
-
 runs:
   using: "composite"
   steps:

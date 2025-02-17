@@ -6,6 +6,7 @@ dotenv.config();
 const env = process.env;
 const DEFAULT_WORKERS = "2";
 const shardNumber = env.SHARD_NUMBER?.match(/^\d*/)?.[0] || "0";
+
 // const DEFAULT_RETRIES = "1";
 
 // FIXME: High timeouts are a temporary solution to handle slower CI environments.
@@ -47,7 +48,6 @@ export default defineConfig({
         branchName: env.BRANCH_NAME || '',    // Optional: Specify the branch name.
         testEnvironment: env.SALEOR_CLOUD_SERVICE || ''     // Optional: Specify the test environment (e.g. staging, production).
       }]]
-      ]
     : [["html"], ["list"]],
   expect: { timeout: 10 * 1000 },
   maxFailures: 10,
