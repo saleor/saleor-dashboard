@@ -17,7 +17,6 @@ runs:
       env:
         VAULT_URL: ${{ inputs.VAULT_URL }}
         VAULT_JWT: ${{ inputs.VAULT_JWT }}
-      if: always()
 
 inputs:
   VAULT_URL:

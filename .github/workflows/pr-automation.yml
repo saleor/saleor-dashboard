@@ -249,6 +249,6 @@ jobs:
 
       - name: Push flaky report
         uses: ./.github/actions/push-flaky-test-report
-        env:
+        with:
           VAULT_URL: ${{ secrets.VAULT_URL }}      
           VAULT_JWT: ${{ secrets.VAULT_JWT }}              
