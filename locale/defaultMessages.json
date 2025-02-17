@@ -15,6 +15,10 @@
     "context": "header",
     "string": "Products in {categoryName}"
   },
+  "+470FM": {
+    "context": "voucher status expired",
+    "string": "Expired"
+  },
   "+5HkZN": {
     "context": "order, button",
     "string": "Mark as paid"
@@ -92,6 +96,10 @@
   "+WTmpr": {
     "context": "disabled status option label",
     "string": "Disabled"
+  },
+  "+Wm2vY": {
+    "context": "discount type percentage",
+    "string": "Percentage"
   },
   "+a+2ug": {
     "string": "Members"
@@ -505,6 +513,10 @@
   "1+ROfp": {
     "string": "Transaction"
   },
+  "1/bAgt": {
+    "context": "discount type fixed",
+    "string": "Fixed"
+  },
   "1/oG76": {
     "context": "dialog header",
     "string": "Delete Sale"
@@ -569,10 +581,6 @@
   "1J/bhZ": {
     "context": "expiry date section header",
     "string": "Expiry date"
-  },
-  "1KSqnn": {
-    "context": "tab name",
-    "string": "All Product Types"
   },
   "1LBYpE": {
     "context": "dialog header",
@@ -2447,6 +2455,10 @@
   "EEW+ND": {
     "string": "Navigator"
   },
+  "EGycu/": {
+    "context": "voucher status active",
+    "string": "Active"
+  },
   "EHsnZX": {
     "context": "dialog description",
     "string": "Are you sure you want to approve this fullfillment?"
@@ -3730,6 +3742,10 @@
   "M59JhX": {
     "string": "Manual"
   },
+  "M61TN/": {
+    "context": "product type shippable",
+    "string": "Shippable"
+  },
   "M6mWHL": {
     "context": "tooltip helper text",
     "string": "You do not have permissions to create a manual refund."
@@ -3998,6 +4014,10 @@
   "No4lyL": {
     "context": "header field name, header",
     "string": "Name"
+  },
+  "Nqh0na": {
+    "context": "Product types search input placeholder",
+    "string": "Search product types..."
   },
   "NqxvFh": {
     "context": "navigator placeholder",
@@ -4765,6 +4785,10 @@
   "SceSNp": {
     "string": "Remove following permissions:"
   },
+  "SgFE10": {
+    "context": "product type digital",
+    "string": "Digital"
+  },
   "Sjd7wm": {
     "context": "product filter label",
     "string": "Product"
@@ -4922,6 +4946,9 @@
     "context": "tax classes card header",
     "string": "General information"
   },
+  "ThUvIL": {
+    "string": "Hidden"
+  },
   "TjGYna": {
     "context": "product inventory, checkbox",
     "string": "Track Inventory"
@@ -5038,6 +5065,10 @@
   "USS3Q7": {
     "context": "filters error messages unknown error",
     "string": "Unknown error occurred"
+  },
+  "UVDfTs": {
+    "context": "discount type shipping",
+    "string": "Shipping"
   },
   "Uf3oHA": {
     "context": "add new menu item",
@@ -7247,6 +7278,10 @@
   "ivJ1qt": {
     "string": "Manage your permission groups and their permissions"
   },
+  "ivmwpV": {
+    "context": "tab name",
+    "string": "All product types"
+  },
   "ixjvkM": {
     "string": "We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
   },
@@ -8380,6 +8415,10 @@
   "qPSWmL": {
     "string": "Enter usage"
   },
+  "qQih8j": {
+    "context": "voucher status scheduled",
+    "string": "Scheduled"
+  },
   "qSCmIG": {
     "string": "lower than {value}"
   },
@@ -8544,9 +8583,6 @@
   "rl1t+o": {
     "context": "expires in label",
     "string": "Expires in"
-  },
-  "rpFdD1": {
-    "string": "Search Product Type"
   },
   "rqiCWU": {
     "string": "Saved changes"
@@ -9237,6 +9273,9 @@
   },
   "w7jT4W": {
     "string": "No channels selected"
+  },
+  "w7tf2z": {
+    "string": "Published"
   },
   "w9xgN9": {
     "context": "see error log label in notification",

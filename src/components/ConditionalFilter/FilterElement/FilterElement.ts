@@ -1,7 +1,7 @@
-import { InitialOrderStateResponse } from "../API/initialState/orders/InitialOrderState";
-import { InitialStateResponse } from "../API/InitialStateResponse";
+import { InitialProductStateResponse } from "../API/initialState/product/InitialProductStateResponse";
 import { RowType, STATIC_OPTIONS } from "../constants";
 import { LeftOperand } from "../LeftOperandsProvider";
+import { InitialResponseType } from "../types";
 import { TokenType, UrlEntry, UrlToken } from "./../ValueProvider/UrlToken";
 import { Condition } from "./Condition";
 import { ConditionItem, ConditionOptions, StaticElementName } from "./ConditionOptions";
@@ -46,7 +46,7 @@ export class ExpressionValue {
     return new ExpressionValue(token.name, option.label, token.name);
   }
 
-  public static forAttribute(attributeName: string, response: InitialStateResponse) {
+  public static forAttribute(attributeName: string, response: InitialProductStateResponse) {
     const attribute = response.attributeByName(attributeName);
 
     return new ExpressionValue(attributeName, attribute.label, attribute.inputType);
@@ -175,10 +175,7 @@ export class FilterElement {
     return new FilterElement(ExpressionValue.fromSlug(slug), Condition.emptyFromSlug(slug), false);
   }
 
-  public static fromUrlToken(
-    token: UrlToken,
-    response: InitialStateResponse | InitialOrderStateResponse,
-  ) {
+  public static fromUrlToken(token: UrlToken, response: InitialResponseType) {
     if (token.isStatic()) {
       return new FilterElement(
         ExpressionValue.fromUrlToken(token),
@@ -189,7 +186,7 @@ export class FilterElement {
 
     if (token.isAttribute()) {
       return new FilterElement(
-        ExpressionValue.forAttribute(token.name, response as InitialStateResponse),
+        ExpressionValue.forAttribute(token.name, response as InitialProductStateResponse),
         Condition.fromUrlToken(token, response),
         false,
       );

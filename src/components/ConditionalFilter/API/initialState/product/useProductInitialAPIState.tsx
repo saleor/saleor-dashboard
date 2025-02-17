@@ -18,22 +18,24 @@ import {
 } from "@dashboard/graphql";
 import { useState } from "react";
 
-import { FetchingParams } from "../../ValueProvider/TokenArray/fetchingParams";
-import { InitialStateResponse } from "../InitialStateResponse";
-import { createInitialStateFromData } from "./helpers";
-import { InitialAPIResponse } from "./types";
+import { FetchingParams } from "../../../ValueProvider/TokenArray/fetchingParams";
+import { createInitialProductStateFromData } from "../helpers";
+import { InitialProductAPIResponse } from "../types";
+import { InitialProductStateResponse } from "./InitialProductStateResponse";
 
-export interface InitialAPIState {
-  data: InitialStateResponse;
+export interface InitialProductAPIState {
+  data: InitialProductStateResponse;
   loading: boolean;
   fetchQueries: (params: FetchingParams) => Promise<void>;
 }
 
-export const useProductInitialAPIState = (): InitialAPIState => {
+export const useProductInitialAPIState = (): InitialProductAPIState => {
   const client = useApolloClient();
-  const [data, setData] = useState<InitialStateResponse>(InitialStateResponse.empty());
+  const [data, setData] = useState<InitialProductStateResponse>(
+    InitialProductStateResponse.empty(),
+  );
   const [loading, setLoading] = useState(true);
-  const queriesToRun: Array<Promise<InitialAPIResponse>> = [];
+  const queriesToRun: Array<Promise<InitialProductAPIResponse>> = [];
   const fetchQueries = async ({
     category,
     collection,
@@ -99,10 +101,10 @@ export const useProductInitialAPIState = (): InitialAPIState => {
     }
 
     const data = await Promise.all(queriesToRun);
-    const initialState = createInitialStateFromData(data, channel);
+    const initialState = createInitialProductStateFromData(data, channel);
 
     setData(
-      new InitialStateResponse(
+      new InitialProductStateResponse(
         initialState.category,
         initialState.attribute,
         initialState.channel,

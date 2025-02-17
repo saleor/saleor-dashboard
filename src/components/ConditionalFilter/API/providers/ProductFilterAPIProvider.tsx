@@ -1,9 +1,9 @@
 import { ApolloClient, useApolloClient } from "@apollo/client";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 
-import { RowType } from "../constants";
-import { FilterContainer, FilterElement } from "../FilterElement";
-import { FilterAPIProvider } from "./FilterAPIProvider";
+import { RowType } from "../../constants";
+import { FilterContainer, FilterElement } from "../../FilterElement";
+import { FilterAPIProvider } from "../FilterAPIProvider";
 import {
   AttributeChoicesHandler,
   AttributesHandler,
@@ -13,17 +13,9 @@ import {
   CollectionHandler,
   Handler,
   ProductTypeHandler,
-} from "./Handler";
+} from "../Handler";
+import { getFilterElement } from "../utils";
 
-const getFilterElement = (value: FilterContainer, index: number): FilterElement => {
-  const possibleFilterElement = value[index];
-
-  if (typeof possibleFilterElement !== "string" && !Array.isArray(possibleFilterElement)) {
-    return possibleFilterElement;
-  }
-
-  throw new Error("Unknown filter element used to create API handler");
-};
 const isStaticBoolean = (rowType: RowType) => {
   return [
     "isAvailable",

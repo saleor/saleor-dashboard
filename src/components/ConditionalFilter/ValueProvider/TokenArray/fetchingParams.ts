@@ -1,3 +1,4 @@
+import { FilterProviderType } from "../../types";
 import { TokenType, UrlToken } from "../UrlToken";
 
 export interface FetchingParams {
@@ -18,8 +19,40 @@ export interface OrderFetchingParams {
   ids: string[];
 }
 
+export interface VoucherFetchingParams {
+  channel: string[];
+  discountType: string[];
+  voucherStatus: string[];
+}
+
+export interface PageFetchingParams {
+  pageTypes: string[];
+}
+
+export interface GiftCardsFetchingParams {
+  currency: string[];
+  products: string[];
+  tags: string[];
+  usedBy: string[];
+}
+
+export interface CollectionFetchingParams {
+  channel: string[];
+  metadata: string[];
+  published: string[];
+}
+
+export interface ProductTypesFetchingParams {
+  typeOfProduct: string[];
+  configurable: string[];
+}
+
 type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute">;
 type OrderParamsKeys = keyof OrderFetchingParams;
+type VoucherParamsKeys = keyof VoucherFetchingParams;
+type PageParamsKeys = keyof PageFetchingParams;
+type GiftCardsParamKeys = keyof GiftCardsFetchingParams;
+type ProductTypesParamsKeys = keyof ProductTypesFetchingParams;
 
 export const emptyFetchingParams: FetchingParams = {
   category: [],
@@ -37,6 +70,34 @@ export const emptyOrderFetchingParams: OrderFetchingParams = {
   channels: [],
   customer: [],
   ids: [],
+};
+
+export const emptyVoucherFetchingParams: VoucherFetchingParams = {
+  channel: [],
+  discountType: [],
+  voucherStatus: [],
+};
+
+export const emptyPageFetchingParams: PageFetchingParams = {
+  pageTypes: [],
+};
+
+export const emptyGiftCardsFetchingParams: GiftCardsFetchingParams = {
+  currency: [],
+  products: [],
+  tags: [],
+  usedBy: [],
+};
+
+export const emptyCollectionFetchingParams: CollectionFetchingParams = {
+  channel: [],
+  metadata: [],
+  published: [],
+};
+
+export const emptyProductTypesFetchingParams: ProductTypesFetchingParams = {
+  typeOfProduct: [],
+  configurable: [],
 };
 
 const unique = <T>(array: Iterable<T>) => Array.from(new Set(array));
@@ -87,4 +148,92 @@ export const toOrderFetchingParams = (p: OrderFetchingParams, c: UrlToken) => {
   p[key] = unique(p[key].concat(c.value));
 
   return p;
+};
+
+export const toVouchersFetchingParams = (p: VoucherFetchingParams, c: UrlToken) => {
+  const key = c.name as VoucherParamsKeys;
+
+  if (!p[key]) {
+    p[key] = [];
+  }
+
+  p[key] = unique(p[key].concat(c.value));
+
+  return p;
+};
+
+export const toPageFetchingParams = (p: PageFetchingParams, c: UrlToken) => {
+  const key = c.name as PageParamsKeys;
+
+  if (!p[key]) {
+    p[key] = [];
+  }
+
+  p[key] = unique(p[key].concat(c.value));
+
+  return p;
+};
+
+export const toGiftCardsFetchingParams = (p: GiftCardsFetchingParams, c: UrlToken) => {
+  const key = c.name as GiftCardsParamKeys;
+
+  if (!p[key]) {
+    p[key] = [];
+  }
+
+  p[key] = unique(p[key].concat(c.value));
+
+  return p;
+};
+
+export const toCollectionFetchingParams = (p: CollectionFetchingParams, c: UrlToken) => {
+  const key = c.name as keyof CollectionFetchingParams;
+
+  if (!p[key]) {
+    p[key] = [];
+  }
+
+  p[key] = unique(p[key].concat(c.value));
+
+  return p;
+};
+
+export const toProductTypesFetchingParams = (p: ProductTypesFetchingParams, c: UrlToken) => {
+  const key = c.name as ProductTypesParamsKeys;
+
+  if (!p[key]) {
+    p[key] = [];
+  }
+
+  p[key] = unique(p[key].concat(c.value));
+
+  return p;
+};
+
+export type FetchingParamsType =
+  | OrderFetchingParams
+  | FetchingParams
+  | CollectionFetchingParams
+  | GiftCardsFetchingParams
+  | PageFetchingParams
+  | VoucherFetchingParams
+  | ProductTypesFetchingParams;
+
+export const getEmptyFetchingPrams = (type: FilterProviderType) => {
+  switch (type) {
+    case "product":
+      return emptyFetchingParams;
+    case "order":
+      return emptyOrderFetchingParams;
+    case "voucher":
+      return emptyVoucherFetchingParams;
+    case "page":
+      return emptyPageFetchingParams;
+    case "gift-cards":
+      return emptyGiftCardsFetchingParams;
+    case "collection":
+      return emptyCollectionFetchingParams;
+    case "product-types":
+      return emptyProductTypesFetchingParams;
+  }
 };
