@@ -8,6 +8,8 @@ import { InitialPageStateResponse } from "./API/initialState/page/InitialPageSta
 import { InitialPageAPIState } from "./API/initialState/page/useInitialPageState";
 import { InitialProductStateResponse } from "./API/initialState/product/InitialProductStateResponse";
 import { InitialProductAPIState } from "./API/initialState/product/useProductInitialAPIState";
+import { InitialProductTypesStateResponse } from "./API/initialState/productTypes/InitialProductTypesState";
+import { InitialProductTypesAPIState } from "./API/initialState/productTypes/useInitialProdutTypesState";
 import { InitialVouchersStateResponse } from "./API/initialState/vouchers/InitialVouchersState";
 import { InitialVoucherAPIState } from "./API/initialState/vouchers/useInitialVouchersState";
 
@@ -17,7 +19,8 @@ export type InitialResponseType =
   | InitialCollectionStateResponse
   | InitialVouchersStateResponse
   | InitialPageStateResponse
-  | InitialGiftCardsStateResponse;
+  | InitialGiftCardsStateResponse
+  | InitialProductTypesStateResponse;
 
 export type InitialAPIState =
   | InitialProductAPIState
@@ -25,7 +28,8 @@ export type InitialAPIState =
   | InitialVoucherAPIState
   | InitialPageAPIState
   | InitialGiftCardsAPIState
-  | InitialCollectionAPIState;
+  | InitialCollectionAPIState
+  | InitialProductTypesAPIState;
 
 export type FilterProviderType =
   | "product"
@@ -36,4 +40,5 @@ export type FilterProviderType =
   | "page"
   | "draft-order"
   | "gift-cards"
-  | "collection";
+  | "collection"
+  | "product-types";
