@@ -1,6 +1,6 @@
 {
   "name": "saleor-dashboard",
-  "version": "3.20.27",
+  "version": "3.20.28",
   "main": "src/index.tsx",
   "repository": {
     "type": "git",
@@ -234,7 +234,9 @@
       "^@material-ui/styles$": "<rootDir>/node_modules/@material-ui/styles",
       "^react$": "<rootDir>/node_modules/react",
       "^react-dom$": "<rootDir>/node_modules/react-dom",
-      "collectCoverageFrom": ["<rootDir>/src/**/*.{ts,tsx}"]
+      "collectCoverageFrom": [
+        "<rootDir>/src/**/*.{ts,tsx}"
+      ]
     }
   },
   "overrides": {

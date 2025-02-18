@@ -1,5 +1,32 @@
 # Changelog
 
+## 3.20.28
+
+### Patch Changes
+
+- 2ab3653: Product types list page uses now new filters. New filters are under feature flag and are enabled by default.
+- 6ece8a5: Test reports no longer mention users due to test tags matching GitHub usernames. Replace overlooked tag
+- 3fdd2b2: Staff members list page use now new filters. New filters are under feature flag and are enabled by default.
+- a04abc7: You can now save, update, and delete filter presets on a product types list
+- eb76fa3: Publish only the table with the summary on PRs, now includes a quick link to the job summary. Added ISO formatted date to the report for future flakiness measurement.
+- 402c88d: Modify menu tests to ensure the first item in the list is visible before proceeding.
+- 9078b4b: Gather all single feature flags for filters into one
+- 3b92997: Collection list filters have been ported to expression filtering. This means you can now use new filters in the Collection list.
+- 5640a9d: Test reports no longer mention users due to test tags matching GitHub usernames.
+- 5434419: You can now save, update and delete filter presets on the warehouse list page
+- b7bc6a9: Now, non-code related files are not included in codecov report.
+- 2d7fde8: Now tests results in ctrf scheme are attached to job and results are published in job summary and PR.
+- 50d6564: Now, the files for collecting coverage was explicitly set, this means we will include also files that are not covered.
+- 428bad7: Now the test coverage is being raported and tracked
+- f3e75bc: List of customers now uses conditional filters
+- 3862c59: Gift cards list page use now new filters. New filters are under feature flag and are enabled by default.
+- 24c613d: List of draft orders now use new filters
+- ceb1919: List of vouchers now use new filters
+- 3232550: Apply improvments for new filters so they looks align
+- 053be92: List of pages now uses conditional filters
+- 659a7c2: Attributes list page use now new filters. New filters are under feature flag and are enabled by default.
+- edf962c: Tests reports from artifacts will be protected by password
+
 ## 3.20.27
 
 ### Patch Changes
