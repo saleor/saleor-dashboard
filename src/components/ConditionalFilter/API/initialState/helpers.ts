@@ -271,7 +271,7 @@ export const createInitialCollectionState = (
     },
     {
       channel: [],
-      published: [],
+      published: createBooleanOptions(),
       metadata: [],
     },
   );
