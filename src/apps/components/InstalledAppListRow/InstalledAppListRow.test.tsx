@@ -2,12 +2,16 @@ import { AppListContext, AppListContextValues } from "@dashboard/apps/context";
 import { activeApp, appWithFailedEventDeliveries } from "@dashboard/apps/fixtures";
 import { InstalledApp } from "@dashboard/apps/types";
 import { getAppsConfig } from "@dashboard/config";
+import { useFlag } from "@dashboard/featureFlags";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 import React from "react";
 import { MemoryRouter as Router } from "react-router-dom";
 
 import InstalledAppListRow from "./InstalledAppListRow";
+
+jest.mock("@dashboard/featureFlags");
+(useFlag as jest.Mock).mockReturnValue({ enabled: true });
 
 const Component = ({ data, context }: { data: InstalledApp; context: AppListContextValues }) => (
   <Wrapper>

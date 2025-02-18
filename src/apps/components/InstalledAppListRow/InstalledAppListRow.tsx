@@ -17,7 +17,7 @@ import { AppManifestUrl } from "./AppManifestUrl";
 import { messages } from "./messages";
 
 export const InstalledAppListRow: React.FC<InstalledApp> = props => {
-  const { enabled: appAlertsEnabled } = useFlag("app_alerts");
+  const { enabled: appAlertsEnabled } = useFlag("app_alerts"); // Note: when removing clean up tests
   const { app, isExternal, logo } = props;
   const intl = useIntl();
   const location = useLocation();
