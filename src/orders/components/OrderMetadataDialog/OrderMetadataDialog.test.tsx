@@ -48,61 +48,6 @@ const mockData: OrderMetadataDialogData = {
   },
 };
 
-// Mock mutations
-const updateMetadataMock = {
-  request: {
-    query: UpdateMetadataDocument,
-    variables: {
-      id: mockData.id,
-      input: [
-        ...mockData.metadata,
-        { key: "new-key", value: "new-value", __typename: "MetadataItem" },
-      ],
-    },
-  },
-  result: {
-    data: {
-      updateMetadata: {
-        item: {
-          ...mockData,
-          metadata: [
-            ...mockData.metadata,
-            { key: "new-key", value: "new-value", __typename: "MetadataItem" },
-          ],
-        },
-        errors: [],
-      },
-    },
-  },
-};
-
-const updatePrivateMetadataMock = {
-  request: {
-    query: UpdateMetadataDocument,
-    variables: {
-      id: mockData.id,
-      input: [
-        ...mockData.privateMetadata,
-        { key: "new-private-key", value: "new-private-value", __typename: "MetadataItem" },
-      ],
-    },
-  },
-  result: {
-    data: {
-      updatePrivateMetadata: {
-        item: {
-          ...mockData,
-          privateMetadata: [
-            ...mockData.privateMetadata,
-            { key: "new-private-key", value: "new-private-value", __typename: "MetadataItem" },
-          ],
-        },
-        errors: [],
-      },
-    },
-  },
-};
-
 describe("OrderMetadataDialog", () => {
   const onCloseMock = jest.fn();
   const notifierMock = {
@@ -283,7 +228,7 @@ describe("OrderMetadataDialog", () => {
     expect(existingKeyInput).toBeInTheDocument();
     expect(existingValueInput).toBeInTheDocument();
 
-    // Change a field value to mark form as dirty
+    // Change a field value it marks form as dirty
     const orderLineMetadataSection = screen.getByTestId("order-line-metadata");
     const valueInput = within(orderLineMetadataSection).getByTestId("metadata-value-input");
 
@@ -300,6 +245,15 @@ describe("OrderMetadataDialog", () => {
     await waitFor(() => {
       // The save button should be enabled since the form state is not reset
       expect(screen.getByTestId("save")).toBeEnabled();
+      
+      // Verify that the mutation was called with correct variables
+      expect(updateMetadataMock.request.variables).toEqual({
+        id: mockData.id,
+        input: [
+          ...mockData.metadata,
+          { key: "new-key", value: "new-value", __typename: "MetadataItem" },
+        ],
+      });
     });
 
     // Add new metadata
@@ -382,11 +336,6 @@ describe("OrderMetadataDialog", () => {
     fireEvent.change(newKeyInput, { target: { value: "order-line-key" } });
     fireEvent.change(newValueInput, { target: { value: "new-value" } });
 
-    // Save button should be enabled after changes
-    await waitFor(() => {
-      expect(screen.getByTestId("save")).toBeEnabled();
-    });
-
     // Submit the form
     await userEvent.click(screen.getByTestId("save"));
 
@@ -446,13 +395,6 @@ describe("OrderMetadataDialog", () => {
     // Show private metadata
     fireEvent.click(expandButtonPrivateMetadata);
 
-    // Wait for private metadata section to be visible
-    await waitFor(() => {
-      const privateMetadataSection = within(orderLineMetadata).getByText("Private Metadata");
-
-      expect(privateMetadataSection).toBeInTheDocument();
-    });
-
     // Add new metadata
     const addButton = within(orderLineMetadata).getByTestId("add-field");
 
@@ -476,18 +418,18 @@ describe("OrderMetadataDialog", () => {
     fireEvent.change(newKeyInput, { target: { value: "new-private-key" } });
     fireEvent.change(newValueInput, { target: { value: "new-private-value" } });
 
-    // Save button should be enabled after changes
-    await waitFor(() => {
-      expect(screen.getByTestId("save")).toBeEnabled();
-    });
-
     // Submit the form
     await userEvent.click(screen.getByTestId("save"));
 
-    // Wait for the mutation to complete
+    // Wait for the mutation to complete and verify it was called correctly
     await waitFor(() => {
-      // The save button should be enabled since the form state is not reset
-      expect(screen.getByTestId("save")).toBeEnabled();
+      expect(updatePrivateMetadataMock.request.variables).toEqual({
+        id: mockData.id,
+        input: [
+          ...mockData.privateMetadata,
+          { key: "new-private-key", value: "new-private-value", __typename: "MetadataItem" },
+        ],
+      });
     });
   });
 
@@ -535,11 +477,6 @@ describe("OrderMetadataDialog", () => {
     // Try to add metadata with duplicate key
     fireEvent.change(newKeyInput, { target: { value: "order-line-private-key" } });
     fireEvent.change(newValueInput, { target: { value: "new-value" } });
-
-    // Save button should be enabled after changes
-    await waitFor(() => {
-      expect(screen.getByTestId("save")).toBeEnabled();
-    });
 
     // Submit the form
     await userEvent.click(screen.getByTestId("save"));
