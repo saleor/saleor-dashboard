@@ -12,6 +12,7 @@ import {
   GlobalIdFilterInput,
   OrderDraftFilterInput,
   PageFilterInput,
+  ProductTypeConfigurable,
   ProductTypeFilterInput,
   ProductWhereInput,
   PromotionWhereInput,
@@ -386,6 +387,13 @@ export const createProductTypesQueryVariables = (
 
     if (c.value.type === "typeOfProduct") {
       p["productType"] = value;
+
+      return p;
+    }
+
+    if (c.value.type === "configurable") {
+      p["configurable"] =
+        value === true ? ProductTypeConfigurable.CONFIGURABLE : ProductTypeConfigurable.SIMPLE;
 
       return p;
     }
