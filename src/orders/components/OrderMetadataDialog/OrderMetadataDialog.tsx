@@ -17,6 +17,8 @@ import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
+import { TEST_ID_ORDER_LINE_METADATA, TEST_ID_PRODUCT_VARIANT_METADATA } from "./test-ids";
+
 type OrderLineMetadata = Pick<OrderLineWithMetadataFragment, "metadata" | "privateMetadata" | "id">;
 type ProductVariantMetadata = Pick<
   OrderLineWithMetadataFragment["variant"],
@@ -78,7 +80,7 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
         <Box as="form" onSubmit={handleSubmit(onSubmit)}>
           <FormProvider {...formMethods}>
             <Box display="flex" flexDirection="column" gap={5}>
-              <Box display="flex" flexDirection="column">
+              <Box display="flex" flexDirection="column" data-test-id={TEST_ID_ORDER_LINE_METADATA}>
                 <Box display="flex" flexDirection="column" marginLeft={6} gap={2}>
                   <Text as="h2" size={5} fontWeight="bold">
                     <FormattedMessage
@@ -113,7 +115,11 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
 
               <Divider />
 
-              <Box display="flex" flexDirection="column">
+              <Box
+                display="flex"
+                flexDirection="column"
+                data-test-id={TEST_ID_PRODUCT_VARIANT_METADATA}
+              >
                 <Box display="flex" flexDirection="column" marginLeft={6} gap={2}>
                   <Text as="h2" size={5} fontWeight="bold">
                     <FormattedMessage
