@@ -8,7 +8,6 @@ import {
 } from "@dashboard/graphql";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
-// import { ORDER_LINE_METADATA_UPDATE_FORM_ID } from "@dashboard/orders/views/OrderDetails/consts";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { flattenErrors } from "@dashboard/utils/hook-form/errors";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
@@ -59,8 +58,6 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
 
   const allFormErrors = flattenErrors(formState.errors);
 
-  // TODO: Exit confirmation?
-
   return (
     <DashboardModal open={open} onChange={onClose}>
       <DashboardModal.Content size="md">
@@ -71,11 +68,7 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
         <Box as="form" onSubmit={handleSubmit(onSubmit)}>
           <FormProvider {...formMethods}>
             <Box display="flex" flexDirection="column" gap={5}>
-              <Box
-                display="flex"
-                flexDirection="column"
-                // __marginBottom="calc(var(--mu-spacing-10) * -1)" // remove Metadata padding
-              >
+              <Box display="flex" flexDirection="column">
                 <Box display="flex" flexDirection="column" marginLeft={6} gap={2}>
                   <Text as="h2" size={5} fontWeight="bold">
                     <FormattedMessage
