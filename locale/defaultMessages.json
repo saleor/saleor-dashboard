@@ -800,10 +800,6 @@
     "context": "btn label",
     "string": "Go to GraphQL Playground"
   },
-  "2yU+q9": {
-    "context": "tab name",
-    "string": "All Warehouses"
-  },
   "2yV+s8": {
     "context": "order history message",
     "string": "Payment was captured"
@@ -6410,9 +6406,6 @@
     "context": "Webhook details events",
     "string": "Events"
   },
-  "caMMWN": {
-    "string": "Search Warehouse"
-  },
   "caqRmN": {
     "context": "header",
     "string": "Create Page Type"
@@ -6657,6 +6650,10 @@
   "eWrHmu": {
     "context": "onboarding step title",
     "string": "View webhooks functionalities"
+  },
+  "eaoi2W": {
+    "context": "tab name",
+    "string": "All warehouses"
   },
   "egBBQ/": {
     "context": "all captured amount from transactions in order",
