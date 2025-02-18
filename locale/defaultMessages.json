@@ -4755,10 +4755,6 @@
     "context": "header",
     "string": "Translation Attribute \"{attribute}\" - {languageCode}"
   },
-  "SPF/Zn": {
-    "context": "staff members status deactivated",
-    "string": "Deactivated"
-  },
   "SPp3cx": {
     "context": "alert message",
     "string": "Orders cannot be placed in an inactive channel."
@@ -8174,6 +8170,10 @@
   },
   "oYGfnY": {
     "string": "ZIP / Postal code"
+  },
+  "oYV+Ru": {
+    "context": "staff members status deactivated",
+    "string": "Inactive"
   },
   "oboeOT": {
     "string": "Add following permissions"
