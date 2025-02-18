@@ -316,7 +316,7 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
   },
   {
     value: "created",
-    label: "Created",
+    label: "Creation date",
     type: "created",
     slug: "created",
   },
