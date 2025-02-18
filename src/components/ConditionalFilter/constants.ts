@@ -518,7 +518,7 @@ export const STATIC_CUSTOMER_OPTIONS: LeftOperand[] = [
 export const STATIC_PRODUCT_TYPES_OPTIONS: LeftOperand[] = [
   {
     value: "configurable",
-    label: "Is configurable",
+    label: "Has variant attributes",
     type: "configurable",
     slug: "configurable",
   },
