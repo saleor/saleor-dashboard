@@ -1682,6 +1682,10 @@
   "9FGTOt": {
     "string": "Allow access to orders of all channels"
   },
+  "9IrVVZ": {
+    "context": "attribute can be searched in storefront",
+    "string": "Filterable in storefront"
+  },
   "9MGrEp": {
     "string": "Is available"
   },
@@ -4552,10 +4556,6 @@
     "context": "info text",
     "string": "Set up an end date of preorder. When end date will be reached product will be automatically taken from preorder to standard selling"
   },
-  "RH+aOF": {
-    "context": "use attribute in filtering",
-    "string": "Use in Filtering"
-  },
   "RK6l3Z": {
     "context": "radio button label",
     "string": "Refund with manual amount"
@@ -4777,6 +4777,10 @@
   "SUbxSK": {
     "context": "product weight",
     "string": "Weight"
+  },
+  "SV0FRm": {
+    "context": "attribute is filterable in storefront",
+    "string": "Filterable in storefront"
   },
   "SZH0fw": {
     "context": "set variant as default, button",
@@ -5334,6 +5338,10 @@
   "W6nwjo": {
     "string": "Draft"
   },
+  "W75xMz": {
+    "context": "attribute is visible in storefront",
+    "string": "Visible in storefront"
+  },
   "W8i2Ez": {
     "context": "product field",
     "string": "Name"
@@ -5696,10 +5704,6 @@
   "Y299ST": {
     "context": "table column header",
     "string": "Price"
-  },
-  "Y3pCRX": {
-    "context": "attribute can be searched in storefront",
-    "string": "Use as filter"
   },
   "Y3zr/B": {
     "context": "voucher application, switch button",
@@ -6229,6 +6233,10 @@
     "context": "amount filter label",
     "string": "Amount"
   },
+  "bWvn/Y": {
+    "context": "attribute can be searched in dashboard",
+    "string": "Filterable in dashboard"
+  },
   "bZenNC": {
     "string": "Description (optional)"
   },
@@ -6581,10 +6589,6 @@
   },
   "e0lt+l": {
     "string": "See documentation"
-  },
-  "e1vU/4": {
-    "context": "attribute is filterable in storefront",
-    "string": "Use as filter"
   },
   "e4UtKH": {
     "context": "Transaction event status - failure",
@@ -7264,6 +7268,10 @@
     "context": "header",
     "string": "App Information"
   },
+  "inWs4U": {
+    "context": "attribute visibility in storefront",
+    "string": "Visible in storefront"
+  },
   "ipbT0Q": {
     "context": "btn label",
     "string": "Mark all as done"
@@ -7316,6 +7324,10 @@
   "j3yE7I": {
     "context": "order history message",
     "string": "Shipping tracking number was sent to customer"
+  },
+  "j5hGyJ": {
+    "context": "attribute is filterable in dashboard",
+    "string": "Filterable in dashboard"
   },
   "j8PV7E": {
     "context": "attribute values",
@@ -7459,10 +7471,6 @@
   "k62BKw": {
     "context": "select label",
     "string": "Unset"
-  },
-  "k6WDZl": {
-    "context": "attribute is visible",
-    "string": "Visible"
   },
   "k6sfZr": {
     "context": "tooltip content when product is in preorder",
@@ -9432,10 +9440,6 @@
     "context": "ProductTypeDeleteWarningDialog title",
     "string": "Delete product {selectedTypesCount,plural,one{type} other{types}}"
   },
-  "x8V/xS": {
-    "context": "attribute visibility in storefront",
-    "string": "Public"
-  },
   "xAHOGV": {
     "context": "dialog header",
     "string": "Assign Variant"
@@ -9597,10 +9601,6 @@
   "yJynYK": {
     "context": "discount value",
     "string": "discount"
-  },
-  "yKuba7": {
-    "context": "attribute can be searched in dashboard",
-    "string": "Searchable"
   },
   "yLfbSh": {
     "context": "support label",

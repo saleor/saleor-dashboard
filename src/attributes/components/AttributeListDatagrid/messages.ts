@@ -11,18 +11,18 @@ export const columnsMessages = defineMessages({
     description: "attribute's label'",
   },
   visible: {
-    id: "k6WDZl",
-    defaultMessage: "Visible",
-    description: "attribute is visible",
+    id: "W75xMz",
+    defaultMessage: "Visible in storefront",
+    description: "attribute is visible in storefront",
   },
   searchable: {
-    id: "yKuba7",
-    defaultMessage: "Searchable",
+    id: "bWvn/Y",
+    defaultMessage: "Filterable in dashboard",
     description: "attribute can be searched in dashboard",
   },
   useInFacetedSearch: {
-    defaultMessage: "Use as filter",
-    id: "Y3pCRX",
+    defaultMessage: "Filterable in storefront",
+    id: "9IrVVZ",
     description: "attribute can be searched in storefront",
   },
 });

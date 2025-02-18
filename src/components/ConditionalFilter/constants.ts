@@ -560,13 +560,13 @@ export const STATIC_ATTRIBUTES_OPTIONS: LeftOperand[] = [
   },
   {
     value: "valueRequired",
-    label: "Value Required",
+    label: "Is required",
     type: "valueRequired",
     slug: "valueRequired",
   },
   {
     value: "visibleInStorefront",
-    label: "Visible on Product Page in Storefront",
+    label: "Visible in Storefront",
     type: "visibleInStorefront",
     slug: "visibleInStorefront",
   },
