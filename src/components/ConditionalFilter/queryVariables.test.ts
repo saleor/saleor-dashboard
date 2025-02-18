@@ -1,13 +1,18 @@
+import { ProductTypeConfigurable, ProductTypeEnum } from "@dashboard/graphql";
+
 import { Condition, FilterContainer, FilterElement } from "./FilterElement";
 import { ConditionOptions } from "./FilterElement/ConditionOptions";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
 import { ExpressionValue } from "./FilterElement/FilterElement";
 import {
+  creatAttributesQueryVariables,
   creatDraftOrderQueryVariables,
   createCustomerQueryVariables,
   createGiftCardQueryVariables,
   createPageQueryVariables,
   createProductQueryVariables,
+  createProductTypesQueryVariables,
+  createStaffMembersQueryVariables,
   creatVoucherQueryVariables,
   mapStaticQueryPartToLegacyVariables,
 } from "./queryVariables";
@@ -520,6 +525,178 @@ describe("ConditionalFilter / queryVariables / createCustomerQueryVariables", ()
     };
     // Act
     const result = createCustomerQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+});
+
+describe("ConditionalFilter / queryVariables / createProductTypesQueryVariables", () => {
+  it("should return empty variables for empty filters", () => {
+    // Arrange
+    const filters: FilterContainer = [];
+    const expectedOutput = {};
+    // Act
+    const result = createProductTypesQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+
+  it("should create variables with selected filters", () => {
+    // Arrange
+    const filters: FilterContainer = [
+      new FilterElement(
+        new ExpressionValue("typeOfProduct", "Product type", "typeOfProduct"),
+        new Condition(
+          ConditionOptions.fromStaticElementName("typeOfProduct"),
+          new ConditionSelected(
+            ProductTypeEnum.DIGITAL,
+            { type: "select", label: "is", value: "input-1" },
+            [],
+            false,
+          ),
+          false,
+        ),
+        false,
+      ),
+      "AND",
+      new FilterElement(
+        new ExpressionValue("configurable", "Configurable", "configurable"),
+        new Condition(
+          ConditionOptions.fromStaticElementName("configurable"),
+          new ConditionSelected(
+            ProductTypeConfigurable.SIMPLE,
+            { type: "select", label: "is", value: "input-1" },
+            [],
+            false,
+          ),
+          false,
+        ),
+        false,
+      ),
+    ];
+    const expectedOutput = {
+      productType: "DIGITAL",
+      configurable: "SIMPLE",
+    };
+    // Act
+    const result = createProductTypesQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+});
+
+describe("ConditionalFilter / queryVariables / createStaffMembersQueryVariables", () => {
+  it("should return empty variables for empty filters", () => {
+    // Arrange
+    const filters: FilterContainer = [];
+    const expectedOutput = {};
+    // Act
+    const result = createStaffMembersQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+
+  it("should create variables with selected filters", () => {
+    // Arrange
+    const filters: FilterContainer = [
+      new FilterElement(
+        new ExpressionValue("staffMemberStatus", "Status", "staffMemberStatus"),
+        new Condition(
+          ConditionOptions.fromStaticElementName("staffMemberStatus"),
+          new ConditionSelected(
+            "active",
+            { type: "select", label: "is", value: "input-1" },
+            [],
+            false,
+          ),
+          false,
+        ),
+        false,
+      ),
+    ];
+    const expectedOutput = {
+      status: "active",
+    };
+    // Act
+    const result = createStaffMembersQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+});
+
+describe("ConditionalFilter / queryVariables / creatAttributesQueryVariables", () => {
+  it("should return empty variables for empty filters", () => {
+    // Arrange
+    const filters: FilterContainer = [];
+    const expectedOutput = {};
+    // Act
+    const result = creatAttributesQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+
+  it("should create variables with selected filters", () => {
+    // Arrange
+    const channelFilterElemen = new FilterElement(
+      new ExpressionValue("channel", "Channel", "channel"),
+      new Condition(
+        ConditionOptions.fromStaticElementName("channel"),
+        new ConditionSelected(
+          "default-channel",
+          { type: "select", label: "is", value: "input-5" },
+          [],
+          false,
+        ),
+        false,
+      ),
+      false,
+    );
+
+    const typeFilterElement = new FilterElement(
+      new ExpressionValue("attributeType", "Attribute type", "attributeType"),
+      new Condition(
+        ConditionOptions.fromStaticElementName("attributeType"),
+        new ConditionSelected(
+          "PRODUCT_TYPE",
+          { type: "select", label: "is", value: "input-1" },
+          [],
+          false,
+        ),
+        false,
+      ),
+      false,
+    );
+
+    const isFilterableInDashboardFilterElement = new FilterElement(
+      new ExpressionValue("filterableInDashboard", "Filterable", "filterableInDashboard"),
+      new Condition(
+        ConditionOptions.fromStaticElementName("filterableInDashboard"),
+        new ConditionSelected("true", { type: "select", label: "is", value: "input-1" }, [], false),
+        false,
+      ),
+      false,
+    );
+
+    const filters: FilterContainer = [
+      channelFilterElemen,
+      "AND",
+      typeFilterElement,
+      "AND",
+      isFilterableInDashboardFilterElement,
+    ];
+    const expectedOutput = {
+      channel: "default-channel",
+      type: "PRODUCT_TYPE",
+      filterableInDashboard: true,
+    };
+    // Act
+    const result = creatAttributesQueryVariables(filters);
 
     // Assert
     expect(result).toEqual(expectedOutput);

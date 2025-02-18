@@ -48,7 +48,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
   const notify = useNotifier();
   const intl = useIntl();
   const { updateListSettings, settings } = useListSettings(ListViews.PAGES_LIST);
-  const { enabled: isPageFiltersEnabled } = useFlag("pages_filters");
+  const { enabled: isPageFiltersEnabled } = useFlag("new_filters");
   const { valueProvider } = useConditionalFilterContext();
   const filter = createPageQueryVariables(valueProvider.value);
 

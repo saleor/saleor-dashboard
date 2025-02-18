@@ -1,5 +1,7 @@
 import {
+  AttributeFilterInput,
   AttributeInput,
+  CollectionFilterInput,
   CustomerFilterInput,
   DateRangeInput,
   DateTimeFilterInput,
@@ -9,8 +11,10 @@ import {
   GlobalIdFilterInput,
   OrderDraftFilterInput,
   PageFilterInput,
+  ProductTypeFilterInput,
   ProductWhereInput,
   PromotionWhereInput,
+  StaffUserInput,
   VoucherFilterInput,
 } from "@dashboard/graphql";
 
@@ -339,4 +343,86 @@ export const createCustomerQueryVariables = (value: FilterContainer): CustomerFi
 
     return p;
   }, {} as CustomerFilterInput);
+};
+
+type CollectionQueryVars = CollectionFilterInput & { channel?: { eq: string } };
+
+export const createCollectionsQueryVariables = (value: FilterContainer): CollectionQueryVars => {
+  return value.reduce((p, c) => {
+    if (typeof c === "string" || Array.isArray(c)) return p;
+
+    if (c.value.type === "metadata") {
+      p.metadata = p.metadata || [];
+
+      const [key, value] = c.condition.selected.value as [string, string];
+
+      p.metadata.push({ key, value });
+
+      return p;
+    }
+
+    p[c.value.value as keyof CollectionFilterInput] = mapStaticQueryPartToLegacyVariables(
+      createStaticQueryPart(c.condition.selected),
+    );
+
+    return p;
+  }, {} as CollectionQueryVars);
+};
+
+export const createProductTypesQueryVariables = (
+  value: FilterContainer,
+): ProductTypeFilterInput => {
+  return value.reduce((p, c) => {
+    if (typeof c === "string" || Array.isArray(c)) return p;
+
+    const value = mapStaticQueryPartToLegacyVariables(createStaticQueryPart(c.condition.selected));
+
+    if (c.value.type === "typeOfProduct") {
+      p["productType"] = value;
+
+      return p;
+    }
+
+    (p[c.value.value as keyof ProductTypeFilterInput] as ProductTypeFilterInput) = value;
+
+    return p;
+  }, {} as ProductTypeFilterInput);
+};
+
+export const createStaffMembersQueryVariables = (value: FilterContainer): StaffUserInput => {
+  return value.reduce((p, c) => {
+    if (typeof c === "string" || Array.isArray(c)) return p;
+
+    if (c.value.type === "staffMemberStatus") {
+      p["status"] = mapStaticQueryPartToLegacyVariables(
+        createStaticQueryPart(c.condition.selected),
+      );
+
+      return p;
+    }
+
+    p[c.value.value as keyof StaffUserInput] = mapStaticQueryPartToLegacyVariables(
+      createStaticQueryPart(c.condition.selected),
+    );
+
+    return p;
+  }, {} as StaffUserInput);
+};
+
+export const creatAttributesQueryVariables = (value: FilterContainer): AttributeFilterInput => {
+  return value.reduce((p, c) => {
+    if (typeof c === "string" || Array.isArray(c)) return p;
+
+    if (c.value.type === "attributeType") {
+      p["type"] = mapStaticQueryPartToLegacyVariables(createStaticQueryPart(c.condition.selected));
+
+      return p;
+    }
+
+    (p[c.value.value as keyof AttributeFilterInput] as any) = mapStaticQueryPartToLegacyVariables(
+      createStaticQueryPart(c.condition.selected),
+    );
+
+    return p;
+  }, {} as AttributeFilterInput);
 };

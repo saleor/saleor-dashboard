@@ -582,10 +582,6 @@
     "context": "expiry date section header",
     "string": "Expiry date"
   },
-  "1KSqnn": {
-    "context": "tab name",
-    "string": "All Product Types"
-  },
   "1LBYpE": {
     "context": "dialog header",
     "string": "Delete Menus"
@@ -803,10 +799,6 @@
   "2xkzcr": {
     "context": "btn label",
     "string": "Go to GraphQL Playground"
-  },
-  "2yU+q9": {
-    "context": "tab name",
-    "string": "All Warehouses"
   },
   "2yV+s8": {
     "context": "order history message",
@@ -3746,6 +3738,10 @@
   "M59JhX": {
     "string": "Manual"
   },
+  "M61TN/": {
+    "context": "product type shippable",
+    "string": "Shippable"
+  },
   "M6mWHL": {
     "context": "tooltip helper text",
     "string": "You do not have permissions to create a manual refund."
@@ -4014,6 +4010,10 @@
   "No4lyL": {
     "context": "header field name, header",
     "string": "Name"
+  },
+  "Nqh0na": {
+    "context": "Product types search input placeholder",
+    "string": "Search product types..."
   },
   "NqxvFh": {
     "context": "navigator placeholder",
@@ -4751,6 +4751,10 @@
     "context": "header",
     "string": "Translation Attribute \"{attribute}\" - {languageCode}"
   },
+  "SPF/Zn": {
+    "context": "staff members status deactivated",
+    "string": "Deactivated"
+  },
   "SPp3cx": {
     "context": "alert message",
     "string": "Orders cannot be placed in an inactive channel."
@@ -4780,6 +4784,10 @@
   },
   "SceSNp": {
     "string": "Remove following permissions:"
+  },
+  "SgFE10": {
+    "context": "product type digital",
+    "string": "Digital"
   },
   "Sjd7wm": {
     "context": "product filter label",
@@ -5058,6 +5066,10 @@
   "UVDfTs": {
     "context": "discount type shipping",
     "string": "Shipping"
+  },
+  "UYKEsx": {
+    "context": "collection filter published",
+    "string": "Published"
   },
   "Uf3oHA": {
     "context": "add new menu item",
@@ -6390,9 +6402,6 @@
     "context": "Webhook details events",
     "string": "Events"
   },
-  "caMMWN": {
-    "string": "Search Warehouse"
-  },
   "caqRmN": {
     "context": "header",
     "string": "Create Page Type"
@@ -6641,6 +6650,10 @@
   "eWrHmu": {
     "context": "onboarding step title",
     "string": "View webhooks functionalities"
+  },
+  "eaoi2W": {
+    "context": "tab name",
+    "string": "All warehouses"
   },
   "egBBQ/": {
     "context": "all captured amount from transactions in order",
@@ -7267,6 +7280,10 @@
   "ivJ1qt": {
     "string": "Manage your permission groups and their permissions"
   },
+  "ivmwpV": {
+    "context": "tab name",
+    "string": "All product types"
+  },
   "ixjvkM": {
     "string": "We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
   },
@@ -7406,6 +7423,10 @@
   "jz2SlO": {
     "context": "refunded fulfillment, section header",
     "string": "Replaced"
+  },
+  "jzu97k": {
+    "context": "attribute product type",
+    "string": "Product type"
   },
   "k+HcTv": {
     "context": "product type",
@@ -7938,6 +7959,10 @@
     "context": "expiration date label",
     "string": "Expiration date"
   },
+  "nG1+Cz": {
+    "context": "staff members status active",
+    "string": "Active"
+  },
   "nHmugP": {
     "context": "order history message",
     "string": "Fulfilled {quantity} items"
@@ -8407,6 +8432,10 @@
   "qSCmIG": {
     "string": "lower than {value}"
   },
+  "qT0qr/": {
+    "context": "attribute page type",
+    "string": "Page type"
+  },
   "qT6YYk": {
     "context": "order line total price",
     "string": "Total"
@@ -8568,9 +8597,6 @@
   "rl1t+o": {
     "context": "expires in label",
     "string": "Expires in"
-  },
-  "rpFdD1": {
-    "string": "Search Product Type"
   },
   "rqiCWU": {
     "string": "Saved changes"
@@ -8984,6 +9010,10 @@
   },
   "ufD5Jr": {
     "string": "Content type"
+  },
+  "ufahVh": {
+    "context": "collection filter hidden",
+    "string": "Hidden"
   },
   "ufmuTp": {
     "context": "button",
