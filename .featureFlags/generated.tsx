@@ -1,47 +1,18 @@
 // @ts-nocheck
 
-import R72419 from "./images/app-alerts.jpg"
-import M15108 from "./images/attributes-filters.png"
-import N45760 from "./images/collection-filters.jpg"
-import W17316 from "./images/customers-filters.png"
-import J08003 from "./images/discounts-list.png"
-import O58901 from "./images/draft-orders-filters.png"
-import R03646 from "./images/gift-cards-filters.png"
-import B43610 from "./images/improved_refunds.png"
-import Q33597 from "./images/page-filters.png"
-import J35283 from "./images/product-types-filters.png"
-import D66886 from "./images/staff-members-filters.png"
-import D68101 from "./images/vouchers-filters.png"
+import D16787 from "./images/app-alerts.jpg"
+import F65169 from "./images/discounts-list.png"
+import K97397 from "./images/improved_refunds.png"
 
-const app_alerts = () => (<><p><img src={R72419} alt="new filters"/>
+const app_alerts = () => (<><p><img src={D16787} alt="new filters"/>
 Experience new notifications displaying alerts for apps in the Dashboard. 
 Get meaningful information when Saleor detects issues with an app.</p>
 </>)
-const attributes_filters = () => (<><p><img src={M15108} alt="new filters"/>
-Experience the new look and enhanced abilities of new fitering mechanism.
-Easily combine any criteria you want, and quickly browse their values.</p>
-</>)
-const collection_filters = () => (<><p><img src={N45760} alt="new filters"/>
-Experience the new look and enhanced abilities of new filtering mechanism.
-Easily combine any criteria you want, and quickly browse their values.</p>
-</>)
-const customers_filters = () => (<><p><img src={W17316} alt="new filters"/>
-Experience the new look and enhanced abilities of new fitering mechanism.
-Easily combine any criteria you want, and quickly browse their values.</p>
-</>)
-const discounts_rules = () => (<><p><img src={J08003} alt="Discount rules"/></p>
+const discounts_rules = () => (<><p><img src={F65169} alt="Discount rules"/></p>
 <p>Apply the new discounts rules to narrow your promotions audience.
 Set up conditions and channels that must be fulfilled to apply defined reward.</p>
 </>)
-const draft_orders_filters = () => (<><p><img src={O58901} alt="new filters"/>
-Experience the new look and enhanced abilities of new fitering mechanism.
-Easily combine any criteria you want, and quickly browse their values.</p>
-</>)
-const gift_cards_filters = () => (<><p><img src={R03646} alt="new filters"/>
-Experience the new look and enhanced abilities of new fitering mechanism.
-Easily combine any criteria you want, and quickly browse their values.</p>
-</>)
-const improved_refunds = () => (<><p><img src={B43610} alt="Improved refunds"/></p>
+const improved_refunds = () => (<><p><img src={K97397} alt="Improved refunds"/></p>
 <h3 id="enable-the-enhanced-refund-feature-to-streamline-your-refund-process">Enable the enhanced refund feature to streamline your refund process:</h3>
 <ul>
 <li><p>• Choose between automatic calculations based on selected items or enter refund amounts directly for overcharges and custom adjustments.</p>
@@ -51,21 +22,19 @@ const improved_refunds = () => (<><p><img src={B43610} alt="Improved refunds"/><
 </ul>
 
 </>)
-const pages_filters = () => (<><p><img src={Q33597} alt="new filters"/>
-Experience the new look and enhanced abilities of new fitering mechanism.
-Easily combine any criteria you want, and quickly browse their values.</p>
-</>)
-const product_types_filters = () => (<><p><img src={J35283} alt="new filters"/>
-Experience the new look and enhanced abilities of new fitering mechanism.
-Easily combine any criteria you want, and quickly browse their values.</p>
-</>)
-const staff_members_filters = () => (<><p><img src={D66886} alt="new filters"/>
-Experience the new look and enhanced abilities of new filtering mechanism.
-Easily combine any criteria you want, and quickly browse their values.</p>
-</>)
-const vouchers_filters = () => (<><p><img src={D68101} alt="new filters"/>
-Experience the new look and enhanced abilities of new fitering mechanism.
-Easily combine any criteria you want, and quickly browse their values.</p>
+const new_filters = () => (<><p>Experience the new look and enhanced abilities of new filtering mechanism.
+Combine any criteria you want, and quickly browse their values.
+New filters have been added to the following pages:</p>
+<ul>
+<li>Collection list</li>
+<li>Customers list</li>
+<li>Vouchers list</li>
+<li>Draft orders list</li>
+<li>Gift cards list</li>
+<li>Content list</li>
+<li>Product types list</li>
+<li>Staff members list</li>
+</ul>
 </>)
 
 export const AVAILABLE_FLAGS = [{
@@ -78,54 +47,9 @@ export const AVAILABLE_FLAGS = [{
     payload: "default",
   }
 },{
-  name: "attributes_filters",
-  displayName: "Attributes filtering",
-  component: attributes_filters,
-  visible: true,
-  content: {
-    enabled: true,
-    payload: "default",
-  }
-},{
-  name: "collection_filters",
-  displayName: "Collection filtering",
-  component: collection_filters,
-  visible: true,
-  content: {
-    enabled: true,
-    payload: "default",
-  }
-},{
-  name: "customers_filters",
-  displayName: "Customers filtering",
-  component: customers_filters,
-  visible: true,
-  content: {
-    enabled: true,
-    payload: "default",
-  }
-},{
   name: "discounts_rules",
   displayName: "Discounts rules",
   component: discounts_rules,
-  visible: true,
-  content: {
-    enabled: true,
-    payload: "default",
-  }
-},{
-  name: "draft_orders_filters",
-  displayName: "Draft orders filtering",
-  component: draft_orders_filters,
-  visible: true,
-  content: {
-    enabled: true,
-    payload: "default",
-  }
-},{
-  name: "gift_cards_filters",
-  displayName: "Gift cards filtering",
-  component: gift_cards_filters,
   visible: true,
   content: {
     enabled: true,
@@ -141,36 +65,9 @@ export const AVAILABLE_FLAGS = [{
     payload: "default",
   }
 },{
-  name: "pages_filters",
-  displayName: "Page filtering",
-  component: pages_filters,
-  visible: true,
-  content: {
-    enabled: true,
-    payload: "default",
-  }
-},{
-  name: "product_types_filters",
-  displayName: "Product types filtering",
-  component: product_types_filters,
-  visible: true,
-  content: {
-    enabled: true,
-    payload: "default",
-  }
-},{
-  name: "staff_members_filters",
-  displayName: "Staff members filtering",
-  component: staff_members_filters,
-  visible: true,
-  content: {
-    enabled: true,
-    payload: "default",
-  }
-},{
-  name: "vouchers_filters",
-  displayName: "Vouchers filtering",
-  component: vouchers_filters,
+  name: "new_filters",
+  displayName: "New filtering",
+  component: new_filters,
   visible: true,
   content: {
     enabled: true,

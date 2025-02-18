@@ -3,6 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
+import { configurationMenuUrl } from "@dashboard/configuration";
 import { useFlag } from "@dashboard/featureFlags";
 import { ProductTypeFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -47,13 +48,14 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
   const navigate = useNavigator();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const filterStructure = createFilterStructure(intl, filterOpts);
-  const { enabled: isProductTypesFilterEnabled } = useFlag("product_types_filters");
+  const { enabled: isProductTypesFilterEnabled } = useFlag("new_filters");
 
   return (
     <ListPageLayout>
       <TopNav
         withoutBorder
         isAlignToRight={false}
+        href={configurationMenuUrl}
         title={intl.formatMessage(sectionNames.productTypes)}
       >
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
