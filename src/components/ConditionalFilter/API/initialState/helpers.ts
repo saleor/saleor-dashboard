@@ -296,7 +296,6 @@ export const createInitialAttributeState = (data: InitialAttributesAPIResponse[]
       channels: [],
       attributeTypes: [],
       filterableInStorefront: createBooleanOptions(),
-      filterableInDashboard: createBooleanOptions(),
       isVariantOnly: createBooleanOptions(),
       valueRequired: createBooleanOptions(),
       visibleInStorefront: createBooleanOptions(),

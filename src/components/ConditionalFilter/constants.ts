@@ -46,7 +46,6 @@ export const STATIC_CONDITIONS = {
   valueRequired: [{ type: "select", label: "is", value: "input-1" }],
   visibleInStorefront: [{ type: "select", label: "is", value: "input-1" }],
   filterableInStorefront: [{ type: "select", label: "is", value: "input-1" }],
-  filterableInDashboard: [{ type: "select", label: "is", value: "input-1" }],
   attributeType: [{ type: "select", label: "is", value: "input-1" }],
   hasCategory: [{ type: "select", label: "is", value: "input-1" }],
   giftCard: [{ type: "select", label: "is", value: "input-1" }],
@@ -545,12 +544,6 @@ export const STATIC_ATTRIBUTES_OPTIONS: LeftOperand[] = [
     label: "Filterable in Storefront",
     type: "filterableInStorefront",
     slug: "filterableInStorefront",
-  },
-  {
-    value: "filterableInDashboard",
-    label: "Filterable in Dashboard",
-    type: "filterableInDashboard",
-    slug: "filterableInDashboard",
   },
   {
     value: "isVariantOnly",
