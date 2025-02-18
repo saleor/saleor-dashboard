@@ -55,7 +55,7 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const filterStructure = createFilterStructure(intl, filterOpts);
   const limitsReached = isLimitReached(limits, "orders");
-  const { enabled: isDraftOrdersFilteringEnabled } = useFlag("draft_orders_filters");
+  const { enabled: isDraftOrdersFilteringEnabled } = useFlag("new_filters");
 
   return (
     <>
