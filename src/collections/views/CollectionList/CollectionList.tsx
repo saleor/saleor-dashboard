@@ -102,7 +102,10 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
 
     return {
       ...paginationState,
-      filter: variables,
+      filter: {
+        ...variables,
+        search: params.query,
+      },
       sort: getSortQueryVariables(params),
       channel, // Saleor docs say 'channel' in filter is deprecated and should be moved to root
     };

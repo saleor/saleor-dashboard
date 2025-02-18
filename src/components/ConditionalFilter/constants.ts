@@ -46,7 +46,6 @@ export const STATIC_CONDITIONS = {
   valueRequired: [{ type: "select", label: "is", value: "input-1" }],
   visibleInStorefront: [{ type: "select", label: "is", value: "input-1" }],
   filterableInStorefront: [{ type: "select", label: "is", value: "input-1" }],
-  filterableInDashboard: [{ type: "select", label: "is", value: "input-1" }],
   attributeType: [{ type: "select", label: "is", value: "input-1" }],
   hasCategory: [{ type: "select", label: "is", value: "input-1" }],
   giftCard: [{ type: "select", label: "is", value: "input-1" }],
@@ -317,7 +316,7 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
   },
   {
     value: "created",
-    label: "Created",
+    label: "Creation date",
     type: "created",
     slug: "created",
   },
@@ -413,7 +412,7 @@ export const STATIC_VOUCHER_OPTIONS: LeftOperand[] = [
 export const STATIC_COLLECTION_OPTIONS: LeftOperand[] = [
   {
     value: "published",
-    label: "Published",
+    label: "Is published",
     type: "published",
     slug: "published",
   },
@@ -449,7 +448,7 @@ export const STATIC_DRAFT_ORDER_OPTIONS: LeftOperand[] = [
   },
   {
     value: "created",
-    label: "Created",
+    label: "Creation date",
     type: "created",
     slug: "created",
   },
@@ -518,7 +517,7 @@ export const STATIC_CUSTOMER_OPTIONS: LeftOperand[] = [
 export const STATIC_PRODUCT_TYPES_OPTIONS: LeftOperand[] = [
   {
     value: "configurable",
-    label: "Configurable",
+    label: "Has variant attributes",
     type: "configurable",
     slug: "configurable",
   },
@@ -547,12 +546,6 @@ export const STATIC_ATTRIBUTES_OPTIONS: LeftOperand[] = [
     slug: "filterableInStorefront",
   },
   {
-    value: "filterableInDashboard",
-    label: "Filterable in Dashboard",
-    type: "filterableInDashboard",
-    slug: "filterableInDashboard",
-  },
-  {
     value: "isVariantOnly",
     label: "Variant only",
     type: "isVariantOnly",
@@ -560,13 +553,13 @@ export const STATIC_ATTRIBUTES_OPTIONS: LeftOperand[] = [
   },
   {
     value: "valueRequired",
-    label: "Value Required",
+    label: "Is required",
     type: "valueRequired",
     slug: "valueRequired",
   },
   {
     value: "visibleInStorefront",
-    label: "Visible on Product Page in Storefront",
+    label: "Visible in Storefront",
     type: "visibleInStorefront",
     slug: "visibleInStorefront",
   },
