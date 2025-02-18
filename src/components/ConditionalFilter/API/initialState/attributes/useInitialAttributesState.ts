@@ -58,7 +58,6 @@ export const useInitialAttributesState = (): InitialAttributesAPIState => {
         initialState.channels,
         initialState.attributeType,
         initialState.filterableInStorefront,
-        initialState.filterableInDashboard,
         initialState.isVariantOnly,
         initialState.valueRequired,
         initialState.visibleInStorefront,

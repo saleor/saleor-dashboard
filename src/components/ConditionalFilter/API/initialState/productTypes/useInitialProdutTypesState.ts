@@ -1,10 +1,11 @@
 import { InitialProductTypesStateResponse } from "@dashboard/components/ConditionalFilter/API/initialState/productTypes/InitialProductTypesState";
-import { ProductTypeConfigurable, ProductTypeEnum } from "@dashboard/graphql";
+import { createBooleanOptions } from "@dashboard/components/ConditionalFilter/constants";
+import { ProductTypeEnum } from "@dashboard/graphql";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductTypesFetchingParams } from "../../../ValueProvider/TokenArray/fetchingParams";
-import { BooleanValuesHandler, EnumValuesHandler } from "../../Handler";
+import { EnumValuesHandler } from "../../Handler";
 
 export interface InitialProductTypesAPIState {
   data: InitialProductTypesStateResponse;
@@ -27,24 +28,9 @@ export const useInitialProductTypesState = (): InitialProductTypesAPIState => {
       typeOfProduct,
     );
 
-    const configurableInit = new BooleanValuesHandler([
-      {
-        label: "Yes",
-        value: ProductTypeConfigurable.CONFIGURABLE,
-        type: "configurable",
-        slug: "true",
-      },
-      {
-        label: "No",
-        value: ProductTypeConfigurable.SIMPLE,
-        type: "configurable",
-        slug: "false",
-      },
-    ]);
-
     const initialState = {
       typeOfProduct: await typeOfProductInit.fetch(),
-      configurable: await configurableInit.fetch(),
+      configurable: createBooleanOptions(),
     };
 
     setData(
