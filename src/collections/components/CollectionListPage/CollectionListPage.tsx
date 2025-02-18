@@ -66,7 +66,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
   const navigate = useNavigator();
   const filterStructure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
-  const { enabled: isNewCollectionListEnabled } = useFlag("collection_filters");
+  const { enabled: isNewCollectionListEnabled } = useFlag("new_filters");
   const filterDependency = filterStructure.find(getByName("channel"));
 
   return (

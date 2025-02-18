@@ -800,10 +800,6 @@
     "context": "btn label",
     "string": "Go to GraphQL Playground"
   },
-  "2yU+q9": {
-    "context": "tab name",
-    "string": "All Warehouses"
-  },
   "2yV+s8": {
     "context": "order history message",
     "string": "Payment was captured"
@@ -4755,6 +4751,10 @@
     "context": "header",
     "string": "Translation Attribute \"{attribute}\" - {languageCode}"
   },
+  "SPF/Zn": {
+    "context": "staff members status deactivated",
+    "string": "Deactivated"
+  },
   "SPp3cx": {
     "context": "alert message",
     "string": "Orders cannot be placed in an inactive channel."
@@ -4946,9 +4946,6 @@
     "context": "tax classes card header",
     "string": "General information"
   },
-  "ThUvIL": {
-    "string": "Hidden"
-  },
   "TjGYna": {
     "context": "product inventory, checkbox",
     "string": "Track Inventory"
@@ -5069,6 +5066,10 @@
   "UVDfTs": {
     "context": "discount type shipping",
     "string": "Shipping"
+  },
+  "UYKEsx": {
+    "context": "collection filter published",
+    "string": "Published"
   },
   "Uf3oHA": {
     "context": "add new menu item",
@@ -6401,9 +6402,6 @@
     "context": "Webhook details events",
     "string": "Events"
   },
-  "caMMWN": {
-    "string": "Search Warehouse"
-  },
   "caqRmN": {
     "context": "header",
     "string": "Create Page Type"
@@ -6652,6 +6650,10 @@
   "eWrHmu": {
     "context": "onboarding step title",
     "string": "View webhooks functionalities"
+  },
+  "eaoi2W": {
+    "context": "tab name",
+    "string": "All warehouses"
   },
   "egBBQ/": {
     "context": "all captured amount from transactions in order",
@@ -7422,6 +7424,10 @@
     "context": "refunded fulfillment, section header",
     "string": "Replaced"
   },
+  "jzu97k": {
+    "context": "attribute product type",
+    "string": "Product type"
+  },
   "k+HcTv": {
     "context": "product type",
     "string": "Type"
@@ -7953,6 +7959,10 @@
     "context": "expiration date label",
     "string": "Expiration date"
   },
+  "nG1+Cz": {
+    "context": "staff members status active",
+    "string": "Active"
+  },
   "nHmugP": {
     "context": "order history message",
     "string": "Fulfilled {quantity} items"
@@ -8421,6 +8431,10 @@
   },
   "qSCmIG": {
     "string": "lower than {value}"
+  },
+  "qT0qr/": {
+    "context": "attribute page type",
+    "string": "Page type"
   },
   "qT6YYk": {
     "context": "order line total price",
@@ -8997,6 +9011,10 @@
   "ufD5Jr": {
     "string": "Content type"
   },
+  "ufahVh": {
+    "context": "collection filter hidden",
+    "string": "Hidden"
+  },
   "ufmuTp": {
     "context": "button",
     "string": "Delete"
@@ -9273,9 +9291,6 @@
   },
   "w7jT4W": {
     "string": "No channels selected"
-  },
-  "w7tf2z": {
-    "string": "Published"
   },
   "w9xgN9": {
     "context": "see error log label in notification",

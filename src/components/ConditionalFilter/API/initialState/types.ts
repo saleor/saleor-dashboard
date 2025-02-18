@@ -29,3 +29,5 @@ export type InitialGiftCardsAPIResponse = ApolloQueryResult<
 >;
 
 export type InitialCollectionAPIResponse = ApolloQueryResult<_GetChannelOperandsQuery>;
+
+export type InitialAttributesAPIResponse = ApolloQueryResult<_GetChannelOperandsQuery>;

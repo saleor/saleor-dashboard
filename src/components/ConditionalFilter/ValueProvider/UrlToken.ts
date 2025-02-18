@@ -41,6 +41,18 @@ const COLLECTION_STATICS = ["channel", "published"];
 
 const PRODUCT_TYPES_STATICS = ["typeOfProduct", "configurable"];
 
+const STAFF_MEMBERS_STATICS = ["staffMemberStatus"];
+
+const ATTRIBUTES_STATICS = [
+  "channel",
+  "attributeType",
+  "filterableInStorefront",
+  "filterableInDashboard",
+  "isVariantOnly",
+  "valueRequired",
+  "visibleInStorefront",
+];
+
 const STATIC_TO_LOAD = [
   ...PRODUCT_STATICS,
   ...ORDER_STATICS,
@@ -49,6 +61,8 @@ const STATIC_TO_LOAD = [
   ...GIFT_CARDS_STATICS,
   ...COLLECTION_STATICS,
   ...PRODUCT_TYPES_STATICS,
+  ...STAFF_MEMBERS_STATICS,
+  ...ATTRIBUTES_STATICS,
 ];
 
 export const TokenType = {

@@ -5,12 +5,14 @@ import { ConditionOptions } from "./FilterElement/ConditionOptions";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
 import { ExpressionValue } from "./FilterElement/FilterElement";
 import {
+  creatAttributesQueryVariables,
   creatDraftOrderQueryVariables,
   createCustomerQueryVariables,
   createGiftCardQueryVariables,
   createPageQueryVariables,
   createProductQueryVariables,
   createProductTypesQueryVariables,
+  createStaffMembersQueryVariables,
   creatVoucherQueryVariables,
   mapStaticQueryPartToLegacyVariables,
 } from "./queryVariables";
@@ -580,6 +582,121 @@ describe("ConditionalFilter / queryVariables / createProductTypesQueryVariables"
     };
     // Act
     const result = createProductTypesQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+});
+
+describe("ConditionalFilter / queryVariables / createStaffMembersQueryVariables", () => {
+  it("should return empty variables for empty filters", () => {
+    // Arrange
+    const filters: FilterContainer = [];
+    const expectedOutput = {};
+    // Act
+    const result = createStaffMembersQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+
+  it("should create variables with selected filters", () => {
+    // Arrange
+    const filters: FilterContainer = [
+      new FilterElement(
+        new ExpressionValue("staffMemberStatus", "Status", "staffMemberStatus"),
+        new Condition(
+          ConditionOptions.fromStaticElementName("staffMemberStatus"),
+          new ConditionSelected(
+            "active",
+            { type: "select", label: "is", value: "input-1" },
+            [],
+            false,
+          ),
+          false,
+        ),
+        false,
+      ),
+    ];
+    const expectedOutput = {
+      status: "active",
+    };
+    // Act
+    const result = createStaffMembersQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+});
+
+describe("ConditionalFilter / queryVariables / creatAttributesQueryVariables", () => {
+  it("should return empty variables for empty filters", () => {
+    // Arrange
+    const filters: FilterContainer = [];
+    const expectedOutput = {};
+    // Act
+    const result = creatAttributesQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+
+  it("should create variables with selected filters", () => {
+    // Arrange
+    const channelFilterElemen = new FilterElement(
+      new ExpressionValue("channel", "Channel", "channel"),
+      new Condition(
+        ConditionOptions.fromStaticElementName("channel"),
+        new ConditionSelected(
+          "default-channel",
+          { type: "select", label: "is", value: "input-5" },
+          [],
+          false,
+        ),
+        false,
+      ),
+      false,
+    );
+
+    const typeFilterElement = new FilterElement(
+      new ExpressionValue("attributeType", "Attribute type", "attributeType"),
+      new Condition(
+        ConditionOptions.fromStaticElementName("attributeType"),
+        new ConditionSelected(
+          "PRODUCT_TYPE",
+          { type: "select", label: "is", value: "input-1" },
+          [],
+          false,
+        ),
+        false,
+      ),
+      false,
+    );
+
+    const isFilterableInDashboardFilterElement = new FilterElement(
+      new ExpressionValue("filterableInDashboard", "Filterable", "filterableInDashboard"),
+      new Condition(
+        ConditionOptions.fromStaticElementName("filterableInDashboard"),
+        new ConditionSelected("true", { type: "select", label: "is", value: "input-1" }, [], false),
+        false,
+      ),
+      false,
+    );
+
+    const filters: FilterContainer = [
+      channelFilterElemen,
+      "AND",
+      typeFilterElement,
+      "AND",
+      isFilterableInDashboardFilterElement,
+    ];
+    const expectedOutput = {
+      channel: "default-channel",
+      type: "PRODUCT_TYPE",
+      filterableInDashboard: true,
+    };
+    // Act
+    const result = creatAttributesQueryVariables(filters);
 
     // Assert
     expect(result).toEqual(expectedOutput);

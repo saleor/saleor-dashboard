@@ -53,7 +53,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
     toggleAll,
   } = useBulkActions(params.ids);
   const { settings } = useListSettings(ListViews.PRODUCT_LIST);
-  const { enabled: isProductTypesFilterEnabled } = useFlag("product_types_filters");
+  const { enabled: isProductTypesFilterEnabled } = useFlag("new_filters");
   const { valueProvider } = useConditionalFilterContext();
   const filters = createProductTypesQueryVariables(valueProvider.value);
 

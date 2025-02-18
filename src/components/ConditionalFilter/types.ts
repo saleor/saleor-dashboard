@@ -1,3 +1,5 @@
+import { InitialAttributesStateResponse } from "./API/initialState/attributes/InitialAttributesState";
+import { InitialAttributesAPIState } from "./API/initialState/attributes/useInitialAttributesState";
 import { InitialCollectionStateResponse } from "./API/initialState/collections/InitialCollectionState";
 import { InitialCollectionAPIState } from "./API/initialState/collections/useInitialCollectionsState";
 import { InitialGiftCardsStateResponse } from "./API/initialState/giftCards/InitialGiftCardsState";
@@ -10,6 +12,8 @@ import { InitialProductStateResponse } from "./API/initialState/product/InitialP
 import { InitialProductAPIState } from "./API/initialState/product/useProductInitialAPIState";
 import { InitialProductTypesStateResponse } from "./API/initialState/productTypes/InitialProductTypesState";
 import { InitialProductTypesAPIState } from "./API/initialState/productTypes/useInitialProdutTypesState";
+import { InitialStaffMembersStateResponse } from "./API/initialState/staffMembers/InitialStaffMembersState";
+import { InitialStaffMembersAPIState } from "./API/initialState/staffMembers/useInitialStaffMemebersState";
 import { InitialVouchersStateResponse } from "./API/initialState/vouchers/InitialVouchersState";
 import { InitialVoucherAPIState } from "./API/initialState/vouchers/useInitialVouchersState";
 
@@ -19,8 +23,10 @@ export type InitialResponseType =
   | InitialCollectionStateResponse
   | InitialVouchersStateResponse
   | InitialPageStateResponse
+  | InitialProductTypesStateResponse
   | InitialGiftCardsStateResponse
-  | InitialProductTypesStateResponse;
+  | InitialStaffMembersStateResponse
+  | InitialAttributesStateResponse;
 
 export type InitialAPIState =
   | InitialProductAPIState
@@ -29,7 +35,9 @@ export type InitialAPIState =
   | InitialPageAPIState
   | InitialGiftCardsAPIState
   | InitialCollectionAPIState
-  | InitialProductTypesAPIState;
+  | InitialProductTypesAPIState
+  | InitialStaffMembersAPIState
+  | InitialAttributesAPIState;
 
 export type FilterProviderType =
   | "product"
@@ -41,4 +49,6 @@ export type FilterProviderType =
   | "draft-order"
   | "gift-cards"
   | "collection"
-  | "product-types";
+  | "product-types"
+  | "staff-members"
+  | "attributes";

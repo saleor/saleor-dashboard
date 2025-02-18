@@ -1,20 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { InitialProductTypesAPIState } from "@dashboard/components/ConditionalFilter/API/initialState/productTypes/useInitialProdutTypesState";
 import { stringify } from "qs";
 import { useEffect, useState } from "react";
 import useRouter from "use-react-router";
 
+import { InitialAttributesAPIState } from "../API/initialState/attributes/useInitialAttributesState";
 import { InitialCollectionAPIState } from "../API/initialState/collections/useInitialCollectionsState";
 import { InitialGiftCardsAPIState } from "../API/initialState/giftCards/useInitialGiftCardsState";
 import { InitialOrderAPIState } from "../API/initialState/orders/useInitialOrderState";
 import { InitialPageAPIState } from "../API/initialState/page/useInitialPageState";
 import { InitialProductAPIState } from "../API/initialState/product/useProductInitialAPIState";
+import { InitialProductTypesAPIState } from "../API/initialState/productTypes/useInitialProdutTypesState";
+import { InitialStaffMembersAPIState } from "../API/initialState/staffMembers/useInitialStaffMemebersState";
 import { InitialVoucherAPIState } from "../API/initialState/vouchers/useInitialVouchersState";
 import { FilterContainer, FilterElement } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
 import { FilterProviderType, InitialAPIState } from "../types";
 import { TokenArray } from "./TokenArray";
 import {
+  AttributesFetchingParams,
   CollectionFetchingParams,
   FetchingParams,
   getEmptyFetchingPrams,
@@ -22,6 +25,7 @@ import {
   OrderFetchingParams,
   PageFetchingParams,
   ProductTypesFetchingParams,
+  StaffMembersFetchingParams,
   VoucherFetchingParams,
 } from "./TokenArray/fetchingParams";
 import { prepareStructure } from "./utils";
@@ -84,6 +88,16 @@ export const useUrlValueProvider = (
         case "product-types":
           (initialState as InitialProductTypesAPIState).fetchQueries(
             fetchingParams as ProductTypesFetchingParams,
+          );
+          break;
+        case "staff-members":
+          (initialState as InitialStaffMembersAPIState).fetchQueries(
+            fetchingParams as StaffMembersFetchingParams,
+          );
+          break;
+        case "attributes":
+          (initialState as InitialAttributesAPIState).fetchQueries(
+            fetchingParams as AttributesFetchingParams,
           );
           break;
       }

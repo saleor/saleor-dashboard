@@ -72,7 +72,7 @@ const PageListPage: React.FC<PageListPageProps> = ({
   const navigate = useNavigator();
   const structure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = React.useState(false);
-  const { enabled: isPageFiltersEnabled } = useFlag("pages_filters");
+  const { enabled: isPageFiltersEnabled } = useFlag("new_filters");
 
   return (
     <ListPageLayout>

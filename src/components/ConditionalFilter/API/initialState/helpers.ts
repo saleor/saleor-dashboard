@@ -14,12 +14,14 @@ import {
 
 import { createBooleanOptions } from "../../constants";
 import { createCustomerOptionsFromAPI, createOptionsFromAPI } from "../Handler";
+import { InitialAttributesState } from "./attributes/InitialAttributesState";
 import { InitialCollectionState } from "./collections/InitialCollectionState";
 import { InitialGiftCardsState } from "./giftCards/InitialGiftCardsState";
 import { InitialOrderState } from "./orders/InitialOrderState";
 import { InitialPageState } from "./page/InitialPageState";
 import { InitialProductState } from "./product/InitialProductStateResponse";
 import {
+  InitialAttributesAPIResponse,
   InitialCollectionAPIResponse,
   InitialGiftCardsAPIResponse,
   InitialOrderAPIResponse,
@@ -271,5 +273,32 @@ export const createInitialCollectionState = (
       channel: [],
       published: [],
       metadata: [],
+    },
+  );
+
+export const createInitialAttributeState = (data: InitialAttributesAPIResponse[]) =>
+  data.reduce<InitialAttributesState>(
+    (acc, query) => {
+      if (isChannelsQuery(query)) {
+        return {
+          ...acc,
+          channels: (query.data?.channels ?? []).map(({ id, name, slug }) => ({
+            label: name,
+            value: id,
+            slug,
+          })),
+        };
+      }
+
+      return acc;
+    },
+    {
+      channels: [],
+      attributeTypes: [],
+      filterableInStorefront: createBooleanOptions(),
+      filterableInDashboard: createBooleanOptions(),
+      isVariantOnly: createBooleanOptions(),
+      valueRequired: createBooleanOptions(),
+      visibleInStorefront: createBooleanOptions(),
     },
   );
