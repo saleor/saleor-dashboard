@@ -3,6 +3,7 @@ import { InstalledApp } from "@dashboard/apps/types";
 import { AppPaths, AppUrls } from "@dashboard/apps/urls";
 import { isAppInTunnel } from "@dashboard/apps/utils";
 import Link from "@dashboard/components/Link";
+import { useFlag } from "@dashboard/featureFlags";
 import { Box, Chip, List, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -16,6 +17,7 @@ import { AppManifestUrl } from "./AppManifestUrl";
 import { messages } from "./messages";
 
 export const InstalledAppListRow: React.FC<InstalledApp> = props => {
+  const { enabled: appAlertsEnabled } = useFlag("app_alerts");
   const { app, isExternal, logo } = props;
   const intl = useIntl();
   const location = useLocation();
@@ -95,7 +97,7 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
           gap={3}
         >
           <Box marginLeft="auto" display="flex" alignItems="center" gap={5}>
-            <AppRowDisabledAlert app={app} />
+            {appAlertsEnabled && <AppRowDisabledAlert app={app} />}
 
             <AppRowWebhookIssueAlert app={app} />
           </Box>
