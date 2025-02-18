@@ -1,3 +1,4 @@
+import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
@@ -7,7 +8,7 @@ import { PageTypeFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { pageTypeAddUrl, PageTypeListUrlSortField } from "@dashboard/pageTypes/urls";
-import { Box, Button, ChevronRightIcon, SearchInput } from "@saleor/macaw-ui-next";
+import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -91,8 +92,8 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
           <FormattedMessage id="6JlXeD" defaultMessage="Create page type" description="button" />
         </Button>
       </TopNav>
-      <DashboardCard>
-        <Box paddingX={6} marginY={2}>
+      <DashboardCard gap={0}>
+        <Box paddingX={6} marginBottom={2}>
           <Box __width="320px">
             <SearchInput
               initialSearch={initialSearch}
