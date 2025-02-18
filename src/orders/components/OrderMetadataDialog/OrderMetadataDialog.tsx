@@ -17,10 +17,20 @@ import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
+type OrderLineMetadata = Pick<OrderLineWithMetadataFragment, "metadata" | "privateMetadata" | "id">;
+type ProductVariantMetadata = Pick<
+  OrderLineWithMetadataFragment["variant"],
+  "metadata" | "privateMetadata" | "id"
+>;
+
+export type OrderMetadataDialogData = OrderLineMetadata & {
+  variant: ProductVariantMetadata;
+} & Pick<OrderLineWithMetadataFragment, "productName">;
+
 interface OrderMetadataDialogProps {
   open: boolean;
   onClose: () => void;
-  data?: OrderLineWithMetadataFragment;
+  data?: OrderMetadataDialogData;
   loading?: boolean;
 }
 
