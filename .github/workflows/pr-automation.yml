@@ -234,6 +234,8 @@ jobs:
 
       - name: Merge playwright reports
         uses: ./.github/actions/merge-pw-reports
+        with:
+           PASSWORD_FOR_DECODING_ARTIFACT: ${{ secrets.TESTS_RESULT_PASSWORD }}
 
       - name: complete testmo report
         uses: ./.github/actions/testmo/testmo-finish
@@ -241,6 +243,7 @@ jobs:
           testmoUrl: ${{ secrets.TESTMO_URL }}
           testmoToken: ${{ secrets.TESTMO_TOKEN }}
           testmoRunId: ${{ needs.deploy-dashboard.outputs.TESTMO_RUN_ID }}
+
 
       - name: Create flaky report
         uses: ./.github/actions/flaky-tests-report

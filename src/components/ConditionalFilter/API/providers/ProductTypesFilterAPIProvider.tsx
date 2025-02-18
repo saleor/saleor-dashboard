@@ -2,7 +2,7 @@ import {
   BooleanValuesHandler,
   EnumValuesHandler,
 } from "@dashboard/components/ConditionalFilter/API/Handler";
-import { ProductTypeConfigurable, ProductTypeEnum } from "@dashboard/graphql";
+import { ProductTypeEnum } from "@dashboard/graphql";
 import { useIntl } from "react-intl";
 
 import { FilterContainer } from "../../FilterElement";
@@ -21,13 +21,13 @@ export const useProductTypesFilterAPIProvider = (): FilterAPIProvider => {
       return await new BooleanValuesHandler([
         {
           label: "Yes",
-          value: ProductTypeConfigurable.CONFIGURABLE,
+          value: "true",
           type: rowType,
           slug: "true",
         },
         {
           label: "No",
-          value: ProductTypeConfigurable.SIMPLE,
+          value: "false",
           type: rowType,
           slug: "false",
         },

@@ -32,11 +32,6 @@ export const attributesListStaticColumnsAdapter = (
       width: 200,
     },
     {
-      id: "searchable",
-      title: intl.formatMessage(columnsMessages.searchable),
-      width: 200,
-    },
-    {
       id: "use-in-faceted-search",
       title: intl.formatMessage(columnsMessages.useInFacetedSearch),
       width: 200,
@@ -71,8 +66,6 @@ export const createGetCellContent =
         return readonlyTextCell(rowData?.name ?? PLACEHOLDER);
       case "visible":
         return readonlyTextCell(translateBoolean(rowData?.visibleInStorefront, intl));
-      case "searchable":
-        return readonlyTextCell(translateBoolean(rowData?.filterableInDashboard, intl));
       case "use-in-faceted-search":
         return readonlyTextCell(translateBoolean(rowData?.filterableInStorefront, intl));
       default:
