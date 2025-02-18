@@ -245,7 +245,7 @@ describe("OrderMetadataDialog", () => {
     await waitFor(() => {
       // The save button should be enabled since the form state is not reset
       expect(screen.getByTestId("save")).toBeEnabled();
-      
+
       // Verify that the mutation was called with correct variables
       expect(updateMetadataMock.request.variables).toEqual({
         id: mockData.id,
@@ -433,6 +433,7 @@ describe("OrderMetadataDialog", () => {
     });
   });
 
+  // TODO: break component tests if tests are working correctly
   it("shows validation error when user inputs private metadata with the same key", async () => {
     render(
       <MockedProvider>
