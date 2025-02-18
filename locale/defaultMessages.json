@@ -7015,10 +7015,6 @@
     "context": "caption",
     "string": "If enabled, attribute will be accessible to customers."
   },
-  "h2hEKV": {
-    "context": "search gift card placeholder",
-    "string": "Search gift cards, e.g {exampleGiftCardCode}"
-  },
   "h2vipu": {
     "string": "Code"
   },
@@ -7369,6 +7365,10 @@
   "jXf/9p": {
     "context": "product availability",
     "string": "Hide in product listings"
+  },
+  "jY80Gs": {
+    "context": "search gift card placeholder",
+    "string": "Search by code, e.g {exampleGiftCardCode}"
   },
   "ja+tNj": {
     "string": "requests access to new permissions."
