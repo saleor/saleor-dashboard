@@ -15,11 +15,6 @@ export const columnsMessages = defineMessages({
     defaultMessage: "Visible in storefront",
     description: "attribute is visible in storefront",
   },
-  searchable: {
-    id: "bWvn/Y",
-    defaultMessage: "Filterable in dashboard",
-    description: "attribute can be searched in dashboard",
-  },
   useInFacetedSearch: {
     defaultMessage: "Filterable in storefront",
     id: "9IrVVZ",

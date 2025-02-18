@@ -6225,10 +6225,6 @@
     "context": "amount filter label",
     "string": "Amount"
   },
-  "bWvn/Y": {
-    "context": "attribute can be searched in dashboard",
-    "string": "Filterable in dashboard"
-  },
   "bZenNC": {
     "string": "Description (optional)"
   },
