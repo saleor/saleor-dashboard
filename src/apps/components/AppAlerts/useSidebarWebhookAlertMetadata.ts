@@ -1,13 +1,18 @@
 import { useUser } from "@dashboard/auth";
 import { MetadataInput, useUserAccountUpdateMutation } from "@dashboard/graphql";
-import { MetadataItem } from "@saleor/sdk/dist/apollo/types";
+import { useMemo } from "react";
 
 const deliveryAttemptKey = "sidebarDotDeliveryAttempt_test";
 
+type SidebarRemoteDotState = {
+  lastClickDate: string;
+  lastFailedAttemptDate: string;
+};
+
 interface SidebarWebhookAlertMetadata {
-  persist: (metadataInput: MetadataInput[]) => Promise<void>;
+  persist: (metadataInput: Record<string, string>) => Promise<void>;
   refetch: () => Promise<void>;
-  webhookAlertState: MetadataItem | null;
+  sidebarDotRemoteState: SidebarRemoteDotState | null;
 }
 
 export const useSidebarWebhookAlertMetadata = (): SidebarWebhookAlertMetadata => {
@@ -15,9 +20,18 @@ export const useSidebarWebhookAlertMetadata = (): SidebarWebhookAlertMetadata =>
 
   const [saveMetadata] = useUserAccountUpdateMutation();
 
-  const persist = async (metadataInput: MetadataInput[]) => {
+  const persist = async (metadataInput: Record<string, string>) => {
     await saveMetadata({
-      variables: { input: { metadata: metadataInput } },
+      variables: {
+        input: {
+          metadata: [
+            {
+              key: deliveryAttemptKey,
+              value: JSON.stringify(metadataInput),
+            } satisfies MetadataInput,
+          ],
+        },
+      },
     });
   };
 
@@ -27,12 +41,27 @@ export const useSidebarWebhookAlertMetadata = (): SidebarWebhookAlertMetadata =>
     }
   };
 
-  const sidebarWebhookAlertMetadata =
-    user?.metadata.find(m => m.key === deliveryAttemptKey) ?? null;
+  const sidebarDotRemoteState = useMemo(() => {
+    const webhookAlertMetadata = user?.metadata.find(m => m.key === deliveryAttemptKey) ?? null;
+
+    if (!webhookAlertMetadata) {
+      return null;
+    }
+
+    try {
+      const parsed = JSON.parse(webhookAlertMetadata.value);
+
+      return parsed as SidebarRemoteDotState;
+    } catch (e) {
+      console.error("Failed to parse webhook alert metadata", e);
+
+      return null;
+    }
+  }, [user]);
 
   return {
     persist,
     refetch,
-    webhookAlertState: sidebarWebhookAlertMetadata,
+    sidebarDotRemoteState,
   };
 };
