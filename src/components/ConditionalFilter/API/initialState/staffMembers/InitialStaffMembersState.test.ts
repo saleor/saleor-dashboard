@@ -13,7 +13,7 @@ describe("ConditionalFilter / API / Page / InitialStaffMembersState", () => {
         slug: "active",
       },
       {
-        label: "Deactivated",
+        label: "Inactive",
         value: "deactivated",
         slug: "deactivated",
       },

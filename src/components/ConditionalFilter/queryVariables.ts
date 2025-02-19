@@ -2,6 +2,7 @@ import {
   AttributeFilterInput,
   AttributeInput,
   CollectionFilterInput,
+  CollectionPublished,
   CustomerFilterInput,
   DateRangeInput,
   DateTimeFilterInput,
@@ -11,6 +12,7 @@ import {
   GlobalIdFilterInput,
   OrderDraftFilterInput,
   PageFilterInput,
+  ProductTypeConfigurable,
   ProductTypeFilterInput,
   ProductWhereInput,
   PromotionWhereInput,
@@ -351,6 +353,8 @@ export const createCollectionsQueryVariables = (value: FilterContainer): Collect
   return value.reduce((p, c) => {
     if (typeof c === "string" || Array.isArray(c)) return p;
 
+    const value = mapStaticQueryPartToLegacyVariables(createStaticQueryPart(c.condition.selected));
+
     if (c.value.type === "metadata") {
       p.metadata = p.metadata || [];
 
@@ -361,9 +365,13 @@ export const createCollectionsQueryVariables = (value: FilterContainer): Collect
       return p;
     }
 
-    p[c.value.value as keyof CollectionFilterInput] = mapStaticQueryPartToLegacyVariables(
-      createStaticQueryPart(c.condition.selected),
-    );
+    if (c.value.type === "published") {
+      p["published"] = value === true ? CollectionPublished.PUBLISHED : CollectionPublished.HIDDEN;
+
+      return p;
+    }
+
+    p[c.value.value as keyof CollectionFilterInput] = value;
 
     return p;
   }, {} as CollectionQueryVars);
@@ -379,6 +387,13 @@ export const createProductTypesQueryVariables = (
 
     if (c.value.type === "typeOfProduct") {
       p["productType"] = value;
+
+      return p;
+    }
+
+    if (c.value.type === "configurable") {
+      p["configurable"] =
+        value === true ? ProductTypeConfigurable.CONFIGURABLE : ProductTypeConfigurable.SIMPLE;
 
       return p;
     }
