@@ -10,7 +10,6 @@ import { giftCardSettingsUrl } from "../../urls";
 import { giftCardsListHeaderMenuItemsMessages as messages } from "../messages";
 import { useGiftCardListDialogs } from "../providers/GiftCardListDialogsProvider";
 import { useGiftCardList } from "../providers/GiftCardListProvider";
-import GiftCardsListHeaderAlert from "./GiftCardsListHeaderAlert";
 
 const GiftCardsListHeader: React.FC = () => {
   const intl = useIntl();
@@ -97,7 +96,6 @@ const GiftCardsListHeader: React.FC = () => {
           </Box>
         </Box>
       </TopNav>
-      <GiftCardsListHeaderAlert />
     </>
   );
 };

@@ -21,11 +21,6 @@ export const giftCardsListHeaderMenuItemsMessages = defineMessages({
     defaultMessage: "Issue card",
     description: "issue card button label",
   },
-  noGiftCardsAlertTitle: {
-    id: "E22x4H",
-    defaultMessage: "You haven’t defined a gift card product!",
-    description: "no card defuned alert message",
-  },
   noGiftCardsProductsAndProductTypes: {
     id: "U9o2bV",
     defaultMessage:

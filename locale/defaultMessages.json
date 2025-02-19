@@ -820,10 +820,6 @@
     "context": "gift card history message",
     "string": "Gift card was issued by {issuedBy}"
   },
-  "31hYP2": {
-    "context": "alert card message",
-    "string": "Gift cards will appear after their order is fullfilled. <link>View Orders with Gift Cards</link>"
-  },
   "32dfzI": {
     "context": "price or ordered products",
     "string": "Price"
@@ -2426,10 +2422,6 @@
   "E1C9pp": {
     "context": "transaction event type, authorization amount was changed",
     "string": "Authorization amount adjusted"
-  },
-  "E22x4H": {
-    "context": "no card defuned alert message",
-    "string": "You haven’t defined a gift card product!"
   },
   "E4GW+N": {
     "context": "fully paid checkout automatically completed message",
