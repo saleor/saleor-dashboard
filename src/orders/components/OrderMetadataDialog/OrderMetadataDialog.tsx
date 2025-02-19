@@ -21,7 +21,7 @@ import { TEST_ID_ORDER_LINE_METADATA, TEST_ID_PRODUCT_VARIANT_METADATA } from ".
 
 type OrderLineMetadata = Pick<OrderLineWithMetadataFragment, "metadata" | "privateMetadata" | "id">;
 type ProductVariantMetadata = Pick<
-  OrderLineWithMetadataFragment["variant"],
+  NonNullable<OrderLineWithMetadataFragment["variant"]>,
   "metadata" | "privateMetadata" | "id"
 >;
 
@@ -33,7 +33,7 @@ export type OrderMetadataDialogData = OrderLineMetadata & {
 interface OrderMetadataDialogProps {
   open: boolean;
   onClose: () => void;
-  data?: OrderMetadataDialogData;
+  data: OrderMetadataDialogData;
   loading?: boolean;
 }
 
@@ -56,7 +56,7 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
     values: {
       // Removes __typename from metadata item object
       metadata: (data?.metadata ?? []).map(mapMetadataItemToInput),
-      privateMetadata: data?.privateMetadata?.map(mapMetadataItemToInput),
+      privateMetadata: (data?.privateMetadata ?? [])?.map(mapMetadataItemToInput),
     },
   });
 
