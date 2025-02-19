@@ -567,9 +567,6 @@ export const getByUnmatchingId = (idToCompare: string) => (obj: { id: string }) 
 
 export const findById = <T extends Node>(id: string, list?: T[]) => list?.find(getById(id));
 
-export const COLOR_WARNING = "#FBE5AC";
-export const COLOR_WARNING_DARK = "#3E2F0A";
-
 export type PillStatusType = "error" | "warning" | "info" | "success" | "generic";
 
 export const getStatusColor = ({
