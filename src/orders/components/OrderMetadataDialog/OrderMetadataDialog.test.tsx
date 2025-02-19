@@ -282,6 +282,65 @@ describe("OrderMetadataDialog", () => {
       });
     });
 
+    it("allows deleting metadata", async () => {
+      const updateMetadataMock = {
+        request: {
+          query: UpdateMetadataDocument,
+        },
+        variableMatcher: jest.fn().mockReturnValue(true),
+        newValue: {
+          data: {
+            updateMetadata: {
+              item: {
+                ...mockData,
+                metadata: [],
+              },
+              errors: [],
+            },
+          },
+        },
+      };
+
+      render(
+        <CustomMockedProvider mocks={[updateMetadataMock]} addTypename={false}>
+          <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
+        </CustomMockedProvider>,
+        { wrapper },
+      );
+
+      const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
+      const expandButtonOrderLineMetadata = within(orderLineMetadata).getAllByTestId("expand")[0];
+
+      // Show metadata
+      fireEvent.click(expandButtonOrderLineMetadata);
+
+      // Verify existing metadata is displayed before deletion
+      const existingKeyInput = within(orderLineMetadata).getByDisplayValue("order-line-key");
+      const existingValueInput = within(orderLineMetadata).getByDisplayValue("order-line-value");
+
+      expect(existingKeyInput).toBeInTheDocument();
+      expect(existingValueInput).toBeInTheDocument();
+
+      // Before making changes save button should be disabled
+      expect(screen.getByTestId("save")).toBeDisabled();
+
+      // Find and click delete button for the existing metadata
+      const deleteButton = within(orderLineMetadata).getByTestId("delete-field-0");
+
+      fireEvent.click(deleteButton);
+
+      // After deletion save button should be enabled
+      expect(screen.getByTestId("save")).toBeEnabled();
+
+      await userEvent.click(screen.getByTestId("save"));
+
+      expect(updateMetadataMock.variableMatcher).toHaveBeenCalledWith({
+        id: mockData.id,
+        input: [],
+        keysToDelete: ["order-line-key"],
+      });
+    });
+
     it("shows validation error when user inputs metadata with the same key", async () => {
       render(
         <MockedProvider>
@@ -484,6 +543,67 @@ describe("OrderMetadataDialog", () => {
           { key: "new-private-key", value: "new-private-value" },
         ],
         keysToDelete: [],
+      });
+    });
+
+    it("allows deleting private metadata", async () => {
+      const updatePrivateMetadataMock = {
+        request: {
+          query: UpdatePrivateMetadataDocument,
+        },
+        variableMatcher: jest.fn().mockReturnValue(true),
+        newValue: {
+          data: {
+            updatePrivateMetadata: {
+              item: {
+                privateMetadata: [],
+                id: "order-line-id",
+                __typename: "OrderLine",
+              },
+              errors: [],
+            },
+          },
+        },
+      };
+
+      render(
+        <CustomMockedProvider mocks={[updatePrivateMetadataMock]} addTypename={false}>
+          <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
+        </CustomMockedProvider>,
+        { wrapper },
+      );
+
+      const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
+      const expandButtons = within(orderLineMetadata).getAllByTestId("expand");
+      const expandButtonPrivateMetadata = expandButtons[1]; // Private metadata is second
+
+      // Show private metadata
+      fireEvent.click(expandButtonPrivateMetadata);
+
+      // Verify existing private metadata is displayed before deletion
+      const existingKeyInput = within(orderLineMetadata).getByDisplayValue("order-line-private-key");
+      const existingValueInput = within(orderLineMetadata).getByDisplayValue("order-line-private-value");
+
+      expect(existingKeyInput).toBeInTheDocument();
+      expect(existingValueInput).toBeInTheDocument();
+
+      // Before making changes save button should be disabled
+      expect(screen.getByTestId("save")).toBeDisabled();
+
+      // Find and click delete button for the existing private metadata
+      const deleteButton = within(orderLineMetadata).getByTestId("delete-field-0");
+
+      fireEvent.click(deleteButton);
+
+      // After deletion save button should be enabled
+      expect(screen.getByTestId("save")).toBeEnabled();
+
+      await userEvent.click(screen.getByTestId("save"));
+
+      expect(updatePrivateMetadataMock.variableMatcher).toHaveBeenCalledWith({
+        id: mockData.id,
+        input: [],
+        keysToDelete: ["order-line-private-key"],
       });
     });
 
