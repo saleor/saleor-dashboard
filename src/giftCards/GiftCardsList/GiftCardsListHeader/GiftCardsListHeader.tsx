@@ -1,3 +1,4 @@
+import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLinks/useContextualLink";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -14,6 +15,8 @@ import { useGiftCardList } from "../providers/GiftCardListProvider";
 const GiftCardsListHeader: React.FC = () => {
   const intl = useIntl();
   const navigate = useNavigator();
+  const subtitle = useContextualLink("gift_cards");
+
   const {
     openCreateDialog,
     openBulkCreateDialog,
@@ -40,6 +43,7 @@ const GiftCardsListHeader: React.FC = () => {
         withoutBorder
         isAlignToRight={false}
         title={intl.formatMessage(sectionNames.giftCards)}
+        subtitle={subtitle}
       >
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
