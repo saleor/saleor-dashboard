@@ -18,12 +18,10 @@ jest.mock("react-intl", () => ({
   }),
 }));
 
-// Mock permissions hook
 jest.mock("@dashboard/orders/hooks/useHasManageProductsPermission", () => ({
   useHasManageProductsPermission: jest.fn(() => false),
 }));
 
-// Mock useNotifier hook
 jest.mock("@dashboard/hooks/useNotifier", () => ({
   __esModule: true,
   default: () => jest.fn(),
