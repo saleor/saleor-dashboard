@@ -8,9 +8,9 @@ import { AlertExclamationIcon } from "./AlertExclamationIcon";
 import { useAppsAlert } from "./useAppsAlert";
 
 export const SidebarAppAlert = () => {
-  const { hasFailedAttempts } = useAppsAlert();
+  const { hasNewFailedAttempts } = useAppsAlert();
 
-  if (!hasFailedAttempts) {
+  if (!hasNewFailedAttempts) {
     return null;
   }
 
