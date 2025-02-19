@@ -2489,6 +2489,10 @@
     "context": "max price in channel",
     "string": "Max. value"
   },
+  "ER0uUn": {
+    "context": "select all page types preset label",
+    "string": "All page types"
+  },
   "ESDTC/": {
     "string": "Manage Sales Channel Availability"
   },
@@ -8153,10 +8157,6 @@
   "oUWXLO": {
     "context": "header",
     "string": "Translation Page \"{pageName}\" - {languageCode}"
-  },
-  "oVDZUb": {
-    "context": "tab name",
-    "string": "All Page Types"
   },
   "oX2TAb": {
     "string": "Select gifts"
