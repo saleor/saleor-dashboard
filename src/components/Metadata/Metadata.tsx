@@ -2,7 +2,7 @@
 import { MetadataInput } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { removeAtIndex, updateAtIndex } from "@dashboard/utils/lists";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, BoxProps } from "@saleor/macaw-ui-next";
 import React, { memo } from "react";
 
 import { MetadataCard, MetadataCardProps } from "./MetadataCard";
@@ -10,7 +10,7 @@ import { MetadataLoadingCard } from "./MetadataLoadingCard";
 import { EventDataAction, EventDataField } from "./types";
 import { getDataKey, parseEventData } from "./utils";
 
-export interface MetadataProps extends Omit<MetadataCardProps, "data" | "isPrivate"> {
+export interface MetadataProps extends Omit<MetadataCardProps, "data" | "isPrivate">, BoxProps {
   data: {
     metadata: MetadataInput[];
     privateMetadata: MetadataInput[] | undefined;
@@ -19,7 +19,6 @@ export interface MetadataProps extends Omit<MetadataCardProps, "data" | "isPriva
   readonly?: boolean;
   // This props is used to hide the private metadata section when user doesn't have enough permissions.
   hidePrivateMetadata?: boolean;
-  className?: string;
 }
 
 const propsCompare = (_, newProps: MetadataProps) => {
@@ -39,7 +38,7 @@ const propsCompare = (_, newProps: MetadataProps) => {
 // TODO: Refactor loading state logic
 // TODO: Split "Metadata" component into "Metadata" and "PrivateMetadata" components
 export const Metadata: React.FC<MetadataProps> = memo(
-  ({ data, onChange, isLoading, readonly = false, hidePrivateMetadata = false, className }) => {
+  ({ data, onChange, isLoading, readonly = false, hidePrivateMetadata = false, ...props }) => {
     const change = (event: ChangeEvent, isPrivate: boolean) => {
       const { action, field, fieldIndex, value } = parseEventData(event);
       const key = getDataKey(isPrivate);
@@ -51,29 +50,29 @@ export const Metadata: React.FC<MetadataProps> = memo(
           value:
             action === EventDataAction.update
               ? updateAtIndex(
-                  {
-                    ...dataToUpdate[fieldIndex],
-                    key: field === EventDataField.name ? value : dataToUpdate[fieldIndex].key,
-                    value: field === EventDataField.value ? value : dataToUpdate[fieldIndex].value,
-                  },
-                  dataToUpdate,
-                  fieldIndex,
-                )
+                {
+                  ...dataToUpdate[fieldIndex],
+                  key: field === EventDataField.name ? value : dataToUpdate[fieldIndex].key,
+                  value: field === EventDataField.value ? value : dataToUpdate[fieldIndex].value,
+                },
+                dataToUpdate,
+                fieldIndex,
+              )
               : action === EventDataAction.add
                 ? [
-                    ...dataToUpdate,
-                    {
-                      key: "",
-                      value: "",
-                    },
-                  ]
+                  ...dataToUpdate,
+                  {
+                    key: "",
+                    value: "",
+                  },
+                ]
                 : removeAtIndex(dataToUpdate, fieldIndex),
         },
       });
     };
 
     return (
-      <Box display="grid" gap={2} paddingBottom={10} className={className}>
+      <Box display="grid" gap={2} paddingBottom={10} {...props}>
         {isLoading ? (
           <>
             <MetadataLoadingCard />

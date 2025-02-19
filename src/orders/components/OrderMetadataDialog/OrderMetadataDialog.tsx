@@ -11,7 +11,6 @@ import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasMa
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { flattenErrors } from "@dashboard/utils/hook-form/errors";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
-import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Button, Divider, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -37,17 +36,7 @@ interface OrderMetadataDialogProps {
   loading?: boolean;
 }
 
-const useStyles = makeStyles(
-  {
-    metadata: {
-      paddingBottom: "0",
-    },
-  },
-  { name: "OrderMetadataDialog" },
-);
-
 export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetadataDialogProps) => {
-  const classes = useStyles();
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const hasManageProducts = useHasManageProductsPermission();
@@ -146,7 +135,7 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
                     privateMetadata: data?.variant?.privateMetadata ?? [],
                   }}
                   hidePrivateMetadata={!hasManageProducts}
-                  className={classes.metadata}
+                  paddingBottom={0}
                 />
               </Box>
             </Box>
