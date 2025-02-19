@@ -3,9 +3,12 @@ import { useUser } from "@dashboard/auth";
 import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDialog";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { creatDraftOrderQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
+import { useFlag } from "@dashboard/featureFlags";
 import { useOrderDraftCreateMutation, useOrderDraftListQuery } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
@@ -48,6 +51,9 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   const notify = useNotifier();
   const intl = useIntl();
   const { updateListSettings, settings } = useListSettings(ListViews.DRAFT_LIST);
+  const { enabled: isDraftOrdersFilteringEnabled } = useFlag("new_filters");
+  const { valueProvider } = useConditionalFilterContext();
+  const filter = creatDraftOrderQueryVariables(valueProvider.value);
 
   usePaginationReset(orderDraftListUrl, params, settings.rowNumber);
 
@@ -119,9 +125,22 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     }),
     [paginationState, params],
   );
+
+  const newFiltersQueryVariables = React.useMemo(
+    () => ({
+      ...paginationState,
+      filter: {
+        ...filter,
+        search: params.query,
+      },
+      sort: getSortQueryVariables(params),
+    }),
+    [params, settings.rowNumber, valueProvider.value],
+  );
+
   const { data, refetch } = useOrderDraftListQuery({
     displayLoader: true,
-    variables: queryVariables,
+    variables: isDraftOrdersFilteringEnabled ? newFiltersQueryVariables : queryVariables,
   });
   const orderDrafts = mapEdgesToItems(data?.draftOrders);
   const paginationValues = usePaginator({

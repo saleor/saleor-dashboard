@@ -1,5 +1,8 @@
 import { ApolloError } from "@apollo/client";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { createGiftCardQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { IFilter } from "@dashboard/components/Filter";
+import { useFlag } from "@dashboard/featureFlags";
 import { ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
 import { getExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
@@ -76,8 +79,12 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
+  const { enabled: isNewGiftCardsFilterEnabled } = useFlag("new_filters");
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const { clearRowSelection, ...rowSelectionUtils } = useRowSelection(params);
+  const { valueProvider } = useConditionalFilterContext();
+  const filters = createGiftCardQueryVariables(valueProvider.value);
+
   const filterUtils = useFilterPresets({
     reset: clearRowSelection,
     params,
@@ -108,6 +115,19 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
     }),
     [params, paginationState],
   );
+
+  const newQueryVariables = React.useMemo<GiftCardListQueryVariables>(
+    () => ({
+      ...paginationState,
+      filter: {
+        ...filters,
+        code: params.query,
+      },
+      sort: getSortQueryVariables(params),
+    }),
+    [params, settings.rowNumber, valueProvider.value],
+  );
+
   const handleGiftCardListError = (error: ApolloError) => {
     const graphqlErrors = error?.graphQLErrors[0];
 
@@ -120,7 +140,7 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
   };
   const { data } = useGiftCardListQuery({
     displayLoader: true,
-    variables: queryVariables,
+    variables: isNewGiftCardsFilterEnabled ? newQueryVariables : queryVariables,
     handleError: handleGiftCardListError,
   });
   const giftCards = mapEdgesToItems(data?.giftCards)?.map(getExtendedGiftCard) ?? [];

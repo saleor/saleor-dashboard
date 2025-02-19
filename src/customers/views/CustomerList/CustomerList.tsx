@@ -1,7 +1,10 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { createCustomerQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { useFlag } from "@dashboard/featureFlags";
 import { useBulkRemoveCustomersMutation, useListCustomersQuery } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
@@ -38,6 +41,9 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
   const notify = useNotifier();
   const intl = useIntl();
   const { updateListSettings, settings } = useListSettings(ListViews.CUSTOMER_LIST);
+  const { enabled: isCustomersFiltersEnabled } = useFlag("new_filters");
+  const { valueProvider } = useConditionalFilterContext();
+  const filter = createCustomerQueryVariables(valueProvider.value);
 
   usePaginationReset(customerListUrl, params, settings.rowNumber);
 
@@ -72,9 +78,21 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber],
   );
+  const newQueryVariables = React.useMemo(
+    () => ({
+      ...paginationState,
+      filter: {
+        ...filter,
+        search: params.query,
+      },
+      sort: getSortQueryVariables(params),
+    }),
+    [params, settings.rowNumber, valueProvider.value],
+  );
+
   const { data, refetch } = useListCustomersQuery({
     displayLoader: true,
-    variables: queryVariables,
+    variables: isCustomersFiltersEnabled ? newQueryVariables : queryVariables,
   });
   const customers = mapEdgesToItems(data?.customers);
   const [changeFilters, resetFilters, handleSearchChange] = createFilterHandlers({

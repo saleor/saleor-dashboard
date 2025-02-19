@@ -15,8 +15,7 @@ export function getFilterVariables(params: WarehouseListUrlFilters): WarehouseFi
   };
 }
 
-export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
-  createFilterTabUtils<WarehouseListUrlFilters>(WAREHOUSE_FILTERS_KEY);
+export const storageUtils = createFilterTabUtils<string>(WAREHOUSE_FILTERS_KEY);
 
 export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
   WarehouseListUrlQueryParams,

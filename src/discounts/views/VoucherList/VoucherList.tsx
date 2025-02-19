@@ -42,7 +42,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.VOUCHER_LIST);
-  const { enabled: isNewGiftCardsFilterEnabled } = useFlag("vouchers_filters");
+  const { enabled: isNewGiftCardsFilterEnabled } = useFlag("new_filters");
   const { valueProvider } = useConditionalFilterContext();
   const { filters, channel } = creatVoucherQueryVariables(valueProvider.value);
 

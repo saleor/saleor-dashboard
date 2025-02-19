@@ -5,6 +5,7 @@ import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
+import { useFlag } from "@dashboard/featureFlags";
 import { useGiftCardCurrenciesQuery } from "@dashboard/graphql";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
@@ -30,6 +31,7 @@ import {
 const GiftCardListSearchAndFilters: React.FC = () => {
   const intl = useIntl();
   const [selectedChannel] = useLocalStorage("channel", "");
+  const { enabled: isNewGiftCardsFilterEnabled } = useFlag("new_filters");
   const { availableChannels } = useAppChannel(false);
   const selectedChannelData = availableChannels.find(channel => channel.slug === selectedChannel);
   const {
@@ -92,34 +94,57 @@ const GiftCardListSearchAndFilters: React.FC = () => {
 
   return (
     <>
-      <ListFilters
-        errorMessages={{
-          initialBalanceAmount: errorMessages.balanceAmount,
-          initialBalanceCurrency: errorMessages.balanceCurrency,
-          currentBalanceAmount: errorMessages.balanceAmount,
-          currentBalanceCurrency: errorMessages.balanceCurrency,
-        }}
-        currencySymbol={selectedChannelData?.currencyCode || ""}
-        initialSearch={params?.query || ""}
-        onFilterChange={changeFilters}
-        onSearchChange={handleSearchChange}
-        filterStructure={filterStructure}
-        searchPlaceholder={intl.formatMessage(messages.searchPlaceholder, {
-          exampleGiftCardCode: "21F1-39DY-V4U2",
-        })}
-        actions={
-          <Box display="flex" gap={4}>
-            {selectedRowIds.length > 0 && (
-              <>
-                <GiftCardListBulkActions />
-                <BulkDeleteButton onClick={openDeleteDialog}>
-                  <FormattedMessage defaultMessage="Delete gift cards" id="d68yq7" />
-                </BulkDeleteButton>
-              </>
-            )}
-          </Box>
-        }
-      />
+      {isNewGiftCardsFilterEnabled ? (
+        <ListFilters
+          type="expression-filter"
+          initialSearch={params?.query || ""}
+          onSearchChange={handleSearchChange}
+          searchPlaceholder={intl.formatMessage(messages.searchPlaceholder, {
+            exampleGiftCardCode: "21F1-39DY-V4U2",
+          })}
+          actions={
+            <Box display="flex" gap={4}>
+              {selectedRowIds.length > 0 && (
+                <>
+                  <GiftCardListBulkActions />
+                  <BulkDeleteButton onClick={openDeleteDialog}>
+                    <FormattedMessage defaultMessage="Delete gift cards" id="d68yq7" />
+                  </BulkDeleteButton>
+                </>
+              )}
+            </Box>
+          }
+        />
+      ) : (
+        <ListFilters
+          errorMessages={{
+            initialBalanceAmount: errorMessages.balanceAmount,
+            initialBalanceCurrency: errorMessages.balanceCurrency,
+            currentBalanceAmount: errorMessages.balanceAmount,
+            currentBalanceCurrency: errorMessages.balanceCurrency,
+          }}
+          currencySymbol={selectedChannelData?.currencyCode || ""}
+          initialSearch={params?.query || ""}
+          onFilterChange={changeFilters}
+          onSearchChange={handleSearchChange}
+          filterStructure={filterStructure}
+          searchPlaceholder={intl.formatMessage(messages.searchPlaceholder, {
+            exampleGiftCardCode: "21F1-39DY-V4U2",
+          })}
+          actions={
+            <Box display="flex" gap={4}>
+              {selectedRowIds.length > 0 && (
+                <>
+                  <GiftCardListBulkActions />
+                  <BulkDeleteButton onClick={openDeleteDialog}>
+                    <FormattedMessage defaultMessage="Delete gift cards" id="d68yq7" />
+                  </BulkDeleteButton>
+                </>
+              )}
+            </Box>
+          }
+        />
+      )}
 
       <SaveFilterTabDialog
         open={params.action === GiftCardListActionParamsEnum.SAVE_SEARCH}

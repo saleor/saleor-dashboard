@@ -2,6 +2,7 @@
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { DashboardCard } from "@dashboard/components/Card";
+import { useFlag } from "@dashboard/featureFlags";
 import { OrderDraftListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
 import { OrderDraftListUrlSortField } from "@dashboard/orders/urls";
 import { FilterPagePropsWithPresets, PageListProps, RelayToFlat, SortPage } from "@dashboard/types";
@@ -54,6 +55,7 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const filterStructure = createFilterStructure(intl, filterOpts);
   const limitsReached = isLimitReached(limits, "orders");
+  const { enabled: isDraftOrdersFilteringEnabled } = useFlag("new_filters");
 
   return (
     <>
@@ -83,30 +85,54 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
           alignItems="stretch"
           justifyContent="space-between"
         >
-          <ListFilters
-            currencySymbol={currencySymbol}
-            initialSearch={initialSearch}
-            onFilterChange={onFilterChange}
-            onFilterAttributeFocus={onFilterAttributeFocus}
-            onSearchChange={onSearchChange}
-            filterStructure={filterStructure}
-            searchPlaceholder={intl.formatMessage({
-              id: "IzECoP",
-              defaultMessage: "Search draft orders...",
-            })}
-            actions={
-              <Box display="flex" gap={4}>
-                {selectedOrderDraftIds.length > 0 && (
-                  <BulkDeleteButton onClick={onDraftOrdersDelete}>
-                    {intl.formatMessage({
-                      id: "+b/qJ9",
-                      defaultMessage: "Delete draft orders",
-                    })}
-                  </BulkDeleteButton>
-                )}
-              </Box>
-            }
-          />
+          {isDraftOrdersFilteringEnabled ? (
+            <ListFilters
+              type="expression-filter"
+              initialSearch={initialSearch}
+              onSearchChange={onSearchChange}
+              searchPlaceholder={intl.formatMessage({
+                id: "IzECoP",
+                defaultMessage: "Search draft orders...",
+              })}
+              actions={
+                <Box display="flex" gap={4}>
+                  {selectedOrderDraftIds.length > 0 && (
+                    <BulkDeleteButton onClick={onDraftOrdersDelete}>
+                      {intl.formatMessage({
+                        id: "+b/qJ9",
+                        defaultMessage: "Delete draft orders",
+                      })}
+                    </BulkDeleteButton>
+                  )}
+                </Box>
+              }
+            />
+          ) : (
+            <ListFilters
+              currencySymbol={currencySymbol}
+              initialSearch={initialSearch}
+              onFilterChange={onFilterChange}
+              onFilterAttributeFocus={onFilterAttributeFocus}
+              onSearchChange={onSearchChange}
+              filterStructure={filterStructure}
+              searchPlaceholder={intl.formatMessage({
+                id: "IzECoP",
+                defaultMessage: "Search draft orders...",
+              })}
+              actions={
+                <Box display="flex" gap={4}>
+                  {selectedOrderDraftIds.length > 0 && (
+                    <BulkDeleteButton onClick={onDraftOrdersDelete}>
+                      {intl.formatMessage({
+                        id: "+b/qJ9",
+                        defaultMessage: "Delete draft orders",
+                      })}
+                    </BulkDeleteButton>
+                  )}
+                </Box>
+              }
+            />
+          )}
         </Box>
 
         <OrderDraftListDatagrid

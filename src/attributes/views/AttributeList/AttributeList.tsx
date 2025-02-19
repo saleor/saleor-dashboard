@@ -3,8 +3,11 @@ import {
   getFilterVariables,
   storageUtils,
 } from "@dashboard/attributes/views/AttributeList/filters";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { creatAttributesQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
+import { useFlag } from "@dashboard/featureFlags";
 import { useAttributeBulkDeleteMutation, useAttributeListQuery } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
@@ -41,6 +44,9 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
   const notify = useNotifier();
   const intl = useIntl();
   const { updateListSettings, settings } = useListSettings(ListViews.ATTRIBUTE_LIST);
+  const { enabled: isAttributesFilteringEnabled } = useFlag("new_filters");
+  const { valueProvider } = useConditionalFilterContext();
+  const filters = creatAttributesQueryVariables(valueProvider.value);
 
   usePaginationReset(attributeListUrl, params, settings.rowNumber);
 
@@ -53,8 +59,19 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber],
   );
+  const newQueryVariables = React.useMemo(
+    () => ({
+      ...paginationState,
+      filter: {
+        ...filters,
+        search: params.query,
+      },
+      sort: getSortQueryVariables(params),
+    }),
+    [params, settings.rowNumber, valueProvider.value],
+  );
   const { data, loading, refetch } = useAttributeListQuery({
-    variables: queryVariables,
+    variables: isAttributesFilteringEnabled ? newQueryVariables : queryVariables,
   });
   const {
     clearRowSelection,

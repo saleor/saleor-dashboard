@@ -1,0 +1,2 @@
+export const WARNING_ICON_COLOR = "#FFB84E";
+export const WARNING_ICON_COLOR_LIGHTER = "#FFD87E";

@@ -3,30 +3,37 @@ import { stringify } from "qs";
 import { useEffect, useState } from "react";
 import useRouter from "use-react-router";
 
-import { InitialAPIState } from "../API";
+import { InitialAttributesAPIState } from "../API/initialState/attributes/useInitialAttributesState";
+import { InitialCollectionAPIState } from "../API/initialState/collections/useInitialCollectionsState";
+import { InitialGiftCardsAPIState } from "../API/initialState/giftCards/useInitialGiftCardsState";
 import { InitialOrderAPIState } from "../API/initialState/orders/useInitialOrderState";
 import { InitialPageAPIState } from "../API/initialState/page/useInitialPageState";
+import { InitialProductAPIState } from "../API/initialState/product/useProductInitialAPIState";
+import { InitialProductTypesAPIState } from "../API/initialState/productTypes/useInitialProdutTypesState";
+import { InitialStaffMembersAPIState } from "../API/initialState/staffMembers/useInitialStaffMemebersState";
 import { InitialVoucherAPIState } from "../API/initialState/vouchers/useInitialVouchersState";
 import { FilterContainer, FilterElement } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
+import { FilterProviderType, InitialAPIState } from "../types";
 import { TokenArray } from "./TokenArray";
 import {
+  AttributesFetchingParams,
+  CollectionFetchingParams,
   FetchingParams,
-  getFetchingPrams,
+  getEmptyFetchingPrams,
+  GiftCardsFetchingParams,
   OrderFetchingParams,
   PageFetchingParams,
+  ProductTypesFetchingParams,
+  StaffMembersFetchingParams,
   VoucherFetchingParams,
 } from "./TokenArray/fetchingParams";
 import { prepareStructure } from "./utils";
 
 export const useUrlValueProvider = (
   locationSearch: string,
-  type: "product" | "order" | "discount" | "voucher" | "page",
-  initialState?:
-    | InitialAPIState
-    | InitialOrderAPIState
-    | InitialVoucherAPIState
-    | InitialPageAPIState,
+  type: FilterProviderType,
+  initialState?: InitialAPIState,
 ): FilterValueProvider => {
   const router = useRouter();
   const params = new URLSearchParams(locationSearch);
@@ -44,14 +51,16 @@ export const useUrlValueProvider = (
   params.delete("after");
 
   const tokenizedUrl = new TokenArray(params.toString());
-  const paramsFromType = getFetchingPrams(type);
-  const fetchingParams = paramsFromType ? tokenizedUrl.getFetchingParams(paramsFromType) : null;
+  const paramsFromType = getEmptyFetchingPrams(type);
+  const fetchingParams = paramsFromType
+    ? tokenizedUrl.getFetchingParams(paramsFromType, type)
+    : null;
 
   useEffect(() => {
     if (initialState) {
       switch (type) {
         case "product":
-          (initialState as InitialAPIState).fetchQueries(fetchingParams as FetchingParams);
+          (initialState as InitialProductAPIState).fetchQueries(fetchingParams as FetchingParams);
           break;
         case "order":
           (initialState as InitialOrderAPIState).fetchQueries(
@@ -65,6 +74,31 @@ export const useUrlValueProvider = (
           break;
         case "page":
           (initialState as InitialPageAPIState).fetchQueries(fetchingParams as PageFetchingParams);
+          break;
+        case "gift-cards":
+          (initialState as InitialGiftCardsAPIState).fetchQueries(
+            fetchingParams as GiftCardsFetchingParams,
+          );
+          break;
+        case "collection":
+          (initialState as InitialCollectionAPIState).fetchQueries(
+            fetchingParams as CollectionFetchingParams,
+          );
+          break;
+        case "product-types":
+          (initialState as InitialProductTypesAPIState).fetchQueries(
+            fetchingParams as ProductTypesFetchingParams,
+          );
+          break;
+        case "staff-members":
+          (initialState as InitialStaffMembersAPIState).fetchQueries(
+            fetchingParams as StaffMembersFetchingParams,
+          );
+          break;
+        case "attributes":
+          (initialState as InitialAttributesAPIState).fetchQueries(
+            fetchingParams as AttributesFetchingParams,
+          );
           break;
       }
     }
