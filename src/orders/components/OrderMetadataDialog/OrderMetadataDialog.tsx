@@ -8,7 +8,9 @@ import {
 } from "@dashboard/graphql";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
-import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import createMetadataUpdateHandler, {
+  ObjectWithMetadata,
+} from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { flattenErrors } from "@dashboard/utils/hook-form/errors";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -27,7 +29,8 @@ type ProductVariantMetadata = Pick<
 
 export type OrderMetadataDialogData = OrderLineMetadata & {
   variant: ProductVariantMetadata;
-} & Pick<OrderLineWithMetadataFragment, "productName">;
+  productName: string;
+};
 
 interface OrderMetadataDialogProps {
   open: boolean;
@@ -143,7 +146,7 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
                   isLoading={loading}
                   data={{
                     metadata: data?.variant?.metadata ?? [],
-                    privateMetadata: data?.variant?.privateMetadata,
+                    privateMetadata: data?.variant?.privateMetadata ?? [],
                   }}
                   hidePrivateMetadata={!hasManageProducts}
                   className={classes.metadata}

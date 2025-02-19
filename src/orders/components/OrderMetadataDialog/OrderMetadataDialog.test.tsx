@@ -55,7 +55,7 @@ describe("OrderMetadataDialog", () => {
     clearErrorNotifications: jest.fn(),
   };
 
-  const wrapper = ({ children }) => (
+  const wrapper = ({ children }: { children: React.ReactNode }) => (
     <MessageContext.Provider value={notifierMock}>{children}</MessageContext.Provider>
   );
 

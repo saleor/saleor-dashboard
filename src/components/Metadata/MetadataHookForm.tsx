@@ -1,6 +1,6 @@
 import { MetadataInput } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useFieldArray, UseFormReturn } from "react-hook-form";
 
@@ -11,20 +11,19 @@ import { getDataKey, parseEventData } from "./utils";
 
 type Data = {
   metadata: MetadataInput[];
-  privateMetadata: MetadataInput[] | undefined;
+  privateMetadata: MetadataInput[];
 };
 
 export interface MetadataProps
   extends Omit<MetadataCardProps, "data" | "isPrivate" | "onChange">,
-    Pick<UseFormReturn<Data>, "getValues" | "control" | "trigger"> {
+  Pick<UseFormReturn<Data>, "getValues" | "control" | "trigger"> {
   isLoading?: boolean;
   readonly?: boolean;
   // This props is used to hide the private metadata section when user doesn't have enough permissions.
   hidePrivateMetadata?: boolean;
-  className?: string;
 }
 
-const validateDuplicateKeys = (metadata: MetadataInput[]) => {
+const validateDuplicateKeys = (metadata: MetadataInput[]): true | string => {
   const keys = metadata.map(entry => entry.key);
   const uniqueKeys = new Set(keys);
 
@@ -40,9 +39,8 @@ export const MetadataHookForm = ({
   control,
   getValues,
   trigger,
-  className,
 }: MetadataProps) => {
-  const metadataControls = useFieldArray({
+  const metadataControls = useFieldArray<Data>({
     control,
     name: "metadata",
     rules: {
@@ -50,7 +48,7 @@ export const MetadataHookForm = ({
     },
   });
 
-  const privateMetadataControls = useFieldArray({
+  const privateMetadataControls = useFieldArray<Data>({
     control,
     name: "privateMetadata",
     rules: {
@@ -66,7 +64,7 @@ export const MetadataHookForm = ({
     const calledMetadataControls =
       metadataType === "metadata" ? metadataControls : privateMetadataControls;
 
-    if (action === EventDataAction.update) {
+    if (action === EventDataAction.update && typeof fieldIndex === "number") {
       // Note: form.setValue cannot be used, because it doesn't trigger a re-render
       const existingValue = getValues(`${metadataType}.${fieldIndex}`);
 
@@ -80,13 +78,13 @@ export const MetadataHookForm = ({
       calledMetadataControls.append({ key: "", value: "" });
     }
 
-    if (action === EventDataAction.delete) {
+    if (action === EventDataAction.delete && typeof fieldIndex === "number") {
       calledMetadataControls.remove(fieldIndex);
     }
   };
 
   return (
-    <Box display="grid" gap={2} paddingBottom={10} className={className}>
+    <Box display="grid" gap={2}>
       {isLoading ? (
         <>
           <MetadataLoadingCard />
