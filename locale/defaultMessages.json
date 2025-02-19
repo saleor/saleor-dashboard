@@ -317,6 +317,10 @@
     "context": "channels alphabetically title",
     "string": "Channels from A to Z"
   },
+  "/mwSjm": {
+    "context": "modal subheader, read-only product variant metadata",
+    "string": "This is a metadata of the variant that is being used in this ordered item"
+  },
   "/n+NRO": {
     "string": "Note id"
   },
@@ -4237,6 +4241,10 @@
   },
   "PFnobO": {
     "string": "greater"
+  },
+  "PH4R7g": {
+    "context": "modal header, read-only product variant metadata",
+    "string": "Product variant metadata"
   },
   "PHUcrU": {
     "context": "date when order was placed",
@@ -9029,6 +9037,10 @@
   "ugnggZ": {
     "string": "Created menu"
   },
+  "ui7jMt": {
+    "context": "modal header, editing order line metadata",
+    "string": "Order line metadata"
+  },
   "uilt7q": {
     "context": "issued cards amount label",
     "string": "Cards Issued"
@@ -9550,6 +9562,10 @@
   "xy66ru": {
     "context": "custom preset delete, dialog header",
     "string": "Delete preset"
+  },
+  "y+CqSF": {
+    "context": "modal subheader, editing order line metadata",
+    "string": "Represents the metadata of the given ordered item"
   },
   "y/UWBR": {
     "string": "There is no address to show for this customer"
