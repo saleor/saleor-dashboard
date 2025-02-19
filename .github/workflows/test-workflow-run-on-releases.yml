@@ -4,9 +4,22 @@ on:
   pull_request:
 
 jobs:
-  test-3-20:
-    uses: ./.github/workflows/run-tests-on-release.yml
-    with:
-      VERSION: "3.20"
-      CUSTOM_VERSION: "3.20.0-abcdef"
-    secrets: inherit
+  trigger-release-workflow:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: run-automation-tests
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api /repos/saleor/saleor-dashboard/dispatches \
+            --input - <<< '{
+              "event_type": "automation-tests-event",
+              "client_payload": {
+                "project": "CORE",
+                "environment": "SANDBOX",
+                "custom_version": "3.20.0-abcdef",
+                "release_pr": "123"
+              }
+            }'
+
+
