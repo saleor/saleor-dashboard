@@ -141,7 +141,7 @@ export const appEventDeliveriesFragment = gql`
         }
       }
       pendingDelivers: eventDeliveries(
-        first: 1
+        first: 6
         filter: { status: PENDING }
         sortBy: { field: CREATED_AT, direction: DESC }
       ) {
