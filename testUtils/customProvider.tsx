@@ -149,7 +149,7 @@ export class CustomMockLink extends ApolloLink {
     const mockedResponses = this.mockedResponsesByKey[key];
     // This is the modified part -->
     const responseIndex = mockedResponses
-      ? mockedResponses.findIndex((res, index) => {
+      ? mockedResponses.findIndex(res => {
           const mockedResponseVars = res.request.variables || {};
 
           if (equal(requestVariables, mockedResponseVars)) {

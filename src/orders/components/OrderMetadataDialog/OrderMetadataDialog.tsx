@@ -8,9 +8,7 @@ import {
 } from "@dashboard/graphql";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
-import createMetadataUpdateHandler, {
-  ObjectWithMetadata,
-} from "@dashboard/utils/handlers/metadataUpdateHandler";
+import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { flattenErrors } from "@dashboard/utils/hook-form/errors";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -106,7 +104,6 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
                   control={control}
                   getValues={getValues}
                   trigger={trigger}
-                  className={classes.metadata}
                 />
 
                 {allFormErrors.length > 0 && (
