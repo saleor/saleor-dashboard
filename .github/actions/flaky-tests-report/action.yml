@@ -40,7 +40,7 @@ runs:
       with:
         report-path: ctrf-reports/merged-report.json
         summary-report: true
-        commit-report: true
+        failed-report: true
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
       if: always()
