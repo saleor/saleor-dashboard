@@ -206,12 +206,8 @@ describe("OrderMetadataDialog", () => {
       // Before making changes save buttoon should be duisabled
       expect(screen.getByTestId("save")).toBeDisabled();
 
-      // Change a field value
-      const orderLineMetadataSection = screen.getByTestId("order-line-metadata");
-      const valueInput = within(orderLineMetadataSection).getByTestId("metadata-value-input");
-
-      await userEvent.clear(valueInput);
-      await userEvent.type(valueInput, newValue);
+      await userEvent.clear(existingValueInput);
+      await userEvent.type(existingValueInput, newValue);
 
       expect(screen.getByTestId("save")).toBeEnabled();
 
@@ -352,6 +348,75 @@ describe("OrderMetadataDialog", () => {
       expect(
         within(orderLineMetadata).queryByDisplayValue("order-line-value"),
       ).not.toBeInTheDocument();
+    });
+
+    it("allows editing existing private metadata", async () => {
+      const newValue = "new-value";
+
+      const updatePrivateMetadataMock = {
+        request: {
+          query: UpdatePrivateMetadataDocument,
+        },
+        variableMatcher: jest.fn().mockReturnValue(true),
+        newValue: {
+          data: {
+            updatePrivateMetadata: {
+              item: {
+                privateMetadata: [
+                  {
+                    key: mockData.privateMetadata[0].key,
+                    value: newValue,
+                    __typename: "MetadataItem",
+                  },
+                ],
+                id: "order-line-id",
+                __typename: "OrderLine",
+              },
+              errors: [],
+            },
+          },
+        },
+      };
+
+      render(
+        <CustomMockedProvider mocks={[updatePrivateMetadataMock]} addTypename={false}>
+          <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
+        </CustomMockedProvider>,
+        { wrapper },
+      );
+
+      const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
+      const expandButtons = within(orderLineMetadata).getAllByTestId("expand");
+      const expandButtonPrivateMetadata = expandButtons[1]; // Private metadata is second
+
+      // Show private metadata
+      fireEvent.click(expandButtonPrivateMetadata);
+
+      // Verify existing metadata is displayed
+      const existingKeyInput =
+        within(orderLineMetadata).getByDisplayValue("order-line-private-key");
+      const existingValueInput = within(orderLineMetadata).getByDisplayValue(
+        "order-line-private-value",
+      );
+
+      expect(existingKeyInput).toBeInTheDocument();
+      expect(existingValueInput).toBeInTheDocument();
+
+      // Before making changes save buttoon should be duisabled
+      expect(screen.getByTestId("save")).toBeDisabled();
+
+      await userEvent.clear(existingValueInput);
+      await userEvent.type(existingValueInput, newValue);
+
+      expect(screen.getByTestId("save")).toBeEnabled();
+
+      await userEvent.click(screen.getByTestId("save"));
+
+      expect(updatePrivateMetadataMock.variableMatcher).toHaveBeenCalledWith({
+        id: mockData.id,
+        input: [{ key: mockData.privateMetadata[0].key, value: newValue }],
+        keysToDelete: [],
+      });
     });
 
     it("allows adding new private metadata", async () => {
