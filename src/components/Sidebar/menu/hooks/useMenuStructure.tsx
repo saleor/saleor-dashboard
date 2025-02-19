@@ -55,7 +55,7 @@ export function useMenuStructure() {
     url: AppPaths.appListPath,
     type: "item",
     endAdornment: hasAppAlertsFeatureFlag ? <SidebarAppAlert /> : null,
-    onClick: handleAppsListItemClick,
+    onClick: () => handleAppsListItemClick(new Date().toISOString()),
   });
   const menuItems: SidebarMenuItem[] = [
     {

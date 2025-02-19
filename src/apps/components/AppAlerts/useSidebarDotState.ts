@@ -24,24 +24,29 @@ export const useSidebarDotState = () => {
         lastClickDateRef.current = sidebarDotRemoteState.lastClickDate;
         lastFailedAttemptDateRef.current = sidebarDotRemoteState.lastFailedAttemptDate;
       }
-    } catch (_) {
-      console.error("Failed to parse webhookAlertState value");
+    } catch (error) {
+      console.error("Failed to parse webhookAlertState value", error);
     }
   }, [webhookAlertState]);
 
-  const handleClick = async () => {
-    const currentDate = new Date().toISOString();
+  const handleClick = async (clickDate: string) => {
     const metadataInput = [
       {
         key: "sidebarDotDeliveryAttempt_test",
         value: JSON.stringify({
-          lastClickDate: currentDate,
+          lastClickDate: clickDate,
           lastFailedAttemptDate: lastFailedAttemptDateRef.current ?? "",
         } satisfies SidebarRemoteDotState),
       },
     ];
 
-    await persist(metadataInput);
+    try {
+      await persist(metadataInput);
+      // We shouldn't hide the dot immediately after click
+      // setIsSidebarDotVisible(false); // Hide dot immediately after click
+    } catch (error) {
+      console.error("Failed to persist metadata on click", error);
+    }
   };
 
   const handleFailedAttempt = async (failedAttemptDate: string) => {
@@ -59,7 +64,6 @@ export const useSidebarDotState = () => {
     ];
 
     try {
-      // causes rerender and multiple mutations
       await persist(metadataInput);
 
       if (!lastClickDateRef.current || failedAttemptDate > lastClickDateRef.current) {
@@ -69,7 +73,7 @@ export const useSidebarDotState = () => {
       lastClickDateRef.current = lastClickDate;
       lastFailedAttemptDateRef.current = lastFailedAttemptDate;
     } catch (error) {
-      console.error("Failed to persist metadata");
+      console.error("Failed to persist metadata on failed attempt", error);
     }
   };
 

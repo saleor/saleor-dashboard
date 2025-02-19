@@ -128,7 +128,14 @@ describe("useAppsFailedDeliveries", () => {
                           {
                             node: {
                               attempts: {
-                                edges: [{ node: { status: "FAILED" } }],
+                                edges: [
+                                  {
+                                    node: {
+                                      status: "FAILED",
+                                      createdAt: "2023-01-19T09:50:43.343Z",
+                                    },
+                                  },
+                                ],
                               },
                             },
                           },
@@ -181,7 +188,14 @@ describe("useAppsFailedDeliveries", () => {
                           {
                             node: {
                               attempts: {
-                                edges: [{ node: { status: "FAILED" } }],
+                                edges: [
+                                  {
+                                    node: {
+                                      status: "FAILED",
+                                      createdAt: "2023-01-19T09:50:43.343Z",
+                                    },
+                                  },
+                                ],
                               },
                             },
                           },
@@ -226,7 +240,14 @@ describe("useAppsFailedDeliveries", () => {
                           {
                             node: {
                               attempts: {
-                                edges: [{ node: { status: "FAILED" } }],
+                                edges: [
+                                  {
+                                    node: {
+                                      status: "FAILED",
+                                      createdAt: "2023-01-19T09:50:43.343Z",
+                                    },
+                                  },
+                                ],
                               },
                             },
                           },
