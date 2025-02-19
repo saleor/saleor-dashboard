@@ -97,9 +97,17 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
           gap={3}
         >
           <Box marginLeft="auto" display="flex" alignItems="center" gap={5}>
-            {appAlertsEnabled && <AppRowDisabledAlert app={app} />}
+            {appAlertsEnabled ? (
+              <AppRowDisabledAlert app={app} />
+            ) : (
+              !app.isActive && (
+                <Text size={2} color="default2">
+                  <FormattedMessage {...messages.appDisabled} />
+                </Text>
+              )
+            )}
 
-            <AppRowWebhookIssueAlert app={app} />
+            {appAlertsEnabled && <AppRowWebhookIssueAlert app={app} />}
           </Box>
         </Box>
       </List.Item>
