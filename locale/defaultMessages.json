@@ -5987,6 +5987,9 @@
     "context": "section header",
     "string": "Data privacy"
   },
+  "a5KupU": {
+    "string": "gift cards"
+  },
   "a5msuh": {
     "string": "Yes"
   },
@@ -6095,6 +6098,9 @@
   },
   "aheQdn": {
     "string": "Last Name"
+  },
+  "aibYbu": {
+    "string": "Learn more about {giftCards}"
   },
   "akXDST": {
     "context": "section header",
