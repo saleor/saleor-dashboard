@@ -10,7 +10,9 @@ import { MetadataLoadingCard } from "./MetadataLoadingCard";
 import { EventDataAction, EventDataField } from "./types";
 import { getDataKey, parseEventData } from "./utils";
 
-export interface MetadataProps extends Omit<MetadataCardProps, "data" | "isPrivate">, BoxProps {
+export interface MetadataProps
+  extends Omit<MetadataCardProps, "data" | "isPrivate">,
+    Omit<BoxProps, `on${string}` | "data"> {
   data: {
     metadata: MetadataInput[];
     privateMetadata: MetadataInput[] | undefined;
@@ -50,22 +52,22 @@ export const Metadata: React.FC<MetadataProps> = memo(
           value:
             action === EventDataAction.update
               ? updateAtIndex(
-                {
-                  ...dataToUpdate[fieldIndex],
-                  key: field === EventDataField.name ? value : dataToUpdate[fieldIndex].key,
-                  value: field === EventDataField.value ? value : dataToUpdate[fieldIndex].value,
-                },
-                dataToUpdate,
-                fieldIndex,
-              )
+                  {
+                    ...dataToUpdate[fieldIndex],
+                    key: field === EventDataField.name ? value : dataToUpdate[fieldIndex].key,
+                    value: field === EventDataField.value ? value : dataToUpdate[fieldIndex].value,
+                  },
+                  dataToUpdate,
+                  fieldIndex,
+                )
               : action === EventDataAction.add
                 ? [
-                  ...dataToUpdate,
-                  {
-                    key: "",
-                    value: "",
-                  },
-                ]
+                    ...dataToUpdate,
+                    {
+                      key: "",
+                      value: "",
+                    },
+                  ]
                 : removeAtIndex(dataToUpdate, fieldIndex),
         },
       });
