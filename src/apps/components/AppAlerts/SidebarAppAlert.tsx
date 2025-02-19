@@ -1,4 +1,5 @@
 import { AppSections } from "@dashboard/apps/urls";
+import { WARNING_ICON_COLOR, WARNING_ICON_COLOR_LIGHTER } from "@dashboard/colors";
 import { ExclamationIcon } from "@dashboard/icons/ExclamationIcon";
 import { ExclamationIconFilled } from "@dashboard/icons/ExclamationIconFilled";
 import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
@@ -10,12 +11,10 @@ import { useAppsAlert } from "./useAppsAlert";
 
 const ExclamationIconComponent = () => {
   const [isHovered, setIsHovered] = useState(false);
-  const colorLighter = "#FFD87E";
-  const colorDefault = "#FFB84E";
 
   return (
     <Box
-      __color={isHovered ? colorLighter : colorDefault}
+      __color={isHovered ? WARNING_ICON_COLOR_LIGHTER : WARNING_ICON_COLOR}
       __width={17}
       __height={17}
       onMouseEnter={() => setIsHovered(true)}
