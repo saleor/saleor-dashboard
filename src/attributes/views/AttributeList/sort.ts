@@ -8,8 +8,6 @@ export function getSortQueryField(sort: AttributeListUrlSortField): AttributeSor
       return AttributeSortField.NAME;
     case AttributeListUrlSortField.slug:
       return AttributeSortField.SLUG;
-    case AttributeListUrlSortField.searchable:
-      return AttributeSortField.FILTERABLE_IN_DASHBOARD;
     case AttributeListUrlSortField.useInFacetedSearch:
       return AttributeSortField.FILTERABLE_IN_STOREFRONT;
     case AttributeListUrlSortField.visible:

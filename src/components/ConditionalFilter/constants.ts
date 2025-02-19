@@ -42,6 +42,11 @@ export const STATIC_CONDITIONS = {
   isAvailable: [{ type: "select", label: "is", value: "input-1" }],
   isPublished: [{ type: "select", label: "is", value: "input-1" }],
   isVisibleInListing: [{ type: "select", label: "is", value: "input-1" }],
+  isVariantOnly: [{ type: "select", label: "is", value: "input-1" }],
+  valueRequired: [{ type: "select", label: "is", value: "input-1" }],
+  visibleInStorefront: [{ type: "select", label: "is", value: "input-1" }],
+  filterableInStorefront: [{ type: "select", label: "is", value: "input-1" }],
+  attributeType: [{ type: "select", label: "is", value: "input-1" }],
   hasCategory: [{ type: "select", label: "is", value: "input-1" }],
   giftCard: [{ type: "select", label: "is", value: "input-1" }],
   startDate: [
@@ -196,6 +201,21 @@ export const STATIC_CONDITIONS = {
       value: "input-1",
     },
   ],
+  typeOfProduct: [
+    {
+      type: "select",
+      label: "is",
+      value: "input-1",
+    },
+  ],
+  configurable: [
+    {
+      type: "select",
+      label: "is",
+      value: "input-1",
+    },
+  ],
+  staffMemberStatus: [{ type: "select", label: "is", value: "input-1" }],
 };
 
 export const CONSTRAINTS = {
@@ -296,7 +316,7 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
   },
   {
     value: "created",
-    label: "Created",
+    label: "Creation date",
     type: "created",
     slug: "created",
   },
@@ -392,7 +412,7 @@ export const STATIC_VOUCHER_OPTIONS: LeftOperand[] = [
 export const STATIC_COLLECTION_OPTIONS: LeftOperand[] = [
   {
     value: "published",
-    label: "Published",
+    label: "Is published",
     type: "published",
     slug: "published",
   },
@@ -428,7 +448,7 @@ export const STATIC_DRAFT_ORDER_OPTIONS: LeftOperand[] = [
   },
   {
     value: "created",
-    label: "Created",
+    label: "Creation date",
     type: "created",
     slug: "created",
   },
@@ -494,6 +514,69 @@ export const STATIC_CUSTOMER_OPTIONS: LeftOperand[] = [
   },
 ];
 
+export const STATIC_PRODUCT_TYPES_OPTIONS: LeftOperand[] = [
+  {
+    value: "configurable",
+    label: "Has variant attributes",
+    type: "configurable",
+    slug: "configurable",
+  },
+  {
+    value: "typeOfProduct",
+    label: "Type",
+    type: "typeOfProduct",
+    slug: "typeOfProduct",
+  },
+];
+
+export const STAFF_MEMBER_OPTIONS: LeftOperand[] = [
+  {
+    value: "staffMemberStatus",
+    label: "Status",
+    type: "staffMemberStatus",
+    slug: "staffMemberStatus",
+  },
+];
+
+export const STATIC_ATTRIBUTES_OPTIONS: LeftOperand[] = [
+  {
+    value: "filterableInStorefront",
+    label: "Filterable in Storefront",
+    type: "filterableInStorefront",
+    slug: "filterableInStorefront",
+  },
+  {
+    value: "isVariantOnly",
+    label: "Variant only",
+    type: "isVariantOnly",
+    slug: "isVariantOnly",
+  },
+  {
+    value: "valueRequired",
+    label: "Is required",
+    type: "valueRequired",
+    slug: "valueRequired",
+  },
+  {
+    value: "visibleInStorefront",
+    label: "Visible in Storefront",
+    type: "visibleInStorefront",
+    slug: "visibleInStorefront",
+  },
+  {
+    value: "attributeType",
+    label: "Type",
+    type: "attributeType",
+    slug: "attributeType",
+  },
+  {
+    value: "channel",
+    label: "Channel",
+    type: "channel",
+    slug: "channel",
+  },
+];
+
 export const STATIC_OPTIONS = [
   ...STATIC_PRODUCT_OPTIONS,
   ...STATIC_DISCOUNT_OPTIONS,
@@ -504,6 +587,9 @@ export const STATIC_OPTIONS = [
   ...STATIC_GIFT_CARDS_OPTIONS,
   ...STATIC_CUSTOMER_OPTIONS,
   ...STATIC_COLLECTION_OPTIONS,
+  ...STATIC_PRODUCT_TYPES_OPTIONS,
+  ...STAFF_MEMBER_OPTIONS,
+  ...STATIC_ATTRIBUTES_OPTIONS,
 ];
 
 export const ATTRIBUTE_INPUT_TYPE_CONDITIONS = {

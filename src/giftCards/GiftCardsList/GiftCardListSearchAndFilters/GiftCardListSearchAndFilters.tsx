@@ -31,7 +31,7 @@ import {
 const GiftCardListSearchAndFilters: React.FC = () => {
   const intl = useIntl();
   const [selectedChannel] = useLocalStorage("channel", "");
-  const { enabled: isNewGiftCardsFilterEnabled } = useFlag("gift_cards_filters");
+  const { enabled: isNewGiftCardsFilterEnabled } = useFlag("new_filters");
   const { availableChannels } = useAppChannel(false);
   const selectedChannelData = availableChannels.find(channel => channel.slug === selectedChannel);
   const {

@@ -1,21 +1,9 @@
 import { useApolloClient } from "@apollo/client";
-import { PageTypesHandler } from "@dashboard/components/ConditionalFilter/API/Handler";
-import {
-  FilterContainer,
-  FilterElement,
-} from "@dashboard/components/ConditionalFilter/FilterElement";
 
+import { FilterContainer } from "../../FilterElement";
 import { FilterAPIProvider } from "../FilterAPIProvider";
-
-const getFilterElement = (value: FilterContainer, index: number): FilterElement => {
-  const possibleFilterElement = value[index];
-
-  if (typeof possibleFilterElement !== "string" && !Array.isArray(possibleFilterElement)) {
-    return possibleFilterElement;
-  }
-
-  throw new Error("Unknown filter element used to create API handler");
-};
+import { PageTypesHandler } from "../Handler";
+import { getFilterElement } from "../utils";
 
 export const usePageAPIProvider = (): FilterAPIProvider => {
   const client = useApolloClient();

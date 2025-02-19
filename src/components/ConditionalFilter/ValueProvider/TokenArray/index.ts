@@ -5,17 +5,23 @@ import { FilterContainer, FilterElement } from "../../FilterElement";
 import { FilterProviderType, InitialResponseType } from "../../types";
 import { UrlEntry, UrlToken } from "../UrlToken";
 import {
+  AttributesFetchingParams,
   CollectionFetchingParams,
   FetchingParams,
   FetchingParamsType,
   GiftCardsFetchingParams,
   OrderFetchingParams,
   PageFetchingParams,
+  ProductTypesFetchingParams,
+  StaffMembersFetchingParams,
+  toAttributesFetchingParams,
   toCollectionFetchingParams,
   toFetchingParams,
   toGiftCardsFetchingParams,
   toOrderFetchingParams,
   toPageFetchingParams,
+  toProductTypesFetchingParams,
+  toStaffMembersFetchingParams,
   toVouchersFetchingParams,
   VoucherFetchingParams,
 } from "./fetchingParams";
@@ -98,6 +104,27 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
           .reduce<GiftCardsFetchingParams>(
             toGiftCardsFetchingParams,
             params as GiftCardsFetchingParams,
+          );
+      case "product-types":
+        return this.asFlatArray()
+          .filter(token => token.isLoadable())
+          .reduce<ProductTypesFetchingParams>(
+            toProductTypesFetchingParams,
+            params as ProductTypesFetchingParams,
+          );
+      case "staff-members":
+        return this.asFlatArray()
+          .filter(token => token.isLoadable())
+          .reduce<StaffMembersFetchingParams>(
+            toStaffMembersFetchingParams,
+            params as StaffMembersFetchingParams,
+          );
+      case "attributes":
+        return this.asFlatArray()
+          .filter(token => token.isLoadable())
+          .reduce<AttributesFetchingParams>(
+            toAttributesFetchingParams,
+            params as AttributesFetchingParams,
           );
       default:
         return this.asFlatArray()
