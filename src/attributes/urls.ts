@@ -27,7 +27,6 @@ export enum AttributeListUrlSortField {
   name = "name",
   slug = "slug",
   visible = "visible",
-  searchable = "searchable",
   useInFacetedSearch = "use-in-faceted-search",
 }
 export type AttributeListUrlSort = Sort<AttributeListUrlSortField>;

@@ -17,7 +17,6 @@ const getFilterElement = (value: FilterContainer, index: number): FilterElement 
 };
 
 const booleanTypes = [
-  "filterableInDashboard",
   "isVariantOnly",
   "valueRequired",
   "visibleInStorefront",

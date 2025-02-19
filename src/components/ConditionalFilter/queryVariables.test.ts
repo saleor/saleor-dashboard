@@ -673,27 +673,10 @@ describe("ConditionalFilter / queryVariables / creatAttributesQueryVariables", (
       false,
     );
 
-    const isFilterableInDashboardFilterElement = new FilterElement(
-      new ExpressionValue("filterableInDashboard", "Filterable", "filterableInDashboard"),
-      new Condition(
-        ConditionOptions.fromStaticElementName("filterableInDashboard"),
-        new ConditionSelected("true", { type: "select", label: "is", value: "input-1" }, [], false),
-        false,
-      ),
-      false,
-    );
-
-    const filters: FilterContainer = [
-      channelFilterElemen,
-      "AND",
-      typeFilterElement,
-      "AND",
-      isFilterableInDashboardFilterElement,
-    ];
+    const filters: FilterContainer = [channelFilterElemen, "AND", typeFilterElement];
     const expectedOutput = {
       channel: "default-channel",
       type: "PRODUCT_TYPE",
-      filterableInDashboard: true,
     };
     // Act
     const result = creatAttributesQueryVariables(filters);

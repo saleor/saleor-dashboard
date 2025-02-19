@@ -101,39 +101,6 @@ describe("ConditionalFilter / API / Page / InitialAttributesState", () => {
     expect(result).toEqual(expectedOutput);
   });
 
-  it("should filter by filterableInDashboard", () => {
-    // Arrange
-    const initialAttributesState = InitialAttributesStateResponse.empty();
-
-    initialAttributesState.filterableInDashboard = [
-      {
-        label: "Yes",
-        value: "true",
-        slug: "true",
-      },
-      {
-        label: "No",
-        value: "false",
-        slug: "false",
-      },
-    ];
-
-    const token = UrlToken.fromUrlEntry(new UrlEntry("s0.filterableInDashboard", "false"));
-    const expectedOutput = [
-      {
-        label: "No",
-        value: "false",
-        slug: "false",
-      },
-    ];
-
-    // Act
-    const result = initialAttributesState.filterByUrlToken(token);
-
-    // Assert
-    expect(result).toEqual(expectedOutput);
-  });
-
   it("should filter by isVariantOnly", () => {
     // Arrange
     const initialAttributesState = InitialAttributesStateResponse.empty();

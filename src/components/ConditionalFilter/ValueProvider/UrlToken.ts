@@ -47,7 +47,6 @@ const ATTRIBUTES_STATICS = [
   "channel",
   "attributeType",
   "filterableInStorefront",
-  "filterableInDashboard",
   "isVariantOnly",
   "valueRequired",
   "visibleInStorefront",

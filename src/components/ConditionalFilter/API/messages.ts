@@ -97,9 +97,9 @@ export const staffMembersStatusMessages = defineMessages({
     id: "nG1+Cz",
   },
   deactivated: {
-    defaultMessage: "Deactivated",
+    defaultMessage: "Inactive",
     description: "staff members status deactivated",
-    id: "SPF/Zn",
+    id: "oYV+Ru",
   },
 });
 

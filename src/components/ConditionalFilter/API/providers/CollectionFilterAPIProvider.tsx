@@ -1,22 +1,32 @@
 import { ApolloClient, useApolloClient } from "@apollo/client";
-import { CollectionPublished } from "@dashboard/graphql/types.generated";
-import { IntlShape, useIntl } from "react-intl";
 
 import { FilterContainer, FilterElement } from "../../FilterElement";
 import { FilterAPIProvider } from "../FilterAPIProvider";
-import { ChannelHandler, EnumValuesHandler, Handler, NoopValuesHandler } from "../Handler";
+import { BooleanValuesHandler, ChannelHandler, Handler, NoopValuesHandler } from "../Handler";
 import { getFilterElement } from "../utils";
 
 const createAPIHandler = (
   selectedRow: FilterElement,
   client: ApolloClient<unknown>,
   inputValue: string,
-  intl: IntlShape,
 ): Handler => {
   const rowType = selectedRow.rowType();
 
   if (rowType === "published") {
-    return new EnumValuesHandler(CollectionPublished, "published", intl);
+    return new BooleanValuesHandler([
+      {
+        label: "Yes",
+        value: "true",
+        type: rowType,
+        slug: "true",
+      },
+      {
+        label: "No",
+        value: "false",
+        type: rowType,
+        slug: "false",
+      },
+    ]);
   }
 
   if (rowType === "metadata") {
@@ -31,7 +41,6 @@ const createAPIHandler = (
 };
 
 export const useCollectionFilterAPIProvider = (): FilterAPIProvider => {
-  const intl = useIntl();
   const client = useApolloClient();
 
   const fetchRightOptions = async (
@@ -42,7 +51,7 @@ export const useCollectionFilterAPIProvider = (): FilterAPIProvider => {
     const index = parseInt(position, 10);
     const filterElement = getFilterElement(value, index);
 
-    const handler = createAPIHandler(filterElement, client, inputValue, intl);
+    const handler = createAPIHandler(filterElement, client, inputValue);
 
     return handler.fetch();
   };

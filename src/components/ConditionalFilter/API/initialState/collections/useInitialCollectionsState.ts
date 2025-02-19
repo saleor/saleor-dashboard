@@ -4,12 +4,9 @@ import {
   _GetChannelOperandsDocument,
   _GetChannelOperandsQuery,
   _GetChannelOperandsQueryVariables,
-  CollectionPublished,
 } from "@dashboard/graphql";
 import { useState } from "react";
-import { useIntl } from "react-intl";
 
-import { EnumValuesHandler } from "../../Handler";
 import { createInitialCollectionState } from "../helpers";
 import { InitialCollectionAPIResponse } from "../types";
 import { InitialCollectionStateResponse } from "./InitialCollectionState";
@@ -22,7 +19,6 @@ export interface InitialCollectionAPIState {
 
 export const useInitialCollectionState = (): InitialCollectionAPIState => {
   const client = useApolloClient();
-  const intl = useIntl();
 
   const [data, setData] = useState<InitialCollectionStateResponse>(
     InitialCollectionStateResponse.empty(),
@@ -40,12 +36,9 @@ export const useInitialCollectionState = (): InitialCollectionAPIState => {
       );
     }
 
-    const publishedInit = new EnumValuesHandler(CollectionPublished, "published", intl);
-
     const data = await Promise.all(queriesToRun);
     const initialState = {
       ...createInitialCollectionState(data, channel),
-      published: await publishedInit.fetch(),
     };
 
     setData(
