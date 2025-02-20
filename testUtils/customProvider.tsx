@@ -1,3 +1,4 @@
+/* eslint-disable no-fallthrough */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 import {
@@ -21,9 +22,174 @@ import {
   stringifyForDisplay,
 } from "@apollo/client/utilities";
 import { invariant } from "@apollo/client/utilities/globals";
-import { equal } from "@wry/equality";
 import { print } from "graphql";
 import * as React from "react";
+
+// @wry/equality package
+const { toString, hasOwnProperty } = Object.prototype;
+const fnToStr = Function.prototype.toString;
+const previousComparisons = new Map<object, Set<object>>();
+
+function equal(a: any, b: any): boolean {
+  try {
+    return check(a, b);
+  } finally {
+    previousComparisons.clear();
+  }
+}
+
+function check(a: any, b: any): boolean {
+  if (a === b) {
+    return true;
+  }
+
+  const aTag = toString.call(a);
+  const bTag = toString.call(b);
+
+  if (aTag !== bTag) {
+    return false;
+  }
+
+  switch (aTag) {
+    case "[object Array]":
+      if (a.length !== b.length) return false;
+    case "[object Object]": {
+      if (previouslyCompared(a, b)) return true;
+
+      const aKeys = definedKeys(a);
+      const bKeys = definedKeys(b);
+
+      const keyCount = aKeys.length;
+
+      if (keyCount !== bKeys.length) return false;
+
+      for (let k = 0; k < keyCount; ++k) {
+        if (!hasOwnProperty.call(b, aKeys[k])) {
+          return false;
+        }
+      }
+
+      for (let k = 0; k < keyCount; ++k) {
+        const key = aKeys[k];
+
+        if (!check(a[key], b[key])) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    case "[object Error]":
+      return a.name === b.name && a.message === b.message;
+
+    case "[object Number]":
+      if (a !== a) return b !== b;
+    case "[object Boolean]":
+    case "[object Date]":
+      return +a === +b;
+
+    case "[object RegExp]":
+    case "[object String]":
+      return a == `${b}`;
+
+    case "[object Map]":
+    case "[object Set]": {
+      if (a.size !== b.size) return false;
+
+      if (previouslyCompared(a, b)) return true;
+
+      const aIterator = a.entries();
+      const isMap = aTag === "[object Map]";
+
+      // eslint-disable-next-line no-constant-condition
+      while (true) {
+        const info = aIterator.next();
+
+        if (info.done) break;
+
+        const [aKey, aValue] = info.value;
+
+        if (!b.has(aKey)) {
+          return false;
+        }
+
+        if (isMap && !check(aValue, b.get(aKey))) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    case "[object Uint16Array]":
+    case "[object Uint8Array]":
+    case "[object Uint32Array]":
+    case "[object Int32Array]":
+    case "[object Int8Array]":
+    case "[object Int16Array]":
+    case "[object ArrayBuffer]":
+      a = new Uint8Array(a);
+      b = new Uint8Array(b);
+    case "[object DataView]": {
+      let len = a.byteLength;
+
+      if (len === b.byteLength) {
+        while (len-- && a[len] === b[len]) {
+          // Keep looping as long as the bytes are equal.
+        }
+      }
+
+      return len === -1;
+    }
+
+    case "[object AsyncFunction]":
+    case "[object GeneratorFunction]":
+    case "[object AsyncGeneratorFunction]":
+    case "[object Function]": {
+      const aCode = fnToStr.call(a);
+
+      if (aCode !== fnToStr.call(b)) {
+        return false;
+      }
+
+      return !endsWith(aCode, nativeCodeSuffix);
+    }
+  }
+
+  return false;
+}
+
+function definedKeys<TObject extends object>(obj: TObject) {
+  return Object.keys(obj).filter(isDefinedKey, obj);
+}
+function isDefinedKey<TObject extends object>(this: TObject, key: keyof TObject) {
+  return this[key] !== void 0;
+}
+
+const nativeCodeSuffix = "{ [native code] }";
+
+function endsWith(full: string, suffix: string) {
+  const fromIndex = full.length - suffix.length;
+
+  return fromIndex >= 0 && full.indexOf(suffix, fromIndex) === fromIndex;
+}
+
+function previouslyCompared(a: object, b: object): boolean {
+  let bSet = previousComparisons.get(a);
+
+  if (bSet) {
+    if (bSet.has(b)) return true;
+  } else {
+    previousComparisons.set(a, (bSet = new Set()));
+  }
+
+  bSet.add(b);
+
+  return false;
+}
+
+// end @wry/equality package
 
 export interface MockedProviderProps<TSerializedCache = {}> {
   mocks?: ReadonlyArray<MockedResponse>;
