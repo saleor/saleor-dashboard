@@ -1,13 +1,18 @@
 // @ts-nocheck
 
-import A54222 from "./images/discounts-list.png"
-import M51879 from "./images/improved_refunds.png"
+import X82432 from "./images/app-alerts.jpg"
+import J50320 from "./images/discounts-list.png"
+import K65771 from "./images/improved_refunds.png"
 
-const discounts_rules = () => (<><p><img src={A54222} alt="Discount rules"/></p>
+const app_alerts = () => (<><p><img src={X82432} alt="new filters"/>
+Experience new notifications displaying alerts for apps in the Dashboard. 
+Get meaningful information when Saleor detects issues with an app.</p>
+</>)
+const discounts_rules = () => (<><p><img src={J50320} alt="Discount rules"/></p>
 <p>Apply the new discounts rules to narrow your promotions audience.
 Set up conditions and channels that must be fulfilled to apply defined reward.</p>
 </>)
-const improved_refunds = () => (<><p><img src={M51879} alt="Improved refunds"/></p>
+const improved_refunds = () => (<><p><img src={K65771} alt="Improved refunds"/></p>
 <h3 id="enable-the-enhanced-refund-feature-to-streamline-your-refund-process">Enable the enhanced refund feature to streamline your refund process:</h3>
 <ul>
 <li><p>• Choose between automatic calculations based on selected items or enter refund amounts directly for overcharges and custom adjustments.</p>
@@ -33,6 +38,15 @@ New filters have been added to the following pages:</p>
 </>)
 
 export const AVAILABLE_FLAGS = [{
+  name: "app_alerts",
+  displayName: "App alerts",
+  component: app_alerts,
+  visible: false,
+  content: {
+    enabled: false,
+    payload: "default",
+  }
+},{
   name: "discounts_rules",
   displayName: "Discounts rules",
   component: discounts_rules,
