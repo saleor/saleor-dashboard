@@ -38,3 +38,31 @@ test('updates form values on private metadata change', () => {
   fireEvent.change(privateMetadataField, { target: { value: 'New private value' } });
   expect(result.current.formValues).toHaveValue('New private value');
 });
+
+test('handles metadata add', () => {
+  const { result } = renderHook(() => useMetadataFormControls());
+  const metadataList = result.current.metadataFields;
+  fireEvent.click(metadataList[0].querySelector('button'));
+  expect(metadataList.length).toBe(2);
+});
+
+test('handles private metadata add', () => {
+  const { result } = renderHook(() => useMetadataFormControls());
+  const privateMetadataList = result.current.privateMetadataFields;
+  fireEvent.click(privateMetadataList[0].querySelector('button'));
+  expect(privateMetadataList.length).toBe(2);
+});
+
+test('handles metadata remove', () => {
+  const { result } = renderHook(() => useMetadataFormControls());
+  const metadataList = result.current.metadataFields;
+  fireEvent.click(metadataList[0].querySelector('button'));
+  expect(metadataList.length).toBe(1);
+});
+
+test('handles private metadata remove', () => {
+  const { result } = renderHook(() => useMetadataFormControls());
+  const privateMetadataList = result.current.privateMetadataFields;
+  fireEvent.click(privateMetadataList[0].querySelector('button'));
+  expect(privateMetadataList.length).toBe(1);
+});
