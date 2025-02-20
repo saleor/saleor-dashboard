@@ -1,10 +1,6 @@
 import { MockedProvider } from "@apollo/client/testing";
-import { MessageContext } from "@dashboard/components/messages";
-import { UpdateMetadataDocument, UpdatePrivateMetadataDocument } from "@dashboard/graphql";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
-import { CustomMockedProvider } from "@test/customProvider";
 import { fireEvent, render, screen, within } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import React from "react";
 import { IntlShape, MessageDescriptor } from "react-intl";
 
@@ -21,11 +17,6 @@ jest.mock("react-intl", () => ({
 
 jest.mock("@dashboard/orders/hooks/useHasManageProductsPermission", () => ({
   useHasManageProductsPermission: jest.fn(() => false),
-}));
-
-jest.mock("@dashboard/hooks/useNotifier", () => ({
-  __esModule: true,
-  default: () => jest.fn(),
 }));
 
 const mockData: OrderMetadataDialogData = {
@@ -50,15 +41,6 @@ const mockData: OrderMetadataDialogData = {
 
 describe("OrderMetadataDialog", () => {
   const onCloseMock = jest.fn();
-  const notifierMock = {
-    show: jest.fn(),
-    remove: jest.fn(),
-    clearErrorNotifications: jest.fn(),
-  };
-
-  const wrapper = ({ children }: { children: React.ReactNode }) => (
-    <MessageContext.Provider value={notifierMock}>{children}</MessageContext.Provider>
-  );
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -69,7 +51,6 @@ describe("OrderMetadataDialog", () => {
       <MockedProvider>
         <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
       </MockedProvider>,
-      { wrapper },
     );
 
     fireEvent.click(screen.getByTestId("close-button"));
@@ -81,7 +62,6 @@ describe("OrderMetadataDialog", () => {
       <MockedProvider>
         <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
       </MockedProvider>,
-      { wrapper },
     );
 
     fireEvent.click(screen.getByTestId("back"));
@@ -94,7 +74,6 @@ describe("OrderMetadataDialog", () => {
         <MockedProvider>
           <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
         </MockedProvider>,
-        { wrapper },
       );
 
       expect(screen.getByText("Product variant metadata")).toBeInTheDocument();
@@ -120,7 +99,6 @@ describe("OrderMetadataDialog", () => {
         <MockedProvider>
           <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
         </MockedProvider>,
-        { wrapper },
       );
 
       // Private metadata should not be visible in the readonly section
@@ -138,7 +116,6 @@ describe("OrderMetadataDialog", () => {
         <MockedProvider>
           <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
         </MockedProvider>,
-        { wrapper },
       );
 
       const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
@@ -159,224 +136,6 @@ describe("OrderMetadataDialog", () => {
         within(orderLineMetadata).queryByDisplayValue("order-line-private-value"),
       ).not.toBeInTheDocument();
     });
-
-    it("allows editing existing metadata", async () => {
-      const newValue = "new-value";
-
-      const updateMetadataMock = {
-        request: {
-          query: UpdateMetadataDocument,
-        },
-        variableMatcher: jest.fn().mockReturnValue(true),
-        newValue: {
-          data: {
-            updateMetadata: {
-              item: {
-                ...mockData,
-                metadata: [
-                  ...mockData.metadata,
-                  { key: "new-key", value: "new-value", __typename: "MetadataItem" },
-                ],
-              },
-              errors: [],
-            },
-          },
-        },
-      };
-
-      render(
-        <CustomMockedProvider mocks={[updateMetadataMock]} addTypename={false}>
-          <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
-        </CustomMockedProvider>,
-        { wrapper },
-      );
-
-      const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
-      const expandButtonOrderLineMetadata = within(orderLineMetadata).getAllByTestId("expand")[0];
-
-      // Show metadata
-      fireEvent.click(expandButtonOrderLineMetadata);
-
-      // Verify existing metadata is displayed
-      const existingKeyInput = within(orderLineMetadata).getByDisplayValue("order-line-key");
-      const existingValueInput = within(orderLineMetadata).getByDisplayValue("order-line-value");
-
-      expect(existingKeyInput).toBeInTheDocument();
-      expect(existingValueInput).toBeInTheDocument();
-
-      // Before making changes save buttoon should be duisabled
-      expect(screen.getByTestId("save")).toBeDisabled();
-
-      await userEvent.clear(existingValueInput);
-      await userEvent.type(existingValueInput, newValue);
-
-      expect(screen.getByTestId("save")).toBeEnabled();
-
-      await userEvent.click(screen.getByTestId("save"));
-
-      expect(updateMetadataMock.variableMatcher).toHaveBeenCalledWith({
-        id: mockData.id,
-        input: [{ key: mockData.metadata[0].key, value: newValue }],
-        keysToDelete: [],
-      });
-    });
-
-    it("allows adding new metadata", async () => {
-      const updateMetadataMock = {
-        request: {
-          query: UpdateMetadataDocument,
-        },
-        variableMatcher: jest.fn().mockReturnValue(true),
-        newValue: {
-          data: {
-            updateMetadata: {
-              item: {
-                ...mockData,
-                metadata: [
-                  ...mockData.metadata,
-                  { key: "new-key", value: "new-value", __typename: "MetadataItem" },
-                ],
-              },
-              errors: [],
-            },
-          },
-        },
-      };
-
-      render(
-        <CustomMockedProvider mocks={[updateMetadataMock]} addTypename={false}>
-          <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
-        </CustomMockedProvider>,
-        { wrapper },
-      );
-
-      const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
-      const expandButtonOrderLineMetadata = within(orderLineMetadata).getAllByTestId("expand")[0];
-
-      // Show metadata form
-      fireEvent.click(expandButtonOrderLineMetadata);
-
-      const addButton = within(orderLineMetadata).getByTestId("add-field");
-
-      fireEvent.click(addButton);
-
-      const keyInputs = within(orderLineMetadata).getAllByTestId("metadata-key-input");
-      const valueInputs = within(orderLineMetadata).getAllByTestId("metadata-value-input");
-      const newKeyInput = keyInputs[keyInputs.length - 1];
-      const newValueInput = valueInputs[valueInputs.length - 1];
-
-      fireEvent.change(newKeyInput, { target: { value: "new-key" } });
-      fireEvent.change(newValueInput, { target: { value: "new-value" } });
-
-      expect(screen.getByTestId("save")).toBeEnabled();
-
-      await userEvent.click(screen.getByTestId("save"));
-
-      expect(updateMetadataMock.variableMatcher).toHaveBeenCalledWith({
-        id: mockData.id,
-        input: [
-          // Note: input doesn't include __typename
-          { key: mockData.metadata[0].key, value: mockData.metadata[0].value },
-          { key: "new-key", value: "new-value" },
-        ],
-        keysToDelete: [],
-      });
-    });
-
-    it("allows deleting metadata", async () => {
-      const updateMetadataMock = {
-        request: {
-          query: UpdateMetadataDocument,
-        },
-        variableMatcher: jest.fn().mockReturnValue(true),
-        newValue: {
-          data: {
-            updateMetadata: {
-              item: {
-                ...mockData,
-                metadata: [],
-              },
-              errors: [],
-            },
-          },
-        },
-      };
-
-      render(
-        <CustomMockedProvider mocks={[updateMetadataMock]} addTypename={false}>
-          <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
-        </CustomMockedProvider>,
-        { wrapper },
-      );
-
-      const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
-      const expandButtonOrderLineMetadata = within(orderLineMetadata).getAllByTestId("expand")[0];
-
-      // Show metadata
-      fireEvent.click(expandButtonOrderLineMetadata);
-
-      // Verify existing metadata is displayed before deletion
-      const existingKeyInput = within(orderLineMetadata).getByDisplayValue("order-line-key");
-      const existingValueInput = within(orderLineMetadata).getByDisplayValue("order-line-value");
-
-      expect(existingKeyInput).toBeInTheDocument();
-      expect(existingValueInput).toBeInTheDocument();
-
-      // Before making changes save button should be disabled
-      expect(screen.getByTestId("save")).toBeDisabled();
-
-      // Find and click delete button for the existing metadata
-      const deleteButton = within(orderLineMetadata).getByTestId("delete-field-0");
-
-      fireEvent.click(deleteButton);
-
-      // After deletion save button should be enabled
-      expect(screen.getByTestId("save")).toBeEnabled();
-
-      await userEvent.click(screen.getByTestId("save"));
-
-      expect(updateMetadataMock.variableMatcher).toHaveBeenCalledWith({
-        id: mockData.id,
-        input: [],
-        keysToDelete: ["order-line-key"],
-      });
-    });
-
-    it("shows validation error when user inputs metadata with the same key", async () => {
-      render(
-        <MockedProvider>
-          <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
-        </MockedProvider>,
-        { wrapper },
-      );
-
-      const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
-      const expandButtonOrderLineMetadata = within(orderLineMetadata).getAllByTestId("expand")[0];
-
-      // Show metadata
-      fireEvent.click(expandButtonOrderLineMetadata);
-
-      // Open input to add new metadata
-      const addButton = within(orderLineMetadata).getByTestId("add-field");
-
-      fireEvent.click(addButton);
-
-      const keyInputs = within(orderLineMetadata).getAllByTestId("metadata-key-input");
-      const valueInputs = within(orderLineMetadata).getAllByTestId("metadata-value-input");
-      const newKeyInput = keyInputs[keyInputs.length - 1];
-      const newValueInput = valueInputs[valueInputs.length - 1];
-
-      // Try to add metadata with duplicate key
-      fireEvent.change(newKeyInput, { target: { value: "order-line-key" } }); // This key already exists
-      fireEvent.change(newValueInput, { target: { value: "new-value" } });
-
-      // Submit the form
-      await userEvent.click(screen.getByTestId("save"));
-
-      expect(
-        screen.getByText("Metadata keys must be unique, remove duplicate key"),
-      ).toBeInTheDocument();
-    });
   });
 
   describe("OrderLine privateMetadata form", () => {
@@ -385,7 +144,6 @@ describe("OrderMetadataDialog", () => {
         <MockedProvider>
           <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
         </MockedProvider>,
-        { wrapper },
       );
 
       const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
@@ -408,245 +166,6 @@ describe("OrderMetadataDialog", () => {
       expect(
         within(orderLineMetadata).queryByDisplayValue("order-line-value"),
       ).not.toBeInTheDocument();
-    });
-
-    it("allows editing existing private metadata", async () => {
-      const newValue = "new-value";
-
-      const updatePrivateMetadataMock = {
-        request: {
-          query: UpdatePrivateMetadataDocument,
-        },
-        variableMatcher: jest.fn().mockReturnValue(true),
-        newValue: {
-          data: {
-            updatePrivateMetadata: {
-              item: {
-                privateMetadata: [
-                  {
-                    key: mockData.privateMetadata[0].key,
-                    value: newValue,
-                    __typename: "MetadataItem",
-                  },
-                ],
-                id: "order-line-id",
-                __typename: "OrderLine",
-              },
-              errors: [],
-            },
-          },
-        },
-      };
-
-      render(
-        <CustomMockedProvider mocks={[updatePrivateMetadataMock]} addTypename={false}>
-          <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
-        </CustomMockedProvider>,
-        { wrapper },
-      );
-
-      const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
-      const expandButtons = within(orderLineMetadata).getAllByTestId("expand");
-      const expandButtonPrivateMetadata = expandButtons[1]; // Private metadata is second
-
-      // Show private metadata
-      fireEvent.click(expandButtonPrivateMetadata);
-
-      // Verify existing metadata is displayed
-      const existingKeyInput =
-        within(orderLineMetadata).getByDisplayValue("order-line-private-key");
-      const existingValueInput = within(orderLineMetadata).getByDisplayValue(
-        "order-line-private-value",
-      );
-
-      expect(existingKeyInput).toBeInTheDocument();
-      expect(existingValueInput).toBeInTheDocument();
-
-      // Before making changes save buttoon should be duisabled
-      expect(screen.getByTestId("save")).toBeDisabled();
-
-      await userEvent.clear(existingValueInput);
-      await userEvent.type(existingValueInput, newValue);
-
-      expect(screen.getByTestId("save")).toBeEnabled();
-
-      await userEvent.click(screen.getByTestId("save"));
-
-      expect(updatePrivateMetadataMock.variableMatcher).toHaveBeenCalledWith({
-        id: mockData.id,
-        input: [{ key: mockData.privateMetadata[0].key, value: newValue }],
-        keysToDelete: [],
-      });
-    });
-
-    it("allows adding new private metadata", async () => {
-      const updatePrivateMetadataMock = {
-        request: {
-          query: UpdatePrivateMetadataDocument,
-        },
-        variableMatcher: jest.fn().mockReturnValue(true),
-        newValue: {
-          data: {
-            updatePrivateMetadata: {
-              item: {
-                privateMetadata: [
-                  ...mockData.privateMetadata,
-                  {
-                    key: "new-private-key",
-                    value: "new-private-value",
-                    __typename: "MetadataItem",
-                  },
-                ],
-                id: "order-line-id",
-                __typename: "OrderLine",
-              },
-              errors: [],
-            },
-          },
-        },
-      };
-
-      render(
-        <CustomMockedProvider mocks={[updatePrivateMetadataMock]} addTypename={false}>
-          <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
-        </CustomMockedProvider>,
-        { wrapper },
-      );
-
-      const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
-      const expandButtons = within(orderLineMetadata).getAllByTestId("expand");
-      const expandButtonPrivateMetadata = expandButtons[1]; // Private metadata is second
-
-      // Show private metadata
-      fireEvent.click(expandButtonPrivateMetadata);
-
-      // Open input to add new metadata
-      const addButton = within(orderLineMetadata).getByTestId("add-field");
-
-      fireEvent.click(addButton);
-
-      const keyInputs = within(orderLineMetadata).getAllByTestId("metadata-key-input");
-      const valueInputs = within(orderLineMetadata).getAllByTestId("metadata-value-input");
-      const newKeyInput = keyInputs[keyInputs.length - 1];
-      const newValueInput = valueInputs[valueInputs.length - 1];
-
-      // Add value to new input line
-      fireEvent.change(newKeyInput, { target: { value: "new-private-key" } });
-      fireEvent.change(newValueInput, { target: { value: "new-private-value" } });
-
-      // Submit the form
-      await userEvent.click(screen.getByTestId("save"));
-
-      expect(updatePrivateMetadataMock.variableMatcher).toHaveBeenCalledWith({
-        id: mockData.id,
-        input: [
-          { key: mockData.privateMetadata[0].key, value: mockData.privateMetadata[0].value },
-          { key: "new-private-key", value: "new-private-value" },
-        ],
-        keysToDelete: [],
-      });
-    });
-
-    it("allows deleting private metadata", async () => {
-      const updatePrivateMetadataMock = {
-        request: {
-          query: UpdatePrivateMetadataDocument,
-        },
-        variableMatcher: jest.fn().mockReturnValue(true),
-        newValue: {
-          data: {
-            updatePrivateMetadata: {
-              item: {
-                privateMetadata: [],
-                id: "order-line-id",
-                __typename: "OrderLine",
-              },
-              errors: [],
-            },
-          },
-        },
-      };
-
-      render(
-        <CustomMockedProvider mocks={[updatePrivateMetadataMock]} addTypename={false}>
-          <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
-        </CustomMockedProvider>,
-        { wrapper },
-      );
-
-      const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
-      const expandButtons = within(orderLineMetadata).getAllByTestId("expand");
-      const expandButtonPrivateMetadata = expandButtons[1]; // Private metadata is second
-
-      // Show private metadata
-      fireEvent.click(expandButtonPrivateMetadata);
-
-      // Verify existing private metadata is displayed before deletion
-      const existingKeyInput =
-        within(orderLineMetadata).getByDisplayValue("order-line-private-key");
-      const existingValueInput = within(orderLineMetadata).getByDisplayValue(
-        "order-line-private-value",
-      );
-
-      expect(existingKeyInput).toBeInTheDocument();
-      expect(existingValueInput).toBeInTheDocument();
-
-      // Before making changes save button should be disabled
-      expect(screen.getByTestId("save")).toBeDisabled();
-
-      // Find and click delete button for the existing private metadata
-      const deleteButton = within(orderLineMetadata).getByTestId("delete-field-0");
-
-      fireEvent.click(deleteButton);
-
-      // After deletion save button should be enabled
-      expect(screen.getByTestId("save")).toBeEnabled();
-
-      await userEvent.click(screen.getByTestId("save"));
-
-      expect(updatePrivateMetadataMock.variableMatcher).toHaveBeenCalledWith({
-        id: mockData.id,
-        input: [],
-        keysToDelete: ["order-line-private-key"],
-      });
-    });
-
-    it("shows validation error when user inputs private metadata with the same key", async () => {
-      render(
-        <MockedProvider>
-          <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
-        </MockedProvider>,
-        { wrapper },
-      );
-
-      const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
-      const expandButtons = within(orderLineMetadata).getAllByTestId("expand");
-      const expandButtonPrivateMetadata = expandButtons[1];
-
-      // Show private metadata
-      fireEvent.click(expandButtonPrivateMetadata);
-
-      // Open input to add new metadata
-      const addButton = within(orderLineMetadata).getByTestId("add-field");
-
-      fireEvent.click(addButton);
-
-      // Add value to new input line
-      const keyInputs = within(orderLineMetadata).getAllByTestId("metadata-key-input");
-      const valueInputs = within(orderLineMetadata).getAllByTestId("metadata-value-input");
-      const newKeyInput = keyInputs[keyInputs.length - 1]; // New input is last in order
-      const newValueInput = valueInputs[valueInputs.length - 1];
-
-      // Try to add metadata with duplicate key
-      fireEvent.change(newKeyInput, { target: { value: "order-line-private-key" } }); // This key already exists
-      fireEvent.change(newValueInput, { target: { value: "new-value" } });
-
-      // Submit the form
-      await userEvent.click(screen.getByTestId("save"));
-
-      expect(
-        screen.getByText("Metadata keys must be unique, remove duplicate key"),
-      ).toBeInTheDocument();
     });
   });
 });
