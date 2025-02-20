@@ -83,31 +83,32 @@ export const MetadataHookForm = ({
     }
   };
 
+  if (isLoading) {
+     return (
+        <Box display="grid" gap={2}>
+            <MetadataLoadingCard />
+            {!hidePrivateMetadata && <MetadataLoadingCard isPrivate />}
+        </Box>
+     )
+  } 
+  
+  
   return (
     <Box display="grid" gap={2}>
-      {isLoading ? (
-        <>
-          <MetadataLoadingCard />
-          {!hidePrivateMetadata && <MetadataLoadingCard isPrivate />}
-        </>
-      ) : (
-        <>
+        <MetadataCard
+          data={metadataControls.fields}
+          isPrivate={false}
+          readonly={readonly}
+          onChange={event => change(event, false)}
+        />
+        {(privateMetadataControls.fields || !hidePrivateMetadata) && (
           <MetadataCard
-            data={metadataControls.fields}
-            isPrivate={false}
+            data={privateMetadataControls.fields}
+            isPrivate={true}
             readonly={readonly}
-            onChange={event => change(event, false)}
+            onChange={event => change(event, true)}
           />
-          {(privateMetadataControls.fields || !hidePrivateMetadata) && (
-            <MetadataCard
-              data={privateMetadataControls.fields}
-              isPrivate={true}
-              readonly={readonly}
-              onChange={event => change(event, true)}
-            />
-          )}
-        </>
-      )}
+        )}
     </Box>
   );
 };
