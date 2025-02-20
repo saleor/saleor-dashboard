@@ -1013,6 +1013,9 @@
   "4LRapg": {
     "string": "Discount removed"
   },
+  "4MIO2H": {
+    "string": "Issues found.{break}Review app alerts."
+  },
   "4PlW0w": {
     "context": "tracking number",
     "string": "Tracking Number: {trackingNumber}"
