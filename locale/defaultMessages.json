@@ -1565,10 +1565,6 @@
   "8HRy+U": {
     "string": "Category Description"
   },
-  "8Hq18g": {
-    "context": "create gift card product type alert message",
-    "string": "Create a gift card product type"
-  },
   "8InCjD": {
     "string": "Please provide range of postal codes you want to add to the include/exclude list."
   },
@@ -1842,10 +1838,6 @@
   "AHK0K9": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
-  },
-  "AJgl5u": {
-    "context": "gift card product message",
-    "string": "gift card product"
   },
   "AKv2BI": {
     "context": "order refund subtitle",
@@ -3124,10 +3116,6 @@
   },
   "HqRNN8": {
     "string": "Support"
-  },
-  "HqeqEV": {
-    "context": "create gift card product alert message",
-    "string": "Create a gift card product"
   },
   "Hswqx2": {
     "string": "Delete discounts"
@@ -5005,10 +4993,6 @@
     "context": "button",
     "string": "Save variant"
   },
-  "U9o2bV": {
-    "context": "no gift card products and types alert message",
-    "string": "{createGiftCardProductType} and {giftCardProduct} to start selling gift cards in your store."
-  },
   "UBuKZ9": {
     "context": "searchbar placeholder",
     "string": "Country"
@@ -5201,10 +5185,6 @@
   "VHuzgq": {
     "context": "table actions",
     "string": "Actions"
-  },
-  "VI+X8H": {
-    "context": "no gift card product types alert message",
-    "string": "{createGiftCardProductType} to start selling gift cards in your store."
   },
   "VIABHy": {
     "context": "error message",
@@ -5990,9 +5970,6 @@
     "context": "section header",
     "string": "Data privacy"
   },
-  "a5KupU": {
-    "string": "gift cards"
-  },
   "a5msuh": {
     "string": "Yes"
   },
@@ -6007,6 +5984,10 @@
   "aAAxKp": {
     "context": "table column header",
     "string": "Product"
+  },
+  "aBpkVh": {
+    "context": "gift cards docs link",
+    "string": "gift cards"
   },
   "aCJwVq": {
     "context": "warehouse",
@@ -6101,9 +6082,6 @@
   },
   "aheQdn": {
     "string": "Last Name"
-  },
-  "aibYbu": {
-    "string": "Learn more about {giftCards}"
   },
   "akXDST": {
     "context": "section header",
@@ -7391,10 +7369,6 @@
   },
   "jmZSK1": {
     "string": "Product is not available in selected channels"
-  },
-  "jmh0rV": {
-    "context": "no gift card products alert message",
-    "string": "{createGiftCardProduct} to start selling gift cards in your store."
   },
   "jqJqdE": {
     "context": "VariantDetailsChannelsAvailabilityCard no items available",
@@ -8689,6 +8663,10 @@
   "sK1FPw": {
     "context": "categories section name",
     "string": "Categories"
+  },
+  "sOlOZB": {
+    "context": "gift cards page subheader",
+    "string": "Learn more about {giftCards}"
   },
   "sR0urA": {
     "context": "dialog content",
