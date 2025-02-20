@@ -19,7 +19,6 @@ type SubtitleType =
   | "product_list"
   | "order_list"
   | "dev_panel"
-  | "webhooks_events"
   | "gift_cards"
   | "staff_members";
 
