@@ -582,8 +582,11 @@ describe("OrderMetadataDialog", () => {
       fireEvent.click(expandButtonPrivateMetadata);
 
       // Verify existing private metadata is displayed before deletion
-      const existingKeyInput = within(orderLineMetadata).getByDisplayValue("order-line-private-key");
-      const existingValueInput = within(orderLineMetadata).getByDisplayValue("order-line-private-value");
+      const existingKeyInput =
+        within(orderLineMetadata).getByDisplayValue("order-line-private-key");
+      const existingValueInput = within(orderLineMetadata).getByDisplayValue(
+        "order-line-private-value",
+      );
 
       expect(existingKeyInput).toBeInTheDocument();
       expect(existingValueInput).toBeInTheDocument();

@@ -1,4 +1,5 @@
 import { FieldError, FieldErrors } from "react-hook-form";
+
 import { flattenErrors } from "./errors";
 
 describe("flattenErrors", () => {
@@ -90,4 +91,4 @@ describe("flattenErrors", () => {
       "City is required",
     ]);
   });
-}); 
+});
