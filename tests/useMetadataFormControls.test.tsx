@@ -1,47 +1,40 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
 import { useMetadataFormControls } from '../MetadataHookForm/useMetadataFormControls';
-import { useForm } from 'react-hook-form';
 
-describe('useMetadataFormControls', () => {
-  it('renders metadata fields', () => {
-    const { getByTestId } = render(<useMetadataFormControls />);
-    const metadataFields = getByTestId('metadata-fields');
-    expect(metadataFields).toBeInTheDocument();
-  });
+test('renders metadata fields', () => {
+  const { result } = renderHook(() => useMetadataFormControls());
+  expect(result.current.metadataFields).toBeInTheDocument();
+});
 
-  it('renders private metadata fields', () => {
-    const { getByTestId } = render(<useMetadataFormControls />);
-    const privateMetadataFields = getByTestId('private-metadata-fields');
-    expect(privateMetadataFields).toBeInTheDocument();
-  });
+test('renders private metadata fields', () => {
+  const { result } = renderHook(() => useMetadataFormControls());
+  expect(result.current.privateMetadataFields).toBeInTheDocument();
+});
 
-  it('handles metadata change', () => {
-    const { getByTestId } = render(<useMetadataFormControls />);
-    const metadataField = getByTestId('metadata-field-0');
-    fireEvent.change(metadataField, { target: { value: 'New value' } });
-    expect(metadataField).toHaveValue('New value');
-  });
+test('handles metadata change', () => {
+  const { result } = renderHook(() => useMetadataFormControls());
+  const metadataField = result.current.metadataFields[0];
+  fireEvent.change(metadataField, { target: { value: 'New value' } });
+  expect(metadataField).toHaveValue('New value');
+});
 
-  it('handles private metadata change', () => {
-    const { getByTestId } = render(<useMetadataFormControls />);
-    const privateMetadataField = getByTestId('private-metadata-field-0');
-    fireEvent.change(privateMetadataField, { target: { value: 'New private value' } });
-    expect(privateMetadataField).toHaveValue('New private value');
-  });
+test('handles private metadata change', () => {
+  const { result } = renderHook(() => useMetadataFormControls());
+  const privateMetadataField = result.current.privateMetadataFields[0];
+  fireEvent.change(privateMetadataField, { target: { value: 'New private value' } });
+  expect(privateMetadataField).toHaveValue('New private value');
+});
 
-  it('updates form values on metadata change', () => {
-    const { getByTestId } = render(<useMetadataFormControls />);
-    const metadataField = getByTestId('metadata-field-0');
-    fireEvent.change(metadataField, { target: { value: 'New value' } });
-    const formValues = getByTestId('form-values');
-    expect(formValues).toHaveValue('New value');
-  });
+test('updates form values on metadata change', () => {
+  const { result } = renderHook(() => useMetadataFormControls());
+  const metadataField = result.current.metadataFields[0];
+  fireEvent.change(metadataField, { target: { value: 'New value' } });
+  expect(result.current.formValues).toHaveValue('New value');
+});
 
-  it('updates form values on private metadata change', () => {
-    const { getByTestId } = render(<useMetadataFormControls />);
-    const privateMetadataField = getByTestId('private-metadata-field-0');
-    fireEvent.change(privateMetadataField, { target: { value: 'New private value' } });
-    const formValues = getByTestId('form-values');
-    expect(formValues).toHaveValue('New private value');
-  });
+test('updates form values on private metadata change', () => {
+  const { result } = renderHook(() => useMetadataFormControls());
+  const privateMetadataField = result.current.privateMetadataFields[0];
+  fireEvent.change(privateMetadataField, { target: { value: 'New private value' } });
+  expect(result.current.formValues).toHaveValue('New private value');
 });
