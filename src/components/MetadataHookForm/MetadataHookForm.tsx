@@ -16,14 +16,12 @@ export interface MetadataProps
   extends Omit<MetadataCardProps, "data" | "isPrivate" | "onChange">,
     Pick<UseFormReturn<Data>, "getValues" | "control" | "trigger"> {
   isLoading?: boolean;
-  readonly?: boolean;
   // This props is used to hide the private metadata section when user doesn't have enough permissions.
   hidePrivateMetadata?: boolean;
 }
 
 export const MetadataHookForm = ({
   isLoading,
-  readonly = false,
   hidePrivateMetadata = false,
   control,
   getValues,
@@ -47,17 +45,11 @@ export const MetadataHookForm = ({
 
   return (
     <Box display="grid" gap={2}>
-      <MetadataCard
-        data={metadataFields}
-        isPrivate={false}
-        readonly={readonly}
-        onChange={handleMetadataChange}
-      />
-      {(privateMetadataFields || !hidePrivateMetadata) && (
+      <MetadataCard data={metadataFields} isPrivate={false} onChange={handleMetadataChange} />
+      {privateMetadataFields && !hidePrivateMetadata && (
         <MetadataCard
           data={privateMetadataFields}
           isPrivate={true}
-          readonly={readonly}
           onChange={handlePrivateMetadataChange}
         />
       )}
