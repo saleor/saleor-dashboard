@@ -99,7 +99,7 @@ export const AppPermissionFragmentDoc = gql`
     `;
 export const AppEventDeliveriesFragmentDoc = gql`
     fragment AppEventDeliveries on App {
-  webhooks {
+  webhooks @include(if: $PERMISSION_MANAGE_APPS) {
     failedDelivers: eventDeliveries(
       first: 1
       filter: {status: FAILED}
@@ -3502,7 +3502,7 @@ export const WebhookDetailsFragmentDoc = gql`
 }
     ${WebhookFragmentDoc}`;
 export const AppFailedPendingWebhooksDocument = gql`
-    query AppFailedPendingWebhooks {
+    query AppFailedPendingWebhooks($PERMISSION_MANAGE_APPS: Boolean!) {
   apps(first: 50, filter: {type: THIRDPARTY}) {
     edges {
       node {
@@ -3525,10 +3525,11 @@ export const AppFailedPendingWebhooksDocument = gql`
  * @example
  * const { data, loading, error } = useAppFailedPendingWebhooksQuery({
  *   variables: {
+ *      PERMISSION_MANAGE_APPS: // value for 'PERMISSION_MANAGE_APPS'
  *   },
  * });
  */
-export function useAppFailedPendingWebhooksQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.AppFailedPendingWebhooksQuery, Types.AppFailedPendingWebhooksQueryVariables>) {
+export function useAppFailedPendingWebhooksQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AppFailedPendingWebhooksQuery, Types.AppFailedPendingWebhooksQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return ApolloReactHooks.useQuery<Types.AppFailedPendingWebhooksQuery, Types.AppFailedPendingWebhooksQueryVariables>(AppFailedPendingWebhooksDocument, options);
       }
@@ -4023,7 +4024,7 @@ export type AppUpdatePermissionsMutationHookResult = ReturnType<typeof useAppUpd
 export type AppUpdatePermissionsMutationResult = Apollo.MutationResult<Types.AppUpdatePermissionsMutation>;
 export type AppUpdatePermissionsMutationOptions = Apollo.BaseMutationOptions<Types.AppUpdatePermissionsMutation, Types.AppUpdatePermissionsMutationVariables>;
 export const AppsListDocument = gql`
-    query AppsList($before: String, $after: String, $first: Int, $last: Int, $sort: AppSortingInput, $filter: AppFilterInput) {
+    query AppsList($before: String, $after: String, $first: Int, $last: Int, $sort: AppSortingInput, $filter: AppFilterInput, $PERMISSION_MANAGE_APPS: Boolean!) {
   apps(
     before: $before
     after: $after
@@ -4066,10 +4067,11 @@ export const AppsListDocument = gql`
  *      last: // value for 'last'
  *      sort: // value for 'sort'
  *      filter: // value for 'filter'
+ *      PERMISSION_MANAGE_APPS: // value for 'PERMISSION_MANAGE_APPS'
  *   },
  * });
  */
-export function useAppsListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.AppsListQuery, Types.AppsListQueryVariables>) {
+export function useAppsListQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AppsListQuery, Types.AppsListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return ApolloReactHooks.useQuery<Types.AppsListQuery, Types.AppsListQueryVariables>(AppsListDocument, options);
       }
