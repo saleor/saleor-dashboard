@@ -1,5 +1,5 @@
 import { Metadata, MetadataFormData } from "@dashboard/components/Metadata";
-import { MetadataHookForm } from "@dashboard/components/Metadata/MetadataHookForm";
+import { MetadataHookForm } from "@dashboard/components/MetadataHookForm";
 import { DashboardModal } from "@dashboard/components/Modal";
 import {
   OrderLineWithMetadataFragment,
@@ -89,7 +89,7 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
                 </Box>
 
                 <MetadataHookForm
-                  isLoading={loading}
+                  // isLoading={loading}
                   control={control}
                   getValues={getValues}
                   trigger={trigger}
@@ -129,7 +129,7 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
                 <Metadata
                   readonly={true}
                   onChange={() => undefined}
-                  isLoading={loading}
+                  // isLoading={loading}
                   data={{
                     metadata: data?.variant?.metadata ?? [],
                     privateMetadata: data?.variant?.privateMetadata ?? [],
