@@ -36,6 +36,8 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({ open, onClose }) =
     balanceAmount: amount,
   };
   const [updateGiftCardBalance, updateGiftCardBalanceOpts] = useGiftCardUpdateMutation({
+    // TODO: remove when apollo client update to newest version
+    refetchQueries: ["GiftCardDetails"],
     onCompleted: data => {
       const errors = data?.giftCardUpdate?.errors;
       const notifierData: IMessage = errors?.length
