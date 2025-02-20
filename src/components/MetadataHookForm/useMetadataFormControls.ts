@@ -76,7 +76,7 @@ export const useMetadataFormControls = ({
 
   return {
     metadataFields: metadataControls.fields,
-    privateMetadataControls: privateMetadataControls.fields,
+    privateMetadataFields: privateMetadataControls.fields,
     handleMetadataChange: getHandleChange({ type: "metadata" }),
     handlePrivateMetadataChange: getHandleChange({ type: "privateMetadata" }),
   } as const;

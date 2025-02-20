@@ -14,7 +14,7 @@ type Data = {
 
 export interface MetadataProps
   extends Omit<MetadataCardProps, "data" | "isPrivate" | "onChange">,
-  Pick<UseFormReturn<Data>, "getValues" | "control" | "trigger"> {
+    Pick<UseFormReturn<Data>, "getValues" | "control" | "trigger"> {
   isLoading?: boolean;
   readonly?: boolean;
   // This props is used to hide the private metadata section when user doesn't have enough permissions.
