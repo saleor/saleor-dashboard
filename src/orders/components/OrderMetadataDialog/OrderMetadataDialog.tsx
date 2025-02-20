@@ -1,14 +1,9 @@
 import { Metadata, MetadataFormData } from "@dashboard/components/Metadata";
 import { MetadataHookForm } from "@dashboard/components/MetadataHookForm";
 import { DashboardModal } from "@dashboard/components/Modal";
-import {
-  OrderLineWithMetadataFragment,
-  useUpdateMetadataMutation,
-  useUpdatePrivateMetadataMutation,
-} from "@dashboard/graphql";
+import { OrderLineWithMetadataFragment } from "@dashboard/graphql";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
-import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { flattenErrors } from "@dashboard/utils/hook-form/errors";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { Box, Button, Divider, Text } from "@saleor/macaw-ui-next";
@@ -17,6 +12,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
 import { TEST_ID_ORDER_LINE_METADATA, TEST_ID_PRODUCT_VARIANT_METADATA } from "./test-ids";
+import { useHandleOrderLineMetadataSubmit } from "./useHandleSubmit";
 
 type OrderLineMetadata = Pick<OrderLineWithMetadataFragment, "metadata" | "privateMetadata" | "id">;
 type ProductVariantMetadata = Pick<
@@ -37,8 +33,7 @@ interface OrderMetadataDialogProps {
 }
 
 export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetadataDialogProps) => {
-  const [updateMetadata] = useUpdateMetadataMutation({});
-  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
+  const onSubmit = useHandleOrderLineMetadataSubmit({ initialData: data });
   const hasManageProducts = useHasManageProductsPermission();
 
   const formMethods = useForm<MetadataFormData>({
@@ -50,13 +45,6 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
   });
 
   const { handleSubmit, control, getValues, formState, trigger } = formMethods;
-
-  const onSubmit = createMetadataUpdateHandler(
-    data,
-    () => Promise.resolve([]),
-    variables => updateMetadata({ variables }),
-    variables => updatePrivateMetadata({ variables }),
-  );
 
   const allFormErrors = flattenErrors(formState.errors);
 
@@ -89,7 +77,7 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
                 </Box>
 
                 <MetadataHookForm
-                  // isLoading={loading}
+                  isLoading={loading}
                   control={control}
                   getValues={getValues}
                   trigger={trigger}
@@ -129,7 +117,7 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
                 <Metadata
                   readonly={true}
                   onChange={() => undefined}
-                  // isLoading={loading}
+                  isLoading={loading}
                   data={{
                     metadata: data?.variant?.metadata ?? [],
                     privateMetadata: data?.variant?.privateMetadata ?? [],
