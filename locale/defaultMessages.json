@@ -869,6 +869,9 @@
     "context": "navigator command mode description",
     "string": "Search Command"
   },
+  "3UUjQv": {
+    "string": "Search page types..."
+  },
   "3a5wL8": {
     "string": "Active"
   },
@@ -9047,9 +9050,6 @@
   },
   "ulh3kf": {
     "string": "Collections"
-  },
-  "umsU70": {
-    "string": "Search Page Type"
   },
   "un+VWt": {
     "string": "Search products"

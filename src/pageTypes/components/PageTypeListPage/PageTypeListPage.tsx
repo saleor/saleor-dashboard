@@ -98,8 +98,8 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
             <SearchInput
               initialSearch={initialSearch}
               placeholder={intl.formatMessage({
-                id: "umsU70",
-                defaultMessage: "Search Page Type",
+                id: "3UUjQv",
+                defaultMessage: "Search page types...",
               })}
               onSearchChange={onSearchChange}
             />
