@@ -63,21 +63,6 @@ describe("useSidebarDotState", () => {
     expect(result.current.isSidebarDotVisible).toBe(false);
   });
 
-  it("should hide dot on auth change", () => {
-    // Arrange
-    (useSidebarWebhookAlertMetadata as jest.Mock).mockReturnValue(defaultMock);
-
-    const { result } = renderHook(() => useSidebarDotState());
-
-    // Act
-    act(() => {
-      result.current.handleAuthChange();
-    });
-
-    // Assert
-    expect(result.current.isSidebarDotVisible).toBe(false);
-  });
-
   it("should handle empty metadata state", async () => {
     // Arrange
     (useSidebarWebhookAlertMetadata as jest.Mock).mockReturnValue(defaultMock);

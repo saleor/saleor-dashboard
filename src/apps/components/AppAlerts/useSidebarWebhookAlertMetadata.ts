@@ -35,6 +35,7 @@ export const useSidebarWebhookAlertMetadata = (): SidebarWebhookAlertMetadata =>
     });
   };
 
+  // TODO: will be used with another ticket
   const refetch = async () => {
     if (refetchUser) {
       await refetchUser();

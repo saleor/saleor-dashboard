@@ -1,5 +1,4 @@
-import { useUser } from "@dashboard/auth";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useSidebarWebhookAlertMetadata } from "./useSidebarWebhookAlertMetadata";
 
@@ -21,8 +20,7 @@ interface SidebarDotState {
 }
 
 export const useSidebarDotState = (): SidebarDotState => {
-  const { persist, refetch, sidebarDotRemoteState } = useSidebarWebhookAlertMetadata();
-  const { authenticated, authenticating } = useUser();
+  const { persist, sidebarDotRemoteState } = useSidebarWebhookAlertMetadata();
 
   const [isSidebarDotVisible, setIsSidebarDotVisible] = useState(false);
   const lastClickDateRef = useRef<string | null>(null);
@@ -42,19 +40,6 @@ export const useSidebarDotState = (): SidebarDotState => {
       setIsSidebarDotVisible(shouldShowDot);
     }
   }, [sidebarDotRemoteState]);
-
-  const handleAuthChange = useCallback(() => {
-    setIsSidebarDotVisible(false);
-    lastClickDateRef.current = null;
-    lastFailedAttemptDateRef.current = null;
-    refetch();
-  }, [refetch]);
-
-  useEffect(() => {
-    if (authenticated && !authenticating) {
-      handleAuthChange();
-    }
-  }, [authenticated, authenticating, handleAuthChange]);
 
   const handleClick = async (clickDate: string) => {
     try {
