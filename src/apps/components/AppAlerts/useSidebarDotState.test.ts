@@ -7,7 +7,6 @@ jest.mock("./useSidebarWebhookAlertMetadata");
 
 const defaultMock = {
   persist: jest.fn().mockResolvedValue(undefined),
-  refetch: jest.fn(),
   webhookAlertState: { value: null },
 };
 
@@ -82,7 +81,6 @@ describe("useSidebarDotState", () => {
     // Arrange
     (useSidebarWebhookAlertMetadata as jest.Mock).mockReturnValue({
       persist: jest.fn().mockResolvedValue(undefined),
-      refetch: jest.fn(),
       sidebarDotRemoteState: {
         lastClickDate: new Date("2024-01-01").toISOString(),
         lastFailedAttemptDate: new Date("2024-01-02").toISOString(),
@@ -98,13 +96,11 @@ describe("useSidebarDotState", () => {
 
   it("should persist app list item click", async () => {
     const persist = jest.fn().mockResolvedValue(undefined);
-    const refetch = jest.fn();
     const date = new Date().toISOString();
 
     // Arrange
     (useSidebarWebhookAlertMetadata as jest.Mock).mockReturnValue({
       persist,
-      refetch,
       sidebarDotRemoteState: {
         lastClickDate: null,
         lastFailedAttemptDate: null,
@@ -128,13 +124,11 @@ describe("useSidebarDotState", () => {
 
   it("should persist failed attempt", async () => {
     const persist = jest.fn().mockResolvedValue(undefined);
-    const refetch = jest.fn();
     const date = new Date().toISOString();
 
     // Arrange
     (useSidebarWebhookAlertMetadata as jest.Mock).mockReturnValue({
       persist,
-      refetch,
       sidebarDotRemoteState: {
         lastClickDate: null,
         lastFailedAttemptDate: null,

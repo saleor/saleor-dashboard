@@ -11,12 +11,11 @@ type SidebarRemoteDotState = {
 
 interface SidebarWebhookAlertMetadata {
   persist: (metadataInput: Record<string, string>) => Promise<void>;
-  refetch: () => Promise<void>;
   sidebarDotRemoteState: SidebarRemoteDotState | null;
 }
 
 export const useSidebarWebhookAlertMetadata = (): SidebarWebhookAlertMetadata => {
-  const { user, refetchUser } = useUser();
+  const { user } = useUser();
 
   const [saveMetadata] = useUserAccountUpdateMutation();
 
@@ -33,13 +32,6 @@ export const useSidebarWebhookAlertMetadata = (): SidebarWebhookAlertMetadata =>
         },
       },
     });
-  };
-
-  // TODO: will be used with another ticket
-  const refetch = async () => {
-    if (refetchUser) {
-      await refetchUser();
-    }
   };
 
   const sidebarDotRemoteState = useMemo(() => {
@@ -62,7 +54,6 @@ export const useSidebarWebhookAlertMetadata = (): SidebarWebhookAlertMetadata =>
 
   return {
     persist,
-    refetch,
     sidebarDotRemoteState,
   };
 };
