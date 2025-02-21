@@ -5,13 +5,19 @@ import { useFieldArray, UseFormReturn } from "react-hook-form";
 import { EventDataAction, EventDataField } from "../Metadata/types";
 import { getDataKey, parseEventData } from "../Metadata/utils";
 
-const validateMetadataDuplicateKeys = (metadata: MetadataInput[]): true | string => {
+const validateMetadata = (metadata: MetadataInput[]): true | string => {
   const keys = metadata.map(entry => entry.key);
   const uniqueKeys = new Set(keys);
 
-  return uniqueKeys.size !== keys.length
-    ? "Metadata keys must be unique, remove duplicate key"
-    : true;
+  if (uniqueKeys.size !== keys.length) {
+    return "Metadata keys must be unique, remove duplicate key";
+  }
+
+  if (keys.some(key => key === "")) {
+    return "Metadata key cannot be empty";
+  }
+
+  return true;
 };
 
 type MetadataFormData = {
@@ -33,7 +39,7 @@ export const useMetadataFormControls = ({
     control,
     name: "metadata",
     rules: {
-      validate: validateMetadataDuplicateKeys,
+      validate: validateMetadata,
     },
   });
 
@@ -41,7 +47,7 @@ export const useMetadataFormControls = ({
     control,
     name: "privateMetadata",
     rules: {
-      validate: validateMetadataDuplicateKeys,
+      validate: validateMetadata,
     },
   });
 
