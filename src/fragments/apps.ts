@@ -96,6 +96,7 @@ export const appListItemFragment = gql`
     permissions {
       ...AppPermission
     }
+    ...AppEventDeliveries
   }
 `;
 
@@ -121,5 +122,44 @@ export const webhookAttemptFragment = gql`
     status
     response
     responseStatusCode
+  }
+`;
+
+export const appEventDeliveriesFragment = gql`
+  fragment AppEventDeliveries on App {
+    webhooks @include(if: $canFetchAppEvents) {
+      failedDelivers: eventDeliveries(
+        first: 1
+        filter: { status: FAILED }
+        sortBy: { field: CREATED_AT, direction: DESC }
+      ) {
+        edges {
+          node {
+            id
+            createdAt
+          }
+        }
+      }
+      pendingDelivers: eventDeliveries(
+        first: 6
+        filter: { status: PENDING }
+        sortBy: { field: CREATED_AT, direction: DESC }
+      ) {
+        edges {
+          node {
+            id
+            attempts(first: 6, sortBy: { field: CREATED_AT, direction: DESC }) {
+              edges {
+                node {
+                  id
+                  status
+                  createdAt
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 `;
