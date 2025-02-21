@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   useMenuDeleteMutation,
   useMenuDetailsQuery,
@@ -10,10 +9,6 @@ import {
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
-import useCategorySearch from "@dashboard/searches/useCategorySearch";
-import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
-import usePageSearch from "@dashboard/searches/usePageSearch";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -52,15 +47,6 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const categorySearch = useCategorySearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
-  const collectionSearch = useCollectionSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
-  const pageSearch = usePageSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
   const { data, loading, refetch } = useMenuDetailsQuery({
     variables: { id },
   });
@@ -107,14 +93,6 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
         throw unknownTypeError;
     }
   };
-  const handleQueryChange = (query: string) => {
-    categorySearch.search(query);
-    collectionSearch.search(query);
-    pageSearch.search(query);
-  };
-  const categories = mapEdgesToItems(categorySearch?.result?.data?.search) || [];
-  const collections = mapEdgesToItems(collectionSearch?.result?.data?.search) || [];
-  const pages = mapEdgesToItems(pageSearch?.result?.data?.search) || [];
   const handleMenuItemCreate = (data: MenuItemDialogFormData) =>
     extractMutationErrors(
       menuItemCreate({
@@ -218,31 +196,21 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
 
       <MenuItemDialog
         open={params.action === "add-item"}
-        categories={categories}
-        collections={collections}
         errors={maybe(() => menuItemCreateOpts.data.menuItemCreate.errors, [])}
-        pages={pages}
-        loading={categorySearch.result.loading || collectionSearch.result.loading}
         confirmButtonState={menuItemCreateOpts.status}
         disabled={menuItemCreateOpts.loading}
         onClose={closeModal}
         onSubmit={handleMenuItemCreate}
-        onQueryChange={handleQueryChange}
       />
       <MenuItemDialog
         open={params.action === "edit-item"}
-        categories={categories}
-        collections={collections}
         errors={maybe(() => menuItemUpdateOpts.data.menuItemUpdate.errors, [])}
-        pages={pages}
         initial={initialMenuItemUpdateFormData}
         initialDisplayValue={getInitialMenuItemLabel(menuItem)}
-        loading={categorySearch.result.loading || collectionSearch.result.loading}
         confirmButtonState={menuItemUpdateOpts.status}
         disabled={menuItemUpdateOpts.loading}
         onClose={closeModal}
         onSubmit={handleMenuItemUpdate}
-        onQueryChange={handleQueryChange}
       />
     </>
   );

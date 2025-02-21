@@ -15,8 +15,7 @@ export function getFilterVariables(params: PageTypeListUrlFilters): PageTypeFilt
   };
 }
 
-export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
-  createFilterTabUtils<PageTypeListUrlFilters>(PAGE_TYPE_FILTERS_KEY);
+export const storageUtils = createFilterTabUtils<string>(PAGE_TYPE_FILTERS_KEY);
 
 export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
   PageTypeListUrlQueryParams,
