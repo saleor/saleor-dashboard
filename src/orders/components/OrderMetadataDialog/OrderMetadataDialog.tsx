@@ -9,7 +9,7 @@ import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasMa
 import { flattenErrors } from "@dashboard/utils/hook-form/errors";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { Box, Button, Divider, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect } from "react";
+import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
@@ -35,15 +35,18 @@ interface OrderMetadataDialogProps {
 }
 
 export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetadataDialogProps) => {
-  const onSubmit = useHandleOrderLineMetadataSubmit({ initialData: data });
+  const { onSubmit, lastSubmittedData } = useHandleOrderLineMetadataSubmit({ initialData: data });
   const hasManageProducts = useHasManageProductsPermission();
 
   const formMethods = useForm<MetadataFormData>({
-    values: {
-      // Removes __typename from metadata item object
-      metadata: (data?.metadata ?? []).map(mapMetadataItemToInput),
-      privateMetadata: (data?.privateMetadata ?? [])?.map(mapMetadataItemToInput),
-    },
+    // Display last submitted data while re-fetching to avoid flicker on UI
+    values: loading
+      ? lastSubmittedData
+      : {
+          // Removes __typename from metadata item object
+          metadata: (data?.metadata ?? []).map(mapMetadataItemToInput),
+          privateMetadata: (data?.privateMetadata ?? [])?.map(mapMetadataItemToInput),
+        },
   });
 
   const { handleSubmit, control, getValues, formState, trigger } = formMethods;
@@ -82,7 +85,7 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
                 </Box>
 
                 <MetadataHookForm
-                  isLoading={loading}
+                  isLoading={loading && !data}
                   control={control}
                   getValues={getValues}
                   trigger={trigger}
@@ -122,7 +125,7 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
                 <Metadata
                   readonly={true}
                   onChange={() => undefined}
-                  isLoading={loading}
+                  isLoading={loading && !data}
                   data={{
                     metadata: data?.variant?.metadata ?? [],
                     privateMetadata: data?.variant?.privateMetadata ?? [],
