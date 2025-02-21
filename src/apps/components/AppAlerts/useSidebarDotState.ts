@@ -5,8 +5,13 @@ import { useSidebarWebhookAlertMetadata } from "./useSidebarWebhookAlertMetadata
 const shouldShowDotCheck = (
   lastClickDate: string | undefined,
   lastFailedAttemptDate: string | undefined,
-): boolean =>
-  !!(!lastClickDate || (lastFailedAttemptDate && lastFailedAttemptDate > lastClickDate));
+): boolean => {
+  if (!lastFailedAttemptDate) {
+    return false;
+  }
+
+  return !lastClickDate || lastFailedAttemptDate > lastClickDate;
+};
 
 export const useSidebarDotState = () => {
   const { persist, refetch, sidebarDotRemoteState } = useSidebarWebhookAlertMetadata();
