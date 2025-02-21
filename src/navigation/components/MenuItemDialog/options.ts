@@ -1,24 +1,9 @@
-import {
-  SearchCategoriesQuery,
-  SearchCollectionsQuery,
-  SearchPagesQuery,
-} from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { MenuItemType } from "@dashboard/navigation/components/MenuItemDialog";
-import { RelayToFlat } from "@dashboard/types";
-import { Option } from "@saleor/macaw-ui-next";
-import { useIntl } from "react-intl";
+import { IntlShape } from "react-intl";
 
-interface UseOptionsProps {
-  collections: RelayToFlat<SearchCollectionsQuery["search"]>;
-  categories: RelayToFlat<SearchCategoriesQuery["search"]>;
-  pages: RelayToFlat<SearchPagesQuery["search"]>;
-}
-
-export const useOptions = ({ pages, categories, collections }: UseOptionsProps) => {
-  const intl = useIntl();
-
-  const baseOptions: Option[] = [
+export const getLinkTypeOptions = (intl: IntlShape) =>
+  [
     {
       value: "category",
       label: intl.formatMessage(sectionNames.categories),
@@ -40,28 +25,3 @@ export const useOptions = ({ pages, categories, collections }: UseOptionsProps) 
       }),
     },
   ] satisfies Array<{ value: MenuItemType; label: string }>;
-
-  const categoriesOptions = categories?.map(category => ({
-    value: category.id,
-    label: category.name,
-  }));
-  const collectionsOptions = collections?.map(collection => ({
-    value: collection.id,
-    label: collection.name,
-  }));
-  const pagesOptions = pages?.map(page => ({
-    value: page.id,
-    label: page.title,
-  }));
-
-  const subOptions: Record<Exclude<MenuItemType, "link">, Option[]> = {
-    category: categoriesOptions ?? [],
-    collection: collectionsOptions ?? [],
-    page: pagesOptions ?? [],
-  };
-
-  return {
-    baseOptions,
-    subOptions,
-  };
-};
