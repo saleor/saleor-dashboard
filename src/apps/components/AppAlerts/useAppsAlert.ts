@@ -14,7 +14,7 @@ export const useAppsAlert = () => {
 
   useEffect(() => {
     if (lastFailedWebhookDate) {
-      handleFailedAttempt(lastFailedWebhookDate);
+      handleFailedAttempt(lastFailedWebhookDate.toISOString());
     }
   }, [lastFailedWebhookDate]);
 
