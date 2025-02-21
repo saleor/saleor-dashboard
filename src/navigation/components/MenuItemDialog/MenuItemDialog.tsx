@@ -7,7 +7,6 @@ import { MenuErrorFragment } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
-import { MenuItemDialogLinkValue } from "@dashboard/navigation/components/MenuItemDialog/MenuItemDialogLinkValue";
 import { getFieldError, getFormErrors } from "@dashboard/utils/errors";
 import getMenuErrorMessage from "@dashboard/utils/errors/menu";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,7 +15,8 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { getBaseOptions } from "./options";
+import { MenuItemDialogLinkValue } from "./MenuItemDialogLinkValue";
+import { getLinkTypeOptions } from "./options";
 import { MenuItemDialogFormData } from "./types";
 import { getValidationSchema } from "./validationSchema";
 
@@ -80,7 +80,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
     .map(field => getFieldError(errors, field))
     .reduce((acc, err) => acc || err);
 
-  const baseOptions = getBaseOptions(intl);
+  const linkTypeOptions = getLinkTypeOptions(intl);
 
   return (
     <DashboardModal onChange={onClose} open={open}>
@@ -137,13 +137,13 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
                           defaultMessage: "Link type",
                           description: "label",
                         })}
-                        options={baseOptions}
+                        options={linkTypeOptions}
                         onChange={e => {
                           onChange(e);
                           setValue("linkValue", "");
                           clearErrors("linkValue");
                         }}
-                        value={baseOptions.find(o => o.value === value) || null}
+                        value={linkTypeOptions.find(o => o.value === value) || null}
                         name="linkType"
                         error={!!idError || !!error}
                         helperText={getMenuErrorMessage(idError, intl) || error?.message}

@@ -2,7 +2,7 @@ import { sectionNames } from "@dashboard/intl";
 import { MenuItemType } from "@dashboard/navigation/components/MenuItemDialog";
 import { IntlShape } from "react-intl";
 
-export const getBaseOptions = (intl: IntlShape) =>
+export const getLinkTypeOptions = (intl: IntlShape) =>
   [
     {
       value: "category",

@@ -5,9 +5,9 @@ import usePageSearch from "@dashboard/searches/usePageSearch";
 import { FetchMoreProps } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
-import { MenuItemTypeWithOptions } from "./types";
+import { MenuItemTypeWithOptions } from "../types";
 
-export const useLinkTypeData = (linkType: MenuItemTypeWithOptions) => {
+export const useLinkValue = (linkType: MenuItemTypeWithOptions) => {
   const categorySearch = useCategorySearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
     skip: linkType !== "category",

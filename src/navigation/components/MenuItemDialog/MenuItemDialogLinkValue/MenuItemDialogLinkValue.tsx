@@ -1,12 +1,10 @@
 import { Combobox } from "@dashboard/components/Combobox";
-import {
-  MenuItemDialogFormData,
-  MenuItemTypeWithOptions,
-} from "@dashboard/navigation/components/MenuItemDialog/types";
-import { useLinkTypeData } from "@dashboard/navigation/components/MenuItemDialog/useLinkTypeData";
 import React from "react";
 import { Control, Controller } from "react-hook-form";
 import { useIntl } from "react-intl";
+
+import { MenuItemDialogFormData, MenuItemTypeWithOptions } from "../types";
+import { useLinkValue } from "./useLinkValue";
 
 interface MenuItemDialogLinkValueProps {
   linkType: MenuItemTypeWithOptions;
@@ -24,7 +22,7 @@ export const MenuItemDialogLinkValue = ({
   initialDisplayValue,
 }: MenuItemDialogLinkValueProps) => {
   const intl = useIntl();
-  const { fetchMoreProps, loading, options, onQueryChange } = useLinkTypeData(linkType);
+  const { fetchMoreProps, loading, options, onQueryChange } = useLinkValue(linkType);
 
   return (
     <Controller
