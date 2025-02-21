@@ -31,6 +31,9 @@ outputs:
   SALEOR_CLOUD_SERVICE:
     description: "Which saleor cloud service will be used"
     value: ${{ steps.generate.outputs.SALEOR_CLOUD_SERVICE }}
+  RUN_SLUG:
+    description: "Dashboard version or PR number or branch name to determine on which version tests were run"
+    value: ${{ steps.generate.outputs.RUN_SLUG }}
 
 runs:
   using: "composite"
@@ -55,11 +58,13 @@ runs:
           if [[ "$DESTINATION_BRANCH" == 'main' ]]; then
             echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
             echo "SALEOR_CLOUD_SERVICE=saleor-master-staging" >> $GITHUB_OUTPUT
+            echo "RUN_SLUG=${PREFIX}${PULL_REQUEST_NUMBER}" >> $GITHUB_OUTPUT
           else
             # it handles pull requests to the other branches than main, e.g. release branches
             VERSION_SLUG=$(echo "${DESTINATION_BRANCH}" | sed "s/\.//")
             echo "BACKUP_NAMESPACE=snapshot-automation-tests-${DESTINATION_BRANCH}" >> $GITHUB_OUTPUT
             echo "SALEOR_CLOUD_SERVICE=saleor-staging-v${VERSION_SLUG}" >> $GITHUB_OUTPUT
+            echo "RUN_SLUG=${DESTINATION_BRANCH}" >> $GITHUB_OUTPUT
           fi
 
           exit 0
@@ -76,6 +81,7 @@ runs:
           echo "POOL_INSTANCE=https://v${VERSION_SLUG}.staging.saleor.cloud/" >> $GITHUB_OUTPUT
           echo "BACKUP_NAMESPACE=snapshot-automation-tests-${CURRENT_BRANCH}" >> $GITHUB_OUTPUT
           echo "SALEOR_CLOUD_SERVICE=saleor-master-staging" >> $GITHUB_OUTPUT
+          echo "RUN_SLUG=${CURRENT_BRANCH}" >> $GITHUB_OUTPUT
 
           exit 0
         fi
@@ -88,12 +94,14 @@ runs:
           echo "POOL_INSTANCE=https://automation-dashboard.staging.saleor.cloud" >> $GITHUB_OUTPUT
           echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
           echo "SALEOR_CLOUD_SERVICE=saleor-master-staging" >> $GITHUB_OUTPUT
+          VERSION=$(cat package.json | jq -r .version)
+          echo "RUN_SLUG=$VERSION" >> $GITHUB_OUTPUT
 
           exit 0
         fi
 
         if [[ "$MODE" == 'from-version' ]]; then
-          VERSION_SLUG=$(echo "${VERSION/./}")
+          VERSION_SLUG=$(echo "${VERSION/./}") 
 
           echo "BASE_URL=https://v${VERSION_SLUG}.staging.saleor.cloud/dashboard/" >> "$GITHUB_OUTPUT"
           echo "API_URL=https://v${VERSION_SLUG}.staging.saleor.cloud/graphql/" >> "$GITHUB_OUTPUT"
@@ -101,7 +109,8 @@ runs:
           echo "POOL_NAME=${VERSION} Staging" >> "$GITHUB_OUTPUT"
           echo "POOL_INSTANCE=https://v${VERSION_SLUG}.staging.saleor.cloud/" >> "$GITHUB_OUTPUT"
           echo "BACKUP_NAMESPACE=snapshot-automation-tests-${VERSION}" >> "$GITHUB_OUTPUT"
-          echo "SALEOR_CLOUD_SERVICE=saleor-master-staging" >> $GITHUB_OUTPUT
+          echo "SALEOR_CLOUD_SERVICE=saleor-staging-v${VERSION_SLUG}" >> $GITHUB_OUTPUT
+          echo "RUN_SLUG=$VERSION" >> $GITHUB_OUTPUT
 
           exit 0
         fi
