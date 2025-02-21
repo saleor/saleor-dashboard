@@ -86,6 +86,7 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
 
                 <MetadataHookForm
                   isLoading={loading && !data}
+                  disabled={loading || formState.isSubmitting}
                   control={control}
                   getValues={getValues}
                   trigger={trigger}

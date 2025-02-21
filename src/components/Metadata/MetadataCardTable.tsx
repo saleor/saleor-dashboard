@@ -12,10 +12,18 @@ import { nameInputPrefix, nameSeparator, valueInputPrefix } from "./utils";
 interface MetadataCardTableProps {
   data: MetadataInput[];
   onChange: FormChange;
+  /** Form is not editable (permanently, e.g. it's not a form) */
   readonly?: boolean;
+  /** Form is temporarily unavailable (e.g. on submit) */
+  disabled?: boolean;
 }
 
-export const MetadataCardTable = ({ data, onChange, readonly = false }: MetadataCardTableProps) => {
+export const MetadataCardTable = ({
+  data,
+  onChange,
+  readonly = false,
+  disabled,
+}: MetadataCardTableProps) => {
   if (!data || data.length === 0) {
     return null;
   }
@@ -74,6 +82,7 @@ export const MetadataCardTable = ({ data, onChange, readonly = false }: Metadata
                   onChange={onChange}
                   value={field.key}
                   readOnly={readonly}
+                  disabled={disabled}
                   color="default1"
                   fontWeight="bold"
                 />
@@ -88,6 +97,7 @@ export const MetadataCardTable = ({ data, onChange, readonly = false }: Metadata
                 <Textarea
                   data-test-id="metadata-value-input"
                   readOnly={readonly}
+                  disabled={disabled}
                   width="100%"
                   rows={1}
                   size="small"
