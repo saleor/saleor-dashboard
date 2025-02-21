@@ -1,24 +1,20 @@
-import { useUser } from "@dashboard/auth";
-import { PermissionEnum, useAppFailedPendingWebhooksLazyQuery } from "@dashboard/graphql";
+import { useAppFailedPendingWebhooksLazyQuery } from "@dashboard/graphql";
+import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { renderHook } from "@testing-library/react-hooks";
 
 import { useAppsFailedDeliveries } from "./useAppsFailedDeliveries";
 
-jest.mock("@dashboard/auth");
+jest.mock("@dashboard/hooks/useHasManagedAppsPermission");
 jest.mock("@dashboard/graphql");
 
 const fetchingFunction = jest.fn();
 
-const userWithPermissions = {
-  user: {
-    userPermissions: [{ code: PermissionEnum.MANAGE_APPS }],
-  },
+const hasPermissions = {
+  hasManagedAppsPermission: true,
 };
 
-const userWithoutPermissions = {
-  user: {
-    userPermissions: [],
-  },
+const doesntHavePermissions = {
+  hasManagedAppsPermission: false,
 };
 
 describe("useAppsFailedDeliveries", () => {
@@ -28,7 +24,7 @@ describe("useAppsFailedDeliveries", () => {
 
   it("should handle null webhook data", () => {
     // Arrange
-    (useUser as jest.Mock).mockReturnValue(userWithPermissions);
+    (useHasManagedAppsPermission as jest.Mock).mockReturnValue(hasPermissions);
     (useAppFailedPendingWebhooksLazyQuery as jest.Mock).mockReturnValue([
       fetchingFunction,
       {
@@ -55,23 +51,9 @@ describe("useAppsFailedDeliveries", () => {
     expect(result.current.hasFailed).toEqual(false);
   });
 
-  it("should handle undefined user", () => {
+  it("should return hasFailed: false when user has no permissions", () => {
     // Arrange
-    (useUser as jest.Mock).mockReturnValue({ user: undefined });
-    (useAppFailedPendingWebhooksLazyQuery as jest.Mock).mockReturnValue([
-      fetchingFunction,
-      { data: null },
-    ]);
-
-    // Act
-    const { result } = renderHook(() => useAppsFailedDeliveries());
-
-    expect(result.current.hasFailed).toEqual(false);
-  });
-
-  it("should return default counts when user has no permissions", () => {
-    // Arrange
-    (useUser as jest.Mock).mockReturnValue(userWithoutPermissions);
+    (useHasManagedAppsPermission as jest.Mock).mockReturnValue(doesntHavePermissions);
     (useAppFailedPendingWebhooksLazyQuery as jest.Mock).mockReturnValue([
       fetchingFunction,
       { data: null },
@@ -83,13 +65,12 @@ describe("useAppsFailedDeliveries", () => {
     result.current.fetchAppsWebhooks();
 
     // Assert
-    expect(fetchingFunction).not.toHaveBeenCalled();
     expect(result.current.hasFailed).toEqual(false);
   });
 
   it("should not flag as fails if there are no failed webhooks", () => {
     // Arrange
-    (useUser as jest.Mock).mockReturnValue(userWithPermissions);
+    (useHasManagedAppsPermission as jest.Mock).mockReturnValue(hasPermissions);
     (useAppFailedPendingWebhooksLazyQuery as jest.Mock).mockReturnValue([
       fetchingFunction,
       {
@@ -130,7 +111,7 @@ describe("useAppsFailedDeliveries", () => {
 
   it("should check webhooks correctly for pending deliveries when user has permissions", () => {
     // Arrange
-    (useUser as jest.Mock).mockReturnValue(userWithPermissions);
+    (useHasManagedAppsPermission as jest.Mock).mockReturnValue(hasPermissions);
     (useAppFailedPendingWebhooksLazyQuery as jest.Mock).mockReturnValue([
       fetchingFunction,
       {
@@ -179,7 +160,7 @@ describe("useAppsFailedDeliveries", () => {
 
   it("should check webhooks correctly when user has permissions", () => {
     // Arrange
-    (useUser as jest.Mock).mockReturnValue(userWithPermissions);
+    (useHasManagedAppsPermission as jest.Mock).mockReturnValue(hasPermissions);
     (useAppFailedPendingWebhooksLazyQuery as jest.Mock).mockReturnValue([
       fetchingFunction,
       {
@@ -228,7 +209,7 @@ describe("useAppsFailedDeliveries", () => {
 
   it("should check webhooks correctly for both delivery fail types", () => {
     // Arrange
-    (useUser as jest.Mock).mockReturnValue(userWithPermissions);
+    (useHasManagedAppsPermission as jest.Mock).mockReturnValue(hasPermissions);
     (useAppFailedPendingWebhooksLazyQuery as jest.Mock).mockReturnValue([
       fetchingFunction,
       {

@@ -1,6 +1,5 @@
-import { useUser } from "@dashboard/auth";
-import { hasAllPermissions } from "@dashboard/auth/misc";
-import { PermissionEnum, useAppFailedPendingWebhooksLazyQuery } from "@dashboard/graphql";
+import { useAppFailedPendingWebhooksLazyQuery } from "@dashboard/graphql";
+import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { useMemo } from "react";
 
 import { webhookFailedAttemptsCheck } from "./utils";
@@ -10,11 +9,8 @@ interface AppsFailedDeliveries {
   fetchAppsWebhooks: () => void;
 }
 
-const requiredPermissions = [PermissionEnum.MANAGE_APPS];
-
 export const useAppsFailedDeliveries = (): AppsFailedDeliveries => {
-  const { user } = useUser();
-  const hasRequiredPermissions = user ? hasAllPermissions(requiredPermissions, user) : false;
+  const { hasManagedAppsPermission } = useHasManagedAppsPermission();
 
   const [fetchAppsWebhooks, { data }] = useAppFailedPendingWebhooksLazyQuery();
 
@@ -26,9 +22,12 @@ export const useAppsFailedDeliveries = (): AppsFailedDeliveries => {
   );
 
   const handleFetchAppsWebhooks = () => {
-    if (hasRequiredPermissions) {
-      fetchAppsWebhooks();
-    }
+    // TODO: checking if webhooks should be fetched will be extracted out of this hook in a separate ticket
+    fetchAppsWebhooks({
+      variables: {
+        canFetchAppEvents: hasManagedAppsPermission,
+      },
+    });
   };
 
   return {

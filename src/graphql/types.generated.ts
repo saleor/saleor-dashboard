@@ -8930,7 +8930,7 @@ export enum WeightUnitsEnum {
 }
 
 export type AppFailedPendingWebhooksQueryVariables = Exact<{
-  PERMISSION_MANAGE_APPS: Scalars['Boolean'];
+  canFetchAppEvents: Scalars['Boolean'];
 }>;
 
 
@@ -9032,7 +9032,7 @@ export type AppsListQueryVariables = Exact<{
   last?: InputMaybe<Scalars['Int']>;
   sort?: InputMaybe<AppSortingInput>;
   filter?: InputMaybe<AppFilterInput>;
-  PERMISSION_MANAGE_APPS: Scalars['Boolean'];
+  canFetchAppEvents: Scalars['Boolean'];
 }>;
 
 

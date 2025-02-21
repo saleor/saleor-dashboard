@@ -127,7 +127,7 @@ export const webhookAttemptFragment = gql`
 
 export const appEventDeliveriesFragment = gql`
   fragment AppEventDeliveries on App {
-    webhooks @include(if: $PERMISSION_MANAGE_APPS) {
+    webhooks @include(if: $canFetchAppEvents) {
       failedDelivers: eventDeliveries(
         first: 1
         filter: { status: FAILED }

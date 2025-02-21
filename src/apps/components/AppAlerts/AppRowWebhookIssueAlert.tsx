@@ -1,10 +1,10 @@
 import { AppPaths } from "@dashboard/apps/urls";
+import EventTime from "@dashboard/components/EventTime";
 import Link from "@dashboard/components/Link";
 import { StopPropagation } from "@dashboard/components/StopPropagation";
 import { AppListItemFragment } from "@dashboard/graphql";
 import { ExclamationIcon } from "@dashboard/icons/ExclamationIcon";
 import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
-import moment from "moment";
 import React, { useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -51,9 +51,7 @@ export const AppRowWebhookIssueAlert = ({ app }: AppRowWebhookIssueAlertProps) =
                   defaultMessage="Webhook errors detected. Last occurred at {date}. {viewDetails}."
                   id="FaRg9/"
                   values={{
-                    date: moment(latestFailedAttempt?.createdAt).format(
-                      "YYYY-MM-DD HH:mm:ss [UTC]Z",
-                    ),
+                    date: <EventTime date={latestFailedAttempt.createdAt} />,
                     viewDetails: (
                       <Link href={detailsLink} color="secondary" underline>
                         <FormattedMessage defaultMessage="View details" id="MnpUD7" />

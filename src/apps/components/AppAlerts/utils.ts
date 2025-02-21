@@ -20,25 +20,53 @@ const hasFailedAttemptsInPendingCheck = (webhook: Webhook) => {
 export const webhookFailedAttemptsCheck = (webhook: Webhook) =>
   hasFailedAttemptsCheck(webhook) || hasFailedAttemptsInPendingCheck(webhook);
 
-const getLatestFailedAttemptFromWebhook = (webhook: Webhook) => {
-  const fromFailedDelivers = webhook.failedDelivers?.edges?.[0]?.node;
-  const fromPendingDelivers = webhook.pendingDelivers?.edges?.[0]?.node.attempts?.edges?.[0]?.node;
+type LatestWebhookDelivery =
+  | NonNullable<Webhook["failedDelivers"]>["edges"][0]["node"]
+  | NonNullable<
+      NonNullable<Webhook["pendingDelivers"]>["edges"][0]["node"]["attempts"]
+    >["edges"][0]["node"];
+
+type LatestWebhookDeliveryWithMoment = LatestWebhookDelivery & { createdAt: moment.Moment };
+
+const toWebhookDeliveryWithMoment = (
+  delivery: LatestWebhookDelivery | null | undefined,
+): LatestWebhookDeliveryWithMoment | null =>
+  delivery
+    ? {
+        ...delivery,
+        createdAt: moment(delivery.createdAt),
+      }
+    : null;
+
+const getLatestFailedAttemptFromWebhook = (
+  webhook: Webhook,
+): LatestWebhookDeliveryWithMoment | null => {
+  const fromFailedDelivers = toWebhookDeliveryWithMoment(webhook.failedDelivers?.edges?.[0]?.node);
+  const fromPendingDelivers = toWebhookDeliveryWithMoment(
+    webhook.pendingDelivers?.edges?.[0]?.node.attempts?.edges.find(
+      ({ node: { status } }) => status === EventDeliveryStatusEnum.FAILED,
+    )?.node,
+  );
 
   if (fromFailedDelivers && fromPendingDelivers) {
-    return moment(fromFailedDelivers?.createdAt).isAfter(moment(fromPendingDelivers?.createdAt))
-      ? fromFailedDelivers
-      : fromPendingDelivers;
-  } else if (fromFailedDelivers) {
-    return fromFailedDelivers;
-  } else if (fromPendingDelivers) {
-    return fromPendingDelivers;
-  } else {
-    return null;
+    const isFailedNewer = fromFailedDelivers?.createdAt.isAfter(fromPendingDelivers?.createdAt);
+
+    return isFailedNewer ? fromFailedDelivers : fromPendingDelivers;
   }
+
+  if (fromFailedDelivers) {
+    return fromFailedDelivers;
+  }
+
+  if (fromPendingDelivers) {
+    return fromPendingDelivers;
+  }
+
+  return null;
 };
 
 export const getLatestFailedAttemptFromWebhooks = (webhooks: Webhook[]) =>
   webhooks
     .map(getLatestFailedAttemptFromWebhook)
     .filter(Boolean)
-    .sort((a, b) => moment(b?.createdAt).diff(a?.createdAt))[0] ?? null;
+    .sort((a, b) => b?.createdAt.diff(a?.createdAt))[0] ?? null;
