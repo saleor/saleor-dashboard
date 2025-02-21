@@ -21,42 +21,6 @@ export const giftCardsListHeaderMenuItemsMessages = defineMessages({
     defaultMessage: "Issue card",
     description: "issue card button label",
   },
-  noGiftCardsAlertTitle: {
-    id: "E22x4H",
-    defaultMessage: "You haven’t defined a gift card product!",
-    description: "no card defuned alert message",
-  },
-  noGiftCardsProductsAndProductTypes: {
-    id: "U9o2bV",
-    defaultMessage:
-      "{createGiftCardProductType} and {giftCardProduct} to start selling gift cards in your store.",
-    description: "no gift card products and types alert message",
-  },
-  noGiftCardsProductTypes: {
-    id: "VI+X8H",
-    defaultMessage: "{createGiftCardProductType} to start selling gift cards in your store.",
-    description: "no gift card product types alert message",
-  },
-  noGiftCardsProducts: {
-    id: "jmh0rV",
-    defaultMessage: "{createGiftCardProduct} to start selling gift cards in your store.",
-    description: "no gift card products alert message",
-  },
-  createGiftCardProductType: {
-    id: "8Hq18g",
-    defaultMessage: "Create a gift card product type",
-    description: "create gift card product type alert message",
-  },
-  createGiftCardProduct: {
-    id: "HqeqEV",
-    defaultMessage: "Create a gift card product",
-    description: "create gift card product alert message",
-  },
-  giftCardProduct: {
-    id: "AJgl5u",
-    defaultMessage: "gift card product",
-    description: "gift card product message",
-  },
 });
 
 export const giftCardsListTableMessages = defineMessages({
