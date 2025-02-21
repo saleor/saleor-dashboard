@@ -274,4 +274,51 @@ describe("useMetadataFormControls", () => {
       },
     });
   });
+
+  it("validates and rejects empty keys in both metadata and privateMetadata", async () => {
+    const { result: reactHookForm } = renderHook(() =>
+      useForm<MetadataFormData>({
+        values: {
+          metadata: [{ key: "test", value: "value1" }],
+          privateMetadata: [{ key: "private-test", value: "private-value1" }],
+        },
+        // Required for empty value validation
+        mode: "onChange",
+      }),
+    );
+
+    const { result: metadataFormControls } = renderHook(() =>
+      useMetadataFormControls({
+        control: reactHookForm.current.control,
+        trigger: reactHookForm.current.trigger,
+        getValues: reactHookForm.current.getValues,
+      }),
+    );
+
+    const eventAdd: ChangeEvent = {
+      target: {
+        name: EventDataAction.add,
+        value: "",
+      },
+    };
+
+    await act(async () => {
+      // Add
+      metadataFormControls.current.handleMetadataChange(eventAdd);
+      metadataFormControls.current.handlePrivateMetadataChange(eventAdd);
+    });
+
+    expect(reactHookForm.current.formState.errors.metadata).toMatchObject({
+      root: {
+        type: "validate",
+        message: "Metadata key cannot be empty",
+      },
+    });
+    expect(reactHookForm.current.formState.errors.privateMetadata).toMatchObject({
+      root: {
+        type: "validate",
+        message: "Metadata key cannot be empty",
+      },
+    });
+  });
 });
