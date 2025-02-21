@@ -46,8 +46,6 @@ export const useSidebarWebhookAlertMetadata = (): SidebarWebhookAlertMetadata =>
 
       return parsed as SidebarRemoteDotState;
     } catch (e) {
-      console.error("Failed to parse webhook alert metadata", e);
-
       return null;
     }
   }, [user]);

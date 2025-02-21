@@ -47,9 +47,8 @@ export const useSidebarDotState = (): SidebarDotState => {
         lastClickDate: clickDate,
         lastFailedAttemptDate: lastFailedAttemptDateRef.current ?? "",
       });
-      // Don't hide dot immediately - wait for next metadata refresh
     } catch (error) {
-      console.error("Failed to persist metadata on click", error);
+      // Silently ignore errors
     }
   };
 
@@ -66,7 +65,7 @@ export const useSidebarDotState = (): SidebarDotState => {
         setIsSidebarDotVisible(true);
       }
     } catch (error) {
-      console.error("Failed to persist metadata on failed attempt", error);
+      // Silently ignore errors
     }
   };
 
