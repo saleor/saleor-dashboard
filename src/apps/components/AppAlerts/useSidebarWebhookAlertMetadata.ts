@@ -2,7 +2,7 @@ import { useUser } from "@dashboard/auth";
 import { MetadataInput, useUserAccountUpdateMutation } from "@dashboard/graphql";
 import { useMemo } from "react";
 
-const deliveryAttemptKey = "sidebarDotDeliveryAttempt_test";
+const deliveryAttemptKey = "sidebar_app_webhook_alert_state";
 
 type SidebarRemoteDotState = {
   lastClickDate: string;
