@@ -1,3 +1,5 @@
+import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { Metadata, MetadataFormData } from "@dashboard/components/Metadata";
 import { MetadataHookForm } from "@dashboard/components/MetadataHookForm";
 import { DashboardModal } from "@dashboard/components/Modal";
@@ -7,7 +9,7 @@ import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasMa
 import { flattenErrors } from "@dashboard/utils/hook-form/errors";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { Box, Button, Divider, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
@@ -47,6 +49,9 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
   const { handleSubmit, control, getValues, formState, trigger } = formMethods;
 
   const allFormErrors = flattenErrors(formState.errors);
+
+  const saveButtonState: ConfirmButtonTransitionState =
+    formState.isSubmitting || loading ? "loading" : allFormErrors.length > 0 ? "error" : "default";
 
   return (
     <DashboardModal open={open} onChange={onClose}>
@@ -128,14 +133,15 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
               </Box>
             </Box>
             <DashboardModal.Actions paddingX={6} marginTop={4}>
-              <Button
+              <ButtonWithLoader
+                transitionState={saveButtonState}
                 data-test-id="save"
                 variant={allFormErrors.length === 0 ? "primary" : "error"}
                 type="submit"
                 disabled={!formState.isDirty}
               >
                 <FormattedMessage {...buttonMessages.save} />
-              </Button>
+              </ButtonWithLoader>
               <Button data-test-id="back" variant="secondary" onClick={onClose}>
                 <FormattedMessage {...buttonMessages.close} />
               </Button>
