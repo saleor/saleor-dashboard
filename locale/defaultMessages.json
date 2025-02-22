@@ -820,10 +820,6 @@
     "context": "gift card history message",
     "string": "Gift card was issued by {issuedBy}"
   },
-  "31hYP2": {
-    "context": "alert card message",
-    "string": "Gift cards will appear after their order is fullfilled. <link>View Orders with Gift Cards</link>"
-  },
   "32dfzI": {
     "context": "price or ordered products",
     "string": "Price"
@@ -868,6 +864,9 @@
   "3TlhJS": {
     "context": "navigator command mode description",
     "string": "Search Command"
+  },
+  "3UUjQv": {
+    "string": "Search page types..."
   },
   "3a5wL8": {
     "string": "Active"
@@ -1569,10 +1568,6 @@
   "8HRy+U": {
     "string": "Category Description"
   },
-  "8Hq18g": {
-    "context": "create gift card product type alert message",
-    "string": "Create a gift card product type"
-  },
   "8InCjD": {
     "string": "Please provide range of postal codes you want to add to the include/exclude list."
   },
@@ -1846,10 +1841,6 @@
   "AHK0K9": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
-  },
-  "AJgl5u": {
-    "context": "gift card product message",
-    "string": "gift card product"
   },
   "AKv2BI": {
     "context": "order refund subtitle",
@@ -2430,10 +2421,6 @@
     "context": "transaction event type, authorization amount was changed",
     "string": "Authorization amount adjusted"
   },
-  "E22x4H": {
-    "context": "no card defuned alert message",
-    "string": "You haven’t defined a gift card product!"
-  },
   "E4GW+N": {
     "context": "fully paid checkout automatically completed message",
     "string": "Order created automatically from fully paid checkout"
@@ -2491,6 +2478,10 @@
   "ER/yBq": {
     "context": "max price in channel",
     "string": "Max. value"
+  },
+  "ER0uUn": {
+    "context": "select all page types preset label",
+    "string": "All page types"
   },
   "ESDTC/": {
     "string": "Manage Sales Channel Availability"
@@ -2696,6 +2687,9 @@
   },
   "FZTrzW": {
     "string": "Manual refund"
+  },
+  "FaRg9/": {
+    "string": "Webhook errors detected. Last occurred at {date}. {viewDetails}."
   },
   "Fbr4Vp": {
     "context": "dialog header",
@@ -3133,15 +3127,14 @@
   "HqRNN8": {
     "string": "Support"
   },
-  "HqeqEV": {
-    "context": "create gift card product alert message",
-    "string": "Create a gift card product"
-  },
   "Hswqx2": {
     "string": "Delete discounts"
   },
   "HvJPcU": {
     "string": "Category deleted"
+  },
+  "HwHSeY": {
+    "string": "App disabled"
   },
   "I+1KzL": {
     "context": "tab name",
@@ -3862,6 +3855,9 @@
   "Mmo9k2": {
     "context": "table header warehouse stock label",
     "string": "Warehouse stock"
+  },
+  "MnpUD7": {
+    "string": "View details"
   },
   "MpR4zK": {
     "context": "customer details, header",
@@ -5013,10 +5009,6 @@
     "context": "button",
     "string": "Save variant"
   },
-  "U9o2bV": {
-    "context": "no gift card products and types alert message",
-    "string": "{createGiftCardProductType} and {giftCardProduct} to start selling gift cards in your store."
-  },
   "UBuKZ9": {
     "context": "searchbar placeholder",
     "string": "Country"
@@ -5209,10 +5201,6 @@
   "VHuzgq": {
     "context": "table actions",
     "string": "Actions"
-  },
-  "VI+X8H": {
-    "context": "no gift card product types alert message",
-    "string": "{createGiftCardProductType} to start selling gift cards in your store."
   },
   "VIABHy": {
     "context": "error message",
@@ -6012,6 +6000,10 @@
   "aAAxKp": {
     "context": "table column header",
     "string": "Product"
+  },
+  "aBpkVh": {
+    "context": "gift cards docs link",
+    "string": "gift cards"
   },
   "aCJwVq": {
     "context": "warehouse",
@@ -7394,10 +7386,6 @@
   "jmZSK1": {
     "string": "Product is not available in selected channels"
   },
-  "jmh0rV": {
-    "context": "no gift card products alert message",
-    "string": "{createGiftCardProduct} to start selling gift cards in your store."
-  },
   "jqJqdE": {
     "context": "VariantDetailsChannelsAvailabilityCard no items available",
     "string": "This variant is not available at any of the channels"
@@ -8128,6 +8116,9 @@
     "context": "order status",
     "string": "Unfulfilled"
   },
+  "oCrEdS": {
+    "string": "Activate the app from the settings. {viewDetails}."
+  },
   "oHbgcK": {
     "context": "PageTypeDeleteWarningDialog title",
     "string": "Delete page {selectedTypesCount,plural,one{type} other{types}}"
@@ -8156,10 +8147,6 @@
   "oUWXLO": {
     "context": "header",
     "string": "Translation Page \"{pageName}\" - {languageCode}"
-  },
-  "oVDZUb": {
-    "context": "tab name",
-    "string": "All Page Types"
   },
   "oX2TAb": {
     "string": "Select gifts"
@@ -8692,6 +8679,10 @@
     "context": "categories section name",
     "string": "Categories"
   },
+  "sOlOZB": {
+    "context": "gift cards page subheader",
+    "string": "Learn more about {giftCards}"
+  },
   "sR0urA": {
     "context": "dialog content",
     "string": "Are you sure you want to delete {name}?"
@@ -8797,6 +8788,9 @@
   "t7UwLY": {
     "context": "voucher status",
     "string": "Expired"
+  },
+  "t9sWqJ": {
+    "string": "Issues found"
   },
   "tA5HJx": {
     "context": "webhook input help text",
@@ -9047,9 +9041,6 @@
   },
   "ulh3kf": {
     "string": "Collections"
-  },
-  "umsU70": {
-    "string": "Search Page Type"
   },
   "un+VWt": {
     "string": "Search products"

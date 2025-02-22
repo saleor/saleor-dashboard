@@ -6,6 +6,7 @@ import useAppstoreApps from "@dashboard/apps/hooks/useAppstoreApps";
 import { AppListUrlDialog, AppListUrlQueryParams, AppUrls } from "@dashboard/apps/urls";
 import { getAppInProgressName, getAppstoreAppsLists } from "@dashboard/apps/utils";
 import { getAppsConfig } from "@dashboard/config";
+import { useFlag } from "@dashboard/featureFlags";
 import {
   AppInstallationFragment,
   AppSortField,
@@ -36,6 +37,7 @@ export const AppListView: React.FC<Props> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const { enabled: appAlertsEnabled } = useFlag("app_alerts");
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const [openModal, closeModal] = createDialogActionHandlers<
     AppListUrlDialog,
@@ -63,6 +65,7 @@ export const AppListView: React.FC<Props> = ({ params }) => {
       filter: {
         type: AppTypeEnum.THIRDPARTY,
       },
+      canFetchAppEvents: hasManagedAppsPermission && appAlertsEnabled,
     },
   });
   const { pageInfo, ...paginationValues } = paginate(
