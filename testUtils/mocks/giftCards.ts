@@ -53,5 +53,6 @@ export const giftCardsMocks: ExtendedGiftCard<NonNullable<GiftCardDetailsQuery["
       { __typename: "MetadataItem", key: "privateKey1", value: "privateValue1" },
       { __typename: "MetadataItem", key: "privateKey2", value: "privateValue2" },
     ],
+    events: [],
   },
 ];
