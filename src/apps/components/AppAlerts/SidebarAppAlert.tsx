@@ -17,7 +17,7 @@ export const SidebarAppAlert = () => {
   return (
     <Tooltip>
       <Tooltip.Trigger>
-        <Link to={AppSections.appsSection}>
+        <Link to={AppSections.appsSection} data-test-id="sidebar-app-alert-trigger">
           <AlertExclamationIcon />
         </Link>
       </Tooltip.Trigger>
