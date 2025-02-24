@@ -4,7 +4,7 @@ import { useAppsFailedDeliveries } from "./useAppsFailedDeliveries";
 import { useSidebarDotState } from "./useSidebarDotState";
 
 export const useAppsAlert = () => {
-  const { isSidebarDotVisible, handleFailedAttempt } = useSidebarDotState();
+  const { hasNewFailedAttempts, handleFailedAttempt } = useSidebarDotState();
   const { lastFailedWebhookDate, fetchAppsWebhooks } = useAppsFailedDeliveries();
 
   // TODO: Implement fetching at intervals
@@ -19,6 +19,6 @@ export const useAppsAlert = () => {
   }, [lastFailedWebhookDate]);
 
   return {
-    hasNewFailedAttempts: isSidebarDotVisible,
+    hasNewFailedAttempts,
   };
 };
