@@ -1,5 +1,6 @@
 import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import MediaTile from "@dashboard/components/MediaTile";
 import { Metadata, MetadataFormData } from "@dashboard/components/Metadata";
 import { MetadataHookForm } from "@dashboard/components/MetadataHookForm";
 import { DashboardModal } from "@dashboard/components/Modal";
@@ -15,16 +16,22 @@ import { FormattedMessage } from "react-intl";
 
 import { TEST_ID_ORDER_LINE_METADATA, TEST_ID_PRODUCT_VARIANT_METADATA } from "./test-ids";
 import { useHandleOrderLineMetadataSubmit } from "./useHandleSubmit";
+import { VariantSubheaderData } from "./VariantSubheaderData";
+import { VariantThumbnail } from "./VariantThumbnail";
 
 type OrderLineMetadata = Pick<OrderLineWithMetadataFragment, "metadata" | "privateMetadata" | "id">;
-type ProductVariantMetadata = Pick<
+type ProductVariant = Pick<
   NonNullable<OrderLineWithMetadataFragment["variant"]>,
-  "metadata" | "privateMetadata" | "id"
+  "metadata" | "privateMetadata" | "id" | "name"
 >;
+type Thumbnail = NonNullable<OrderLineWithMetadataFragment["thumbnail"]>;
 
 export type OrderMetadataDialogData = OrderLineMetadata & {
-  variant: ProductVariantMetadata;
+  variant: ProductVariant;
   productName: string;
+  thumbnail: Thumbnail;
+  productSku: string;
+  quantity: number;
 };
 
 interface OrderMetadataDialogProps {
@@ -59,8 +66,18 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
   return (
     <DashboardModal open={open} onChange={onClose}>
       <DashboardModal.Content size="md">
-        <DashboardModal.Header paddingX={6}>
-          <FormattedMessage {...commonMessages.metadata} />: {data?.productName ?? ""}
+        <DashboardModal.Header display="flex" gap={2} alignItems="center" paddingX={6}>
+          <VariantThumbnail src={data?.thumbnail?.url} />
+          <Box display="flex" flexDirection="column" gap={2}>
+            <Text size={7} fontWeight="bold">
+              <FormattedMessage {...commonMessages.metadata} />: {data?.productName ?? ""}
+            </Text>
+            <VariantSubheaderData
+              productSku={data?.productSku}
+              quantity={data?.quantity}
+              variantName={data?.variant?.name}
+            />
+          </Box>
         </DashboardModal.Header>
 
         <Box as="form" onSubmit={handleSubmit(onSubmit)}>
