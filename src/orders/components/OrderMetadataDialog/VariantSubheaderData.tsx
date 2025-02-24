@@ -1,5 +1,6 @@
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
+import { useIntl } from "react-intl";
 
 const ListValue = ({ children, last }: { children: React.ReactNode; last?: boolean }) => {
   return (
@@ -47,11 +48,35 @@ export const VariantSubheaderData = ({
   quantity: number;
   variantName: string;
 }) => {
+  const intl = useIntl();
+
   return (
     <Text as="span" display="flex" gap={1}>
-      <ListItem name="SKU" value={productSku} />
-      <ListItem name="Variant" value={variantName} />
-      <ListItem name="Qty" value={quantity} last />
+      <ListItem
+        name={intl.formatMessage({
+          defaultMessage: "SKU",
+          description: "orderLine.productSku, subheader, order line metadata dialog",
+          id: "h6MWxB",
+        })}
+        value={productSku}
+      />
+      <ListItem
+        name={intl.formatMessage({
+          defaultMessage: "Variant",
+          id: "IHTyjM",
+          description: "orderLine.variant.name, subheader, order line metadata dialog",
+        })}
+        value={variantName}
+      />
+      <ListItem
+        name={intl.formatMessage({
+          defaultMessage: "Qty",
+          id: "NL5C12",
+          description: "orderLine.quantity, subheader, oredr line metadata dialog",
+        })}
+        value={quantity}
+        last
+      />
     </Text>
   );
 };
