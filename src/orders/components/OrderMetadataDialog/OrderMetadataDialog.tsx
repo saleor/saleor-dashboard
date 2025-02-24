@@ -67,7 +67,7 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
     <DashboardModal open={open} onChange={onClose}>
       <DashboardModal.Content size="md">
         <DashboardModal.Header display="flex" gap={5} alignItems="center" paddingX={6}>
-          <VariantThumbnail src={data?.thumbnail?.url} />
+          <VariantThumbnail src={data?.thumbnail?.url} loading={loading} />
           <Box display="flex" flexDirection="column" gap={2}>
             <Text size={7} fontWeight="bold">
               <FormattedMessage {...commonMessages.metadata} />: {data?.productName ?? ""}
@@ -76,6 +76,7 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
               productSku={data?.productSku}
               quantity={data?.quantity}
               variantName={data?.variant?.name}
+              loading={loading}
             />
           </Box>
         </DashboardModal.Header>

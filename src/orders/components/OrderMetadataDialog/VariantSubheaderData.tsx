@@ -43,12 +43,23 @@ export const VariantSubheaderData = ({
   productSku,
   quantity,
   variantName,
+  loading,
 }: {
   productSku: string;
   quantity: number;
   variantName: string;
+  loading: boolean;
 }) => {
   const intl = useIntl();
+
+  if (loading) {
+    // Hidden text that adds height, so that we don't have movement once data loads
+    return (
+      <Text visibility="hidden" aria-hidden="true">
+        Loading...
+      </Text>
+    );
+  }
 
   return (
     <Text as="span" display="flex" gap={1}>
