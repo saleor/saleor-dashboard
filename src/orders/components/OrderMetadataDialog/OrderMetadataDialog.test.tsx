@@ -36,12 +36,19 @@ const mockData: OrderMetadataDialogData = {
       __typename: "MetadataItem",
     },
   ],
+  quantity: 22222222,
+  productSku: "product-sku",
+  thumbnail: {
+    url: "https://test.com/img.png",
+    __typename: "Image",
+  },
   variant: {
     id: "variant-id",
     metadata: [{ key: "variant-key", value: "variant-value", __typename: "MetadataItem" }],
     privateMetadata: [
       { key: "variant-private-key", value: "variant-private-value", __typename: "MetadataItem" },
     ],
+    name: "Variant name",
   },
 };
 
@@ -72,6 +79,18 @@ describe("OrderMetadataDialog", () => {
 
     // Assert
     expect(onCloseMock).toHaveBeenCalled();
+  });
+
+  it("displays details about order line", () => {
+    render(
+      <MockedProvider>
+        <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
+      </MockedProvider>,
+    );
+
+    expect(screen.queryByText(mockData.quantity)).toBeInTheDocument();
+    expect(screen.queryByText(mockData.variant.name)).toBeInTheDocument();
+    expect(screen.queryByText(mockData.productSku)).toBeInTheDocument();
   });
 
   describe("ProductVariant metadata list", () => {
