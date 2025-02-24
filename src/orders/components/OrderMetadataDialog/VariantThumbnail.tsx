@@ -5,8 +5,8 @@ export const VariantThumbnail = ({ src }: { src: string }) => {
   return (
     <Box
       display="flex"
-      height={24}
-      width={24}
+      height={20}
+      width={20}
       borderRadius={4}
       borderStyle="solid"
       borderWidth={1}

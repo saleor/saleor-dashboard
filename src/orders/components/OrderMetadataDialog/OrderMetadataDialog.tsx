@@ -50,10 +50,10 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
     values: loading
       ? lastSubmittedData
       : {
-          // Removes __typename from metadata item object
-          metadata: (data?.metadata ?? []).map(mapMetadataItemToInput),
-          privateMetadata: (data?.privateMetadata ?? [])?.map(mapMetadataItemToInput),
-        },
+        // Removes __typename from metadata item object
+        metadata: (data?.metadata ?? []).map(mapMetadataItemToInput),
+        privateMetadata: (data?.privateMetadata ?? [])?.map(mapMetadataItemToInput),
+      },
   });
 
   const { handleSubmit, control, getValues, formState, trigger } = formMethods;
@@ -66,7 +66,7 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
   return (
     <DashboardModal open={open} onChange={onClose}>
       <DashboardModal.Content size="md">
-        <DashboardModal.Header display="flex" gap={2} alignItems="center" paddingX={6}>
+        <DashboardModal.Header display="flex" gap={5} alignItems="center" paddingX={6}>
           <VariantThumbnail src={data?.thumbnail?.url} />
           <Box display="flex" flexDirection="column" gap={2}>
             <Text size={7} fontWeight="bold">
