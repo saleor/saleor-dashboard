@@ -93,7 +93,7 @@ export const PageList = ({ params }: PageListProps) => {
     }),
     [params, settings.rowNumber],
   );
-  const newQueryVariables = React.useMemo(
+  const newQueryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: {

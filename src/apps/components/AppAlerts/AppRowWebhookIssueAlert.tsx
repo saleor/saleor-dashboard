@@ -5,7 +5,7 @@ import { StopPropagation } from "@dashboard/components/StopPropagation";
 import { AppListItemFragment } from "@dashboard/graphql";
 import { ExclamationIcon } from "@dashboard/icons/ExclamationIcon";
 import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { AlertExclamationIcon } from "../AppAlerts/AlertExclamationIcon";

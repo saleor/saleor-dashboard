@@ -68,7 +68,7 @@ export const ProductTypeList = ({ params }: ProductTypeListProps) => {
     }),
     [params, settings.rowNumber],
   );
-  const newQueryVariables = React.useMemo(
+  const newQueryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: {

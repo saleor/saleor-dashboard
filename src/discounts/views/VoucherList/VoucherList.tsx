@@ -68,7 +68,7 @@ export const VoucherList = ({ params }: VoucherListProps) => {
     }),
     [params, settings.rowNumber],
   );
-  const newFiltersQueryVariables = React.useMemo(
+  const newFiltersQueryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: {

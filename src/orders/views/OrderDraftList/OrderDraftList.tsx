@@ -126,7 +126,7 @@ export const OrderDraftList = ({ params }: OrderDraftListProps) => {
     [paginationState, params],
   );
 
-  const newFiltersQueryVariables = React.useMemo(
+  const newFiltersQueryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: {

@@ -71,7 +71,7 @@ const PageListPage = ({
   const location = useLocation();
   const navigate = useNavigator();
   const structure = createFilterStructure(intl, filterOpts);
-  const [isFilterPresetOpen, setFilterPresetOpen] = React.useState(false);
+  const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const { enabled: isPageFiltersEnabled } = useFlag("new_filters");
 
   return (

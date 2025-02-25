@@ -1,6 +1,6 @@
 import { ContextualLine } from "@dashboard/components/AppLayout/ContextualLinks/ContextualLine";
 import { renderHook } from "@testing-library/react-hooks";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { IntlProvider } from "react-intl";
 
 import { useContextualLink } from "./useContextualLink";
@@ -10,6 +10,7 @@ jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
 }));
 
 const wrapper = ({ children }: { children: ReactNode }) => (
+  // @ts-expect-error wrong typing
   <IntlProvider locale="EN">{children}</IntlProvider>
 );
 

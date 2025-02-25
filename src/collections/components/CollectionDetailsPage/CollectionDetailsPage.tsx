@@ -17,7 +17,6 @@ import {
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { ChannelProps, PageListProps } from "../../../types";
