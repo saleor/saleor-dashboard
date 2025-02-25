@@ -7,7 +7,6 @@
     "@octokit/core": "^4.0.4",
     "@testmo/testmo-cli": "^1.4.0",
     "commander": "^9.4.0",
-    "fs": "^0.0.1-security",
     "graphql": "^16.8.1",
     "graphql-request": "^5.0.0",
     "node-fetch": "^2.6.7",
