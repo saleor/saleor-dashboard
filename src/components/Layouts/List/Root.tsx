@@ -1,8 +1,8 @@
 import { Box } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ReactNode } from "react";
 
 interface ListPageLayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
   hasSaveBar?: boolean;
   hasTopNav?: boolean;
 }

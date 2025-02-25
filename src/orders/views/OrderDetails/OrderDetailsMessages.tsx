@@ -37,7 +37,7 @@ import {
   transactionRequestMessages as transactionMessages,
 } from "@dashboard/utils/errors/transaction";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import * as React from "react";
+import { ReactElement } from "react";
 import { useIntl } from "react-intl";
 
 import { orderUrl, OrderUrlQueryParams } from "../../urls";
@@ -66,7 +66,7 @@ interface OrderDetailsMessages {
     handleInvoiceSend: (data: InvoiceEmailSendMutation) => void;
     handleTransactionAction: (data: OrderTransactionRequestActionMutation) => void;
     handleAddManualTransaction: (data: CreateManualTransactionCaptureMutation) => void;
-  }) => React.ReactElement;
+  }) => ReactElement;
   id: string;
   params: OrderUrlQueryParams;
 }

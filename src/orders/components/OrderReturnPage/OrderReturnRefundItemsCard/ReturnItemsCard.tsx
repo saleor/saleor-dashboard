@@ -9,8 +9,7 @@ import { getById, renderCollection } from "@dashboard/misc";
 import { Checkbox, TableBody, TableCell, TableHead, TextField } from "@material-ui/core";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import { CSSProperties } from "react";
-import * as React from "react";
+import { ChangeEvent, CSSProperties } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import OrderCardTitle from "../../OrderCardTitle";
@@ -104,7 +103,7 @@ const ItemsCard = ({
 }: OrderReturnRefundLinesCardProps) => {
   const classes = useStyles({});
   const intl = useIntl();
-  const handleChangeQuantity = (id: string) => (event: React.ChangeEvent<HTMLInputElement>) =>
+  const handleChangeQuantity = (id: string) => (event: ChangeEvent<HTMLInputElement>) =>
     onChangeQuantity(id, parseInt(event.target.value, 10));
   const fulfillment = order?.fulfillments.find(getById(fulfilmentId));
 

@@ -7,6 +7,7 @@ import {
   JobStatusEnum,
 } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
+import { MutableRefObject } from "react";
 import { IntlShape } from "react-intl";
 
 import messages from "./messages";
@@ -49,11 +50,7 @@ export function handleError(error: Error) {
   throw error;
 }
 
-export function queueCustom(
-  id: number,
-  tasks: React.MutableRefObject<QueuedTask[]>,
-  data: TaskData,
-) {
+export function queueCustom(id: number, tasks: MutableRefObject<QueuedTask[]>, data: TaskData) {
   (["handle", "onCompleted"] as Array<keyof TaskData>)
     .filter(field => !data[field])
     .forEach(field => {
@@ -74,7 +71,7 @@ export function queueCustom(
 export function queueInvoiceGenerate(
   id: number,
   generateInvoice: InvoiceGenerateParams,
-  tasks: React.MutableRefObject<QueuedTask[]>,
+  tasks: MutableRefObject<QueuedTask[]>,
   fetch: () => Promise<ApolloQueryResult<CheckOrderInvoicesStatusQuery>>,
   notify: IMessageContext,
   intl: IntlShape,
@@ -115,7 +112,7 @@ export function queueInvoiceGenerate(
 
 export function queueExport(
   id: number,
-  tasks: React.MutableRefObject<QueuedTask[]>,
+  tasks: MutableRefObject<QueuedTask[]>,
   fetch: () => Promise<ApolloQueryResult<CheckExportFileStatusQuery>>,
   notify: IMessageContext,
   intl: IntlShape,

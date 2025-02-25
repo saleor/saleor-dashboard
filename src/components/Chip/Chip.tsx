@@ -3,11 +3,11 @@ import CloseIcon from "@material-ui/icons/Close";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import * as React from "react";
+import { ReactNode } from "react";
 
 export interface ChipProps {
   className?: string;
-  label: React.ReactNode;
+  label: ReactNode;
   onClose?: () => void;
 }
 

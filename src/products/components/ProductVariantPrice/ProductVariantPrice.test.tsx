@@ -1,13 +1,11 @@
 import { ChannelData } from "@dashboard/channels/utils";
 import { ThemeWrapper } from "@test/themeWrapper";
 import { fireEvent, render, screen } from "@testing-library/react";
-import * as React from "react";
+import { ReactNode } from "react";
 
 import { ProductVariantPrice } from "./ProductVariantPrice";
 
-const wrapper = ({ children }: { children: React.ReactNode }) => (
-  <ThemeWrapper>{children}</ThemeWrapper>
-);
+const wrapper = ({ children }: { children: ReactNode }) => <ThemeWrapper>{children}</ThemeWrapper>;
 
 jest.mock("react-intl", () => ({
   useIntl: jest.fn(() => ({

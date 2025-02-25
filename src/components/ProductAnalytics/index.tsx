@@ -1,6 +1,6 @@
 import { PostHogConfig } from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
-import React from "react";
+import { ReactNode } from "react";
 
 const isDomainExcluded = () => {
   const domainsString = process.env.POSTHOG_EXCLUDED_DOMAINS;
@@ -54,7 +54,7 @@ const useConfig = () => {
 };
 
 interface ProductAnalyticsProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const ProductAnalytics = ({ children }: ProductAnalyticsProps) => {

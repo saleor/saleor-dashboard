@@ -1,6 +1,6 @@
 import Debounce from "@dashboard/components/Debounce";
 import { SearchInput } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ChangeEvent, SetStateAction } from "react";
 import { useIntl } from "react-intl";
 
 import messages from "./messages";
@@ -8,7 +8,7 @@ import { ColumnCategory } from "./useColumns";
 
 interface ColumnPickerSearchProps {
   currentCategory: ColumnCategory;
-  setQuery: (value: React.SetStateAction<string>) => void;
+  setQuery: (value: SetStateAction<string>) => void;
   query: string;
 }
 
@@ -22,7 +22,7 @@ export const ColumnPickerSearch = ({
   return (
     <Debounce debounceFn={(value: string) => currentCategory.onSearch(value)} time={500}>
       {debounceSearchChange => {
-        const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
           const value = event.target.value ?? "";
 
           setQuery(value);

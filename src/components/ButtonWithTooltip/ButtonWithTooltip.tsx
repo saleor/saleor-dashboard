@@ -1,9 +1,9 @@
 import { Button, ButtonProps, Tooltip } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ReactNode } from "react";
 
 interface ButtonWithTooltipProps extends ButtonProps {
-  tooltip?: React.ReactNode;
-  children: React.ReactNode;
+  tooltip?: ReactNode;
+  children: ReactNode;
 }
 
 export const ButtonWithTooltip = ({ tooltip, children, ...props }: ButtonWithTooltipProps) => {

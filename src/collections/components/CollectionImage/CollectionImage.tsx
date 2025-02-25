@@ -7,7 +7,7 @@ import { commonMessages } from "@dashboard/intl";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Button, Skeleton, vars } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ChangeEvent, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
@@ -52,14 +52,14 @@ export interface CollectionImageProps {
     backgroundImageAlt: string;
   };
   image: CollectionDetailsFragment["backgroundImage"];
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
   onImageDelete: () => void;
   onImageUpload: (file: File) => void;
 }
 
 export const CollectionImage = (props: CollectionImageProps) => {
   const { data, onImageUpload, image, onChange, onImageDelete } = props;
-  const anchor = React.useRef<HTMLInputElement | null>(null);
+  const anchor = useRef<HTMLInputElement | null>(null);
   const classes = useStyles(props);
   const intl = useIntl();
   const handleImageUploadButtonClick = () => anchor?.current?.click();

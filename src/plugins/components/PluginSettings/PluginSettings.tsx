@@ -7,7 +7,7 @@ import { getFieldError } from "@dashboard/utils/errors";
 import { TextField } from "@material-ui/core";
 import InfoIcon from "@material-ui/icons/Info";
 import { Box, Tooltip } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 
 import { PluginDetailsPageFormData } from "../PluginsDetailsPage";
@@ -16,7 +16,7 @@ interface PluginSettingsProps {
   data: PluginDetailsPageFormData;
   errors: UserError[];
   disabled: boolean;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
   fields: ConfigurationItemFragment[];
 }
 

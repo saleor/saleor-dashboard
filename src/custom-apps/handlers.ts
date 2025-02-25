@@ -16,7 +16,6 @@ import {
 } from "graphql";
 import isEmpty from "lodash/isEmpty";
 import { Dispatch, SetStateAction } from "react";
-import * as React from "react";
 
 import { WebhookFormData } from "./components/WebhookDetailsPage";
 import { filterSelectedAsyncEvents, IntrospectionNode } from "./utils";
@@ -100,7 +99,7 @@ const enumToEventName = (value: string) =>
 interface HandleQuery {
   events: WebhookEventTypeAsyncEnum[] | WebhookEventTypeSyncEnum[];
   query: string;
-  setQuery: React.Dispatch<React.SetStateAction<string>>;
+  setQuery: Dispatch<SetStateAction<string>>;
   availableEvents: IntrospectionNode[];
 }
 

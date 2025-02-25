@@ -1,6 +1,6 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
-import * as React from "react";
+import { Dispatch, SetStateAction } from "react";
 import { Control, FieldArrayWithId, UseFieldArrayUpdate } from "react-hook-form";
 
 import { LineToRefund, OrderTransactionRefundPageFormData } from "../../OrderTransactionRefundPage";
@@ -13,7 +13,7 @@ interface OrderTransactionRefundTableProps {
   draftRefund?: OrderDetailsGrantRefundFragment["grantedRefunds"][0];
   control: Control<OrderTransactionRefundPageFormData, any>;
   onChange: (data: RefundQuantityChange, index: number) => void;
-  onEditReasonModal: React.Dispatch<React.SetStateAction<number | null>>;
+  onEditReasonModal: Dispatch<SetStateAction<number | null>>;
   linesToRefund: LineToRefund[];
   refundFields: FieldArrayWithId<OrderTransactionRefundPageFormData, "linesToRefund", "id">[];
   refundFieldsUpdate: UseFieldArrayUpdate<OrderTransactionRefundPageFormData, "linesToRefund">;

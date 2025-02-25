@@ -1,7 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
 import { TextField } from "@material-ui/core";
-import * as React from "react";
+import { ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 
 interface ProductTypeShippingProps {
@@ -11,7 +11,7 @@ interface ProductTypeShippingProps {
   };
   weightUnit: string;
   disabled: boolean;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
 }
 
 const ProductTypeShipping = ({

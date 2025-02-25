@@ -2,15 +2,15 @@ import Money from "@dashboard/components/Money";
 import { IMoney } from "@dashboard/utils/intl";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import * as React from "react";
+import { ReactNode } from "react";
 import { useIntl } from "react-intl";
 
 import { orderSummaryMessages } from "./messages";
 import { useSummaryLineStyles } from "./styles";
 
 interface SummaryLineProps {
-  text: React.ReactNode;
-  subText?: React.ReactNode;
+  text: ReactNode;
+  subText?: ReactNode;
   negative?: boolean;
   bold?: boolean;
   vertical?: boolean;

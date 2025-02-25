@@ -8,7 +8,7 @@ import { commonMessages } from "@dashboard/intl";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, vars } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ChangeEvent, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CategoryUpdateData } from "../CategoryUpdatePage/form";
@@ -42,7 +42,7 @@ const useStyles = makeStyles(
 export interface CategoryBackgroundProps {
   data: CategoryUpdateData;
   image: CategoryDetailsFragment["backgroundImage"] | undefined | null;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
   onImageDelete: () => void;
   onImageUpload: (file: File | null) => void;
 }
@@ -50,7 +50,7 @@ export interface CategoryBackgroundProps {
 const CategoryBackground = (props: CategoryBackgroundProps) => {
   const classes = useStyles(props);
   const intl = useIntl();
-  const anchor = React.useRef<HTMLInputElement>(null);
+  const anchor = useRef<HTMLInputElement>(null);
   const { data, onImageUpload, image, onChange, onImageDelete } = props;
   const handleImageUploadButtonClick = () => anchor.current?.click();
 

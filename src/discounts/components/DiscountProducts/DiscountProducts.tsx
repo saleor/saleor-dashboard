@@ -15,6 +15,7 @@ import { getLoadableList, mapEdgesToItems } from "@dashboard/utils/maps";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
+import { ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
@@ -120,10 +121,10 @@ const DiscountProducts = (props: SaleProductsProps) => {
                     className={classes.colName}
                     thumbnail={maybe(() => product.thumbnail.url)}
                   >
-                    {maybe<React.ReactNode>(() => product.name, <Skeleton />)}
+                    {maybe<ReactNode>(() => product.name, <Skeleton />)}
                   </TableCellAvatar>
                   <TableCell className={classes.colType}>
-                    {maybe<React.ReactNode>(() => product.productType.name, <Skeleton />)}
+                    {maybe<ReactNode>(() => product.productType.name, <Skeleton />)}
                   </TableCell>
                   <TableCell className={classes.colType}>
                     {product && !product?.channelListings?.length ? (

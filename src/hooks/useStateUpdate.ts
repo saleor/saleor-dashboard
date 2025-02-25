@@ -1,10 +1,10 @@
-import * as React from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 /** useState, but updates state every time initial value changes. */
-export function useStateUpdate<T>(data: T): [T, React.Dispatch<React.SetStateAction<T>>] {
-  const [state, setState] = React.useState(data);
+export function useStateUpdate<T>(data: T): [T, Dispatch<SetStateAction<T>>] {
+  const [state, setState] = useState(data);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setState(data);
   }, [data]);
 

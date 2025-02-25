@@ -8,7 +8,7 @@ import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import * as React from "react";
+import { ReactNode, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { getStringOrPlaceholder, maybe, renderCollection } from "../../misc";
@@ -17,8 +17,8 @@ import { DashboardCard } from "../Card";
 export interface CountryListProps {
   countries: CountryFragment[];
   disabled: boolean;
-  emptyText: React.ReactNode;
-  title: React.ReactNode;
+  emptyText: ReactNode;
+  title: ReactNode;
   onCountryAssign: () => void;
   onCountryUnassign: (country: string) => void;
 }
@@ -74,7 +74,7 @@ const useStyles = makeStyles(
 const CountryList = (props: CountryListProps) => {
   const { countries, disabled, emptyText, title, onCountryAssign, onCountryUnassign } = props;
   const classes = useStyles(props);
-  const [isCollapsed, setCollapseStatus] = React.useState(true);
+  const [isCollapsed, setCollapseStatus] = useState(true);
   const toggleCollapse = () => setCollapseStatus(!isCollapsed);
 
   function sortCountries(countries: CountryFragment[]): CountryFragment[] {
@@ -121,7 +121,7 @@ const CountryList = (props: CountryListProps) => {
               (country, countryIndex) => (
                 <TableRowLink key={country ? country.code : "skeleton"}>
                   <TableCell className={classes.offsetCell}>
-                    {maybe<React.ReactNode>(
+                    {maybe<ReactNode>(
                       () => (
                         <>
                           {(countryIndex === 0 ||

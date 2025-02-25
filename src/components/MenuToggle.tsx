@@ -1,4 +1,4 @@
-import * as React from "react";
+import { Component, ReactElement } from "react";
 
 interface MenuToggleProps {
   ariaOwns?: string;
@@ -8,14 +8,14 @@ interface MenuToggleProps {
       close: () => void;
     };
     open: boolean;
-  }) => React.ReactElement<any>;
+  }) => ReactElement<any>;
 }
 
 interface MenuToggleState {
   open: boolean;
 }
 
-class MenuToggle extends React.Component<MenuToggleProps, MenuToggleState> {
+class MenuToggle extends Component<MenuToggleProps, MenuToggleState> {
   state = {
     open: false,
   };

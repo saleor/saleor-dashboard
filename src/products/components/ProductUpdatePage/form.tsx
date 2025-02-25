@@ -39,7 +39,6 @@ import { RichTextContext } from "@dashboard/utils/richText/context";
 import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { useCallback, useEffect, useMemo, useRef } from "react";
-import * as React from "react";
 
 import { useProductChannelListingsForm } from "./formChannels";
 import {
@@ -82,7 +81,7 @@ export function useProductUpdateForm(
     removed: [],
     updates: [],
   });
-  const handleVariantChange = React.useCallback(
+  const handleVariantChange = useCallback(
     (data: DatagridChangeOpts) => {
       variants.current = prepareVariantChangeData(data, locale, product);
       triggerChange();

@@ -16,6 +16,7 @@ import { getArrowDirection } from "@dashboard/utils/sort";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
+import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
 export interface MenuListProps extends ListProps, ListActions, SortPage<MenuListUrlSortField> {
@@ -134,10 +135,10 @@ const MenuList = (props: MenuListProps) => {
                     />
                   </TableCell>
                   <TableCell className={classes.colTitle} data-test-id="menu-name">
-                    {maybe<React.ReactNode>(() => menu.name, <Skeleton />)}
+                    {maybe<ReactNode>(() => menu.name, <Skeleton />)}
                   </TableCell>
                   <TableCell className={classes.colItems}>
-                    {maybe<React.ReactNode>(() => menu.items.length, <Skeleton />)}
+                    {maybe<ReactNode>(() => menu.items.length, <Skeleton />)}
                   </TableCell>
                   <TableButtonWrapper>
                     <IconButtonTableCell

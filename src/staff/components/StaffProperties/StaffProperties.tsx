@@ -8,7 +8,7 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getStaffErrorMessage from "@dashboard/utils/errors/staff";
 import { TextField } from "@material-ui/core";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ChangeEvent, createRef } from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -23,7 +23,7 @@ interface StaffPropertiesProps {
   errors: StaffErrorFragment[];
   disabled: boolean;
   staffMember: StaffMemberDetailsFragment | UserFragment;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
   onImageDelete: () => void;
   onImageUpload: (file: File) => void;
 }
@@ -40,7 +40,7 @@ const StaffProperties = (props: StaffPropertiesProps) => {
     onImageUpload,
   } = props;
   const intl = useIntl();
-  const imgInputAnchor = React.createRef<HTMLInputElement>();
+  const imgInputAnchor = createRef<HTMLInputElement>();
   const clickImgInput = () => imgInputAnchor.current.click();
   const formErrors = getFormErrors(["id", "firstName", "lastName", "email"], errors || []);
   const hasAvatar = !!staffMember?.avatar?.url;

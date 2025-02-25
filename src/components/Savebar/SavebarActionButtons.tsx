@@ -1,14 +1,11 @@
 import { buttonMessages } from "@dashboard/intl";
 import { Button, ButtonProps } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { ConfirmButton as ConfirmButtonComponent, ConfirmButtonProps } from "../ConfirmButton";
 
-export const DeleteButton = ({
-  children,
-  ...props
-}: { children?: React.ReactNode } & ButtonProps) => (
+export const DeleteButton = ({ children, ...props }: { children?: ReactNode } & ButtonProps) => (
   <Button variant="error" size="large" data-test-id="button-bar-delete" {...props}>
     {children || <FormattedMessage {...buttonMessages.delete} />}
   </Button>
@@ -19,7 +16,7 @@ export const ConfirmButton = ({
   transitionState,
   ...props
 }: {
-  children?: React.ReactNode;
+  children?: ReactNode;
   transitionState: ConfirmButtonProps["transitionState"];
 } & ButtonProps) => (
   <ConfirmButtonComponent
@@ -32,10 +29,7 @@ export const ConfirmButton = ({
   </ConfirmButtonComponent>
 );
 
-export const CancelButton = ({
-  children,
-  ...props
-}: { children?: React.ReactNode } & ButtonProps) => (
+export const CancelButton = ({ children, ...props }: { children?: ReactNode } & ButtonProps) => (
   <Button variant="secondary" size="large" data-test-id="button-bar-cancel" {...props}>
     {children || <FormattedMessage {...buttonMessages.back} />}
   </Button>

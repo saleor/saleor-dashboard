@@ -1,11 +1,11 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import * as React from "react";
+import { ReactNode } from "react";
 
 export type WelcomePageInfoTileProps = {
   id: string;
-  header: React.ReactNode;
-  content: React.ReactNode;
-  bottomActions: React.ReactNode;
+  header: ReactNode;
+  content: ReactNode;
+  bottomActions: ReactNode;
 };
 
 export const WelcomePageInfoTile = ({

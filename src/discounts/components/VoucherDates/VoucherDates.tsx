@@ -6,7 +6,7 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
 import { TextField } from "@material-ui/core";
-import * as React from "react";
+import { ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 
 import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
@@ -15,7 +15,7 @@ interface VoucherDatesProps {
   data: VoucherDetailsPageFormData;
   disabled: boolean;
   errors: DiscountErrorFragment[];
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
 }
 
 const VoucherDates = ({ data, disabled, errors, onChange }: VoucherDatesProps) => {

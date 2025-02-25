@@ -1,7 +1,7 @@
 import { Divider } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import * as React from "react";
+import { ReactNode } from "react";
 
 const useStyles = makeStyles(
   theme => ({
@@ -54,12 +54,12 @@ const useStyles = makeStyles(
 );
 
 interface ExtendedPageHeaderProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
   className?: string;
   childrenWrapperClassName?: string;
   inline?: boolean;
   underline?: boolean;
-  title?: React.ReactNode;
+  title?: ReactNode;
   testId?: string;
 }
 

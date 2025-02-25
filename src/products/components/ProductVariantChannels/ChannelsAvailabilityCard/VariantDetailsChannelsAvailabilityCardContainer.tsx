@@ -1,13 +1,13 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { Accordion } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { variantDetailsChannelsAvailabilityCardMessages as messages } from "./../messages";
 
 interface VariantDetailsChannelsAvailabilityCardContainerProps {
-  children: React.ReactNode;
-  cardTitle?: React.ReactNode;
+  children: ReactNode;
+  cardTitle?: ReactNode;
 }
 
 const VariantDetailsChannelsAvailabilityCardContainer = ({

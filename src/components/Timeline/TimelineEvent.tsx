@@ -1,20 +1,20 @@
 import { Accordion, Box, sprinkles, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { Children, ReactNode } from "react";
 
 import TimelineEventHeader, { TitleElement } from "./TimelineEventHeader";
 
 export interface TimelineEventProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
   date: string;
   secondaryTitle?: string;
-  title?: React.ReactNode;
+  title?: ReactNode;
   titleElements?: TitleElement[];
   hasPlainDate?: boolean;
 }
 
 export const TimelineEvent = (props: TimelineEventProps) => {
   const { children, date, secondaryTitle, title, titleElements, hasPlainDate } = props;
-  const hasChildren = children && React.Children.toArray(children).filter(Boolean).length > 0;
+  const hasChildren = children && Children.toArray(children).filter(Boolean).length > 0;
 
   return (
     <Box display="flex" alignItems="center" marginBottom={5} position="relative" width="100%">

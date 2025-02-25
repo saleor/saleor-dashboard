@@ -1,10 +1,10 @@
 import { Tooltip } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ReactNodeArray } from "react";
 
 import TableCellHeader, { TableCellHeaderProps } from "../TableCellHeader";
 
 interface TooltipTableCellHeaderProps extends TableCellHeaderProps {
-  tooltip?: string | React.ReactNodeArray;
+  tooltip?: string | ReactNodeArray;
 }
 
 export const TooltipTableCellHeader = (props: TooltipTableCellHeaderProps) => {

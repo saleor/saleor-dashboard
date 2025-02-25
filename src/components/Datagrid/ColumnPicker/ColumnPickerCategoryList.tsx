@@ -1,11 +1,11 @@
 import { List, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { Dispatch, SetStateAction } from "react";
 
 import { ColumnCategory } from "./useColumns";
 
 export interface ColumnPickerCategoryListProps {
   columnCategories: ColumnCategory[];
-  setCurrentCategory: React.Dispatch<React.SetStateAction<string | null>>;
+  setCurrentCategory: Dispatch<SetStateAction<string | null>>;
 }
 export const ColumnPickerCategoryList = ({
   columnCategories,

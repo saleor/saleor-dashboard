@@ -1,8 +1,7 @@
 import closeIcon from "@assets/images/close-thin.svg";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
-import { useState } from "react";
-import * as React from "react";
+import { ReactNode, useState } from "react";
 
 import FormSpacer from "../FormSpacer";
 
@@ -33,7 +32,7 @@ const useStyles = makeStyles(
 
 interface Props {
   buttonText: string;
-  children: React.ReactNode;
+  children: ReactNode;
   onInputClose: () => void;
 }
 

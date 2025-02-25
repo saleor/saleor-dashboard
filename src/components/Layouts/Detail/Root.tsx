@@ -1,10 +1,9 @@
 import { borderHeight, savebarHeight } from "@dashboard/components/AppLayout/consts";
 import { Box, Sprinkles } from "@saleor/macaw-ui-next";
-import { useMemo } from "react";
-import * as React from "react";
+import { ReactNode, useMemo } from "react";
 
 interface DetailPageLayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
   gridTemplateColumns?: Sprinkles["gridTemplateColumns"];
   withSavebar?: boolean;
 }

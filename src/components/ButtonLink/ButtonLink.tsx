@@ -1,9 +1,9 @@
 import { Button, ButtonProps, vars } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { MouseEvent, MouseEventHandler, ReactNode } from "react";
 
 interface ButtonLinkProps extends ButtonProps {
-  children: React.ReactNode;
-  onClick?: React.MouseEventHandler;
+  children: ReactNode;
+  onClick?: MouseEventHandler;
   underline?: boolean;
 }
 
@@ -16,7 +16,7 @@ export const ButtonLink = ({
 }: ButtonLinkProps) => {
   const color = disabled ? vars.colors.text.defaultDisabled : vars.colors.text.accent1;
 
-  const handleClick = (event: React.MouseEvent) => {
+  const handleClick = (event: MouseEvent) => {
     if (disabled || !onClick) {
       return;
     }

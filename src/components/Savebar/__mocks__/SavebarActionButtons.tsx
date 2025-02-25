@@ -1,13 +1,13 @@
-import * as React from "react";
+import { ReactNode } from "react";
 
-export const CancelButton = ({ children, ...props }: { children?: React.ReactNode }) => (
+export const CancelButton = ({ children, ...props }: { children?: ReactNode }) => (
   <button {...props}>cancel</button>
 );
 
-export const ConfirmButton = ({ children, ...props }: { children?: React.ReactNode }) => (
+export const ConfirmButton = ({ children, ...props }: { children?: ReactNode }) => (
   <button {...props}>save</button>
 );
 
-export const DeleteButton = ({ children, ...props }: { children?: React.ReactNode }) => (
+export const DeleteButton = ({ children, ...props }: { children?: ReactNode }) => (
   <button {...props}>delete</button>
 );

@@ -5,6 +5,7 @@ import {
   OrderGrantRefundUpdateErrorFragment,
 } from "@dashboard/graphql";
 import { OrderTransactionRefundError } from "@dashboard/orders/components/OrderTransactionRefundPage/OrderTransactionRefundPage";
+import { SetStateAction } from "react";
 import { IntlShape } from "react-intl";
 
 import { transactionRefundEditMessages } from "./messages";
@@ -17,7 +18,7 @@ export const handleRefundEditComplete = ({
 }: {
   submitData: OrderGrantRefundEditMutation;
   notify: (message: IMessage) => void;
-  setLinesErrors: (value: React.SetStateAction<OrderTransactionRefundError[]>) => void;
+  setLinesErrors: (value: SetStateAction<OrderTransactionRefundError[]>) => void;
   intl: IntlShape;
   orderId: string;
 }) => {

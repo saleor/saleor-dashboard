@@ -10,8 +10,7 @@ import useForm, {
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { Option } from "@saleor/macaw-ui-next";
-import { useEffect, useState } from "react";
-import * as React from "react";
+import { ChangeEvent, FormEvent, ReactNode, useEffect, useState } from "react";
 
 export enum AddressInputOptionEnum {
   CUSTOMER_ADDRESS = "customerAddress",
@@ -35,7 +34,7 @@ export interface OrderCustomerAddressesEditData extends OrderCustomerAddressesEd
 
 export interface OrderCustomerAddressesEditHandlers {
   changeFormAddress: (
-    event: React.ChangeEvent<any>,
+    event: ChangeEvent<any>,
     addressType: "shippingAddress" | "billingAddress",
   ) => void;
   changeCustomerAddress: (
@@ -51,7 +50,7 @@ interface UseOrderCustomerAddressesEditFormResult
     OrderCustomerAddressesEditData,
     OrderCustomerAddressesEditHandlers
   > {
-  submit: (event: React.FormEvent<any>) => SubmitPromise<any[]>;
+  submit: (event: FormEvent<any>) => SubmitPromise<any[]>;
 }
 
 interface UseOrderCustomerAddressesEditFormOpts {
@@ -63,7 +62,7 @@ interface UseOrderCustomerAddressesEditFormOpts {
 }
 
 export interface OrderCustomerAddressesEditFormProps extends UseOrderCustomerAddressesEditFormOpts {
-  children: (props: UseOrderCustomerAddressesEditFormResult) => React.ReactNode;
+  children: (props: UseOrderCustomerAddressesEditFormResult) => ReactNode;
   initial?: Partial<OrderCustomerAddressesEditFormData>;
   onSubmit: (data: OrderCustomerAddressesEditData) => void;
 }
@@ -102,7 +101,7 @@ function useOrderCustomerAddressesEditForm(
     opts.countries.find(country => initialData.billingAddress.country === country.code)?.country,
   );
   const handleFormAddressChange = (
-    event: React.ChangeEvent<any>,
+    event: ChangeEvent<any>,
     addressType: "shippingAddress" | "billingAddress",
   ) =>
     change({
@@ -163,7 +162,7 @@ function useOrderCustomerAddressesEditForm(
     onSubmit,
   });
   const handleSubmit = () => handleFormSubmit(data);
-  const submit = (event: React.FormEvent<any>) => {
+  const submit = (event: FormEvent<any>) => {
     event.stopPropagation();
     event.preventDefault();
 

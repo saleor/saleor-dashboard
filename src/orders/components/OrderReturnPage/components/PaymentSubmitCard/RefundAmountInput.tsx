@@ -5,7 +5,7 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { IMoney } from "@dashboard/utils/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import * as React from "react";
+import { ChangeEvent } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { OrderRefundFormData } from "../../../OrderRefundPage/form";
@@ -47,7 +47,7 @@ interface RefundAmountInputProps {
   amountTooBig: boolean;
   disabled: boolean;
   errors: OrderErrorFragment[];
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
 }
 
 const messages = defineMessages({

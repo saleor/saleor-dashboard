@@ -1,7 +1,6 @@
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text, TextProps } from "@saleor/macaw-ui-next";
-import { HTMLAttributes } from "react";
-import * as React from "react";
+import { HTMLAttributes, HTMLProps, ReactNode } from "react";
 
 const useStyles = makeStyles(
   {
@@ -12,9 +11,10 @@ const useStyles = makeStyles(
   { name: "ExternalLink" },
 );
 
-interface ExternalLinkProps extends React.HTMLProps<HTMLAnchorElement> {
+interface ExternalLinkProps extends HTMLProps<HTMLAnchorElement> {
   href: string;
   className?: string;
+  children: ReactNode;
 }
 
 /**

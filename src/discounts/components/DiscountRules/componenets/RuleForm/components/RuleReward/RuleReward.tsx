@@ -2,7 +2,7 @@ import { useDiscountRulesContext } from "@dashboard/discounts/components/Discoun
 import { Rule } from "@dashboard/discounts/models";
 import { PromotionTypeEnum, RewardTypeEnum } from "@dashboard/graphql";
 import { Box, BoxProps, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ReactNode } from "react";
 import { useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 
@@ -42,7 +42,7 @@ export const RuleReward = ({ currencySymbol, error }: RuleRewardProps) => {
   );
 };
 
-function RuleRewardWrapper({ children, ...props }: { children: React.ReactNode } & BoxProps) {
+function RuleRewardWrapper({ children, ...props }: { children: ReactNode } & BoxProps) {
   const intl = useIntl();
 
   return (

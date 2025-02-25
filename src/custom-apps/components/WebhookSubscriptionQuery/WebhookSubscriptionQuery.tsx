@@ -6,7 +6,7 @@ import { WebhookErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { useExplorerPlugin } from "@graphiql/plugin-explorer";
 import { createGraphiQLFetcher } from "@graphiql/toolkit";
-import * as React from "react";
+import { Dispatch } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import GraphiQL from "../../../components/GraphiQL";
@@ -23,7 +23,7 @@ const messages = defineMessages({
 
 interface WebhookSubscriptionQueryProps {
   query: any;
-  setQuery: React.Dispatch<any>;
+  setQuery: Dispatch<any>;
   data: WebhookFormData;
   errors: WebhookErrorFragment[];
 }

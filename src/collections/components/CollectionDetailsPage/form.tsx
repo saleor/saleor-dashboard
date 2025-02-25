@@ -13,8 +13,7 @@ import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChang
 import { RichTextContext, RichTextContextValues } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { OutputData } from "@editorjs/editorjs";
-import { useEffect } from "react";
-import * as React from "react";
+import { ReactNode, useEffect } from "react";
 
 export interface CollectionUpdateFormData extends MetadataFormData {
   backgroundImageAlt: string;
@@ -38,7 +37,7 @@ export type UseCollectionUpdateFormResult = CommonUseFormResultWithHandlers<
 >;
 
 export interface CollectionUpdateFormProps {
-  children: (props: UseCollectionUpdateFormResult) => React.ReactNode;
+  children: (props: UseCollectionUpdateFormResult) => ReactNode;
   collection: CollectionDetailsFragment;
   currentChannels: ChannelCollectionData[];
   setChannels: (data: ChannelCollectionData[]) => void;

@@ -14,8 +14,7 @@ import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChang
 import { RichTextContext, RichTextContextValues } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { OutputData } from "@editorjs/editorjs";
-import { useEffect } from "react";
-import * as React from "react";
+import { ReactNode, useEffect } from "react";
 
 export interface CollectionCreateFormData extends MetadataFormData {
   backgroundImage: {
@@ -45,7 +44,7 @@ export type UseCollectionCreateFormResult = CommonUseFormResultWithHandlers<
 export interface CollectionCreateFormProps {
   currentChannels: ChannelCollectionData[];
   setChannels: (data: ChannelCollectionData[]) => void;
-  children: (props: UseCollectionCreateFormResult) => React.ReactNode;
+  children: (props: UseCollectionCreateFormResult) => ReactNode;
   onSubmit: (data: CollectionCreateData) => SubmitPromise;
   disabled: boolean;
 }

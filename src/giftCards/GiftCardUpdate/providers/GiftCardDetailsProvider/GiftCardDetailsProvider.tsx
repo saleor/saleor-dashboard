@@ -1,13 +1,12 @@
 // @ts-strict-ignore
 import { GiftCardDetailsQuery, useGiftCardDetailsQuery } from "@dashboard/graphql";
-import { createContext } from "react";
-import * as React from "react";
+import { createContext, ReactNode } from "react";
 
 import { ExtendedGiftCard } from "./types";
 import { getExtendedGiftCard } from "./utils";
 
 interface GiftCardDetailsProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
   id: string;
 }
 

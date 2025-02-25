@@ -10,8 +10,7 @@ import { getFieldError } from "@dashboard/utils/errors";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Checkbox, RadioGroup, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import { useState } from "react";
-import * as React from "react";
+import { ReactNode, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { DashboardCard } from "../Card";
@@ -78,7 +77,7 @@ export interface DateFields {
 }
 
 export interface VisibilityCardProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
   data: DateFields & {
     availableForPurchaseAt?: string;
     isAvailableForPurchase?: boolean;

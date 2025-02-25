@@ -10,8 +10,7 @@ import {
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
 import { OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
-import { createContext } from "react";
-import * as React from "react";
+import { createContext, ReactNode } from "react";
 import { useIntl } from "react-intl";
 
 import { OrderDiscountConsumerCommonProps, OrderDiscountData } from "./types";
@@ -28,7 +27,7 @@ export interface OrderDiscountContextConsumerProps extends OrderDiscountConsumer
 }
 
 interface OrderDiscountProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
   order?: OrderDetailsFragment;
 }
 

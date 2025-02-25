@@ -1,6 +1,6 @@
 import { MeasurementUnitsEnum } from "@dashboard/graphql";
 import { Option } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { isValidElement, ReactNode } from "react";
 import { IntlShape, MessageDescriptor } from "react-intl";
 
 import * as M from "./messages";
@@ -48,10 +48,10 @@ const UNIT_MESSAGES_MAPPING = {
 export const getMeasurementUnitMessage = (
   unit: MeasurementUnitsEnum,
   formatMessage: IntlShape["formatMessage"],
-): MessageDescriptor | React.ReactNode => {
+): MessageDescriptor | ReactNode => {
   const message = UNIT_MESSAGES_MAPPING[unit];
 
-  return typeof message === "string" || React.isValidElement(message)
+  return typeof message === "string" || isValidElement(message)
     ? message
     : formatMessage(message as MessageDescriptor);
 };

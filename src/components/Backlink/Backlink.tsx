@@ -1,9 +1,9 @@
 import { isExternalURL } from "@dashboard/utils/urls";
 import { Backlink as MacawBacklink, BacklinkProps } from "@saleor/macaw-ui";
-import * as React from "react";
+import { FunctionComponent } from "react";
 import { Link, LinkProps } from "react-router-dom";
 
-type LinkType = React.FunctionComponent<LinkProps>;
+type LinkType = FunctionComponent<LinkProps>;
 
 export const Backlink = ({ href, ...props }: BacklinkProps<"a"> & BacklinkProps<"button">) => {
   if (href && !isExternalURL(href)) {

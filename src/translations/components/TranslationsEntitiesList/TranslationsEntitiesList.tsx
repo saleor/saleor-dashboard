@@ -5,6 +5,7 @@ import { TableBody, TableCell, TableFooter, TableHead } from "@material-ui/core"
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
+import { ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
@@ -79,7 +80,7 @@ const TranslationsEntitiesList = (props: TranslationsEntitiesListProps) => {
               <TableCell>{entity?.name || <Skeleton />}</TableCell>
               <TableCell className={classes.textRight}>
                 {!!entity?.completion &&
-                  maybe<React.ReactNode>(
+                  maybe<ReactNode>(
                     () =>
                       intl.formatMessage(
                         {

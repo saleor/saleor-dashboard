@@ -1,6 +1,6 @@
 import { CircularProgress } from "@material-ui/core";
 import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { Dispatch, SetStateAction } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { ColumnPickerSearch } from "./ColumnPickerSearch";
@@ -11,7 +11,7 @@ export interface ColumnPickerAvailableNodesProps {
   currentCategory: ColumnCategory;
   selectedColumns: string[];
   query: string;
-  setQuery: React.Dispatch<React.SetStateAction<string>>;
+  setQuery: Dispatch<SetStateAction<string>>;
   onToggle: (column: string) => void;
 }
 

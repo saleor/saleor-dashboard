@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import * as React from "react";
+import { ReactNode } from "react";
 
 import AvatarImage from "./AvatarImage";
 import { useAvatarStyles } from "./styles";
@@ -11,8 +11,8 @@ export interface AvatarProps {
   thumbnail?: string;
   alignRight?: boolean;
   avatarProps?: string;
-  children?: React.ReactNode | React.ReactNode[];
-  badge?: React.ReactNode;
+  children?: ReactNode | ReactNode[];
+  badge?: ReactNode;
   className?: string;
 }
 

@@ -3,8 +3,7 @@ import GiftCardUpdatePageDeleteDialog from "@dashboard/giftCards/components/Gift
 import { giftCardsListPath, giftCardUrl } from "@dashboard/giftCards/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import { createContext } from "react";
-import * as React from "react";
+import { createContext, ReactNode } from "react";
 
 import GiftCardResendCodeDialog from "../../GiftCardResendCodeDialog";
 import GiftCardUpdateBalanceDialog from "../../GiftCardUpdateBalanceDialog";
@@ -12,7 +11,7 @@ import { GiftCardUpdatePageActionParamsEnum, GiftCardUpdatePageUrlQueryParams } 
 import useGiftCardDetails from "../GiftCardDetailsProvider/hooks/useGiftCardDetails";
 
 interface GiftCardUpdateDialogsProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
   params: GiftCardUpdatePageUrlQueryParams;
   id: string;
 }

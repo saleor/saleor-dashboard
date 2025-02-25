@@ -1,5 +1,7 @@
+import { ReactNode } from "react";
+
 interface IBaseMenuItem<TMenuData = {}, TValue = string> {
-  label: React.ReactNode;
+  label: ReactNode;
   value?: TValue;
   data: TMenuData | null;
 }

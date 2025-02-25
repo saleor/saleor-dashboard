@@ -1,7 +1,7 @@
 import { Box, PropsWithBox } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ReactNode } from "react";
 
-export const Root = ({ children, ...rest }: PropsWithBox<{ children: React.ReactNode }>) => (
+export const Root = ({ children, ...rest }: PropsWithBox<{ children: ReactNode }>) => (
   <Box display="flex" flexDirection="column" gap={5} backgroundColor="default1" {...rest}>
     {children}
   </Box>

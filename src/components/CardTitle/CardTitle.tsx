@@ -1,13 +1,13 @@
 import { CardHeader } from "@material-ui/core";
-import * as React from "react";
+import { MouseEvent, ReactNode } from "react";
 
 interface CardTitleProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
   className?: string;
-  title: string | React.ReactNode;
-  subtitle?: string | React.ReactNode;
-  toolbar?: React.ReactNode;
-  onClick?: (event: React.MouseEvent<any>) => void;
+  title: string | ReactNode;
+  subtitle?: string | ReactNode;
+  toolbar?: ReactNode;
+  onClick?: (event: MouseEvent<any>) => void;
   onClose?: () => void;
 }
 

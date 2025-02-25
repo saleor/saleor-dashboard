@@ -1,7 +1,7 @@
 import { useDragResize, usePluginContext, useTheme as useGraphiQLTheme } from "@graphiql/react";
 import { makeStyles } from "@saleor/macaw-ui";
 import { useTheme, vars } from "@saleor/macaw-ui-next";
-import { useEffect } from "react";
+import { CSSProperties, useEffect } from "react";
 
 export const useStyles = makeStyles(
   () => ({
@@ -81,7 +81,7 @@ export const useDashboardTheme = () => {
     "--font-size-hint": vars.fontSize[5],
     "--font-size-inline-code": vars.fontSize[3],
     "--color-base": match ? match[1] : background.default1,
-  } as React.CSSProperties;
+  } as CSSProperties;
 
   return { rootStyle };
 };

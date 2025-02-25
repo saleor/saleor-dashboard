@@ -2,7 +2,7 @@ import { alpha } from "@material-ui/core/styles";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import * as React from "react";
+import { ReactNode } from "react";
 
 const useStyles = makeStyles(
   theme => ({
@@ -35,7 +35,7 @@ const useStyles = makeStyles(
 );
 
 interface TabProps<T> {
-  children?: React.ReactNode;
+  children?: ReactNode;
   isActive: boolean;
   changeTab: (index: T) => void;
   testId?: string;

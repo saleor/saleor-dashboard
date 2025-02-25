@@ -1,4 +1,4 @@
-import * as React from "react";
+import { ReactNode } from "react";
 
 export type OnboardingStepsIDs =
   | "get-started"
@@ -37,5 +37,5 @@ export interface OnboardingContextType {
 }
 
 export interface OnboardingProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }

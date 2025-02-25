@@ -2,7 +2,7 @@
 import { FormControl, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import * as React from "react";
+import { ChangeEvent, ReactNode } from "react";
 
 const useStyles = makeStyles(
   theme => ({
@@ -33,11 +33,11 @@ interface RadioSwitchFieldProps {
   className?: string;
   disabled?: boolean;
   error?: boolean;
-  firstOptionLabel: React.ReactNode;
+  firstOptionLabel: ReactNode;
   name?: string;
-  secondOptionLabel: React.ReactNode;
+  secondOptionLabel: ReactNode;
   value?: boolean;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
 }
 
 export const RadioSwitchField = (props: RadioSwitchFieldProps) => {

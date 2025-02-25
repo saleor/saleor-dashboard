@@ -9,8 +9,7 @@ import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChang
 import { RichTextContext, RichTextContextValues } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { OutputData } from "@editorjs/editorjs";
-import { useEffect } from "react";
-import * as React from "react";
+import { ReactNode, useEffect } from "react";
 
 export interface CategoryUpdateFormData extends MetadataFormData {
   backgroundImageAlt: string;
@@ -32,7 +31,7 @@ export interface UseCategoryUpdateFormResult extends CommonUseFormResult<Categor
 }
 
 export interface CategoryUpdateFormProps {
-  children: (props: UseCategoryUpdateFormResult) => React.ReactNode;
+  children: (props: UseCategoryUpdateFormResult) => ReactNode;
   category: CategoryDetailsFragment | undefined | null;
   onSubmit: (data: CategoryUpdateData) => Promise<any[]>;
   disabled: boolean;

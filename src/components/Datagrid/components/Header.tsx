@@ -6,12 +6,11 @@ import {
   PlusIcon,
   Text,
 } from "@saleor/macaw-ui-next";
-import { FC, PropsWithChildren } from "react";
-import * as React from "react";
+import { FC, MouseEventHandler, PropsWithChildren } from "react";
 
 interface ButtonFullScreenProps {
   isOpen: boolean;
-  onToggle: React.MouseEventHandler<HTMLButtonElement>;
+  onToggle: MouseEventHandler<HTMLButtonElement>;
 }
 
 const ButtonFullScreen = ({
@@ -30,7 +29,7 @@ const ButtonFullScreen = ({
 };
 
 interface ButtonAddRowProps {
-  onAddRow: React.MouseEventHandler<HTMLButtonElement>;
+  onAddRow: MouseEventHandler<HTMLButtonElement>;
 }
 
 const ButtonAddRow = ({ onAddRow, children }: PropsWithChildren<ButtonAddRowProps>) => {

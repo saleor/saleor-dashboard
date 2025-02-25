@@ -1,7 +1,6 @@
 import { useUser } from "@dashboard/auth";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import { PropsWithChildren } from "react";
-import * as React from "react";
+import { PropsWithChildren, ReactNode } from "react";
 
 import useAppChannel from "../AppChannelContext";
 import AppChannelSelect from "../AppChannelSelect";
@@ -10,8 +9,8 @@ import { TopNavLink } from "./TopNavLink";
 import { TopNavWrapper } from "./TopNavWrapper";
 
 interface TopNavProps {
-  title: string | React.ReactNode;
-  subtitle?: React.ReactNode;
+  title: string | ReactNode;
+  subtitle?: ReactNode;
   href?: string;
   withoutBorder?: boolean;
   isAlignToRight?: boolean;

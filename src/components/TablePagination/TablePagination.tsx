@@ -5,7 +5,7 @@ import {
   PaginationProps as MacawPaginationProps,
   PaginationRowNumberSelectLabels,
 } from "@saleor/macaw-ui";
-import * as React from "react";
+import { ElementType } from "react";
 import { useIntl } from "react-intl";
 import { Link, LinkProps } from "react-router-dom";
 
@@ -21,7 +21,7 @@ export interface PaginationProps
     MacawPaginationProps,
     "labels" | "rowNumber" | "nextIconButtonProps" | "prevIconButtonProps"
   > {
-  component?: React.ElementType;
+  component?: ElementType;
   colSpan?: number;
   settings?: ListSettings;
   onUpdateListSettings?: ListSettingsUpdate;

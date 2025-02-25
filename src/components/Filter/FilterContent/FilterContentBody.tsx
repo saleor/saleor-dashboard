@@ -7,7 +7,7 @@ import { FormControlLabel, Radio, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Option, Skeleton } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import * as React from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 
 import FilterAutocompleteField, {
   FilterAutocompleteDisplayValues,
@@ -42,13 +42,13 @@ const useStyles = makeStyles(
 const filterTestingContext = "filter-field-";
 
 export interface FilterContentBodyProps<K extends string> {
-  children?: React.ReactNode;
+  children?: ReactNode;
   filter: FilterElement<K>;
   currencySymbol?: string;
   initialAutocompleteDisplayValues: FilterAutocompleteDisplayValues;
   onFilterPropertyChange: <T extends FieldType>(value: FilterReducerAction<K, T>) => void;
   autocompleteDisplayValues: FilterAutocompleteDisplayValues;
-  setAutocompleteDisplayValues: React.Dispatch<React.SetStateAction<Record<string, Option[]>>>;
+  setAutocompleteDisplayValues: Dispatch<SetStateAction<Record<string, Option[]>>>;
 }
 
 const FilterContentBody = <K extends string = string>({

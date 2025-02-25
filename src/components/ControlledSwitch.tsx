@@ -1,17 +1,17 @@
 // @ts-strict-ignore
 import { FormControlLabel, Switch } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ChangeEvent, ReactNode } from "react";
 
 interface ControlledSwitchProps {
   className?: string;
   checked: boolean;
   disabled?: boolean;
-  label: string | React.ReactNode;
+  label: string | ReactNode;
   name: string;
-  secondLabel?: string | React.ReactNode;
-  uncheckedLabel?: string | React.ReactNode;
-  onChange?: (event: React.ChangeEvent<any>) => any;
+  secondLabel?: string | ReactNode;
+  uncheckedLabel?: string | ReactNode;
+  onChange?: (event: ChangeEvent<any>) => any;
 }
 
 export const ControlledSwitch = (props: ControlledSwitchProps) => {

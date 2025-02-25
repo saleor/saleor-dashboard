@@ -21,8 +21,15 @@ import {
   WriteableEditorProps,
 } from "@graphiql/react";
 import clsx from "clsx";
-import { ComponentType, PropsWithChildren, ReactNode, useState } from "react";
-import * as React from "react";
+import {
+  Children,
+  ComponentType,
+  Dispatch,
+  PropsWithChildren,
+  ReactNode,
+  SetStateAction,
+  useState,
+} from "react";
 import { useIntl } from "react-intl";
 
 import DryRun from "../DryRun";
@@ -35,7 +42,7 @@ export interface GraphiQLToolbarConfig {
    * Note that this will not apply if you provide a completely custom toolbar
    * (by passing `GraphiQL.Toolbar` as child to the `GraphiQL` component).
    */
-  additionalContent?: React.ReactNode;
+  additionalContent?: ReactNode;
 }
 
 export type GraphiQLProps = Omit<GraphiQLProviderProps, "children"> & GraphiQLInterfaceProps;
@@ -144,7 +151,7 @@ export type GraphiQLInterfaceProps = WriteableEditorProps &
     isHeadersEditorEnabled?: boolean;
     toolbar?: GraphiQLToolbarConfig;
     showDialog?: boolean;
-    setShowDialog?: React.Dispatch<React.SetStateAction<boolean>>;
+    setShowDialog?: Dispatch<SetStateAction<boolean>>;
     result?: string;
   };
 
@@ -161,7 +168,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
   useGraphiQLThemeSwitcher();
 
   const PluginContent = pluginContext?.visiblePlugin?.content;
-  const children = React.Children.toArray(props.children);
+  const children = Children.toArray(props.children);
   const toolbar = children.find(child => isChildComponentType(child, GraphiQL.Toolbar)) || (
     <>
       <ToolbarButton

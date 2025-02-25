@@ -1,5 +1,5 @@
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import * as React from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 
 interface ManualRefundHookProps {
   submitState: ConfirmButtonTransitionState;
@@ -13,13 +13,11 @@ interface ManualRefundHookProps {
 export type ManualRefundData = ReturnType<typeof useManualRefund>;
 
 export const useManualRefund = ({ submitState, initialData }: ManualRefundHookProps) => {
-  const [amount, setAmount] = React.useState<number | undefined>(initialData?.amount);
-  const [description, setDescription] = React.useState(initialData?.description ?? "");
-  const [pspReference, setPspReference] = React.useState<string | undefined>(
-    initialData?.pspReference,
-  );
+  const [amount, setAmount] = useState<number | undefined>(initialData?.amount);
+  const [description, setDescription] = useState(initialData?.description ?? "");
+  const [pspReference, setPspReference] = useState<string | undefined>(initialData?.pspReference);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (submitState === "success") {
       // reset state after submit
       setAmount(undefined);
@@ -28,10 +26,10 @@ export const useManualRefund = ({ submitState, initialData }: ManualRefundHookPr
     }
   }, [submitState]);
 
-  const handleChangeDescription: React.ChangeEventHandler<HTMLInputElement> = e => {
+  const handleChangeDescription: ChangeEventHandler<HTMLInputElement> = e => {
     setDescription(e.target.value);
   };
-  const handleChangeAmount: React.ChangeEventHandler<HTMLInputElement> = e => {
+  const handleChangeAmount: ChangeEventHandler<HTMLInputElement> = e => {
     const value = parseFloat(e.target.value);
 
     if (!Number.isNaN(value)) {
@@ -40,7 +38,7 @@ export const useManualRefund = ({ submitState, initialData }: ManualRefundHookPr
       setAmount(undefined);
     }
   };
-  const handleChangePspReference: React.ChangeEventHandler<HTMLInputElement> = e => {
+  const handleChangePspReference: ChangeEventHandler<HTMLInputElement> = e => {
     setPspReference(e.target.value);
   };
 

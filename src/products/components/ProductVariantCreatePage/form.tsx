@@ -53,8 +53,7 @@ import { validateProductVariant } from "@dashboard/products/utils/validation";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
-import { useEffect, useState } from "react";
-import * as React from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
@@ -119,7 +118,7 @@ export interface UseProductVariantCreateFormOutput
 }
 
 export interface ProductVariantCreateFormProps extends UseProductVariantCreateFormOpts {
-  children: (props: UseProductVariantCreateFormOutput) => React.ReactNode;
+  children: (props: UseProductVariantCreateFormOutput) => ReactNode;
   product: ProductVariantCreateDataQuery["product"];
   onSubmit: (data: ProductVariantCreateData) => SubmitPromise;
   disabled: boolean;

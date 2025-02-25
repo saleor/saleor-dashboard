@@ -2,7 +2,7 @@ import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/componen
 import { buttonMessages } from "@dashboard/intl";
 import { DialogProps } from "@dashboard/types";
 import { Box } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ReactNode } from "react";
 import { useIntl } from "react-intl";
 
 import BackButton from "../BackButton";
@@ -10,7 +10,7 @@ import { DashboardModal, DashboardModalContentSize } from "../Modal";
 import { ActionDialogVariant } from "./types";
 
 export interface ActionDialogProps extends DialogProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
   confirmButtonLabel?: string;
   confirmButtonState: ConfirmButtonTransitionState;
   disabled?: boolean;

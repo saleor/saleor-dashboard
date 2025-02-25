@@ -1,13 +1,13 @@
 import { useApolloClient } from "@apollo/client";
 import useNotifier from "@dashboard/hooks/useNotifier";
-import * as React from "react";
+import { ReactNode } from "react";
 import { useIntl } from "react-intl";
 
 import { UserContext } from "./";
 import { useAuthProvider } from "./hooks/useAuthProvider";
 
 interface AuthProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 const AuthProvider = ({ children }: AuthProviderProps) => {

@@ -1,12 +1,13 @@
 import { makeStyles } from "@saleor/macaw-ui";
+import { CSSProperties } from "react";
 
 const useStyles = makeStyles(
   theme => {
-    const colAction: React.CSSProperties = {
+    const colAction: CSSProperties = {
       textAlign: "right",
       width: 130,
     };
-    const colName: React.CSSProperties = {
+    const colName: CSSProperties = {
       width: 250,
       textAlign: "right",
     };

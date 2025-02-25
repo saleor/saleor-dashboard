@@ -8,6 +8,7 @@ import { TableBody, TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, vars } from "@saleor/macaw-ui-next";
 import { clsx } from "clsx";
+import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
@@ -61,7 +62,7 @@ const TranslationsLanguageList = (props: TranslationsLanguageListProps) => {
                   href={language && languageEntitiesUrl(language.code, {})}
                 >
                   <TableCell className={classes.capitalize}>
-                    {maybe<React.ReactNode>(() => language.language, <Skeleton />)}
+                    {maybe<ReactNode>(() => language.language, <Skeleton />)}
                   </TableCell>
                 </TableRowLink>
               ),

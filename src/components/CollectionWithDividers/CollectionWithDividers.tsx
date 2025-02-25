@@ -1,9 +1,8 @@
 import { Divider } from "@material-ui/core";
-import * as React from "react";
-import { ReactNode } from "react";
+import { FunctionComponent, ReactNode } from "react";
 
 interface CollectionWithDividersProps<T> {
-  DividerComponent?: React.FunctionComponent;
+  DividerComponent?: FunctionComponent;
   renderEmpty?: (collection: T[]) => any;
   withOuterDividers?: boolean;
   collection: T[];
@@ -16,7 +15,7 @@ const Wrapper = ({
   children,
 }: {
   withOuterDividers?: boolean;
-  SelectedDivider?: React.FunctionComponent;
+  SelectedDivider?: FunctionComponent;
   children: ReactNode;
 }) => (
   <div>

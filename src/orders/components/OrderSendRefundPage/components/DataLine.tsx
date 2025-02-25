@@ -1,10 +1,10 @@
-import * as React from "react";
+import { ReactNode } from "react";
 
 import { useDataLineStyles } from "../styles";
 
 interface DataLineProps {
-  label: React.ReactNode;
-  children: React.ReactNode;
+  label: ReactNode;
+  children: ReactNode;
 }
 
 export const DataLine = ({ label, children }: DataLineProps) => {

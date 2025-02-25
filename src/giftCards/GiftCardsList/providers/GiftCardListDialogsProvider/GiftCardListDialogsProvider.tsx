@@ -6,21 +6,20 @@ import GiftCardExportDialogContent from "@dashboard/giftCards/GiftCardExportDial
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import { createContext, useContext } from "react";
-import * as React from "react";
+import { createContext, ReactNode, useContext } from "react";
 
 import { GIFT_CARD_LIST_QUERY } from "../../queries";
 import { GiftCardListActionParamsEnum, GiftCardListUrlQueryParams } from "../../types";
 
 interface GiftCardListDialogsProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
   params: GiftCardListUrlQueryParams;
 }
 
 export interface GiftCardListDialogsConsumerProps {
   openCreateDialog: () => void;
   openBulkCreateDialog: () => void;
-  openDeleteDialog: (id?: string | React.MouseEvent) => void;
+  openDeleteDialog: (id?: string | MouseEvent) => void;
   openSearchSaveDialog: () => void;
   openSearchDeleteDialog: () => void;
   onClose: () => void;

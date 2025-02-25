@@ -27,7 +27,7 @@ import { productListUrl } from "@dashboard/products/urls";
 import { languageListUrl } from "@dashboard/translations/urls";
 import { Box } from "@saleor/macaw-ui-next";
 import isEmpty from "lodash/isEmpty";
-import * as React from "react";
+import { ReactNode } from "react";
 import { useIntl } from "react-intl";
 
 import { SidebarMenuItem } from "../types";
@@ -205,7 +205,7 @@ export function useMenuStructure() {
   }, []);
 }
 
-function renderIcon(icon: React.ReactNode) {
+function renderIcon(icon: ReactNode) {
   return (
     <Box color="default2" __width={20} __height={20}>
       {icon}

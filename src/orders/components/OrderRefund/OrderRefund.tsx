@@ -1,7 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
 import { makeStyles } from "@saleor/macaw-ui";
-import * as React from "react";
+import { ChangeEvent } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { OrderRefundFormData, OrderRefundType } from "../OrderRefundPage/form";
@@ -16,7 +16,7 @@ const useStyles = makeStyles(
 interface OrderRefundProps {
   data: OrderRefundFormData;
   disabled: boolean;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
 }
 
 const messages = defineMessages({

@@ -1,7 +1,6 @@
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
 import { ReactNode } from "react";
-import * as React from "react";
 
 import { DateTime } from "../Date";
 import Link from "../Link";
@@ -12,7 +11,7 @@ export interface TitleElement {
 }
 
 export interface TimelineEventHeaderProps {
-  title?: React.ReactNode;
+  title?: ReactNode;
   date: string;
   titleElements?: TitleElement[];
   secondaryTitle?: string;

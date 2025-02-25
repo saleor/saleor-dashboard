@@ -1,12 +1,12 @@
 import { Root as Portal } from "@radix-ui/react-portal";
 import { Box } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ReactNode } from "react";
 
 import { savebarHeight } from "../AppLayout/consts";
 import { useSavebarRef } from "./SavebarRefContext";
 
 export interface SavebarProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const SavebarRoot = ({ children }: SavebarProps) => {

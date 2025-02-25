@@ -8,8 +8,7 @@ import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { toggle } from "@dashboard/utils/lists";
 import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";
-import { useEffect, useState } from "react";
-import * as React from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 import useStateFromProps from "./../useStateFromProps";
 import { FormData } from "./types";
@@ -26,7 +25,7 @@ export type SubmitPromise<TData = any> = Promise<TData>;
 export type FormChange<T = any> = (event: ChangeEvent<T>, cb?: () => void) => void;
 
 export type FormErrors<T> = {
-  [field in keyof T]?: string | React.ReactNode;
+  [field in keyof T]?: string | ReactNode;
 };
 
 export interface UseFormOpts<T> {
@@ -47,7 +46,7 @@ export interface UseFormResult<TData>
   toggleValue: FormChange;
   toggleValues: FormChange;
   errors: FormErrors<TData>;
-  setError: (name: keyof TData, error: string | React.ReactNode) => void;
+  setError: (name: keyof TData, error: string | ReactNode) => void;
   clearErrors: (name?: keyof TData | Array<keyof TData>) => void;
   setIsSubmitDisabled: (value: boolean) => void;
   cleanChanged: () => void;
@@ -218,7 +217,7 @@ function useForm<T extends FormData, TErrors>(
     return [];
   }
 
-  const setError = (field: keyof T, error: string | React.ReactNode) =>
+  const setError = (field: keyof T, error: string | ReactNode) =>
     setErrors(e => ({ ...e, [field]: error }));
   const clearErrors = (field?: keyof T | Array<keyof T>) => {
     if (!field) {

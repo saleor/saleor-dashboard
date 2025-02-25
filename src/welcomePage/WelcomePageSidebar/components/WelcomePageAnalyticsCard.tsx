@@ -1,11 +1,11 @@
 import { Box, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
 interface WelcomePageAnalyticsCardProps {
   testId?: string;
   title: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 export const WelcomePageAnalyticsCard = ({

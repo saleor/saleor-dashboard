@@ -1,13 +1,13 @@
 import { makeStyles } from "@material-ui/core";
 import { Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import * as React from "react";
+import { ReactNode } from "react";
 
 import { useOverflow } from "./useOverflow";
 
 interface OverflowTooltipProps {
-  children: React.ReactNode;
-  title?: React.ReactNode;
+  children: ReactNode;
+  title?: ReactNode;
   header?: string;
   checkHorizontal?: boolean;
   checkVertical?: boolean;

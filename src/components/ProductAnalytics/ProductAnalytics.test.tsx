@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
-import * as React from "react";
+import { ReactNode } from "react";
 
 import { ProductAnalytics } from ".";
 
 jest.mock("posthog-js/react", () => ({
-  PostHogProvider: ({ children }: { children: React.ReactNode }) => <>{children} with posthog</>,
+  PostHogProvider: ({ children }: { children: ReactNode }) => <>{children} with posthog</>,
 }));
 describe("ProductAnalytics", () => {
   const ENV_COPY = process.env;

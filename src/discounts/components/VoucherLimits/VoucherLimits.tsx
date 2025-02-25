@@ -6,7 +6,7 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
 import { TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 
 import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
@@ -18,7 +18,7 @@ interface VoucherLimitsProps {
   disabled: boolean;
   errors: DiscountErrorFragment[];
   initialUsageLimit: number;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
   setData: (data: Partial<VoucherDetailsPageFormData>) => void;
   isNewVoucher: boolean;
 }

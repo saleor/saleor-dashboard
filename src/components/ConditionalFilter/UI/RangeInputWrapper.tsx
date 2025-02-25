@@ -1,7 +1,7 @@
 import { Box } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ReactNode } from "react";
 
-export const RangeInputWrapper = ({ children }: { children: React.ReactNode }) => {
+export const RangeInputWrapper = ({ children }: { children: ReactNode }) => {
   return (
     <Box display="flex" gap={0.5} alignItems="center" flexWrap="wrap">
       {children}

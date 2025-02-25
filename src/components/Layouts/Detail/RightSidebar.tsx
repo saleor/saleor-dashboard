@@ -1,8 +1,8 @@
 import { Box, BoxProps } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ReactNode } from "react";
 
 interface DetailPageLayoutRightSidebarProps extends BoxProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const RightSidebar = ({ children, ...props }: DetailPageLayoutRightSidebarProps) => (

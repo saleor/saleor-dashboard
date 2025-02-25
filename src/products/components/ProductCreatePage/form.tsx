@@ -65,8 +65,7 @@ import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichTe
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { OutputData } from "@editorjs/editorjs";
 import { Option } from "@saleor/macaw-ui-next";
-import { useEffect, useState } from "react";
-import * as React from "react";
+import { Dispatch, ReactNode, SetStateAction, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { createPreorderEndDateChangeHandler } from "../../utils/handlers";
@@ -138,9 +137,9 @@ export type UseProductCreateFormRenderProps = Omit<UseProductCreateFormOutput, "
 
 export interface UseProductCreateFormOpts
   extends Record<"categories" | "collections" | "taxClasses", Option[]> {
-  setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
-  setSelectedCollections: React.Dispatch<React.SetStateAction<Option[]>>;
-  setSelectedTaxClass: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedCategory: Dispatch<SetStateAction<string>>;
+  setSelectedCollections: Dispatch<SetStateAction<Option[]>>;
+  setSelectedTaxClass: Dispatch<SetStateAction<string>>;
   setChannels: (channels: ChannelData[]) => void;
   selectedCollections: Option[];
   productTypes: RelayToFlat<SearchProductTypesQuery["search"]>;
@@ -157,7 +156,7 @@ export interface UseProductCreateFormOpts
 }
 
 export interface ProductCreateFormProps extends UseProductCreateFormOpts {
-  children: (props: UseProductCreateFormRenderProps) => React.ReactNode;
+  children: (props: UseProductCreateFormRenderProps) => ReactNode;
   initial?: Partial<ProductCreateFormData>;
   onSubmit: (data: ProductCreateData) => SubmitPromise;
   loading: boolean;

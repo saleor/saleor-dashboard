@@ -2,6 +2,7 @@ import { FetchResult, MutationResult } from "@apollo/client";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { UserPermissionFragment } from "@dashboard/graphql";
 import { Option } from "@saleor/macaw-ui-next";
+import { ReactNode, ReactNodeArray } from "react";
 
 import { FilterElement, IFilter } from "./components/Filter";
 
@@ -93,9 +94,9 @@ export interface ListActionsWithoutToolbar {
   selected: number;
 }
 export type TabListActions<TToolbars extends string> = ListActionsWithoutToolbar &
-  Record<TToolbars, React.ReactNode | React.ReactNodeArray>;
+  Record<TToolbars, ReactNode | ReactNodeArray>;
 export interface ListActions extends ListActionsWithoutToolbar {
-  toolbar: React.ReactNode | React.ReactNodeArray;
+  toolbar: ReactNode | ReactNodeArray;
 }
 export interface PageListProps<TColumns extends string = string> extends ListProps<TColumns> {
   defaultSettings?: ListSettings<TColumns>;

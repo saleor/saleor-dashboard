@@ -1,8 +1,8 @@
-import * as React from "react";
+import { cloneElement, isValidElement, MouseEvent, ReactElement } from "react";
 
 export interface TableButtonWrapper {
-  children: React.ReactElement<{
-    onClick?: (e: React.MouseEvent<any>) => void;
+  children: ReactElement<{
+    onClick?: (e: MouseEvent<any>) => void;
     href?: string;
   }>;
 }
@@ -18,7 +18,7 @@ export interface TableButtonWrapper {
  * ```
  */
 export const TableButtonWrapper = <T extends HTMLElement>({ children }: TableButtonWrapper) => {
-  const onClick = (e: React.MouseEvent<T>) => {
+  const onClick = (e: MouseEvent<T>) => {
     if (!children.props.href) {
       // <TableRowLink> is a <a> that wraps each <tr>
       // This causes buttons to act like links rather than buttons
@@ -35,8 +35,8 @@ export const TableButtonWrapper = <T extends HTMLElement>({ children }: TableBut
     }
   };
 
-  if (React.isValidElement(children)) {
-    return React.cloneElement(children, { ...children.props, onClick });
+  if (isValidElement(children)) {
+    return cloneElement(children, { ...children.props, onClick });
   }
 
   return children;

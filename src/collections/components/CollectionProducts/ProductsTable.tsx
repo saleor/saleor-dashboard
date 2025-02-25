@@ -5,7 +5,7 @@ import { Node } from "@dashboard/types";
 import { closestCenter, DndContext } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { Box, Button, Checkbox, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { MouseEvent } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { ProductTableItem } from "./ProductTableItem";
@@ -18,7 +18,7 @@ interface ProductsTableProps {
   toggle: (id: string) => void;
   toggleAll: (items: Node[], selected: number) => void;
   disabled: boolean;
-  onProductUnassign: (id: string, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onProductUnassign: (id: string, event: MouseEvent<HTMLButtonElement>) => void;
   numberOfColumns: number;
   selected: number;
   onUnassignClick: () => void;

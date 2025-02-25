@@ -1,7 +1,7 @@
 import { Table } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import * as React from "react";
+import { ReactNode, ReactNodeArray } from "react";
 
 const useStyles = makeStyles(
   theme => ({
@@ -22,7 +22,7 @@ const useStyles = makeStyles(
 );
 
 interface ResponsiveTableProps {
-  children: React.ReactNode | React.ReactNodeArray;
+  children: ReactNode | ReactNodeArray;
   className?: string;
   onMouseLeave?: () => void;
   key?: string;

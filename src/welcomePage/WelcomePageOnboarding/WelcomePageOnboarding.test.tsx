@@ -1,7 +1,7 @@
 import { useUser } from "@dashboard/auth";
 import { ApolloMockedProvider } from "@test/ApolloMockedProvider";
 import { render, screen, waitFor } from "@testing-library/react";
-import * as React from "react";
+import { ReactNode } from "react";
 
 import { onboardingCompletedMock, onboardingInitState } from "./mocks";
 import { OnboardingProvider } from "./onboardingContext";
@@ -35,7 +35,7 @@ jest.mock("react-router-dom", () => ({
   Link: jest.fn(({ to, ...props }) => <a href={to} {...props} />),
 }));
 
-const Wrapper = ({ children }: { children: React.ReactNode }) => (
+const Wrapper = ({ children }: { children: ReactNode }) => (
   <ApolloMockedProvider>
     <OnboardingProvider>{children}</OnboardingProvider>
   </ApolloMockedProvider>

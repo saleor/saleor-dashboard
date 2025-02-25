@@ -1,6 +1,6 @@
 import { List } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import * as React from "react";
+import { ReactNode } from "react";
 
 const useStyles = makeStyles(
   () => ({
@@ -13,7 +13,7 @@ const useStyles = makeStyles(
 );
 
 interface ScrollableContentProps {
-  children: React.ReactNode | React.ReactNode[];
+  children: ReactNode | ReactNode[];
 }
 
 const ScrollableContent = ({ children }: ScrollableContentProps) => {

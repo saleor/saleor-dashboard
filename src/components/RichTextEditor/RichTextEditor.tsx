@@ -4,7 +4,7 @@ import { useId } from "@reach/auto-id";
 import { EditorCore, Props as ReactEditorJSProps } from "@react-editor-js/core";
 import { Box } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import * as React from "react";
+import { MutableRefObject, RefCallback, useCallback, useRef, useState } from "react";
 
 import { tools } from "./consts";
 import { useHasRendered, useUpdateOnRerender } from "./hooks";
@@ -20,7 +20,7 @@ export interface RichTextEditorProps extends Omit<EditorJsProps, "onChange"> {
   helperText?: string;
   label: string;
   name: string;
-  editorRef: React.RefCallback<EditorCore> | React.MutableRefObject<EditorCore | null> | null;
+  editorRef: RefCallback<EditorCore> | MutableRefObject<EditorCore | null> | null;
   // onChange with value shouldn't be used due to issues with React and EditorJS integration
   onChange?: (data?: OutputData) => void;
   onBlur?: () => void;
@@ -41,11 +41,11 @@ const RichTextEditor = ({
 }: RichTextEditorProps) => {
   const classes = useStyles({});
   const id = useId(defaultId);
-  const ref = React.useRef<EditorCore | null>(null);
-  const [isFocused, setIsFocused] = React.useState(false);
-  const [hasValue, setHasValue] = React.useState(false);
+  const ref = useRef<EditorCore | null>(null);
+  const [isFocused, setIsFocused] = useState(false);
+  const [hasValue, setHasValue] = useState(false);
   const isTyped = Boolean(hasValue || isFocused);
-  const handleInitialize = React.useCallback((editor: EditorCore) => {
+  const handleInitialize = useCallback((editor: EditorCore) => {
     if (onInitialize) {
       onInitialize(editor);
     }

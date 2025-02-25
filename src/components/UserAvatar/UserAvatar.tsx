@@ -1,11 +1,11 @@
 import { Avatar } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { CSSProperties } from "react";
 
 interface UserAvatarProps {
   url?: string;
   initials?: string;
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 }
 
 export const UserAvatar = ({ url, initials, ...rest }: UserAvatarProps) =>

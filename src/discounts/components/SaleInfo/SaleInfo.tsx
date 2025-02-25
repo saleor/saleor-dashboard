@@ -4,7 +4,7 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
 import { TextField } from "@material-ui/core";
-import * as React from "react";
+import { ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 
 import { SaleDetailsPageFormData } from "../SaleDetailsPage";
@@ -13,7 +13,7 @@ export interface SaleInfoProps {
   data: SaleDetailsPageFormData;
   disabled: boolean;
   errors: DiscountErrorFragment[];
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
 }
 
 const SaleInfo = ({ data, disabled, errors, onChange }: SaleInfoProps) => {

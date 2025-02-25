@@ -63,7 +63,7 @@ import {
   useOrderUpdateMutation,
   useOrderVoidMutation,
 } from "@dashboard/graphql";
-import * as React from "react";
+import { ReactNode } from "react";
 
 import { getMutationProviderData } from "../../misc";
 import { PartialMutationProviderOutput } from "../../types";
@@ -146,7 +146,7 @@ interface OrderOperationsProps {
       CreateManualTransactionCaptureMutation,
       CreateManualTransactionCaptureMutationVariables
     >;
-  }) => React.ReactNode;
+  }) => ReactNode;
   onOrderFulfillmentApprove: (data: OrderFulfillmentApproveMutation) => void;
   onOrderFulfillmentCancel: (data: OrderFulfillmentCancelMutation) => void;
   onOrderFulfillmentUpdate: (data: OrderFulfillmentUpdateTrackingMutation) => void;

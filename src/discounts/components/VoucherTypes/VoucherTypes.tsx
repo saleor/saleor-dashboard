@@ -5,7 +5,7 @@ import { DiscountTypeEnum } from "@dashboard/discounts/types";
 import { DiscountErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
-import * as React from "react";
+import { ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 
 import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
@@ -14,7 +14,7 @@ interface VoucherTypesProps {
   data: VoucherDetailsPageFormData;
   errors: DiscountErrorFragment[];
   disabled: boolean;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
 }
 
 const VoucherTypes = ({ data, disabled, errors, onChange }: VoucherTypesProps) => {

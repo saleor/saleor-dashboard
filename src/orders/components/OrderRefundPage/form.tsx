@@ -4,8 +4,7 @@ import { OrderRefundDataQuery } from "@dashboard/graphql";
 import useForm, { CommonUseFormResultWithHandlers, SubmitPromise } from "@dashboard/hooks/useForm";
 import useFormset, { FormsetChange, FormsetData } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
-import { useEffect } from "react";
-import * as React from "react";
+import { ReactNode, useEffect } from "react";
 
 import { refundFulfilledStatuses } from "./OrderRefundPage";
 
@@ -46,7 +45,7 @@ export interface UseOrderRefundFormResult
 }
 
 interface OrderRefundFormProps {
-  children: (props: UseOrderRefundFormResult) => React.ReactNode;
+  children: (props: UseOrderRefundFormResult) => ReactNode;
   order: OrderRefundDataQuery["order"];
   defaultType: OrderRefundType;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;

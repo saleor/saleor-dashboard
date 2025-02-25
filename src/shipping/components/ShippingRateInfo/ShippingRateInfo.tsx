@@ -11,7 +11,7 @@ import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { OutputData } from "@editorjs/editorjs";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import * as React from "react";
+import { ChangeEvent } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 const messages = defineMessages({
@@ -63,7 +63,7 @@ export interface ShippingRateInfoProps {
   };
   disabled: boolean;
   errors: ShippingErrorFragment[];
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
 }
 
 const ShippingRateInfo = (props: ShippingRateInfoProps) => {

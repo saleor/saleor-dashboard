@@ -2,13 +2,12 @@
 import { commonMessages } from "@dashboard/intl";
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import moment from "moment";
-import { useEffect, useState } from "react";
-import * as React from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 interface DateTimeFieldProps {
   onChange: (value: string) => void;
-  error?: string | React.ReactNode;
+  error?: string | ReactNode;
   setError?: () => void;
   futureDatesOnly?: boolean;
   value: string;

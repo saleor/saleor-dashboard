@@ -31,6 +31,7 @@ import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductU
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
 import { OutputData } from "@editorjs/editorjs";
 import { Option } from "@saleor/macaw-ui-next";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 
 import { ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDialog";
 
@@ -107,9 +108,9 @@ export type UseProductUpdateFormRenderProps = Omit<
 
 export interface UseProductUpdateFormOpts
   extends Record<"categories" | "collections" | "taxClasses", Option[]> {
-  setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
-  setSelectedCollections: React.Dispatch<React.SetStateAction<Option[]>>;
-  setSelectedTaxClass: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedCategory: Dispatch<SetStateAction<string>>;
+  setSelectedCollections: Dispatch<SetStateAction<Option[]>>;
+  setSelectedTaxClass: Dispatch<SetStateAction<string>>;
   selectedCollections: Option[];
   hasVariants: boolean;
   referencePages: RelayToFlat<SearchPagesQuery["search"]>;
@@ -127,7 +128,7 @@ export type SubmitResult = SubmitPromise<
 >;
 
 export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
-  children: (props: UseProductUpdateFormRenderProps) => React.ReactNode;
+  children: (props: UseProductUpdateFormRenderProps) => ReactNode;
   product: ProductFragment;
   onSubmit: (data: ProductUpdateSubmitData) => SubmitResult;
   refetch: () => Promise<any>;

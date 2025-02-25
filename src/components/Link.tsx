@@ -4,7 +4,7 @@ import { TypographyProps } from "@material-ui/core/Typography";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import * as React from "react";
+import { AnchorHTMLAttributes, MouseEventHandler, ReactNode } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 const useStyles = makeStyles(
@@ -37,15 +37,16 @@ export interface LinkState {
   from?: string;
 }
 
-interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   href?: string;
   color?: "primary" | "secondary";
   inline?: boolean;
   underline?: boolean;
   typographyProps?: TypographyProps;
-  onClick?: React.MouseEventHandler;
+  onClick?: MouseEventHandler;
   disabled?: boolean;
   state?: LinkState;
+  children: ReactNode;
 }
 
 const Link = (props: LinkProps) => {

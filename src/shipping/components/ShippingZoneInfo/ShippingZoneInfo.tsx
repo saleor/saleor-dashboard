@@ -6,7 +6,7 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import * as React from "react";
+import { ChangeEvent } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 const messages = defineMessages({
@@ -31,7 +31,7 @@ export interface ShippingZoneInfoProps {
   data: Record<"name" | "description", string>;
   disabled: boolean;
   errors: ShippingErrorFragment[];
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
 }
 
 const useStyles = makeStyles(

@@ -8,7 +8,7 @@ import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Checkbox, Skeleton, Text } from "@saleor/macaw-ui-next";
 import moment from "moment-timezone";
-import * as React from "react";
+import { ChangeEvent, ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
@@ -37,7 +37,7 @@ export interface CustomerDetailsProps {
   };
   disabled: boolean;
   errors: AccountErrorFragment[];
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
 }
 
 const CustomerDetails = (props: CustomerDetailsProps) => {
@@ -58,7 +58,7 @@ const CustomerDetails = (props: CustomerDetailsProps) => {
           gap={2}
         >
           <>
-            {maybe<React.ReactNode>(() => customer.email, <Skeleton />)}
+            {maybe<ReactNode>(() => customer.email, <Skeleton />)}
             {customer && customer.dateJoined ? (
               <Text className={classes.subtitle} size={2} fontWeight="light">
                 <FormattedMessage
@@ -89,7 +89,7 @@ const CustomerDetails = (props: CustomerDetailsProps) => {
                 name: "isActive",
                 value,
               },
-            } as React.ChangeEvent<any>);
+            } as ChangeEvent<any>);
           }}
         >
           <Text fontSize={3}>

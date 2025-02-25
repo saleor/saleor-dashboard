@@ -2,14 +2,14 @@ import CloseIcon from "@material-ui/icons/Close";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import * as React from "react";
+import { MouseEvent, ReactNode } from "react";
 import { SortableElement, SortableElementProps } from "react-sortable-hoc";
 
 import SortableHandle from "./SortableHandle";
 
 export interface SortableChipProps extends SortableElementProps {
   className?: string;
-  label: React.ReactNode;
+  label: ReactNode;
   onClose?: () => void;
   loading?: boolean;
 }
@@ -49,7 +49,7 @@ const useStyles = makeStyles(
 const SortableChip = SortableElement<SortableChipProps>((props: SortableChipProps) => {
   const { className, label, onClose, loading } = props;
   const classes = useStyles(props);
-  const handleClose = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClose = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
     if (onClose) {

@@ -9,7 +9,7 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getWebhookErrorMessage from "@dashboard/utils/errors/webhooks";
 import { Popper, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { WebhookFormData } from "../WebhookDetailsPage";
@@ -20,15 +20,15 @@ interface WebhookInfoProps {
   data: WebhookFormData;
   disabled: boolean;
   errors: WebhookErrorFragment[];
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
 }
 
 const WebhookInfo = ({ data, disabled, errors, onChange }: WebhookInfoProps) => {
   const intl = useIntl();
   const classes = useStyles();
   const formErrors = getFormErrors(["name", "targetUrl", "secretKey"], errors);
-  const [isPopupOpen, setPopupOpen] = React.useState(false);
-  const anchor = React.useRef<HTMLDivElement>(null);
+  const [isPopupOpen, setPopupOpen] = useState(false);
+  const anchor = useRef<HTMLDivElement>(null);
 
   return (
     <DashboardCard className={classes.card}>

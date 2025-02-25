@@ -5,7 +5,7 @@ import { TableHeadProps as MuiTableHeadProps } from "@material-ui/core/TableHead
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import * as React from "react";
+import { ReactNode, ReactNodeArray } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { Node } from "../../types";
@@ -17,7 +17,7 @@ export interface TableHeadProps extends MuiTableHeadProps {
   dragRows?: boolean;
   selected?: number;
   items: Node[];
-  toolbar?: React.ReactNode | React.ReactNodeArray;
+  toolbar?: ReactNode | ReactNodeArray;
   toggleAll?: (items: Node[], selected: number) => void;
 }
 

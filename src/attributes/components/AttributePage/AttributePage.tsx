@@ -24,7 +24,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { ListSettings, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import * as React from "react";
+import { ReactNode } from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";
 
@@ -53,7 +53,7 @@ export interface AttributePageProps {
   };
   onNextPage: () => void;
   onPreviousPage: () => void;
-  children: (data: AttributePageFormData) => React.ReactNode;
+  children: (data: AttributePageFormData) => ReactNode;
 }
 
 export interface AttributePageFormData extends MetadataFormData {

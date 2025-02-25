@@ -14,7 +14,7 @@ import { RelayToFlat } from "@dashboard/types";
 import { Divider } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ChangeEvent, useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { WarehouseDetailsPageFormData } from "../WarehouseDetailsPage";
@@ -24,7 +24,7 @@ export interface WarehouseSettingsProps {
   zones: RelayToFlat<WarehouseWithShippingFragment["shippingZones"]>;
   disabled: boolean;
   data: WarehouseDetailsPageFormData;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
   setData: (data: Partial<WarehouseDetailsPageFormData>) => void;
 }
 
@@ -50,7 +50,7 @@ const WarehouseSettings = ({
   onChange,
   setData,
 }: WarehouseSettingsProps) => {
-  React.useEffect(() => {
+  useEffect(() => {
     if (data.isPrivate && data.clickAndCollectOption === WarehouseClickAndCollectOptionEnum.LOCAL) {
       setData({
         clickAndCollectOption: WarehouseClickAndCollectOptionEnum.DISABLED,
@@ -59,9 +59,7 @@ const WarehouseSettings = ({
   }, [data.isPrivate]);
 
   const classes = useStyles({});
-  const booleanRadioHandler = ({
-    target: { name, value },
-  }: React.ChangeEvent<HTMLInputElement>) => {
+  const booleanRadioHandler = ({ target: { name, value } }: ChangeEvent<HTMLInputElement>) => {
     setData({ [name]: value === "true" });
   };
   const isPrivateChoices = [

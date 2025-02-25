@@ -1,8 +1,8 @@
 import { Checkbox, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ReactNode } from "react";
 
 interface DeleteWarningDialogConsentContentProps {
-  description: string | React.ReactNode[] | readonly React.ReactNode[];
+  description: string | ReactNode[] | readonly ReactNode[];
   consentLabel: string;
   isConsentChecked: boolean;
   onConsentChange: (value: boolean) => void;

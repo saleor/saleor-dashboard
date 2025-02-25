@@ -58,8 +58,7 @@ import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import getMetadata from "@dashboard/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
-import { useEffect, useState } from "react";
-import * as React from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductStockInput } from "../ProductStocks";
@@ -134,7 +133,7 @@ export interface UseProductVariantUpdateFormResult
 }
 
 export interface ProductVariantUpdateFormProps extends UseProductVariantUpdateFormOpts {
-  children: (props: UseProductVariantUpdateFormResult) => React.ReactNode;
+  children: (props: UseProductVariantUpdateFormResult) => ReactNode;
   variant: ProductVariantFragment;
   loading: boolean;
   onSubmit: (data: ProductVariantUpdateSubmitData) => SubmitPromise;

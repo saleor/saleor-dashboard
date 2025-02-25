@@ -14,6 +14,7 @@ import { getLoadableList, mapEdgesToItems } from "@dashboard/utils/maps";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
+import { ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
@@ -117,13 +118,13 @@ const DiscountVariants = (props: SaleVariantsProps) => {
                     className={classes.colProductName}
                     thumbnail={maybe(() => variant.product.thumbnail.url)}
                   >
-                    {maybe<React.ReactNode>(() => variant.product.name, <Skeleton />)}
+                    {maybe<ReactNode>(() => variant.product.name, <Skeleton />)}
                   </TableCellAvatar>
                   <TableCell className={classes.colType}>
-                    {maybe<React.ReactNode>(() => variant.name, <Skeleton />)}
+                    {maybe<ReactNode>(() => variant.name, <Skeleton />)}
                   </TableCell>
                   <TableCell className={classes.colType}>
-                    {maybe<React.ReactNode>(() => variant.product.productType.name, <Skeleton />)}
+                    {maybe<ReactNode>(() => variant.product.productType.name, <Skeleton />)}
                   </TableCell>
                   <TableCell className={classes.colActions}>
                     <TableButtonWrapper>

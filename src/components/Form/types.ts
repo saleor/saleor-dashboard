@@ -1,7 +1,7 @@
 import { SubmitPromise } from "@dashboard/hooks/useForm";
-import * as React from "react";
+import { FormEvent } from "react";
 
-export type SubmitFn = (event?: React.FormEvent) => SubmitPromise;
+export type SubmitFn = (event?: FormEvent) => SubmitPromise;
 
 export type FormId = symbol;
 

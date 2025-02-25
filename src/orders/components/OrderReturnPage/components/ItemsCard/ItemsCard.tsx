@@ -10,7 +10,7 @@ import OrderCardTitle from "@dashboard/orders/components/OrderCardTitle";
 import { Checkbox, TableBody, TableCell, TableHead, TextField } from "@material-ui/core";
 import { ResponsiveTable } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ChangeEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { FormsetQuantityData, FormsetReplacementData } from "../../form";
@@ -45,7 +45,7 @@ export const ItemsCard = ({
 }: OrderReturnRefundLinesCardProps) => {
   const classes = useItemCardStyles({});
   const intl = useIntl();
-  const handleChangeQuantity = (id: string) => (event: React.ChangeEvent<HTMLInputElement>) =>
+  const handleChangeQuantity = (id: string) => (event: ChangeEvent<HTMLInputElement>) =>
     onChangeQuantity(id, parseInt(event.target.value, 10));
   const fulfillment = order?.fulfillments.find(getById(fulfilmentId));
 

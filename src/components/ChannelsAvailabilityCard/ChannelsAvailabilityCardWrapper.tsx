@@ -1,7 +1,7 @@
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ReactNode } from "react";
 import { useIntl } from "react-intl";
 
 import { DashboardCard } from "../Card";
@@ -9,7 +9,7 @@ import { DashboardCard } from "../Card";
 export interface ChannelsAvailabilityWrapperProps {
   selectedChannelsCount: number;
   allChannelsCount: number;
-  children: React.ReactNode;
+  children: ReactNode;
   managePermissions: PermissionEnum[];
   openModal: () => void;
 }

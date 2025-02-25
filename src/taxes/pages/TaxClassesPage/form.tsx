@@ -9,8 +9,7 @@ import { getTaxClassInitialFormData } from "@dashboard/taxes/utils/data";
 import { validateTaxClassFormData } from "@dashboard/taxes/utils/validation";
 import { TaxClassError } from "@dashboard/utils/errors/taxes";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { useState } from "react";
-import * as React from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 interface TaxClassesFormHandlers {
   handleRateChange: (id: string, value: string) => void;
@@ -26,7 +25,7 @@ export interface UseTaxClassesFormResult {
 }
 
 interface TaxClassesFormProps {
-  children: (props: UseTaxClassesFormResult) => React.ReactNode;
+  children: (props: UseTaxClassesFormResult) => ReactNode;
   taxClass: TaxClassFragment | undefined;
   onTaxClassCreate: (data: TaxClassesPageFormData) => SubmitPromise<TaxClassError[]>;
   onTaxClassUpdate: (data: TaxClassesPageFormData) => SubmitPromise<TaxClassError[]>;
@@ -96,7 +95,7 @@ function useTaxClassesForm(
     formId,
   });
 
-  React.useEffect(() => setExitDialogSubmitRef(submit), [setExitDialogSubmitRef, submit]);
+  useEffect(() => setExitDialogSubmitRef(submit), [setExitDialogSubmitRef, submit]);
   setIsSubmitDisabled(disabled);
 
   return {

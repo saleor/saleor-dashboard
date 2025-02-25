@@ -1,5 +1,4 @@
-import { createContext } from "react";
-import * as React from "react";
+import { createContext, ReactNode, useContext } from "react";
 
 interface ModalContextValues {
   open?: boolean;
@@ -13,7 +12,7 @@ export const ModalContextProvider = ({
   onChange,
   open,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   onChange?: (open: boolean) => void;
   open?: boolean;
 }) => {
@@ -21,7 +20,7 @@ export const ModalContextProvider = ({
 };
 
 export const useModalContext = () => {
-  const context = React.useContext(ModalContext);
+  const context = useContext(ModalContext);
 
   if (!context) {
     throw new Error("useModalContext must be used within a ModalContextProvider");

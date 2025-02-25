@@ -2,13 +2,13 @@
 import { ChannelData } from "@dashboard/channels/utils";
 import Label from "@dashboard/orders/components/OrderHistory/Label";
 import { Accordion, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ReactNode } from "react";
 
 import { Messages } from "../types";
 
 export interface ChannelContentWrapperProps {
   data: ChannelData;
-  children: React.ReactNode;
+  children: ReactNode;
   messages: Messages;
 }
 

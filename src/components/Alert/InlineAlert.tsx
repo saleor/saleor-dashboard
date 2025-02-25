@@ -1,9 +1,9 @@
-import * as React from "react";
+import { ReactNode } from "react";
 
 import { DashboardCard } from "../Card";
 
 interface AlertCardProps {
-  children?: React.ReactNode | React.ReactNode[];
+  children?: ReactNode | ReactNode[];
 }
 
 const AlertCard = ({ children }: AlertCardProps) => (

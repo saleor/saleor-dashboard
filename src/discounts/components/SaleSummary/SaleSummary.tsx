@@ -9,6 +9,7 @@ import { SaleDetailsFragment, SaleType } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { ChannelProps } from "@dashboard/types";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
+import { ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
@@ -33,7 +34,7 @@ const SaleSummary = ({ selectedChannelId, sale }: SaleSummaryProps) => {
           <FormattedMessage id="F56hOz" defaultMessage="Name" description="sale name" />
         </Text>
         <Text className={classes.ellipsis} display="block">
-          {maybe<React.ReactNode>(() => sale.name, <Skeleton />)}
+          {maybe<ReactNode>(() => sale.name, <Skeleton />)}
         </Text>
         <FormSpacer />
 
@@ -67,7 +68,7 @@ const SaleSummary = ({ selectedChannelId, sale }: SaleSummaryProps) => {
           <FormattedMessage {...commonMessages.startDate} />
         </Text>
         <Text display="block">
-          {maybe<React.ReactNode>(
+          {maybe<ReactNode>(
             () => (
               <Date date={sale.startDate} plain />
             ),
@@ -80,7 +81,7 @@ const SaleSummary = ({ selectedChannelId, sale }: SaleSummaryProps) => {
           <FormattedMessage {...commonMessages.endDate} />
         </Text>
         <Text display="block">
-          {maybe<React.ReactNode>(
+          {maybe<ReactNode>(
             () => (sale.endDate === null ? "-" : <Date date={sale.endDate} plain />),
             <Skeleton />,
           )}

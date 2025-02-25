@@ -20,8 +20,7 @@ import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import getMetadata from "@dashboard/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import difference from "lodash/difference";
-import { createContext } from "react";
-import * as React from "react";
+import { createContext, ReactNode } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -31,7 +30,7 @@ import {
 import useGiftCardDetails from "../GiftCardDetailsProvider/hooks/useGiftCardDetails";
 
 interface GiftCardUpdateFormProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export type GiftCardUpdateFormData = MetadataFormData &

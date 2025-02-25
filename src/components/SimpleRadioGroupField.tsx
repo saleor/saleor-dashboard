@@ -1,9 +1,9 @@
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { RadioGroup, RadioGroupRootProps, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ReactNode } from "react";
 
 type RadioGroupFieldChoice = {
-  label: string | React.ReactNode;
+  label: string | ReactNode;
   value: string;
   disabled?: boolean;
 };

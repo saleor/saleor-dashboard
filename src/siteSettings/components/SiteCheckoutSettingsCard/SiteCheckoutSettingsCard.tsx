@@ -4,7 +4,7 @@ import { ShopErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { ChangeEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { SiteSettingsPageFormData } from "../SiteSettingsPage";
@@ -14,7 +14,7 @@ interface SiteCheckoutSettingsCardProps {
   data: SiteSettingsPageFormData;
   errors: ShopErrorFragment[];
   disabled: boolean;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
 }
 
 const SiteCheckoutSettingsCard = ({

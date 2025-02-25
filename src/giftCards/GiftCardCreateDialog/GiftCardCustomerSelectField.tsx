@@ -5,7 +5,7 @@ import { commonMessages } from "@dashboard/intl";
 import { getFullName } from "@dashboard/misc";
 import useCustomerSearch from "@dashboard/searches/useCustomerSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import * as React from "react";
+import { ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 
 import { giftCardCreateMessages as messages } from "./messages";
@@ -31,7 +31,7 @@ const GiftCardCustomerSelectField = ({
     value: email,
     label: getFullName({ firstName, lastName }) || email,
   }));
-  const handleSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSelect = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     const label = choices?.find(category => category.value === value)?.label;
 

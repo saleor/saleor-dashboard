@@ -1,5 +1,5 @@
 import { Box, Paragraph, TextProps } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ReactNode } from "react";
 
 const Root = ({ children, ...rest }: TextProps) => (
   <Paragraph
@@ -21,7 +21,7 @@ const ContextualLineLink = ({
   onClick,
 }: {
   href: string;
-  children: React.ReactNode;
+  children: ReactNode;
   onClick?: () => void;
 }) => (
   <Box

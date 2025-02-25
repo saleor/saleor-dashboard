@@ -1,9 +1,9 @@
 import { makeStyles } from "@saleor/macaw-ui";
-import * as React from "react";
+import { ReactChild } from "react";
 
 interface PspRerefenceLinkProps {
   href: string | null;
-  children: React.ReactChild;
+  children: ReactChild;
 }
 
 const useStyles = makeStyles(

@@ -8,7 +8,7 @@ import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { OutputData } from "@editorjs/editorjs";
 import { TextField } from "@material-ui/core";
-import * as React from "react";
+import { ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 
 interface CategoryDetailsFormProps {
@@ -18,7 +18,7 @@ interface CategoryDetailsFormProps {
   };
   disabled: boolean;
   errors: ProductErrorFragment[];
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
 }
 
 export const CategoryDetailsForm = ({

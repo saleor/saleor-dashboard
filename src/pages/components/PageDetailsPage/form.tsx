@@ -53,8 +53,7 @@ import { RichTextContext } from "@dashboard/utils/richText/context";
 import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { OutputData } from "@editorjs/editorjs";
-import { useEffect, useState } from "react";
-import * as React from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 export interface PageFormData extends MetadataFormData {
   isPublished: boolean;
@@ -112,7 +111,7 @@ export interface UsePageFormOpts {
 }
 
 export interface PageFormProps extends UsePageFormOpts {
-  children: (props: UsePageUpdateFormRenderProps) => React.ReactNode;
+  children: (props: UsePageUpdateFormRenderProps) => ReactNode;
   page: PageDetailsFragment;
   onSubmit: (data: PageData) => SubmitPromise;
   disabled: boolean;

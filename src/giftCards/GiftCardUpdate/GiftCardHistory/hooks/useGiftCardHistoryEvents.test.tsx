@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react-hooks";
-import * as React from "react";
+import { ReactNode } from "react";
 
 import { giftCardsMocks } from "../../../../../testUtils/mocks/giftCards";
 import { useUser } from "../../../../auth";
@@ -38,7 +38,7 @@ describe("useGiftCardHistoryEvents", () => {
       },
     }));
 
-    const wrapper = ({ children }: { children: React.ReactNode }) => (
+    const wrapper = ({ children }: { children: ReactNode }) => (
       <GiftCardDetailsContext.Provider value={{ giftCard: mockGiftCard, loading: false }}>
         {children}
       </GiftCardDetailsContext.Provider>
@@ -65,7 +65,7 @@ describe("useGiftCardHistoryEvents", () => {
       data: undefined,
     }));
 
-    const wrapper = ({ children }: { children: React.ReactNode }) => (
+    const wrapper = ({ children }: { children: ReactNode }) => (
       <GiftCardDetailsContext.Provider value={{ giftCard: undefined, loading: false }}>
         {children}
       </GiftCardDetailsContext.Provider>
@@ -94,7 +94,7 @@ describe("useGiftCardHistoryEvents", () => {
       },
     }));
 
-    const wrapper = ({ children }: { children: React.ReactNode }) => (
+    const wrapper = ({ children }: { children: ReactNode }) => (
       <GiftCardDetailsContext.Provider value={{ giftCard: mockGiftCard, loading: false }}>
         {children}
       </GiftCardDetailsContext.Provider>

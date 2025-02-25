@@ -11,7 +11,15 @@ import {
 import { IconButtonProps, makeStyles, SettingsIcon } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import { FunctionComponent, ReactElement, useEffect, useRef, useState } from "react";
+import {
+  FunctionComponent,
+  KeyboardEvent,
+  MouseEvent,
+  ReactElement,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { FormattedMessage } from "react-intl";
 
 import { IconButton } from "../IconButton";
@@ -88,14 +96,14 @@ const CardMenu = (props: CardMenuProps) => {
   const anchorRef = useRef<HTMLButtonElement | null>(null);
   const [open, setOpen] = useState(false);
   const handleToggle = () => setOpen(prevOpen => !prevOpen);
-  const handleClose = (event: React.MouseEvent<EventTarget>) => {
+  const handleClose = (event: MouseEvent<EventTarget>) => {
     if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
       return;
     }
 
     setOpen(false);
   };
-  const handleListKeyDown = (event: React.KeyboardEvent) => {
+  const handleListKeyDown = (event: KeyboardEvent) => {
     if (event.key === "Tab") {
       event.preventDefault();
       setOpen(false);

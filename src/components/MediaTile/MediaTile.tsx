@@ -3,7 +3,7 @@ import { CircularProgress } from "@material-ui/core";
 import { DeleteIcon, EditIcon, makeStyles } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import * as React from "react";
+import { ChangeEvent, MouseEventHandler } from "react";
 
 const useStyles = makeStyles(
   theme => ({
@@ -84,13 +84,13 @@ interface MediaTileBaseProps {
   disableOverlay?: boolean;
   loading?: boolean;
   onDelete?: () => void;
-  onEdit?: (event: React.ChangeEvent<any>) => void;
+  onEdit?: (event: ChangeEvent<any>) => void;
 }
 
 export type MediaTileProps = MediaTileBaseProps &
   (
     | {
-        onEdit?: React.MouseEventHandler<HTMLButtonElement>;
+        onEdit?: MouseEventHandler<HTMLButtonElement>;
         editHref?: never;
       }
     | {
