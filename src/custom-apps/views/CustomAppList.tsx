@@ -68,6 +68,7 @@ export const CustomAppList: React.FC<CustomAppListProps> = ({ params }) => {
       filter: {
         type: AppTypeEnum.LOCAL,
       },
+      canFetchAppEvents: false, // We don't need to fetch events for custom apps
     },
   });
   const [deleteApp, deleteAppOpts] = useAppDeleteMutation({

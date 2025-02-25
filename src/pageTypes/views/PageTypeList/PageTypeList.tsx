@@ -1,11 +1,10 @@
 // @ts-strict-ignore
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData,
-} from "@dashboard/components/SaveFilterTabDialog";
+import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import TypeDeleteWarningDialog from "@dashboard/components/TypeDeleteWarningDialog";
 import { usePageTypeBulkDeleteMutation, usePageTypeListQuery } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -15,10 +14,10 @@ import usePaginator, {
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
 import { commonMessages } from "@dashboard/intl";
-import { getStringOrPlaceholder } from "@dashboard/misc";
 import usePageTypeDelete from "@dashboard/pageTypes/hooks/usePageTypeDelete";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
@@ -27,20 +26,8 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import PageTypeListPage from "../../components/PageTypeListPage";
-import {
-  pageTypeListUrl,
-  PageTypeListUrlDialog,
-  PageTypeListUrlFilters,
-  PageTypeListUrlQueryParams,
-} from "../../urls";
-import {
-  deleteFilterTab,
-  getActiveFilters,
-  getFiltersCurrentTab,
-  getFilterTabs,
-  getFilterVariables,
-  saveFilterTab,
-} from "./filters";
+import { pageTypeListUrl, PageTypeListUrlDialog, PageTypeListUrlQueryParams } from "../../urls";
+import { getFilterVariables, storageUtils } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
 interface PageTypeListProps {
@@ -71,49 +58,47 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber],
   );
+
   const { data, loading, refetch } = usePageTypeListQuery({
     displayLoader: true,
     variables: queryVariables,
   });
-  const tabs = getFilterTabs();
-  const currentTab = getFiltersCurrentTab(params, tabs);
-  const changeFilterField = (filter: PageTypeListUrlFilters) => {
-    reset();
-    navigate(
-      pageTypeListUrl({
-        ...getActiveFilters(params),
-        ...filter,
-        activeTab: undefined,
-      }),
-    );
-  };
+
   const [openModal, closeModal] = createDialogActionHandlers<
     PageTypeListUrlDialog,
     PageTypeListUrlQueryParams
   >(navigate, pageTypeListUrl, params);
-  const handleTabChange = (tab: number) => {
-    reset();
-    navigate(
-      pageTypeListUrl({
-        activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data,
-      }),
-    );
-  };
-  const handleTabDelete = () => {
-    deleteFilterTab(currentTab);
-    reset();
-    navigate(pageTypeListUrl());
-  };
-  const handleTabSave = (data: SaveFilterTabDialogFormData) => {
-    saveFilterTab(data.name, getActiveFilters(params));
-    handleTabChange(tabs.length + 1);
-  };
+
   const paginationValues = usePaginator({
     pageInfo: data?.pageTypes?.pageInfo,
     paginationState,
     queryString: params,
   });
+
+  const [, resetFilters, handleSearchChange] = createFilterHandlers({
+    createUrl: pageTypeListUrl,
+    getFilterQueryParam: async () => undefined,
+    navigate,
+    params,
+  });
+
+  const {
+    selectedPreset,
+    presets,
+    hasPresetsChanged,
+    onPresetChange,
+    onPresetDelete,
+    onPresetSave,
+    onPresetUpdate,
+    setPresetIdToDelete,
+    getPresetNameToDelete,
+  } = useFilterPresets({
+    params,
+    reset: resetFilters,
+    getUrl: pageTypeListUrl,
+    storageUtils,
+  });
+
   const handleSort = createSortHandler(navigate, pageTypeListUrl, params);
   const [pageTypeBulkDelete, pageTypeBulkDeleteOpts] = usePageTypeBulkDeleteMutation({
     onCompleted: data => {
@@ -134,29 +119,37 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
       }
     },
   });
+
   const hanldePageTypeBulkDelete = () =>
     pageTypeBulkDelete({
       variables: {
         ids: params.ids,
       },
     });
+
   const pageTypeDeleteData = usePageTypeDelete({
     selectedTypes: selectedPageTypes,
     params,
   });
+
   const pageTypesData = mapEdgesToItems(data?.pageTypes);
 
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <PageTypeListPage
-        currentTab={currentTab}
+        currentTab={selectedPreset}
         initialSearch={params.query || ""}
-        onSearchChange={query => changeFilterField({ query })}
+        onSearchChange={handleSearchChange}
         onAll={() => navigate(pageTypeListUrl())}
-        onTabChange={handleTabChange}
-        onTabDelete={() => openModal("delete-search")}
+        onTabChange={onPresetChange}
+        onTabDelete={(id: number) => {
+          setPresetIdToDelete(id);
+          openModal("delete-search");
+        }}
         onTabSave={() => openModal("save-search")}
-        tabs={tabs.map(tab => tab.name)}
+        onTabUpdate={onPresetUpdate}
+        tabs={presets.map(tab => tab.name)}
+        hasPresetsChanged={hasPresetsChanged}
         disabled={loading}
         pageTypes={pageTypesData}
         onSort={handleSort}
@@ -194,14 +187,14 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
         open={params.action === "save-search"}
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={handleTabSave}
+        onSubmit={onPresetSave}
       />
       <DeleteFilterTabDialog
         open={params.action === "delete-search"}
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={handleTabDelete}
-        tabName={getStringOrPlaceholder(tabs[currentTab - 1]?.name)}
+        onSubmit={onPresetDelete}
+        tabName={getPresetNameToDelete()}
       />
     </PaginatorContext.Provider>
   );

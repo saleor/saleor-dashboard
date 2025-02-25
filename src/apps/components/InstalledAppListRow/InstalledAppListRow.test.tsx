@@ -1,13 +1,17 @@
 import { AppListContext, AppListContextValues } from "@dashboard/apps/context";
-import { activeApp } from "@dashboard/apps/fixtures";
+import { activeApp, appWithFailedEventDeliveries } from "@dashboard/apps/fixtures";
 import { InstalledApp } from "@dashboard/apps/types";
 import { getAppsConfig } from "@dashboard/config";
+import { useFlag } from "@dashboard/featureFlags";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 import React from "react";
 import { MemoryRouter as Router } from "react-router-dom";
 
 import InstalledAppListRow from "./InstalledAppListRow";
+
+jest.mock("@dashboard/featureFlags");
+(useFlag as jest.Mock).mockReturnValue({ enabled: true });
 
 const Component = ({ data, context }: { data: InstalledApp; context: AppListContextValues }) => (
   <Wrapper>
@@ -103,5 +107,29 @@ describe("Apps InstalledAppListRow", () => {
 
     // Assert
     expect(tunnelLabel).toBeTruthy();
+  });
+  it("displays a warning dot when app has issues", async () => {
+    // Arrange
+    const removeAppInstallation = jest.fn();
+    const retryAppInstallation = jest.fn();
+
+    // Act
+    render(
+      <Component
+        data={{
+          app: appWithFailedEventDeliveries,
+          isExternal: false,
+        }}
+        context={{
+          removeAppInstallation,
+          retryAppInstallation,
+        }}
+      />,
+    );
+
+    // Assert
+    const warningDot = screen.getByTestId("app-warning-dot");
+
+    expect(warningDot).toBeInTheDocument();
   });
 });

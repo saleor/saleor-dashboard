@@ -9,6 +9,7 @@
     "commander": "^9.4.0",
     "graphql": "^16.8.1",
     "graphql-request": "^5.0.0",
-    "node-fetch": "^2.6.7"
+    "node-fetch": "^2.6.7",
+    "octokit": "^4.1.1"
   }
 }

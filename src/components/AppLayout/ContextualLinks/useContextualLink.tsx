@@ -3,6 +3,7 @@ import {
   API_GUIDE_DOCS,
   API_REFERENCE_DOCS,
   EXTENDING_WITH_WEBHOOKS_DOCS_URL,
+  GIFT_CARD_PRODUCT_DOCS_URL,
   ORDER_MANAGEMENT_DOCS_URL,
   PRODUCT_CONFIGURATION_DOCS_URL,
   USER_PERMISSIONS_DOCS_URL,
@@ -18,7 +19,7 @@ type SubtitleType =
   | "product_list"
   | "order_list"
   | "dev_panel"
-  | "webhooks_events"
+  | "gift_cards"
   | "staff_members";
 
 const EVENT = "contextual_link_clicked";
@@ -86,6 +87,17 @@ export const useContextualLink = (type: SubtitleType) => {
             onClick={() => trackEvent("product_configuration_docs")}
           >
             {intl.formatMessage(contextualLinks.productConfigurations)}
+          </ContextualLine.Link>
+        ),
+      });
+    case "gift_cards":
+      return intl.formatMessage(contextualLinks.giftCards, {
+        giftCards: (
+          <ContextualLine.Link
+            href={GIFT_CARD_PRODUCT_DOCS_URL}
+            onClick={() => trackEvent("gift_card_product_docs")}
+          >
+            {intl.formatMessage(contextualLinks.giftCardsDocs)}
           </ContextualLine.Link>
         ),
       });

@@ -164,6 +164,7 @@ describe("App List verified installed apps util", () => {
           },
         ],
         brand: null,
+        webhooks: [],
       },
       {
         __typename: "App",
@@ -188,6 +189,7 @@ describe("App List verified installed apps util", () => {
           },
         ],
         brand: null,
+        webhooks: [],
       },
     ];
     const installableMarketplaceApps: AppstoreApi.ReleasedSaleorApp[] = [
@@ -253,6 +255,7 @@ describe("App List verified installable marketplace apps util", () => {
           },
         ],
         brand: null,
+        webhooks: [],
       },
       {
         __typename: "App",
@@ -277,6 +280,7 @@ describe("App List verified installable marketplace apps util", () => {
           },
         ],
         brand: null,
+        webhooks: [],
       },
     ];
     const installableMarketplaceApps: AppstoreApi.ReleasedSaleorApp[] = [
