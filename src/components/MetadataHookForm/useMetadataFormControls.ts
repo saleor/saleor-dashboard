@@ -1,24 +1,35 @@
 import { MetadataInput } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { useFieldArray, UseFormReturn } from "react-hook-form";
+import { IntlShape, useIntl } from "react-intl";
 
 import { EventDataAction, EventDataField } from "../Metadata/types";
 import { getDataKey, parseEventData } from "../Metadata/utils";
 
-const validateMetadata = (metadata: MetadataInput[]): true | string => {
-  const keys = metadata.map(entry => entry.key);
-  const uniqueKeys = new Set(keys);
+const getValidateMetadata =
+  (intl: IntlShape) =>
+  (metadata: MetadataInput[]): true | string => {
+    const keys = metadata.map(entry => entry.key);
+    const uniqueKeys = new Set(keys);
 
-  if (uniqueKeys.size !== keys.length) {
-    return "Metadata keys must be unique, remove duplicate key";
-  }
+    if (uniqueKeys.size !== keys.length) {
+      return intl.formatMessage({
+        defaultMessage: "Metadata keys must be unique, remove duplicate key",
+        description: "metadata edit form, error message",
+        id: "MfWHGz",
+      });
+    }
 
-  if (keys.some(key => key === "")) {
-    return "Metadata key cannot be empty";
-  }
+    if (keys.some(key => key === "")) {
+      return intl.formatMessage({
+        defaultMessage: "Metadata key cannot be empty",
+        description: "metadata edit form, error message",
+        id: "lb5uDM",
+      });
+    }
 
-  return true;
-};
+    return true;
+  };
 
 type MetadataFormData = {
   metadata: MetadataInput[];
@@ -35,11 +46,12 @@ export const useMetadataFormControls = ({
   trigger,
   getValues,
 }: MetadataFormControlProps) => {
+  const intl = useIntl();
   const metadataControls = useFieldArray<MetadataFormData>({
     control,
     name: "metadata",
     rules: {
-      validate: validateMetadata,
+      validate: getValidateMetadata(intl),
     },
   });
 
@@ -47,7 +59,7 @@ export const useMetadataFormControls = ({
     control,
     name: "privateMetadata",
     rules: {
-      validate: validateMetadata,
+      validate: getValidateMetadata(intl),
     },
   });
 
