@@ -147,8 +147,7 @@ const LocaleProvider = ({ children }) => {
   }, [locale]);
 
   return (
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+    // @ts-expect-error wrong typing
     <IntlProvider
       defaultLocale={defaultLocale}
       locale={locale}

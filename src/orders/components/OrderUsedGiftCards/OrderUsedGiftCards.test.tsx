@@ -21,12 +21,10 @@ const mockGiftCards = [
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+    // @ts-expect-error BrowserRouter types does not have explicit children props
     <BrowserRouter>
       <ThemeWrapper>
-        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-        {/* @ts-ignore */}
+        {/* @ts-expect-error wrong typing*/}
         <IntlProvider
           locale="EN"
           messages={{

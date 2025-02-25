@@ -104,51 +104,51 @@ const handleLegacyTheming = () => {
 handleLegacyTheming();
 
 const App = () => (
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  <SaleorProvider client={saleorClient}>
-    <ApolloProvider client={apolloClient}>
-      <Router>
-        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-        {/* @ts-ignore */}
-        <LegacyThemeProvider overrides={themeOverrides} palettes={paletteOverrides}>
-          <ThemeProvider>
-            <DateProvider>
-              <LocaleProvider>
-                <MessageManagerProvider>
-                  <BackgroundTasksProvider>
-                    <AppStateProvider>
-                      <AuthProvider>
-                        <ProductAnalytics>
-                          <ShopProvider>
-                            <AppChannelProvider>
-                              <ExitFormDialogProvider>
-                                <DevModeProvider>
-                                  <NavigatorSearchProvider>
-                                    <SavebarRefProvider>
-                                      <FeatureFlagsProviderWithUser>
-                                        <OnboardingProvider>
-                                          <Routes />
-                                        </OnboardingProvider>
-                                      </FeatureFlagsProviderWithUser>
-                                    </SavebarRefProvider>
-                                  </NavigatorSearchProvider>
-                                </DevModeProvider>
-                              </ExitFormDialogProvider>
-                            </AppChannelProvider>
-                          </ShopProvider>
-                        </ProductAnalytics>
-                      </AuthProvider>
-                    </AppStateProvider>
-                  </BackgroundTasksProvider>
-                </MessageManagerProvider>
-              </LocaleProvider>
-            </DateProvider>
-          </ThemeProvider>
-        </LegacyThemeProvider>
-      </Router>
-    </ApolloProvider>
-  </SaleorProvider>
+  <>
+    {/* @ts-expect-error SaleorProvider types does not have explicit children props  */}
+    <SaleorProvider client={saleorClient}>
+      <ApolloProvider client={apolloClient}>
+        <Router>
+          {/* @ts-expect-error LegacyThemeProvider types does not have explicit children props  */}
+          <LegacyThemeProvider overrides={themeOverrides} palettes={paletteOverrides}>
+            <ThemeProvider>
+              <DateProvider>
+                <LocaleProvider>
+                  <MessageManagerProvider>
+                    <BackgroundTasksProvider>
+                      <AppStateProvider>
+                        <AuthProvider>
+                          <ProductAnalytics>
+                            <ShopProvider>
+                              <AppChannelProvider>
+                                <ExitFormDialogProvider>
+                                  <DevModeProvider>
+                                    <NavigatorSearchProvider>
+                                      <SavebarRefProvider>
+                                        <FeatureFlagsProviderWithUser>
+                                          <OnboardingProvider>
+                                            <Routes />
+                                          </OnboardingProvider>
+                                        </FeatureFlagsProviderWithUser>
+                                      </SavebarRefProvider>
+                                    </NavigatorSearchProvider>
+                                  </DevModeProvider>
+                                </ExitFormDialogProvider>
+                              </AppChannelProvider>
+                            </ShopProvider>
+                          </ProductAnalytics>
+                        </AuthProvider>
+                      </AppStateProvider>
+                    </BackgroundTasksProvider>
+                  </MessageManagerProvider>
+                </LocaleProvider>
+              </DateProvider>
+            </ThemeProvider>
+          </LegacyThemeProvider>
+        </Router>
+      </ApolloProvider>
+    </SaleorProvider>
+  </>
 );
 const Routes = () => {
   const intl = useIntl();

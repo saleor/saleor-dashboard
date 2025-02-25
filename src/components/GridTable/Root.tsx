@@ -12,8 +12,7 @@ export const GridTableRoot = React.forwardRef<GridTableRootElement, GridTableRoo
     const { children, ...rest } = props;
 
     return (
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      // @ts-expect-error Types of property contentEditable are incompatible.
       <Box
         ref={forwardedRef}
         as="table"

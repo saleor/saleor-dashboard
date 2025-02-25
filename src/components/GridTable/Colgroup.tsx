@@ -9,8 +9,7 @@ type GridTableColgroupProps = GridTableProps<ColgroupHTMLAttributes<HTMLElement>
 
 export const GridTableColgroup = React.forwardRef<GridTableColgroupElement, GridTableColgroupProps>(
   ({ children, ...props }, forwardedRef) => (
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+    // @ts-expect-error Types of property contentEditable are incompatible.
     <Box as="colgroup" ref={forwardedRef} {...props}>
       {children}
     </Box>

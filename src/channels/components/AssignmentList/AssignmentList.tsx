@@ -51,8 +51,6 @@ const AssignmentList = (props: AssignmentListProps) => {
             <Skeleton className={classes.skeleton} />
           ) : (
             <>
-              {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-              {/* @ts-ignore */}
               <SortableContainer
                 axis="xy"
                 lockAxis="xy"
@@ -65,8 +63,6 @@ const AssignmentList = (props: AssignmentListProps) => {
                     <Item
                       key={itemIndex}
                       index={itemIndex}
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                      // @ts-ignore
                       item={item}
                       onDelete={removeItem}
                       sortable={!!reorderItem}

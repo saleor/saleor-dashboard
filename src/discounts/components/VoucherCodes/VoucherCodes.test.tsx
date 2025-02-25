@@ -30,11 +30,9 @@ jest.mock("@dashboard/components/Datagrid/persistance/usePersistance", () => ({
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+    // @ts-expect-error BrowserRouter types does not have explicit children props
     <BrowserRouter>
-      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-      {/* @ts-ignore */}
+      {/* @ts-expect-error LegacyThemeProvider types does not have explicit children props */}
       <LegacyThemeProvider>
         <ThemeProvider>{children}</ThemeProvider>
       </LegacyThemeProvider>

@@ -12,18 +12,19 @@ describe("EventItem", () => {
     const onHover = jest.fn();
 
     render(
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      <MemoryRouter>
-        <Wrapper>
-          <EventItem
-            event={transactionEvent}
-            onHover={onHover}
-            hoveredPspReference={null}
-            hasCreatedBy={true}
-          />
-        </Wrapper>
-      </MemoryRouter>,
+      <>
+        {/* @ts-expect-error MemoryRouter types does not have explicit children props  */}
+        <MemoryRouter>
+          <Wrapper>
+            <EventItem
+              event={transactionEvent}
+              onHover={onHover}
+              hoveredPspReference={null}
+              hasCreatedBy={true}
+            />
+          </Wrapper>
+        </MemoryRouter>
+      </>,
     );
 
     const row = screen.getByRole("row");

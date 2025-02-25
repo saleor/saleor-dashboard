@@ -12,7 +12,7 @@ interface ItemProps extends SortableElementProps {
   onDelete: (id: string) => void;
 }
 
-const Item = SortableElement(({ item, sortable = false, onDelete }: ItemProps) => {
+const Item = SortableElement<ItemProps>(({ item, sortable = false, onDelete }: ItemProps) => {
   const { id, name } = item;
   const classes = useStyles();
 
@@ -21,8 +21,6 @@ const Item = SortableElement(({ item, sortable = false, onDelete }: ItemProps) =
       <div className={classes.container}>
         <div className={classes.containerContent}>
           {sortable && (
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
             <SortableHandle className={classes.sortableHandle} data-test-id="button-drag-handle" />
           )}
           <Text size={3}>{name}</Text>

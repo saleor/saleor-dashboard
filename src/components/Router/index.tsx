@@ -14,7 +14,6 @@ export const history = createBrowserHistory({
 export const Route = Sentry.withSentryRouting(BaseRoute);
 
 export const Router = (props: RouterProps) => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  // @ts-expect-error BaseRouter types does not have explicit children props
   return <BaseRouter history={history}>{props.children}</BaseRouter>;
 };

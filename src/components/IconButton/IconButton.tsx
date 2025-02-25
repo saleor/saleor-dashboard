@@ -5,13 +5,11 @@ import { Link } from "react-router-dom";
 
 const _IconButton: React.FC<any> = React.forwardRef(({ href, ...props }, ref) => {
   if (href && !isExternalURL(href)) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+    // @ts-expect-error old macaw Button component use legacy types for ref
     return <MacawIconButton {...props} to={href} component={Link} ref={ref} />;
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  // @ts-expect-error old macaw Button component use legacy types for ref
   return <MacawIconButton href={href} {...props} ref={ref} />;
 });
 

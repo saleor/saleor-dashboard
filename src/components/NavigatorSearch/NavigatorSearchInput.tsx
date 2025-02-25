@@ -30,8 +30,7 @@ const NavigatorSearchInput = forwardRef<HTMLInputElement, NavigatorSearchInputPr
             })}
           />
         )}
-        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-        {/* @ts-ignore */}
+        {/* @ts-expect-error Types of property contentEditable are incompatible  */}
         <Box
           as="input"
           role="input"

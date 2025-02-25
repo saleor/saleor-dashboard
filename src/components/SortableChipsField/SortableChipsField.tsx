@@ -57,8 +57,6 @@ const SortableChipsField = (props: SortableChipsFieldProps) => {
   };
 
   return (
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     <SortableContainer
       axis="xy"
       lockAxis="xy"
@@ -70,8 +68,6 @@ const SortableChipsField = (props: SortableChipsFieldProps) => {
       <div>
         {values.map((value, valueIndex) => (
           <DraggableChip
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
             className={classes.chip}
             loading={loading}
             disabled={loading}

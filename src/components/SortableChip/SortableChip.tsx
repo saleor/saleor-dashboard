@@ -46,7 +46,7 @@ const useStyles = makeStyles(
   }),
   { name: "SortableChip" },
 );
-const SortableChip = SortableElement((props: SortableChipProps) => {
+const SortableChip = SortableElement<SortableChipProps>((props: SortableChipProps) => {
   const { className, label, onClose, loading } = props;
   const classes = useStyles(props);
   const handleClose = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -65,8 +65,6 @@ const SortableChip = SortableElement((props: SortableChipProps) => {
     >
       <div className={classes.content}>
         <SortableHandle
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
           className={clsx(classes.sortableHandle, {
             [classes.disabled]: loading,
           })}

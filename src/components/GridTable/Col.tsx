@@ -9,8 +9,7 @@ type GridTableColProps = GridTableProps<ColHTMLAttributes<HTMLTableColElement>>;
 
 export const GridTableCol = React.forwardRef<GridTableColElement, GridTableColProps>(
   ({ children, ...props }, forwardedRef) => (
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+    // @ts-expect-error Types of property contentEditable are incompatible.
     <Box as="col" ref={forwardedRef} {...props}>
       {children}
     </Box>

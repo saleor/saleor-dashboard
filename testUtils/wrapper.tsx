@@ -10,8 +10,7 @@ import { ThemeWrapper } from "./themeWrapper";
 
 const Wrapper = ({ children }: { children: ReactNode }) => (
   <ApolloMockedProvider>
-    {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-    {/* @ts-ignore */}
+    {/* @ts-expect-error types of property refs are incompatible */}
     <IntlProvider defaultLocale={Locale.EN} locale={Locale.EN}>
       <RawLocaleProvider
         value={{

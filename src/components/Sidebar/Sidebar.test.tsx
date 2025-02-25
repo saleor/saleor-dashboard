@@ -46,8 +46,7 @@ jest.mock("@dashboard/components/NavigatorSearch/useNavigatorSearchContext", () 
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+    // @ts-expect-error LegacyThemeProvider types does not have explicit children props
     <LegacyThemeProvider>
       <ThemeProvider>{children}</ThemeProvider>
     </LegacyThemeProvider>

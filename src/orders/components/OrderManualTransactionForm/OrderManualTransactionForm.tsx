@@ -28,8 +28,6 @@ export const OrderManualTransactionForm = ({
 
   return (
     <ManualTransactionContext.Provider
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       value={{
         ...hookData,
         ...props,

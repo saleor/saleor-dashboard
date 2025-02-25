@@ -109,8 +109,7 @@ const Link = (props: LinkProps) => {
           {children}
         </RouterLink>
       ) : (
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error Types of property contentEditable are incompatible.
         <Text as="a" href={disabled ? undefined : href} display="block" {...commonLinkProps}>
           {children}
         </Text>

@@ -8,6 +8,8 @@ interface SortableContainerProps extends SortableContainerHocProps {
   children: ReactElement;
 }
 
-const SortableContainer = SortableContainerHoc(({ children }: SortableContainerProps) => children);
+const SortableContainer = SortableContainerHoc<SortableContainerProps>(
+  ({ children }: SortableContainerProps) => children,
+);
 
 export default SortableContainer;

@@ -15,7 +15,7 @@ interface SortableHandleProps {
   className?: string;
 }
 
-const SortableHandle = SortableHandleHoc((props: SortableHandleProps) => {
+const SortableHandle = SortableHandleHoc<SortableHandleProps>((props: SortableHandleProps) => {
   const { className, ...restProps } = props;
   const classes = useStyles(props);
 
