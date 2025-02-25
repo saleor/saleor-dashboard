@@ -2,7 +2,10 @@ import { useUser } from "@dashboard/auth";
 import { useUserAccountUpdateMutation } from "@dashboard/graphql";
 import { renderHook } from "@testing-library/react-hooks";
 
-import { useSidebarWebhookAlertMetadata } from "./useSidebarWebhookAlertMetadata";
+import {
+  DELIVERY_ATTEMPT_KEY,
+  useSidebarWebhookAlertMetadata,
+} from "./useSidebarWebhookAlertMetadata";
 
 jest.mock("@dashboard/auth", () => ({
   useUser: jest.fn().mockReturnValue({ user: null }),
@@ -36,7 +39,7 @@ describe("useSidebarWebhookAlertMetadata", () => {
         input: {
           metadata: [
             {
-              key: "sidebar_app_webhook_alert_state",
+              key: DELIVERY_ATTEMPT_KEY,
               value: JSON.stringify(mockMetadataInput),
             },
           ],
@@ -51,7 +54,7 @@ describe("useSidebarWebhookAlertMetadata", () => {
       user: {
         metadata: [
           {
-            key: "sidebar_app_webhook_alert_state",
+            key: DELIVERY_ATTEMPT_KEY,
             value: JSON.stringify(mockMetadataInput),
           },
         ],
@@ -86,7 +89,7 @@ describe("useSidebarWebhookAlertMetadata", () => {
       user: {
         metadata: [
           {
-            key: "sidebar_app_webhook_alert_state",
+            key: DELIVERY_ATTEMPT_KEY,
             value: "invalid-json",
           },
         ],

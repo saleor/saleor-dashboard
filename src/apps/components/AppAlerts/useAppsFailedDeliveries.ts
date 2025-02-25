@@ -34,7 +34,7 @@ export const useAppsFailedDeliveries = (): AppsFailedDeliveries => {
         },
         null as Moment | null,
       ) ?? null,
-    [data],
+    [data?.apps?.edges],
   );
 
   const handleFetchAppsWebhooks = () => {

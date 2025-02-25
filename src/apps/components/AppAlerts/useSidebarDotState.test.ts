@@ -15,7 +15,7 @@ describe("useSidebarDotState", () => {
     jest.clearAllMocks();
   });
 
-  it("should initialize with dot not visible", () => {
+  it("should initialize with dot not visible when no value", () => {
     // Arrange & Act
     (useSidebarWebhookAlertMetadata as jest.Mock).mockReturnValue(defaultMock);
 

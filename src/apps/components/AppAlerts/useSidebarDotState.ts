@@ -1,3 +1,4 @@
+import errorTracker from "@dashboard/services/errorTracking";
 import { useEffect, useRef, useState } from "react";
 
 import { useSidebarWebhookAlertMetadata } from "./useSidebarWebhookAlertMetadata";
@@ -48,7 +49,7 @@ export const useSidebarDotState = (): SidebarDotState => {
         lastFailedAttemptDate: lastFailedAttemptDateRef.current ?? "",
       });
     } catch (error) {
-      // Silently ignore errors
+      errorTracker.captureException(error as Error);
     }
   };
 
@@ -65,7 +66,7 @@ export const useSidebarDotState = (): SidebarDotState => {
         setHasNewFailedAttempts(true);
       }
     } catch (error) {
-      // Silently ignore errors
+      errorTracker.captureException(error as Error);
     }
   };
 

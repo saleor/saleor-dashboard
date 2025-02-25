@@ -87,6 +87,7 @@ describe("SidebarAppAlert", () => {
     await screen.findByRole(/tooltip/);
 
     // Assert
+    // Radix tooltip content mounts twice - https://github.com/radix-ui/primitives/issues/3034
     expect(screen.queryAllByText("Issues found.{break}Review app alerts.")[0]).toBeInTheDocument();
   });
 
