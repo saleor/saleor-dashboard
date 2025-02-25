@@ -6,6 +6,18 @@ import { slugFromConditionValue } from "../FilterElement/ConditionValue";
 
 export const CONDITIONS = ["is", "equals", "in", "between", "lower", "greater"];
 
+const PRODUCT_STATICS = [
+  "category",
+  "collection",
+  "channel",
+  "productType",
+  "isAvailable",
+  "isPublished",
+  "isVisibleInListing",
+  "hasCategory",
+  "giftCard",
+];
+
 const ORDER_STATICS = [
   "paymentStatus",
   "status",
@@ -19,17 +31,37 @@ const ORDER_STATICS = [
   "ids",
 ];
 
-const STATIC_TO_LOAD = [
-  "category",
-  "collection",
+const VOUCHER_STATICS = ["channel", "discountType", "voucherStatus"];
+
+const PAGE_STATIC = ["pageTypes"];
+
+const GIFT_CARDS_STATICS = ["currency", "products", "isActive", "tags", "usedBy"];
+
+const COLLECTION_STATICS = ["channel", "published"];
+
+const PRODUCT_TYPES_STATICS = ["typeOfProduct", "configurable"];
+
+const STAFF_MEMBERS_STATICS = ["staffMemberStatus"];
+
+const ATTRIBUTES_STATICS = [
   "channel",
-  "productType",
-  "isAvailable",
-  "isPublished",
-  "isVisibleInListing",
-  "hasCategory",
-  "giftCard",
+  "attributeType",
+  "filterableInStorefront",
+  "isVariantOnly",
+  "valueRequired",
+  "visibleInStorefront",
+];
+
+const STATIC_TO_LOAD = [
+  ...PRODUCT_STATICS,
   ...ORDER_STATICS,
+  ...VOUCHER_STATICS,
+  ...PAGE_STATIC,
+  ...GIFT_CARDS_STATICS,
+  ...COLLECTION_STATICS,
+  ...PRODUCT_TYPES_STATICS,
+  ...STAFF_MEMBERS_STATICS,
+  ...ATTRIBUTES_STATICS,
 ];
 
 export const TokenType = {

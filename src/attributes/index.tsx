@@ -1,3 +1,4 @@
+import { ConditionalAttributesFilterProvider } from "@dashboard/components/ConditionalFilter";
 import { Route } from "@dashboard/components/Router";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
@@ -23,7 +24,11 @@ const AttributeList = ({ location }: RouteComponentProps<{}>) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: AttributeListUrlQueryParams = asSortParams(qs, AttributeListUrlSortField);
 
-  return <AttributeListComponent params={params} />;
+  return (
+    <ConditionalAttributesFilterProvider locationSearch={location.search}>
+      <AttributeListComponent params={params} />
+    </ConditionalAttributesFilterProvider>
+  );
 };
 const AttributeCreate = ({ location }: RouteComponentProps<{}>) => {
   const qs = parseQs(location.search.substr(1));

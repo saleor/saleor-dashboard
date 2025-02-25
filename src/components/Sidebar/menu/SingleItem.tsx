@@ -27,6 +27,7 @@ export const SingleItem = ({ menuItem }: Props) => {
       active={active}
       onClick={handleMenuItemClick}
       data-test-id={`menu-item-label-${menuItem.id}`}
+      position="relative"
     >
       <Link
         to={menuItem.url || ""}
@@ -50,6 +51,11 @@ export const SingleItem = ({ menuItem }: Props) => {
           </Text>
         </Box>
       </Link>
+      {menuItem.endAdornment && (
+        <Box position="absolute" right={2} zIndex={"3"}>
+          {menuItem.endAdornment}
+        </Box>
+      )}
     </List.Item>
   );
 };

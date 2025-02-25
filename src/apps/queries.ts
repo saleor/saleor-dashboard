@@ -8,6 +8,7 @@ export const appsList = gql`
     $last: Int
     $sort: AppSortingInput
     $filter: AppFilterInput
+    $canFetchAppEvents: Boolean!
   ) {
     apps(
       before: $before

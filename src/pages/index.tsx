@@ -1,3 +1,4 @@
+import { ConditionalPageFilterProvider } from "@dashboard/components/ConditionalFilter";
 import { Route } from "@dashboard/components/Router";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
@@ -27,7 +28,11 @@ const PageList = ({ location }: RouteComponentProps<{}>) => {
     PageListUrlSortField.title,
   );
 
-  return <PageListComponent params={params} />;
+  return (
+    <ConditionalPageFilterProvider locationSearch={location.search}>
+      <PageListComponent params={params} />
+    </ConditionalPageFilterProvider>
+  );
 };
 const PageCreate = ({ match }: RouteComponentProps<any>) => {
   const qs = parseQs(location.search.substr(1));

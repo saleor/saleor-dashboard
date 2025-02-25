@@ -68,6 +68,7 @@ export const CustomAppList = ({ params }: CustomAppListProps) => {
       filter: {
         type: AppTypeEnum.LOCAL,
       },
+      canFetchAppEvents: false, // We don't need to fetch events for custom apps
     },
   });
   const [deleteApp, deleteAppOpts] = useAppDeleteMutation({

@@ -16,7 +16,7 @@ export const AppAdditionalInfo = ({
     <Tooltip>
       <Tooltip.Trigger>
         <Box display="flex" placeItems="center">
-          <InfoIcon color="default2" size="large" />
+          <InfoIcon color="default2" size="medium" />
         </Box>
       </Tooltip.Trigger>
       <Tooltip.Content side="bottom">

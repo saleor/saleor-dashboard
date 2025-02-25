@@ -1,3 +1,4 @@
+import { ConditionalCollectionFilterProvider } from "@dashboard/components/ConditionalFilter";
 import { Route } from "@dashboard/components/Router";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
@@ -23,7 +24,11 @@ const CollectionList = ({ location }: RouteComponentProps<{}>) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: CollectionListUrlQueryParams = asSortParams(qs, CollectionListUrlSortField);
 
-  return <CollectionListView params={params} />;
+  return (
+    <ConditionalCollectionFilterProvider locationSearch={location.search}>
+      <CollectionListView params={params} />
+    </ConditionalCollectionFilterProvider>
+  );
 };
 
 interface CollectionDetailsRouteProps {

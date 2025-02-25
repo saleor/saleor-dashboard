@@ -1,3 +1,4 @@
+import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLinks/useContextualLink";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -9,11 +10,12 @@ import { giftCardSettingsUrl } from "../../urls";
 import { giftCardsListHeaderMenuItemsMessages as messages } from "../messages";
 import { useGiftCardListDialogs } from "../providers/GiftCardListDialogsProvider";
 import { useGiftCardList } from "../providers/GiftCardListProvider";
-import GiftCardsListHeaderAlert from "./GiftCardsListHeaderAlert";
 
 const GiftCardsListHeader = () => {
   const intl = useIntl();
   const navigate = useNavigator();
+  const subtitle = useContextualLink("gift_cards");
+
   const {
     openCreateDialog,
     openBulkCreateDialog,
@@ -40,6 +42,7 @@ const GiftCardsListHeader = () => {
         withoutBorder
         isAlignToRight={false}
         title={intl.formatMessage(sectionNames.giftCards)}
+        subtitle={subtitle}
       >
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
@@ -96,7 +99,6 @@ const GiftCardsListHeader = () => {
           </Box>
         </Box>
       </TopNav>
-      <GiftCardsListHeaderAlert />
     </>
   );
 };

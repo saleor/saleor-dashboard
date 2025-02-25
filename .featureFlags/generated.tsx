@@ -1,13 +1,18 @@
 // @ts-nocheck
 
-import V24493 from "./images/discounts-list.png"
-import J49162 from "./images/improved_refunds.png"
+import M09811 from "./images/app-alerts.jpg"
+import T88459 from "./images/discounts-list.png"
+import L79851 from "./images/improved_refunds.png"
 
-const discounts_rules = () => (<><p><img src={V24493} alt="Discount rules"/></p>
+const app_alerts = () => (<><p><img src={M09811} alt="new filters"/>
+Experience new notifications displaying alerts for apps in the Dashboard. 
+Get meaningful information when Saleor detects issues with an app.</p>
+</>)
+const discounts_rules = () => (<><p><img src={T88459} alt="Discount rules"/></p>
 <p>Apply the new discounts rules to narrow your promotions audience.
 Set up conditions and channels that must be fulfilled to apply defined reward.</p>
 </>)
-const improved_refunds = () => (<><p><img src={J49162} alt="Improved refunds"/></p>
+const improved_refunds = () => (<><p><img src={L79851} alt="Improved refunds"/></p>
 <h3 id="enable-the-enhanced-refund-feature-to-streamline-your-refund-process">Enable the enhanced refund feature to streamline your refund process:</h3>
 <ul>
 <li><p>• Choose between automatic calculations based on selected items or enter refund amounts directly for overcharges and custom adjustments.</p>
@@ -17,8 +22,31 @@ const improved_refunds = () => (<><p><img src={J49162} alt="Improved refunds"/><
 </ul>
 
 </>)
+const new_filters = () => (<><p>Experience the new look and enhanced abilities of new filtering mechanism.
+Combine any criteria you want, and quickly browse their values.
+New filters have been added to the following pages:</p>
+<ul>
+<li>Collection list</li>
+<li>Customers list</li>
+<li>Vouchers list</li>
+<li>Draft orders list</li>
+<li>Gift cards list</li>
+<li>Content list</li>
+<li>Product types list</li>
+<li>Staff members list</li>
+</ul>
+</>)
 
 export const AVAILABLE_FLAGS = [{
+  name: "app_alerts",
+  displayName: "App alerts",
+  component: app_alerts,
+  visible: false,
+  content: {
+    enabled: false,
+    payload: "default",
+  }
+},{
   name: "discounts_rules",
   displayName: "Discounts rules",
   component: discounts_rules,
@@ -31,6 +59,15 @@ export const AVAILABLE_FLAGS = [{
   name: "improved_refunds",
   displayName: "Improved refunds",
   component: improved_refunds,
+  visible: true,
+  content: {
+    enabled: true,
+    payload: "default",
+  }
+},{
+  name: "new_filters",
+  displayName: "New filtering",
+  component: new_filters,
   visible: true,
   content: {
     enabled: true,

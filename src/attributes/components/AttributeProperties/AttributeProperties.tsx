@@ -31,9 +31,9 @@ const messages = defineMessages({
     description: "attribute properties regarding dashboard",
   },
   filterableInDashboard: {
-    id: "RH+aOF",
-    defaultMessage: "Use in Filtering",
-    description: "use attribute in filtering",
+    id: "j5hGyJ",
+    defaultMessage: "Filterable in dashboard",
+    description: "attribute is filterable in dashboard",
   },
   filterableInDashboardCaption: {
     id: "Q9wTrz",
@@ -42,8 +42,8 @@ const messages = defineMessages({
     description: "caption",
   },
   filterableInStorefront: {
-    defaultMessage: "Use as filter",
-    id: "e1vU/4",
+    defaultMessage: "Filterable in storefront",
+    id: "SV0FRm",
     description: "attribute is filterable in storefront",
   },
   storefrontPropertiesTitle: {
@@ -57,8 +57,8 @@ const messages = defineMessages({
     description: "attribute position in storefront filters",
   },
   visibleInStorefront: {
-    id: "x8V/xS",
-    defaultMessage: "Public",
+    id: "inWs4U",
+    defaultMessage: "Visible in storefront",
     description: "attribute visibility in storefront",
   },
   visibleInStorefrontCaption: {

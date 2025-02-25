@@ -15,6 +15,10 @@
     "context": "header",
     "string": "Products in {categoryName}"
   },
+  "+470FM": {
+    "context": "voucher status expired",
+    "string": "Expired"
+  },
   "+5HkZN": {
     "context": "order, button",
     "string": "Mark as paid"
@@ -92,6 +96,10 @@
   "+WTmpr": {
     "context": "disabled status option label",
     "string": "Disabled"
+  },
+  "+Wm2vY": {
+    "context": "discount type percentage",
+    "string": "Percentage"
   },
   "+a+2ug": {
     "string": "Members"
@@ -505,6 +513,10 @@
   "1+ROfp": {
     "string": "Transaction"
   },
+  "1/bAgt": {
+    "context": "discount type fixed",
+    "string": "Fixed"
+  },
   "1/oG76": {
     "context": "dialog header",
     "string": "Delete Sale"
@@ -569,10 +581,6 @@
   "1J/bhZ": {
     "context": "expiry date section header",
     "string": "Expiry date"
-  },
-  "1KSqnn": {
-    "context": "tab name",
-    "string": "All Product Types"
   },
   "1LBYpE": {
     "context": "dialog header",
@@ -792,10 +800,6 @@
     "context": "btn label",
     "string": "Go to GraphQL Playground"
   },
-  "2yU+q9": {
-    "context": "tab name",
-    "string": "All Warehouses"
-  },
   "2yV+s8": {
     "context": "order history message",
     "string": "Payment was captured"
@@ -815,10 +819,6 @@
   "30X9S8": {
     "context": "gift card history message",
     "string": "Gift card was issued by {issuedBy}"
-  },
-  "31hYP2": {
-    "context": "alert card message",
-    "string": "Gift cards will appear after their order is fullfilled. <link>View Orders with Gift Cards</link>"
   },
   "32dfzI": {
     "context": "price or ordered products",
@@ -864,6 +864,9 @@
   "3TlhJS": {
     "context": "navigator command mode description",
     "string": "Search Command"
+  },
+  "3UUjQv": {
+    "string": "Search page types..."
   },
   "3a5wL8": {
     "string": "Active"
@@ -1008,6 +1011,9 @@
   },
   "4LRapg": {
     "string": "Discount removed"
+  },
+  "4MIO2H": {
+    "string": "Issues found.{break}Review app alerts."
   },
   "4PlW0w": {
     "context": "tracking number",
@@ -1562,10 +1568,6 @@
   "8HRy+U": {
     "string": "Category Description"
   },
-  "8Hq18g": {
-    "context": "create gift card product type alert message",
-    "string": "Create a gift card product type"
-  },
   "8InCjD": {
     "string": "Please provide range of postal codes you want to add to the include/exclude list."
   },
@@ -1673,6 +1675,10 @@
   },
   "9FGTOt": {
     "string": "Allow access to orders of all channels"
+  },
+  "9IrVVZ": {
+    "context": "attribute can be searched in storefront",
+    "string": "Filterable in storefront"
   },
   "9MGrEp": {
     "string": "Is available"
@@ -1835,10 +1841,6 @@
   "AHK0K9": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
-  },
-  "AJgl5u": {
-    "context": "gift card product message",
-    "string": "gift card product"
   },
   "AKv2BI": {
     "context": "order refund subtitle",
@@ -2419,10 +2421,6 @@
     "context": "transaction event type, authorization amount was changed",
     "string": "Authorization amount adjusted"
   },
-  "E22x4H": {
-    "context": "no card defuned alert message",
-    "string": "You haven’t defined a gift card product!"
-  },
   "E4GW+N": {
     "context": "fully paid checkout automatically completed message",
     "string": "Order created automatically from fully paid checkout"
@@ -2446,6 +2444,10 @@
   },
   "EEW+ND": {
     "string": "Navigator"
+  },
+  "EGycu/": {
+    "context": "voucher status active",
+    "string": "Active"
   },
   "EHsnZX": {
     "context": "dialog description",
@@ -2476,6 +2478,10 @@
   "ER/yBq": {
     "context": "max price in channel",
     "string": "Max. value"
+  },
+  "ER0uUn": {
+    "context": "select all page types preset label",
+    "string": "All page types"
   },
   "ESDTC/": {
     "string": "Manage Sales Channel Availability"
@@ -2681,6 +2687,9 @@
   },
   "FZTrzW": {
     "string": "Manual refund"
+  },
+  "FaRg9/": {
+    "string": "Webhook errors detected. Last occurred at {date}. {viewDetails}."
   },
   "Fbr4Vp": {
     "context": "dialog header",
@@ -3118,15 +3127,14 @@
   "HqRNN8": {
     "string": "Support"
   },
-  "HqeqEV": {
-    "context": "create gift card product alert message",
-    "string": "Create a gift card product"
-  },
   "Hswqx2": {
     "string": "Delete discounts"
   },
   "HvJPcU": {
     "string": "Category deleted"
+  },
+  "HwHSeY": {
+    "string": "App disabled"
   },
   "I+1KzL": {
     "context": "tab name",
@@ -3730,6 +3738,10 @@
   "M59JhX": {
     "string": "Manual"
   },
+  "M61TN/": {
+    "context": "product type shippable",
+    "string": "Shippable"
+  },
   "M6mWHL": {
     "context": "tooltip helper text",
     "string": "You do not have permissions to create a manual refund."
@@ -3843,6 +3855,9 @@
   "Mmo9k2": {
     "context": "table header warehouse stock label",
     "string": "Warehouse stock"
+  },
+  "MnpUD7": {
+    "string": "View details"
   },
   "MpR4zK": {
     "context": "customer details, header",
@@ -3998,6 +4013,10 @@
   "No4lyL": {
     "context": "header field name, header",
     "string": "Name"
+  },
+  "Nqh0na": {
+    "context": "Product types search input placeholder",
+    "string": "Search product types..."
   },
   "NqxvFh": {
     "context": "navigator placeholder",
@@ -4532,10 +4551,6 @@
     "context": "info text",
     "string": "Set up an end date of preorder. When end date will be reached product will be automatically taken from preorder to standard selling"
   },
-  "RH+aOF": {
-    "context": "use attribute in filtering",
-    "string": "Use in Filtering"
-  },
   "RK6l3Z": {
     "context": "radio button label",
     "string": "Refund with manual amount"
@@ -4754,6 +4769,10 @@
     "context": "product weight",
     "string": "Weight"
   },
+  "SV0FRm": {
+    "context": "attribute is filterable in storefront",
+    "string": "Filterable in storefront"
+  },
   "SZH0fw": {
     "context": "set variant as default, button",
     "string": "Set as default"
@@ -4764,6 +4783,10 @@
   },
   "SceSNp": {
     "string": "Remove following permissions:"
+  },
+  "SgFE10": {
+    "context": "product type digital",
+    "string": "Digital"
   },
   "Sjd7wm": {
     "context": "product filter label",
@@ -4986,10 +5009,6 @@
     "context": "button",
     "string": "Save variant"
   },
-  "U9o2bV": {
-    "context": "no gift card products and types alert message",
-    "string": "{createGiftCardProductType} and {giftCardProduct} to start selling gift cards in your store."
-  },
   "UBuKZ9": {
     "context": "searchbar placeholder",
     "string": "Country"
@@ -5038,6 +5057,14 @@
   "USS3Q7": {
     "context": "filters error messages unknown error",
     "string": "Unknown error occurred"
+  },
+  "UVDfTs": {
+    "context": "discount type shipping",
+    "string": "Shipping"
+  },
+  "UYKEsx": {
+    "context": "collection filter published",
+    "string": "Published"
   },
   "Uf3oHA": {
     "context": "add new menu item",
@@ -5175,10 +5202,6 @@
     "context": "table actions",
     "string": "Actions"
   },
-  "VI+X8H": {
-    "context": "no gift card product types alert message",
-    "string": "{createGiftCardProductType} to start selling gift cards in your store."
-  },
   "VIABHy": {
     "context": "error message",
     "string": "Default shipping zone already exists"
@@ -5297,6 +5320,10 @@
   },
   "W6nwjo": {
     "string": "Draft"
+  },
+  "W75xMz": {
+    "context": "attribute is visible in storefront",
+    "string": "Visible in storefront"
   },
   "W8i2Ez": {
     "context": "product field",
@@ -5661,10 +5688,6 @@
     "context": "table column header",
     "string": "Price"
   },
-  "Y3pCRX": {
-    "context": "attribute can be searched in storefront",
-    "string": "Use as filter"
-  },
   "Y3zr/B": {
     "context": "voucher application, switch button",
     "string": "Apply only to a single cheapest eligible product"
@@ -5977,6 +6000,10 @@
   "aAAxKp": {
     "context": "table column header",
     "string": "Product"
+  },
+  "aBpkVh": {
+    "context": "gift cards docs link",
+    "string": "gift cards"
   },
   "aCJwVq": {
     "context": "warehouse",
@@ -6370,9 +6397,6 @@
     "context": "Webhook details events",
     "string": "Events"
   },
-  "caMMWN": {
-    "string": "Search Warehouse"
-  },
   "caqRmN": {
     "context": "header",
     "string": "Create Page Type"
@@ -6546,10 +6570,6 @@
   "e0lt+l": {
     "string": "See documentation"
   },
-  "e1vU/4": {
-    "context": "attribute is filterable in storefront",
-    "string": "Use as filter"
-  },
   "e4UtKH": {
     "context": "Transaction event status - failure",
     "string": "Failure"
@@ -6621,6 +6641,10 @@
   "eWrHmu": {
     "context": "onboarding step title",
     "string": "View webhooks functionalities"
+  },
+  "eaoi2W": {
+    "context": "tab name",
+    "string": "All warehouses"
   },
   "egBBQ/": {
     "context": "all captured amount from transactions in order",
@@ -6979,10 +7003,6 @@
     "context": "caption",
     "string": "If enabled, attribute will be accessible to customers."
   },
-  "h2hEKV": {
-    "context": "search gift card placeholder",
-    "string": "Search gift cards, e.g {exampleGiftCardCode}"
-  },
   "h2vipu": {
     "string": "Code"
   },
@@ -7232,6 +7252,10 @@
     "context": "header",
     "string": "App Information"
   },
+  "inWs4U": {
+    "context": "attribute visibility in storefront",
+    "string": "Visible in storefront"
+  },
   "ipbT0Q": {
     "context": "btn label",
     "string": "Mark all as done"
@@ -7246,6 +7270,10 @@
   },
   "ivJ1qt": {
     "string": "Manage your permission groups and their permissions"
+  },
+  "ivmwpV": {
+    "context": "tab name",
+    "string": "All product types"
   },
   "ixjvkM": {
     "string": "We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
@@ -7280,6 +7308,10 @@
   "j3yE7I": {
     "context": "order history message",
     "string": "Shipping tracking number was sent to customer"
+  },
+  "j5hGyJ": {
+    "context": "attribute is filterable in dashboard",
+    "string": "Filterable in dashboard"
   },
   "j8PV7E": {
     "context": "attribute values",
@@ -7330,6 +7362,10 @@
     "context": "product availability",
     "string": "Hide in product listings"
   },
+  "jY80Gs": {
+    "context": "search gift card placeholder",
+    "string": "Search by code, e.g {exampleGiftCardCode}"
+  },
   "ja+tNj": {
     "string": "requests access to new permissions."
   },
@@ -7349,10 +7385,6 @@
   },
   "jmZSK1": {
     "string": "Product is not available in selected channels"
-  },
-  "jmh0rV": {
-    "context": "no gift card products alert message",
-    "string": "{createGiftCardProduct} to start selling gift cards in your store."
   },
   "jqJqdE": {
     "context": "VariantDetailsChannelsAvailabilityCard no items available",
@@ -7387,6 +7419,10 @@
     "context": "refunded fulfillment, section header",
     "string": "Replaced"
   },
+  "jzu97k": {
+    "context": "attribute product type",
+    "string": "Product type"
+  },
   "k+HcTv": {
     "context": "product type",
     "string": "Type"
@@ -7415,10 +7451,6 @@
   "k62BKw": {
     "context": "select label",
     "string": "Unset"
-  },
-  "k6WDZl": {
-    "context": "attribute is visible",
-    "string": "Visible"
   },
   "k6sfZr": {
     "context": "tooltip content when product is in preorder",
@@ -7918,6 +7950,10 @@
     "context": "expiration date label",
     "string": "Expiration date"
   },
+  "nG1+Cz": {
+    "context": "staff members status active",
+    "string": "Active"
+  },
   "nHmugP": {
     "context": "order history message",
     "string": "Fulfilled {quantity} items"
@@ -8080,6 +8116,9 @@
     "context": "order status",
     "string": "Unfulfilled"
   },
+  "oCrEdS": {
+    "string": "Activate the app from the settings. {viewDetails}."
+  },
   "oHbgcK": {
     "context": "PageTypeDeleteWarningDialog title",
     "string": "Delete page {selectedTypesCount,plural,one{type} other{types}}"
@@ -8109,15 +8148,15 @@
     "context": "header",
     "string": "Translation Page \"{pageName}\" - {languageCode}"
   },
-  "oVDZUb": {
-    "context": "tab name",
-    "string": "All Page Types"
-  },
   "oX2TAb": {
     "string": "Select gifts"
   },
   "oYGfnY": {
     "string": "ZIP / Postal code"
+  },
+  "oYV+Ru": {
+    "context": "staff members status deactivated",
+    "string": "Inactive"
   },
   "oboeOT": {
     "string": "Add following permissions"
@@ -8380,8 +8419,16 @@
   "qPSWmL": {
     "string": "Enter usage"
   },
+  "qQih8j": {
+    "context": "voucher status scheduled",
+    "string": "Scheduled"
+  },
   "qSCmIG": {
     "string": "lower than {value}"
+  },
+  "qT0qr/": {
+    "context": "attribute page type",
+    "string": "Page type"
   },
   "qT6YYk": {
     "context": "order line total price",
@@ -8545,9 +8592,6 @@
     "context": "expires in label",
     "string": "Expires in"
   },
-  "rpFdD1": {
-    "string": "Search Product Type"
-  },
   "rqiCWU": {
     "string": "Saved changes"
   },
@@ -8634,6 +8678,10 @@
   "sK1FPw": {
     "context": "categories section name",
     "string": "Categories"
+  },
+  "sOlOZB": {
+    "context": "gift cards page subheader",
+    "string": "Learn more about {giftCards}"
   },
   "sR0urA": {
     "context": "dialog content",
@@ -8740,6 +8788,9 @@
   "t7UwLY": {
     "context": "voucher status",
     "string": "Expired"
+  },
+  "t9sWqJ": {
+    "string": "Issues found"
   },
   "tA5HJx": {
     "context": "webhook input help text",
@@ -8961,6 +9012,10 @@
   "ufD5Jr": {
     "string": "Content type"
   },
+  "ufahVh": {
+    "context": "collection filter hidden",
+    "string": "Hidden"
+  },
   "ufmuTp": {
     "context": "button",
     "string": "Delete"
@@ -8986,9 +9041,6 @@
   },
   "ulh3kf": {
     "string": "Collections"
-  },
-  "umsU70": {
-    "string": "Search Page Type"
   },
   "un+VWt": {
     "string": "Search products"
@@ -9375,10 +9427,6 @@
     "context": "ProductTypeDeleteWarningDialog title",
     "string": "Delete product {selectedTypesCount,plural,one{type} other{types}}"
   },
-  "x8V/xS": {
-    "context": "attribute visibility in storefront",
-    "string": "Public"
-  },
   "xAHOGV": {
     "context": "dialog header",
     "string": "Assign Variant"
@@ -9540,10 +9588,6 @@
   "yJynYK": {
     "context": "discount value",
     "string": "discount"
-  },
-  "yKuba7": {
-    "context": "attribute can be searched in dashboard",
-    "string": "Searchable"
   },
   "yLfbSh": {
     "context": "support label",
