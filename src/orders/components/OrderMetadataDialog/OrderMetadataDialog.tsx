@@ -10,7 +10,7 @@ import { flattenErrors } from "@dashboard/utils/hook-form/errors";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { Box, Button, Divider, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
 import { TEST_ID_ORDER_LINE_METADATA, TEST_ID_PRODUCT_VARIANT_METADATA } from "./test-ids";
@@ -43,10 +43,10 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
     values: loading
       ? lastSubmittedData
       : {
-          // Removes __typename from metadata item object
-          metadata: (data?.metadata ?? []).map(mapMetadataItemToInput),
-          privateMetadata: (data?.privateMetadata ?? [])?.map(mapMetadataItemToInput),
-        },
+        // Removes __typename from metadata item object
+        metadata: (data?.metadata ?? []).map(mapMetadataItemToInput),
+        privateMetadata: (data?.privateMetadata ?? [])?.map(mapMetadataItemToInput),
+      },
   });
 
   const { handleSubmit, control, getValues, formState, trigger } = formMethods;
@@ -64,93 +64,91 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
         </DashboardModal.Header>
 
         <Box as="form" onSubmit={handleSubmit(onSubmit)}>
-          <FormProvider {...formMethods}>
-            <Box display="flex" flexDirection="column" gap={5}>
-              <Box display="flex" flexDirection="column" data-test-id={TEST_ID_ORDER_LINE_METADATA}>
-                <Box display="flex" flexDirection="column" marginLeft={6} gap={2}>
-                  <Text as="h2" size={5} fontWeight="bold">
-                    <FormattedMessage
-                      defaultMessage="Order line metadata"
-                      description="modal header, editing order line metadata"
-                      id="ui7jMt"
-                    />
-                  </Text>
-                  <Text>
-                    <FormattedMessage
-                      defaultMessage="Represents the metadata of the given ordered item"
-                      description="modal subheader, editing order line metadata"
-                      id="y+CqSF"
-                    />
-                  </Text>
-                </Box>
-
-                <MetadataHookForm
-                  isLoading={loading && !data}
-                  disabled={loading || formState.isSubmitting}
-                  control={control}
-                  getValues={getValues}
-                  trigger={trigger}
-                />
-
-                {allFormErrors.length > 0 && (
-                  <Text color="critical1" marginLeft={6} marginTop={4}>
-                    {allFormErrors.join(", ")}
-                  </Text>
-                )}
+          <Box display="flex" flexDirection="column" gap={5}>
+            <Box display="flex" flexDirection="column" data-test-id={TEST_ID_ORDER_LINE_METADATA}>
+              <Box display="flex" flexDirection="column" marginLeft={6} gap={2}>
+                <Text as="h2" size={5} fontWeight="bold">
+                  <FormattedMessage
+                    defaultMessage="Order line metadata"
+                    description="modal header, editing order line metadata"
+                    id="ui7jMt"
+                  />
+                </Text>
+                <Text>
+                  <FormattedMessage
+                    defaultMessage="Represents the metadata of the given ordered item"
+                    description="modal subheader, editing order line metadata"
+                    id="y+CqSF"
+                  />
+                </Text>
               </Box>
 
-              <Divider />
+              <MetadataHookForm
+                isLoading={loading && !data}
+                disabled={loading || formState.isSubmitting}
+                control={control}
+                getValues={getValues}
+                trigger={trigger}
+              />
 
-              <Box
-                display="flex"
-                flexDirection="column"
-                data-test-id={TEST_ID_PRODUCT_VARIANT_METADATA}
-              >
-                <Box display="flex" flexDirection="column" marginLeft={6} gap={2}>
-                  <Text as="h2" size={5} fontWeight="bold">
-                    <FormattedMessage
-                      defaultMessage="Product variant metadata"
-                      description="modal header, read-only product variant metadata"
-                      id="PH4R7g"
-                    />
-                  </Text>
-                  <Text>
-                    <FormattedMessage
-                      defaultMessage="This is a metadata of the variant that is being used in this ordered item"
-                      description="modal subheader, read-only product variant metadata"
-                      id="/mwSjm"
-                    />
-                  </Text>
-                </Box>
-
-                <Metadata
-                  readonly={true}
-                  onChange={() => undefined}
-                  isLoading={loading && !data}
-                  data={{
-                    metadata: data?.variant?.metadata ?? [],
-                    privateMetadata: data?.variant?.privateMetadata ?? [],
-                  }}
-                  hidePrivateMetadata={!hasManageProducts}
-                  paddingBottom={0}
-                />
-              </Box>
+              {allFormErrors.length > 0 && (
+                <Text color="critical1" marginLeft={6} marginTop={4}>
+                  {allFormErrors.join(", ")}
+                </Text>
+              )}
             </Box>
-            <DashboardModal.Actions paddingX={6} marginTop={4}>
-              <ButtonWithLoader
-                transitionState={saveButtonState}
-                data-test-id="save"
-                variant={allFormErrors.length === 0 ? "primary" : "error"}
-                type="submit"
-                disabled={!formState.isDirty}
-              >
-                <FormattedMessage {...buttonMessages.save} />
-              </ButtonWithLoader>
-              <Button data-test-id="back" variant="secondary" onClick={onClose}>
-                <FormattedMessage {...buttonMessages.close} />
-              </Button>
-            </DashboardModal.Actions>
-          </FormProvider>
+
+            <Divider />
+
+            <Box
+              display="flex"
+              flexDirection="column"
+              data-test-id={TEST_ID_PRODUCT_VARIANT_METADATA}
+            >
+              <Box display="flex" flexDirection="column" marginLeft={6} gap={2}>
+                <Text as="h2" size={5} fontWeight="bold">
+                  <FormattedMessage
+                    defaultMessage="Product variant metadata"
+                    description="modal header, read-only product variant metadata"
+                    id="PH4R7g"
+                  />
+                </Text>
+                <Text>
+                  <FormattedMessage
+                    defaultMessage="This is a metadata of the variant that is being used in this ordered item"
+                    description="modal subheader, read-only product variant metadata"
+                    id="/mwSjm"
+                  />
+                </Text>
+              </Box>
+
+              <Metadata
+                readonly={true}
+                onChange={() => undefined}
+                isLoading={loading && !data}
+                data={{
+                  metadata: data?.variant?.metadata ?? [],
+                  privateMetadata: data?.variant?.privateMetadata ?? [],
+                }}
+                hidePrivateMetadata={!hasManageProducts}
+                paddingBottom={0}
+              />
+            </Box>
+          </Box>
+          <DashboardModal.Actions paddingX={6} marginTop={4}>
+            <ButtonWithLoader
+              transitionState={saveButtonState}
+              data-test-id="save"
+              variant={allFormErrors.length === 0 ? "primary" : "error"}
+              type="submit"
+              disabled={!formState.isDirty}
+            >
+              <FormattedMessage {...buttonMessages.save} />
+            </ButtonWithLoader>
+            <Button data-test-id="back" variant="secondary" onClick={onClose}>
+              <FormattedMessage {...buttonMessages.close} />
+            </Button>
+          </DashboardModal.Actions>
         </Box>
       </DashboardModal.Content>
     </DashboardModal>
