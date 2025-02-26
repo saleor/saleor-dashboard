@@ -6,7 +6,7 @@ type Timeout = ReturnType<typeof setTimeout>;
 export const useIntervalActionWithState = (action: () => void, interval = 5_000, key: string) => {
   const savedAction = useRef(action);
   const timeout = useRef<Timeout | null>(null);
-  const [lastInvocation, setLastInvocation] = useLocalStorage(key, new Date(Date.now()).getTime());
+  const [lastInvocation, setLastInvocation] = useLocalStorage(key, new Date().getTime());
 
   useEffect(() => {
     const cleanup = () => {
