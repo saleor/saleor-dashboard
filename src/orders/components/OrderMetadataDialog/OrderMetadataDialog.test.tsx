@@ -1,4 +1,3 @@
-import { MockedProvider } from "@apollo/client/testing";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import React from "react";
@@ -12,6 +11,13 @@ jest.mock("react-intl", () => ({
   defineMessages: (messages: Record<string, MessageDescriptor>) => messages,
   useIntl: (): Pick<IntlShape, "formatMessage"> => ({
     formatMessage: ({ defaultMessage }: MessageDescriptor) => defaultMessage || "",
+  }),
+}));
+
+jest.mock("./useHandleSubmit", () => ({
+  useHandleOrderLineMetadataSubmit: () => ({
+    onSubmit: jest.fn(),
+    lastSubmittedData: undefined,
   }),
 }));
 
@@ -47,22 +53,14 @@ describe("OrderMetadataDialog", () => {
   });
 
   it("closes when user hits close icon button", () => {
-    render(
-      <MockedProvider>
-        <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
-      </MockedProvider>,
-    );
+    render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
 
     fireEvent.click(screen.getByTestId("close-button"));
     expect(onCloseMock).toHaveBeenCalled();
   });
 
   it("closes when user hits close text button", () => {
-    render(
-      <MockedProvider>
-        <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
-      </MockedProvider>,
-    );
+    render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
 
     fireEvent.click(screen.getByTestId("back"));
     expect(onCloseMock).toHaveBeenCalled();
@@ -70,11 +68,7 @@ describe("OrderMetadataDialog", () => {
 
   describe("ProductVariant metadata list", () => {
     it("displays product variant metadata", async () => {
-      render(
-        <MockedProvider>
-          <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
-        </MockedProvider>,
-      );
+      render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
 
       expect(screen.getByText("Product variant metadata")).toBeInTheDocument();
 
@@ -95,11 +89,7 @@ describe("OrderMetadataDialog", () => {
     it("hides privateMetadata from product variant when user doesn't have MANAGE_PRODUCTS permission", () => {
       (useHasManageProductsPermission as jest.Mock).mockReturnValue(false);
 
-      render(
-        <MockedProvider>
-          <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
-        </MockedProvider>,
-      );
+      render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
 
       // Private metadata should not be visible in the readonly section
       const metadataEditors = screen.getAllByTestId("metadata-editor");
@@ -112,11 +102,7 @@ describe("OrderMetadataDialog", () => {
 
   describe("OrderLine metadata form", () => {
     it("displays order line metadata", async () => {
-      render(
-        <MockedProvider>
-          <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
-        </MockedProvider>,
-      );
+      render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
 
       const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
       const expandButtonOrderLineMetadata = within(orderLineMetadata).getAllByTestId("expand")[0];
@@ -140,11 +126,7 @@ describe("OrderMetadataDialog", () => {
 
   describe("OrderLine privateMetadata form", () => {
     it("displays order line private metadata", () => {
-      render(
-        <MockedProvider>
-          <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
-        </MockedProvider>,
-      );
+      render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
 
       const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
       const expandButtonOrderLinePrivateMetadata =
