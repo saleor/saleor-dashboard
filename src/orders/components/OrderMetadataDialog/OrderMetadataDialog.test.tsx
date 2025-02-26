@@ -25,7 +25,7 @@ jest.mock("@dashboard/orders/hooks/useHasManageProductsPermission", () => ({
   useHasManageProductsPermission: jest.fn(() => false),
 }));
 
-const mockData: OrderMetadataDialogData = {
+const mockData = {
   id: "order-line-id",
   productName: "Product Name",
   metadata: [{ key: "order-line-key", value: "order-line-value", __typename: "MetadataItem" }],
@@ -52,7 +52,7 @@ const mockData: OrderMetadataDialogData = {
     __typename: "ProductVariant",
   },
   __typename: "OrderLine",
-};
+} satisfies OrderMetadataDialogData;
 
 jest.mock("./useMetadataValues", () => ({
   useMetadataValues: () => ({
