@@ -1,7 +1,6 @@
 const { Command } = require("commander");
 const program = new Command();
 const core = require("@actions/core");
-const { Octokit } = require("@octokit/core");
 
 program
   .name("Send tests results")

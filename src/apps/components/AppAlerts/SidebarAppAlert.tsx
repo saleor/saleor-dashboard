@@ -8,16 +8,16 @@ import { AlertExclamationIcon } from "./AlertExclamationIcon";
 import { useAppsAlert } from "./useAppsAlert";
 
 export const SidebarAppAlert = () => {
-  const { hasFailedAttempts } = useAppsAlert();
+  const { hasNewFailedAttempts } = useAppsAlert();
 
-  if (!hasFailedAttempts) {
+  if (!hasNewFailedAttempts) {
     return null;
   }
 
   return (
     <Tooltip>
       <Tooltip.Trigger>
-        <Link to={AppSections.appsSection}>
+        <Link to={AppSections.appsSection} data-test-id="sidebar-app-alert-trigger">
           <AlertExclamationIcon />
         </Link>
       </Tooltip.Trigger>
