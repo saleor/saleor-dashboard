@@ -128,7 +128,14 @@ describe("useAppsFailedDeliveries", () => {
                           {
                             node: {
                               attempts: {
-                                edges: [{ node: { status: "FAILED" } }],
+                                edges: [
+                                  {
+                                    node: {
+                                      status: "FAILED",
+                                      createdAt: "2023-01-19T09:50:43.343Z",
+                                    },
+                                  },
+                                ],
                               },
                             },
                           },
@@ -181,7 +188,14 @@ describe("useAppsFailedDeliveries", () => {
                           {
                             node: {
                               attempts: {
-                                edges: [{ node: { status: "FAILED" } }],
+                                edges: [
+                                  {
+                                    node: {
+                                      status: "FAILED",
+                                      createdAt: "2023-01-19T09:50:43.343Z",
+                                    },
+                                  },
+                                ],
                               },
                             },
                           },
@@ -226,7 +240,14 @@ describe("useAppsFailedDeliveries", () => {
                           {
                             node: {
                               attempts: {
-                                edges: [{ node: { status: "FAILED" } }],
+                                edges: [
+                                  {
+                                    node: {
+                                      status: "FAILED",
+                                      createdAt: "2023-01-19T09:50:43.343Z",
+                                    },
+                                  },
+                                ],
                               },
                             },
                           },
@@ -250,5 +271,178 @@ describe("useAppsFailedDeliveries", () => {
     // Assert
     expect(fetchingFunction).toHaveBeenCalled();
     expect(result.current.hasFailed).toEqual(true);
+  });
+
+  it("should return null for lastFailedWebhookDate when there are no webhooks", () => {
+    // Arrange
+    (useHasManagedAppsPermission as jest.Mock).mockReturnValue(hasPermissions);
+    (useAppFailedPendingWebhooksLazyQuery as jest.Mock).mockReturnValue([
+      fetchingFunction,
+      {
+        data: {
+          apps: {
+            edges: [
+              {
+                node: {
+                  webhooks: [],
+                },
+              },
+            ],
+          },
+        },
+      },
+    ]);
+
+    // Act
+    const { result } = renderHook(() => useAppsFailedDeliveries());
+
+    result.current.fetchAppsWebhooks();
+
+    // Assert
+    expect(result.current.lastFailedWebhookDate).toBeNull();
+  });
+
+  it("should return the latest failed webhook date", () => {
+    // Arrange
+    (useHasManagedAppsPermission as jest.Mock).mockReturnValue(hasPermissions);
+    (useAppFailedPendingWebhooksLazyQuery as jest.Mock).mockReturnValue([
+      fetchingFunction,
+      {
+        data: {
+          apps: {
+            edges: [
+              {
+                node: {
+                  webhooks: [
+                    {
+                      failedDelivers: { edges: [1] },
+                      pendingDelivers: {
+                        edges: [
+                          {
+                            node: {
+                              attempts: {
+                                edges: [
+                                  {
+                                    node: {
+                                      status: "FAILED",
+                                      createdAt: "2023-01-19T09:50:43.343Z",
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      failedDelivers: { edges: [2] },
+                      pendingDelivers: {
+                        edges: [
+                          {
+                            node: {
+                              attempts: {
+                                edges: [
+                                  {
+                                    node: {
+                                      status: "FAILED",
+                                      createdAt: "2023-01-20T09:50:43.343Z",
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      },
+    ]);
+
+    // Act
+    const { result } = renderHook(() => useAppsFailedDeliveries());
+
+    result.current.fetchAppsWebhooks();
+
+    // Assert
+    expect(result.current.lastFailedWebhookDate?.toISOString()).toEqual("2023-01-20T09:50:43.343Z");
+  });
+
+  it("should return the latest failed webhook date when some webhooks have no failed deliveries", () => {
+    // Arrange
+    (useHasManagedAppsPermission as jest.Mock).mockReturnValue(hasPermissions);
+    (useAppFailedPendingWebhooksLazyQuery as jest.Mock).mockReturnValue([
+      fetchingFunction,
+      {
+        data: {
+          apps: {
+            edges: [
+              {
+                node: {
+                  webhooks: [
+                    {
+                      failedDelivers: { edges: [] },
+                      pendingDelivers: {
+                        edges: [
+                          {
+                            node: {
+                              attempts: {
+                                edges: [
+                                  {
+                                    node: {
+                                      status: "FAILED",
+                                      createdAt: "2023-01-19T09:50:43.343Z",
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      failedDelivers: { edges: [2] },
+                      pendingDelivers: {
+                        edges: [
+                          {
+                            node: {
+                              attempts: {
+                                edges: [
+                                  {
+                                    node: {
+                                      status: "FAILED",
+                                      createdAt: "2023-01-20T09:50:43.343Z",
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      },
+    ]);
+
+    // Act
+    const { result } = renderHook(() => useAppsFailedDeliveries());
+
+    result.current.fetchAppsWebhooks();
+
+    // Assert
+    expect(result.current.lastFailedWebhookDate?.toISOString()).toEqual("2023-01-20T09:50:43.343Z");
   });
 });

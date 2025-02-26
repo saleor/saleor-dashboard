@@ -4,7 +4,7 @@ import { InstalledApp } from "@dashboard/apps/types";
 import { getAppsConfig } from "@dashboard/config";
 import { useFlag } from "@dashboard/featureFlags";
 import Wrapper from "@test/wrapper";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import { MemoryRouter as Router } from "react-router-dom";
 
@@ -80,7 +80,7 @@ describe("Apps InstalledAppListRow", () => {
     // Assert
     expect(externalLabel).toBeTruthy();
   });
-  it("displays tunnnel label when app is served via tunnnel", () => {
+  it("displays tunnel label when app is served via tunnel", () => {
     // Arrange
     const removeAppInstallation = jest.fn();
     const retryAppInstallation = jest.fn();
@@ -108,7 +108,7 @@ describe("Apps InstalledAppListRow", () => {
     // Assert
     expect(tunnelLabel).toBeTruthy();
   });
-  it("displays a warning dot when app has issues", async () => {
+  it("displays a warning dot when app has issues, TC_ID: D_INT_02", async () => {
     // Arrange
     const removeAppInstallation = jest.fn();
     const retryAppInstallation = jest.fn();
@@ -127,9 +127,11 @@ describe("Apps InstalledAppListRow", () => {
       />,
     );
 
-    // Assert
-    const warningDot = screen.getByTestId("app-warning-dot");
+    fireEvent.focus(screen.getByTestId("app-warning-dot"));
 
-    expect(warningDot).toBeInTheDocument();
+    // Assert
+    expect(screen.queryAllByRole("link").at(-1)?.getAttribute("href")).toBe(
+      `/apps/${appWithFailedEventDeliveries.id}`,
+    );
   });
 });
