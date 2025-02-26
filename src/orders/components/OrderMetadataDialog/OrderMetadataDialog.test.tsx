@@ -116,6 +116,24 @@ describe("OrderMetadataDialog", () => {
     expect(screen.queryByText(mockData.productSku)).toBeInTheDocument();
   });
 
+  it("renders product thumbnail correctly", () => {
+    render(
+      <MockedProvider>
+        <OrderMetadataDialog
+          open={true}
+          onClose={onCloseMock}
+          orderId="order-id"
+          lineId={mockData.id}
+        />
+      </MockedProvider>,
+    );
+
+    const thumbnailImage = screen.getByRole("img");
+
+    expect(thumbnailImage).toBeInTheDocument();
+    expect(thumbnailImage).toHaveAttribute("src", mockData.thumbnail.url);
+  });
+
   describe("ProductVariant metadata list", () => {
     it("displays product variant metadata", async () => {
       render(
