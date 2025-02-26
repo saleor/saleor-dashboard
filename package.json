@@ -36,6 +36,8 @@
     "@material-ui/icons": "^4.11.3",
     "@material-ui/lab": "^4.0.0-alpha.61",
     "@material-ui/styles": "^4.11.4",
+    "@radix-ui/react-portal": "^1.1.4",
+    "@radix-ui/react-radio-group": "^1.2.3",
     "@reach/auto-id": "^0.16.0",
     "@saleor/macaw-ui": "npm:@saleor/macaw-ui@0.7.4",
     "@saleor/macaw-ui-next": "npm:@saleor/macaw-ui@1.1.15",
@@ -234,7 +236,9 @@
       "^@material-ui/styles$": "<rootDir>/node_modules/@material-ui/styles",
       "^react$": "<rootDir>/node_modules/react",
       "^react-dom$": "<rootDir>/node_modules/react-dom",
-      "collectCoverageFrom": ["<rootDir>/src/**/*.{ts,tsx}"]
+      "collectCoverageFrom": [
+        "<rootDir>/src/**/*.{ts,tsx}"
+      ]
     }
   },
   "overrides": {
