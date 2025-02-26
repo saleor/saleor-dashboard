@@ -1,4 +1,5 @@
 import { SidebarAppAlert } from "@dashboard/apps/components/AppAlerts/SidebarAppAlert";
+import { useSidebarDotState } from "@dashboard/apps/components/AppAlerts/useSidebarDotState";
 import { extensionMountPoints, useExtensions } from "@dashboard/apps/hooks/useExtensions";
 import { AppPaths } from "@dashboard/apps/urls";
 import { useUser } from "@dashboard/auth";
@@ -34,6 +35,7 @@ import { SidebarMenuItem } from "../types";
 import { mapToExtensionsItems } from "../utils";
 
 export function useMenuStructure() {
+  const { handleAppsListItemClick } = useSidebarDotState();
   const { enabled: hasAppAlertsFeatureFlag } = useFlag("app_alerts");
 
   const extensions = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);
@@ -53,6 +55,7 @@ export function useMenuStructure() {
     url: AppPaths.appListPath,
     type: "item",
     endAdornment: hasAppAlertsFeatureFlag ? <SidebarAppAlert /> : null,
+    onClick: () => handleAppsListItemClick(new Date().toISOString()),
   });
   const menuItems: SidebarMenuItem[] = [
     {

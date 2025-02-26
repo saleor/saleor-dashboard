@@ -39,6 +39,7 @@ export const link = attachVariablesLink.concat(
 );
 
 export const apolloClient = new ApolloClient({
+  connectToDevTools: process.env.NODE_ENV === "development",
   cache: new InMemoryCache({
     possibleTypes: introspectionQueryResultData.possibleTypes,
     typePolicies: {

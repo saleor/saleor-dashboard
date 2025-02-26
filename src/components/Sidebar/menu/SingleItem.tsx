@@ -19,6 +19,10 @@ export const SingleItem: React.FC<Props> = ({ menuItem }) => {
     if (extension) {
       extension.open();
     }
+
+    if (menuItem.onClick) {
+      menuItem.onClick();
+    }
   };
 
   return (
