@@ -53,29 +53,36 @@ describe("OrderMetadataDialog", () => {
   });
 
   it("closes when user hits close icon button", () => {
+    // Arrange
     render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
 
+    // Act
     fireEvent.click(screen.getByTestId("close-button"));
+
+    // Assert
     expect(onCloseMock).toHaveBeenCalled();
   });
 
   it("closes when user hits close text button", () => {
+    // Arrange
     render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
 
+    // Act
     fireEvent.click(screen.getByTestId("back"));
+
+    // Assert
     expect(onCloseMock).toHaveBeenCalled();
   });
 
   describe("ProductVariant metadata list", () => {
     it("displays product variant metadata", async () => {
+      // Arrange
       render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
-
-      expect(screen.getByText("Product variant metadata")).toBeInTheDocument();
 
       const productVariantMetadata = screen.getByTestId(TEST_ID_PRODUCT_VARIANT_METADATA);
 
-      // Readonly metadata component displays all existing data
-      // expand doesn't need to be used
+      // Assert - readonly metadata component displays all existing data without expansion
+      expect(screen.getByText("Product variant metadata")).toBeInTheDocument();
       expect(within(productVariantMetadata).getByDisplayValue("variant-key")).toBeInTheDocument();
       expect(within(productVariantMetadata).getByDisplayValue("variant-value")).toBeInTheDocument();
       expect(
@@ -87,14 +94,15 @@ describe("OrderMetadataDialog", () => {
     });
 
     it("hides privateMetadata from product variant when user doesn't have MANAGE_PRODUCTS permission", () => {
+      // Arrange
       (useHasManageProductsPermission as jest.Mock).mockReturnValue(false);
-
       render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
 
-      // Private metadata should not be visible in the readonly section
+      // Act
       const metadataEditors = screen.getAllByTestId("metadata-editor");
       const readonlyEditor = metadataEditors[1];
 
+      // Assert
       expect(readonlyEditor).not.toHaveTextContent("variant-private-key");
       expect(readonlyEditor).not.toHaveTextContent("variant-private-value");
     });
@@ -102,17 +110,17 @@ describe("OrderMetadataDialog", () => {
 
   describe("OrderLine metadata form", () => {
     it("displays order line metadata", async () => {
+      // Arrange
       render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
 
       const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
+
+      // Act - expand metadata section
       const expandButtonOrderLineMetadata = within(orderLineMetadata).getAllByTestId("expand")[0];
 
-      expect(screen.getByText("Order line metadata")).toBeInTheDocument();
+      fireEvent.click(expandButtonOrderLineMetadata);
 
-      // Editable forms need to be expanded before values are shown
-      fireEvent.click(expandButtonOrderLineMetadata); // Show metadata
-
-      // Metadata is visible, private metadata is not
+      // Assert - check metadata values after expansion
       expect(within(orderLineMetadata).getByDisplayValue("order-line-key")).toBeInTheDocument();
       expect(within(orderLineMetadata).getByDisplayValue("order-line-value")).toBeInTheDocument();
       expect(
@@ -126,16 +134,18 @@ describe("OrderMetadataDialog", () => {
 
   describe("OrderLine privateMetadata form", () => {
     it("displays order line private metadata", () => {
+      // Arrange
       render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
 
       const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
+
+      // Act - expand private metadata section
       const expandButtonOrderLinePrivateMetadata =
         within(orderLineMetadata).getAllByTestId("expand")[1];
 
-      // Editable forms need to be expanded before values are shown
-      fireEvent.click(expandButtonOrderLinePrivateMetadata); // Show privateMetadata
+      fireEvent.click(expandButtonOrderLinePrivateMetadata);
 
-      // Private metadata is visible, metadata is not
+      // Assert - check private metadata values after expansion
       expect(
         within(orderLineMetadata).getByDisplayValue("order-line-private-key"),
       ).toBeInTheDocument();

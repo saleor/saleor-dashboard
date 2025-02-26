@@ -13,6 +13,7 @@ jest.mock("react-intl", () => ({
 }));
 describe("useMetadataFormControls", () => {
   it("returns form values from hook form to be used in form", () => {
+    // Arrange
     const formMethods = renderHook(() =>
       useForm<MetadataFormData>({
         values: {
@@ -22,6 +23,7 @@ describe("useMetadataFormControls", () => {
       }),
     );
 
+    // Act
     const { result } = renderHook(() =>
       useMetadataFormControls({
         control: formMethods.result.current.control,
@@ -30,6 +32,7 @@ describe("useMetadataFormControls", () => {
       }),
     );
 
+    // Assert
     expect(result.current.metadataFields).toEqual([
       {
         key: "key",
@@ -47,6 +50,7 @@ describe("useMetadataFormControls", () => {
   });
 
   it("handles update action for metadata and privateMetadata keys", () => {
+    // Arrange
     const formMethods = renderHook(() =>
       useForm<MetadataFormData>({
         values: {
@@ -78,11 +82,13 @@ describe("useMetadataFormControls", () => {
       },
     };
 
+    // Act
     act(() => {
       result.current.handleMetadataChange(metadataEvent);
       result.current.handlePrivateMetadataChange(privateMetadataEvent);
     });
 
+    // Assert
     expect(formMethods.result.current.getValues("metadata.0")).toEqual({
       key: "new-key",
       value: "test-value",
@@ -94,6 +100,7 @@ describe("useMetadataFormControls", () => {
   });
 
   it("handles update action for metadata and privateMetadata values", () => {
+    // Arrange
     const formMethods = renderHook(() =>
       useForm<MetadataFormData>({
         values: {
@@ -125,11 +132,13 @@ describe("useMetadataFormControls", () => {
       },
     };
 
+    // Act
     act(() => {
       result.current.handleMetadataChange(metadataEvent);
       result.current.handlePrivateMetadataChange(privateMetadataEvent);
     });
 
+    // Assert
     expect(formMethods.result.current.getValues("metadata.0")).toEqual({
       key: "test-key",
       value: "new-value",
@@ -141,6 +150,7 @@ describe("useMetadataFormControls", () => {
   });
 
   it("handles add action for metadata and privateMetadata", () => {
+    // Arrange
     const formMethods = renderHook(() =>
       useForm<MetadataFormData>({
         values: {
@@ -165,11 +175,13 @@ describe("useMetadataFormControls", () => {
       },
     };
 
+    // Act
     act(() => {
       result.current.handleMetadataChange(event);
       result.current.handlePrivateMetadataChange(event);
     });
 
+    // Assert
     expect(formMethods.result.current.getValues("metadata")).toEqual([
       {
         key: "",
@@ -185,6 +197,7 @@ describe("useMetadataFormControls", () => {
   });
 
   it("handles delete action for metadata and privateMetadata", () => {
+    // Arrange
     const formMethods = renderHook(() =>
       useForm<MetadataFormData>({
         values: {
@@ -209,16 +222,19 @@ describe("useMetadataFormControls", () => {
       },
     };
 
+    // Act
     act(() => {
       result.current.handleMetadataChange(event);
       result.current.handlePrivateMetadataChange(event);
     });
 
+    // Assert
     expect(formMethods.result.current.getValues("metadata")).toEqual([]);
     expect(formMethods.result.current.getValues("privateMetadata")).toEqual([]);
   });
 
   it("validates and rejects duplicate keys in both metadata and privateMetadata", async () => {
+    // Arrange
     const { result: reactHookForm } = renderHook(() =>
       useForm<MetadataFormData>({
         values: {
@@ -257,6 +273,7 @@ describe("useMetadataFormControls", () => {
       },
     };
 
+    // Act
     await act(async () => {
       // Add
       metadataFormControls.current.handleMetadataChange(eventAdd);
@@ -267,6 +284,7 @@ describe("useMetadataFormControls", () => {
       metadataFormControls.current.handlePrivateMetadataChange(privateMetadataUpdate);
     });
 
+    // Assert
     expect(reactHookForm.current.formState.errors.metadata).toMatchObject({
       root: {
         type: "validate",
@@ -282,6 +300,7 @@ describe("useMetadataFormControls", () => {
   });
 
   it("validates and rejects empty keys in both metadata and privateMetadata", async () => {
+    // Arrange
     const { result: reactHookForm } = renderHook(() =>
       useForm<MetadataFormData>({
         values: {
@@ -308,12 +327,13 @@ describe("useMetadataFormControls", () => {
       },
     };
 
+    // Act
     await act(async () => {
-      // Add
       metadataFormControls.current.handleMetadataChange(eventAdd);
       metadataFormControls.current.handlePrivateMetadataChange(eventAdd);
     });
 
+    // Assert
     expect(reactHookForm.current.formState.errors.metadata).toMatchObject({
       root: {
         type: "validate",

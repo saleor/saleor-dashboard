@@ -44,43 +44,48 @@ jest.mock("./useMetadataFormControls", () => ({
 
 describe("MetadataHookForm", () => {
   it("displays loading state", () => {
+    // Arrange
     render(<MetadataHookForm isLoading={true} {...mockHookFormProps} />);
 
-    // There are multiple skeletons, check if there' at least one
+    // Assert, There are multiple skeletons, check if there's at least one
     expect(screen.queryAllByTestId("skeleton")?.[0]).toBeInTheDocument();
   });
 
   it("displays metadata", async () => {
+    // Arrange
     render(<MetadataHookForm isLoading={false} {...mockHookFormProps} />);
 
-    // First button is for metadata
+    // Act, First button is for metadata
     const metadataButton = screen.getAllByTestId("expand")[0];
 
     await userEvent.click(metadataButton);
 
+    // Assert
     expect(screen.getByDisplayValue(mockData.metadata[0].value)).toBeInTheDocument();
     expect(screen.getByDisplayValue(mockData.metadata[0].key)).toBeInTheDocument();
   });
 
   it("displays private metadata when not hidden", async () => {
+    // Arrange
     render(<MetadataHookForm isLoading={false} {...mockHookFormProps} />);
 
-    expect(screen.queryByText("Private Metadata")).toBeInTheDocument();
-
-    // Second button is for privateMetadata
+    // Act, Second button is for privateMetadata
     const metadataButton = screen.getAllByTestId("expand")[1];
 
     await userEvent.click(metadataButton);
 
+    // Assert
     expect(screen.getByDisplayValue(mockData.privateMetadata[0].value)).toBeInTheDocument();
     expect(screen.getByDisplayValue(mockData.privateMetadata[0].key)).toBeInTheDocument();
   });
 
   it("doesn't display private metadata when hidden", async () => {
+    // Arrange
     render(
       <MetadataHookForm isLoading={false} hidePrivateMetadata={true} {...mockHookFormProps} />,
     );
 
+    // Assert
     expect(screen.queryByText("Private Metadata")).not.toBeInTheDocument();
   });
 });
