@@ -18,6 +18,10 @@ export const SingleItem = ({ menuItem }: Props) => {
     if (extension) {
       extension.open();
     }
+
+    if (menuItem.onClick) {
+      menuItem.onClick();
+    }
   };
 
   return (
