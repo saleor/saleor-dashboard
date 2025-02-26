@@ -109,8 +109,8 @@ describe("OrderMetadataDialog", () => {
 
       expect(screen.getByText("Order line metadata")).toBeInTheDocument();
 
-      // Show metadata
-      fireEvent.click(expandButtonOrderLineMetadata);
+      // Editable forms need to be expanded before values are shown
+      fireEvent.click(expandButtonOrderLineMetadata); // Show metadata
 
       // Metadata is visible, private metadata is not
       expect(within(orderLineMetadata).getByDisplayValue("order-line-key")).toBeInTheDocument();
@@ -132,8 +132,8 @@ describe("OrderMetadataDialog", () => {
       const expandButtonOrderLinePrivateMetadata =
         within(orderLineMetadata).getAllByTestId("expand")[1];
 
-      // Show privateMetadata
-      fireEvent.click(expandButtonOrderLinePrivateMetadata);
+      // Editable forms need to be expanded before values are shown
+      fireEvent.click(expandButtonOrderLinePrivateMetadata); // Show privateMetadata
 
       // Private metadata is visible, metadata is not
       expect(
