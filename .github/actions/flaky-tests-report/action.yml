@@ -55,9 +55,14 @@ runs:
         GITHUB_TOKEN: ${{ inputs.github_token }}
       if: github.event_name == 'pull_request'
 
-    - name: Cleanup partial reports
+    - name: Cleanup uploaded partial reports
       shell: bash
-      run: rm -rf ctrf-reports/ctrf-report-*
+      run: |
+        for artifact_id in $(gh api repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts --jq '.artifacts[] | select(.name | startswith("ctrf-report-")) | .id'); do
+          gh api --method DELETE repos/${{ github.repository }}/actions/artifacts/$artifact_id
+        done
+      env:
+        GH_TOKEN:  ${{ inputs.github_token }}
 
 inputs:
   github_token:
