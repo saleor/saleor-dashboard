@@ -55,6 +55,10 @@ runs:
         GITHUB_TOKEN: ${{ inputs.github_token }}
       if: github.event_name == 'pull_request'
 
+    - name: Cleanup partial reports
+      shell: bash
+      run: rm -rf ctrf-reports/ctrf-report-*
+
 inputs:
   github_token:
     description: "GitHub token for accessing APIs"
