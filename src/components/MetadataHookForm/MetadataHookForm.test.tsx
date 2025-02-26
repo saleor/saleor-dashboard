@@ -44,9 +44,10 @@ jest.mock("./useMetadataFormControls", () => ({
 
 describe("MetadataHookForm", () => {
   it("displays loading state", () => {
-    const { debug } = render(<MetadataHookForm isLoading={true} {...mockHookFormProps} />);
+    render(<MetadataHookForm isLoading={true} {...mockHookFormProps} />);
 
-    debug();
+    // There are multiple skeletons, check if there' at least one
+    expect(screen.queryAllByTestId("skeleton")?.[0]).toBeInTheDocument();
   });
 
   it("displays metadata", async () => {
