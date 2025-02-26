@@ -1,5 +1,4 @@
 import { useAppFailedPendingWebhooksLazyQuery } from "@dashboard/graphql";
-import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { Moment } from "moment";
 import { useMemo } from "react";
 
@@ -12,9 +11,9 @@ interface AppsFailedDeliveries {
 }
 
 export const useAppsFailedDeliveries = (): AppsFailedDeliveries => {
-  const { hasManagedAppsPermission } = useHasManagedAppsPermission();
-
-  const [fetchAppsWebhooks, { data }] = useAppFailedPendingWebhooksLazyQuery();
+  const [fetchAppsWebhooks, { data }] = useAppFailedPendingWebhooksLazyQuery({
+    fetchPolicy: "no-cache",
+  });
 
   const lastFailedWebhookDate = useMemo(
     () =>
@@ -35,10 +34,9 @@ export const useAppsFailedDeliveries = (): AppsFailedDeliveries => {
   );
 
   const handleFetchAppsWebhooks = () => {
-    // TODO: checking if webhooks should be fetched will be extracted out of this hook in a separate ticket
     fetchAppsWebhooks({
       variables: {
-        canFetchAppEvents: hasManagedAppsPermission,
+        canFetchAppEvents: true,
       },
     });
   };

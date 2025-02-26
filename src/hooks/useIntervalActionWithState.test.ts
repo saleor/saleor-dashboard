@@ -31,7 +31,13 @@ describe("useIntervalActionWithState", () => {
     const action = jest.fn();
 
     // Act
-    renderHook(() => useIntervalActionWithState(action, 1000, TEST_KEY));
+    renderHook(() =>
+      useIntervalActionWithState({
+        action,
+        interval: 1000,
+        key: TEST_KEY,
+      }),
+    );
 
     // Assert
     expect(action).toHaveBeenCalledTimes(1);
@@ -42,7 +48,13 @@ describe("useIntervalActionWithState", () => {
     const action = jest.fn();
 
     // Act
-    renderHook(() => useIntervalActionWithState(action, 1000, TEST_KEY));
+    renderHook(() =>
+      useIntervalActionWithState({
+        action,
+        interval: 1000,
+        key: TEST_KEY,
+      }),
+    );
 
     act(() => {
       jest.advanceTimersByTime(1000);
@@ -57,7 +69,13 @@ describe("useIntervalActionWithState", () => {
     const action = jest.fn();
 
     // Act
-    const { unmount } = renderHook(() => useIntervalActionWithState(action, 1000, TEST_KEY));
+    const { unmount } = renderHook(() =>
+      useIntervalActionWithState({
+        action,
+        interval: 1000,
+        key: TEST_KEY,
+      }),
+    );
 
     unmount();
 
@@ -74,7 +92,13 @@ describe("useIntervalActionWithState", () => {
     const action = jest.fn();
 
     // Act
-    renderHook(() => useIntervalActionWithState(action, 1000, TEST_KEY));
+    renderHook(() =>
+      useIntervalActionWithState({
+        action,
+        interval: 1000,
+        key: TEST_KEY,
+      }),
+    );
 
     act(() => {
       jest.advanceTimersByTime(2500);
@@ -89,7 +113,13 @@ describe("useIntervalActionWithState", () => {
     const action = jest.fn();
 
     // Act
-    const { rerender } = renderHook(() => useIntervalActionWithState(action, 1000, TEST_KEY));
+    const { rerender } = renderHook(() =>
+      useIntervalActionWithState({
+        action,
+        interval: 1000,
+        key: TEST_KEY,
+      }),
+    );
 
     rerender();
 
@@ -109,7 +139,13 @@ describe("useIntervalActionWithState", () => {
     (useLocalStorage as jest.Mock).mockReturnValue([mockTime - 500, jest.fn()]);
 
     // Act
-    renderHook(() => useIntervalActionWithState(action, 1000, TEST_KEY));
+    renderHook(() =>
+      useIntervalActionWithState({
+        action,
+        interval: 1000,
+        key: TEST_KEY,
+      }),
+    );
 
     expect(action).not.toHaveBeenCalled();
 
@@ -119,5 +155,27 @@ describe("useIntervalActionWithState", () => {
 
     // Assert
     expect(action).toHaveBeenCalledTimes(1);
+  });
+
+  it("should skip execution if skip is true", () => {
+    // Arrange
+    const action = jest.fn();
+
+    // Act
+    renderHook(() =>
+      useIntervalActionWithState({
+        action,
+        interval: 1000,
+        key: TEST_KEY,
+        skip: true,
+      }),
+    );
+
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    // Assert
+    expect(action).not.toHaveBeenCalled();
   });
 });

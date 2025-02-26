@@ -3,7 +3,19 @@ import { useEffect, useRef } from "react";
 
 type Timeout = ReturnType<typeof setTimeout>;
 
-export const useIntervalActionWithState = (action: () => void, interval = 5_000, key: string) => {
+interface UseIntervalActionWithState {
+  action: () => void;
+  key: string;
+  interval?: number;
+  skip?: boolean;
+}
+
+export const useIntervalActionWithState = ({
+  action,
+  key,
+  interval = 5_000,
+  skip = false,
+}: UseIntervalActionWithState) => {
   const savedAction = useRef(action);
   const timeout = useRef<Timeout | null>(null);
   const [lastInvocation, setLastInvocation] = useLocalStorage(key, new Date().getTime());
@@ -14,6 +26,10 @@ export const useIntervalActionWithState = (action: () => void, interval = 5_000,
         clearTimeout(timeout.current);
       }
     };
+
+    if (skip) {
+      return cleanup;
+    }
 
     const timeNow = new Date().getTime();
     const timePassed = timeNow - lastInvocation;
@@ -34,5 +50,5 @@ export const useIntervalActionWithState = (action: () => void, interval = 5_000,
     }
 
     return cleanup;
-  }, [lastInvocation, action, interval, key, setLastInvocation]);
+  }, [lastInvocation, action, interval, key, setLastInvocation, skip]);
 };
