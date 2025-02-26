@@ -3201,6 +3201,10 @@
   "IH47ID": {
     "string": "Use button above to add new product variants"
   },
+  "IHTyjM": {
+    "context": "orderLine.variant.name, subheader, order line metadata dialog",
+    "string": "Variant"
+  },
   "IKvOK+": {
     "context": "Amount error message",
     "string": "Amount must be bigger than 0"
@@ -3938,6 +3942,10 @@
   "NJbzcP": {
     "context": "dialog header",
     "string": "Cancel Orders"
+  },
+  "NL5C12": {
+    "context": "orderLine.quantity, subheader, oredr line metadata dialog",
+    "string": "Qty"
   },
   "NL6mvR": {
     "string": "Visit App Store to replace with the App"
@@ -7024,6 +7032,10 @@
   "h65vZI": {
     "context": "times voucher used",
     "string": "Used"
+  },
+  "h6MWxB": {
+    "context": "orderLine.productSku, subheader, order line metadata dialog",
+    "string": "SKU"
   },
   "h75GAF": {
     "context": "voucher",
