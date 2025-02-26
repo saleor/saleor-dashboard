@@ -18,22 +18,19 @@ export const useAppsFailedDeliveries = (): AppsFailedDeliveries => {
 
   const lastFailedWebhookDate = useMemo(
     () =>
-      data?.apps?.edges.reduce(
-        (acc, app) => {
-          const latestFailedAttempt = getLatestFailedAttemptFromWebhooks(app.node.webhooks ?? []);
+      data?.apps?.edges.reduce((acc, app) => {
+        const latestFailedAttempt = getLatestFailedAttemptFromWebhooks(app.node.webhooks ?? []);
 
-          if (!latestFailedAttempt) {
-            return acc;
-          }
+        if (!latestFailedAttempt) {
+          return acc;
+        }
 
-          if (!acc) {
-            return latestFailedAttempt.createdAt;
-          }
+        if (!acc) {
+          return latestFailedAttempt.createdAt;
+        }
 
-          return latestFailedAttempt.createdAt > acc ? latestFailedAttempt : acc;
-        },
-        null as Moment | null,
-      ) ?? null,
+        return latestFailedAttempt.createdAt > acc ? latestFailedAttempt : acc;
+      }, null) ?? null,
     [data?.apps?.edges],
   );
 
