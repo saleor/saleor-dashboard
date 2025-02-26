@@ -4,7 +4,6 @@ import {
 } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import * as React from "react";
 
 import { SidebarAppAlert } from "./SidebarAppAlert";
 
