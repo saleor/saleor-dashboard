@@ -1,7 +1,13 @@
 import { Box, Spinner } from "@saleor/macaw-ui-next";
 import React from "react";
 
-export const VariantThumbnail = ({ src, loading }: { src: string; loading: boolean }) => {
+export const VariantThumbnail = ({
+  src,
+  loading,
+}: {
+  src: string | undefined;
+  loading: boolean;
+}) => {
   return (
     <Box
       display="flex"

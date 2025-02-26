@@ -39,69 +39,74 @@ const propsCompare = (_, newProps: MetadataProps) => {
 
 // TODO: Refactor loading state logic
 // TODO: Split "Metadata" component into "Metadata" and "PrivateMetadata" components
-export const Metadata: React.FC<MetadataProps> = memo(
-  ({ data, onChange, isLoading, readonly = false, hidePrivateMetadata = false, ...props }) => {
-    const change = (event: ChangeEvent, isPrivate: boolean) => {
-      const { action, field, fieldIndex, value } = parseEventData(event);
-      const key = getDataKey(isPrivate);
-      const dataToUpdate = data[key];
+export const MetadataNoMemo: React.FC<MetadataProps> = ({
+  data,
+  onChange,
+  isLoading,
+  readonly = false,
+  hidePrivateMetadata = false,
+  ...props
+}) => {
+  const change = (event: ChangeEvent, isPrivate: boolean) => {
+    const { action, field, fieldIndex, value } = parseEventData(event);
+    const key = getDataKey(isPrivate);
+    const dataToUpdate = data[key];
 
-      onChange({
-        target: {
-          name: key,
-          value:
-            action === EventDataAction.update
-              ? updateAtIndex(
+    onChange({
+      target: {
+        name: key,
+        value:
+          action === EventDataAction.update
+            ? updateAtIndex(
+                {
+                  ...dataToUpdate[fieldIndex],
+                  key: field === EventDataField.name ? value : dataToUpdate[fieldIndex].key,
+                  value: field === EventDataField.value ? value : dataToUpdate[fieldIndex].value,
+                },
+                dataToUpdate,
+                fieldIndex,
+              )
+            : action === EventDataAction.add
+              ? [
+                  ...dataToUpdate,
                   {
-                    ...dataToUpdate[fieldIndex],
-                    key: field === EventDataField.name ? value : dataToUpdate[fieldIndex].key,
-                    value: field === EventDataField.value ? value : dataToUpdate[fieldIndex].value,
+                    key: "",
+                    value: "",
                   },
-                  dataToUpdate,
-                  fieldIndex,
-                )
-              : action === EventDataAction.add
-                ? [
-                    ...dataToUpdate,
-                    {
-                      key: "",
-                      value: "",
-                    },
-                  ]
-                : removeAtIndex(dataToUpdate, fieldIndex),
-        },
-      });
-    };
+                ]
+              : removeAtIndex(dataToUpdate, fieldIndex),
+      },
+    });
+  };
 
-    return (
-      <Box display="grid" gap={2} paddingBottom={10} {...props}>
-        {isLoading ? (
-          <>
-            <MetadataLoadingCard />
-            {!hidePrivateMetadata && <MetadataLoadingCard isPrivate />}
-          </>
-        ) : (
-          <>
+  return (
+    <Box display="grid" gap={2} paddingBottom={10} {...props}>
+      {isLoading ? (
+        <>
+          <MetadataLoadingCard />
+          {!hidePrivateMetadata && <MetadataLoadingCard isPrivate />}
+        </>
+      ) : (
+        <>
+          <MetadataCard
+            data={data?.metadata}
+            isPrivate={false}
+            readonly={readonly}
+            onChange={event => change(event, false)}
+          />
+          {(data?.privateMetadata || !hidePrivateMetadata) && (
             <MetadataCard
-              data={data?.metadata}
-              isPrivate={false}
+              data={data?.privateMetadata}
+              isPrivate={true}
               readonly={readonly}
-              onChange={event => change(event, false)}
+              onChange={event => change(event, true)}
             />
-            {(data?.privateMetadata || !hidePrivateMetadata) && (
-              <MetadataCard
-                data={data?.privateMetadata}
-                isPrivate={true}
-                readonly={readonly}
-                onChange={event => change(event, true)}
-              />
-            )}
-          </>
-        )}
-      </Box>
-    );
-  },
-  propsCompare,
-);
+          )}
+        </>
+      )}
+    </Box>
+  );
+};
 
+export const Metadata = memo(MetadataNoMemo, propsCompare);
 Metadata.displayName = "Metadata";

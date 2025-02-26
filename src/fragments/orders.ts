@@ -166,6 +166,13 @@ export const fragmentOrderLineWithMetadata = gql`
   }
 `;
 
+export const fragmentOrderLineWithMetadata = gql`
+  fragment OrderLineWithMetadata on OrderLine {
+    ...OrderLine
+    ...OrderLineMetadata
+  }
+`;
+
 export const fragmentRefundOrderLine = gql`
   fragment RefundOrderLine on OrderLine {
     id
@@ -410,7 +417,7 @@ export const fragmentOrderDetailsWithMetadata = gql`
       ...FulfillmentWithMetadata
     }
     lines {
-      ...OrderLineWithMetadata
+      ...OrderLine
     }
   }
 `;

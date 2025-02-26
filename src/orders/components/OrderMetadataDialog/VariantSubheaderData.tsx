@@ -23,7 +23,7 @@ const ListItem = ({
   last,
 }: {
   name: string;
-  value: string | number;
+  value: string | number | undefined;
   last?: boolean;
 }) => {
   return (
@@ -45,9 +45,9 @@ export const VariantSubheaderData = ({
   variantName,
   loading,
 }: {
-  productSku: string;
-  quantity: number;
-  variantName: string;
+  productSku: string | null | undefined;
+  quantity: number | undefined;
+  variantName: string | undefined;
   loading: boolean;
 }) => {
   const intl = useIntl();
@@ -63,14 +63,16 @@ export const VariantSubheaderData = ({
 
   return (
     <Text as="span" display="flex" gap={1}>
-      <ListItem
-        name={intl.formatMessage({
-          defaultMessage: "SKU",
-          description: "orderLine.productSku, subheader, order line metadata dialog",
-          id: "h6MWxB",
-        })}
-        value={productSku}
-      />
+      {productSku && (
+        <ListItem
+          name={intl.formatMessage({
+            defaultMessage: "SKU",
+            description: "orderLine.productSku, subheader, order line metadata dialog",
+            id: "h6MWxB",
+          })}
+          value={productSku}
+        />
+      )}
       <ListItem
         name={intl.formatMessage({
           defaultMessage: "Variant",

@@ -316,8 +316,8 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
       <OrderMetadataDialog
         open={params.action === "view-metadata"}
         onClose={closeModal}
-        data={order?.lines?.find(orderLine => orderLine.id === params.id)}
-        loading={loading || updateMetadataOpts.loading || updatePrivateMetadataOpts.loading}
+        lineId={params.id}
+        orderId={id}
       />
       <OrderMarkAsPaidDialog
         confirmButtonState={orderPaymentMarkAsPaid.opts.status}

@@ -1,10 +1,9 @@
 import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import MediaTile from "@dashboard/components/MediaTile";
-import { Metadata, MetadataFormData } from "@dashboard/components/Metadata";
+import { MetadataFormData, MetadataNoMemo } from "@dashboard/components/Metadata";
 import { MetadataHookForm } from "@dashboard/components/MetadataHookForm";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { OrderLineWithMetadataFragment } from "@dashboard/graphql";
+import { OrderLinesMetadataQuery } from "@dashboard/graphql";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 import { flattenErrors } from "@dashboard/utils/hook-form/errors";
@@ -16,32 +15,26 @@ import { FormattedMessage } from "react-intl";
 
 import { TEST_ID_ORDER_LINE_METADATA, TEST_ID_PRODUCT_VARIANT_METADATA } from "./test-ids";
 import { useHandleOrderLineMetadataSubmit } from "./useHandleSubmit";
+import { useMetadataValues } from "./useMetadataValues";
 import { VariantSubheaderData } from "./VariantSubheaderData";
 import { VariantThumbnail } from "./VariantThumbnail";
 
-type OrderLineMetadata = Pick<OrderLineWithMetadataFragment, "metadata" | "privateMetadata" | "id">;
-type ProductVariant = Pick<
-  NonNullable<OrderLineWithMetadataFragment["variant"]>,
-  "metadata" | "privateMetadata" | "id" | "name"
->;
-type Thumbnail = NonNullable<OrderLineWithMetadataFragment["thumbnail"]>;
-
-export type OrderMetadataDialogData = OrderLineMetadata & {
-  variant: ProductVariant;
-  productName: string;
-  thumbnail: Thumbnail;
-  productSku: string;
-  quantity: number;
-};
+export type OrderMetadataDialogData = NonNullable<OrderLinesMetadataQuery["order"]>["lines"][0];
 
 interface OrderMetadataDialogProps {
   open: boolean;
   onClose: () => void;
-  data: OrderMetadataDialogData;
-  loading?: boolean;
+  lineId: string;
+  orderId: string;
 }
 
-export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetadataDialogProps) => {
+export const OrderMetadataDialog = ({
+  onClose,
+  open,
+  lineId,
+  orderId,
+}: OrderMetadataDialogProps) => {
+  const { data, loading } = useMetadataValues({ open, orderId, lineId });
   const { onSubmit, lastSubmittedData } = useHandleOrderLineMetadataSubmit({ initialData: data });
   const hasManageProducts = useHasManageProductsPermission();
 
@@ -114,43 +107,43 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
                   {allFormErrors.join(", ")}
                 </Text>
               )}
-            </Box>
 
-            <Divider />
+              <Divider />
 
-            <Box
-              display="flex"
-              flexDirection="column"
-              data-test-id={TEST_ID_PRODUCT_VARIANT_METADATA}
-            >
-              <Box display="flex" flexDirection="column" marginLeft={6} gap={2}>
-                <Text as="h2" size={5} fontWeight="bold">
-                  <FormattedMessage
-                    defaultMessage="Product variant metadata"
-                    description="modal header, read-only product variant metadata"
-                    id="PH4R7g"
-                  />
-                </Text>
-                <Text>
-                  <FormattedMessage
-                    defaultMessage="This is a metadata of the variant that is being used in this ordered item"
-                    description="modal subheader, read-only product variant metadata"
-                    id="/mwSjm"
-                  />
-                </Text>
+              <Box
+                display="flex"
+                flexDirection="column"
+                data-test-id={TEST_ID_PRODUCT_VARIANT_METADATA}
+              >
+                <Box display="flex" flexDirection="column" marginLeft={6} gap={2}>
+                  <Text as="h2" size={5} fontWeight="bold">
+                    <FormattedMessage
+                      defaultMessage="Product variant metadata"
+                      description="modal header, read-only product variant metadata"
+                      id="PH4R7g"
+                    />
+                  </Text>
+                  <Text>
+                    <FormattedMessage
+                      defaultMessage="This is a metadata of the variant that is being used in this ordered item"
+                      description="modal subheader, read-only product variant metadata"
+                      id="/mwSjm"
+                    />
+                  </Text>
+                </Box>
+
+                {/* We cannot use memo, because it won't show loading state correctly */}
+                <MetadataNoMemo
+                  onChange={() => undefined}
+                  isLoading={loading && !data}
+                  data={{
+                    metadata: data?.variant?.metadata ?? [],
+                    privateMetadata: data?.variant?.privateMetadata ?? [],
+                  }}
+                  hidePrivateMetadata={!hasManageProducts}
+                  paddingBottom={0}
+                />
               </Box>
-
-              <Metadata
-                readonly={true}
-                onChange={() => undefined}
-                isLoading={loading && !data}
-                data={{
-                  metadata: data?.variant?.metadata ?? [],
-                  privateMetadata: data?.variant?.privateMetadata ?? [],
-                }}
-                hidePrivateMetadata={!hasManageProducts}
-                paddingBottom={0}
-              />
             </Box>
           </Box>
           <DashboardModal.Actions paddingX={6} marginTop={4}>
