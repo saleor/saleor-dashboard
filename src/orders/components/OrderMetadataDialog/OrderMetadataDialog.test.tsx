@@ -49,9 +49,17 @@ const mockData: OrderMetadataDialogData = {
       { key: "variant-private-key", value: "variant-private-value", __typename: "MetadataItem" },
     ],
     name: "Variant name",
+    __typename: "ProductVariant",
   },
+  __typename: "OrderLine",
 };
 
+jest.mock("./useMetadataValues", () => ({
+  useMetadataValues: () => ({
+    data: mockData,
+    loading: false,
+  }),
+}));
 describe("OrderMetadataDialog", () => {
   const onCloseMock = jest.fn();
 
@@ -60,8 +68,14 @@ describe("OrderMetadataDialog", () => {
   });
 
   it("closes when user hits close icon button", () => {
-    // Arrange
-    render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
+    render(
+        <OrderMetadataDialog
+          open={true}
+          onClose={onCloseMock}
+          orderId="order-id"
+          lineId={mockData.id}
+        />
+    );
 
     // Act
     fireEvent.click(screen.getByTestId("close-button"));
@@ -71,8 +85,14 @@ describe("OrderMetadataDialog", () => {
   });
 
   it("closes when user hits close text button", () => {
-    // Arrange
-    render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
+    render(
+        <OrderMetadataDialog
+          open={true}
+          onClose={onCloseMock}
+          orderId="order-id"
+          lineId={mockData.id}
+        />
+    );
 
     // Act
     fireEvent.click(screen.getByTestId("back"));
@@ -83,9 +103,12 @@ describe("OrderMetadataDialog", () => {
 
   it("displays details about order line", () => {
     render(
-      <MockedProvider>
-        <OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />
-      </MockedProvider>,
+        <OrderMetadataDialog
+          open={true}
+          onClose={onCloseMock}
+          orderId="order-id"
+          lineId={mockData.id}
+        />
     );
 
     expect(screen.queryByText(mockData.quantity)).toBeInTheDocument();
@@ -95,8 +118,16 @@ describe("OrderMetadataDialog", () => {
 
   describe("ProductVariant metadata list", () => {
     it("displays product variant metadata", async () => {
-      // Arrange
-      render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
+      render(
+          <OrderMetadataDialog
+            open={true}
+            onClose={onCloseMock}
+            orderId="order-id"
+            lineId={mockData.id}
+          />
+      );
+
+      expect(screen.getByText("Product variant metadata")).toBeInTheDocument();
 
       const productVariantMetadata = screen.getByTestId(TEST_ID_PRODUCT_VARIANT_METADATA);
 
@@ -117,7 +148,16 @@ describe("OrderMetadataDialog", () => {
       (useHasManageProductsPermission as jest.Mock).mockReturnValue(false);
       render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
 
-      // Act
+      render(
+          <OrderMetadataDialog
+            open={true}
+            onClose={onCloseMock}
+            orderId="order-id"
+            lineId={mockData.id}
+          />
+      );
+
+      // Private metadata should not be visible in the readonly section
       const metadataEditors = screen.getAllByTestId("metadata-editor");
       const readonlyEditor = metadataEditors[1];
 
@@ -129,8 +169,14 @@ describe("OrderMetadataDialog", () => {
 
   describe("OrderLine metadata form", () => {
     it("displays order line metadata", async () => {
-      // Arrange
-      render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
+      render(
+          <OrderMetadataDialog
+            open={true}
+            onClose={onCloseMock}
+            orderId="order-id"
+            lineId={mockData.id}
+          />
+      );
 
       const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
 
@@ -153,8 +199,14 @@ describe("OrderMetadataDialog", () => {
 
   describe("OrderLine privateMetadata form", () => {
     it("displays order line private metadata", () => {
-      // Arrange
-      render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
+      render(
+          <OrderMetadataDialog
+            open={true}
+            onClose={onCloseMock}
+            orderId="order-id"
+            lineId={mockData.id}
+          />
+      );
 
       const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
 
@@ -179,4 +231,22 @@ describe("OrderMetadataDialog", () => {
       ).not.toBeInTheDocument();
     });
   });
-});
+  
+
+
+
+
+
+
+  
+
+
+  
+
+  
+    
+  
+  
+    
+  
+  

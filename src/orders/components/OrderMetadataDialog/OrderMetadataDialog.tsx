@@ -135,6 +135,7 @@ export const OrderMetadataDialog = ({
                 {/* We cannot use memo, because it won't show loading state correctly */}
                 <MetadataNoMemo
                   onChange={() => undefined}
+                  readonly
                   isLoading={loading && !data}
                   data={{
                     metadata: data?.variant?.metadata ?? [],
