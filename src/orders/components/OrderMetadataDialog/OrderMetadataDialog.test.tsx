@@ -69,12 +69,12 @@ describe("OrderMetadataDialog", () => {
 
   it("closes when user hits close icon button", () => {
     render(
-        <OrderMetadataDialog
-          open={true}
-          onClose={onCloseMock}
-          orderId="order-id"
-          lineId={mockData.id}
-        />
+      <OrderMetadataDialog
+        open={true}
+        onClose={onCloseMock}
+        orderId="order-id"
+        lineId={mockData.id}
+      />,
     );
 
     // Act
@@ -86,12 +86,12 @@ describe("OrderMetadataDialog", () => {
 
   it("closes when user hits close text button", () => {
     render(
-        <OrderMetadataDialog
-          open={true}
-          onClose={onCloseMock}
-          orderId="order-id"
-          lineId={mockData.id}
-        />
+      <OrderMetadataDialog
+        open={true}
+        onClose={onCloseMock}
+        orderId="order-id"
+        lineId={mockData.id}
+      />,
     );
 
     // Act
@@ -103,12 +103,12 @@ describe("OrderMetadataDialog", () => {
 
   it("displays details about order line", () => {
     render(
-        <OrderMetadataDialog
-          open={true}
-          onClose={onCloseMock}
-          orderId="order-id"
-          lineId={mockData.id}
-        />
+      <OrderMetadataDialog
+        open={true}
+        onClose={onCloseMock}
+        orderId="order-id"
+        lineId={mockData.id}
+      />,
     );
 
     expect(screen.queryByText(mockData.quantity)).toBeInTheDocument();
@@ -118,14 +118,12 @@ describe("OrderMetadataDialog", () => {
 
   it("renders product thumbnail correctly", () => {
     render(
-      <MockedProvider>
-        <OrderMetadataDialog
-          open={true}
-          onClose={onCloseMock}
-          orderId="order-id"
-          lineId={mockData.id}
-        />
-      </MockedProvider>,
+      <OrderMetadataDialog
+        open={true}
+        onClose={onCloseMock}
+        orderId="order-id"
+        lineId={mockData.id}
+      />,
     );
 
     const thumbnailImage = screen.getByRole("img");
@@ -137,12 +135,12 @@ describe("OrderMetadataDialog", () => {
   describe("ProductVariant metadata list", () => {
     it("displays product variant metadata", async () => {
       render(
-          <OrderMetadataDialog
-            open={true}
-            onClose={onCloseMock}
-            orderId="order-id"
-            lineId={mockData.id}
-          />
+        <OrderMetadataDialog
+          open={true}
+          onClose={onCloseMock}
+          orderId="order-id"
+          lineId={mockData.id}
+        />,
       );
 
       expect(screen.getByText("Product variant metadata")).toBeInTheDocument();
@@ -164,15 +162,13 @@ describe("OrderMetadataDialog", () => {
     it("hides privateMetadata from product variant when user doesn't have MANAGE_PRODUCTS permission", () => {
       // Arrange
       (useHasManageProductsPermission as jest.Mock).mockReturnValue(false);
-      render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
-
       render(
-          <OrderMetadataDialog
-            open={true}
-            onClose={onCloseMock}
-            orderId="order-id"
-            lineId={mockData.id}
-          />
+        <OrderMetadataDialog
+          open={true}
+          onClose={onCloseMock}
+          orderId="order-id"
+          lineId={mockData.id}
+        />,
       );
 
       // Private metadata should not be visible in the readonly section
@@ -188,12 +184,12 @@ describe("OrderMetadataDialog", () => {
   describe("OrderLine metadata form", () => {
     it("displays order line metadata", async () => {
       render(
-          <OrderMetadataDialog
-            open={true}
-            onClose={onCloseMock}
-            orderId="order-id"
-            lineId={mockData.id}
-          />
+        <OrderMetadataDialog
+          open={true}
+          onClose={onCloseMock}
+          orderId="order-id"
+          lineId={mockData.id}
+        />,
       );
 
       const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
@@ -218,12 +214,12 @@ describe("OrderMetadataDialog", () => {
   describe("OrderLine privateMetadata form", () => {
     it("displays order line private metadata", () => {
       render(
-          <OrderMetadataDialog
-            open={true}
-            onClose={onCloseMock}
-            orderId="order-id"
-            lineId={mockData.id}
-          />
+        <OrderMetadataDialog
+          open={true}
+          onClose={onCloseMock}
+          orderId="order-id"
+          lineId={mockData.id}
+        />,
       );
 
       const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
@@ -249,22 +245,4 @@ describe("OrderMetadataDialog", () => {
       ).not.toBeInTheDocument();
     });
   });
-  
-
-
-
-
-
-
-  
-
-
-  
-
-  
-    
-  
-  
-    
-  
-  
+});
