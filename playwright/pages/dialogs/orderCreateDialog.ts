@@ -22,7 +22,10 @@ export class OrderCreateDialog {
 
   async completeOrderCreateDialogWithFirstChannel() {
     await this.expandChannelsSearchList();
+    await this.channelOption.first().waitFor({ state: "visible" });
     await this.channelOption.first().click();
+    await this.channelOption.first().waitFor({ state: "hidden" });
+    await this.channelNameInput.blur();
     await this.clickConfirmButton();
   }
 
