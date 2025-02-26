@@ -43,10 +43,10 @@ export const OrderMetadataDialog = ({ onClose, open, data, loading }: OrderMetad
     values: loading
       ? lastSubmittedData
       : {
-        // Removes __typename from metadata item object
-        metadata: (data?.metadata ?? []).map(mapMetadataItemToInput),
-        privateMetadata: (data?.privateMetadata ?? [])?.map(mapMetadataItemToInput),
-      },
+          // Removes __typename from metadata item object
+          metadata: (data?.metadata ?? []).map(mapMetadataItemToInput),
+          privateMetadata: (data?.privateMetadata ?? [])?.map(mapMetadataItemToInput),
+        },
   });
 
   const { handleSubmit, control, getValues, formState, trigger } = formMethods;
