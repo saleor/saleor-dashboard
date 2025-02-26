@@ -50,5 +50,5 @@ export const useIntervalActionWithState = ({
     }
 
     return cleanup;
-  }, [lastInvocation, action, interval, key, setLastInvocation, skip]);
+  }, [lastInvocation, interval, key, setLastInvocation, skip]);
 };
