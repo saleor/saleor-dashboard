@@ -55,13 +55,11 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
   const formErrors = getFormErrors(["availableForPurchaseAt", "publishedAt"], errors);
 
   return (
-    <Box display="flex" gap={3} paddingTop={3} flexDirection="column">
-      {/**
-       * StopPropagation is used here to block onClick events from RadioGroup that cause throw error in datagrid
-       * Datagrid listing for all on click event but RadioGroup emitted couple of events at once
-       * Radix issue: https://github.com/radix-ui/primitives/issues/1982
-       */}
-      <StopPropagation>
+    // StopPropagation is used here to block onClick events from RadioGroup and Checkbox that cause throw error in datagrid
+    // Datagrid listing for all on click event but RadioGroup emitted couple of events at once
+    // Radix issue: https://github.com/radix-ui/primitives/issues/1982
+    <StopPropagation>
+      <Box display="flex" gap={3} paddingTop={3} flexDirection="column">
         <RadioGroup
           value={String(isPublished)}
           onValueChange={value => {
@@ -97,127 +95,127 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
             </Box>
           </RadioGroup.Item>
         </RadioGroup>
-      </StopPropagation>
-      {!isPublished && (
-        <Box display="flex" flexDirection="column" alignItems="start" gap={1}>
-          <Checkbox
-            onCheckedChange={(checked: boolean) => setPublishedAt(checked)}
-            checked={isPublishedAt}
-          >
-            {intl.formatMessage(availabilityItemMessages.setPublicationDate)}
-          </Checkbox>
-          {isPublishedAt && (
-            <DateTimeTimezoneField
-              error={!!formErrors.publishedAt}
-              helperText={
-                formErrors.publishedAt ? getProductErrorMessage(formErrors.publishedAt, intl) : ""
-              }
+        {!isPublished && (
+          <Box display="flex" flexDirection="column" alignItems="start" gap={1}>
+            <Checkbox
+              onCheckedChange={(checked: boolean) => setPublishedAt(checked)}
+              checked={isPublishedAt}
+            >
+              {intl.formatMessage(availabilityItemMessages.setPublicationDate)}
+            </Checkbox>
+            {isPublishedAt && (
+              <DateTimeTimezoneField
+                error={!!formErrors.publishedAt}
+                helperText={
+                  formErrors.publishedAt ? getProductErrorMessage(formErrors.publishedAt, intl) : ""
+                }
+                disabled={disabled}
+                name={`channel:publicationTime:${id}`}
+                value={publishedAt || ""}
+                onChange={dateTime =>
+                  onChange(id, {
+                    ...formData,
+                    publishedAt: dateTime,
+                  })
+                }
+                fullWidth
+              />
+            )}
+          </Box>
+        )}
+        {hasAvailableProps && (
+          <>
+            <Divider />
+            <RadioGroup
               disabled={disabled}
-              name={`channel:publicationTime:${id}`}
-              value={publishedAt || ""}
-              onChange={dateTime =>
+              name={`channel:isAvailableForPurchase:${id}`}
+              value={String(isAvailable)}
+              onValueChange={value =>
                 onChange(id, {
                   ...formData,
-                  publishedAt: dateTime,
+                  availableForPurchase: value === "false" ? null : availableForPurchaseAt,
+                  isAvailableForPurchase: value === "true",
                 })
               }
-              fullWidth
-            />
-          )}
-        </Box>
-      )}
-      {hasAvailableProps && (
-        <>
-          <Divider />
-          <RadioGroup
-            disabled={disabled}
-            name={`channel:isAvailableForPurchase:${id}`}
-            value={String(isAvailable)}
-            onValueChange={value =>
-              onChange(id, {
-                ...formData,
-                availableForPurchase: value === "false" ? null : availableForPurchaseAt,
-                isAvailableForPurchase: value === "true",
-              })
-            }
-            display="flex"
-            flexDirection="column"
-            gap={3}
-          >
-            <RadioGroup.Item id={`channel:isAvailableForPurchase:${id}-true`} value="true">
-              <Box display="flex" __alignItems="baseline" gap={2}>
-                <Text>{messages.availableLabel}</Text>
-                {isAvailable &&
-                  availableForPurchaseAt &&
-                  Date.parse(availableForPurchaseAt) < dateNow && (
+              display="flex"
+              flexDirection="column"
+              gap={3}
+            >
+              <RadioGroup.Item id={`channel:isAvailableForPurchase:${id}-true`} value="true">
+                <Box display="flex" __alignItems="baseline" gap={2}>
+                  <Text>{messages.availableLabel}</Text>
+                  {isAvailable &&
+                    availableForPurchaseAt &&
+                    Date.parse(availableForPurchaseAt) < dateNow && (
+                      <Text size={2} color="default2">
+                        {visibleMessage(availableForPurchaseAt)}
+                      </Text>
+                    )}
+                </Box>
+              </RadioGroup.Item>
+              <RadioGroup.Item id={`channel:isAvailableForPurchase:${id}-false`} value="false">
+                <Box display="flex" __alignItems="baseline" gap={2}>
+                  <Text>{messages.unavailableLabel}</Text>
+                  {availableForPurchaseAt && !isAvailable && (
                     <Text size={2} color="default2">
-                      {visibleMessage(availableForPurchaseAt)}
+                      {messages.availableSecondLabel}
                     </Text>
                   )}
-              </Box>
-            </RadioGroup.Item>
-            <RadioGroup.Item id={`channel:isAvailableForPurchase:${id}-false`} value="false">
-              <Box display="flex" __alignItems="baseline" gap={2}>
-                <Text>{messages.unavailableLabel}</Text>
-                {availableForPurchaseAt && !isAvailable && (
-                  <Text size={2} color="default2">
-                    {messages.availableSecondLabel}
-                  </Text>
+                </Box>
+              </RadioGroup.Item>
+            </RadioGroup>
+            {!isAvailable && (
+              <Box display="flex" gap={1} flexDirection="column" alignItems="start">
+                <Checkbox
+                  onCheckedChange={(checked: boolean) => setAvailableDate(checked)}
+                  checked={isAvailableDate}
+                >
+                  {messages.setAvailabilityDateLabel}
+                </Checkbox>
+                {isAvailableDate && (
+                  <DateTimeTimezoneField
+                    error={!!formErrors.availableForPurchaseAt}
+                    disabled={disabled}
+                    name={`channel:availableForPurchase:${id}`}
+                    value={availableForPurchaseAt || ""}
+                    onChange={dateTime =>
+                      onChange(id, {
+                        ...formData,
+                        availableForPurchase: dateTime,
+                      })
+                    }
+                    fullWidth
+                  />
                 )}
               </Box>
-            </RadioGroup.Item>
-          </RadioGroup>
-          {!isAvailable && (
-            <Box display="flex" gap={1} flexDirection="column" alignItems="start">
-              <Checkbox
-                onCheckedChange={(checked: boolean) => setAvailableDate(checked)}
-                checked={isAvailableDate}
-              >
-                {messages.setAvailabilityDateLabel}
-              </Checkbox>
-              {isAvailableDate && (
-                <DateTimeTimezoneField
-                  error={!!formErrors.availableForPurchaseAt}
-                  disabled={disabled}
-                  name={`channel:availableForPurchase:${id}`}
-                  value={availableForPurchaseAt || ""}
-                  onChange={dateTime =>
-                    onChange(id, {
-                      ...formData,
-                      availableForPurchase: dateTime,
-                    })
-                  }
-                  fullWidth
-                />
-              )}
-            </Box>
-          )}
-        </>
-      )}
-      {visibleInListings !== undefined && (
-        <>
-          <Divider />
-          <Checkbox
-            name={`channel:visibleInListings:${id}`}
-            id={`channel:visibleInListings:${id}`}
-            checked={!visibleInListings}
-            disabled={disabled}
-            onCheckedChange={checked => {
-              onChange(id, {
-                ...formData,
-                visibleInListings: !checked,
-              });
-            }}
-          >
-            <Text cursor="pointer">
-              {intl.formatMessage(availabilityItemMessages.hideInListings)}
+            )}
+          </>
+        )}
+        {visibleInListings !== undefined && (
+          <>
+            <Divider />
+            <Checkbox
+              name={`channel:visibleInListings:${id}`}
+              id={`channel:visibleInListings:${id}`}
+              checked={!visibleInListings}
+              disabled={disabled}
+              onCheckedChange={checked => {
+                onChange(id, {
+                  ...formData,
+                  visibleInListings: !checked,
+                });
+              }}
+            >
+              <Text cursor="pointer">
+                {intl.formatMessage(availabilityItemMessages.hideInListings)}
+              </Text>
+            </Checkbox>
+            <Text size={2} color="default2">
+              {intl.formatMessage(availabilityItemMessages.hideInListingsDescription)}
             </Text>
-          </Checkbox>
-          <Text size={2} color="default2">
-            {intl.formatMessage(availabilityItemMessages.hideInListingsDescription)}
-          </Text>
-        </>
-      )}
-    </Box>
+          </>
+        )}
+      </Box>
+    </StopPropagation>
   );
 };

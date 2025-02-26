@@ -97,6 +97,44 @@ export const AppPermissionFragmentDoc = gql`
   code
 }
     `;
+export const AppEventDeliveriesFragmentDoc = gql`
+    fragment AppEventDeliveries on App {
+  webhooks @include(if: $canFetchAppEvents) {
+    failedDelivers: eventDeliveries(
+      first: 1
+      filter: {status: FAILED}
+      sortBy: {field: CREATED_AT, direction: DESC}
+    ) {
+      edges {
+        node {
+          id
+          createdAt
+        }
+      }
+    }
+    pendingDelivers: eventDeliveries(
+      first: 6
+      filter: {status: PENDING}
+      sortBy: {field: CREATED_AT, direction: DESC}
+    ) {
+      edges {
+        node {
+          id
+          attempts(first: 6, sortBy: {field: CREATED_AT, direction: DESC}) {
+            edges {
+              node {
+                id
+                status
+                createdAt
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
 export const AppListItemFragmentDoc = gql`
     fragment AppListItem on App {
   id
@@ -115,8 +153,10 @@ export const AppListItemFragmentDoc = gql`
   permissions {
     ...AppPermission
   }
+  ...AppEventDeliveries
 }
-    ${AppPermissionFragmentDoc}`;
+    ${AppPermissionFragmentDoc}
+${AppEventDeliveriesFragmentDoc}`;
 export const EventDeliveryAttemptFragmentDoc = gql`
     fragment EventDeliveryAttempt on EventDeliveryAttempt {
   id
@@ -3464,45 +3504,16 @@ export const WebhookDetailsFragmentDoc = gql`
 }
     ${WebhookFragmentDoc}`;
 export const AppFailedPendingWebhooksDocument = gql`
-    query AppFailedPendingWebhooks {
+    query AppFailedPendingWebhooks($canFetchAppEvents: Boolean!) {
   apps(first: 50, filter: {type: THIRDPARTY}) {
     edges {
       node {
-        webhooks {
-          failedDelivers: eventDeliveries(
-            first: 1
-            filter: {status: FAILED}
-            sortBy: {field: CREATED_AT, direction: DESC}
-          ) {
-            edges {
-              node {
-                id
-              }
-            }
-          }
-          pendingDelivers: eventDeliveries(
-            first: 1
-            filter: {status: PENDING}
-            sortBy: {field: CREATED_AT, direction: DESC}
-          ) {
-            edges {
-              node {
-                attempts(first: 6, sortBy: {field: CREATED_AT, direction: DESC}) {
-                  edges {
-                    node {
-                      status
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
+        ...AppEventDeliveries
       }
     }
   }
 }
-    `;
+    ${AppEventDeliveriesFragmentDoc}`;
 
 /**
  * __useAppFailedPendingWebhooksQuery__
@@ -3516,10 +3527,11 @@ export const AppFailedPendingWebhooksDocument = gql`
  * @example
  * const { data, loading, error } = useAppFailedPendingWebhooksQuery({
  *   variables: {
+ *      canFetchAppEvents: // value for 'canFetchAppEvents'
  *   },
  * });
  */
-export function useAppFailedPendingWebhooksQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.AppFailedPendingWebhooksQuery, Types.AppFailedPendingWebhooksQueryVariables>) {
+export function useAppFailedPendingWebhooksQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AppFailedPendingWebhooksQuery, Types.AppFailedPendingWebhooksQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return ApolloReactHooks.useQuery<Types.AppFailedPendingWebhooksQuery, Types.AppFailedPendingWebhooksQueryVariables>(AppFailedPendingWebhooksDocument, options);
       }
@@ -4014,7 +4026,7 @@ export type AppUpdatePermissionsMutationHookResult = ReturnType<typeof useAppUpd
 export type AppUpdatePermissionsMutationResult = Apollo.MutationResult<Types.AppUpdatePermissionsMutation>;
 export type AppUpdatePermissionsMutationOptions = Apollo.BaseMutationOptions<Types.AppUpdatePermissionsMutation, Types.AppUpdatePermissionsMutationVariables>;
 export const AppsListDocument = gql`
-    query AppsList($before: String, $after: String, $first: Int, $last: Int, $sort: AppSortingInput, $filter: AppFilterInput) {
+    query AppsList($before: String, $after: String, $first: Int, $last: Int, $sort: AppSortingInput, $filter: AppFilterInput, $canFetchAppEvents: Boolean!) {
   apps(
     before: $before
     after: $after
@@ -4057,10 +4069,11 @@ export const AppsListDocument = gql`
  *      last: // value for 'last'
  *      sort: // value for 'sort'
  *      filter: // value for 'filter'
+ *      canFetchAppEvents: // value for 'canFetchAppEvents'
  *   },
  * });
  */
-export function useAppsListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.AppsListQuery, Types.AppsListQueryVariables>) {
+export function useAppsListQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AppsListQuery, Types.AppsListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return ApolloReactHooks.useQuery<Types.AppsListQuery, Types.AppsListQueryVariables>(AppsListDocument, options);
       }
