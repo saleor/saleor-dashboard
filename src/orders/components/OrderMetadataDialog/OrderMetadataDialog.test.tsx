@@ -1,10 +1,12 @@
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import React from "react";
 import { IntlShape, MessageDescriptor } from "react-intl";
 
 import { OrderMetadataDialog, OrderMetadataDialogData } from "./OrderMetadataDialog";
 import { TEST_ID_ORDER_LINE_METADATA, TEST_ID_PRODUCT_VARIANT_METADATA } from "./test-ids";
+import { useHandleOrderLineMetadataSubmit } from "./useHandleSubmit";
 
 jest.mock("react-intl", () => ({
   FormattedMessage: (props: MessageDescriptor) => <>{props.defaultMessage || props.id || ""}</>,
@@ -15,10 +17,10 @@ jest.mock("react-intl", () => ({
 }));
 
 jest.mock("./useHandleSubmit", () => ({
-  useHandleOrderLineMetadataSubmit: () => ({
+  useHandleOrderLineMetadataSubmit: jest.fn(() => ({
     onSubmit: jest.fn(),
     lastSubmittedData: undefined,
-  }),
+  })),
 }));
 
 jest.mock("@dashboard/orders/hooks/useHasManageProductsPermission", () => ({
@@ -186,7 +188,7 @@ describe("OrderMetadataDialog", () => {
     });
   });
 
-  describe("OrderLine metadata form", () => {
+  describe("OrderLine metadata's form", () => {
     it("displays order line metadata", async () => {
       // Arrange
       render(
@@ -215,9 +217,7 @@ describe("OrderMetadataDialog", () => {
         within(orderLineMetadata).queryByDisplayValue("order-line-private-value"),
       ).not.toBeInTheDocument();
     });
-  });
 
-  describe("OrderLine privateMetadata form", () => {
     it("displays order line private metadata", () => {
       // Arrange
       render(
@@ -250,6 +250,68 @@ describe("OrderMetadataDialog", () => {
       expect(
         within(orderLineMetadata).queryByDisplayValue("order-line-value"),
       ).not.toBeInTheDocument();
+    });
+
+    it("saves changes after editing metadata", async () => {
+      // Arrange
+      const submitFn = jest.fn();
+
+      (useHandleOrderLineMetadataSubmit as jest.Mock).mockImplementation(() => ({
+        onSubmit: submitFn,
+        lastSubmittedData: undefined,
+      }));
+
+      const { debug } = render(
+        <OrderMetadataDialog
+          open={true}
+          onClose={onCloseMock}
+          orderId="order-id"
+          lineId={mockData.id}
+        />,
+      );
+
+      // Act
+      const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
+
+      const expandButtons = within(orderLineMetadata).getAllByTestId("expand");
+      const expandButtonOrderLineMetadata = expandButtons[0];
+      const expandButtonOrderLinePrivateMetadata = expandButtons[1];
+
+      await userEvent.click(expandButtonOrderLineMetadata);
+      await userEvent.click(expandButtonOrderLinePrivateMetadata);
+
+      const inputMetadata = screen.getByDisplayValue("order-line-value");
+      const inputPrivateMetadata = screen.getByDisplayValue("order-line-private-value");
+
+      await userEvent.type(inputMetadata, "new-value");
+      await userEvent.type(inputPrivateMetadata, "new-private-value");
+
+      const saveButton = screen.getByRole("button", {
+        name: "Save",
+      });
+
+      await userEvent.click(saveButton);
+
+      // Assert
+      await waitFor(() => {
+        expect(submitFn).toHaveBeenCalledWith(
+          expect.objectContaining({
+            metadata: [
+              {
+                key: "order-line-key",
+                value: "order-line-valuenew-value",
+              },
+            ],
+            privateMetadata: [
+              {
+                key: "order-line-private-key",
+                value: "order-line-private-valuenew-private-value",
+              },
+            ],
+          }),
+          expect.anything(),
+        );
+      });
     });
   });
 });
