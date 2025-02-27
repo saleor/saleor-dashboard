@@ -181,7 +181,6 @@ jobs:
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
 
   run-tests:
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'run pw-e2e') }}
     runs-on: ubuntu-22.04
     needs: [initialize-cloud, deploy-dashboard]
     strategy:
@@ -192,7 +191,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Check for skip e2e label
+        id: check-label
+        run: |
+          if ${{ contains(github.event.pull_request.labels.*.name, 'skip e2e') }}; then
+            echo "Tests skipped due to 'skip e2e' label"
+            echo "skip_tests=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip_tests=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Run playwright tests
+        # Only run tests if 'skip e2e' label is NOT present AND 'run pw-e2e' label IS present
+        if: steps.check-label.outputs.skip_tests == 'false' && contains(github.event.pull_request.labels.*.name, 'run pw-e2e')
         uses: ./.github/actions/run-pw-tests
         with:
           SHARD: ${{ matrix.shard }}
@@ -211,7 +222,8 @@ jobs:
           SALEOR_CLOUD_SERVICE: ${{ needs.initialize-cloud.outputs.SALEOR_CLOUD_SERVICE }}
 
       - name: submit-results-to-testmo
-        if: always()
+        # Only submit results if tests actually ran
+        if: always() && steps.check-label.outputs.skip_tests == 'false' && contains(github.event.pull_request.labels.*.name, 'run pw-e2e')
         uses: ./.github/actions/testmo/testmo-threads-submit-playwright
         with:
           testmoUrl: ${{ secrets.TESTMO_URL }}
