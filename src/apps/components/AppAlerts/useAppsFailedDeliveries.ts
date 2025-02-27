@@ -34,6 +34,7 @@ export const useAppsFailedDeliveries = (): AppsFailedDeliveries => {
   );
 
   const handleFetchAppsWebhooks = () => {
+    // Permissions are checked outside of this hook
     fetchAppsWebhooks({
       variables: {
         canFetchAppEvents: true,
