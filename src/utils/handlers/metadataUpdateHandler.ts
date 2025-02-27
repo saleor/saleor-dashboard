@@ -20,6 +20,12 @@ export interface ObjectWithMetadata {
   privateMetadata: MetadataInput[];
 }
 
+/** Compares initial metadata values with form values to determine
+ * which metadata should be updated in `updateMetadata` / `updatePrivateMetadata` mutation
+ *
+ * We don't want to modify metadata which wasn't changed in form (to avoid race-conditions)
+ * We also don't want to run mutation if no metadata were changed
+ * */
 function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
   initial: ObjectWithMetadata,
   update: (data: TData) => SubmitPromise<TError[] | undefined>,
