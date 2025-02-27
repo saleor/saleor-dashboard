@@ -57,6 +57,6 @@ export const formatMoneyRange = (moneyFrom: IMoney, moneyTo: IMoney, locale: str
     const formattedMoneyFrom = formatMoney(moneyFrom, locale);
     const formattedMoneyTo = formatMoney(moneyTo, locale);
 
-    return `${formattedMoneyFrom} - ${formattedMoneyTo}`;
+    return `${formattedMoneyFrom} – ${formattedMoneyTo}`;
   }
 };
