@@ -146,21 +146,21 @@ export const OrderMetadataDialog = ({
               />
             </Box>
           </Box>
+          <DashboardModal.Actions paddingX={6} marginTop={4}>
+            <ButtonWithLoader
+              transitionState={saveButtonState}
+              data-test-id="save"
+              variant={allFormErrors.length === 0 ? "primary" : "error"}
+              type="submit"
+              disabled={!formState.isDirty}
+            >
+              <FormattedMessage {...buttonMessages.save} />
+            </ButtonWithLoader>
+            <Button data-test-id="back" variant="secondary" onClick={onClose}>
+              <FormattedMessage {...buttonMessages.close} />
+            </Button>
+          </DashboardModal.Actions>
         </Box>
-        <DashboardModal.Actions paddingX={6} marginTop={4}>
-          <ButtonWithLoader
-            transitionState={saveButtonState}
-            data-test-id="save"
-            variant={allFormErrors.length === 0 ? "primary" : "error"}
-            type="submit"
-            disabled={!formState.isDirty}
-          >
-            <FormattedMessage {...buttonMessages.save} />
-          </ButtonWithLoader>
-          <Button data-test-id="back" variant="secondary" onClick={onClose}>
-            <FormattedMessage {...buttonMessages.close} />
-          </Button>
-        </DashboardModal.Actions>
       </DashboardModal.Content>
     </DashboardModal>
   );
