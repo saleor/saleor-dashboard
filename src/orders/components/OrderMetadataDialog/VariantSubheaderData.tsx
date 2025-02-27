@@ -1,8 +1,8 @@
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { ReactNode } from "react";
 import { useIntl } from "react-intl";
 
-const ListValue = ({ children, last }: { children: React.ReactNode; last?: boolean }) => {
+const ListValue = ({ children, last }: { children: ReactNode; last?: boolean }) => {
   return (
     <>
       <span
