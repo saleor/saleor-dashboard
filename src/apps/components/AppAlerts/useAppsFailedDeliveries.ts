@@ -1,5 +1,4 @@
 import { useAppFailedPendingWebhooksLazyQuery } from "@dashboard/graphql";
-import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { Moment } from "moment";
 import { useMemo } from "react";
 
@@ -12,36 +11,33 @@ interface AppsFailedDeliveries {
 }
 
 export const useAppsFailedDeliveries = (): AppsFailedDeliveries => {
-  const { hasManagedAppsPermission } = useHasManagedAppsPermission();
-
-  const [fetchAppsWebhooks, { data }] = useAppFailedPendingWebhooksLazyQuery();
+  const [fetchAppsWebhooks, { data }] = useAppFailedPendingWebhooksLazyQuery({
+    fetchPolicy: "no-cache",
+  });
 
   const lastFailedWebhookDate = useMemo(
     () =>
-      data?.apps?.edges.reduce(
-        (acc, app) => {
-          const latestFailedAttempt = getLatestFailedAttemptFromWebhooks(app.node.webhooks ?? []);
+      data?.apps?.edges.reduce((acc, app) => {
+        const latestFailedAttempt = getLatestFailedAttemptFromWebhooks(app.node.webhooks ?? []);
 
-          if (!latestFailedAttempt) {
-            return acc;
-          }
+        if (!latestFailedAttempt) {
+          return acc;
+        }
 
-          if (!acc) {
-            return latestFailedAttempt.createdAt;
-          }
+        if (!acc) {
+          return latestFailedAttempt.createdAt;
+        }
 
-          return latestFailedAttempt.createdAt > acc ? latestFailedAttempt : acc;
-        },
-        null as Moment | null,
-      ) ?? null,
+        return latestFailedAttempt.createdAt > acc ? latestFailedAttempt : acc;
+      }, null) ?? null,
     [data?.apps?.edges],
   );
 
   const handleFetchAppsWebhooks = () => {
-    // TODO: checking if webhooks should be fetched will be extracted out of this hook in a separate ticket
+    // Permissions are checked outside of this hook
     fetchAppsWebhooks({
       variables: {
-        canFetchAppEvents: hasManagedAppsPermission,
+        canFetchAppEvents: true,
       },
     });
   };
