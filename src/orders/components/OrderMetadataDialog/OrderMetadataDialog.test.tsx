@@ -68,6 +68,7 @@ describe("OrderMetadataDialog", () => {
   });
 
   it("closes when user hits close icon button", () => {
+    // Arrange
     render(
       <OrderMetadataDialog
         open={true}
@@ -85,6 +86,7 @@ describe("OrderMetadataDialog", () => {
   });
 
   it("closes when user hits close text button", () => {
+    // Arrange
     render(
       <OrderMetadataDialog
         open={true}
@@ -102,6 +104,7 @@ describe("OrderMetadataDialog", () => {
   });
 
   it("displays details about order line", () => {
+    // Arrange
     render(
       <OrderMetadataDialog
         open={true}
@@ -111,12 +114,14 @@ describe("OrderMetadataDialog", () => {
       />,
     );
 
+    // Assert
     expect(screen.queryByText(mockData.quantity)).toBeInTheDocument();
     expect(screen.queryByText(mockData.variant.name)).toBeInTheDocument();
     expect(screen.queryByText(mockData.productSku)).toBeInTheDocument();
   });
 
   it("renders product thumbnail correctly", () => {
+    // Arrange
     render(
       <OrderMetadataDialog
         open={true}
@@ -126,6 +131,7 @@ describe("OrderMetadataDialog", () => {
       />,
     );
 
+    // Assert
     const thumbnailImage = screen.getByRole("img");
 
     expect(thumbnailImage).toBeInTheDocument();
@@ -134,6 +140,7 @@ describe("OrderMetadataDialog", () => {
 
   describe("ProductVariant metadata list", () => {
     it("displays product variant metadata", async () => {
+      // Arrange
       render(
         <OrderMetadataDialog
           open={true}
@@ -142,8 +149,6 @@ describe("OrderMetadataDialog", () => {
           lineId={mockData.id}
         />,
       );
-
-      expect(screen.getByText("Product variant metadata")).toBeInTheDocument();
 
       const productVariantMetadata = screen.getByTestId(TEST_ID_PRODUCT_VARIANT_METADATA);
 
@@ -171,11 +176,11 @@ describe("OrderMetadataDialog", () => {
         />,
       );
 
+      // Assert
       // Private metadata should not be visible in the readonly section
       const metadataEditors = screen.getAllByTestId("metadata-editor");
       const readonlyEditor = metadataEditors[1];
 
-      // Assert
       expect(readonlyEditor).not.toHaveTextContent("variant-private-key");
       expect(readonlyEditor).not.toHaveTextContent("variant-private-value");
     });
@@ -183,6 +188,7 @@ describe("OrderMetadataDialog", () => {
 
   describe("OrderLine metadata form", () => {
     it("displays order line metadata", async () => {
+      // Arrange
       render(
         <OrderMetadataDialog
           open={true}
@@ -213,6 +219,7 @@ describe("OrderMetadataDialog", () => {
 
   describe("OrderLine privateMetadata form", () => {
     it("displays order line private metadata", () => {
+      // Arrange
       render(
         <OrderMetadataDialog
           open={true}

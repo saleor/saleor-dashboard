@@ -43,10 +43,10 @@ export const OrderMetadataDialog = ({
     values: loading
       ? lastSubmittedData
       : {
-        // Removes __typename from metadata item object
-        metadata: (data?.metadata ?? []).map(mapMetadataItemToInput),
-        privateMetadata: (data?.privateMetadata ?? [])?.map(mapMetadataItemToInput),
-      },
+          // Removes __typename from metadata item object
+          metadata: (data?.metadata ?? []).map(mapMetadataItemToInput),
+          privateMetadata: (data?.privateMetadata ?? [])?.map(mapMetadataItemToInput),
+        },
   });
 
   const { handleSubmit, control, getValues, formState, trigger } = formMethods;
@@ -107,61 +107,60 @@ export const OrderMetadataDialog = ({
                   {allFormErrors.join(", ")}
                 </Text>
               )}
+            </Box>
+            <Divider />
 
-              <Divider />
-
-              <Box
-                display="flex"
-                flexDirection="column"
-                data-test-id={TEST_ID_PRODUCT_VARIANT_METADATA}
-              >
-                <Box display="flex" flexDirection="column" marginLeft={6} gap={2}>
-                  <Text as="h2" size={5} fontWeight="bold">
-                    <FormattedMessage
-                      defaultMessage="Product variant metadata"
-                      description="modal header, read-only product variant metadata"
-                      id="PH4R7g"
-                    />
-                  </Text>
-                  <Text>
-                    <FormattedMessage
-                      defaultMessage="This is a metadata of the variant that is being used in this ordered item"
-                      description="modal subheader, read-only product variant metadata"
-                      id="/mwSjm"
-                    />
-                  </Text>
-                </Box>
-
-                {/* We cannot use memo, because it won't show loading state correctly */}
-                <MetadataNoMemo
-                  onChange={() => undefined}
-                  readonly
-                  isLoading={loading && !data}
-                  data={{
-                    metadata: data?.variant?.metadata ?? [],
-                    privateMetadata: data?.variant?.privateMetadata ?? [],
-                  }}
-                  hidePrivateMetadata={!hasManageProducts}
-                  paddingBottom={0}
-                />
+            <Box
+              display="flex"
+              flexDirection="column"
+              data-test-id={TEST_ID_PRODUCT_VARIANT_METADATA}
+            >
+              <Box display="flex" flexDirection="column" marginLeft={6} gap={2}>
+                <Text as="h2" size={5} fontWeight="bold">
+                  <FormattedMessage
+                    defaultMessage="Product variant metadata"
+                    description="modal header, read-only product variant metadata"
+                    id="PH4R7g"
+                  />
+                </Text>
+                <Text>
+                  <FormattedMessage
+                    defaultMessage="This is a metadata of the variant that is being used in this ordered item"
+                    description="modal subheader, read-only product variant metadata"
+                    id="/mwSjm"
+                  />
+                </Text>
               </Box>
+
+              {/* We cannot use memo, because it won't show loading state correctly */}
+              <MetadataNoMemo
+                onChange={() => undefined}
+                readonly
+                isLoading={loading && !data}
+                data={{
+                  metadata: data?.variant?.metadata ?? [],
+                  privateMetadata: data?.variant?.privateMetadata ?? [],
+                }}
+                hidePrivateMetadata={!hasManageProducts}
+                paddingBottom={0}
+              />
             </Box>
           </Box>
-          <DashboardModal.Actions paddingX={6} marginTop={4}>
-            <ButtonWithLoader
-              transitionState={saveButtonState}
-              data-test-id="save"
-              variant={allFormErrors.length === 0 ? "primary" : "error"}
-              type="submit"
-              disabled={!formState.isDirty}
-            >
-              <FormattedMessage {...buttonMessages.save} />
-            </ButtonWithLoader>
-            <Button data-test-id="back" variant="secondary" onClick={onClose}>
-              <FormattedMessage {...buttonMessages.close} />
-            </Button>
-          </DashboardModal.Actions>
         </Box>
+        <DashboardModal.Actions paddingX={6} marginTop={4}>
+          <ButtonWithLoader
+            transitionState={saveButtonState}
+            data-test-id="save"
+            variant={allFormErrors.length === 0 ? "primary" : "error"}
+            type="submit"
+            disabled={!formState.isDirty}
+          >
+            <FormattedMessage {...buttonMessages.save} />
+          </ButtonWithLoader>
+          <Button data-test-id="back" variant="secondary" onClick={onClose}>
+            <FormattedMessage {...buttonMessages.close} />
+          </Button>
+        </DashboardModal.Actions>
       </DashboardModal.Content>
     </DashboardModal>
   );

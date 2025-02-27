@@ -1498,6 +1498,8 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
       quantityFulfilled: 0,
       quantityToFulfill: 3,
       isGift: false,
+      metadata: [],
+      privateMetadata: [],
       allocations: [
         {
           id: "allocation_test_id",
@@ -1609,6 +1611,8 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
       quantityFulfilled: 2,
       quantityToFulfill: 0,
       isGift: false,
+      metadata: [],
+      privateMetadata: [],
       allocations: [
         {
           id: "allocation_test_id",
@@ -1885,6 +1889,8 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
       quantityFulfilled: 0,
       quantityToFulfill: 2,
       isGift: false,
+      metadata: [],
+      privateMetadata: [],
       allocations: [
         {
           id: "allocation_test_id",
@@ -1996,6 +2002,8 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
       quantityFulfilled: 0,
       quantityToFulfill: 2,
       isGift: false,
+      metadata: [],
+      privateMetadata: [],
       allocations: [
         {
           id: "allocation_test_id",
