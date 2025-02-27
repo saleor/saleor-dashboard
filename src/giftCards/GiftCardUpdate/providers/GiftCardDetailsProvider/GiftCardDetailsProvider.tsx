@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { GiftCardDetailsQuery, useGiftCardDetailsQuery } from "@dashboard/graphql";
-import { createContext, ReactNode } from "react";
+import { createContext, ReactNode, useContext } from "react";
 
 import { useGiftCardPermissions } from "../../../hooks/useGiftCardPermissions";
 import { ExtendedGiftCard } from "./types";
@@ -37,7 +37,7 @@ const GiftCardDetailsProvider = ({ children, id }: GiftCardDetailsProviderProps)
 };
 
 export const useGiftCardDetails = () => {
-  const context = React.useContext(GiftCardDetailsContext);
+  const context = useContext(GiftCardDetailsContext);
 
   if (!context) {
     throw new Error("useGiftCardDetails must be used within a GiftCardDetailsProvider");
