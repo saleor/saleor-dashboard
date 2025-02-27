@@ -9,7 +9,7 @@ import {
   SaleDetailsPageFormData,
 } from "@dashboard/discounts/components/SaleDetailsPage";
 import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
-import { DiscountTypeEnum } from "@dashboard/discounts/types";
+import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
 import {
   DiscountErrorCode,
   DiscountErrorFragment,
@@ -185,17 +185,20 @@ export function createVoucherUpdateHandler(
   setLocalErrors: (errors: DiscountErrorFragment[]) => void,
 ) {
   return async (formData: VoucherDetailsPageFormData) => {
-    const { channelListings } = formData;
-    const invalidChannelListings = channelListings
-      ?.filter(channel => validateVoucherPrice(formData, channel))
-      .map(channel => channel.id);
-    const localErrors: DiscountErrorFragment[] = invalidChannelListings?.length
+    const { channelListings, discountType, requirementsPicker } = formData;
+    const { valid, invalidChannels } = validateChannelListing(
+      channelListings,
+      discountType,
+      requirementsPicker,
+    );
+
+    const localErrors: DiscountErrorFragment[] = !valid
       ? [
           {
             __typename: "DiscountError",
             code: DiscountErrorCode.INVALID,
             field: "discountValue",
-            channels: invalidChannelListings,
+            channels: invalidChannels,
             message: "Invalid discount value",
           },
         ]
@@ -208,5 +211,28 @@ export function createVoucherUpdateHandler(
     }
 
     return submit(formData);
+  };
+}
+
+export function validateChannelListing(
+  channelListings: ChannelVoucherData[],
+  discountType: DiscountTypeEnum,
+  requirementsPicker: RequirementsPicker,
+) {
+  // When discount type is shipping, there is no need to check if all selected channels have a discount value
+  if (discountType === DiscountTypeEnum.SHIPPING) {
+    return {
+      valid: true,
+      invalidChannels: [],
+    };
+  }
+
+  const invalidChannelListings = channelListings
+    ?.filter(channel => validateVoucherPrice(requirementsPicker, channel))
+    .map(channel => channel.id);
+
+  return {
+    valid: !invalidChannelListings.length,
+    invalidChannels: invalidChannelListings,
   };
 }
