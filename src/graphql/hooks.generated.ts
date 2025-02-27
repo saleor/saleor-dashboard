@@ -2088,6 +2088,7 @@ ${InvoiceFragmentDoc}`;
 export const OrderLineWithMetadataFragmentDoc = gql`
     fragment OrderLineWithMetadata on OrderLine {
   ...OrderLine
+  ...Metadata
   variant {
     metadata {
       ...MetadataItem
@@ -2098,6 +2099,7 @@ export const OrderLineWithMetadataFragmentDoc = gql`
   }
 }
     ${OrderLineFragmentDoc}
+${MetadataFragmentDoc}
 ${MetadataItemFragmentDoc}`;
 export const FulfillmentWithMetadataFragmentDoc = gql`
     fragment FulfillmentWithMetadata on Fulfillment {

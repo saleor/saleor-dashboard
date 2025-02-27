@@ -317,6 +317,10 @@
     "context": "channels alphabetically title",
     "string": "Channels from A to Z"
   },
+  "/mwSjm": {
+    "context": "modal subheader, read-only product variant metadata",
+    "string": "This is a metadata of the variant that is being used in this ordered item"
+  },
   "/n+NRO": {
     "string": "Note id"
   },
@@ -3840,6 +3844,10 @@
     "context": "section header",
     "string": "Fulfillment"
   },
+  "MfWHGz": {
+    "context": "metadata edit form, error message",
+    "string": "Metadata keys must be unique, remove duplicate key"
+  },
   "MgdgpT": {
     "context": "customer input label",
     "string": "Customer"
@@ -4233,6 +4241,10 @@
   },
   "PFnobO": {
     "string": "greater"
+  },
+  "PH4R7g": {
+    "context": "modal header, read-only product variant metadata",
+    "string": "Product variant metadata"
   },
   "PHUcrU": {
     "context": "date when order was placed",
@@ -7738,6 +7750,10 @@
     "context": "order returned success message",
     "string": "Successfully returned products and granted refund!"
   },
+  "lb5uDM": {
+    "context": "metadata edit form, error message",
+    "string": "Metadata key cannot be empty"
+  },
   "lct0qd": {
     "string": "This list shows all attributes that will be assigned to pages that have this page type assigned."
   },
@@ -9023,6 +9039,10 @@
   "ugnggZ": {
     "string": "Created menu"
   },
+  "ui7jMt": {
+    "context": "modal header, editing order line metadata",
+    "string": "Order line metadata"
+  },
   "uilt7q": {
     "context": "issued cards amount label",
     "string": "Cards Issued"
@@ -9541,6 +9561,10 @@
   "xy66ru": {
     "context": "custom preset delete, dialog header",
     "string": "Delete preset"
+  },
+  "y+CqSF": {
+    "context": "modal subheader, editing order line metadata",
+    "string": "Represents the metadata of the given ordered item"
   },
   "y/UWBR": {
     "string": "There is no address to show for this customer"

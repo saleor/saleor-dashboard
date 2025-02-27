@@ -14,6 +14,7 @@ export interface MetadataCardProps {
   isPrivate: boolean;
   onChange: FormChange;
   readonly?: boolean;
+  disabled?: boolean;
 }
 
 export const MetadataCard: React.FC<MetadataCardProps> = ({
@@ -21,6 +22,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
   isPrivate,
   onChange,
   readonly = false,
+  disabled,
 }) => {
   const intl = useIntl();
   const [expanded, setExpanded] = useState(readonly ? "metadata-accordion" : undefined);
@@ -67,7 +69,12 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                 <Skeleton />
               ) : (
                 <>
-                  <MetadataCardTable readonly={readonly} data={data} onChange={onChange} />
+                  <MetadataCardTable
+                    readonly={readonly}
+                    disabled={disabled}
+                    data={data}
+                    onChange={onChange}
+                  />
 
                   {!readonly && (
                     <Button
