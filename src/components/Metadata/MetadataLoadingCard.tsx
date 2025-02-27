@@ -15,8 +15,8 @@ export const MetadataLoadingCard = ({ isPrivate = false }: { isPrivate?: boolean
         </Text>
 
         <Box display="flex" flexDirection="row" gap={20}>
-          <Skeleton height={6} />
-          <Skeleton height={6} />
+          <Skeleton height={6} data-test-id="skeleton" />
+          <Skeleton height={6} data-test-id="skeleton" />
         </Box>
       </DashboardCard.Content>
     </DashboardCard>

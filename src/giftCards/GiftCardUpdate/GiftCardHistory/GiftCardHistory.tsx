@@ -2,6 +2,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Form from "@dashboard/components/Form";
 import Timeline, { TimelineAddNote, TimelineNote } from "@dashboard/components/Timeline";
+import { useGiftCardDetails } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider";
 import { GiftCardEventsEnum, useGiftCardAddNoteMutation } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { HistoryComponentLoader } from "@dashboard/orders/components/OrderHistory/HistoryComponentLoader";
@@ -9,7 +10,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { GIFT_CARD_DETAILS_QUERY } from "../queries";
 import GiftCardTimelineEvent from "./GiftCardTimelineEvent";
-import useGiftCardHistoryEvents from "./hooks/useGiftCardHistoryEvents";
 import { giftCardHistoryMessages as messages } from "./messages";
 
 interface FormData {
@@ -19,7 +19,7 @@ interface FormData {
 const GiftCardHistory = () => {
   const intl = useIntl();
   const notify = useNotifier();
-  const { id, events } = useGiftCardHistoryEvents();
+  const { giftCard } = useGiftCardDetails();
   const [addTimelineNote, { loading }] = useGiftCardAddNoteMutation({
     refetchQueries: [GIFT_CARD_DETAILS_QUERY],
     onCompleted: ({ giftCardAddNote }) => {
@@ -41,7 +41,9 @@ const GiftCardHistory = () => {
   const onNoteAdd = (data: FormData) => {
     const { message } = data;
 
-    addTimelineNote({ variables: { id, input: { message } } });
+    if (!giftCard) return;
+
+    addTimelineNote({ variables: { id: giftCard.id, input: { message } } });
   };
 
   return (
@@ -52,7 +54,7 @@ const GiftCardHistory = () => {
         </DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        {events ? (
+        {giftCard?.events ? (
           <Timeline>
             <Form initial={{ message: "" }} onSubmit={onNoteAdd} resetOnSubmit>
               {({ change, data, reset, submit }) => (
@@ -65,7 +67,7 @@ const GiftCardHistory = () => {
                 />
               )}
             </Form>
-            {events
+            {giftCard.events
               .slice()
               .reverse()
               .map(event => {

@@ -3,14 +3,14 @@ import { AppPaths } from "@dashboard/apps/urls";
 import Link from "@dashboard/components/Link";
 import { TimelineEvent } from "@dashboard/components/Timeline";
 import { customerPath } from "@dashboard/customers/urls";
-import { GiftCardEventsEnum, GiftCardEventsQuery } from "@dashboard/graphql";
+import { GiftCardDetailsQuery, GiftCardEventsEnum } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { IntlShape, useIntl } from "react-intl";
 
 import { giftCardHistoryTimelineMessages as timelineMessages } from "./messages";
 
-type GiftCardEventType = GiftCardEventsQuery["giftCard"]["events"][0];
+type GiftCardEventType = GiftCardDetailsQuery["giftCard"]["events"][0];
 
 const getUserOrApp = (event: GiftCardEventType): string | null => {
   if (event.user) {

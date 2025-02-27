@@ -511,6 +511,8 @@ describe("Get the total value of all replaced products", () => {
         id: "1",
         isShippingRequired: false,
         isGift: false,
+        metadata: [],
+        privateMetadata: [],
         allocations: [
           {
             id: "allocation_test_id",
@@ -624,7 +626,8 @@ describe("Get the total value of all replaced products", () => {
         id: "2",
         isShippingRequired: false,
         isGift: false,
-
+        metadata: [],
+        privateMetadata: [],
         allocations: [
           {
             id: "allocation_test_id",
@@ -738,7 +741,8 @@ describe("Get the total value of all replaced products", () => {
         id: "3",
         isShippingRequired: true,
         isGift: false,
-
+        metadata: [],
+        privateMetadata: [],
         allocations: [
           {
             id: "allocation_test_id",
@@ -857,7 +861,8 @@ describe("Get the total value of all replaced products", () => {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
           isGift: false,
-
+          metadata: [],
+          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -976,6 +981,8 @@ describe("Get the total value of all replaced products", () => {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
           isGift: false,
+          metadata: [],
+          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -1094,6 +1101,8 @@ describe("Get the total value of all replaced products", () => {
           id: "T3JkZXJMaW5lOjQ3",
           isShippingRequired: true,
           isGift: false,
+          metadata: [],
+          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -1212,6 +1221,8 @@ describe("Get the total value of all replaced products", () => {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
           isGift: false,
+          metadata: [],
+          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -1330,6 +1341,8 @@ describe("Get the total value of all replaced products", () => {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
           isGift: false,
+          metadata: [],
+          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -1577,6 +1590,8 @@ describe("Get the total value of all selected products", () => {
         id: "1",
         isShippingRequired: false,
         isGift: false,
+        metadata: [],
+        privateMetadata: [],
         allocations: [
           {
             id: "allocation_test_id",
@@ -1690,6 +1705,8 @@ describe("Get the total value of all selected products", () => {
         id: "2",
         isShippingRequired: false,
         isGift: false,
+        metadata: [],
+        privateMetadata: [],
         allocations: [
           {
             id: "allocation_test_id",
@@ -1803,6 +1820,8 @@ describe("Get the total value of all selected products", () => {
         id: "3",
         isShippingRequired: true,
         isGift: false,
+        metadata: [],
+        privateMetadata: [],
         allocations: [
           {
             id: "allocation_test_id",
@@ -1921,6 +1940,8 @@ describe("Get the total value of all selected products", () => {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
           isGift: false,
+          metadata: [],
+          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -2039,6 +2060,8 @@ describe("Get the total value of all selected products", () => {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
           isGift: false,
+          metadata: [],
+          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -2157,6 +2180,8 @@ describe("Get the total value of all selected products", () => {
           id: "T3JkZXJMaW5lOjQ3",
           isShippingRequired: true,
           isGift: false,
+          metadata: [],
+          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -2397,6 +2422,8 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
           isGift: false,
+          metadata: [],
+          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -2515,6 +2542,8 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
           isGift: false,
+          metadata: [],
+          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -2633,6 +2662,8 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           id: "T3JkZXJMaW5lOjQ3",
           isShippingRequired: true,
           isGift: false,
+          metadata: [],
+          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",

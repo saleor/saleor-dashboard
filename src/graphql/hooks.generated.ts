@@ -2088,6 +2088,7 @@ ${InvoiceFragmentDoc}`;
 export const OrderLineWithMetadataFragmentDoc = gql`
     fragment OrderLineWithMetadata on OrderLine {
   ...OrderLine
+  ...Metadata
   variant {
     metadata {
       ...MetadataItem
@@ -2098,6 +2099,7 @@ export const OrderLineWithMetadataFragmentDoc = gql`
   }
 }
     ${OrderLineFragmentDoc}
+${MetadataFragmentDoc}
 ${MetadataItemFragmentDoc}`;
 export const FulfillmentWithMetadataFragmentDoc = gql`
     fragment FulfillmentWithMetadata on Fulfillment {
@@ -9469,62 +9471,6 @@ export function useGiftCardSettingsLazyQuery(baseOptions?: ApolloReactHooks.Lazy
 export type GiftCardSettingsQueryHookResult = ReturnType<typeof useGiftCardSettingsQuery>;
 export type GiftCardSettingsLazyQueryHookResult = ReturnType<typeof useGiftCardSettingsLazyQuery>;
 export type GiftCardSettingsQueryResult = Apollo.QueryResult<Types.GiftCardSettingsQuery, Types.GiftCardSettingsQueryVariables>;
-export const GiftCardEventsDocument = gql`
-    query GiftCardEvents($id: ID!, $canSeeApp: Boolean!, $canSeeUser: Boolean!) {
-  giftCard(id: $id) {
-    events {
-      ...GiftCardEvent
-      app @include(if: $canSeeApp) {
-        id
-        name
-        brand {
-          logo {
-            default(size: 128)
-          }
-        }
-      }
-      user @include(if: $canSeeUser) {
-        ...UserBase
-        email
-        avatar(size: 128) {
-          url
-        }
-      }
-    }
-  }
-}
-    ${GiftCardEventFragmentDoc}
-${UserBaseFragmentDoc}`;
-
-/**
- * __useGiftCardEventsQuery__
- *
- * To run a query within a React component, call `useGiftCardEventsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGiftCardEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGiftCardEventsQuery({
- *   variables: {
- *      id: // value for 'id'
- *      canSeeApp: // value for 'canSeeApp'
- *      canSeeUser: // value for 'canSeeUser'
- *   },
- * });
- */
-export function useGiftCardEventsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.GiftCardEventsQuery, Types.GiftCardEventsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.GiftCardEventsQuery, Types.GiftCardEventsQueryVariables>(GiftCardEventsDocument, options);
-      }
-export function useGiftCardEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GiftCardEventsQuery, Types.GiftCardEventsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.GiftCardEventsQuery, Types.GiftCardEventsQueryVariables>(GiftCardEventsDocument, options);
-        }
-export type GiftCardEventsQueryHookResult = ReturnType<typeof useGiftCardEventsQuery>;
-export type GiftCardEventsLazyQueryHookResult = ReturnType<typeof useGiftCardEventsLazyQuery>;
-export type GiftCardEventsQueryResult = Apollo.QueryResult<Types.GiftCardEventsQuery, Types.GiftCardEventsQueryVariables>;
 export const GiftCardResendDocument = gql`
     mutation GiftCardResend($input: GiftCardResendInput!) {
   giftCardResend(input: $input) {
@@ -9808,12 +9754,33 @@ export type GiftCardBulkDeactivateMutationHookResult = ReturnType<typeof useGift
 export type GiftCardBulkDeactivateMutationResult = Apollo.MutationResult<Types.GiftCardBulkDeactivateMutation>;
 export type GiftCardBulkDeactivateMutationOptions = Apollo.BaseMutationOptions<Types.GiftCardBulkDeactivateMutation, Types.GiftCardBulkDeactivateMutationVariables>;
 export const GiftCardDetailsDocument = gql`
-    query GiftCardDetails($id: ID!) {
+    query GiftCardDetails($id: ID!, $canSeeApp: Boolean!, $canSeeUser: Boolean!) {
   giftCard(id: $id) {
     ...GiftCardData
+    events {
+      ...GiftCardEvent
+      app @include(if: $canSeeApp) {
+        id
+        name
+        brand {
+          logo {
+            default(size: 128)
+          }
+        }
+      }
+      user @include(if: $canSeeUser) {
+        ...UserBase
+        email
+        avatar(size: 128) {
+          url
+        }
+      }
+    }
   }
 }
-    ${GiftCardDataFragmentDoc}`;
+    ${GiftCardDataFragmentDoc}
+${GiftCardEventFragmentDoc}
+${UserBaseFragmentDoc}`;
 
 /**
  * __useGiftCardDetailsQuery__
@@ -9828,6 +9795,8 @@ export const GiftCardDetailsDocument = gql`
  * const { data, loading, error } = useGiftCardDetailsQuery({
  *   variables: {
  *      id: // value for 'id'
+ *      canSeeApp: // value for 'canSeeApp'
+ *      canSeeUser: // value for 'canSeeUser'
  *   },
  * });
  */

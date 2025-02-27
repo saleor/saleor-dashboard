@@ -37,7 +37,7 @@ export const ButtonWithLoader = ({
   return (
     <Button
       {...props}
-      disabled={isLoading && disabled}
+      disabled={isLoading || disabled}
       onClick={isLoading ? undefined : onClick}
       data-test-state={isLoading ? "loading" : "default"}
     >
