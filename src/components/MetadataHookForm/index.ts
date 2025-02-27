@@ -1,0 +1,1 @@
+export { MetadataHookForm } from "./MetadataHookForm";

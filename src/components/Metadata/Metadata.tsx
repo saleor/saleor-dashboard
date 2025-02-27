@@ -2,7 +2,7 @@
 import { MetadataInput } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { removeAtIndex, updateAtIndex } from "@dashboard/utils/lists";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, BoxProps } from "@saleor/macaw-ui-next";
 import React, { memo } from "react";
 
 import { MetadataCard, MetadataCardProps } from "./MetadataCard";
@@ -10,7 +10,9 @@ import { MetadataLoadingCard } from "./MetadataLoadingCard";
 import { EventDataAction, EventDataField } from "./types";
 import { getDataKey, parseEventData } from "./utils";
 
-export interface MetadataProps extends Omit<MetadataCardProps, "data" | "isPrivate"> {
+export interface MetadataProps
+  extends Omit<MetadataCardProps, "data" | "isPrivate">,
+    Omit<BoxProps, `on${string}` | "data"> {
   data: {
     metadata: MetadataInput[];
     privateMetadata: MetadataInput[] | undefined;
@@ -38,7 +40,7 @@ const propsCompare = (_, newProps: MetadataProps) => {
 // TODO: Refactor loading state logic
 // TODO: Split "Metadata" component into "Metadata" and "PrivateMetadata" components
 export const Metadata: React.FC<MetadataProps> = memo(
-  ({ data, onChange, isLoading, readonly = false, hidePrivateMetadata = false }) => {
+  ({ data, onChange, isLoading, readonly = false, hidePrivateMetadata = false, ...props }) => {
     const change = (event: ChangeEvent, isPrivate: boolean) => {
       const { action, field, fieldIndex, value } = parseEventData(event);
       const key = getDataKey(isPrivate);
@@ -72,7 +74,7 @@ export const Metadata: React.FC<MetadataProps> = memo(
     };
 
     return (
-      <Box display="grid" gap={2} paddingBottom={10}>
+      <Box display="grid" gap={2} paddingBottom={10} {...props}>
         {isLoading ? (
           <>
             <MetadataLoadingCard />
