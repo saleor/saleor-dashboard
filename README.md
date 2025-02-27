@@ -27,7 +27,7 @@
 
 ## Prerequisites
 
-- Node.js v18+
+- Node.js v20
 - A running instance of [Saleor](https://github.com/saleor/saleor/)
 
 ## Development
