@@ -7,5 +7,5 @@ visible: true
 ---
 
 ![new filters](./images/app-alerts.jpg)
-Experience new notifications displaying alerts for apps in the Dashboard. 
-Get meaningful information when Saleor detects issues with an app.
+Benefit from new notifications in your Dashboard that alert you to issues with webhooks for your apps, helping you stay informed about potential problems.
+We’re continuously working to expand this feature to provide more insights for your apps.
