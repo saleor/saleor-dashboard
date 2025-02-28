@@ -17,7 +17,7 @@
   <span> • </span>
   <a href="https://twitter.com/getsaleor">🐦 Twitter</a>
   <span> • </span>
-  <a href="https://discord.gg/H52JTZAtSH">💬 Discord</a>
+  <a href="https://saleor.io/discord">💬 Discord</a>
 </div>
 
 <div align="center">
