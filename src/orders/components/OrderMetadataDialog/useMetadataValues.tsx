@@ -1,4 +1,7 @@
-import { useOrderLinesMetadataLazyQuery } from "@dashboard/graphql";
+import {
+  OrderLineMetadataDetailsFragment,
+  useOrderLinesMetadataLazyQuery,
+} from "@dashboard/graphql";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 import { useEffect, useMemo } from "react";
 
@@ -32,7 +35,7 @@ export const useMetadataValues = ({
   }, [data, lineId]);
 
   return {
-    data: lineData,
+    data: lineData as OrderLineMetadataDetailsFragment,
     loading,
   } as const;
 };

@@ -1489,6 +1489,40 @@ export const MenuDetailsFragmentDoc = gql`
   name
 }
     ${MenuItemNestedFragmentDoc}`;
+export const OrderLineMetadataFragmentDoc = gql`
+    fragment OrderLineMetadata on OrderLine {
+  metadata {
+    ...MetadataItem
+  }
+  privateMetadata {
+    ...MetadataItem
+  }
+  variant {
+    metadata {
+      ...MetadataItem
+    }
+    privateMetadata @include(if: $hasManageProducts) {
+      ...MetadataItem
+    }
+  }
+}
+    ${MetadataItemFragmentDoc}`;
+export const OrderLineMetadataDetailsFragmentDoc = gql`
+    fragment OrderLineMetadataDetails on OrderLine {
+  id
+  productName
+  productSku
+  quantity
+  thumbnail {
+    url
+  }
+  variant {
+    id
+    name
+  }
+  ...OrderLineMetadata
+}
+    ${OrderLineMetadataFragmentDoc}`;
 export const RefundOrderLineFragmentDoc = gql`
     fragment RefundOrderLine on OrderLine {
   id
@@ -2085,24 +2119,6 @@ ${FulfillmentFragmentDoc}
 ${OrderLineFragmentDoc}
 ${MoneyFragmentDoc}
 ${InvoiceFragmentDoc}`;
-export const OrderLineMetadataFragmentDoc = gql`
-    fragment OrderLineMetadata on OrderLine {
-  metadata {
-    ...MetadataItem
-  }
-  privateMetadata {
-    ...MetadataItem
-  }
-  variant {
-    metadata {
-      ...MetadataItem
-    }
-    privateMetadata @include(if: $hasManageProducts) {
-      ...MetadataItem
-    }
-  }
-}
-    ${MetadataItemFragmentDoc}`;
 export const OrderLineWithMetadataFragmentDoc = gql`
     fragment OrderLineWithMetadata on OrderLine {
   ...OrderLine
@@ -12415,22 +12431,11 @@ export const OrderLinesMetadataDocument = gql`
     query OrderLinesMetadata($id: ID!, $hasManageProducts: Boolean!) {
   order(id: $id) {
     lines {
-      id
-      productName
-      productSku
-      quantity
-      thumbnail {
-        url
-      }
-      variant {
-        id
-        name
-      }
-      ...OrderLineMetadata
+      ...OrderLineMetadataDetails
     }
   }
 }
-    ${OrderLineMetadataFragmentDoc}`;
+    ${OrderLineMetadataDetailsFragmentDoc}`;
 
 /**
  * __useOrderLinesMetadataQuery__

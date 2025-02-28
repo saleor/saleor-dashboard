@@ -141,18 +141,7 @@ export const orderLinesMetadata = gql`
   query OrderLinesMetadata($id: ID!, $hasManageProducts: Boolean!) {
     order(id: $id) {
       lines {
-        id
-        productName
-        productSku
-        quantity
-        thumbnail {
-          url
-        }
-        variant {
-          id
-          name
-        }
-        ...OrderLineMetadata
+        ...OrderLineMetadataDetails
       }
     }
   }

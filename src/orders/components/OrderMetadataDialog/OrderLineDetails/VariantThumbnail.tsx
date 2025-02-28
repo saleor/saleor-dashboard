@@ -1,4 +1,4 @@
-import { Box, Spinner } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Spinner } from "@saleor/macaw-ui-next";
 import React from "react";
 
 export const VariantThumbnail = ({
@@ -8,6 +8,10 @@ export const VariantThumbnail = ({
   src: string | undefined;
   loading: boolean;
 }) => {
+  if (loading) {
+    return <Skeleton height={20} width={20} />;
+  }
+
   return (
     <Box
       display="flex"
@@ -20,7 +24,7 @@ export const VariantThumbnail = ({
       borderWidth={1}
       borderColor="default1"
     >
-      {loading ? <Spinner /> : <img src={src} alt="" />}
+      <img src={src} alt="" />
     </Box>
   );
 };

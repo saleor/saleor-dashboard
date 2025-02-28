@@ -1,4 +1,4 @@
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React, { ReactNode } from "react";
 import { useIntl } from "react-intl";
 
@@ -39,7 +39,7 @@ const ListItem = ({
   );
 };
 
-export const VariantSubheaderData = ({
+export const OrderLineSubheaderData = ({
   productSku,
   quantity,
   variantName,
@@ -54,11 +54,7 @@ export const VariantSubheaderData = ({
 
   if (loading) {
     // Hidden text that adds height, so that we don't have movement once data loads
-    return (
-      <Text visibility="hidden" aria-hidden="true">
-        Loading...
-      </Text>
-    );
+    return <Skeleton width={52} height={5} />;
   }
 
   return (

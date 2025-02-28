@@ -170,6 +170,23 @@ export const fragmentOrderLineMetadata = gql`
   }
 `;
 
+export const fragmentOrderLineMetadataDetails = gql`
+  fragment OrderLineMetadataDetails on OrderLine {
+    id
+    productName
+    productSku
+    quantity
+    thumbnail {
+      url
+    }
+    variant {
+      id
+      name
+    }
+    ...OrderLineMetadata
+  }
+`;
+
 export const fragmentOrderLineWithMetadata = gql`
   fragment OrderLineWithMetadata on OrderLine {
     ...OrderLine

@@ -13,10 +13,10 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
+import { OrderLineDetails } from "./OrderLineDetails/OrderLineDetails";
 import { TEST_ID_ORDER_LINE_METADATA, TEST_ID_PRODUCT_VARIANT_METADATA } from "./test-ids";
 import { useHandleOrderLineMetadataSubmit } from "./useHandleSubmit";
 import { useMetadataValues } from "./useMetadataValues";
-import { VariantSubheaderData } from "./VariantSubheaderData";
 import { VariantThumbnail } from "./VariantThumbnail";
 
 export type OrderMetadataDialogData = NonNullable<OrderLinesMetadataQuery["order"]>["lines"][0];
@@ -67,20 +67,7 @@ export const OrderMetadataDialog = ({
           />
         </DashboardModal.Header>
 
-        <Box display="flex" gap={5} alignItems="center" paddingX={6}>
-          <VariantThumbnail src={data?.thumbnail?.url} loading={loading} />
-          <Box display="flex" flexDirection="column" gap={2}>
-            <Text size={7} fontWeight="bold">
-              <FormattedMessage {...commonMessages.metadata} />: {data?.productName ?? ""}
-            </Text>
-            <VariantSubheaderData
-              productSku={data?.productSku}
-              quantity={data?.quantity}
-              variantName={data?.variant?.name}
-              loading={loading}
-            />
-          </Box>
-        </Box>
+        <OrderLineDetails data={data} loading={loading} />
 
         <Box as="form" onSubmit={handleSubmit(onSubmit)}>
           <Box display="flex" flexDirection="column" gap={5}>
