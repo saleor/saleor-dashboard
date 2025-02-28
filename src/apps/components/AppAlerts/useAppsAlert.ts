@@ -1,5 +1,6 @@
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { useIntervalActionWithState } from "@dashboard/hooks/useIntervalActionWithState";
+import moment from "moment-timezone";
 import { useEffect } from "react";
 
 import { useAppsFailedDeliveries } from "./useAppsFailedDeliveries";
@@ -20,7 +21,7 @@ export const useAppsAlert = () => {
   });
 
   useEffect(() => {
-    if (lastFailedWebhookDate) {
+    if (lastFailedWebhookDate && lastFailedWebhookDate instanceof moment) {
       handleFailedAttempt(lastFailedWebhookDate.toISOString());
     }
   }, [lastFailedWebhookDate]);
