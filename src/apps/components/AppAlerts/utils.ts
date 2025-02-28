@@ -26,7 +26,7 @@ type LatestWebhookDelivery =
       NonNullable<Webhook["pendingDelivers"]>["edges"][0]["node"]["attempts"]
     >["edges"][0]["node"];
 
-type LatestWebhookDeliveryWithMoment = LatestWebhookDelivery & { createdAt: moment.Moment };
+export type LatestWebhookDeliveryWithMoment = LatestWebhookDelivery & { createdAt: moment.Moment };
 
 const toWebhookDeliveryWithMoment = (
   delivery: LatestWebhookDelivery | null | undefined,
