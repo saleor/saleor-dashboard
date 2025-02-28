@@ -1075,6 +1075,10 @@
     "context": "variant attribute checkbox",
     "string": "Variant Selection"
   },
+  "4oYRyT": {
+    "context": "event delivery id label",
+    "string": "ID:"
+  },
   "4p3bjX": {
     "context": "tax strategy combobox choice",
     "string": "Use flat rates"
@@ -2101,6 +2105,9 @@
   "BtErCZ": {
     "string": "Search Plugins..."
   },
+  "Btr1DU": {
+    "string": "Webhook errors detected. Last occurred {break}at {date}. {viewDetails}."
+  },
   "BvGp1I": {
     "string": "between"
   },
@@ -2497,9 +2504,6 @@
     "context": "delete app",
     "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
   },
-  "EY/jqC": {
-    "string": "Last delivery attempt:"
-  },
   "EYkW1J": {
     "context": "checkbox label",
     "string": "Charge taxes for this channel"
@@ -2691,9 +2695,6 @@
   },
   "FZTrzW": {
     "string": "Manual refund"
-  },
-  "FaRg9/": {
-    "string": "Webhook errors detected. Last occurred at {date}. {viewDetails}."
   },
   "Fbr4Vp": {
     "context": "dialog header",
@@ -4101,9 +4102,6 @@
     "context": "WarehouseSettings disabled warehouse label",
     "string": "Disabled"
   },
-  "OFTsI1": {
-    "string": "Attempts:"
-  },
   "OFW7nq": {
     "context": "placeholder",
     "string": "Search by page name, etc..."
@@ -4363,6 +4361,10 @@
   "Q0JJ4F": {
     "context": "dialog header",
     "string": "Delete Vouchers"
+  },
+  "Q0V6OG": {
+    "context": "event delivery last attempt date label",
+    "string": "Last delivery attempt:"
   },
   "Q1HhPk": {
     "context": "table head",
@@ -6630,6 +6632,10 @@
   },
   "eQ7bCN": {
     "string": "App Webhooks"
+  },
+  "eQbQLB": {
+    "context": "event delivery attempts count label",
+    "string": "Attempts:"
   },
   "eR2vV/": {
     "string": "If left unchecked it creates a {link} - used by Payment Plugins"

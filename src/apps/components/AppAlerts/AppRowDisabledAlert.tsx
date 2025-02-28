@@ -26,7 +26,7 @@ export const AppRowDisabledAlert = ({ app }: AppRowDisabledAlertProps) => {
         </Box>
       </Tooltip.Trigger>
 
-      <Tooltip.Content align="start" side="bottom">
+      <Tooltip.Content align="end" side="bottom">
         <StopPropagation>
           <Box display="flex" flexDirection="row" gap={2} color="default2">
             <Box __transform="scale(0.8)" __marginTop="-3px">

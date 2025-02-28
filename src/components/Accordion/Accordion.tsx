@@ -26,7 +26,8 @@ const Accordion: React.FC<AccordionProps> = ({
     <div className={className}>
       <AccordionMacaw
         value={openedAccordionId}
-        onValueChange={value => setOpendAccordionId(value)}
+        type="single"
+        onValueChange={value => setOpendAccordionId(value as string)}
         className={sprinkles({
           borderStyle: "solid",
           borderWidth: 1,

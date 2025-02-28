@@ -30,7 +30,11 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
   return (
     <DashboardCard paddingTop={6} data-test-id="metadata-editor" data-test-is-private={isPrivate}>
       <DashboardCard.Content>
-        <Accordion value={expanded} onValueChange={setExpanded}>
+        <Accordion
+          value={expanded}
+          type="single"
+          onValueChange={value => setExpanded(value as string)}
+        >
           <Accordion.Item data-test-id="metadata-item" value="metadata-accordion">
             <Accordion.Trigger>
               <Box display="flex" flexDirection="column" gap={2}>

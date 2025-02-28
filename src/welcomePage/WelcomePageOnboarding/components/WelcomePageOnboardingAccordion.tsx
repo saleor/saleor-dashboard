@@ -27,8 +27,9 @@ export const WelcomePageOnboardingAccordion = () => {
       display="grid"
       gap={3}
       value={extendedStepId}
+      type="single"
       onValueChange={value => {
-        toggleExpandedOnboardingStep(value, extendedStepId);
+        toggleExpandedOnboardingStep(value as string, extendedStepId);
       }}
     >
       {steps.map(step => (
