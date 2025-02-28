@@ -1487,6 +1487,10 @@
     "context": "select label",
     "string": "True"
   },
+  "7WrRzs": {
+    "context": "dialog , editing order line metadata",
+    "string": "Represents the metadata of the given ordered item"
+  },
   "7WzUxn": {
     "context": "staff member status",
     "string": "Inactive"
@@ -1977,6 +1981,10 @@
   },
   "B52Em/": {
     "string": "Address line 1"
+  },
+  "B54f/g": {
+    "context": "dialog, editing order line metadata",
+    "string": "Order line metadata"
   },
   "B5KI59": {
     "context": "Empty filters text",
@@ -3315,6 +3323,10 @@
   "IzEVek": {
     "context": "bulk disable label",
     "string": "Deactivate"
+  },
+  "IzZkJx": {
+    "context": "modal header, order line metadata",
+    "string": "View or edit metadata for line item"
   },
   "J/QqOI": {
     "string": "This value already exists within this attribute"
@@ -9051,10 +9063,6 @@
   "ugnggZ": {
     "string": "Created menu"
   },
-  "ui7jMt": {
-    "context": "modal header, editing order line metadata",
-    "string": "Order line metadata"
-  },
   "uilt7q": {
     "context": "issued cards amount label",
     "string": "Cards Issued"
@@ -9573,10 +9581,6 @@
   "xy66ru": {
     "context": "custom preset delete, dialog header",
     "string": "Delete preset"
-  },
-  "y+CqSF": {
-    "context": "modal subheader, editing order line metadata",
-    "string": "Represents the metadata of the given ordered item"
   },
   "y/UWBR": {
     "string": "There is no address to show for this customer"
