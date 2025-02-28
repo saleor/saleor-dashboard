@@ -1,4 +1,4 @@
-import { Box, Skeleton, Spinner } from "@saleor/macaw-ui-next";
+import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 
 export const VariantThumbnail = ({

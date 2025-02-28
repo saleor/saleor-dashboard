@@ -4,7 +4,7 @@ import { MetadataFormData, MetadataNoMemo } from "@dashboard/components/Metadata
 import { MetadataHookForm } from "@dashboard/components/MetadataHookForm";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { OrderLinesMetadataQuery } from "@dashboard/graphql";
-import { buttonMessages, commonMessages } from "@dashboard/intl";
+import { buttonMessages } from "@dashboard/intl";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 import { flattenErrors } from "@dashboard/utils/hook-form/errors";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
@@ -17,7 +17,6 @@ import { OrderLineDetails } from "./OrderLineDetails/OrderLineDetails";
 import { TEST_ID_ORDER_LINE_METADATA, TEST_ID_PRODUCT_VARIANT_METADATA } from "./test-ids";
 import { useHandleOrderLineMetadataSubmit } from "./useHandleSubmit";
 import { useMetadataValues } from "./useMetadataValues";
-import { VariantThumbnail } from "./VariantThumbnail";
 
 export type OrderMetadataDialogData = NonNullable<OrderLinesMetadataQuery["order"]>["lines"][0];
 
@@ -54,7 +53,7 @@ export const OrderMetadataDialog = ({
   const allFormErrors = flattenErrors(formState.errors);
 
   const saveButtonState: ConfirmButtonTransitionState =
-    formState.isSubmitting || loading ? "loading" : allFormErrors.length > 0 ? "error" : "default";
+    formState.isSubmitting || loading ? "loading" : "default";
 
   return (
     <DashboardModal open={open} onChange={onClose}>

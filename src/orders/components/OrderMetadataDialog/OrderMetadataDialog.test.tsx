@@ -261,7 +261,7 @@ describe("OrderMetadataDialog", () => {
         lastSubmittedData: undefined,
       }));
 
-      const { debug } = render(
+      render(
         <OrderMetadataDialog
           open={true}
           onClose={onCloseMock}
