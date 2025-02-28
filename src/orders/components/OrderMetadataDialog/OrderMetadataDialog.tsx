@@ -59,7 +59,15 @@ export const OrderMetadataDialog = ({
   return (
     <DashboardModal open={open} onChange={onClose}>
       <DashboardModal.Content size="md">
-        <DashboardModal.Header display="flex" gap={5} alignItems="center" paddingX={6}>
+        <DashboardModal.Header>
+          <FormattedMessage
+            defaultMessage="View or edit metadata for line item"
+            description="modal header, order line metadata"
+            id="IzZkJx"
+          />
+        </DashboardModal.Header>
+
+        <Box display="flex" gap={5} alignItems="center" paddingX={6}>
           <VariantThumbnail src={data?.thumbnail?.url} loading={loading} />
           <Box display="flex" flexDirection="column" gap={2}>
             <Text size={7} fontWeight="bold">
@@ -72,7 +80,7 @@ export const OrderMetadataDialog = ({
               loading={loading}
             />
           </Box>
-        </DashboardModal.Header>
+        </Box>
 
         <Box as="form" onSubmit={handleSubmit(onSubmit)}>
           <Box display="flex" flexDirection="column" gap={5}>
@@ -81,15 +89,15 @@ export const OrderMetadataDialog = ({
                 <Text as="h2" size={5} fontWeight="bold">
                   <FormattedMessage
                     defaultMessage="Order line metadata"
-                    description="modal header, editing order line metadata"
-                    id="ui7jMt"
+                    description="dialog, editing order line metadata"
+                    id="B54f/g"
                   />
                 </Text>
                 <Text>
                   <FormattedMessage
                     defaultMessage="Represents the metadata of the given ordered item"
-                    description="modal subheader, editing order line metadata"
-                    id="y+CqSF"
+                    description="dialog , editing order line metadata"
+                    id="7WrRzs"
                   />
                 </Text>
               </Box>
