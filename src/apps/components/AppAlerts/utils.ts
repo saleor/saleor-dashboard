@@ -1,5 +1,5 @@
 import { AppEventDeliveriesFragment, EventDeliveryStatusEnum } from "@dashboard/graphql";
-import moment from "moment";
+import moment from "moment-timezone";
 
 export type Webhook = NonNullable<AppEventDeliveriesFragment["webhooks"]>[0];
 

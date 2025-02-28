@@ -1,4 +1,5 @@
 import { useAppFailedPendingWebhooksLazyQuery } from "@dashboard/graphql";
+import moment from "moment-timezone";
 import { useMemo } from "react";
 
 import { getLatestFailedAttemptFromWebhooks, LatestWebhookDeliveryWithMoment } from "./utils";
