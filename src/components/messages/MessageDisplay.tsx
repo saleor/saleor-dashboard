@@ -32,7 +32,6 @@ export const MessageDisplay = ({
                   }
                 : {})}
               onClose={notification.close}
-              // @ts-expect-error Legacy usage of Material UI
               title={
                 notification.message.apiMessage && !notification.message.title
                   ? intl.formatMessage(commonMessages.defaultErrorTitle)
@@ -40,7 +39,6 @@ export const MessageDisplay = ({
               }
               type={notification.message.status || "info"}
               content={notification.message.text}
-              // @ts-expect-error Legacy usage of Material UI
               apiMessage={
                 notification.message.apiMessage && {
                   apiMessageContent: (
