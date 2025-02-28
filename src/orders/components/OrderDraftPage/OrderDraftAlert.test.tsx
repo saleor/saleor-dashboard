@@ -2,7 +2,6 @@ import { channelsList } from "@dashboard/channels/fixtures";
 import { channelUsabilityData, order } from "@dashboard/orders/fixtures";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
-import * as React from "react";
 
 import OrderDraftAlert, { OrderDraftAlertProps } from "./OrderDraftAlert";
 

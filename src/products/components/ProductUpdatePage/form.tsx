@@ -38,7 +38,7 @@ import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChang
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
 import { useProductChannelListingsForm } from "./formChannels";
 import {
@@ -81,7 +81,7 @@ export function useProductUpdateForm(
     removed: [],
     updates: [],
   });
-  const handleVariantChange = React.useCallback(
+  const handleVariantChange = useCallback(
     (data: DatagridChangeOpts) => {
       variants.current = prepareVariantChangeData(data, locale, product);
       triggerChange();
@@ -297,14 +297,14 @@ export function useProductUpdateForm(
   };
 }
 
-const ProductUpdateForm: React.FC<ProductUpdateFormProps> = ({
+const ProductUpdateForm = ({
   children,
   product,
   onSubmit,
   refetch,
   disabled,
   ...rest
-}) => {
+}: ProductUpdateFormProps) => {
   const { datagrid, richText, ...props } = useProductUpdateForm(
     product,
     onSubmit,

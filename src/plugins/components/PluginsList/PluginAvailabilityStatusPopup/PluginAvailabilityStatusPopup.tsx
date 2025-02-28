@@ -5,7 +5,7 @@ import { PluginBaseFragment } from "@dashboard/graphql";
 import { isPluginGlobal } from "@dashboard/plugins/views/utils";
 import { Popper } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { RefObject } from "react";
 
 import { mapPluginsToPills } from "../utils";
 import GlobalConfigPluginPopupBody from "./GlobalConfigPluginPopupBody";
@@ -23,14 +23,14 @@ const useStyles = makeStyles(
 interface PluginAvailabilityStatusPopupProps {
   plugin: PluginBaseFragment;
   isOpen: boolean;
-  anchor: React.RefObject<HTMLTableCellElement>;
+  anchor: RefObject<HTMLTableCellElement>;
 }
 
-const PluginAvailabilityStatusPopup: React.FC<PluginAvailabilityStatusPopupProps> = ({
+const PluginAvailabilityStatusPopup = ({
   plugin,
   isOpen,
   anchor,
-}) => {
+}: PluginAvailabilityStatusPopupProps) => {
   const classes = useStyles({});
   const isGlobalPlugin = isPluginGlobal(plugin.globalConfiguration);
 

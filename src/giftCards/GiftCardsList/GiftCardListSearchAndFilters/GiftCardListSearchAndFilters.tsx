@@ -15,7 +15,6 @@ import useProductSearch from "@dashboard/searches/useProductSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box } from "@saleor/macaw-ui-next";
 import compact from "lodash/compact";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { createFilterStructure, getFilterOpts } from "../filters";
@@ -28,7 +27,7 @@ import {
   giftCardListSearchAndFiltersMessages as messages,
 } from "./messages";
 
-const GiftCardListSearchAndFilters: React.FC = () => {
+const GiftCardListSearchAndFilters = () => {
   const intl = useIntl();
   const [selectedChannel] = useLocalStorage("channel", "");
   const { enabled: isNewGiftCardsFilterEnabled } = useFlag("new_filters");

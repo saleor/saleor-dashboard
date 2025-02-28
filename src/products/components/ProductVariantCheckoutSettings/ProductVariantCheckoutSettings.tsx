@@ -4,7 +4,6 @@ import { ProductErrorFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { Input } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -19,7 +18,7 @@ interface ProductVariantCheckoutSettingsProps {
   onChange: FormChange;
 }
 
-const ProductVariantCheckoutSettings: React.FC<ProductVariantCheckoutSettingsProps> = props => {
+const ProductVariantCheckoutSettings = (props: ProductVariantCheckoutSettingsProps) => {
   const { data, disabled, errors, onChange } = props;
   const intl = useIntl();
   const classes = useStyles();

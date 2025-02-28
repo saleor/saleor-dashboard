@@ -4,14 +4,13 @@ import { PluginListUrlSortField } from "@dashboard/plugins/urls";
 import { SortPage } from "@dashboard/types";
 import { getArrowDirection } from "@dashboard/utils/sort";
 import { TableHead } from "@material-ui/core";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { pluginsListTableHeadMessages as messages } from "./messages";
 
 type PluginListTableHeadProps = SortPage<PluginListUrlSortField>;
 
-const PluginListTableHead: React.FC<PluginListTableHeadProps> = ({ sort, onSort }) => {
+const PluginListTableHead = ({ sort, onSort }: PluginListTableHeadProps) => {
   const intl = useIntl();
 
   return (

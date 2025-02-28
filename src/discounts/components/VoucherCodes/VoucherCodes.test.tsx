@@ -6,7 +6,7 @@ import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { FormattedMessageProps } from "react-intl";
 import { BrowserRouter } from "react-router-dom";
 
@@ -30,7 +30,9 @@ jest.mock("@dashboard/components/Datagrid/persistance/usePersistance", () => ({
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
+    // @ts-expect-error BrowserRouter types does not have explicit children props
     <BrowserRouter>
+      {/* @ts-expect-error LegacyThemeProvider types does not have explicit children props */}
       <LegacyThemeProvider>
         <ThemeProvider>{children}</ThemeProvider>
       </LegacyThemeProvider>

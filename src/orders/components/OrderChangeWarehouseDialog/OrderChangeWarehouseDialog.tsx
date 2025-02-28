@@ -19,7 +19,7 @@ import {
 } from "@material-ui/core";
 import { Button, isScrolledToBottom, SearchIcon, useElementScroll } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { changeWarehouseDialogMessages as messages } from "./messages";
@@ -33,21 +33,21 @@ export interface OrderChangeWarehouseDialogProps {
   onClose: () => any;
 }
 
-export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProps> = ({
+export const OrderChangeWarehouseDialog = ({
   open,
   line,
   currentWarehouseId,
   onConfirm,
   onClose,
-}) => {
+}: OrderChangeWarehouseDialogProps) => {
   const classes = useStyles();
   const intl = useIntl();
   const { anchor, position, setAnchor } = useElementScroll();
   const bottomShadow = !isScrolledToBottom(anchor, position, 20);
-  const [query, setQuery] = React.useState<string>("");
-  const [selectedWarehouseId, setSelectedWarehouseId] = React.useState<string | null>(null);
+  const [query, setQuery] = useState<string>("");
+  const [selectedWarehouseId, setSelectedWarehouseId] = useState<string | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (currentWarehouseId) {
       setSelectedWarehouseId(currentWarehouseId);
     }
@@ -67,7 +67,7 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
   });
   const filteredWarehouses = mapEdgesToItems(warehousesOpts?.data?.search);
   const selectedWarehouse = filteredWarehouses?.find(getById(selectedWarehouseId ?? ""));
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSelectedWarehouseId(e.target.value);
   };
   const handleSubmit = () => {
@@ -75,7 +75,7 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
     onClose();
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!bottomShadow) {
       loadMore();
     }
@@ -98,7 +98,7 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
 
         <Debounce debounceFn={search}>
           {debounceSearchChange => {
-            const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
               const value = event.target.value;
 
               setQuery(value);
@@ -115,7 +115,10 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <SearchIcon />
+                      <SearchIcon
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
+                      />
                     </InputAdornment>
                   ),
                 }}

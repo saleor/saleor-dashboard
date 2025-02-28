@@ -1,6 +1,6 @@
 import { Tabs } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { ReactNode } from "react";
 
 const useStyles = makeStyles(
   theme => ({
@@ -13,11 +13,11 @@ const useStyles = makeStyles(
 );
 
 interface FilterTabsProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
   currentTab: number | undefined;
 }
 
-export const FilterTabs: React.FC<FilterTabsProps> = props => {
+export const FilterTabs = (props: FilterTabsProps) => {
   const { children, currentTab } = props;
   const classes = useStyles(props);
 

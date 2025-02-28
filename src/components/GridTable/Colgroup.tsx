@@ -1,13 +1,14 @@
 import { Box } from "@saleor/macaw-ui-next";
-import React, { ColgroupHTMLAttributes } from "react";
+import { ColgroupHTMLAttributes, ElementRef, forwardRef } from "react";
 
 import { GridTableProps } from "./types";
 
-type GridTableColgroupElement = React.ElementRef<"colgroup">;
+type GridTableColgroupElement = ElementRef<"colgroup">;
 type GridTableColgroupProps = GridTableProps<ColgroupHTMLAttributes<HTMLElement>>;
 
-export const GridTableColgroup = React.forwardRef<GridTableColgroupElement, GridTableColgroupProps>(
+export const GridTableColgroup = forwardRef<GridTableColgroupElement, GridTableColgroupProps>(
   ({ children, ...props }, forwardedRef) => (
+    // @ts-expect-error Types of property contentEditable are incompatible.
     <Box as="colgroup" ref={forwardedRef} {...props}>
       {children}
     </Box>

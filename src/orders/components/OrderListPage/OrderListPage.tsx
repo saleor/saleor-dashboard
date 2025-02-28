@@ -30,7 +30,7 @@ import {
 } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Box, Button, ChevronRightIcon, Tooltip } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderLimitReached from "../OrderLimitReached";
@@ -51,7 +51,7 @@ export interface OrderListPageProps
   onTabDelete: (tabIndex: number) => void;
 }
 
-const OrderListPage: React.FC<OrderListPageProps> = ({
+const OrderListPage = ({
   initialSearch,
   limits,
   onAdd,
@@ -67,7 +67,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   currentTab,
   hasPresetsChanged,
   ...listProps
-}) => {
+}: OrderListPageProps) => {
   const intl = useIntl();
   const subtitle = useContextualLink("order_list");
   const userAccessibleChannels = useUserAccessibleChannels();

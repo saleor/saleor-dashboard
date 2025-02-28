@@ -5,7 +5,7 @@ import favicon32 from "@assets/favicons/favicon-32x32.png";
 import safariPinnedTab from "@assets/favicons/safari-pinned-tab.svg";
 import { useUser } from "@dashboard/auth";
 import { ShopInfoQuery, useShopInfoQuery } from "@dashboard/graphql";
-import React, { useEffect } from "react";
+import { createContext, useEffect } from "react";
 import Helmet from "react-helmet";
 
 import { useAnalytics } from "../ProductAnalytics/useAnalytics";
@@ -13,9 +13,9 @@ import { extractEmailDomain } from "../ProductAnalytics/utils";
 
 type ShopContext = ShopInfoQuery["shop"];
 
-export const ShopContext = React.createContext<ShopContext>(undefined);
+export const ShopContext = createContext<ShopContext>(undefined);
 
-export const ShopProvider: React.FC = ({ children }) => {
+export const ShopProvider = ({ children }) => {
   const { authenticated, user } = useUser();
   const analytics = useAnalytics();
   const { data } = useShopInfoQuery({
@@ -36,6 +36,7 @@ export const ShopProvider: React.FC = ({ children }) => {
 
   return (
     <>
+      {/* @ts-expect-error Helmet types does not have explicit children props */}
       <Helmet>
         <link rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon} />
         <link rel="icon" type="image/png" sizes="32x32" href={favicon32} />

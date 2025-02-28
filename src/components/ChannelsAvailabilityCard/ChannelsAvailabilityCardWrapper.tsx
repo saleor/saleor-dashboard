@@ -1,7 +1,7 @@
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ReactNode } from "react";
 import { useIntl } from "react-intl";
 
 import { DashboardCard } from "../Card";
@@ -9,14 +9,12 @@ import { DashboardCard } from "../Card";
 export interface ChannelsAvailabilityWrapperProps {
   selectedChannelsCount: number;
   allChannelsCount: number;
-  children: React.ReactNode;
+  children: ReactNode;
   managePermissions: PermissionEnum[];
   openModal: () => void;
 }
 
-export const ChannelsAvailabilityCardWrapper: React.FC<
-  ChannelsAvailabilityWrapperProps
-> = props => {
+export const ChannelsAvailabilityCardWrapper = (props: ChannelsAvailabilityWrapperProps) => {
   const { selectedChannelsCount, allChannelsCount, children, managePermissions, openModal } = props;
   const intl = useIntl();
   const channelsAvailabilityText = intl.formatMessage(

@@ -20,7 +20,7 @@ import { orderListUrlWithCustomer } from "@dashboard/orders/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ChangeEvent, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { customerUrl } from "../../../customers/urls";
@@ -50,7 +50,7 @@ export interface OrderCustomerProps extends Partial<FetchMoreProps> {
   onShippingAddressEdit?: () => void;
 }
 
-const OrderCustomer: React.FC<OrderCustomerProps> = props => {
+const OrderCustomer = (props: OrderCustomerProps) => {
   const {
     canEditAddresses,
     canEditCustomer,
@@ -71,7 +71,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
   const user = maybe(() => order.user);
   const userEmail = maybe(() => order.userEmail);
   const [userDisplayName, setUserDisplayName] = useStateFromProps(maybe(() => user.email, ""));
-  const [isInEditMode, setEditModeStatus] = React.useState(false);
+  const [isInEditMode, setEditModeStatus] = useState(false);
   const toggleEditMode = () => setEditModeStatus(!isInEditMode);
   const billingAddress = maybe(() => order.billingAddress);
   const shippingAddress = maybe(() => order.shippingAddress);
@@ -113,7 +113,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
         ) : isInEditMode && canEditCustomer ? (
           <Form confirmLeave initial={{ query: "" }}>
             {({ change, data }) => {
-              const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+              const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
                 change(event);
 
                 const value = event.target.value;

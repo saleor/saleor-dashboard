@@ -9,7 +9,7 @@ import {
 import { useId } from "@reach/auto-id";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderTransaction from "../../OrderTransaction";
@@ -43,16 +43,16 @@ const useStyles = makeStyles(
   { name: "TransactionCard" },
 );
 
-export const TransactionCard: React.FC<TransactionCardProps> = ({
+export const TransactionCard = ({
   transaction,
   orderId,
   totalRemainingGrant,
-}) => {
+}: TransactionCardProps) => {
   const classes = useStyles();
   const intl = useIntl();
   const id = useId();
 
-  const [value, setValue] = React.useState<number | undefined>();
+  const [value, setValue] = useState<number | undefined>();
 
   const { data, error, loading, status, sendRefund } = useOrderSendRefund({
     transactionId: transaction.id,
@@ -60,14 +60,14 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
     amount: value,
   });
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async e => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async e => {
     e.preventDefault();
 
     if (typeof value === "number" && transaction?.id) {
       await sendRefund();
     }
   };
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = e => {
+  const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
     const value = parseFloat(e.target.value);
 
     if (!Number.isNaN(value)) {

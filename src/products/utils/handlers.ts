@@ -17,6 +17,7 @@ import {
 import { FormChange, UseFormResult } from "@dashboard/hooks/useForm";
 import { diff } from "fast-array-diff";
 import moment from "moment";
+import { ChangeEvent } from "react";
 
 export function createChannelsPriceChangeHandler(
   channelListings: ChannelData[],
@@ -84,7 +85,7 @@ export function createProductTypeSelectHandler(
   setProductType: (productTypeId: string) => void,
   triggerChange: () => void,
 ): FormChange {
-  return (event: React.ChangeEvent<any>) => {
+  return (event: ChangeEvent<any>) => {
     const id = event.target.value;
 
     setProductType(id);

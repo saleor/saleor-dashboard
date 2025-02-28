@@ -35,7 +35,7 @@ import { productUrl } from "@dashboard/products/urls";
 import { getSelectedMedia } from "@dashboard/products/utils/data";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
+import { useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { ProductShipping } from "../ProductShipping";
@@ -124,7 +124,7 @@ interface ProductVariantPageProps {
   searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
 }
 
-const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
+const ProductVariantPage = ({
   productId,
   channels,
   channelErrors,
@@ -158,13 +158,13 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   onAttributeSelectBlur,
   fetchMoreWarehouses,
   searchWarehousesResult,
-}) => {
+}: ProductVariantPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const { isOpen: isManageChannelsModalOpen, toggle: toggleManageChannels } = useManageChannels();
-  const [isModalOpened, setModalStatus] = React.useState(false);
+  const [isModalOpened, setModalStatus] = useState(false);
   const toggleModal = () => setModalStatus(!isModalOpened);
-  const [isEndPreorderModalOpened, setIsEndPreorderModalOpened] = React.useState(false);
+  const [isEndPreorderModalOpened, setIsEndPreorderModalOpened] = useState(false);
   const productMedia = [...(variant?.product?.media ?? [])]?.sort((prev, next) =>
     prev.sortOrder > next.sortOrder ? 1 : -1,
   );

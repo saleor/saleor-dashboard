@@ -16,7 +16,6 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import { sectionNames } from "@dashboard/intl";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import VoucherCreatePage from "../../components/VoucherCreatePage";
@@ -33,7 +32,7 @@ interface VoucherCreateProps {
   params: VoucherCreateUrlQueryParams;
 }
 
-export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
+export const VoucherCreateView = ({ params }: VoucherCreateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

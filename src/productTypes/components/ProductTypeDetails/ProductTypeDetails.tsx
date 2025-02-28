@@ -9,7 +9,7 @@ import { getFieldError } from "@dashboard/utils/errors";
 import { Divider, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ChangeEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -37,8 +37,8 @@ interface ProductTypeDetailsProps {
   };
   disabled: boolean;
   errors: UserError[];
-  onChange: (event: React.ChangeEvent<any>) => void;
-  onKindChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
+  onKindChange: (event: ChangeEvent<any>) => void;
 }
 
 const kindOptions = [
@@ -52,7 +52,7 @@ const kindOptions = [
     type: ProductTypeKindEnum.GIFT_CARD,
   },
 ];
-const ProductTypeDetails: React.FC<ProductTypeDetailsProps> = props => {
+const ProductTypeDetails = (props: ProductTypeDetailsProps) => {
   const { data, disabled, errors, onChange, onKindChange } = props;
   const classes = useStyles(props);
   const intl = useIntl();

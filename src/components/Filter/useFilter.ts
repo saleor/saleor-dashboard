@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { useEffect, useReducer } from "react";
+import { Reducer, useEffect, useReducer } from "react";
 
 import reduceFilter, { FilterReducerAction } from "./reducer";
 import { FieldType, FilterElement, IFilter } from "./types";
@@ -27,7 +27,7 @@ function getParsedInitialFilter<T extends string>(initialFilter: IFilter<T>): IF
 function useFilter<K extends string>(initialFilter: IFilter<K>): UseFilter<K> {
   const parsedInitialFilter = getParsedInitialFilter(initialFilter);
   const [data, dispatchFilterAction] = useReducer<
-    React.Reducer<IFilter<K>, FilterReducerAction<K, FieldType>>
+    Reducer<IFilter<K>, FilterReducerAction<K, FieldType>>
   >(reduceFilter, parsedInitialFilter);
   const reset = () =>
     dispatchFilterAction({

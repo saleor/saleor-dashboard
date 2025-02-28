@@ -7,11 +7,11 @@ import {
 import { GetFilterTabsOutput, StorageUtils } from "@dashboard/utils/filters";
 import { prepareQs } from "@dashboard/utils/filters/qs";
 import { stringify } from "qs";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 export interface UseFilterPresets {
   presetIdToDelete: number | null;
-  setPresetIdToDelete: React.Dispatch<React.SetStateAction<number | null>>;
+  setPresetIdToDelete: Dispatch<SetStateAction<number | null>>;
   presets: GetFilterTabsOutput<string>;
   selectedPreset: number | undefined;
   onPresetChange: (index: number) => void;

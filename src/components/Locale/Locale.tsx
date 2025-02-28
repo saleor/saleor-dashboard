@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
-import React from "react";
+import { createContext, useEffect, useState } from "react";
 import { IntlProvider, ReactIntlErrorCode } from "react-intl";
 
 export enum Locale {
@@ -121,17 +121,17 @@ export interface LocaleContextType {
   locale: Locale;
   setLocale: (locale: Locale) => void;
 }
-export const LocaleContext = React.createContext<LocaleContextType>({
+export const LocaleContext = createContext<LocaleContextType>({
   locale: defaultLocale,
   setLocale: () => undefined,
 });
 
 const { Consumer: LocaleConsumer, Provider: RawLocaleProvider } = LocaleContext;
-const LocaleProvider: React.FC = ({ children }) => {
+const LocaleProvider = ({ children }) => {
   const [locale, setLocale] = useLocalStorage("locale", defaultLocale);
-  const [messages, setMessages] = React.useState(undefined);
+  const [messages, setMessages] = useState(undefined);
 
-  React.useEffect(() => {
+  useEffect(() => {
     async function changeLocale() {
       if (locale !== Locale.EN) {
         // It seems like Webpack is unable to use aliases for lazy imports
@@ -147,6 +147,7 @@ const LocaleProvider: React.FC = ({ children }) => {
   }, [locale]);
 
   return (
+    // @ts-expect-error wrong typing
     <IntlProvider
       defaultLocale={defaultLocale}
       locale={locale}

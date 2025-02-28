@@ -5,7 +5,7 @@ import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 import { Sidebar } from "./Sidebar";
 
@@ -46,6 +46,7 @@ jest.mock("@dashboard/components/NavigatorSearch/useNavigatorSearchContext", () 
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
+    // @ts-expect-error LegacyThemeProvider types does not have explicit children props
     <LegacyThemeProvider>
       <ThemeProvider>{children}</ThemeProvider>
     </LegacyThemeProvider>

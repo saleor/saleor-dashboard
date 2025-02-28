@@ -14,7 +14,7 @@ import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { orderUrl } from "@dashboard/orders/urls";
 import { Box, Input, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect, useMemo } from "react";
+import { FormEvent, useEffect, useMemo, useReducer } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getOrderTitleMessage } from "../OrderCardTitle/utils";
@@ -46,20 +46,20 @@ export interface OrderGrantRefundPageProps {
   initialData?: OrderDetailsGrantedRefundFragment;
 }
 
-const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
+const OrderGrantRefundPage = ({
   order,
   loading,
   submitState,
   onSubmit,
   isEdit,
   initialData,
-}) => {
+}: OrderGrantRefundPageProps) => {
   const intl = useIntl();
   const { locale } = useLocale();
   const navigate = useNavigator();
   const grantedRefund = useMemo(() => getGrantedRefundData(initialData), [initialData]);
   const unfulfilledLines = (order?.lines ?? []).filter(line => line.quantityToFulfill > 0);
-  const [state, dispatch] = React.useReducer(grantRefundReducer, grantRefundDefaultState);
+  const [state, dispatch] = useReducer(grantRefundReducer, grantRefundDefaultState);
 
   useEffect(() => {
     if (grantedRefund) {
@@ -98,7 +98,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
     totalCalulatedPrice: totalSelectedPrice,
   });
   const currency = order?.total?.gross?.currency ?? "";
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.stopPropagation();
     e.preventDefault();
     submit();

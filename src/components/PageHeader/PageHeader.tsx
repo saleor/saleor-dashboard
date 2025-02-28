@@ -1,6 +1,6 @@
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ReactNode } from "react";
 
 import ExtendedPageHeader from "../ExtendedPageHeader";
 import PreviewPill from "../PreviewPill";
@@ -44,17 +44,17 @@ const useStyles = makeStyles(
 );
 
 interface PageHeaderProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
   className?: string;
   inline?: boolean;
   underline?: boolean;
   limitText?: string;
-  title?: React.ReactNode;
-  cardMenu?: React.ReactNode;
+  title?: ReactNode;
+  cardMenu?: ReactNode;
   preview?: boolean;
 }
 
-const PageHeader: React.FC<PageHeaderProps> = props => {
+const PageHeader = (props: PageHeaderProps) => {
   const { children, className, inline, underline, limitText, title, cardMenu, preview } = props;
   const classes = useStyles(props);
 

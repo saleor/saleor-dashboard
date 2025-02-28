@@ -2,7 +2,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { TransactionActionEnum } from "@dashboard/graphql";
 import { TransactionFakeEvent } from "@dashboard/orders/types";
-import React from "react";
+import { ReactNode } from "react";
 
 import { OrderTransactionCardTitle } from "./components";
 import { TransactionEvents } from "./components/TransactionEvents";
@@ -14,18 +14,18 @@ export interface OrderTransactionProps {
   fakeEvents?: TransactionFakeEvent[];
   onTransactionAction: (transactionId: string, actionType: TransactionActionEnum) => void;
   showActions?: boolean;
-  cardFooter?: React.ReactNode;
+  cardFooter?: ReactNode;
   disabled?: boolean;
 }
 
-const OrderTransaction: React.FC<OrderTransactionProps> = ({
+const OrderTransaction = ({
   transaction,
   fakeEvents,
   onTransactionAction,
   showActions,
   cardFooter,
   disabled = false,
-}) => {
+}: OrderTransactionProps) => {
   const events = getTransactionEvents(transaction, fakeEvents);
 
   return (

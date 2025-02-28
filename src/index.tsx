@@ -10,8 +10,7 @@ import { ThemeProvider } from "@dashboard/theme";
 import { OnboardingProvider } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { SaleorProvider } from "@saleor/sdk";
-import React from "react";
-import { render } from "react-dom";
+import { createRoot } from "react-dom/client";
 import { ErrorBoundary } from "react-error-boundary";
 import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
@@ -104,50 +103,54 @@ const handleLegacyTheming = () => {
 
 handleLegacyTheming();
 
-const App: React.FC = () => (
-  <SaleorProvider client={saleorClient}>
-    <ApolloProvider client={apolloClient}>
-      <Router>
-        <LegacyThemeProvider overrides={themeOverrides} palettes={paletteOverrides}>
-          <ThemeProvider>
-            <DateProvider>
-              <LocaleProvider>
-                <MessageManagerProvider>
-                  <BackgroundTasksProvider>
-                    <AppStateProvider>
-                      <AuthProvider>
-                        <ProductAnalytics>
-                          <ShopProvider>
-                            <AppChannelProvider>
-                              <ExitFormDialogProvider>
-                                <DevModeProvider>
-                                  <NavigatorSearchProvider>
-                                    <SavebarRefProvider>
-                                      <FeatureFlagsProviderWithUser>
-                                        <OnboardingProvider>
-                                          <Routes />
-                                        </OnboardingProvider>
-                                      </FeatureFlagsProviderWithUser>
-                                    </SavebarRefProvider>
-                                  </NavigatorSearchProvider>
-                                </DevModeProvider>
-                              </ExitFormDialogProvider>
-                            </AppChannelProvider>
-                          </ShopProvider>
-                        </ProductAnalytics>
-                      </AuthProvider>
-                    </AppStateProvider>
-                  </BackgroundTasksProvider>
-                </MessageManagerProvider>
-              </LocaleProvider>
-            </DateProvider>
-          </ThemeProvider>
-        </LegacyThemeProvider>
-      </Router>
-    </ApolloProvider>
-  </SaleorProvider>
+const App = () => (
+  <>
+    {/* @ts-expect-error SaleorProvider types does not have explicit children props  */}
+    <SaleorProvider client={saleorClient}>
+      <ApolloProvider client={apolloClient}>
+        <Router>
+          {/* @ts-expect-error LegacyThemeProvider types does not have explicit children props  */}
+          <LegacyThemeProvider overrides={themeOverrides} palettes={paletteOverrides}>
+            <ThemeProvider>
+              <DateProvider>
+                <LocaleProvider>
+                  <MessageManagerProvider>
+                    <BackgroundTasksProvider>
+                      <AppStateProvider>
+                        <AuthProvider>
+                          <ProductAnalytics>
+                            <ShopProvider>
+                              <AppChannelProvider>
+                                <ExitFormDialogProvider>
+                                  <DevModeProvider>
+                                    <NavigatorSearchProvider>
+                                      <SavebarRefProvider>
+                                        <FeatureFlagsProviderWithUser>
+                                          <OnboardingProvider>
+                                            <Routes />
+                                          </OnboardingProvider>
+                                        </FeatureFlagsProviderWithUser>
+                                      </SavebarRefProvider>
+                                    </NavigatorSearchProvider>
+                                  </DevModeProvider>
+                                </ExitFormDialogProvider>
+                              </AppChannelProvider>
+                            </ShopProvider>
+                          </ProductAnalytics>
+                        </AuthProvider>
+                      </AppStateProvider>
+                    </BackgroundTasksProvider>
+                  </MessageManagerProvider>
+                </LocaleProvider>
+              </DateProvider>
+            </ThemeProvider>
+          </LegacyThemeProvider>
+        </Router>
+      </ApolloProvider>
+    </SaleorProvider>
+  </>
 );
-const Routes: React.FC = () => {
+const Routes = () => {
   const intl = useIntl();
   const [, dispatchAppState] = useAppState();
   const { authenticated, authenticating } = useAuthRedirection();
@@ -314,4 +317,7 @@ const Routes: React.FC = () => {
   );
 };
 
-render(<App />, document.querySelector("#dashboard-app"));
+const container = document.querySelector("#dashboard-app");
+const root = createRoot(container!);
+
+root.render(<App />);

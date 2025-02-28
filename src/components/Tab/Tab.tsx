@@ -2,7 +2,7 @@ import { alpha } from "@material-ui/core/styles";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import { ReactNode } from "react";
 
 const useStyles = makeStyles(
   theme => ({
@@ -35,14 +35,14 @@ const useStyles = makeStyles(
 );
 
 interface TabProps<T> {
-  children?: React.ReactNode;
+  children?: ReactNode;
   isActive: boolean;
   changeTab: (index: T) => void;
   testId?: string;
 }
 
 export function Tab<T>(value: T) {
-  const Component: React.FC<TabProps<T>> = props => {
+  const Component = (props: TabProps<T>) => {
     const { children, isActive, changeTab, testId } = props;
     const classes = useStyles(props);
 

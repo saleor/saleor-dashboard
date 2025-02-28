@@ -1,7 +1,6 @@
 import { AppPageNav } from "@dashboard/apps/components/AppPage/AppPageNav";
 import { AppUrls } from "@dashboard/apps/urls";
 import { AppQuery } from "@dashboard/graphql";
-import React from "react";
 
 import HeaderOptions from "./HeaderOptions";
 
@@ -12,12 +11,7 @@ interface HeaderProps {
   onAppDeleteOpen: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({
-  data,
-  onAppActivateOpen,
-  onAppDeactivateOpen,
-  onAppDeleteOpen,
-}) => {
+const Header = ({ data, onAppActivateOpen, onAppDeactivateOpen, onAppDeleteOpen }: HeaderProps) => {
   const getBackButtonUrl = () => {
     /**
      * App is null with first render so fallback with HTML-safe fallback

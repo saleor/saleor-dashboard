@@ -52,7 +52,7 @@ import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { Box, Option } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { AttributeValuesMetadata, getChoices } from "../../utils/data";
@@ -113,7 +113,7 @@ export interface ProductUpdatePageProps {
   onSeoClick?: () => any;
 }
 
-export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
+export const ProductUpdatePage = ({
   productId,
   disabled,
   categories: categoryChoiceList,
@@ -159,10 +159,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   refetch,
   onCloseDialog,
   onAttributeSelectBlur,
-}) => {
+}: ProductUpdatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const [channelPickerOpen, setChannelPickerOpen] = React.useState(false);
+  const [channelPickerOpen, setChannelPickerOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useStateFromProps(product?.category?.name || "");
   const [mediaUrlModalStatus, setMediaUrlModalStatus] = useStateFromProps(
     isMediaUrlModalVisible || false,
@@ -200,14 +200,14 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     onCloseDialog();
   };
   const { PRODUCT_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.PRODUCT_DETAILS);
-  const productErrors = React.useMemo(
+  const productErrors = useMemo(
     () =>
       errors.filter(
         error => error.__typename === "ProductError",
       ) as ProductErrorWithAttributesFragment[],
     [errors],
   );
-  const productOrganizationErrors = React.useMemo(
+  const productOrganizationErrors = useMemo(
     () =>
       [...errors, ...channelsErrors].filter(err =>
         ["ProductChannelListingError", "ProductError"].includes(err.__typename),

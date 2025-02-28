@@ -5,7 +5,7 @@ import { OrderLineGrantRefundFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ChangeEvent, ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { useGrantRefundContext } from "../context";
@@ -13,12 +13,12 @@ import { grantRefundPageMessages, productCardMessages } from "../messages";
 import { useProductsCardStyles } from "../styles";
 
 interface ProductsCardProps {
-  title: React.ReactNode;
-  subtitle?: React.ReactNode;
+  title: ReactNode;
+  subtitle?: ReactNode;
   lines: OrderLineGrantRefundFragment[];
 }
 
-export const ProductsCard: React.FC<ProductsCardProps> = ({ title, subtitle, lines }) => {
+export const ProductsCard = ({ title, subtitle, lines }: ProductsCardProps) => {
   const classes = useProductsCardStyles();
   const { dispatch, state } = useGrantRefundContext();
 
@@ -27,7 +27,7 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({ title, subtitle, lin
   }
 
   const getHandleAmountChange =
-    (line: OrderLineGrantRefundFragment) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    (line: OrderLineGrantRefundFragment) => (e: ChangeEvent<HTMLInputElement>) => {
       const parsedValue = parseInt(e.target.value, 10);
       const value = Number.isNaN(parsedValue) ? 0 : parsedValue;
 

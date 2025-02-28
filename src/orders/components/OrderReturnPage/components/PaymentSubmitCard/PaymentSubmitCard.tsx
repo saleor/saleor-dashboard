@@ -8,7 +8,7 @@ import { OrderDetailsFragment, OrderErrorFragment, OrderRefundDataQuery } from "
 import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ChangeEvent } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import {
@@ -83,11 +83,11 @@ interface PaymentSubmitCardProps {
   errors: OrderErrorFragment[];
   amountData: PaymentSubmitCardValuesProps;
   allowNoRefund?: boolean;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
   onRefund: () => void;
 }
 
-export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
+export const PaymentSubmitCard = (props: PaymentSubmitCardProps) => {
   const {
     data,
     order,

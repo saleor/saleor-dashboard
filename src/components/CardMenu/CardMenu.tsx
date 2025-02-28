@@ -11,7 +11,15 @@ import {
 import { IconButtonProps, makeStyles, SettingsIcon } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React, { useEffect, useRef, useState } from "react";
+import {
+  FunctionComponent,
+  KeyboardEvent,
+  MouseEvent,
+  ReactElement,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { FormattedMessage } from "react-intl";
 
 import { IconButton } from "../IconButton";
@@ -27,7 +35,7 @@ export interface CardMenuItem {
   loading?: boolean;
   withLoading?: boolean;
   hasError?: boolean;
-  Icon?: React.ReactElement;
+  Icon?: ReactElement;
 }
 
 export interface CardMenuProps {
@@ -35,7 +43,7 @@ export interface CardMenuProps {
   disabled?: boolean;
   menuItems: CardMenuItem[];
   outlined?: boolean;
-  Icon?: React.ElementType<{}>;
+  Icon?: FunctionComponent<any>;
   IconButtonProps?: IconButtonProps;
   autoFocusItem?: boolean;
   showMenuIcon?: boolean;
@@ -72,7 +80,7 @@ const useStyles = makeStyles(
 /**
  * @deprecated use [`TopNav.Menu`](https://github.com/saleor/saleor-dashboard/blob/main/src/components/AppLayout/TopNav/Menu.tsx) instead
  */
-const CardMenu: React.FC<CardMenuProps> = props => {
+const CardMenu = (props: CardMenuProps) => {
   const {
     className,
     disabled,
@@ -88,14 +96,14 @@ const CardMenu: React.FC<CardMenuProps> = props => {
   const anchorRef = useRef<HTMLButtonElement | null>(null);
   const [open, setOpen] = useState(false);
   const handleToggle = () => setOpen(prevOpen => !prevOpen);
-  const handleClose = (event: React.MouseEvent<EventTarget>) => {
+  const handleClose = (event: MouseEvent<EventTarget>) => {
     if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
       return;
     }
 
     setOpen(false);
   };
-  const handleListKeyDown = (event: React.KeyboardEvent) => {
+  const handleListKeyDown = (event: KeyboardEvent) => {
     if (event.key === "Tab") {
       event.preventDefault();
       setOpen(false);
@@ -146,7 +154,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
         state={open ? "active" : "default"}
         {...IconButtonProps}
       >
-        <Icon />
+        <Icon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
       </IconButton>
       <Popper
         placement="bottom-end"

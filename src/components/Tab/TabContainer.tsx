@@ -1,9 +1,9 @@
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React from "react";
+import { ReactNode, ReactNodeArray } from "react";
 
 export interface TabContainerProps {
-  children: React.ReactNode | React.ReactNodeArray;
+  children: ReactNode | ReactNodeArray;
   className?: string;
 }
 
@@ -15,7 +15,7 @@ const useStyles = makeStyles(
   }),
   { name: "TabContainer" },
 );
-const TabContainer: React.FC<TabContainerProps> = props => {
+const TabContainer = (props: TabContainerProps) => {
   const { children } = props;
   const classes = useStyles(props);
 

@@ -1,5 +1,5 @@
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { ReactNode } from "react";
 
 const useStyles = makeStyles(
   theme => ({
@@ -14,10 +14,10 @@ const useStyles = makeStyles(
 );
 
 interface CardSpacerProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
-export const CardSpacer: React.FC<CardSpacerProps> = props => {
+export const CardSpacer = (props: CardSpacerProps) => {
   const { children } = props;
   const classes = useStyles(props);
 

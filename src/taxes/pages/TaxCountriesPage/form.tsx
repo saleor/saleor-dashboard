@@ -9,7 +9,7 @@ import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
 import useFormset, { FormsetData } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { taxesMessages } from "@dashboard/taxes/messages";
-import React from "react";
+import { ReactNode, useEffect } from "react";
 import { useIntl } from "react-intl";
 
 export interface TaxCountriesPageFormData {
@@ -26,7 +26,7 @@ export interface UseTaxCountriesFormResult {
 }
 
 interface TaxCountriesFormProps {
-  children: (props: any) => React.ReactNode;
+  children: (props: any) => ReactNode;
   country: TaxCountryConfigurationFragment;
   onSubmit: (data: TaxClassRateInput[]) => SubmitPromise;
   disabled: boolean;
@@ -81,18 +81,13 @@ function useTaxCountriesForm(
     formId,
   });
 
-  React.useEffect(() => setExitDialogSubmitRef(submit), [setExitDialogSubmitRef, submit]);
+  useEffect(() => setExitDialogSubmitRef(submit), [setExitDialogSubmitRef, submit]);
   setIsSubmitDisabled(disabled);
 
   return { data: formset.data, handlers: { handleRateChange }, submit };
 }
 
-const TaxCountriesForm: React.FC<TaxCountriesFormProps> = ({
-  children,
-  country,
-  onSubmit,
-  disabled,
-}) => {
+const TaxCountriesForm = ({ children, country, onSubmit, disabled }: TaxCountriesFormProps) => {
   const props = useTaxCountriesForm(country, onSubmit, disabled);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;

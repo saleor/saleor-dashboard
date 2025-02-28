@@ -9,6 +9,7 @@ import {
 import { FormChange } from "@dashboard/hooks/useForm";
 import { flatten, getById } from "@dashboard/misc";
 import { Option } from "@saleor/macaw-ui-next";
+import { Dispatch, SetStateAction } from "react";
 
 import { OrderCustomerAddressesEditData, OrderCustomerAddressesEditHandlers } from "./form";
 import { OrderCustomerAddressEditProps } from "./OrderCustomerAddressEdit";
@@ -70,7 +71,7 @@ export const getAddressEditProps = (
   handlers: OrderCustomerAddressesEditHandlers,
   change: FormChange,
   dialogErrors: Array<OrderErrorFragment | AccountErrorFragment>,
-  setAddressSearchState: React.Dispatch<React.SetStateAction<OrderCustomerSearchAddressState>>,
+  setAddressSearchState: Dispatch<SetStateAction<OrderCustomerSearchAddressState>>,
   addressEditCommonProps: AddressEditCommonProps,
 ): OrderCustomerAddressEditProps => {
   if (variant === "shipping") {

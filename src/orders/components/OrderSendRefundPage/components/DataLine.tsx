@@ -1,13 +1,13 @@
-import React from "react";
+import { ReactNode } from "react";
 
 import { useDataLineStyles } from "../styles";
 
 interface DataLineProps {
-  label: React.ReactNode;
-  children: React.ReactNode;
+  label: ReactNode;
+  children: ReactNode;
 }
 
-export const DataLine: React.FC<DataLineProps> = ({ label, children }) => {
+export const DataLine = ({ label, children }: DataLineProps) => {
   const classes = useDataLineStyles();
 
   return (

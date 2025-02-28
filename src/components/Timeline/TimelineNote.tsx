@@ -1,7 +1,7 @@
 import { GiftCardDetailsQuery, OrderEventFragment } from "@dashboard/graphql";
 import { getUserInitials, getUserName } from "@dashboard/misc";
 import { Box, Button, EditIcon, Text } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { DashboardCard } from "../Card";
@@ -29,7 +29,7 @@ interface NoteMessageProps {
   message: string | null;
 }
 
-const NoteMessage: React.FC<NoteMessageProps> = ({ message }) => (
+const NoteMessage = ({ message }: NoteMessageProps) => (
   <>
     {message?.split("\n").map(string => {
       if (string === "") {
@@ -69,7 +69,7 @@ const TimelineAvatar = ({
   return null;
 };
 
-export const TimelineNote: React.FC<TimelineNoteProps> = ({
+export const TimelineNote = ({
   date,
   user,
   message,
@@ -79,7 +79,7 @@ export const TimelineNote: React.FC<TimelineNoteProps> = ({
   relatedId,
   onNoteUpdate,
   onNoteUpdateLoading,
-}) => {
+}: TimelineNoteProps) => {
   const userDisplayName = getUserName(user, true) ?? app?.name;
   const [showEdit, setShowEdit] = useState(false);
 

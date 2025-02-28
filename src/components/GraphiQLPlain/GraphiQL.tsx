@@ -45,7 +45,7 @@ import {
   VariableEditor,
   WriteableEditorProps,
 } from "@graphiql/react";
-import React, { ComponentType, PropsWithChildren, ReactNode, useState } from "react";
+import { Children, ComponentType, PropsWithChildren, ReactNode, useState } from "react";
 
 import { useDashboardTheme, useGraphiQLThemeSwitcher } from "../GraphiQL/styles";
 
@@ -55,7 +55,7 @@ export interface GraphiQLToolbarConfig {
    * Note that this will not apply if you provide a completely custom toolbar
    * (by passing `GraphiQL.Toolbar` as child to the `GraphiQL` component).
    */
-  additionalContent?: React.ReactNode;
+  additionalContent?: ReactNode;
 }
 
 /**
@@ -235,7 +235,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
   );
   const [showDialog, setShowDialog] = useState<"settings" | "short-keys" | null>(null);
   const [clearStorageStatus, setClearStorageStatus] = useState<"success" | "error" | null>(null);
-  const children = React.Children.toArray(props.children);
+  const children = Children.toArray(props.children);
   const toolbar = children.find(child => isChildComponentType(child, GraphiQL.Toolbar)) || (
     <>
       <ToolbarButton onClick={() => prettify()} label="Prettify query (Shift-Ctrl-P)">
@@ -530,7 +530,13 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
           </div>
         </div>
       </div>
-      <Dialog isOpen={showDialog === "short-keys"} onDismiss={() => setShowDialog(null)}>
+      <Dialog
+        isOpen={showDialog === "short-keys"}
+        onDismiss={() => setShowDialog(null)}
+        placeholder={undefined}
+        onPointerEnterCapture={undefined}
+        onPointerLeaveCapture={undefined}
+      >
         <div className="graphiql-dialog-header">
           <div className="graphiql-dialog-title">Short Keys</div>
           <Dialog.Close onClick={() => setShowDialog(null)} />
@@ -632,6 +638,9 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
           setShowDialog(null);
           setClearStorageStatus(null);
         }}
+        placeholder={undefined}
+        onPointerEnterCapture={undefined}
+        onPointerLeaveCapture={undefined}
       >
         <div className="graphiql-dialog-header">
           <div className="graphiql-dialog-title">Settings</div>

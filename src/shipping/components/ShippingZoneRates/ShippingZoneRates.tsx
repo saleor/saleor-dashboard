@@ -14,7 +14,7 @@ import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import { Button, DeleteIcon, ICONBUTTON_SIZE, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
@@ -48,7 +48,7 @@ const useStyles = makeStyles(
   }),
   { name: "ShippingZoneRates" },
 );
-const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
+const ShippingZoneRates = (props: ShippingZoneRatesProps) => {
   const {
     disabled,
     onRateAdd,
@@ -135,10 +135,10 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                   data-test-id="shipping-method-row"
                 >
                   <TableCell className={classes.nameColumn}>
-                    {maybe<React.ReactNode>(() => rate.name, <Skeleton />)}
+                    {maybe<ReactNode>(() => rate.name, <Skeleton />)}
                   </TableCell>
                   <TableCell>
-                    {maybe<React.ReactNode>(
+                    {maybe<ReactNode>(
                       () =>
                         rate && !channel ? (
                           "-"
@@ -157,7 +157,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                     )}
                   </TableCell>
                   <TableCell data-test-id="shipping-rate-price">
-                    {maybe<React.ReactNode>(
+                    {maybe<ReactNode>(
                       () => (rate && !channel ? "-" : <Money money={channel.price} />),
                       <Skeleton />,
                     )}
@@ -177,7 +177,11 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                       onClick={() => onRateRemove(rate.id)}
                       className={classes.buttonColumn}
                     >
-                      <DeleteIcon data-test-id="delete-button" />
+                      <DeleteIcon
+                        data-test-id="delete-button"
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
+                      />
                     </IconButtonTableCell>
                   </TableButtonWrapper>
                 </TableRowLink>

@@ -11,7 +11,6 @@ import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { OutputData } from "@editorjs/editorjs";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import TranslationsCategoriesPage from "../components/TranslationsCategoriesPage";
@@ -29,11 +28,7 @@ export interface TranslationsCategoriesProps {
   params: TranslationsCategoriesQueryParams;
 }
 
-const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
-  id,
-  languageCode,
-  params,
-}) => {
+const TranslationsCategories = ({ id, languageCode, params }: TranslationsCategoriesProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

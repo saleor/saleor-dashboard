@@ -1,5 +1,6 @@
 import { MoneyFragment, TaxedMoneyFragment } from "@dashboard/graphql";
 import { OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
+import { ReactNode } from "react";
 
 import { OrderLineDiscountContextConsumerProps } from "./OrderLineDiscountProvider";
 
@@ -23,6 +24,6 @@ export interface OrderDiscountConsumerCommonProps {
 }
 
 export interface OrderLineDiscountConsumerProps {
-  children: (values: OrderLineDiscountContextConsumerProps) => React.ReactNode;
+  children: (values: OrderLineDiscountContextConsumerProps) => ReactNode;
   orderLineId: string;
 }

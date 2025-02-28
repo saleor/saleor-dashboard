@@ -1,21 +1,21 @@
-import React from "react";
+import { createContext, Dispatch, ReactNode, useEffect, useReducer } from "react";
 import useRouter from "use-react-router";
 
 import appStateReducer, { AppStateReducerAction } from "./reducer";
 import IAppState, { initialAppState } from "./state";
 
-export type AppStateContextType = [IAppState, React.Dispatch<AppStateReducerAction>];
-export const AppStateContext = React.createContext<AppStateContextType>([
+export type AppStateContextType = [IAppState, Dispatch<AppStateReducerAction>];
+export const AppStateContext = createContext<AppStateContextType>([
   initialAppState,
   () => undefined,
 ]);
 
-const AppStateProvider: React.FC = ({ children }) => {
+const AppStateProvider = ({ children }: { children: ReactNode }) => {
   const { location } = useRouter();
-  const stateAndDispatch = React.useReducer(appStateReducer, initialAppState);
+  const stateAndDispatch = useReducer(appStateReducer, initialAppState);
   const [state, dispatch] = stateAndDispatch;
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (state.error) {
       dispatch({
         payload: {

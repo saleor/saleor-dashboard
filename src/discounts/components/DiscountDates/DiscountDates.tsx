@@ -3,7 +3,7 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { CommonError, getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
 import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui-next";
-import React, { ChangeEvent } from "react";
+import { ChangeEvent, FocusEvent } from "react";
 import { FieldError } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -20,8 +20,8 @@ interface DiscountDatesProps<ErrorCode> {
     startDate?: FieldError;
   };
   errors: Array<CommonError<ErrorCode>>;
-  onChange: (event: React.ChangeEvent<any>) => void;
-  onBlur?: (event: React.FocusEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
+  onBlur?: (event: FocusEvent<any>) => void;
 }
 
 const DiscountDates = <ErrorCode,>({

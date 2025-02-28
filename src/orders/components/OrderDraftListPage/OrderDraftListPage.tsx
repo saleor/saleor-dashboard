@@ -8,7 +8,7 @@ import { OrderDraftListUrlSortField } from "@dashboard/orders/urls";
 import { FilterPagePropsWithPresets, PageListProps, RelayToFlat, SortPage } from "@dashboard/types";
 import { isLimitReached } from "@dashboard/utils/limits";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { OrderDraftListDatagrid } from "../OrderDraftListDatagrid";
@@ -29,7 +29,7 @@ export interface OrderDraftListPageProps
   onSelectOrderDraftIds: (ids: number[], clearSelection: () => void) => void;
 }
 
-const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
+const OrderDraftListPage = ({
   selectedFilterPreset,
   disabled,
   filterOpts,
@@ -50,7 +50,7 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
   currencySymbol,
   selectedOrderDraftIds,
   ...listProps
-}) => {
+}: OrderDraftListPageProps) => {
   const intl = useIntl();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const filterStructure = createFilterStructure(intl, filterOpts);

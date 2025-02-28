@@ -3,7 +3,6 @@ import { Select } from "@dashboard/components/Select";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
 
 const useStyles = makeStyles(
   theme => ({
@@ -25,7 +24,7 @@ interface PhoneFieldProps {
   onChange: (event: ChangeEvent) => any;
 }
 
-const PhoneField: React.FC<PhoneFieldProps> = props => {
+const PhoneField = (props: PhoneFieldProps) => {
   const { name, number: phoneNumber, prefix, prefixes, label, onChange } = props;
   const classes = useStyles(props);
   const nameWithPrefix = name + "_prefix";

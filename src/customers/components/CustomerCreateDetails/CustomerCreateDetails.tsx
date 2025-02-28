@@ -6,7 +6,7 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 
 import { CustomerCreatePageFormData } from "../CustomerCreatePage";
@@ -27,10 +27,10 @@ export interface CustomerCreateDetailsProps {
   data: CustomerCreatePageFormData;
   disabled: boolean;
   errors: AccountErrorFragment[];
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
 }
 
-const CustomerCreateDetails: React.FC<CustomerCreateDetailsProps> = props => {
+const CustomerCreateDetails = (props: CustomerCreateDetailsProps) => {
   const { data, disabled, errors, onChange } = props;
 
   const classes = useStyles(props);

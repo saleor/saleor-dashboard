@@ -27,7 +27,6 @@ import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeV
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseAddPath } from "@dashboard/warehouses/urls";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors, weight } from "../../misc";
@@ -47,7 +46,7 @@ interface ProductVariantCreateProps {
   params: ProductVariantAddUrlQueryParams;
 }
 
-export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId, params }) => {
+export const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

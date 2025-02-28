@@ -22,7 +22,6 @@ import { ListActions, SortPage } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -68,7 +67,7 @@ export interface PermissonGroupDetailsPageProps
   onSubmit: (data: PermissionGroupDetailsPageFormData) => SubmitPromise;
 }
 
-export const PermissionGroupDetailsPage: React.FC<PermissonGroupDetailsPageProps> = ({
+export const PermissionGroupDetailsPage = ({
   disabled,
   errors,
   members,
@@ -81,7 +80,7 @@ export const PermissionGroupDetailsPage: React.FC<PermissonGroupDetailsPageProps
   channels,
   isUserAbleToEditChannels,
   ...listProps
-}) => {
+}: PermissonGroupDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const user = useUser();

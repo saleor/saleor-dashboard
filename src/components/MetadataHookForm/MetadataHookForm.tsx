@@ -1,6 +1,5 @@
 import { MetadataInput } from "@dashboard/graphql";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
 import { UseFormReturn } from "react-hook-form";
 
 import { MetadataCard, MetadataCardProps } from "../Metadata/MetadataCard";

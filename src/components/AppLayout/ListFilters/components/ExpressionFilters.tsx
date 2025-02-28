@@ -4,7 +4,6 @@ import {
   useConditionalFilterContext,
 } from "@dashboard/components/ConditionalFilter";
 import { Box, Button, CloseIcon, DropdownButton, Popover, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 export const ExpressionFilters = () => {

@@ -1,6 +1,5 @@
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 import { fireEvent, render, screen, within } from "@testing-library/react";
-import React from "react";
 import { IntlShape, MessageDescriptor } from "react-intl";
 
 import { OrderMetadataDialog, OrderMetadataDialogData } from "./OrderMetadataDialog";

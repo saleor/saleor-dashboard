@@ -1,6 +1,5 @@
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
-import React from "react";
 
 import AppInProgressDeleteDialog from "./AppInProgressDeleteDialog";
 import msgs from "./messages";

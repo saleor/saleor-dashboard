@@ -1,6 +1,5 @@
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
 
 import { FilterElement } from "../types";
 import { FilterDispatchFunction } from "../useFilter";
@@ -22,10 +21,10 @@ export interface FilterContentBodyNameFieldProps<K extends string = string> {
   onFilterPropertyChange: FilterDispatchFunction<K>;
 }
 
-const FilterContentBodyNameField: React.FC<FilterContentBodyNameFieldProps> = ({
+const FilterContentBodyNameField = ({
   filter,
   onFilterPropertyChange,
-}) => {
+}: FilterContentBodyNameFieldProps) => {
   const classes = useStyles({});
 
   return (

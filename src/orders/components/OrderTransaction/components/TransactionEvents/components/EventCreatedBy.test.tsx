@@ -4,7 +4,6 @@ import { AppPaths } from "@dashboard/apps/urls";
 import { staffMemberAvatar } from "@dashboard/staff/fixtures";
 import { staffMemberDetailsPath } from "@dashboard/staff/urls";
 import { render, screen } from "@testing-library/react";
-import React from "react";
 import { MemoryRouter } from "react-router";
 
 import { EventCreatedBy } from "./EventCreatedBy";
@@ -16,6 +15,7 @@ describe("EventCreatedBy", () => {
   });
   it("displays a link to the app if app is passed", () => {
     render(
+      // @ts-expect-error MemoryRouter types does not have explicit children props
       <MemoryRouter>
         <EventCreatedBy createdBy={appAvatar} />
       </MemoryRouter>,
@@ -31,6 +31,7 @@ describe("EventCreatedBy", () => {
   });
   it("displays a link to the user settings if user is passed", () => {
     render(
+      // @ts-expect-error MemoryRouter types does not have explicit children props
       <MemoryRouter>
         <EventCreatedBy createdBy={staffMemberAvatar} />
       </MemoryRouter>,

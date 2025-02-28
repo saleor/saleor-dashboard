@@ -7,7 +7,7 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { PermissionEnum, useAppQuery, useAppUpdatePermissionsMutation } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 const messages = AppPermissionsDialogMessages.dialogRoot;

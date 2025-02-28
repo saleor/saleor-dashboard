@@ -8,7 +8,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { getById } from "@dashboard/misc";
 import { Checkbox, FormControlLabel, InputAdornment, TextField } from "@material-ui/core";
 import { Button, SearchIcon } from "@saleor/macaw-ui";
-import React from "react";
+import { ChangeEvent, Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { dialogMessages as messages } from "./messages";
@@ -28,7 +28,7 @@ export interface OrderCustomerAddressesSearchProps {
   exitSearch: () => any;
 }
 
-const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> = props => {
+const OrderCustomerAddressesSearch = (props: OrderCustomerAddressesSearchProps) => {
   const {
     type,
     cloneAddress,
@@ -44,8 +44,8 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
   const intl = useIntl();
   const classes = useStyles(props);
   const initialAddress = customerAddresses.find(getById(selectedCustomerAddressId));
-  const [query, setQuery] = React.useState("");
-  const [temporarySelectedAddress, setTemporarySelectedAddress] = React.useState(initialAddress);
+  const [query, setQuery] = useState("");
+  const [temporarySelectedAddress, setTemporarySelectedAddress] = useState(initialAddress);
   const handleSelect = () => {
     if (type === AddressTypeEnum.SHIPPING) {
       onChangeCustomerShippingAddress(temporarySelectedAddress);
@@ -57,7 +57,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
       exitSearch();
     }
   };
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
   const filteredCustomerAddresses = customerAddresses.filter(address => {
@@ -79,7 +79,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <SearchIcon />
+              <SearchIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
             </InputAdornment>
           ),
         }}
@@ -90,13 +90,13 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
         {filteredCustomerAddresses.length === 0
           ? intl.formatMessage(messages.noResultsFound)
           : filteredCustomerAddresses?.map(address => (
-              <React.Fragment key={address.id}>
+              <Fragment key={address.id}>
                 <CustomerAddressChoiceCard
                   selected={address.id === temporarySelectedAddress.id}
                   onSelect={() => setTemporarySelectedAddress(address)}
                   address={address}
                 />
-              </React.Fragment>
+              </Fragment>
             ))}
       </div>
 

@@ -1,9 +1,9 @@
 import { borderHeight, savebarHeight } from "@dashboard/components/AppLayout/consts";
 import { Box, Sprinkles } from "@saleor/macaw-ui-next";
-import React, { useMemo } from "react";
+import { ReactNode, useMemo } from "react";
 
 interface DetailPageLayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
   gridTemplateColumns?: Sprinkles["gridTemplateColumns"];
   withSavebar?: boolean;
 }
@@ -11,11 +11,11 @@ interface DetailPageLayoutProps {
 const contentWithSidebarHeight = `calc(100vh - ${savebarHeight} - ${borderHeight} * 2)`;
 const contentWithoutSidebarHeight = `calc(100vh - ${borderHeight}`;
 
-export const RootLayout: React.FC<DetailPageLayoutProps> = ({
+export const RootLayout = ({
   children,
   gridTemplateColumns = 12,
   withSavebar = true,
-}) => {
+}: DetailPageLayoutProps) => {
   const gridTemplateColumnsValue = useMemo((): Sprinkles["gridTemplateColumns"] => {
     if (gridTemplateColumns instanceof Object) {
       return {

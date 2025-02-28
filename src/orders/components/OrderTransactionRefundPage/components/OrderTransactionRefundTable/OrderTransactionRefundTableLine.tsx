@@ -1,6 +1,6 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
-import React from "react";
+import { ChangeEvent, Dispatch, FocusEvent, SetStateAction } from "react";
 import { Control, FieldArrayWithId, UseFieldArrayUpdate } from "react-hook-form";
 
 import { LineToRefund, OrderTransactionRefundPageFormData } from "../../OrderTransactionRefundPage";
@@ -19,12 +19,12 @@ interface OrderTransactionRefundTableLineProps {
   draftRefund?: OrderDetailsGrantRefundFragment["grantedRefunds"][0];
   qtyToRefund: LineToRefund["quantity"];
   maxQtyToRefund: number;
-  onEditReasonModal: React.Dispatch<React.SetStateAction<number | null>>;
+  onEditReasonModal: Dispatch<SetStateAction<number | null>>;
   refundFieldsUpdate: UseFieldArrayUpdate<OrderTransactionRefundPageFormData, "linesToRefund">;
   onChange: (data: RefundQuantityChange, index: number) => void;
 }
 
-export const OrderTransactionRefundTableLine: React.FC<OrderTransactionRefundTableLineProps> = ({
+export const OrderTransactionRefundTableLine = ({
   control,
   field,
   index,
@@ -36,8 +36,8 @@ export const OrderTransactionRefundTableLine: React.FC<OrderTransactionRefundTab
   onEditReasonModal,
   refundFieldsUpdate,
   onChange,
-}) => {
-  const handleInputOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+}: OrderTransactionRefundTableLineProps) => {
+  const handleInputOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(
       {
         value: event.target.value,
@@ -46,7 +46,7 @@ export const OrderTransactionRefundTableLine: React.FC<OrderTransactionRefundTab
       index,
     );
   };
-  const handleInputOnBlur = (event: React.FocusEvent<HTMLInputElement, Element>) =>
+  const handleInputOnBlur = (event: FocusEvent<HTMLInputElement, Element>) =>
     refundFieldsUpdate(index, {
       reason: field.reason,
       quantity: validateQty({

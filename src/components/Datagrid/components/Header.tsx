@@ -6,18 +6,18 @@ import {
   PlusIcon,
   Text,
 } from "@saleor/macaw-ui-next";
-import React, { FC, PropsWithChildren } from "react";
+import { FC, MouseEventHandler, PropsWithChildren } from "react";
 
 interface ButtonFullScreenProps {
   isOpen: boolean;
-  onToggle: React.MouseEventHandler<HTMLButtonElement>;
+  onToggle: MouseEventHandler<HTMLButtonElement>;
 }
 
-const ButtonFullScreen: FC<PropsWithChildren<ButtonFullScreenProps>> = ({
+const ButtonFullScreen = ({
   isOpen,
   onToggle,
   children,
-}) => {
+}: PropsWithChildren<ButtonFullScreenProps>) => {
   return (
     <Button data-test-id="button-exit-fullscreen" variant="secondary" onClick={onToggle}>
       <Box as="span" display="flex">
@@ -29,10 +29,10 @@ const ButtonFullScreen: FC<PropsWithChildren<ButtonFullScreenProps>> = ({
 };
 
 interface ButtonAddRowProps {
-  onAddRow: React.MouseEventHandler<HTMLButtonElement>;
+  onAddRow: MouseEventHandler<HTMLButtonElement>;
 }
 
-const ButtonAddRow: FC<PropsWithChildren<ButtonAddRowProps>> = ({ onAddRow, children }) => {
+const ButtonAddRow = ({ onAddRow, children }: PropsWithChildren<ButtonAddRowProps>) => {
   return (
     <Button data-test-id="button-add-variant" variant="secondary" onClick={onAddRow}>
       <PlusIcon />
