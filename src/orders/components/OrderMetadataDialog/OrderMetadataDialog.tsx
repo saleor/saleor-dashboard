@@ -52,7 +52,7 @@ export const OrderMetadataDialog = ({
 
   return (
     <DashboardModal open={open} onChange={onClose}>
-      <DashboardModal.Content size="md">
+      <DashboardModal.Content size="md" overflowY="hidden">
         <DashboardModal.Header>
           <FormattedMessage
             defaultMessage="View or edit metadata for line item"
@@ -61,83 +61,102 @@ export const OrderMetadataDialog = ({
           />
         </DashboardModal.Header>
 
-        <OrderLineDetails data={data} loading={loading} />
+        <Box
+          style={{
+            // Max height calculated so that there's no scroll on modal itself
+            maxHeight: "calc(-270px + 100vh)",
+            // Remove right margin (DashboardModal.Content has 6 units padding)
+            // It has to be removed to avoid spacing out horizontal scroll in weird way
+            marginRight: "calc(var(--mu-spacing-6) * -1)",
+          }}
+          // Re-add back removed padding via negative margin
+          paddingRight={6}
+          overflowY="auto"
+        >
+          <OrderLineDetails data={data} loading={loading} />
 
-        <Box as="form" onSubmit={handleSubmit(onSubmit)}>
-          <Box display="flex" flexDirection="column" gap={5}>
-            <Box display="flex" flexDirection="column" data-test-id={TEST_ID_ORDER_LINE_METADATA}>
-              <Box display="flex" flexDirection="column" marginLeft={6} gap={2}>
-                <Text as="h2" size={5} fontWeight="bold">
-                  <FormattedMessage
-                    defaultMessage="Order line metadata"
-                    description="dialog, editing order line metadata"
-                    id="B54f/g"
-                  />
-                </Text>
-                <Text>
-                  <FormattedMessage
-                    defaultMessage="Represents the metadata of the given ordered item"
-                    description="dialog , editing order line metadata"
-                    id="7WrRzs"
-                  />
-                </Text>
+          <Box as="form" onSubmit={handleSubmit(onSubmit)}>
+            <Box display="flex" flexDirection="column" gap={5}>
+              <Box display="flex" flexDirection="column" data-test-id={TEST_ID_ORDER_LINE_METADATA}>
+                <Box display="flex" flexDirection="column" marginLeft={6} gap={2}>
+                  <Text as="h2" size={5} fontWeight="bold">
+                    <FormattedMessage
+                      defaultMessage="Order line metadata"
+                      description="dialog, editing order line metadata"
+                      id="B54f/g"
+                    />
+                  </Text>
+                  <Text>
+                    <FormattedMessage
+                      defaultMessage="Represents the metadata of the given ordered item"
+                      description="dialog , editing order line metadata"
+                      id="7WrRzs"
+                    />
+                  </Text>
+                </Box>
+
+                <MetadataHookForm
+                  isLoading={loading && !data}
+                  disabled={loading || formState.isSubmitting}
+                  control={control}
+                  getValues={getValues}
+                  trigger={trigger}
+                />
+
+                {allFormErrors.length > 0 && (
+                  <Text color="critical1" marginLeft={6} marginTop={4}>
+                    {allFormErrors.join(", ")}
+                  </Text>
+                )}
               </Box>
+              <Divider />
 
-              <MetadataHookForm
-                isLoading={loading && !data}
-                disabled={loading || formState.isSubmitting}
-                control={control}
-                getValues={getValues}
-                trigger={trigger}
-              />
+              <Box
+                display="flex"
+                flexDirection="column"
+                data-test-id={TEST_ID_PRODUCT_VARIANT_METADATA}
+              >
+                <Box display="flex" flexDirection="column" marginLeft={6} gap={2}>
+                  <Text as="h2" size={5} fontWeight="bold">
+                    <FormattedMessage
+                      defaultMessage="Product variant metadata"
+                      description="modal header, read-only product variant metadata"
+                      id="PH4R7g"
+                    />
+                  </Text>
+                  <Text>
+                    <FormattedMessage
+                      defaultMessage="This is a metadata of the variant that is being used in this ordered item"
+                      description="modal subheader, read-only product variant metadata"
+                      id="/mwSjm"
+                    />
+                  </Text>
+                </Box>
 
-              {allFormErrors.length > 0 && (
-                <Text color="critical1" marginLeft={6} marginTop={4}>
-                  {allFormErrors.join(", ")}
-                </Text>
-              )}
-            </Box>
-            <Divider />
-
-            <Box
-              display="flex"
-              flexDirection="column"
-              data-test-id={TEST_ID_PRODUCT_VARIANT_METADATA}
-            >
-              <Box display="flex" flexDirection="column" marginLeft={6} gap={2}>
-                <Text as="h2" size={5} fontWeight="bold">
-                  <FormattedMessage
-                    defaultMessage="Product variant metadata"
-                    description="modal header, read-only product variant metadata"
-                    id="PH4R7g"
-                  />
-                </Text>
-                <Text>
-                  <FormattedMessage
-                    defaultMessage="This is a metadata of the variant that is being used in this ordered item"
-                    description="modal subheader, read-only product variant metadata"
-                    id="/mwSjm"
-                  />
-                </Text>
+                {/* We cannot use memo, because it won't show loading state correctly */}
+                <MetadataNoMemo
+                  onChange={() => undefined}
+                  readonly
+                  isLoading={loading && !data}
+                  data={{
+                    metadata: data?.variant?.metadata ?? [],
+                    privateMetadata: data?.variant?.privateMetadata ?? [],
+                  }}
+                  hidePrivateMetadata={!hasManageProducts}
+                  paddingBottom={0}
+                />
               </Box>
-
-              {/* We cannot use memo, because it won't show loading state correctly */}
-              <MetadataNoMemo
-                onChange={() => undefined}
-                readonly
-                isLoading={loading && !data}
-                data={{
-                  metadata: data?.variant?.metadata ?? [],
-                  privateMetadata: data?.variant?.privateMetadata ?? [],
-                }}
-                hidePrivateMetadata={!hasManageProducts}
-                paddingBottom={0}
-              />
             </Box>
           </Box>
         </Box>
 
-        <DashboardModal.Actions paddingX={6} marginTop={4}>
+        <DashboardModal.Actions
+          paddingTop={4}
+          paddingX={6}
+          bottom={6}
+          width="100%"
+          backgroundColor="default1"
+        >
           <Button
             data-test-id="save"
             variant="primary"
