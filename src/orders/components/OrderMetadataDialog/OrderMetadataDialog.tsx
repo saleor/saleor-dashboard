@@ -1,5 +1,3 @@
-import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { MetadataFormData, MetadataNoMemo } from "@dashboard/components/Metadata";
 import { MetadataHookForm } from "@dashboard/components/MetadataHookForm";
 import { DashboardModal } from "@dashboard/components/Modal";
@@ -51,9 +49,6 @@ export const OrderMetadataDialog = ({
   const { handleSubmit, control, getValues, formState, trigger } = formMethods;
 
   const allFormErrors = flattenErrors(formState.errors);
-
-  const saveButtonState: ConfirmButtonTransitionState =
-    formState.isSubmitting || loading ? "loading" : "default";
 
   return (
     <DashboardModal open={open} onChange={onClose}>
@@ -140,21 +135,22 @@ export const OrderMetadataDialog = ({
               />
             </Box>
           </Box>
-          <DashboardModal.Actions paddingX={6} marginTop={4}>
-            <ButtonWithLoader
-              transitionState={saveButtonState}
-              data-test-id="save"
-              variant={allFormErrors.length === 0 ? "primary" : "error"}
-              type="submit"
-              disabled={!formState.isDirty}
-            >
-              <FormattedMessage {...buttonMessages.save} />
-            </ButtonWithLoader>
-            <Button data-test-id="back" variant="secondary" onClick={onClose}>
-              <FormattedMessage {...buttonMessages.close} />
-            </Button>
-          </DashboardModal.Actions>
         </Box>
+
+        <DashboardModal.Actions paddingX={6} marginTop={4}>
+          <Button
+            data-test-id="save"
+            variant="primary"
+            disabled={formState.isSubmitting || !formState.isDirty}
+            type="submit"
+            onClick={handleSubmit(onSubmit)}
+          >
+            <FormattedMessage {...buttonMessages.save} />
+          </Button>
+          <Button data-test-id="back" variant="secondary" onClick={onClose}>
+            <FormattedMessage {...buttonMessages.close} />
+          </Button>
+        </DashboardModal.Actions>
       </DashboardModal.Content>
     </DashboardModal>
   );
