@@ -445,4 +445,129 @@ describe("useAppsFailedDeliveries", () => {
     // Assert
     expect(result.current.lastFailedWebhookDate?.toISOString()).toEqual("2023-01-20T09:50:43.343Z");
   });
+
+  it("should should handle multiple apps with failed events", () => {
+    // Arrange
+    (useHasManagedAppsPermission as jest.Mock).mockReturnValue(hasPermissions);
+    (useAppFailedPendingWebhooksLazyQuery as jest.Mock).mockReturnValue([
+      fetchingFunction,
+      {
+        data: {
+          apps: {
+            edges: [
+              {
+                node: {
+                  webhooks: [
+                    {
+                      failedDelivers: { edges: [1] },
+                      pendingDelivers: {
+                        edges: [
+                          {
+                            node: {
+                              attempts: {
+                                edges: [
+                                  {
+                                    node: {
+                                      status: "FAILED",
+                                      createdAt: "2023-01-19T09:50:43.343Z",
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      failedDelivers: { edges: [2] },
+                      pendingDelivers: {
+                        edges: [
+                          {
+                            node: {
+                              attempts: {
+                                edges: [
+                                  {
+                                    node: {
+                                      status: "FAILED",
+                                      createdAt: "2023-01-20T09:50:43.343Z",
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+              {
+                node: {
+                  webhooks: [
+                    {
+                      failedDelivers: { edges: [1] },
+                      pendingDelivers: {
+                        edges: [
+                          {
+                            node: {
+                              attempts: {
+                                edges: [
+                                  {
+                                    node: {
+                                      status: "FAILED",
+                                      createdAt: "2023-01-21T09:50:43.343Z",
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      failedDelivers: { edges: [2] },
+                      pendingDelivers: {
+                        edges: [
+                          {
+                            node: {
+                              attempts: {
+                                edges: [
+                                  {
+                                    node: {
+                                      status: "FAILED",
+                                      createdAt: "2023-01-20T09:50:43.343Z",
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+              {
+                node: {
+                  webhooks: [],
+                },
+              },
+            ],
+          },
+        },
+      },
+    ]);
+
+    // Act
+    const { result } = renderHook(() => useAppsFailedDeliveries());
+
+    result.current.fetchAppsWebhooks();
+
+    // Assert
+    expect(result.current.lastFailedWebhookDate?.toISOString()).toEqual("2023-01-21T09:50:43.343Z");
+  });
 });
