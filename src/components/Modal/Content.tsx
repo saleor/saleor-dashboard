@@ -19,7 +19,17 @@ const sizes: Record<ContentSize, number> = {
 
 export const Content = ({ children, disableAutofocus, size, ...rest }: ContentProps) => {
   return (
-    <Modal.Content disableAutofocus={disableAutofocus}>
+    <Modal.Content
+      disableAutofocus={disableAutofocus}
+      dialogContentProps={{
+        onPointerDownOutside: e => {
+          // This fixes issues when cursor was clicked on DataGrid x/y coordinates
+          // For example: when in modal clicked on "View metadata" button in DataGrid
+          // This doesn't prevent default action from Radix which is to close modal
+          e.detail.originalEvent.preventDefault();
+        },
+      }}
+    >
       <Box
         backgroundColor="default1"
         boxShadow="defaultModal"

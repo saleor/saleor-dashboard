@@ -302,8 +302,8 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
       <OrderMetadataDialog
         open={params.action === "view-metadata"}
         onClose={closeModal}
-        data={order?.lines?.find(orderLine => orderLine.id === params.id)}
-        loading={loading}
+        lineId={params.id}
+        orderId={id}
       />
       <OrderAddressFields
         action={params?.action}

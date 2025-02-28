@@ -371,10 +371,10 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
         }
       />
       <OrderMetadataDialog
-        onClose={closeModal}
         open={params.action === "view-metadata"}
-        data={order?.lines?.find(orderLine => orderLine.id === params.id)}
-        loading={updateMetadataOpts.loading || updatePrivateMetadataOpts.loading}
+        onClose={closeModal}
+        lineId={params.id}
+        orderId={id}
       />
 
       <OrderPaymentVoidDialog

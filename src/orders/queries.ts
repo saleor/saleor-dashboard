@@ -137,6 +137,16 @@ export const orderDetailsWithMetadataQuery = gql`
   }
 `;
 
+export const orderLinesMetadata = gql`
+  query OrderLinesMetadata($id: ID!, $hasManageProducts: Boolean!) {
+    order(id: $id) {
+      lines {
+        ...OrderLineMetadataDetails
+      }
+    }
+  }
+`;
+
 export const orderDetailsGrantedRefund = gql`
   query OrderDetailsGrantRefund($id: ID!) {
     order(id: $id) {
