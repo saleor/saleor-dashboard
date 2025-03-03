@@ -1,12 +1,10 @@
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
-import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import React from "react";
 import { IntlShape, MessageDescriptor } from "react-intl";
 
 import { OrderMetadataDialog, OrderMetadataDialogData } from "./OrderMetadataDialog";
 import { TEST_ID_ORDER_LINE_METADATA, TEST_ID_PRODUCT_VARIANT_METADATA } from "./test-ids";
-import { useHandleOrderLineMetadataSubmit } from "./useHandleSubmit";
 
 jest.mock("react-intl", () => ({
   FormattedMessage: (props: MessageDescriptor) => <>{props.defaultMessage || props.id || ""}</>,
