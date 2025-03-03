@@ -1,3 +1,4 @@
+import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
 import { MetadataFormData, MetadataNoMemo } from "@dashboard/components/Metadata";
 import { MetadataHookForm } from "@dashboard/components/MetadataHookForm";
 import { DashboardModal } from "@dashboard/components/Modal";
@@ -144,7 +145,8 @@ export const OrderMetadataDialog = ({
           width="100%"
           backgroundColor="default1"
         >
-          <Button
+          <ButtonWithLoader
+            transitionState={formState.isSubmitting ? "loading" : "default"}
             data-test-id="save"
             variant="primary"
             disabled={formState.isSubmitting || !formState.isDirty}
@@ -152,7 +154,7 @@ export const OrderMetadataDialog = ({
             onClick={handleSubmit(onSubmit)}
           >
             <FormattedMessage {...buttonMessages.save} />
-          </Button>
+          </ButtonWithLoader>
           <Button data-test-id="back" variant="secondary" onClick={onClose}>
             <FormattedMessage {...buttonMessages.close} />
           </Button>
