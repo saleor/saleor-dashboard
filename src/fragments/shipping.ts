@@ -5,8 +5,7 @@ export const shippingZoneFragment = gql`
     ...Metadata
     id
     countries {
-      code
-      country
+      ...Country
     }
     name
     description
