@@ -6,6 +6,7 @@ import { act, renderHook } from "@testing-library/react-hooks";
 import { useIntl } from "react-intl";
 
 import { useAuthProvider } from "./hooks/useAuthProvider";
+import { usePersistLoginDate } from "./hooks/usePersistLoginDate";
 
 const originalWindowNavigator = window.navigator;
 const adminCredentials = {
@@ -97,6 +98,11 @@ jest.mock("use-react-router", () => ({
     location: {},
   })),
 }));
+jest.mock("@dashboard/auth/hooks/usePersistLoginDate");
+(usePersistLoginDate as jest.Mock).mockReturnValue({
+  lastLoginDate: new Date("2024-01-01").toISOString(),
+  setLastLoginDate: jest.fn(),
+});
 describe("AuthProvider", () => {
   it("Staff user will be logged in if has valid credentials", async () => {
     // Arrange
