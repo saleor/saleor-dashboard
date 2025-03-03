@@ -1,14 +1,21 @@
+import { usePersistLoginDate } from "@dashboard/auth/hooks/usePersistLoginDate";
 import { act, renderHook } from "@testing-library/react-hooks";
 
 import { useSidebarDotState } from "./useSidebarDotState";
 import { useSidebarWebhookAlertMetadata } from "./useSidebarWebhookAlertMetadata";
 
 jest.mock("./useSidebarWebhookAlertMetadata");
+jest.mock("@dashboard/auth/hooks/usePersistLoginDate");
 
 const defaultMock = {
   persist: jest.fn().mockResolvedValue(undefined),
   webhookAlertState: { value: null },
 };
+
+(usePersistLoginDate as jest.Mock).mockReturnValue({
+  lastLoginDate: new Date("2024-01-01").toISOString(),
+  setLastLoginDate: jest.fn(),
+});
 
 describe("useSidebarDotState", () => {
   beforeEach(() => {
@@ -148,5 +155,97 @@ describe("useSidebarDotState", () => {
       lastFailedAttemptDate: date,
     });
     expect(result.current.hasNewFailedAttempts).toBe(true);
+  });
+
+  it("should show dot when logged in with failed attempts but no alert clicks", () => {
+    // Arrange
+    const mockLoginDate = new Date("2024-01-03").toISOString();
+
+    (usePersistLoginDate as jest.Mock).mockReturnValue({
+      lastLoginDate: mockLoginDate,
+      setLastLoginDate: jest.fn(),
+    });
+    (useSidebarWebhookAlertMetadata as jest.Mock).mockReturnValue({
+      persist: jest.fn().mockResolvedValue(undefined),
+      sidebarDotRemoteState: {
+        lastClickDate: null,
+        lastFailedAttemptDate: new Date("2024-01-01").toISOString(),
+      },
+    });
+
+    // Act
+    const { result } = renderHook(() => useSidebarDotState());
+
+    // Assert
+    expect(result.current.hasNewFailedAttempts).toBe(true);
+  });
+
+  it("should show dot when login is newer than failed attempt and click", () => {
+    // Arrange
+    const mockLoginDate = new Date("2024-01-03").toISOString();
+
+    (usePersistLoginDate as jest.Mock).mockReturnValue({
+      lastLoginDate: mockLoginDate,
+      setLastLoginDate: jest.fn(),
+    });
+    (useSidebarWebhookAlertMetadata as jest.Mock).mockReturnValue({
+      persist: jest.fn().mockResolvedValue(undefined),
+      sidebarDotRemoteState: {
+        lastClickDate: new Date("2024-01-01").toISOString(),
+        lastFailedAttemptDate: new Date("2024-01-02").toISOString(),
+      },
+    });
+
+    // Act
+    const { result } = renderHook(() => useSidebarDotState());
+
+    // Assert
+    expect(result.current.hasNewFailedAttempts).toBe(true);
+  });
+
+  it("should show dot when login is older than new failed attempt and click", () => {
+    // Arrange
+    const mockLoginDate = new Date("2024-01-01").toISOString();
+
+    (usePersistLoginDate as jest.Mock).mockReturnValue({
+      lastLoginDate: mockLoginDate,
+      setLastLoginDate: jest.fn(),
+    });
+    (useSidebarWebhookAlertMetadata as jest.Mock).mockReturnValue({
+      persist: jest.fn().mockResolvedValue(undefined),
+      sidebarDotRemoteState: {
+        lastClickDate: new Date("2024-01-02").toISOString(),
+        lastFailedAttemptDate: new Date("2024-01-03").toISOString(),
+      },
+    });
+
+    // Act
+    const { result } = renderHook(() => useSidebarDotState());
+
+    // Assert
+    expect(result.current.hasNewFailedAttempts).toBe(true);
+  });
+
+  it("should not show the dot when login and click are newer than failed attempt", () => {
+    // Arrange
+    const mockLoginDate = new Date("2024-01-03").toISOString();
+
+    (usePersistLoginDate as jest.Mock).mockReturnValue({
+      lastLoginDate: mockLoginDate,
+      setLastLoginDate: jest.fn(),
+    });
+    (useSidebarWebhookAlertMetadata as jest.Mock).mockReturnValue({
+      persist: jest.fn().mockResolvedValue(undefined),
+      sidebarDotRemoteState: {
+        lastClickDate: new Date("2024-01-04").toISOString(),
+        lastFailedAttemptDate: new Date("2024-01-02").toISOString(),
+      },
+    });
+
+    // Act
+    const { result } = renderHook(() => useSidebarDotState());
+
+    // Assert
+    expect(result.current.hasNewFailedAttempts).toBe(false);
   });
 });

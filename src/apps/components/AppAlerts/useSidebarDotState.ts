@@ -1,3 +1,4 @@
+import { usePersistLoginDate } from "@dashboard/auth/hooks/usePersistLoginDate";
 import errorTracker from "@dashboard/services/errorTracking";
 import { useEffect, useRef, useState } from "react";
 
@@ -6,9 +7,16 @@ import { useSidebarWebhookAlertMetadata } from "./useSidebarWebhookAlertMetadata
 const shouldShowDotCheck = (
   lastClickDate: string | undefined,
   lastFailedAttemptDate: string | undefined,
+  lastLoginDate: string | null,
 ): boolean => {
   if (!lastFailedAttemptDate) {
     return false;
+  }
+
+  // check if should show the dot after re-login
+  if (lastLoginDate && lastLoginDate > lastFailedAttemptDate) {
+    // show dot if last click is older than last login
+    return lastClickDate ? lastLoginDate > lastClickDate : true;
   }
 
   return !lastClickDate || lastFailedAttemptDate > lastClickDate;
@@ -21,6 +29,7 @@ interface SidebarDotState {
 }
 
 export const useSidebarDotState = (): SidebarDotState => {
+  const { lastLoginDate } = usePersistLoginDate();
   const { persist, sidebarDotRemoteState } = useSidebarWebhookAlertMetadata();
 
   const [hasNewFailedAttempts, setHasNewFailedAttempts] = useState(false);
@@ -36,11 +45,12 @@ export const useSidebarDotState = (): SidebarDotState => {
       const shouldShowDot = shouldShowDotCheck(
         lastClickDateRef.current,
         lastFailedAttemptDateRef.current,
+        lastLoginDate,
       );
 
       setHasNewFailedAttempts(shouldShowDot);
     }
-  }, [sidebarDotRemoteState]);
+  }, [sidebarDotRemoteState, lastLoginDate]);
 
   const handleClick = async (clickDate: string) => {
     try {

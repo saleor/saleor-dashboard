@@ -27,6 +27,7 @@ import {
   UserContextError,
 } from "../types";
 import { displayDemoMessage } from "../utils";
+import { usePersistLoginDate } from "./usePersistLoginDate";
 
 export interface UseAuthProviderOpts {
   intl: IntlShape;
@@ -36,6 +37,7 @@ export interface UseAuthProviderOpts {
 type AuthErrorCodes = `${AccountErrorCode}`;
 
 export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderOpts): UserContext {
+  const { setLastLoginDate } = usePersistLoginDate();
   const { login, getExternalAuthUrl, getExternalAccessToken, logout } = useAuth();
   const navigate = useNavigator();
   const { authenticated, authenticating, user } = useAuthState();
@@ -129,6 +131,8 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
         includeDetails: false,
       });
 
+      setLastLoginDate(new Date().toISOString());
+
       const errorList = result.data?.tokenCreate?.errors?.map(
         ({ code }) => code,
         // SDK is deprecated and has outdated types - we need to use ones from Dashboard
@@ -196,6 +200,8 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
         pluginId,
         input: JSON.stringify(input),
       });
+
+      setLastLoginDate(new Date().toISOString());
 
       if (isEmpty(result.data?.externalObtainAccessTokens?.user?.userPermissions)) {
         setErrors(["noPermissionsError"]);
