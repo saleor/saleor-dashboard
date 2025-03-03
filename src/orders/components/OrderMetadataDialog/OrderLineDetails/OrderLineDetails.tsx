@@ -23,7 +23,7 @@ export const OrderLineDetails = ({
             <Skeleton height={7} />
           ) : (
             <>
-              <FormattedMessage {...commonMessages.metadata} />: {data?.productName ?? ""}
+              <FormattedMessage {...commonMessages.orderLine} />: {data?.productName ?? ""}
             </>
           )}
         </Text>

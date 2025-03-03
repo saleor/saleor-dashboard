@@ -54,27 +54,22 @@ export const OrderMetadataDialog = ({
     <DashboardModal open={open} onChange={onClose}>
       <DashboardModal.Content size="md" overflowY="hidden">
         <DashboardModal.Header>
-          <FormattedMessage
-            defaultMessage="View or edit metadata for line item"
-            description="modal header, order line metadata"
-            id="IzZkJx"
-          />
+          <OrderLineDetails data={data} loading={loading} />
         </DashboardModal.Header>
 
+        {/* This is scroll container so that Save and title are always visible */}
         <Box
           style={{
             // Max height calculated so that there's no scroll on modal itself
-            maxHeight: "calc(-270px + 100vh)",
+            maxHeight: "calc(-320px + 100vh)",
             // Remove right margin (DashboardModal.Content has 6 units padding)
             // It has to be removed to avoid spacing out horizontal scroll in weird way
             marginRight: "calc(var(--mu-spacing-6) * -1)",
           }}
-          // Re-add back removed padding via negative margin
+          // Re-add back removed padding via negative marginRight
           paddingRight={6}
           overflowY="auto"
         >
-          <OrderLineDetails data={data} loading={loading} />
-
           <Box as="form" onSubmit={handleSubmit(onSubmit)}>
             <Box display="flex" flexDirection="column" gap={5}>
               <Box display="flex" flexDirection="column" data-test-id={TEST_ID_ORDER_LINE_METADATA}>
