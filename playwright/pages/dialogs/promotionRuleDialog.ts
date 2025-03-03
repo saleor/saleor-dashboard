@@ -8,6 +8,7 @@ export class PromotionRuleDialog {
     readonly ruleNameInput = page.getByTestId("rule-name-input"),
     readonly ruleChannelDropdown = page.getByText("Channel", { exact: true }),
     readonly ruleChannelDropdownOptions = page.getByRole("listbox"),
+    readonly channelSelect = page.locator("[data-test-id='channel-dropdown']"),
     readonly selectOption = page.getByTestId("select-option"),
     readonly ruleDescriptionInput = page.getByTestId("rich-text-editor-rule-description"),
     readonly addRuleConditionButton = page.getByTestId("add-condition-button"),
@@ -40,8 +41,9 @@ export class PromotionRuleDialog {
   }
 
   async selectSingleChannel(channel: string) {
-    await this.clickChannelsDropdown();
-    await this.page.getByTestId("select-option").getByText(channel).click();
+    await this.channelSelect.fill(channel);
+    await this.selectOption.filter({ hasText: channel }).waitFor({ state: "attached" });
+    await this.selectOption.filter({ hasText: channel }).click();
   }
 
   async typePromotionRuleName(name: string) {
