@@ -4,7 +4,6 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { OrderLinesMetadataQuery } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
-import { flattenErrors } from "@dashboard/utils/hook-form/errors";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { Box, Button, Divider, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -47,8 +46,6 @@ export const OrderMetadataDialog = ({
   });
 
   const { handleSubmit, control, getValues, formState, trigger } = formMethods;
-
-  const allFormErrors = flattenErrors(formState.errors);
 
   return (
     <DashboardModal open={open} onChange={onClose}>
@@ -96,13 +93,8 @@ export const OrderMetadataDialog = ({
                   control={control}
                   getValues={getValues}
                   trigger={trigger}
+                  formErrors={formState.errors}
                 />
-
-                {allFormErrors.length > 0 && (
-                  <Text color="critical1" marginLeft={6} marginTop={4}>
-                    {allFormErrors.join(", ")}
-                  </Text>
-                )}
               </Box>
               <Divider />
 

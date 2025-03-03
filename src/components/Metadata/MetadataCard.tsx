@@ -15,6 +15,7 @@ export interface MetadataCardProps {
   onChange: FormChange;
   readonly?: boolean;
   disabled?: boolean;
+  error?: string | undefined;
 }
 
 export const MetadataCard: React.FC<MetadataCardProps> = ({
@@ -23,6 +24,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
   onChange,
   readonly = false,
   disabled,
+  error,
 }) => {
   const intl = useIntl();
   const [expanded, setExpanded] = useState(readonly ? "metadata-accordion" : undefined);
@@ -96,6 +98,12 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                         description="add metadata field,button"
                       />
                     </Button>
+                  )}
+
+                  {error && (
+                    <Box fontSize={4} fontWeight="medium" color="critical1" marginTop={4}>
+                      {error}
+                    </Box>
                   )}
                 </>
               )}
