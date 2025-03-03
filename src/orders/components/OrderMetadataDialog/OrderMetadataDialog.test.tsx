@@ -65,10 +65,6 @@ jest.mock("./useMetadataValues", () => ({
 describe("OrderMetadataDialog", () => {
   const onCloseMock = jest.fn();
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
   it("closes when user hits close icon button", () => {
     // Arrange
     render(
