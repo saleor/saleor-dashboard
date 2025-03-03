@@ -32,6 +32,7 @@ export const MessageDisplay = ({
                   }
                 : {})}
               onClose={notification.close}
+              // @ts-expect-error legacy material-ui usage, we want to hide title even though types don't support this
               title={
                 notification.message.apiMessage && !notification.message.title
                   ? intl.formatMessage(commonMessages.defaultErrorTitle)
@@ -39,6 +40,7 @@ export const MessageDisplay = ({
               }
               type={notification.message.status || "info"}
               content={notification.message.text}
+              // @ts-expect-error legacy material-ui usage, we want to hide apiMessage even though types don't support this
               apiMessage={
                 notification.message.apiMessage && {
                   apiMessageContent: (

@@ -2063,6 +2063,9 @@
     "context": "capture payment, button",
     "string": "Capture"
   },
+  "BalldE": {
+    "string": "Order line"
+  },
   "BanAhF": {
     "context": "sale status",
     "string": "Scheduled"
@@ -3323,10 +3326,6 @@
   "IzEVek": {
     "context": "bulk disable label",
     "string": "Deactivate"
-  },
-  "IzZkJx": {
-    "context": "modal header, order line metadata",
-    "string": "View or edit metadata for line item"
   },
   "J/QqOI": {
     "string": "This value already exists within this attribute"
