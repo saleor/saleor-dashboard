@@ -1,5 +1,5 @@
 import { AppEventDeliveriesFragment, EventDeliveryStatusEnum } from "@dashboard/graphql";
-import moment from "moment";
+import moment from "moment-timezone";
 
 export type Webhook = NonNullable<AppEventDeliveriesFragment["webhooks"]>[0];
 
@@ -26,7 +26,7 @@ type LatestWebhookDelivery =
       NonNullable<Webhook["pendingDelivers"]>["edges"][0]["node"]["attempts"]
     >["edges"][0]["node"];
 
-type LatestWebhookDeliveryWithMoment = LatestWebhookDelivery & { createdAt: moment.Moment };
+export type LatestWebhookDeliveryWithMoment = LatestWebhookDelivery & { createdAt: moment.Moment };
 
 const toWebhookDeliveryWithMoment = (
   delivery: LatestWebhookDelivery | null | undefined,
