@@ -1,6 +1,6 @@
 import { commonMessages } from "@dashboard/intl";
 import { Portal } from "@radix-ui/react-portal";
-import { Notification } from "@saleor/macaw-ui";
+import { ApiMessageData, Notification } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 import { TransitionGroup } from "react-transition-group";
@@ -32,17 +32,15 @@ export const MessageDisplay = ({
                   }
                 : {})}
               onClose={notification.close}
-              // @ts-expect-error legacy material-ui usage, we want to hide title even though types don't support this
               title={
-                notification.message.apiMessage && !notification.message.title
+                (notification.message.apiMessage && !notification.message.title
                   ? intl.formatMessage(commonMessages.defaultErrorTitle)
-                  : notification.message.title
+                  : notification.message.title) as string
               }
               type={notification.message.status || "info"}
               content={notification.message.text}
-              // @ts-expect-error legacy material-ui usage, we want to hide apiMessage even though types don't support this
               apiMessage={
-                notification.message.apiMessage && {
+                (notification.message.apiMessage && {
                   apiMessageContent: (
                     <pre
                       style={{
@@ -55,7 +53,7 @@ export const MessageDisplay = ({
                   ),
                   hideApiLabel: intl.formatMessage(notificationMessages.hideError),
                   showApiLabel: intl.formatMessage(notificationMessages.seeError),
-                }
+                }) as ApiMessageData
               }
               {...(notification.message.actionBtn
                 ? {
