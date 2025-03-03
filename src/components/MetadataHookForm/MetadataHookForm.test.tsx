@@ -31,6 +31,7 @@ const mockHookFormProps = {
   control: {} as Control<any>,
   getValues: jest.fn(),
   trigger: jest.fn(),
+  formErrors: {},
 };
 
 jest.mock("./useMetadataFormControls", () => ({
@@ -87,5 +88,45 @@ describe("MetadataHookForm", () => {
 
     // Assert
     expect(screen.queryByText("Private Metadata")).not.toBeInTheDocument();
+  });
+
+  it("displays separate errors for public and private metadata", async () => {
+    // Arrange
+    render(
+      <MetadataHookForm
+        isLoading={false}
+        {...mockHookFormProps}
+        formErrors={{
+          metadata: [
+            {
+              root: {
+                message: "Metadata key cannot be empty",
+                type: "validate",
+              },
+            },
+          ],
+          privateMetadata: [
+            {
+              root: {
+                message: "Private metadata key cannot be empty",
+                type: "validate",
+              },
+            },
+          ],
+        }}
+      />,
+    );
+
+    // Act
+    const expandButtons = screen.getAllByTestId("expand");
+    const expandButtonOrderLineMetadata = expandButtons[0];
+    const expandButtonOrderLinePrivateMetadata = expandButtons[1];
+
+    await userEvent.click(expandButtonOrderLineMetadata);
+    await userEvent.click(expandButtonOrderLinePrivateMetadata);
+
+    // Assert
+    expect(screen.getByText("Metadata key cannot be empty")).toBeInTheDocument();
+    expect(screen.getByText("Private metadata key cannot be empty")).toBeInTheDocument();
   });
 });
