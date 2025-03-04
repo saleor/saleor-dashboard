@@ -31,7 +31,7 @@ export const OrderMetadataDialog = ({
   lineId,
   orderId,
 }: OrderMetadataDialogProps) => {
-  const { data, loading } = useMetadataValues({ open, orderId, lineId });
+  const { data, loading } = useMetadataValues({ orderId, lineId });
   const { onSubmit, lastSubmittedData } = useHandleOrderLineMetadataSubmit({ initialData: data });
   const hasManageProducts = useHasManageProductsPermission();
 
