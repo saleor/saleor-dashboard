@@ -15,9 +15,9 @@ import {
   ShippingMethodWithPostalCodesFragment,
   useDeleteShippingRateMutation,
   useShippingMethodChannelListingUpdateMutation,
+  useShippingMethodsQuery,
   useShippingPriceExcludeProductMutation,
   useShippingPriceRemoveProductFromExcludeMutation,
-  useShippingZoneQuery,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
   useUpdateShippingRateMutation,
@@ -77,7 +77,7 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({ id, rateId, params }) =>
   const intl = useIntl();
   const [paginationState, setPaginationState] = useLocalPaginationState(PAGINATE_BY);
   const paginate = useLocalPaginator(setPaginationState);
-  const { data, loading, refetch } = useShippingZoneQuery({
+  const { data, loading, refetch } = useShippingMethodsQuery({
     displayLoader: true,
     variables: { id, ...paginationState },
   });

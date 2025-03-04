@@ -7,7 +7,7 @@ import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { ShippingZoneQuery } from "@dashboard/graphql";
+import { ShippingMethodWithExcludedProductsFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { ListActions, ListProps, RelayToFlat } from "@dashboard/types";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
@@ -41,9 +41,7 @@ const useStyles = makeStyles(
 export interface ShippingMethodProductsProps
   extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
     ListActions {
-  products: RelayToFlat<
-    ShippingZoneQuery["shippingZone"]["shippingMethods"][0]["excludedProducts"]
-  >;
+  products: RelayToFlat<ShippingMethodWithExcludedProductsFragment["excludedProducts"]>;
   onProductAssign: () => void;
   onProductUnassign: (ids: string[]) => void;
 }

@@ -17058,10 +17058,6 @@ export const UpdateShippingZoneDocument = gql`
     }
     shippingZone {
       ...ShippingZone
-      default
-      shippingMethods {
-        ...ShippingMethodType
-      }
       channels {
         id
         name
@@ -17075,8 +17071,7 @@ export const UpdateShippingZoneDocument = gql`
   }
 }
     ${ShippingErrorFragmentDoc}
-${ShippingZoneFragmentDoc}
-${ShippingMethodTypeFragmentDoc}`;
+${ShippingZoneFragmentDoc}`;
 export type UpdateShippingZoneMutationFn = Apollo.MutationFunction<Types.UpdateShippingZoneMutation, Types.UpdateShippingZoneMutationVariables>;
 
 /**
@@ -17427,12 +17422,11 @@ export type ShippingZonesQueryHookResult = ReturnType<typeof useShippingZonesQue
 export type ShippingZonesLazyQueryHookResult = ReturnType<typeof useShippingZonesLazyQuery>;
 export type ShippingZonesQueryResult = Apollo.QueryResult<Types.ShippingZonesQuery, Types.ShippingZonesQueryVariables>;
 export const ShippingZoneDocument = gql`
-    query ShippingZone($id: ID!, $before: String, $after: String, $first: Int, $last: Int) {
+    query ShippingZone($id: ID!) {
   shippingZone(id: $id) {
     ...ShippingZone
-    default
     shippingMethods {
-      ...ShippingMethodWithExcludedProducts
+      ...ShippingMethodType
     }
     channels {
       id
@@ -17446,7 +17440,7 @@ export const ShippingZoneDocument = gql`
   }
 }
     ${ShippingZoneFragmentDoc}
-${ShippingMethodWithExcludedProductsFragmentDoc}`;
+${ShippingMethodTypeFragmentDoc}`;
 
 /**
  * __useShippingZoneQuery__
@@ -17461,10 +17455,6 @@ ${ShippingMethodWithExcludedProductsFragmentDoc}`;
  * const { data, loading, error } = useShippingZoneQuery({
  *   variables: {
  *      id: // value for 'id'
- *      before: // value for 'before'
- *      after: // value for 'after'
- *      first: // value for 'first'
- *      last: // value for 'last'
  *   },
  * });
  */
@@ -17479,6 +17469,52 @@ export function useShippingZoneLazyQuery(baseOptions?: ApolloReactHooks.LazyQuer
 export type ShippingZoneQueryHookResult = ReturnType<typeof useShippingZoneQuery>;
 export type ShippingZoneLazyQueryHookResult = ReturnType<typeof useShippingZoneLazyQuery>;
 export type ShippingZoneQueryResult = Apollo.QueryResult<Types.ShippingZoneQuery, Types.ShippingZoneQueryVariables>;
+export const ShippingMethodsDocument = gql`
+    query ShippingMethods($id: ID!, $before: String, $after: String, $first: Int, $last: Int) {
+  shippingZone(id: $id) {
+    channels {
+      id
+      name
+      currencyCode
+    }
+    shippingMethods {
+      ...ShippingMethodWithExcludedProducts
+    }
+  }
+}
+    ${ShippingMethodWithExcludedProductsFragmentDoc}`;
+
+/**
+ * __useShippingMethodsQuery__
+ *
+ * To run a query within a React component, call `useShippingMethodsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useShippingMethodsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useShippingMethodsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      before: // value for 'before'
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      last: // value for 'last'
+ *   },
+ * });
+ */
+export function useShippingMethodsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ShippingMethodsQuery, Types.ShippingMethodsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ShippingMethodsQuery, Types.ShippingMethodsQueryVariables>(ShippingMethodsDocument, options);
+      }
+export function useShippingMethodsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ShippingMethodsQuery, Types.ShippingMethodsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ShippingMethodsQuery, Types.ShippingMethodsQueryVariables>(ShippingMethodsDocument, options);
+        }
+export type ShippingMethodsQueryHookResult = ReturnType<typeof useShippingMethodsQuery>;
+export type ShippingMethodsLazyQueryHookResult = ReturnType<typeof useShippingMethodsLazyQuery>;
+export type ShippingMethodsQueryResult = Apollo.QueryResult<Types.ShippingMethodsQuery, Types.ShippingMethodsQueryVariables>;
 export const ShippingZoneChannelsDocument = gql`
     query ShippingZoneChannels($id: ID!) {
   shippingZone(id: $id) {

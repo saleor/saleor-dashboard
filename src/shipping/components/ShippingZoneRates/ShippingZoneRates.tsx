@@ -7,7 +7,7 @@ import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import WeightRange from "@dashboard/components/WeightRange";
-import { ShippingZoneDetailsFragment } from "@dashboard/graphql";
+import { ShippingMethodTypeFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ChannelProps } from "@dashboard/types";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
@@ -21,7 +21,7 @@ import { maybe, renderCollection } from "../../../misc";
 
 export interface ShippingZoneRatesProps extends ChannelProps {
   disabled: boolean;
-  rates: ShippingZoneDetailsFragment["shippingMethods"];
+  rates: ShippingMethodTypeFragment[];
   variant: "price" | "weight";
   testId?: string;
   onRateAdd: () => void;
