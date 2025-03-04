@@ -14,7 +14,6 @@ import {
   ShippingErrorFragment,
   ShippingMethodTypeEnum,
   ShippingMethodTypeFragment,
-  ShippingMethodWithExcludedProductsFragment,
   ShippingZoneQuery,
   TaxClassBaseFragment,
 } from "@dashboard/graphql";
@@ -48,7 +47,7 @@ export interface ShippingZoneRatesPageProps
   allChannelsCount?: number;
   shippingChannels: ChannelShippingData[];
   disabled: boolean;
-  rate: ShippingMethodWithExcludedProductsFragment;
+  rate: NonNullable<NonNullable<ShippingZoneQuery["shippingZone"]>["shippingMethods"]>[number];
   channelErrors: ShippingChannelsErrorFragment[];
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;

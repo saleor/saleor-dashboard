@@ -22,11 +22,12 @@ export const shippingZones = gql`
 `;
 
 export const shippingZone = gql`
-  query ShippingZone($id: ID!) {
+  query ShippingZone($id: ID!, $before: String, $after: String, $first: Int, $last: Int) {
     shippingZone(id: $id) {
       ...ShippingZone
+      default
       shippingMethods {
-        ...ShippingMethodType
+        ...ShippingMethodWithExcludedProducts
       }
       channels {
         id
@@ -40,22 +41,6 @@ export const shippingZone = gql`
     }
   }
 `;
-
-export const shippingMethods = gql`
-  query ShippingMethods($id: ID!, $before: String, $after: String, $first: Int, $last: Int) {
-    shippingZone(id: $id) {
-      channels {
-        id
-        name
-        currencyCode
-      }
-      shippingMethods {
-        ...ShippingMethodWithExcludedProducts
-      }
-    }
-  }
-`;
-
 export const shippingZoneChannels = gql`
   query ShippingZoneChannels($id: ID!) {
     shippingZone(id: $id) {

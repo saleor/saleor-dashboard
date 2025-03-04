@@ -31,7 +31,6 @@ export const shippingMethodWithPostalCodesFragment = gql`
     }
   }
 `;
-
 export const shippingMethodTypeFragment = gql`
   fragment ShippingMethodType on ShippingMethodType {
     ...ShippingMethodWithPostalCodes
@@ -72,7 +71,6 @@ export const shippingMethodTypeFragment = gql`
     }
   }
 `;
-
 export const shippingMethodWithExcludedProductsFragment = gql`
   fragment ShippingMethodWithExcludedProducts on ShippingMethodType {
     ...ShippingMethodType

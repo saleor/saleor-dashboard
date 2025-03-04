@@ -54,6 +54,10 @@ export const updateShippingZone = gql`
       }
       shippingZone {
         ...ShippingZone
+        default
+        shippingMethods {
+          ...ShippingMethodType
+        }
         channels {
           id
           name

@@ -1309,6 +1309,7 @@ export const shippingZones: ShippingZoneFragment[] = [
 export const shippingZone: ShippingZoneQuery["shippingZone"] = {
   __typename: "ShippingZone",
   priceRange: null,
+  default: true,
   channels: [
     { __typename: "Channel", id: "channel1", name: "GBP", currencyCode: "GBP" },
 
@@ -1611,6 +1612,30 @@ export const shippingZone: ShippingZoneQuery["shippingZone"] = {
           },
         },
       ],
+      excludedProducts: {
+        __typename: "ProductCountableConnection",
+        edges: [
+          {
+            __typename: "ProductCountableEdge",
+            node: {
+              __typename: "Product",
+              id: "1",
+              name: "Apple Juice",
+              thumbnail: {
+                __typename: "Image",
+                url: "",
+              },
+            },
+          },
+        ],
+        pageInfo: {
+          __typename: "PageInfo",
+          endCursor: "",
+          hasNextPage: false,
+          hasPreviousPage: false,
+          startCursor: "",
+        },
+      },
       id: "U2hpcHBpbmdNZXRob2Q6NA==",
       maximumDeliveryDays: 10,
       maximumOrderWeight: {
@@ -1661,6 +1686,30 @@ export const shippingZone: ShippingZoneQuery["shippingZone"] = {
         id: "VGV4Q2xhc3M6MQ==",
       },
       channelListings: [],
+      excludedProducts: {
+        __typename: "ProductCountableConnection",
+        edges: [
+          {
+            __typename: "ProductCountableEdge",
+            node: {
+              __typename: "Product",
+              id: "1",
+              name: "Apple Juice",
+              thumbnail: {
+                __typename: "Image",
+                url: "",
+              },
+            },
+          },
+        ],
+        pageInfo: {
+          __typename: "PageInfo",
+          endCursor: "",
+          hasNextPage: false,
+          hasPreviousPage: false,
+          startCursor: "",
+        },
+      },
       id: "U2hpcHBpbmdNZXRob2Q6Mw==",
       maximumDeliveryDays: 10,
       maximumOrderWeight: null,
@@ -1707,6 +1756,30 @@ export const shippingZone: ShippingZoneQuery["shippingZone"] = {
         id: "VGV4Q2xhc3M6MQ==",
       },
       channelListings: [],
+      excludedProducts: {
+        __typename: "ProductCountableConnection",
+        edges: [
+          {
+            __typename: "ProductCountableEdge",
+            node: {
+              __typename: "Product",
+              id: "1",
+              name: "Apple Juice",
+              thumbnail: {
+                __typename: "Image",
+                url: "",
+              },
+            },
+          },
+        ],
+        pageInfo: {
+          __typename: "PageInfo",
+          endCursor: "",
+          hasNextPage: false,
+          hasPreviousPage: false,
+          startCursor: "",
+        },
+      },
       id: "U2hpcHBpbmdNZXRob2Q6Mg==",
       maximumDeliveryDays: 10,
       maximumOrderWeight: null,
@@ -1753,6 +1826,17 @@ export const shippingZone: ShippingZoneQuery["shippingZone"] = {
         id: "VGV4Q2xhc3M6MQ==",
       },
       channelListings: [],
+      excludedProducts: {
+        __typename: "ProductCountableConnection",
+        edges: [],
+        pageInfo: {
+          __typename: "PageInfo",
+          endCursor: "",
+          hasNextPage: false,
+          hasPreviousPage: false,
+          startCursor: "",
+        },
+      },
       id: "U2hpcHBpbmdNZXRob2Q6MQ==",
       maximumDeliveryDays: 10,
       maximumOrderWeight: null,
