@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { createContext } from "react";
 
 export type Status = "success" | "error" | "info" | "warning";
@@ -39,7 +38,7 @@ export const types = {
 };
 export interface INotificationContext {
   show: (message: IMessage, timeout?: number | null) => void;
-  remove: (notification: INotification) => void;
+  remove: (notificationId: number) => void;
   clearErrorNotifications: () => void;
 }
 

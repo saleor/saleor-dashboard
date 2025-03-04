@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { MetadataInput } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { removeAtIndex, updateAtIndex } from "@dashboard/utils/lists";
@@ -23,7 +22,7 @@ export interface MetadataProps
   hidePrivateMetadata?: boolean;
 }
 
-const propsCompare = (_, newProps: MetadataProps) => {
+const propsCompare = (_: unknown, newProps: MetadataProps) => {
   /**
     If we pass `isLoading` render only when the loading finishes
   */
@@ -51,6 +50,10 @@ export const MetadataNoMemo: React.FC<MetadataProps> = ({
     const { action, field, fieldIndex, value } = parseEventData(event);
     const key = getDataKey(isPrivate);
     const dataToUpdate = data[key];
+
+    if (!dataToUpdate || !fieldIndex) {
+      return;
+    }
 
     onChange({
       target: {
@@ -96,7 +99,7 @@ export const MetadataNoMemo: React.FC<MetadataProps> = ({
           />
           {(data?.privateMetadata || !hidePrivateMetadata) && (
             <MetadataCard
-              data={data?.privateMetadata}
+              data={data?.privateMetadata ?? []}
               isPrivate={true}
               readonly={readonly}
               onChange={event => change(event, true)}
