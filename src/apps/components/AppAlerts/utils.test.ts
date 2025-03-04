@@ -11,7 +11,8 @@ describe("getLatestFailedAttemptFromWebhook", () => {
           {
             node: {
               id: "id",
-              createdAt: "2023-10-01T10:00:00Z",
+              createdAt: "2023-09-01T10:00:00Z",
+              attempts: null,
               __typename: "EventDelivery",
             },
             __typename: "EventDeliveryCountableEdge",
@@ -29,7 +30,7 @@ describe("getLatestFailedAttemptFromWebhook", () => {
                     node: {
                       id: "id2",
                       status: EventDeliveryStatusEnum.FAILED,
-                      createdAt: "2023-09-01T10:00:00Z",
+                      createdAt: "2023-09-02T10:00:00Z",
                       __typename: "EventDeliveryAttempt",
                     },
                     __typename: "EventDeliveryAttemptCountableEdge",
@@ -52,7 +53,7 @@ describe("getLatestFailedAttemptFromWebhook", () => {
     const result = getLatestFailedAttemptFromWebhooks([webhook]);
 
     // Assert
-    expect(result?.createdAt.toISOString()).toEqual("2023-10-01T10:00:00.000Z");
+    expect(result?.createdAt.toISOString()).toEqual("2023-09-02T10:00:00.000Z");
   });
 
   it("should return the latest failed attempt from pendingDelivers", () => {
@@ -64,6 +65,7 @@ describe("getLatestFailedAttemptFromWebhook", () => {
             node: {
               id: "id",
               createdAt: "2023-09-01T10:00:00Z",
+              attempts: null,
               __typename: "EventDelivery",
             },
             __typename: "EventDeliveryCountableEdge",
@@ -137,6 +139,7 @@ describe("getLatestFailedAttemptFromWebhook", () => {
             node: {
               createdAt: "2023-10-01T10:00:00Z",
               id: "old",
+              attempts: null,
               __typename: "EventDelivery",
             },
             __typename: "EventDeliveryCountableEdge",
@@ -178,5 +181,71 @@ describe("getLatestFailedAttemptFromWebhook", () => {
 
     // Assert
     expect(result?.id).toBe("new");
+  });
+
+  it("should return the latest failed attempt when both failedDelivers and pendingDelivers are present", () => {
+    // Arrange
+    const webhook: Webhook = {
+      failedDelivers: {
+        edges: [
+          {
+            node: {
+              createdAt: "2023-10-01T10:00:00Z",
+              id: "old",
+              attempts: {
+                __typename: "EventDeliveryAttemptCountableConnection",
+                edges: [
+                  {
+                    node: {
+                      status: EventDeliveryStatusEnum.FAILED,
+                      createdAt: "2023-10-02T11:00:00Z",
+                      id: "newer",
+                      __typename: "EventDeliveryAttempt",
+                    },
+                    __typename: "EventDeliveryAttemptCountableEdge",
+                  },
+                ],
+              },
+              __typename: "EventDelivery",
+            },
+            __typename: "EventDeliveryCountableEdge",
+          },
+        ],
+        __typename: "EventDeliveryCountableConnection",
+      },
+      pendingDelivers: {
+        edges: [
+          {
+            node: {
+              attempts: {
+                edges: [
+                  {
+                    node: {
+                      status: EventDeliveryStatusEnum.FAILED,
+                      createdAt: "2023-10-02T10:00:00Z",
+                      id: "new",
+                      __typename: "EventDeliveryAttempt",
+                    },
+                    __typename: "EventDeliveryAttemptCountableEdge",
+                  },
+                ],
+                __typename: "EventDeliveryAttemptCountableConnection",
+              },
+              id: "idnode",
+              __typename: "EventDelivery",
+            },
+            __typename: "EventDeliveryCountableEdge",
+          },
+        ],
+        __typename: "EventDeliveryCountableConnection",
+      },
+      __typename: "Webhook",
+    };
+
+    // Act
+    const result = getLatestFailedAttemptFromWebhooks([webhook]);
+
+    // Assert
+    expect(result?.id).toBe("newer");
   });
 });
