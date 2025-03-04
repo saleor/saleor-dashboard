@@ -2101,6 +2101,9 @@
   "BtErCZ": {
     "string": "Search Plugins..."
   },
+  "Btr1DU": {
+    "string": "Webhook errors detected. Last occurred {break}at {date}. {viewDetails}."
+  },
   "BvGp1I": {
     "string": "between"
   },
@@ -2691,9 +2694,6 @@
   },
   "FZTrzW": {
     "string": "Manual refund"
-  },
-  "FaRg9/": {
-    "string": "Webhook errors detected. Last occurred at {date}. {viewDetails}."
   },
   "Fbr4Vp": {
     "context": "dialog header",
