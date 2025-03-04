@@ -10,8 +10,10 @@ import { OrderMetadataDialogData } from "./OrderMetadataDialog";
 
 export const useHandleOrderLineMetadataSubmit = ({
   initialData,
+  onClose,
 }: {
   initialData: OrderMetadataDialogData | undefined;
+  onClose: () => void;
 }) => {
   const notify = useNotifier();
   const intl = useIntl();
@@ -43,6 +45,7 @@ export const useHandleOrderLineMetadataSubmit = ({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
       });
+      onClose();
     }
   };
 

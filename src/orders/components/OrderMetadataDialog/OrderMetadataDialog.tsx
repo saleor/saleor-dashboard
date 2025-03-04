@@ -32,7 +32,10 @@ export const OrderMetadataDialog = ({
   orderId,
 }: OrderMetadataDialogProps) => {
   const { data, loading } = useMetadataValues({ orderId, lineId });
-  const { onSubmit, lastSubmittedData } = useHandleOrderLineMetadataSubmit({ initialData: data });
+  const { onSubmit, lastSubmittedData } = useHandleOrderLineMetadataSubmit({
+    initialData: data,
+    onClose,
+  });
   const hasManageProducts = useHasManageProductsPermission();
 
   const formMethods = useForm<MetadataFormData>({
