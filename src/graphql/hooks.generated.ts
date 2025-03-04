@@ -17058,10 +17058,6 @@ export const UpdateShippingZoneDocument = gql`
     }
     shippingZone {
       ...ShippingZone
-      default
-      shippingMethods {
-        ...ShippingMethodType
-      }
       channels {
         id
         name
@@ -17075,8 +17071,7 @@ export const UpdateShippingZoneDocument = gql`
   }
 }
     ${ShippingErrorFragmentDoc}
-${ShippingZoneFragmentDoc}
-${ShippingMethodTypeFragmentDoc}`;
+${ShippingZoneFragmentDoc}`;
 export type UpdateShippingZoneMutationFn = Apollo.MutationFunction<Types.UpdateShippingZoneMutation, Types.UpdateShippingZoneMutationVariables>;
 
 /**
