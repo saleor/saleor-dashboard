@@ -49,11 +49,7 @@ export const MetadataNoMemo: React.FC<MetadataProps> = ({
   const change = (event: ChangeEvent, isPrivate: boolean) => {
     const { action, field, fieldIndex, value } = parseEventData(event);
     const key = getDataKey(isPrivate);
-    const dataToUpdate = data[key];
-
-    if (!dataToUpdate || !fieldIndex) {
-      return;
-    }
+    const dataToUpdate = data[key] ?? [];
 
     onChange({
       target: {
@@ -62,12 +58,16 @@ export const MetadataNoMemo: React.FC<MetadataProps> = ({
           action === EventDataAction.update
             ? updateAtIndex(
                 {
-                  ...dataToUpdate[fieldIndex],
-                  key: field === EventDataField.name ? value : dataToUpdate[fieldIndex].key,
-                  value: field === EventDataField.value ? value : dataToUpdate[fieldIndex].value,
+                  ...dataToUpdate[fieldIndex as number],
+                  key:
+                    field === EventDataField.name ? value : dataToUpdate[fieldIndex as number].key,
+                  value:
+                    field === EventDataField.value
+                      ? value
+                      : dataToUpdate[fieldIndex as number].value,
                 },
                 dataToUpdate,
-                fieldIndex,
+                fieldIndex as number,
               )
             : action === EventDataAction.add
               ? [
@@ -77,7 +77,7 @@ export const MetadataNoMemo: React.FC<MetadataProps> = ({
                     value: "",
                   },
                 ]
-              : removeAtIndex(dataToUpdate, fieldIndex),
+              : removeAtIndex(dataToUpdate, fieldIndex as number),
       },
     });
   };
