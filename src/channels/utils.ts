@@ -2,7 +2,6 @@ import {
   ChannelSaleFormData,
   SaleDetailsPageFormData,
 } from "@dashboard/discounts/components/SaleDetailsPage";
-import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
 import { RequirementsPicker } from "@dashboard/discounts/types";
 import {
   ChannelDetailsFragment,
@@ -399,11 +398,11 @@ export const validateSalePrice = (data: SaleDetailsPageFormData, channel: Channe
   validatePrice(data.type === SaleType.PERCENTAGE ? channel.percentageValue : channel.fixedValue);
 
 export const validateVoucherPrice = (
-  data: VoucherDetailsPageFormData,
+  requirementsPicker: RequirementsPicker,
   channel: ChannelVoucherData,
 ) =>
   validatePrice(channel.discountValue) ||
-  (data.requirementsPicker === RequirementsPicker.ORDER && validatePrice(channel.minSpent));
+  (requirementsPicker === RequirementsPicker.ORDER && validatePrice(channel.minSpent));
 
 type BareChannel = { id: string };
 type BareChannelListing = { channel: BareChannel };
