@@ -2101,9 +2101,6 @@
   "BtErCZ": {
     "string": "Search Plugins..."
   },
-  "Btr1DU": {
-    "string": "Webhook errors detected. Last occurred {break}at {date}. {viewDetails}."
-  },
   "BvGp1I": {
     "string": "between"
   },
@@ -6810,6 +6807,9 @@
     "context": "sum of pending amount (any status) in order's transactions",
     "string": "Pending"
   },
+  "fm1vrG": {
+    "string": "Last seen {date}.{break}{viewDetails}"
+  },
   "fo7nfa": {
     "context": "fixed amount",
     "string": "Fixed Amount"
@@ -7904,6 +7904,9 @@
     "context": "resend code to customer title",
     "string": "Resend code to customer"
   },
+  "mt3SU9": {
+    "string": "Webhook errors detected"
+  },
   "mxtAFx": {
     "string": "Are you sure you want to delete draft #{orderNumber}?"
   },
@@ -8804,9 +8807,6 @@
   "t7UwLY": {
     "context": "voucher status",
     "string": "Expired"
-  },
-  "t9sWqJ": {
-    "string": "Issues found"
   },
   "tA5HJx": {
     "context": "webhook input help text",

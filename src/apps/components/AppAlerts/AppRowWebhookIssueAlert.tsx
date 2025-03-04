@@ -44,16 +44,21 @@ export const AppRowWebhookIssueAlert = ({ app }: AppRowWebhookIssueAlertProps) =
 
             <Box display="flex" flexDirection="column" gap={1}>
               <Text fontSize={5} fontWeight="bold">
-                <FormattedMessage defaultMessage="Issues found" id="t9sWqJ" />
+                <FormattedMessage defaultMessage="Webhook errors detected" id="mt3SU9" />
               </Text>
-              <Text>
+              <Text color="default2">
                 <FormattedMessage
-                  defaultMessage="Webhook errors detected. Last occurred {break}at {date}. {viewDetails}."
-                  id="Btr1DU"
+                  defaultMessage="Last seen {date}.{break}{viewDetails}"
+                  id="fm1vrG"
                   values={{
                     date: <EventTime date={latestFailedAttempt.createdAt} />,
                     viewDetails: (
-                      <Link href={detailsLink} color="secondary" underline>
+                      <Link
+                        href={detailsLink}
+                        color="secondary"
+                        underline
+                        style={{ float: "right", marginTop: "1rem" }}
+                      >
                         <FormattedMessage defaultMessage="View details" id="MnpUD7" />
                       </Link>
                     ),
