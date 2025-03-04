@@ -76,13 +76,17 @@ export const AppWebhooksDisplay = ({ appId, ...boxProps }: AppWebhooksDisplayPro
     const webhooks = [...webhooksData.app.webhooks];
     const sortedWebhooks = webhooks.sort(sortWebhooksByDeliveries);
 
+    const alertsWithDeliveriesIds = sortedWebhooks
+      .filter(wh => (wh.eventDeliveries?.edges.length || 0) > 0)
+      .map(({ id }) => id);
+
     return (
       <Wrapper {...boxProps}>
         <Accordion
           __marginLeft="-24px"
           __width="calc(100% + 48px)"
           type="multiple"
-          defaultValue={sortedWebhooks[0]?.id}
+          defaultValue={alertsWithDeliveriesIds}
         >
           {sortedWebhooks.map((wh, index) => {
             const isLastWebhook = index === (webhooksData?.app?.webhooks ?? []).length - 1;

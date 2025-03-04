@@ -18,7 +18,7 @@ const Accordion: React.FC<AccordionProps> = ({
   className,
   dataTestId = "expand-icon",
 }) => {
-  const [openedAccordionId, setOpendAccordionId] = useState<undefined | string>(
+  const [openedAccordionId, setOpenedAccordionId] = useState<undefined | string>(
     initialExpand ? AccordionItemId : undefined,
   );
 
@@ -26,7 +26,7 @@ const Accordion: React.FC<AccordionProps> = ({
     <div className={className}>
       <AccordionMacaw
         value={openedAccordionId}
-        onValueChange={value => setOpendAccordionId(value)}
+        onValueChange={(value: string) => setOpenedAccordionId(value)}
         className={sprinkles({
           borderStyle: "solid",
           borderWidth: 1,
