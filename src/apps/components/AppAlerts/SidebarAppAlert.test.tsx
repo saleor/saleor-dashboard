@@ -3,7 +3,7 @@ import {
   useUserAccountUpdateMutation,
 } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import * as React from "react";
 
@@ -78,11 +78,13 @@ describe("SidebarAppAlert", () => {
     ]);
 
     // Act
-    await act(async () => {
-      const { result } = renderHook(() => useAppsAlert());
+    const { result } = renderHook(() => useAppsAlert());
 
-      render(<SidebarAppAlert hasNewFailedAttempts={result.current.hasNewFailedAttempts} />);
+    await waitFor(() => {
+      expect(result.current.hasNewFailedAttempts).toBe(true);
     });
+
+    render(<SidebarAppAlert hasNewFailedAttempts={result.current.hasNewFailedAttempts} />);
 
     const trigger = screen.getByTestId("sidebar-app-alert-trigger");
 
@@ -129,11 +131,13 @@ describe("SidebarAppAlert", () => {
     ]);
 
     // Act
-    await act(async () => {
-      const { result } = renderHook(() => useAppsAlert());
+    const { result } = renderHook(() => useAppsAlert());
 
-      render(<SidebarAppAlert hasNewFailedAttempts={result.current.hasNewFailedAttempts} />);
+    await waitFor(() => {
+      expect(result.current.hasNewFailedAttempts).toBe(false);
     });
+
+    render(<SidebarAppAlert hasNewFailedAttempts={result.current.hasNewFailedAttempts} />);
 
     // Assert
     expect(screen.queryByTestId("sidebar-app-alert-trigger")).not.toBeInTheDocument();
