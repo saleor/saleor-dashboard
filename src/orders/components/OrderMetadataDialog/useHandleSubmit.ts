@@ -7,7 +7,6 @@ import {
 } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
-import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
@@ -17,25 +16,14 @@ import { OrderMetadataDialogData } from "./OrderMetadataDialog";
 export const useHandleOrderLineMetadataSubmit = ({
   initialData,
   onClose,
-  orderId,
 }: {
   initialData: OrderMetadataDialogData | undefined;
   onClose: () => void;
-  orderId: string;
 }) => {
   const notify = useNotifier();
   const intl = useIntl();
-  const hasManageProducts = useHasManageProductsPermission();
 
-  const queriesToRefetch: InternalRefetchQueriesInclude = [
-    {
-      query: OrderLinesMetadataDocument,
-      variables: {
-        id: orderId,
-        hasManageProducts,
-      },
-    },
-  ];
+  const queriesToRefetch: InternalRefetchQueriesInclude = [OrderLinesMetadataDocument];
 
   const [updateMetadata] = useUpdateMetadataMutation({
     refetchQueries: queriesToRefetch,
