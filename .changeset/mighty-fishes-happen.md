@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Updated required Node version from `18` to `20`
+Node 20 can be now used along with Node 18, which will be removed in next release.
