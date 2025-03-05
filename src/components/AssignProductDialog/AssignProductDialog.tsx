@@ -5,10 +5,13 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { maybe } from "@dashboard/misc";
-import { DialogProps, FetchMoreProps } from "@dashboard/types";
+import useProductSearch from "@dashboard/searches/useProductSearch";
+import { DialogProps } from "@dashboard/types";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
 import React, { useEffect } from "react";
@@ -27,14 +30,11 @@ export interface AssignProductDialogFormData {
   query: string;
 }
 
-export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
+export interface AssignProductDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  products: Products;
   selectedChannels?: SelectedChannel[];
   productUnavailableText?: string;
   selectedIds?: Record<string, boolean>;
-  loading: boolean;
-  onFetch: (value: string) => void;
   onSubmit: (data: Container[]) => void;
 }
 
@@ -44,19 +44,25 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
     confirmButtonState,
     selectedChannels,
     productUnavailableText,
-    hasMore,
     open,
-    loading,
-    products,
     onClose,
-    onFetch,
-    onFetchMore,
     onSubmit,
     selectedIds,
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
-  const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
+
+  const {
+    loadMore: loadMoreProducts,
+    search: searchProducts,
+    result: searchProductsOpts,
+  } = useProductSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
+
+  const products = mapEdgesToItems(searchProductsOpts.data?.search) ?? [];
+
+  const [query, onQueryChange, queryReset] = useSearchQuery(searchProducts);
   const [productsDict, setProductsDict] = React.useState(selectedIds || {});
 
   useEffect(() => {
@@ -87,7 +93,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
     onSubmit(
       selectedProductsAsArray.map(id => ({
         id,
-        name: products.find(product => product.id === id)?.name,
+        name: products?.find(product => product.id === id)?.name,
       })),
     );
   };
@@ -118,15 +124,15 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
           fullWidth
           InputProps={{
             autoComplete: "off",
-            endAdornment: loading && <CircularProgress size={16} />,
+            endAdornment: searchProductsOpts.loading && <CircularProgress size={16} />,
           }}
         />
 
         <InfiniteScroll
           id={scrollableTargetId}
           dataLength={products?.length ?? 0}
-          next={onFetchMore}
-          hasMore={hasMore}
+          next={loadMoreProducts}
+          hasMore={searchProductsOpts.data?.search.pageInfo.hasNextPage}
           scrollThreshold="100px"
           scrollableTarget={scrollableTargetId}
         >

@@ -264,7 +264,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                   errors={allErrors}
                   onChange={change}
                   onChannelChange={handleChannelChange}
-                  variant="update"
                 />
               ) : null}
               {data.type === VoucherTypeEnum.SPECIFIC_PRODUCT &&

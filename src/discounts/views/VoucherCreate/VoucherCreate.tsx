@@ -1,8 +1,10 @@
 // @ts-strict-ignore
 import { ChannelVoucherData, createSortedVoucherData } from "@dashboard/channels/utils";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { Button } from "@dashboard/components/Button";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { PAGINATE_BY } from "@dashboard/config";
 import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
 import {
   useUpdateMetadataMutation,
@@ -10,13 +12,19 @@ import {
   useVoucherChannelListingUpdateMutation,
   useVoucherCreateMutation,
 } from "@dashboard/graphql";
+import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useChannels from "@dashboard/hooks/useChannels";
+import useLocalPaginator, {
+  PageInfo,
+  useSectionLocalPaginationState,
+} from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
+import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { sectionNames } from "@dashboard/intl";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
-import React from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import VoucherCreatePage from "../../components/VoucherCreatePage";
@@ -33,6 +41,14 @@ interface VoucherCreateProps {
   params: VoucherCreateUrlQueryParams;
 }
 
+export enum VoucherCreatePageTab {
+  categories = "categories",
+  collections = "collections",
+  products = "products",
+}
+
+export type VoucherTabItemsCount = Partial<Record<VoucherCreatePageTab, number>>;
+
 export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -45,6 +61,14 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
   >(navigate, params => voucherAddUrl(params), params);
   const { availableChannels } = useAppChannel(false);
   const allChannels: ChannelVoucherData[] = createSortedVoucherData(availableChannels);
+  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
+  const [activeTab, setActiveTab] = useState<VoucherCreatePageTab>(VoucherCreatePageTab.categories);
+  const [paginationState, setPaginationState] = useSectionLocalPaginationState(
+    PAGINATE_BY,
+    activeTab,
+  );
+
+  const paginate = useLocalPaginator(setPaginationState);
   const {
     channelListElements,
     channelsToggle,
@@ -103,8 +127,28 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
     updatePrivateMetadata,
   );
 
+  const changeTab = (tab: VoucherCreatePageTab) => {
+    reset();
+    setActiveTab(tab);
+  };
+
+  const tabItemsCount: VoucherTabItemsCount = {
+    categories: 0,
+    collections: 0,
+    products: 0,
+  };
+
+  const tabPageInfo: PageInfo = {
+    hasNextPage: false,
+    endCursor: "",
+    hasPreviousPage: false,
+    startCursor: "",
+  };
+
+  const { pageInfo, ...paginationValues } = paginate(tabPageInfo, paginationState);
+
   return (
-    <>
+    <PaginatorContext.Provider value={{ ...pageInfo, ...paginationValues }}>
       {!!allChannels?.length && (
         <ChannelsAvailabilityDialog
           isSelected={isChannelSelected}
@@ -125,6 +169,9 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
       )}
       <WindowTitle title={intl.formatMessage(sectionNames.vouchers)} />
       <VoucherCreatePage
+        action={params.action}
+        openModal={openModal}
+        closeModal={closeModal}
         allChannelsCount={allChannels?.length}
         channelListings={currentChannels}
         disabled={voucherCreateOpts.loading || updateChannelsOpts.loading}
@@ -136,8 +183,18 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
         saveButtonBarState={voucherCreateOpts.status}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
+        activeTab={activeTab}
+        tabItemsCount={tabItemsCount}
+        onTabClick={changeTab}
+        categoryListToolbar={<Button>Test</Button>}
+        collectionListToolbar={<Button>Test</Button>}
+        productListToolbar={<Button>Test</Button>}
+        isChecked={isSelected}
+        selected={listElements.length}
+        toggle={toggle}
+        toggleAll={toggleAll}
       />
-    </>
+    </PaginatorContext.Provider>
   );
 };
 export default VoucherCreateView;
