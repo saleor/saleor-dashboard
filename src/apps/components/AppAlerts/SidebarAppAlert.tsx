@@ -5,11 +5,8 @@ import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
 import { AlertExclamationIcon } from "./AlertExclamationIcon";
-import { useAppsAlert } from "./useAppsAlert";
 
-export const SidebarAppAlert = () => {
-  const { hasNewFailedAttempts } = useAppsAlert();
-
+export const SidebarAppAlert = ({ hasNewFailedAttempts }: { hasNewFailedAttempts: boolean }) => {
   if (!hasNewFailedAttempts) {
     return null;
   }

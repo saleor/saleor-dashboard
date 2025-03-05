@@ -10,7 +10,8 @@ const DELIVERIES_FETCHING_INTERVAL = 5 * 60 * 1000; // 5 minutes
 
 export const useAppsAlert = () => {
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
-  const { hasNewFailedAttempts, handleFailedAttempt } = useSidebarDotState();
+  const { hasNewFailedAttempts, handleFailedAttempt, handleAppsListItemClick } =
+    useSidebarDotState();
   const { lastFailedWebhookDate, fetchAppsWebhooks } = useAppsFailedDeliveries();
 
   useIntervalActionWithState({
@@ -28,5 +29,6 @@ export const useAppsAlert = () => {
 
   return {
     hasNewFailedAttempts,
+    handleAppsListItemClick,
   };
 };
