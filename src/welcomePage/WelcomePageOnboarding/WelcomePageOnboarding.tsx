@@ -33,7 +33,7 @@ export const WelcomePageOnboarding = () => {
     <DashboardCard borderRadius={3} borderColor="default1" borderWidth={1} borderStyle="solid">
       <Accordion
         value={isOnboardingExpanded ? "onboarding" : ""}
-        onValueChange={value => {
+        onValueChange={(value: string) => {
           toggleOnboarding(value === "onboarding");
         }}
       >

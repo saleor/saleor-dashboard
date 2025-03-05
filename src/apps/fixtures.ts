@@ -274,6 +274,7 @@ export const appWithFailedEventDeliveries: AppListItemFragment = {
             node: {
               createdAt: "2021-06-02T12:24:26.818138+00:00",
               id: "failedEvent",
+              attempts: null,
               __typename: "EventDelivery",
             },
             __typename: "EventDeliveryCountableEdge",
