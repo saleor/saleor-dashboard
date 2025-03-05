@@ -1,7 +1,13 @@
+import { InternalRefetchQueriesInclude } from "@apollo/client";
 import { MetadataFormData } from "@dashboard/components/Metadata";
-import { useUpdateMetadataMutation, useUpdatePrivateMetadataMutation } from "@dashboard/graphql";
+import {
+  OrderLinesMetadataDocument,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation,
+} from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
+import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
@@ -11,14 +17,32 @@ import { OrderMetadataDialogData } from "./OrderMetadataDialog";
 export const useHandleOrderLineMetadataSubmit = ({
   initialData,
   onClose,
+  orderId,
 }: {
   initialData: OrderMetadataDialogData | undefined;
   onClose: () => void;
+  orderId: string;
 }) => {
   const notify = useNotifier();
   const intl = useIntl();
-  const [updateMetadata] = useUpdateMetadataMutation({});
-  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
+  const hasManageProducts = useHasManageProductsPermission();
+
+  const queriesToRefetch: InternalRefetchQueriesInclude = [
+    {
+      query: OrderLinesMetadataDocument,
+      variables: {
+        id: orderId,
+        hasManageProducts,
+      },
+    },
+  ];
+
+  const [updateMetadata] = useUpdateMetadataMutation({
+    refetchQueries: queriesToRefetch,
+  });
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({
+    refetchQueries: queriesToRefetch,
+  });
 
   const submittedData = useRef<MetadataFormData>();
 
