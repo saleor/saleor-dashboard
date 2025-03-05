@@ -4,9 +4,11 @@ import {
 } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { act, fireEvent, render, screen } from "@testing-library/react";
+import { renderHook } from "@testing-library/react-hooks";
 import * as React from "react";
 
 import { SidebarAppAlert } from "./SidebarAppAlert";
+import { useAppsAlert } from "./useAppsAlert";
 
 jest.mock("@dashboard/hooks/useHasManagedAppsPermission");
 jest.mock("react-router-dom");
@@ -77,7 +79,9 @@ describe("SidebarAppAlert", () => {
 
     // Act
     await act(async () => {
-      render(<SidebarAppAlert />);
+      const { result } = renderHook(() => useAppsAlert());
+
+      render(<SidebarAppAlert hasNewFailedAttempts={result.current.hasNewFailedAttempts} />);
     });
 
     const trigger = screen.getByTestId("sidebar-app-alert-trigger");
@@ -126,7 +130,9 @@ describe("SidebarAppAlert", () => {
 
     // Act
     await act(async () => {
-      render(<SidebarAppAlert />);
+      const { result } = renderHook(() => useAppsAlert());
+
+      render(<SidebarAppAlert hasNewFailedAttempts={result.current.hasNewFailedAttempts} />);
     });
 
     // Assert
