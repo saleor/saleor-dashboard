@@ -1,5 +1,5 @@
 import { SidebarAppAlert } from "@dashboard/apps/components/AppAlerts/SidebarAppAlert";
-import { useSidebarDotState } from "@dashboard/apps/components/AppAlerts/useSidebarDotState";
+import { useAppsAlert } from "@dashboard/apps/components/AppAlerts/useAppsAlert";
 import { extensionMountPoints, useExtensions } from "@dashboard/apps/hooks/useExtensions";
 import { AppPaths } from "@dashboard/apps/urls";
 import { useUser } from "@dashboard/auth";
@@ -35,8 +35,8 @@ import { SidebarMenuItem } from "../types";
 import { mapToExtensionsItems } from "../utils";
 
 export function useMenuStructure() {
-  const { handleAppsListItemClick } = useSidebarDotState();
   const { enabled: hasAppAlertsFeatureFlag } = useFlag("app_alerts");
+  const { handleAppsListItemClick, hasNewFailedAttempts } = useAppsAlert(hasAppAlertsFeatureFlag);
 
   const extensions = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);
   const intl = useIntl();
@@ -54,7 +54,9 @@ export function useMenuStructure() {
     id: "apps",
     url: AppPaths.appListPath,
     type: "item",
-    endAdornment: hasAppAlertsFeatureFlag ? <SidebarAppAlert /> : null,
+    endAdornment: hasAppAlertsFeatureFlag ? (
+      <SidebarAppAlert hasNewFailedAttempts={hasNewFailedAttempts} />
+    ) : null,
     onClick: () => handleAppsListItemClick(new Date().toISOString()),
   });
   const menuItems: SidebarMenuItem[] = [

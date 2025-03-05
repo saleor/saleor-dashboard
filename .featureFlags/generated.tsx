@@ -1,18 +1,18 @@
 // @ts-nocheck
 
-import M09811 from "./images/app-alerts.jpg"
-import T88459 from "./images/discounts-list.png"
-import L79851 from "./images/improved_refunds.png"
+import T76178 from "./images/app-alerts.jpg"
+import D25950 from "./images/discounts-list.png"
+import O71553 from "./images/improved_refunds.png"
 
-const app_alerts = () => (<><p><img src={M09811} alt="new filters"/>
-Experience new notifications displaying alerts for apps in the Dashboard. 
-Get meaningful information when Saleor detects issues with an app.</p>
+const app_alerts = () => (<><p><img src={T76178} alt="new filters"/>
+Benefit from new notifications in your Dashboard that alert you to issues with webhooks for your apps, helping you stay informed about potential problems.
+We’re continuously working to expand this feature to provide more insights for your apps.</p>
 </>)
-const discounts_rules = () => (<><p><img src={T88459} alt="Discount rules"/></p>
+const discounts_rules = () => (<><p><img src={D25950} alt="Discount rules"/></p>
 <p>Apply the new discounts rules to narrow your promotions audience.
 Set up conditions and channels that must be fulfilled to apply defined reward.</p>
 </>)
-const improved_refunds = () => (<><p><img src={L79851} alt="Improved refunds"/></p>
+const improved_refunds = () => (<><p><img src={O71553} alt="Improved refunds"/></p>
 <h3 id="enable-the-enhanced-refund-feature-to-streamline-your-refund-process">Enable the enhanced refund feature to streamline your refund process:</h3>
 <ul>
 <li><p>• Choose between automatic calculations based on selected items or enter refund amounts directly for overcharges and custom adjustments.</p>
@@ -41,9 +41,9 @@ export const AVAILABLE_FLAGS = [{
   name: "app_alerts",
   displayName: "App alerts",
   component: app_alerts,
-  visible: false,
+  visible: true,
   content: {
-    enabled: false,
+    enabled: true,
     payload: "default",
   }
 },{

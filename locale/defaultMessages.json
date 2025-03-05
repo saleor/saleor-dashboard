@@ -6826,9 +6826,6 @@
     "context": "sum of pending amount (any status) in order's transactions",
     "string": "Pending"
   },
-  "fm1vrG": {
-    "string": "Last seen {date}.{break}{viewDetails}"
-  },
   "fo7nfa": {
     "context": "fixed amount",
     "string": "Fixed Amount"
@@ -8168,6 +8165,9 @@
   "oIvtua": {
     "context": "attribute's editor component",
     "string": "Catalog Input type for Store Owner"
+  },
+  "oJkLQN": {
+    "string": "Last seen {date}{break}{viewDetails}"
   },
   "oJkeS6": {
     "string": "Attribute Code"
