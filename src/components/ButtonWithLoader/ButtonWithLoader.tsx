@@ -5,9 +5,6 @@ import { useIntl } from "react-intl";
 
 import { ConfirmButtonTransitionState } from "../ConfirmButton";
 
-// TODO: This should be used, instead of imported type (we don't want error state)
-// export type ButtonWithLoaderTransitionState = "default" | "loading" | "success";
-
 interface ButtonWithLoaderProps extends ButtonProps {
   transitionState: ConfirmButtonTransitionState;
 }
