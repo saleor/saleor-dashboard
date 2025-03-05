@@ -80,9 +80,10 @@ describe("Metadata editor", () => {
     // Assert
     expect(input).toHaveValue("value with new field value");
   });
+
   it("can delete field", async () => {
     // Arrange
-    const { debug } = render(<Component />);
+    render(<Component />);
 
     const user = userEvent.setup();
 
@@ -92,10 +93,10 @@ describe("Metadata editor", () => {
     expect(screen.getAllByTestId("field")).toHaveLength(props.data.metadata.length);
     // Act
     await user.click(screen.getByTestId("delete-field-0"));
-    debug();
     // Assert
     expect(screen.getAllByTestId("field")).toHaveLength(props.data.metadata.length - 1);
   });
+
   it("can add field", async () => {
     // Arrange
     render(<Component />);
