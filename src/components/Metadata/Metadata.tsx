@@ -38,14 +38,14 @@ const propsCompare = (_: unknown, newProps: MetadataProps) => {
 
 // TODO: Refactor loading state logic
 // TODO: Split "Metadata" component into "Metadata" and "PrivateMetadata" components
-export const MetadataNoMemo: React.FC<MetadataProps> = ({
+export const MetadataNoMemo = ({
   data,
   onChange,
   isLoading,
   readonly = false,
   hidePrivateMetadata = false,
   ...props
-}) => {
+}: MetadataProps) => {
   const change = (event: ChangeEvent, isPrivate: boolean) => {
     const { action, field, fieldIndex, value } = parseEventData(event);
     const key = getDataKey(isPrivate);
