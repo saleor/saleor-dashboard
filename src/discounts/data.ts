@@ -7,7 +7,10 @@ import { RequirementsPicker } from "./types";
 const getChannelDiscountValue = (
   channel: ChannelVoucherData,
   formData: VoucherDetailsPageFormData,
-) => (formData.discountType.toString() === "SHIPPING" ? 100 : channel.discountValue);
+) => {
+  // 100 means that the discount is 100%
+  return formData.discountType.toString() === "SHIPPING" ? 100 : channel.discountValue;
+};
 const getChannelMinAmountSpent = (
   channel: ChannelVoucherData,
   formData: VoucherDetailsPageFormData,
