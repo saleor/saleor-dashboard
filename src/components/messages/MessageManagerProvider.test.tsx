@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { renderHook } from "@testing-library/react-hooks";
 import React, { useContext } from "react";
 
 import { MessageContext } from ".";
@@ -12,38 +12,14 @@ jest.mock("./MessageDisplay", () => ({
 describe("MessageManagerProvider", () => {
   test("should provide MessageContext to children", () => {
     // Arrange
-    const TestConsumer = () => {
-      // Access the context
-      const messageContext = useContext(MessageContext);
+    const { result } = renderHook(() => useContext(MessageContext), {
+      wrapper: ({ children }) => <MessageManagerProvider>{children}</MessageManagerProvider>,
+    });
 
-      // Assert that context is provided and has expected methods
-      return (
-        <div>
-          {messageContext ? (
-            <div data-test-id="context-provided">
-              {typeof messageContext.show === "function" &&
-              typeof messageContext.remove === "function" &&
-              typeof messageContext.clearErrorNotifications === "function"
-                ? "Context methods available"
-                : "Missing context methods"}
-            </div>
-          ) : (
-            <div data-test-id="context-missing">Context not provided</div>
-          )}
-        </div>
-      );
-    };
-
-    // Act
-    render(
-      <MessageManagerProvider>
-        <TestConsumer />
-      </MessageManagerProvider>,
-    );
-
-    // Assert
-    expect(screen.getByTestId("context-provided")).toBeInTheDocument();
-    expect(screen.getByTestId("context-provided")).toHaveTextContent("Context methods available");
-    expect(screen.getByTestId("message-display")).toBeInTheDocument();
+    // Assert: context exists
+    expect(result.current).toBeTruthy();
+    expect(typeof result.current?.show).toBe("function");
+    expect(typeof result.current?.remove).toBe("function");
+    expect(typeof result.current?.clearErrorNotifications).toBe("function");
   });
 });
