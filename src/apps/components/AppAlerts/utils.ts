@@ -38,31 +38,36 @@ const toWebhookDeliveryWithMoment = (
       }
     : null;
 
+const getLatest = (
+  a: LatestWebhookDeliveryWithMoment | null,
+  b: LatestWebhookDeliveryWithMoment | null,
+) => {
+  if (a && b) {
+    return a.createdAt.isAfter(b.createdAt) ? a : b;
+  }
+
+  return a ?? b;
+};
+
 const getLatestFailedAttemptFromWebhook = (
   webhook: Webhook,
 ): LatestWebhookDeliveryWithMoment | null => {
-  const fromFailedDelivers = toWebhookDeliveryWithMoment(webhook.failedDelivers?.edges?.[0]?.node);
+  // Edge case: Saleor failed to make a single delivery attempt
+  const failedEventDelivery = toWebhookDeliveryWithMoment(webhook.failedDelivers?.edges?.[0]?.node);
+  const fromFailedDeliveryAttempts = toWebhookDeliveryWithMoment(
+    webhook.failedDelivers?.edges?.[0]?.node?.attempts?.edges?.[0].node,
+  );
+
+  // handling the edge case and checking which one is newer
+  const fromFailedDelivers = getLatest(failedEventDelivery, fromFailedDeliveryAttempts);
+
   const fromPendingDelivers = toWebhookDeliveryWithMoment(
     webhook.pendingDelivers?.edges?.[0]?.node.attempts?.edges.find(
       ({ node: { status } }) => status === EventDeliveryStatusEnum.FAILED,
     )?.node,
   );
 
-  if (fromFailedDelivers && fromPendingDelivers) {
-    const isFailedNewer = fromFailedDelivers?.createdAt.isAfter(fromPendingDelivers?.createdAt);
-
-    return isFailedNewer ? fromFailedDelivers : fromPendingDelivers;
-  }
-
-  if (fromFailedDelivers) {
-    return fromFailedDelivers;
-  }
-
-  if (fromPendingDelivers) {
-    return fromPendingDelivers;
-  }
-
-  return null;
+  return getLatest(fromFailedDelivers, fromPendingDelivers);
 };
 
 export const getLatestFailedAttemptFromWebhooks = (webhooks: Webhook[]) =>
