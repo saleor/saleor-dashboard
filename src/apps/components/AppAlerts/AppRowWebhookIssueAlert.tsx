@@ -35,7 +35,7 @@ export const AppRowWebhookIssueAlert = ({ app }: AppRowWebhookIssueAlertProps) =
       </Tooltip.Trigger>
 
       <Tooltip.Content align="end" side="bottom">
-        <Box display="flex" flexDirection="row" gap={2} __color="#FFB84E">
+        <Box display="flex" flexDirection="row" gap={2} __color="#FFB84E" padding={2}>
           <Box marginTop={0.5}>
             <ExclamationIcon />
           </Box>
@@ -46,8 +46,8 @@ export const AppRowWebhookIssueAlert = ({ app }: AppRowWebhookIssueAlertProps) =
             </Text>
             <Text color="default2">
               <FormattedMessage
-                defaultMessage="Last seen {date}.{break}{viewDetails}"
-                id="fm1vrG"
+                defaultMessage="Last seen {date}{break}{viewDetails}"
+                id="oJkLQN"
                 values={{
                   date: <EventTime date={latestFailedAttempt.createdAt} />,
                   viewDetails: (
