@@ -24,7 +24,7 @@ export interface MetadataProps
 }
 
 /** Displays controls for `metadata` and `privateMetadata` fields used with react-hook-form useForm
- * Values must be nambed exactly `metadata` and `privateMetadata`
+ * Values must be named exactly `metadata` and `privateMetadata`
  * Example: see OrderMetadataDialog */
 export const MetadataHookForm = ({
   isLoading,
