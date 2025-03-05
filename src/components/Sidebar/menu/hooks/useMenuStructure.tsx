@@ -35,8 +35,8 @@ import { SidebarMenuItem } from "../types";
 import { mapToExtensionsItems } from "../utils";
 
 export function useMenuStructure() {
-  const { handleAppsListItemClick, hasNewFailedAttempts } = useAppsAlert();
   const { enabled: hasAppAlertsFeatureFlag } = useFlag("app_alerts");
+  const { handleAppsListItemClick, hasNewFailedAttempts } = useAppsAlert(hasAppAlertsFeatureFlag);
 
   const extensions = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);
   const intl = useIntl();
