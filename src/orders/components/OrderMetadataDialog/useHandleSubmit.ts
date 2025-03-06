@@ -1,4 +1,4 @@
-import { InternalRefetchQueriesInclude, useApolloClient } from "@apollo/client";
+import { useApolloClient } from "@apollo/client";
 import { MetadataFormData } from "@dashboard/components/Metadata";
 import {
   OrderLinesMetadataDocument,
