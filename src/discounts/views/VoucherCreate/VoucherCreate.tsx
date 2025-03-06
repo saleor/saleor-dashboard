@@ -1,10 +1,9 @@
 // @ts-strict-ignore
 import { ChannelVoucherData, createSortedVoucherData } from "@dashboard/channels/utils";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { Button } from "@dashboard/components/Button";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { PAGINATE_BY } from "@dashboard/config";
+import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
 import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
 import {
   useUpdateMetadataMutation,
@@ -21,7 +20,11 @@ import useLocalPaginator, {
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
+import useShop from "@dashboard/hooks/useShop";
 import { sectionNames } from "@dashboard/intl";
+import useCategorySearch from "@dashboard/searches/useCategorySearch";
+import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
+import useProductSearch from "@dashboard/searches/useProductSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import React, { useState } from "react";
@@ -53,6 +56,7 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const shop = useShop();
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -101,6 +105,17 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
       }
     },
   });
+
+  const categoriesSearch = useCategorySearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
+  const collectionsSearch = useCollectionSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
+  const productsSearch = useProductSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
+
   const handleFormValidate = (data: VoucherDetailsPageFormData) => {
     if (data.codes.length === 0) {
       notify({
@@ -130,12 +145,6 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
   const changeTab = (tab: VoucherCreatePageTab) => {
     reset();
     setActiveTab(tab);
-  };
-
-  const tabItemsCount: VoucherTabItemsCount = {
-    categories: 0,
-    collections: 0,
-    products: 0,
   };
 
   const tabPageInfo: PageInfo = {
@@ -170,6 +179,10 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
       <WindowTitle title={intl.formatMessage(sectionNames.vouchers)} />
       <VoucherCreatePage
         action={params.action}
+        countries={shop?.countries ?? []}
+        categoriesSearch={categoriesSearch}
+        collectionsSearch={collectionsSearch}
+        productsSearch={productsSearch}
         openModal={openModal}
         closeModal={closeModal}
         allChannelsCount={allChannels?.length}
@@ -184,15 +197,12 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
         activeTab={activeTab}
-        tabItemsCount={tabItemsCount}
         onTabClick={changeTab}
-        categoryListToolbar={<Button>Test</Button>}
-        collectionListToolbar={<Button>Test</Button>}
-        productListToolbar={<Button>Test</Button>}
         isChecked={isSelected}
-        selected={listElements.length}
+        selected={listElements}
         toggle={toggle}
         toggleAll={toggleAll}
+        resetSelected={reset}
       />
     </PaginatorContext.Provider>
   );

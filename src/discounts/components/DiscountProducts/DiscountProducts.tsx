@@ -116,8 +116,8 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
                   </TableCell>
                   <TableCellAvatar
                     className={classes.colName}
-                    // thumbnail={maybe(() => product.thumbnail.url)}
-                    thumbnail={undefined}
+                    // @ts-expect-error to be solved
+                    thumbnail={maybe(() => product.thumbnail?.url)}
                   >
                     {maybe<React.ReactNode>(() => product.name, <Skeleton />)}
                   </TableCellAvatar>

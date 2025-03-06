@@ -16525,6 +16525,10 @@ export const SearchProductsDocument = gql`
       node {
         id
         name
+        productType {
+          id
+          name
+        }
         thumbnail {
           url
         }

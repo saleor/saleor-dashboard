@@ -13,6 +13,7 @@ import { Savebar } from "@dashboard/components/Savebar";
 import { Tab, TabContainer } from "@dashboard/components/Tab";
 import DiscountCategories from "@dashboard/discounts/components/DiscountCategories";
 import DiscountCollections from "@dashboard/discounts/components/DiscountCollections";
+import DiscountCountrySelectDialog from "@dashboard/discounts/components/DiscountCountrySelectDialog";
 import DiscountProducts from "@dashboard/discounts/components/DiscountProducts";
 import {
   createChannelsChangeHandler,
@@ -21,21 +22,33 @@ import {
 import { itemsQuantityMessages } from "@dashboard/discounts/translations";
 import { VoucherCreateUrlQueryParams, voucherListUrl } from "@dashboard/discounts/urls";
 import { VOUCHER_CREATE_FORM_ID } from "@dashboard/discounts/views/VoucherCreate/types";
-import { DiscountErrorFragment, PermissionEnum, VoucherTypeEnum } from "@dashboard/graphql";
+import {
+  CountryWithCodeFragment,
+  DiscountErrorFragment,
+  PermissionEnum,
+  SearchCategoriesQuery,
+  SearchCategoriesQueryVariables,
+  SearchCollectionsQuery,
+  SearchCollectionsQueryVariables,
+  SearchProductsQuery,
+  SearchProductsQueryVariables,
+  VoucherTypeEnum,
+} from "@dashboard/graphql";
+import { UseSearchResult } from "@dashboard/hooks/makeSearch";
 import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { buttonMessages } from "@dashboard/intl";
 import { validatePrice } from "@dashboard/products/utils/validation";
-import { TabListActions } from "@dashboard/types";
+import { ListActionsWithoutToolbar } from "@dashboard/types";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Button, Text } from "@saleor/macaw-ui-next";
+import React, { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { RequirementsPicker } from "../../types";
 import { VoucherCodes } from "../VoucherCodes";
 import { GenerateMultipleVoucherCodeFormData } from "../VoucherCodesGenerateDialog";
 import VoucherDates from "../VoucherDates";
-import { VoucherTabItemsCount } from "../VoucherDetailsPage";
 import VoucherInfo from "../VoucherInfo";
 import VoucherLimits from "../VoucherLimits";
 import VoucherRequirements from "../VoucherRequirements";
@@ -45,7 +58,14 @@ import { initialForm } from "./const";
 import { useVoucherCodesPagination } from "./hooks/useVoucherCodesPagination";
 import { useVoucherCodesSelection } from "./hooks/useVoucherCodesSelection";
 import { FormData } from "./types";
-import { generateDraftVoucherCode, generateMultipleVoucherCodes, voucherCodeExists } from "./utils";
+import {
+  generateDraftVoucherCode,
+  generateMultipleVoucherCodes,
+  getFilteredCategories,
+  getFilteredCollections,
+  getFilteredProducts,
+  voucherCodeExists,
+} from "./utils";
 
 export enum VoucherCreatePageTab {
   categories = "categories",
@@ -53,9 +73,9 @@ export enum VoucherCreatePageTab {
   products = "products",
 }
 
-export interface VoucherCreatePageProps
-  extends TabListActions<"categoryListToolbar" | "collectionListToolbar" | "productListToolbar"> {
+export interface VoucherCreatePageProps extends Omit<ListActionsWithoutToolbar, "selected"> {
   activeTab: VoucherCreatePageTab;
+  countries: CountryWithCodeFragment[];
   allChannelsCount: number;
   channelListings: ChannelVoucherData[];
   disabled: boolean;
@@ -64,11 +84,15 @@ export interface VoucherCreatePageProps
   onChannelsChange: (data: ChannelVoucherData[]) => void;
   openChannelsModal: () => void;
   onSubmit: (data: FormData) => SubmitPromise;
-  tabItemsCount: VoucherTabItemsCount;
   onTabClick: (index: VoucherCreatePageTab) => void;
   action: VoucherCreateUrlQueryParams["action"];
   openModal: (action: VoucherCreateUrlQueryParams["action"]) => void;
   closeModal: () => void;
+  categoriesSearch: UseSearchResult<SearchCategoriesQuery, SearchCategoriesQueryVariables>;
+  collectionsSearch: UseSearchResult<SearchCollectionsQuery, SearchCollectionsQueryVariables>;
+  productsSearch: UseSearchResult<SearchProductsQuery, SearchProductsQueryVariables>;
+  selected: string[];
+  resetSelected: () => void;
 }
 
 const CategoriesTab = Tab(VoucherCreatePageTab.categories);
@@ -77,7 +101,6 @@ const ProductsTab = Tab(VoucherCreatePageTab.products);
 
 const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   activeTab,
-  tabItemsCount,
   allChannelsCount,
   channelListings = [],
   disabled,
@@ -88,19 +111,34 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   openChannelsModal,
   onTabClick,
   selected,
-  collectionListToolbar,
-  productListToolbar,
   isChecked,
-  categoryListToolbar,
   action,
   openModal,
   closeModal,
   toggle,
   toggleAll,
+  productsSearch,
+  categoriesSearch,
+  collectionsSearch,
+  countries,
+  resetSelected,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
+
+  const countriesMap = useMemo(
+    () =>
+      countries.reduce(
+        (allChannelsCount, country) => {
+          allChannelsCount[country.code] = country;
+
+          return allChannelsCount;
+        },
+        {} as Record<string, CountryWithCodeFragment>,
+      ),
+    [countries],
+  );
 
   const checkIfSaveIsDisabled = (data: FormData) =>
     (data.discountType.toString() !== "SHIPPING" &&
@@ -186,6 +224,22 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     closeModal();
   };
 
+  const handleBulkUnassign = (type: "categories" | "products" | "collections") => {
+    const selectedData = data[type];
+
+    if (!selectedData) {
+      return;
+    }
+
+    change({
+      target: {
+        name: type,
+        value: (selectedData as Array<{ id: string }>)?.filter(item => !selected.includes(item.id)),
+      },
+    });
+    resetSelected();
+  };
+
   const handleCollectionUnassign = (id: string) => {
     change({
       target: {
@@ -225,10 +279,28 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   };
 
   const handleCountryUnassign = (code: string) => {
-    set({
-      countries: data.countries.filter(country => country !== code),
+    change({
+      target: {
+        name: "countries",
+        value: data.countries.filter(country => country.code !== code),
+      },
     });
   };
+
+  const handleCountryAssign = (countries: string[]) => {
+    change({
+      target: {
+        name: "countries",
+        value: countries.map(country => countriesMap[country]),
+      },
+    });
+  };
+
+  const BulkUnassignButton = ({ type }: { type: "categories" | "products" | "collections" }) => (
+    <Button onClick={() => handleBulkUnassign(type)} variant="secondary">
+      <FormattedMessage id="Gkip05" defaultMessage="Unassign" description="button" />
+    </Button>
+  );
 
   return (
     <form onSubmit={submit}>
@@ -279,7 +351,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                   testId="categories-tab"
                 >
                   {intl.formatMessage(itemsQuantityMessages.categories, {
-                    quantity: tabItemsCount.categories?.toString() || "…",
+                    quantity: data.categories.length,
                   })}
                 </CategoriesTab>
                 <CollectionsTab
@@ -288,7 +360,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                   changeTab={onTabClick}
                 >
                   {intl.formatMessage(itemsQuantityMessages.collections, {
-                    quantity: tabItemsCount.collections?.toString() || "…",
+                    quantity: data.collections.length,
                   })}
                 </CollectionsTab>
                 <ProductsTab
@@ -297,34 +369,36 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                   changeTab={onTabClick}
                 >
                   {intl.formatMessage(itemsQuantityMessages.products, {
-                    quantity: tabItemsCount.products?.toString() || "…",
+                    quantity: data.products.length,
                   })}
                 </ProductsTab>
               </TabContainer>
               <CardSpacer />
               {activeTab === VoucherCreatePageTab.categories ? (
                 <DiscountCategories
+                  showProductColumn={false}
                   disabled={disabled}
                   onCategoryAssign={() => openModal("assign-category")}
                   onCategoryUnassign={handleCategoryUnassign}
                   categories={data.categories}
                   isChecked={isChecked}
-                  selected={selected}
+                  selected={selected.length}
                   toggle={toggle}
                   toggleAll={toggleAll}
-                  toolbar={categoryListToolbar}
+                  toolbar={<BulkUnassignButton type="categories" />}
                 />
               ) : activeTab === VoucherCreatePageTab.collections ? (
                 <DiscountCollections
+                  showProductColumn={false}
                   disabled={disabled}
                   onCollectionAssign={() => openModal("assign-collection")}
                   onCollectionUnassign={handleCollectionUnassign}
                   collections={data.collections}
                   isChecked={isChecked}
-                  selected={selected}
+                  selected={selected.length}
                   toggle={toggle}
                   toggleAll={toggleAll}
-                  toolbar={collectionListToolbar}
+                  toolbar={<BulkUnassignButton type="collections" />}
                 />
               ) : (
                 <DiscountProducts
@@ -333,17 +407,17 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                   onProductUnassign={handleProductUnassign}
                   products={data.products}
                   isChecked={isChecked}
-                  selected={selected}
+                  selected={selected.length}
                   toggle={toggle}
                   toggleAll={toggleAll}
-                  toolbar={productListToolbar}
+                  toolbar={<BulkUnassignButton type="products" />}
                 />
               )}
             </>
           ) : null}
           {data.discountType.toString() === "SHIPPING" ? (
             <CountryList
-              countries={[]}
+              countries={data.countries}
               disabled={disabled}
               emptyText={intl.formatMessage({
                 id: "jd/LWa",
@@ -411,40 +485,59 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
       </DetailPageLayout>
 
       <AssignCategoriesDialog
-        selectedCategories={data.categories.map(category => category.id)}
-        confirmButtonState={"default"}
+        categories={getFilteredCategories(data, categoriesSearch.result)}
+        confirmButtonState="default"
+        hasMore={categoriesSearch.result?.data?.search?.pageInfo?.hasNextPage ?? false}
         open={action === "assign-category"}
+        onFetch={categoriesSearch.search}
+        onFetchMore={categoriesSearch.loadMore}
+        loading={categoriesSearch.result?.loading}
         onClose={closeModal}
         onSubmit={handleCategoriesAssign}
+        labels={{
+          confirmBtn: intl.formatMessage(buttonMessages.save),
+        }}
       />
       <AssignCollectionDialog
-        selectedCollections={data.collections.map(collection => collection.id)}
-        confirmButtonState={"default"}
+        collections={getFilteredCollections(data, collectionsSearch.result)}
+        confirmButtonState="default"
+        hasMore={collectionsSearch?.result?.data?.search?.pageInfo?.hasNextPage ?? false}
         open={action === "assign-collection"}
+        onFetch={collectionsSearch.search}
+        onFetchMore={collectionsSearch.loadMore}
+        loading={collectionsSearch.result.loading}
         onClose={closeModal}
         onSubmit={handleCollectionAssign}
+        labels={{
+          confirmBtn: intl.formatMessage(buttonMessages.save),
+        }}
       />
-      {/*<DiscountCountrySelectDialog*/}
-      {/*  confirmButtonState="default"*/}
-      {/*  countries={[]}*/}
-      {/*  onClose={closeModal}*/}
-      {/*  onConfirm={formData => {*/}
-      {/*    console.log("assing country");*/}
-      {/*  }}*/}
-      {/*  open={action === "assign-country"}*/}
-      {/*  initial={[]}*/}
-      {/*/>*/}
+      <DiscountCountrySelectDialog
+        confirmButtonState="default"
+        countries={countries}
+        onClose={closeModal}
+        onConfirm={async ({ countries }) => handleCountryAssign(countries)}
+        open={action === "assign-country"}
+        initial={data.countries.map(country => country.code)}
+      />
       <AssignProductDialog
         selectedChannels={channelListings}
-        selectedIds={data.products.map(product => product.id)}
         productUnavailableText={intl.formatMessage({
           id: "XOkUxQ",
           defaultMessage: "Product unavailable in voucher channels",
         })}
-        confirmButtonState={"default"}
+        confirmButtonState="default"
+        hasMore={productsSearch?.result.data?.search?.pageInfo?.hasNextPage ?? false}
+        onFetch={productsSearch.search}
+        onFetchMore={productsSearch.loadMore}
+        loading={productsSearch.result.loading}
         open={action === "assign-product"}
         onClose={closeModal}
         onSubmit={handleProductsAssign}
+        products={getFilteredProducts(data, productsSearch.result)}
+        labels={{
+          confirmBtn: intl.formatMessage(buttonMessages.save),
+        }}
       />
     </form>
   );

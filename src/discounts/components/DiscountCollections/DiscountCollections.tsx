@@ -24,6 +24,7 @@ export interface DiscountCollectionsProps extends ListProps, ListActions {
   collections: CollectionFragment[];
   onCollectionAssign: () => void;
   onCollectionUnassign: (id: string) => void;
+  showProductColumn?: boolean;
 }
 
 const numberOfColumns = 4;
@@ -38,6 +39,7 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
     toggle,
     toggleAll,
     toolbar,
+    showProductColumn = true,
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -58,7 +60,7 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
         <colgroup>
           <col />
           <col className={classes.colName} />
-          <col className={classes.colProducts} />
+          {showProductColumn && <col className={classes.colProducts} />}
           <col className={classes.colActions} />
         </colgroup>
         <TableHead
@@ -72,9 +74,11 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
           <TableCell className={classes.colName}>
             <FormattedMessage {...messages.discountCollectionsTableProductHeader} />
           </TableCell>
-          <TableCell className={classes.colProducts}>
-            <FormattedMessage {...messages.discountCollectionsTableProductNumber} />
-          </TableCell>
+          {showProductColumn && (
+            <TableCell className={classes.colProducts}>
+              <FormattedMessage {...messages.discountCollectionsTableProductNumber} />
+            </TableCell>
+          )}
           <TableCell />
         </TableHead>
         <TableFooter>
@@ -108,10 +112,12 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
                   <TableCell className={classes.colName}>
                     {collection ? collection.name : <Skeleton />}
                   </TableCell>
-                  <TableCell className={classes.colProducts}>
-                    <Skeleton />
-                    {/*{collection ? collection?.products.totalCount : <Skeleton />}*/}
-                  </TableCell>
+                  {showProductColumn && (
+                    <TableCell className={classes.colProducts}>
+                      {/* @ts-expect-error to be solved */}
+                      {collection ? collection?.products.totalCount : <Skeleton />}
+                    </TableCell>
+                  )}
                   <TableCell className={classes.colActions}>
                     <TableButtonWrapper>
                       <IconButton

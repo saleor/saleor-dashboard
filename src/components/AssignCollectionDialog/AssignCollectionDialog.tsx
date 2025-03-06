@@ -1,7 +1,6 @@
 // @ts-strict-ignore
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
-import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { SearchCollectionsQuery } from "@dashboard/graphql";
+import { RelayToFlat } from "@dashboard/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -9,46 +8,28 @@ import AssignContainerDialog, { AssignContainerDialogProps } from "../AssignCont
 import { messages } from "./messages";
 
 interface AssignCollectionDialogProps
-  extends Omit<
-    AssignContainerDialogProps,
-    "containers" | "labels" | "hasMore" | "loading" | "onFetchMore" | "onFetch"
-  > {
-  selectedCollections: string[];
+  extends Omit<AssignContainerDialogProps, "containers" | "labels"> {
+  collections: RelayToFlat<SearchCollectionsQuery["search"]>;
+  labels?: Partial<AssignContainerDialogProps["labels"]>;
 }
 
 const AssignCollectionDialog: React.FC<AssignCollectionDialogProps> = ({
-  selectedCollections,
+  collections,
+  labels,
   ...rest
 }) => {
   const intl = useIntl();
 
-  const {
-    loadMore: loadMoreCollections,
-    search: searchCollections,
-    result: searchCollectionsOpts,
-  } = useCollectionSearch({
-    skip: !rest.open,
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
-
-  const collections = mapEdgesToItems(searchCollectionsOpts?.data?.search) ?? [];
-  const collectionsToDisplay = collections.filter(
-    category => !selectedCollections.includes(category.id),
-  );
-
   return (
     <AssignContainerDialog
-      containers={collectionsToDisplay}
+      containers={collections}
       labels={{
         title: intl.formatMessage(messages.assignCollectionDialogHeader),
         label: intl.formatMessage(messages.assignCollectionDialogLabel),
         placeholder: intl.formatMessage(messages.assignCollectionDialogPlaceholder),
         confirmBtn: intl.formatMessage(messages.confirmBtn),
+        ...labels,
       }}
-      hasMore={searchCollectionsOpts?.data?.search.pageInfo.hasNextPage}
-      onFetch={searchCollections}
-      onFetchMore={loadMoreCollections}
-      loading={searchCollectionsOpts.loading}
       {...rest}
     />
   );

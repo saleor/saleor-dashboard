@@ -5,13 +5,10 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { maybe } from "@dashboard/misc";
-import useProductSearch from "@dashboard/searches/useProductSearch";
-import { DialogProps } from "@dashboard/types";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { DialogProps, FetchMoreProps } from "@dashboard/types";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
 import React, { useEffect } from "react";
@@ -30,12 +27,18 @@ export interface AssignProductDialogFormData {
   query: string;
 }
 
-export interface AssignProductDialogProps extends DialogProps {
+export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
+  products: Products;
   selectedChannels?: SelectedChannel[];
   productUnavailableText?: string;
   selectedIds?: Record<string, boolean>;
-  onSubmit: (data: Container[]) => void;
+  loading: boolean;
+  onFetch: (value: string) => void;
+  onSubmit: (data: Array<Container & Omit<Partial<Products[number]>, "name">>) => void;
+  labels?: {
+    confirmBtn: string;
+  };
 }
 
 const scrollableTargetId = "assignProductScrollableDialog";
@@ -44,25 +47,20 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
     confirmButtonState,
     selectedChannels,
     productUnavailableText,
+    hasMore,
     open,
+    loading,
+    products,
     onClose,
+    onFetch,
+    onFetchMore,
     onSubmit,
     selectedIds,
+    labels,
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
-
-  const {
-    loadMore: loadMoreProducts,
-    search: searchProducts,
-    result: searchProductsOpts,
-  } = useProductSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
-
-  const products = mapEdgesToItems(searchProductsOpts.data?.search) ?? [];
-
-  const [query, onQueryChange, queryReset] = useSearchQuery(searchProducts);
+  const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
   const [productsDict, setProductsDict] = React.useState(selectedIds || {});
 
   useEffect(() => {
@@ -91,10 +89,15 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
       .map(key => key);
 
     onSubmit(
-      selectedProductsAsArray.map(id => ({
-        id,
-        name: products?.find(product => product.id === id)?.name,
-      })),
+      selectedProductsAsArray.map(id => {
+        const productDetails = products.find(product => product.id === id);
+
+        return {
+          id,
+          name: productDetails?.name,
+          ...(productDetails ?? {}),
+        };
+      }),
     );
   };
   const handleChange = productId => {
@@ -124,15 +127,15 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
           fullWidth
           InputProps={{
             autoComplete: "off",
-            endAdornment: searchProductsOpts.loading && <CircularProgress size={16} />,
+            endAdornment: loading && <CircularProgress size={16} />,
           }}
         />
 
         <InfiniteScroll
           id={scrollableTargetId}
           dataLength={products?.length ?? 0}
-          next={loadMoreProducts}
-          hasMore={searchProductsOpts.data?.search.pageInfo.hasNextPage}
+          next={onFetchMore}
+          hasMore={hasMore}
           scrollThreshold="100px"
           scrollableTarget={scrollableTargetId}
         >
@@ -185,7 +188,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
             type="submit"
             onClick={handleSubmit}
           >
-            <FormattedMessage {...messages.assignProductDialogButton} />
+            {labels.confirmBtn ?? <FormattedMessage {...messages.assignProductDialogButton} />}
           </ConfirmButton>
         </DashboardModal.Actions>
       </DashboardModal.Content>

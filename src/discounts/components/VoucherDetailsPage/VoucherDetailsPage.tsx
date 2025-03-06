@@ -29,7 +29,7 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { UseListSettings } from "@dashboard/hooks/useListSettings";
 import { LocalPagination } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { mapMetadataItemToInput } from "@dashboard/utils/maps";
+import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -304,7 +304,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                       disabled={disabled}
                       onCategoryAssign={onCategoryAssign}
                       onCategoryUnassign={onCategoryUnassign}
-                      discount={voucher}
+                      // @ts-expect-error to be solved
+                      categories={mapEdgesToItems(voucher?.categories)}
                       isChecked={isChecked}
                       selected={selected}
                       toggle={toggle}
@@ -316,7 +317,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                       disabled={disabled}
                       onCollectionAssign={onCollectionAssign}
                       onCollectionUnassign={onCollectionUnassign}
-                      discount={voucher}
+                      // @ts-expect-error to be solved
+                      collections={mapEdgesToItems(voucher?.collections)}
                       isChecked={isChecked}
                       selected={selected}
                       toggle={toggle}
@@ -328,7 +330,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                       disabled={disabled}
                       onProductAssign={onProductAssign}
                       onProductUnassign={onProductUnassign}
-                      discount={voucher}
+                      // @ts-expect-error to be solved
+                      products={mapEdgesToItems(voucher?.products)}
                       isChecked={isChecked}
                       selected={selected}
                       toggle={toggle}
