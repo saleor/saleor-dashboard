@@ -3,6 +3,11 @@ import { FieldError, FieldErrors } from "react-hook-form";
 import { flattenErrors } from "./errors";
 
 describe("flattenErrors", () => {
+  it("should return empty array when undefined", () => {
+    const errors = undefined;
+
+    expect(flattenErrors(errors)).toEqual([]);
+  });
   it("should return empty array when no errors", () => {
     const errors: FieldErrors = {};
 

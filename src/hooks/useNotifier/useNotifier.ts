@@ -8,7 +8,7 @@ function useNotifier(): UseNotifierResult {
   const notify = (options: IMessage) => {
     const timeout = options.status === "error" ? null : options.autohide;
 
-    notificationContext.show(options, timeout);
+    notificationContext?.show(options, timeout);
   };
 
   return notify;

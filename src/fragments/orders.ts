@@ -151,10 +151,14 @@ export const fragmentOrderLine = gql`
   }
 `;
 
-export const fragmentOrderLineWithMetadata = gql`
-  fragment OrderLineWithMetadata on OrderLine {
-    ...OrderLine
-    ...Metadata
+export const fragmentOrderLineMetadata = gql`
+  fragment OrderLineMetadata on OrderLine {
+    metadata {
+      ...MetadataItem
+    }
+    privateMetadata {
+      ...MetadataItem
+    }
     variant {
       metadata {
         ...MetadataItem
@@ -163,6 +167,30 @@ export const fragmentOrderLineWithMetadata = gql`
         ...MetadataItem
       }
     }
+  }
+`;
+
+export const fragmentOrderLineMetadataDetails = gql`
+  fragment OrderLineMetadataDetails on OrderLine {
+    id
+    productName
+    productSku
+    quantity
+    thumbnail {
+      url
+    }
+    variant {
+      id
+      name
+    }
+    ...OrderLineMetadata
+  }
+`;
+
+export const fragmentOrderLineWithMetadata = gql`
+  fragment OrderLineWithMetadata on OrderLine {
+    ...OrderLine
+    ...OrderLineMetadata
   }
 `;
 
@@ -410,7 +438,7 @@ export const fragmentOrderDetailsWithMetadata = gql`
       ...FulfillmentWithMetadata
     }
     lines {
-      ...OrderLineWithMetadata
+      ...OrderLine
     }
   }
 `;

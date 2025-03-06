@@ -1,5 +1,4 @@
 import useForm from "@dashboard/hooks/useForm";
-import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
@@ -7,14 +6,18 @@ import React from "react";
 import { props } from "./fixtures";
 import { Metadata } from "./Metadata";
 
+jest.mock("react-intl", () => ({
+  useIntl: jest.fn(() => ({
+    formatMessage: jest.fn(x => x.defaultMessage),
+  })),
+  defineMessages: jest.fn(x => x),
+  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
+}));
+
 const Component = () => {
   const { change, data } = useForm(props.data, jest.fn());
 
-  return (
-    <Wrapper>
-      <Metadata data={data} onChange={change} />
-    </Wrapper>
-  );
+  return <Metadata data={data} onChange={change} />;
 };
 const getFirstExpandIcon = () => screen.getAllByTestId("expand")[0];
 
@@ -34,6 +37,8 @@ describe("Metadata editor", () => {
     // Assert
     expect(editor).toHaveAttribute(isExpandedAttribute, "open");
   });
+
+  // TODO: Fix this test
   xit("can edit field name", async () => {
     // Arrange
     render(<Component />);
@@ -55,7 +60,8 @@ describe("Metadata editor", () => {
     // Assert
     expect(input).toHaveValue("key with new name");
   });
-  xit("can edit field value", async () => {
+
+  it("can edit field value", async () => {
     // Arrange
     render(<Component />);
 
@@ -74,6 +80,7 @@ describe("Metadata editor", () => {
     // Assert
     expect(input).toHaveValue("value with new field value");
   });
+
   it("can delete field", async () => {
     // Arrange
     render(<Component />);
@@ -89,7 +96,8 @@ describe("Metadata editor", () => {
     // Assert
     expect(screen.getAllByTestId("field")).toHaveLength(props.data.metadata.length - 1);
   });
-  xit("can add field", async () => {
+
+  it("can add field", async () => {
     // Arrange
     render(<Component />);
 
