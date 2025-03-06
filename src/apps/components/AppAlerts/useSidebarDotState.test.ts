@@ -150,7 +150,7 @@ describe("useSidebarDotState", () => {
     expect(result.current.hasNewFailedAttempts).toBe(true);
   });
 
-  it.only("should persist click date after multiple attempts", async () => {
+  it("should persist click date after multiple attempts", async () => {
     const persist = jest.fn().mockResolvedValue(undefined);
     const eventDate = new Date("2025-01-01").toISOString();
     const clickDate = new Date("2025-01-02").toISOString();
