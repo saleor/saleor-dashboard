@@ -25,7 +25,7 @@ export const EventDeliveriesList: React.FC<EventDeliveriesListProps> = ({ eventD
       return (
         <EventDeliveryItem
           key={id}
-          dataTestId={id}
+          deliveryId={id}
           createdAt={createdAt}
           status={ed.node.status}
           attemptsCount={attemptsCount}

@@ -1,7 +1,6 @@
 import { AppPaths } from "@dashboard/apps/urls";
 import EventTime from "@dashboard/components/EventTime";
 import Link from "@dashboard/components/Link";
-import { StopPropagation } from "@dashboard/components/StopPropagation";
 import { AppListItemFragment } from "@dashboard/graphql";
 import { ExclamationIcon } from "@dashboard/icons/ExclamationIcon";
 import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
@@ -35,34 +34,38 @@ export const AppRowWebhookIssueAlert = ({ app }: AppRowWebhookIssueAlertProps) =
         </Box>
       </Tooltip.Trigger>
 
-      <Tooltip.Content align="start" side="bottom">
-        <StopPropagation>
-          <Box display="flex" flexDirection="row" gap={2} __color="#FFB84E">
-            <Box marginTop={0.5}>
-              <ExclamationIcon />
-            </Box>
-
-            <Box display="flex" flexDirection="column" gap={1}>
-              <Text fontSize={5} fontWeight="bold">
-                <FormattedMessage defaultMessage="Issues found" id="t9sWqJ" />
-              </Text>
-              <Text>
-                <FormattedMessage
-                  defaultMessage="Webhook errors detected. Last occurred at {date}. {viewDetails}."
-                  id="FaRg9/"
-                  values={{
-                    date: <EventTime date={latestFailedAttempt.createdAt} />,
-                    viewDetails: (
-                      <Link href={detailsLink} color="secondary" underline>
-                        <FormattedMessage defaultMessage="View details" id="MnpUD7" />
-                      </Link>
-                    ),
-                  }}
-                />
-              </Text>
-            </Box>
+      <Tooltip.Content align="end" side="bottom">
+        <Box display="flex" flexDirection="row" gap={2} __color="#FFB84E" padding={2}>
+          <Box marginTop={0.5}>
+            <ExclamationIcon />
           </Box>
-        </StopPropagation>
+
+          <Box display="flex" flexDirection="column" gap={1}>
+            <Text fontSize={5} fontWeight="bold">
+              <FormattedMessage defaultMessage="Webhook errors detected" id="mt3SU9" />
+            </Text>
+            <Text color="default2">
+              <FormattedMessage
+                defaultMessage="Last seen {date}{break}{viewDetails}"
+                id="oJkLQN"
+                values={{
+                  date: <EventTime date={latestFailedAttempt.createdAt} />,
+                  viewDetails: (
+                    <Link
+                      href={detailsLink}
+                      color="secondary"
+                      underline
+                      style={{ float: "right", marginTop: "1rem" }}
+                    >
+                      <FormattedMessage defaultMessage="View details" id="MnpUD7" />
+                    </Link>
+                  ),
+                  break: <br />,
+                }}
+              />
+            </Text>
+          </Box>
+        </Box>
       </Tooltip.Content>
     </Tooltip>
   );

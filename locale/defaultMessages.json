@@ -2692,9 +2692,6 @@
   "FZTrzW": {
     "string": "Manual refund"
   },
-  "FaRg9/": {
-    "string": "Webhook errors detected. Last occurred at {date}. {viewDetails}."
-  },
   "Fbr4Vp": {
     "context": "dialog header",
     "string": "Permissions"
@@ -7904,6 +7901,9 @@
     "context": "resend code to customer title",
     "string": "Resend code to customer"
   },
+  "mt3SU9": {
+    "string": "Webhook errors detected"
+  },
   "mxtAFx": {
     "string": "Are you sure you want to delete draft #{orderNumber}?"
   },
@@ -8142,6 +8142,9 @@
   "oIvtua": {
     "context": "attribute's editor component",
     "string": "Catalog Input type for Store Owner"
+  },
+  "oJkLQN": {
+    "string": "Last seen {date}{break}{viewDetails}"
   },
   "oJkeS6": {
     "string": "Attribute Code"
@@ -8805,9 +8808,6 @@
     "context": "voucher status",
     "string": "Expired"
   },
-  "t9sWqJ": {
-    "string": "Issues found"
-  },
   "tA5HJx": {
     "context": "webhook input help text",
     "string": "secret key is used to create a hash signature with each payload. *optional field"
@@ -8876,6 +8876,9 @@
   "tlGXkh": {
     "context": "input description",
     "string": "Unlimited"
+  },
+  "tmcdrp": {
+    "string": "ID:"
   },
   "tmrBDK": {
     "string": "Manual transaction ({amount}) was created"

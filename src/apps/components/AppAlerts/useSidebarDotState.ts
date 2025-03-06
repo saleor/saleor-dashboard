@@ -48,6 +48,7 @@ export const useSidebarDotState = (): SidebarDotState => {
         lastClickDate: clickDate,
         lastFailedAttemptDate: lastFailedAttemptDateRef.current ?? "",
       });
+      lastClickDateRef.current = clickDate;
     } catch (error) {
       errorTracker.captureException(error as Error);
     }
