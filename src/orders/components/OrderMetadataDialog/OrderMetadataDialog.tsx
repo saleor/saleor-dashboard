@@ -32,7 +32,7 @@ export const OrderMetadataDialog = ({
   orderId,
 }: OrderMetadataDialogProps) => {
   const { data, loading } = useMetadataValues({ orderId, lineId, open });
-  const { onSubmit, lastSubmittedData } = useHandleOrderLineMetadataSubmit({
+  const { onSubmit, lastSubmittedData, submitInProgress } = useHandleOrderLineMetadataSubmit({
     initialData: data,
     onClose,
   });
@@ -40,7 +40,7 @@ export const OrderMetadataDialog = ({
 
   const formMethods = useForm<MetadataFormData>({
     // Display last submitted data while re-fetching to avoid flicker on UI
-    values: loading
+    values: submitInProgress
       ? lastSubmittedData
       : {
           // Removes __typename from metadata item object
@@ -93,7 +93,7 @@ export const OrderMetadataDialog = ({
 
                 <MetadataHookForm
                   isLoading={loading && !data}
-                  disabled={loading || formState.isSubmitting}
+                  disabled={loading || submitInProgress}
                   control={control}
                   getValues={getValues}
                   trigger={trigger}
@@ -149,10 +149,10 @@ export const OrderMetadataDialog = ({
           backgroundColor="default1"
         >
           <ButtonWithLoader
-            transitionState={formState.isSubmitting ? "loading" : "default"}
+            transitionState={submitInProgress ? "loading" : "default"}
             data-test-id="save"
             variant="primary"
-            disabled={formState.isSubmitting || !formState.isDirty}
+            disabled={submitInProgress || !formState.isDirty}
             type="submit"
             onClick={handleSubmit(onSubmit)}
           >

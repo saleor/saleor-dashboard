@@ -8,7 +8,7 @@ import {
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { OrderMetadataDialogData } from "./OrderMetadataDialog";
@@ -28,6 +28,7 @@ export const useHandleOrderLineMetadataSubmit = ({
   const [updateMetadata] = useUpdateMetadataMutation();
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation();
 
+  const [submitInProgress, setSubmitInProgress] = useState(false);
   const submittedData = useRef<MetadataFormData>();
 
   const submitHandler = useMemo(() => {
@@ -44,6 +45,7 @@ export const useHandleOrderLineMetadataSubmit = ({
   }, [initialData, updateMetadata, updatePrivateMetadata]);
 
   const onSubmit = async (data: MetadataFormData) => {
+    setSubmitInProgress(true);
     submittedData.current = data;
 
     const errors = await submitHandler(data);
@@ -57,7 +59,13 @@ export const useHandleOrderLineMetadataSubmit = ({
       });
       onClose();
     }
+
+    setSubmitInProgress(false);
   };
 
-  return { onSubmit, lastSubmittedData: submittedData.current };
+  return {
+    onSubmit,
+    lastSubmittedData: submittedData.current,
+    submitInProgress: submitInProgress,
+  };
 };
