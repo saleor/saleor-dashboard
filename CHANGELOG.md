@@ -1,5 +1,39 @@
 # Changelog
 
+## 3.20.29
+
+### Patch Changes
+
+- 4bcebbf: Reorder warehouses on channel edit is now called only when warehouses have been changed
+- 37fdf66: The alert in the Apps link in the Dashboard's sidebar now hide after user is informed about apps' issues. This means the dot will hide after you enter the App list and will show only when there is a new failed webhook after your last visit.
+- fe0b3e6: Now clicking in radio and checkbox in a channel availability section no more case error
+- eb9d8ce: Clicking on "Apps" when there is an alert is now persisted after webhooks pending query is executed. This means that after viewing apps list the alert now correctly disappears after long time of inactivity when there has been no new alerts.
+- 41834a8: Notifications will be now clearly visible and not be overlayed anymore by modals. Previously they were partially hidden by the modal's dropover.
+- a2af73f: App list now shows an alert if app's webhooks have failed or the app is disabled. This means you can see if there are issues with your apps without having to enter app details.
+- 1b0d02d: Now tests results in ctrf scheme are attached to job from manual trigger tests.
+- eafaf9e: You can now save, update, and delete filter presets on a page types list
+- 988f25a: Shipping details show fresh data after update
+- a517466: Gift card details page now show correct balance amount after update
+- 3ee3970: Menu item create dialog no more show static amount of item, now data is loading dynamically when user scrolls the list
+- e6401c6: You can now see event delivery ID in webhook details section of an app.
+- ebfc19a: Added `OrderLine` metadata editor when opening metadata modal for products on Order details page.
+  It now allows editing `OrderLine`'s `metadata` and `privateMetadata` and viewing (read-only) `metadata` and `privateMetadata` for `OrderLine.variant`
+- bc83281: "Apps" link in sidebar now shows an alert if one or more apps have failed or pending webhook deliveries. This means you can see if there are issues with your apps without having to enter app details.
+- 2938372: Adding changesets can be now skipped on Pull Requests by adding `skip changeset` label
+- 1b5c8d1: You can now see an alert with a correct date when a webhook has failed event delivery with attempts.
+- a53950a: App alerts now save correct dates of failed attempts and clicks to user's metadata.
+- 435a7b1: `@radix-ui/react-portal` and `@radix-ui/react-radio-group` were added as explicit dependencies, previously these packages were assumed to be installed from `@saleor/macaw-ui`
+- 8a2842a: Legacy alert on gift cards list have been replaced by link to documentaion in page header
+- f33c9a7: Webhooks with failed or pending event deliveries now appear on top in App's settings. App alert tooltip now takes less space on the screen.
+- fdcd7c5: Now results from test report are pushed to qa repo
+- 4162987: App delivery events are now fetched at a 5 minute interval. This means this heavy query is now used sparingly.
+- f7a936b: Voucher details form now properly validate data when discount type is shipping
+- 32b03f4: You can now see apps alerts when multiple apps have failed event deliveries.
+- 5526cd5: Nginx config now server index.html to paths that doesnot contains dashboard
+- e6ef0fb: Fixed issue in OrderLine metadata form dialog: when closing dialog, form state was preserved even when opened for different OrderLine.
+  Now form state will be cleared properly on dialog closure.
+- 2275ad9: "App alers" feature is now available in feature flags and is enabled by default.
+
 ## 3.20.28
 
 ### Patch Changes
