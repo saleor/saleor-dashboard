@@ -56,14 +56,16 @@ export const EventDeliveryItem: React.FC<EventDeliveryItemProps> = ({
               defaultMessage: "Last delivery attempt:",
               id: "EY/jqC",
             })}{" "}
-            <DateTime plain date={lastAttemptDate} />
+            <Text size={4} fontWeight="bold">
+              <DateTime plain date={lastAttemptDate} />
+            </Text>
           </Text>
           <Text as="p">
             {intl.formatMessage({
               defaultMessage: "ID:",
               id: "tmcdrp",
             })}{" "}
-            <Text size={4} fontWeight="medium">
+            <Text size={4} fontWeight="bold">
               {deliveryId}
             </Text>
           </Text>
