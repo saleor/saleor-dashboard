@@ -13,5 +13,4 @@ export interface FormData extends VoucherDetailsPageFormData {
   categories: Array<CategoryFragment>;
   collections: Array<CollectionFragment>;
   products: Array<ProductFragment>;
-  variants: string[];
 }

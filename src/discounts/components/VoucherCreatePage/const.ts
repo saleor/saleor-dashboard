@@ -30,5 +30,4 @@ export const initialForm: FormData = {
   categories: [],
   collections: [],
   products: [],
-  variants: [],
 };

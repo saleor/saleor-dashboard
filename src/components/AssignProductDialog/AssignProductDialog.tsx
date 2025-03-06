@@ -188,7 +188,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
             type="submit"
             onClick={handleSubmit}
           >
-            {labels.confirmBtn ?? <FormattedMessage {...messages.assignProductDialogButton} />}
+            {labels?.confirmBtn ?? <FormattedMessage {...messages.assignProductDialogButton} />}
           </ConfirmButton>
         </DashboardModal.Actions>
       </DashboardModal.Content>
