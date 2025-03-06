@@ -226,6 +226,10 @@ export const commonMessages = defineMessages({
     defaultMessage: "Loading...",
     id: "gjBiyj",
   },
+  orderLine: {
+    defaultMessage: "Order line",
+    id: "BalldE",
+  },
 });
 
 export const errorMessages = defineMessages({

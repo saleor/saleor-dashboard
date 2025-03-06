@@ -15,17 +15,17 @@ jest.mock("react-intl", () => ({
 }));
 
 jest.mock("./useHandleSubmit", () => ({
-  useHandleOrderLineMetadataSubmit: () => ({
+  useHandleOrderLineMetadataSubmit: jest.fn(() => ({
     onSubmit: jest.fn(),
     lastSubmittedData: undefined,
-  }),
+  })),
 }));
 
 jest.mock("@dashboard/orders/hooks/useHasManageProductsPermission", () => ({
   useHasManageProductsPermission: jest.fn(() => false),
 }));
 
-const mockData: OrderMetadataDialogData = {
+const mockData = {
   id: "order-line-id",
   productName: "Product Name",
   metadata: [{ key: "order-line-key", value: "order-line-value", __typename: "MetadataItem" }],
@@ -36,25 +36,43 @@ const mockData: OrderMetadataDialogData = {
       __typename: "MetadataItem",
     },
   ],
+  quantity: 22222222,
+  productSku: "product-sku",
+  thumbnail: {
+    url: "https://test.com/img.png",
+    __typename: "Image",
+  },
   variant: {
     id: "variant-id",
     metadata: [{ key: "variant-key", value: "variant-value", __typename: "MetadataItem" }],
     privateMetadata: [
       { key: "variant-private-key", value: "variant-private-value", __typename: "MetadataItem" },
     ],
+    name: "Variant name",
+    __typename: "ProductVariant",
   },
-};
+  __typename: "OrderLine",
+} satisfies OrderMetadataDialogData;
 
+jest.mock("./useMetadataValues", () => ({
+  useMetadataValues: () => ({
+    data: mockData,
+    loading: false,
+  }),
+}));
 describe("OrderMetadataDialog", () => {
   const onCloseMock = jest.fn();
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
   it("closes when user hits close icon button", () => {
     // Arrange
-    render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
+    render(
+      <OrderMetadataDialog
+        open={true}
+        onClose={onCloseMock}
+        orderId="order-id"
+        lineId={mockData.id}
+      />,
+    );
 
     // Act
     fireEvent.click(screen.getByTestId("close-button"));
@@ -65,7 +83,14 @@ describe("OrderMetadataDialog", () => {
 
   it("closes when user hits close text button", () => {
     // Arrange
-    render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
+    render(
+      <OrderMetadataDialog
+        open={true}
+        onClose={onCloseMock}
+        orderId="order-id"
+        lineId={mockData.id}
+      />,
+    );
 
     // Act
     fireEvent.click(screen.getByTestId("back"));
@@ -74,10 +99,52 @@ describe("OrderMetadataDialog", () => {
     expect(onCloseMock).toHaveBeenCalled();
   });
 
+  it("displays details about order line", () => {
+    // Arrange
+    render(
+      <OrderMetadataDialog
+        open={true}
+        onClose={onCloseMock}
+        orderId="order-id"
+        lineId={mockData.id}
+      />,
+    );
+
+    // Assert
+    expect(screen.queryByText(mockData.quantity)).toBeInTheDocument();
+    expect(screen.queryByText(mockData.variant.name)).toBeInTheDocument();
+    expect(screen.queryByText(mockData.productSku)).toBeInTheDocument();
+  });
+
+  it("renders product thumbnail correctly", () => {
+    // Arrange
+    render(
+      <OrderMetadataDialog
+        open={true}
+        onClose={onCloseMock}
+        orderId="order-id"
+        lineId={mockData.id}
+      />,
+    );
+
+    // Assert
+    const thumbnailImage = screen.getByRole("img");
+
+    expect(thumbnailImage).toBeInTheDocument();
+    expect(thumbnailImage).toHaveAttribute("src", mockData.thumbnail.url);
+  });
+
   describe("ProductVariant metadata list", () => {
     it("displays product variant metadata", async () => {
       // Arrange
-      render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
+      render(
+        <OrderMetadataDialog
+          open={true}
+          onClose={onCloseMock}
+          orderId="order-id"
+          lineId={mockData.id}
+        />,
+      );
 
       const productVariantMetadata = screen.getByTestId(TEST_ID_PRODUCT_VARIANT_METADATA);
 
@@ -96,22 +163,36 @@ describe("OrderMetadataDialog", () => {
     it("hides privateMetadata from product variant when user doesn't have MANAGE_PRODUCTS permission", () => {
       // Arrange
       (useHasManageProductsPermission as jest.Mock).mockReturnValue(false);
-      render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
+      render(
+        <OrderMetadataDialog
+          open={true}
+          onClose={onCloseMock}
+          orderId="order-id"
+          lineId={mockData.id}
+        />,
+      );
 
-      // Act
+      // Assert
+      // Private metadata should not be visible in the readonly section
       const metadataEditors = screen.getAllByTestId("metadata-editor");
       const readonlyEditor = metadataEditors[1];
 
-      // Assert
       expect(readonlyEditor).not.toHaveTextContent("variant-private-key");
       expect(readonlyEditor).not.toHaveTextContent("variant-private-value");
     });
   });
 
-  describe("OrderLine metadata form", () => {
+  describe("OrderLine metadata's form", () => {
     it("displays order line metadata", async () => {
       // Arrange
-      render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
+      render(
+        <OrderMetadataDialog
+          open={true}
+          onClose={onCloseMock}
+          orderId="order-id"
+          lineId={mockData.id}
+        />,
+      );
 
       const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
 
@@ -130,12 +211,17 @@ describe("OrderMetadataDialog", () => {
         within(orderLineMetadata).queryByDisplayValue("order-line-private-value"),
       ).not.toBeInTheDocument();
     });
-  });
 
-  describe("OrderLine privateMetadata form", () => {
     it("displays order line private metadata", () => {
       // Arrange
-      render(<OrderMetadataDialog open={true} onClose={onCloseMock} data={mockData} />);
+      render(
+        <OrderMetadataDialog
+          open={true}
+          onClose={onCloseMock}
+          orderId="order-id"
+          lineId={mockData.id}
+        />,
+      );
 
       const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
 
