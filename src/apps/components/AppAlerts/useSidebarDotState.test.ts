@@ -149,4 +149,40 @@ describe("useSidebarDotState", () => {
     });
     expect(result.current.hasNewFailedAttempts).toBe(true);
   });
+
+  it("should persist click date after multiple attempts", async () => {
+    const persist = jest.fn().mockResolvedValue(undefined);
+    const eventDate = new Date("2025-01-01").toISOString();
+    const clickDate = new Date("2025-01-02").toISOString();
+
+    // Arrange
+    (useSidebarWebhookAlertMetadata as jest.Mock).mockReturnValue({
+      persist,
+      sidebarDotRemoteState: {
+        lastClickDate: null,
+        lastFailedAttemptDate: null,
+      },
+    });
+
+    // Act
+    const { result } = renderHook(() => useSidebarDotState());
+
+    await act(async () => {
+      result.current.handleFailedAttempt(eventDate);
+    });
+
+    await act(async () => {
+      result.current.handleAppsListItemClick(clickDate);
+    });
+
+    await act(async () => {
+      result.current.handleFailedAttempt(eventDate);
+    });
+
+    // Assert
+    expect(persist).toHaveBeenLastCalledWith({
+      lastClickDate: clickDate,
+      lastFailedAttemptDate: eventDate,
+    });
+  });
 });
