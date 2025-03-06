@@ -294,6 +294,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
         value: countries.map(country => countriesMap[country]),
       },
     });
+    closeModal();
   };
 
   const BulkUnassignButton = ({ type }: { type: "categories" | "products" | "collections" }) => (

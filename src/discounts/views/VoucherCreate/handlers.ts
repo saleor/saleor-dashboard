@@ -55,6 +55,7 @@ export function createHandler(
         products: formData.products.map(product => product.id),
         collections: formData.collections.map(collection => collection.id),
         categories: formData.categories.map(category => category.id),
+        countries: formData.countries.map(country => country.code),
       },
     });
     const errors = getMutationErrors(response);

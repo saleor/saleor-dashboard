@@ -25,7 +25,7 @@ import {
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { mapMetadataItemToInput } from "@dashboard/utils/maps";
+import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { sprinkles } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -230,7 +230,8 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   disabled={disabled}
                   onCategoryAssign={onCategoryAssign}
                   onCategoryUnassign={onCategoryUnassign}
-                  discount={sale}
+                  // @ts-expect-error to be solved
+                  categories={mapEdgesToItems(sale.categories)}
                   isChecked={isChecked}
                   selected={selected}
                   toggle={toggle}
@@ -242,7 +243,8 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   disabled={disabled}
                   onCollectionAssign={onCollectionAssign}
                   onCollectionUnassign={onCollectionUnassign}
-                  discount={sale}
+                  // @ts-expect-error to be solved
+                  collections={mapEdgesToItems(voucher?.collections)}
                   isChecked={isChecked}
                   selected={selected}
                   toggle={toggle}
@@ -254,7 +256,8 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   disabled={disabled}
                   onProductAssign={onProductAssign}
                   onProductUnassign={onProductUnassign}
-                  discount={sale}
+                  // @ts-expect-error to be solved
+                  products={mapEdgesToItems(voucher?.products)}
                   isChecked={isChecked}
                   selected={selected}
                   toggle={toggle}

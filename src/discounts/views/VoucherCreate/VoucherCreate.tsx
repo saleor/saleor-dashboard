@@ -50,8 +50,6 @@ export enum VoucherCreatePageTab {
   products = "products",
 }
 
-export type VoucherTabItemsCount = Partial<Record<VoucherCreatePageTab, number>>;
-
 export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
