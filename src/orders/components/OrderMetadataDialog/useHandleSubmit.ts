@@ -1,4 +1,4 @@
-import { InternalRefetchQueriesInclude } from "@apollo/client";
+import { InternalRefetchQueriesInclude, useApolloClient } from "@apollo/client";
 import { MetadataFormData } from "@dashboard/components/Metadata";
 import {
   OrderLinesMetadataDocument,
@@ -23,14 +23,10 @@ export const useHandleOrderLineMetadataSubmit = ({
   const notify = useNotifier();
   const intl = useIntl();
 
-  const queriesToRefetch: InternalRefetchQueriesInclude = [OrderLinesMetadataDocument];
+  const client = useApolloClient();
 
-  const [updateMetadata] = useUpdateMetadataMutation({
-    refetchQueries: queriesToRefetch,
-  });
-  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({
-    refetchQueries: queriesToRefetch,
-  });
+  const [updateMetadata] = useUpdateMetadataMutation();
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation();
 
   const submittedData = useRef<MetadataFormData>();
 
@@ -51,6 +47,8 @@ export const useHandleOrderLineMetadataSubmit = ({
     submittedData.current = data;
 
     const errors = await submitHandler(data);
+
+    client.refetchQueries({ include: [OrderLinesMetadataDocument] });
 
     if (Array.isArray(errors) && errors.length === 0) {
       notify({
