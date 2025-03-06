@@ -2,6 +2,7 @@
 import ChannelDeleteDialog from "@dashboard/channels/components/ChannelDeleteDialog";
 import { FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
 import { getChannelsCurrencyChoices } from "@dashboard/channels/utils";
+import { useChannelWarehousesReorder } from "@dashboard/channels/views/ChannelDetails/useChannelWarehouseReorder";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   ChannelDeleteMutation,
@@ -11,7 +12,6 @@ import {
   useChannelDeactivateMutation,
   useChannelDeleteMutation,
   useChannelQuery,
-  useChannelReorderWarehousesMutation,
   useChannelsQuery,
   useChannelUpdateMutation,
 } from "@dashboard/graphql";
@@ -28,7 +28,6 @@ import { useIntl } from "react-intl";
 
 import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
 import { channelsListUrl, channelUrl, ChannelUrlDialog, ChannelUrlQueryParams } from "../../urls";
-import { calculateItemsOrderMoves } from "./handlers";
 import { useShippingZones } from "./useShippingZones";
 import { useWarehouses } from "./useWarehouses";
 
@@ -43,24 +42,31 @@ export const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   const intl = useIntl();
   const shop = useShop();
   const channelsListData = useChannelsQuery({ displayLoader: true });
+
   const [openModal, closeModal] = createDialogActionHandlers<
     ChannelUrlDialog,
     ChannelUrlQueryParams
   >(navigate, params => channelUrl(id, params), params);
+
   const [updateChannel, updateChannelOpts] = useChannelUpdateMutation({
     onCompleted: ({ channelUpdate: { errors } }: ChannelUpdateMutation) =>
       notify(getDefaultNotifierSuccessErrorData(errors, intl)),
   });
+
   const { data, loading } = useChannelQuery({
     displayLoader: true,
     variables: { id },
   });
+
+  const { reorderChannelWarehouses, reorderChannelWarehousesOpts } = useChannelWarehousesReorder();
+
   const handleError = (error: ChannelErrorFragment) => {
     notify({
       status: "error",
       text: getChannelsErrorMessage(error, intl),
     });
   };
+
   const [activateChannel, activateChannelOpts] = useChannelActivateMutation({
     onCompleted: data => {
       const errors = data.channelActivate.errors;
@@ -70,6 +76,7 @@ export const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
       }
     },
   });
+
   const [deactivateChannel, deactivateChannelOpts] = useChannelDeactivateMutation({
     onCompleted: data => {
       const errors = data.channelDeactivate.errors;
@@ -79,16 +86,7 @@ export const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
       }
     },
   });
-  const [reorderChannelWarehouses, reorderChannelWarehousesOpts] =
-    useChannelReorderWarehousesMutation({
-      onCompleted: data => {
-        const errors = data.channelReorderWarehouses.errors;
 
-        if (errors.length) {
-          errors.forEach(error => handleError(error));
-        }
-      },
-    });
   const handleSubmit = async ({
     allocationStrategy,
     allowUnpaidOrders,
@@ -133,25 +131,21 @@ export const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
         },
       },
     });
+
     const resultChannel = await updateChannelMutation;
     const errors = await extractMutationErrors(updateChannelMutation);
 
     if (!errors?.length) {
-      const moves = calculateItemsOrderMoves(
-        resultChannel.data?.channelUpdate.channel?.warehouses,
-        warehousesToDisplay,
-      );
-
       await reorderChannelWarehouses({
-        variables: {
-          channelId: id,
-          moves,
-        },
+        channelId: id,
+        warehousesToDisplay,
+        warehouses: resultChannel.data?.channelUpdate.channel?.warehouses,
       });
     }
 
     return errors;
   };
+
   const onDeleteCompleted = (data: ChannelDeleteMutation) => {
     const errors = data.channelDelete.errors;
 
@@ -174,19 +168,23 @@ export const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
       );
     }
   };
+
   const [deleteChannel, deleteChannelOpts] = useChannelDeleteMutation({
     onCompleted: onDeleteCompleted,
   });
+
   const channelsChoices = getChannelsCurrencyChoices(
     id,
     data?.channel,
     channelsListData?.data?.channels,
   );
+
   const handleRemoveConfirm = (channelId?: string) => {
     const data = channelId ? { id, input: { channelId } } : { id };
 
     deleteChannel({ variables: data });
   };
+
   const {
     shippingZonesCountData,
     shippingZonesCountLoading,
@@ -203,6 +201,7 @@ export const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     searchWarehouses,
     searchWarehousesResult,
   } = useWarehouses();
+
   const channelWarehouses = data?.channel?.warehouses || [];
   const channelShippingZones = mapEdgesToItems(channelShippingZonesData?.shippingZones);
 

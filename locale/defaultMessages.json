@@ -1487,6 +1487,10 @@
     "context": "select label",
     "string": "True"
   },
+  "7WrRzs": {
+    "context": "dialog , editing order line metadata",
+    "string": "Represents the metadata of the given ordered item"
+  },
   "7WzUxn": {
     "context": "staff member status",
     "string": "Inactive"
@@ -1978,6 +1982,10 @@
   "B52Em/": {
     "string": "Address line 1"
   },
+  "B54f/g": {
+    "context": "dialog, editing order line metadata",
+    "string": "Order line metadata"
+  },
   "B5KI59": {
     "context": "Empty filters text",
     "string": "Add filter to start"
@@ -2054,6 +2062,9 @@
   "BZ7BkQ": {
     "context": "capture payment, button",
     "string": "Capture"
+  },
+  "BalldE": {
+    "string": "Order line"
   },
   "BanAhF": {
     "context": "sale status",
@@ -2692,9 +2703,6 @@
   "FZTrzW": {
     "string": "Manual refund"
   },
-  "FaRg9/": {
-    "string": "Webhook errors detected. Last occurred at {date}. {viewDetails}."
-  },
   "Fbr4Vp": {
     "context": "dialog header",
     "string": "Permissions"
@@ -3200,6 +3208,10 @@
   },
   "IH47ID": {
     "string": "Use button above to add new product variants"
+  },
+  "IHTyjM": {
+    "context": "orderLine.variant.name, subheader, order line metadata dialog",
+    "string": "Variant"
   },
   "IKvOK+": {
     "context": "Amount error message",
@@ -3938,6 +3950,10 @@
   "NJbzcP": {
     "context": "dialog header",
     "string": "Cancel Orders"
+  },
+  "NL5C12": {
+    "context": "orderLine.quantity, subheader, oredr line metadata dialog",
+    "string": "Qty"
   },
   "NL6mvR": {
     "string": "Visit App Store to replace with the App"
@@ -7025,6 +7041,10 @@
     "context": "times voucher used",
     "string": "Used"
   },
+  "h6MWxB": {
+    "context": "orderLine.productSku, subheader, order line metadata dialog",
+    "string": "SKU"
+  },
   "h75GAF": {
     "context": "voucher",
     "string": "Times used"
@@ -7904,6 +7924,9 @@
     "context": "resend code to customer title",
     "string": "Resend code to customer"
   },
+  "mt3SU9": {
+    "string": "Webhook errors detected"
+  },
   "mxtAFx": {
     "string": "Are you sure you want to delete draft #{orderNumber}?"
   },
@@ -8142,6 +8165,9 @@
   "oIvtua": {
     "context": "attribute's editor component",
     "string": "Catalog Input type for Store Owner"
+  },
+  "oJkLQN": {
+    "string": "Last seen {date}{break}{viewDetails}"
   },
   "oJkeS6": {
     "string": "Attribute Code"
@@ -8805,9 +8831,6 @@
     "context": "voucher status",
     "string": "Expired"
   },
-  "t9sWqJ": {
-    "string": "Issues found"
-  },
   "tA5HJx": {
     "context": "webhook input help text",
     "string": "secret key is used to create a hash signature with each payload. *optional field"
@@ -8876,6 +8899,9 @@
   "tlGXkh": {
     "context": "input description",
     "string": "Unlimited"
+  },
+  "tmcdrp": {
+    "string": "ID:"
   },
   "tmrBDK": {
     "string": "Manual transaction ({amount}) was created"
@@ -9038,10 +9064,6 @@
   },
   "ugnggZ": {
     "string": "Created menu"
-  },
-  "ui7jMt": {
-    "context": "modal header, editing order line metadata",
-    "string": "Order line metadata"
   },
   "uilt7q": {
     "context": "issued cards amount label",
@@ -9561,10 +9583,6 @@
   "xy66ru": {
     "context": "custom preset delete, dialog header",
     "string": "Delete preset"
-  },
-  "y+CqSF": {
-    "context": "modal subheader, editing order line metadata",
-    "string": "Represents the metadata of the given ordered item"
   },
   "y/UWBR": {
     "string": "There is no address to show for this customer"

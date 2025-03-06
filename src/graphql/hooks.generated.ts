@@ -109,6 +109,15 @@ export const AppEventDeliveriesFragmentDoc = gql`
         node {
           id
           createdAt
+          attempts(first: 1, sortBy: {field: CREATED_AT, direction: DESC}) {
+            edges {
+              node {
+                id
+                status
+                createdAt
+              }
+            }
+          }
         }
       }
     }
@@ -1489,6 +1498,40 @@ export const MenuDetailsFragmentDoc = gql`
   name
 }
     ${MenuItemNestedFragmentDoc}`;
+export const OrderLineMetadataFragmentDoc = gql`
+    fragment OrderLineMetadata on OrderLine {
+  metadata {
+    ...MetadataItem
+  }
+  privateMetadata {
+    ...MetadataItem
+  }
+  variant {
+    metadata {
+      ...MetadataItem
+    }
+    privateMetadata @include(if: $hasManageProducts) {
+      ...MetadataItem
+    }
+  }
+}
+    ${MetadataItemFragmentDoc}`;
+export const OrderLineMetadataDetailsFragmentDoc = gql`
+    fragment OrderLineMetadataDetails on OrderLine {
+  id
+  productName
+  productSku
+  quantity
+  thumbnail {
+    url
+  }
+  variant {
+    id
+    name
+  }
+  ...OrderLineMetadata
+}
+    ${OrderLineMetadataFragmentDoc}`;
 export const RefundOrderLineFragmentDoc = gql`
     fragment RefundOrderLine on OrderLine {
   id
@@ -2088,19 +2131,10 @@ ${InvoiceFragmentDoc}`;
 export const OrderLineWithMetadataFragmentDoc = gql`
     fragment OrderLineWithMetadata on OrderLine {
   ...OrderLine
-  ...Metadata
-  variant {
-    metadata {
-      ...MetadataItem
-    }
-    privateMetadata @include(if: $hasManageProducts) {
-      ...MetadataItem
-    }
-  }
+  ...OrderLineMetadata
 }
     ${OrderLineFragmentDoc}
-${MetadataFragmentDoc}
-${MetadataItemFragmentDoc}`;
+${OrderLineMetadataFragmentDoc}`;
 export const FulfillmentWithMetadataFragmentDoc = gql`
     fragment FulfillmentWithMetadata on Fulfillment {
   ...Fulfillment
@@ -2119,12 +2153,12 @@ export const OrderDetailsWithMetadataFragmentDoc = gql`
     ...FulfillmentWithMetadata
   }
   lines {
-    ...OrderLineWithMetadata
+    ...OrderLine
   }
 }
     ${OrderDetailsFragmentDoc}
 ${FulfillmentWithMetadataFragmentDoc}
-${OrderLineWithMetadataFragmentDoc}`;
+${OrderLineFragmentDoc}`;
 export const OrderSettingsFragmentDoc = gql`
     fragment OrderSettings on OrderSettings {
   automaticallyConfirmAllNewOrders
@@ -2991,13 +3025,18 @@ export const ShippingMethodWithExcludedProductsFragmentDoc = gql`
   }
 }
     ${ShippingMethodTypeFragmentDoc}`;
+export const CountryFragmentDoc = gql`
+    fragment Country on CountryDisplay {
+  country
+  code
+}
+    `;
 export const ShippingZoneFragmentDoc = gql`
     fragment ShippingZone on ShippingZone {
   ...Metadata
   id
   countries {
-    code
-    country
+    ...Country
   }
   name
   description
@@ -3011,6 +3050,7 @@ export const ShippingZoneFragmentDoc = gql`
   }
 }
     ${MetadataFragmentDoc}
+${CountryFragmentDoc}
 ${MoneyFragmentDoc}`;
 export const ShippingZoneDetailsFragmentDoc = gql`
     fragment ShippingZoneDetails on ShippingZone {
@@ -3096,12 +3136,6 @@ export const StaffMemberDetailsFragmentDoc = gql`
   }
 }
     ${StaffMemberFragmentDoc}`;
-export const CountryFragmentDoc = gql`
-    fragment Country on CountryDisplay {
-  country
-  code
-}
-    `;
 export const CountryWithCodeFragmentDoc = gql`
     fragment CountryWithCode on CountryDisplay {
   country
@@ -12369,6 +12403,44 @@ export function useOrderDetailsWithMetadataLazyQuery(baseOptions?: ApolloReactHo
 export type OrderDetailsWithMetadataQueryHookResult = ReturnType<typeof useOrderDetailsWithMetadataQuery>;
 export type OrderDetailsWithMetadataLazyQueryHookResult = ReturnType<typeof useOrderDetailsWithMetadataLazyQuery>;
 export type OrderDetailsWithMetadataQueryResult = Apollo.QueryResult<Types.OrderDetailsWithMetadataQuery, Types.OrderDetailsWithMetadataQueryVariables>;
+export const OrderLinesMetadataDocument = gql`
+    query OrderLinesMetadata($id: ID!, $hasManageProducts: Boolean!) {
+  order(id: $id) {
+    lines {
+      ...OrderLineMetadataDetails
+    }
+  }
+}
+    ${OrderLineMetadataDetailsFragmentDoc}`;
+
+/**
+ * __useOrderLinesMetadataQuery__
+ *
+ * To run a query within a React component, call `useOrderLinesMetadataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOrderLinesMetadataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOrderLinesMetadataQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      hasManageProducts: // value for 'hasManageProducts'
+ *   },
+ * });
+ */
+export function useOrderLinesMetadataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderLinesMetadataQuery, Types.OrderLinesMetadataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.OrderLinesMetadataQuery, Types.OrderLinesMetadataQueryVariables>(OrderLinesMetadataDocument, options);
+      }
+export function useOrderLinesMetadataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderLinesMetadataQuery, Types.OrderLinesMetadataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.OrderLinesMetadataQuery, Types.OrderLinesMetadataQueryVariables>(OrderLinesMetadataDocument, options);
+        }
+export type OrderLinesMetadataQueryHookResult = ReturnType<typeof useOrderLinesMetadataQuery>;
+export type OrderLinesMetadataLazyQueryHookResult = ReturnType<typeof useOrderLinesMetadataLazyQuery>;
+export type OrderLinesMetadataQueryResult = Apollo.QueryResult<Types.OrderLinesMetadataQuery, Types.OrderLinesMetadataQueryVariables>;
 export const OrderDetailsGrantRefundDocument = gql`
     query OrderDetailsGrantRefund($id: ID!) {
   order(id: $id) {
@@ -17018,16 +17090,12 @@ export const CreateShippingZoneDocument = gql`
       ...ShippingError
     }
     shippingZone {
-      countries {
-        ...Country
-      }
-      id
-      name
+      ...ShippingZone
     }
   }
 }
     ${ShippingErrorFragmentDoc}
-${CountryFragmentDoc}`;
+${ShippingZoneFragmentDoc}`;
 export type CreateShippingZoneMutationFn = Apollo.MutationFunction<Types.CreateShippingZoneMutation, Types.CreateShippingZoneMutationVariables>;
 
 /**
@@ -17061,16 +17129,21 @@ export const UpdateShippingZoneDocument = gql`
       ...ShippingError
     }
     shippingZone {
-      countries {
-        ...Country
+      ...ShippingZone
+      channels {
+        id
+        name
+        currencyCode
       }
-      id
-      name
+      warehouses {
+        id
+        name
+      }
     }
   }
 }
     ${ShippingErrorFragmentDoc}
-${CountryFragmentDoc}`;
+${ShippingZoneFragmentDoc}`;
 export type UpdateShippingZoneMutationFn = Apollo.MutationFunction<Types.UpdateShippingZoneMutation, Types.UpdateShippingZoneMutationVariables>;
 
 /**

@@ -8,16 +8,17 @@ import { useSidebarDotState } from "./useSidebarDotState";
 
 const DELIVERIES_FETCHING_INTERVAL = 5 * 60 * 1000; // 5 minutes
 
-export const useAppsAlert = () => {
+export const useAppsAlert = (enabled: boolean | undefined = true) => {
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
-  const { hasNewFailedAttempts, handleFailedAttempt } = useSidebarDotState();
+  const { hasNewFailedAttempts, handleFailedAttempt, handleAppsListItemClick } =
+    useSidebarDotState();
   const { lastFailedWebhookDate, fetchAppsWebhooks } = useAppsFailedDeliveries();
 
   useIntervalActionWithState({
     action: fetchAppsWebhooks,
     interval: DELIVERIES_FETCHING_INTERVAL,
     key: "webhook_deliveries_last_fetched",
-    skip: !hasManagedAppsPermission,
+    skip: !hasManagedAppsPermission || !enabled,
   });
 
   useEffect(() => {
@@ -28,5 +29,6 @@ export const useAppsAlert = () => {
 
   return {
     hasNewFailedAttempts,
+    handleAppsListItemClick,
   };
 };

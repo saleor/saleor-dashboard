@@ -4,6 +4,7 @@ import { Accordion, Box, BoxProps, Chip, Skeleton, Text } from "@saleor/macaw-ui
 import { useIntl } from "react-intl";
 
 import { EventDeliveriesList } from "./EventDeliveriesList";
+import { sortWebhooksByDeliveries } from "./utils";
 
 interface AppWebhooksDisplayProps extends BoxProps {
   appId: string;
@@ -71,10 +72,22 @@ export const AppWebhooksDisplay = ({ appId, ...boxProps }: AppWebhooksDisplayPro
   }
 
   if (webhooksData?.app?.webhooks) {
+    const webhooks = [...webhooksData.app.webhooks];
+    const sortedWebhooks = webhooks.sort(sortWebhooksByDeliveries);
+
+    const alertsWithDeliveriesIds = sortedWebhooks
+      .filter(wh => (wh.eventDeliveries?.edges.length || 0) > 0)
+      .map(({ id }) => id);
+
     return (
       <Wrapper {...boxProps}>
-        <Accordion __marginLeft="-24px" __width="calc(100% + 48px)">
-          {webhooksData.app.webhooks.map((wh, index) => {
+        <Accordion
+          __marginLeft="-24px"
+          __width="calc(100% + 48px)"
+          type="multiple"
+          defaultValue={alertsWithDeliveriesIds}
+        >
+          {sortedWebhooks.map((wh, index) => {
             const isLastWebhook = index === (webhooksData?.app?.webhooks ?? []).length - 1;
             const events = [...wh.asyncEvents, ...wh.syncEvents].flatMap(e => e.name).join(", ");
             const eventDeliveries = wh.eventDeliveries?.edges ?? [];

@@ -1498,8 +1498,6 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
       quantityFulfilled: 0,
       quantityToFulfill: 3,
       isGift: false,
-      metadata: [],
-      privateMetadata: [],
       allocations: [
         {
           id: "allocation_test_id",
@@ -1570,8 +1568,6 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
         name: "Soft",
         quantityAvailable: 10,
         preorder: null,
-        metadata: [],
-        privateMetadata: [],
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -1613,8 +1609,6 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
       quantityFulfilled: 2,
       quantityToFulfill: 0,
       isGift: false,
-      metadata: [],
-      privateMetadata: [],
       allocations: [
         {
           id: "allocation_test_id",
@@ -1685,8 +1679,6 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
         name: "XXL",
         quantityAvailable: 10,
         preorder: null,
-        metadata: [],
-        privateMetadata: [],
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -1893,8 +1885,6 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
       quantityFulfilled: 0,
       quantityToFulfill: 2,
       isGift: false,
-      metadata: [],
-      privateMetadata: [],
       allocations: [
         {
           id: "allocation_test_id",
@@ -1965,8 +1955,6 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
         name: "Hard",
         quantityAvailable: 10,
         preorder: null,
-        metadata: [],
-        privateMetadata: [],
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -2008,8 +1996,6 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
       quantityFulfilled: 0,
       quantityToFulfill: 2,
       isGift: false,
-      metadata: [],
-      privateMetadata: [],
       allocations: [
         {
           id: "allocation_test_id",
@@ -2080,8 +2066,6 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
         name: "15-1337",
         quantityAvailable: 10,
         preorder: null,
-        metadata: [],
-        privateMetadata: [],
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",

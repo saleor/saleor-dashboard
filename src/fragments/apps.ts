@@ -137,6 +137,15 @@ export const appEventDeliveriesFragment = gql`
           node {
             id
             createdAt
+            attempts(first: 1, sortBy: { field: CREATED_AT, direction: DESC }) {
+              edges {
+                node {
+                  id
+                  status
+                  createdAt
+                }
+              }
+            }
           }
         }
       }
