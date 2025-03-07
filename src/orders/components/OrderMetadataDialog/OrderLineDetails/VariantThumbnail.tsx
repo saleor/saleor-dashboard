@@ -19,12 +19,14 @@ export const VariantThumbnail = ({
       justifyContent="center"
       height={20}
       width={20}
+      __padding="2px"
       borderRadius={4}
       borderStyle="solid"
       borderWidth={1}
       borderColor="default1"
+      overflow="hidden"
     >
-      <img src={src} alt="" />
+      <Box as="img" width="100%" height="100%" objectFit="contain" src={src} alt="" />
     </Box>
   );
 };
