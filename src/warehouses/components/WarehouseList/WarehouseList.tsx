@@ -14,7 +14,6 @@ import { TableBody, TableCell, TableFooter, TableHead } from "@material-ui/core"
 import EditIcon from "@material-ui/icons/Edit";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 import { useLocation } from "react-router";
 
@@ -61,7 +60,7 @@ interface WarehouseListProps extends ListProps, SortPage<WarehouseListUrlSortFie
 }
 
 const numberOfColumns = 3;
-const WarehouseList: React.FC<WarehouseListProps> = props => {
+const WarehouseList = (props: WarehouseListProps) => {
   const { warehouses, disabled, settings, sort, onUpdateListSettings, onRemove, onSort } = props;
   const classes = useStyles(props);
   const location = useLocation();
@@ -142,6 +141,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
                       color="primary"
                       onClick={stopPropagation(() => onRemove(warehouse?.id))}
                     >
+                      {/* @ts-expect-error wrong typing in the old macaw-ui */}
                       <DeleteIcon />
                     </IconButton>
                   </TableButtonWrapper>

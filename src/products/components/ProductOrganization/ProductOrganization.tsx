@@ -12,7 +12,7 @@ import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { FetchMoreProps } from "@dashboard/types";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { Box, Option, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { cloneElement, ReactElement, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface ProductType {
@@ -49,7 +49,7 @@ interface ProductOrganizationProps {
   selectedProductCategory?: Option;
 }
 
-export const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
+export const ProductOrganization = (props: ProductOrganizationProps) => {
   const {
     canChangeType,
     categories,
@@ -78,7 +78,7 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
     ["productType", "category", "collections", "isPublished"],
     errors,
   );
-  const [categoryInputActive, setCategoryInputActive] = React.useState(false);
+  const [categoryInputActive, setCategoryInputActive] = useState(false);
 
   // Input is hide to proper handle showing nested category structure
   const hideInput = !categoryInputActive && data.category && !disabled;
@@ -195,7 +195,7 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
 
               return (
                 <>
-                  {React.cloneElement(adornment as React.ReactElement, {
+                  {cloneElement(adornment as ReactElement, {
                     size: 3,
                   })}
                   <Text size={3}>{categoryInputDisplayValue}</Text>

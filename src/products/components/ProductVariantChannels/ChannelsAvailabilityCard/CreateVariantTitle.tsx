@@ -1,6 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { Accordion, Box, Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { variantDetailsChannelsAvailabilityCardMessages as messages } from "./../messages";
@@ -12,12 +11,12 @@ interface CreateVariantTitleProps {
   isEmpty: boolean;
 }
 
-export const CreateVariantTitle: React.FC<CreateVariantTitleProps> = ({
+export const CreateVariantTitle = ({
   onManageClick,
   disabled,
   availabilityCount,
   isEmpty,
-}) => {
+}: CreateVariantTitleProps) => {
   const intl = useIntl();
   const getCaptionText = () => {
     if (isEmpty) {

@@ -11,14 +11,14 @@ import {
   Popper,
 } from "@material-ui/core";
 import { ArrowDropDown as ArrowDropDownIcon } from "@material-ui/icons";
-import React from "react";
+import { MouseEvent as ReactMouseEvent, useRef, useState } from "react";
 
 import { useStyles } from "./styles";
 
 interface Option {
   label: string;
   disabled?: boolean;
-  onSelect: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
+  onSelect: (e: ReactMouseEvent<HTMLLIElement, MouseEvent>) => void;
 }
 
 export interface ButtonWithSelectProps
@@ -31,19 +31,19 @@ export interface ButtonWithSelectProps
 /**
  * @deprecated use [`ButtonWithDropdown`](https://github.com/saleor/saleor-dashboard/blob/main/src/components/ButtonWithDropdown/ButtonWithDropdown.tsx) instead
  */
-export const ButtonWithSelect: React.FC<ButtonWithSelectProps> = ({
+export const ButtonWithSelect = ({
   options,
   children,
   href,
   onClick,
   ...props
-}) => {
-  const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef<HTMLDivElement>(null);
+}: ButtonWithSelectProps) => {
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef<HTMLDivElement>(null);
   const classes = useStyles();
   const handleMenuItemClick = (
-    event: React.MouseEvent<HTMLLIElement, MouseEvent>,
-    onClick: (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => void,
+    event: ReactMouseEvent<HTMLLIElement, MouseEvent>,
+    onClick: (event: ReactMouseEvent<HTMLLIElement, MouseEvent>) => void,
   ) => {
     onClick(event);
     setOpen(false);
@@ -51,7 +51,7 @@ export const ButtonWithSelect: React.FC<ButtonWithSelectProps> = ({
   const handleToggle = () => {
     setOpen(prevOpen => !prevOpen);
   };
-  const handleClose = (event: React.MouseEvent<Document, MouseEvent>) => {
+  const handleClose = (event: ReactMouseEvent<Document, MouseEvent>) => {
     if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
       return;
     }

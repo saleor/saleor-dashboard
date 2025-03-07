@@ -15,7 +15,7 @@ import { getLoadableList, mapEdgesToItems } from "@dashboard/utils/maps";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
@@ -30,7 +30,7 @@ export interface SaleProductsProps extends ListProps, ListActions {
 }
 
 const numberOfColumns = 5;
-const DiscountProducts: React.FC<SaleProductsProps> = props => {
+const DiscountProducts = (props: SaleProductsProps) => {
   const {
     discount,
     disabled,
@@ -121,10 +121,10 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
                     className={classes.colName}
                     thumbnail={maybe(() => product.thumbnail.url)}
                   >
-                    {maybe<React.ReactNode>(() => product.name, <Skeleton />)}
+                    {maybe<ReactNode>(() => product.name, <Skeleton />)}
                   </TableCellAvatar>
                   <TableCell className={classes.colType}>
-                    {maybe<React.ReactNode>(() => product.productType.name, <Skeleton />)}
+                    {maybe<ReactNode>(() => product.productType.name, <Skeleton />)}
                   </TableCell>
                   <TableCell className={classes.colType}>
                     {product && !product?.channelListings?.length ? (
@@ -145,6 +145,7 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
                           onProductUnassign(product.id);
                         }}
                       >
+                        {/* @ts-expect-error wrong typing in the old macaw-ui */}
                         <DeleteIcon />
                       </IconButton>
                     </TableButtonWrapper>

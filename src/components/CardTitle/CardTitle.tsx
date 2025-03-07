@@ -1,24 +1,17 @@
 import { CardHeader } from "@material-ui/core";
-import React from "react";
+import { MouseEvent, ReactNode } from "react";
 
 interface CardTitleProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
   className?: string;
-  title: string | React.ReactNode;
-  subtitle?: string | React.ReactNode;
-  toolbar?: React.ReactNode;
-  onClick?: (event: React.MouseEvent<any>) => void;
+  title: string | ReactNode;
+  subtitle?: string | ReactNode;
+  toolbar?: ReactNode;
+  onClick?: (event: MouseEvent<any>) => void;
   onClose?: () => void;
 }
 
-const CardTitle: React.FC<CardTitleProps> = ({
-  className,
-  children,
-  title,
-  subtitle,
-  toolbar,
-  ...rest
-}) => (
+const CardTitle = ({ className, children, title, subtitle, toolbar, ...rest }: CardTitleProps) => (
   <CardHeader action={toolbar} className={className} title={title} subheader={subtitle} {...rest}>
     {children}
   </CardHeader>

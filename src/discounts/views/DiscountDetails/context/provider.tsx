@@ -1,5 +1,5 @@
 import { PromotionDetailsQuery } from "@dashboard/graphql";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 import {
   getRuleConditionsOptionsDetailsMap,
@@ -9,7 +9,7 @@ import { useFetchGiftLables } from "../hooks/useFetchGiftLables";
 import { labelsMapsContext } from "./context";
 
 interface LabelsMapsProoviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
   promotionData: PromotionDetailsQuery | undefined;
 }
 

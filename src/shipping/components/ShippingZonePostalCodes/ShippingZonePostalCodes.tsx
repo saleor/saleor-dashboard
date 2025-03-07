@@ -11,7 +11,7 @@ import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import { ChangeEvent, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface ShippingZonePostalCodesProps {
@@ -50,16 +50,16 @@ const useStyles = makeStyles(
     name: "ShippingZonePostalCodes",
   },
 );
-const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
+const ShippingZonePostalCodes = ({
   disabled,
   initialExpanded = true,
   postalCodes,
   onPostalCodeDelete,
   onPostalCodeInclusionChange,
   onPostalCodeRangeAdd,
-}) => {
-  const [expanded, setExpanded] = React.useState(initialExpanded);
-  const [inclusionType, setInclusionType] = React.useState(null);
+}: ShippingZonePostalCodesProps) => {
+  const [expanded, setExpanded] = useState(initialExpanded);
+  const [inclusionType, setInclusionType] = useState(null);
   const intl = useIntl();
   const classes = useStyles({});
   const getInclusionType = () => {
@@ -69,7 +69,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
 
     return postalCodes[0]?.inclusionType || PostalCodeRuleInclusionTypeEnum.EXCLUDE;
   };
-  const onInclusionRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onInclusionRadioChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     const postalType =
       value === "EXCLUDE"
@@ -212,6 +212,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
                       onClick={() => onPostalCodeDelete(postalCodeRange)}
                       data-test-id={"delete-postal-code-" + postalCodeRange?.id}
                     >
+                      {/* @ts-expect-error wrong typing in the old macaw-ui */}
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>

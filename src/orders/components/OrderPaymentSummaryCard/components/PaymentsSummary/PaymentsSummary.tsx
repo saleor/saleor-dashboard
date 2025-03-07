@@ -1,6 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { OrderDetailsFragment } from "@dashboard/graphql";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import SummaryLine from "../../../OrderSummaryCard/SummaryLine";
@@ -13,7 +12,7 @@ interface PaymentsSummaryProps {
   order: OrderDetailsFragment;
 }
 
-export const PaymentsSummary: React.FC<PaymentsSummaryProps> = ({ order }) => {
+export const PaymentsSummary = ({ order }: PaymentsSummaryProps) => {
   const classes = useStyles();
   const shouldDisplay = getShouldDisplayAmounts(order);
 

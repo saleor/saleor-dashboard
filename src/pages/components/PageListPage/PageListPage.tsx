@@ -17,7 +17,7 @@ import {
 } from "@dashboard/pages/urls";
 import { FilterPagePropsWithPresets, PageListProps, SortPage } from "@dashboard/types";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
@@ -47,7 +47,7 @@ export interface PageListPageProps
   onPageCreate: () => void;
 }
 
-const PageListPage: React.FC<PageListPageProps> = ({
+const PageListPage = ({
   selectedFilterPreset,
   filterOpts,
   initialSearch,
@@ -66,12 +66,12 @@ const PageListPage: React.FC<PageListPageProps> = ({
   onPagesUnpublish,
   onPageCreate,
   ...listProps
-}) => {
+}: PageListPageProps) => {
   const intl = useIntl();
   const location = useLocation();
   const navigate = useNavigator();
   const structure = createFilterStructure(intl, filterOpts);
-  const [isFilterPresetOpen, setFilterPresetOpen] = React.useState(false);
+  const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const { enabled: isPageFiltersEnabled } = useFlag("new_filters");
 
   return (

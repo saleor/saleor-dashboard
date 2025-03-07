@@ -6,7 +6,7 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import { TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ChangeEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface CustomerCreateNoteProps {
@@ -15,15 +15,10 @@ export interface CustomerCreateNoteProps {
   };
   disabled: boolean;
   errors: AccountErrorFragment[];
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
 }
 
-const CustomerCreateNote: React.FC<CustomerCreateNoteProps> = ({
-  data,
-  disabled,
-  errors,
-  onChange,
-}) => {
+const CustomerCreateNote = ({ data, disabled, errors, onChange }: CustomerCreateNoteProps) => {
   const intl = useIntl();
 
   const formErrors = getFormErrors(["note"], errors);

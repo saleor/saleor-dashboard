@@ -2,7 +2,7 @@ import { appsMessages } from "@dashboard/apps/messages";
 import { buttonMessages } from "@dashboard/intl";
 import { TextField } from "@material-ui/core";
 import { Box, Button } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { FormEventHandler, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -12,13 +12,13 @@ interface InstallWithManifestFormButtonProps {
   onSubmitted: (manifestUrl: string) => void;
 }
 
-export const InstallWithManifestFormButton: React.FC<InstallWithManifestFormButtonProps> = ({
+export const InstallWithManifestFormButton = ({
   onSubmitted,
-}) => {
+}: InstallWithManifestFormButtonProps) => {
   const styles = useStyles();
   const intl = useIntl();
   const [inputOpened, setInputOpened] = useState(false);
-  const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = e => {
+  const handleFormSubmit: FormEventHandler<HTMLFormElement> = e => {
     e.preventDefault();
 
     const form = new FormData(e.currentTarget);

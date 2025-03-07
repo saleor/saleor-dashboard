@@ -1,5 +1,5 @@
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import React from "react";
+import { ReactNode } from "react";
 
 import { ManualTransactionContext } from "./context";
 import { useManualRefund } from "./hooks";
@@ -16,12 +16,13 @@ export interface OrderManualTransactionFormProps {
   submitState: ConfirmButtonTransitionState;
   error: string | undefined;
   initialData?: Partial<OrderManualTransactionSubmitVariables>;
+  children?: ReactNode;
 }
 
-export const OrderManualTransactionForm: React.FC<OrderManualTransactionFormProps> = ({
+export const OrderManualTransactionForm = ({
   children,
   ...props
-}) => {
+}: OrderManualTransactionFormProps) => {
   const { submitState, initialData } = props;
   const hookData = useManualRefund({ submitState, initialData });
 

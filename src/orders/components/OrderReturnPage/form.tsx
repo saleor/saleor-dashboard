@@ -5,7 +5,7 @@ import useForm, { CommonUseFormResultWithHandlers, SubmitPromise } from "@dashbo
 import useFormset, { FormsetChange, FormsetData } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { getById } from "@dashboard/misc";
-import React, { useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 import { OrderRefundAmountCalculationMode } from "../OrderRefundPage/form";
 import { useFulfillmentFormset } from "./useFulfillmentFormset";
@@ -64,7 +64,7 @@ export type UseOrderRefundFormResult = CommonUseFormResultWithHandlers<
 > & { isAmountDirty: boolean };
 
 interface OrderReturnProps {
-  children: (props: UseOrderRefundFormResult) => React.ReactNode;
+  children: (props: UseOrderRefundFormResult) => ReactNode;
   order: OrderDetailsFragment;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
@@ -90,7 +90,7 @@ function useOrderReturnForm(
   } = useForm(getOrderRefundPageFormData(), undefined, {
     confirmLeave: true,
   });
-  const [isAmountDirty, setAmountDirty] = React.useState(false);
+  const [isAmountDirty, setAmountDirty] = useState(false);
   const { setExitDialogSubmitRef } = useExitFormDialog({
     formId,
   });
@@ -222,7 +222,7 @@ function useOrderReturnForm(
   };
 }
 
-const OrderReturnForm: React.FC<OrderReturnProps> = ({ children, order, onSubmit }) => {
+const OrderReturnForm = ({ children, order, onSubmit }: OrderReturnProps) => {
   const props = useOrderReturnForm(order as OrderDetailsFragment, onSubmit);
 
   return <form>{children(props)}</form>;

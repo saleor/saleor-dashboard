@@ -6,7 +6,7 @@ import { ProductMediaFragment, ProductMediaType } from "@dashboard/graphql";
 import { ReorderAction } from "@dashboard/types";
 import createMultiFileUploadHandler from "@dashboard/utils/handlers/multiFileUploadHandler";
 import { Box, Button, Dropdown, List, Skeleton, sprinkles, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 
@@ -65,7 +65,7 @@ interface ProductMediaProps {
   openMediaUrlModal: () => any;
 }
 
-const ProductMedia: React.FC<ProductMediaProps> = props => {
+const ProductMedia = (props: ProductMediaProps) => {
   const {
     media,
     getImageEditUrl,
@@ -75,9 +75,9 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
     openMediaUrlModal,
   } = props;
   const intl = useIntl();
-  const imagesUpload = React.useRef<HTMLInputElement>(null);
-  const anchor = React.useRef<HTMLButtonElement>();
-  const [imagesToUpload, setImagesToUpload] = React.useState<ProductMediaFragment[]>([]);
+  const imagesUpload = useRef<HTMLInputElement>(null);
+  const anchor = useRef<HTMLButtonElement>();
+  const [imagesToUpload, setImagesToUpload] = useState<ProductMediaFragment[]>([]);
   const handleImageUpload = createMultiFileUploadHandler(onImageUpload, {
     onAfterUpload: () => setImagesToUpload(prevImagesToUpload => prevImagesToUpload.slice(1)),
     onStart: files => {
@@ -161,7 +161,7 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
             as="input"
             display="none"
             id="fileUpload"
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
               handleImageUpload(event.target.files)
             }
             multiple

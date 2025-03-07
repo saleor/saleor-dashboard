@@ -11,7 +11,7 @@ import { maybe } from "@dashboard/misc";
 import { DialogProps, FetchMoreProps } from "@dashboard/types";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { Container } from "../AssignContainerDialog";
@@ -39,7 +39,7 @@ export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
 }
 
 const scrollableTargetId = "assignProductScrollableDialog";
-const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
+const AssignProductDialog = (props: AssignProductDialogProps) => {
   const {
     confirmButtonState,
     selectedChannels,
@@ -57,7 +57,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
-  const [productsDict, setProductsDict] = React.useState(selectedIds || {});
+  const [productsDict, setProductsDict] = useState(selectedIds || {});
 
   useEffect(() => {
     if (selectedIds) {

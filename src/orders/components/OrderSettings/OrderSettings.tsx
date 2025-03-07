@@ -2,7 +2,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ChangeEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderSettingsFormData } from "../OrderSettingsPage/types";
@@ -10,10 +10,10 @@ import { OrderSettingsFormData } from "../OrderSettingsPage/types";
 export interface OrderSettingsProps {
   data: OrderSettingsFormData;
   disabled: boolean;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
 }
 
-const OrderSettings: React.FC<OrderSettingsProps> = ({ data, disabled, onChange }) => {
+const OrderSettings = ({ data, disabled, onChange }: OrderSettingsProps) => {
   const intl = useIntl();
 
   return (

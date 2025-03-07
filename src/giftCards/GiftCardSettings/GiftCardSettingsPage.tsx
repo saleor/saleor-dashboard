@@ -13,7 +13,6 @@ import {
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { giftCardsListPath } from "../urls";
@@ -23,7 +22,7 @@ import { giftCardSettingsPageMessages as messages } from "./messages";
 import { GiftCardSettingsFormData } from "./types";
 import { getGiftCardSettingsInputData } from "./utils";
 
-const GiftCardSettingsPage: React.FC = () => {
+const GiftCardSettingsPage = () => {
   const intl = useIntl();
   const navigate = useNavigator();
   const { data, loading } = useGiftCardSettingsQuery();

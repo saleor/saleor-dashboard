@@ -9,7 +9,7 @@ import { FormChange } from "@dashboard/hooks/useForm";
 import { getById } from "@dashboard/misc";
 import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import { Box, Option, Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 
 import { AddressInputOptionEnum } from "./form";
@@ -27,13 +27,13 @@ export interface OrderCustomerAddressEditProps {
   formAddress: AddressTypeInput;
   formAddressCountryDisplayName: string;
   formErrors: Array<AccountErrorFragment | OrderErrorFragment>;
-  onChangeFormAddress: (event: React.ChangeEvent<any>) => void;
-  onChangeFormAddressCountry: (event: React.ChangeEvent<any>) => void;
+  onChangeFormAddress: (event: ChangeEvent<any>) => void;
+  onChangeFormAddressCountry: (event: ChangeEvent<any>) => void;
   onEdit?: () => void;
   showCard?: boolean;
 }
 
-const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props => {
+const OrderCustomerAddressEdit = (props: OrderCustomerAddressEditProps) => {
   const {
     loading,
     customerAddresses,

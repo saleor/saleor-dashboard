@@ -6,7 +6,7 @@ import { productUrl } from "@dashboard/products/urls";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Box, Button, Checkbox, Skeleton, Text, TrashBinIcon } from "@saleor/macaw-ui-next";
-import React from "react";
+import { MouseEvent } from "react";
 
 import { EmptyImage } from "./EmptyImage";
 import { Product } from "./types";
@@ -16,7 +16,7 @@ interface ItemProps {
   isSelected: boolean;
   draggable: boolean;
   toggle: (id: string) => void;
-  onProductUnassign: (id: string, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onProductUnassign: (id: string, event: MouseEvent<HTMLButtonElement>) => void;
 }
 
 export const ProductTableItem = ({

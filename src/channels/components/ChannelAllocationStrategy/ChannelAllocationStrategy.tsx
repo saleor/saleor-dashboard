@@ -4,7 +4,7 @@ import RadioGroupField from "@dashboard/components/RadioGroupField";
 import { AllocationStrategyEnum, StockSettingsInput } from "@dashboard/graphql";
 import HelpOutline from "@material-ui/icons/HelpOutline";
 import { Text, Tooltip } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ChangeEvent } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "./messages";
@@ -26,14 +26,14 @@ const strategyOptions = [
 interface ChannelAllocationStrategyProps {
   data?: StockSettingsInput;
   disabled: boolean;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
 }
 
-const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
+const ChannelAllocationStrategy = ({
   data,
   disabled,
   onChange,
-}) => {
+}: ChannelAllocationStrategyProps) => {
   const classes = useStyles();
 
   return (

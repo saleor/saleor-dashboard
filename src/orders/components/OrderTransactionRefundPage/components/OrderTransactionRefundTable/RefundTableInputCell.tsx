@@ -1,6 +1,6 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import { Box, Button, Input } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ChangeEvent, FocusEvent } from "react";
 import { Control, Controller } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
@@ -12,12 +12,12 @@ interface RefundTableInputCellProps {
   control: Control<OrderTransactionRefundPageFormData, any>;
   qtyToRefund: string | number;
   maxQtyToRefund: number;
-  handleInputOnChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleInputOnBlur: (event: React.FocusEvent<HTMLInputElement, Element>) => void;
+  handleInputOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleInputOnBlur: (event: FocusEvent<HTMLInputElement, Element>) => void;
   handleMaxRefund: () => void;
 }
 
-export const RefundTableInputCell: React.FC<RefundTableInputCellProps> = ({
+export const RefundTableInputCell = ({
   index,
   control,
   qtyToRefund,
@@ -25,7 +25,7 @@ export const RefundTableInputCell: React.FC<RefundTableInputCellProps> = ({
   handleInputOnBlur,
   handleInputOnChange,
   handleMaxRefund,
-}) => {
+}: RefundTableInputCellProps) => {
   return (
     <GridTable.Cell>
       <Box backgroundColor="default1" display="flex" gap={2}>

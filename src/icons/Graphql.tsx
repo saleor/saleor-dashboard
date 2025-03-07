@@ -1,5 +1,3 @@
-import React from "react";
-
 export const Graphql = () => {
   return (
     // Mark component as candidate for macaw-ui

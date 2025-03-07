@@ -63,7 +63,7 @@ import {
   useOrderUpdateMutation,
   useOrderVoidMutation,
 } from "@dashboard/graphql";
-import React from "react";
+import { ReactNode } from "react";
 
 import { getMutationProviderData } from "../../misc";
 import { PartialMutationProviderOutput } from "../../types";
@@ -146,7 +146,7 @@ interface OrderOperationsProps {
       CreateManualTransactionCaptureMutation,
       CreateManualTransactionCaptureMutationVariables
     >;
-  }) => React.ReactNode;
+  }) => ReactNode;
   onOrderFulfillmentApprove: (data: OrderFulfillmentApproveMutation) => void;
   onOrderFulfillmentCancel: (data: OrderFulfillmentCancelMutation) => void;
   onOrderFulfillmentUpdate: (data: OrderFulfillmentUpdateTrackingMutation) => void;
@@ -170,7 +170,7 @@ interface OrderOperationsProps {
   onManualTransactionAdded: (data: CreateManualTransactionCaptureMutation) => void;
 }
 
-const OrderOperations: React.FC<OrderOperationsProps> = ({
+const OrderOperations = ({
   children,
   onDraftUpdate,
   onNoteAdd,
@@ -193,7 +193,7 @@ const OrderOperations: React.FC<OrderOperationsProps> = ({
   onInvoiceSend,
   onTransactionActionSend,
   onManualTransactionAdded,
-}) => {
+}: OrderOperationsProps) => {
   const orderVoid = useOrderVoidMutation({
     onCompleted: onOrderVoid,
   });

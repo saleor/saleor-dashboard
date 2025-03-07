@@ -12,6 +12,7 @@ import {
   OrderTransactionRefundError,
 } from "@dashboard/orders/components/OrderTransactionRefundPage/OrderTransactionRefundPage";
 import { orderTransactionRefundEditUrl } from "@dashboard/orders/urls";
+import { SetStateAction } from "react";
 import { IntlShape } from "react-intl";
 
 import { transactionRefundEditMessages } from "../OrderTransactionRefundEdit/messages";
@@ -26,7 +27,7 @@ export const handleRefundCreateComplete = ({
 }: {
   submitData: OrderGrantRefundAddMutation;
   notify: (message: IMessage) => void;
-  setLinesErrors: (value: React.SetStateAction<OrderTransactionRefundError[]>) => void;
+  setLinesErrors: (value: SetStateAction<OrderTransactionRefundError[]>) => void;
   navigate: UseNavigatorResult;
   intl: IntlShape;
   orderId: string;
@@ -123,7 +124,7 @@ export const handleAmountExceedsChargedAmount = ({
   setLinesErrors,
   intl,
 }: {
-  setLinesErrors: (value: React.SetStateAction<OrderTransactionRefundError[]>) => void;
+  setLinesErrors: (value: SetStateAction<OrderTransactionRefundError[]>) => void;
   intl: IntlShape;
 }) => {
   setLinesErrors([

@@ -5,7 +5,7 @@ import { getUserInitials } from "@dashboard/misc";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { sprinkles, vars } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ChangeEvent, FormEvent, ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { DashboardCard } from "../Card";
@@ -52,25 +52,25 @@ const useStyles = makeStyles(
 );
 
 interface TimelineProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 interface TimelineAddNoteProps {
   disabled?: boolean;
   message: string;
   reset: () => void;
-  onChange: (event: React.ChangeEvent<any>) => any;
-  onSubmit: (event: React.FormEvent<any>) => any;
+  onChange: (event: ChangeEvent<any>) => any;
+  onSubmit: (event: FormEvent<any>) => any;
 }
 
-export const Timeline: React.FC<TimelineProps> = props => {
+export const Timeline = (props: TimelineProps) => {
   const { children } = props;
   const classes = useStyles(props);
 
   return <div className={classes.root}>{children}</div>;
 };
 
-export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
+export const TimelineAddNote = (props: TimelineAddNoteProps) => {
   const { message, onChange, onSubmit, reset, disabled } = props;
   const classes = useStyles(props);
   const { user } = useUser();

@@ -13,7 +13,6 @@ import { renderCollection } from "@dashboard/misc";
 import { TableBody, TableCell } from "@material-ui/core";
 import { DeleteIcon, IconButton, ResponsiveTable } from "@saleor/macaw-ui";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CustomAppsSkeleton from "../CustomAppsSkeleton";
@@ -25,11 +24,7 @@ export interface CustomAppListPageProps {
   onRemove: (id: string) => void;
 }
 
-const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
-  appsList,
-  onRemove,
-  getCustomAppHref,
-}) => {
+const CustomAppListPage = ({ appsList, onRemove, getCustomAppHref }: CustomAppListPageProps) => {
   const intl = useIntl();
   const classes = useStyles();
   const navigate = useNavigator();
@@ -93,6 +88,7 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
                           color="primary"
                           onClick={() => onRemove(app.id)}
                         >
+                          {/* @ts-expect-error wrong typing in the old macaw-ui */}
                           <DeleteIcon />
                         </IconButton>
                       </TableButtonWrapper>

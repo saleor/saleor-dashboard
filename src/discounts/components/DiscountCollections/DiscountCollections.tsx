@@ -13,7 +13,6 @@ import { getLoadableList, mapEdgesToItems } from "@dashboard/utils/maps";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { renderCollection } from "../../../misc";
@@ -28,7 +27,7 @@ export interface DiscountCollectionsProps extends ListProps, ListActions {
 }
 
 const numberOfColumns = 4;
-const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
+const DiscountCollections = (props: DiscountCollectionsProps) => {
   const {
     discount: sale,
     disabled,
@@ -122,6 +121,7 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
                           onCollectionUnassign(collection.id);
                         }}
                       >
+                        {/* @ts-expect-error wrong typing in the old macaw-ui */}
                         <DeleteIcon />
                       </IconButton>
                     </TableButtonWrapper>

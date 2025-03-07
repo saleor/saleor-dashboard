@@ -1,5 +1,4 @@
 import { Box, Input } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { metadataInputMessages } from "../intl";

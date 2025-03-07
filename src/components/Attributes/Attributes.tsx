@@ -13,7 +13,7 @@ import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { FetchMoreProps } from "@dashboard/types";
 import { RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
 import { Accordion, Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Fragment, ReactNode } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { DashboardCard } from "../Card";
@@ -45,7 +45,7 @@ export interface AttributesProps extends AttributeRowHandlers {
   disabled: boolean;
   loading: boolean;
   errors: Array<ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment>;
-  title?: React.ReactNode;
+  title?: ReactNode;
   richTextGetters: RichTextGetters<string>;
 }
 
@@ -62,7 +62,7 @@ const messages = defineMessages({
   },
 });
 
-export const Attributes: React.FC<AttributesProps> = ({
+export const Attributes = ({
   attributes,
   attributeValues,
   errors,
@@ -70,7 +70,7 @@ export const Attributes: React.FC<AttributesProps> = ({
   onAttributeSelectBlur,
   richTextGetters,
   ...props
-}) => {
+}: AttributesProps) => {
   const intl = useIntl();
 
   return (
@@ -103,7 +103,7 @@ export const Attributes: React.FC<AttributesProps> = ({
                 {attributes.length > 0 && (
                   <ul>
                     {attributes.map(attribute => (
-                      <React.Fragment key={attribute.id}>
+                      <Fragment key={attribute.id}>
                         <AttributeListItem
                           attribute={attribute}
                           errors={errors}
@@ -112,7 +112,7 @@ export const Attributes: React.FC<AttributesProps> = ({
                           richTextGetters={richTextGetters}
                           {...props}
                         />
-                      </React.Fragment>
+                      </Fragment>
                     ))}
                   </ul>
                 )}

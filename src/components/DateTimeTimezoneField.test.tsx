@@ -1,12 +1,13 @@
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { fireEvent, render } from "@testing-library/react";
-import * as React from "react";
+import { PropsWithChildren } from "react";
 import { IntlProvider } from "react-intl";
 
 import { DateTimeTimezoneField } from "./DateTimeTimezoneField";
 
-const Wrapper: React.FC<React.PropsWithChildren<{}>> = ({ children }) => (
+const Wrapper = ({ children }: PropsWithChildren<{}>) => (
   <ThemeProvider>
+    {/* @ts-expect-error types of property refs are incompatible */}
     <IntlProvider locale="en">{children}</IntlProvider>
   </ThemeProvider>
 );

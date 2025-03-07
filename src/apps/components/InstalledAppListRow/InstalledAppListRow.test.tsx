@@ -5,7 +5,6 @@ import { getAppsConfig } from "@dashboard/config";
 import { useFlag } from "@dashboard/featureFlags";
 import Wrapper from "@test/wrapper";
 import { fireEvent, render, screen } from "@testing-library/react";
-import React from "react";
 import { MemoryRouter as Router } from "react-router-dom";
 
 import InstalledAppListRow from "./InstalledAppListRow";
@@ -15,6 +14,7 @@ jest.mock("@dashboard/featureFlags");
 
 const Component = ({ data, context }: { data: InstalledApp; context: AppListContextValues }) => (
   <Wrapper>
+    {/* @ts-expect-error  Router types does not have explicit children props  */}
     <Router>
       <AppListContext.Provider value={context}>
         <InstalledAppListRow {...data} />

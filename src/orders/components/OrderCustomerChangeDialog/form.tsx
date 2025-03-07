@@ -1,6 +1,6 @@
 import useForm, { CommonUseFormResult } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
-import React from "react";
+import { FormEvent, ReactNode } from "react";
 
 export enum CustomerChangeActionEnum {
   KEEP_ADDRESS = "keepAddress",
@@ -14,7 +14,7 @@ export interface OrderCustomerChangeData {
 type UseOrderCustomerChangeFormResult = CommonUseFormResult<OrderCustomerChangeData>;
 
 export interface OrderCustomerChangeFormProps {
-  children: (props: UseOrderCustomerChangeFormResult) => React.ReactNode;
+  children: (props: UseOrderCustomerChangeFormResult) => ReactNode;
   initial?: Partial<OrderCustomerChangeData>;
   onSubmit: (data: OrderCustomerChangeData) => void;
 }
@@ -35,7 +35,7 @@ function useOrderCustomerChangeForm(
     onSubmit,
   });
   const handleSubmit = () => handleFormSubmit(data);
-  const submit = (event: React.FormEvent<any>) => {
+  const submit = (event: FormEvent<any>) => {
     event.stopPropagation();
     event.preventDefault();
 
@@ -49,11 +49,7 @@ function useOrderCustomerChangeForm(
   };
 }
 
-const OrderCustomerChangeForm: React.FC<OrderCustomerChangeFormProps> = ({
-  children,
-  initial,
-  onSubmit,
-}) => {
+const OrderCustomerChangeForm = ({ children, initial, onSubmit }: OrderCustomerChangeFormProps) => {
   const props = useOrderCustomerChangeForm(initial, onSubmit);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;

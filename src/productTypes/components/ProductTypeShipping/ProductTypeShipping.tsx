@@ -1,7 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
 import { TextField } from "@material-ui/core";
-import React from "react";
+import { ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 
 interface ProductTypeShippingProps {
@@ -11,15 +11,15 @@ interface ProductTypeShippingProps {
   };
   weightUnit: string;
   disabled: boolean;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
 }
 
-const ProductTypeShipping: React.FC<ProductTypeShippingProps> = ({
+const ProductTypeShipping = ({
   data,
   weightUnit,
   disabled,
   onChange,
-}) => {
+}: ProductTypeShippingProps) => {
   const intl = useIntl();
 
   return (

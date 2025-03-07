@@ -1,10 +1,10 @@
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React from "react";
+import { ReactNode } from "react";
 
 export type GridVariant = "default" | "inverted" | "uniform";
 export interface GridProps {
-  children: React.ReactNodeArray | React.ReactNode;
+  children: ReactNode | ReactNode[];
   className?: string;
   variant?: GridVariant;
   richText?: boolean;
@@ -39,7 +39,7 @@ const useStyles = makeStyles(
   { name: "Grid" },
 );
 
-export const Grid: React.FC<GridProps> = props => {
+export const Grid = (props: GridProps) => {
   const { className, children, variant, richText } = props;
   const classes = useStyles(props);
 

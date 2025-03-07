@@ -1,5 +1,5 @@
 import type { UniqueIdentifier } from "@dnd-kit/core";
-import type { MutableRefObject } from "react";
+import type { CSSProperties, MutableRefObject } from "react";
 
 export type DataTypePlaceholder = Record<string, unknown> | null;
 
@@ -34,7 +34,7 @@ export interface TreeItemComponentProps<T extends DataTypePlaceholder> {
   ghost?: boolean;
   handleProps?: any;
   indentationWidth: number;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   wrapperRef?: (node: HTMLDivElement) => void;
   innerRef?: (node: HTMLDivElement) => void;
 }

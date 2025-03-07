@@ -1,5 +1,5 @@
 import { DynamicMultiselect } from "@saleor/macaw-ui-next";
-import React, { useRef, useState } from "react";
+import { ClipboardEvent, FocusEvent, KeyboardEvent, useRef, useState } from "react";
 
 import { BulkselectOperator, RightOperatorOption } from "./types";
 
@@ -46,7 +46,7 @@ const BulkSelect = ({
     onOptionsChange(options);
   };
 
-  const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const onKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (!ref.current) return;
 
     const currentValue = (event.target as HTMLInputElement).value;
@@ -80,7 +80,7 @@ const BulkSelect = ({
     }
   };
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement, Element>) => {
+  const handleBlur = (e: FocusEvent<HTMLInputElement, Element>) => {
     if (!ref.current) return;
 
     const onBlurValue = e.target.value;
@@ -95,7 +95,7 @@ const BulkSelect = ({
     ref.current.style.display = "block";
   };
 
-  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+  const handlePaste = (e: ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
     e.stopPropagation();
 

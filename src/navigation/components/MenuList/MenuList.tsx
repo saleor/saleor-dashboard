@@ -16,7 +16,7 @@ import { getArrowDirection } from "@dashboard/utils/sort";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
 export interface MenuListProps extends ListProps, ListActions, SortPage<MenuListUrlSortField> {
@@ -48,7 +48,7 @@ const useStyles = makeStyles(
   { name: "MenuList" },
 );
 const numberOfColumns = 4;
-const MenuList: React.FC<MenuListProps> = props => {
+const MenuList = (props: MenuListProps) => {
   const {
     settings,
     disabled,
@@ -135,10 +135,10 @@ const MenuList: React.FC<MenuListProps> = props => {
                     />
                   </TableCell>
                   <TableCell className={classes.colTitle} data-test-id="menu-name">
-                    {maybe<React.ReactNode>(() => menu.name, <Skeleton />)}
+                    {maybe<ReactNode>(() => menu.name, <Skeleton />)}
                   </TableCell>
                   <TableCell className={classes.colItems}>
-                    {maybe<React.ReactNode>(() => menu.items.length, <Skeleton />)}
+                    {maybe<ReactNode>(() => menu.items.length, <Skeleton />)}
                   </TableCell>
                   <TableButtonWrapper>
                     <IconButtonTableCell
@@ -146,6 +146,7 @@ const MenuList: React.FC<MenuListProps> = props => {
                       disabled={disabled}
                       onClick={() => onDelete(menu.id)}
                     >
+                      {/* @ts-expect-error wrong typing in the old macaw-ui */}
                       <DeleteIcon />
                     </IconButtonTableCell>
                   </TableButtonWrapper>

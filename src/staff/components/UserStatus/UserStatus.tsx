@@ -1,7 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ChangeEvent, ReactNode } from "react";
 import { useIntl } from "react-intl";
 
 import { userStatusMessages as messages } from "./messages";
@@ -11,11 +11,11 @@ interface AppStatusProps {
     isActive: boolean;
   };
   disabled: boolean;
-  label: React.ReactNode;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  label: ReactNode;
+  onChange: (event: ChangeEvent<any>) => void;
 }
 
-const AppStatus: React.FC<AppStatusProps> = ({ data, disabled, label, onChange }) => {
+const AppStatus = ({ data, disabled, label, onChange }: AppStatusProps) => {
   const intl = useIntl();
 
   return (

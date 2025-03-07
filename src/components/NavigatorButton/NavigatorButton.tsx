@@ -4,7 +4,7 @@ import { Grow, Paper, Popper } from "@material-ui/core";
 import { IconButtonProps } from "@material-ui/core/IconButton";
 import { LayoutButton, makeStyles, NavigatorIcon } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React from "react";
+import { useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
@@ -65,11 +65,11 @@ export interface NavigatorButtonProps extends IconButtonProps {
   isMac: boolean;
 }
 
-const NavigatorButton: React.FC<NavigatorButtonProps> = ({ className, isMac, ...props }) => {
+const NavigatorButton = ({ className, isMac, ...props }: NavigatorButtonProps) => {
   const classes = useStyles({});
-  const helperTimer = React.useRef(null);
-  const [helperVisibility, setHelperVisibility] = React.useState(false);
-  const anchor = React.useRef<HTMLButtonElement>();
+  const helperTimer = useRef(null);
+  const [helperVisibility, setHelperVisibility] = useState(false);
+  const anchor = useRef<HTMLButtonElement>();
   const setHelper = () => {
     helperTimer.current = setTimeout(() => setHelperVisibility(true), 2 * 1000);
   };
@@ -92,6 +92,7 @@ const NavigatorButton: React.FC<NavigatorButtonProps> = ({ className, isMac, ...
         {...props}
         ref={anchor}
       >
+        {/* @ts-expect-error wrong typing in the old macaw-ui */}
         <NavigatorIcon />
       </LayoutButton>
       <Popper open={helperVisibility} anchorEl={anchor.current} transition placement="bottom-start">

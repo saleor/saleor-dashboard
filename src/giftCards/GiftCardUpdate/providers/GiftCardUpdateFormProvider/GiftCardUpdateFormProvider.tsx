@@ -20,7 +20,7 @@ import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import getMetadata from "@dashboard/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import difference from "lodash/difference";
-import React, { createContext } from "react";
+import { createContext, ReactNode } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -30,7 +30,7 @@ import {
 import useGiftCardDetails from "../GiftCardDetailsProvider/hooks/useGiftCardDetails";
 
 interface GiftCardUpdateFormProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export type GiftCardUpdateFormData = MetadataFormData &
@@ -59,7 +59,7 @@ const getGiftCardTagsAddRemoveData = (initTags: string[], changedTags: string[])
     removeTags: removed,
   };
 };
-const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({ children }) => {
+const GiftCardUpdateFormProvider = ({ children }: GiftCardUpdateFormProviderProps) => {
   const notify = useNotifier();
   const intl = useIntl();
   const { canSeeCreatedBy } = useGiftCardPermissions();

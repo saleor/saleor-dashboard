@@ -27,7 +27,6 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
 import { orderListUrl } from "@dashboard/orders/urls";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors, maybe } from "../../../misc";
@@ -91,7 +90,7 @@ export interface OrderDetailsPageProps {
   onSubmit: (data: MetadataIdSchema) => SubmitPromise;
 }
 
-const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
+const OrderDetailsPage = (props: OrderDetailsPageProps) => {
   const {
     loading,
     order,

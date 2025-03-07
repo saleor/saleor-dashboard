@@ -1,9 +1,9 @@
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { RadioGroup, RadioGroupRootProps, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ReactNode } from "react";
 
 type RadioGroupFieldChoice = {
-  label: string | React.ReactNode;
+  label: string | ReactNode;
   value: string;
   disabled?: boolean;
 };
@@ -19,7 +19,7 @@ interface SimpleRadioGroupFieldProps
 
 // SimpleRadioGroupField is a migration of RadioGroupField "@dashboard/components/RadioGroupField" using Macaw UI
 // While migrating to this component note that it doesn't have a label, hint or 'no choices' message.
-export const SimpleRadioGroupField: React.FC<SimpleRadioGroupFieldProps> = ({
+export const SimpleRadioGroupField = ({
   name,
   value,
   error,
@@ -28,7 +28,7 @@ export const SimpleRadioGroupField: React.FC<SimpleRadioGroupFieldProps> = ({
   size = "large",
   errorMessage,
   ...props
-}) => {
+}: SimpleRadioGroupFieldProps) => {
   return (
     <>
       <RadioGroup

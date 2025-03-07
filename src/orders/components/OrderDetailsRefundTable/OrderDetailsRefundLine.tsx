@@ -5,7 +5,6 @@ import { useOverflowDetection } from "@dashboard/hooks/useOverflowDetection/useO
 import { getUserInitials, getUserName, User } from "@dashboard/misc";
 import { orderTransactionRefundEditUrl } from "@dashboard/orders/urls";
 import { Box, Button, EditIcon, Text, Tooltip } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
@@ -23,10 +22,7 @@ interface OrderDetailsRefundLineProps {
   orderId: string;
 }
 
-export const OrderDetailsRefundLine: React.FC<OrderDetailsRefundLineProps> = ({
-  refund,
-  orderId,
-}) => {
+export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLineProps) => {
   const isEditable = isRefundEditable(refund);
   const intl = useIntl();
   const { isOverflowing, elementRef } = useOverflowDetection<HTMLTableCellElement>();

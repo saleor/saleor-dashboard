@@ -3,7 +3,6 @@ import { transactionEvent } from "@dashboard/orders/fixtures";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import React from "react";
 import { MemoryRouter } from "react-router";
 
 import { EventItem } from "./EventItem";
@@ -13,16 +12,19 @@ describe("EventItem", () => {
     const onHover = jest.fn();
 
     render(
-      <MemoryRouter>
-        <Wrapper>
-          <EventItem
-            event={transactionEvent}
-            onHover={onHover}
-            hoveredPspReference={null}
-            hasCreatedBy={true}
-          />
-        </Wrapper>
-      </MemoryRouter>,
+      <>
+        {/* @ts-expect-error MemoryRouter types does not have explicit children props  */}
+        <MemoryRouter>
+          <Wrapper>
+            <EventItem
+              event={transactionEvent}
+              onHover={onHover}
+              hoveredPspReference={null}
+              hasCreatedBy={true}
+            />
+          </Wrapper>
+        </MemoryRouter>
+      </>,
     );
 
     const row = screen.getByRole("row");

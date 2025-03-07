@@ -1,22 +1,22 @@
 import Debounce from "@dashboard/components/Debounce";
 import { SearchPageProps } from "@dashboard/types";
 import { Box, SearchInput as MacawSearchInput } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 export interface SearchInputProps extends SearchPageProps {
   placeholder: string;
 }
 
-const SearchInput: React.FC<SearchInputProps> = props => {
+const SearchInput = (props: SearchInputProps) => {
   const { initialSearch, onSearchChange, placeholder } = props;
-  const [search, setSearch] = React.useState(initialSearch);
+  const [search, setSearch] = useState(initialSearch);
 
-  React.useEffect(() => setSearch(initialSearch), [initialSearch]);
+  useEffect(() => setSearch(initialSearch), [initialSearch]);
 
   return (
     <Debounce debounceFn={onSearchChange} time={500}>
       {debounceSearchChange => {
-        const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
           const value = event.target.value;
 
           setSearch(value);

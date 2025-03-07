@@ -13,7 +13,6 @@ import { ListActions, ListProps, RelayToFlat } from "@dashboard/types";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
@@ -49,7 +48,7 @@ export interface ShippingMethodProductsProps
 }
 
 const numberOfColumns = 3;
-const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
+const ShippingMethodProducts = (props: ShippingMethodProductsProps) => {
   const {
     disabled,
     products,
@@ -140,6 +139,7 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
                   </TableCellAvatar>
                   <TableCell className={classes.colAction}>
                     <IconButton variant="secondary" onClick={() => onProductUnassign([product.id])}>
+                      {/* @ts-expect-error wrong typing in the old macaw-ui */}
                       <DeleteIcon color="primary" />
                     </IconButton>
                   </TableCell>

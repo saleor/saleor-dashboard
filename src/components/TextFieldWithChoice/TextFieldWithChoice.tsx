@@ -12,16 +12,16 @@ import { TextFieldProps } from "@material-ui/core/TextField";
 import DropdownIcon from "@material-ui/icons/ArrowDropDown";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ReactNode, useRef } from "react";
 
 import MenuToggle from "../MenuToggle";
 
 export type TextFieldWithChoiceProps<TValue = string> = TextFieldProps & {
   ChoiceProps: {
     name: string;
-    label: string | React.ReactNode;
+    label: string | ReactNode;
     values: Array<{
-      label: string | React.ReactNode;
+      label: string | ReactNode;
       value: TValue;
     }>;
   };
@@ -40,10 +40,10 @@ const useStyles = makeStyles(
   },
   { name: "TextFieldWithChoice" },
 );
-const TextFieldWithChoice: React.FC<TextFieldWithChoiceProps> = props => {
+const TextFieldWithChoice = (props: TextFieldWithChoiceProps) => {
   const { ChoiceProps, InputProps, onChange, ...rest } = props;
   const classes = useStyles(props);
-  const anchor = React.useRef<HTMLDivElement>();
+  const anchor = useRef<HTMLDivElement>();
 
   return (
     <TextField

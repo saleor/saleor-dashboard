@@ -31,7 +31,7 @@ import {
   SearchIcon,
 } from "@saleor/macaw-ui";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
-import React, { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TaxInput from "../../components/TaxInput";
@@ -52,7 +52,7 @@ interface TaxClassesPageProps {
   onTaxClassUpdate: (data: TaxClassesPageFormData) => SubmitPromise;
 }
 
-export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
+export const TaxClassesPage = (props: TaxClassesPageProps) => {
   const {
     taxClasses,
     selectedTaxClassId,
@@ -175,6 +175,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                                 InputProps={{
                                   startAdornment: (
                                     <InputAdornment position="start">
+                                      {/* @ts-expect-error wrong typing in the old macaw-ui */}
                                       <SearchIcon />
                                     </InputAdornment>
                                   ),
@@ -197,7 +198,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                               </ListHeader>
                               <Divider />
                               {paginatedRates?.map((countryRate, countryRateIndex) => (
-                                <React.Fragment key={countryRate.id}>
+                                <Fragment key={countryRate.id}>
                                   <ListItem
                                     hover={false}
                                     className={classes.noDivider}
@@ -214,7 +215,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                                     </ListItemCell>
                                   </ListItem>
                                   {!isLastElement(filteredRates, countryRateIndex) && <Divider />}
-                                </React.Fragment>
+                                </Fragment>
                               )) ?? (
                                 <>
                                   <Skeleton />

@@ -1,9 +1,9 @@
 import { Pagination } from "@dashboard/types";
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
 export interface UseRowSelection {
   selectedRowIds: string[];
-  setSelectedRowIds: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedRowIds: Dispatch<SetStateAction<string[]>>;
   clearRowSelection: () => void;
   setClearDatagridRowSelectionCallback: (callback: () => void) => void;
 }

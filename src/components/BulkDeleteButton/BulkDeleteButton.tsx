@@ -1,10 +1,10 @@
 import { Button, Tooltip, TrashBinIcon } from "@saleor/macaw-ui-next";
-import React, { forwardRef, useState } from "react";
+import { forwardRef, ReactNode, useState } from "react";
 
 interface ProductListDeleteButtonProps {
   onClick: () => void;
   disabled?: boolean;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const BulkDeleteButton = forwardRef<HTMLButtonElement, ProductListDeleteButtonProps>(

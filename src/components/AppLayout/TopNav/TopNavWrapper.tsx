@@ -1,12 +1,17 @@
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ReactNode } from "react";
 
 import { topBarHeight, topBarHeightSubtitle } from "../consts";
 
-export const TopNavWrapper: React.FC<{
+export const TopNavWrapper = ({
+  children,
+  withoutBorder,
+  hasSubtitle,
+}: {
   withoutBorder?: boolean;
+  children: ReactNode;
   hasSubtitle?: boolean;
-}> = ({ children, withoutBorder, hasSubtitle }) => (
+}) => (
   <Box
     display={hasSubtitle ? "block" : "flex"}
     alignItems="center"

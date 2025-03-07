@@ -5,7 +5,6 @@ import {
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
-import * as React from "react";
 
 import { SidebarAppAlert } from "./SidebarAppAlert";
 import { useAppsAlert } from "./useAppsAlert";

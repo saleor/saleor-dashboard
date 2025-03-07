@@ -14,7 +14,6 @@ import { TableCell, TextField } from "@material-ui/core";
 import { ChevronIcon, IconButton, WarningIcon } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -28,7 +27,7 @@ interface OrderFulfillLineProps {
   onWarehouseChange: () => void;
 }
 
-export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
+export const OrderFulfillLine = (props: OrderFulfillLineProps) => {
   const { line, lineIndex, formsetData, formsetChange, onWarehouseChange } = props;
   const classes = useStyles();
   const intl = useIntl();
@@ -155,6 +154,7 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
               <Text className={classes.warehouseButtonContentText}>
                 {lineFormWarehouse?.name ?? intl.formatMessage(messages.selectWarehouse)}
               </Text>
+              {/* @ts-expect-error wrong typing in the old macaw-ui */}
               <ChevronIcon />
             </div>
           </IconButton>

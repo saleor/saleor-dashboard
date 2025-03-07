@@ -10,7 +10,7 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
 import { getById } from "@dashboard/misc";
 import { OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
-import React, { createContext, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -33,7 +33,7 @@ export interface OrderLineDiscountContextConsumerProps extends OrderDiscountCons
 }
 
 interface DiscountProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
   order: OrderDetailsFragment;
 }
 
@@ -50,7 +50,7 @@ export const useOrderLineDiscountContext = () => {
   return context;
 };
 
-export const OrderLineDiscountProvider: React.FC<DiscountProviderProps> = ({ children, order }) => {
+export const OrderLineDiscountProvider = ({ children, order }: DiscountProviderProps) => {
   const intl = useIntl();
   const notify = useNotifier();
   const { isDialogOpen, openDialog, closeDialog } = useDiscountDialog();
@@ -113,10 +113,10 @@ export const OrderLineDiscountProvider: React.FC<DiscountProviderProps> = ({ chi
   );
 };
 
-export const OrderLineDiscountConsumer: React.FC<OrderLineDiscountConsumerProps> = ({
+export const OrderLineDiscountConsumer = ({
   children,
   orderLineId,
-}) => (
+}: OrderLineDiscountConsumerProps) => (
   <OrderLineDiscountContext.Consumer>
     {(getValues: GetOrderLineDiscountContextConsumerProps) => children(getValues(orderLineId))}
   </OrderLineDiscountContext.Consumer>

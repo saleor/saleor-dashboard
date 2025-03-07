@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { MenuItem, Select } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
@@ -37,12 +36,7 @@ interface RowNumberSelectProps {
   onChange: (value: number) => any;
 }
 
-const RowNumberSelect: React.FC<RowNumberSelectProps> = ({
-  className,
-  choices,
-  rowNumber,
-  onChange,
-}) => {
+const RowNumberSelect = ({ className, choices, rowNumber, onChange }: RowNumberSelectProps) => {
   const classes = useStyles({});
 
   return (

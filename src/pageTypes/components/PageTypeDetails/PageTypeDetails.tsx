@@ -5,7 +5,7 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
 import { TextField } from "@material-ui/core";
-import React from "react";
+import { ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 
 interface PageTypeDetailsProps {
@@ -14,10 +14,10 @@ interface PageTypeDetailsProps {
   };
   disabled: boolean;
   errors: PageErrorFragment[];
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
 }
 
-const PageTypeDetails: React.FC<PageTypeDetailsProps> = props => {
+const PageTypeDetails = (props: PageTypeDetailsProps) => {
   const { data, disabled, errors, onChange } = props;
   const intl = useIntl();
   const formErrors = getFormErrors(["name"], errors);

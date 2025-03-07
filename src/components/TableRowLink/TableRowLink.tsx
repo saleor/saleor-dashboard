@@ -2,7 +2,7 @@ import { isExternalURL } from "@dashboard/utils/urls";
 import { TableRow, TableRowTypeMap } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React, { forwardRef } from "react";
+import { forwardRef, ReactNode } from "react";
 import { Link, LinkProps } from "react-router-dom";
 
 type MaterialTableRowPropsType = TableRowTypeMap["props"];
@@ -10,7 +10,7 @@ type MaterialTableRowPropsType = TableRowTypeMap["props"];
 type LocationDescriptor = LinkProps["to"];
 
 export interface TableRowLinkProps extends MaterialTableRowPropsType {
-  children: React.ReactNode;
+  children: ReactNode;
   href?: string | LocationDescriptor;
   className?: string;
   linkClassName?: string;

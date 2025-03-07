@@ -16,7 +16,6 @@ import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { validatePrice } from "@dashboard/products/utils/validation";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { RequirementsPicker } from "../../types";
@@ -49,7 +48,7 @@ export interface VoucherCreatePageProps {
   onSubmit: (data: FormData) => SubmitPromise;
 }
 
-const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
+const VoucherCreatePage = ({
   allChannelsCount,
   channelListings = [],
   disabled,
@@ -58,7 +57,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   onChannelsChange,
   onSubmit,
   openChannelsModal,
-}) => {
+}: VoucherCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();

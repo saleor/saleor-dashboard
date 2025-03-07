@@ -23,7 +23,15 @@ import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import React, { createContext, Dispatch, SetStateAction, useContext, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 
 import { getFilterQueryParam, getFilterVariables, storageUtils } from "../../filters";
 import {
@@ -36,7 +44,7 @@ import { getSortQueryVariables } from "./sort";
 const numberOfColumns = 7;
 
 interface GiftCardsListProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
   params: GiftCardListUrlQueryParams;
 }
 
@@ -73,10 +81,7 @@ export const useGiftCardList = () => {
   return context;
 };
 
-export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
-  children,
-  params,
-}) => {
+export const GiftCardsListProvider = ({ children, params }: GiftCardsListProviderProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { enabled: isNewGiftCardsFilterEnabled } = useFlag("new_filters");
@@ -107,7 +112,7 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const handleSort = createSortHandler(navigate, giftCardListUrl, params);
-  const queryVariables = React.useMemo<GiftCardListQueryVariables>(
+  const queryVariables = useMemo<GiftCardListQueryVariables>(
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
@@ -116,7 +121,7 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
     [params, paginationState],
   );
 
-  const newQueryVariables = React.useMemo<GiftCardListQueryVariables>(
+  const newQueryVariables = useMemo<GiftCardListQueryVariables>(
     () => ({
       ...paginationState,
       filter: {

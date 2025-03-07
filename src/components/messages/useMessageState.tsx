@@ -22,7 +22,7 @@ export const useMessageState = () => {
     remove(notification.id);
     timersArr.current = timersArr.current.filter(timer => timer.id !== notification.id);
   };
-  const remove = useCallback(notificationId => {
+  const remove = useCallback((notificationId: number) => {
     setNotifications(currentNotifications =>
       currentNotifications.filter(n => n.id !== notificationId),
     );

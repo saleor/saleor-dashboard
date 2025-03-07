@@ -1,11 +1,11 @@
 import { Box, Dropdown, List, RemoveIcon, Text } from "@saleor/macaw-ui-next";
-import React, { MouseEvent } from "react";
+import { MouseEvent, ReactNode, useState } from "react";
 
 interface FilterPresetItemProps {
   onSelect: (e: MouseEvent<HTMLLIElement>) => void;
   onRemove: () => void;
   isActive?: boolean;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const FilterPresetItem = ({
@@ -14,7 +14,7 @@ export const FilterPresetItem = ({
   isActive,
   onRemove,
 }: FilterPresetItemProps) => {
-  const [hasHover, setHasHover] = React.useState(false);
+  const [hasHover, setHasHover] = useState(false);
 
   return (
     <Dropdown.Item>

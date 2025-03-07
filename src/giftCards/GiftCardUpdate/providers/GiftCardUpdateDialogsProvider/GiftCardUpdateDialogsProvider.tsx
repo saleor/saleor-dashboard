@@ -3,7 +3,7 @@ import GiftCardUpdatePageDeleteDialog from "@dashboard/giftCards/components/Gift
 import { giftCardsListPath, giftCardUrl } from "@dashboard/giftCards/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import React, { createContext } from "react";
+import { createContext, ReactNode } from "react";
 
 import GiftCardResendCodeDialog from "../../GiftCardResendCodeDialog";
 import GiftCardUpdateBalanceDialog from "../../GiftCardUpdateBalanceDialog";
@@ -11,7 +11,7 @@ import { GiftCardUpdatePageActionParamsEnum, GiftCardUpdatePageUrlQueryParams } 
 import useGiftCardDetails from "../GiftCardDetailsProvider/hooks/useGiftCardDetails";
 
 interface GiftCardUpdateDialogsProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
   params: GiftCardUpdatePageUrlQueryParams;
   id: string;
 }
@@ -25,11 +25,11 @@ export interface GiftCardUpdateDialogsConsumerProps {
 
 export const GiftCardUpdateDialogsContext = createContext<GiftCardUpdateDialogsConsumerProps>(null);
 
-const GiftCardUpdateDialogsProvider: React.FC<GiftCardUpdateDialogsProviderProps> = ({
+const GiftCardUpdateDialogsProvider = ({
   children,
   params,
   id,
-}) => {
+}: GiftCardUpdateDialogsProviderProps) => {
   const navigate = useNavigator();
   const { loading: loadingGiftCard } = useGiftCardDetails();
   const { SET_BALANCE, DELETE, RESEND_CODE } = GiftCardUpdatePageActionParamsEnum;

@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, ReactNode } from "react";
 
 export type Status = "success" | "error" | "info" | "warning";
 export interface IMessage {
@@ -9,7 +9,7 @@ export interface IMessage {
   autohide?: number;
   expandText?: string;
   title?: string;
-  text?: React.ReactNode;
+  text?: ReactNode;
   onUndo?: () => void;
   status?: Status;
   apiMessage?: string;

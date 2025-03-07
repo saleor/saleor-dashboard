@@ -4,7 +4,6 @@ import useClipboard from "@dashboard/hooks/useClipboard";
 import { commonMessages } from "@dashboard/intl";
 import { CheckIcon, CopyIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { PspReferenceLink } from "./PspReferenceLink";
@@ -54,7 +53,7 @@ export interface PspReferenceProps {
   url?: string;
 }
 
-export const PspReference: React.FC<PspReferenceProps> = ({ reference, url }) => {
+export const PspReference = ({ reference, url }: PspReferenceProps) => {
   const intl = useIntl();
   const [copied, copy] = useClipboard();
   const classes = useStyles();
@@ -76,7 +75,13 @@ export const PspReference: React.FC<PspReferenceProps> = ({ reference, url }) =>
             copy(reference);
           }}
         >
-          {copied ? <CheckIcon /> : <CopyIcon />}
+          {copied ? (
+            // @ts-expect-error wrong typing in the old macaw-ui
+            <CheckIcon />
+          ) : (
+            // @ts-expect-error wrong typing in the old macaw-ui
+            <CopyIcon />
+          )}
         </IconButton>
       )}
     </div>

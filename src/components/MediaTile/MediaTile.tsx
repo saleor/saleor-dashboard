@@ -3,7 +3,7 @@ import { CircularProgress } from "@material-ui/core";
 import { DeleteIcon, EditIcon, makeStyles } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import { ChangeEvent, MouseEventHandler } from "react";
 
 const useStyles = makeStyles(
   theme => ({
@@ -84,13 +84,13 @@ interface MediaTileBaseProps {
   disableOverlay?: boolean;
   loading?: boolean;
   onDelete?: () => void;
-  onEdit?: (event: React.ChangeEvent<any>) => void;
+  onEdit?: (event: ChangeEvent<any>) => void;
 }
 
 export type MediaTileProps = MediaTileBaseProps &
   (
     | {
-        onEdit?: React.MouseEventHandler<HTMLButtonElement>;
+        onEdit?: MouseEventHandler<HTMLButtonElement>;
         editHref?: never;
       }
     | {
@@ -99,7 +99,7 @@ export type MediaTileProps = MediaTileBaseProps &
       }
   );
 
-const MediaTile: React.FC<MediaTileProps> = props => {
+const MediaTile = (props: MediaTileProps) => {
   const { loading, onDelete, onEdit, editHref, media, disableOverlay = false } = props;
   const classes = useStyles(props);
   const parsedMediaOembedData = media?.oembedData ? JSON.parse(media.oembedData) : null;
@@ -125,6 +125,7 @@ const MediaTile: React.FC<MediaTileProps> = props => {
                 className={classes.controlButton}
                 onClick={onEdit}
               >
+                {/* @ts-expect-error wrong typing in the old macaw-ui */}
                 <EditIcon />
               </IconButton>
             )}
@@ -135,6 +136,7 @@ const MediaTile: React.FC<MediaTileProps> = props => {
                 className={classes.controlButton}
                 onClick={onDelete}
               >
+                {/* @ts-expect-error wrong typing in the old macaw-ui */}
                 <DeleteIcon />
               </IconButton>
             )}

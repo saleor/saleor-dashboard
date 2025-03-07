@@ -1,7 +1,6 @@
 import { KeyValue } from "@dashboard/types";
 import { TextField } from "@material-ui/core";
 import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { keyValueMessages } from "./messages";
@@ -113,6 +112,7 @@ export const FilterKeyValueField = <K extends string = string>({
                 });
               }}
             >
+              {/* @ts-expect-error wrong typing in old macaw-ui */}
               <DeleteIcon />
             </IconButton>
           </div>

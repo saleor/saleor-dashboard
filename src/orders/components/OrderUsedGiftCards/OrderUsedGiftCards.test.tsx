@@ -1,7 +1,7 @@
 import { OrderDetailsFragment } from "@dashboard/graphql";
 import { ThemeWrapper } from "@test/themeWrapper";
 import { render, screen } from "@testing-library/react";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { IntlProvider } from "react-intl";
 import { BrowserRouter } from "react-router-dom";
 
@@ -21,8 +21,10 @@ const mockGiftCards = [
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
+    // @ts-expect-error BrowserRouter types does not have explicit children props
     <BrowserRouter>
       <ThemeWrapper>
+        {/* @ts-expect-error wrong typing*/}
         <IntlProvider
           locale="EN"
           messages={{

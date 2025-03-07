@@ -1,7 +1,6 @@
 import { AppstoreApi } from "@dashboard/apps/appstore.types";
 import { AppInstallationFragment } from "@dashboard/graphql";
 import { Box, useTheme } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import AppListRow from "../AppListRow";
 
@@ -12,12 +11,12 @@ interface AllAppListProps {
   navigateToGithubForkPage?: (githubForkUrl: string) => void;
 }
 
-const AllAppList: React.FC<AllAppListProps> = ({
+const AllAppList = ({
   appList,
   appInstallationList,
   navigateToAppInstallPage,
   navigateToGithubForkPage,
-}) => {
+}: AllAppListProps) => {
   const { themeValues } = useTheme();
 
   return (

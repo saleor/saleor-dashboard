@@ -7,7 +7,7 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationErrors } from "@dashboard/misc";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { LabelsMapsProvider } from "./context/provider";

@@ -8,7 +8,7 @@ import {
   RadioGroup,
 } from "@material-ui/core";
 import clsx from "clsx";
-import React from "react";
+import { ChangeEvent, ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { SimpleRadioGroupField } from "../SimpleRadioGroupField";
@@ -17,7 +17,7 @@ import { useStyles } from "./styles";
 export interface RadioGroupFieldChoice<T extends string | number = string | number> {
   disabled?: boolean;
   value: T;
-  label: React.ReactNode;
+  label: ReactNode;
 }
 
 interface RadioGroupFieldProps {
@@ -28,16 +28,16 @@ interface RadioGroupFieldProps {
   disabled?: boolean;
   error?: boolean;
   hint?: string;
-  label?: React.ReactNode;
+  label?: ReactNode;
   name?: string;
   value: string | number;
   variant?: "block" | "inline" | "inlineJustify";
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
 }
 
 export const NewRadioGroupField = SimpleRadioGroupField;
 
-export const RadioGroupField: React.FC<RadioGroupFieldProps> = props => {
+export const RadioGroupField = (props: RadioGroupFieldProps) => {
   const {
     alignTop,
     className,

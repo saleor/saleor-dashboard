@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { Tooltip } from "@saleor/macaw-ui-next";
 import moment from "moment-timezone";
-import React from "react";
 import ReactMoment from "react-moment";
 
 import { LocaleConsumer } from "../Locale";
@@ -13,7 +12,7 @@ interface DateTimeProps {
   plain?: boolean;
 }
 
-export const DateTime: React.FC<DateTimeProps> = ({ date, plain }) => {
+export const DateTime = ({ date, plain }: DateTimeProps) => {
   const getTitle = (value: string, locale?: string, tz?: string) => {
     let date = moment(value).locale(locale);
 

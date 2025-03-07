@@ -3,7 +3,7 @@ import { WeightUnitsEnum } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
 import { Box, Button, Option, Select } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface FormData {
@@ -16,11 +16,11 @@ export interface ShippingWeightUnitFormProps {
   onSubmit: (unit: WeightUnitsEnum | null) => SubmitPromise;
 }
 
-const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
+const ShippingWeightUnitForm = ({
   defaultWeightUnit,
   disabled,
   onSubmit,
-}) => {
+}: ShippingWeightUnitFormProps) => {
   const intl = useIntl();
   const initialForm: FormData = {
     unit: defaultWeightUnit
@@ -30,7 +30,7 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
         }
       : null,
   };
-  const unitOptions: Option[] = React.useMemo(
+  const unitOptions: Option[] = useMemo(
     () =>
       Object.values(WeightUnitsEnum).map(unit => ({
         label: unit,

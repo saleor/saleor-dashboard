@@ -15,7 +15,6 @@ import getWarehouseErrorMessage from "@dashboard/utils/errors/warehouse";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Option } from "@saleor/macaw-ui-next";
-import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 import { useAddressValidation } from "../AddressEdit/useAddressValidation";
@@ -52,7 +51,7 @@ function getErrorMessage(
   }
 }
 
-const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
+const CompanyAddressForm = (props: CompanyAddressFormProps) => {
   const { countries, data, disabled, displayCountry, errors, onChange, onCountryChange } = props;
   const { areas, isFieldAllowed, getDisplayValue } = useAddressValidation(data.country);
   const classes = useStyles(props);

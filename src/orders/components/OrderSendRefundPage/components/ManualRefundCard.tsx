@@ -1,7 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { commonMessages } from "@dashboard/intl";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
@@ -11,7 +10,7 @@ import {
 import { manualRefundMessages, refundPageMessages } from "../messages";
 import { useManualRefundCardStyles } from "../styles";
 
-export const ManualRefundCard: React.FC<OrderManualTransactionFormProps> = props => {
+export const ManualRefundCard = (props: OrderManualTransactionFormProps) => {
   const classes = useManualRefundCardStyles();
   const intl = useIntl();
 

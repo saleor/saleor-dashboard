@@ -6,7 +6,7 @@ import { PluginErrorCode, PluginErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import getPluginErrorMessage from "@dashboard/utils/errors/plugins";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ChangeEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { PluginDetailsPageFormData } from "../PluginsDetailsPage";
@@ -16,10 +16,10 @@ interface PluginInfoProps {
   description: string;
   errors: PluginErrorFragment[];
   name: string;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
 }
 
-const PluginInfo: React.FC<PluginInfoProps> = ({ data, description, errors, name, onChange }) => {
+const PluginInfo = ({ data, description, errors, name, onChange }: PluginInfoProps) => {
   const intl = useIntl();
   const misconfiguredError = errors.find(err => err.code === PluginErrorCode.PLUGIN_MISCONFIGURED);
 

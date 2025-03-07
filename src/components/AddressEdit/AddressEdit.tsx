@@ -6,7 +6,7 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Option } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 
 import { Combobox } from "../Combobox";
@@ -30,8 +30,8 @@ interface AddressEditProps {
   data: AddressTypeInput;
   disabled?: boolean;
   errors: Array<AccountErrorFragment | OrderErrorFragment>;
-  onChange: (event: React.ChangeEvent<any>) => any;
-  onCountryChange: (event: React.ChangeEvent<any>) => any;
+  onChange: (event: ChangeEvent<any>) => any;
+  onCountryChange: (event: ChangeEvent<any>) => any;
 }
 
 const PossibleFormFields = {
@@ -49,7 +49,7 @@ const PossibleFormFields = {
 } as const;
 const formFields: Array<keyof AddressTypeInput> = Object.values(PossibleFormFields);
 
-const AddressEdit: React.FC<AddressEditProps> = props => {
+const AddressEdit = (props: AddressEditProps) => {
   const { countries, countryDisplayValue, data, disabled, errors, onChange, onCountryChange } =
     props;
   const classes = useStyles(props);

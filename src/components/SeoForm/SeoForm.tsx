@@ -7,7 +7,7 @@ import {
 import { getFieldError, getProductErrorMessage } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
 import { Accordion, Box, Input, Text, Textarea } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ChangeEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { DashboardCard } from "../Card";
@@ -39,7 +39,7 @@ interface SeoFormProps {
   onClick?: () => any;
 }
 
-export const SeoForm: React.FC<SeoFormProps> = props => {
+export const SeoForm = (props: SeoFormProps) => {
   const {
     description,
     descriptionPlaceholder,
@@ -66,7 +66,7 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
       ? getProductErrorMessage(error as ProductErrorFragment, intl)
       : getPageErrorMessage(error as PageErrorFragment, intl);
   };
-  const handleSlugChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSlugChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
 
     if (value === "" || SLUG_REGEX.test(value)) {

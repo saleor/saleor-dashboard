@@ -18,7 +18,6 @@ import { TableBody, TableCell } from "@material-ui/core";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text, vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
@@ -69,7 +68,7 @@ interface PermissionGroupProps extends ListActions, SortPage<MembersListUrlSortF
   onAssign: () => void;
 }
 
-const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
+const PermissionGroupMemberList = (props: PermissionGroupProps) => {
   const {
     disabled,
     users,
@@ -220,6 +219,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
                             color="primary"
                             onClick={stopPropagation(() => onUnassign([user.id]))}
                           >
+                            {/* @ts-expect-error wrong typing in the old macaw-ui */}
                             <DeleteIcon />
                           </IconButton>
                         </>

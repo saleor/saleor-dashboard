@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { MouseEvent, ReactNode } from "react";
 
 interface StopPropagationProps {
   children: ReactNode;
@@ -6,7 +6,7 @@ interface StopPropagationProps {
 
 // If you don't want to click events bubble in the DOM tree, you can use this component.
 export const StopPropagation = ({ children }: StopPropagationProps) => {
-  const stopPropagation = (e: React.MouseEvent) => {
+  const stopPropagation = (e: MouseEvent) => {
     e.stopPropagation();
   };
 

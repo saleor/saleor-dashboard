@@ -23,7 +23,7 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import React from "react";
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import TypeDeleteWarningDialog from "../../../components/TypeDeleteWarningDialog/TypeDeleteWarningDialog";
@@ -41,7 +41,7 @@ interface ProductTypeListProps {
   params: ProductTypeListUrlQueryParams;
 }
 
-export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
+export const ProductTypeList = ({ params }: ProductTypeListProps) => {
   const navigate = useNavigator();
   const intl = useIntl();
   const notify = useNotifier();
@@ -60,7 +60,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
   usePaginationReset(productTypeListUrl, params, settings.rowNumber);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = React.useMemo(
+  const queryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
@@ -68,7 +68,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber],
   );
-  const newQueryVariables = React.useMemo(
+  const newQueryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: {
@@ -187,6 +187,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
               })
             }
           >
+            {/* @ts-expect-error wrong typing in the old macaw-ui */}
             <DeleteIcon />
           </IconButton>
         }

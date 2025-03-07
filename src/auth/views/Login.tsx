@@ -1,7 +1,7 @@
 import { useAvailableExternalAuthenticationsLazyQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import urlJoin from "url-join";
 import useRouter from "use-react-router";
 
@@ -15,7 +15,7 @@ interface LoginViewProps {
   params: LoginUrlQueryParams;
 }
 
-const LoginView: React.FC<LoginViewProps> = ({ params }) => {
+const LoginView = ({ params }: LoginViewProps) => {
   const navigate = useNavigator();
   const { location } = useRouter();
   const { login, requestLoginByExternalPlugin, loginByExternalPlugin, authenticating, errors } =

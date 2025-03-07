@@ -1,14 +1,15 @@
 import { Box } from "@saleor/macaw-ui-next";
-import React, { TdHTMLAttributes } from "react";
+import { ElementRef, forwardRef, TdHTMLAttributes } from "react";
 
 import { GridTableProps } from "./types";
 
-type GridTableCellElement = React.ElementRef<"td">;
+type GridTableCellElement = ElementRef<"td">;
 type GridTableCellProps = GridTableProps<TdHTMLAttributes<HTMLTableCellElement>>;
 
-export const GridTableCell = React.forwardRef<GridTableCellElement, GridTableCellProps>(
+export const GridTableCell = forwardRef<GridTableCellElement, GridTableCellProps>(
   ({ children, ...props }, forwardedRef) => {
     return (
+      // @ts-expect-error Types of property contentEditable are incompatible.
       <Box
         as="td"
         ref={forwardedRef}

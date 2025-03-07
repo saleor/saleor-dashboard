@@ -3,13 +3,13 @@ import { alpha } from "@material-ui/core/styles";
 import { ImageIcon, makeStyles } from "@saleor/macaw-ui";
 import { Text, vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
 import Dropzone from "../Dropzone";
 
 interface ImageUploadProps {
-  children?: (props: { isDragActive: boolean }) => React.ReactNode;
+  children?: (props: { isDragActive: boolean }) => ReactNode;
   className?: string;
   disableClick?: boolean;
   isActiveClassName?: string;
@@ -53,7 +53,7 @@ const useStyles = makeStyles(
   { name: "ImageUpload" },
 );
 
-export const ImageUpload: React.FC<ImageUploadProps> = props => {
+export const ImageUpload = (props: ImageUploadProps) => {
   const {
     children,
     className,

@@ -1,8 +1,8 @@
 import { DeleteIcon, IconButton, IconButtonProps } from "@saleor/macaw-ui";
-import React from "react";
 
-const DeleteIconButton: React.FC<IconButtonProps> = ({ onClick }) => (
+const DeleteIconButton = ({ onClick }: IconButtonProps) => (
   <IconButton variant="secondary" onClick={onClick} data-test-id="button-delete-items">
+    {/* @ts-expect-error wrong typing in old macaw-ui */}
     <DeleteIcon />
   </IconButton>
 );
