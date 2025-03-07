@@ -97,7 +97,7 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
             {app.manifestUrl && <AppManifestUrl manifestUrl={app.manifestUrl} />}
           </Box>
         </Box>
-        <StopPropagation>
+        <StopPropagation preventDefault>
           <Box
             display="flex"
             marginTop={{ mobile: 1.5, desktop: 0 }}
