@@ -1,0 +1,32 @@
+name: Push flaky test report
+description: Push flaky test report to qa repository
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 20
+
+    - name: Push Test Report
+      shell: bash
+      run: |
+        export GITHUB_TOKEN=$( \
+            curl --request GET --url ${{ inputs.VAULT_URL}} --header "Authorization: JWT ${{ inputs.VAULT_JWT }}" | jq -r .token \
+          )
+        gh api \
+          --method PUT \
+          -H "Accept: application/vnd.github+json" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          /repos/saleor/qa-helpers/contents/newReports/test-report-$(date +%s).json \
+          -f "message=push new saleor-dashboard test report" -f "committer[name]=GitHub Actions Bot" -f "committer[email]=octocat@github.com" -f "content=$(cat ctrf-reports/merged-report.json | base64)"
+      env:
+        VAULT_URL: ${{ inputs.VAULT_URL }}
+        VAULT_JWT: ${{ inputs.VAULT_JWT }}
+
+inputs:
+  VAULT_URL:
+    description: "Vault URL for GitHub token"
+    required: true
+  VAULT_JWT:
+    description: "Vault JWT for GitHub token"
+    required: true
