@@ -4,9 +4,9 @@ on:
   pull_request:
 
 jobs:
-  test-3-19:
+  test-3-20:
     uses: ./.github/workflows/run-tests-on-release.yml
     with:
-      VERSION: "3.19"
-      CUSTOM_VERSION: "3.19.1-abcdef"
+      VERSION: "3.20"
+      CUSTOM_VERSION: "3.20.1-abcdef"
     secrets: inherit
