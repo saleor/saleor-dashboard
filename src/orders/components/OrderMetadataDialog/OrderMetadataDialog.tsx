@@ -7,6 +7,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { Box, Button, Divider, Text } from "@saleor/macaw-ui-next";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
@@ -48,7 +49,13 @@ export const OrderMetadataDialog = ({
         },
   });
 
-  const { handleSubmit, control, getValues, formState, trigger } = formMethods;
+  const { handleSubmit, control, getValues, formState, trigger, reset } = formMethods;
+
+  useEffect(() => {
+    if (!open) {
+      reset();
+    }
+  }, [open, reset]);
 
   return (
     <DashboardModal open={open} onChange={onClose}>
