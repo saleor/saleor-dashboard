@@ -192,12 +192,35 @@ jobs:
           SALEOR_CLOUD_SERVICE: ${{ needs.initialize-cloud.outputs.SALEOR_CLOUD_SERVICE }}
 
   merge-reports:
-    if: "!cancelled()"
+    if: "!cancelled() && contains(github.event.pull_request.labels.*.name, 'run pw-e2e')"
 
-    needs: run-tests
+    needs: [run-tests,  deploy-dashboard]
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
 
       - name: Merge playwright reports
         uses: ./.github/actions/merge-pw-reports
+        with:
+           PASSWORD_FOR_DECODING_ARTIFACT: ${{ secrets.TESTS_RESULT_PASSWORD }}
+
+      - name: complete testmo report
+        uses: ./.github/actions/testmo/testmo-finish
+        with:
+          testmoUrl: ${{ secrets.TESTMO_URL }}
+          testmoToken: ${{ secrets.TESTMO_TOKEN }}
+          testmoRunId: ${{ needs.deploy-dashboard.outputs.TESTMO_RUN_ID }}
+
+
+      - name: Create flaky report
+        uses: ./.github/actions/flaky-tests-report
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push flaky report
+        uses: ./.github/actions/push-flaky-test-report
+        with:
+          VAULT_URL: ${{ secrets.VAULT_URL }}      
+          VAULT_JWT: ${{ secrets.VAULT_JWT }}              
+
+  
