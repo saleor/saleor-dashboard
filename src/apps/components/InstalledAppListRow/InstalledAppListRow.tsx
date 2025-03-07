@@ -104,6 +104,7 @@ export const InstalledAppListRow = (props: InstalledApp) => {
             flexDirection="row"
             justifyContent={{ mobile: "flex-end", desktop: "flex-start" }}
             gap={3}
+            onClick={e => e.preventDefault()}
             onMouseEnter={() => setIsMouseOverAlertIcons(true)}
             onMouseLeave={() => setIsMouseOverAlertIcons(false)}
           >
