@@ -37,12 +37,11 @@ export const AppManifestTableDisplay = ({ manifestUrl }: AppManifestTableDisplay
         >
           {getAppDomainFromManifest(manifestUrl)}
           {!!navigator.clipboard && (
+            // @ts-expect-error wrong typing in old macaw-ui
             <CopyIcon
               className={clsx(styles.copyIcon, {
                 [styles.copyIconColorful]: copied,
               })}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
             />
           )}
         </Text>

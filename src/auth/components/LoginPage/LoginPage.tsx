@@ -106,7 +106,8 @@ const LoginPage = (props: LoginCardProps) => {
               onMouseDown={() => setShowPassword(true)}
               onMouseUp={() => setShowPassword(false)}
             >
-              <EyeIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+              {/* @ts-expect-error wrong typing in old macaw-ui*/}
+              <EyeIcon />
             </IconButton>
           </div>
           <Text

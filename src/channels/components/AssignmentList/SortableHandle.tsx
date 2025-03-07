@@ -19,15 +19,8 @@ const SortableHandle = SortableHandleHoc<SortableHandleProps>((props: SortableHa
   const { className, ...restProps } = props;
   const classes = useStyles(props);
 
-  return (
-    <DragIcon
-      onPointerEnterCapture={undefined}
-      onPointerLeaveCapture={undefined}
-      className={clsx(classes.drag, className)}
-      tabIndex={0}
-      {...restProps}
-    />
-  );
+  // @ts-expect-error wrong typing in old macaw-ui
+  return <DragIcon className={clsx(classes.drag, className)} tabIndex={0} {...restProps} />;
 });
 
 export default SortableHandle;

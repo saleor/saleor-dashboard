@@ -121,10 +121,8 @@ export const ChannelsListPage = ({ channelsList, limits, onRemove }: ChannelsLis
                             channel ? stopPropagation(() => onRemove(channel.id)) : undefined
                           }
                         >
-                          <DeleteIcon
-                            onPointerEnterCapture={undefined}
-                            onPointerLeaveCapture={undefined}
-                          />
+                          {/* @ts-expect-error wrong typing in old macaw-ui */}
+                          <DeleteIcon />
                         </IconButton>
                       </TableButtonWrapper>
                     )}

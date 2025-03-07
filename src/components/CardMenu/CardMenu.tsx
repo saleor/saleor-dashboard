@@ -154,7 +154,8 @@ const CardMenu = (props: CardMenuProps) => {
         state={open ? "active" : "default"}
         {...IconButtonProps}
       >
-        <Icon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+        {/* @ts-expect-error SettingsIcon has wrong typing in old macaw-ui */}
+        <Icon />
       </IconButton>
       <Popper
         placement="bottom-end"

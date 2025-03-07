@@ -41,13 +41,12 @@ import { useFilterWindow } from "../useFilterWindow";
 import { useUrlValueProvider } from "../ValueProvider/useUrlValueProvider";
 import { ConditionalFilterContext } from "./context";
 
-export const ConditionalProductFilterProvider = ({
-  children,
-  locationSearch,
-}: {
+interface ProviderProps {
   locationSearch: string;
   children: ReactNode;
-}) => {
+}
+
+export const ConditionalProductFilterProvider = ({ children, locationSearch }: ProviderProps) => {
   const apiProvider = useProductFilterAPIProvider();
   const initialState = useProductInitialAPIState();
   const valueProvider = useUrlValueProvider(locationSearch, "product", initialState);
@@ -70,13 +69,7 @@ export const ConditionalProductFilterProvider = ({
   );
 };
 
-export const ConditionalDiscountFilterProvider = ({
-  children,
-  locationSearch,
-}: {
-  locationSearch: string;
-  children: ReactNode;
-}) => {
+export const ConditionalDiscountFilterProvider = ({ children, locationSearch }: ProviderProps) => {
   const apiProvider = useDiscountFilterAPIProvider();
   const valueProvider = useUrlValueProvider(locationSearch, "discount");
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_DISCOUNT_OPTIONS);
@@ -98,13 +91,7 @@ export const ConditionalDiscountFilterProvider = ({
   );
 };
 
-export const ConditionalOrderFilterProvider = ({
-  children,
-  locationSearch,
-}: {
-  locationSearch: string;
-  children: ReactNode;
-}) => {
+export const ConditionalOrderFilterProvider = ({ children, locationSearch }: ProviderProps) => {
   const apiProvider = useOrderFilterAPIProvider();
 
   const initialState = useInitialOrderState();
@@ -128,13 +115,7 @@ export const ConditionalOrderFilterProvider = ({
   );
 };
 
-export const ConditionalVoucherFilterProvider = ({
-  children,
-  locationSearch,
-}: {
-  locationSearch: string;
-  children: ReactNode;
-}) => {
+export const ConditionalVoucherFilterProvider = ({ children, locationSearch }: ProviderProps) => {
   const apiProvider = useVoucherAPIProvider();
 
   const initialState = useInitialVouchersState();
@@ -158,13 +139,7 @@ export const ConditionalVoucherFilterProvider = ({
   );
 };
 
-export const ConditionalPageFilterProvider = ({
-  children,
-  locationSearch,
-}: {
-  locationSearch: string;
-  children: ReactNode;
-}) => {
+export const ConditionalPageFilterProvider = ({ children, locationSearch }: ProviderProps) => {
   const apiProvider = usePageAPIProvider();
 
   const initialState = useInitialPageState();
@@ -191,10 +166,7 @@ export const ConditionalPageFilterProvider = ({
 export const ConditionalDraftOrderFilterProvider = ({
   children,
   locationSearch,
-}: {
-  locationSearch: string;
-  children: ReactNode;
-}) => {
+}: ProviderProps) => {
   const apiProvider = useDraftOrderFilterAPIProvider();
 
   const valueProvider = useUrlValueProvider(locationSearch, "draft-order");
@@ -217,13 +189,7 @@ export const ConditionalDraftOrderFilterProvider = ({
   );
 };
 
-export const ConditionalGiftCardsFilterProver = ({
-  children,
-  locationSearch,
-}: {
-  locationSearch: string;
-  children: ReactNode;
-}) => {
+export const ConditionalGiftCardsFilterProver = ({ children, locationSearch }: ProviderProps) => {
   const initialState = useInitialGiftCardsState();
   const apiProvider = useGiftCardsFiltersAPIProvider();
   const valueProvider = useUrlValueProvider(locationSearch, "gift-cards", initialState);
@@ -246,13 +212,7 @@ export const ConditionalGiftCardsFilterProver = ({
   );
 };
 
-export const ConditionalCustomerFilterProvider = ({
-  children,
-  locationSearch,
-}: {
-  locationSearch: string;
-  children: ReactNode;
-}) => {
+export const ConditionalCustomerFilterProvider = ({ children, locationSearch }: ProviderProps) => {
   const apiProvider = useCustomerAPIProvider();
 
   const valueProvider = useUrlValueProvider(locationSearch, "customer");
@@ -278,10 +238,7 @@ export const ConditionalCustomerFilterProvider = ({
 export const ConditionalCollectionFilterProvider = ({
   children,
   locationSearch,
-}: {
-  locationSearch: string;
-  children: ReactNode;
-}) => {
+}: ProviderProps) => {
   const apiProvider = useCollectionFilterAPIProvider();
 
   const initialState = useInitialCollectionState();
@@ -309,10 +266,7 @@ export const ConditionalCollectionFilterProvider = ({
 export const ConditionalProductTypesFilterProvider = ({
   children,
   locationSearch,
-}: {
-  locationSearch: string;
-  children: ReactNode;
-}) => {
+}: ProviderProps) => {
   const apiProvider = useProductTypesFilterAPIProvider();
 
   const initialState = useInitialProductTypesState();
@@ -339,10 +293,7 @@ export const ConditionalProductTypesFilterProvider = ({
 export const ConditionalStaffMembersFilterProvider = ({
   children,
   locationSearch,
-}: {
-  locationSearch: string;
-  children: ReactNode;
-}) => {
+}: ProviderProps) => {
   const apiProvider = useStaffMembersFilterAPIProvider();
 
   const initialState = useInitialStaffMembersState();
@@ -369,10 +320,7 @@ export const ConditionalStaffMembersFilterProvider = ({
 export const ConditionalAttributesFilterProvider = ({
   children,
   locationSearch,
-}: {
-  locationSearch: string;
-  children: ReactNode;
-}) => {
+}: ProviderProps) => {
   const apiProvider = useAttributesFilterAPIProvider();
 
   const initialState = useInitialAttributesState();
