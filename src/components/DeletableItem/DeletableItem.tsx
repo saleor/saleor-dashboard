@@ -10,7 +10,8 @@ const DeletableItem = ({ onDelete, id }: DeletableItemProps) => {
 
   return (
     <IconButton variant="secondary" onClick={handleDelete}>
-      <DeleteIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+      {/* @ts-expect-error wrong typing in old macaw-ui */}
+      <DeleteIcon />
     </IconButton>
   );
 };

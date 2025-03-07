@@ -139,11 +139,8 @@ const ShippingMethodProducts = (props: ShippingMethodProductsProps) => {
                   </TableCellAvatar>
                   <TableCell className={classes.colAction}>
                     <IconButton variant="secondary" onClick={() => onProductUnassign([product.id])}>
-                      <DeleteIcon
-                        color="primary"
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
-                      />
+                      {/* @ts-expect-error wrong typing in the old macaw-ui */}
+                      <DeleteIcon color="primary" />
                     </IconButton>
                   </TableCell>
                 </TableRowLink>

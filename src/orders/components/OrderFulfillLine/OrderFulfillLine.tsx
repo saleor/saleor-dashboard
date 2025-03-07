@@ -154,7 +154,8 @@ export const OrderFulfillLine = (props: OrderFulfillLineProps) => {
               <Text className={classes.warehouseButtonContentText}>
                 {lineFormWarehouse?.name ?? intl.formatMessage(messages.selectWarehouse)}
               </Text>
-              <ChevronIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+              {/* @ts-expect-error wrong typing in the old macaw-ui */}
+              <ChevronIcon />
             </div>
           </IconButton>
         )}

@@ -212,10 +212,8 @@ const ShippingZonePostalCodes = ({
                       onClick={() => onPostalCodeDelete(postalCodeRange)}
                       data-test-id={"delete-postal-code-" + postalCodeRange?.id}
                     >
-                      <DeleteIcon
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
-                      />
+                      {/* @ts-expect-error wrong typing in the old macaw-ui */}
+                      <DeleteIcon />
                     </IconButton>
                   </TableCell>
                 </TableRowLink>

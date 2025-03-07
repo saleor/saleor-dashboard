@@ -125,7 +125,8 @@ const MediaTile = (props: MediaTileProps) => {
                 className={classes.controlButton}
                 onClick={onEdit}
               >
-                <EditIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+                {/* @ts-expect-error wrong typing in the old macaw-ui */}
+                <EditIcon />
               </IconButton>
             )}
             {onDelete && (
@@ -135,7 +136,8 @@ const MediaTile = (props: MediaTileProps) => {
                 className={classes.controlButton}
                 onClick={onDelete}
               >
-                <DeleteIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+                {/* @ts-expect-error wrong typing in the old macaw-ui */}
+                <DeleteIcon />
               </IconButton>
             )}
           </div>

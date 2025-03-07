@@ -112,7 +112,8 @@ export const FilterKeyValueField = <K extends string = string>({
                 });
               }}
             >
-              <DeleteIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+              {/* @ts-expect-error wrong typing in old macaw-ui */}
+              <DeleteIcon />
             </IconButton>
           </div>
         ))}

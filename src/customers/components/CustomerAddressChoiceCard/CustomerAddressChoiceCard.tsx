@@ -35,11 +35,8 @@ const CustomerAddressChoiceCard = (props: CustomerAddressChoiceCardProps) => {
         <AddressFormatter address={address} />
         {editable && (
           <div onClick={onEditClick}>
-            <EditIcon
-              className={classes.editIcon}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-            />
+            {/* @ts-expect-error wrong typing in the old macaw-ui */}
+            <EditIcon className={classes.editIcon} />
           </div>
         )}
         {selected && (

@@ -156,11 +156,8 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
                           variant="secondary"
                           onClick={() => onAttributeUnassign(attribute.id)}
                         >
-                          <DeleteIcon
-                            color="primary"
-                            onPointerEnterCapture={undefined}
-                            onPointerLeaveCapture={undefined}
-                          />
+                          {/* @ts-expect-error wrong typing in the old macaw-ui */}
+                          <DeleteIcon color="primary" />
                         </IconButton>
                       </TableButtonWrapper>
                     </TableCell>

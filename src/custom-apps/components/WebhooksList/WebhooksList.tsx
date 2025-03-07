@@ -97,10 +97,8 @@ const WebhooksList = ({ webhooks, createHref, onRemove }: WebhooksListProps) => 
                         color="primary"
                         onClick={webhook ? stopPropagation(() => onRemove(webhook.id)) : undefined}
                       >
-                        <DeleteIcon
-                          onPointerEnterCapture={undefined}
-                          onPointerLeaveCapture={undefined}
-                        />
+                        {/* @ts-expect-error wrong typing in the old macaw-ui */}
+                        <DeleteIcon />
                       </IconButton>
                     </TableButtonWrapper>
                   </TableCell>

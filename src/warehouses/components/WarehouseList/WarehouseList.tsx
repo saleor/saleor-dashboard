@@ -141,10 +141,8 @@ const WarehouseList = (props: WarehouseListProps) => {
                       color="primary"
                       onClick={stopPropagation(() => onRemove(warehouse?.id))}
                     >
-                      <DeleteIcon
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
-                      />
+                      {/* @ts-expect-error wrong typing in the old macaw-ui */}
+                      <DeleteIcon />
                     </IconButton>
                   </TableButtonWrapper>
                 </div>

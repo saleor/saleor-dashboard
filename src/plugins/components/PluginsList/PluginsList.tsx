@@ -86,7 +86,8 @@ const PluginList = (props: PluginListProps) => {
                 <PluginChannelConfigurationCell plugin={plugin} />
                 <PluginChannelAvailabilityCell plugin={plugin} />
                 <TableCell align="right">
-                  <EditIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+                  {/* @ts-expect-error wrong typing in the old macaw-ui */}
+                  <EditIcon />
                 </TableCell>
               </TableRowLink>
             ) : (

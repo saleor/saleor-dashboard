@@ -121,10 +121,8 @@ const DiscountCollections = (props: DiscountCollectionsProps) => {
                           onCollectionUnassign(collection.id);
                         }}
                       >
-                        <DeleteIcon
-                          onPointerEnterCapture={undefined}
-                          onPointerLeaveCapture={undefined}
-                        />
+                        {/* @ts-expect-error wrong typing in the old macaw-ui */}
+                        <DeleteIcon />
                       </IconButton>
                     </TableButtonWrapper>
                   </TableCell>

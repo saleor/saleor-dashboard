@@ -32,14 +32,8 @@ export const Pill = forwardRef<HTMLDivElement, PillProps>(({ color: status, ...p
   });
 
   return (
-    <MacawuiPill
-      placeholder={undefined}
-      onPointerEnterCapture={undefined}
-      onPointerLeaveCapture={undefined}
-      {...props}
-      ref={ref}
-      className={clsx(classes.pill, props.className)}
-    />
+    // @ts-expect-error wrong typing in the old macaw-ui
+    <MacawuiPill {...props} ref={ref} className={clsx(classes.pill, props.className)} />
   );
 });
 

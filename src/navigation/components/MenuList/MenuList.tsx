@@ -146,10 +146,8 @@ const MenuList = (props: MenuListProps) => {
                       disabled={disabled}
                       onClick={() => onDelete(menu.id)}
                     >
-                      <DeleteIcon
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
-                      />
+                      {/* @ts-expect-error wrong typing in the old macaw-ui */}
+                      <DeleteIcon />
                     </IconButtonTableCell>
                   </TableButtonWrapper>
                 </TableRowLink>

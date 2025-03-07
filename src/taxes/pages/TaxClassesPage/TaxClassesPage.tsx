@@ -175,10 +175,8 @@ export const TaxClassesPage = (props: TaxClassesPageProps) => {
                                 InputProps={{
                                   startAdornment: (
                                     <InputAdornment position="start">
-                                      <SearchIcon
-                                        onPointerEnterCapture={undefined}
-                                        onPointerLeaveCapture={undefined}
-                                      />
+                                      {/* @ts-expect-error wrong typing in the old macaw-ui */}
+                                      <SearchIcon />
                                     </InputAdornment>
                                   ),
                                 }}

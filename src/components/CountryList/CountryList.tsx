@@ -142,10 +142,8 @@ const CountryList = (props: CountryListProps) => {
                       disabled={!country || disabled}
                       onClick={() => onCountryUnassign(country.code)}
                     >
-                      <DeleteIcon
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
-                      />
+                      {/* @ts-expect-error wrong typing in old macaw-ui */}
+                      <DeleteIcon />
                     </IconButton>
                   </TableCell>
                 </TableRowLink>

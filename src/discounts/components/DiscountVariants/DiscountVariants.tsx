@@ -136,11 +136,8 @@ const DiscountVariants = (props: SaleVariantsProps) => {
                           onVariantUnassign(variant.id);
                         }}
                       >
-                        <DeleteIcon
-                          color="primary"
-                          onPointerEnterCapture={undefined}
-                          onPointerLeaveCapture={undefined}
-                        />
+                        {/* @ts-expect-error wrong typing in the old macaw-ui */}
+                        <DeleteIcon color="primary" />
                       </IconButton>
                     </TableButtonWrapper>
                   </TableCell>

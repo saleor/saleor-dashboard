@@ -177,11 +177,8 @@ const ShippingZoneRates = (props: ShippingZoneRatesProps) => {
                       onClick={() => onRateRemove(rate.id)}
                       className={classes.buttonColumn}
                     >
-                      <DeleteIcon
-                        data-test-id="delete-button"
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
-                      />
+                      {/* @ts-expect-error wrong typing in the old macaw-ui */}
+                      <DeleteIcon data-test-id="delete-button" />
                     </IconButtonTableCell>
                   </TableButtonWrapper>
                 </TableRowLink>

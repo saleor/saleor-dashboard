@@ -60,7 +60,7 @@ export const TaxCountryDialog = ({
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+                <SearchIcon />
               </InputAdornment>
             ),
           }}

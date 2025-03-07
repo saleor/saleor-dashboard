@@ -76,9 +76,11 @@ export const PspReference = ({ reference, url }: PspReferenceProps) => {
           }}
         >
           {copied ? (
-            <CheckIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+            // @ts-expect-error wrong typing in the old macaw-ui
+            <CheckIcon />
           ) : (
-            <CopyIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+            // @ts-expect-error wrong typing in the old macaw-ui
+            <CopyIcon />
           )}
         </IconButton>
       )}

@@ -88,10 +88,8 @@ const CustomAppListPage = ({ appsList, onRemove, getCustomAppHref }: CustomAppLi
                           color="primary"
                           onClick={() => onRemove(app.id)}
                         >
-                          <DeleteIcon
-                            onPointerEnterCapture={undefined}
-                            onPointerLeaveCapture={undefined}
-                          />
+                          {/* @ts-expect-error wrong typing in the old macaw-ui */}
+                          <DeleteIcon />
                         </IconButton>
                       </TableButtonWrapper>
                     </TableCell>

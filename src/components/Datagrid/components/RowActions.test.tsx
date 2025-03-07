@@ -27,13 +27,8 @@ describe("RowActions", () => {
             {
               label: "Edit",
               onSelect: jest.fn(),
-              Icon: (
-                <EditIcon
-                  data-test-id="edit-icon"
-                  onPointerEnterCapture={undefined}
-                  onPointerLeaveCapture={undefined}
-                />
-              ),
+              // @ts-expect-error wrong typing in old macaw-ui
+              Icon: <EditIcon data-test-id="edit-icon" />,
             },
           ]}
           disabled={false}
@@ -111,7 +106,8 @@ describe("RowActions", () => {
               label: "Edit",
               onSelect: onSelectCallback,
               Icon: (
-                <EditIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+                // @ts-expect-error wrong typing in old macaw-ui
+                <EditIcon />
               ),
             },
           ]}
@@ -191,7 +187,8 @@ describe("RowActions", () => {
               label: "Edit",
               onSelect: jest.fn(),
               Icon: (
-                <EditIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+                // @ts-expect-error wrong typing in old macaw-ui
+                <EditIcon />
               ),
             },
           ]}

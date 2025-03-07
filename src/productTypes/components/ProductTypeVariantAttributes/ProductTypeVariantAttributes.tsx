@@ -266,10 +266,8 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
                           onClick={() => onAttributeUnassign(attribute.id)}
                           variant="secondary"
                         >
-                          <DeleteIcon
-                            onPointerEnterCapture={undefined}
-                            onPointerLeaveCapture={undefined}
-                          />
+                          {/* @ts-expect-error wrong typing in the old macaw-ui */}
+                          <DeleteIcon />
                         </IconButton>
                       </TableButtonWrapper>
                     </TableCell>

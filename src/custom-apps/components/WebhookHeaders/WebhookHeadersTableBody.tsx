@@ -104,7 +104,8 @@ const WebhookHeadersTableBody = ({ onChange, headers }: WebhookHeadersTableBodyP
                 })
               }
             >
-              <DeleteIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+              {/* @ts-expect-error wrong typing in the old macaw-ui */}
+              <DeleteIcon />
             </IconButton>
           </TableCell>
         </TableRowLink>

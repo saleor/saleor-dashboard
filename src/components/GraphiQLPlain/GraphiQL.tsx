@@ -530,13 +530,8 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
           </div>
         </div>
       </div>
-      <Dialog
-        isOpen={showDialog === "short-keys"}
-        onDismiss={() => setShowDialog(null)}
-        placeholder={undefined}
-        onPointerEnterCapture={undefined}
-        onPointerLeaveCapture={undefined}
-      >
+      {/* @ts-expect-error wrong typing in @graphiql/react */}
+      <Dialog isOpen={showDialog === "short-keys"} onDismiss={() => setShowDialog(null)}>
         <div className="graphiql-dialog-header">
           <div className="graphiql-dialog-title">Short Keys</div>
           <Dialog.Close onClick={() => setShowDialog(null)} />
@@ -632,15 +627,13 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
           </div>
         </div>
       </Dialog>
+      {/* @ts-expect-error wrong typing in @graphiql/react */}
       <Dialog
         isOpen={showDialog === "settings"}
         onDismiss={() => {
           setShowDialog(null);
           setClearStorageStatus(null);
         }}
-        placeholder={undefined}
-        onPointerEnterCapture={undefined}
-        onPointerLeaveCapture={undefined}
       >
         <div className="graphiql-dialog-header">
           <div className="graphiql-dialog-title">Settings</div>

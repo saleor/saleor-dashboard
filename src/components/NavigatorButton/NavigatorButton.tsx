@@ -92,7 +92,8 @@ const NavigatorButton = ({ className, isMac, ...props }: NavigatorButtonProps) =
         {...props}
         ref={anchor}
       >
-        <NavigatorIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+        {/* @ts-expect-error wrong typing in the old macaw-ui */}
+        <NavigatorIcon />
       </LayoutButton>
       <Popper open={helperVisibility} anchorEl={anchor.current} transition placement="bottom-start">
         {({ TransitionProps, placement }) => (

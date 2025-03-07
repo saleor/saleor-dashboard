@@ -2,7 +2,8 @@ import { DeleteIcon, IconButton, IconButtonProps } from "@saleor/macaw-ui";
 
 const DeleteIconButton = ({ onClick }: IconButtonProps) => (
   <IconButton variant="secondary" onClick={onClick} data-test-id="button-delete-items">
-    <DeleteIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+    {/* @ts-expect-error wrong typing in old macaw-ui */}
+    <DeleteIcon />
   </IconButton>
 );
 
