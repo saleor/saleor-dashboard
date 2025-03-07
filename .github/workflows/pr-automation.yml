@@ -28,6 +28,7 @@ jobs:
       BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
       SHARD_MATRIX: ${{ steps.generate-shard-matrix.outputs.SHARD_MATRIX }}
       SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
+      RUN_SLUG: ${{ steps.cloud_variables.outputs.RUN_SLUG }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -187,10 +188,10 @@ jobs:
           PW_RETRIES: ${{ vars.PW_RETRIES }}
           ACCOUNTS: ${{ needs.deploy-dashboard.outputs.ACCOUNTS }}
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
-          DASHBOARD_VERSION: ${{ needs.deploy-dashboard.outputs.DASHBOARD_VERSION }}
+          DASHBOARD_VERSION: ${{ needs.initialize-cloud.outputs.RUN_SLUG }}
           BRANCH_NAME: ${{ github.ref}}
           SALEOR_CLOUD_SERVICE: ${{ needs.initialize-cloud.outputs.SALEOR_CLOUD_SERVICE }}
-
+          
   merge-reports:
     if: "!cancelled() && contains(github.event.pull_request.labels.*.name, 'run pw-e2e')"
 
