@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.20.30
+
+### Patch Changes
+
+- 4a56859: Collection table no longer shrinks its rows
+- 75c203f: Checkbox and datapiker are now clickable in channel availlablity
+
 ## 3.20.29
 
 ### Patch Changes
