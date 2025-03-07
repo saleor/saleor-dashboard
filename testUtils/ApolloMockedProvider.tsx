@@ -1,5 +1,5 @@
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
-import * as React from "react";
+import { ReactNode } from "react";
 
 import {
   addressMocks,
@@ -18,7 +18,7 @@ const mocks: MockedResponse[] = [
 ];
 
 interface ApolloMockedProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const ApolloMockedProvider = ({ children }: ApolloMockedProviderProps) => (

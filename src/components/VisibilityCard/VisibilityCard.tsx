@@ -212,7 +212,7 @@ export const VisibilityCard = (props: VisibilityCardProps) => {
                     },
                   })
                 }
-                error={getFieldError(errors, "isPublishedAt") as any}
+                error={getFieldError(errors, "isPublishedAt")?.message}
                 fullWidth
               />
             )}

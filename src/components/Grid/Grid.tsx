@@ -1,10 +1,10 @@
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import { ReactNode, ReactNodeArray } from "react";
+import { ReactNode } from "react";
 
 export type GridVariant = "default" | "inverted" | "uniform";
 export interface GridProps {
-  children: ReactNodeArray | ReactNode;
+  children: ReactNode | ReactNode[];
   className?: string;
   variant?: GridVariant;
   richText?: boolean;

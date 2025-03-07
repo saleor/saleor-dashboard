@@ -60,6 +60,7 @@ export const TaxCountryDialog = ({
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
+                {/* @ts-expect-error wrong typing in old macaw */}
                 <SearchIcon />
               </InputAdornment>
             ),

@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { PermissionEnum, UserPermissionFragment } from "@dashboard/graphql";
-import { ReactNode, ReactNodeArray } from "react";
+import { ReactNode } from "react";
 
 const findPerm = (permList, perm) => permList.find(userPerm => userPerm.code === perm);
 
@@ -20,7 +20,7 @@ export function hasOneOfPermissions(
 }
 
 export interface RequirePermissionsProps {
-  children: ReactNode | ReactNodeArray;
+  children: ReactNode | ReactNode[];
   requiredPermissions?: PermissionEnum[];
   oneOfPermissions?: PermissionEnum[];
 }

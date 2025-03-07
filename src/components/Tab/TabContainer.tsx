@@ -1,9 +1,9 @@
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import { ReactNode, ReactNodeArray } from "react";
+import { ReactNode } from "react";
 
 export interface TabContainerProps {
-  children: ReactNode | ReactNodeArray;
+  children: ReactNode | ReactNode[];
   className?: string;
 }
 
