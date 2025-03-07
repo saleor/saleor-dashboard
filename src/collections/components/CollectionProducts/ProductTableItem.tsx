@@ -39,7 +39,7 @@ export const ProductTableItem = ({
 
   return (
     <GridTable.Row
-      __height="1px" // for content inside the row to be full height
+      __height="50px"
       data-test-id="assign-product-table-row"
       backgroundColor={{
         hover: "default1Hovered",
