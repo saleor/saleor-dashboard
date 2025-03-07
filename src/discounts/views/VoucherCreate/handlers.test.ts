@@ -1,15 +1,16 @@
-import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
+import { FormData } from "@dashboard/discounts/components/VoucherCreatePage/types";
 import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
 import { VoucherTypeEnum } from "@dashboard/graphql";
 
 import { createHandler } from "./handlers";
 
-const formData: VoucherDetailsPageFormData = {
+const formData: FormData = {
   applyOncePerCustomer: false,
   applyOncePerOrder: false,
   onlyForStaff: false,
   channelListings: [],
   name: "name",
+  value: 1,
   discountType: DiscountTypeEnum.SHIPPING,
   endDate: "2021-01-01",
   endTime: "00:00",
@@ -26,6 +27,10 @@ const formData: VoucherDetailsPageFormData = {
   singleUse: false,
   metadata: [],
   privateMetadata: [],
+  products: [],
+  collections: [],
+  categories: [],
+  countries: [],
 };
 
 describe("createHandler", () => {

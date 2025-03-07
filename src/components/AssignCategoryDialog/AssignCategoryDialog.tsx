@@ -10,9 +10,14 @@ import { messages } from "./messages";
 interface AssignCategoryDialogProps
   extends Omit<AssignContainerDialogProps, "containers" | "labels"> {
   categories: RelayToFlat<SearchCategoriesQuery["search"]>;
+  labels?: Partial<AssignContainerDialogProps["labels"]>;
 }
 
-const AssignCategoryDialog: React.FC<AssignCategoryDialogProps> = ({ categories, ...rest }) => {
+const AssignCategoryDialog: React.FC<AssignCategoryDialogProps> = ({
+  categories,
+  labels,
+  ...rest
+}) => {
   const intl = useIntl();
 
   return (
@@ -23,6 +28,7 @@ const AssignCategoryDialog: React.FC<AssignCategoryDialogProps> = ({ categories,
         label: intl.formatMessage(messages.assignCategoryDialogLabel),
         placeholder: intl.formatMessage(messages.assignCategoryDialogPlaceholder),
         confirmBtn: intl.formatMessage(messages.confirmButton),
+        ...labels,
       }}
       {...rest}
     />

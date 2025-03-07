@@ -8,8 +8,7 @@ import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/Tab
 import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { SaleDetailsFragment, VoucherDetailsFragment } from "@dashboard/graphql";
-import { getLoadableList, mapEdgesToItems } from "@dashboard/utils/maps";
+import { CategoryFragment } from "@dashboard/graphql";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
@@ -22,7 +21,8 @@ import { messages } from "./messages";
 import { useStyles } from "./styles";
 
 export interface DiscountCategoriesProps extends ListProps, ListActions {
-  discount: SaleDetailsFragment | VoucherDetailsFragment;
+  categories: CategoryFragment[];
+  showProductColumn?: boolean;
   onCategoryAssign: () => void;
   onCategoryUnassign: (id: string) => void;
 }
@@ -30,7 +30,7 @@ export interface DiscountCategoriesProps extends ListProps, ListActions {
 const numberOfColumns = 4;
 const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
   const {
-    discount,
+    categories,
     disabled,
     onCategoryAssign,
     onCategoryUnassign,
@@ -39,6 +39,8 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
     toggleAll,
     selected,
     isChecked,
+    // In some cases, we don't have data about category products
+    showProductColumn = true,
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -59,14 +61,14 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
         <colgroup>
           <col />
           <col className={classes.colName} />
-          <col className={classes.colProducts} />
+          {showProductColumn && <col className={classes.colProducts} />}
           <col className={classes.colActions} />
         </colgroup>
         <TableHead
           colSpan={numberOfColumns}
           selected={selected}
           disabled={disabled}
-          items={mapEdgesToItems(discount?.categories)}
+          items={categories}
           toggleAll={toggleAll}
           toolbar={toolbar}
         >
@@ -74,9 +76,11 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
             <TableCell className={classes.colName}>
               <FormattedMessage {...messages.discountCategoriesTableProductHeader} />
             </TableCell>
-            <TableCell className={classes.colProducts}>
-              <FormattedMessage {...messages.discountCategoriesTableProductNumber} />
-            </TableCell>
+            {showProductColumn && (
+              <TableCell className={classes.colProducts}>
+                <FormattedMessage {...messages.discountCategoriesTableProductNumber} />
+              </TableCell>
+            )}
             <TableCell />
           </>
         </TableHead>
@@ -87,7 +91,7 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
         </TableFooter>
         <TableBody data-test-id="assigned-specific-products-table">
           {renderCollection(
-            getLoadableList(discount?.categories),
+            categories,
             category => {
               const isSelected = category ? isChecked(category.id) : false;
 
@@ -109,7 +113,9 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
                     />
                   </TableCell>
                   <TableCell>{category ? category.name : <Skeleton />}</TableCell>
-                  <TableCell>{category ? category.products.totalCount : <Skeleton />}</TableCell>
+                  {showProductColumn && (
+                    <TableCell>{category ? category.products?.totalCount : <Skeleton />}</TableCell>
+                  )}
                   <TableCell className={classes.colActions}>
                     <TableButtonWrapper>
                       <IconButton

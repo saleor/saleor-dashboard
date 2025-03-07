@@ -10,10 +10,12 @@ import { messages } from "./messages";
 interface AssignCollectionDialogProps
   extends Omit<AssignContainerDialogProps, "containers" | "labels"> {
   collections: RelayToFlat<SearchCollectionsQuery["search"]>;
+  labels?: Partial<AssignContainerDialogProps["labels"]>;
 }
 
 const AssignCollectionDialog: React.FC<AssignCollectionDialogProps> = ({
   collections,
+  labels,
   ...rest
 }) => {
   const intl = useIntl();
@@ -26,6 +28,7 @@ const AssignCollectionDialog: React.FC<AssignCollectionDialogProps> = ({
         label: intl.formatMessage(messages.assignCollectionDialogLabel),
         placeholder: intl.formatMessage(messages.assignCollectionDialogPlaceholder),
         confirmBtn: intl.formatMessage(messages.confirmBtn),
+        ...labels,
       }}
       {...rest}
     />

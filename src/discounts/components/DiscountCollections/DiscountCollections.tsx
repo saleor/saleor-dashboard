@@ -8,8 +8,7 @@ import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/Tab
 import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { SaleDetailsFragment, VoucherDetailsFragment } from "@dashboard/graphql";
-import { getLoadableList, mapEdgesToItems } from "@dashboard/utils/maps";
+import { CollectionFragment } from "@dashboard/graphql";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
@@ -22,15 +21,16 @@ import { messages } from "./messages";
 import { useStyles } from "./styles";
 
 export interface DiscountCollectionsProps extends ListProps, ListActions {
-  discount: SaleDetailsFragment | VoucherDetailsFragment;
+  collections: CollectionFragment[];
   onCollectionAssign: () => void;
   onCollectionUnassign: (id: string) => void;
+  showProductColumn?: boolean;
 }
 
 const numberOfColumns = 4;
 const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
   const {
-    discount: sale,
+    collections,
     disabled,
     onCollectionAssign,
     onCollectionUnassign,
@@ -39,6 +39,7 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
     toggle,
     toggleAll,
     toolbar,
+    showProductColumn = true,
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -59,23 +60,25 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
         <colgroup>
           <col />
           <col className={classes.colName} />
-          <col className={classes.colProducts} />
+          {showProductColumn && <col className={classes.colProducts} />}
           <col className={classes.colActions} />
         </colgroup>
         <TableHead
           colSpan={numberOfColumns}
           selected={selected}
           disabled={disabled}
-          items={mapEdgesToItems(sale?.collections)}
+          items={collections}
           toggleAll={toggleAll}
           toolbar={toolbar}
         >
           <TableCell className={classes.colName}>
             <FormattedMessage {...messages.discountCollectionsTableProductHeader} />
           </TableCell>
-          <TableCell className={classes.colProducts}>
-            <FormattedMessage {...messages.discountCollectionsTableProductNumber} />
-          </TableCell>
+          {showProductColumn && (
+            <TableCell className={classes.colProducts}>
+              <FormattedMessage {...messages.discountCollectionsTableProductNumber} />
+            </TableCell>
+          )}
           <TableCell />
         </TableHead>
         <TableFooter>
@@ -85,7 +88,7 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
         </TableFooter>
         <TableBody data-test-id="assigned-specific-products-table">
           {renderCollection(
-            getLoadableList(sale?.collections),
+            collections,
             collection => {
               const isSelected = collection ? isChecked(collection.id) : false;
 
@@ -109,9 +112,12 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
                   <TableCell className={classes.colName}>
                     {collection ? collection.name : <Skeleton />}
                   </TableCell>
-                  <TableCell className={classes.colProducts}>
-                    {collection ? collection.products.totalCount : <Skeleton />}
-                  </TableCell>
+                  {showProductColumn && (
+                    <TableCell className={classes.colProducts}>
+                      {/* @ts-expect-error to be solved */}
+                      {collection ? collection?.products.totalCount : <Skeleton />}
+                    </TableCell>
+                  )}
                   <TableCell className={classes.colActions}>
                     <TableButtonWrapper>
                       <IconButton

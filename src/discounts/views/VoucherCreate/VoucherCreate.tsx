@@ -3,6 +3,7 @@ import { ChannelVoucherData, createSortedVoucherData } from "@dashboard/channels
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
 import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
 import {
   useUpdateMetadataMutation,
@@ -10,13 +11,23 @@ import {
   useVoucherChannelListingUpdateMutation,
   useVoucherCreateMutation,
 } from "@dashboard/graphql";
+import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useChannels from "@dashboard/hooks/useChannels";
+import useLocalPaginator, {
+  PageInfo,
+  useSectionLocalPaginationState,
+} from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
+import { PaginatorContext } from "@dashboard/hooks/usePaginator";
+import useShop from "@dashboard/hooks/useShop";
 import { sectionNames } from "@dashboard/intl";
+import useCategorySearch from "@dashboard/searches/useCategorySearch";
+import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
+import useProductSearch from "@dashboard/searches/useProductSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
-import React from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import VoucherCreatePage from "../../components/VoucherCreatePage";
@@ -33,10 +44,17 @@ interface VoucherCreateProps {
   params: VoucherCreateUrlQueryParams;
 }
 
+export enum VoucherCreatePageTab {
+  categories = "categories",
+  collections = "collections",
+  products = "products",
+}
+
 export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const shop = useShop();
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -45,6 +63,14 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
   >(navigate, params => voucherAddUrl(params), params);
   const { availableChannels } = useAppChannel(false);
   const allChannels: ChannelVoucherData[] = createSortedVoucherData(availableChannels);
+  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
+  const [activeTab, setActiveTab] = useState<VoucherCreatePageTab>(VoucherCreatePageTab.categories);
+  const [paginationState, setPaginationState] = useSectionLocalPaginationState(
+    PAGINATE_BY,
+    activeTab,
+  );
+
+  const paginate = useLocalPaginator(setPaginationState);
   const {
     channelListElements,
     channelsToggle,
@@ -77,6 +103,17 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
       }
     },
   });
+
+  const categoriesSearch = useCategorySearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
+  const collectionsSearch = useCollectionSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
+  const productsSearch = useProductSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
+
   const handleFormValidate = (data: VoucherDetailsPageFormData) => {
     if (data.codes.length === 0) {
       notify({
@@ -103,8 +140,22 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
     updatePrivateMetadata,
   );
 
+  const changeTab = (tab: VoucherCreatePageTab) => {
+    reset();
+    setActiveTab(tab);
+  };
+
+  const tabPageInfo: PageInfo = {
+    hasNextPage: false,
+    endCursor: "",
+    hasPreviousPage: false,
+    startCursor: "",
+  };
+
+  const { pageInfo, ...paginationValues } = paginate(tabPageInfo, paginationState);
+
   return (
-    <>
+    <PaginatorContext.Provider value={{ ...pageInfo, ...paginationValues }}>
       {!!allChannels?.length && (
         <ChannelsAvailabilityDialog
           isSelected={isChannelSelected}
@@ -125,6 +176,13 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
       )}
       <WindowTitle title={intl.formatMessage(sectionNames.vouchers)} />
       <VoucherCreatePage
+        action={params.action}
+        countries={shop?.countries ?? []}
+        categoriesSearch={categoriesSearch}
+        collectionsSearch={collectionsSearch}
+        productsSearch={productsSearch}
+        openModal={openModal}
+        closeModal={closeModal}
         allChannelsCount={allChannels?.length}
         channelListings={currentChannels}
         disabled={voucherCreateOpts.loading || updateChannelsOpts.loading}
@@ -136,8 +194,15 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
         saveButtonBarState={voucherCreateOpts.status}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
+        activeTab={activeTab}
+        onTabClick={changeTab}
+        isChecked={isSelected}
+        selected={listElements}
+        toggle={toggle}
+        toggleAll={toggleAll}
+        resetSelected={reset}
       />
-    </>
+    </PaginatorContext.Provider>
   );
 };
 export default VoucherCreateView;
