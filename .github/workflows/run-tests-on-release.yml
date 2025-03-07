@@ -311,6 +311,12 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Push flaky report
+        uses: ./.github/actions/push-flaky-test-report
+        with:
+          VAULT_URL: ${{ secrets.VAULT_URL }}      
+          VAULT_JWT: ${{ secrets.VAULT_JWT }}
+          
       - name: send message on slack
         working-directory: ".github"
         id: send-slack-message
