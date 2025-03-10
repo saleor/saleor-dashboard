@@ -141,6 +141,10 @@
     "context": "dialog header",
     "string": "Change Password"
   },
+  "+mbkbU": {
+    "context": "unknown customer display name",
+    "string": "Unknown customer"
+  },
   "+mmPxn": {
     "context": "page header",
     "string": "Grant refund"
@@ -7645,6 +7649,10 @@
   "kuo4fW": {
     "context": "dialog title",
     "string": "Capture manual transaction"
+  },
+  "kv1DqJ": {
+    "context": "unknown user display name",
+    "string": "Unknown user"
   },
   "kv3FWU": {
     "context": "btn label",
