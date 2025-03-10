@@ -22,6 +22,7 @@ import {
   DiscountErrorFragment,
   DiscountValueTypeEnum,
   PermissionEnum,
+  SearchProductFragment,
   VoucherDetailsFragment,
   VoucherTypeEnum,
 } from "@dashboard/graphql";
@@ -304,7 +305,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                       disabled={disabled}
                       onCategoryAssign={onCategoryAssign}
                       onCategoryUnassign={onCategoryUnassign}
-                      // @ts-expect-error to be solved
                       categories={mapEdgesToItems(voucher?.categories)}
                       isChecked={isChecked}
                       selected={selected}
@@ -317,7 +317,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                       disabled={disabled}
                       onCollectionAssign={onCollectionAssign}
                       onCollectionUnassign={onCollectionUnassign}
-                      // @ts-expect-error to be solved
                       collections={mapEdgesToItems(voucher?.collections)}
                       isChecked={isChecked}
                       selected={selected}
@@ -330,8 +329,9 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                       disabled={disabled}
                       onProductAssign={onProductAssign}
                       onProductUnassign={onProductUnassign}
-                      // @ts-expect-error to be solved
-                      products={mapEdgesToItems(voucher?.products)}
+                      products={
+                        mapEdgesToItems(voucher?.products) as unknown as SearchProductFragment[]
+                      }
                       isChecked={isChecked}
                       selected={selected}
                       toggle={toggle}

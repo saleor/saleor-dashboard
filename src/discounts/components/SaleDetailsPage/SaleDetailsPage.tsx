@@ -230,7 +230,6 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   disabled={disabled}
                   onCategoryAssign={onCategoryAssign}
                   onCategoryUnassign={onCategoryUnassign}
-                  // @ts-expect-error to be solved
                   categories={mapEdgesToItems(sale.categories)}
                   isChecked={isChecked}
                   selected={selected}
@@ -243,8 +242,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   disabled={disabled}
                   onCollectionAssign={onCollectionAssign}
                   onCollectionUnassign={onCollectionUnassign}
-                  // @ts-expect-error to be solved
-                  collections={mapEdgesToItems(voucher?.collections)}
+                  collections={mapEdgesToItems(sale?.collections)}
                   isChecked={isChecked}
                   selected={selected}
                   toggle={toggle}
@@ -256,8 +254,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   disabled={disabled}
                   onProductAssign={onProductAssign}
                   onProductUnassign={onProductUnassign}
-                  // @ts-expect-error to be solved
-                  products={mapEdgesToItems(voucher?.products)}
+                  products={mapEdgesToItems(sale?.products)}
                   isChecked={isChecked}
                   selected={selected}
                   toggle={toggle}
