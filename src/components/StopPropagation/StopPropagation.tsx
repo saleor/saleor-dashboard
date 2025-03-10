@@ -8,7 +8,6 @@ interface StopPropagationProps {
 export const StopPropagation = ({ children }: StopPropagationProps) => {
   const stopPropagation = (e: React.MouseEvent) => {
     e.stopPropagation();
-    e.preventDefault();
   };
 
   return <div onClick={stopPropagation}>{children}</div>;
