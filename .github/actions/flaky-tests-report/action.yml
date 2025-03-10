@@ -36,7 +36,7 @@ runs:
         retention-days: 14
 
     - name: Publish Test Report
-      uses: ctrf-io/github-test-reporter@v1
+      uses: ctrf-io/github-test-reporter@15f50159adb465644ec5ddc3b76b92af1e414432 # v1.0.11  
       with:
         report-path: ctrf-reports/merged-report.json
         summary-report: true
@@ -46,7 +46,7 @@ runs:
       if: always()
       
     - name: Publish PR Comment
-      uses: ctrf-io/github-test-reporter@v1
+      uses: ctrf-io/github-test-reporter@15f50159adb465644ec5ddc3b76b92af1e414432 # v1.0.11  
       with:
         report-path: ctrf-reports/merged-report.json
         pull-request-report: true
@@ -58,8 +58,8 @@ runs:
     - name: Cleanup uploaded partial reports
       shell: bash
       run: |
-        for artifact_id in $(gh api repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts --jq '.artifacts[] | select(.name | startswith("ctrf-report-")) | .id'); do
-          gh api --method DELETE repos/${{ github.repository }}/actions/artifacts/$artifact_id
+        for artifact_id in $(gh api repos/"$GITHUB_REPOSITORY"/actions/runs/"$GITHUB_RUN_ID"/artifacts --jq '.artifacts[] | select(.name | startswith("ctrf-report-")) | .id'); do  
+          gh api --method DELETE repos/"$GITHUB_REPOSITORY"/actions/artifacts/"$artifact_id"  
         done
       env:
         GH_TOKEN:  ${{ inputs.github_token }}
