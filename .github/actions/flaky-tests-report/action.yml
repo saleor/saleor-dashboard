@@ -7,9 +7,11 @@ runs:
       with:
         node-version: 20
 
-    - name: Install CTRF package globally
+    - name: Install dependencies
       shell: bash
-      run: npm install -g ctrf
+      run: |
+        cd .github/actions/flaky-tests-report
+        npm ci
 
     - name: Download CTRF reports
       uses: actions/download-artifact@v4
