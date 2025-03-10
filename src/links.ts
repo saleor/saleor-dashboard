@@ -10,7 +10,7 @@ export const MISSING_APPS_TYPEFORM_URL = "https://saleor.typeform.com/to/ecR2msL
 
 export const PRODUCT_CONFIGURATION_DOCS_URL =
   "https://docs.saleor.io/developer/products/configuration";
-export const ORDER_MANAGEMENT_DOCS_URL = "https://docs.saleor.io/developer/checkout/order-status";
+export const ORDER_MANAGEMENT_DOCS_URL = "https://docs.saleor.io/developer/order/order-status";
 export const API_REFERENCE_DOCS = "https://docs.saleor.io/api-reference/";
 export const API_GUIDE_DOCS = "https://docs.saleor.io/api-usage/overview";
 export const EXTENDING_WITH_WEBHOOKS_DOCS_URL =
