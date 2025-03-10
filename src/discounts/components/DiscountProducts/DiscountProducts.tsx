@@ -9,7 +9,7 @@ import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { ProductFragment } from "@dashboard/graphql";
+import { SearchProductFragment } from "@dashboard/graphql";
 import { productUrl } from "@dashboard/products/urls";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
@@ -23,7 +23,7 @@ import { messages } from "./messages";
 import { useStyles } from "./styles";
 
 export interface SaleProductsProps extends ListProps, ListActions {
-  products: ProductFragment[];
+  products: SearchProductFragment[];
   onProductAssign: () => void;
   onProductUnassign: (id: string) => void;
 }
@@ -116,7 +116,6 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
                   </TableCell>
                   <TableCellAvatar
                     className={classes.colName}
-                    // @ts-expect-error to be solved
                     thumbnail={maybe(() => product.thumbnail?.url)}
                   >
                     {maybe<React.ReactNode>(() => product.name, <Skeleton />)}

@@ -22,7 +22,7 @@ import { useCollectionWithTotalProductsSearch } from "@dashboard/searches/useCol
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
-import React, { useState } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import VoucherCreatePage from "../../components/VoucherCreatePage";
@@ -59,7 +59,6 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
   const { availableChannels } = useAppChannel(false);
   const allChannels: ChannelVoucherData[] = createSortedVoucherData(availableChannels);
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
-  const [activeTab, setActiveTab] = useState<VoucherCreatePageTab>(VoucherCreatePageTab.categories);
 
   const {
     channelListElements,
@@ -130,11 +129,6 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
     updatePrivateMetadata,
   );
 
-  const changeTab = (tab: VoucherCreatePageTab) => {
-    reset();
-    setActiveTab(tab);
-  };
-
   return (
     <>
       {!!allChannels?.length && (
@@ -175,8 +169,6 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
         saveButtonBarState={voucherCreateOpts.status}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
-        activeTab={activeTab}
-        onTabClick={changeTab}
         isChecked={isSelected}
         selected={listElements}
         toggle={toggle}

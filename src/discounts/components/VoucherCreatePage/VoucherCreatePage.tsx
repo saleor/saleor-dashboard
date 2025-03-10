@@ -11,11 +11,12 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import { Tab, TabContainer } from "@dashboard/components/Tab";
-import { PAGINATE_BY } from "@dashboard/config";
 import DiscountCategories from "@dashboard/discounts/components/DiscountCategories";
 import DiscountCollections from "@dashboard/discounts/components/DiscountCollections";
 import DiscountCountrySelectDialog from "@dashboard/discounts/components/DiscountCountrySelectDialog";
 import DiscountProducts from "@dashboard/discounts/components/DiscountProducts";
+import { useSpecificItemsAssign } from "@dashboard/discounts/components/VoucherCreatePage/hooks/useSpecificItemsAssig";
+import { useSpecificItemsPagination } from "@dashboard/discounts/components/VoucherCreatePage/hooks/useSpecificItemsPagination";
 import {
   createChannelsChangeHandler,
   createDiscountTypeChangeHandler,
@@ -24,6 +25,8 @@ import { itemsQuantityMessages } from "@dashboard/discounts/translations";
 import { VoucherCreateUrlQueryParams, voucherListUrl } from "@dashboard/discounts/urls";
 import { VOUCHER_CREATE_FORM_ID } from "@dashboard/discounts/views/VoucherCreate/types";
 import {
+  CategoryWithTotalProductsFragment,
+  CollectionWithTotalProductsFragment,
   CountryWithCodeFragment,
   DiscountErrorFragment,
   PermissionEnum,
@@ -31,13 +34,13 @@ import {
   SearchCategoriesWithTotalProductsQueryVariables,
   SearchCollectionsWithTotalProductsQuery,
   SearchCollectionsWithTotalProductsQueryVariables,
+  SearchProductFragment,
   SearchProductsQuery,
   SearchProductsQueryVariables,
   VoucherTypeEnum,
 } from "@dashboard/graphql";
 import { UseSearchResult } from "@dashboard/hooks/makeSearch";
 import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
-import useLocalPageInfo from "@dashboard/hooks/useLocalPageInfo";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { buttonMessages } from "@dashboard/intl";
@@ -45,7 +48,7 @@ import { validatePrice } from "@dashboard/products/utils/validation";
 import { ListActionsWithoutToolbar } from "@dashboard/types";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Button, Text } from "@saleor/macaw-ui-next";
-import React, { useMemo } from "react";
+import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { RequirementsPicker } from "../../types";
@@ -58,9 +61,10 @@ import VoucherRequirements from "../VoucherRequirements";
 import VoucherTypes from "../VoucherTypes";
 import VoucherValue from "../VoucherValue";
 import { initialForm } from "./const";
+import { useActiveTab } from "./hooks/useActiveTab";
 import { useVoucherCodesPagination } from "./hooks/useVoucherCodesPagination";
 import { useVoucherCodesSelection } from "./hooks/useVoucherCodesSelection";
-import { FormData } from "./types";
+import { FormData, VoucherCreatePageTab } from "./types";
 import {
   generateDraftVoucherCode,
   generateMultipleVoucherCodes,
@@ -70,14 +74,7 @@ import {
   voucherCodeExists,
 } from "./utils";
 
-export enum VoucherCreatePageTab {
-  categories = "categories",
-  collections = "collections",
-  products = "products",
-}
-
 export interface VoucherCreatePageProps extends Omit<ListActionsWithoutToolbar, "selected"> {
-  activeTab: VoucherCreatePageTab;
   countries: CountryWithCodeFragment[];
   allChannelsCount: number;
   channelListings: ChannelVoucherData[];
@@ -87,7 +84,6 @@ export interface VoucherCreatePageProps extends Omit<ListActionsWithoutToolbar, 
   onChannelsChange: (data: ChannelVoucherData[]) => void;
   openChannelsModal: () => void;
   onSubmit: (data: FormData) => SubmitPromise;
-  onTabClick: (index: VoucherCreatePageTab) => void;
   action: VoucherCreateUrlQueryParams["action"];
   openModal: (action: VoucherCreateUrlQueryParams["action"]) => void;
   closeModal: () => void;
@@ -109,7 +105,6 @@ const CollectionsTab = Tab(VoucherCreatePageTab.collections);
 const ProductsTab = Tab(VoucherCreatePageTab.products);
 
 const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
-  activeTab,
   allChannelsCount,
   channelListings = [],
   disabled,
@@ -118,7 +113,6 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   onChannelsChange,
   onSubmit,
   openChannelsModal,
-  onTabClick,
   selected,
   isChecked,
   action,
@@ -135,19 +129,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   const intl = useIntl();
   const navigate = useNavigator();
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
-
-  const countriesMap = useMemo(
-    () =>
-      countries.reduce(
-        (allChannelsCount, country) => {
-          allChannelsCount[country.code] = country;
-
-          return allChannelsCount;
-        },
-        {} as Record<string, CountryWithCodeFragment>,
-      ),
-    [countries],
-  );
+  const { activeTab, changeTab } = useActiveTab();
 
   const checkIfSaveIsDisabled = (data: FormData) =>
     (data.discountType.toString() !== "SHIPPING" &&
@@ -167,32 +149,6 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
       checkIfSaveIsDisabled,
     },
   );
-
-  const getSpecificDataByType = () => {
-    switch (activeTab) {
-      case "categories":
-        return data.categories;
-      case "collections":
-        return data.collections;
-      case "products":
-        return data.products;
-      default:
-        return [];
-    }
-  };
-
-  const {
-    pageInfo,
-    pageValues: paginatedCategories,
-    resetPage,
-    ...paginationValues
-  } = useLocalPageInfo(getSpecificDataByType(), PAGINATE_BY);
-
-  const changedPageInfo = {
-    ...pageInfo,
-    endCursor: pageInfo.endCursor.toString(),
-    startCursor: pageInfo.startCursor.toString(),
-  };
 
   const { clearRowSelection, setSelectedVoucherCodesIds, selectedRowIds } =
     useVoucherCodesSelection(data.codes);
@@ -240,108 +196,40 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     data.codes,
   );
 
-  const handleCategoryUnassign = (id: string) => {
-    change({
-      target: {
-        name: "categories",
-        value: data.categories.filter(category => category.id !== id),
+  const { paginatedSpecificItems, specificItemsPagination, resetSpecificItemsPagination } =
+    useSpecificItemsPagination({
+      type: activeTab,
+      data: {
+        categories: data.categories,
+        collections: data.collections,
+        products: data.products,
       },
     });
-  };
 
-  const handleCategoriesAssign = (categories: any[]) => {
-    change({
-      target: {
-        name: "categories",
-        value: [...data.categories, ...categories],
-      },
+  const { bulkUnassign, unassignItem, assignItem } = useSpecificItemsAssign({
+    data: {
+      categories: data.categories,
+      collections: data.collections,
+      products: data.products,
+      countries: data.countries,
+    },
+    onChange: change,
+  });
+
+  const onTabClick = (tab: VoucherCreatePageTab) =>
+    changeTab(tab, () => {
+      resetSelected();
+      resetSpecificItemsPagination();
     });
-    closeModal();
-  };
 
-  const handleBulkUnassign = (type: "categories" | "products" | "collections") => {
-    const selectedData = data[type];
-
-    if (!selectedData) {
-      return;
-    }
-
-    change({
-      target: {
-        name: type,
-        value: (selectedData as Array<{ id: string }>)?.filter(item => !selected.includes(item.id)),
-      },
-    });
-    resetSelected();
-  };
-
-  const handleCollectionUnassign = (id: string) => {
-    change({
-      target: {
-        name: "collections",
-        value: data.collections.filter(collection => collection.id !== id),
-      },
-    });
-  };
-
-  const handleCollectionAssign = (collections: any[]) => {
-    change({
-      target: {
-        name: "collections",
-        value: [...data.collections, ...collections],
-      },
-    });
-    closeModal();
-  };
-
-  const handleProductUnassign = (id: string) => {
-    change({
-      target: {
-        name: "products",
-        value: data.products.filter(product => product.id !== id),
-      },
-    });
-  };
-
-  const handleProductsAssign = (products: any[]) => {
-    change({
-      target: {
-        name: "products",
-        value: [...data.products, ...products],
-      },
-    });
-    closeModal();
-  };
-
-  const handleCountryUnassign = (code: string) => {
-    change({
-      target: {
-        name: "countries",
-        value: data.countries.filter(country => country.code !== code),
-      },
-    });
-  };
-
-  const handleCountryAssign = (countries: string[]) => {
-    change({
-      target: {
-        name: "countries",
-        value: countries.map(country => countriesMap[country]),
-      },
-    });
-    closeModal();
-  };
-
-  const BulkUnassignButton = ({ type }: { type: "categories" | "products" | "collections" }) => (
-    <Button onClick={() => handleBulkUnassign(type)} variant="secondary">
+  const BulkUnassignButton = ({ type }: { type: VoucherCreatePageTab | "countries" }) => (
+    <Button onClick={() => bulkUnassign(type, selected)} variant="secondary">
       <FormattedMessage id="Gkip05" defaultMessage="Unassign" description="button" />
     </Button>
   );
 
   return (
-    <PaginatorContext.Provider
-      value={{ ...changedPageInfo, paginatorType: "click", ...paginationValues }}
-    >
+    <PaginatorContext.Provider value={{ ...specificItemsPagination, paginatorType: "click" }}>
       <form onSubmit={submit}>
         <DetailPageLayout>
           <TopNav
@@ -417,8 +305,10 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                   <DiscountCategories
                     disabled={disabled}
                     onCategoryAssign={() => openModal("assign-category")}
-                    onCategoryUnassign={handleCategoryUnassign}
-                    categories={paginatedCategories}
+                    onCategoryUnassign={id =>
+                      unassignItem(id, VoucherCreatePageTab.categories, resetSelected)
+                    }
+                    categories={paginatedSpecificItems as CategoryWithTotalProductsFragment[]}
                     isChecked={isChecked}
                     selected={selected.length}
                     toggle={toggle}
@@ -429,8 +319,10 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                   <DiscountCollections
                     disabled={disabled}
                     onCollectionAssign={() => openModal("assign-collection")}
-                    onCollectionUnassign={handleCollectionUnassign}
-                    collections={paginatedCategories}
+                    onCollectionUnassign={id =>
+                      unassignItem(id, VoucherCreatePageTab.collections, resetSelected)
+                    }
+                    collections={paginatedSpecificItems as CollectionWithTotalProductsFragment[]}
                     isChecked={isChecked}
                     selected={selected.length}
                     toggle={toggle}
@@ -441,8 +333,10 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                   <DiscountProducts
                     disabled={disabled}
                     onProductAssign={() => openModal("assign-product")}
-                    onProductUnassign={handleProductUnassign}
-                    products={paginatedCategories}
+                    onProductUnassign={id =>
+                      unassignItem(id, VoucherCreatePageTab.products, resetSelected)
+                    }
+                    products={paginatedSpecificItems as SearchProductFragment[]}
                     isChecked={isChecked}
                     selected={selected.length}
                     toggle={toggle}
@@ -476,7 +370,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                   </>
                 }
                 onCountryAssign={() => openModal("assign-country")}
-                onCountryUnassign={handleCountryUnassign}
+                onCountryUnassign={id => unassignItem(id, "countries", closeModal)}
               />
             ) : null}
             <VoucherRequirements
@@ -530,7 +424,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
           onFetchMore={categoriesSearch.loadMore}
           loading={categoriesSearch.result?.loading}
           onClose={closeModal}
-          onSubmit={handleCategoriesAssign}
+          onSubmit={data => assignItem(data, VoucherCreatePageTab.categories, closeModal)}
           labels={{
             confirmBtn: intl.formatMessage(buttonMessages.save),
           }}
@@ -544,7 +438,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
           onFetchMore={collectionsSearch.loadMore}
           loading={collectionsSearch.result.loading}
           onClose={closeModal}
-          onSubmit={handleCollectionAssign}
+          onSubmit={data => assignItem(data, VoucherCreatePageTab.collections, closeModal)}
           labels={{
             confirmBtn: intl.formatMessage(buttonMessages.save),
           }}
@@ -553,7 +447,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
           confirmButtonState="default"
           countries={countries}
           onClose={closeModal}
-          onConfirm={async ({ countries }) => handleCountryAssign(countries)}
+          onSubmit={({ countries }) => assignItem(countries, "countries", closeModal)}
           open={action === "assign-country"}
           initial={data.countries.map(country => country.code)}
         />
@@ -570,7 +464,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
           loading={productsSearch.result.loading}
           open={action === "assign-product"}
           onClose={closeModal}
-          onSubmit={handleProductsAssign}
+          onSubmit={data => assignItem(data, VoucherCreatePageTab.products, closeModal)}
           products={getFilteredProducts(data, productsSearch.result)}
           labels={{
             confirmBtn: intl.formatMessage(buttonMessages.save),

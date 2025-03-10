@@ -2,7 +2,7 @@ import {
   CategoryWithTotalProductsFragment,
   CollectionWithTotalProductsFragment,
   CountryWithCodeFragment,
-  ProductFragment,
+  SearchProductFragment,
 } from "@dashboard/graphql";
 
 import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
@@ -12,5 +12,11 @@ export interface FormData extends VoucherDetailsPageFormData {
   countries: Array<CountryWithCodeFragment>;
   categories: Array<CategoryWithTotalProductsFragment>;
   collections: Array<CollectionWithTotalProductsFragment>;
-  products: Array<ProductFragment>;
+  products: Array<SearchProductFragment>;
+}
+
+export enum VoucherCreatePageTab {
+  categories = "categories",
+  collections = "collections",
+  products = "products",
 }
