@@ -11,6 +11,7 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import { Tab, TabContainer } from "@dashboard/components/Tab";
+import { PAGINATE_BY } from "@dashboard/config";
 import DiscountCategories from "@dashboard/discounts/components/DiscountCategories";
 import DiscountCollections from "@dashboard/discounts/components/DiscountCollections";
 import DiscountCountrySelectDialog from "@dashboard/discounts/components/DiscountCountrySelectDialog";
@@ -36,7 +37,9 @@ import {
 } from "@dashboard/graphql";
 import { UseSearchResult } from "@dashboard/hooks/makeSearch";
 import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
+import useLocalPageInfo from "@dashboard/hooks/useLocalPageInfo";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { buttonMessages } from "@dashboard/intl";
 import { validatePrice } from "@dashboard/products/utils/validation";
 import { ListActionsWithoutToolbar } from "@dashboard/types";
@@ -164,6 +167,32 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
       checkIfSaveIsDisabled,
     },
   );
+
+  const getSpecificDataByType = () => {
+    switch (activeTab) {
+      case "categories":
+        return data.categories;
+      case "collections":
+        return data.collections;
+      case "products":
+        return data.products;
+      default:
+        return [];
+    }
+  };
+
+  const {
+    pageInfo,
+    pageValues: paginatedCategories,
+    resetPage,
+    ...paginationValues
+  } = useLocalPageInfo(getSpecificDataByType(), PAGINATE_BY);
+
+  const changedPageInfo = {
+    ...pageInfo,
+    endCursor: pageInfo.endCursor.toString(),
+    startCursor: pageInfo.startCursor.toString(),
+  };
 
   const { clearRowSelection, setSelectedVoucherCodesIds, selectedRowIds } =
     useVoucherCodesSelection(data.codes);
@@ -310,241 +339,245 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   );
 
   return (
-    <form onSubmit={submit}>
-      <DetailPageLayout>
-        <TopNav
-          href={voucherListUrl()}
-          title={intl.formatMessage({
-            id: "PsclSa",
-            defaultMessage: "Create Voucher",
-            description: "page header",
-          })}
-        />
-        <DetailPageLayout.Content>
-          <VoucherInfo
-            data={data}
-            errors={errors}
-            disabled={disabled}
-            onChange={event => handleDiscountTypeChange(data, event)}
+    <PaginatorContext.Provider
+      value={{ ...changedPageInfo, paginatorType: "click", ...paginationValues }}
+    >
+      <form onSubmit={submit}>
+        <DetailPageLayout>
+          <TopNav
+            href={voucherListUrl()}
+            title={intl.formatMessage({
+              id: "PsclSa",
+              defaultMessage: "Create Voucher",
+              description: "page header",
+            })}
           />
-          <VoucherCodes
-            codes={paginatedCodes}
-            onDeleteCodes={handleDeleteVoucherCodes}
-            onMultiCodesGenerate={handleGenerateMultipleCodes}
-            onSelectVoucherCodesIds={setSelectedVoucherCodesIds}
-            onSettingsChange={onSettingsChange}
-            onCustomCodeGenerate={handleGenerateCustomCode}
-            selectedCodesIds={selectedRowIds}
-            settings={settings}
-            voucherCodesPagination={pagination}
-          />
-          <VoucherTypes data={data} disabled={disabled} errors={errors} onChange={change} />
-          {data.discountType.toString() !== "SHIPPING" ? (
-            <VoucherValue
+          <DetailPageLayout.Content>
+            <VoucherInfo
+              data={data}
+              errors={errors}
+              disabled={disabled}
+              onChange={event => handleDiscountTypeChange(data, event)}
+            />
+            <VoucherCodes
+              codes={paginatedCodes}
+              onDeleteCodes={handleDeleteVoucherCodes}
+              onMultiCodesGenerate={handleGenerateMultipleCodes}
+              onSelectVoucherCodesIds={setSelectedVoucherCodesIds}
+              onSettingsChange={onSettingsChange}
+              onCustomCodeGenerate={handleGenerateCustomCode}
+              selectedCodesIds={selectedRowIds}
+              settings={settings}
+              voucherCodesPagination={pagination}
+            />
+            <VoucherTypes data={data} disabled={disabled} errors={errors} onChange={change} />
+            {data.discountType.toString() !== "SHIPPING" ? (
+              <VoucherValue
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChannelChange={handleChannelChange}
+                onChange={change}
+              />
+            ) : null}
+            {data.type === VoucherTypeEnum.SPECIFIC_PRODUCT &&
+            data.discountType.toString() !== "SHIPPING" ? (
+              <>
+                <TabContainer>
+                  <CategoriesTab
+                    isActive={activeTab === VoucherCreatePageTab.categories}
+                    changeTab={onTabClick}
+                    testId="categories-tab"
+                  >
+                    {intl.formatMessage(itemsQuantityMessages.categories, {
+                      quantity: data.categories.length,
+                    })}
+                  </CategoriesTab>
+                  <CollectionsTab
+                    testId="collections-tab"
+                    isActive={activeTab === VoucherCreatePageTab.collections}
+                    changeTab={onTabClick}
+                  >
+                    {intl.formatMessage(itemsQuantityMessages.collections, {
+                      quantity: data.collections.length,
+                    })}
+                  </CollectionsTab>
+                  <ProductsTab
+                    testId="products-tab"
+                    isActive={activeTab === VoucherCreatePageTab.products}
+                    changeTab={onTabClick}
+                  >
+                    {intl.formatMessage(itemsQuantityMessages.products, {
+                      quantity: data.products.length,
+                    })}
+                  </ProductsTab>
+                </TabContainer>
+                <CardSpacer />
+                {activeTab === VoucherCreatePageTab.categories ? (
+                  <DiscountCategories
+                    disabled={disabled}
+                    onCategoryAssign={() => openModal("assign-category")}
+                    onCategoryUnassign={handleCategoryUnassign}
+                    categories={paginatedCategories}
+                    isChecked={isChecked}
+                    selected={selected.length}
+                    toggle={toggle}
+                    toggleAll={toggleAll}
+                    toolbar={<BulkUnassignButton type="categories" />}
+                  />
+                ) : activeTab === VoucherCreatePageTab.collections ? (
+                  <DiscountCollections
+                    disabled={disabled}
+                    onCollectionAssign={() => openModal("assign-collection")}
+                    onCollectionUnassign={handleCollectionUnassign}
+                    collections={paginatedCategories}
+                    isChecked={isChecked}
+                    selected={selected.length}
+                    toggle={toggle}
+                    toggleAll={toggleAll}
+                    toolbar={<BulkUnassignButton type="collections" />}
+                  />
+                ) : (
+                  <DiscountProducts
+                    disabled={disabled}
+                    onProductAssign={() => openModal("assign-product")}
+                    onProductUnassign={handleProductUnassign}
+                    products={paginatedCategories}
+                    isChecked={isChecked}
+                    selected={selected.length}
+                    toggle={toggle}
+                    toggleAll={toggleAll}
+                    toolbar={<BulkUnassignButton type="products" />}
+                  />
+                )}
+              </>
+            ) : null}
+            {data.discountType.toString() === "SHIPPING" ? (
+              <CountryList
+                countries={data.countries}
+                disabled={disabled}
+                emptyText={intl.formatMessage({
+                  id: "jd/LWa",
+                  defaultMessage: "Voucher applies to all countries",
+                })}
+                title={
+                  <>
+                    {intl.formatMessage({
+                      id: "ibnmEd",
+                      defaultMessage: "Countries",
+                      description: "voucher country range",
+                    })}
+                    <Text size={2} fontWeight="light" display="block">
+                      <FormattedMessage
+                        id="glT6fm"
+                        defaultMessage="Voucher is limited to these countries"
+                      />
+                    </Text>
+                  </>
+                }
+                onCountryAssign={() => openModal("assign-country")}
+                onCountryUnassign={handleCountryUnassign}
+              />
+            ) : null}
+            <VoucherRequirements
               data={data}
               disabled={disabled}
               errors={errors}
               onChannelChange={handleChannelChange}
               onChange={change}
             />
-          ) : null}
-          {data.type === VoucherTypeEnum.SPECIFIC_PRODUCT &&
-          data.discountType.toString() !== "SHIPPING" ? (
-            <>
-              <TabContainer>
-                <CategoriesTab
-                  isActive={activeTab === VoucherCreatePageTab.categories}
-                  changeTab={onTabClick}
-                  testId="categories-tab"
-                >
-                  {intl.formatMessage(itemsQuantityMessages.categories, {
-                    quantity: data.categories.length,
-                  })}
-                </CategoriesTab>
-                <CollectionsTab
-                  testId="collections-tab"
-                  isActive={activeTab === VoucherCreatePageTab.collections}
-                  changeTab={onTabClick}
-                >
-                  {intl.formatMessage(itemsQuantityMessages.collections, {
-                    quantity: data.collections.length,
-                  })}
-                </CollectionsTab>
-                <ProductsTab
-                  testId="products-tab"
-                  isActive={activeTab === VoucherCreatePageTab.products}
-                  changeTab={onTabClick}
-                >
-                  {intl.formatMessage(itemsQuantityMessages.products, {
-                    quantity: data.products.length,
-                  })}
-                </ProductsTab>
-              </TabContainer>
-              <CardSpacer />
-              {activeTab === VoucherCreatePageTab.categories ? (
-                <DiscountCategories
-                  disabled={disabled}
-                  onCategoryAssign={() => openModal("assign-category")}
-                  onCategoryUnassign={handleCategoryUnassign}
-                  categories={data.categories}
-                  isChecked={isChecked}
-                  selected={selected.length}
-                  toggle={toggle}
-                  toggleAll={toggleAll}
-                  toolbar={<BulkUnassignButton type="categories" />}
-                />
-              ) : activeTab === VoucherCreatePageTab.collections ? (
-                <DiscountCollections
-                  disabled={disabled}
-                  onCollectionAssign={() => openModal("assign-collection")}
-                  onCollectionUnassign={handleCollectionUnassign}
-                  collections={data.collections}
-                  isChecked={isChecked}
-                  selected={selected.length}
-                  toggle={toggle}
-                  toggleAll={toggleAll}
-                  toolbar={<BulkUnassignButton type="collections" />}
-                />
-              ) : (
-                <DiscountProducts
-                  disabled={disabled}
-                  onProductAssign={() => openModal("assign-product")}
-                  onProductUnassign={handleProductUnassign}
-                  products={data.products}
-                  isChecked={isChecked}
-                  selected={selected.length}
-                  toggle={toggle}
-                  toggleAll={toggleAll}
-                  toolbar={<BulkUnassignButton type="products" />}
-                />
-              )}
-            </>
-          ) : null}
-          {data.discountType.toString() === "SHIPPING" ? (
-            <CountryList
-              countries={data.countries}
+            <VoucherLimits
+              data={data}
+              initialUsageLimit={initialForm.usageLimit}
               disabled={disabled}
-              emptyText={intl.formatMessage({
-                id: "jd/LWa",
-                defaultMessage: "Voucher applies to all countries",
-              })}
-              title={
-                <>
-                  {intl.formatMessage({
-                    id: "ibnmEd",
-                    defaultMessage: "Countries",
-                    description: "voucher country range",
-                  })}
-                  <Text size={2} fontWeight="light" display="block">
-                    <FormattedMessage
-                      id="glT6fm"
-                      defaultMessage="Voucher is limited to these countries"
-                    />
-                  </Text>
-                </>
-              }
-              onCountryAssign={() => openModal("assign-country")}
-              onCountryUnassign={handleCountryUnassign}
+              errors={errors}
+              onChange={change}
+              setData={set}
+              isNewVoucher
             />
-          ) : null}
-          <VoucherRequirements
-            data={data}
-            disabled={disabled}
-            errors={errors}
-            onChannelChange={handleChannelChange}
-            onChange={change}
-          />
-          <VoucherLimits
-            data={data}
-            initialUsageLimit={initialForm.usageLimit}
-            disabled={disabled}
-            errors={errors}
-            onChange={change}
-            setData={set}
-            isNewVoucher
-          />
-          <VoucherDates data={data} disabled={disabled} errors={errors} onChange={change} />
-          <Metadata data={data} onChange={changeMetadata} />
-        </DetailPageLayout.Content>
-        <DetailPageLayout.RightSidebar>
-          <ChannelsAvailabilityCard
-            managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
-            allChannelsCount={allChannelsCount}
-            channelsList={data.channelListings.map(channel => ({
-              id: channel.id,
-              name: channel.name,
-            }))}
-            disabled={disabled}
-            openModal={openChannelsModal}
-          />
-        </DetailPageLayout.RightSidebar>
-        <Savebar>
-          <Savebar.Spacer />
-          <Savebar.CancelButton onClick={() => navigate(voucherListUrl())} />
-          <Savebar.ConfirmButton
-            transitionState={saveButtonBarState}
-            onClick={submit}
-            disabled={disabled}
-          />
-        </Savebar>
-      </DetailPageLayout>
+            <VoucherDates data={data} disabled={disabled} errors={errors} onChange={change} />
+            <Metadata data={data} onChange={changeMetadata} />
+          </DetailPageLayout.Content>
+          <DetailPageLayout.RightSidebar>
+            <ChannelsAvailabilityCard
+              managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
+              allChannelsCount={allChannelsCount}
+              channelsList={data.channelListings.map(channel => ({
+                id: channel.id,
+                name: channel.name,
+              }))}
+              disabled={disabled}
+              openModal={openChannelsModal}
+            />
+          </DetailPageLayout.RightSidebar>
+          <Savebar>
+            <Savebar.Spacer />
+            <Savebar.CancelButton onClick={() => navigate(voucherListUrl())} />
+            <Savebar.ConfirmButton
+              transitionState={saveButtonBarState}
+              onClick={submit}
+              disabled={disabled}
+            />
+          </Savebar>
+        </DetailPageLayout>
 
-      <AssignCategoriesDialog
-        categories={getFilteredCategories(data, categoriesSearch.result)}
-        confirmButtonState="default"
-        hasMore={categoriesSearch.result?.data?.search?.pageInfo?.hasNextPage ?? false}
-        open={action === "assign-category"}
-        onFetch={categoriesSearch.search}
-        onFetchMore={categoriesSearch.loadMore}
-        loading={categoriesSearch.result?.loading}
-        onClose={closeModal}
-        onSubmit={handleCategoriesAssign}
-        labels={{
-          confirmBtn: intl.formatMessage(buttonMessages.save),
-        }}
-      />
-      <AssignCollectionDialog
-        collections={getFilteredCollections(data, collectionsSearch.result)}
-        confirmButtonState="default"
-        hasMore={collectionsSearch?.result?.data?.search?.pageInfo?.hasNextPage ?? false}
-        open={action === "assign-collection"}
-        onFetch={collectionsSearch.search}
-        onFetchMore={collectionsSearch.loadMore}
-        loading={collectionsSearch.result.loading}
-        onClose={closeModal}
-        onSubmit={handleCollectionAssign}
-        labels={{
-          confirmBtn: intl.formatMessage(buttonMessages.save),
-        }}
-      />
-      <DiscountCountrySelectDialog
-        confirmButtonState="default"
-        countries={countries}
-        onClose={closeModal}
-        onConfirm={async ({ countries }) => handleCountryAssign(countries)}
-        open={action === "assign-country"}
-        initial={data.countries.map(country => country.code)}
-      />
-      <AssignProductDialog
-        selectedChannels={channelListings}
-        productUnavailableText={intl.formatMessage({
-          id: "XOkUxQ",
-          defaultMessage: "Product unavailable in voucher channels",
-        })}
-        confirmButtonState="default"
-        hasMore={productsSearch?.result.data?.search?.pageInfo?.hasNextPage ?? false}
-        onFetch={productsSearch.search}
-        onFetchMore={productsSearch.loadMore}
-        loading={productsSearch.result.loading}
-        open={action === "assign-product"}
-        onClose={closeModal}
-        onSubmit={handleProductsAssign}
-        products={getFilteredProducts(data, productsSearch.result)}
-        labels={{
-          confirmBtn: intl.formatMessage(buttonMessages.save),
-        }}
-      />
-    </form>
+        <AssignCategoriesDialog
+          categories={getFilteredCategories(data, categoriesSearch.result)}
+          confirmButtonState="default"
+          hasMore={categoriesSearch.result?.data?.search?.pageInfo?.hasNextPage ?? false}
+          open={action === "assign-category"}
+          onFetch={categoriesSearch.search}
+          onFetchMore={categoriesSearch.loadMore}
+          loading={categoriesSearch.result?.loading}
+          onClose={closeModal}
+          onSubmit={handleCategoriesAssign}
+          labels={{
+            confirmBtn: intl.formatMessage(buttonMessages.save),
+          }}
+        />
+        <AssignCollectionDialog
+          collections={getFilteredCollections(data, collectionsSearch.result)}
+          confirmButtonState="default"
+          hasMore={collectionsSearch?.result?.data?.search?.pageInfo?.hasNextPage ?? false}
+          open={action === "assign-collection"}
+          onFetch={collectionsSearch.search}
+          onFetchMore={collectionsSearch.loadMore}
+          loading={collectionsSearch.result.loading}
+          onClose={closeModal}
+          onSubmit={handleCollectionAssign}
+          labels={{
+            confirmBtn: intl.formatMessage(buttonMessages.save),
+          }}
+        />
+        <DiscountCountrySelectDialog
+          confirmButtonState="default"
+          countries={countries}
+          onClose={closeModal}
+          onConfirm={async ({ countries }) => handleCountryAssign(countries)}
+          open={action === "assign-country"}
+          initial={data.countries.map(country => country.code)}
+        />
+        <AssignProductDialog
+          selectedChannels={channelListings}
+          productUnavailableText={intl.formatMessage({
+            id: "XOkUxQ",
+            defaultMessage: "Product unavailable in voucher channels",
+          })}
+          confirmButtonState="default"
+          hasMore={productsSearch?.result.data?.search?.pageInfo?.hasNextPage ?? false}
+          onFetch={productsSearch.search}
+          onFetchMore={productsSearch.loadMore}
+          loading={productsSearch.result.loading}
+          open={action === "assign-product"}
+          onClose={closeModal}
+          onSubmit={handleProductsAssign}
+          products={getFilteredProducts(data, productsSearch.result)}
+          labels={{
+            confirmBtn: intl.formatMessage(buttonMessages.save),
+          }}
+        />
+      </form>
+    </PaginatorContext.Provider>
   );
 };
 

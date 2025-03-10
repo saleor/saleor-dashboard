@@ -3,7 +3,7 @@ import { ChannelVoucherData, createSortedVoucherData } from "@dashboard/channels
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
 import {
   useUpdateMetadataMutation,
@@ -13,13 +13,8 @@ import {
 } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useChannels from "@dashboard/hooks/useChannels";
-import useLocalPaginator, {
-  PageInfo,
-  useSectionLocalPaginationState,
-} from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
-import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import useShop from "@dashboard/hooks/useShop";
 import { sectionNames } from "@dashboard/intl";
 import { useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCategorySearch";
@@ -65,12 +60,7 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
   const allChannels: ChannelVoucherData[] = createSortedVoucherData(availableChannels);
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
   const [activeTab, setActiveTab] = useState<VoucherCreatePageTab>(VoucherCreatePageTab.categories);
-  const [paginationState, setPaginationState] = useSectionLocalPaginationState(
-    PAGINATE_BY,
-    activeTab,
-  );
 
-  const paginate = useLocalPaginator(setPaginationState);
   const {
     channelListElements,
     channelsToggle,
@@ -145,17 +135,8 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
     setActiveTab(tab);
   };
 
-  const tabPageInfo: PageInfo = {
-    hasNextPage: false,
-    endCursor: "",
-    hasPreviousPage: false,
-    startCursor: "",
-  };
-
-  const { pageInfo, ...paginationValues } = paginate(tabPageInfo, paginationState);
-
   return (
-    <PaginatorContext.Provider value={{ ...pageInfo, ...paginationValues }}>
+    <>
       {!!allChannels?.length && (
         <ChannelsAvailabilityDialog
           isSelected={isChannelSelected}
@@ -202,7 +183,7 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
         toggleAll={toggleAll}
         resetSelected={reset}
       />
-    </PaginatorContext.Provider>
+    </>
   );
 };
 export default VoucherCreateView;
