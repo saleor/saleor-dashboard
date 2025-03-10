@@ -1,0 +1,72 @@
+name: Flaky test report
+description: Extract flaky tests from PW test reports
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 20
+
+    - name: Install dependencies
+      shell: bash
+      run: |
+        cd .github/actions/flaky-tests-report
+        npm ci
+
+    - name: Download CTRF reports
+      uses: actions/download-artifact@v4
+      with:
+        pattern: ctrf-report-*
+        path: ctrf-reports
+        merge-multiple: true
+
+    - name: Merge CTRF reports
+      shell: bash
+      run: npx ctrf merge ./ctrf-reports --output merged-report.json
+
+    - name: Add execution date to merged report
+      shell: bash
+      run: |
+        DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")  # ISO format
+        jq --arg date "$DATE" '.results.summary.extra = { "date": $date }' ctrf-reports/merged-report.json > ctrf-reports/tmp.json && mv ctrf-reports/tmp.json ctrf-reports/merged-report.json
+        
+    - name: Upload CTRF report
+      uses: actions/upload-artifact@v4
+      with:
+        name:  merged-report.json
+        path: ctrf-reports
+        retention-days: 14
+
+    - name: Publish Test Report
+      uses: ctrf-io/github-test-reporter@15f50159adb465644ec5ddc3b76b92af1e414432 # v1.0.11  
+      with:
+        report-path: ctrf-reports/merged-report.json
+        summary-report: true
+        failed-report: true
+      env:
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+      if: always()
+      
+    - name: Publish PR Comment
+      uses: ctrf-io/github-test-reporter@15f50159adb465644ec5ddc3b76b92af1e414432 # v1.0.11  
+      with:
+        report-path: ctrf-reports/merged-report.json
+        pull-request-report: true
+        overwrite-comment: true
+      env:
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+      if: github.event_name == 'pull_request'
+
+    - name: Cleanup uploaded partial reports
+      shell: bash
+      run: |
+        for artifact_id in $(gh api repos/"$GITHUB_REPOSITORY"/actions/runs/"$GITHUB_RUN_ID"/artifacts --jq '.artifacts[] | select(.name | startswith("ctrf-report-")) | .id'); do  
+          gh api --method DELETE repos/"$GITHUB_REPOSITORY"/actions/artifacts/"$artifact_id"  
+        done
+      env:
+        GH_TOKEN:  ${{ inputs.github_token }}
+
+inputs:
+  github_token:
+    description: "GitHub token for accessing APIs"
+    required: true
