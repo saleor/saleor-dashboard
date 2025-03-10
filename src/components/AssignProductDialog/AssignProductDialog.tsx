@@ -35,7 +35,10 @@ export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   selectedIds?: Record<string, boolean>;
   loading: boolean;
   onFetch: (value: string) => void;
-  onSubmit: (data: Container[]) => void;
+  onSubmit: (data: Array<Container & Omit<Partial<Products[number]>, "name">>) => void;
+  labels?: {
+    confirmBtn: string;
+  };
 }
 
 const scrollableTargetId = "assignProductScrollableDialog";
@@ -53,6 +56,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
     onFetchMore,
     onSubmit,
     selectedIds,
+    labels,
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -85,10 +89,15 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
       .map(key => key);
 
     onSubmit(
-      selectedProductsAsArray.map(id => ({
-        id,
-        name: products.find(product => product.id === id)?.name,
-      })),
+      selectedProductsAsArray.map(id => {
+        const productDetails = products.find(product => product.id === id);
+
+        return {
+          id,
+          name: productDetails?.name,
+          ...(productDetails ?? {}),
+        };
+      }),
     );
   };
   const handleChange = productId => {
@@ -179,7 +188,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
             type="submit"
             onClick={handleSubmit}
           >
-            <FormattedMessage {...messages.assignProductDialogButton} />
+            {labels?.confirmBtn ?? <FormattedMessage {...messages.assignProductDialogButton} />}
           </ConfirmButton>
         </DashboardModal.Actions>
       </DashboardModal.Content>

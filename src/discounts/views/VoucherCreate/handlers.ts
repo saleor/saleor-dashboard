@@ -1,4 +1,5 @@
 import { FetchResult } from "@apollo/client";
+import { FormData } from "@dashboard/discounts/components/VoucherCreatePage/types";
 import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
 import { getChannelsVariables } from "@dashboard/discounts/handlers";
 import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
@@ -21,7 +22,7 @@ export function createHandler(
   }) => Promise<FetchResult<VoucherChannelListingUpdateMutation>>,
   validateFn: (data: VoucherDetailsPageFormData) => boolean,
 ) {
-  return async (formData: VoucherDetailsPageFormData) => {
+  return async (formData: FormData) => {
     if (!validateFn(formData)) {
       return { errors: ["Invalid data"] };
     }
@@ -51,6 +52,10 @@ export function createHandler(
             : formData.type,
         usageLimit: formData.hasUsageLimit ? formData.usageLimit : null,
         singleUse: formData.singleUse,
+        products: formData.products.map(product => product.id),
+        collections: formData.collections.map(collection => collection.id),
+        categories: formData.categories.map(category => category.id),
+        countries: formData.countries.map(country => country.code),
       },
     });
     const errors = getMutationErrors(response);

@@ -25,7 +25,6 @@ interface VoucherValueProps {
   data: VoucherDetailsPageFormData;
   errors: DiscountErrorFragment[];
   disabled: boolean;
-  variant: string;
   onChange: (event: React.ChangeEvent<any>) => void;
   onChannelChange: (channelId: string, input: ChannelInput) => void;
 }
@@ -37,7 +36,7 @@ export enum VoucherType {
 
 const numberOfColumns = 2;
 const VoucherValue: React.FC<VoucherValueProps> = props => {
-  const { data, disabled, errors, variant, onChange, onChannelChange } = props;
+  const { data, disabled, errors, onChange, onChannelChange } = props;
   const classes = useStyles(props);
   const intl = useIntl();
   const formErrors = getFormErrors(["discountValue", "type"], errors);
@@ -140,23 +139,21 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
         </div>
 
         <FormSpacer />
-        {variant === "update" && (
-          <>
-            <RadioGroupField
-              choices={voucherTypeChoices}
-              disabled={disabled}
-              error={!!formErrors.type}
-              hint={getDiscountErrorMessage(formErrors.type, intl)}
-              label={intl.formatMessage({
-                id: "9UHfux",
-                defaultMessage: "Voucher Specific Information",
-              })}
-              name={"type" as keyof VoucherDetailsPageFormData}
-              value={data.type}
-              onChange={onChange}
-            />
-          </>
-        )}
+
+        <RadioGroupField
+          choices={voucherTypeChoices}
+          disabled={disabled}
+          error={!!formErrors.type}
+          hint={getDiscountErrorMessage(formErrors.type, intl)}
+          label={intl.formatMessage({
+            id: "9UHfux",
+            defaultMessage: "Voucher Specific Information",
+          })}
+          name={"type" as keyof VoucherDetailsPageFormData}
+          value={data.type}
+          onChange={onChange}
+        />
+
         <FormSpacer />
         <ControlledCheckbox
           name={"applyOncePerOrder" as keyof VoucherDetailsPageFormData}

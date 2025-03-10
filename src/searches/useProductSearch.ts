@@ -14,6 +14,10 @@ export const searchProducts = gql`
         node {
           id
           name
+          productType {
+            id
+            name
+          }
           thumbnail {
             url
           }
