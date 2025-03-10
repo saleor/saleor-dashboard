@@ -3,7 +3,7 @@ import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { getFullName } from "@dashboard/misc";
 import { orderUrl } from "@dashboard/orders/urls";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
-import { MessageDescriptor } from "react-intl";
+import { IntlShape, MessageDescriptor } from "react-intl";
 
 export const getEventSecondaryTitle = (event: OrderEventFragment): [MessageDescriptor, any?] => {
   switch (event.type) {
@@ -76,7 +76,7 @@ const selectEmployeeName = ({ firstName, lastName, email }: OrderEventFragment["
   return email;
 };
 
-export const getEmployeeNameLink = (event: OrderEventFragment) => {
+export const getEmployeeNameLink = (event: OrderEventFragment, intl: IntlShape) => {
   if (!hasEnsuredOrderEventFields(event, ["user"])) {
     return null;
   }
@@ -85,7 +85,13 @@ export const getEmployeeNameLink = (event: OrderEventFragment) => {
 
   return {
     link: staffMemberDetailsUrl(id),
-    text: selectEmployeeName(event.user),
+    text:
+      selectEmployeeName(event.user) ||
+      intl.formatMessage({
+        defaultMessage: "Unknown user",
+        id: "kv1DqJ",
+        description: "unknown user display name",
+      }),
   };
 };
 

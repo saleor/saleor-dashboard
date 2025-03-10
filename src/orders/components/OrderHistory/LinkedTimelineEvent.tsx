@@ -61,7 +61,7 @@ const LinkedTimelineEvent: React.FC<LinkedTimelineEventProps> = ({ event, hasPla
           {
             text: intl.formatMessage(discountRemovedMessages.orderDiscountRemoved),
           },
-          getEmployeeNameLink(event),
+          getEmployeeNameLink(event, intl),
         ];
       }
       case OrderEventsEnum.ORDER_LINE_DISCOUNT_REMOVED: {
@@ -71,7 +71,7 @@ const LinkedTimelineEvent: React.FC<LinkedTimelineEventProps> = ({ event, hasPla
               productName: lines[0].itemName,
             }),
           },
-          getEmployeeNameLink(event),
+          getEmployeeNameLink(event, intl),
         ];
       }
     }
