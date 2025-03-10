@@ -1,6 +1,5 @@
 // @ts-strict-ignore
-import { SearchCollectionsQuery } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
+import { CollectionWithTotalProductsFragment } from "@dashboard/graphql";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -9,7 +8,7 @@ import { messages } from "./messages";
 
 interface AssignCollectionDialogProps
   extends Omit<AssignContainerDialogProps, "containers" | "labels"> {
-  collections: RelayToFlat<SearchCollectionsQuery["search"]>;
+  collections: CollectionWithTotalProductsFragment[];
   labels?: Partial<AssignContainerDialogProps["labels"]>;
 }
 

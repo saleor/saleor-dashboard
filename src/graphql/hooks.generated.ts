@@ -431,6 +431,15 @@ export const CollectionProductFragmentDoc = gql`
   }
 }
     ${ChannelListingProductWithoutPricingFragmentDoc}`;
+export const CollectionWithTotalProductsFragmentDoc = gql`
+    fragment CollectionWithTotalProducts on Collection {
+  id
+  name
+  products {
+    totalCount
+  }
+}
+    `;
 export const CustomerFragmentDoc = gql`
     fragment Customer on User {
   id
@@ -16324,6 +16333,57 @@ export function useSearchCollectionsLazyQuery(baseOptions?: ApolloReactHooks.Laz
 export type SearchCollectionsQueryHookResult = ReturnType<typeof useSearchCollectionsQuery>;
 export type SearchCollectionsLazyQueryHookResult = ReturnType<typeof useSearchCollectionsLazyQuery>;
 export type SearchCollectionsQueryResult = Apollo.QueryResult<Types.SearchCollectionsQuery, Types.SearchCollectionsQueryVariables>;
+export const SearchCollectionsWithTotalProductsDocument = gql`
+    query SearchCollectionsWithTotalProducts($after: String, $first: Int!, $query: String!, $channel: String) {
+  search: collections(
+    after: $after
+    first: $first
+    filter: {search: $query}
+    channel: $channel
+  ) {
+    edges {
+      node {
+        ...CollectionWithTotalProducts
+      }
+    }
+    pageInfo {
+      ...PageInfo
+    }
+  }
+}
+    ${CollectionWithTotalProductsFragmentDoc}
+${PageInfoFragmentDoc}`;
+
+/**
+ * __useSearchCollectionsWithTotalProductsQuery__
+ *
+ * To run a query within a React component, call `useSearchCollectionsWithTotalProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchCollectionsWithTotalProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchCollectionsWithTotalProductsQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      query: // value for 'query'
+ *      channel: // value for 'channel'
+ *   },
+ * });
+ */
+export function useSearchCollectionsWithTotalProductsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchCollectionsWithTotalProductsQuery, Types.SearchCollectionsWithTotalProductsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.SearchCollectionsWithTotalProductsQuery, Types.SearchCollectionsWithTotalProductsQueryVariables>(SearchCollectionsWithTotalProductsDocument, options);
+      }
+export function useSearchCollectionsWithTotalProductsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchCollectionsWithTotalProductsQuery, Types.SearchCollectionsWithTotalProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.SearchCollectionsWithTotalProductsQuery, Types.SearchCollectionsWithTotalProductsQueryVariables>(SearchCollectionsWithTotalProductsDocument, options);
+        }
+export type SearchCollectionsWithTotalProductsQueryHookResult = ReturnType<typeof useSearchCollectionsWithTotalProductsQuery>;
+export type SearchCollectionsWithTotalProductsLazyQueryHookResult = ReturnType<typeof useSearchCollectionsWithTotalProductsLazyQuery>;
+export type SearchCollectionsWithTotalProductsQueryResult = Apollo.QueryResult<Types.SearchCollectionsWithTotalProductsQuery, Types.SearchCollectionsWithTotalProductsQueryVariables>;
 export const SearchCustomersDocument = gql`
     query SearchCustomers($after: String, $first: Int!, $query: String!) {
   search: customers(after: $after, first: $first, filter: {search: $query}) {

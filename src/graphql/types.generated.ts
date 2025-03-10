@@ -10108,6 +10108,8 @@ export type CollectionDetailsFragment = { __typename: 'Collection', slug: string
 
 export type CollectionProductFragment = { __typename: 'Product', id: string, name: string, productType: { __typename: 'ProductType', id: string, name: string }, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, isPublished: boolean, publishedAt: any | null, isAvailableForPurchase: boolean | null, availableForPurchaseAt: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null };
 
+export type CollectionWithTotalProductsFragment = { __typename: 'Collection', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null };
+
 export type CustomerFragment = { __typename: 'User', id: string, email: string, firstName: string, lastName: string };
 
 export type CustomerDetailsFragment = { __typename: 'User', dateJoined: any, lastLogin: any | null, note: string | null, isActive: boolean, id: string, email: string, firstName: string, lastName: string, defaultShippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null };
@@ -11924,6 +11926,16 @@ export type SearchCollectionsQueryVariables = Exact<{
 
 
 export type SearchCollectionsQuery = { __typename: 'Query', search: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
+export type SearchCollectionsWithTotalProductsQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int'];
+  query: Scalars['String'];
+  channel?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type SearchCollectionsWithTotalProductsQuery = { __typename: 'Query', search: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchCustomersQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;

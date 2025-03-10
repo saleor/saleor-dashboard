@@ -23,7 +23,7 @@ import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import useShop from "@dashboard/hooks/useShop";
 import { sectionNames } from "@dashboard/intl";
 import { useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCategorySearch";
-import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
+import { useCollectionWithTotalProductsSearch } from "@dashboard/searches/useCollectionSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
@@ -107,7 +107,7 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
   const categoriesSearch = useCategoryWithTotalProductsSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
-  const collectionsSearch = useCollectionSearch({
+  const collectionsSearch = useCollectionWithTotalProductsSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const productsSearch = useProductSearch({

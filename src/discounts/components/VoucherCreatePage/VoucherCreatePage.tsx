@@ -28,8 +28,8 @@ import {
   PermissionEnum,
   SearchCategoriesWithTotalProductsQuery,
   SearchCategoriesWithTotalProductsQueryVariables,
-  SearchCollectionsQuery,
-  SearchCollectionsQueryVariables,
+  SearchCollectionsWithTotalProductsQuery,
+  SearchCollectionsWithTotalProductsQueryVariables,
   SearchProductsQuery,
   SearchProductsQueryVariables,
   VoucherTypeEnum,
@@ -92,7 +92,10 @@ export interface VoucherCreatePageProps extends Omit<ListActionsWithoutToolbar, 
     SearchCategoriesWithTotalProductsQuery,
     SearchCategoriesWithTotalProductsQueryVariables
   >;
-  collectionsSearch: UseSearchResult<SearchCollectionsQuery, SearchCollectionsQueryVariables>;
+  collectionsSearch: UseSearchResult<
+    SearchCollectionsWithTotalProductsQuery,
+    SearchCollectionsWithTotalProductsQueryVariables
+  >;
   productsSearch: UseSearchResult<SearchProductsQuery, SearchProductsQueryVariables>;
   selected: string[];
   resetSelected: () => void;
@@ -380,7 +383,6 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
               <CardSpacer />
               {activeTab === VoucherCreatePageTab.categories ? (
                 <DiscountCategories
-                  showProductColumn={false}
                   disabled={disabled}
                   onCategoryAssign={() => openModal("assign-category")}
                   onCategoryUnassign={handleCategoryUnassign}
@@ -393,7 +395,6 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 />
               ) : activeTab === VoucherCreatePageTab.collections ? (
                 <DiscountCollections
-                  showProductColumn={false}
                   disabled={disabled}
                   onCollectionAssign={() => openModal("assign-collection")}
                   onCollectionUnassign={handleCollectionUnassign}

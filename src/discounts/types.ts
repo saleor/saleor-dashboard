@@ -1,6 +1,6 @@
 import { DecimalFilterInput, PromotionTypeEnum } from "@dashboard/graphql";
 import { useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCategorySearch";
-import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
+import { useCollectionWithTotalProductsSearch } from "@dashboard/searches/useCollectionSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 
 import { Rule } from "./models";
@@ -18,7 +18,9 @@ export enum DiscountTypeEnum {
 }
 
 export type SearchCategoriesOpts = ReturnType<typeof useCategoryWithTotalProductsSearch>["result"];
-export type SearchCollectionOpts = ReturnType<typeof useCollectionSearch>["result"];
+export type SearchCollectionOpts = ReturnType<
+  typeof useCollectionWithTotalProductsSearch
+>["result"];
 export type SearchProductsOpts = ReturnType<typeof useProductSearch>["result"];
 
 export interface DiscoutFormData {
