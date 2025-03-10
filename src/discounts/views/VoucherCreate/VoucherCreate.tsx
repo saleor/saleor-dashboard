@@ -22,7 +22,7 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import useShop from "@dashboard/hooks/useShop";
 import { sectionNames } from "@dashboard/intl";
-import useCategorySearch from "@dashboard/searches/useCategorySearch";
+import { useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -104,7 +104,7 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
     },
   });
 
-  const categoriesSearch = useCategorySearch({
+  const categoriesSearch = useCategoryWithTotalProductsSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const collectionsSearch = useCollectionSearch({

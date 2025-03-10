@@ -1,5 +1,5 @@
 import { DecimalFilterInput, PromotionTypeEnum } from "@dashboard/graphql";
-import useCategorySearch from "@dashboard/searches/useCategorySearch";
+import { useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 
@@ -17,7 +17,7 @@ export enum DiscountTypeEnum {
   SHIPPING = "SHIPPING",
 }
 
-export type SearchCategoriesOpts = ReturnType<typeof useCategorySearch>["result"];
+export type SearchCategoriesOpts = ReturnType<typeof useCategoryWithTotalProductsSearch>["result"];
 export type SearchCollectionOpts = ReturnType<typeof useCollectionSearch>["result"];
 export type SearchProductsOpts = ReturnType<typeof useProductSearch>["result"];
 

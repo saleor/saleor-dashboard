@@ -26,8 +26,8 @@ import {
   CountryWithCodeFragment,
   DiscountErrorFragment,
   PermissionEnum,
-  SearchCategoriesQuery,
-  SearchCategoriesQueryVariables,
+  SearchCategoriesWithTotalProductsQuery,
+  SearchCategoriesWithTotalProductsQueryVariables,
   SearchCollectionsQuery,
   SearchCollectionsQueryVariables,
   SearchProductsQuery,
@@ -88,7 +88,10 @@ export interface VoucherCreatePageProps extends Omit<ListActionsWithoutToolbar, 
   action: VoucherCreateUrlQueryParams["action"];
   openModal: (action: VoucherCreateUrlQueryParams["action"]) => void;
   closeModal: () => void;
-  categoriesSearch: UseSearchResult<SearchCategoriesQuery, SearchCategoriesQueryVariables>;
+  categoriesSearch: UseSearchResult<
+    SearchCategoriesWithTotalProductsQuery,
+    SearchCategoriesWithTotalProductsQueryVariables
+  >;
   collectionsSearch: UseSearchResult<SearchCollectionsQuery, SearchCollectionsQueryVariables>;
   productsSearch: UseSearchResult<SearchProductsQuery, SearchProductsQueryVariables>;
   selected: string[];

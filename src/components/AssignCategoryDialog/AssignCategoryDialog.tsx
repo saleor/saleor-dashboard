@@ -1,6 +1,5 @@
 // @ts-strict-ignore
-import { SearchCategoriesQuery } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
+import { CategoryWithTotalProductsFragment } from "@dashboard/graphql";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -9,7 +8,7 @@ import { messages } from "./messages";
 
 interface AssignCategoryDialogProps
   extends Omit<AssignContainerDialogProps, "containers" | "labels"> {
-  categories: RelayToFlat<SearchCategoriesQuery["search"]>;
+  categories: CategoryWithTotalProductsFragment[];
   labels?: Partial<AssignContainerDialogProps["labels"]>;
 }
 

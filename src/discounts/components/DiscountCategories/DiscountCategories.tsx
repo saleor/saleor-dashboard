@@ -8,7 +8,7 @@ import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/Tab
 import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { CategoryFragment } from "@dashboard/graphql";
+import { CategoryWithTotalProductsFragment } from "@dashboard/graphql";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
@@ -21,8 +21,7 @@ import { messages } from "./messages";
 import { useStyles } from "./styles";
 
 export interface DiscountCategoriesProps extends ListProps, ListActions {
-  categories: CategoryFragment[];
-  showProductColumn?: boolean;
+  categories: CategoryWithTotalProductsFragment[];
   onCategoryAssign: () => void;
   onCategoryUnassign: (id: string) => void;
 }
@@ -39,8 +38,6 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
     toggleAll,
     selected,
     isChecked,
-    // In some cases, we don't have data about category products
-    showProductColumn = true,
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -61,7 +58,7 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
         <colgroup>
           <col />
           <col className={classes.colName} />
-          {showProductColumn && <col className={classes.colProducts} />}
+          <col className={classes.colProducts} />
           <col className={classes.colActions} />
         </colgroup>
         <TableHead
@@ -76,11 +73,9 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
             <TableCell className={classes.colName}>
               <FormattedMessage {...messages.discountCategoriesTableProductHeader} />
             </TableCell>
-            {showProductColumn && (
-              <TableCell className={classes.colProducts}>
-                <FormattedMessage {...messages.discountCategoriesTableProductNumber} />
-              </TableCell>
-            )}
+            <TableCell className={classes.colProducts}>
+              <FormattedMessage {...messages.discountCategoriesTableProductNumber} />
+            </TableCell>
             <TableCell />
           </>
         </TableHead>
@@ -113,9 +108,7 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
                     />
                   </TableCell>
                   <TableCell>{category ? category.name : <Skeleton />}</TableCell>
-                  {showProductColumn && (
-                    <TableCell>{category ? category.products?.totalCount : <Skeleton />}</TableCell>
-                  )}
+                  <TableCell>{category ? category.products?.totalCount : <Skeleton />}</TableCell>
                   <TableCell className={classes.colActions}>
                     <TableButtonWrapper>
                       <IconButton
