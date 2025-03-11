@@ -30,6 +30,9 @@
 - Node.js v20
 - A running instance of [Saleor](https://github.com/saleor/saleor/)
 
+> [!NOTE]
+> Currently both Node v20 and v18 are supported. We recommend using Node v20, since support for older versions will be dropped.
+
 ## Development
 
 1. Clone the repository:
