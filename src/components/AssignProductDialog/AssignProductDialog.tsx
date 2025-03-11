@@ -38,7 +38,7 @@ export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   // name is part of Container interface
   onSubmit: (data: Array<Container & Omit<Partial<Products[number]>, "name">>) => void;
   labels?: {
-    confirmBtn: string;
+    confirmBtn?: string;
   };
 }
 

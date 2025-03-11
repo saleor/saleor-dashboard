@@ -432,7 +432,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
             )
           }
           labels={{
-            confirmBtn: intl.formatMessage(buttonMessages.save),
+            confirmBtn: intl.formatMessage(buttonMessages.assign),
           }}
         />
         <AssignCollectionDialog
@@ -452,7 +452,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
             )
           }
           labels={{
-            confirmBtn: intl.formatMessage(buttonMessages.save),
+            confirmBtn: intl.formatMessage(buttonMessages.assign),
           }}
         />
         <DiscountCountrySelectDialog
@@ -462,6 +462,9 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
           onConfirm={async ({ countries }) => assignItem(countries, "countries", onModalClose)}
           open={action === "assign-country"}
           initial={data.countries.map(country => country.code)}
+          labels={{
+            confirmBtn: intl.formatMessage(buttonMessages.assign),
+          }}
         />
         <AssignProductDialog
           selectedChannels={channelListings}
@@ -481,7 +484,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
           }
           products={getFilteredProducts(data, productsSearch.result)}
           labels={{
-            confirmBtn: intl.formatMessage(buttonMessages.save),
+            confirmBtn: intl.formatMessage(buttonMessages.assign),
           }}
         />
       </form>
