@@ -213,6 +213,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
       products: data.products,
       countries: data.countries,
     },
+    countries,
     onChange: change,
   });
 
@@ -221,6 +222,11 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
       resetSelected();
       resetSpecificItemsPagination();
     });
+
+  const onModalClose = () => {
+    closeModal();
+    resetSelected();
+  };
 
   const BulkUnassignButton = ({ type }: { type: VoucherCreatePageTab | "countries" }) => (
     <Button onClick={() => bulkUnassign(type, selected)} variant="secondary">
@@ -305,43 +311,37 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                   <DiscountCategories
                     disabled={disabled}
                     onCategoryAssign={() => openModal("assign-category")}
-                    onCategoryUnassign={id =>
-                      unassignItem(id, VoucherCreatePageTab.categories, resetSelected)
-                    }
+                    onCategoryUnassign={id => unassignItem(id, VoucherCreatePageTab.categories)}
                     categories={paginatedSpecificItems as CategoryWithTotalProductsFragment[]}
                     isChecked={isChecked}
                     selected={selected.length}
                     toggle={toggle}
                     toggleAll={toggleAll}
-                    toolbar={<BulkUnassignButton type="categories" />}
+                    toolbar={<BulkUnassignButton type={VoucherCreatePageTab.categories} />}
                   />
                 ) : activeTab === VoucherCreatePageTab.collections ? (
                   <DiscountCollections
                     disabled={disabled}
                     onCollectionAssign={() => openModal("assign-collection")}
-                    onCollectionUnassign={id =>
-                      unassignItem(id, VoucherCreatePageTab.collections, resetSelected)
-                    }
+                    onCollectionUnassign={id => unassignItem(id, VoucherCreatePageTab.collections)}
                     collections={paginatedSpecificItems as CollectionWithTotalProductsFragment[]}
                     isChecked={isChecked}
                     selected={selected.length}
                     toggle={toggle}
                     toggleAll={toggleAll}
-                    toolbar={<BulkUnassignButton type="collections" />}
+                    toolbar={<BulkUnassignButton type={VoucherCreatePageTab.collections} />}
                   />
                 ) : (
                   <DiscountProducts
                     disabled={disabled}
                     onProductAssign={() => openModal("assign-product")}
-                    onProductUnassign={id =>
-                      unassignItem(id, VoucherCreatePageTab.products, resetSelected)
-                    }
+                    onProductUnassign={id => unassignItem(id, VoucherCreatePageTab.products)}
                     products={paginatedSpecificItems as SearchProductFragment[]}
                     isChecked={isChecked}
                     selected={selected.length}
                     toggle={toggle}
                     toggleAll={toggleAll}
-                    toolbar={<BulkUnassignButton type="products" />}
+                    toolbar={<BulkUnassignButton type={VoucherCreatePageTab.products} />}
                   />
                 )}
               </>
@@ -370,7 +370,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                   </>
                 }
                 onCountryAssign={() => openModal("assign-country")}
-                onCountryUnassign={id => unassignItem(id, "countries", closeModal)}
+                onCountryUnassign={id => unassignItem(id, "countries")}
               />
             ) : null}
             <VoucherRequirements
@@ -424,7 +424,13 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
           onFetchMore={categoriesSearch.loadMore}
           loading={categoriesSearch.result?.loading}
           onClose={closeModal}
-          onSubmit={data => assignItem(data, VoucherCreatePageTab.categories, closeModal)}
+          onSubmit={data =>
+            assignItem(
+              data as CategoryWithTotalProductsFragment[],
+              VoucherCreatePageTab.categories,
+              onModalClose,
+            )
+          }
           labels={{
             confirmBtn: intl.formatMessage(buttonMessages.save),
           }}
@@ -438,7 +444,13 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
           onFetchMore={collectionsSearch.loadMore}
           loading={collectionsSearch.result.loading}
           onClose={closeModal}
-          onSubmit={data => assignItem(data, VoucherCreatePageTab.collections, closeModal)}
+          onSubmit={data =>
+            assignItem(
+              data as CollectionWithTotalProductsFragment[],
+              VoucherCreatePageTab.collections,
+              onModalClose,
+            )
+          }
           labels={{
             confirmBtn: intl.formatMessage(buttonMessages.save),
           }}
@@ -447,7 +459,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
           confirmButtonState="default"
           countries={countries}
           onClose={closeModal}
-          onSubmit={({ countries }) => assignItem(countries, "countries", closeModal)}
+          onConfirm={async ({ countries }) => assignItem(countries, "countries", onModalClose)}
           open={action === "assign-country"}
           initial={data.countries.map(country => country.code)}
         />
@@ -464,7 +476,9 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
           loading={productsSearch.result.loading}
           open={action === "assign-product"}
           onClose={closeModal}
-          onSubmit={data => assignItem(data, VoucherCreatePageTab.products, closeModal)}
+          onSubmit={data =>
+            assignItem(data as SearchProductFragment[], VoucherCreatePageTab.products, onModalClose)
+          }
           products={getFilteredProducts(data, productsSearch.result)}
           labels={{
             confirmBtn: intl.formatMessage(buttonMessages.save),

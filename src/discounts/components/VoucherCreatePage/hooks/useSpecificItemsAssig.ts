@@ -14,6 +14,7 @@ import { useMemo } from "react";
 export const useSpecificItemsAssign = ({
   data,
   onChange,
+  countries,
 }: {
   data: {
     categories: FormData["categories"];
@@ -21,11 +22,12 @@ export const useSpecificItemsAssign = ({
     products: FormData["products"];
     countries: FormData["countries"];
   };
+  countries: CountryWithCodeFragment[];
   onChange: (e: ChangeEvent) => void;
 }) => {
   const countriesMap = useMemo(
     () =>
-      data.countries.reduce(
+      countries.reduce(
         (allChannelsCount, country) => {
           allChannelsCount[country.code] = country;
 
@@ -33,7 +35,7 @@ export const useSpecificItemsAssign = ({
         },
         {} as Record<string, CountryWithCodeFragment>,
       ),
-    [data.countries],
+    [countries],
   );
 
   const handleItemUnassign = (
@@ -45,7 +47,7 @@ export const useSpecificItemsAssign = ({
       | CategoryWithTotalProductsFragment
       | CollectionWithTotalProductsFragment
       | SearchProductFragment
-      | string
+      | CountryWithCodeFragment
     >;
 
     switch (type) {
@@ -59,7 +61,7 @@ export const useSpecificItemsAssign = ({
         selectedData = data.products.filter(item => item.id !== id);
         break;
       case "countries":
-        selectedData = data.countries.map(country => countriesMap[country]);
+        selectedData = data.countries.filter(item => item.code !== id);
         break;
       default:
         selectedData = [];
@@ -82,15 +84,25 @@ export const useSpecificItemsAssign = ({
       | SearchProductFragment
       | string
     >,
-    type: keyof VoucherCreatePageTab | "countries",
+    type: VoucherCreatePageTab | "countries",
     callback?: () => void,
   ) => {
-    onChange({
-      target: {
-        name: type,
-        value: [...(data[type] ?? []), ...items],
-      },
-    });
+    if (type === "countries") {
+      onChange({
+        target: {
+          name: type,
+          value: [...data.countries, ...(items as string[]).map(country => countriesMap[country])],
+        },
+      });
+    } else {
+      onChange({
+        target: {
+          name: type,
+          value: [...(data[type] ?? []), ...items],
+        },
+      });
+    }
+
     callback?.();
   };
 
