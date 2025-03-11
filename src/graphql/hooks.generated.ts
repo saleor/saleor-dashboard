@@ -2963,12 +2963,7 @@ export const SearchProductFragmentDoc = gql`
     url
   }
   channelListings {
-    id
-    channel {
-      id
-      name
-      currencyCode
-    }
+    ...ChannelListingProductWithoutPricing
   }
   variants {
     id
@@ -2991,7 +2986,7 @@ export const SearchProductFragmentDoc = gql`
     id
   }
 }
-    `;
+    ${ChannelListingProductWithoutPricingFragmentDoc}`;
 export const ExportFileFragmentDoc = gql`
     fragment ExportFile on ExportFile {
   id

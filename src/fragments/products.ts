@@ -358,12 +358,7 @@ export const searchProduct = gql`
       url
     }
     channelListings {
-      id
-      channel {
-        id
-        name
-        currencyCode
-      }
+      ...ChannelListingProductWithoutPricing
     }
     variants {
       id
