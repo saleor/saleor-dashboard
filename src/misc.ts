@@ -522,7 +522,7 @@ export const transformAddressToAddressInput = (data?: AddressType) => ({
 });
 
 export function getFullName<T extends { firstName: string; lastName: string }>(data: T) {
-  if (!data || !data.firstName || !data.lastName) {
+  if (!data || (!data.firstName && !data.lastName)) {
     return "";
   }
 
