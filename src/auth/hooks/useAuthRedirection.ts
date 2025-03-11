@@ -13,7 +13,8 @@ export const useAuthRedirection = () => {
   const router = useRouter();
   const params = new URLSearchParams(router.location.search);
   const shouldRedirect = params.has(PLUGIN_ID_PARAM);
-  const { authenticated, authenticating, requestLoginByExternalPlugin } = useUser();
+  const { authenticated, authenticating, requestLoginByExternalPlugin, isCredentialsLogin } =
+    useUser();
   const { setRequestedExternalPluginId } = useAuthParameters();
   const pluginId = params.get(PLUGIN_ID_PARAM);
   const handleAuthentication = async () => {
@@ -42,6 +43,6 @@ export const useAuthRedirection = () => {
 
   return {
     authenticated,
-    authenticating: authenticating || shouldRedirect,
+    authenticating: (authenticating || shouldRedirect) && !isCredentialsLogin, // Prevent redirecting when user is logging in with credentials
   };
 };

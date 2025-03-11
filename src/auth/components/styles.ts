@@ -31,11 +31,6 @@ const useStyles = makeStyles(
       position: "relative",
       width: "100%",
     },
-    showPasswordBtn: {
-      position: "absolute",
-      top: 6,
-      right: 8,
-    },
   }),
   { name: "Login" },
 );
