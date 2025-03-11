@@ -11,7 +11,7 @@ import { maybe } from "@dashboard/misc";
 import { DialogProps, FetchMoreProps } from "@dashboard/types";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { Container } from "../AssignContainerDialog";
@@ -35,6 +35,7 @@ export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   selectedIds?: Record<string, boolean>;
   loading: boolean;
   onFetch: (value: string) => void;
+  // name is part of Container interface
   onSubmit: (data: Array<Container & Omit<Partial<Products[number]>, "name">>) => void;
   labels?: {
     confirmBtn: string;
@@ -63,6 +64,9 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
   const [productsDict, setProductsDict] = React.useState(selectedIds || {});
 
+  // Keep selected product data to send them back when submitting
+  const productsData = useRef<Products>([]);
+
   useEffect(() => {
     if (selectedIds) {
       setProductsDict(prev => {
@@ -90,7 +94,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
 
     onSubmit(
       selectedProductsAsArray.map(id => {
-        const productDetails = products.find(product => product.id === id);
+        const productDetails = productsData.current.find(product => product.id === id);
 
         return {
           id,
@@ -101,6 +105,12 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
     );
   };
   const handleChange = productId => {
+    const productData = products.find(product => product.id === productId);
+
+    if (productData) {
+      productsData.current = [...productsData.current, productData];
+    }
+
     setProductsDict(prev => ({
       ...prev,
       [productId]: !prev[productId] ?? true,
