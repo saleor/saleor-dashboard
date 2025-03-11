@@ -1,9 +1,8 @@
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React, { ReactNode } from "react";
+import { Link } from "react-router-dom";
 
 import { DateTime } from "../Date";
-import Link from "../Link";
 
 export interface TitleElement {
   text: string;
@@ -21,7 +20,8 @@ export interface TimelineEventHeaderProps {
 
 export const TimelineEventHeader: React.FC<TimelineEventHeaderProps> = props => {
   const { title, date, titleElements, secondaryTitle, hasPlainDate, children } = props;
-  const navigate = useNavigator();
+
+  const elements = titleElements?.filter(Boolean) ?? [];
 
   return (
     <Box
@@ -36,19 +36,15 @@ export const TimelineEventHeader: React.FC<TimelineEventHeaderProps> = props => 
           {title}
         </Text>
       )}
-      {titleElements && (
+      {elements.length > 0 && (
         <Box display="flex" alignItems="center" flexDirection="row" flexWrap="wrap">
-          {titleElements.filter(Boolean).map(({ text, link }) => {
+          {elements.map(({ text, link }) => {
             if (link) {
               return (
-                <Link
-                  className={sprinkles({
-                    marginRight: 0.5,
-                  })}
-                  onClick={() => navigate(link)}
-                  key={`timeline-event-${link}`}
-                >
-                  {text}
+                <Link to={link} key={`timeline-event-${link}`}>
+                  <Text marginRight={0.5} size={3} color="accent1">
+                    {text}
+                  </Text>
                 </Link>
               );
             }
