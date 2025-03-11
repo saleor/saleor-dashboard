@@ -7,7 +7,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { EyeIcon } from "@saleor/macaw-ui";
 import { Box, Button, Divider, Input, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
@@ -35,7 +35,8 @@ const LoginPage: React.FC<LoginCardProps> = props => {
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [optimisticLoaderAuthId, setOptimisticLoaderAuthId] = useState<null | string>(null);
 
   return (
     <LoginForm onSubmit={onSubmit}>
@@ -138,15 +139,21 @@ const LoginPage: React.FC<LoginCardProps> = props => {
           {externalAuthentications.map(externalAuthentication => (
             <React.Fragment key={externalAuthentication.id}>
               <FormSpacer />
-              <Button
+              <ButtonWithLoader
                 width="100%"
                 variant="secondary"
-                onClick={() => onExternalAuthentication(externalAuthentication.id)}
+                onClick={() => {
+                  onExternalAuthentication(externalAuthentication.id);
+                  setOptimisticLoaderAuthId(externalAuthentication.id);
+                }}
                 data-test-id="external-authentication"
                 disabled={disabled}
+                transitionState={
+                  optimisticLoaderAuthId === externalAuthentication.id ? "loading" : "default"
+                }
               >
                 {externalAuthentication.name}
-              </Button>
+              </ButtonWithLoader>
             </React.Fragment>
           ))}
         </Box>
