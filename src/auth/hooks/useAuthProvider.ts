@@ -142,12 +142,14 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
         await handleLogout();
       }
 
-      if (result && !errorList?.length) {
+      const hasUser = !!result.data?.tokenCreate?.user;
+
+      if (hasUser && !errorList?.length) {
         if (DEMO_MODE) {
           displayDemoMessage(intl, notify);
         }
 
-        saveCredentials(result.data?.tokenCreate?.user!, password);
+        saveCredentials(result.data!.tokenCreate!.user!, password);
       } else {
         const userContextErrorList: UserContextError[] = [];
         // While login page can show multiple errors, "loginError" doesn't match "attemptDelay"
