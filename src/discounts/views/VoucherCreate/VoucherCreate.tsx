@@ -39,12 +39,6 @@ interface VoucherCreateProps {
   params: VoucherCreateUrlQueryParams;
 }
 
-export enum VoucherCreatePageTab {
-  categories = "categories",
-  collections = "collections",
-  products = "products",
-}
-
 export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();

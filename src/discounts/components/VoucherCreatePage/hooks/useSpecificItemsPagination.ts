@@ -1,11 +1,12 @@
 import { PAGINATE_BY } from "@dashboard/config";
-import { VoucherCreatePageTab } from "@dashboard/discounts/views/VoucherCreate";
 import {
   CategoryWithTotalProductsFragment,
   CollectionWithTotalProductsFragment,
   SearchProductFragment,
 } from "@dashboard/graphql";
 import useLocalPageInfo from "@dashboard/hooks/useLocalPageInfo";
+
+import { VoucherCreatePageTab } from "../types";
 
 export const useSpecificItemsPagination = ({
   type,
