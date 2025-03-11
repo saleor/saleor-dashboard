@@ -1,12 +1,12 @@
 import { UserContextError } from "@dashboard/auth/types";
 import { passwordResetUrl } from "@dashboard/auth/urls";
+import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
 import { AvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
-import { CircularProgress, Divider, TextField } from "@material-ui/core";
-import { EyeIcon, IconButton } from "@saleor/macaw-ui";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { EyeIcon } from "@saleor/macaw-ui";
+import { Box, Button, Divider, Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -37,17 +37,9 @@ const LoginPage: React.FC<LoginCardProps> = props => {
   const intl = useIntl();
   const [showPassword, setShowPassword] = React.useState(false);
 
-  if (loading) {
-    return (
-      <div className={classes.loading}>
-        <CircularProgress size={128} />
-      </div>
-    );
-  }
-
   return (
     <LoginForm onSubmit={onSubmit}>
-      {({ change: handleChange, data, submit }) => (
+      {({ change: handleChange, data }) => (
         <Box display="flex" flexDirection="column" alignItems="flex-start" width="100%">
           <Text size={6} fontWeight="bold" lineHeight={3} marginBottom={4}>
             <FormattedMessage id="vzgZ3U" defaultMessage="Sign In" description="card header" />
@@ -62,27 +54,26 @@ const LoginPage: React.FC<LoginCardProps> = props => {
               key={error}
               data-test-id="login-error-message"
             >
-              <Text color="warning1">{getErrorMessage(error, intl)}</Text>
+              <Text color="critical2">{getErrorMessage(error, intl)}</Text>
             </Box>
           ))}
-          <TextField
+          <Input
             autoFocus
-            fullWidth
-            autoComplete="username"
+            width="100%"
+            autoComplete="email"
             label={intl.formatMessage(commonMessages.email)}
             name="email"
             onChange={handleChange}
             value={data.email}
-            inputProps={{
-              "data-test-id": "email",
-              spellCheck: false,
-            }}
+            data-test-id="email"
+            spellCheck={false}
             disabled={disabled}
+            required
           />
           <FormSpacer />
           <div className={classes.passwordWrapper}>
-            <TextField
-              fullWidth
+            <Input
+              width="100%"
               autoComplete="password"
               label={intl.formatMessage({
                 id: "5sg7KC",
@@ -92,48 +83,43 @@ const LoginPage: React.FC<LoginCardProps> = props => {
               onChange={handleChange}
               type={showPassword ? "text" : "password"}
               value={data.password}
-              inputProps={{
-                "data-test-id": "password",
-                spellCheck: false,
-              }}
+              data-test-id="password"
+              spellCheck={false}
               disabled={disabled}
+              required
             />
             {/* Not using endAdornment as it looks weird with autocomplete */}
-            <IconButton
-              className={classes.showPasswordBtn}
-              variant="ghost"
-              hoverOutline={false}
+            <Button
+              icon={<EyeIcon />}
               onMouseDown={() => setShowPassword(true)}
               onMouseUp={() => setShowPassword(false)}
-            >
-              <EyeIcon />
-            </IconButton>
-          </div>
-          <Text
-            // @ts-expect-error - to fix in macaw-ui
-            as={Link}
-            className={classes.link}
-            to={passwordResetUrl}
-            fontSize={3}
-            data-test-id="reset-password-link"
-          >
-            <FormattedMessage
-              id="3tbL7x"
-              defaultMessage="Forgot password?"
-              description="description"
+              variant="tertiary"
+              position="absolute"
+              __top={10}
+              __right={10}
             />
-          </Text>
+          </div>
+          <Link to={passwordResetUrl}>
+            <Text className={classes.link} fontSize={3} data-test-id="reset-password-link">
+              <FormattedMessage
+                id="3tbL7x"
+                defaultMessage="Forgot password?"
+                description="description"
+              />
+            </Text>
+          </Link>
+
           <div className={classes.buttonContainer}>
-            <Button
+            <ButtonWithLoader
               width="100%"
               disabled={disabled}
               variant="primary"
-              onClick={submit}
               type="submit"
+              transitionState={loading ? "loading" : "default"}
               data-test-id="submit"
             >
               <FormattedMessage id="AubJ/S" defaultMessage="Sign in" description="button" />
-            </Button>
+            </ButtonWithLoader>
           </div>
           {externalAuthentications.length > 0 && (
             <>
