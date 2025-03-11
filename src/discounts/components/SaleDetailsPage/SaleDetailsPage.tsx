@@ -21,6 +21,7 @@ import {
   PermissionEnum,
   SaleDetailsFragment,
   SaleType as SaleTypeEnum,
+  SearchProductFragment,
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
@@ -230,7 +231,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   disabled={disabled}
                   onCategoryAssign={onCategoryAssign}
                   onCategoryUnassign={onCategoryUnassign}
-                  categories={mapEdgesToItems(sale.categories)}
+                  categories={mapEdgesToItems(sale?.categories) ?? []}
                   isChecked={isChecked}
                   selected={selected}
                   toggle={toggle}
@@ -242,7 +243,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   disabled={disabled}
                   onCollectionAssign={onCollectionAssign}
                   onCollectionUnassign={onCollectionUnassign}
-                  collections={mapEdgesToItems(sale?.collections)}
+                  collections={mapEdgesToItems(sale?.collections) ?? []}
                   isChecked={isChecked}
                   selected={selected}
                   toggle={toggle}
@@ -254,7 +255,9 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   disabled={disabled}
                   onProductAssign={onProductAssign}
                   onProductUnassign={onProductUnassign}
-                  products={mapEdgesToItems(sale?.products)}
+                  products={
+                    (mapEdgesToItems(sale?.products) ?? []) as unknown as SearchProductFragment[]
+                  }
                   isChecked={isChecked}
                   selected={selected}
                   toggle={toggle}
