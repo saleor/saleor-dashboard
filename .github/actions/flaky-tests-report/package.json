@@ -7,7 +7,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "BSD-3-Clause",
   "description": "",
   "dependencies": {
     "ctrf": "0.0.12"
