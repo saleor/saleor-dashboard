@@ -15,7 +15,7 @@ import DiscountCategories from "@dashboard/discounts/components/DiscountCategori
 import DiscountCollections from "@dashboard/discounts/components/DiscountCollections";
 import DiscountCountrySelectDialog from "@dashboard/discounts/components/DiscountCountrySelectDialog";
 import DiscountProducts from "@dashboard/discounts/components/DiscountProducts";
-import { useSpecificItemsAssign } from "@dashboard/discounts/components/VoucherCreatePage/hooks/useSpecificItemsAssig";
+import { useSpecificItemsAssign } from "@dashboard/discounts/components/VoucherCreatePage/hooks/useSpecificItemsAssign";
 import { useSpecificItemsPagination } from "@dashboard/discounts/components/VoucherCreatePage/hooks/useSpecificItemsPagination";
 import {
   createChannelsChangeHandler,

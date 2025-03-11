@@ -11,17 +11,19 @@ import {
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { useMemo } from "react";
 
+export interface SpecificItemsData {
+  categories: FormData["categories"];
+  collections: FormData["collections"];
+  products: FormData["products"];
+  countries: FormData["countries"];
+}
+
 export const useSpecificItemsAssign = ({
   data,
   onChange,
   countries,
 }: {
-  data: {
-    categories: FormData["categories"];
-    collections: FormData["collections"];
-    products: FormData["products"];
-    countries: FormData["countries"];
-  };
+  data: SpecificItemsData;
   countries: CountryWithCodeFragment[];
   onChange: (e: ChangeEvent) => void;
 }) => {
@@ -120,8 +122,8 @@ export const useSpecificItemsAssign = ({
     onChange({
       target: {
         name: type,
-        value: (selectedData as Array<{ id: string }>)?.filter(
-          item => !selectedItems.includes(item.id),
+        value: (selectedData as Array<{ id: string; code?: string }>)?.filter(
+          item => !selectedItems.includes(type === "countries" ? item.code! : item.id),
         ),
       },
     });
