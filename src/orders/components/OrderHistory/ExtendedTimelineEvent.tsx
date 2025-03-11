@@ -171,7 +171,7 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
   };
   const titleElements = {
     by: { text: intl.formatMessage(messages.by) },
-    employeeName: getEmployeeNameLink(event),
+    employeeName: getEmployeeNameLink(event, intl),
     orderNumber: getOrderNumberLink(event),
     title: {
       text: intl.formatMessage(getEventTitleMessageInCamelCase(), getTitleProps()),
