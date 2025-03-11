@@ -83,7 +83,7 @@ test("TC: SALEOR_77 Mark order as paid and fulfill it with transaction flow acti
   await ordersPage.clickFulfillButton();
   await fulfillmentPage.clickFulfillButton();
   await ordersPage.expectSuccessBanner({ message: "fulfilled" });
-  expect(await ordersPage.pageHeaderStatusInfo).toContainText("Fulfilled");
+  await expect(ordersPage.pageHeaderStatusInfo).toContainText("Fulfilled");
 });
 
 test("TC: SALEOR_78 Capture partial amounts by manual transactions and fulfill order with transaction flow activated #e2e #order", async () => {
@@ -141,7 +141,7 @@ test("TC: SALEOR_78 Capture partial amounts by manual transactions and fulfill o
   await ordersPage.clickFulfillButton();
   await fulfillmentPage.clickFulfillButton();
   await ordersPage.expectSuccessBanner({ message: "fulfilled" });
-  expect(await ordersPage.pageHeaderStatusInfo, "Order should be yet fulfilled").toContainText(
+  await expect(ordersPage.pageHeaderStatusInfo, "Order should be yet fulfilled").toContainText(
     "Fulfilled",
   );
 });
@@ -159,7 +159,7 @@ test("TC: SALEOR_79 Mark order as paid and fulfill it with regular flow #e2e #or
   await ordersPage.clickFulfillButton();
   await fulfillmentPage.clickFulfillButton();
   await ordersPage.expectSuccessBanner({ message: "fulfilled" });
-  expect(await ordersPage.pageHeaderStatusInfo).toContainText("Fulfilled");
+  await expect(ordersPage.pageHeaderStatusInfo).toContainText("Fulfilled");
 });
 
 test("TC: SALEOR_80 Add tracking to order #e2e #order", async () => {
