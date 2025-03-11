@@ -51,7 +51,7 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
     if (currentWarehouseId) {
       setSelectedWarehouseId(currentWarehouseId);
     }
-  }, [currentWarehouseId]);
+  }, [currentWarehouseId, open]);
 
   const {
     result: warehousesOpts,
