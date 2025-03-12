@@ -1,14 +1,17 @@
+import { AvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import React from "react";
-import { MemoryRouter } from "react-router-dom";
 
 import LoginPage from "./LoginPage";
+
+type AuthType = AvailableExternalAuthenticationsQuery["shop"]["availableExternalAuthentications"];
 
 const mockExternalAuth = {
   id: "cloud",
   name: "Cloud",
-};
+  __typename: "ExternalAuthentication",
+} as AuthType[0];
 
 const defaultProps = {
   errors: [],
@@ -54,7 +57,7 @@ describe("LoginPage", () => {
       const twoAuths = [
         { id: "oidc", name: "OIDC" },
         { id: "cloud", name: "Cloud" },
-      ];
+      ] as AuthType;
 
       // Act
       render(<LoginPage {...defaultProps} externalAuthentications={twoAuths} />);
