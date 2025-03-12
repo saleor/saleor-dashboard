@@ -215,5 +215,33 @@ describe("useAuthProvider", () => {
       // Assert
       expect(result.current.errors).toContain("unknownLoginError");
     });
+
+    it("should handle other login errors", async () => {
+      // Arrange
+      mockLogin.mockResolvedValueOnce({
+        data: {
+          tokenCreate: {
+            errors: [{ code: AccountErrorCode.ACCOUNT_NOT_CONFIRMED }],
+            user: null,
+          },
+        },
+      });
+
+      // Act
+      const { result } = renderHook(() =>
+        useAuthProvider({
+          intl: mockIntl as any,
+          notify: mockNotify,
+          apolloClient: mockApolloClient as any,
+        }),
+      );
+
+      await act(async () => {
+        await result.current.login!("test@example.com", "password");
+      });
+
+      // Assert
+      expect(result.current.errors).toContain("loginError");
+    });
   });
 });
