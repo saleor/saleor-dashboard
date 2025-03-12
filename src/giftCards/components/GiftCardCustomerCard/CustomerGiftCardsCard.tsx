@@ -103,7 +103,13 @@ const CustomerGiftCardsCard: React.FC = () => {
           refetchQueries={[CUSTOMER_GIFT_CARD_LIST_QUERY]}
           initialCustomer={{
             email: customer?.email,
-            name: getFullName(customer),
+            name:
+              getFullName(customer) ||
+              intl.formatMessage({
+                defaultMessage: "Unknown customer",
+                id: "+mbkbU",
+                description: "unknown customer display name",
+              }),
           }}
         />
       </DashboardModal>
