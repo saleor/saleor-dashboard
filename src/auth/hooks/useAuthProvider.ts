@@ -152,8 +152,6 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
         saveCredentials(result.data!.tokenCreate!.user!, password);
       } else {
         const userContextErrorList: UserContextError[] = [];
-        // While login page can show multiple errors, "loginError" doesn't match "attemptDelay"
-        // and should be shown when no other error is present
 
         errorList?.forEach(error => {
           switch (error) {
