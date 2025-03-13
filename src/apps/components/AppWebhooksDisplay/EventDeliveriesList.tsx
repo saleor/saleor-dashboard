@@ -19,7 +19,7 @@ export const EventDeliveriesList: React.FC<EventDeliveriesListProps> = ({ eventD
       const { createdAt, id } = ed.node;
       const attempts = ed.node.attempts?.edges?.map(({ node }) => node) ?? [];
       const attemptsCount = attempts.length;
-      const lastAttemptDate = attempts[attemptsCount - 1]?.createdAt;
+      const lastAttemptDate = attempts[0]?.createdAt;
       const hasMore = index < eventDeliveries.length - 1;
 
       return (

@@ -4272,7 +4272,7 @@ export const AppWebhookDeliveriesDocument = gql`
             createdAt
             status
             eventType
-            attempts(first: 10) {
+            attempts(first: 10, sortBy: {field: CREATED_AT, direction: DESC}) {
               edges {
                 node {
                   ...EventDeliveryAttempt
