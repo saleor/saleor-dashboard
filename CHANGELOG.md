@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.20.31
+
+### Patch Changes
+
+- 5277d8f: You can now middle click on the links in order history event messages.
+- d3bfbc2: Dashboard now properly handles failed or pending deliveries without any attempts in App alerts.
+- 1405ff0: Chosen warehouses no longer persist between select dialogs.
+- 03551ee: Node 20 can be now used along with Node 18, which will be removed in next release.
+- e935b96: Fixed scaling issues for small images in OrderLine metadata dialog - now small images will scale to fit entire reserved space, just like other places in Salero Dashboard. Previously such images remained at their default size in px.
+- 9070a79: Flaky orders tests using auto-retrying assertions on checking fulfillment status
+
 ## 3.20.30
 
 ### Patch Changes
