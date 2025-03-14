@@ -373,6 +373,10 @@
   "01+5kQ": {
     "string": "Mark as paid"
   },
+  "033/zW": {
+    "context": "explore extensions section name",
+    "string": "Explore"
+  },
   "05hqq6": {
     "context": "checkbox label",
     "string": "Automatically approve all fulfillments"
@@ -6817,6 +6821,10 @@
   "fkgack": {
     "context": "button, sends refund for transaction",
     "string": "Request refund"
+  },
+  "fkoxZY": {
+    "context": "extensions section name",
+    "string": "Extensions"
   },
   "fkplbE": {
     "context": "order history message",

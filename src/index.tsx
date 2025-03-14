@@ -4,6 +4,7 @@ import "./index.css";
 import { ApolloProvider } from "@apollo/client";
 import DemoBanner from "@dashboard/components/DemoBanner";
 import { history, Route, Router } from "@dashboard/components/Router";
+import { extensionsSection } from "@dashboard/extensions/urls";
 import { PermissionEnum } from "@dashboard/graphql";
 import useAppState from "@dashboard/hooks/useAppState";
 import { ThemeProvider } from "@dashboard/theme";
@@ -53,6 +54,7 @@ import CustomAppsSection from "./custom-apps";
 import { CustomAppSections } from "./custom-apps/urls";
 import { CustomerSection } from "./customers";
 import DiscountSection from "./discounts";
+import { ExtensionsSection } from "./extensions";
 import { FeatureFlagsProviderWithUser } from "./featureFlags/FeatureFlagsProvider";
 import GiftCardSection from "./giftCards";
 import { giftCardsSectionUrlName } from "./giftCards/urls";
@@ -281,6 +283,11 @@ const Routes: React.FC = () => {
                   permissions={[]}
                   path={AppSections.appsSection}
                   component={AppsSectionRoot}
+                />
+                <SectionRoute
+                  permissions={[]}
+                  path={extensionsSection}
+                  component={ExtensionsSection}
                 />
                 <SectionRoute
                   permissions={[PermissionEnum.MANAGE_PRODUCTS]}
