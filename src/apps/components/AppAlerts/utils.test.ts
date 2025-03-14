@@ -248,4 +248,50 @@ describe("getLatestFailedAttemptFromWebhook", () => {
     // Assert
     expect(result?.id).toBe("newer");
   });
+
+  it("should handle no attempts in failed deliveries", () => {
+    // Arrange
+    const webhook: Webhook = {
+      failedDelivers: {
+        edges: [
+          {
+            node: {
+              createdAt: "2023-10-01T10:00:00Z",
+              id: "id",
+              attempts: {
+                edges: [],
+                __typename: "EventDeliveryAttemptCountableConnection",
+              },
+              __typename: "EventDelivery",
+            },
+            __typename: "EventDeliveryCountableEdge",
+          },
+        ],
+        __typename: "EventDeliveryCountableConnection",
+      },
+      pendingDelivers: {
+        edges: [
+          {
+            node: {
+              attempts: {
+                edges: [],
+                __typename: "EventDeliveryAttemptCountableConnection",
+              },
+              id: "id_two",
+              __typename: "EventDelivery",
+            },
+            __typename: "EventDeliveryCountableEdge",
+          },
+        ],
+        __typename: "EventDeliveryCountableConnection",
+      },
+      __typename: "Webhook",
+    };
+
+    // Act
+    const result = getLatestFailedAttemptFromWebhooks([webhook]);
+
+    // Assert
+    expect(result?.id).toBe("id");
+  });
 });

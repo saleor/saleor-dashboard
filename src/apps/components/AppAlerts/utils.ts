@@ -55,7 +55,7 @@ const getLatestFailedAttemptFromWebhook = (
   // Edge case: Saleor failed to make a single delivery attempt
   const failedEventDelivery = toWebhookDeliveryWithMoment(webhook.failedDelivers?.edges?.[0]?.node);
   const fromFailedDeliveryAttempts = toWebhookDeliveryWithMoment(
-    webhook.failedDelivers?.edges?.[0]?.node?.attempts?.edges?.[0].node,
+    webhook.failedDelivers?.edges?.[0]?.node?.attempts?.edges?.[0]?.node,
   );
 
   // handling the edge case and checking which one is newer
