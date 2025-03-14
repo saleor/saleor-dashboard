@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import react from "@vitejs/plugin-react-swc";
 import { CodeInspectorPlugin } from "code-inspector-plugin";
@@ -202,15 +201,6 @@ export default defineConfig(({ command, mode }) => {
     },
     optimizeDeps: {
       include: ["esm-dep > cjs-dep", "@saleor/macaw-ui"],
-      esbuildOptions: {
-        plugins: [
-          /*
-            react-markdown and its dependency tried to call process.cwd().
-            Since it's not present in the browser, we need to polyfill that.
-           */
-          NodeGlobalsPolyfillPlugin({ process: true }),
-        ],
-      },
     },
     resolve: {
       dedupe: ["react", "react-dom", "clsx", "@material-ui/styles"],
