@@ -42,8 +42,8 @@ const CustomerCreateNote: React.FC<CustomerCreateNoteProps> = ({
       <DashboardCard.Content>
         <Text>
           <FormattedMessage
-            id="w3sGrD"
-            defaultMessage="Enter any extra infotmation regarding this customer."
+            id="wpONQ2"
+            defaultMessage="Enter any extra information regarding this customer."
           />
         </Text>
         <FormSpacer />
