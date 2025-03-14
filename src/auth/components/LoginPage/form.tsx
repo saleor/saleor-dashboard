@@ -45,10 +45,9 @@ function useLoginForm(onSubmit: (data: LoginFormData) => SubmitPromise): UseLogi
 
 const LoginForm: React.FC<LoginFormProps> = ({ children, onSubmit }) => {
   const props = useLoginForm(onSubmit);
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    // Cypress tests blow up without it
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    props.submit();
+    await props.submit();
   };
 
   return <form onSubmit={handleSubmit}>{children(props)}</form>;

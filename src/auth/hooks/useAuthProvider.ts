@@ -40,7 +40,7 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
   const navigate = useNavigator();
   const { authenticated, authenticating, user } = useAuthState();
   const [requestedExternalPluginId] = useLocalStorage("requestedExternalPluginId", null);
-  const [isAuthRequestRunning, setIsAuthRequestRunning] = useState(false);
+  const [isCredentialsLogin, setIsCredentialsLogin] = useState(false);
   const [errors, setErrors] = useState<UserContextError[]>([]);
   const permitCredentialsAPI = useRef(true);
 
@@ -116,12 +116,12 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
   };
 
   const handleLogin = async (email: string, password: string) => {
-    if (isAuthRequestRunning) {
+    if (isCredentialsLogin) {
       return;
     }
 
     try {
-      setIsAuthRequestRunning(true);
+      setIsCredentialsLogin(true);
 
       const result = await login({
         email,
@@ -134,25 +134,40 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
         // SDK is deprecated and has outdated types - we need to use ones from Dashboard
       ) as AuthErrorCodes[];
 
-      if (isEmpty(result.data?.tokenCreate?.user?.userPermissions)) {
+      const userLoggedInButHasNoPermissions =
+        result.data?.tokenCreate?.user && isEmpty(result.data?.tokenCreate?.user?.userPermissions);
+
+      if (userLoggedInButHasNoPermissions) {
         setErrors(["noPermissionsError"]);
         await handleLogout();
       }
 
-      if (result && !errorList?.length) {
+      const hasUser = !!result.data?.tokenCreate?.user;
+
+      if (hasUser && !errorList?.length) {
         if (DEMO_MODE) {
           displayDemoMessage(intl, notify);
         }
 
-        saveCredentials(result.data?.tokenCreate?.user!, password);
+        saveCredentials(result.data!.tokenCreate!.user!, password);
       } else {
-        // While login page can show multiple errors, "loginError" doesn't match "attemptDelay"
-        // and should be shown when no other error is present
-        if (errorList?.includes(AccountErrorCode.LOGIN_ATTEMPT_DELAYED)) {
-          setErrors(["loginAttemptDelay"]);
-        } else {
-          setErrors(["loginError"]);
-        }
+        const userContextErrorList: UserContextError[] = [];
+
+        errorList?.forEach(error => {
+          switch (error) {
+            case AccountErrorCode.LOGIN_ATTEMPT_DELAYED:
+              userContextErrorList.push("loginAttemptDelay");
+              break;
+            case AccountErrorCode.INVALID_CREDENTIALS:
+              userContextErrorList.push("invalidCredentials");
+              break;
+            default:
+              userContextErrorList.push("loginError");
+              break;
+          }
+        });
+
+        setErrors(userContextErrorList);
       }
 
       await logoutNonStaffUser(result.data?.tokenCreate!);
@@ -165,7 +180,7 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
         setErrors(["unknownLoginError"]);
       }
     } finally {
-      setIsAuthRequestRunning(false);
+      setIsCredentialsLogin(false);
     }
   };
   const handleRequestExternalLogin = async (pluginId: string, input: RequestExternalLoginInput) => {
@@ -239,6 +254,7 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
     loginByExternalPlugin: handleExternalLogin,
     logout: handleLogout,
     authenticating: authenticating && !errors.length,
+    isCredentialsLogin,
     authenticated: authenticated && !!user?.isStaff && !errors.length,
     user: userDetails.data?.me,
     refetchUser: userDetails.refetch,
