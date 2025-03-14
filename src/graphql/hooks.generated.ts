@@ -4265,7 +4265,7 @@ export const AppWebhookDeliveriesDocument = gql`
       asyncEvents {
         name
       }
-      eventDeliveries(first: 10) {
+      eventDeliveries(first: 10, sortBy: {field: CREATED_AT, direction: DESC}) {
         edges {
           node {
             id
