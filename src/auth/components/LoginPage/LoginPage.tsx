@@ -63,6 +63,7 @@ const LoginPage: React.FC<LoginCardProps> = props => {
             width="100%"
             autoComplete="email"
             label={intl.formatMessage(commonMessages.email)}
+            id="email"
             name="email"
             onChange={handleChange}
             value={data.email}
@@ -72,34 +73,32 @@ const LoginPage: React.FC<LoginCardProps> = props => {
             required
           />
           <FormSpacer />
-          <div className={classes.passwordWrapper}>
-            <Input
-              width="100%"
-              autoComplete="password"
-              label={intl.formatMessage({
-                id: "5sg7KC",
-                defaultMessage: "Password",
-              })}
-              name="password"
-              onChange={handleChange}
-              type={showPassword ? "text" : "password"}
-              value={data.password}
-              data-test-id="password"
-              spellCheck={false}
-              disabled={disabled}
-              required
-            />
-            {/* Not using endAdornment as it looks weird with autocomplete */}
-            <Button
-              icon={<EyeIcon />}
-              onMouseDown={() => setShowPassword(true)}
-              onMouseUp={() => setShowPassword(false)}
-              variant="tertiary"
-              position="absolute"
-              __top={10}
-              __right={10}
-            />
-          </div>
+          <Input
+            width="100%"
+            label={intl.formatMessage({
+              id: "5sg7KC",
+              defaultMessage: "Password",
+            })}
+            id="password"
+            name="password"
+            autoComplete="current-password"
+            onChange={handleChange}
+            type={showPassword ? "text" : "password"}
+            value={data.password}
+            data-test-id="password"
+            spellCheck={false}
+            disabled={disabled}
+            endAdornment={
+              <Button
+                icon={<EyeIcon />}
+                onMouseDown={() => setShowPassword(true)}
+                onMouseUp={() => setShowPassword(false)}
+                variant="tertiary"
+                type="button"
+              />
+            }
+            required
+          />
           <Link to={passwordResetUrl}>
             <Text className={classes.link} fontSize={3} data-test-id="reset-password-link">
               <FormattedMessage
