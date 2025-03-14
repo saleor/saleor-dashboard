@@ -25,3 +25,10 @@ export const buttonLabels = defineMessages({
     id: "u9WrRb",
   },
 });
+
+export const messages = defineMessages({
+  searchPlaceholder: {
+    defaultMessage: "Search extensions...",
+    id: "D66hpd",
+  },
+});
