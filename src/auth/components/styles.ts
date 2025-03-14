@@ -27,10 +27,6 @@ const useStyles = makeStyles(
     loginButton: {
       width: "100%",
     },
-    passwordWrapper: {
-      position: "relative",
-      width: "100%",
-    },
   }),
   { name: "Login" },
 );
