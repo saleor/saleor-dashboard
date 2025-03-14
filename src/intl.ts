@@ -595,6 +595,11 @@ export const sectionNames = defineMessages({
     defaultMessage: "Extensions",
     description: "extensions section name",
   },
+  exploreExtensions: {
+    id: "033/zW",
+    defaultMessage: "Explore",
+    description: "explore extensions section name",
+  },
 });
 
 export const commonStatusMessages = defineMessages({
