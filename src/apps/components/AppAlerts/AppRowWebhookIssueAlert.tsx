@@ -49,7 +49,7 @@ export const AppRowWebhookIssueAlert = ({ app }: AppRowWebhookIssueAlertProps) =
                 defaultMessage="Last seen {date}{break}{viewDetails}"
                 id="oJkLQN"
                 values={{
-                  date: <EventTime date={latestFailedAttempt.createdAt} />,
+                  date: <EventTime date={latestFailedAttempt.createdAt} showSeconds />,
                   viewDetails: (
                     <Link
                       href={detailsLink}

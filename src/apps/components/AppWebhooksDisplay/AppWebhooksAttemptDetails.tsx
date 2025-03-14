@@ -1,4 +1,4 @@
-import { DateTime } from "@dashboard/components/Date";
+import EventTime from "@dashboard/components/EventTime/EventTime";
 import { EventDeliveryAttemptFragment } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -26,7 +26,7 @@ export const AppWebhooksAttemptDetails: React.FC<AppWebhooksAttemptDetailsProps>
     >
       <Box display="flex" gap={4} key={id}>
         <Text display="block" size={3} fontWeight="bold">
-          <DateTime plain date={createdAt} />
+          <EventTime date={createdAt} showSeconds />
         </Text>
 
         <Box display="block" marginLeft="auto">

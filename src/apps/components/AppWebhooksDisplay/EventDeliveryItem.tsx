@@ -1,4 +1,4 @@
-import { DateTime } from "@dashboard/components/Date";
+import EventTime from "@dashboard/components/EventTime";
 import { EventDeliveryAttemptFragment, EventDeliveryStatusEnum } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -12,7 +12,6 @@ interface EventDeliveryItemProps {
   attemptsCount: number;
   status: EventDeliveryStatusEnum;
   attempts: EventDeliveryAttemptFragment[];
-  lastAttemptDate: string;
   hasMore: boolean;
   deliveryId: string;
 }
@@ -24,51 +23,71 @@ export const EventDeliveryItem: React.FC<EventDeliveryItemProps> = ({
   status,
   attemptsCount,
   attempts,
-  lastAttemptDate,
   hasMore,
   deliveryId,
 }) => {
   const intl = useIntl();
 
   return (
-    <Box key={createdAt} marginBottom={hasMore ? 4 : undefined} data-test-id={deliveryId}>
-      <Box display="grid" __gridTemplateColumns="1fr 1fr" paddingX={4}>
-        <Text as="p" size={4} fontWeight="bold">
-          <DateTime plain date={createdAt} />
-        </Text>
-        <Box marginLeft="auto">
-          <EventDeliveryStatusChip status={status} />
-        </Box>
+    <Box
+      key={createdAt}
+      marginBottom={hasMore ? 4 : undefined}
+      data-test-id={deliveryId}
+      position="relative"
+    >
+      <Box marginLeft="auto" position="absolute" right={4} top={0}>
+        <EventDeliveryStatusChip status={status} />
       </Box>
       {attempts.length > 0 && (
-        <Box marginBottom={2} paddingX={4}>
-          <Text>
-            {intl.formatMessage({
-              defaultMessage: "Attempts:",
-              id: "OFTsI1",
-            })}{" "}
-            <Text size={4} fontWeight="bold">
-              {attemptsCount} / {MAX_ATTEMPTS}
-            </Text>
-          </Text>
-          <Text as="p">
-            {intl.formatMessage({
-              defaultMessage: "Last delivery attempt:",
-              id: "EY/jqC",
-            })}{" "}
-            <Text size={4} fontWeight="bold">
-              <DateTime plain date={lastAttemptDate} />
-            </Text>
-          </Text>
-          <Text as="p">
-            {intl.formatMessage({
-              defaultMessage: "ID:",
-              id: "tmcdrp",
-            })}{" "}
-            <Text size={4} fontWeight="bold">
-              {deliveryId}
-            </Text>
-          </Text>
+        <Box as="table" marginBottom={2} paddingLeft={4} style={{ borderSpacing: "8px 0" }}>
+          <tr>
+            <td>
+              <Text>
+                {intl.formatMessage({
+                  defaultMessage: "Delivery start:",
+                  id: "fKLe7r",
+                })}
+              </Text>
+            </td>
+            <td>
+              <Text size={4} fontWeight="bold">
+                <EventTime date={createdAt} showSeconds />
+              </Text>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <Text>
+                {intl.formatMessage({
+                  defaultMessage: "Attempts:",
+                  id: "OFTsI1",
+                })}
+              </Text>
+            </td>
+            <td>
+              <Text size={4} fontWeight="bold">
+                {attemptsCount} / {MAX_ATTEMPTS}
+              </Text>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <Text>
+                {intl.formatMessage({
+                  defaultMessage: "ID:",
+                  id: "tmcdrp",
+                })}
+              </Text>
+            </td>
+
+            <td>
+              <Text size={4} fontWeight="bold">
+                {deliveryId}
+              </Text>
+            </td>
+          </tr>
         </Box>
       )}
 
