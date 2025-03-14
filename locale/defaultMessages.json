@@ -39,6 +39,9 @@
     "context": "order shipping method name",
     "string": "Shipping"
   },
+  "+G2N98": {
+    "string": "Install from manifest"
+  },
   "+HuipK": {
     "context": "variant sku",
     "string": "SKU {sku}"
@@ -148,6 +151,9 @@
   "+mmPxn": {
     "context": "page header",
     "string": "Grant refund"
+  },
+  "+pGERa": {
+    "string": "Provide details manually"
   },
   "+pLi+M": {
     "context": "issued by app label",
@@ -2887,6 +2893,9 @@
   },
   "GTCg9O": {
     "string": "You must add at least one voucher code"
+  },
+  "GUcbBE": {
+    "string": "Explore Extensions"
   },
   "GVM/fi": {
     "context": "order history message",
@@ -6777,6 +6786,9 @@
   "fNFEkh": {
     "string": "No of Rows:"
   },
+  "fOXF9A": {
+    "string": "Request Extension"
+  },
   "fP9FXB": {
     "context": "input label",
     "string": "Search Attributes"
@@ -7114,6 +7126,10 @@
   },
   "hVPucN": {
     "string": "Light Mode"
+  },
+  "hVwc73": {
+    "context": "extensions page subheader",
+    "string": "extensions"
   },
   "hWO1SD": {
     "context": "order history message",
@@ -8990,6 +9006,9 @@
     "context": "webhook input label",
     "string": "Target URL"
   },
+  "u9WrRb": {
+    "string": "Add Custom Extensions"
+  },
   "uCn/rd": {
     "context": "dialog header",
     "string": "Delete Image"
@@ -9695,6 +9714,10 @@
   "ycrTBX": {
     "context": "table header channel col label",
     "string": "Channel"
+  },
+  "yeX6fA": {
+    "context": "extensions page subheader",
+    "string": "Learn more about {extensions}"
   },
   "yfhLcv": {
     "string": "We are working on replacing plugins with apps. Read more about"
