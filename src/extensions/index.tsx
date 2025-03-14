@@ -1,6 +1,8 @@
 import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { exploreExtensionsPath, installedExtensionsPath } from "@dashboard/extensions/urls";
+import { useFlag } from "@dashboard/featureFlags";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -24,6 +26,14 @@ const InstalledExtensions = () => {
 
 export const ExtensionsSection = () => {
   const intl = useIntl();
+  const navigate = useNavigator();
+  const { enabled: isExtensionsEnabled } = useFlag("extensions");
+
+  if (!isExtensionsEnabled) {
+    navigate("/", { replace: true });
+
+    return <>Redirecting...</>;
+  }
 
   return (
     <>
