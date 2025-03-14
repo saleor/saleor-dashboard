@@ -169,6 +169,10 @@ export const searchProductsMock = {
                 __typename: "Image",
               },
               channelListings: [],
+              productType: {
+                id: "1",
+                name: "Bear",
+              },
               variants: [
                 {
                   id: "UHJvZHVjdFZhcmlhbnQ6MjAz",
@@ -299,6 +303,10 @@ export const searchProductsMock = {
                 __typename: "Image",
               },
               channelListings: [],
+              productType: {
+                id: "1",
+                name: "Bear",
+              },
               variants: [
                 {
                   id: "UHJvZHVjdFZhcmlhbnQ6MjA5",
@@ -427,6 +435,10 @@ export const searchProductsMock = {
               thumbnail: {
                 url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjE0/256/",
                 __typename: "Image",
+              },
+              productType: {
+                id: "1",
+                name: "Bear",
               },
               channelListings: [],
               variants: [
@@ -557,6 +569,10 @@ export const searchProductsMock = {
               thumbnail: {
                 url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjQ2/256/",
                 __typename: "Image",
+              },
+              productType: {
+                id: "1",
+                name: "Bear",
               },
               channelListings: [],
               variants: [
