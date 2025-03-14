@@ -6818,6 +6818,10 @@
     "context": "button, sends refund for transaction",
     "string": "Request refund"
   },
+  "fkoxZY": {
+    "context": "extensions section name",
+    "string": "Extensions"
+  },
   "fkplbE": {
     "context": "order history message",
     "string": "Order was marked as paid"

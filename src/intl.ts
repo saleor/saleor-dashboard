@@ -590,6 +590,11 @@ export const sectionNames = defineMessages({
     defaultMessage: "Webhooks & Events",
     description: "webhooks and events section name",
   },
+  extensions: {
+    id: "fkoxZY",
+    defaultMessage: "Extensions",
+    description: "extensions section name",
+  },
 });
 
 export const commonStatusMessages = defineMessages({
