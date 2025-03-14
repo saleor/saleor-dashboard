@@ -1,6 +1,7 @@
 import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { exploreExtensionsPath, installedExtensionsPath } from "@dashboard/extensions/urls";
+import { ExploreExtensions } from "@dashboard/extensions/views/ExploreExtensions";
 import { useFlag } from "@dashboard/featureFlags";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
@@ -8,12 +9,8 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { Switch } from "react-router-dom";
 
-const ExploreExtensions = () => {
-  return (
-    <div>
-      <h1>Explore Extensions</h1>
-    </div>
-  );
+const ExploreExtensionsView = () => {
+  return <ExploreExtensions />;
 };
 
 const InstalledExtensions = () => {
@@ -39,7 +36,7 @@ export const ExtensionsSection = () => {
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.extensions)} />
       <Switch>
-        <Route exact path={exploreExtensionsPath} component={ExploreExtensions} />
+        <Route exact path={exploreExtensionsPath} component={ExploreExtensionsView} />
         <Route exact path={installedExtensionsPath} component={InstalledExtensions} />
       </Switch>
     </>
