@@ -26,6 +26,24 @@ export const buttonLabels = defineMessages({
   },
 });
 
+export const extensionCategory = defineMessages({
+  taxes: {
+    defaultMessage: "Taxes",
+    description: "Extension Taxes category",
+    id: "ZelW6e",
+  },
+  payment: {
+    defaultMessage: "Payment",
+    id: "udvqNN",
+    description: "Extension Payment categoy",
+  },
+  cms: {
+    defaultMessage: "CMS",
+    id: "U4Ey/7",
+    description: "Extension CMS category",
+  },
+});
+
 export const messages = defineMessages({
   searchPlaceholder: {
     defaultMessage: "Search extensions...",
