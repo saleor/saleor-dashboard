@@ -2516,9 +2516,6 @@
     "context": "delete app",
     "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
   },
-  "EY/jqC": {
-    "string": "Last delivery attempt:"
-  },
   "EYkW1J": {
     "context": "checkbox label",
     "string": "Charge taxes for this channel"
@@ -6760,6 +6757,9 @@
   "fITtdb": {
     "context": "helper text",
     "string": "{value} already refunded"
+  },
+  "fKLe7r": {
+    "string": "Delivery start:"
   },
   "fKrRhF": {
     "string": "General information"
