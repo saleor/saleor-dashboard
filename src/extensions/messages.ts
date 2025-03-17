@@ -53,4 +53,37 @@ export const messages = defineMessages({
     defaultMessage: "Installed",
     id: "V22724",
   },
+  developedBy: {
+    defaultMessage: "Developed by {developer}",
+    id: "xKLf5H",
+  },
+  community: {
+    defaultMessage: "Community",
+    id: "4CrCbD",
+  },
+  customBuild: {
+    defaultMessage: "Custom build",
+    id: "LdzrxA",
+  },
+  install: {
+    defaultMessage: "Install",
+    id: "ubmFc8",
+  },
+  viewDetails: {
+    defaultMessage: "View details",
+    id: "MnpUD7",
+  },
+  viewOnGithub: {
+    defaultMessage: "View on GitHub",
+    id: "80g19N",
+  },
+  pluginDescription: {
+    defaultMessage: "Plugin built-in to Saleor’s core codebase",
+    id: "JaLLdQ",
+  },
+  pluginInfo: {
+    defaultMessage:
+      "IMPORTANT: We are working on replacing plugins with apps. Use apps unless no other option. {learnMore}",
+    id: "SW5A/J",
+  },
 });

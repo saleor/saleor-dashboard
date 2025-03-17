@@ -1,40 +1,35 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { InstalledBadge } from "@dashboard/extensions/components/ExtenionItem/InstalledBadge";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
+import { ExtensionData } from "../../types";
+import { InstalledBadge } from "./components/InstalledBadge";
+import { useExtension } from "./hooks/useExtension";
+
 interface ExtensionItemProps {
-  title: string;
-  subtitle: string;
-  description: string;
-  avatarUrl: string;
-  actions: React.ReactNode;
-  isInstalled?: boolean;
+  extension: ExtensionData;
 }
 
-export const ExtensionItem = ({
-  title,
-  subtitle,
-  description,
-  avatarUrl,
-  actions,
-  isInstalled,
-}: ExtensionItemProps) => {
+export const ExtensionItem = ({ extension }: ExtensionItemProps) => {
+  const { title, subtitle, description, avatar, actions, isInstalled } = useExtension(extension);
+
   return (
     <DashboardCard borderColor="default1" borderStyle="solid" borderWidth={1} borderRadius={5}>
       <DashboardCard.Header alignItems="flex-start">
         <Box display="flex" gap={4}>
-          <Box __width="40px" __height="40px">
-            <Box
-              as="img"
-              display="block"
-              maxWidth="100%"
-              borderRadius={5}
-              borderColor="default1"
-              borderStyle="solid"
-              borderWidth={1}
-              src={avatarUrl}
-            />
+          <Box
+            __width="40px"
+            __height="40px"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            borderRadius={5}
+            borderColor="default1"
+            borderStyle="solid"
+            borderWidth={1}
+            overflow="hidden"
+          >
+            {avatar}
           </Box>
 
           <Box>

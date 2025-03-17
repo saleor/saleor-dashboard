@@ -11,7 +11,14 @@ export const ExtensionsHeader = ({ title, actions }: ExtensionsHeaderProps) => {
   const contextualLink = useContextualLink("extensions");
 
   return (
-    <Box paddingY={6} display="flex" justifyContent="space-between" alignItems="center">
+    <Box
+      paddingY={6}
+      gap={4}
+      display="flex"
+      justifyContent="space-between"
+      alignItems="center"
+      flexWrap="wrap"
+    >
       <Box display="flex" flexDirection="column" gap={2}>
         <Text as="h1" margin={0} fontWeight="medium" size={9}>
           {title}

@@ -9,8 +9,8 @@ export const useExploreExtensions = (): Record<ExtensionGroup, ExtensionData[]> 
         id: "app.saleor.adyen",
         kind: "OFFICIAL",
         logo: {
-          light: "https://apps.staging.saleor.io/apps/v2/saleor-apps/adyen.svg",
-          dark: "https://apps.staging.saleor.io/apps/v2/saleor-apps/adyen.svg",
+          light: "https://apps.staging.saleor.io/apps/v2/contentful.png",
+          dark: "https://apps.staging.saleor.io/apps/v2/contentful.png",
         },
         name: "Adyen",
         description: {
@@ -24,8 +24,8 @@ export const useExploreExtensions = (): Record<ExtensionGroup, ExtensionData[]> 
         id: "app.saleor.adyen2",
         kind: "OFFICIAL",
         logo: {
-          light: "https://apps.staging.saleor.io/apps/v2/saleor-apps/adyen.svg",
-          dark: "https://apps.staging.saleor.io/apps/v2/saleor-apps/adyen.svg",
+          light: "https://apps.staging.saleor.io/apps/v2/contentful.png",
+          dark: "https://apps.staging.saleor.io/apps/v2/contentful.png",
         },
         name: "Adyen",
         description: {
@@ -39,8 +39,8 @@ export const useExploreExtensions = (): Record<ExtensionGroup, ExtensionData[]> 
         id: "app.saleor.adyen3",
         kind: "OFFICIAL",
         logo: {
-          light: "https://apps.staging.saleor.io/apps/v2/saleor-apps/adyen.svg",
-          dark: "https://apps.staging.saleor.io/apps/v2/saleor-apps/adyen.svg",
+          light: "https://apps.staging.saleor.io/apps/v2/contentful.png",
+          dark: "https://apps.staging.saleor.io/apps/v2/contentful.png",
         },
         name: "Adyen",
         description: {
@@ -54,8 +54,8 @@ export const useExploreExtensions = (): Record<ExtensionGroup, ExtensionData[]> 
         id: "app.saleor.adyen4",
         kind: "OFFICIAL",
         logo: {
-          light: "https://apps.staging.saleor.io/apps/v2/saleor-apps/adyen.svg",
-          dark: "https://apps.staging.saleor.io/apps/v2/saleor-apps/adyen.svg",
+          light: "https://apps.staging.saleor.io/apps/v2/contentful.png",
+          dark: "https://apps.staging.saleor.io/apps/v2/contentful.png",
         },
         name: "Adyen",
         description: {
@@ -71,8 +71,8 @@ export const useExploreExtensions = (): Record<ExtensionGroup, ExtensionData[]> 
         id: "app.saleor.avatax",
         kind: "OFFICIAL",
         logo: {
-          light: "https://apps.staging.saleor.io/apps/v2/saleor-apps/avatax.svg",
-          dark: "https://apps.staging.saleor.io/apps/v2/saleor-apps/avatax.svg",
+          light: "https://apps.staging.saleor.io/apps/v2/payloadcms.png",
+          dark: "https://apps.staging.saleor.io/apps/v2/payloadcms.png",
         },
         name: "AvaTax",
         description: {
@@ -80,6 +80,18 @@ export const useExploreExtensions = (): Record<ExtensionGroup, ExtensionData[]> 
         },
         repositoryUrl: "https://github.com/saleor/apps",
         manifestUrl: "https://avatax.saleor.app/api/manifest",
+      },
+      {
+        type: "PLUGIN",
+        id: "app.saleor.braintree",
+        logo: {
+          light: "https://apps.staging.saleor.io/apps/v2/payloadcms.png",
+          dark: "https://apps.staging.saleor.io/apps/v2/payloadcms.png",
+        },
+        name: "BrainTree",
+        description: {
+          en: "AvaTax App allows dynamic tax calculations for orders and checkouts.",
+        },
       },
     ],
     cms: [

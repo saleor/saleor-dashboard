@@ -15,7 +15,7 @@ export const ExtensionsList = ({ extensions }: ExtensionsListProps) => {
       {Object.entries(extensions).map(([group, groupExtensions]) => (
         <ExtensionsGroup title={group} key={group}>
           {groupExtensions.map(extension => (
-            <ExtensionItem key={extension.id} />
+            <ExtensionItem key={extension.id} extension={extension} />
           ))}
         </ExtensionsGroup>
       ))}

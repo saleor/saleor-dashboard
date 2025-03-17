@@ -4,8 +4,8 @@ import React from "react";
 import SVG from "react-inlinesvg";
 import { useIntl } from "react-intl";
 
-import CheckIcon from "../../../../assets/images/check.svg";
-import { messages } from "../../messages";
+import CheckIcon from "../../../../../assets/images/check.svg";
+import { messages } from "../../../messages";
 
 export const InstalledBadge = () => {
   const intl = useIntl();
