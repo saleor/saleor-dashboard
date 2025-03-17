@@ -12,6 +12,7 @@ export interface UseLoginFormResult {
   change: FormChange;
   data: LoginFormData;
   submit: () => SubmitPromise;
+  reset: () => void;
 }
 
 export interface LoginFormProps {
@@ -32,12 +33,13 @@ const getLoginFormData = () => {
 
 function useLoginForm(onSubmit: (data: LoginFormData) => SubmitPromise): UseLoginFormResult {
   const form = useForm(getLoginFormData());
-  const { change, data } = form;
+  const { change, data, reset } = form;
   const handleFormSubmit = useHandleFormSubmit({ onSubmit });
   const submit = async () => handleFormSubmit(data);
 
   return {
     change,
+    reset,
     data,
     submit,
   };
@@ -48,6 +50,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ children, onSubmit }) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await props.submit();
+
+    props.reset(); // clear fields after submit
   };
 
   return <form onSubmit={handleSubmit}>{children(props)}</form>;
