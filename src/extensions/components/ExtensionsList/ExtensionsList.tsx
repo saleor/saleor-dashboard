@@ -1,6 +1,6 @@
 import { ExtensionItem } from "@dashboard/extensions/components/ExtenionItem/ExtenionItem";
 import { ExtensionsGroup } from "@dashboard/extensions/components/ExtensionsGroup/ExtensionsGroup";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { ExtensionData, ExtensionGroup } from "../../types";

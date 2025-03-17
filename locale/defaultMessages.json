@@ -5039,6 +5039,10 @@
   "U2mOqA": {
     "string": "No vouchers found"
   },
+  "U4Ey/7": {
+    "context": "Extension CMS category",
+    "string": "CMS"
+  },
   "U5CH0u": {
     "string": "Are you sure you want to delete {name} preset?"
   },
@@ -5215,6 +5219,9 @@
   "V1mqpZ": {
     "context": "button",
     "string": "Create Permission Group"
+  },
+  "V22724": {
+    "string": "Installed"
   },
   "V2BBQu": {
     "string": "Currency in both channels must be the same"
@@ -5956,6 +5963,10 @@
   "Zd3Eew": {
     "context": "subsection header",
     "string": "Shipping Address"
+  },
+  "ZelW6e": {
+    "context": "Extension Taxes category",
+    "string": "Taxes"
   },
   "ZepEWY": {
     "context": "Dry run item",
@@ -9085,6 +9096,10 @@
   "udJUSa": {
     "context": "Authorize {app name}",
     "string": "Authorize"
+  },
+  "udvqNN": {
+    "context": "Extension Payment categoy",
+    "string": "Payment"
   },
   "uf1ttM": {
     "string": "Rule reward value is required"

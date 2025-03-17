@@ -19,6 +19,51 @@ export const useExploreExtensions = (): Record<ExtensionGroup, ExtensionData[]> 
         repositoryUrl: "https://github.com/saleor/saleor",
         manifestUrl: "https://adyen.saleor.app/api/manifest",
       },
+      {
+        type: "APP",
+        id: "app.saleor.adyen2",
+        kind: "OFFICIAL",
+        logo: {
+          light: "https://apps.staging.saleor.io/apps/v2/saleor-apps/adyen.svg",
+          dark: "https://apps.staging.saleor.io/apps/v2/saleor-apps/adyen.svg",
+        },
+        name: "Adyen",
+        description: {
+          en: "Simplify your payment process and offer a seamless online shopping experience with Adyen's payment integration for Saleor.",
+        },
+        repositoryUrl: "https://github.com/saleor/saleor",
+        manifestUrl: "https://adyen.saleor.app/api/manifest",
+      },
+      {
+        type: "APP",
+        id: "app.saleor.adyen3",
+        kind: "OFFICIAL",
+        logo: {
+          light: "https://apps.staging.saleor.io/apps/v2/saleor-apps/adyen.svg",
+          dark: "https://apps.staging.saleor.io/apps/v2/saleor-apps/adyen.svg",
+        },
+        name: "Adyen",
+        description: {
+          en: "Simplify your payment process and offer a seamless online shopping experience with Adyen's payment integration for Saleor.",
+        },
+        repositoryUrl: "https://github.com/saleor/saleor",
+        manifestUrl: "https://adyen.saleor.app/api/manifest",
+      },
+      {
+        type: "APP",
+        id: "app.saleor.adyen4",
+        kind: "OFFICIAL",
+        logo: {
+          light: "https://apps.staging.saleor.io/apps/v2/saleor-apps/adyen.svg",
+          dark: "https://apps.staging.saleor.io/apps/v2/saleor-apps/adyen.svg",
+        },
+        name: "Adyen",
+        description: {
+          en: "Simplify your payment process and offer a seamless online shopping experience with Adyen's payment integration for Saleor.",
+        },
+        repositoryUrl: "https://github.com/saleor/saleor",
+        manifestUrl: "https://adyen.saleor.app/api/manifest",
+      },
     ],
     taxes: [
       {

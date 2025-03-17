@@ -26,11 +26,11 @@ export const ExtensionsGroup = ({ children, title }: ExtensionsGroupProps) => {
 
   return (
     <Box marginBottom={12}>
-      <Text as="h4" size={5} fontWeight="bold" marginBottom={4}>
+      <Text as="h4" size={6} fontWeight="bold" marginBottom={4}>
         {getCategoryTranslation(title, intl)}
       </Text>
 
-      <Box display="grid" gridTemplateColumns={3} gap={6}>
+      <Box display="grid" __gridTemplateColumns="repeat(auto-fill, minmax(375px, 1fr))" gap={6}>
         {children}
       </Box>
     </Box>

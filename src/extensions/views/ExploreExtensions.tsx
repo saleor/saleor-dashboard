@@ -20,7 +20,7 @@ export const ExploreExtensions = () => {
         actions={<ExploreExtensionsActions />}
       />
 
-      <Box __width="370px" marginTop={3} marginBottom={3}>
+      <Box __width="370px" marginTop={3} marginBottom={12}>
         <SearchInput
           withBorder
           size="medium"

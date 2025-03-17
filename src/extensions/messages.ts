@@ -49,4 +49,8 @@ export const messages = defineMessages({
     defaultMessage: "Search extensions...",
     id: "D66hpd",
   },
+  installed: {
+    defaultMessage: "Installed",
+    id: "V22724",
+  },
 });
