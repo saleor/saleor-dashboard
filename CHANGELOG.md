@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.19.13
+
+### Patch Changes
+
+- 53cb75ee9: Now CI workflows use updated action to upload and download artifacts
+- cdb591a4f: Release and manually workflow use password argument on creating test reports
+- e62b553a2: Test reports no longer mention users due to test tags matching GitHub usernames.
+- 1846a3193: Tests results in CTRF scheme are attached to job summary. Test reports are pushed to qa helpers repository. HTML reports are secured with password.
+
 ## 3.19.12
 
 ### Patch Changes
