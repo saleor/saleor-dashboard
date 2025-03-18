@@ -1,5 +1,7 @@
 import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
+import Link from "@dashboard/components/Link";
 import { buttonLabels } from "@dashboard/extensions/messages";
+import { MISSING_APPS_TYPEFORM_URL } from "@dashboard/links";
 import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -9,9 +11,11 @@ export const ExploreExtensionsActions = () => {
 
   return (
     <>
-      <Button variant="secondary" size="large">
-        <FormattedMessage {...buttonLabels.requestExtension} />
-      </Button>
+      <Link href={MISSING_APPS_TYPEFORM_URL} target="_blank" rel="noopener noreferrer">
+        <Button variant="secondary" size="large">
+          <FormattedMessage {...buttonLabels.requestExtension} />
+        </Button>
+      </Link>
       <ButtonWithDropdown
         size="large"
         options={[
