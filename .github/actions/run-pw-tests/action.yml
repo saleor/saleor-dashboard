@@ -37,6 +37,15 @@ inputs:
   E2E_ENCODE_PASS:
     description: "Password for encoding credentials"
     required: true
+  BRANCH_NAME:
+    description: "Branch name"
+    required: true
+  SALEOR_CLOUD_SERVICE:
+    description: "Saleor Cloud service"
+    required: true
+  DASHBOARD_VERSION:
+    description: "Dashboard version"
+    required: false 
 
 runs:
   using: "composite"
@@ -77,9 +86,13 @@ runs:
         URL_TO_RUN: ${{ inputs.URL_TO_RUN }}
         WORKERS: ${{ inputs.PW_WORKERS }}
         RETRIES: ${{ inputs.PW_RETRIES }}
+        BRANCH_NAME: ${{ inputs.BRANCH_NAME }}
+        SALEOR_CLOUD_SERVICE: ${{ inputs.SALEOR_CLOUD_SERVICE }}
+        DASHBOARD_VERSION: ${{ inputs.DASHBOARD_VERSION }}
       run: |
         echo "reportName=all-blob-reports-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
-        npm run qa:pw-e2e -- --shard "$SHARD_NUMBER"
+        echo "ctrfReport=ctrf-report-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
+        npx playwright test --grep "#e2e" --shard "$SHARD_NUMBER"
 
     - name: Upload blob report to GitHub Actions Artifacts
       uses: actions/upload-artifact@v4
@@ -87,4 +100,12 @@ runs:
       with:
         name: ${{ env.reportName }}
         path: blob-report
+        retention-days: 1
+
+    - name: Upload ctrf report to GitHub Actions Artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: ${{ env.ctrfReport }}
+        path: ctrf/ctrf-report-*.json
         retention-days: 1
