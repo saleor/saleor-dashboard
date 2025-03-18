@@ -9,6 +9,7 @@ import { configurationMenuUrl } from "@dashboard/configuration";
 import { getConfigMenuItemsPermissions } from "@dashboard/configuration/utils";
 import { customerListUrl } from "@dashboard/customers/urls";
 import { saleListUrl, voucherListUrl } from "@dashboard/discounts/urls";
+import { exploreExtensionsPath, installedExtensionsPath } from "@dashboard/extensions/urls";
 import { useFlag } from "@dashboard/featureFlags";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import { PermissionEnum } from "@dashboard/graphql";
@@ -41,6 +42,8 @@ export function useMenuStructure() {
   const extensions = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);
   const intl = useIntl();
   const { user } = useUser();
+  const { enabled: showExtensions } = useFlag("extensions");
+
   const appExtensionsHeaderItem: SidebarMenuItem = {
     id: "extensions",
     label: intl.formatMessage(sectionNames.appExtensions),
@@ -59,6 +62,29 @@ export function useMenuStructure() {
     ) : null,
     onClick: () => handleAppsListItemClick(new Date().toISOString()),
   });
+
+  const getExtensionsSection = (): SidebarMenuItem => ({
+    icon: renderIcon(<MarketplaceIcon />),
+    label: intl.formatMessage(sectionNames.extensions),
+    permissions: [],
+    id: "installed-extensions",
+    url: installedExtensionsPath,
+    type: "itemGroup",
+    endAdornment: hasAppAlertsFeatureFlag ? (
+      <SidebarAppAlert hasNewFailedAttempts={hasNewFailedAttempts} />
+    ) : null,
+    onClick: () => handleAppsListItemClick(new Date().toISOString()),
+    children: [
+      {
+        label: intl.formatMessage(sectionNames.exploreExtensions),
+        id: "explore-extensions",
+        url: exploreExtensionsPath,
+        permissions: [],
+        type: "item",
+      },
+    ],
+  });
+
   const menuItems: SidebarMenuItem[] = [
     {
       icon: renderIcon(<HomeIcon />),
@@ -176,7 +202,7 @@ export function useMenuStructure() {
       url: languageListUrl,
       type: !isEmpty(extensions.NAVIGATION_TRANSLATIONS) ? "itemGroup" : "item",
     },
-    getAppSection(),
+    showExtensions ? getExtensionsSection() : getAppSection(),
     {
       icon: renderIcon(<ConfigurationIcon />),
       label: intl.formatMessage(sectionNames.configuration),
