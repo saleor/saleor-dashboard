@@ -141,6 +141,10 @@
     "context": "dialog header",
     "string": "Change Password"
   },
+  "+mbkbU": {
+    "context": "unknown customer display name",
+    "string": "Unknown customer"
+  },
   "+mmPxn": {
     "context": "page header",
     "string": "Grant refund"
@@ -368,6 +372,10 @@
   },
   "01+5kQ": {
     "string": "Mark as paid"
+  },
+  "033/zW": {
+    "context": "explore extensions section name",
+    "string": "Explore"
   },
   "05hqq6": {
     "context": "checkbox label",
@@ -2507,9 +2515,6 @@
   "EWD/wU": {
     "context": "delete app",
     "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
-  },
-  "EY/jqC": {
-    "string": "Last delivery attempt:"
   },
   "EYkW1J": {
     "context": "checkbox label",
@@ -6753,6 +6758,9 @@
     "context": "helper text",
     "string": "{value} already refunded"
   },
+  "fKLe7r": {
+    "string": "Delivery start:"
+  },
   "fKrRhF": {
     "string": "General information"
   },
@@ -6813,6 +6821,10 @@
   "fkgack": {
     "context": "button, sends refund for transaction",
     "string": "Request refund"
+  },
+  "fkoxZY": {
+    "context": "extensions section name",
+    "string": "Extensions"
   },
   "fkplbE": {
     "context": "order history message",
@@ -7645,6 +7657,10 @@
   "kuo4fW": {
     "context": "dialog title",
     "string": "Capture manual transaction"
+  },
+  "kv1DqJ": {
+    "context": "unknown user display name",
+    "string": "Unknown user"
   },
   "kv3FWU": {
     "context": "btn label",
@@ -9319,9 +9335,6 @@
     "context": "placed orders counter",
     "string": "{count}/{max} orders"
   },
-  "w3sGrD": {
-    "string": "Enter any extra infotmation regarding this customer."
-  },
   "w424P4": {
     "context": "section header",
     "string": "Plugin Information and Status"
@@ -9430,6 +9443,9 @@
   "wpAXKX": {
     "context": "checkbox label description",
     "string": "All orders will be automatically confirmed and all payments will be captured."
+  },
+  "wpONQ2": {
+    "string": "Enter any extra information regarding this customer."
   },
   "wpli4O": {
     "context": "WarehouseSettings private stock label",
