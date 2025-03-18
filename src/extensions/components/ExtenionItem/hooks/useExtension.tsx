@@ -70,6 +70,7 @@ export const useExtension = (extension: ExtensionData, isInstalled = false) => {
   };
 
   return {
+    type: extension.type,
     title: extension.name,
     subtitle: getExtensionSubtitle(),
     description: getExtensionDescription(),

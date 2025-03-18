@@ -121,6 +121,9 @@
     "context": "input helper text",
     "string": "This number defines quantity of items in checkout line that can be bought. You can override this setting per variant. Leaving this setting empty mean that there is no limits."
   },
+  "+fICx5": {
+    "string": "Important"
+  },
   "+hib+V": {
     "context": "error message",
     "string": "This attribute is already assigned."
@@ -3539,6 +3542,9 @@
     "context": "input label",
     "string": "Refund value"
   },
+  "K58C4r": {
+    "string": "We are working on replacing plugins with apps. Use apps unless no other option. {learnMore}"
+  },
   "K8xNLe": {
     "context": "products section name",
     "string": "Products"
@@ -4832,9 +4838,6 @@
   "SV0FRm": {
     "context": "attribute is filterable in storefront",
     "string": "Filterable in storefront"
-  },
-  "SW5A/J": {
-    "string": "IMPORTANT: We are working on replacing plugins with apps. Use apps unless no other option. {learnMore}"
   },
   "SZH0fw": {
     "context": "set variant as default, button",

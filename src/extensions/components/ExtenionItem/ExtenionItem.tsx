@@ -4,6 +4,7 @@ import React from "react";
 
 import { ExtensionData } from "../../types";
 import { InstalledBadge } from "./components/InstalledBadge";
+import { PluginWarning } from "./components/PluginWarning";
 import { useExtension } from "./hooks/useExtension";
 
 interface ExtensionItemProps {
@@ -11,7 +12,8 @@ interface ExtensionItemProps {
 }
 
 export const ExtensionItem = ({ extension }: ExtensionItemProps) => {
-  const { title, subtitle, description, avatar, actions, isInstalled } = useExtension(extension);
+  const { type, title, subtitle, description, avatar, actions, isInstalled } =
+    useExtension(extension);
 
   return (
     <DashboardCard borderColor="default1" borderStyle="solid" borderWidth={1} borderRadius={5}>
@@ -45,8 +47,12 @@ export const ExtensionItem = ({ extension }: ExtensionItemProps) => {
         <Text size={4} color="default2">
           {description}
         </Text>
+
+        {type === "PLUGIN" && <PluginWarning />}
       </DashboardCard.Content>
-      <DashboardCard.BottomActions gap={6}>{actions}</DashboardCard.BottomActions>
+      <DashboardCard.BottomActions gap={6} marginTop="auto" paddingTop={2} paddingBottom={5}>
+        {actions}
+      </DashboardCard.BottomActions>
     </DashboardCard>
   );
 };

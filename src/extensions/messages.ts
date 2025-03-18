@@ -81,9 +81,17 @@ export const messages = defineMessages({
     defaultMessage: "Plugin built-in to Saleor’s core codebase",
     id: "JaLLdQ",
   },
+  pluginInfoImportant: {
+    defaultMessage: "Important",
+    id: "+fICx5",
+  },
   pluginInfo: {
     defaultMessage:
-      "IMPORTANT: We are working on replacing plugins with apps. Use apps unless no other option. {learnMore}",
-    id: "SW5A/J",
+      "We are working on replacing plugins with apps. Use apps unless no other option. {learnMore}",
+    id: "K58C4r",
+  },
+  learnMore: {
+    defaultMessage: "Learn more",
+    id: "TdTXXf",
   },
 });
