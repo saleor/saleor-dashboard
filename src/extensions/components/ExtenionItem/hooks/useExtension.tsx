@@ -1,9 +1,9 @@
+import PluginIcon from "@assets/images/plugin.svg";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { useIntl } from "react-intl";
 
-import PluginIcon from "../../../../../assets/images/plugin.svg";
 import { messages } from "../../../messages";
 import { ExtensionData } from "../../../types";
 import { AppActions } from "../components/AppActions";

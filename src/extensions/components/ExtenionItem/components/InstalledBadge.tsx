@@ -1,10 +1,10 @@
+import CheckIcon from "@assets/images/check.svg";
 import { SUCCESS_ICON_COLOR } from "@dashboard/colors";
 import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { useIntl } from "react-intl";
 
-import CheckIcon from "../../../../../assets/images/check.svg";
 import { messages } from "../../../messages";
 
 export const InstalledBadge = () => {
