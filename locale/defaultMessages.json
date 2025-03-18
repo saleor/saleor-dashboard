@@ -2534,9 +2534,6 @@
     "context": "delete app",
     "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
   },
-  "EY/jqC": {
-    "string": "Last delivery attempt:"
-  },
   "EYkW1J": {
     "context": "checkbox label",
     "string": "Charge taxes for this channel"
@@ -6802,6 +6799,9 @@
     "context": "helper text",
     "string": "{value} already refunded"
   },
+  "fKLe7r": {
+    "string": "Delivery start:"
+  },
   "fKrRhF": {
     "string": "General information"
   },
@@ -9393,9 +9393,6 @@
     "context": "placed orders counter",
     "string": "{count}/{max} orders"
   },
-  "w3sGrD": {
-    "string": "Enter any extra infotmation regarding this customer."
-  },
   "w424P4": {
     "context": "section header",
     "string": "Plugin Information and Status"
@@ -9504,6 +9501,9 @@
   "wpAXKX": {
     "context": "checkbox label description",
     "string": "All orders will be automatically confirmed and all payments will be captured."
+  },
+  "wpONQ2": {
+    "string": "Enter any extra information regarding this customer."
   },
   "wpli4O": {
     "context": "WarehouseSettings private stock label",
