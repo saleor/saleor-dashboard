@@ -373,6 +373,10 @@
   "01+5kQ": {
     "string": "Mark as paid"
   },
+  "033/zW": {
+    "context": "explore extensions section name",
+    "string": "Explore"
+  },
   "05hqq6": {
     "context": "checkbox label",
     "string": "Automatically approve all fulfillments"
@@ -6818,6 +6822,10 @@
     "context": "button, sends refund for transaction",
     "string": "Request refund"
   },
+  "fkoxZY": {
+    "context": "extensions section name",
+    "string": "Extensions"
+  },
   "fkplbE": {
     "context": "order history message",
     "string": "Order was marked as paid"
@@ -9327,9 +9335,6 @@
     "context": "placed orders counter",
     "string": "{count}/{max} orders"
   },
-  "w3sGrD": {
-    "string": "Enter any extra infotmation regarding this customer."
-  },
   "w424P4": {
     "context": "section header",
     "string": "Plugin Information and Status"
@@ -9438,6 +9443,9 @@
   "wpAXKX": {
     "context": "checkbox label description",
     "string": "All orders will be automatically confirmed and all payments will be captured."
+  },
+  "wpONQ2": {
+    "string": "Enter any extra information regarding this customer."
   },
   "wpli4O": {
     "context": "WarehouseSettings private stock label",
