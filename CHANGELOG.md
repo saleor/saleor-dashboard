@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.20.32
+
+### Patch Changes
+
+- 91b41a1: Now, the header near the input for note, when creating customer has correct text.
+- edf04af: You can now close the channel availability modal in product variant edit form using "x" button
+- 29a50ef: Last delivery attempt date is now the date of the newest attempt in given event delivery.
+- 3dd70bb: Now the project uses the latest version of the Vitejs
+- 594244a: You can now see extensions section in sidebar when feature flag is on
+- f925a68: Order details now show correct quantity of items after some items have been returned.
+
 ## 3.20.31
 
 ### Patch Changes
