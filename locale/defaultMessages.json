@@ -9335,9 +9335,6 @@
     "context": "placed orders counter",
     "string": "{count}/{max} orders"
   },
-  "w3sGrD": {
-    "string": "Enter any extra infotmation regarding this customer."
-  },
   "w424P4": {
     "context": "section header",
     "string": "Plugin Information and Status"
@@ -9446,6 +9443,9 @@
   "wpAXKX": {
     "context": "checkbox label description",
     "string": "All orders will be automatically confirmed and all payments will be captured."
+  },
+  "wpONQ2": {
+    "string": "Enter any extra information regarding this customer."
   },
   "wpli4O": {
     "context": "WarehouseSettings private stock label",
