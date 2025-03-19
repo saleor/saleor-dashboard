@@ -8264,6 +8264,9 @@
     "context": "staff members status deactivated",
     "string": "Inactive"
   },
+  "obHpf0": {
+    "string": "No extensions found"
+  },
   "oboeOT": {
     "string": "Add following permissions"
   },
