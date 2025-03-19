@@ -2,6 +2,7 @@ import { InstallWithManifestFormButton } from "@dashboard/apps/components/Instal
 import { AppUrls } from "@dashboard/apps/urls";
 import { TopNav } from "@dashboard/components/AppLayout";
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
+import { useExtensionsFilter } from "@dashboard/extensions/hooks/useExtenstionsFilter";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
@@ -16,6 +17,7 @@ import { messages } from "../messages";
 export const ExploreExtensions = () => {
   const intl = useIntl();
   const extensions = useExploreExtensions();
+  const { handleQueryChange, query, filteredExtensions } = useExtensionsFilter({ extensions });
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const navigate = useNavigator();
 
@@ -38,17 +40,13 @@ export const ExploreExtensions = () => {
           <SearchInput
             withBorder
             size="medium"
-            initialSearch={""}
+            initialSearch={query}
             placeholder={intl.formatMessage(messages.searchPlaceholder)}
-            onSearchChange={() => {
-              // TODO: Implement search logic
-              // eslint-disable-next-line no-console
-              console.log("On search change");
-            }}
+            onSearchChange={handleQueryChange}
           />
         </Box>
 
-        <ExtensionsList extensions={extensions} />
+        <ExtensionsList extensions={filteredExtensions} />
       </Box>
     </>
   );
