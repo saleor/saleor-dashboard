@@ -6,6 +6,7 @@ export const useExploreExtensions = () => {
     "https://appstore-git-prod-131-add-plugins-saleorcommerce.vercel.app/api/v3/extensions",
   );
 
+  // TODO: Remove filter in phase 3
   const onlyAppsExtensions = Object.fromEntries(
     Object.entries(data).map(([group, extensions]) => [
       group,

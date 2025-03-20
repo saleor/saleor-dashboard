@@ -382,10 +382,6 @@
   "01+5kQ": {
     "string": "Mark as paid"
   },
-  "01ofBw": {
-    "context": "Extension Automation category",
-    "string": "Automation"
-  },
   "033/zW": {
     "context": "explore extensions section name",
     "string": "Explore"
@@ -5058,10 +5054,6 @@
   "U2mOqA": {
     "string": "No vouchers found"
   },
-  "U4Ey/7": {
-    "context": "Extension CMS category",
-    "string": "CMS"
-  },
   "U5CH0u": {
     "string": "Are you sure you want to delete {name} preset?"
   },
@@ -5982,10 +5974,6 @@
   "Zd3Eew": {
     "context": "subsection header",
     "string": "Shipping Address"
-  },
-  "ZelW6e": {
-    "context": "Extension Taxes category",
-    "string": "Taxes"
   },
   "ZepEWY": {
     "context": "Dry run item",
@@ -6968,10 +6956,6 @@
   "gAqkrG": {
     "context": "gift card history message",
     "string": "Gift card was deactivated by {deactivatedBy}"
-  },
-  "gJ9QR3": {
-    "context": "Extension Payment categoy",
-    "string": "Payments"
   },
   "gKdGxP": {
     "context": "error message",
