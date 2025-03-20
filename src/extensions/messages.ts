@@ -76,4 +76,8 @@ export const messages = defineMessages({
     defaultMessage: "Learn more",
     id: "TdTXXf",
   },
+  errorLoadingExtensions: {
+    defaultMessage: "Sorry, we couldn't load extensions",
+    id: "iX/Xbc",
+  },
 });

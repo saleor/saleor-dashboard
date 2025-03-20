@@ -9,18 +9,25 @@ export const useExploreExtensions = () => {
   );
   const { installedExtensions } = useInstalledExtensions();
 
-  // TODO: Remove filter in phase 3
   const onlyAppsExtensions = Object.fromEntries(
     Object.entries(data).map(([group, extensions]) => [
       group,
       {
         title: extensions.title,
         items: extensions.items
+          // TODO: Remove filter in phase 3
           .filter(extension => extension.type === "APP")
-          .map(extension => ({
-            ...extension,
-            installed: installedExtensions.includes(extension.id),
-          })),
+          .map(extension => {
+            const installedApp = installedExtensions.find(
+              installedExtension => installedExtension.identifier === extension.id,
+            );
+
+            return {
+              ...extension,
+              installed: !!installedApp,
+              appId: installedApp?.id,
+            };
+          }),
       },
     ]),
   ) as ExtensionsGroups;

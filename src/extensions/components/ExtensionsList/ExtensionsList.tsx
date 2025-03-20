@@ -1,10 +1,12 @@
-import { LoadingSkeleton } from "@dashboard/extensions/components/ExtensionsList/LoadingSkeleton";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
+import { messages } from "../../messages";
 import { ExtensionsGroups } from "../../types";
 import { ExtensionItem } from "../ExtenionItem";
 import { ExtensionsGroup } from "../ExtensionsGroup";
+import { LoadingSkeleton } from "./LoadingSkeleton";
 import { NoExtensions } from "./NoExtenstions";
 
 export interface ExtensionsListProps {
@@ -25,7 +27,11 @@ export const ExtensionsList = ({ extensions, error, loading }: ExtensionsListPro
   }
 
   if (error) {
-    return <Box>Error</Box>;
+    return (
+      <Text color="critical1">
+        <FormattedMessage {...messages.errorLoadingExtensions} />
+      </Text>
+    );
   }
 
   if (isAllExtensionsEmpty) {

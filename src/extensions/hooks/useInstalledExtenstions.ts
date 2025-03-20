@@ -9,10 +9,9 @@ export const useInstalledExtensions = () => {
   });
 
   const installedApps = mapEdgesToItems(data?.apps) ?? [];
-  const installedAppsIdentifiers = installedApps.map(app => app.identifier);
 
   return {
-    installedExtensions: [...installedAppsIdentifiers],
+    installedExtensions: [...installedApps],
     loading,
   };
 };

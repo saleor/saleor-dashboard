@@ -40,7 +40,7 @@ export const useExtension = (extension: ExtensionData, isInstalled = false) => {
         isInstalled={isInstalled}
         manifestUrl={extension.manifestUrl}
         repositoryUrl={extension.repositoryUrl}
-        id={extension.id}
+        id={extension.appId}
       />
     );
   };

@@ -15,6 +15,7 @@ interface CommonExtensionData {
     };
   };
   installed?: boolean;
+  appId?: string;
 }
 
 interface AppExtensionData extends CommonExtensionData {
