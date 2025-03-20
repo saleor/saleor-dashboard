@@ -6,6 +6,10 @@ export interface QuickSearchAction {
   label: string;
   price?: number;
   symbol?: string;
+  thumbnail?: {
+    alt: string;
+    url: string;
+  };
   type: QuickSearchActionType;
   onClick: () => boolean;
 }

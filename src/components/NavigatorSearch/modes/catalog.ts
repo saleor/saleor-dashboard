@@ -29,6 +29,8 @@ export function searchInCatalog(
     },
     text: category.name,
     type: "catalog",
+    thumbnail: category.backgroundImage,
+    extraInfo: category.level === 0 ? intl.formatMessage(messages.root) : undefined,
   }));
   const collections: QuickSearchActionInput[] = (
     mapEdgesToItems(catalog?.collections) || []
@@ -42,6 +44,7 @@ export function searchInCatalog(
     },
     text: collection.name,
     type: "catalog",
+    thumbnail: collection.backgroundImage,
   }));
   const products: QuickSearchActionInput[] = (
     mapEdgesToItems(catalog?.products) || []
@@ -56,6 +59,7 @@ export function searchInCatalog(
     },
     text: product.name,
     type: "catalog",
+    thumbnail: product.thumbnail,
   }));
   const variants: QuickSearchActionInput[] = (
     mapEdgesToItems(catalog?.productVariants) || []
@@ -70,6 +74,7 @@ export function searchInCatalog(
     },
     text: variant.name,
     type: "catalog",
+    thumbnail: variant.product.thumbnail,
   }));
 
   const searchableItems = [...categories, ...collections, ...products, ...variants];

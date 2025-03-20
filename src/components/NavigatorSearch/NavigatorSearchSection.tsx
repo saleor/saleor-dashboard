@@ -2,6 +2,7 @@ import { Box, Text } from "@saleor/macaw-ui-next";
 import { GetItemPropsOptions } from "downshift";
 import React from "react";
 
+import { NavigatorThumbnail } from "./NavigatorThumbnail";
 import { QuickSearchAction } from "./types";
 
 interface NavigatorSearchSectionProps {
@@ -45,26 +46,34 @@ const NavigatorSearchSection: React.FC<NavigatorSearchSectionProps> = props => {
             selected={highlightedIndex === index}
             key={[item.label, item.type].join(":")}
             cursor="pointer"
+            display="flex"
+            flexDirection="row"
           >
+            {item.thumbnail && (
+              <NavigatorThumbnail src={item.thumbnail.url} alt={item.thumbnail.alt} />
+            )}
+
             <Box as="span" display="inline-block">
-              {item.symbol && (
-                <Box as="span" display="inline-block" fontWeight="bold" width={6}>
-                  {item.symbol}
-                </Box>
-              )}
+              <Box as="span" display="inline-block">
+                {item.symbol && (
+                  <Box as="span" display="inline-block" fontWeight="bold" width={6}>
+                    {item.symbol}
+                  </Box>
+                )}
 
-              <Text size={3}>{item.label}</Text>
+                <Text size={3}>{item.label}</Text>
 
-              {item.caption && (
-                <Text size={2} marginLeft={2} color="default2">
-                  {item.caption}
-                </Text>
-              )}
+                {item.caption && (
+                  <Text size={2} marginLeft={2} color="default2">
+                    {item.caption}
+                  </Text>
+                )}
+              </Box>
+
+              <Box __flex={1} />
+
+              {item.extraInfo}
             </Box>
-
-            <Box __flex={1} />
-
-            {item.extraInfo}
           </Box>
         );
       })}

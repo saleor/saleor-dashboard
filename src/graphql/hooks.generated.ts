@@ -7011,6 +7011,11 @@ export const SearchCatalogDocument = gql`
       node {
         id
         name
+        backgroundImage(size: 64) {
+          url
+          alt
+        }
+        level
       }
     }
   }
@@ -7018,6 +7023,10 @@ export const SearchCatalogDocument = gql`
     edges {
       node {
         ...Collection
+        backgroundImage(size: 64) {
+          url
+          alt
+        }
       }
     }
   }
@@ -7030,6 +7039,10 @@ export const SearchCatalogDocument = gql`
           name
         }
         name
+        thumbnail(size: 64) {
+          alt
+          url
+        }
       }
     }
   }
@@ -7045,6 +7058,10 @@ export const SearchCatalogDocument = gql`
           category {
             id
             name
+          }
+          thumbnail(size: 64) {
+            alt
+            url
           }
         }
       }
