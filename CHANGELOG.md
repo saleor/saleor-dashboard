@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.20.33
+
+### Patch Changes
+
+- 779d410: Webhooks in app details section now are sorted based on which attempt is latest
+- b007a2a: Login page now doesn't reload after submitting the login form. This means that email and password input remain filled after unsuccessful login attempt.
+
 ## 3.20.32
 
 ### Patch Changes
