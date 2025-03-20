@@ -15,6 +15,7 @@ export interface ExtensionsListProps {
 
 export const ExtensionsList = ({ extensions, error, loading }: ExtensionsListProps) => {
   const extensionsEntries = Object.entries(extensions);
+
   const isAllExtensionsEmpty = extensionsEntries.every(
     ([_, groupExtensions]) => groupExtensions.items.length === 0,
   );

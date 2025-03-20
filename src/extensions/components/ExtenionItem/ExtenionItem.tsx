@@ -25,6 +25,7 @@ export const ExtensionItem = ({ extension }: ExtensionItemProps) => {
             display="flex"
             alignItems="center"
             justifyContent="center"
+            padding={1.5}
             borderRadius={5}
             borderColor="default1"
             borderStyle="solid"
