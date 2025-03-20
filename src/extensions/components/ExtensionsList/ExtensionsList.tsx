@@ -1,13 +1,14 @@
-import { ExtensionItem } from "@dashboard/extensions/components/ExtenionItem/ExtenionItem";
-import { ExtensionsGroup } from "@dashboard/extensions/components/ExtensionsGroup/ExtensionsGroup";
-import { NoExtensions } from "@dashboard/extensions/components/ExtensionsList/NoExtenstions";
-import { Box, Skeleton } from "@saleor/macaw-ui-next";
+import { LoadingSkeleton } from "@dashboard/extensions/components/ExtensionsList/LoadingSkeleton";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
-import { ExtensionData, ExtensionGroup } from "../../types";
+import { ExtensionsGroups } from "../../types";
+import { ExtensionItem } from "../ExtenionItem";
+import { ExtensionsGroup } from "../ExtensionsGroup";
+import { NoExtensions } from "./NoExtenstions";
 
 export interface ExtensionsListProps {
-  extensions: Record<ExtensionGroup, ExtensionData[]>;
+  extensions: ExtensionsGroups;
   error?: string | null;
   loading?: boolean;
 }
@@ -15,19 +16,11 @@ export interface ExtensionsListProps {
 export const ExtensionsList = ({ extensions, error, loading }: ExtensionsListProps) => {
   const extensionsEntries = Object.entries(extensions);
   const isAllExtensionsEmpty = extensionsEntries.every(
-    ([_, groupExtensions]) => groupExtensions.length === 0,
+    ([_, groupExtensions]) => groupExtensions.items.length === 0,
   );
 
   if (loading) {
-    return (
-      <Box>
-        <Skeleton __width="200px" />
-        <Skeleton __width="200px" />
-        <Skeleton __width="200px" />
-        <Skeleton __width="200px" />
-        <Skeleton __width="200px" />
-      </Box>
-    );
+    return <LoadingSkeleton />;
   }
 
   if (error) {
@@ -41,9 +34,9 @@ export const ExtensionsList = ({ extensions, error, loading }: ExtensionsListPro
   return (
     <Box>
       {extensionsEntries.map(([group, groupExtensions]) =>
-        groupExtensions.length > 0 ? (
-          <ExtensionsGroup title={group} key={group}>
-            {groupExtensions.map(extension => (
+        groupExtensions.items.length > 0 ? (
+          <ExtensionsGroup title={groupExtensions.title} key={group}>
+            {groupExtensions.items.map(extension => (
               <ExtensionItem key={extension.id} extension={extension} />
             ))}
           </ExtensionsGroup>

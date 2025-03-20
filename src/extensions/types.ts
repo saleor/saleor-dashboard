@@ -20,7 +20,7 @@ interface AppExtensionData extends CommonExtensionData {
   type: "APP";
   kind: "OFFICIAL" | "OSS";
   manifestUrl: string | null;
-  repostitoryUrl: string | null; // Typo in the original code
+  repositoryUrl: string | null; // Typo in the original code
 }
 
 interface PluginExtensionData extends CommonExtensionData {
@@ -29,6 +29,12 @@ interface PluginExtensionData extends CommonExtensionData {
 
 export type ExtensionData = AppExtensionData | PluginExtensionData;
 
-export type ExtensionGroup = "payment" | "taxes" | "cms";
+export type ExtensionGroup = "payments" | "taxes" | "cms" | "automation";
 
-export type ExtensionsGroups = Record<ExtensionGroup, ExtensionData[]>;
+export type ExtensionsGroups = Record<ExtensionGroup, { title: string; items: ExtensionData[] }>;
+
+export type APIExtensionsResponse = Array<{
+  id: string;
+  name: { en: string };
+  extensions: ExtensionData[];
+}>;

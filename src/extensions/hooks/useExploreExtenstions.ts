@@ -1,16 +1,20 @@
 import { useAppStoreExtensions } from "@dashboard/extensions/hooks/useAppStoreExtenstions";
+import { ExtensionsGroups } from "@dashboard/extensions/types";
 
 export const useExploreExtensions = () => {
   const { data, loading, error } = useAppStoreExtensions(
-    "https://appstore-m0rin7clo-saleorcommerce.vercel.app/api/v3/extensions",
+    "https://appstore-git-prod-131-add-plugins-saleorcommerce.vercel.app/api/v3/extensions",
   );
 
   const onlyAppsExtensions = Object.fromEntries(
     Object.entries(data).map(([group, extensions]) => [
       group,
-      extensions.filter(extension => extension.type === "APP"),
+      {
+        title: extensions.title,
+        items: extensions.items.filter(extension => extension.type === "APP"),
+      },
     ]),
-  );
+  ) as ExtensionsGroups;
 
   return {
     extensions: onlyAppsExtensions,

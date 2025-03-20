@@ -19,7 +19,7 @@ export const useExtension = (extension: ExtensionData, isInstalled = false) => {
       return <SVG src={PluginIcon} />;
     }
 
-    return <Box as="img" display="block" maxWidth="100%" src={extension.logo?.light} />;
+    return <Box as="img" display="block" maxWidth="100%" src={extension.logo?.light?.source} />;
   };
 
   const getExtensionDescription = () => {
@@ -39,7 +39,7 @@ export const useExtension = (extension: ExtensionData, isInstalled = false) => {
       <AppActions
         isInstalled={isInstalled}
         manifestUrl={extension.manifestUrl}
-        repositoryUrl={extension.repostitoryUrl}
+        repositoryUrl={extension.repositoryUrl}
         id={extension.id}
       />
     );
