@@ -31,9 +31,10 @@ import { messages } from "./messages";
 
 interface Props {
   params: AppListUrlQueryParams;
+  showAvailableApps?: boolean;
 }
 
-export const AppListView: React.FC<Props> = ({ params }) => {
+export const AppListView: React.FC<Props> = ({ params, showAvailableApps = true }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -143,6 +144,7 @@ export const AppListView: React.FC<Props> = ({ params }) => {
           open={params.action === "app-installation-remove"}
         />
         <AppListPage
+          showAvailableApps={showAvailableApps}
           appsInstallations={appsInstallations}
           installedApps={installedApps}
           installableMarketplaceApps={installableMarketplaceApps}
