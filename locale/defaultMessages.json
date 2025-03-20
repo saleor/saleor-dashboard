@@ -382,6 +382,10 @@
   "01+5kQ": {
     "string": "Mark as paid"
   },
+  "01ofBw": {
+    "context": "Extension Automation category",
+    "string": "Automation"
+  },
   "033/zW": {
     "context": "explore extensions section name",
     "string": "Explore"
@@ -6965,6 +6969,10 @@
     "context": "gift card history message",
     "string": "Gift card was deactivated by {deactivatedBy}"
   },
+  "gJ9QR3": {
+    "context": "Extension Payment categoy",
+    "string": "Payments"
+  },
   "gKdGxP": {
     "context": "error message",
     "string": "Only pre-authorized payments can be captured"
@@ -9120,10 +9128,6 @@
   "udJUSa": {
     "context": "Authorize {app name}",
     "string": "Authorize"
-  },
-  "udvqNN": {
-    "context": "Extension Payment categoy",
-    "string": "Payment"
   },
   "uf1ttM": {
     "string": "Rule reward value is required"

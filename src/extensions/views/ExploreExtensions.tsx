@@ -16,7 +16,7 @@ import { messages } from "../messages";
 
 export const ExploreExtensions = () => {
   const intl = useIntl();
-  const extensions = useExploreExtensions();
+  const { extensions, loading, error } = useExploreExtensions();
   const { handleQueryChange, query, filteredExtensions } = useExtensionsFilter({ extensions });
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const navigate = useNavigator();
@@ -46,7 +46,7 @@ export const ExploreExtensions = () => {
           />
         </Box>
 
-        <ExtensionsList extensions={filteredExtensions} />
+        <ExtensionsList extensions={filteredExtensions} error={error} loading={loading} />
       </Box>
     </>
   );

@@ -1,21 +1,26 @@
 interface CommonExtensionData {
-  name: string;
-  logo?: {
-    light: string;
-    dark: string;
-  };
   id: string;
-  description?: {
+  name: {
     en: string;
-    [languageKey: string]: string;
+  };
+  description: {
+    en: string;
+  };
+  logo: {
+    light: {
+      source: string;
+    };
+    dark: {
+      source: string;
+    };
   };
 }
 
 interface AppExtensionData extends CommonExtensionData {
   type: "APP";
-  manifestUrl: string | null;
-  repositoryUrl: string | null;
   kind: "OFFICIAL" | "OSS";
+  manifestUrl: string | null;
+  repostitoryUrl: string | null; // Typo in the original code
 }
 
 interface PluginExtensionData extends CommonExtensionData {

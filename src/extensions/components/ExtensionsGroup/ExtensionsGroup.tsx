@@ -10,12 +10,14 @@ interface ExtensionsGroupProps {
 
 const getCategoryTranslation = (group: string, intl: IntlShape) => {
   switch (group) {
-    case "payment":
-      return intl.formatMessage(extensionCategory.payment);
+    case "payments":
+      return intl.formatMessage(extensionCategory.payments);
     case "taxes":
       return intl.formatMessage(extensionCategory.taxes);
     case "cms":
       return intl.formatMessage(extensionCategory.cms);
+    case "automation":
+      return intl.formatMessage(extensionCategory.automation);
     default:
       return group;
   }

@@ -39,7 +39,7 @@ export const useExtension = (extension: ExtensionData, isInstalled = false) => {
       <AppActions
         isInstalled={isInstalled}
         manifestUrl={extension.manifestUrl}
-        repositoryUrl={extension.repositoryUrl}
+        repositoryUrl={extension.repostitoryUrl}
         id={extension.id}
       />
     );
@@ -71,7 +71,7 @@ export const useExtension = (extension: ExtensionData, isInstalled = false) => {
 
   return {
     type: extension.type,
-    title: extension.name,
+    title: extension.name.en,
     subtitle: getExtensionSubtitle(),
     description: getExtensionDescription(),
     avatar: getExtensionAvatar(),

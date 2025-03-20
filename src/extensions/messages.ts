@@ -32,15 +32,20 @@ export const extensionCategory = defineMessages({
     description: "Extension Taxes category",
     id: "ZelW6e",
   },
-  payment: {
-    defaultMessage: "Payment",
-    id: "udvqNN",
+  payments: {
+    defaultMessage: "Payments",
+    id: "gJ9QR3",
     description: "Extension Payment categoy",
   },
   cms: {
     defaultMessage: "CMS",
     id: "U4Ey/7",
     description: "Extension CMS category",
+  },
+  automation: {
+    defaultMessage: "Automation",
+    id: "01ofBw",
+    description: "Extension Automation category",
   },
 });
 
