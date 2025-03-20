@@ -29,6 +29,9 @@ const NavigatorSearchSection: React.FC<NavigatorSearchSectionProps> = props => {
           item,
         });
 
+        // 'thumbnail' is 'null' when the item is from Saleor API, 'undefined' if it's nav item
+        const shouldRenderThumbnail = typeof item.thumbnail !== "undefined";
+
         return (
           <Box
             {...itemProps}
@@ -49,8 +52,8 @@ const NavigatorSearchSection: React.FC<NavigatorSearchSectionProps> = props => {
             display="flex"
             flexDirection="row"
           >
-            {item.thumbnail && (
-              <NavigatorThumbnail src={item.thumbnail.url} alt={item.thumbnail.alt} />
+            {shouldRenderThumbnail && (
+              <NavigatorThumbnail src={item.thumbnail?.url} alt={item.thumbnail?.alt} />
             )}
 
             <Box as="span" display="inline-block">
