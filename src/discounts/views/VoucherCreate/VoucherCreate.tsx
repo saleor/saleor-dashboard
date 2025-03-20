@@ -3,6 +3,7 @@ import { ChannelVoucherData, createSortedVoucherData } from "@dashboard/channels
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
 import {
   useUpdateMetadataMutation,
@@ -10,10 +11,15 @@ import {
   useVoucherChannelListingUpdateMutation,
   useVoucherCreateMutation,
 } from "@dashboard/graphql";
+import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useChannels from "@dashboard/hooks/useChannels";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
+import useShop from "@dashboard/hooks/useShop";
 import { sectionNames } from "@dashboard/intl";
+import { useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCategorySearch";
+import { useCollectionWithTotalProductsSearch } from "@dashboard/searches/useCollectionSearch";
+import useProductSearch from "@dashboard/searches/useProductSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import React from "react";
@@ -37,6 +43,7 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const shop = useShop();
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -45,6 +52,8 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
   >(navigate, params => voucherAddUrl(params), params);
   const { availableChannels } = useAppChannel(false);
   const allChannels: ChannelVoucherData[] = createSortedVoucherData(availableChannels);
+  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
+
   const {
     channelListElements,
     channelsToggle,
@@ -77,6 +86,17 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
       }
     },
   });
+
+  const categoriesSearch = useCategoryWithTotalProductsSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
+  const collectionsSearch = useCollectionWithTotalProductsSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
+  const productsSearch = useProductSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
+
   const handleFormValidate = (data: VoucherDetailsPageFormData) => {
     if (data.codes.length === 0) {
       notify({
@@ -125,6 +145,13 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
       )}
       <WindowTitle title={intl.formatMessage(sectionNames.vouchers)} />
       <VoucherCreatePage
+        action={params.action}
+        countries={shop?.countries ?? []}
+        categoriesSearch={categoriesSearch}
+        collectionsSearch={collectionsSearch}
+        productsSearch={productsSearch}
+        openModal={openModal}
+        closeModal={closeModal}
         allChannelsCount={allChannels?.length}
         channelListings={currentChannels}
         disabled={voucherCreateOpts.loading || updateChannelsOpts.loading}
@@ -136,6 +163,11 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
         saveButtonBarState={voucherCreateOpts.status}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
+        isChecked={isSelected}
+        selected={listElements}
+        toggle={toggle}
+        toggleAll={toggleAll}
+        resetSelected={reset}
       />
     </>
   );
