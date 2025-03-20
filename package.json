@@ -266,7 +266,7 @@
     "prestart": "npm run build-types",
     "test": "jest src/",
     "test:ci": "jest src/ --coverage",
-    "test:watch": "jest --watch src/",
+    "test:watch": "jest --watch catalog.test.ts",
     "lint": "eslint \"{src,playwright}/**/*.@(tsx|ts|jsx|js)\" --fix",
     "lint:check-progress": "eslint-nibble \"src/**/*.@(tsx|ts|jsx|js)\"",
     "prebuild": "npm run build-types",
