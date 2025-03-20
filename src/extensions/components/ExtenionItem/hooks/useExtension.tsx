@@ -11,7 +11,7 @@ import { PluginActions } from "../components/PluginActions";
 
 const saleor = "Saleor Commerce";
 
-export const useExtension = (extension: ExtensionData, isInstalled = false) => {
+export const useExtension = (extension: ExtensionData) => {
   const intl = useIntl();
 
   const getExtensionAvatar = () => {
@@ -32,12 +32,12 @@ export const useExtension = (extension: ExtensionData, isInstalled = false) => {
 
   const getExtensionActions = () => {
     if (extension.type === "PLUGIN") {
-      return <PluginActions id={extension.id} isInstalled={isInstalled} />;
+      return <PluginActions id={extension.id} isInstalled={extension.installed ?? false} />;
     }
 
     return (
       <AppActions
-        isInstalled={isInstalled}
+        isInstalled={extension.installed || false}
         manifestUrl={extension.manifestUrl}
         repositoryUrl={extension.repositoryUrl}
         id={extension.appId}
@@ -76,6 +76,6 @@ export const useExtension = (extension: ExtensionData, isInstalled = false) => {
     description: getExtensionDescription(),
     avatar: getExtensionAvatar(),
     actions: getExtensionActions(),
-    isInstalled,
+    isInstalled: extension.installed,
   };
 };

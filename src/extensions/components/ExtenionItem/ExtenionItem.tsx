@@ -12,10 +12,8 @@ interface ExtensionItemProps {
 }
 
 export const ExtensionItem = ({ extension }: ExtensionItemProps) => {
-  const { type, title, subtitle, description, avatar, actions, isInstalled } = useExtension(
-    extension,
-    extension.installed,
-  );
+  const { type, title, subtitle, description, avatar, actions, isInstalled } =
+    useExtension(extension);
 
   return (
     <DashboardCard borderColor="default1" borderStyle="solid" borderWidth={1} borderRadius={5}>
