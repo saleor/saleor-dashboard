@@ -101,6 +101,10 @@ const messages = defineMessages({
     id: "x/ZVlU",
     defaultMessage: "Product",
   },
+  variant: {
+    defaultMessage: "Product variant",
+    id: "GC8T3V",
+  },
 });
 
 export default messages;

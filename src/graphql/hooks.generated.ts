@@ -7033,6 +7033,23 @@ export const SearchCatalogDocument = gql`
       }
     }
   }
+  productVariants(first: $first, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+        sku
+        product {
+          id
+          name
+          category {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
 }
     ${CollectionFragmentDoc}`;
 

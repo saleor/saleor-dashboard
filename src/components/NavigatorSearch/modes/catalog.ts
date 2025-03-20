@@ -4,7 +4,7 @@ import { collectionUrl } from "@dashboard/collections/urls";
 import { SearchCatalogQuery } from "@dashboard/graphql";
 import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
 import { fuzzySearch } from "@dashboard/misc";
-import { productUrl } from "@dashboard/products/urls";
+import { productUrl, productVariantEditUrl } from "@dashboard/products/urls";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { IntlShape } from "react-intl";
 
@@ -57,10 +57,25 @@ export function searchInCatalog(
     text: product.name,
     type: "catalog",
   }));
+  const variants: QuickSearchActionInput[] = (
+    mapEdgesToItems(catalog?.productVariants) || []
+  ).map<QuickSearchActionInput>(variant => ({
+    caption: intl.formatMessage(messages.variant),
+    extraInfo: variant.product.category.name,
+    label: `${variant.product.name} / ${variant.name} (${variant.sku})`,
+    onClick: () => {
+      navigate(productVariantEditUrl(variant.product.id, variant.id));
 
-  const searchableItems = [...categories, ...collections, ...products];
+      return false;
+    },
+    text: variant.name,
+    type: "catalog",
+  }));
 
-  return fuzzySearch(searchableItems, search, ["label"]);
+  const searchableItems = [...categories, ...collections, ...products, ...variants];
+  const searchResults = fuzzySearch(searchableItems, search, ["label"]);
+
+  return searchResults;
 }
 
 function getCatalogModeActions(
