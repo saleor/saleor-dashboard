@@ -1,3 +1,4 @@
+import { AppUrls } from "@dashboard/apps/urls";
 import Link from "@dashboard/components/Link";
 import { Box, Button, ExternalLinkIcon } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -26,7 +27,7 @@ export const AppActions = ({ isInstalled, repositoryUrl, manifestUrl }: AppActio
   return (
     <>
       {manifestUrl && (
-        <Link href="/extensions/plugin/{id}/install">
+        <Link href={AppUrls.resolveAppInstallUrl(manifestUrl)}>
           <Button variant="secondary">{intl.formatMessage(messages.install)}</Button>
         </Link>
       )}

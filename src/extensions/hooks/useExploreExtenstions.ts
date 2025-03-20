@@ -1,7 +1,7 @@
-import { ExtensionData, ExtensionGroup } from "@dashboard/extensions/types";
+import { ExtensionsGroups } from "@dashboard/extensions/types";
 
 // TODO: Replace mock with real data
-export const useExploreExtensions = (): Record<ExtensionGroup, ExtensionData[]> => {
+export const useExploreExtensions = (): ExtensionsGroups => {
   return {
     payment: [
       {
