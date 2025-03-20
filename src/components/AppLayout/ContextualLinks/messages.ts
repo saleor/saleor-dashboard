@@ -55,4 +55,14 @@ export const contextualLinks = defineMessages({
     defaultMessage: "gift cards",
     id: "aBpkVh",
   },
+  extensions: {
+    defaultMessage: "Learn more about {extensions}",
+    description: "extensions page subheader",
+    id: "yeX6fA",
+  },
+  extensionsDocs: {
+    defaultMessage: "extensions",
+    description: "extensions page subheader",
+    id: "hVwc73",
+  },
 });
