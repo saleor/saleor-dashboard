@@ -14,6 +14,14 @@ body:
         We can implement datagrid table that presents all variants, and when clicking in some cell, it will turn into edit mode.
     validations:
       required: true
+  - type: input
+    id: discord-discussion
+    attributes:
+      label: Discord Discussion Link
+      description: Link to a corresponding thread in the [Discord](https://saleor.io/discord)'s "#ideas" channel. Read more about the process in the [Contribution Guidelines](http://docs.saleor.io/developer/community/contributing#contributing-issues).
+      placeholder: https://discord.com/channels/8640668198...
+    validations:
+      required: true
   - type: textarea
     id: acceptable-criteria
     attributes:
@@ -39,4 +47,3 @@ body:
         ...
     validations:
       required: false
-

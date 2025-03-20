@@ -1,10 +1,9 @@
 # Welcome to dashboard contribution guide
 
-Thank you for investing your time in contributing to our project!
+> [!IMPORTANT]
+> We value your contributions to Saleor and want to ensure they meet our project's needs. To help us maintain quality and consistency, we ask that you follow the process described in our [Contribution Guidelines](http://docs.saleor.io/developer/community/contributing). We welcome issues, new features, documentation improvements, community support, and more.
 
 Read our [Code of Conduct](./CODE_OF_CONDUCT.md) to keep our community approachable and respectable.
-
-In this guide you will get an overview of the contribution workflow from opening an issue, creating a PR, reviewing, and merging the PR.
 
 ## New contributor guide
 
@@ -16,15 +15,9 @@ To get an overview of the project, read the [README](../README.md). Here are som
 
 ## Getting started
 
-### Issues
+We love your contributions and do our best to provide you with mentorship and support. If you are looking for an issue to tackle, take a look at issues labeled [`Good first issue`](https://github.com/saleor/saleor-dashboard/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22+) and [`Help wanted`](https://github.com/saleor/saleor-dashboard/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22).
 
-#### Create a new issue
-
-If you spot a problem with the dashboard, search if an issue already exists. If a related issue doesn't exist, you can open a new issue using a relevant issue form.
-
-#### Solve an issue
-
-Scan through our existing issues to find one that interests you. You can narrow down the search using labels as filters. If you find an issue to work on, you are welcome to open a PR with a fix.
+If nothing grabs your attention, check [our roadmap](https://saleor.io/roadmap) or [start a Discord discussion](https://saleor.io/discord) about a feature you'd like to see. Make sure to read our [Contribution Guidelines](http://docs.saleor.io/developer/community/contributing) before opening a PR or issue.
 
 ### Make changes locally
 
@@ -52,11 +45,12 @@ When you're finished with the changes, create a pull request, also known as a PR
 - Try to respect **SOLID** rules.
 
 ### Changesets
+
 Remember to add changeset file by running `npm run change:add` command.
 The prompt will ask you what kind of change you have made. Please pick the one according to the following guide:
+
 - `minor` - any breaking changes, UI updates, new features, anything that changes behavior of the app, and can be considered as minor change
 - `patch` - all bugfixes, insignificant UI updates (color of a button, margins, paddings, borders etc.), text typos, translation amends, CI scripts
-
 
 ### Continuous Integration
 
@@ -66,6 +60,6 @@ We run a series of automated checks on your PR to ensure that it meets our stand
 - UI tests are pending - reach out to maintainers to approve them
 - MacawUI migration check is failing - we are on the way to migrate to new MacawUI components, use imports from `@saleor/macaw-ui-next` instead of `@saleor/macaw-ui` in your changes
 
-### Your PR is merged!
+### Your PR is merged
 
 Congratulations 🎉🎉 Thank you for contribution to dashboard ✨.
