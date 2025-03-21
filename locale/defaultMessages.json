@@ -2156,6 +2156,9 @@
     "context": "dialog header",
     "string": "Delete Page"
   },
+  "C3sTzL": {
+    "string": "Installed Extensions"
+  },
   "C4aDMy": {
     "context": "description",
     "string": "Set up time amount that stock in checkout is reserved for the customer. You can set separate values for authenticated and anonymous customers."

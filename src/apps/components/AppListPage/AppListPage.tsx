@@ -1,5 +1,7 @@
 import { AppUrls } from "@dashboard/apps/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { headerTitles } from "@dashboard/extensions/messages";
+import { useFlag } from "@dashboard/featureFlags";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
@@ -43,6 +45,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
   const intl = useIntl();
   const classes = useStyles();
   const navigate = useNavigator();
+  const { enabled: isExtensionsEnabled } = useFlag("extensions");
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const verifiedInstalledApps = getVerifiedInstalledApps(installedApps, installableMarketplaceApps);
   const verifiedAppsInstallations = getVerifiedAppsInstallations(
@@ -72,7 +75,11 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
 
   return (
     <>
-      <TopNav title={intl.formatMessage(sectionNames.apps)}>
+      <TopNav
+        title={intl.formatMessage(
+          isExtensionsEnabled ? headerTitles.installedExtensions : sectionNames.apps,
+        )}
+      >
         {hasManagedAppsPermission && (
           <InstallWithManifestFormButton onSubmitted={navigateToAppInstallPage} />
         )}

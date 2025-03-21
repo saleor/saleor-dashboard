@@ -5,6 +5,10 @@ export const headerTitles = defineMessages({
     defaultMessage: "Explore Extensions",
     id: "GUcbBE",
   },
+  installedExtensions: {
+    defaultMessage: "Installed Extensions",
+    id: "C3sTzL",
+  },
 });
 
 export const buttonLabels = defineMessages({
