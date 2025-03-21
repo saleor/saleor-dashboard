@@ -7303,9 +7303,6 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this variant?} other{Are you sure you want to unassign {displayQuantity} variants?}}"
   },
-  "iX/Xbc": {
-    "string": "Sorry, we couldn't load extensions"
-  },
   "ibnmEd": {
     "context": "voucher country range",
     "string": "Countries"

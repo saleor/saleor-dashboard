@@ -1,5 +1,5 @@
 import { APIExtensionsResponse, ExtensionsGroups } from "@dashboard/extensions/types";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const prepareExtensionsData = (data: APIExtensionsResponse) => {
   return data.reduce((acc, { name, extensions }) => {
@@ -15,8 +15,6 @@ const prepareExtensionsData = (data: APIExtensionsResponse) => {
 };
 
 export const useAppStoreExtensions = (appStoreUrl: string) => {
-  const cache = useRef(new Map<string, ExtensionsGroups>());
-
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<ExtensionsGroups>({
@@ -37,14 +35,6 @@ export const useAppStoreExtensions = (appStoreUrl: string) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (cache.current.has(appStoreUrl)) {
-        return {
-          data: cache.current.get(appStoreUrl),
-          loading: false,
-          error: null,
-        };
-      }
-
       try {
         setLoading(true);
 
@@ -55,8 +45,6 @@ export const useAppStoreExtensions = (appStoreUrl: string) => {
         }
 
         const data = await response.json();
-
-        cache.current.set(appStoreUrl, data);
 
         setData(prepareExtensionsData(data.extensionCategories));
       } catch (e) {

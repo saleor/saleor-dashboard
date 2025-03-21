@@ -27,6 +27,11 @@ export const ExploreExtensions = () => {
     [navigate],
   );
 
+  if (error) {
+    // We want to show default errr page when app store api does not work
+    throw new Error(error);
+  }
+
   return (
     <>
       <TopNav title={intl.formatMessage(headerTitles.exploreExtensions)}>
@@ -45,7 +50,7 @@ export const ExploreExtensions = () => {
           />
         </Box>
 
-        <ExtensionsList extensions={filteredExtensions} error={error} loading={loading} />
+        <ExtensionsList extensions={filteredExtensions} loading={loading} />
       </Box>
     </>
   );

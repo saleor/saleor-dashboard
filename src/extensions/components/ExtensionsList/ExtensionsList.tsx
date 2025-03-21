@@ -1,8 +1,6 @@
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
-import { FormattedMessage } from "react-intl";
 
-import { messages } from "../../messages";
 import { ExtensionsGroups } from "../../types";
 import { ExtensionItem } from "../ExtenionItem";
 import { ExtensionsGroup } from "../ExtensionsGroup";
@@ -11,11 +9,10 @@ import { NoExtensions } from "./NoExtenstions";
 
 export interface ExtensionsListProps {
   extensions: ExtensionsGroups;
-  error?: string | null;
   loading?: boolean;
 }
 
-export const ExtensionsList = ({ extensions, error, loading }: ExtensionsListProps) => {
+export const ExtensionsList = ({ extensions, loading }: ExtensionsListProps) => {
   const extensionsEntries = Object.entries(extensions);
 
   const isAllExtensionsEmpty = extensionsEntries.every(
@@ -24,14 +21,6 @@ export const ExtensionsList = ({ extensions, error, loading }: ExtensionsListPro
 
   if (loading) {
     return <LoadingSkeleton />;
-  }
-
-  if (error) {
-    return (
-      <Text color="critical1">
-        <FormattedMessage {...messages.errorLoadingExtensions} />
-      </Text>
-    );
   }
 
   if (isAllExtensionsEmpty) {
