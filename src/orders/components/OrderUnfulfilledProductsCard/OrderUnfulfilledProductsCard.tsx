@@ -10,6 +10,7 @@ import { FormattedMessage } from "react-intl";
 import OrderCardTitle from "../OrderCardTitle";
 import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid";
 import { useStyles } from "./styles";
+import { toLineWithUnfulfilledQuantity } from "./utils";
 
 interface OrderUnfulfilledProductsCardProps {
   showFulfillmentAction: boolean;
@@ -19,13 +20,6 @@ interface OrderUnfulfilledProductsCardProps {
   loading: boolean;
   onShowMetadata: (id: string) => void;
 }
-
-const toLineWithUnfulfilledQuantity = (lines: OrderLineFragment[]) =>
-  lines.map(({ quantityToFulfill, ...rest }) => ({
-    ...rest,
-    quantityToFulfill,
-    quantity: quantityToFulfill,
-  }));
 
 const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> = ({
   showFulfillmentAction,
