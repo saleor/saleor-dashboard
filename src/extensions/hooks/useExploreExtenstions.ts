@@ -1,12 +1,11 @@
+import { getExtensionsConfig } from "@dashboard/config";
 import { ExtensionsGroups } from "@dashboard/extensions/types";
 
 import { useAppStoreExtensions } from "./useAppStoreExtenstions";
 import { useInstalledExtensions } from "./useInstalledExtenstions";
 
 export const useExploreExtensions = () => {
-  const { data, loading, error } = useAppStoreExtensions(
-    "https://appstore-git-prod-131-add-plugins-saleorcommerce.vercel.app/api/v3/extensions",
-  );
+  const { data, loading, error } = useAppStoreExtensions(getExtensionsConfig().extensionsApiUri);
   const { installedExtensions } = useInstalledExtensions();
 
   const onlyAppsExtensions = Object.fromEntries(

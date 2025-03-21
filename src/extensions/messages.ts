@@ -80,4 +80,8 @@ export const messages = defineMessages({
     defaultMessage: "Learn more",
     id: "TdTXXf",
   },
+  emptyExtensionsApiUrl: {
+    defaultMessage: "No extensions API URL provided",
+    id: "gZ1qnD",
+  },
 });

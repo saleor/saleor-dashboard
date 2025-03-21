@@ -1,5 +1,7 @@
+import { messages } from "@dashboard/extensions/messages";
 import { APIExtensionsResponse, ExtensionsGroups } from "@dashboard/extensions/types";
 import { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
 
 const prepareExtensionsData = (data: APIExtensionsResponse) => {
   return data.reduce((acc, { name, extensions }) => {
@@ -14,7 +16,9 @@ const prepareExtensionsData = (data: APIExtensionsResponse) => {
   }, {} as ExtensionsGroups);
 };
 
-export const useAppStoreExtensions = (appStoreUrl: string) => {
+export const useAppStoreExtensions = (appStoreUrl?: string) => {
+  const intl = useIntl();
+
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<ExtensionsGroups>({
@@ -35,6 +39,8 @@ export const useAppStoreExtensions = (appStoreUrl: string) => {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!appStoreUrl) return;
+
       try {
         setLoading(true);
 
@@ -56,6 +62,14 @@ export const useAppStoreExtensions = (appStoreUrl: string) => {
 
     fetchData();
   }, [appStoreUrl]);
+
+  if (!appStoreUrl) {
+    return {
+      error: intl.formatMessage(messages.emptyExtensionsApiUrl),
+      loading: false,
+      data,
+    };
+  }
 
   return {
     error,
