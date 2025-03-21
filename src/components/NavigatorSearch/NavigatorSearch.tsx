@@ -140,10 +140,12 @@ const NavigatorSearch: React.FC = () => {
 
   return (
     <DashboardModal open={isNavigatorVisible} onChange={setNavigatorVisibility}>
-      <DashboardModal.Content size="sm" backgroundColor="default1" padding={0}>
+      <DashboardModal.Content size="sm" backgroundColor="default1" padding={0} paddingBottom={4}>
         <Box __height="500px" width="100%">
           <Downshift
-            itemToString={(item: QuickSearchAction) => (item ? item.label : "")}
+            itemToString={(item: QuickSearchAction) =>
+              item && typeof item.label === "string" ? item.label : ""
+            }
             onSelect={(item: QuickSearchAction) => {
               const shouldRemainVisible = item?.onClick();
 

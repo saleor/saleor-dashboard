@@ -1401,6 +1401,9 @@
     "context": "tooltip, submit form",
     "string": "Transaction is non-refundable. You have to send refund manually."
   },
+  "6iaXL/": {
+    "string": "This is root category"
+  },
   "6iw4VR": {
     "context": "delete variant dialog title",
     "string": "Delete Product Variants"

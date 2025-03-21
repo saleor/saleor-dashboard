@@ -101,6 +101,14 @@ const messages = defineMessages({
     id: "x/ZVlU",
     defaultMessage: "Product",
   },
+  root: {
+    defaultMessage: "This is root category",
+    id: "6iaXL/",
+  },
+  variant: {
+    defaultMessage: "Variant",
+    id: "OK5+Fh",
+  },
 });
 
 export default messages;
