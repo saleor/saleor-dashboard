@@ -10,7 +10,13 @@ export const useExtensionsFilter = ({ extensions }: { extensions: ExtensionsGrou
   };
 
   const filteredExtensions = Object.fromEntries(
-    Object.entries(extensions).map(([key, value]) => [key, fuzzySearch(value, query, ["name"])]),
+    Object.entries(extensions).map(([key, value]) => [
+      key,
+      {
+        title: value.title,
+        items: fuzzySearch(value.items, query, ["name.en"]),
+      },
+    ]),
   ) as ExtensionsGroups;
 
   return {

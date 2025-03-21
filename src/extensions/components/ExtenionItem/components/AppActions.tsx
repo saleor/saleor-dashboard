@@ -10,15 +10,15 @@ interface AppActionsProps {
   isInstalled: boolean;
   manifestUrl?: string | null;
   repositoryUrl?: string | null;
-  id: string;
+  id?: string;
 }
 
-export const AppActions = ({ isInstalled, repositoryUrl, manifestUrl }: AppActionsProps) => {
+export const AppActions = ({ isInstalled, repositoryUrl, manifestUrl, id }: AppActionsProps) => {
   const intl = useIntl();
 
-  if (isInstalled) {
+  if (isInstalled && id) {
     return (
-      <Link href="/extensions/{id}">
+      <Link href={AppUrls.resolveAppUrl(id)}>
         <Button variant="secondary">{intl.formatMessage(messages.viewDetails)}</Button>
       </Link>
     );

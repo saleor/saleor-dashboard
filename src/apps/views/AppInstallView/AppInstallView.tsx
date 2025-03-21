@@ -2,6 +2,7 @@ import { AppInstallErrorPage } from "@dashboard/apps/components/AppInstallErrorP
 import AppInstallPage from "@dashboard/apps/components/AppInstallPage";
 import { AppInstallUrlQueryParams, AppUrls, MANIFEST_ATTR } from "@dashboard/apps/urls";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { exploreExtensionsPath } from "@dashboard/extensions/urls";
 import { useFlag } from "@dashboard/featureFlags";
 import { useAppFetchMutation, useAppInstallMutation } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
@@ -68,7 +69,7 @@ export const AppInstallView: React.FC<Props> = ({ params }) => {
     },
   });
   const navigateToAppsList = () =>
-    navigate(AppUrls.resolveAppListUrl(undefined, isExtensionsEnabled));
+    navigate(isExtensionsEnabled ? exploreExtensionsPath : AppUrls.resolveAppListUrl());
 
   const handleSubmit = () => {
     const manifest = fetchManifestOpts?.data?.appFetchManifest?.manifest;
