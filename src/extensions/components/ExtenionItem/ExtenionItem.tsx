@@ -15,6 +15,7 @@ export const ExtensionItem = ({ extension }: ExtensionItemProps) => {
   const { type, title, subtitle, description, avatar, actions, isInstalled } =
     useExtension(extension);
   const { theme } = useTheme();
+  const textColor = theme === "defaultDark" ? "default1" : "default2";
 
   return (
     <DashboardCard borderColor="default1" borderStyle="solid" borderWidth={1} borderRadius={5}>
@@ -46,11 +47,11 @@ export const ExtensionItem = ({ extension }: ExtensionItemProps) => {
       </DashboardCard.Header>
 
       <DashboardCard.Content>
-        <Text size={4} color={theme === "defaultDark" ? "default1" : "default2"}>
+        <Text size={4} color={textColor}>
           {description}
         </Text>
 
-        {type === "PLUGIN" && <PluginWarning />}
+        {type === "PLUGIN" && <PluginWarning color={textColor} />}
       </DashboardCard.Content>
       <DashboardCard.BottomActions gap={6} marginTop="auto" paddingTop={2} paddingBottom={5}>
         {actions}

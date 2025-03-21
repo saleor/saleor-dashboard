@@ -1,7 +1,5 @@
-import PluginIcon from "@assets/images/plugin.svg";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
-import SVG from "react-inlinesvg";
 import { useIntl } from "react-intl";
 
 import { messages } from "../../../messages";
@@ -13,13 +11,13 @@ const saleor = "Saleor Commerce";
 
 export const useExtension = (extension: ExtensionData) => {
   const intl = useIntl();
+  const { theme } = useTheme();
 
   const getExtensionAvatar = () => {
-    if (extension.type === "PLUGIN") {
-      return <SVG src={PluginIcon} />;
-    }
+    const source =
+      theme === "defaultDark" ? extension.logo?.dark?.source : extension.logo?.light?.source;
 
-    return <Box as="img" display="block" maxWidth="100%" src={extension.logo?.light?.source} />;
+    return <Box as="img" display="block" maxWidth="100%" src={source} />;
   };
 
   const getExtensionDescription = () => {
