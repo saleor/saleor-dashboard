@@ -8,9 +8,11 @@ export const getProductVariantLabel = (variant: Variant) => {
   return (
     <>
       {variant.product.name} / {variant.name}
-      <Text marginLeft={2} size={2}>
-        <i>({variant.sku})</i>
-      </Text>
+      {variant.sku && (
+        <Text marginLeft={2} size={2}>
+          <i>({variant.sku})</i>
+        </Text>
+      )}
     </>
   );
 };
