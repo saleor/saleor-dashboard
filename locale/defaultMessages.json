@@ -6994,6 +6994,9 @@
     "context": "information",
     "string": "{releaseDate}"
   },
+  "gZ1qnD": {
+    "string": "No extensions API URL provided"
+  },
   "gZHmaV": {
     "context": "plugin filters error messages channels",
     "string": "No channels selected"
