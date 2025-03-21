@@ -441,6 +441,10 @@ export const getAttributesCaption = (
     ?.map(attribute => attribute.values.map(attributeValue => attributeValue.name).join(", "))
     .filter(Boolean);
 
+  if (names.length === 0) {
+    return "";
+  }
+
   return `${separator}${names.join(separator)}`;
 };
 
