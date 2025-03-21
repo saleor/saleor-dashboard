@@ -2835,9 +2835,6 @@
     "context": "value input label",
     "string": "Discount value"
   },
-  "GC8T3V": {
-    "string": "Product variant"
-  },
   "GCPzKf": {
     "context": "ProductTypeDeleteWarningDialog single assigned items button label",
     "string": "View products"
