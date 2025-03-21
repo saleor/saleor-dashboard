@@ -20,6 +20,13 @@ interface OrderUnfulfilledProductsCardProps {
   onShowMetadata: (id: string) => void;
 }
 
+const toLineWithUnfulfilledQuantity = (lines: OrderLineFragment[]) =>
+  lines.map(({ quantityToFulfill, ...rest }) => ({
+    ...rest,
+    quantityToFulfill,
+    quantity: quantityToFulfill,
+  }));
+
 const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> = ({
   showFulfillmentAction,
   notAllowedToFulfillUnpaid,
@@ -39,7 +46,11 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
       <DashboardCard>
         <OrderCardTitle withStatus status="unfulfilled" className={classes.cardTitle} />
         <DashboardCard.Content paddingX={0}>
-          <OrderDetailsDatagrid lines={lines} loading={loading} onShowMetadata={onShowMetadata} />
+          <OrderDetailsDatagrid
+            lines={toLineWithUnfulfilledQuantity(lines)}
+            loading={loading}
+            onShowMetadata={onShowMetadata}
+          />
           {showFulfillmentAction && (
             <DashboardCard.BottomActions justifyContent="flex-end">
               <Button
