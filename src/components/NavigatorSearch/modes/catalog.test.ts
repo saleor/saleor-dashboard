@@ -10,6 +10,7 @@ describe("searchInCatalog", () => {
   const navigate = jest.fn();
 
   it("should return variants if search is a sku", () => {
+    // Arrange
     const mockCatalog: SearchCatalogQuery = {
       productVariants: {
         edges: [
@@ -32,13 +33,16 @@ describe("searchInCatalog", () => {
       },
     } as SearchCatalogQuery;
 
+    // Act
     const results = searchInCatalog("PROD-SMALL", intl, navigate, mockCatalog);
 
+    // Assert
     expect(results).toHaveLength(1);
     expect(results[0].searchValue).toContain("PROD-SMALL");
   });
 
   it("should return both product and its variant", () => {
+    // Arrange
     const mockCatalog: SearchCatalogQuery = {
       products: {
         edges: [
@@ -75,8 +79,10 @@ describe("searchInCatalog", () => {
       },
     } as SearchCatalogQuery;
 
+    // Act
     const results = searchInCatalog("T-Shirt", intl, navigate, mockCatalog);
 
+    // Assert
     expect(results).toHaveLength(2);
     expect(results[0].label).toBe("T-Shirt");
     expect(results[1].searchValue).toContain("PROD-SMALL");
