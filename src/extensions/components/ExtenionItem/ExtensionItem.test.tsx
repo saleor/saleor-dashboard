@@ -20,6 +20,11 @@ jest.mock("@dashboard/components/Link", () => {
   );
 });
 
+jest.mock("@saleor/macaw-ui-next", () => ({
+  ...jest.requireActual("@saleor/macaw-ui-next"),
+  useTheme: () => ({ theme: "default" }),
+}));
+
 const baseApp = {
   type: "APP",
   kind: "OFFICIAL",

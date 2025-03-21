@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { ExtensionData } from "../../types";
@@ -14,6 +14,7 @@ interface ExtensionItemProps {
 export const ExtensionItem = ({ extension }: ExtensionItemProps) => {
   const { type, title, subtitle, description, avatar, actions, isInstalled } =
     useExtension(extension);
+  const { theme } = useTheme();
 
   return (
     <DashboardCard borderColor="default1" borderStyle="solid" borderWidth={1} borderRadius={5}>
@@ -45,7 +46,7 @@ export const ExtensionItem = ({ extension }: ExtensionItemProps) => {
       </DashboardCard.Header>
 
       <DashboardCard.Content>
-        <Text size={4} color="default2">
+        <Text size={4} color={theme === "defaultDark" ? "default1" : "default2"}>
           {description}
         </Text>
 
