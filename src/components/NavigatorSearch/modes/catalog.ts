@@ -83,7 +83,7 @@ export function searchInCatalog(
   }));
 
   const searchableItems = [...categories, ...collections, ...products, ...variants];
-  const searchResults = fuzzySearch(searchableItems, search, ["searchValue"]);
+  const searchResults = fuzzySearch(searchableItems, search, ["searchValue"], 0.8);
 
   return searchResults;
 }

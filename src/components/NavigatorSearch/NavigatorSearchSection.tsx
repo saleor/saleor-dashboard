@@ -47,7 +47,9 @@ const NavigatorSearchSection: React.FC<NavigatorSearchSectionProps> = props => {
               active: "accent1Pressed",
             }}
             selected={highlightedIndex === index}
-            key={[item.label, item.type].join(":")}
+            key={[typeof item.label === "string" ? item.label : item.searchValue, item.type].join(
+              ":",
+            )}
             cursor="pointer"
             display="flex"
             flexDirection="row"
