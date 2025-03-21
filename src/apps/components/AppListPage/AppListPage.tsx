@@ -6,7 +6,7 @@ import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsP
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { ListProps } from "@dashboard/types";
-import { Box, Skeleton, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -15,7 +15,7 @@ import InstalledAppList from "../InstalledAppList";
 import { InstallWithManifestFormButton } from "../InstallWithManifestFormButton";
 import MarketplaceAlert from "../MarketplaceAlert";
 import { messages } from "./messages";
-import { MissingAppsFooter } from "./MissingAppsFooter";
+import { CONST_TYPEFORM_URL, MissingAppsFooter } from "./MissingAppsFooter";
 import { useStyles } from "./styles";
 import { AppListPageSections } from "./types";
 import {
@@ -80,9 +80,16 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
           isExtensionsEnabled ? headerTitles.installedExtensions : sectionNames.apps,
         )}
       >
-        {hasManagedAppsPermission && (
-          <InstallWithManifestFormButton onSubmitted={navigateToAppInstallPage} />
-        )}
+        <Box display="flex" gap={4}>
+          {isExtensionsEnabled && (
+            <Button variant="secondary" target="_blank" as="a" href={CONST_TYPEFORM_URL}>
+              {intl.formatMessage(messages.missingAppsButton)}
+            </Button>
+          )}
+          {hasManagedAppsPermission && (
+            <InstallWithManifestFormButton onSubmitted={navigateToAppInstallPage} />
+          )}
+        </Box>
       </TopNav>
       <Box display="flex" flexDirection="column" alignItems="center" marginY={5}>
         <Box className={classes.appContent} marginY={5}>
