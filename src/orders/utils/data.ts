@@ -434,10 +434,15 @@ export const transformFuflillmentLinesToStockFormsetData = (
 
 export const getAttributesCaption = (
   attributes: OrderFulfillLineFragment["variant"]["attributes"] | undefined,
-): string | undefined =>
-  attributes
+): string | undefined => {
+  const separator = " / ";
+
+  const names = attributes
     ?.map(attribute => attribute.values.map(attributeValue => attributeValue.name).join(", "))
-    .join(" / ");
+    .filter(Boolean);
+
+  return `${separator}${names.join(separator)}`;
+};
 
 export const prepareMoney = (
   amount: number,
