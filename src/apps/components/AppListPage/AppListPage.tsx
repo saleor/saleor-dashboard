@@ -25,6 +25,7 @@ import {
 
 export interface AppListPageProps extends AppListPageSections, ListProps {
   marketplaceError?: Error;
+  showAvailableApps: boolean;
 }
 
 export const AppListPage: React.FC<AppListPageProps> = props => {
@@ -37,6 +38,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
     settings,
     marketplaceError,
     onUpdateListSettings,
+    showAvailableApps,
   } = props;
   const intl = useIntl();
   const classes = useStyles();
@@ -91,7 +93,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
           />
 
           <MarketplaceAlert error={marketplaceError} />
-          {sectionsAvailability.all && !marketplaceError && (
+          {showAvailableApps && sectionsAvailability.all && !marketplaceError && (
             <Box marginTop={7} data-test-id="apps-available">
               <Text
                 as="h3"
@@ -114,7 +116,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
               )}
             </Box>
           )}
-          {sectionsAvailability.comingSoon && !marketplaceError && (
+          {showAvailableApps && sectionsAvailability.comingSoon && !marketplaceError && (
             <Box marginTop={7} data-test-id="apps-upcoming">
               <Text
                 as="h3"
