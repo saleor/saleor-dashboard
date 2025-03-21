@@ -106,8 +106,8 @@ const messages = defineMessages({
     id: "6iaXL/",
   },
   variant: {
-    defaultMessage: "Product variant",
-    id: "GC8T3V",
+    defaultMessage: "Variant",
+    id: "OK5+Fh",
   },
 });
 

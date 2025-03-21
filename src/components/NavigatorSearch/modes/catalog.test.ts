@@ -35,7 +35,7 @@ describe("searchInCatalog", () => {
     const results = searchInCatalog("PROD-SMALL", intl, navigate, mockCatalog);
 
     expect(results).toHaveLength(1);
-    expect(results[0].label).toContain("PROD-SMALL");
+    expect(results[0].searchValue).toContain("PROD-SMALL");
   });
 
   it("should return both product and its variant", () => {
@@ -79,6 +79,6 @@ describe("searchInCatalog", () => {
 
     expect(results).toHaveLength(2);
     expect(results[0].label).toBe("T-Shirt");
-    expect(results[1].label).toBe("T-Shirt / Small (PROD-SMALL)");
+    expect(results[1].searchValue).toContain("PROD-SMALL");
   });
 });

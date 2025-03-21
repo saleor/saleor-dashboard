@@ -2,9 +2,9 @@ import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 
 const defaultProps = {
-  __height: "48px",
-  __width: "48px",
-  __minWidth: "48px",
+  __height: "40px",
+  __width: "40px",
+  __minWidth: "40px",
 };
 
 export const NavigatorThumbnail = ({

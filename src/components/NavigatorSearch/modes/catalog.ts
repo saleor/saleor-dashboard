@@ -9,6 +9,7 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { IntlShape } from "react-intl";
 
 import { QuickSearchAction, QuickSearchActionInput } from "../types";
+import { getProductVariantLabel } from "./labels";
 import messages from "./messages";
 
 export function searchInCatalog(
@@ -22,6 +23,7 @@ export function searchInCatalog(
   ).map<QuickSearchActionInput>(category => ({
     caption: intl.formatMessage(messages.category),
     label: category.name,
+    searchValue: category.name,
     onClick: () => {
       navigate(categoryUrl(category.id));
 
@@ -37,6 +39,7 @@ export function searchInCatalog(
   ).map<QuickSearchActionInput>(collection => ({
     caption: intl.formatMessage(messages.collection),
     label: collection.name,
+    searchValue: collection.name,
     onClick: () => {
       navigate(collectionUrl(collection.id));
 
@@ -52,6 +55,7 @@ export function searchInCatalog(
     caption: intl.formatMessage(messages.product),
     extraInfo: product.category.name,
     label: product.name,
+    searchValue: product.name,
     onClick: () => {
       navigate(productUrl(product.id));
 
@@ -66,7 +70,8 @@ export function searchInCatalog(
   ).map<QuickSearchActionInput>(variant => ({
     caption: intl.formatMessage(messages.variant),
     extraInfo: variant.product.category.name,
-    label: `${variant.product.name} / ${variant.name} (${variant.sku})`,
+    label: getProductVariantLabel(variant),
+    searchValue: `${variant.product.name} ${variant.name} ${variant.sku}`,
     onClick: () => {
       navigate(productVariantEditUrl(variant.product.id, variant.id));
 
@@ -78,7 +83,7 @@ export function searchInCatalog(
   }));
 
   const searchableItems = [...categories, ...collections, ...products, ...variants];
-  const searchResults = fuzzySearch(searchableItems, search, ["label"]);
+  const searchResults = fuzzySearch(searchableItems, search, ["searchValue"]);
 
   return searchResults;
 }
