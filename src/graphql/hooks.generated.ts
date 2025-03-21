@@ -9259,6 +9259,7 @@ export const InstalledAppsDocument = gql`
       node {
         id
         identifier
+        manifestUrl
       }
     }
   }

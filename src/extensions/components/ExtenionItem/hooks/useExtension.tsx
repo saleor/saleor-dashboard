@@ -44,27 +44,27 @@ export const useExtension = (extension: ExtensionData) => {
   };
 
   const getExtensionSubtitle = () => {
-    if (extension.type === "PLUGIN") {
-      return intl.formatMessage(messages.developedBy, {
-        developer: saleor,
-      });
+    if (extension.type === "APP") {
+      if (extension.kind === "OSS") {
+        return intl.formatMessage(messages.developedBy, {
+          developer: intl.formatMessage(messages.community),
+        });
+      }
+
+      if (extension.kind === "OFFICIAL") {
+        if (extension.isCustomApp) {
+          return intl.formatMessage(messages.customBuild);
+        }
+
+        return intl.formatMessage(messages.developedBy, {
+          developer: saleor,
+        });
+      }
     }
 
-    // Here extension.type is equal APP
-
-    if (extension.kind === "OSS") {
-      return intl.formatMessage(messages.developedBy, {
-        developer: intl.formatMessage(messages.community),
-      });
-    }
-
-    if (extension.kind === "OFFICIAL") {
-      return intl.formatMessage(messages.developedBy, {
-        developer: saleor,
-      });
-    }
-
-    return intl.formatMessage(messages.customBuild);
+    return intl.formatMessage(messages.developedBy, {
+      developer: saleor,
+    });
   };
 
   return {

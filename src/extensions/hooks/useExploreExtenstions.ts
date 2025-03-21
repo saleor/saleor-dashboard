@@ -23,6 +23,9 @@ export const useExploreExtensions = () => {
 
             return {
               ...extension,
+              ...(extension.type === "APP"
+                ? { isCustomApp: extension.manifestUrl !== installedApp?.manifestUrl }
+                : {}),
               installed: !!installedApp,
               appId: installedApp?.id,
             };

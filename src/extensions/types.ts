@@ -23,6 +23,7 @@ interface AppExtensionData extends CommonExtensionData {
   kind: "OFFICIAL" | "OSS";
   manifestUrl: string | null;
   repositoryUrl: string | null; // Typo in the original code
+  isCustomApp?: boolean;
 }
 
 interface PluginExtensionData extends CommonExtensionData {

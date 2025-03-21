@@ -14,6 +14,7 @@ export const installedApps = gql`
         node {
           id
           identifier
+          manifestUrl
         }
       }
     }

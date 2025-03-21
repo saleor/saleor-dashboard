@@ -10049,7 +10049,7 @@ export type InstalledAppsQueryVariables = Exact<{
 }>;
 
 
-export type InstalledAppsQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', totalCount: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, identifier: string | null } }> } | null };
+export type InstalledAppsQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', totalCount: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, identifier: string | null, manifestUrl: string | null } }> } | null };
 
 export type FileUploadMutationVariables = Exact<{
   file: Scalars['Upload'];
