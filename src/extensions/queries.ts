@@ -12,9 +12,7 @@ export const installedApps = gql`
       totalCount
       edges {
         node {
-          id
-          identifier
-          manifestUrl
+          ...InstalledApp
         }
       }
     }

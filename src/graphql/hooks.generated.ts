@@ -175,6 +175,13 @@ export const EventDeliveryAttemptFragmentDoc = gql`
   responseStatusCode
 }
     `;
+export const InstalledAppFragmentDoc = gql`
+    fragment InstalledApp on App {
+  id
+  identifier
+  manifestUrl
+}
+    `;
 export const AttributeFragmentDoc = gql`
     fragment Attribute on Attribute {
   id
@@ -9257,14 +9264,12 @@ export const InstalledAppsDocument = gql`
     totalCount
     edges {
       node {
-        id
-        identifier
-        manifestUrl
+        ...InstalledApp
       }
     }
   }
 }
-    `;
+    ${InstalledAppFragmentDoc}`;
 
 /**
  * __useInstalledAppsQuery__

@@ -15,7 +15,6 @@ interface CommonExtensionData {
     };
   };
   installed?: boolean;
-  appId?: string;
 }
 
 interface AppExtensionData extends CommonExtensionData {
@@ -24,6 +23,7 @@ interface AppExtensionData extends CommonExtensionData {
   manifestUrl: string | null;
   repositoryUrl: string | null; // Typo in the original code
   isCustomApp?: boolean;
+  appId?: string;
 }
 
 interface PluginExtensionData extends CommonExtensionData {

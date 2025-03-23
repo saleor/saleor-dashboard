@@ -1,41 +1,49 @@
 import { getExtensionsConfig } from "@dashboard/config";
-import { ExtensionsGroups } from "@dashboard/extensions/types";
+import { ExtensionData, ExtensionsGroups } from "@dashboard/extensions/types";
+import { InstalledAppFragment } from "@dashboard/graphql";
 
 import { useAppStoreExtensions } from "./useAppStoreExtenstions";
 import { useInstalledExtensions } from "./useInstalledExtenstions";
 
+const byAppType = (extension: ExtensionData) => extension.type === "APP";
+
+const toExtension = (extension: ExtensionData, installedApps: InstalledAppFragment[]) => {
+  // Implement checking is plugin installed in phase 3
+  if (extension.type === "PLUGIN") return extension;
+
+  const installedApp = installedApps.find(
+    installedExtension => installedExtension.identifier === extension.id,
+  );
+
+  if (!installedApp) return extension;
+
+  return {
+    ...extension,
+    isCustomApp: extension.manifestUrl !== installedApp.manifestUrl,
+    installed: true,
+    appId: installedApp.id,
+  };
+};
+
 export const useExploreExtensions = () => {
   const { data, loading, error } = useAppStoreExtensions(getExtensionsConfig().extensionsApiUri);
-  const { installedExtensions } = useInstalledExtensions();
+  const { installedApps } = useInstalledExtensions();
 
-  const onlyAppsExtensions = Object.fromEntries(
+  const extensionsData = Object.fromEntries(
     Object.entries(data).map(([group, extensions]) => [
       group,
       {
         title: extensions.title,
         items: extensions.items
           // TODO: Remove filter in phase 3
-          .filter(extension => extension.type === "APP")
-          .map(extension => {
-            const installedApp = installedExtensions.find(
-              installedExtension => installedExtension.identifier === extension.id,
-            );
-
-            return {
-              ...extension,
-              ...(extension.type === "APP"
-                ? { isCustomApp: extension.manifestUrl !== installedApp?.manifestUrl }
-                : {}),
-              installed: !!installedApp,
-              appId: installedApp?.id,
-            };
-          }),
+          .filter(byAppType)
+          .map(extension => toExtension(extension, installedApps)),
       },
     ]),
   ) as ExtensionsGroups;
 
   return {
-    extensions: onlyAppsExtensions,
+    extensions: extensionsData,
     loading,
     error,
   };

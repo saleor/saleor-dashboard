@@ -11,7 +11,7 @@ export const useInstalledExtensions = () => {
   const installedApps = mapEdgesToItems(data?.apps) ?? [];
 
   return {
-    installedExtensions: [...installedApps],
+    installedApps,
     loading,
   };
 };
