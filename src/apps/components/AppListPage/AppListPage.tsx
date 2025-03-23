@@ -80,7 +80,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
           isExtensionsEnabled ? headerTitles.installedExtensions : sectionNames.apps,
         )}
       >
-        <Box display="flex" gap={4}>
+        <Box display="flex" gap={4} alignItems="center">
           {isExtensionsEnabled && (
             <Button variant="secondary" target="_blank" as="a" href={CONST_TYPEFORM_URL}>
               {intl.formatMessage(messages.missingAppsButton)}

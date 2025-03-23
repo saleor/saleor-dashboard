@@ -59,6 +59,10 @@ export const messages = defineMessages({
     defaultMessage: "View details",
     id: "MnpUD7",
   },
+  manageApp: {
+    defaultMessage: "Manage app",
+    id: "wZFsmY",
+  },
   viewOnGithub: {
     defaultMessage: "View on GitHub",
     id: "80g19N",

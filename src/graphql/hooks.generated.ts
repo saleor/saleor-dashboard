@@ -180,6 +180,7 @@ export const InstalledAppFragmentDoc = gql`
   id
   identifier
   manifestUrl
+  isActive
 }
     `;
 export const AttributeFragmentDoc = gql`

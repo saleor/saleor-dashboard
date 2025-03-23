@@ -21,6 +21,7 @@ const toExtension = (extension: ExtensionData, installedApps: InstalledAppFragme
     ...extension,
     isCustomApp: extension.manifestUrl !== installedApp.manifestUrl,
     installed: true,
+    disabled: !installedApp.isActive,
     appId: installedApp.id,
   };
 };

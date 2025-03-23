@@ -39,6 +39,7 @@ export const useExtension = (extension: ExtensionData) => {
         manifestUrl={extension.manifestUrl}
         repositoryUrl={extension.repositoryUrl}
         id={extension.appId}
+        disabled={extension.disabled}
       />
     );
   };

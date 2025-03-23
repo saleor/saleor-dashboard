@@ -178,5 +178,6 @@ export const InstalledApp = gql`
     id
     identifier
     manifestUrl
+    isActive
   }
 `;
