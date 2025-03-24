@@ -88,6 +88,14 @@ export const messages = defineMessages({
     defaultMessage: "No extensions API URL provided",
     id: "gZ1qnD",
   },
+  noExtensionsInstalled: {
+    defaultMessage: "No Extensions installed yet",
+    id: "2nT0Sm",
+  },
+  exploreAvailableExtensions: {
+    defaultMessage: "Explore available Extensions",
+    id: "MhT1CS",
+  },
   noExtensionsFound: {
     defaultMessage: "No Extensions found",
     id: "jWLXdD",
