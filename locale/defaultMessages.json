@@ -39,6 +39,9 @@
     "context": "order shipping method name",
     "string": "Shipping"
   },
+  "+G2N98": {
+    "string": "Install from manifest"
+  },
   "+HuipK": {
     "context": "variant sku",
     "string": "SKU {sku}"
@@ -118,6 +121,9 @@
     "context": "input helper text",
     "string": "This number defines quantity of items in checkout line that can be bought. You can override this setting per variant. Leaving this setting empty mean that there is no limits."
   },
+  "+fICx5": {
+    "string": "Important"
+  },
   "+hib+V": {
     "context": "error message",
     "string": "This attribute is already assigned."
@@ -148,6 +154,9 @@
   "+mmPxn": {
     "context": "page header",
     "string": "Grant refund"
+  },
+  "+pGERa": {
+    "string": "Provide details manually"
   },
   "+pLi+M": {
     "context": "issued by app label",
@@ -372,6 +381,10 @@
   },
   "01+5kQ": {
     "string": "Mark as paid"
+  },
+  "033/zW": {
+    "context": "explore extensions section name",
+    "string": "Explore"
   },
   "05hqq6": {
     "context": "checkbox label",
@@ -982,6 +995,9 @@
     "context": "sale Details delete button",
     "string": "Removed sale"
   },
+  "4CrCbD": {
+    "string": "Community"
+  },
   "4Dc2j0": {
     "context": "order status",
     "string": "Returned"
@@ -1549,6 +1565,9 @@
   "7yKZvp": {
     "context": "section header",
     "string": "User Status"
+  },
+  "80g19N": {
+    "string": "View on GitHub"
   },
   "83egc7": {
     "string": "Manually enter the voucher code."
@@ -2137,6 +2156,9 @@
     "context": "dialog header",
     "string": "Delete Page"
   },
+  "C3sTzL": {
+    "string": "Installed Extensions"
+  },
   "C4aDMy": {
     "context": "description",
     "string": "Set up time amount that stock in checkout is reserved for the customer. You can set separate values for authenticated and anonymous customers."
@@ -2304,6 +2326,9 @@
   "D5Wtf/": {
     "context": "table header column",
     "string": "Country name"
+  },
+  "D66hpd": {
+    "string": "Search extensions..."
   },
   "D8nsBc": {
     "context": "no warehouses info",
@@ -2511,9 +2536,6 @@
   "EWD/wU": {
     "context": "delete app",
     "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
-  },
-  "EY/jqC": {
-    "string": "Last delivery attempt:"
   },
   "EYkW1J": {
     "context": "checkbox label",
@@ -2883,6 +2905,9 @@
   },
   "GTCg9O": {
     "string": "You must add at least one voucher code"
+  },
+  "GUcbBE": {
+    "string": "Explore Extensions"
   },
   "GVM/fi": {
     "context": "order history message",
@@ -3429,6 +3454,9 @@
     "context": "button",
     "string": "Edit"
   },
+  "JaLLdQ": {
+    "string": "Plugin built-in to Saleor’s core codebase"
+  },
   "Jb1/3V": {
     "context": "add shipping carrier button",
     "string": "Add shipping carrier"
@@ -3513,6 +3541,9 @@
   "K1ycaD": {
     "context": "input label",
     "string": "Refund value"
+  },
+  "K58C4r": {
+    "string": "We are working on replacing plugins with apps. Use apps unless no other option. {learnMore}"
   },
   "K8xNLe": {
     "context": "products section name",
@@ -3704,6 +3735,9 @@
   "LdNCP/": {
     "context": "Filter or element text",
     "string": "Or"
+  },
+  "LdzrxA": {
+    "string": "Custom build"
   },
   "LeJClL": {
     "context": "Popover title",
@@ -5199,6 +5233,9 @@
   "V1mqpZ": {
     "context": "button",
     "string": "Create Permission Group"
+  },
+  "V22724": {
+    "string": "Installed"
   },
   "V2BBQu": {
     "string": "Currency in both channels must be the same"
@@ -6757,6 +6794,9 @@
     "context": "helper text",
     "string": "{value} already refunded"
   },
+  "fKLe7r": {
+    "string": "Delivery start:"
+  },
   "fKrRhF": {
     "string": "General information"
   },
@@ -6772,6 +6812,9 @@
   },
   "fNFEkh": {
     "string": "No of Rows:"
+  },
+  "fOXF9A": {
+    "string": "Request Extension"
   },
   "fP9FXB": {
     "context": "input label",
@@ -6817,6 +6860,10 @@
   "fkgack": {
     "context": "button, sends refund for transaction",
     "string": "Request refund"
+  },
+  "fkoxZY": {
+    "context": "extensions section name",
+    "string": "Extensions"
   },
   "fkplbE": {
     "context": "order history message",
@@ -6946,6 +6993,9 @@
   "gXvoFf": {
     "context": "information",
     "string": "{releaseDate}"
+  },
+  "gZ1qnD": {
+    "string": "No extensions API URL provided"
   },
   "gZHmaV": {
     "context": "plugin filters error messages channels",
@@ -7106,6 +7156,10 @@
   },
   "hVPucN": {
     "string": "Light Mode"
+  },
+  "hVwc73": {
+    "context": "extensions page subheader",
+    "string": "extensions"
   },
   "hWO1SD": {
     "context": "order history message",
@@ -8208,6 +8262,9 @@
     "context": "staff members status deactivated",
     "string": "Inactive"
   },
+  "obHpf0": {
+    "string": "No extensions found"
+  },
   "oboeOT": {
     "string": "Add following permissions"
   },
@@ -8982,6 +9039,9 @@
     "context": "webhook input label",
     "string": "Target URL"
   },
+  "u9WrRb": {
+    "string": "Add Custom Extensions"
+  },
   "uCn/rd": {
     "context": "dialog header",
     "string": "Delete Image"
@@ -9040,6 +9100,9 @@
   "ubasgL": {
     "context": "order history message",
     "string": "Order was confirmed"
+  },
+  "ubmFc8": {
+    "string": "Install"
   },
   "ucLtY8": {
     "string": "Discount rules for products, collections or categories."
@@ -9327,9 +9390,6 @@
     "context": "placed orders counter",
     "string": "{count}/{max} orders"
   },
-  "w3sGrD": {
-    "string": "Enter any extra infotmation regarding this customer."
-  },
   "w424P4": {
     "context": "section header",
     "string": "Plugin Information and Status"
@@ -9397,6 +9457,9 @@
     "context": "note on currency",
     "string": "Note: Only channels with matching currency are available."
   },
+  "wZFsmY": {
+    "string": "Manage app"
+  },
   "wbsq7O": {
     "string": "Usage"
   },
@@ -9438,6 +9501,9 @@
   "wpAXKX": {
     "context": "checkbox label description",
     "string": "All orders will be automatically confirmed and all payments will be captured."
+  },
+  "wpONQ2": {
+    "string": "Enter any extra information regarding this customer."
   },
   "wpli4O": {
     "context": "WarehouseSettings private stock label",
@@ -9494,6 +9560,9 @@
   },
   "xJQX5t": {
     "string": "No staff members found"
+  },
+  "xKLf5H": {
+    "string": "Developed by {developer}"
   },
   "xNElry": {
     "context": "Transaction card title with name",
@@ -9687,6 +9756,10 @@
   "ycrTBX": {
     "context": "table header channel col label",
     "string": "Channel"
+  },
+  "yeX6fA": {
+    "context": "extensions page subheader",
+    "string": "Learn more about {extensions}"
   },
   "yfhLcv": {
     "string": "We are working on replacing plugins with apps. Read more about"

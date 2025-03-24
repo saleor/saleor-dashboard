@@ -78,7 +78,8 @@ export const AppWebhooksDisplay = ({ appId, ...boxProps }: AppWebhooksDisplayPro
 
     const alertsWithDeliveriesIds = sortedWebhooks
       .filter(wh => (wh.eventDeliveries?.edges.length || 0) > 0)
-      .map(({ id }) => id);
+      .map(({ id }) => id)
+      .splice(0, 1); // Display only first webhook with deliveries
 
     return (
       <Wrapper {...boxProps}>
