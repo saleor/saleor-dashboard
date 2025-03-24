@@ -88,4 +88,9 @@ export const messages = defineMessages({
     defaultMessage: "No extensions API URL provided",
     id: "gZ1qnD",
   },
+  installationCloudOnly: {
+    defaultMessage: "Use Saleor Cloud to access Saleor Apps",
+    description: "description",
+    id: "IEpmGQ",
+  },
 });
