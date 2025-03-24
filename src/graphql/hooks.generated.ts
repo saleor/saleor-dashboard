@@ -7823,6 +7823,7 @@ export const CustomerDetailsDocument = gql`
               amount
             }
           }
+          chargeStatus
         }
       }
     }

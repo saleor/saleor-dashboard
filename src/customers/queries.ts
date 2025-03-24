@@ -63,6 +63,7 @@ export const customerDetails = gql`
                 amount
               }
             }
+            chargeStatus
           }
         }
       }

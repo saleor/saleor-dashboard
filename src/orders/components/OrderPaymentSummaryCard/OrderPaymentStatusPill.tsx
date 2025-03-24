@@ -4,8 +4,10 @@ import { transformPaymentStatus } from "@dashboard/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 
+type Order = Pick<OrderDetailsFragment, "paymentStatus" | "chargeStatus">;
+
 interface OrderPaymentStatusPillProps {
-  order: OrderDetailsFragment | undefined;
+  order: Order | undefined;
   className?: string;
 }
 
