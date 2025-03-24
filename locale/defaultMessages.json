@@ -2156,6 +2156,9 @@
     "context": "dialog header",
     "string": "Delete Page"
   },
+  "C3sTzL": {
+    "string": "Installed Extensions"
+  },
   "C4aDMy": {
     "context": "description",
     "string": "Set up time amount that stock in checkout is reserved for the customer. You can set separate values for authenticated and anonymous customers."
@@ -5054,10 +5057,6 @@
   "U2mOqA": {
     "string": "No vouchers found"
   },
-  "U4Ey/7": {
-    "context": "Extension CMS category",
-    "string": "CMS"
-  },
   "U5CH0u": {
     "string": "Are you sure you want to delete {name} preset?"
   },
@@ -5978,10 +5977,6 @@
   "Zd3Eew": {
     "context": "subsection header",
     "string": "Shipping Address"
-  },
-  "ZelW6e": {
-    "context": "Extension Taxes category",
-    "string": "Taxes"
   },
   "ZepEWY": {
     "context": "Dry run item",
@@ -6998,6 +6993,9 @@
   "gXvoFf": {
     "context": "information",
     "string": "{releaseDate}"
+  },
+  "gZ1qnD": {
+    "string": "No extensions API URL provided"
   },
   "gZHmaV": {
     "context": "plugin filters error messages channels",
@@ -9121,10 +9119,6 @@
     "context": "Authorize {app name}",
     "string": "Authorize"
   },
-  "udvqNN": {
-    "context": "Extension Payment categoy",
-    "string": "Payment"
-  },
   "uf1ttM": {
     "string": "Rule reward value is required"
   },
@@ -9462,6 +9456,9 @@
   "wXFttp": {
     "context": "note on currency",
     "string": "Note: Only channels with matching currency are available."
+  },
+  "wZFsmY": {
+    "string": "Manage app"
   },
   "wbsq7O": {
     "string": "Usage"
