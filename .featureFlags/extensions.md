@@ -1,6 +1,6 @@
 ---
 name: extensions
-displayName: Extensions
+displayName: New Explore view
 enabled: true
 payload: "default"
 visible: true
@@ -8,5 +8,5 @@ visible: true
 
 ![Extensions](./images/extensions.png)
 
-Extensions unification allows you to manage all your extensions in one place. 
+Experience the new interface for browsing and installing extensions in the ‘Explore’ view
 
