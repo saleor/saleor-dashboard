@@ -1,0 +1,16 @@
+{
+  "name": "flaky-tests-report",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "BSD-3-Clause",
+  "type": "commonjs",
+  "dependencies": {
+    "ctrf": "0.0.12"
+  }
+}
