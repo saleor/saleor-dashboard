@@ -1046,6 +1046,10 @@
   "4T/RzC": {
     "string": "Make sure to save token, you won’t be able to see it again."
   },
+  "4VLj3S": {
+    "context": "overcharged order status",
+    "string": "Overcharged"
+  },
   "4VOIum": {
     "context": "product availability",
     "string": "Enabling this checkbox will remove product from search and category pages. It will be available on collection pages."
@@ -1056,6 +1060,10 @@
   "4W/CKn": {
     "context": "modal button",
     "string": "Upload URL"
+  },
+  "4WranC": {
+    "context": "payment status",
+    "string": "Overcharged"
   },
   "4XhJY+": {
     "context": "dialog header",
