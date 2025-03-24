@@ -57,6 +57,7 @@ jobs:
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       APPS_MARKETPLACE_API_URL: "https://apps.staging.saleor.io/api/v2/saleor-apps"
+      EXTENSIONS_API_URL: "https://apps.staging.saleor.io/api/v1/extensions"
       VERSION: ${{ github.event.inputs.git_ref || github.ref_name }}
       IS_CLOUD_INSTANCE: true
       ENABLED_SERVICE_NAME_HEADER: true
