@@ -43,5 +43,9 @@ export function getErrorMessage(err: UserContextError, intl: IntlShape): string 
       return intl.formatMessage(errorMessages.noPermissionsError);
     case "loginAttemptDelay":
       return intl.formatMessage(errorMessages.loginAttemptDelay);
+    case "invalidCredentials":
+      return intl.formatMessage(errorMessages.loginError);
+    default:
+      return intl.formatMessage(errorMessages.unknownLoginError);
   }
 }

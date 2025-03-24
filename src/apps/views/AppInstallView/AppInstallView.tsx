@@ -2,6 +2,7 @@ import { AppInstallErrorPage } from "@dashboard/apps/components/AppInstallErrorP
 import AppInstallPage from "@dashboard/apps/components/AppInstallPage";
 import { AppInstallUrlQueryParams, AppUrls, MANIFEST_ATTR } from "@dashboard/apps/urls";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { useFlag } from "@dashboard/featureFlags";
 import { useAppFetchMutation, useAppInstallMutation } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -23,6 +24,7 @@ export const AppInstallView: React.FC<Props> = ({ params }) => {
     "activeInstallations",
     [],
   );
+  const { enabled: isExtensionsEnabled } = useFlag("extensions");
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -65,7 +67,9 @@ export const AppInstallView: React.FC<Props> = ({ params }) => {
       }
     },
   });
-  const navigateToAppsList = () => navigate(AppUrls.resolveAppListUrl());
+  const navigateToAppsList = () =>
+    navigate(AppUrls.resolveAppListUrl(undefined, isExtensionsEnabled));
+
   const handleSubmit = () => {
     const manifest = fetchManifestOpts?.data?.appFetchManifest?.manifest;
 
@@ -86,7 +90,7 @@ export const AppInstallView: React.FC<Props> = ({ params }) => {
     if (manifestUrl) {
       fetchManifest({ variables: { manifestUrl } });
     } else {
-      navigate(AppUrls.resolveAppListUrl());
+      navigate(AppUrls.resolveAppListUrl(undefined, isExtensionsEnabled));
     }
   }, []);
 

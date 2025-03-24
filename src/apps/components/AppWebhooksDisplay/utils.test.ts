@@ -122,4 +122,224 @@ describe("sortWebhooksByFailedDeliveries", () => {
     // Assert
     expect(result[0].name).toBe("non-empty");
   });
+
+  it("should sort by attempt dates", () => {
+    const webhookWithAttempt = {
+      name: "with-attempt",
+      eventDeliveries: {
+        edges: [
+          {
+            node: {
+              attempts: {
+                edges: [
+                  {
+                    node: {
+                      id: "id",
+                      response: "response",
+                      status: EventDeliveryStatusEnum.FAILED,
+                      responseStatusCode: 500,
+                      createdAt: "2024-03-18T10:00:00Z",
+                      __typename: "EventDeliveryAttempt",
+                    },
+                    __typename: "EventDeliveryAttemptCountableEdge",
+                  },
+                ],
+                __typename: "EventDeliveryAttemptCountableConnection",
+              },
+              createdAt: "2024-03-17T10:00:00Z",
+              id: "delivery-1",
+              eventType: WebhookEventTypeEnum.ORDER_CONFIRMED,
+              status: EventDeliveryStatusEnum.FAILED,
+              __typename: "EventDelivery",
+            },
+            __typename: "EventDeliveryCountableEdge",
+          },
+        ],
+        __typename: "EventDeliveryCountableConnection",
+      },
+      id: "1",
+      ...DEFAULT_WEBHOOK,
+    } as Webhook;
+
+    const webhookWithoutAttempt = {
+      name: "with-newer-attempt",
+      eventDeliveries: {
+        edges: [
+          {
+            node: {
+              attempts: {
+                edges: [
+                  {
+                    node: {
+                      id: "id-two",
+                      response: "response",
+                      status: EventDeliveryStatusEnum.FAILED,
+                      responseStatusCode: 500,
+                      createdAt: "2024-03-19T11:00:00Z",
+                      __typename: "EventDeliveryAttempt",
+                    },
+                    __typename: "EventDeliveryAttemptCountableEdge",
+                  },
+                ],
+                __typename: "EventDeliveryAttemptCountableConnection",
+              },
+              createdAt: "2024-03-19T10:00:00Z",
+              id: "delivery-2",
+              eventType: WebhookEventTypeEnum.ORDER_CONFIRMED,
+              status: EventDeliveryStatusEnum.FAILED,
+              __typename: "EventDelivery",
+            },
+            __typename: "EventDeliveryCountableEdge",
+          },
+        ],
+        __typename: "EventDeliveryCountableConnection",
+      },
+      id: "2",
+      ...DEFAULT_WEBHOOK,
+    } as Webhook;
+
+    const webhooks = [webhookWithAttempt, webhookWithoutAttempt];
+
+    // Act
+    const result = webhooks.sort(sortWebhooksByDeliveries);
+
+    // Assert
+    expect(result[0].name).toBe("with-newer-attempt");
+    expect(result[1].name).toBe("with-attempt");
+  });
+
+  it("should sort by attempt date when available", () => {
+    const webhookWithAttempt = {
+      name: "with-attempt",
+      eventDeliveries: {
+        edges: [
+          {
+            node: {
+              attempts: {
+                edges: [
+                  {
+                    node: {
+                      id: "id",
+                      response: "response",
+                      status: EventDeliveryStatusEnum.FAILED,
+                      responseStatusCode: 500,
+                      createdAt: "2024-03-18T10:00:00Z",
+                      __typename: "EventDeliveryAttempt",
+                    },
+                    __typename: "EventDeliveryAttemptCountableEdge",
+                  },
+                ],
+                __typename: "EventDeliveryAttemptCountableConnection",
+              },
+              createdAt: "2024-03-17T10:00:00Z",
+              id: "delivery-1",
+              eventType: WebhookEventTypeEnum.ORDER_CONFIRMED,
+              status: EventDeliveryStatusEnum.FAILED,
+              __typename: "EventDelivery",
+            },
+            __typename: "EventDeliveryCountableEdge",
+          },
+        ],
+        __typename: "EventDeliveryCountableConnection",
+      },
+      id: "1",
+      ...DEFAULT_WEBHOOK,
+    } as Webhook;
+
+    const webhookWithoutAttempt = {
+      name: "without-attempt",
+      eventDeliveries: {
+        edges: [
+          {
+            node: {
+              attempts: {
+                edges: [],
+                __typename: "EventDeliveryAttemptCountableConnection",
+              },
+              createdAt: "2024-03-19T10:00:00Z",
+              id: "delivery-2",
+              eventType: WebhookEventTypeEnum.ORDER_CONFIRMED,
+              status: EventDeliveryStatusEnum.FAILED,
+              __typename: "EventDelivery",
+            },
+            __typename: "EventDeliveryCountableEdge",
+          },
+        ],
+        __typename: "EventDeliveryCountableConnection",
+      },
+      id: "2",
+      ...DEFAULT_WEBHOOK,
+    } as Webhook;
+
+    const webhooks = [webhookWithAttempt, webhookWithoutAttempt];
+
+    // Act
+    const result = webhooks.sort(sortWebhooksByDeliveries);
+
+    // Assert
+    expect(result[0].name).toBe("without-attempt");
+    expect(result[1].name).toBe("with-attempt");
+  });
+
+  it("should fallback to delivery date when no attempt is present", () => {
+    // Arrange
+    const olderDelivery = {
+      name: "older",
+      eventDeliveries: {
+        edges: [
+          {
+            node: {
+              attempts: {
+                edges: [],
+                __typename: "EventDeliveryAttemptCountableConnection",
+              },
+              createdAt: "2024-03-17T10:00:00Z",
+              id: "delivery-1",
+              eventType: WebhookEventTypeEnum.ORDER_CONFIRMED,
+              status: EventDeliveryStatusEnum.FAILED,
+              __typename: "EventDelivery",
+            },
+            __typename: "EventDeliveryCountableEdge",
+          },
+        ],
+        __typename: "EventDeliveryCountableConnection",
+      },
+      id: "1",
+      ...DEFAULT_WEBHOOK,
+    } as Webhook;
+
+    const newerDelivery = {
+      name: "newer",
+      eventDeliveries: {
+        edges: [
+          {
+            node: {
+              attempts: {
+                edges: [],
+                __typename: "EventDeliveryAttemptCountableConnection",
+              },
+              createdAt: "2024-03-18T10:00:00Z",
+              id: "delivery-2",
+              eventType: WebhookEventTypeEnum.ORDER_CONFIRMED,
+              status: EventDeliveryStatusEnum.FAILED,
+              __typename: "EventDelivery",
+            },
+            __typename: "EventDeliveryCountableEdge",
+          },
+        ],
+        __typename: "EventDeliveryCountableConnection",
+      },
+      id: "2",
+      ...DEFAULT_WEBHOOK,
+    } as Webhook;
+
+    const webhooks = [olderDelivery, newerDelivery];
+
+    // Act
+    const result = webhooks.sort(sortWebhooksByDeliveries);
+
+    // Assert
+    expect(result[0].name).toBe("newer");
+    expect(result[1].name).toBe("older");
+  });
 });
