@@ -21,15 +21,57 @@ jest.mock("@dashboard/components/Link", () => {
   );
 });
 
+jest.mock("@saleor/macaw-ui-next", () => ({
+  ...(jest.requireActual("@saleor/macaw-ui-next") as object),
+  useTheme: () => ({ theme: "default" }),
+}));
+
+const basePlugin = {
+  type: "PLUGIN",
+  id: "mirumee.braintree",
+  name: {
+    en: "Braintreee",
+  },
+  description: {
+    en: "Description",
+  },
+  logo: {
+    light: {
+      source: "plugin-logo.png",
+    },
+    dark: {
+      source: "plugin-logo.png",
+    },
+  },
+};
+
+const baseApp = {
+  type: "APP",
+  kind: "OFFICIAL",
+  name: {
+    en: "Adyen",
+  },
+  description: {
+    en: "App description",
+  },
+  logo: {
+    light: {
+      source: "plugin-logo.png",
+    },
+    dark: {
+      source: "plugin-logo.png",
+    },
+  },
+  manifestUrl: "https://example.com/manifest",
+  repositoryUrl: "https://example.com/repository",
+};
+
 describe("Extensions / ExtensionItem / useExtension", () => {
   it("should return correct values for not installed plugin", () => {
     const extension = {
-      type: "PLUGIN",
-      name: "Braintreee",
-      id: "mirumee.braintree",
-      logo: {
-        light: "plugin-logo.png",
-      },
+      ...basePlugin,
+      installed: false,
+      appId: "123",
     } as ExtensionData;
 
     const { result } = renderHook(() => useExtension(extension));
@@ -43,7 +85,7 @@ describe("Extensions / ExtensionItem / useExtension", () => {
       expect.objectContaining({
         title: "Braintreee",
         subtitle: "Developed by {developer}",
-        description: "Plugin built-in to Saleor’s core codebase",
+        description: "Description",
         isInstalled: false,
       }),
     );
@@ -51,15 +93,12 @@ describe("Extensions / ExtensionItem / useExtension", () => {
 
   it("should return correct values for installed plugin", () => {
     const extension = {
-      type: "PLUGIN",
-      name: "Braintreee",
-      id: "mirumee.braintree",
-      logo: {
-        light: "plugin-logo.png",
-      },
+      ...basePlugin,
+      installed: true,
+      appId: "123",
     } as ExtensionData;
 
-    const { result } = renderHook(() => useExtension(extension, true));
+    const { result } = renderHook(() => useExtension(extension));
 
     render(result.current.actions);
 
@@ -70,7 +109,7 @@ describe("Extensions / ExtensionItem / useExtension", () => {
       expect.objectContaining({
         title: "Braintreee",
         subtitle: "Developed by {developer}",
-        description: "Plugin built-in to Saleor’s core codebase",
+        description: "Description",
         isInstalled: true,
       }),
     );
@@ -78,17 +117,9 @@ describe("Extensions / ExtensionItem / useExtension", () => {
 
   it("should return correct values for not installed extension", () => {
     const extension = {
-      type: "APP",
-      kind: "OFFICIAL",
-      name: "Adyen",
-      description: {
-        en: "App description",
-      },
-      logo: {
-        light: "other-logo.png",
-      },
-      manifestUrl: "https://example.com/manifest",
-      repositoryUrl: "https://example.com/repository",
+      ...baseApp,
+      installed: false,
+      appId: "123",
     } as ExtensionData;
     const { result } = renderHook(() => useExtension(extension));
 
@@ -113,19 +144,11 @@ describe("Extensions / ExtensionItem / useExtension", () => {
 
   it("should return correct values for installed extension", () => {
     const extension = {
-      type: "APP",
-      kind: "OFFICIAL",
-      name: "Adyen",
-      description: {
-        en: "App description",
-      },
-      logo: {
-        light: "other-logo.png",
-      },
-      manifestUrl: "https://example.com/manifest",
-      repositoryUrl: "https://example.com/repository",
+      ...baseApp,
+      installed: true,
+      appId: "123",
     } as ExtensionData;
-    const { result } = renderHook(() => useExtension(extension, true));
+    const { result } = renderHook(() => useExtension(extension));
 
     render(result.current.actions);
 

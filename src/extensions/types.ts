@@ -1,21 +1,30 @@
 interface CommonExtensionData {
-  name: string;
-  logo?: {
-    light: string;
-    dark: string;
-  };
   id: string;
-  description?: {
+  name: {
     en: string;
-    [languageKey: string]: string;
   };
+  description: {
+    en: string;
+  };
+  logo: {
+    light: {
+      source: string;
+    };
+    dark: {
+      source: string;
+    };
+  };
+  installed?: boolean;
+  disabled?: boolean;
 }
 
 interface AppExtensionData extends CommonExtensionData {
   type: "APP";
-  manifestUrl: string | null;
-  repositoryUrl: string | null;
   kind: "OFFICIAL" | "OSS";
+  manifestUrl: string | null;
+  repositoryUrl: string | null; // Typo in the original code
+  isCustomApp?: boolean;
+  appId?: string;
 }
 
 interface PluginExtensionData extends CommonExtensionData {
@@ -24,6 +33,12 @@ interface PluginExtensionData extends CommonExtensionData {
 
 export type ExtensionData = AppExtensionData | PluginExtensionData;
 
-export type ExtensionGroup = "payment" | "taxes" | "cms";
+export type ExtensionGroup = "payments" | "taxes" | "cms" | "automation";
 
-export type ExtensionsGroups = Record<ExtensionGroup, ExtensionData[]>;
+export type ExtensionsGroups = Record<ExtensionGroup, { title: string; items: ExtensionData[] }>;
+
+export type APIExtensionsResponse = Array<{
+  id: string;
+  name: { en: string };
+  extensions: ExtensionData[];
+}>;

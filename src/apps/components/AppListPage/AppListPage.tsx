@@ -1,10 +1,12 @@
 import { AppUrls } from "@dashboard/apps/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { headerTitles } from "@dashboard/extensions/messages";
+import { useFlag } from "@dashboard/featureFlags";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { ListProps } from "@dashboard/types";
-import { Box, Skeleton, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -13,7 +15,7 @@ import InstalledAppList from "../InstalledAppList";
 import { InstallWithManifestFormButton } from "../InstallWithManifestFormButton";
 import MarketplaceAlert from "../MarketplaceAlert";
 import { messages } from "./messages";
-import { MissingAppsFooter } from "./MissingAppsFooter";
+import { CONST_TYPEFORM_URL, MissingAppsFooter } from "./MissingAppsFooter";
 import { useStyles } from "./styles";
 import { AppListPageSections } from "./types";
 import {
@@ -43,6 +45,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
   const intl = useIntl();
   const classes = useStyles();
   const navigate = useNavigator();
+  const { enabled: isExtensionsEnabled } = useFlag("extensions");
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const verifiedInstalledApps = getVerifiedInstalledApps(installedApps, installableMarketplaceApps);
   const verifiedAppsInstallations = getVerifiedAppsInstallations(
@@ -72,10 +75,21 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
 
   return (
     <>
-      <TopNav title={intl.formatMessage(sectionNames.apps)}>
-        {hasManagedAppsPermission && (
-          <InstallWithManifestFormButton onSubmitted={navigateToAppInstallPage} />
+      <TopNav
+        title={intl.formatMessage(
+          isExtensionsEnabled ? headerTitles.installedExtensions : sectionNames.apps,
         )}
+      >
+        <Box display="flex" gap={4} alignItems="center">
+          {isExtensionsEnabled && (
+            <Button variant="secondary" target="_blank" as="a" href={CONST_TYPEFORM_URL}>
+              {intl.formatMessage(messages.missingAppsButton)}
+            </Button>
+          )}
+          {hasManagedAppsPermission && (
+            <InstallWithManifestFormButton onSubmitted={navigateToAppInstallPage} />
+          )}
+        </Box>
       </TopNav>
       <Box display="flex" flexDirection="column" alignItems="center" marginY={5}>
         <Box className={classes.appContent} marginY={5}>

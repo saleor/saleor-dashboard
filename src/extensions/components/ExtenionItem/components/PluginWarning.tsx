@@ -1,17 +1,17 @@
 import { PLUGINS_DOCS_URL } from "@dashboard/links";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, BoxProps, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "../../../messages";
 
-export const PluginWarning = () => {
+export const PluginWarning = ({ color }: { color: BoxProps["color"] }) => {
   return (
     <Box marginTop={4}>
-      <Text size={4} fontWeight="medium" color="default2" textTransform="uppercase">
+      <Text size={4} fontWeight="medium" color={color} textTransform="uppercase">
         <FormattedMessage {...messages.pluginInfoImportant} />:{" "}
       </Text>
-      <Text size={1} color="default2">
+      <Text size={1} color={color}>
         <FormattedMessage
           {...messages.pluginInfo}
           values={{
