@@ -1,19 +1,22 @@
 // @ts-nocheck
 
-import Q50417 from "./images/app-alerts.jpg"
-import U69221 from "./images/discounts-list.png"
-import Z66097 from "./images/improved_refunds.png"
+import H74699 from "./images/app-alerts.jpg"
+import G07613 from "./images/discounts-list.png"
+import A17672 from "./images/extensions.png"
+import V06511 from "./images/improved_refunds.png"
 
-const app_alerts = () => (<><p><img src={Q50417} alt="new filters"/>
+const app_alerts = () => (<><p><img src={H74699} alt="new filters"/>
 Benefit from new notifications in your Dashboard that alert you to issues with webhooks for your apps, helping you stay informed about potential problems.
 We’re continuously working to expand this feature to provide more insights for your apps.</p>
 </>)
-const discounts_rules = () => (<><p><img src={U69221} alt="Discount rules"/></p>
+const discounts_rules = () => (<><p><img src={G07613} alt="Discount rules"/></p>
 <p>Apply the new discounts rules to narrow your promotions audience.
 Set up conditions and channels that must be fulfilled to apply defined reward.</p>
 </>)
-const extensions = () => (<></>)
-const improved_refunds = () => (<><p><img src={Z66097} alt="Improved refunds"/></p>
+const extensions = () => (<><p><img src={A17672} alt="Extensions"/></p>
+<p>Extensions unification allows you to manage all your extensions in one place. </p>
+</>)
+const improved_refunds = () => (<><p><img src={V06511} alt="Improved refunds"/></p>
 <h3 id="enable-the-enhanced-refund-feature-to-streamline-your-refund-process">Enable the enhanced refund feature to streamline your refund process:</h3>
 <ul>
 <li><p>• Choose between automatic calculations based on selected items or enter refund amounts directly for overcharges and custom adjustments.</p>
@@ -60,9 +63,9 @@ export const AVAILABLE_FLAGS = [{
   name: "extensions",
   displayName: "Extensions",
   component: extensions,
-  visible: false,
+  visible: true,
   content: {
-    enabled: false,
+    enabled: true,
     payload: "default",
   }
 },{
