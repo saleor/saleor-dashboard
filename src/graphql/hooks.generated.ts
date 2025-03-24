@@ -1967,7 +1967,6 @@ export const InvoiceFragmentDoc = gql`
 export const OrderDetailsFragmentDoc = gql`
     fragment OrderDetails on Order {
   id
-  token
   ...Metadata
   billingAddress {
     ...Address

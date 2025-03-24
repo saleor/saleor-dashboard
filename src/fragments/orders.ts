@@ -269,8 +269,6 @@ export const orderDiscount = gql`
 export const fragmentOrderDetails = gql`
   fragment OrderDetails on Order {
     id
-    # TODO: remove me
-    token
     ...Metadata
     billingAddress {
       ...Address

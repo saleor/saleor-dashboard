@@ -1474,7 +1474,6 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     },
   ],
   id: "T3JkZXI6OQ==",
-  token: "e5cfc543-6a62-472f-8b80-6a2311f9ff14",
   invoices: [
     {
       __typename: "Invoice",
@@ -1861,7 +1860,6 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
   events: [],
   fulfillments: [],
   id: "T3JkZXI6MjQ=",
-  token: "e5cfc543-6a62-472f-8b80-6a2311f9ff14",
   invoices: [
     {
       __typename: "Invoice",
