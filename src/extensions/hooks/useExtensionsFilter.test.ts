@@ -6,14 +6,20 @@ import { renderHook } from "@testing-library/react-hooks";
 describe("Extensions / hooks / useExtensionsFilter", () => {
   it("should allow filter extensions by name", async () => {
     const extensions = {
-      group1: [
-        { name: "Extension 1", id: "1" },
-        { name: "Extension 2", id: "2" },
-      ],
-      group2: [
-        { name: "Extension 3", id: "3" },
-        { name: "Extension 4", id: "4" },
-      ],
+      group1: {
+        title: { en: "Group 1" },
+        items: [
+          { name: { en: "Extension 1" }, id: "1" },
+          { name: { en: "Extension 2" }, id: "2" },
+        ],
+      },
+      group2: {
+        title: { en: "Group 2" },
+        items: [
+          { name: { en: "Extension 3" }, id: "3" },
+          { name: { en: "Extension 4" }, id: "4" },
+        ],
+      },
     } as unknown as ExtensionsGroups;
 
     const { result } = renderHook(() => useExtensionsFilter({ extensions }));
@@ -26,8 +32,14 @@ describe("Extensions / hooks / useExtensionsFilter", () => {
     // Assert
     expect(result.current.query).toBe("1");
     expect(result.current.filteredExtensions).toEqual({
-      group1: [{ name: "Extension 1", id: "1" }],
-      group2: [],
+      group1: {
+        title: { en: "Group 1" },
+        items: [{ name: { en: "Extension 1" }, id: "1" }],
+      },
+      group2: {
+        title: { en: "Group 2" },
+        items: [],
+      },
     });
   });
 });

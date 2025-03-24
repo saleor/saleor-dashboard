@@ -10041,6 +10041,16 @@ export type PromotionDetailsQueryQueryVariables = Exact<{
 
 export type PromotionDetailsQueryQuery = { __typename: 'Query', promotion: { __typename: 'Promotion', id: string, name: string, description: any | null, startDate: any, endDate: any | null, type: PromotionTypeEnum | null, rules: Array<{ __typename: 'PromotionRule', id: string, name: string | null, description: any | null, giftIds: Array<string> | null, rewardType: RewardTypeEnum | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: any | null, orderPredicate: any | null, channels: Array<{ __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string } }> | null }> | null } | null };
 
+export type InstalledAppsQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']>;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type InstalledAppsQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', totalCount: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, identifier: string | null, manifestUrl: string | null, isActive: boolean | null } }> } | null };
+
 export type FileUploadMutationVariables = Exact<{
   file: Scalars['Upload'];
 }>;
@@ -10065,6 +10075,8 @@ export type AppAvatarFragment = { __typename: 'App', id: string, name: string | 
 export type EventDeliveryAttemptFragment = { __typename: 'EventDeliveryAttempt', id: string, createdAt: any, status: EventDeliveryStatusEnum, response: string | null, responseStatusCode: number | null };
 
 export type AppEventDeliveriesFragment = { __typename: 'App', webhooks?: Array<{ __typename: 'Webhook', failedDelivers: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, createdAt: any, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, status: EventDeliveryStatusEnum, createdAt: any } }> } | null } }> } | null, pendingDelivers: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, status: EventDeliveryStatusEnum, createdAt: any } }> } | null } }> } | null }> | null };
+
+export type InstalledAppFragment = { __typename: 'App', id: string, identifier: string | null, manifestUrl: string | null, isActive: boolean | null };
 
 export type AttributeValueFragment = { __typename: 'AttributeValue', id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null };
 

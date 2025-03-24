@@ -172,3 +172,12 @@ export const appEventDeliveriesFragment = gql`
     }
   }
 `;
+
+export const InstalledApp = gql`
+  fragment InstalledApp on App {
+    id
+    identifier
+    manifestUrl
+    isActive
+  }
+`;

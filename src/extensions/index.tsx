@@ -1,4 +1,4 @@
-import { AppListUrlQueryParams } from "@dashboard/apps/urls";
+import { AppListUrlQueryParams, AppPaths } from "@dashboard/apps/urls";
 import { AppListView } from "@dashboard/apps/views";
 import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -29,7 +29,7 @@ export const ExtensionsSection = () => {
   const { enabled: isExtensionsEnabled } = useFlag("extensions");
 
   if (!isExtensionsEnabled) {
-    navigate("/", { replace: true });
+    navigate(AppPaths.appListPath, { replace: true });
 
     return <>Redirecting...</>;
   }

@@ -1,7 +1,5 @@
-import PluginIcon from "@assets/images/plugin.svg";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
-import SVG from "react-inlinesvg";
 import { useIntl } from "react-intl";
 
 import { messages } from "../../../messages";
@@ -11,15 +9,15 @@ import { PluginActions } from "../components/PluginActions";
 
 const saleor = "Saleor Commerce";
 
-export const useExtension = (extension: ExtensionData, isInstalled = false) => {
+export const useExtension = (extension: ExtensionData) => {
   const intl = useIntl();
+  const { theme } = useTheme();
 
   const getExtensionAvatar = () => {
-    if (extension.type === "PLUGIN") {
-      return <SVG src={PluginIcon} />;
-    }
+    const source =
+      theme === "defaultDark" ? extension.logo?.dark?.source : extension.logo?.light?.source;
 
-    return <Box as="img" display="block" maxWidth="100%" src={extension.logo?.light} />;
+    return <Box as="img" display="block" maxWidth="100%" src={source} />;
   };
 
   const getExtensionDescription = () => {
@@ -32,50 +30,51 @@ export const useExtension = (extension: ExtensionData, isInstalled = false) => {
 
   const getExtensionActions = () => {
     if (extension.type === "PLUGIN") {
-      return <PluginActions id={extension.id} isInstalled={isInstalled} />;
+      return <PluginActions id={extension.id} isInstalled={extension.installed ?? false} />;
     }
 
     return (
       <AppActions
-        isInstalled={isInstalled}
+        isInstalled={extension.installed || false}
         manifestUrl={extension.manifestUrl}
         repositoryUrl={extension.repositoryUrl}
-        id={extension.id}
+        id={extension.appId}
+        disabled={extension.disabled}
       />
     );
   };
 
   const getExtensionSubtitle = () => {
-    if (extension.type === "PLUGIN") {
-      return intl.formatMessage(messages.developedBy, {
-        developer: saleor,
-      });
+    if (extension.type === "APP") {
+      if (extension.kind === "OSS") {
+        return intl.formatMessage(messages.developedBy, {
+          developer: intl.formatMessage(messages.community),
+        });
+      }
+
+      if (extension.kind === "OFFICIAL") {
+        if (extension.isCustomApp) {
+          return intl.formatMessage(messages.customBuild);
+        }
+
+        return intl.formatMessage(messages.developedBy, {
+          developer: saleor,
+        });
+      }
     }
 
-    // Here extension.type is equal APP
-
-    if (extension.kind === "OSS") {
-      return intl.formatMessage(messages.developedBy, {
-        developer: intl.formatMessage(messages.community),
-      });
-    }
-
-    if (extension.kind === "OFFICIAL") {
-      return intl.formatMessage(messages.developedBy, {
-        developer: saleor,
-      });
-    }
-
-    return intl.formatMessage(messages.customBuild);
+    return intl.formatMessage(messages.developedBy, {
+      developer: saleor,
+    });
   };
 
   return {
     type: extension.type,
-    title: extension.name,
+    title: extension.name.en,
     subtitle: getExtensionSubtitle(),
     description: getExtensionDescription(),
     avatar: getExtensionAvatar(),
     actions: getExtensionActions(),
-    isInstalled,
+    isInstalled: extension.installed,
   };
 };
