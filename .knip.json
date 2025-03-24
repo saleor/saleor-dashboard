@@ -16,6 +16,7 @@
     "dependencies": "error",
     "devDependencies": "error"
   },
+  "vite": false,
   "ignore": ["playwright/**", "**/*.js"],
   "ignoreDependencies": [
     "@graphql-codegen/typescript-apollo-client-helpers",
@@ -45,6 +46,14 @@
     "mocha",
     "mochawesome",
     "mochawesome-report-generator",
-    "mochawesome-merge"
+    "mochawesome-merge",
+    "playwright-ctrf-json-reporter",
+    "rollup-plugin-polyfill-node",
+    "vite-plugin-html",
+    "@vitejs/plugin-react-swc",
+    "@sentry/vite-plugin",
+    "code-inspector-plugin",
+    "faker",
+    "@types/faker"
   ]
 }
