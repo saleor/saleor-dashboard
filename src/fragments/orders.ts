@@ -426,6 +426,7 @@ export const fragmentOrderDetails = gql`
       }
     }
     isPaid
+    chargeStatus
   }
 `;
 

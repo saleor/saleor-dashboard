@@ -2122,6 +2122,7 @@ export const OrderDetailsFragmentDoc = gql`
     }
   }
   isPaid
+  chargeStatus
 }
     ${MetadataFragmentDoc}
 ${AddressFragmentDoc}

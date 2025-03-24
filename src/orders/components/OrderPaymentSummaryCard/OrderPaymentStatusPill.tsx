@@ -1,0 +1,48 @@
+import { Pill } from "@dashboard/components/Pill";
+import { OrderChargeStatusEnum, OrderDetailsFragment } from "@dashboard/graphql";
+import { transformPaymentStatus } from "@dashboard/misc";
+import React from "react";
+import { useIntl } from "react-intl";
+
+interface OrderPaymentStatusPillProps {
+  order: OrderDetailsFragment | undefined;
+  className?: string;
+}
+
+export const OrderPaymentStatusPill = ({ order, className }: OrderPaymentStatusPillProps) => {
+  const intl = useIntl();
+
+  if (!order) {
+    return null;
+  }
+
+  const payment = transformPaymentStatus(order.paymentStatus, intl);
+
+  if (order.chargeStatus === OrderChargeStatusEnum.OVERCHARGED) {
+    return (
+      <Pill
+        key={payment.status}
+        label={intl.formatMessage({
+          defaultMessage: "Overcharged",
+          id: "4WranC",
+          description: "payment status",
+        })}
+        color="warning"
+        style={{ alignSelf: "flex-end" }}
+        data-test-id="payment-status"
+        className={className}
+      />
+    );
+  }
+
+  return (
+    <Pill
+      key={payment.status}
+      label={payment.localized}
+      color={payment.status}
+      style={{ alignSelf: "flex-end" }}
+      data-test-id="payment-status"
+      className={className}
+    />
+  );
+};
