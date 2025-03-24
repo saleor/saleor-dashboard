@@ -20,24 +20,37 @@ jest.mock("@dashboard/components/Link", () => {
   );
 });
 
+jest.mock("@saleor/macaw-ui-next", () => ({
+  ...(jest.requireActual("@saleor/macaw-ui-next") as object),
+  useTheme: () => ({ theme: "default" }),
+}));
+
+const baseApp = {
+  type: "APP",
+  kind: "OFFICIAL",
+  name: {
+    en: "Avatax",
+  },
+  id: "mirumee.avatax",
+  logo: {
+    light: {
+      source: "http://example.com",
+    },
+    dark: {
+      source: "http://example.com",
+    },
+  },
+  repositoryUrl: "https://example.com/repo",
+  manifestUrl: "https://example.com/manifest",
+  description: {
+    en: "Avatax description",
+  },
+};
+
 describe("Extensions / Components / ExtensionItem", () => {
   it("should render extension with actions", () => {
     // Arrange
-    const extension = {
-      type: "APP",
-      kind: "OFFICIAL",
-      name: "Avatax",
-      id: "mirumee.avatax",
-      logo: {
-        light: "http://example.com",
-        dark: "http://example.com",
-      },
-      repositoryUrl: "https://example.com/repo",
-      manifestUrl: "https://example.com/manifest",
-      description: {
-        en: "Avatax description",
-      },
-    } as ExtensionData;
+    const extension = { ...baseApp, installed: false } as ExtensionData;
 
     render(<ExtensionItem extension={extension} />);
 
@@ -50,33 +63,23 @@ describe("Extensions / Components / ExtensionItem", () => {
     expect(screen.queryByText("Installed")).not.toBeInTheDocument();
   });
 
-  // TODO: uncomment when check installed logic will be ready
-  // it("should render installed extension with actions", () => {
-  //   // Arrange
-  //   const extension = {
-  //     type: "APP",
-  //     kind: "OFFICIAL",
-  //     name: "Avatax",
-  //     id: "mirumee.avatax",
-  //     logo: {
-  //       light: "http://example.com",
-  //       dark: "http://example.com",
-  //     },
-  //     repositoryUrl: "https://example.com/repo",
-  //     manifestUrl: "https://example.com/manifest",
-  //     description: {
-  //       en: "Avatax description",
-  //     },
-  //   } as ExtensionData;
-  //
-  //   render(<ExtensionItem extension={extension} isInstalled={true} />);
-  //
-  //   // Assert
-  //   expect(screen.getByText("Avatax")).toBeInTheDocument();
-  //   expect(screen.getByText("Avatax description")).toBeInTheDocument();
-  //   expect(screen.getByText("Developed by Saleor")).toBeInTheDocument();
-  //   expect(screen.getByRole("link", { name: "Install" })).toBeInTheDocument();
-  //   expect(screen.getByRole("link", { name: "View on GitHub" })).toBeInTheDocument();
-  //   expect(screen.getByText("Installed")).toBeInTheDocument();
-  // });
+  it("should render installed extension with actions", () => {
+    // Arrange
+    const extension = {
+      ...baseApp,
+      installed: true,
+      appId: "appId",
+    } as ExtensionData;
+
+    render(<ExtensionItem extension={extension} />);
+
+    // Assert
+    expect(screen.getByText("Avatax")).toBeInTheDocument();
+    expect(screen.getByText("Avatax description")).toBeInTheDocument();
+    expect(screen.getByText("Developed by {developer}")).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Install" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "View on GitHub" })).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "View details" })).toBeInTheDocument();
+    expect(screen.getByText("Installed")).toBeInTheDocument();
+  });
 });
