@@ -12245,6 +12245,7 @@ export const OrderListDocument = gql`
           }
         }
         userEmail
+        chargeStatus
       }
     }
     pageInfo {
