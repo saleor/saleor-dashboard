@@ -103,11 +103,13 @@ const messages = defineMessages({
   },
   root: {
     defaultMessage: "This is root category",
-    id: "6iaXL/",
+    description: "Navigation search no parent category message",
+    id: "1JSu4L",
   },
   variant: {
     defaultMessage: "Variant",
-    id: "OK5+Fh",
+    description: "Navigation search variant item type name",
+    id: "MtkXb6",
   },
 });
 

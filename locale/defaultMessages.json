@@ -603,6 +603,10 @@
     "context": "expiry date section header",
     "string": "Expiry date"
   },
+  "1JSu4L": {
+    "context": "Navigation search no parent category message",
+    "string": "This is root category"
+  },
   "1LBYpE": {
     "context": "dialog header",
     "string": "Delete Menus"
@@ -1400,9 +1404,6 @@
   "6heBHt": {
     "context": "tooltip, submit form",
     "string": "Transaction is non-refundable. You have to send refund manually."
-  },
-  "6iaXL/": {
-    "string": "This is root category"
   },
   "6iw4VR": {
     "context": "delete variant dialog title",
@@ -3920,6 +3921,10 @@
   "MpR4zK": {
     "context": "customer details, header",
     "string": "{fullName} Details"
+  },
+  "MtkXb6": {
+    "context": "Navigation search variant item type name",
+    "string": "Variant"
   },
   "MwfSVA": {
     "context": "input helper text",
