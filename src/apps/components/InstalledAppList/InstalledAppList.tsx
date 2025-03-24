@@ -1,6 +1,6 @@
 import { AppInstallation, InstalledApp } from "@dashboard/apps/types";
 import { EmptyInstalledList } from "@dashboard/extensions/components/EmptyListState";
-import { exploreExtensionsPath } from "@dashboard/extensions/urls";
+import { ExtensionsPaths } from "@dashboard/extensions/urls";
 import { useFlag } from "@dashboard/featureFlags";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -31,7 +31,9 @@ const InstalledAppList: React.FC<InstalledAppListProps> = ({ appList, appInstall
 
   if (hasEmptyAppList({ appList, appInstallationList, hasManagedAppsPermission })) {
     if (isExtensionsEnabled) {
-      return <EmptyInstalledList onSubtitleClick={() => navigate(exploreExtensionsPath)} />;
+      return (
+        <EmptyInstalledList onSubtitleClick={() => navigate(ExtensionsPaths.exploreExtensions)} />
+      );
     }
 
     return (
