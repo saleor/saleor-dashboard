@@ -155,14 +155,14 @@ export function getPaymentCellContent(
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
   if (higherPriorityChargeStatuses.includes(rowData.chargeStatus)) {
+    const { localized, status } = transformChargedStatus(rowData.chargeStatus, intl);
+
     const color = getStatusColor({
-      status: "warning",
+      status,
       currentTheme,
     });
 
-    const chargeStatus = transformChargedStatus(rowData.chargeStatus, intl);
-
-    return pillCell(chargeStatus, color, COMMON_CELL_PROPS);
+    return pillCell(localized, color, COMMON_CELL_PROPS);
   }
 
   const paymentStatus = transformPaymentStatus(rowData.paymentStatus, intl);

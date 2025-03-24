@@ -1,11 +1,17 @@
+import { PillCell } from "@dashboard/components/Datagrid/customCells/PillCell";
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { OrderListQuery, OrderStatus, PaymentChargeStatusEnum } from "@dashboard/graphql";
+import {
+  OrderChargeStatusEnum,
+  OrderListQuery,
+  OrderStatus,
+  PaymentChargeStatusEnum,
+} from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 import { TextCell } from "@glideapps/glide-data-grid";
 import { renderHook } from "@testing-library/react-hooks";
 
-import { getCustomerCellContent, useGetCellContent } from "./datagrid";
+import { getCustomerCellContent, getPaymentCellContent, useGetCellContent } from "./datagrid";
 
 jest.mock("react-intl", () => ({
   useIntl: jest.fn(() => ({
@@ -203,5 +209,39 @@ describe("useGetCellContent", () => {
 
     // Act & Assert
     expect((getCellContent([0, 1], contentOpts) as TextCell).data).toBe("");
+  });
+});
+
+describe("getPaymentCellContent", () => {
+  it("should return Fully Paid when payment status is PAID", () => {
+    // Arrange
+    const data = {
+      paymentStatus: "PAID" as PaymentChargeStatusEnum,
+    } as RelayToFlat<NonNullable<OrderListQuery["orders"]>>[number];
+
+    // Act
+    const result = getPaymentCellContent({ formatMessage: jest.fn() } as any, "defaultLight", data);
+
+    // Assert
+    expect((result.data as PillCell["data"]).value).toEqual("PAID");
+  });
+
+  it("should return Overcharged when charge status is OVERCHARGED", () => {
+    // Arrange
+    const data = {
+      chargeStatus: "OVERCHARGED" as OrderChargeStatusEnum,
+    } as RelayToFlat<NonNullable<OrderListQuery["orders"]>>[number];
+
+    // Act
+    const result = getPaymentCellContent(
+      {
+        formatMessage: jest.fn().mockImplementation(({ defaultMessage }) => defaultMessage),
+      } as any,
+      "defaultLight",
+      data,
+    );
+
+    // Assert
+    expect((result.data as PillCell["data"]).value).toEqual("Overcharged");
   });
 });

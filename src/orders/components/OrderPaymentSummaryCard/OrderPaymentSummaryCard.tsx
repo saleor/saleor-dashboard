@@ -10,10 +10,10 @@ import { FormattedMessage } from "react-intl";
 
 import { extractOrderGiftCardUsedAmount } from "../OrderSummaryCard/utils";
 import { RefundsSummary } from "./components";
+import { OrderPaymentStatusPill } from "./components/OrderPaymentStatusPill";
 import { PaymentsSummary } from "./components/PaymentsSummary";
 import { getShouldDisplayAmounts } from "./components/PaymentsSummary/utils";
 import { orderPaymentActionButtonMessages, orderPaymentMessages } from "./messages";
-import { OrderPaymentStatusPill } from "./OrderPaymentStatusPill";
 import { useStyles } from "./styles";
 
 interface OrderPaymementProps {

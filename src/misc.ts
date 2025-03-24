@@ -129,13 +129,19 @@ export const transformPaymentStatus = (
 export const transformChargedStatus = (status: OrderChargeStatusEnum, intl: IntlShape) => {
   switch (status) {
     case OrderChargeStatusEnum.OVERCHARGED:
-      return intl.formatMessage({
-        defaultMessage: "Overcharged",
-        id: "4VLj3S",
-        description: "overcharged order status",
-      });
+      return {
+        localized: intl.formatMessage({
+          defaultMessage: "Overcharged",
+          id: "4VLj3S",
+          description: "overcharged order status",
+        }),
+        status: StatusType.WARNING,
+      };
     default:
-      return status;
+      return {
+        localized: status,
+        status: StatusType.ERROR,
+      };
   }
 };
 

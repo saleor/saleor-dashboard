@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 
 type Order = Pick<OrderDetailsFragment, "paymentStatus" | "chargeStatus">;
 
-interface OrderPaymentStatusPillProps {
+export interface OrderPaymentStatusPillProps {
   order: Order | undefined;
   className?: string;
 }
