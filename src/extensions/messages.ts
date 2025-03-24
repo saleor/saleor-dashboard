@@ -88,4 +88,12 @@ export const messages = defineMessages({
     defaultMessage: "No extensions API URL provided",
     id: "gZ1qnD",
   },
+  noExtensionsFound: {
+    defaultMessage: "No Extensions found",
+    id: "jWLXdD",
+  },
+  clearSearch: {
+    defaultMessage: "Clear search",
+    id: "4YJHut",
+  },
 });
