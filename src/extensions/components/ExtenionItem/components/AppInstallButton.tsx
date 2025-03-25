@@ -17,7 +17,7 @@ export const AppInstallButton = ({ manifestUrl }: { manifestUrl: string }) => {
   if (!hasManagedAppsPermission) {
     return (
       <ButtonWithTooltip
-        variant="primary"
+        variant="secondary"
         disabled
         tooltip={intl.formatMessage(buttonMessages.noPermission)}
       >
@@ -29,7 +29,7 @@ export const AppInstallButton = ({ manifestUrl }: { manifestUrl: string }) => {
   if (IS_CLOUD_INSTANCE) {
     return (
       <Link href={AppUrls.resolveAppInstallUrl(manifestUrl)}>
-        <Button variant="primary" data-test-id="app-install-button">
+        <Button variant="secondary" data-test-id="app-install-button">
           <FormattedMessage {...buttonMessages.install} />
         </Button>
       </Link>
@@ -39,6 +39,7 @@ export const AppInstallButton = ({ manifestUrl }: { manifestUrl: string }) => {
   return (
     <span tabIndex={0}>
       <ButtonWithTooltip
+        variant="secondary"
         tooltip={intl.formatMessage(messages.installationCloudOnly)}
         data-test-id="app-install-button"
         disabled
