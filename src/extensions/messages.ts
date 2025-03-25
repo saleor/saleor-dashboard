@@ -109,4 +109,9 @@ export const messages = defineMessages({
     description: "description",
     id: "IEpmGQ",
   },
+  missingExtensionsButton: {
+    id: "VS0YOp",
+    defaultMessage: "Request Extension",
+    description: "Request extension",
+  },
 });
