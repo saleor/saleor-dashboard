@@ -41,13 +41,9 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
             <Text size={3} fontWeight="medium">
               {menuItem.label}
             </Text>
+            {menuItem.endAdornment && <Box>{menuItem.endAdornment}</Box>}
           </Box>
         </Link>
-        {menuItem.endAdornment && (
-          <Box position="absolute" right={9} top={2} zIndex={"3"}>
-            {menuItem.endAdornment}
-          </Box>
-        )}
       </List.ItemGroup.Trigger>
       <List.ItemGroup.Content>
         <Box
