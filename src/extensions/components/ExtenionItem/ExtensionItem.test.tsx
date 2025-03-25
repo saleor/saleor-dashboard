@@ -58,7 +58,7 @@ describe("Extensions / Components / ExtensionItem", () => {
     expect(screen.getByText("Avatax")).toBeInTheDocument();
     expect(screen.getByText("Avatax description")).toBeInTheDocument();
     expect(screen.getByText("Developed by {developer}")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Install" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Install" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "View on GitHub" })).toBeInTheDocument();
     expect(screen.queryByText("Installed")).not.toBeInTheDocument();
   });

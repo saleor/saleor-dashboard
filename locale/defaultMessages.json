@@ -794,6 +794,9 @@
     "context": "section header button",
     "string": "Manage"
   },
+  "2nT0Sm": {
+    "string": "No Extensions installed yet"
+  },
   "2ob30/": {
     "string": "Success! In a few minutes you’ll receive a message with instructions on how to reset your password."
   },
@@ -1060,6 +1063,9 @@
   "4XhJY+": {
     "context": "dialog header",
     "string": "Add product from {channelName}"
+  },
+  "4YJHut": {
+    "string": "Clear search"
   },
   "4Z0O2B": {
     "context": "section header title",
@@ -3902,6 +3908,9 @@
     "context": "customer input label",
     "string": "Customer"
   },
+  "MhT1CS": {
+    "string": "Explore available Extensions"
+  },
   "MjUyhA": {
     "context": "section subheader",
     "string": "Active member since {date}"
@@ -5295,6 +5304,10 @@
   "VOjJWA": {
     "context": "refund type",
     "string": "Refund products"
+  },
+  "VS0YOp": {
+    "context": "Request extension",
+    "string": "Request Extension"
   },
   "VSj89H": {
     "context": "fulfill button label",
@@ -7445,6 +7458,9 @@
     "context": "App by Author",
     "string": "by"
   },
+  "jWLXdD": {
+    "string": "No Extensions found"
+  },
   "jWna9Q": {
     "string": "Content Type Name"
   },
@@ -8261,9 +8277,6 @@
   "oYV+Ru": {
     "context": "staff members status deactivated",
     "string": "Inactive"
-  },
-  "obHpf0": {
-    "string": "No extensions found"
   },
   "oboeOT": {
     "string": "Add following permissions"
