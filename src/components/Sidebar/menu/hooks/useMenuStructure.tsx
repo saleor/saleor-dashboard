@@ -9,7 +9,7 @@ import { configurationMenuUrl } from "@dashboard/configuration";
 import { getConfigMenuItemsPermissions } from "@dashboard/configuration/utils";
 import { customerListUrl } from "@dashboard/customers/urls";
 import { saleListUrl, voucherListUrl } from "@dashboard/discounts/urls";
-import { exploreExtensionsPath, installedExtensionsPath } from "@dashboard/extensions/urls";
+import { ExtensionsPaths } from "@dashboard/extensions/urls";
 import { useFlag } from "@dashboard/featureFlags";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import { PermissionEnum } from "@dashboard/graphql";
@@ -68,7 +68,7 @@ export function useMenuStructure() {
     label: intl.formatMessage(sectionNames.extensions),
     permissions: [],
     id: "installed-extensions",
-    url: installedExtensionsPath,
+    url: ExtensionsPaths.installedExtensions,
     type: "itemGroup",
     endAdornment: hasAppAlertsFeatureFlag ? (
       <SidebarAppAlert hasNewFailedAttempts={hasNewFailedAttempts} />
@@ -78,7 +78,7 @@ export function useMenuStructure() {
       {
         label: intl.formatMessage(sectionNames.exploreExtensions),
         id: "explore-extensions",
-        url: exploreExtensionsPath,
+        url: ExtensionsPaths.exploreExtensions,
         permissions: [],
         type: "item",
       },
