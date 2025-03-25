@@ -3,7 +3,7 @@ import AppDeleteDialog from "@dashboard/apps/components/AppDeleteDialog";
 import { appMessages } from "@dashboard/apps/messages";
 import { EXTENSION_LIST_QUERY } from "@dashboard/apps/queries";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
-import { installedExtensionsPath } from "@dashboard/extensions/urls";
+import { ExtensionsPaths } from "@dashboard/extensions/urls";
 import { useFlag } from "@dashboard/featureFlags";
 import {
   useAppActivateMutation,
@@ -106,7 +106,7 @@ export const AppManageView: React.FC<Props> = ({ id, params }) => {
         refetch();
         refetchExtensionList();
         removeAppNotify();
-        navigate(isExtensionEnabled ? installedExtensionsPath : AppPaths.appListPath);
+        navigate(isExtensionEnabled ? ExtensionsPaths.installedExtensions : AppPaths.appListPath);
       }
     },
   });

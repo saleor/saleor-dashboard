@@ -1,12 +1,13 @@
 import { AppUrls } from "@dashboard/apps/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { RequestExtensionsButton } from "@dashboard/extensions/components/RequestExtensionsButton";
 import { headerTitles } from "@dashboard/extensions/messages";
 import { useFlag } from "@dashboard/featureFlags";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { ListProps } from "@dashboard/types";
-import { Box, Button, Skeleton, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -15,7 +16,7 @@ import InstalledAppList from "../InstalledAppList";
 import { InstallWithManifestFormButton } from "../InstallWithManifestFormButton";
 import MarketplaceAlert from "../MarketplaceAlert";
 import { messages } from "./messages";
-import { CONST_TYPEFORM_URL, MissingAppsFooter } from "./MissingAppsFooter";
+import { MissingAppsFooter } from "./MissingAppsFooter";
 import { useStyles } from "./styles";
 import { AppListPageSections } from "./types";
 import {
@@ -81,11 +82,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
         )}
       >
         <Box display="flex" gap={4} alignItems="center">
-          {isExtensionsEnabled && (
-            <Button variant="secondary" target="_blank" as="a" href={CONST_TYPEFORM_URL}>
-              {intl.formatMessage(messages.missingAppsButton)}
-            </Button>
-          )}
+          {isExtensionsEnabled && <RequestExtensionsButton />}
           {hasManagedAppsPermission && (
             <InstallWithManifestFormButton onSubmitted={navigateToAppInstallPage} />
           )}
@@ -93,11 +90,13 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
       </TopNav>
       <Box display="flex" flexDirection="column" alignItems="center" marginY={5}>
         <Box className={classes.appContent} marginY={5}>
-          <Box paddingX={5} paddingY={3}>
-            <Text as="h3" size={5} fontWeight="bold" color="default2">
-              {intl.formatMessage(messages.installedApps)}
-            </Text>
-          </Box>
+          {!isExtensionsEnabled && (
+            <Box paddingX={5} paddingY={3}>
+              <Text as="h3" size={5} fontWeight="bold" color="default2">
+                {intl.formatMessage(messages.installedApps)}
+              </Text>
+            </Box>
+          )}
           <InstalledAppList
             appList={verifiedInstalledApps}
             appInstallationList={verifiedAppsInstallations}

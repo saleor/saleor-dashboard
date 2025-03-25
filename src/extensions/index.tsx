@@ -2,7 +2,7 @@ import { AppListUrlQueryParams, AppPaths } from "@dashboard/apps/urls";
 import { AppListView } from "@dashboard/apps/views";
 import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { exploreExtensionsPath, installedExtensionsPath } from "@dashboard/extensions/urls";
+import { ExtensionsPaths } from "@dashboard/extensions/urls";
 import { ExploreExtensions } from "@dashboard/extensions/views/ExploreExtensions";
 import { useFlag } from "@dashboard/featureFlags";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -38,8 +38,12 @@ export const ExtensionsSection = () => {
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.extensions)} />
       <Switch>
-        <Route exact path={exploreExtensionsPath} component={ExploreExtensionsView} />
-        <Route exact path={installedExtensionsPath} component={InstalledExtensionsView} />
+        <Route exact path={ExtensionsPaths.exploreExtensions} component={ExploreExtensionsView} />
+        <Route
+          exact
+          path={ExtensionsPaths.installedExtensions}
+          component={InstalledExtensionsView}
+        />
       </Switch>
     </>
   );

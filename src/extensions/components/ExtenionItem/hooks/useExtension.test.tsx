@@ -125,12 +125,11 @@ describe("Extensions / ExtensionItem / useExtension", () => {
 
     render(result.current.actions);
 
-    expect(screen.getByRole("link", { name: "Install" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Install" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "View on GitHub" })).toHaveAttribute(
       "href",
       "https://example.com/repository",
     );
-    expect(screen.getAllByRole("link").length).toEqual(2);
 
     expect(result.current).toEqual(
       expect.objectContaining({

@@ -2,17 +2,18 @@ import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { ExtensionsGroups } from "../../types";
+import { EmptySearchList } from "../EmptyListState";
 import { ExtensionItem } from "../ExtenionItem";
 import { ExtensionsGroup } from "../ExtensionsGroup";
 import { LoadingSkeleton } from "./LoadingSkeleton";
-import { NoExtensions } from "./NoExtenstions";
 
 export interface ExtensionsListProps {
   extensions: ExtensionsGroups;
   loading?: boolean;
+  clearSearch: () => void;
 }
 
-export const ExtensionsList = ({ extensions, loading }: ExtensionsListProps) => {
+export const ExtensionsList = ({ extensions, loading, clearSearch }: ExtensionsListProps) => {
   const extensionsEntries = Object.entries(extensions);
 
   const isAllExtensionsEmpty = extensionsEntries.every(
@@ -24,7 +25,7 @@ export const ExtensionsList = ({ extensions, loading }: ExtensionsListProps) => 
   }
 
   if (isAllExtensionsEmpty) {
-    return <NoExtensions />;
+    return <EmptySearchList onSubtitleClick={clearSearch} />;
   }
 
   return (
