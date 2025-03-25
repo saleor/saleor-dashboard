@@ -1,7 +1,7 @@
 import { AppDetailsUrlQueryParams, AppInstallUrlQueryParams } from "@dashboard/apps/urls";
 import SectionRoute from "@dashboard/auth/components/SectionRoute";
 import { Route } from "@dashboard/components/Router";
-import { installedExtensionsPath } from "@dashboard/extensions/urls";
+import { ExtensionsPaths } from "@dashboard/extensions/urls";
 import { useFlag } from "@dashboard/featureFlags";
 import { PermissionEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -43,7 +43,7 @@ const AppListRoute: React.FC<RouteComponentProps> = () => {
   const { enabled: isExtensionsEnabled } = useFlag("extensions");
 
   if (isExtensionsEnabled) {
-    navigate(installedExtensionsPath, { replace: true });
+    navigate(ExtensionsPaths.installedExtensions, { replace: true });
 
     return <>Redirecting...</>;
   }

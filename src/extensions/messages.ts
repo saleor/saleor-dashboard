@@ -88,4 +88,30 @@ export const messages = defineMessages({
     defaultMessage: "No extensions API URL provided",
     id: "gZ1qnD",
   },
+  noExtensionsInstalled: {
+    defaultMessage: "No Extensions installed yet",
+    id: "2nT0Sm",
+  },
+  exploreAvailableExtensions: {
+    defaultMessage: "Explore available Extensions",
+    id: "MhT1CS",
+  },
+  noExtensionsFound: {
+    defaultMessage: "No Extensions found",
+    id: "jWLXdD",
+  },
+  clearSearch: {
+    defaultMessage: "Clear search",
+    id: "4YJHut",
+  },
+  installationCloudOnly: {
+    defaultMessage: "Use Saleor Cloud to access Saleor Apps",
+    description: "description",
+    id: "IEpmGQ",
+  },
+  missingExtensionsButton: {
+    id: "VS0YOp",
+    defaultMessage: "Request Extension",
+    description: "Request extension",
+  },
 });
