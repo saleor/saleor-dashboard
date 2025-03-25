@@ -1,12 +1,10 @@
 import { SearchCatalogQuery } from "@dashboard/graphql";
-import { IntlShape } from "react-intl";
+import { intlMock } from "@test/intl";
 
 import { searchInCatalog } from "./catalog";
 
-describe("searchInCatalog", () => {
-  const intl = {
-    formatMessage: ({ defaultMessage }) => defaultMessage,
-  } as IntlShape;
+describe("NavigatorSearch / modes / searchInCatalog", () => {
+  const intl = intlMock;
   const navigate = jest.fn();
 
   it("should return variants if search is a sku", () => {

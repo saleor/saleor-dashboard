@@ -144,6 +144,8 @@ const NavigatorSearch: React.FC = () => {
         <Box __height="500px" width="100%">
           <Downshift
             itemToString={(item: QuickSearchAction) =>
+              // 'label' can be string for non-search results (actions)
+              // and ReactNode for search results
               item && typeof item.label === "string" ? item.label : ""
             }
             onSelect={(item: QuickSearchAction) => {
