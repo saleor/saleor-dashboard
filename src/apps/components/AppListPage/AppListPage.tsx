@@ -83,7 +83,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
         <Box display="flex" gap={4} alignItems="center">
           {isExtensionsEnabled && (
             <Button variant="secondary" target="_blank" as="a" href={CONST_TYPEFORM_URL}>
-              {intl.formatMessage(messages.missingAppsButton)}
+              {intl.formatMessage(messages.missingExtensionsButton)}
             </Button>
           )}
           {hasManagedAppsPermission && (
@@ -93,11 +93,13 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
       </TopNav>
       <Box display="flex" flexDirection="column" alignItems="center" marginY={5}>
         <Box className={classes.appContent} marginY={5}>
-          <Box paddingX={5} paddingY={3}>
-            <Text as="h3" size={5} fontWeight="bold" color="default2">
-              {intl.formatMessage(messages.installedApps)}
-            </Text>
-          </Box>
+          {!isExtensionsEnabled && (
+            <Box paddingX={5} paddingY={3}>
+              <Text as="h3" size={5} fontWeight="bold" color="default2">
+                {intl.formatMessage(messages.installedApps)}
+              </Text>
+            </Box>
+          )}
           <InstalledAppList
             appList={verifiedInstalledApps}
             appInstallationList={verifiedAppsInstallations}

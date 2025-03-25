@@ -28,7 +28,7 @@ export const ExploreExtensions = () => {
   );
 
   if (error) {
-    // We want to show default errr page when app store api does not work
+    // We want to show the default error page when app store api does not work
     throw new Error(error);
   }
 
@@ -50,7 +50,11 @@ export const ExploreExtensions = () => {
           />
         </Box>
 
-        <ExtensionsList extensions={filteredExtensions} loading={loading} />
+        <ExtensionsList
+          extensions={filteredExtensions}
+          loading={loading}
+          clearSearch={() => handleQueryChange("")}
+        />
       </Box>
     </>
   );
