@@ -41,9 +41,4 @@ export const messages = defineMessages({
     defaultMessage: "Request integration",
     description: "Request integration",
   },
-  missingExtensionsButton: {
-    id: "VS0YOp",
-    defaultMessage: "Request Extension",
-    description: "Request extension",
-  },
 });

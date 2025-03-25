@@ -104,4 +104,14 @@ export const messages = defineMessages({
     defaultMessage: "Clear search",
     id: "4YJHut",
   },
+  installationCloudOnly: {
+    defaultMessage: "Use Saleor Cloud to access Saleor Apps",
+    description: "description",
+    id: "IEpmGQ",
+  },
+  missingExtensionsButton: {
+    id: "VS0YOp",
+    defaultMessage: "Request Extension",
+    description: "Request extension",
+  },
 });
