@@ -57,6 +57,29 @@ describe("Extensions / Components / ExtensionsList", () => {
     expect(screen.getByTestId("empty-search-list")).toBeInTheDocument();
   });
 
+  it("should allow to clear search when empty search list is rendered", () => {
+    // Arrange
+    const extensions = {
+      group1: {
+        title: "Group 1",
+        items: [],
+      },
+      group2: {
+        title: "Group 2",
+        items: [],
+      },
+    } as unknown as ExtensionsGroups;
+    const clearSearch = jest.fn();
+
+    render(<ExtensionsList clearSearch={clearSearch} extensions={extensions} />);
+
+    // Act
+    screen.getByText("Clear search").click();
+
+    // Assert
+    expect(clearSearch).toHaveBeenCalled();
+  });
+
   it("should render extensions list", () => {
     // Arrange
     const extensions = {
