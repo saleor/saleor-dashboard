@@ -95,6 +95,7 @@ export function searchInCommands(
 
   return fuzzySearch(actions, search, ["label"]).map(action => ({
     label: action.label,
+    searchValue: action.label,
     onClick: action.onClick,
     text: action.label,
     type: "action",

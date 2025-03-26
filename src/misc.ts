@@ -645,7 +645,12 @@ const getAllRemovedRowsBeforeRowIndex = (rowIndex: number, removedRowsIndexs: nu
 export const getDatagridRowDataIndex = (rowIndex: number, removedRowsIndexs: number[]) =>
   rowIndex + getAllRemovedRowsBeforeRowIndex(rowIndex, removedRowsIndexs).length;
 
-export const fuzzySearch = <T>(array: T[], query: string | undefined, keys: string[]) => {
+export const fuzzySearch = <T>(
+  array: T[],
+  query: string | undefined,
+  keys: string[],
+  threshold = 0.3,
+) => {
   if (!query) {
     return array;
   }
@@ -653,7 +658,7 @@ export const fuzzySearch = <T>(array: T[], query: string | undefined, keys: stri
   const fuse = new Fuse(array, {
     keys,
     includeScore: true,
-    threshold: 0.3,
+    threshold,
   });
 
   return fuse.search(query.toLocaleLowerCase()).map(({ item }) => item);
