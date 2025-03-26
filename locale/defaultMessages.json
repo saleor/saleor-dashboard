@@ -1068,10 +1068,6 @@
     "context": "modal button",
     "string": "Upload URL"
   },
-  "4WranC": {
-    "context": "payment status",
-    "string": "Overcharged"
-  },
   "4XhJY+": {
     "context": "dialog header",
     "string": "Add product from {channelName}"
@@ -2091,6 +2087,10 @@
   },
   "BWpuKl": {
     "string": "Update"
+  },
+  "BXKn/d": {
+    "context": "charge status",
+    "string": "Overcharged"
   },
   "BXkF8Z": {
     "context": "header",
