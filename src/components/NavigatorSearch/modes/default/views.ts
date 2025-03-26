@@ -126,6 +126,7 @@ function searchInViews(
 
   return fuzzySearch(views, search, ["label"]).map(view => ({
     label: view.label,
+    searchValue: view.label,
     onClick: () => {
       navigate(view.url);
 
