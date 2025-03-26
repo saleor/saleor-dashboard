@@ -1,5 +1,8 @@
 import { AppUrls } from "@dashboard/apps/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { RequestExtensionsButton } from "@dashboard/extensions/components/RequestExtensionsButton";
+import { headerTitles } from "@dashboard/extensions/messages";
+import { useFlag } from "@dashboard/featureFlags";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
@@ -43,6 +46,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
   const intl = useIntl();
   const classes = useStyles();
   const navigate = useNavigator();
+  const { enabled: isExtensionsEnabled } = useFlag("extensions");
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const verifiedInstalledApps = getVerifiedInstalledApps(installedApps, installableMarketplaceApps);
   const verifiedAppsInstallations = getVerifiedAppsInstallations(
@@ -72,18 +76,27 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
 
   return (
     <>
-      <TopNav title={intl.formatMessage(sectionNames.apps)}>
-        {hasManagedAppsPermission && (
-          <InstallWithManifestFormButton onSubmitted={navigateToAppInstallPage} />
+      <TopNav
+        title={intl.formatMessage(
+          isExtensionsEnabled ? headerTitles.installedExtensions : sectionNames.apps,
         )}
+      >
+        <Box display="flex" gap={4} alignItems="center">
+          {isExtensionsEnabled && <RequestExtensionsButton />}
+          {hasManagedAppsPermission && (
+            <InstallWithManifestFormButton onSubmitted={navigateToAppInstallPage} />
+          )}
+        </Box>
       </TopNav>
       <Box display="flex" flexDirection="column" alignItems="center" marginY={5}>
         <Box className={classes.appContent} marginY={5}>
-          <Box paddingX={5} paddingY={3}>
-            <Text as="h3" size={5} fontWeight="bold" color="default2">
-              {intl.formatMessage(messages.installedApps)}
-            </Text>
-          </Box>
+          {!isExtensionsEnabled && (
+            <Box paddingX={5} paddingY={3}>
+              <Text as="h3" size={5} fontWeight="bold" color="default2">
+                {intl.formatMessage(messages.installedApps)}
+              </Text>
+            </Box>
+          )}
           <InstalledAppList
             appList={verifiedInstalledApps}
             appInstallationList={verifiedAppsInstallations}

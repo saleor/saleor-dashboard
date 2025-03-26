@@ -2,21 +2,21 @@ import { InstallWithManifestFormButton } from "@dashboard/apps/components/Instal
 import { AppUrls } from "@dashboard/apps/urls";
 import { TopNav } from "@dashboard/components/AppLayout";
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
-import { useExtensionsFilter } from "@dashboard/extensions/hooks/useExtenstionsFilter";
+import { RequestExtensionsButton } from "@dashboard/extensions/components/RequestExtensionsButton";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 
 import { ExtensionsList } from "../components/ExtensionsList";
 import { useExploreExtensions } from "../hooks/useExploreExtenstions";
-import { messages } from "../messages";
+import { useExtensionsFilter } from "../hooks/useExtenstionsFilter";
+import { headerTitles, messages } from "../messages";
 
 export const ExploreExtensions = () => {
   const intl = useIntl();
-  const extensions = useExploreExtensions();
+  const { extensions, loading, error } = useExploreExtensions();
   const { handleQueryChange, query, filteredExtensions } = useExtensionsFilter({ extensions });
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const navigate = useNavigator();
@@ -28,12 +28,20 @@ export const ExploreExtensions = () => {
     [navigate],
   );
 
+  if (error) {
+    // We want to show the default error page when app store api does not work
+    throw new Error(error);
+  }
+
   return (
     <>
-      <TopNav title={intl.formatMessage(sectionNames.extensions)}>
-        {hasManagedAppsPermission && (
-          <InstallWithManifestFormButton onSubmitted={navigateToAppInstallPage} />
-        )}
+      <TopNav title={intl.formatMessage(headerTitles.exploreExtensions)}>
+        <Box display="flex" gap={4} alignItems="center">
+          <RequestExtensionsButton />
+          {hasManagedAppsPermission && (
+            <InstallWithManifestFormButton onSubmitted={navigateToAppInstallPage} />
+          )}
+        </Box>
       </TopNav>
       <Box paddingX={6}>
         <Box __width="370px" marginTop={8} marginBottom={12}>
@@ -46,7 +54,11 @@ export const ExploreExtensions = () => {
           />
         </Box>
 
-        <ExtensionsList extensions={filteredExtensions} />
+        <ExtensionsList
+          extensions={filteredExtensions}
+          loading={loading}
+          clearSearch={() => handleQueryChange("")}
+        />
       </Box>
     </>
   );

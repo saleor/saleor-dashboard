@@ -26,6 +26,7 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
         active={isActive}
         justifyContent="space-between"
         data-test-id={`menu-item-label-${menuItem.id}`}
+        position="relative"
       >
         <Link
           replace={isActive}
@@ -40,6 +41,7 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
             <Text size={3} fontWeight="medium">
               {menuItem.label}
             </Text>
+            {menuItem.endAdornment && <Box>{menuItem.endAdornment}</Box>}
           </Box>
         </Link>
       </List.ItemGroup.Trigger>

@@ -1,7 +1,10 @@
 import { AppDetailsUrlQueryParams, AppInstallUrlQueryParams } from "@dashboard/apps/urls";
 import SectionRoute from "@dashboard/auth/components/SectionRoute";
 import { Route } from "@dashboard/components/Router";
+import { ExtensionsPaths } from "@dashboard/extensions/urls";
+import { useFlag } from "@dashboard/featureFlags";
 import { PermissionEnum } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { parse as parseQs } from "qs";
 import React from "react";
@@ -36,6 +39,14 @@ const AppInstallRoute: React.FC<RouteComponentProps> = props => {
 const AppListRoute: React.FC<RouteComponentProps> = () => {
   const qs = parseQs(location.search.substr(1));
   const params: AppListUrlQueryParams = qs;
+  const navigate = useNavigator();
+  const { enabled: isExtensionsEnabled } = useFlag("extensions");
+
+  if (isExtensionsEnabled) {
+    navigate(ExtensionsPaths.installedExtensions, { replace: true });
+
+    return <>Redirecting...</>;
+  }
 
   return <AppListView params={params} />;
 };

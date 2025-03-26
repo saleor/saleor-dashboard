@@ -5,6 +5,10 @@ export const headerTitles = defineMessages({
     defaultMessage: "Explore Extensions",
     id: "GUcbBE",
   },
+  installedExtensions: {
+    defaultMessage: "Installed Extensions",
+    id: "C3sTzL",
+  },
 });
 
 export const buttonLabels = defineMessages({
@@ -23,24 +27,6 @@ export const buttonLabels = defineMessages({
   addCustomExtensions: {
     defaultMessage: "Add Custom Extensions",
     id: "u9WrRb",
-  },
-});
-
-export const extensionCategory = defineMessages({
-  taxes: {
-    defaultMessage: "Taxes",
-    description: "Extension Taxes category",
-    id: "ZelW6e",
-  },
-  payment: {
-    defaultMessage: "Payment",
-    id: "udvqNN",
-    description: "Extension Payment categoy",
-  },
-  cms: {
-    defaultMessage: "CMS",
-    id: "U4Ey/7",
-    description: "Extension CMS category",
   },
 });
 
@@ -73,6 +59,10 @@ export const messages = defineMessages({
     defaultMessage: "View details",
     id: "MnpUD7",
   },
+  manageApp: {
+    defaultMessage: "Manage app",
+    id: "wZFsmY",
+  },
   viewOnGithub: {
     defaultMessage: "View on GitHub",
     id: "80g19N",
@@ -93,5 +83,35 @@ export const messages = defineMessages({
   learnMore: {
     defaultMessage: "Learn more",
     id: "TdTXXf",
+  },
+  emptyExtensionsApiUrl: {
+    defaultMessage: "No extensions API URL provided",
+    id: "gZ1qnD",
+  },
+  noExtensionsInstalled: {
+    defaultMessage: "No Extensions installed yet",
+    id: "2nT0Sm",
+  },
+  exploreAvailableExtensions: {
+    defaultMessage: "Explore available Extensions",
+    id: "MhT1CS",
+  },
+  noExtensionsFound: {
+    defaultMessage: "No Extensions found",
+    id: "jWLXdD",
+  },
+  clearSearch: {
+    defaultMessage: "Clear search",
+    id: "4YJHut",
+  },
+  installationCloudOnly: {
+    defaultMessage: "Use Saleor Cloud to access Saleor Apps",
+    description: "description",
+    id: "IEpmGQ",
+  },
+  missingExtensionsButton: {
+    id: "VS0YOp",
+    defaultMessage: "Request Extension",
+    description: "Request extension",
   },
 });

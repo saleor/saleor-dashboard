@@ -33,6 +33,7 @@ function getOrdersModeActions(
       label: intl.formatMessage(messages.goToOrder, {
         orderNumber,
       }),
+      searchValue: orderNumber,
       onClick: () => {
         navigate(orderUrl(order.id));
 

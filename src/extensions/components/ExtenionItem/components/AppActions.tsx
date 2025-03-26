@@ -1,5 +1,6 @@
 import { AppUrls } from "@dashboard/apps/urls";
 import Link from "@dashboard/components/Link";
+import { AppInstallButton } from "@dashboard/extensions/components/ExtenionItem/components/AppInstallButton";
 import { Box, Button, ExternalLinkIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -10,15 +11,30 @@ interface AppActionsProps {
   isInstalled: boolean;
   manifestUrl?: string | null;
   repositoryUrl?: string | null;
-  id: string;
+  id?: string;
+  disabled?: boolean;
 }
 
-export const AppActions = ({ isInstalled, repositoryUrl, manifestUrl }: AppActionsProps) => {
+export const AppActions = ({
+  isInstalled,
+  repositoryUrl,
+  manifestUrl,
+  id,
+  disabled,
+}: AppActionsProps) => {
   const intl = useIntl();
 
-  if (isInstalled) {
+  if (isInstalled && disabled && id) {
     return (
-      <Link href="/extensions/{id}">
+      <Link href={AppUrls.resolveAppDetailsUrl(id)}>
+        <Button variant="secondary">{intl.formatMessage(messages.manageApp)}</Button>
+      </Link>
+    );
+  }
+
+  if (isInstalled && id) {
+    return (
+      <Link href={AppUrls.resolveAppUrl(id)}>
         <Button variant="secondary">{intl.formatMessage(messages.viewDetails)}</Button>
       </Link>
     );
@@ -26,11 +42,7 @@ export const AppActions = ({ isInstalled, repositoryUrl, manifestUrl }: AppActio
 
   return (
     <>
-      {manifestUrl && (
-        <Link href={AppUrls.resolveAppInstallUrl(manifestUrl)}>
-          <Button variant="secondary">{intl.formatMessage(messages.install)}</Button>
-        </Link>
-      )}
+      {manifestUrl && <AppInstallButton manifestUrl={manifestUrl} />}
       {repositoryUrl && (
         <Link target="_blank" href={repositoryUrl}>
           <Button variant="secondary" display="flex" alignItems="center" gap={2}>
