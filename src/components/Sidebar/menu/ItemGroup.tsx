@@ -27,6 +27,7 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
         justifyContent="space-between"
         data-test-id={`menu-item-label-${menuItem.id}`}
         position="relative"
+        onClick={menuItem.onClick}
       >
         <Link
           replace={isActive}
