@@ -101,6 +101,16 @@ const messages = defineMessages({
     id: "x/ZVlU",
     defaultMessage: "Product",
   },
+  root: {
+    defaultMessage: "This is root category",
+    description: "Navigation search no parent category message",
+    id: "1JSu4L",
+  },
+  variant: {
+    defaultMessage: "Variant",
+    description: "Navigation search variant item type name",
+    id: "MtkXb6",
+  },
 });
 
 export default messages;

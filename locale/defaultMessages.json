@@ -603,6 +603,10 @@
     "context": "expiry date section header",
     "string": "Expiry date"
   },
+  "1JSu4L": {
+    "context": "Navigation search no parent category message",
+    "string": "This is root category"
+  },
   "1LBYpE": {
     "context": "dialog header",
     "string": "Delete Menus"
@@ -3929,6 +3933,10 @@
   "MpR4zK": {
     "context": "customer details, header",
     "string": "{fullName} Details"
+  },
+  "MtkXb6": {
+    "context": "Navigation search variant item type name",
+    "string": "Variant"
   },
   "MwfSVA": {
     "context": "input helper text",
