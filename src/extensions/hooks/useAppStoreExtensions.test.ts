@@ -38,8 +38,10 @@ describe("Extensions / hooks / useAppStoreExtensions", () => {
   });
 
   it("should return an error message when appStoreUrl is not provided", () => {
+    // Act
     const { result } = renderHook(() => useAppStoreExtensions());
 
+    // Assert
     expect(result.current.error).toBe("No extensions API URL provided");
     expect(result.current.loading).toBe(false);
     expect(result.current.data).toEqual({
@@ -51,15 +53,18 @@ describe("Extensions / hooks / useAppStoreExtensions", () => {
   });
 
   it("should fetch and set data when appStoreUrl is provided", async () => {
+    // Arrange
     (fetch as jest.Mock).mockResolvedValueOnce({
       ok: true,
       json: jest.fn().mockResolvedValueOnce(mockExtensionsResponse),
     });
 
+    // Act
     const { result, waitForNextUpdate } = renderHook(() =>
       useAppStoreExtensions("https://mockapi.com"),
     );
 
+    // Assert
     expect(result.current.loading).toBe(true);
 
     await waitForNextUpdate();
@@ -75,12 +80,15 @@ describe("Extensions / hooks / useAppStoreExtensions", () => {
   });
 
   it("should handle API errors", async () => {
+    // Arrange
     (fetch as jest.Mock).mockRejectedValueOnce(new Error("Network Error"));
 
+    // Act
     const { result, waitForNextUpdate } = renderHook(() =>
       useAppStoreExtensions("https://mockapi.com"),
     );
 
+    // Assert
     expect(result.current.loading).toBe(true);
 
     await waitForNextUpdate();

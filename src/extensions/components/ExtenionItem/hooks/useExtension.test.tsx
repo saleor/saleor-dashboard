@@ -67,14 +67,17 @@ const baseApp = {
 
 describe("Extensions / ExtensionItem / useExtension", () => {
   it("should return correct values for not installed plugin", () => {
+    // Arrange
     const extension = {
       ...basePlugin,
       installed: false,
       appId: "123",
     } as ExtensionData;
 
+    // Act
     const { result } = renderHook(() => useExtension(extension));
 
+    // Assert
     expect(result.current).toEqual(
       expect.objectContaining({
         title: "Braintreee",
@@ -86,14 +89,17 @@ describe("Extensions / ExtensionItem / useExtension", () => {
   });
 
   it("should return correct values for installed plugin", () => {
+    // Arrange
     const extension = {
       ...basePlugin,
       installed: true,
       appId: "123",
     } as ExtensionData;
 
+    // Act
     const { result } = renderHook(() => useExtension(extension));
 
+    // Assert
     expect(result.current).toEqual(
       expect.objectContaining({
         title: "Braintreee",
@@ -105,13 +111,17 @@ describe("Extensions / ExtensionItem / useExtension", () => {
   });
 
   it("should return correct values for not installed app", () => {
+    // Arrange
     const extension = {
       ...baseApp,
       installed: false,
       appId: "123",
     } as ExtensionData;
+
+    // Act
     const { result } = renderHook(() => useExtension(extension));
 
+    // Assert
     expect(result.current).toEqual(
       expect.objectContaining({
         title: "Adyen",
@@ -123,13 +133,17 @@ describe("Extensions / ExtensionItem / useExtension", () => {
   });
 
   it("should return correct values for installed app", () => {
+    // Arrange
     const extension = {
       ...baseApp,
       installed: true,
       appId: "123",
     } as ExtensionData;
+
+    // Act
     const { result } = renderHook(() => useExtension(extension));
 
+    // Assert
     expect(result.current).toEqual(
       expect.objectContaining({
         title: "Adyen",

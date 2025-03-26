@@ -52,6 +52,7 @@ const mockedAppStoreExtensions = {
 
 describe("Extension / hooks / useExploreExtensions", () => {
   it("should return loading state when fetching data", () => {
+    // Arrange
     (useAppStoreExtensions as jest.Mock).mockReturnValue({
       data: {},
       loading: true,
@@ -59,14 +60,17 @@ describe("Extension / hooks / useExploreExtensions", () => {
     });
     (useInstalledExtensions as jest.Mock).mockReturnValue({ installedApps: [] });
 
+    // Act
     const { result } = renderHook(() => useExploreExtensions());
 
+    // Assert
     expect(result.current.loading).toBe(true);
     expect(result.current.error).toBeNull();
     expect(result.current.extensions).toEqual({});
   });
 
   it("should return extensions data when fetched", () => {
+    // Arrange
     (useAppStoreExtensions as jest.Mock).mockReturnValue({
       data: mockedAppStoreExtensions,
       loading: false,
@@ -95,8 +99,10 @@ describe("Extension / hooks / useExploreExtensions", () => {
       ],
     });
 
+    // Act
     const { result } = renderHook(() => useExploreExtensions());
 
+    // Assert
     expect(result.current.loading).toBe(false);
     expect(result.current.error).toBeNull();
     expect(result.current.extensions).toEqual({
