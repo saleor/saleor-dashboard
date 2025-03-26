@@ -4,7 +4,7 @@ import { act, renderHook } from "@testing-library/react-hooks";
 import { useVariantDrag } from "./useVariantDrag";
 
 jest.mock("@dnd-kit/core", () => ({
-  ...jest.requireActual("@dnd-kit/core"),
+  ...(jest.requireActual("@dnd-kit/core") as object),
   useSensors: jest.fn(() => "mockedSensors"),
   useSensor: jest.fn(),
   PointerSensor: jest.fn(),
