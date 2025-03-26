@@ -9,6 +9,7 @@ import {
 } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 import { TextCell } from "@glideapps/glide-data-grid";
+import { intlMock } from "@test/intl";
 import { renderHook } from "@testing-library/react-hooks";
 
 import { getCustomerCellContent, getPaymentCellContent, useGetCellContent } from "./datagrid";
@@ -212,15 +213,17 @@ describe("useGetCellContent", () => {
   });
 });
 
+type RowDataType = RelayToFlat<NonNullable<OrderListQuery["orders"]>>[number];
+
 describe("getPaymentCellContent", () => {
   it("should return Fully Paid when payment status is PAID", () => {
     // Arrange
     const data = {
       paymentStatus: "PAID" as PaymentChargeStatusEnum,
-    } as RelayToFlat<NonNullable<OrderListQuery["orders"]>>[number];
+    } as RowDataType;
 
     // Act
-    const result = getPaymentCellContent({ formatMessage: jest.fn() } as any, "defaultLight", data);
+    const result = getPaymentCellContent(intlMock, "defaultLight", data);
 
     // Assert
     expect((result.data as PillCell["data"]).value).toEqual("PAID");
@@ -230,16 +233,10 @@ describe("getPaymentCellContent", () => {
     // Arrange
     const data = {
       chargeStatus: "OVERCHARGED" as OrderChargeStatusEnum,
-    } as RelayToFlat<NonNullable<OrderListQuery["orders"]>>[number];
+    } as RowDataType;
 
     // Act
-    const result = getPaymentCellContent(
-      {
-        formatMessage: jest.fn().mockImplementation(({ defaultMessage }) => defaultMessage),
-      } as any,
-      "defaultLight",
-      data,
-    );
+    const result = getPaymentCellContent(intlMock, "defaultLight", data);
 
     // Assert
     expect((result.data as PillCell["data"]).value).toEqual("Overcharged");

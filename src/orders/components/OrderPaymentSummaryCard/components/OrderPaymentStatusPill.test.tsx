@@ -33,7 +33,7 @@ describe("OrderPaymentStatusPill", () => {
     const { container } = render(<OrderPaymentStatusPill order={undefined} />);
 
     // Assert
-    expect(container.firstChild).toBeNull();
+    expect(container).toBeEmptyDOMElement();
   });
 
   it("displays overcharged status when order is overcharged", () => {

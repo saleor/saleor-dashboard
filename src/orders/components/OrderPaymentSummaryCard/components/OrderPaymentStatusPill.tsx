@@ -23,15 +23,14 @@ export const OrderPaymentStatusPill = ({ order, className }: OrderPaymentStatusP
   if (order.chargeStatus === OrderChargeStatusEnum.OVERCHARGED) {
     return (
       <Pill
-        key={payment.status}
+        key="overcharged"
         label={intl.formatMessage({
           defaultMessage: "Overcharged",
-          id: "4WranC",
-          description: "payment status",
+          id: "BXKn/d",
+          description: "charge status",
         })}
         color="warning"
         style={{ alignSelf: "flex-end" }}
-        data-test-id="payment-status"
         className={className}
       />
     );
