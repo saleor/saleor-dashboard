@@ -1,11 +1,18 @@
+import { ReactNode } from "react";
+
 export type QuickSearchActionType = "action" | "catalog" | "customer" | "view";
 
 export interface QuickSearchAction {
   caption?: string;
   extraInfo?: string;
-  label: string;
+  label: string | ReactNode;
+  searchValue: string;
   price?: number;
   symbol?: string;
+  thumbnail?: {
+    alt: string;
+    url: string;
+  };
   type: QuickSearchActionType;
   onClick: () => boolean;
 }
