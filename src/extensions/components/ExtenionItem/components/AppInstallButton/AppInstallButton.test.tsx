@@ -26,7 +26,7 @@ const ConfigMock = jest.requireMock("@dashboard/config");
 
 jest.mock("@dashboard/config", () => ({
   __esModule: true,
-  ...jest.requireActual("@dashboard/config"),
+  ...(jest.requireActual("@dashboard/config") as object),
   IS_CLOUD_INSTANCE: true,
 }));
 
