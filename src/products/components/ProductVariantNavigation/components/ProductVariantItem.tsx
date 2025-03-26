@@ -45,7 +45,7 @@ export const VariantItem: React.FC<VariantItemProps> = ({
       borderLeftStyle="solid"
       __borderLeftWidth={2}
       __marginBottom="-3px"
-      __borderColor={isActive ? "hsla(0, 0%, 0%, 0.6)" : "transparent"}
+      __borderColor={isActive ? undefined : "transparent"}
     >
       <Box maxWidth="100%" paddingX={2} paddingY={1} display="flex" alignItems="center" gap={5}>
         <Box
