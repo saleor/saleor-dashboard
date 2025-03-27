@@ -37,6 +37,7 @@ export const orderListQuery = gql`
             }
           }
           userEmail
+          chargeStatus
         }
       }
       pageInfo {
