@@ -19,7 +19,7 @@ test("TC: SALEOR_10 User should be able to navigate to extensions list as a staf
   await home.goto();
   await home.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });
   await mainMenuPage.openExtensions();
-  await appsPage.installedAppsList.waitFor({
+  await appsPage.installedExtensionsList.waitFor({
     state: "visible",
     timeout: 30000,
   });
