@@ -20,4 +20,6 @@ Create or edit `.env` file in a root directory or set environment variables with
 
 - `APPS_MARKETPLACE_API_URL` - URI of Marketplace API to fetch list of Apps in JSON.
 
+- `EXTENSIONS_API_URL` - URI of Marketplace API to fetch list of Extensions in JSON.
+
 - `APPS_TUNNEL_URL_KEYWORDS` - Custom apps tunnel URL keywords.
