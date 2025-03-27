@@ -10,7 +10,7 @@ import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 
 import { ExtensionsList } from "../components/ExtensionsList";
-import { useExploreExtensions } from "../hooks/useExploreExtenstions";
+import { useExploreExtensions } from "../hooks/useExploreExtensions";
 import { useExtensionsFilter } from "../hooks/useExtenstionsFilter";
 import { headerTitles, messages } from "../messages";
 
