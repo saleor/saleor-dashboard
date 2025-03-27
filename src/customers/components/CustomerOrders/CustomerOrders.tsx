@@ -1,49 +1,32 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { DateTime } from "@dashboard/components/Date";
 import Money from "@dashboard/components/Money";
-import { Pill } from "@dashboard/components/Pill";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { CustomerDetailsQuery } from "@dashboard/graphql";
+import { OrderPaymentStatusPill } from "@dashboard/orders/components/OrderPaymentSummaryCard/components/OrderPaymentStatusPill";
 import { orderUrl } from "@dashboard/orders/urls";
 import { RelayToFlat } from "@dashboard/types";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Button, Skeleton } from "@saleor/macaw-ui-next";
+import { Button, Skeleton, sprinkles } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
-import { maybe, renderCollection, transformPaymentStatus } from "../../../misc";
+import { renderCollection } from "../../../misc";
 
-const useStyles = makeStyles(
-  {
-    link: {
-      cursor: "pointer",
-    },
-    textRight: {
-      textAlign: "right",
-    },
-  },
-  { name: "CustomerOrders" },
-);
+const textRightStyle = sprinkles({
+  textAlign: "right",
+});
 
 export interface CustomerOrdersProps {
-  orders: RelayToFlat<CustomerDetailsQuery["user"]["orders"]>;
+  orders: RelayToFlat<NonNullable<NonNullable<CustomerDetailsQuery["user"]>["orders"]>>;
   viewAllHref: string;
 }
 
 const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
   const { orders, viewAllHref } = props;
-  const classes = useStyles(props);
   const intl = useIntl();
-  const orderList = orders
-    ? orders.map(order => ({
-        ...order,
-        paymentStatus: transformPaymentStatus(order.paymentStatus, intl),
-      }))
-    : undefined;
 
   return (
     <DashboardCard>
@@ -83,7 +66,7 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
             <TableCell>
               <FormattedMessage id="pURrk1" defaultMessage="Status" description="order status" />
             </TableCell>
-            <TableCell className={classes.textRight}>
+            <TableCell className={textRightStyle}>
               <FormattedMessage
                 id="taX/V3"
                 defaultMessage="Total"
@@ -94,42 +77,29 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
         </TableHead>
         <TableBody>
           {renderCollection(
-            orderList,
+            orders,
             order => (
               <TableRowLink
                 hover={!!order}
-                className={order ? classes.link : undefined}
+                className={
+                  order
+                    ? sprinkles({
+                        cursor: "pointer",
+                      })
+                    : undefined
+                }
                 href={order && orderUrl(order.id)}
                 key={order ? order.id : "skeleton"}
               >
+                <TableCell>{order?.number ? "#" + order.number : <Skeleton />}</TableCell>
                 <TableCell>
-                  {maybe(() => order.number) ? "#" + order.number : <Skeleton />}
+                  {order?.created ? <DateTime date={order.created} plain /> : <Skeleton />}
                 </TableCell>
                 <TableCell>
-                  {maybe(() => order.created) ? (
-                    <DateTime date={order.created} plain />
-                  ) : (
-                    <Skeleton />
-                  )}
+                  {order ? <OrderPaymentStatusPill order={order} /> : <Skeleton />}
                 </TableCell>
-                <TableCell>
-                  {maybe(() => order.paymentStatus.status) !== undefined ? (
-                    order.paymentStatus.status === null ? null : (
-                      <Pill
-                        color={order.paymentStatus.status}
-                        label={order.paymentStatus.localized}
-                      />
-                    )
-                  ) : (
-                    <Skeleton />
-                  )}
-                </TableCell>
-                <TableCell className={classes.textRight} align="right">
-                  {maybe(() => order.total.gross) ? (
-                    <Money money={order.total.gross} />
-                  ) : (
-                    <Skeleton />
-                  )}
+                <TableCell className={textRightStyle} align="right">
+                  {order?.total.gross ? <Money money={order.total.gross} /> : <Skeleton />}
                 </TableCell>
               </TableRowLink>
             ),

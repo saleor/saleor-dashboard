@@ -50,7 +50,7 @@ export const customerDetails = gql`
       privateMetadata @include(if: $PERMISSION_MANAGE_STAFF) {
         ...MetadataItem
       }
-      orders(last: 5) @include(if: $PERMISSION_MANAGE_ORDERS) {
+      orders(first: 5) @include(if: $PERMISSION_MANAGE_ORDERS) {
         edges {
           node {
             id
@@ -63,10 +63,11 @@ export const customerDetails = gql`
                 amount
               }
             }
+            chargeStatus
           }
         }
       }
-      lastPlacedOrder: orders(last: 1) @include(if: $PERMISSION_MANAGE_ORDERS) {
+      lastPlacedOrder: orders(first: 1) @include(if: $PERMISSION_MANAGE_ORDERS) {
         edges {
           node {
             id
