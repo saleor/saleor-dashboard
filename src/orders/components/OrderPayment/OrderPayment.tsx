@@ -2,7 +2,6 @@ import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import Money from "@dashboard/components/Money";
-import { Pill } from "@dashboard/components/Pill";
 import { OrderAction, OrderDetailsFragment, OrderStatus } from "@dashboard/graphql";
 import { getDiscountTypeLabel } from "@dashboard/orders/utils/data";
 import { Divider, Skeleton, sprinkles } from "@saleor/macaw-ui-next";
@@ -10,7 +9,7 @@ import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { transformPaymentStatus } from "../../../misc";
+import { OrderPaymentStatusPill } from "../OrderPaymentSummaryCard/components/OrderPaymentStatusPill";
 import { OrderUsedGiftCards } from "../OrderUsedGiftCards";
 import { orderPaymentMessages, paymentButtonMessages } from "./messages";
 import { useStyles } from "./styles";
@@ -37,7 +36,6 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
   const canVoid = (order?.actions ?? []).includes(OrderAction.VOID);
   const canRefund = (order?.actions ?? []).includes(OrderAction.REFUND);
   const canMarkAsPaid = (order?.actions ?? []).includes(OrderAction.MARK_AS_PAID);
-  const payment = transformPaymentStatus(order?.paymentStatus, intl);
   const refundedAmount = extractRefundedAmount(order);
   const usedGiftCardAmount = extractOrderGiftCardUsedAmount(order);
   const usedGiftcards = obtainUsedGifrcards(order);
@@ -68,17 +66,13 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
         <DashboardCard.Title>
           <FormattedMessage {...orderPaymentMessages.paymentTitle} />
 
-          {order?.paymentStatus && (
-            <Pill
-              className={sprinkles({
-                marginLeft: 2,
-                marginRight: "auto",
-              })}
-              label={payment.localized}
-              color={payment.status}
-              data-test-id="payment-status"
-            />
-          )}
+          <OrderPaymentStatusPill
+            order={order}
+            className={sprinkles({
+              marginLeft: 2,
+              marginRight: "auto",
+            })}
+          />
         </DashboardCard.Title>
 
         <DashboardCard.Toolbar>

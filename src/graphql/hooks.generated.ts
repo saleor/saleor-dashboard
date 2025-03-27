@@ -1967,7 +1967,6 @@ export const InvoiceFragmentDoc = gql`
 export const OrderDetailsFragmentDoc = gql`
     fragment OrderDetails on Order {
   id
-  token
   ...Metadata
   billingAddress {
     ...Address
@@ -2123,6 +2122,7 @@ export const OrderDetailsFragmentDoc = gql`
     }
   }
   isPaid
+  chargeStatus
 }
     ${MetadataFragmentDoc}
 ${AddressFragmentDoc}
@@ -7844,7 +7844,7 @@ export const CustomerDetailsDocument = gql`
     privateMetadata @include(if: $PERMISSION_MANAGE_STAFF) {
       ...MetadataItem
     }
-    orders(last: 5) @include(if: $PERMISSION_MANAGE_ORDERS) {
+    orders(first: 5) @include(if: $PERMISSION_MANAGE_ORDERS) {
       edges {
         node {
           id
@@ -7857,10 +7857,11 @@ export const CustomerDetailsDocument = gql`
               amount
             }
           }
+          chargeStatus
         }
       }
     }
-    lastPlacedOrder: orders(last: 1) @include(if: $PERMISSION_MANAGE_ORDERS) {
+    lastPlacedOrder: orders(first: 1) @include(if: $PERMISSION_MANAGE_ORDERS) {
       edges {
         node {
           id
@@ -12279,6 +12280,7 @@ export const OrderListDocument = gql`
           }
         }
         userEmail
+        chargeStatus
       }
     }
     pageInfo {
