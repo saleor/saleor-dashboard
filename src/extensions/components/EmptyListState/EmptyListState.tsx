@@ -15,6 +15,7 @@ export const EmptyListState = ({ title, onSubtitleClick, subtitle }: EmptyListSt
     gap={2}
     marginY={24}
     textAlign="center"
+    data-test-id="empty-search-list"
   >
     <Text size={5} fontWeight="bold" color="default1">
       {title}

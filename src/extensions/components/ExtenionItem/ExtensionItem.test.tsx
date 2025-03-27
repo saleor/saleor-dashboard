@@ -82,4 +82,21 @@ describe("Extensions / Components / ExtensionItem", () => {
     expect(screen.getByRole("link", { name: "View details" })).toBeInTheDocument();
     expect(screen.getByText("Installed")).toBeInTheDocument();
   });
+
+  it("should render warning when extension is a plugin", () => {
+    // Arrange
+    const extension = {
+      ...baseApp,
+      type: "PLUGIN",
+    } as ExtensionData;
+
+    render(<ExtensionItem extension={extension} />);
+
+    // Assert
+    expect(
+      screen.getByText(
+        "We are working on replacing plugins with apps. Use apps unless no other option. {learnMore}",
+      ),
+    ).toBeInTheDocument();
+  });
 });
