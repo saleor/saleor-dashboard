@@ -1,6 +1,7 @@
 import {
   CustomerAddressesQuery,
   CustomerDetailsQuery,
+  OrderChargeStatusEnum,
   PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
 
@@ -1060,6 +1061,7 @@ export const customer: CustomerDetailsQuery["user"] & CustomerAddressesQuery["us
           id: "T3JkZXI6MTk=",
           number: "8234",
           paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
+          chargeStatus: OrderChargeStatusEnum.FULL,
           total: {
             __typename: "TaxedMoney",
             gross: {
