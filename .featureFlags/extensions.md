@@ -1,7 +1,7 @@
 ---
 name: extensions
 displayName: New Explore view
-enabled: true
+enabled: false
 payload: "default"
 visible: true
 ---

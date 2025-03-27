@@ -1,22 +1,22 @@
 // @ts-nocheck
 
-import S70248 from "./images/app-alerts.jpg"
-import T30909 from "./images/discounts-list.png"
-import J24746 from "./images/extensions.png"
-import Z42277 from "./images/improved_refunds.png"
+import W36049 from "./images/app-alerts.jpg"
+import C58845 from "./images/discounts-list.png"
+import H95814 from "./images/extensions.png"
+import A56493 from "./images/improved_refunds.png"
 
-const app_alerts = () => (<><p><img src={S70248} alt="new filters"/>
+const app_alerts = () => (<><p><img src={W36049} alt="new filters"/>
 Benefit from new notifications in your Dashboard that alert you to issues with webhooks for your apps, helping you stay informed about potential problems.
 We’re continuously working to expand this feature to provide more insights for your apps.</p>
 </>)
-const discounts_rules = () => (<><p><img src={T30909} alt="Discount rules"/></p>
+const discounts_rules = () => (<><p><img src={C58845} alt="Discount rules"/></p>
 <p>Apply the new discounts rules to narrow your promotions audience.
 Set up conditions and channels that must be fulfilled to apply defined reward.</p>
 </>)
-const extensions = () => (<><p><img src={J24746} alt="Extensions"/></p>
+const extensions = () => (<><p><img src={H95814} alt="Extensions"/></p>
 <p>Experience the new interface for browsing and installing extensions in the ‘Explore’ view</p>
 </>)
-const improved_refunds = () => (<><p><img src={Z42277} alt="Improved refunds"/></p>
+const improved_refunds = () => (<><p><img src={A56493} alt="Improved refunds"/></p>
 <h3 id="enable-the-enhanced-refund-feature-to-streamline-your-refund-process">Enable the enhanced refund feature to streamline your refund process:</h3>
 <ul>
 <li><p>• Choose between automatic calculations based on selected items or enter refund amounts directly for overcharges and custom adjustments.</p>
@@ -65,7 +65,7 @@ export const AVAILABLE_FLAGS = [{
   component: extensions,
   visible: true,
   content: {
-    enabled: true,
+    enabled: false,
     payload: "default",
   }
 },{
