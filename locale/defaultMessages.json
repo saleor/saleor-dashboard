@@ -603,6 +603,10 @@
     "context": "expiry date section header",
     "string": "Expiry date"
   },
+  "1JSu4L": {
+    "context": "Navigation search no parent category message",
+    "string": "This is root category"
+  },
   "1LBYpE": {
     "context": "dialog header",
     "string": "Delete Menus"
@@ -793,6 +797,9 @@
   "2i81/P": {
     "context": "section header button",
     "string": "Manage"
+  },
+  "2nT0Sm": {
+    "string": "No Extensions installed yet"
   },
   "2ob30/": {
     "string": "Success! In a few minutes you’ll receive a message with instructions on how to reset your password."
@@ -1046,6 +1053,10 @@
   "4T/RzC": {
     "string": "Make sure to save token, you won’t be able to see it again."
   },
+  "4VLj3S": {
+    "context": "overcharged order status",
+    "string": "Overcharged"
+  },
   "4VOIum": {
     "context": "product availability",
     "string": "Enabling this checkbox will remove product from search and category pages. It will be available on collection pages."
@@ -1060,6 +1071,9 @@
   "4XhJY+": {
     "context": "dialog header",
     "string": "Add product from {channelName}"
+  },
+  "4YJHut": {
+    "string": "Clear search"
   },
   "4Z0O2B": {
     "context": "section header title",
@@ -2073,6 +2087,10 @@
   },
   "BWpuKl": {
     "string": "Update"
+  },
+  "BXKn/d": {
+    "context": "charge status",
+    "string": "Overcharged"
   },
   "BXkF8Z": {
     "context": "header",
@@ -3902,6 +3920,9 @@
     "context": "customer input label",
     "string": "Customer"
   },
+  "MhT1CS": {
+    "string": "Explore available Extensions"
+  },
   "MjUyhA": {
     "context": "section subheader",
     "string": "Active member since {date}"
@@ -3920,6 +3941,10 @@
   "MpR4zK": {
     "context": "customer details, header",
     "string": "{fullName} Details"
+  },
+  "MtkXb6": {
+    "context": "Navigation search variant item type name",
+    "string": "Variant"
   },
   "MwfSVA": {
     "context": "input helper text",
@@ -5295,6 +5320,10 @@
   "VOjJWA": {
     "context": "refund type",
     "string": "Refund products"
+  },
+  "VS0YOp": {
+    "context": "Request extension",
+    "string": "Request Extension"
   },
   "VSj89H": {
     "context": "fulfill button label",
@@ -7445,6 +7474,9 @@
     "context": "App by Author",
     "string": "by"
   },
+  "jWLXdD": {
+    "string": "No Extensions found"
+  },
   "jWna9Q": {
     "string": "Content Type Name"
   },
@@ -8261,9 +8293,6 @@
   "oYV+Ru": {
     "context": "staff members status deactivated",
     "string": "Inactive"
-  },
-  "obHpf0": {
-    "string": "No extensions found"
   },
   "oboeOT": {
     "string": "Add following permissions"

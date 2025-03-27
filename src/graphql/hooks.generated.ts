@@ -1967,7 +1967,6 @@ export const InvoiceFragmentDoc = gql`
 export const OrderDetailsFragmentDoc = gql`
     fragment OrderDetails on Order {
   id
-  token
   ...Metadata
   billingAddress {
     ...Address
@@ -2123,6 +2122,7 @@ export const OrderDetailsFragmentDoc = gql`
     }
   }
   isPaid
+  chargeStatus
 }
     ${MetadataFragmentDoc}
 ${AddressFragmentDoc}
@@ -7019,6 +7019,11 @@ export const SearchCatalogDocument = gql`
       node {
         id
         name
+        backgroundImage(size: 64) {
+          url
+          alt
+        }
+        level
       }
     }
   }
@@ -7026,6 +7031,10 @@ export const SearchCatalogDocument = gql`
     edges {
       node {
         ...Collection
+        backgroundImage(size: 64) {
+          url
+          alt
+        }
       }
     }
   }
@@ -7038,6 +7047,31 @@ export const SearchCatalogDocument = gql`
           name
         }
         name
+        thumbnail(size: 64) {
+          alt
+          url
+        }
+      }
+    }
+  }
+  productVariants(first: $first, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+        sku
+        product {
+          id
+          name
+          category {
+            id
+            name
+          }
+          thumbnail(size: 64) {
+            alt
+            url
+          }
+        }
       }
     }
   }
@@ -7810,7 +7844,7 @@ export const CustomerDetailsDocument = gql`
     privateMetadata @include(if: $PERMISSION_MANAGE_STAFF) {
       ...MetadataItem
     }
-    orders(last: 5) @include(if: $PERMISSION_MANAGE_ORDERS) {
+    orders(first: 5) @include(if: $PERMISSION_MANAGE_ORDERS) {
       edges {
         node {
           id
@@ -7823,10 +7857,11 @@ export const CustomerDetailsDocument = gql`
               amount
             }
           }
+          chargeStatus
         }
       }
     }
-    lastPlacedOrder: orders(last: 1) @include(if: $PERMISSION_MANAGE_ORDERS) {
+    lastPlacedOrder: orders(first: 1) @include(if: $PERMISSION_MANAGE_ORDERS) {
       edges {
         node {
           id
@@ -12245,6 +12280,7 @@ export const OrderListDocument = gql`
           }
         }
         userEmail
+        chargeStatus
       }
     }
     pageInfo {

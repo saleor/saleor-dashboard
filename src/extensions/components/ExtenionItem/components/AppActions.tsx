@@ -1,5 +1,6 @@
 import { AppUrls } from "@dashboard/apps/urls";
 import Link from "@dashboard/components/Link";
+import { AppInstallButton } from "@dashboard/extensions/components/ExtenionItem/components/AppInstallButton";
 import { Box, Button, ExternalLinkIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -41,11 +42,7 @@ export const AppActions = ({
 
   return (
     <>
-      {manifestUrl && (
-        <Link href={AppUrls.resolveAppInstallUrl(manifestUrl)}>
-          <Button variant="secondary">{intl.formatMessage(messages.install)}</Button>
-        </Link>
-      )}
+      {manifestUrl && <AppInstallButton manifestUrl={manifestUrl} />}
       {repositoryUrl && (
         <Link target="_blank" href={repositoryUrl}>
           <Button variant="secondary" display="flex" alignItems="center" gap={2}>

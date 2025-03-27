@@ -12,6 +12,7 @@ function getHelpModeActions(
     return [
       {
         label: intl.formatMessage(messages.noResults),
+        searchValue: query,
         onClick: () => true,
         type: "action",
       },
@@ -21,6 +22,7 @@ function getHelpModeActions(
   return [
     {
       label: intl.formatMessage(messages.helpDefaultMode),
+      searchValue: "",
       onClick: () => {
         setMode("default");
 
@@ -31,6 +33,7 @@ function getHelpModeActions(
     },
     {
       label: intl.formatMessage(messages.helpCommandsMode),
+      searchValue: "",
       onClick: () => {
         setMode("commands");
 
@@ -41,6 +44,7 @@ function getHelpModeActions(
     },
     {
       label: intl.formatMessage(messages.helpOrdersMode),
+      searchValue: "",
       onClick: () => {
         setMode("orders");
 
@@ -51,6 +55,7 @@ function getHelpModeActions(
     },
     {
       label: intl.formatMessage(messages.helpCustomersMode),
+      searchValue: "",
       onClick: () => {
         setMode("customers");
 
@@ -61,6 +66,7 @@ function getHelpModeActions(
     },
     {
       label: intl.formatMessage(messages.helpCatalogMode),
+      searchValue: "",
       onClick: () => {
         setMode("catalog");
 
@@ -71,6 +77,7 @@ function getHelpModeActions(
     },
     {
       label: intl.formatMessage(messages.helpMode),
+      searchValue: "",
       onClick: () => {
         setMode("help");
 

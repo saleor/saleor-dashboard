@@ -2,6 +2,7 @@ import { InstallWithManifestFormButton } from "@dashboard/apps/components/Instal
 import { AppUrls } from "@dashboard/apps/urls";
 import { TopNav } from "@dashboard/components/AppLayout";
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
+import { RequestExtensionsButton } from "@dashboard/extensions/components/RequestExtensionsButton";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box } from "@saleor/macaw-ui-next";
@@ -28,16 +29,19 @@ export const ExploreExtensions = () => {
   );
 
   if (error) {
-    // We want to show default errr page when app store api does not work
+    // We want to show the default error page when app store api does not work
     throw new Error(error);
   }
 
   return (
     <>
       <TopNav title={intl.formatMessage(headerTitles.exploreExtensions)}>
-        {hasManagedAppsPermission && (
-          <InstallWithManifestFormButton onSubmitted={navigateToAppInstallPage} />
-        )}
+        <Box display="flex" gap={4} alignItems="center">
+          <RequestExtensionsButton />
+          {hasManagedAppsPermission && (
+            <InstallWithManifestFormButton onSubmitted={navigateToAppInstallPage} />
+          )}
+        </Box>
       </TopNav>
       <Box paddingX={6}>
         <Box __width="370px" marginTop={8} marginBottom={12}>
@@ -50,7 +54,11 @@ export const ExploreExtensions = () => {
           />
         </Box>
 
-        <ExtensionsList extensions={filteredExtensions} loading={loading} />
+        <ExtensionsList
+          extensions={filteredExtensions}
+          loading={loading}
+          clearSearch={() => handleQueryChange("")}
+        />
       </Box>
     </>
   );

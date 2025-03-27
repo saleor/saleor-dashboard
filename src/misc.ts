@@ -3,6 +3,7 @@ import {
   AddressInput,
   CountryCode,
   DateRangeInput,
+  OrderChargeStatusEnum,
   OrderStatus,
   OrderStatusFilter,
   PaymentChargeStatusEnum,
@@ -123,6 +124,25 @@ export const transformPaymentStatus = (
     localized: status,
     status: StatusType.ERROR,
   };
+};
+
+export const transformChargedStatus = (status: OrderChargeStatusEnum, intl: IntlShape) => {
+  switch (status) {
+    case OrderChargeStatusEnum.OVERCHARGED:
+      return {
+        localized: intl.formatMessage({
+          defaultMessage: "Overcharged",
+          id: "4VLj3S",
+          description: "overcharged order status",
+        }),
+        status: StatusType.WARNING,
+      };
+    default:
+      return {
+        localized: status,
+        status: StatusType.ERROR,
+      };
+  }
 };
 
 export const transformOrderStatus = (
@@ -625,7 +645,12 @@ const getAllRemovedRowsBeforeRowIndex = (rowIndex: number, removedRowsIndexs: nu
 export const getDatagridRowDataIndex = (rowIndex: number, removedRowsIndexs: number[]) =>
   rowIndex + getAllRemovedRowsBeforeRowIndex(rowIndex, removedRowsIndexs).length;
 
-export const fuzzySearch = <T>(array: T[], query: string | undefined, keys: string[]) => {
+export const fuzzySearch = <T>(
+  array: T[],
+  query: string | undefined,
+  keys: string[],
+  threshold = 0.3,
+) => {
   if (!query) {
     return array;
   }
@@ -633,7 +658,7 @@ export const fuzzySearch = <T>(array: T[], query: string | undefined, keys: stri
   const fuse = new Fuse(array, {
     keys,
     includeScore: true,
-    threshold: 0.3,
+    threshold,
   });
 
   return fuse.search(query.toLocaleLowerCase()).map(({ item }) => item);
