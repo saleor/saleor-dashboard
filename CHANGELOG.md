@@ -1,5 +1,26 @@
 # Changelog
 
+## 3.20.34
+
+### Patch Changes
+
+- 4fbd1ad: Replace an Apps section with a new Extensions section visible under a feature flag
+  New Extensions section is split into two pages:
+
+  1. Main Extensions page which presents a list of all installed apps
+  2. Explore page which presents a list of available apps to install
+
+  Currently, Extensions show only apps but in the future Extensions section will gather also plugins and webhooks (custom apps).
+
+- 6875a88: Variant's empty attributes are no longer displayed in fulfillment creation form.
+- 36a9943: Updated @saleor/app-sdk to 1.0.0
+- 45c3f6c: The order list and details view now support the overcharged status. This means that you can now see pill with overcharged label when order has charge status overcharged
+- 4d53e56: Menu item group now support on click handlers
+- 9122a03: Knip no longer raises an error regarding "import.meta" in vite.config.js
+- 62383cc: In quick search you can now search for product variants with SKU. This means product variants are a new item added to the search catalogue. Catalogue items now show their media, if available. Category item display message if they don't have parents.
+- d7adfec: You can now see the correct quantity for unfulfilled lines in Order details page.
+- 4df5005: Test results from the release workflow are now generated in the CTRF scheme and pushed to the qa-helpers repository.
+
 ## 3.20.33
 
 ### Patch Changes
