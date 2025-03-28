@@ -29,10 +29,13 @@ export interface DiscountCountrySelectDialogProps {
   open: boolean;
   onClose: () => void;
   onConfirm: (data: FormData) => SubmitPromise;
+  labels?: {
+    confirmBtn?: string;
+  };
 }
 
 const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = props => {
-  const { confirmButtonState, onClose, countries, open, initial, onConfirm } = props;
+  const { confirmButtonState, onClose, countries, open, initial, onConfirm, labels } = props;
   const classes = useStyles(props);
   const intl = useIntl();
   const initialForm: FormData = {
@@ -145,11 +148,13 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
                 <DashboardModal.Actions>
                   <BackButton onClick={onClose} />
                   <ConfirmButton transitionState={confirmButtonState} type="submit">
-                    <FormattedMessage
-                      id="zZCCqz"
-                      defaultMessage="Assign countries"
-                      description="button"
-                    />
+                    {labels?.confirmBtn ?? (
+                      <FormattedMessage
+                        id="zZCCqz"
+                        defaultMessage="Assign countries"
+                        description="button"
+                      />
+                    )}
                   </ConfirmButton>
                 </DashboardModal.Actions>
               </DashboardModal.Grid>

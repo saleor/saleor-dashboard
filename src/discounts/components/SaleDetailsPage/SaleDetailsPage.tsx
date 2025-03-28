@@ -21,11 +21,12 @@ import {
   PermissionEnum,
   SaleDetailsFragment,
   SaleType as SaleTypeEnum,
+  SearchProductFragment,
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { mapMetadataItemToInput } from "@dashboard/utils/maps";
+import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { sprinkles } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -230,7 +231,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   disabled={disabled}
                   onCategoryAssign={onCategoryAssign}
                   onCategoryUnassign={onCategoryUnassign}
-                  discount={sale}
+                  categories={mapEdgesToItems(sale?.categories) ?? []}
                   isChecked={isChecked}
                   selected={selected}
                   toggle={toggle}
@@ -242,7 +243,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   disabled={disabled}
                   onCollectionAssign={onCollectionAssign}
                   onCollectionUnassign={onCollectionUnassign}
-                  discount={sale}
+                  collections={mapEdgesToItems(sale?.collections) ?? []}
                   isChecked={isChecked}
                   selected={selected}
                   toggle={toggle}
@@ -254,7 +255,9 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   disabled={disabled}
                   onProductAssign={onProductAssign}
                   onProductUnassign={onProductUnassign}
-                  discount={sale}
+                  products={
+                    (mapEdgesToItems(sale?.products) ?? []) as unknown as SearchProductFragment[]
+                  }
                   isChecked={isChecked}
                   selected={selected}
                   toggle={toggle}

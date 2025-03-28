@@ -346,6 +346,43 @@ export const fragmentVariant = gql`
   }
 `;
 
+export const searchProduct = gql`
+  fragment SearchProduct on Product {
+    id
+    name
+    productType {
+      id
+      name
+    }
+    thumbnail {
+      url
+    }
+    channelListings {
+      ...ChannelListingProductWithoutPricing
+    }
+    variants {
+      id
+      name
+      sku
+      channelListings {
+        channel {
+          id
+          isActive
+          name
+          currencyCode
+        }
+        price {
+          amount
+          currency
+        }
+      }
+    }
+    collections {
+      id
+    }
+  }
+`;
+
 export const exportFileFragment = gql`
   fragment ExportFile on ExportFile {
     id

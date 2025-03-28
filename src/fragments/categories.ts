@@ -50,3 +50,13 @@ export const categoryWithAncestorFragment = gql`
     }
   }
 `;
+
+export const categoryWithTotalProductsFragment = gql`
+  fragment CategoryWithTotalProducts on Category {
+    id
+    name
+    products {
+      totalCount
+    }
+  }
+`;
