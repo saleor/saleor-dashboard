@@ -9,6 +9,7 @@ import {
   SearchProductFragment,
 } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
+import uniqBy from "lodash/uniqBy";
 import { useMemo } from "react";
 
 export interface SpecificItemsData {
@@ -90,10 +91,15 @@ export const useSpecificItemsAssign = ({
     callback?: () => void,
   ) => {
     if (type === "countries") {
+      const combinedData = [
+        ...data.countries,
+        ...(items as string[]).map(country => countriesMap[country]),
+      ];
+
       onChange({
         target: {
           name: type,
-          value: [...data.countries, ...(items as string[]).map(country => countriesMap[country])],
+          value: uniqBy(combinedData, "code"),
         },
       });
     } else {

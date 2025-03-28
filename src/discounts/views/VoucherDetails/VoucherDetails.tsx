@@ -117,7 +117,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
     includeCollections: activeTab === VoucherDetailsPageTab.collections,
     includeProducts: activeTab === VoucherDetailsPageTab.products,
   };
-  const { data, loading, refetch } = useVoucherDetailsQuery({
+  const { data, loading, refetch, updateQuery } = useVoucherDetailsQuery({
     displayLoader: true,
     variables: {
       id,
@@ -186,6 +186,13 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
         notifySaved();
         handleClearAddedVoucherCodes();
         voucherCodesRefetch();
+        updateQuery(prev => ({
+          ...prev,
+          voucher: {
+            ...prev.voucher,
+            ...data.voucherUpdate.voucher,
+          },
+        }));
       }
     },
   });
