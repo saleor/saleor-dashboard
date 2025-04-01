@@ -1,6 +1,6 @@
 import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
 import { getStringOrPlaceholder } from "@dashboard/misc";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Paragraph, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -23,8 +23,14 @@ const ExtraInfoLines: React.FC<ExtraInfoLinesProps> = ({ fulfillment }) => {
   const { warehouse, trackingNumber, status } = fulfillment;
 
   return (
-    <Box paddingY={4} borderColor="default1" borderBottomStyle={"solid"} borderBottomWidth={1}>
-      <Text color="default2" fontSize={3}>
+    <Box
+      paddingY={4}
+      paddingX={6}
+      borderColor="default1"
+      borderBottomStyle={"solid"}
+      borderBottomWidth={1}
+    >
+      <Paragraph color="default2" fontSize={3}>
         {warehouse && (
           <>
             {intl.formatMessage(
@@ -43,8 +49,8 @@ const ExtraInfoLines: React.FC<ExtraInfoLinesProps> = ({ fulfillment }) => {
             </Text>
           </>
         )}
-      </Text>
-      <Text color="default2" fontSize={3}>
+      </Paragraph>
+      <Paragraph color="default2" fontSize={3}>
         {trackingNumber && (
           <FormattedMessage
             {...extraInfoMessages.tracking}
@@ -62,7 +68,7 @@ const ExtraInfoLines: React.FC<ExtraInfoLinesProps> = ({ fulfillment }) => {
             }}
           />
         )}
-      </Text>
+      </Paragraph>
     </Box>
   );
 };
