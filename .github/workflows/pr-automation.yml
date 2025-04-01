@@ -193,16 +193,32 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Load secrets
+        uses: 1password/load-secrets-action@v2
+        id: load-secrets
+        with:
+          # Export loaded secrets as environment variables
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          E2E_USER_NAME: "op://Continuous Integration/E2E_USER/username"
+          E2E_USER_PASSWORD: "op://Continuous Integration/E2E_USER/password"
+          E2E_PERMISSIONS_USERS_PASSWORD: "op://Continuous Integration/E2E_PERMISSIONS_USERS_PASSWORD/password"
+          MAILPITURL: "op://Continuous Integration/MAILPITURL_STAGING/password"
+          TESTMO_URL: "op://Continuous Integration/Password/password"
+          TESTMO_TOKEN: "op://Continuous Integration/TESTMO_TOKEN/password"
+          
+
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
         with:
           SHARD: ${{ matrix.shard }}
           BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
           API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
-          E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
-          E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
-          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
-          MAILPITURL: ${{ secrets.MAILPITURL }}
+          E2E_USER_NAME: ${{ steps.load-secrets.outputs.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ steps.load-secrets.outputs.E2E_USER_PASSWORD }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ steps.load-secrets.outputs.E2E_PERMISSIONS_USERS_PASSWORD }}
+          MAILPITURL: ${{ steps.load-secrets.outputs.MAILPITURL }}
           PW_WORKERS: ${{ vars.PW_WORKERS }}
           PW_RETRIES: ${{ vars.PW_RETRIES }}
           ACCOUNTS: ${{ needs.deploy-dashboard.outputs.ACCOUNTS }}
@@ -215,8 +231,8 @@ jobs:
         if: always()
         uses: ./.github/actions/testmo/testmo-threads-submit-playwright
         with:
-          testmoUrl: ${{ secrets.TESTMO_URL }}
-          testmoToken: ${{ secrets.TESTMO_TOKEN }}
+          testmoUrl: ${{ needs.initialize-cloud.outputs.TESTMO_URL }}
+          testmoToken: ${{ needs.initialize-cloud.outputs.TESTMO_TOKEN }}
           testmoRunId: ${{ needs.deploy-dashboard.outputs.TESTMO_RUN_ID }}
 
   merge-reports:
