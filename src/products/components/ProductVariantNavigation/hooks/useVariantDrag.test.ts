@@ -1,6 +1,7 @@
 import * as dndKit from "@dnd-kit/core";
 import { act, renderHook } from "@testing-library/react-hooks";
 
+import { ProductVariantItem } from "../types";
 import { useVariantDrag } from "./useVariantDrag";
 
 jest.mock("@dnd-kit/core", () => ({
@@ -25,7 +26,10 @@ describe("useVariantDrag", () => {
   it("should not call onReorder when over is null", () => {
     // Arrange & Act
     const { result } = renderHook(() =>
-      useVariantDrag({ variants: mockVariants, onReorder: mockOnReorder }),
+      useVariantDrag({
+        variants: mockVariants as unknown as ProductVariantItem[],
+        onReorder: mockOnReorder,
+      }),
     );
 
     act(() => {
@@ -43,7 +47,10 @@ describe("useVariantDrag", () => {
   it("should not call onReorder when active.id equals over.id", () => {
     // Arrange & Act
     const { result } = renderHook(() =>
-      useVariantDrag({ variants: mockVariants, onReorder: mockOnReorder }),
+      useVariantDrag({
+        variants: mockVariants as unknown as ProductVariantItem[],
+        onReorder: mockOnReorder,
+      }),
     );
 
     act(() => {
@@ -61,7 +68,10 @@ describe("useVariantDrag", () => {
   it("should handle successful reorder", () => {
     // Arrange & Act
     const { result } = renderHook(() =>
-      useVariantDrag({ variants: mockVariants, onReorder: mockOnReorder }),
+      useVariantDrag({
+        variants: mockVariants as unknown as ProductVariantItem[],
+        onReorder: mockOnReorder,
+      }),
     );
 
     act(() => {

@@ -8,25 +8,26 @@ import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
 import { messages } from "../messages";
+import { ProductVariantItem, ProductVariantItemThumbnail } from "../types";
 import { ImagePlaceholder } from "./ImagePlaceholder";
 
 interface VariantItemProps {
-  variant: any;
-  thumbnail: any;
+  variant: ProductVariantItem;
+  thumbnail: ProductVariantItemThumbnail | undefined;
   isDefault: boolean;
   isActive: boolean;
   productId: string;
   draggable: boolean;
 }
 
-export const VariantItem: React.FC<VariantItemProps> = ({
+export const VariantItem = ({
   variant,
   thumbnail,
   isDefault,
   isActive,
   productId,
   draggable,
-}) => {
+}: VariantItemProps) => {
   const intl = useIntl();
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
     id: variant.id,
@@ -43,16 +44,17 @@ export const VariantItem: React.FC<VariantItemProps> = ({
       style={style}
       display="block"
       borderLeftStyle="solid"
-      __borderLeftWidth={2}
-      __marginBottom="-3px"
+      // Passing undefined here shows the border for active item
+      // that changes color in dark and light mode
       __borderColor={isActive ? undefined : "transparent"}
+      __borderLeftWidth={2}
     >
       <Box maxWidth="100%" paddingX={2} paddingY={1} display="flex" alignItems="center" gap={5}>
         <Box
           {...attributes}
           {...listeners}
           cursor={draggable ? "grabbing" : "auto"}
-          __marginBottom="-2px"
+          paddingTop={1}
           color="default2"
         >
           <Drag />
@@ -73,7 +75,7 @@ export const VariantItem: React.FC<VariantItemProps> = ({
                 padding={1}
                 flexShrink="0"
                 src={thumbnail.url}
-                alt={variant.name || variant.sku}
+                alt={variant.name || variant.sku || ""}
               />
             ) : (
               <ImagePlaceholder />

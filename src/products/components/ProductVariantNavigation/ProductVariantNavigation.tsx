@@ -1,6 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { Divider } from "@dashboard/components/Divider";
-import { ProductVariantCreateDataQuery, ProductVariantDetailsQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { productVariantAddUrl } from "@dashboard/products/urls";
@@ -16,6 +15,7 @@ import { ProductVariantEmptyItem } from "./components/ProductVariantEmptyItem";
 import { VariantItem } from "./components/ProductVariantItem";
 import { useVariantDrag } from "./hooks/useVariantDrag";
 import { messages } from "./messages";
+import { ProductVariantItem } from "./types";
 
 interface ProductVariantNavigationProps {
   current?: string;
@@ -23,9 +23,7 @@ interface ProductVariantNavigationProps {
   fallbackThumbnail: string;
   productId: string;
   isCreate?: boolean;
-  variants:
-    | Array<ProductVariantDetailsQuery["productVariant"]>
-    | NonNullable<NonNullable<ProductVariantCreateDataQuery["product"]>["variants"]>;
+  variants: ProductVariantItem[] | undefined;
   onReorder: ReorderAction;
 }
 
@@ -39,6 +37,8 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
     onReorder,
   });
 
+  const hasVariants = variants && variants.length > 0;
+
   return (
     <DashboardCard>
       <DashboardCard.Header>
@@ -48,7 +48,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
       <DashboardCard.Content paddingX={0}>
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
           <Box data-test-id="variants-list">
-            {variants?.length > 0 && <Divider />}
+            {hasVariants && <Divider />}
             <SortableContext items={items} strategy={verticalListSortingStrategy}>
               {renderCollection(variants, variant => {
                 if (!variant) {
@@ -57,7 +57,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
 
                 const isDefault = variant.id === defaultVariantId;
                 const isActive = variant.id === current;
-                const thumbnail = variant?.media?.filter(mediaObj => mediaObj.type === "IMAGE")[0];
+                const thumbnail = variant.media?.filter(mediaObj => mediaObj.type === "IMAGE")[0];
 
                 return (
                   <React.Fragment key={variant.id}>
@@ -69,7 +69,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
                       productId={productId}
                       draggable={!isSaving}
                     />
-                    <Divider />
+                    <Divider height={0} />
                   </React.Fragment>
                 );
               })}
@@ -88,7 +88,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
             <FormattedMessage {...messages.addVariant} />
           </Button>
         ) : (
-          <ProductVariantEmptyItem>
+          <ProductVariantEmptyItem hasVariants={hasVariants || false}>
             <Text>
               <FormattedMessage {...messages.newVariant} />
             </Text>
