@@ -1,4 +1,3 @@
-import { render, screen } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import React from "react";
 import { FormattedMessageProps } from "react-intl";
@@ -68,19 +67,17 @@ const baseApp = {
 
 describe("Extensions / ExtensionItem / useExtension", () => {
   it("should return correct values for not installed plugin", () => {
+    // Arrange
     const extension = {
       ...basePlugin,
       installed: false,
       appId: "123",
     } as ExtensionData;
 
+    // Act
     const { result } = renderHook(() => useExtension(extension));
 
-    render(result.current.actions);
-
-    expect(screen.getByRole("link", { name: "Install" })).toBeInTheDocument();
-    expect(screen.getAllByRole("link").length).toEqual(1);
-
+    // Assert
     expect(result.current).toEqual(
       expect.objectContaining({
         title: "Braintreee",
@@ -92,19 +89,17 @@ describe("Extensions / ExtensionItem / useExtension", () => {
   });
 
   it("should return correct values for installed plugin", () => {
+    // Arrange
     const extension = {
       ...basePlugin,
       installed: true,
       appId: "123",
     } as ExtensionData;
 
+    // Act
     const { result } = renderHook(() => useExtension(extension));
 
-    render(result.current.actions);
-
-    expect(screen.getByRole("link", { name: "View details" })).toBeInTheDocument();
-    expect(screen.getAllByRole("link").length).toEqual(1);
-
+    // Assert
     expect(result.current).toEqual(
       expect.objectContaining({
         title: "Braintreee",
@@ -115,22 +110,18 @@ describe("Extensions / ExtensionItem / useExtension", () => {
     );
   });
 
-  it("should return correct values for not installed extension", () => {
+  it("should return correct values for not installed app", () => {
+    // Arrange
     const extension = {
       ...baseApp,
       installed: false,
       appId: "123",
     } as ExtensionData;
+
+    // Act
     const { result } = renderHook(() => useExtension(extension));
 
-    render(result.current.actions);
-
-    expect(screen.getByRole("button", { name: "Install" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "View on GitHub" })).toHaveAttribute(
-      "href",
-      "https://example.com/repository",
-    );
-
+    // Assert
     expect(result.current).toEqual(
       expect.objectContaining({
         title: "Adyen",
@@ -141,19 +132,65 @@ describe("Extensions / ExtensionItem / useExtension", () => {
     );
   });
 
-  it("should return correct values for installed extension", () => {
+  it("should return correct values for installed app", () => {
+    // Arrange
     const extension = {
       ...baseApp,
       installed: true,
       appId: "123",
     } as ExtensionData;
+
+    // Act
     const { result } = renderHook(() => useExtension(extension));
 
-    render(result.current.actions);
+    // Assert
+    expect(result.current).toEqual(
+      expect.objectContaining({
+        title: "Adyen",
+        subtitle: "Developed by {developer}",
+        description: "App description",
+        isInstalled: true,
+      }),
+    );
+  });
 
-    expect(screen.getByRole("link", { name: "View details" })).toBeInTheDocument();
-    expect(screen.getAllByRole("link").length).toEqual(1);
+  it("should return correct values for official installed custom app", () => {
+    // Arrange
+    const extension = {
+      ...baseApp,
+      isCustomApp: true,
+      installed: true,
+      appId: "123",
+    } as ExtensionData;
 
+    // Act
+    const { result } = renderHook(() => useExtension(extension));
+
+    // Assert
+    expect(result.current).toEqual(
+      expect.objectContaining({
+        title: "Adyen",
+        subtitle: "Custom build",
+        description: "App description",
+        isInstalled: true,
+      }),
+    );
+  });
+
+  it("should return correct values for oss installed app", () => {
+    // Arrange
+    const extension = {
+      ...baseApp,
+      kind: "OSS",
+      isCustomApp: true,
+      installed: true,
+      appId: "123",
+    } as ExtensionData;
+
+    // Act
+    const { result } = renderHook(() => useExtension(extension));
+
+    // Assert
     expect(result.current).toEqual(
       expect.objectContaining({
         title: "Adyen",

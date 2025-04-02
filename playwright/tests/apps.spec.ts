@@ -1,18 +1,18 @@
 import { APPS } from "@data/e2eTestData";
 import { AppInstallationPage } from "@pages/appInstallationPage";
 import { AppPage } from "@pages/appPageThirdparty";
-import { AppsPage } from "@pages/appsPage";
+import { ExtensionsPage } from "@pages/extensionsPage";
 import { expect } from "@playwright/test";
 import { test } from "utils/testWithPermission";
 
 test.use({ permissionName: "admin" });
 
-let appsPage: AppsPage;
+let appsPage: ExtensionsPage;
 let installationPage: AppInstallationPage;
 let appPage: AppPage;
 
 test.beforeEach(({ page }) => {
-  appsPage = new AppsPage(page);
+  appsPage = new ExtensionsPage(page);
   installationPage = new AppInstallationPage(page);
   appPage = new AppPage(page);
 });
@@ -24,7 +24,7 @@ const APP_EXPECT_UI_TIMEOUT = 15 * 1000;
 test("TC: SALEOR_119 User should be able to install and configure app from manifest #e2e", async ({
   page,
 }) => {
-  await appsPage.gotoAppsList();
+  await appsPage.gotoExtensionsList();
   await appsPage.installExternalAppButton.click();
   await appsPage.typeManifestUrl("https://klaviyo.saleor.app/api/manifest");
   await appsPage.installAppFromManifestButton.click();

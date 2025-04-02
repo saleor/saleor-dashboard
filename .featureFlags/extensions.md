@@ -1,7 +1,12 @@
 ---
 name: extensions
-displayName: Extensions
-enabled: false
+displayName: New Explore view
+enabled: true
 payload: "default"
-visible: false
+visible: true
 ---
+
+![Extensions](./images/extensions.png)
+
+Experience the new interface for browsing and installing extensions in the ‘Explore’ view
+

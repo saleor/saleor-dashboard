@@ -2,8 +2,8 @@ import { getExtensionsConfig } from "@dashboard/config";
 import { ExtensionData, ExtensionsGroups } from "@dashboard/extensions/types";
 import { InstalledAppFragment } from "@dashboard/graphql";
 
-import { useAppStoreExtensions } from "./useAppStoreExtenstions";
-import { useInstalledExtensions } from "./useInstalledExtenstions";
+import { useAppStoreExtensions } from "./useAppStoreExtensions";
+import { useInstalledExtensions } from "./useInstalledExtensions";
 
 const byAppType = (extension: ExtensionData) => extension.type === "APP";
 

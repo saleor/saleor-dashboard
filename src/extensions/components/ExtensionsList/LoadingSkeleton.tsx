@@ -3,7 +3,7 @@ import React from "react";
 
 export const LoadingSkeleton = () => {
   return (
-    <>
+    <Box data-test-id="extensions-loading-skeleton">
       {Array.from({ length: 4 }).map((_, i) => (
         <Box marginBottom={20} key={i}>
           <Box marginBottom={8}>
@@ -17,6 +17,6 @@ export const LoadingSkeleton = () => {
           </Box>
         </Box>
       ))}
-    </>
+    </Box>
   );
 };

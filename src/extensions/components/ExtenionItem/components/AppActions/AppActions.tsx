@@ -1,11 +1,11 @@
 import { AppUrls } from "@dashboard/apps/urls";
 import Link from "@dashboard/components/Link";
-import { AppInstallButton } from "@dashboard/extensions/components/ExtenionItem/components/AppInstallButton";
+import { messages } from "@dashboard/extensions/messages";
 import { Box, Button, ExternalLinkIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { messages } from "../../../messages";
+import { AppInstallButton } from "../AppInstallButton";
 
 interface AppActionsProps {
   isInstalled: boolean;

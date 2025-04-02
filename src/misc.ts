@@ -3,6 +3,7 @@ import {
   AddressInput,
   CountryCode,
   DateRangeInput,
+  OrderChargeStatusEnum,
   OrderStatus,
   OrderStatusFilter,
   PaymentChargeStatusEnum,
@@ -123,6 +124,25 @@ export const transformPaymentStatus = (
     localized: status,
     status: StatusType.ERROR,
   };
+};
+
+export const transformChargedStatus = (status: OrderChargeStatusEnum, intl: IntlShape) => {
+  switch (status) {
+    case OrderChargeStatusEnum.OVERCHARGED:
+      return {
+        localized: intl.formatMessage({
+          defaultMessage: "Overcharged",
+          id: "4VLj3S",
+          description: "overcharged order status",
+        }),
+        status: StatusType.WARNING,
+      };
+    default:
+      return {
+        localized: status,
+        status: StatusType.ERROR,
+      };
+  }
 };
 
 export const transformOrderStatus = (
