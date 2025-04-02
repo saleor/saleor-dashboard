@@ -29,7 +29,7 @@ export const ExtensionsList = ({ extensions, loading, clearSearch }: ExtensionsL
   }
 
   return (
-    <Box>
+    <Box data-test-id="extensions-list">
       {extensionsEntries.map(([group, groupExtensions]) =>
         groupExtensions.items.length > 0 ? (
           <ExtensionsGroup title={groupExtensions.title} key={group}>
