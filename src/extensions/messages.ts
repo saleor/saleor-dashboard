@@ -30,6 +30,13 @@ export const buttonLabels = defineMessages({
   },
 });
 
+export const infoMessages = defineMessages({
+  appDisabled: {
+    defaultMessage: "App disabled. Activate the app from the settings.",
+    id: "r9R4OC",
+  },
+});
+
 export const messages = defineMessages({
   searchPlaceholder: {
     defaultMessage: "Search extensions...",
