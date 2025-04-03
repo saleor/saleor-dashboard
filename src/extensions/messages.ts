@@ -35,6 +35,26 @@ export const infoMessages = defineMessages({
     defaultMessage: "App disabled. Activate the app from the settings.",
     id: "r9R4OC",
   },
+  installationFailed: {
+    defaultMessage: "Installation failed",
+    id: "9DUknc",
+  },
+  installationPending: {
+    defaultMessage: "Installation is pending...",
+    id: "KTjTMW",
+  },
+  webhookErrorDetected: {
+    defaultMessage: "Webhook errors detected.",
+    id: "CKP9+i",
+  },
+  webhookErrorLastSeen: {
+    defaultMessage: "Last seen {date}.",
+    id: "b1lW6g",
+  },
+  webhookErrorViewDetails: {
+    defaultMessage: "See logs",
+    id: "qkUBLC",
+  },
 });
 
 export const messages = defineMessages({
