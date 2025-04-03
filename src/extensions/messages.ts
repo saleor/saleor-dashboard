@@ -28,6 +28,18 @@ export const buttonLabels = defineMessages({
     defaultMessage: "Add Custom Extensions",
     id: "u9WrRb",
   },
+  viewDetails: {
+    defaultMessage: "View details",
+    id: "MnpUD7",
+  },
+  manage: {
+    defaultMessage: "Manage",
+    id: "0Azlrb",
+  },
+  retry: {
+    defaultMessage: "Retry",
+    id: "62nsdy",
+  },
 });
 
 export const infoMessages = defineMessages({

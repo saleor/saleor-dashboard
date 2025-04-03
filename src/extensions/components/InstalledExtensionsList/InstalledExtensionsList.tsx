@@ -23,7 +23,7 @@ export const InstalledExtensionsList = ({ installedExtensions }: InstalledExtens
         {installedExtensions.map(extension => (
           <GridTable.Row key={extension.id}>
             <GridTable.Cell>
-              <Box display="flex" alignItems="center" gap={10}>
+              <Box width="100%" display="flex" alignItems="center" gap={10}>
                 <Box display="flex" alignItems="center" gap={2}>
                   <ExtensionAvatar>
                     <Box
@@ -39,6 +39,7 @@ export const InstalledExtensionsList = ({ installedExtensions }: InstalledExtens
                   </Text>
                 </Box>
                 <Box>{extension.info}</Box>
+                <Box marginLeft="auto">{extension.actions}</Box>
               </Box>
             </GridTable.Cell>
           </GridTable.Row>
