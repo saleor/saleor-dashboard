@@ -43,6 +43,7 @@ const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
   pages,
   products,
   attribute,
+  labels,
   ...rest
 }) => {
   const intl = useIntl();
@@ -64,6 +65,7 @@ const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
             label: intl.formatMessage(pagesMessages.searchLabel),
             placeholder: intl.formatMessage(pagesMessages.searchPlaceholder),
             title: intl.formatMessage(pagesMessages.header),
+            ...labels,
           }}
           {...rest}
         />
