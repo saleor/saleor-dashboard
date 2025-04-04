@@ -397,6 +397,9 @@
   "0AQH0Q": {
     "string": "Plugin is misconfigured and cannot be activated"
   },
+  "0Azlrb": {
+    "string": "Manage"
+  },
   "0DRBjg": {
     "string": "Token Note"
   },
@@ -1321,6 +1324,9 @@
     "context": "number of countries",
     "string": "{number} Countries"
   },
+  "62nsdy": {
+    "string": "Retry"
+  },
   "64aQXZ": {
     "context": "product variants, full-screen title",
     "string": "Variants for: {name}"
@@ -1541,6 +1547,10 @@
     "context": "button",
     "string": "Delete Variant"
   },
+  "7jxSx8": {
+    "context": "Installed extensions column name",
+    "string": "Extension Name"
+  },
   "7l5Bh9": {
     "string": "{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
   },
@@ -1717,6 +1727,9 @@
   "9CW3TD": {
     "context": "label",
     "string": "Reward type"
+  },
+  "9DUknc": {
+    "string": "Installation failed"
   },
   "9FGTOt": {
     "string": "Allow access to orders of all channels"
@@ -2236,6 +2249,9 @@
   "CJpx4E": {
     "context": "page header",
     "string": "Order no. {orderNumber} - Add Fulfillment"
+  },
+  "CKP9+i": {
+    "string": "Webhook errors detected."
   },
   "CLeDae": {
     "context": "section header",
@@ -3609,6 +3625,9 @@
   },
   "KRqgfo": {
     "string": "User is out of your permissions scope"
+  },
+  "KTjTMW": {
+    "string": "Installation is pending..."
   },
   "KWXwFo": {
     "context": "grant refund table, column header",
@@ -6240,6 +6259,9 @@
     "context": "select label",
     "string": "False"
   },
+  "b1lW6g": {
+    "string": "Last seen {date}."
+  },
   "b1t9bM": {
     "context": "empty headers text",
     "string": "No custom request headers created for this webhook. Use the button below to add new custom request header."
@@ -8601,6 +8623,9 @@
     "context": "attribute type",
     "string": "Product Attribute"
   },
+  "qkUBLC": {
+    "string": "See logs"
+  },
   "qkt/Km": {
     "context": "bulk delete label",
     "string": "Delete"
@@ -8653,6 +8678,9 @@
   "r86alc": {
     "context": "button",
     "string": "Copied"
+  },
+  "r9R4OC": {
+    "string": "App disabled. Activate the app from the settings."
   },
   "rCy3Fe": {
     "context": "invalid date in expirydate field content",

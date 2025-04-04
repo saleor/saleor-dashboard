@@ -28,6 +28,45 @@ export const buttonLabels = defineMessages({
     defaultMessage: "Add Custom Extensions",
     id: "u9WrRb",
   },
+  viewDetails: {
+    defaultMessage: "View details",
+    id: "MnpUD7",
+  },
+  manage: {
+    defaultMessage: "Manage",
+    id: "0Azlrb",
+  },
+  retry: {
+    defaultMessage: "Retry",
+    id: "62nsdy",
+  },
+});
+
+export const infoMessages = defineMessages({
+  appDisabled: {
+    defaultMessage: "App disabled. Activate the app from the settings.",
+    id: "r9R4OC",
+  },
+  installationFailed: {
+    defaultMessage: "Installation failed",
+    id: "9DUknc",
+  },
+  installationPending: {
+    defaultMessage: "Installation is pending...",
+    id: "KTjTMW",
+  },
+  webhookErrorDetected: {
+    defaultMessage: "Webhook errors detected.",
+    id: "CKP9+i",
+  },
+  webhookErrorLastSeen: {
+    defaultMessage: "Last seen {date}.",
+    id: "b1lW6g",
+  },
+  webhookErrorViewDetails: {
+    defaultMessage: "See logs",
+    id: "qkUBLC",
+  },
 });
 
 export const messages = defineMessages({
@@ -113,5 +152,10 @@ export const messages = defineMessages({
     id: "VS0YOp",
     defaultMessage: "Request Extension",
     description: "Request extension",
+  },
+  extensionName: {
+    defaultMessage: "Extension Name",
+    description: "Installed extensions column name",
+    id: "7jxSx8",
   },
 });
