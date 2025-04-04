@@ -103,10 +103,12 @@ export const useSpecificItemsAssign = ({
         },
       });
     } else {
+      const combinedData = uniqBy([...(data[type] ?? []), ...items], "id");
+
       onChange({
         target: {
           name: type,
-          value: [...(data[type] ?? []), ...items],
+          value: combinedData,
         },
       });
     }

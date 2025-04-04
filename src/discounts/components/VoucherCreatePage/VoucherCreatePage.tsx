@@ -229,7 +229,13 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   };
 
   const BulkUnassignButton = ({ type }: { type: VoucherCreatePageTab | "countries" }) => (
-    <Button onClick={() => bulkUnassign(type, selected)} variant="secondary">
+    <Button
+      onClick={() => {
+        bulkUnassign(type, selected);
+        resetSelected();
+      }}
+      variant="secondary"
+    >
       <FormattedMessage id="Gkip05" defaultMessage="Unassign" description="button" />
     </Button>
   );
@@ -415,46 +421,52 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
           </Savebar>
         </DetailPageLayout>
 
-        <AssignCategoriesDialog
-          categories={getFilteredCategories(data, categoriesSearch.result)}
-          confirmButtonState="default"
-          hasMore={categoriesSearch.result?.data?.search?.pageInfo?.hasNextPage ?? false}
-          open={action === "assign-category"}
-          onFetch={categoriesSearch.search}
-          onFetchMore={categoriesSearch.loadMore}
-          loading={categoriesSearch.result?.loading}
-          onClose={closeModal}
-          onSubmit={data =>
-            assignItem(
-              data as CategoryWithTotalProductsFragment[],
-              VoucherCreatePageTab.categories,
-              onModalClose,
-            )
-          }
-          labels={{
-            confirmBtn: intl.formatMessage(buttonMessages.assign),
-          }}
-        />
-        <AssignCollectionDialog
-          collections={getFilteredCollections(data, collectionsSearch.result)}
-          confirmButtonState="default"
-          hasMore={collectionsSearch?.result?.data?.search?.pageInfo?.hasNextPage ?? false}
-          open={action === "assign-collection"}
-          onFetch={collectionsSearch.search}
-          onFetchMore={collectionsSearch.loadMore}
-          loading={collectionsSearch.result.loading}
-          onClose={closeModal}
-          onSubmit={data =>
-            assignItem(
-              data as CollectionWithTotalProductsFragment[],
-              VoucherCreatePageTab.collections,
-              onModalClose,
-            )
-          }
-          labels={{
-            confirmBtn: intl.formatMessage(buttonMessages.assign),
-          }}
-        />
+        {/* Modal state needs to reset when the modal is closed */}
+        {action === "assign-category" && (
+          <AssignCategoriesDialog
+            categories={getFilteredCategories(data, categoriesSearch.result)}
+            confirmButtonState="default"
+            hasMore={categoriesSearch.result?.data?.search?.pageInfo?.hasNextPage ?? false}
+            open={action === "assign-category"}
+            onFetch={categoriesSearch.search}
+            onFetchMore={categoriesSearch.loadMore}
+            loading={categoriesSearch.result?.loading}
+            onClose={closeModal}
+            onSubmit={data =>
+              assignItem(
+                data as CategoryWithTotalProductsFragment[],
+                VoucherCreatePageTab.categories,
+                onModalClose,
+              )
+            }
+            labels={{
+              confirmBtn: intl.formatMessage(buttonMessages.assign),
+            }}
+          />
+        )}
+        {/* Modal state needs to reset when the modal is closed */}
+        {action === "assign-collection" && (
+          <AssignCollectionDialog
+            collections={getFilteredCollections(data, collectionsSearch.result)}
+            confirmButtonState="default"
+            hasMore={collectionsSearch?.result?.data?.search?.pageInfo?.hasNextPage ?? false}
+            open={action === "assign-collection"}
+            onFetch={collectionsSearch.search}
+            onFetchMore={collectionsSearch.loadMore}
+            loading={collectionsSearch.result.loading}
+            onClose={closeModal}
+            onSubmit={data =>
+              assignItem(
+                data as CollectionWithTotalProductsFragment[],
+                VoucherCreatePageTab.collections,
+                onModalClose,
+              )
+            }
+            labels={{
+              confirmBtn: intl.formatMessage(buttonMessages.assign),
+            }}
+          />
+        )}
         <DiscountCountrySelectDialog
           confirmButtonState="default"
           countries={countries}
