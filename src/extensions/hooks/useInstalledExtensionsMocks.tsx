@@ -33,7 +33,7 @@ export const useInstalledExtensionsMocks = (): InstalledExtension[] => {
     },
     {
       id: "QXBwOjH2Mg==",
-      name: "Product Feeds",
+      name: "Product Feeds very long name",
       logo: "https://pawel-shop.staging.saleor.cloud/thumbnail/QXBwOmE1ZDUyZTg4LWQxZjItNDRiMS1hZTcwLTdlMWQxMTAyZmJmNA==/64/webp/",
       info: <InstallationPendingInfo />,
       actions: <ViewDetailsActionButton id={undefined} />,

@@ -153,4 +153,9 @@ export const messages = defineMessages({
     defaultMessage: "Request Extension",
     description: "Request extension",
   },
+  extensionName: {
+    defaultMessage: "Extension Name",
+    description: "Installed extensions column name",
+    id: "7jxSx8",
+  },
 });
