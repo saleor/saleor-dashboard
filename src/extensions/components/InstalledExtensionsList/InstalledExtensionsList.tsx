@@ -2,15 +2,31 @@ import { GridTable } from "@dashboard/components/GridTable";
 import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
 import { messages } from "@dashboard/extensions/messages";
 import { InstalledExtension } from "@dashboard/extensions/types";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
 interface InstalledExtensionsListProps {
   installedExtensions: InstalledExtension[];
+  loading: boolean;
 }
 
-export const InstalledExtensionsList = ({ installedExtensions }: InstalledExtensionsListProps) => {
+export const InstalledExtensionsList = ({
+  installedExtensions,
+  loading,
+}: InstalledExtensionsListProps) => {
+  if (loading) {
+    return (
+      <Box display="grid" gap={3}>
+        <Skeleton __width="50%" />
+        <Skeleton __width="100%" />
+        <Skeleton __width="50%" />
+        <Skeleton __width="100%" />
+        <Skeleton __width="50%" />
+      </Box>
+    );
+  }
+
   return (
     <Box __marginLeft="-24px" __marginRight="-24px">
       <GridTable>
