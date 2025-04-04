@@ -66,7 +66,10 @@ export default makeSearch<SearchAttributeValuesQuery, SearchAttributeValuesQuery
               ...prev.attribute,
               choices: {
                 ...prev?.attribute.choices,
-                edges: [...prev.attribute.choices.edges, ...next.attribute.choices.edges],
+                edges: [
+                  ...(prev.attribute.choices?.edges ?? []),
+                  ...(next.attribute.choices?.edges ?? []),
+                ],
                 pageInfo: next.attribute.choices.pageInfo,
               },
             },

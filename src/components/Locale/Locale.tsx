@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
-import React from "react";
+import React, { useRef } from "react";
 import { IntlProvider, ReactIntlErrorCode } from "react-intl";
 
 export enum Locale {
@@ -130,14 +130,19 @@ const { Consumer: LocaleConsumer, Provider: RawLocaleProvider } = LocaleContext;
 const LocaleProvider: React.FC = ({ children }) => {
   const [locale, setLocale] = useLocalStorage("locale", defaultLocale);
   const [messages, setMessages] = React.useState(undefined);
+  const loaded = useRef(false);
 
   React.useEffect(() => {
     async function changeLocale() {
-      if (locale !== Locale.EN) {
+      if (locale !== Locale.EN && !loaded.current) {
         // It seems like Webpack is unable to use aliases for lazy imports
         const mod = await import(`../../../locale/${locale}.json`);
 
         setMessages(mod.default);
+
+        if (!loaded.current) {
+          loaded.current = true;
+        }
       } else {
         setMessages(undefined);
       }

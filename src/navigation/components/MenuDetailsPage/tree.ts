@@ -75,7 +75,7 @@ function removeNodeAndChildren(
   const sourcePath = findNode(tree, operation.id);
   const node = getNode(tree, sourcePath);
 
-  if (node.children) {
+  if (node?.children) {
     const treeAfterChildrenRemoval = node.children.reduce(
       (acc, child) =>
         removeNodeAndChildren(acc, {
