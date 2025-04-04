@@ -14,7 +14,7 @@ export const ExtensionAvatar = ({ children }: ExtensionAvatarProps) => {
       alignItems="center"
       justifyContent="center"
       padding={1.5}
-      borderRadius={5}
+      borderRadius={3}
       borderColor="default1"
       borderStyle="solid"
       borderWidth={1}
