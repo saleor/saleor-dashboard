@@ -1,4 +1,5 @@
-import { AppPaths } from "@dashboard/apps/urls";
+import { AppListUrlQueryParams, AppPaths } from "@dashboard/apps/urls";
+import { AppListView } from "@dashboard/apps/views";
 import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { ExtensionsPaths } from "@dashboard/extensions/urls";
@@ -7,6 +8,7 @@ import { InstalledExtensions } from "@dashboard/extensions/views/InstalledExtens
 import { useFlag } from "@dashboard/featureFlags";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
+import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Switch } from "react-router-dom";
@@ -16,7 +18,15 @@ const ExploreExtensionsView = () => {
 };
 
 const InstalledExtensionsView = () => {
-  return <InstalledExtensions />;
+  const qs = parseQs(location.search.substr(1));
+  const params: AppListUrlQueryParams = qs;
+  const { enabled: isExtensionsDevEnabled } = useFlag("extensions_dev");
+
+  if (isExtensionsDevEnabled) {
+    return <InstalledExtensions />;
+  }
+
+  return <AppListView params={params} showAvailableApps={false} />;
 };
 
 export const ExtensionsSection = () => {
