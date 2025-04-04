@@ -1,4 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
+import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
 import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
 
@@ -21,21 +22,7 @@ export const ExtensionItem = ({ extension }: ExtensionItemProps) => {
     <DashboardCard borderColor="default1" borderStyle="solid" borderWidth={1} borderRadius={5}>
       <DashboardCard.Header alignItems="flex-start">
         <Box display="flex" gap={4}>
-          <Box
-            __width="40px"
-            __height="40px"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            padding={1.5}
-            borderRadius={5}
-            borderColor="default1"
-            borderStyle="solid"
-            borderWidth={1}
-            overflow="hidden"
-          >
-            {avatar}
-          </Box>
+          <ExtensionAvatar>{avatar}</ExtensionAvatar>
 
           <Box>
             <DashboardCard.Title fontSize={6}>{title}</DashboardCard.Title>

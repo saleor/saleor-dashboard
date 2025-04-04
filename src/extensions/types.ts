@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 interface CommonExtensionData {
   id: string;
   name: {
@@ -42,3 +44,11 @@ export type APIExtensionsResponse = Array<{
   name: { en: string };
   extensions: ExtensionData[];
 }>;
+
+export type InstalledExtension = {
+  id: string;
+  name: string;
+  logo: string;
+  info: ReactNode;
+  actions: ReactNode;
+};
