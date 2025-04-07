@@ -4,6 +4,7 @@ import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { ExtensionsPaths } from "@dashboard/extensions/urls";
 import { ExploreExtensions } from "@dashboard/extensions/views/ExploreExtensions";
+import { InstallCustomExtension } from "@dashboard/extensions/views/InstallCustomExtension";
 import { InstalledExtensions } from "@dashboard/extensions/views/InstalledExtensions";
 import { useFlag } from "@dashboard/featureFlags";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -29,6 +30,10 @@ const InstalledExtensionsView = () => {
   return <AppListView params={params} showAvailableApps={false} />;
 };
 
+const InstallCustomExtensionView = () => {
+  return <InstallCustomExtension />;
+};
+
 export const ExtensionsSection = () => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -49,6 +54,11 @@ export const ExtensionsSection = () => {
           exact
           path={ExtensionsPaths.installedExtensions}
           component={InstalledExtensionsView}
+        />
+        <Route
+          exact
+          path={ExtensionsPaths.installCustomExtension}
+          component={InstallCustomExtensionView}
         />
       </Switch>
     </>

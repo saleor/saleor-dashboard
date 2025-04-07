@@ -9,6 +9,10 @@ export const headerTitles = defineMessages({
     defaultMessage: "Installed Extensions",
     id: "C3sTzL",
   },
+  addCustomExtensionManifest: {
+    defaultMessage: "Add Custom Extension from manifest",
+    id: "2+v6qd",
+  },
 });
 
 export const buttonLabels = defineMessages({
@@ -157,5 +161,15 @@ export const messages = defineMessages({
     defaultMessage: "Extension Name",
     description: "Installed extensions column name",
     id: "7jxSx8",
+  },
+  learnMoreSubheader: {
+    defaultMessage: "Learn more about {manifestFormatLink}",
+    id: "0DTk+2",
+    description: "Add custom extension page subheader",
+  },
+  manifestFormatLink: {
+    defaultMessage: "manifest format",
+    id: "sXSde1",
+    description: "link to docs in add custom extensions page subheader",
   },
 });

@@ -5,4 +5,5 @@ export const extensionsSection = "/extensions";
 export const ExtensionsPaths = {
   installedExtensions: extensionsSection,
   exploreExtensions: urlJoin(extensionsSection, "explore"),
+  installCustomExtension: urlJoin(extensionsSection, "install"),
 };
