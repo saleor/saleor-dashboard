@@ -46,3 +46,13 @@ export const collectionProductFragment = gql`
     }
   }
 `;
+
+export const collectionWithTotalProductsFragment = gql`
+  fragment CollectionWithTotalProducts on Collection {
+    id
+    name
+    products {
+      totalCount
+    }
+  }
+`;
