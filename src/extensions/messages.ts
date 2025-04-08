@@ -69,6 +69,29 @@ export const infoMessages = defineMessages({
   },
 });
 
+export const notifyMessages = defineMessages({
+  extensionReadyToUse: {
+    defaultMessage: "{name} is ready to be used",
+    id: "p42saN",
+    description: "extensions ready to be use",
+  },
+  extensionInstalled: {
+    defaultMessage: "Extension installed",
+    description: "extension has been installed",
+    id: "SItkhR",
+  },
+  extensionRemoved: {
+    defaultMessage: "Extension successfully removed",
+    description: "extension has been removed",
+    id: "JbKGHC",
+  },
+  extensionInstallError: {
+    id: "VokWlV",
+    defaultMessage: "Couldn’t Install {name}",
+    description: "extension has not been installed",
+  },
+});
+
 export const messages = defineMessages({
   searchPlaceholder: {
     defaultMessage: "Search extensions...",

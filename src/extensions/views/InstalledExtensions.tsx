@@ -1,17 +1,19 @@
+import AppInProgressDeleteDialog from "@dashboard/apps/components/AppInProgressDeleteDialog";
 import { InstallWithManifestFormButton } from "@dashboard/apps/components/InstallWithManifestFormButton";
 import { AppUrls } from "@dashboard/apps/urls";
 import { TopNav } from "@dashboard/components/AppLayout";
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
-import { AppDisabledInfo } from "@dashboard/extensions/components/InstalledExtensionsList/componets/AppDisabledInfo";
-import { FailedInstallationActions } from "@dashboard/extensions/components/InstalledExtensionsList/componets/FailedInstallationActions";
-import { InstallationPendingInfo } from "@dashboard/extensions/components/InstalledExtensionsList/componets/InstallationPendingInfo";
-import { ViewDetailsActionButton } from "@dashboard/extensions/components/InstalledExtensionsList/componets/ViewDetailsActionButton";
 import { useInstalledExtensionsData } from "@dashboard/extensions/hooks/useInstalledExtensionsData";
+import { usePendingInstallation } from "@dashboard/extensions/hooks/usePendingInstallation";
 import { headerTitles, messages } from "@dashboard/extensions/messages";
-import { InstalledExtension } from "@dashboard/extensions/types";
-import { AppInstallationFragment, InstalledAppDetailsFragment } from "@dashboard/graphql";
+import {
+  ExtensionsListUrlDialog,
+  ExtensionsListUrlQueryParams,
+  ExtensionsUrls,
+} from "@dashboard/extensions/urls";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useState } from "react";
 import { useIntl } from "react-intl";
@@ -19,7 +21,11 @@ import { useIntl } from "react-intl";
 import { InstalledExtensionsList } from "../components/InstalledExtensionsList";
 import { RequestExtensionsButton } from "../components/RequestExtensionsButton";
 
-export const InstalledExtensions = () => {
+interface InstalledExtensionsProps {
+  params: ExtensionsListUrlQueryParams;
+}
+
+export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const [query, setQuery] = useState("");
@@ -32,10 +38,28 @@ export const InstalledExtensions = () => {
     [navigate],
   );
 
-  const { data, loading } = useInstalledExtensionsData();
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ExtensionsListUrlDialog,
+    ExtensionsListUrlQueryParams
+  >(navigate, ExtensionsUrls.resolveInstalledExtensionsUrl, {});
 
-  const installationInProgress = data.appsInstallation.map(toInProgressExtension);
-  const installedApps = data.apps.map(toInstalledExtension);
+  const handleRemoveFailedInstallation = (id: string) => {
+    openModal("app-installation-remove", { id });
+  };
+
+  const { installedApps, installedAppsLoading, refetchInstalledApps } =
+    useInstalledExtensionsData();
+
+  const {
+    pendingInstallations,
+    deleteInProgressAppStatus,
+    pendingInstallationsLoading,
+    handleRemoveInProgress,
+  } = usePendingInstallation({
+    onCloseModal: closeModal,
+    refetchExtensions: refetchInstalledApps,
+    onFailedInstallationRemove: handleRemoveFailedInstallation,
+  });
 
   return (
     <>
@@ -59,36 +83,19 @@ export const InstalledExtensions = () => {
         </Box>
 
         <InstalledExtensionsList
-          installedExtensions={[...installationInProgress, ...installedApps]}
-          loading={loading}
+          installedExtensions={[...pendingInstallations, ...installedApps]}
+          loading={pendingInstallationsLoading || installedAppsLoading}
+        />
+
+        <AppInProgressDeleteDialog
+          confirmButtonState={deleteInProgressAppStatus}
+          // name={getAppInProgressName(params.id || "", pendingInstallations)}
+          name="Test"
+          onClose={closeModal}
+          onConfirm={() => handleRemoveInProgress(params?.id || "")}
+          open={params.action === "app-installation-remove"}
         />
       </Box>
     </>
   );
 };
-
-function toInProgressExtension(data: AppInstallationFragment): InstalledExtension {
-  return {
-    id: data.id,
-    name: data.appName,
-    logo: data.brand?.logo?.default ?? "",
-    info: <InstallationPendingInfo />,
-    actions:
-      data.status === "FAILED" ? (
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        <FailedInstallationActions onDelete={() => {}} onRetry={() => {}} />
-      ) : (
-        <ViewDetailsActionButton />
-      ),
-  };
-}
-
-function toInstalledExtension(data: InstalledAppDetailsFragment): InstalledExtension {
-  return {
-    id: data.id,
-    name: data.name ?? "",
-    logo: data.brand?.logo?.default ?? "",
-    info: !data.isActive && <AppDisabledInfo />,
-    actions: <ViewDetailsActionButton id={data.id} isDisabled={!data.isActive} />,
-  };
-}
