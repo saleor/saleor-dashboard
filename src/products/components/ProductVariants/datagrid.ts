@@ -43,7 +43,7 @@ export const useChannelAdapter = ({
   const { paginate, currentPage, changeCurrentPage } = useClientPagination();
   const paginatedChannels = paginate(
     (listings ?? [])?.filter(channel =>
-      channel.name.toLowerCase().includes(channelQuery.toLowerCase()),
+      channel.name.toLowerCase().includes(channelQuery?.toLowerCase()),
     ),
   );
   const selectedChannels = selectedColumns
@@ -78,7 +78,7 @@ export const useChannelAvailabilityAdapter = ({
   const { paginate, currentPage, changeCurrentPage } = useClientPagination();
   const paginatedChannels = paginate(
     (listings ?? []).filter(channel =>
-      channel.name.toLowerCase().includes(channelQuery.toLowerCase()),
+      channel.name.toLowerCase().includes(channelQuery?.toLowerCase()),
     ),
   );
   const selectedChannels = selectedColumns
