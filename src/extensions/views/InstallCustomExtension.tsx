@@ -21,6 +21,7 @@ export const InstallCustomExtension = () => {
       <TopNav
         // TODO: replace url with previous page?
         href={ExtensionsPaths.installedExtensions}
+        __height="auto"
         title={intl.formatMessage(headerTitles.addCustomExtensionManifest)}
         subtitle={
           <FormattedMessage
