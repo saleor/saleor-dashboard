@@ -104,4 +104,6 @@ export function useAutoSubmit<TFieldValues extends FieldValues>({
       debouncedSubmit.cancel();
     }
   }, [debouncedSubmit, isSubmitting]);
+
+  return debouncedSubmit;
 }

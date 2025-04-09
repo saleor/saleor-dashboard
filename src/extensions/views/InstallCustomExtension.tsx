@@ -9,6 +9,7 @@ import {
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
+import { commonMessages } from "@dashboard/intl";
 import { MANIFEST_FORMAT_DOCS_URL } from "@dashboard/links";
 import { extractMutationErrors } from "@dashboard/misc";
 import getAppErrorMessage, { appErrorMessages } from "@dashboard/utils/errors/app";
@@ -32,7 +33,7 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
   const navigate = useNavigator();
   const notify = useNotifier();
 
-  const { register, control, trigger, watch, handleSubmit, setError } = useForm<FormData>({
+  const { control, trigger, watch, handleSubmit, setError } = useForm<FormData>({
     values: {
       manifestUrl: params[MANIFEST_ATTR] || "",
     },
@@ -123,7 +124,7 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
     );
   };
 
-  useAutoSubmit({
+  const { flush: flushDebouncedSubmit } = useAutoSubmit({
     trigger,
     watch,
     onSubmit: handleSubmit(submitFetchManifest),
@@ -172,10 +173,19 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
           <HookFormInput
             control={control}
             name="manifestUrl"
-            // TODO: intl
-            rules={{ required: "Required", validate: validateUrl }}
+            rules={{
+              required: intl.formatMessage(commonMessages.requiredField),
+              validate: validateUrl,
+            }}
             aria-labelledby={EL_ID_MANIFEST_INPUT_LABEL}
             placeholder={PLACEHOLDER_MANIFEST_URL}
+            onPaste={() => {
+              // On paste immediately submit form
+              // Wait for next tick when debounced submit is scheduled and call it immedioately
+              setTimeout(() => {
+                flushDebouncedSubmit();
+              });
+            }}
           />
         </Box>
         {fetchManifestOpts.loading && (
