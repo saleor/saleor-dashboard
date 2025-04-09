@@ -2,10 +2,11 @@ import { AppDisabledInfo } from "@dashboard/extensions/components/InstalledExten
 import { ViewDetailsActionButton } from "@dashboard/extensions/components/InstalledExtensionsList/componets/ViewDetailsActionButton";
 import { AppTypeEnum, useInstalledAppsListQuery } from "@dashboard/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export const useInstalledExtensionsData = () => {
-  const { data, loading, refetch } = useInstalledAppsListQuery({
+  const [initialLoading, setInitialLoading] = useState(true);
+  const { data, refetch } = useInstalledAppsListQuery({
     variables: {
       first: 100,
       filter: {
@@ -14,6 +15,12 @@ export const useInstalledExtensionsData = () => {
       after: null,
     },
   });
+
+  useEffect(() => {
+    if (initialLoading && data) {
+      setInitialLoading(false);
+    }
+  }, [data]);
 
   const installedAppsData = mapEdgesToItems(data?.apps) || [];
 
@@ -27,7 +34,7 @@ export const useInstalledExtensionsData = () => {
 
   return {
     installedApps,
-    installedAppsLoading: loading,
+    installedAppsLoading: initialLoading,
     refetchInstalledApps: refetch,
   };
 };

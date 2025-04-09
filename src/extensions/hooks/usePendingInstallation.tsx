@@ -6,7 +6,7 @@ import useActiveAppsInstallations from "@dashboard/extensions/hooks/useActiveApp
 import { useInstallationNotify } from "@dashboard/extensions/hooks/useInstallationNotify";
 import { InstalledExtension } from "@dashboard/extensions/types";
 import { JobStatusEnum, useAppsInstallationsQuery } from "@dashboard/graphql";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export const usePendingInstallation = ({
   refetchExtensions,
@@ -17,8 +17,15 @@ export const usePendingInstallation = ({
   onCloseModal: () => void;
   onFailedInstallationRemove: (id: string) => void;
 }) => {
+  const [initialLoading, setInitialLoading] = useState(true);
   const { data, loading, refetch } = useAppsInstallationsQuery();
   const { installedNotify, removeInProgressAppNotify, errorNotify } = useInstallationNotify();
+
+  useEffect(() => {
+    if (initialLoading && data) {
+      setInitialLoading(false);
+    }
+  }, [data]);
 
   const { handleRemoveInProgress, deleteInProgressAppOpts, handleAppInstallRetry } =
     useActiveAppsInstallations({
@@ -58,7 +65,7 @@ export const usePendingInstallation = ({
 
   return {
     pendingInstallations,
-    pendingInstallationsLoading: loading,
+    pendingInstallationsLoading: initialLoading,
     handleRemoveInProgress,
     deleteInProgressAppStatus: deleteInProgressAppOpts.status,
   };
