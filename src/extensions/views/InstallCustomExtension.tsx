@@ -1,6 +1,5 @@
 import { TopNav } from "@dashboard/components/AppLayout";
 import { HookFormInput } from "@dashboard/components/HookFormInput";
-import { InputWithPlaceholder } from "@dashboard/components/InputWithPlaceholder/InputWithPlaceholder";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   AppFetchMutationVariables,
@@ -10,15 +9,13 @@ import {
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
-import { ErrorCircle } from "@dashboard/icons/ErrorCircle";
-import ErrorExclamationCircle from "@dashboard/icons/ErrorExclamationCircle";
 import { MANIFEST_FORMAT_DOCS_URL } from "@dashboard/links";
 import { extractMutationErrors } from "@dashboard/misc";
 import getAppErrorMessage, { appErrorMessages } from "@dashboard/utils/errors/app";
 import { useAutoSubmit } from "@dashboard/utils/hook-form/auto-submit";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React, { useCallback } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { headerTitles, messages } from "../messages";
@@ -35,10 +32,11 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
   const navigate = useNavigator();
   const notify = useNotifier();
 
-  const { control, trigger, watch, handleSubmit } = useForm<FormData>({
+  const { register, control, trigger, watch, handleSubmit, setError } = useForm<FormData>({
     values: {
       manifestUrl: params[MANIFEST_ATTR] || "",
     },
+    mode: "onBlur",
   });
 
   const validateUrl = useCallback(
@@ -46,6 +44,8 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
       if (typeof value === "string") {
         try {
           new URL(value);
+
+          return true;
         } catch (e) {
           // no-op
         }
@@ -60,14 +60,17 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
     "activeInstallations",
     [],
   );
+
   const [fetchManifest, fetchManifestOpts] = useAppFetchMutation({
     onCompleted: data => {
       if (data?.appFetchManifest?.errors.length) {
-        data.appFetchManifest.errors.forEach(error => {
-          notify({
-            status: "error",
-            text: getAppErrorMessage(error, intl),
-          });
+        const mergedErrorMessages = data.appFetchManifest.errors
+          .map(error => getAppErrorMessage(error, intl))
+          .join(", ");
+
+        setError("manifestUrl", {
+          message: mergedErrorMessages,
+          type: "validate",
         });
       }
     },
@@ -124,6 +127,7 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
     trigger,
     watch,
     onSubmit: handleSubmit(submitFetchManifest),
+    control,
   });
 
   return (
@@ -153,27 +157,44 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
           />
         }
       ></TopNav>
-      <Box
-        as="form"
-        marginX={6}
-        marginTop={10}
-        display="flex"
-        gap={3}
-        flexDirection="column"
-        __width="380px"
-        onSubmit={handleSubmit(submitFetchManifest)}
-      >
-        <Text size={5} fontWeight="medium" id={EL_ID_MANIFEST_INPUT_LABEL}>
-          Provide Manifest URL
-        </Text>
-        <HookFormInput
-          control={control}
-          name="manifestUrl"
-          // TODO: intl
-          rules={{ required: "Required", validate: validateUrl }}
-          aria-labelledby={EL_ID_MANIFEST_INPUT_LABEL}
-          placeholder={PLACEHOLDER_MANIFEST_URL}
-        />
+      <Box marginX={6} marginTop={10}>
+        <Box
+          as="form"
+          display="flex"
+          gap={3}
+          flexDirection="column"
+          __width="380px"
+          onSubmit={handleSubmit(submitFetchManifest)}
+        >
+          <Text size={5} fontWeight="medium" id={EL_ID_MANIFEST_INPUT_LABEL}>
+            Provide Manifest URL
+          </Text>
+          <HookFormInput
+            control={control}
+            name="manifestUrl"
+            // TODO: intl
+            rules={{ required: "Required", validate: validateUrl }}
+            aria-labelledby={EL_ID_MANIFEST_INPUT_LABEL}
+            placeholder={PLACEHOLDER_MANIFEST_URL}
+          />
+        </Box>
+        {fetchManifestOpts.loading && (
+          <Box marginTop={10}>
+            <Box display="flex" flexDirection="column" gap={6}>
+              <Skeleton height={5} __width="292px" />
+              <Skeleton height={12} __width="292px" />
+            </Box>
+            <Box marginTop={16}>
+              <Skeleton height={5} __width="106px" />
+              <Skeleton height={5} marginTop={4} __width="356px" />
+              <Skeleton height={5} marginTop={1.5} __width="356px" />
+            </Box>
+            <Box marginTop={11}>
+              <Skeleton height={5} __width="356px" />
+              <Skeleton height={5} marginTop={1.5} __width="356px" />
+            </Box>
+          </Box>
+        )}
       </Box>
       <Savebar>
         <Savebar.Spacer />

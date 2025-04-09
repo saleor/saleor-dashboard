@@ -1,75 +1,107 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { FieldValues, UseFormTrigger, UseFormWatch } from "react-hook-form";
+import debounce from "lodash/debounce";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Control, FieldValues, useFormState, UseFormTrigger, UseFormWatch } from "react-hook-form";
 
 interface UseAutoSubmitProps<TFieldValues extends FieldValues> {
   trigger: UseFormTrigger<TFieldValues>;
   watch: UseFormWatch<TFieldValues>;
+  control: Control<TFieldValues>;
   onSubmit: () => void; // Changed to match expected type
   debounceTime?: number;
   excludeFields?: Array<keyof TFieldValues>;
 }
 
-function useDebounce<T extends (...args: any[]) => any>(
-  func: T,
-  delay: number,
-): (...args: Parameters<T>) => void {
-  // Use ref to store the timeout ID between renders
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+type DebounceOptions = {
+  leading?: boolean;
+  trailing?: boolean;
+  maxWait?: number;
+};
 
-  // Clean up the timeout when the component unmounts or when dependencies change
+type ControlFunctions = {
+  cancel: () => void;
+  flush: () => void;
+  isPending: () => boolean;
+};
+
+export type DebouncedState<T extends (...args: any) => ReturnType<T>> = ((
+  ...args: Parameters<T>
+) => ReturnType<T> | undefined) &
+  ControlFunctions;
+
+export function useDebounceCallback<T extends (...args: any) => ReturnType<T>>(
+  func: T,
+  delay = 500,
+  options?: DebounceOptions,
+): DebouncedState<T> {
+  const debouncedFunc = useRef<ReturnType<typeof debounce>>();
+
+  // Cleanup
   useEffect(() => {
     return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
+      if (debouncedFunc.current) {
+        debouncedFunc.current.cancel();
       }
     };
   }, []);
 
-  // Create the debounced function
-  const debouncedFunction = useCallback(
-    (...args: Parameters<T>) => {
-      // Clear any existing timeout
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
+  const debounced = useMemo(() => {
+    const debouncedFuncInstance = debounce(func, delay, options);
 
-      // Set a new timeout
-      timeoutRef.current = setTimeout(() => {
-        func(...args);
-      }, delay);
-    },
-    [func, delay],
-  );
+    const wrappedFunc: DebouncedState<T> = (...args: Parameters<T>) => {
+      return debouncedFuncInstance(...args);
+    };
 
-  return debouncedFunction;
+    wrappedFunc.cancel = () => {
+      debouncedFuncInstance.cancel();
+    };
+
+    wrappedFunc.isPending = () => {
+      return !!debouncedFunc.current;
+    };
+
+    wrappedFunc.flush = () => {
+      return debouncedFuncInstance.flush();
+    };
+
+    return wrappedFunc;
+  }, [func, delay, options]);
+
+  // Update the debounced function ref whenever func, wait, or options change
+  useEffect(() => {
+    debouncedFunc.current = debounce(func, delay, options);
+  }, [func, delay, options]);
+
+  return debounced;
 }
 
 export function useAutoSubmit<TFieldValues extends FieldValues>({
   trigger,
   watch,
+  control,
   onSubmit,
-  debounceTime = 500,
+  debounceTime = 1000,
 }: UseAutoSubmitProps<TFieldValues>) {
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  // Note: form will have `isSubmitted` state which changes validation to be done onChange (by default)
+  // to change this behavior we would need to first validate form, then call onSubmit
+  const debouncedSubmit = useDebounceCallback(onSubmit, debounceTime);
 
-  const debouncedSubmit = useDebounce(onSubmit, debounceTime);
-
+  // Call debounce after form was changed by user
   useEffect(() => {
     const subscription = watch((_, info) => {
       if (info?.type !== "change") return;
 
-      setIsSubmitting(true);
-      trigger()
-        .then(valid => {
-          if (valid) {
-            debouncedSubmit();
-          }
-        })
-        .finally(() => setIsSubmitting(false));
+      debouncedSubmit();
     });
 
     return () => subscription.unsubscribe();
   }, [watch, onSubmit, trigger, debouncedSubmit]);
 
-  return { isSubmitting };
+  // Cancel debounce if form is already submitting
+  const { isSubmitting } = useFormState({ control });
+
+  useEffect(() => {
+    if (isSubmitting) {
+      debouncedSubmit.cancel();
+    }
+  }, [debouncedSubmit, isSubmitting]);
 }
