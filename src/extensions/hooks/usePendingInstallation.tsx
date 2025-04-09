@@ -35,7 +35,7 @@ export const usePendingInstallation = ({
 
   const { handleRemoveInProgress, deleteInProgressAppOpts, handleAppInstallRetry } =
     useActiveAppsInstallations({
-      appsInProgressData: data?.appsInstallations as any,
+      appsInProgressData: data,
       appInProgressLoading: loading,
       appsInProgressRefetch: refetch,
       appsRefetch: refetchExtensions,

@@ -1,4 +1,7 @@
-import { getLatestFailedAttemptFromWebhooks } from "@dashboard/apps/components/AppAlerts/utils";
+import {
+  getLatestFailedAttemptFromWebhooks,
+  LatestWebhookDeliveryWithMoment,
+} from "@dashboard/apps/components/AppAlerts/utils";
 import { AppPaths } from "@dashboard/apps/urls";
 import { useFlag } from "@dashboard/featureFlags";
 import {
@@ -34,6 +37,7 @@ export const useInstalledExtensionsData = ({ searchQuery }: UseInstalledExtensio
       after: null,
     },
   });
+  const installedAppsData = mapEdgesToItems(data?.apps) || [];
 
   const [queryEventDeliveries, { data: eventDeliveriesData, loading: eventDeliveriesLoading }] =
     useEventDeliveryLazyQuery({
@@ -45,6 +49,7 @@ export const useInstalledExtensionsData = ({ searchQuery }: UseInstalledExtensio
         canFetchAppEvents: hasManagedAppsPermission && appAlertsEnabled,
       },
     });
+  const eventDeliveries = mapEdgesToItems(eventDeliveriesData?.apps) ?? [];
 
   useEffect(() => {
     if (initialLoading && data) {
@@ -53,11 +58,38 @@ export const useInstalledExtensionsData = ({ searchQuery }: UseInstalledExtensio
     }
   }, [data]);
 
-  const eventDeliveries = mapEdgesToItems(eventDeliveriesData?.apps) ?? [];
+  const getExtensionInfo = ({
+    loading,
+    isActive,
+    id,
+    lastFailedAttempt,
+  }: {
+    id: string;
+    isActive: boolean | null;
+    loading: boolean;
+    lastFailedAttempt?: LatestWebhookDeliveryWithMoment | null;
+  }) => {
+    if (!isActive) {
+      return <AppDisabledInfo />;
+    }
 
-  const installedAppsData = mapEdgesToItems(data?.apps) || [];
+    if (loading) {
+      return <Skeleton __width="200px" />;
+    }
+
+    if (lastFailedAttempt) {
+      return (
+        <FailedWebhookInfo
+          link={AppPaths.resolveAppDetailsPath(id)}
+          date={lastFailedAttempt.createdAt}
+        />
+      );
+    }
+
+    return null;
+  };
+
   const filteredInstalledAppsData = fuzzySearch(installedAppsData, searchQuery, ["name"]);
-
   const installedApps = filteredInstalledAppsData.map(({ id, name, isActive, brand }) => {
     const appEvents = eventDeliveries.find(events => events.id === id);
     const lastFailedAttempt = getLatestFailedAttemptFromWebhooks(appEvents?.webhooks ?? []);
@@ -66,16 +98,12 @@ export const useInstalledExtensionsData = ({ searchQuery }: UseInstalledExtensio
       id: id,
       name: name ?? "",
       logo: brand?.logo?.default ?? "",
-      info: !isActive ? (
-        <AppDisabledInfo />
-      ) : eventDeliveriesLoading ? (
-        <Skeleton __width="200px" />
-      ) : lastFailedAttempt ? (
-        <FailedWebhookInfo
-          link={AppPaths.resolveAppDetailsPath(id)}
-          date={lastFailedAttempt.createdAt}
-        />
-      ) : null,
+      info: getExtensionInfo({
+        id,
+        isActive,
+        loading: eventDeliveriesLoading,
+        lastFailedAttempt,
+      }),
       actions: <ViewDetailsActionButton id={id} isDisabled={!isActive} />,
     };
   });
