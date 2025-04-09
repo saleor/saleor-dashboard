@@ -14,6 +14,7 @@ import { MANIFEST_FORMAT_DOCS_URL } from "@dashboard/links";
 import { extractMutationErrors } from "@dashboard/misc";
 import getAppErrorMessage, { appErrorMessages } from "@dashboard/utils/errors/app";
 import { useAutoSubmit } from "@dashboard/utils/hook-form/auto-submit";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React, { useCallback, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -36,7 +37,7 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
 
   const manifestUrlFromQueryParams = params[MANIFEST_ATTR];
 
-  const { control, trigger, watch, handleSubmit, setError } = useForm<FormData>({
+  const { control, trigger, watch, handleSubmit, setError, getValues } = useForm<FormData>({
     values: {
       manifestUrl: manifestUrlFromQueryParams || "",
     },
@@ -80,7 +81,7 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
     },
   });
 
-  const [installApp] = useAppInstallMutation({
+  const [installApp, installAppOpts] = useAppInstallMutation({
     onCompleted: data => {
       const installationData = data?.appInstall?.appInstallation;
 
@@ -111,20 +112,24 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
     fetchManifest({ variables: data });
   };
 
-  const submitInstallApp: SubmitHandler<FormData> = data => {
+  const submitInstallApp = async () => {
     const manifest = fetchManifestOpts?.data?.appFetchManifest?.manifest;
 
-    return extractMutationErrors(
+    const errors = await extractMutationErrors(
       installApp({
         variables: {
           input: {
             appName: manifest?.name,
-            manifestUrl: data.manifestUrl,
+            manifestUrl: getValues("manifestUrl"),
             permissions: manifest?.permissions?.map(permission => permission.code),
           },
         },
       }),
     );
+
+    if (!errors) {
+      navigate(ExtensionsPaths.installedExtensions);
+    }
   };
 
   const { flush: flushDebouncedSubmit } = useAutoSubmit({
@@ -227,7 +232,11 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
       <Savebar>
         <Savebar.Spacer />
         <Savebar.CancelButton />
-        <Savebar.ConfirmButton>
+        <Savebar.ConfirmButton
+          disabled={!manifest}
+          transitionState={installAppOpts.loading ? "loading" : "default"}
+          onClick={() => submitInstallApp()}
+        >
           <FormattedMessage {...messages.install} />
         </Savebar.ConfirmButton>
       </Savebar>
