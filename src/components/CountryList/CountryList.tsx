@@ -6,13 +6,14 @@ import { CountryFragment } from "@dashboard/graphql";
 import { TableBody, TableCell } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { getStringOrPlaceholder, maybe, renderCollection } from "../../misc";
+import { getStringOrPlaceholder } from "../../misc";
 import { DashboardCard } from "../Card";
+import { groupCountriesByStartingLetter } from "./utils";
 
 export interface CountryListProps {
   countries: CountryFragment[];
@@ -81,6 +82,10 @@ const CountryList: React.FC<CountryListProps> = props => {
     return [...countries].sort((a, b) => a.country.localeCompare(b.country));
   }
 
+  const sortedCountries = sortCountries(countries ?? []);
+  const groupedCountries = groupCountriesByStartingLetter(sortedCountries);
+  const hasCountriesToRender = sortedCountries.length > 0;
+
   return (
     <DashboardCard>
       <DashboardCard.Header>
@@ -115,25 +120,19 @@ const CountryList: React.FC<CountryListProps> = props => {
               </IconButton>
             </TableCell>
           </TableRowLink>
-          {!isCollapsed &&
-            renderCollection(
-              sortCountries(countries),
-              (country, countryIndex) => (
+          {!isCollapsed && hasCountriesToRender ? (
+            Object.keys(groupedCountries).map(letter => {
+              const countries = groupedCountries[letter];
+
+              return countries.map((country, countryIndex) => (
                 <TableRowLink key={country ? country.code : "skeleton"}>
                   <TableCell className={classes.offsetCell}>
-                    {maybe<React.ReactNode>(
-                      () => (
-                        <>
-                          {(countryIndex === 0 ||
-                            countries[countryIndex].country[0] !==
-                              countries[countryIndex - 1].country[0]) && (
-                            <span className={classes.indicator}>{country.country[0]}</span>
-                          )}
-                          {country.country}
-                        </>
-                      ),
-                      <Skeleton />,
+                    {countryIndex === 0 && (
+                      <Text color="default2" display="inline-block" left={2} position="absolute">
+                        {country.country[0]}
+                      </Text>
                     )}
+                    {country.country}
                   </TableCell>
                   <TableCell className={clsx(classes.textRight, classes.iconCell)}>
                     <IconButton
@@ -146,15 +145,15 @@ const CountryList: React.FC<CountryListProps> = props => {
                     </IconButton>
                   </TableCell>
                 </TableRowLink>
-              ),
-              () => (
-                <TableRowLink>
-                  <TableCell className={classes.toLeft} colSpan={2}>
-                    {emptyText}
-                  </TableCell>
-                </TableRowLink>
-              ),
-            )}
+              ));
+            })
+          ) : (
+            <TableRowLink>
+              <TableCell className={classes.toLeft} colSpan={2}>
+                {emptyText}
+              </TableCell>
+            </TableRowLink>
+          )}
         </TableBody>
       </ResponsiveTable>
     </DashboardCard>
