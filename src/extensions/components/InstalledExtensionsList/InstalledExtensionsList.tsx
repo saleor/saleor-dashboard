@@ -2,7 +2,7 @@ import { GridTable } from "@dashboard/components/GridTable";
 import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
 import { messages } from "@dashboard/extensions/messages";
 import { InstalledExtension } from "@dashboard/extensions/types";
-import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, GenericAppIcon, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -28,7 +28,7 @@ export const InstalledExtensionsList = ({
   }
 
   return (
-    <Box __marginLeft="-24px" __marginRight="-24px">
+    <Box __marginLeft="-24px" __marginRight="-24px" paddingBottom={10}>
       <GridTable>
         <GridTable.Colgroup>
           <GridTable.Col __width="16px" />
@@ -51,13 +51,17 @@ export const InstalledExtensionsList = ({
               <GridTable.Cell>
                 <Box display="flex" alignItems="center" gap={2}>
                   <ExtensionAvatar>
-                    <Box
-                      as="img"
-                      src={extension.logo}
-                      alt={extension.name}
-                      display="block"
-                      maxWidth="100%"
-                    />
+                    {extension.logo ? (
+                      <Box
+                        as="img"
+                        src={extension.logo}
+                        alt={extension.name}
+                        display="block"
+                        maxWidth="100%"
+                      />
+                    ) : (
+                      <GenericAppIcon size="medium" color="default2" />
+                    )}
                   </ExtensionAvatar>
                   <Text
                     size={4}

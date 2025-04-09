@@ -1,12 +1,13 @@
-import { FailedInstallationActions } from "@dashboard/extensions/components/InstalledExtensionsList/componets/FailedInstallationActions";
-import { FailedInstallationInfo } from "@dashboard/extensions/components/InstalledExtensionsList/componets/FailedInstallationInfo";
-import { InstallationPendingInfo } from "@dashboard/extensions/components/InstalledExtensionsList/componets/InstallationPendingInfo";
-import { ViewDetailsActionButton } from "@dashboard/extensions/components/InstalledExtensionsList/componets/ViewDetailsActionButton";
 import useActiveAppsInstallations from "@dashboard/extensions/hooks/useActiveAppsInstallations";
 import { useInstallationNotify } from "@dashboard/extensions/hooks/useInstallationNotify";
 import { InstalledExtension } from "@dashboard/extensions/types";
 import { JobStatusEnum, useAppsInstallationsQuery } from "@dashboard/graphql";
 import React, { useEffect, useState } from "react";
+
+import { FailedInstallationActions } from "../components/FailedInstallationActions";
+import { FailedInstallationInfo } from "../components/FailedInstallationInfo";
+import { InstallationPendingInfo } from "../components/InstallationPendingInfo";
+import { ViewDetailsActionButton } from "../components/ViewDetailsActionButton";
 
 export const usePendingInstallation = ({
   refetchExtensions,

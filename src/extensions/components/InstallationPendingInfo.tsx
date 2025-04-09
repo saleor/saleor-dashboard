@@ -8,7 +8,15 @@ export const InstallationPendingInfo = () => {
   return (
     <Box display="flex" alignItems="center" gap={1} color="default2">
       <CircularProgress size={10} />
-      <Text size={2} color="default2">
+      <Text
+        size={2}
+        color="default2"
+        display={{
+          desktop: "block",
+          tablet: "block",
+          mobile: "none",
+        }}
+      >
         <FormattedMessage {...infoMessages.installationPending} />
       </Text>
     </Box>

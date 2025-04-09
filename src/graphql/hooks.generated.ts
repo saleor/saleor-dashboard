@@ -9413,6 +9413,63 @@ export function useInstalledAppsListLazyQuery(baseOptions?: ApolloReactHooks.Laz
 export type InstalledAppsListQueryHookResult = ReturnType<typeof useInstalledAppsListQuery>;
 export type InstalledAppsListLazyQueryHookResult = ReturnType<typeof useInstalledAppsListLazyQuery>;
 export type InstalledAppsListQueryResult = Apollo.QueryResult<Types.InstalledAppsListQuery, Types.InstalledAppsListQueryVariables>;
+export const EventDeliveryDocument = gql`
+    query EventDelivery($before: String, $after: String, $first: Int, $last: Int, $filter: AppFilterInput, $canFetchAppEvents: Boolean!) {
+  apps(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    filter: $filter
+  ) {
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    edges {
+      node {
+        id
+        ...AppEventDeliveries
+      }
+    }
+  }
+}
+    ${AppEventDeliveriesFragmentDoc}`;
+
+/**
+ * __useEventDeliveryQuery__
+ *
+ * To run a query within a React component, call `useEventDeliveryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useEventDeliveryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useEventDeliveryQuery({
+ *   variables: {
+ *      before: // value for 'before'
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      last: // value for 'last'
+ *      filter: // value for 'filter'
+ *      canFetchAppEvents: // value for 'canFetchAppEvents'
+ *   },
+ * });
+ */
+export function useEventDeliveryQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.EventDeliveryQuery, Types.EventDeliveryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.EventDeliveryQuery, Types.EventDeliveryQueryVariables>(EventDeliveryDocument, options);
+      }
+export function useEventDeliveryLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.EventDeliveryQuery, Types.EventDeliveryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.EventDeliveryQuery, Types.EventDeliveryQueryVariables>(EventDeliveryDocument, options);
+        }
+export type EventDeliveryQueryHookResult = ReturnType<typeof useEventDeliveryQuery>;
+export type EventDeliveryLazyQueryHookResult = ReturnType<typeof useEventDeliveryLazyQuery>;
+export type EventDeliveryQueryResult = Apollo.QueryResult<Types.EventDeliveryQuery, Types.EventDeliveryQueryVariables>;
 export const FileUploadDocument = gql`
     mutation FileUpload($file: Upload!) {
   fileUpload(file: $file) {

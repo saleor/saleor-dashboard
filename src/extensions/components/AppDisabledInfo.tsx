@@ -8,7 +8,15 @@ export const AppDisabledInfo = () => {
   return (
     <Box display="flex" alignItems="center" gap={1} color="default2">
       <DisabledIcon height="10px" width="10px" />
-      <Text size={2} color="default2">
+      <Text
+        size={2}
+        color="default2"
+        display={{
+          desktop: "block",
+          tablet: "block",
+          mobile: "none",
+        }}
+      >
         <FormattedMessage {...infoMessages.appDisabled} />
       </Text>
     </Box>

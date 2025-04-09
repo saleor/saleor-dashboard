@@ -50,6 +50,32 @@ export const installedAppsList = gql`
   }
 `;
 
+export const eventDeliveries = gql`
+  query EventDelivery(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $filter: AppFilterInput
+    $canFetchAppEvents: Boolean!
+  ) {
+    apps(before: $before, after: $after, first: $first, last: $last, filter: $filter) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        node {
+          id
+          ...AppEventDeliveries
+        }
+      }
+    }
+  }
+`;
+
 export const appsInstallations = gql`
   query AppsInstallations {
     appsInstallations {
