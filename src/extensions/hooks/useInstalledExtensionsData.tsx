@@ -7,6 +7,7 @@ import {
   useInstalledAppsListQuery,
 } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
+import { fuzzySearch } from "@dashboard/misc";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import React, { useEffect, useState } from "react";
@@ -15,7 +16,11 @@ import { AppDisabledInfo } from "../components/AppDisabledInfo";
 import { FailedWebhookInfo } from "../components/FailedWebhookInfo";
 import { ViewDetailsActionButton } from "../components/ViewDetailsActionButton";
 
-export const useInstalledExtensionsData = () => {
+interface UseInstalledExtensionsDataProps {
+  searchQuery: string;
+}
+
+export const useInstalledExtensionsData = ({ searchQuery }: UseInstalledExtensionsDataProps) => {
   const [initialLoading, setInitialLoading] = useState(true);
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const { enabled: appAlertsEnabled } = useFlag("app_alerts");
@@ -51,8 +56,9 @@ export const useInstalledExtensionsData = () => {
   const eventDeliveries = mapEdgesToItems(eventDeliveriesData?.apps) ?? [];
 
   const installedAppsData = mapEdgesToItems(data?.apps) || [];
+  const filteredInstalledAppsData = fuzzySearch(installedAppsData, searchQuery, ["name"]);
 
-  const installedApps = installedAppsData.map(({ id, name, isActive, brand }) => {
+  const installedApps = filteredInstalledAppsData.map(({ id, name, isActive, brand }) => {
     const appEvents = eventDeliveries.find(events => events.id === id);
     const lastFailedAttempt = getLatestFailedAttemptFromWebhooks(appEvents?.webhooks ?? []);
 

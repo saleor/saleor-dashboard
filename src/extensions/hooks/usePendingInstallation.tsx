@@ -2,6 +2,7 @@ import useActiveAppsInstallations from "@dashboard/extensions/hooks/useActiveApp
 import { useInstallationNotify } from "@dashboard/extensions/hooks/useInstallationNotify";
 import { InstalledExtension } from "@dashboard/extensions/types";
 import { JobStatusEnum, useAppsInstallationsQuery } from "@dashboard/graphql";
+import { fuzzySearch } from "@dashboard/misc";
 import React, { useEffect, useState } from "react";
 
 import { FailedInstallationActions } from "../components/FailedInstallationActions";
@@ -9,15 +10,19 @@ import { FailedInstallationInfo } from "../components/FailedInstallationInfo";
 import { InstallationPendingInfo } from "../components/InstallationPendingInfo";
 import { ViewDetailsActionButton } from "../components/ViewDetailsActionButton";
 
+interface UsePendingInstallationProps {
+  refetchExtensions: () => void;
+  onCloseModal: () => void;
+  onFailedInstallationRemove: (id: string) => void;
+  searchQuery: string;
+}
+
 export const usePendingInstallation = ({
   refetchExtensions,
   onCloseModal,
   onFailedInstallationRemove,
-}: {
-  refetchExtensions: () => void;
-  onCloseModal: () => void;
-  onFailedInstallationRemove: (id: string) => void;
-}) => {
+  searchQuery,
+}: UsePendingInstallationProps) => {
   const [initialLoading, setInitialLoading] = useState(true);
   const { data, loading, refetch } = useAppsInstallationsQuery();
   const { installedNotify, removeInProgressAppNotify, errorNotify } = useInstallationNotify();
@@ -44,8 +49,11 @@ export const usePendingInstallation = ({
       onRemoveInProgressAppSuccess: onCloseModal,
     });
 
-  const pendingInstallations: InstalledExtension[] =
-    data?.appsInstallations.map(({ status, id, appName, brand }) => {
+  const filteredPendingInstallations = fuzzySearch(data?.appsInstallations ?? [], searchQuery, [
+    "name",
+  ]);
+  const pendingInstallations: InstalledExtension[] = filteredPendingInstallations.map(
+    ({ status, id, appName, brand }) => {
       const isFailed = status === JobStatusEnum.FAILED;
 
       return {
@@ -62,7 +70,8 @@ export const usePendingInstallation = ({
           <ViewDetailsActionButton />
         ),
       };
-    }) ?? [];
+    },
+  );
 
   return {
     pendingInstallations,

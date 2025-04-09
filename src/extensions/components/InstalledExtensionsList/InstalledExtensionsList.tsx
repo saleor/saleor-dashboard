@@ -1,20 +1,25 @@
 import { GridTable } from "@dashboard/components/GridTable";
+import { EmptyListState } from "@dashboard/extensions/components/EmptyListState/EmptyListState";
 import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
 import { messages } from "@dashboard/extensions/messages";
 import { InstalledExtension } from "@dashboard/extensions/types";
 import { Box, GenericAppIcon, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 interface InstalledExtensionsListProps {
   installedExtensions: InstalledExtension[];
   loading: boolean;
+  clearSearch: () => void;
 }
 
 export const InstalledExtensionsList = ({
   installedExtensions,
   loading,
+  clearSearch,
 }: InstalledExtensionsListProps) => {
+  const intl = useIntl();
+
   if (loading) {
     return (
       <Box display="grid" gap={3}>
@@ -24,6 +29,16 @@ export const InstalledExtensionsList = ({
         <Skeleton __width="100%" />
         <Skeleton __width="50%" />
       </Box>
+    );
+  }
+
+  if (installedExtensions.length === 0) {
+    return (
+      <EmptyListState
+        title={intl.formatMessage(messages.noExtensionsFound)}
+        subtitle={intl.formatMessage(messages.clearSearch)}
+        onSubtitleClick={clearSearch}
+      />
     );
   }
 

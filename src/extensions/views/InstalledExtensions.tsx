@@ -47,8 +47,9 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
     openModal("app-installation-remove", { id });
   };
 
-  const { installedApps, installedAppsLoading, refetchInstalledApps } =
-    useInstalledExtensionsData();
+  const { installedApps, installedAppsLoading, refetchInstalledApps } = useInstalledExtensionsData({
+    searchQuery: query,
+  });
 
   const {
     pendingInstallations,
@@ -56,6 +57,7 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
     pendingInstallationsLoading,
     handleRemoveInProgress,
   } = usePendingInstallation({
+    searchQuery: query,
     onCloseModal: closeModal,
     refetchExtensions: refetchInstalledApps,
     onFailedInstallationRemove: handleRemoveFailedInstallation,
@@ -85,6 +87,7 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
         <InstalledExtensionsList
           installedExtensions={[...pendingInstallations, ...installedApps]}
           loading={pendingInstallationsLoading || installedAppsLoading}
+          clearSearch={() => setQuery("")}
         />
 
         <AppInProgressDeleteDialog
