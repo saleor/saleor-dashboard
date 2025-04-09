@@ -172,4 +172,19 @@ export const messages = defineMessages({
     id: "sXSde1",
     description: "link to docs in add custom extensions page subheader",
   },
+  installExtensionNameHeader: {
+    defaultMessage: "You are about to install {extensionName}",
+    id: "CB7xpk",
+    description: "subheader on extension install page",
+  },
+  permissions: {
+    defaultMessage: "Permissions",
+    id: "7eGvyy",
+    description: "extension install page, extension permissions (from manifest)",
+  },
+  permissionsExplanation: {
+    defaultMessage: "Installing this app will give it following permissions",
+    id: "O4R3Ni",
+    description: "extension install page, permissions section",
+  },
 });

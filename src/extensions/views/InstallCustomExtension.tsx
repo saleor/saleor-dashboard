@@ -15,10 +15,11 @@ import { extractMutationErrors } from "@dashboard/misc";
 import getAppErrorMessage, { appErrorMessages } from "@dashboard/utils/errors/app";
 import { useAutoSubmit } from "@dashboard/utils/hook-form/auto-submit";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { InstallExtensionManifestData } from "../components/InstallExtensionManifestData";
 import { headerTitles, messages } from "../messages";
 import { ExtensionInstallQueryParams, ExtensionsPaths, MANIFEST_ATTR } from "../urls";
 
@@ -33,9 +34,11 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
   const navigate = useNavigator();
   const notify = useNotifier();
 
+  const manifestUrlFromQueryParams = params[MANIFEST_ATTR];
+
   const { control, trigger, watch, handleSubmit, setError } = useForm<FormData>({
     values: {
-      manifestUrl: params[MANIFEST_ATTR] || "",
+      manifestUrl: manifestUrlFromQueryParams || "",
     },
     mode: "onBlur",
   });
@@ -131,6 +134,19 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
     control,
   });
 
+  useEffect(() => {
+    if (manifestUrlFromQueryParams) {
+      (async () => {
+        await trigger();
+        await handleSubmit(submitFetchManifest)();
+      })();
+    }
+    // Run this only once
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const manifest = fetchManifestOpts.data?.appFetchManifest?.manifest;
+
   return (
     <>
       <TopNav
@@ -158,7 +174,7 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
           />
         }
       ></TopNav>
-      <Box marginX={6} marginTop={10}>
+      <Box marginX={6} marginTop={10} display="flex" flexDirection="column" gap={10}>
         <Box
           as="form"
           display="flex"
@@ -188,8 +204,8 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
             }}
           />
         </Box>
-        {fetchManifestOpts.loading && (
-          <Box marginTop={10}>
+        {fetchManifestOpts.loading ? (
+          <Box>
             <Box display="flex" flexDirection="column" gap={6}>
               <Skeleton height={5} __width="292px" />
               <Skeleton height={12} __width="292px" />
@@ -204,7 +220,9 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
               <Skeleton height={5} marginTop={1.5} __width="356px" />
             </Box>
           </Box>
-        )}
+        ) : manifest ? (
+          <InstallExtensionManifestData manifest={manifest} />
+        ) : null}
       </Box>
       <Savebar>
         <Savebar.Spacer />
