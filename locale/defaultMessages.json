@@ -3495,6 +3495,10 @@
     "context": "add shipping carrier button",
     "string": "Add shipping carrier"
   },
+  "JbKGHC": {
+    "context": "extension has been removed",
+    "string": "Extension successfully removed"
+  },
   "JbUg2b": {
     "context": "activate app",
     "string": "Are you sure you want to activate {name}? Activating will start gathering events."
@@ -4837,6 +4841,10 @@
   "SI3/nl": {
     "string": "Nothing will change in terms of permissions. The Dashboard will redirect to the app and inform it that you denied the request."
   },
+  "SItkhR": {
+    "context": "extension has been installed",
+    "string": "Extension installed"
+  },
   "SKFr04": {
     "string": "Attribute not found."
   },
@@ -5380,6 +5388,10 @@
   "VmMDLN": {
     "context": "permission list item description",
     "string": "This group is last source of that permission"
+  },
+  "VokWlV": {
+    "context": "extension has not been installed",
+    "string": "Couldn’t Install {name}"
   },
   "VrFy8e": {
     "string": "No notes from customer"
@@ -6586,6 +6598,10 @@
   "cy8sV7": {
     "context": "volume units types",
     "string": "Volume"
+  },
+  "d+5yJO": {
+    "context": "delete app header",
+    "string": "Delete App"
   },
   "d+qgix": {
     "string": "Next step"
@@ -8369,6 +8385,10 @@
   "p3eRUm": {
     "context": "indicator that feature is in preview mode",
     "string": "Preview"
+  },
+  "p42saN": {
+    "context": "extensions ready to be use",
+    "string": "{name} is ready to be used"
   },
   "p4X/0H": {
     "context": "button, assign variants to sale and save",

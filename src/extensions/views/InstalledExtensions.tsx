@@ -1,11 +1,7 @@
-import AppInProgressDeleteDialog from "@dashboard/apps/components/AppInProgressDeleteDialog";
 import { InstallWithManifestFormButton } from "@dashboard/apps/components/InstallWithManifestFormButton";
 import { AppUrls } from "@dashboard/apps/urls";
 import { TopNav } from "@dashboard/components/AppLayout";
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
-import { useInstalledExtensionsData } from "@dashboard/extensions/hooks/useInstalledExtensionsData";
-import { usePendingInstallation } from "@dashboard/extensions/hooks/usePendingInstallation";
-import { headerTitles, messages } from "@dashboard/extensions/messages";
 import {
   ExtensionsListUrlDialog,
   ExtensionsListUrlQueryParams,
@@ -18,8 +14,12 @@ import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useState } from "react";
 import { useIntl } from "react-intl";
 
+import { DeleteFailedInstallationDialog } from "../components/DeleteFailedInstallationDialog";
 import { InstalledExtensionsList } from "../components/InstalledExtensionsList";
 import { RequestExtensionsButton } from "../components/RequestExtensionsButton";
+import { useInstalledExtensionsData } from "../hooks/useInstalledExtensionsData";
+import { usePendingInstallation } from "../hooks/usePendingInstallation";
+import { headerTitles, messages } from "../messages";
 
 interface InstalledExtensionsProps {
   params: ExtensionsListUrlQueryParams;
@@ -90,10 +90,9 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
           clearSearch={() => setQuery("")}
         />
 
-        <AppInProgressDeleteDialog
+        <DeleteFailedInstallationDialog
           confirmButtonState={deleteInProgressAppStatus}
-          // name={getAppInProgressName(params.id || "", pendingInstallations)}
-          name="Test"
+          name={pendingInstallations.find(installation => installation.id === params?.id)?.name}
           onClose={closeModal}
           onConfirm={() => handleRemoveInProgress(params?.id || "")}
           open={params.action === "app-installation-remove"}
