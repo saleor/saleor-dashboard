@@ -22,13 +22,24 @@ export const InstalledExtensionsList = ({
 
   if (loading) {
     return (
-      <Box display="grid" gap={3}>
-        <Skeleton __width="50%" />
-        <Skeleton __width="100%" />
-        <Skeleton __width="50%" />
-        <Skeleton __width="100%" />
-        <Skeleton __width="50%" />
-      </Box>
+      <GridTable>
+        <GridTable.Body>
+          <GridTable.Row>
+            <GridTable.Cell paddingY={4}>
+              <Text size={3}>
+                <FormattedMessage {...messages.extensionName} />
+              </Text>
+            </GridTable.Cell>
+          </GridTable.Row>
+          {Array.from({ length: 5 }).map((_, i) => (
+            <GridTable.Row key={i}>
+              <GridTable.Cell paddingY={4}>
+                <Skeleton __width={i % 2 === 0 ? "150px" : "200px"} />
+              </GridTable.Cell>
+            </GridTable.Row>
+          ))}
+        </GridTable.Body>
+      </GridTable>
     );
   }
 
