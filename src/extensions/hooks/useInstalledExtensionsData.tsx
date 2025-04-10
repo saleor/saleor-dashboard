@@ -3,7 +3,6 @@ import {
   LatestWebhookDeliveryWithMoment,
 } from "@dashboard/apps/components/AppAlerts/utils";
 import { AppPaths } from "@dashboard/apps/urls";
-import { useFlag } from "@dashboard/featureFlags";
 import {
   AppTypeEnum,
   useEventDeliveryLazyQuery,
@@ -26,7 +25,6 @@ interface UseInstalledExtensionsDataProps {
 export const useInstalledExtensionsData = ({ searchQuery }: UseInstalledExtensionsDataProps) => {
   const [initialLoading, setInitialLoading] = useState(true);
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
-  const { enabled: appAlertsEnabled } = useFlag("app_alerts");
 
   const { data, refetch } = useInstalledAppsListQuery({
     variables: {
@@ -46,7 +44,7 @@ export const useInstalledExtensionsData = ({ searchQuery }: UseInstalledExtensio
         filter: {
           type: AppTypeEnum.THIRDPARTY,
         },
-        canFetchAppEvents: hasManagedAppsPermission && appAlertsEnabled,
+        canFetchAppEvents: hasManagedAppsPermission,
       },
     });
   const eventDeliveries = mapEdgesToItems(eventDeliveriesData?.apps) ?? [];
