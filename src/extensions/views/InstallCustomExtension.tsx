@@ -18,7 +18,6 @@ import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React, { useCallback, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useHistory } from "react-router";
 
 import { ExternalLinkUnstyled } from "../components/ExternalLinkUnstyled";
 import { InstallExtensionManifestData } from "../components/InstallExtensionManifestData";
@@ -36,7 +35,6 @@ type FormData = AppFetchMutationVariables;
 export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQueryParams }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const history = useHistory();
   const notify = useNotifier();
 
   const manifestUrlFromQueryParams = params[MANIFEST_ATTR];
@@ -227,9 +225,7 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
       </Box>
       <Savebar>
         <Savebar.Spacer />
-        <Savebar.CancelButton
-          onClick={() => (history.length > 0 ? history.goBack() : navigate(previousPagePath))}
-        />
+        <Savebar.CancelButton href={previousPagePath} />
         <Savebar.ConfirmButton
           disabled={!manifest}
           transitionState={installAppOpts.loading ? "loading" : "default"}
