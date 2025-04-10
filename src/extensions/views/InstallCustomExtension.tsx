@@ -1,5 +1,4 @@
 import { TopNav } from "@dashboard/components/AppLayout";
-import { ExternalLinkNext } from "@dashboard/components/ExternalLink";
 import { HookFormInput } from "@dashboard/components/HookFormInput";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
@@ -15,11 +14,11 @@ import { MANIFEST_FORMAT_DOCS_URL } from "@dashboard/links";
 import { extractMutationErrors } from "@dashboard/misc";
 import getAppErrorMessage, { appErrorMessages } from "@dashboard/utils/errors/app";
 import { useAutoSubmit } from "@dashboard/utils/hook-form/auto-submit";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React, { useCallback, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
+import { useHistory } from "react-router";
 
 import { ExternalLinkUnstyled } from "../components/ExternalLinkUnstyled";
 import { InstallExtensionManifestData } from "../components/InstallExtensionManifestData";
@@ -30,11 +29,14 @@ const PLACEHOLDER_MANIFEST_URL = "https://example.com/api/manifest";
 
 const EL_ID_MANIFEST_INPUT_LABEL = "manifest-input-label";
 
+const previousPagePath = ExtensionsPaths.installedExtensions;
+
 type FormData = AppFetchMutationVariables;
 
 export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQueryParams }) => {
   const intl = useIntl();
   const navigate = useNavigator();
+  const history = useHistory();
   const notify = useNotifier();
 
   const manifestUrlFromQueryParams = params[MANIFEST_ATTR];
@@ -98,7 +100,7 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
           ]);
         }
 
-        navigate(ExtensionsPaths.installedExtensions);
+        navigate(previousPagePath);
       } else {
         (data?.appInstall?.errors ?? []).forEach(error => {
           notify({
@@ -130,7 +132,7 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
     );
 
     if (!errors) {
-      navigate(ExtensionsPaths.installedExtensions);
+      navigate(previousPagePath);
     }
   };
 
@@ -157,8 +159,7 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
   return (
     <>
       <TopNav
-        // TODO: replace url with previous page?
-        href={ExtensionsPaths.installedExtensions}
+        href={previousPagePath}
         __height="auto"
         title={intl.formatMessage(headerTitles.addCustomExtensionManifest)}
         subtitle={
@@ -226,7 +227,9 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
       </Box>
       <Savebar>
         <Savebar.Spacer />
-        <Savebar.CancelButton />
+        <Savebar.CancelButton
+          onClick={() => (history.length > 0 ? history.goBack() : navigate(previousPagePath))}
+        />
         <Savebar.ConfirmButton
           disabled={!manifest}
           transitionState={installAppOpts.loading ? "loading" : "default"}
