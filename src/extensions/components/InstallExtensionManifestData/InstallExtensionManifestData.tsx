@@ -5,7 +5,6 @@ import { AppAvatar } from "@dashboard/apps/components/AppAvatar/AppAvatar";
 import { DashboardCard } from "@dashboard/components/Card";
 import { AppFetchMutation } from "@dashboard/graphql";
 import { ExclamationIcon } from "@dashboard/icons/ExclamationIcon";
-import { DATA_PRIVACY_URL } from "@dashboard/links";
 import { useTheme } from "@dashboard/theme";
 import { Box, DefaultTheme, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -83,6 +82,7 @@ export const InstallExtensionManifestData = ({
           __transform="translateY(-50%)"
           __width="195px"
           __zIndex="-1"
+          // Color used by the Plus icon
           __backgroundColor="hsla(0, 0%, 92%, 1)"
         ></Box>
       </Box>
@@ -110,11 +110,12 @@ export const InstallExtensionManifestData = ({
             <FormattedMessage
               {...messages.infoCardText}
               values={{
-                learnMoreLink: (
-                  <ExternalLinkUnstyled href={DATA_PRIVACY_URL} target="_blank">
+                extensionName: manifest?.name ?? "this extension",
+                learnMoreLink: manifest?.dataPrivacyUrl ? (
+                  <ExternalLinkUnstyled href={manifest.dataPrivacyUrl} target="_blank">
                     <FormattedMessage {...messages.infoCardLearnMoreLink} />
                   </ExternalLinkUnstyled>
-                ),
+                ) : null,
               }}
             />
           </DashboardCard.Content>

@@ -24,4 +24,3 @@ export const EXTENSIONS_DOCS_URL = "https://docs.saleor.io/developer/extensions"
 export const PLUGINS_DOCS_URL = "https://docs.saleor.io/developer/app-store/overview#plugins";
 export const MANIFEST_FORMAT_DOCS_URL =
   "https://docs.saleor.io/developer/extending/apps/architecture/manifest";
-export const DATA_PRIVACY_URL = "https://saleor.io/legal/privacy";

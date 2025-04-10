@@ -194,8 +194,8 @@ export const messages = defineMessages({
   },
   infoCardText: {
     defaultMessage:
-      "Uninstalling the app will remove all your customer’s personal data stored by Product Feed. {learnMoreLink}",
-    id: "shb8aZ",
+      "Uninstalling the app will remove all your customer’s personal data stored by {extensionName}. {learnMoreLink}",
+    id: "chJmBW",
     description: "card text, app install page",
   },
   infoCardLearnMoreLink: {
