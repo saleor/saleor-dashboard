@@ -1,11 +1,9 @@
-import msgs from "@dashboard/apps/components/AppInProgressDeleteDialog/messages";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { messages } from "@dashboard/extensions/messages";
-import { getStringOrPlaceholder } from "@dashboard/misc";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui/dist/types/ConfirmButton";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 interface DeleteFailedInstallationDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -23,16 +21,6 @@ export const DeleteFailedInstallationDialog = ({
   onClose,
 }: DeleteFailedInstallationDialogProps) => {
   const intl = useIntl();
-  const isNameMissing = name === null || name === "";
-  const getMainText = () => {
-    if (isNameMissing) {
-      return intl.formatMessage(msgs.deleteApp);
-    }
-
-    return intl.formatMessage(msgs.deleteNamedApp, {
-      name: <strong>{getStringOrPlaceholder(name)}</strong>,
-    });
-  };
 
   return (
     <ActionDialog
@@ -40,10 +28,17 @@ export const DeleteFailedInstallationDialog = ({
       open={open}
       onClose={onClose}
       onConfirm={onConfirm}
-      title={intl.formatMessage(messages.deleteAppHeader)}
+      title={intl.formatMessage(messages.deleteFailedInstallation)}
       variant="delete"
     >
-      <Box data-test-id="dialog-content">{getMainText()}</Box>
+      <Box data-test-id="dialog-content">
+        <FormattedMessage
+          {...messages.deleteFailedInstallationContent}
+          values={{
+            name: name ? <strong>{name}</strong> : "",
+          }}
+        />
+      </Box>
     </ActionDialog>
   );
 };

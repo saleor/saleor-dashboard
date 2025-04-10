@@ -5192,6 +5192,10 @@
     "context": "add new menu item",
     "string": "Create new item"
   },
+  "Uh3NX/": {
+    "context": "remove failed installation dialog content",
+    "string": "Are you sure you want to delete {name} failed installation?"
+  },
   "Uh9R9m": {
     "context": "prepare order fulfillment, button",
     "string": "Prepare fulfillment"
@@ -6599,10 +6603,6 @@
     "context": "volume units types",
     "string": "Volume"
   },
-  "d+5yJO": {
-    "context": "delete app header",
-    "string": "Delete App"
-  },
   "d+qgix": {
     "string": "Next step"
   },
@@ -7481,6 +7481,10 @@
   "jDIRQV": {
     "context": "section header",
     "string": "About this app"
+  },
+  "jDWPin": {
+    "context": "remove failed installation dialog title",
+    "string": "Remove failed installation"
   },
   "jDovoJ": {
     "context": "gift card history message",
