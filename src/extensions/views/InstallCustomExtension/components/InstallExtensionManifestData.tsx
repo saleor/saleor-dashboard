@@ -10,8 +10,8 @@ import { Box, DefaultTheme, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { messages } from "../../messages";
-import { ExternalLinkUnstyled } from "../ExternalLinkUnstyled";
+import { ExternalLinkUnstyled } from "../../../components/ExternalLinkUnstyled";
+import { messages } from "../../../messages";
 
 const getSaleorLogoUrl = (theme: DefaultTheme) => {
   switch (theme) {

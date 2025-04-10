@@ -16,14 +16,14 @@ import { extractMutationErrors } from "@dashboard/misc";
 import getAppErrorMessage, { appErrorMessages } from "@dashboard/utils/errors/app";
 import { useAutoSubmit } from "@dashboard/utils/hook-form/auto-submit";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { SubmitHandler, useForm, useWatch } from "react-hook-form";
+import React, { useCallback, useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ExternalLinkUnstyled } from "../components/ExternalLinkUnstyled";
-import { InstallExtensionManifestData } from "../components/InstallExtensionManifestData";
-import { headerTitles, messages } from "../messages";
-import { ExtensionInstallQueryParams, ExtensionsPaths, MANIFEST_ATTR } from "../urls";
+import { ExternalLinkUnstyled } from "../../components/ExternalLinkUnstyled";
+import { headerTitles, messages } from "../../messages";
+import { ExtensionInstallQueryParams, ExtensionsPaths, MANIFEST_ATTR } from "../../urls";
+import { InstallExtensionManifestData } from "./components/InstallExtensionManifestData";
 
 const PLACEHOLDER_MANIFEST_URL = "https://example.com/api/manifest";
 
