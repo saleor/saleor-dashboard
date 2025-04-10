@@ -2,13 +2,19 @@ import plusIcon from "@assets/images/plus-icon.svg";
 import saleorLogoDarkMode from "@assets/images/sidebar-deafult-logo-darkMode.png";
 import saleorLogoLightMode from "@assets/images/sidebar-default-logo.png";
 import { AppAvatar } from "@dashboard/apps/components/AppAvatar/AppAvatar";
+import { DashboardCard } from "@dashboard/components/Card";
+import Link from "@dashboard/components/Link";
 import { AppFetchMutation } from "@dashboard/graphql";
+import ErrorExclamationCircle from "@dashboard/icons/ErrorExclamationCircle";
+import { ExclamationIcon } from "@dashboard/icons/ExclamationIcon";
+import { DATA_PRIVACY_URL } from "@dashboard/links";
 import { useTheme } from "@dashboard/theme";
 import { Box, DefaultTheme, List, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "../../messages";
+import { ExternalLinkUnstyled } from "../ExternalLinkUnstyled";
 
 const getSaleorLogoUrl = (theme: DefaultTheme) => {
   switch (theme) {
@@ -82,18 +88,38 @@ export const InstallExtensionManifestData = ({
         ></Box>
       </Box>
 
-      <Box display="flex" flexDirection="column">
+      <Box display="flex" flexDirection="column" gap={4}>
         <Text size={5} fontWeight="medium">
           <FormattedMessage {...messages.permissions} />
         </Text>
-        <Text>
-          <FormattedMessage {...messages.permissionsExplanation} />
-        </Text>
-        <ul>
-          {manifest?.permissions?.map(permission => (
-            <li key={permission.code}>{permission.name}</li>
-          ))}
-        </ul>
+        <div>
+          <Text>
+            <FormattedMessage {...messages.permissionsExplanation} />
+          </Text>
+          <Box as="ul" listStyleType="disc" paddingLeft={4} fontSize={3}>
+            {manifest?.permissions?.map(permission => (
+              <li key={permission.code}>{permission.name}</li>
+            ))}
+          </Box>
+        </div>
+        <DashboardCard withBorder gap={1} __width="fit-content">
+          <DashboardCard.Title display="flex" gap={2} alignItems="center">
+            <ExclamationIcon />
+            <FormattedMessage {...messages.infoCardTitle} />
+          </DashboardCard.Title>
+          <DashboardCard.Content fontSize={3} paddingRight={0}>
+            <FormattedMessage
+              {...messages.infoCardText}
+              values={{
+                learnMoreLink: (
+                  <ExternalLinkUnstyled href={DATA_PRIVACY_URL} target="_blank">
+                    <FormattedMessage {...messages.infoCardLearnMoreLink} />
+                  </ExternalLinkUnstyled>
+                ),
+              }}
+            />
+          </DashboardCard.Content>
+        </DashboardCard>
       </Box>
     </Box>
   );

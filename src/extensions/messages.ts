@@ -187,4 +187,20 @@ export const messages = defineMessages({
     id: "O4R3Ni",
     description: "extension install page, permissions section",
   },
+  infoCardTitle: {
+    defaultMessage: "Info",
+    id: "vGfmv8",
+    description: "card title, app install page, about privacy",
+  },
+  infoCardText: {
+    defaultMessage:
+      "Uninstalling the app will remove all your customer’s personal data stored by Product Feed. {learnMoreLink}",
+    id: "shb8aZ",
+    description: "card text, app install page",
+  },
+  infoCardLearnMoreLink: {
+    defaultMessage: "Learn more about data privacy.",
+    id: "4KRhwm",
+    description: "link in infoCardText, to Saleor docs",
+  },
 });

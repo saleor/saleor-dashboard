@@ -1,4 +1,5 @@
 import { TopNav } from "@dashboard/components/AppLayout";
+import { ExternalLinkNext } from "@dashboard/components/ExternalLink";
 import { HookFormInput } from "@dashboard/components/HookFormInput";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
@@ -20,6 +21,7 @@ import React, { useCallback, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { ExternalLinkUnstyled } from "../components/ExternalLinkUnstyled";
 import { InstallExtensionManifestData } from "../components/InstallExtensionManifestData";
 import { headerTitles, messages } from "../messages";
 import { ExtensionInstallQueryParams, ExtensionsPaths, MANIFEST_ATTR } from "../urls";
@@ -164,16 +166,9 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
             {...messages.learnMoreSubheader}
             values={{
               manifestFormatLink: (
-                <Box
-                  as="a"
-                  href={MANIFEST_FORMAT_DOCS_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  borderBottomStyle="solid"
-                  borderWidth={1}
-                >
+                <ExternalLinkUnstyled href={MANIFEST_FORMAT_DOCS_URL} target="_blank">
                   <FormattedMessage {...messages.manifestFormatLink} />
-                </Box>
+                </ExternalLinkUnstyled>
               ),
             }}
           />
