@@ -58,8 +58,8 @@ export const InstalledExtensionsList = ({
       <GridTable>
         <GridTable.Colgroup>
           <GridTable.Col __width="16px" />
-          <GridTable.Col __width="250px" />
           <GridTable.Col __width="calc(100% - 250px)" />
+          <GridTable.Col __width="250px" />
         </GridTable.Colgroup>
         <GridTable.Body>
           <GridTable.Row>
@@ -75,7 +75,7 @@ export const InstalledExtensionsList = ({
             <GridTable.Row key={extension.id}>
               <GridTable.Cell />
               <GridTable.Cell>
-                <Box display="flex" alignItems="center" gap={2}>
+                <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
                   <ExtensionAvatar>
                     {extension.logo ? (
                       <Box
@@ -99,11 +99,17 @@ export const InstalledExtensionsList = ({
                   >
                     {extension.name}
                   </Text>
+                  <Box
+                    marginLeft={{
+                      tablet: 6,
+                    }}
+                  >
+                    {extension.info}
+                  </Box>
                 </Box>
               </GridTable.Cell>
               <GridTable.Cell>
-                <Box width="100%" display="flex" alignItems="center" justifyContent="space-between">
-                  <Box>{extension.info}</Box>
+                <Box display="flex" alignItems="center" justifyContent="space-between">
                   <Box marginLeft="auto" marginRight={4}>
                     {extension.actions}
                   </Box>

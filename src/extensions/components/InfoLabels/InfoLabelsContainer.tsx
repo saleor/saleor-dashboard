@@ -9,16 +9,8 @@ interface InfoLabelsContainerProps {
 export const InfoLabelsContainer = ({ message, icon }: InfoLabelsContainerProps) => {
   return (
     <Box display="flex" alignItems="center" gap={1} color="default2">
-      {icon}
-      <Text
-        size={2}
-        color="default2"
-        display={{
-          desktop: "block",
-          tablet: "block",
-          mobile: "none",
-        }}
-      >
+      <Box flexShrink="0">{icon}</Box>
+      <Text size={2} color="default2">
         {message}
       </Text>
     </Box>
