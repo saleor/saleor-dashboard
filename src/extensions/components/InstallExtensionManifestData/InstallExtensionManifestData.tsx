@@ -3,13 +3,11 @@ import saleorLogoDarkMode from "@assets/images/sidebar-deafult-logo-darkMode.png
 import saleorLogoLightMode from "@assets/images/sidebar-default-logo.png";
 import { AppAvatar } from "@dashboard/apps/components/AppAvatar/AppAvatar";
 import { DashboardCard } from "@dashboard/components/Card";
-import Link from "@dashboard/components/Link";
 import { AppFetchMutation } from "@dashboard/graphql";
-import ErrorExclamationCircle from "@dashboard/icons/ErrorExclamationCircle";
 import { ExclamationIcon } from "@dashboard/icons/ExclamationIcon";
 import { DATA_PRIVACY_URL } from "@dashboard/links";
 import { useTheme } from "@dashboard/theme";
-import { Box, DefaultTheme, List, Text } from "@saleor/macaw-ui-next";
+import { Box, DefaultTheme, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -75,6 +73,7 @@ export const InstallExtensionManifestData = ({
           }
         />
 
+        {/* This is a line between Saleor - Plus icon - App logo */}
         <Box
           as="span"
           aria-hidden="true"
@@ -83,8 +82,8 @@ export const InstallExtensionManifestData = ({
           __height="2px"
           __transform="translateY(-50%)"
           __width="195px"
-          backgroundColor="default3"
           __zIndex="-1"
+          __backgroundColor="hsla(0, 0%, 92%, 1)"
         ></Box>
       </Box>
 
