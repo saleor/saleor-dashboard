@@ -2,6 +2,7 @@ import { TopNav } from "@dashboard/components/AppLayout";
 import { HookFormInput } from "@dashboard/components/HookFormInput";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
+  AppFetchMutation,
   AppFetchMutationVariables,
   useAppFetchMutation,
   useAppInstallMutation,
@@ -15,8 +16,8 @@ import { extractMutationErrors } from "@dashboard/misc";
 import getAppErrorMessage, { appErrorMessages } from "@dashboard/utils/errors/app";
 import { useAutoSubmit } from "@dashboard/utils/hook-form/auto-submit";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React, { useCallback, useEffect } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ExternalLinkUnstyled } from "../components/ExternalLinkUnstyled";
@@ -68,7 +69,19 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
     [],
   );
 
+  // TODO: Remove this once updated to newer Apollo version
+  // In latest apollo we can call fetchManifestOpts.reset to clear data
+  const [manifest, setManifest] =
+    useState<NonNullable<AppFetchMutation["appFetchManifest"]>["manifest"]>();
+
+  const manifestUrlInputValue = watch("manifestUrl");
+
+  useEffect(() => {
+    setManifest(null);
+  }, [manifestUrlInputValue]);
+
   const [fetchManifest, fetchManifestOpts] = useAppFetchMutation({
+    disableErrorHandling: true,
     onCompleted: data => {
       if (data?.appFetchManifest?.errors.length) {
         const mergedErrorMessages = data.appFetchManifest.errors
@@ -79,6 +92,8 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
           message: mergedErrorMessages,
           type: "validate",
         });
+      } else {
+        setManifest(data.appFetchManifest?.manifest);
       }
     },
   });
@@ -151,8 +166,6 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
     // Run this only once
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const manifest = fetchManifestOpts.data?.appFetchManifest?.manifest;
 
   return (
     <>
