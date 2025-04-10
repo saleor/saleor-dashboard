@@ -6,8 +6,8 @@ import { fuzzySearch } from "@dashboard/misc";
 import React, { useEffect, useState } from "react";
 
 import { FailedInstallationActions } from "../components/FailedInstallationActions";
-import { FailedInstallationInfo } from "../components/FailedInstallationInfo";
-import { InstallationPendingInfo } from "../components/InstallationPendingInfo";
+import { FailedInstallationInfo } from "../components/InfoLabels/FailedInstallationInfo";
+import { InstallationPendingInfo } from "../components/InfoLabels/InstallationPendingInfo";
 import { ViewDetailsActionButton } from "../components/ViewDetailsActionButton";
 
 interface UsePendingInstallationProps {

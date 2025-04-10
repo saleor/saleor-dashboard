@@ -72,23 +72,23 @@ export const infoMessages = defineMessages({
 export const notifyMessages = defineMessages({
   extensionReadyToUse: {
     defaultMessage: "{name} is ready to be used",
-    id: "p42saN",
-    description: "extensions ready to be use",
+    id: "qRmntJ",
+    description: "extensions list ready to be used",
   },
   extensionInstalled: {
     defaultMessage: "Extension installed",
-    description: "extension has been installed",
-    id: "SItkhR",
+    description: "extensions list has been installed",
+    id: "43b+ts",
   },
   extensionRemoved: {
     defaultMessage: "Extension successfully removed",
-    description: "extension has been removed",
-    id: "JbKGHC",
+    description: "extensions list has been removed",
+    id: "EGzGed",
   },
   extensionInstallError: {
-    id: "VokWlV",
+    id: "UMUQCG",
     defaultMessage: "Couldn’t Install {name}",
-    description: "extension has not been installed",
+    description: "extensions list has not been installed",
   },
 });
 

@@ -1,13 +1,15 @@
-import { infoMessages } from "@dashboard/extensions/messages";
-import { ErrorCircle } from "@dashboard/icons/ErrorCircle";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
-import { FormattedMessage } from "react-intl";
+import React, { ReactNode } from "react";
 
-export const FailedInstallationInfo = () => {
+interface InfoLabelsContainerProps {
+  icon: ReactNode;
+  message: ReactNode;
+}
+
+export const InfoLabelsContainer = ({ message, icon }: InfoLabelsContainerProps) => {
   return (
     <Box display="flex" alignItems="center" gap={1} color="default2">
-      <ErrorCircle />
+      {icon}
       <Text
         size={2}
         color="default2"
@@ -17,7 +19,7 @@ export const FailedInstallationInfo = () => {
           mobile: "none",
         }}
       >
-        <FormattedMessage {...infoMessages.installationFailed} />
+        {message}
       </Text>
     </Box>
   );

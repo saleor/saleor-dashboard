@@ -982,6 +982,10 @@
     "context": "Transaction capture button - charge preauthorized transaction amount",
     "string": "Capture"
   },
+  "43b+ts": {
+    "context": "extensions list has been installed",
+    "string": "Extension installed"
+  },
   "45aV8u": {
     "context": "gift card bulk create modal bottom explanation",
     "string": "After creation Saleor will create a list of gift card codes that you will be able to download."
@@ -2527,6 +2531,10 @@
     "context": "voucher status active",
     "string": "Active"
   },
+  "EGzGed": {
+    "context": "extensions list has been removed",
+    "string": "Extension successfully removed"
+  },
   "EHsnZX": {
     "context": "dialog description",
     "string": "Are you sure you want to approve this fullfillment?"
@@ -3494,10 +3502,6 @@
   "Jb1/3V": {
     "context": "add shipping carrier button",
     "string": "Add shipping carrier"
-  },
-  "JbKGHC": {
-    "context": "extension has been removed",
-    "string": "Extension successfully removed"
   },
   "JbUg2b": {
     "context": "activate app",
@@ -4841,10 +4845,6 @@
   "SI3/nl": {
     "string": "Nothing will change in terms of permissions. The Dashboard will redirect to the app and inform it that you denied the request."
   },
-  "SItkhR": {
-    "context": "extension has been installed",
-    "string": "Extension installed"
-  },
   "SKFr04": {
     "string": "Attribute not found."
   },
@@ -5146,6 +5146,10 @@
     "context": "note input label",
     "string": "Note"
   },
+  "UMUQCG": {
+    "context": "extensions list has not been installed",
+    "string": "Couldn’t Install {name}"
+  },
   "UN+yTt": {
     "string": "Staff Settings"
   },
@@ -5388,10 +5392,6 @@
   "VmMDLN": {
     "context": "permission list item description",
     "string": "This group is last source of that permission"
-  },
-  "VokWlV": {
-    "context": "extension has not been installed",
-    "string": "Couldn’t Install {name}"
   },
   "VrFy8e": {
     "string": "No notes from customer"
@@ -8386,10 +8386,6 @@
     "context": "indicator that feature is in preview mode",
     "string": "Preview"
   },
-  "p42saN": {
-    "context": "extensions ready to be use",
-    "string": "{name} is ready to be used"
-  },
   "p4X/0H": {
     "context": "button, assign variants to sale and save",
     "string": "Assign and save"
@@ -8600,6 +8596,10 @@
   "qQih8j": {
     "context": "voucher status scheduled",
     "string": "Scheduled"
+  },
+  "qRmntJ": {
+    "context": "extensions list ready to be used",
+    "string": "{name} is ready to be used"
   },
   "qSCmIG": {
     "string": "lower than {value}"
