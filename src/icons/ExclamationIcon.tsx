@@ -1,9 +1,9 @@
 import React from "react";
 
 export const ExclamationIcon = ({
-  width = "17",
-  height = "17",
-  viewBox = "0 0 17 17",
+  width = "12",
+  height = "12",
+  viewBox = "0 0 12 12",
 }: {
   width?: string;
   height?: string;
@@ -16,23 +16,23 @@ export const ExclamationIcon = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <g clipPath="url(#clip0_466_2501)">
+    <g clipPath="url(#clip0_1226_7785)">
       <path
-        d="M8.50008 15.5846C12.4121 15.5846 15.5834 12.4133 15.5834 8.5013C15.5834 4.58929 12.4121 1.41797 8.50008 1.41797C4.58806 1.41797 1.41675 4.58929 1.41675 8.5013C1.41675 12.4133 4.58806 15.5846 8.50008 15.5846Z"
+        d="M6 11C8.76142 11 11 8.76142 11 6C11 3.23858 8.76142 1 6 1C3.23858 1 1 3.23858 1 6C1 8.76142 3.23858 11 6 11Z"
         stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
-        d="M8.5 5.66797V8.5013"
+        d="M6 4V6"
         stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
-        d="M8.5 11.332H8.50607"
+        d="M6 8H6.00429"
         stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
@@ -40,8 +40,8 @@ export const ExclamationIcon = ({
       />
     </g>
     <defs>
-      <clipPath id="clip0_466_2501">
-        <rect width="17" height="17" fill="white" />
+      <clipPath id="clip0_1226_7785">
+        <rect width="12" height="12" fill="white" />
       </clipPath>
     </defs>
   </svg>

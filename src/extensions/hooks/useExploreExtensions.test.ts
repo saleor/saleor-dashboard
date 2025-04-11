@@ -1,11 +1,20 @@
+import { useInstalledAppsQuery } from "@dashboard/graphql";
 import { renderHook } from "@testing-library/react-hooks";
 
 import { useAppStoreExtensions } from "./useAppStoreExtensions";
 import { useExploreExtensions } from "./useExploreExtensions";
-import { useInstalledExtensions } from "./useInstalledExtensions";
 
 jest.mock("./useAppStoreExtensions");
-jest.mock("./useInstalledExtensions");
+jest.mock("@dashboard/graphql", () => ({
+  ...(jest.requireActual("@dashboard/graphql") as object),
+  useInstalledAppsQuery: jest.fn(() => ({
+    data: {
+      apps: {
+        edges: [],
+      },
+    },
+  })),
+}));
 
 const mockedAppStoreExtensions = {
   payments: {
@@ -58,7 +67,13 @@ describe("Extension / hooks / useExploreExtensions", () => {
       loading: true,
       error: null,
     });
-    (useInstalledExtensions as jest.Mock).mockReturnValue({ installedApps: [] });
+    (useInstalledAppsQuery as jest.Mock).mockReturnValue({
+      data: {
+        apps: {
+          edges: [],
+        },
+      },
+    });
 
     // Act
     const { result } = renderHook(() => useExploreExtensions());
@@ -76,27 +91,37 @@ describe("Extension / hooks / useExploreExtensions", () => {
       loading: false,
       error: null,
     });
-    (useInstalledExtensions as jest.Mock).mockReturnValue({
-      installedApps: [
-        {
-          id: "id-1",
-          identifier: "app-id-1",
-          isActive: true,
-          manifestUrl: "http://example.com/api/manifest",
+    (useInstalledAppsQuery as jest.Mock).mockReturnValue({
+      data: {
+        apps: {
+          edges: [
+            {
+              node: {
+                id: "id-1",
+                identifier: "app-id-1",
+                isActive: true,
+                manifestUrl: "http://example.com/api/manifest",
+              },
+            },
+            {
+              node: {
+                id: "id-2",
+                identifier: "app-id-2",
+                isActive: true,
+                manifestUrl: "http://something.com/api/manifest",
+              },
+            },
+            {
+              node: {
+                id: "id-4",
+                identifier: "app-id-4",
+                isActive: false,
+                manifestUrl: "http://example-3.com/api/manifest",
+              },
+            },
+          ],
         },
-        {
-          id: "id-2",
-          identifier: "app-id-2",
-          isActive: true,
-          manifestUrl: "http://something.com/api/manifest",
-        },
-        {
-          id: "id-4",
-          identifier: "app-id-4",
-          isActive: false,
-          manifestUrl: "http://example-3.com/api/manifest",
-        },
-      ],
+      },
     });
 
     // Act

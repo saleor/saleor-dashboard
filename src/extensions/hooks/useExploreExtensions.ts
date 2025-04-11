@@ -1,9 +1,9 @@
 import { getExtensionsConfig } from "@dashboard/config";
 import { ExtensionData, ExtensionsGroups } from "@dashboard/extensions/types";
-import { InstalledAppFragment } from "@dashboard/graphql";
+import { InstalledAppFragment, useInstalledAppsQuery } from "@dashboard/graphql";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 import { useAppStoreExtensions } from "./useAppStoreExtensions";
-import { useInstalledExtensions } from "./useInstalledExtensions";
 
 const byAppType = (extension: ExtensionData) => extension.type === "APP";
 
@@ -28,7 +28,13 @@ const toExtension = (extension: ExtensionData, installedApps: InstalledAppFragme
 
 export const useExploreExtensions = () => {
   const { data, loading, error } = useAppStoreExtensions(getExtensionsConfig().extensionsApiUri);
-  const { installedApps } = useInstalledExtensions();
+  const { data: installedAppsData } = useInstalledAppsQuery({
+    variables: {
+      first: 100,
+    },
+  });
+
+  const installedApps = mapEdgesToItems(installedAppsData?.apps) ?? [];
 
   const extensionsData = Object.fromEntries(
     Object.entries(data).map(([group, extensions]) => [

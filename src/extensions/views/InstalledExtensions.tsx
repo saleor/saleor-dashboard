@@ -2,23 +2,34 @@ import { InstallWithManifestFormButton } from "@dashboard/apps/components/Instal
 import { AppUrls } from "@dashboard/apps/urls";
 import { TopNav } from "@dashboard/components/AppLayout";
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
-import { useInstalledExtensionsMocks } from "@dashboard/extensions/hooks/useInstalledExtensionsMocks";
-import { headerTitles, messages } from "@dashboard/extensions/messages";
+import {
+  ExtensionsListUrlDialog,
+  ExtensionsListUrlQueryParams,
+  ExtensionsUrls,
+} from "@dashboard/extensions/urls";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useState } from "react";
 import { useIntl } from "react-intl";
 
+import { DeleteFailedInstallationDialog } from "../components/DeleteFailedInstallationDialog";
 import { InstalledExtensionsList } from "../components/InstalledExtensionsList";
 import { RequestExtensionsButton } from "../components/RequestExtensionsButton";
+import { useInstalledExtensionsData } from "../hooks/useInstalledExtensionsData";
+import { usePendingInstallation } from "../hooks/usePendingInstallation";
+import { headerTitles, messages } from "../messages";
 
-export const InstalledExtensions = () => {
+interface InstalledExtensionsProps {
+  params: ExtensionsListUrlQueryParams;
+}
+
+export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const [query, setQuery] = useState("");
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
-  const installedExtensions = useInstalledExtensionsMocks();
 
   const navigateToAppInstallPage = useCallback(
     (manifestUrl: string) => {
@@ -26,6 +37,31 @@ export const InstalledExtensions = () => {
     },
     [navigate],
   );
+
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ExtensionsListUrlDialog,
+    ExtensionsListUrlQueryParams
+  >(navigate, ExtensionsUrls.resolveInstalledExtensionsUrl, {});
+
+  const handleRemoveFailedInstallation = (id: string) => {
+    openModal("app-installation-remove", { id });
+  };
+
+  const { installedApps, installedAppsLoading, refetchInstalledApps } = useInstalledExtensionsData({
+    searchQuery: query,
+  });
+
+  const {
+    pendingInstallations,
+    deleteInProgressAppStatus,
+    pendingInstallationsLoading,
+    handleRemoveInProgress,
+  } = usePendingInstallation({
+    searchQuery: query,
+    onCloseModal: closeModal,
+    refetchExtensions: refetchInstalledApps,
+    onFailedInstallationRemove: handleRemoveFailedInstallation,
+  });
 
   return (
     <>
@@ -48,7 +84,19 @@ export const InstalledExtensions = () => {
           />
         </Box>
 
-        <InstalledExtensionsList installedExtensions={installedExtensions} />
+        <InstalledExtensionsList
+          installedExtensions={[...pendingInstallations, ...installedApps]}
+          loading={pendingInstallationsLoading || installedAppsLoading}
+          clearSearch={() => setQuery("")}
+        />
+
+        <DeleteFailedInstallationDialog
+          confirmButtonState={deleteInProgressAppStatus}
+          name={pendingInstallations.find(installation => installation.id === params?.id)?.name}
+          onClose={closeModal}
+          onConfirm={() => handleRemoveInProgress(params?.id || "")}
+          open={params.action === "app-installation-remove"}
+        />
       </Box>
     </>
   );
