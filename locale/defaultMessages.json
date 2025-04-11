@@ -6563,6 +6563,10 @@
     "context": "page header",
     "string": "Create New Category"
   },
+  "chJmBW": {
+    "context": "card text, app install page",
+    "string": "Uninstalling the app will remove all your customer’s personal data stored by {extensionName}. {learnMoreLink}"
+  },
   "chvryR": {
     "context": "order history message",
     "string": "Invoice was requested by {requestedBy}"
@@ -8922,10 +8926,6 @@
   },
   "sfErC+": {
     "string": "Voucher Name"
-  },
-  "shb8aZ": {
-    "context": "card text, app install page",
-    "string": "Uninstalling the app will remove all your customer’s personal data stored by Product Feed. {learnMoreLink}"
   },
   "shmSDX": {
     "context": "no products placeholder",
