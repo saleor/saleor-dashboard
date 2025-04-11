@@ -1,5 +1,3 @@
-import plusIcon from "@assets/images/plus-icon.svg";
-import { AppAvatar } from "@dashboard/apps/components/AppAvatar/AppAvatar";
 import { DashboardCard } from "@dashboard/components/Card";
 import { ExternalLinkUnstyled } from "@dashboard/extensions/components/ExternalLinkUnstyled";
 import { messages } from "@dashboard/extensions/messages";
@@ -10,7 +8,6 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { IconsSection } from "./IconsSection";
-import { SaleorLogo } from "./SaleorLogo";
 
 export const InstallExtensionManifestData = ({
   manifest,

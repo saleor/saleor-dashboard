@@ -1,4 +1,4 @@
-import { ExtensionInstallQueryParams, ExtensionsPaths, MANIFEST_ATTR } from "../../urls";
+import { ExtensionsPaths } from "../../urls";
 
 export const PLACEHOLDER_MANIFEST_URL = "https://example.com/api/manifest";
 

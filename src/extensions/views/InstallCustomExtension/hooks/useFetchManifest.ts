@@ -48,5 +48,5 @@ export const useFetchManifest = ({
     submitFetchManifest,
     lastFetchedManifestUrl,
     isFetchingManifest: fetchManifestOpts.loading,
-  };
+  } as const;
 };
