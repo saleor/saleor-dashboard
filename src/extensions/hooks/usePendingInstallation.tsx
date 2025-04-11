@@ -52,7 +52,7 @@ export const usePendingInstallation = ({
     });
 
   const filteredPendingInstallations = fuzzySearch(data?.appsInstallations ?? [], searchQuery, [
-    "name",
+    "appName",
   ]);
   const pendingInstallations: InstalledExtension[] = filteredPendingInstallations.map(
     ({ status, id, appName, brand }) => {
