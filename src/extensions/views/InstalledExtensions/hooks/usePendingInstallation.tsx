@@ -1,5 +1,3 @@
-import useActiveAppsInstallations from "@dashboard/extensions/hooks/useActiveAppsInstallations";
-import { useInstallationNotify } from "@dashboard/extensions/hooks/useInstallationNotify";
 import { InstalledExtension } from "@dashboard/extensions/types";
 import { JobStatusEnum, useAppsInstallationsQuery } from "@dashboard/graphql";
 import { fuzzySearch } from "@dashboard/misc";
@@ -9,6 +7,8 @@ import { FailedInstallationActions } from "../components/FailedInstallationActio
 import { FailedInstallationInfo } from "../components/InfoLabels/FailedInstallationInfo";
 import { InstallationPendingInfo } from "../components/InfoLabels/InstallationPendingInfo";
 import { ViewDetailsActionButton } from "../components/ViewDetailsActionButton";
+import useActiveAppsInstallations from "./useActiveAppsInstallations";
+import { useInstallationNotify } from "./useInstallationNotify";
 
 interface UsePendingInstallationProps {
   refetchExtensions: () => void;
