@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 export const InstallationPendingInfo = () => {
   return (
     <InfoLabelsContainer
-      icon={<CircularProgress size={10} />}
+      icon={<CircularProgress size={10} thickness={7} />}
       message={<FormattedMessage {...infoMessages.installationPending} />}
     />
   );

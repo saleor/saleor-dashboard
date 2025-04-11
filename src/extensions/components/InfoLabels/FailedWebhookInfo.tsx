@@ -25,7 +25,7 @@ export const FailedWebhookInfo = ({ date, link }: FailedWebhookInfoProps) => {
           alignItems="center"
           justifyContent="center"
         >
-          <ExclamationIcon width="11px" height="11px" />
+          <ExclamationIcon />
         </Box>
       }
       message={

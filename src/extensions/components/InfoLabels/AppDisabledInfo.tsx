@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 export const AppDisabledInfo = () => {
   return (
     <InfoLabelsContainer
-      icon={<DisabledIcon height="10px" width="10px" />}
+      icon={<DisabledIcon />}
       message={<FormattedMessage {...infoMessages.appDisabled} />}
     />
   );
