@@ -2676,6 +2676,10 @@
     "context": "sale name",
     "string": "Name"
   },
+  "F62RkR": {
+    "context": "dialog header",
+    "string": "Unassign Variants From Voucher"
+  },
   "F69lwk": {
     "context": "settings menu item",
     "string": "Settings"
