@@ -94,7 +94,11 @@ export function useAutoSubmit<TFieldValues extends FieldValues>({
     });
 
     return () => subscription.unsubscribe();
-  }, [watch, onSubmit, trigger, debouncedSubmit]);
+
+    // Initialize watch method only on first render
+    // Note: We cannot watch for these dependencies, because it causes debounce to be ignored on re-render
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Cancel debounce if form is already submitting
   const { isSubmitting } = useFormState({ control });

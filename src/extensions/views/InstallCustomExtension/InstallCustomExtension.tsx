@@ -1,12 +1,7 @@
 import { TopNav } from "@dashboard/components/AppLayout";
 import { HookFormInput } from "@dashboard/components/HookFormInput";
 import { Savebar } from "@dashboard/components/Savebar";
-import {
-  AppFetchMutation,
-  AppFetchMutationVariables,
-  useAppFetchMutation,
-  useAppInstallMutation,
-} from "@dashboard/graphql";
+import { useAppFetchMutation, useAppInstallMutation } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -15,15 +10,17 @@ import { MANIFEST_FORMAT_DOCS_URL } from "@dashboard/links";
 import { extractMutationErrors } from "@dashboard/misc";
 import getAppErrorMessage, { appErrorMessages } from "@dashboard/utils/errors/app";
 import { useAutoSubmit } from "@dashboard/utils/hook-form/auto-submit";
-import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React, { useCallback, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
+import { z } from "zod";
 
 import { ExternalLinkUnstyled } from "../../components/ExternalLinkUnstyled";
 import { headerTitles, messages } from "../../messages";
 import { ExtensionInstallQueryParams, ExtensionsPaths, MANIFEST_ATTR } from "../../urls";
-import { InstallExtensionManifestData } from "./components/InstallExtensionManifestData";
+import { InstallSectionData } from "./components/InstallSectionData";
+import { FormData } from "./types";
 
 const PLACEHOLDER_MANIFEST_URL = "https://example.com/api/manifest";
 
@@ -31,7 +28,9 @@ const EL_ID_MANIFEST_INPUT_LABEL = "manifest-input-label";
 
 const previousPagePath = ExtensionsPaths.installedExtensions;
 
-type FormData = AppFetchMutationVariables;
+const schema = z.object({
+  manifestUrl: z.string().url().trim(),
+});
 
 export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQueryParams }) => {
   const intl = useIntl();
@@ -44,6 +43,7 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
     values: {
       manifestUrl: manifestUrlFromQueryParams || "",
     },
+    // resolver: zodResolver(schema),
     mode: "onBlur",
   });
 
@@ -71,18 +71,13 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
 
   // TODO: Remove this once updated to newer Apollo version
   // In latest apollo we can call fetchManifestOpts.reset to clear data
-  const [manifest, setManifest] =
-    useState<NonNullable<AppFetchMutation["appFetchManifest"]>["manifest"]>();
-
-  const manifestUrlInputValue = watch("manifestUrl");
-
-  useEffect(() => {
-    setManifest(null);
-  }, [manifestUrlInputValue]);
+  const [lastFetchedManifestUrl, setLastFetchedManifestUrl] = useState<string>();
 
   const [fetchManifest, fetchManifestOpts] = useAppFetchMutation({
     disableErrorHandling: true,
     onCompleted: data => {
+      setLastFetchedManifestUrl(getValues("manifestUrl"));
+
       if (data?.appFetchManifest?.errors.length) {
         const mergedErrorMessages = data.appFetchManifest.errors
           .map(error => getAppErrorMessage(error, intl))
@@ -92,8 +87,6 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
           message: mergedErrorMessages,
           type: "validate",
         });
-      } else {
-        setManifest(data.appFetchManifest?.manifest);
       }
     },
   });
@@ -167,6 +160,8 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const manifest = fetchManifestOpts?.data?.appFetchManifest?.manifest;
+
   return (
     <>
       <TopNav
@@ -216,25 +211,12 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
             }}
           />
         </Box>
-        {fetchManifestOpts.loading ? (
-          <Box>
-            <Box display="flex" flexDirection="column" gap={6}>
-              <Skeleton height={5} __width="292px" />
-              <Skeleton height={12} __width="292px" />
-            </Box>
-            <Box marginTop={16}>
-              <Skeleton height={5} __width="106px" />
-              <Skeleton height={5} marginTop={4} __width="356px" />
-              <Skeleton height={5} marginTop={1.5} __width="356px" />
-            </Box>
-            <Box marginTop={11}>
-              <Skeleton height={5} __width="356px" />
-              <Skeleton height={5} marginTop={1.5} __width="356px" />
-            </Box>
-          </Box>
-        ) : manifest ? (
-          <InstallExtensionManifestData manifest={manifest} />
-        ) : null}
+        <InstallSectionData
+          isManifestLoading={fetchManifestOpts.loading}
+          manifest={manifest}
+          lastFetchedManifestUrl={lastFetchedManifestUrl}
+          control={control}
+        />
       </Box>
       <Savebar>
         <Savebar.Spacer />
