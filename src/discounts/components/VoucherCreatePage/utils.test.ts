@@ -174,7 +174,7 @@ describe("getFilteredProductVariants", () => {
     // Arrange
     const data = {
       variants: [],
-    } as FormData;
+    } as unknown as FormData;
 
     const searchOpts = {
       data: {
@@ -182,7 +182,7 @@ describe("getFilteredProductVariants", () => {
           edges: [],
         },
       },
-    } as SearchProductsOpts;
+    } as unknown as SearchProductsOpts;
 
     // Act
     const result = getFilteredProductVariants(data, searchOpts);
@@ -217,8 +217,8 @@ describe("getFilteredProductVariants", () => {
 
     // Assert
     expect(result).toHaveLength(1);
-    expect(result[0].variants).toHaveLength(1);
-    expect(result[0].variants[0].id).toBe("variant-2");
+    expect(result![0].variants).toHaveLength(1);
+    expect(result![0].variants[0].id).toBe("variant-2");
   });
 
   it("should handle null variants in products", () => {
@@ -247,7 +247,7 @@ describe("getFilteredProductVariants", () => {
 
     // Assert
     expect(result).toHaveLength(1);
-    expect(result[0].variants).toEqual([]);
+    expect(result![0].variants).toEqual([]);
   });
 
   it("should maintain product structure while filtering variants", () => {
@@ -276,7 +276,7 @@ describe("getFilteredProductVariants", () => {
     const result = getFilteredProductVariants(data, searchOpts);
 
     // Assert
-    expect(result[0]).toMatchObject({
+    expect(result![0]).toMatchObject({
       id: "prod-1",
       name: "Test Product",
       variants: [{ id: "variant-2" }],
