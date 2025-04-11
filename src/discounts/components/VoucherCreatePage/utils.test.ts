@@ -87,7 +87,10 @@ describe("mapLocalVariantsToSavedVariants", () => {
               __typename: "Product",
               id: "prod-1",
               name: "T-Shirt",
-              thumbnail: "thumb.jpg",
+              thumbnail: {
+                __typename: "Image",
+                url: "thumb.jpg",
+              },
               productType: {
                 __typename: "ProductType",
                 id: "type-1",
