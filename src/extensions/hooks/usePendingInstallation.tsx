@@ -24,7 +24,9 @@ export const usePendingInstallation = ({
   searchQuery,
 }: UsePendingInstallationProps) => {
   const [initialLoading, setInitialLoading] = useState(true);
-  const { data, loading, refetch } = useAppsInstallationsQuery();
+  const { data, loading, refetch } = useAppsInstallationsQuery({
+    displayLoader: true,
+  });
   const { installedNotify, removeInProgressAppNotify, errorNotify } = useInstallationNotify();
 
   useEffect(() => {

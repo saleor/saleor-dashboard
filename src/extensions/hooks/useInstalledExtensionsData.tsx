@@ -54,6 +54,7 @@ export const useInstalledExtensionsData = ({ searchQuery }: UseInstalledExtensio
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
 
   const { data, refetch } = useInstalledAppsListQuery({
+    displayLoader: true,
     variables: {
       first: 100,
       filter: {
@@ -65,6 +66,7 @@ export const useInstalledExtensionsData = ({ searchQuery }: UseInstalledExtensio
   const installedAppsData = mapEdgesToItems(data?.apps) || [];
 
   const { data: eventDeliveriesData, loading: eventDeliveriesLoading } = useEventDeliveryQuery({
+    displayLoader: true,
     variables: {
       first: 50,
       filter: {
