@@ -1,9 +1,9 @@
 import React from "react";
 
 export const DisabledIcon = ({
-  height = "20px",
-  width = "20px",
-  viewBox = "0 0 20 20",
+  height = "12px",
+  width = "12px",
+  viewBox = "0 0 12 12",
 }: {
   height?: string;
   width?: string;
@@ -16,25 +16,25 @@ export const DisabledIcon = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <g clipPath="url(#clip0_478_40539)">
+    <g clipPath="url(#clip0_1226_7882)">
       <path
-        d="M9.99984 18.3346C14.6022 18.3346 18.3332 14.6037 18.3332 10.0013C18.3332 5.39893 14.6022 1.66797 9.99984 1.66797C5.39746 1.66797 1.6665 5.39893 1.6665 10.0013C1.6665 14.6037 5.39746 18.3346 9.99984 18.3346Z"
-        stroke="currentColor"
-        strokeWidth="2"
+        d="M6 11C8.76142 11 11 8.76142 11 6C11 3.23858 8.76142 1 6 1C3.23858 1 1 3.23858 1 6C1 8.76142 3.23858 11 6 11Z"
+        stroke="#677686"
+        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
-        d="M4.0835 4.08203L15.9168 15.9154"
-        stroke="currentColor"
-        strokeWidth="2"
+        d="M2.4502 2.44922L9.5502 9.54922"
+        stroke="#677686"
+        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
     </g>
     <defs>
-      <clipPath id="clip0_478_40539">
-        <rect width="20" height="20" fill="white" />
+      <clipPath id="clip0_1226_7882">
+        <rect width="12" height="12" fill="white" />
       </clipPath>
     </defs>
   </svg>

@@ -1,4 +1,4 @@
-import { AppListUrlQueryParams, AppPaths } from "@dashboard/apps/urls";
+import { AppPaths } from "@dashboard/apps/urls";
 import { AppListView } from "@dashboard/apps/views";
 import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -19,11 +19,11 @@ const ExploreExtensionsView = () => {
 
 const InstalledExtensionsView = () => {
   const qs = parseQs(location.search.substr(1));
-  const params: AppListUrlQueryParams = qs;
+  const params = qs;
   const { enabled: isExtensionsDevEnabled } = useFlag("extensions_dev");
 
   if (isExtensionsDevEnabled) {
-    return <InstalledExtensions />;
+    return <InstalledExtensions params={params} />;
   }
 
   return <AppListView params={params} showAvailableApps={false} />;

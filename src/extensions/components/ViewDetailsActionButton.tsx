@@ -22,7 +22,7 @@ export const ViewDetailsActionButton = ({ isDisabled, id }: ViewDetailsActionBut
 
   if (isDisabled) {
     return (
-      <Link href={AppPaths.resolveAppPath(id)}>
+      <Link href={AppPaths.resolveAppDetailsPath(id)}>
         <Button size="small" variant="secondary">
           <FormattedMessage {...buttonLabels.manage} />
         </Button>
@@ -31,7 +31,7 @@ export const ViewDetailsActionButton = ({ isDisabled, id }: ViewDetailsActionBut
   }
 
   return (
-    <Link href={AppPaths.resolveAppDetailsPath(id)}>
+    <Link href={AppPaths.resolveAppPath(id)}>
       <Button size="small" variant="secondary">
         <FormattedMessage {...buttonLabels.viewDetails} />
       </Button>

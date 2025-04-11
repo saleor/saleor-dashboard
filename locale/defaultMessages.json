@@ -982,6 +982,10 @@
     "context": "Transaction capture button - charge preauthorized transaction amount",
     "string": "Capture"
   },
+  "43b+ts": {
+    "context": "extensions list has been installed",
+    "string": "Extension installed"
+  },
   "45aV8u": {
     "context": "gift card bulk create modal bottom explanation",
     "string": "After creation Saleor will create a list of gift card codes that you will be able to download."
@@ -2526,6 +2530,10 @@
   "EGycu/": {
     "context": "voucher status active",
     "string": "Active"
+  },
+  "EGzGed": {
+    "context": "extensions list has been removed",
+    "string": "Extension successfully removed"
   },
   "EHsnZX": {
     "context": "dialog description",
@@ -5138,6 +5146,10 @@
     "context": "note input label",
     "string": "Note"
   },
+  "UMUQCG": {
+    "context": "extensions list has not been installed",
+    "string": "Couldn’t Install {name}"
+  },
   "UN+yTt": {
     "string": "Staff Settings"
   },
@@ -5179,6 +5191,10 @@
   "Uf3oHA": {
     "context": "add new menu item",
     "string": "Create new item"
+  },
+  "Uh3NX/": {
+    "context": "remove failed installation dialog content",
+    "string": "Are you sure you want to delete {name} failed installation?"
   },
   "Uh9R9m": {
     "context": "prepare order fulfillment, button",
@@ -7466,6 +7482,10 @@
     "context": "section header",
     "string": "About this app"
   },
+  "jDWPin": {
+    "context": "remove failed installation dialog title",
+    "string": "Remove failed installation"
+  },
   "jDovoJ": {
     "context": "gift card history message",
     "string": "Gift card was issued"
@@ -8580,6 +8600,10 @@
   "qQih8j": {
     "context": "voucher status scheduled",
     "string": "Scheduled"
+  },
+  "qRmntJ": {
+    "context": "extensions list ready to be used",
+    "string": "{name} is ready to be used"
   },
   "qSCmIG": {
     "string": "lower than {value}"
