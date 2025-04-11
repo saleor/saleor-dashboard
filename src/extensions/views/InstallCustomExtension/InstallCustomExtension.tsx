@@ -1,15 +1,11 @@
 import { TopNav } from "@dashboard/components/AppLayout";
 import { Savebar } from "@dashboard/components/Savebar";
-import { useAppFetchMutation, useAppInstallMutation } from "@dashboard/graphql";
-import useLocalStorage from "@dashboard/hooks/useLocalStorage";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useAppFetchMutation } from "@dashboard/graphql";
 import { MANIFEST_FORMAT_DOCS_URL } from "@dashboard/links";
-import { extractMutationErrors } from "@dashboard/misc";
-import getAppErrorMessage, { appErrorMessages } from "@dashboard/utils/errors/app";
+import getAppErrorMessage from "@dashboard/utils/errors/app";
 import { useAutoSubmit } from "@dashboard/utils/hook-form/auto-submit";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -19,13 +15,12 @@ import { ExtensionInstallQueryParams, MANIFEST_ATTR } from "../../urls";
 import { InstallSectionData } from "./components/InstallSectionData";
 import { ManifestUrlForm } from "./components/ManifestUrlForm/ManifestUrlForm";
 import { previousPagePath } from "./consts";
+import { useInstallApp } from "./hooks/useInstallApp";
 import { useLoadQueryParamsToForm } from "./hooks/useLoadQueryParamsToForm";
 import { ExtensionInstallFormData } from "./types";
 
 export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQueryParams }) => {
   const intl = useIntl();
-  const navigate = useNavigator();
-  const notify = useNotifier();
 
   const manifestUrlFromQueryParams = params[MANIFEST_ATTR];
 
@@ -36,28 +31,6 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
       },
       mode: "onBlur",
     });
-
-  const validateUrl = useCallback(
-    (value: any) => {
-      if (typeof value === "string") {
-        try {
-          new URL(value);
-
-          return true;
-        } catch (e) {
-          // no-op
-        }
-      }
-
-      return intl.formatMessage(appErrorMessages.invalidUrlFormat);
-    },
-    [intl],
-  );
-
-  const [, setActiveInstallations] = useLocalStorage<Array<Record<"id" | "name", string>>>(
-    "activeInstallations",
-    [],
-  );
 
   // TODO: Remove this once updated to newer Apollo version
   // In latest apollo we can call fetchManifestOpts.reset to clear data
@@ -81,55 +54,14 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
     },
   });
 
-  const [installApp, installAppOpts] = useAppInstallMutation({
-    onCompleted: data => {
-      const installationData = data?.appInstall?.appInstallation;
+  const manifest = fetchManifestOpts?.data?.appFetchManifest?.manifest;
 
-      if (data.appInstall?.errors.length === 0) {
-        if (installationData) {
-          setActiveInstallations(activeInstallations => [
-            ...activeInstallations,
-            {
-              id: installationData.id,
-              name: installationData.appName,
-            },
-          ]);
-        }
-
-        navigate(previousPagePath);
-      } else {
-        (data?.appInstall?.errors ?? []).forEach(error => {
-          notify({
-            status: "error",
-            text: getAppErrorMessage(error, intl),
-          });
-        });
-      }
-    },
+  const { submitInstallApp, isSubmittingInstallation } = useInstallApp({
+    getValues,
+    manifest,
   });
-
   const submitFetchManifest: SubmitHandler<ExtensionInstallFormData> = data => {
     fetchManifest({ variables: data });
-  };
-
-  const submitInstallApp = async () => {
-    const manifest = fetchManifestOpts?.data?.appFetchManifest?.manifest;
-
-    const errors = await extractMutationErrors(
-      installApp({
-        variables: {
-          input: {
-            appName: manifest?.name,
-            manifestUrl: getValues("manifestUrl"),
-            permissions: manifest?.permissions?.map(permission => permission.code),
-          },
-        },
-      }),
-    );
-
-    if (!errors) {
-      navigate(previousPagePath);
-    }
   };
 
   const { flush: flushDebouncedSubmit } = useAutoSubmit({
@@ -144,8 +76,6 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
     onSubmit: handleSubmit(submitFetchManifest),
     params,
   });
-
-  const manifest = fetchManifestOpts?.data?.appFetchManifest?.manifest;
 
   return (
     <>
@@ -190,7 +120,7 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
         <Savebar.CancelButton href={previousPagePath} />
         <Savebar.ConfirmButton
           disabled={!manifest}
-          transitionState={installAppOpts.loading ? "loading" : "default"}
+          transitionState={isSubmittingInstallation ? "loading" : "default"}
           onClick={() => submitInstallApp()}
         >
           <FormattedMessage {...messages.install} />
