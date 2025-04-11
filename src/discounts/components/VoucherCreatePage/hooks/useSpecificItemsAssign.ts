@@ -91,6 +91,7 @@ export const useSpecificItemsAssign = ({
       | CategoryWithTotalProductsFragment
       | CollectionWithTotalProductsFragment
       | SearchProductFragment
+      | VoucherCreateProductVariant
       | string
     >,
     type: VoucherCreatePageTab | "countries",
