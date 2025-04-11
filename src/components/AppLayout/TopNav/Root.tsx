@@ -1,6 +1,6 @@
 import { useUser } from "@dashboard/auth";
-import { Box, Text } from "@saleor/macaw-ui-next";
-import React, { ComponentProps, PropsWithChildren } from "react";
+import { Box, BoxProps, Text } from "@saleor/macaw-ui-next";
+import React, { PropsWithChildren } from "react";
 
 import useAppChannel from "../AppChannelContext";
 import AppChannelSelect from "../AppChannelSelect";
@@ -9,7 +9,7 @@ import { TopNavLink } from "./TopNavLink";
 import { TopNavWrapper } from "./TopNavWrapper";
 
 interface TopNavProps {
-  title: string | React.ReactNode;
+  title: React.ReactNode;
   subtitle?: React.ReactNode;
   href?: string;
   withoutBorder?: boolean;
@@ -24,7 +24,7 @@ export const Root = ({
   isAlignToRight = true,
   children,
   ...wrapperProps
-}: PropsWithChildren<TopNavProps> & ComponentProps<typeof Box>) => {
+}: PropsWithChildren<TopNavProps> & Omit<BoxProps, keyof TopNavProps>) => {
   const { channel, isPickerActive, setChannel } = useAppChannel(false);
   const user = useUser();
   const channels = user?.user?.accessibleChannels ?? [];

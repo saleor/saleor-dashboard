@@ -1,5 +1,5 @@
-import { Box } from "@saleor/macaw-ui-next";
-import React, { ComponentProps } from "react";
+import { Box, BoxProps } from "@saleor/macaw-ui-next";
+import React from "react";
 
 import { topBarHeight, topBarHeightSubtitle } from "../consts";
 
@@ -12,7 +12,7 @@ export const TopNavWrapper = ({
   children?: React.ReactNode;
   withoutBorder?: boolean;
   hasSubtitle?: boolean;
-} & ComponentProps<typeof Box>) => (
+} & BoxProps) => (
   <Box
     display={hasSubtitle ? "block" : "flex"}
     alignItems="center"
