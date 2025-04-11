@@ -1,12 +1,10 @@
 import { TopNav } from "@dashboard/components/AppLayout";
 import { Savebar } from "@dashboard/components/Savebar";
-import { useAppFetchMutation } from "@dashboard/graphql";
 import { MANIFEST_FORMAT_DOCS_URL } from "@dashboard/links";
-import getAppErrorMessage from "@dashboard/utils/errors/app";
 import { useAutoSubmit } from "@dashboard/utils/hook-form/auto-submit";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import React from "react";
+import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ExternalLinkUnstyled } from "../../components/ExternalLinkUnstyled";
@@ -15,6 +13,7 @@ import { ExtensionInstallQueryParams, MANIFEST_ATTR } from "../../urls";
 import { InstallSectionData } from "./components/InstallSectionData";
 import { ManifestUrlForm } from "./components/ManifestUrlForm/ManifestUrlForm";
 import { previousPagePath } from "./consts";
+import { useFetchManifest } from "./hooks/useFetchManifest";
 import { useInstallApp } from "./hooks/useInstallApp";
 import { useLoadQueryParamsToForm } from "./hooks/useLoadQueryParamsToForm";
 import { ExtensionInstallFormData } from "./types";
@@ -32,37 +31,16 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
       mode: "onBlur",
     });
 
-  // TODO: Remove this once updated to newer Apollo version
-  // In latest apollo we can call fetchManifestOpts.reset to clear data
-  const [lastFetchedManifestUrl, setLastFetchedManifestUrl] = useState<string>();
-
-  const [fetchManifest, fetchManifestOpts] = useAppFetchMutation({
-    disableErrorHandling: true,
-    onCompleted: data => {
-      setLastFetchedManifestUrl(getValues("manifestUrl"));
-
-      if (data?.appFetchManifest?.errors.length) {
-        const mergedErrorMessages = data.appFetchManifest.errors
-          .map(error => getAppErrorMessage(error, intl))
-          .join(", ");
-
-        setError("manifestUrl", {
-          message: mergedErrorMessages,
-          type: "validate",
-        });
-      }
-    },
-  });
-
-  const manifest = fetchManifestOpts?.data?.appFetchManifest?.manifest;
+  const { submitFetchManifest, manifest, lastFetchedManifestUrl, isFetchingManifest } =
+    useFetchManifest({
+      getValues,
+      setError,
+    });
 
   const { submitInstallApp, isSubmittingInstallation } = useInstallApp({
     getValues,
     manifest,
   });
-  const submitFetchManifest: SubmitHandler<ExtensionInstallFormData> = data => {
-    fetchManifest({ variables: data });
-  };
 
   const { flush: flushDebouncedSubmit } = useAutoSubmit({
     trigger,
@@ -109,7 +87,7 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
           }}
         />
         <InstallSectionData
-          isManifestLoading={fetchManifestOpts.loading}
+          isFetchingManifest={isFetchingManifest}
           manifest={manifest}
           lastFetchedManifestUrl={lastFetchedManifestUrl}
           control={control}
