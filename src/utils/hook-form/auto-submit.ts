@@ -1,9 +1,8 @@
 import debounce from "lodash/debounce";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Control, FieldValues, useFormState, UseFormTrigger, UseFormWatch } from "react-hook-form";
+import { useEffect, useMemo, useRef } from "react";
+import { Control, FieldValues, useFormState, UseFormWatch } from "react-hook-form";
 
 interface UseAutoSubmitProps<TFieldValues extends FieldValues> {
-  trigger: UseFormTrigger<TFieldValues>;
   watch: UseFormWatch<TFieldValues>;
   control: Control<TFieldValues>;
   onSubmit: () => void; // Changed to match expected type
@@ -75,7 +74,6 @@ export function useDebounceCallback<T extends (...args: any) => ReturnType<T>>(
 }
 
 export function useAutoSubmit<TFieldValues extends FieldValues>({
-  trigger,
   watch,
   control,
   onSubmit,

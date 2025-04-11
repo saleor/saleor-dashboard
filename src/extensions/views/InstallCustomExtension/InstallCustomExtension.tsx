@@ -43,7 +43,6 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
   });
 
   const { flush: flushDebouncedSubmit } = useAutoSubmit({
-    trigger,
     watch,
     onSubmit: handleSubmit(submitFetchManifest),
     control,
