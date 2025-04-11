@@ -54,7 +54,7 @@ export const InstallExtensionManifestData = ({
           height={12}
           display="flex"
           placeItems="center"
-          borderRadius={2}
+          borderRadius={5}
           overflow="hidden"
         >
           <img src={getSaleorLogoUrl(theme)} alt="" />
@@ -63,6 +63,7 @@ export const InstallExtensionManifestData = ({
 
         <AppAvatar
           size={12}
+          borderRadius={5}
           logo={
             manifest?.brand?.logo.default
               ? {
