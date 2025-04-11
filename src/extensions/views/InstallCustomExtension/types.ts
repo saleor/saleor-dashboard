@@ -1,4 +1,4 @@
 import { type AppFetchMutation, type AppFetchMutationVariables } from "@dashboard/graphql";
 
 export type Manifest = NonNullable<AppFetchMutation["appFetchManifest"]>["manifest"];
-export type FormData = AppFetchMutationVariables;
+export type ExtensionInstallFormData = AppFetchMutationVariables;

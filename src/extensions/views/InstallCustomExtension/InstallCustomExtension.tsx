@@ -1,36 +1,26 @@
 import { TopNav } from "@dashboard/components/AppLayout";
-import { HookFormInput } from "@dashboard/components/HookFormInput";
 import { Savebar } from "@dashboard/components/Savebar";
 import { useAppFetchMutation, useAppInstallMutation } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
 import { MANIFEST_FORMAT_DOCS_URL } from "@dashboard/links";
 import { extractMutationErrors } from "@dashboard/misc";
 import getAppErrorMessage, { appErrorMessages } from "@dashboard/utils/errors/app";
 import { useAutoSubmit } from "@dashboard/utils/hook-form/auto-submit";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
-import { z } from "zod";
 
 import { ExternalLinkUnstyled } from "../../components/ExternalLinkUnstyled";
 import { headerTitles, messages } from "../../messages";
-import { ExtensionInstallQueryParams, ExtensionsPaths, MANIFEST_ATTR } from "../../urls";
+import { ExtensionInstallQueryParams, MANIFEST_ATTR } from "../../urls";
 import { InstallSectionData } from "./components/InstallSectionData";
-import { FormData } from "./types";
-
-const PLACEHOLDER_MANIFEST_URL = "https://example.com/api/manifest";
-
-const EL_ID_MANIFEST_INPUT_LABEL = "manifest-input-label";
-
-const previousPagePath = ExtensionsPaths.installedExtensions;
-
-const schema = z.object({
-  manifestUrl: z.string().url().trim(),
-});
+import { ManifestUrlForm } from "./components/ManifestUrlForm/ManifestUrlForm";
+import { previousPagePath } from "./consts";
+import { useLoadQueryParamsToForm } from "./hooks/useLoadQueryParamsToForm";
+import { ExtensionInstallFormData } from "./types";
 
 export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQueryParams }) => {
   const intl = useIntl();
@@ -39,13 +29,13 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
 
   const manifestUrlFromQueryParams = params[MANIFEST_ATTR];
 
-  const { control, trigger, watch, handleSubmit, setError, getValues } = useForm<FormData>({
-    values: {
-      manifestUrl: manifestUrlFromQueryParams || "",
-    },
-    // resolver: zodResolver(schema),
-    mode: "onBlur",
-  });
+  const { control, trigger, watch, handleSubmit, setError, getValues } =
+    useForm<ExtensionInstallFormData>({
+      values: {
+        manifestUrl: manifestUrlFromQueryParams || "",
+      },
+      mode: "onBlur",
+    });
 
   const validateUrl = useCallback(
     (value: any) => {
@@ -118,7 +108,7 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
     },
   });
 
-  const submitFetchManifest: SubmitHandler<FormData> = data => {
+  const submitFetchManifest: SubmitHandler<ExtensionInstallFormData> = data => {
     fetchManifest({ variables: data });
   };
 
@@ -149,16 +139,11 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
     control,
   });
 
-  useEffect(() => {
-    if (manifestUrlFromQueryParams) {
-      (async () => {
-        await trigger();
-        await handleSubmit(submitFetchManifest)();
-      })();
-    }
-    // Run this only once
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useLoadQueryParamsToForm({
+    trigger,
+    onSubmit: handleSubmit(submitFetchManifest),
+    params,
+  });
 
   const manifest = fetchManifestOpts?.data?.appFetchManifest?.manifest;
 
@@ -182,35 +167,17 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
         }
       ></TopNav>
       <Box marginX={6} marginTop={10} display="flex" flexDirection="column" gap={10}>
-        <Box
-          as="form"
-          display="flex"
-          gap={3}
-          flexDirection="column"
-          __width="380px"
+        <ManifestUrlForm
+          control={control}
           onSubmit={handleSubmit(submitFetchManifest)}
-        >
-          <Text size={5} fontWeight="medium" id={EL_ID_MANIFEST_INPUT_LABEL}>
-            Provide Manifest URL
-          </Text>
-          <HookFormInput
-            control={control}
-            name="manifestUrl"
-            rules={{
-              required: intl.formatMessage(commonMessages.requiredField),
-              validate: validateUrl,
-            }}
-            aria-labelledby={EL_ID_MANIFEST_INPUT_LABEL}
-            placeholder={PLACEHOLDER_MANIFEST_URL}
-            onPaste={() => {
-              // On paste immediately submit form
-              // Wait for next tick when debounced submit is scheduled and call it immedioately
-              setTimeout(() => {
-                flushDebouncedSubmit();
-              });
-            }}
-          />
-        </Box>
+          onPaste={() => {
+            // On paste immediately submit form
+            // Wait for next tick when debounced submit is scheduled and call it immedioately
+            setTimeout(() => {
+              flushDebouncedSubmit();
+            });
+          }}
+        />
         <InstallSectionData
           isManifestLoading={fetchManifestOpts.loading}
           manifest={manifest}

@@ -2,7 +2,7 @@ import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { Control, useWatch } from "react-hook-form";
 
-import { FormData, Manifest } from "../../types";
+import { ExtensionInstallFormData, Manifest } from "../../types";
 import { InstallExtensionManifestData } from "../InstallExtensionManifestData";
 
 export const InstallSectionData = ({
@@ -14,7 +14,7 @@ export const InstallSectionData = ({
   isManifestLoading: boolean;
   manifest: Manifest | undefined;
   lastFetchedManifestUrl: string | undefined;
-  control: Control<FormData>;
+  control: Control<ExtensionInstallFormData>;
 }) => {
   const manifestUrlInputValue = useWatch({
     control,

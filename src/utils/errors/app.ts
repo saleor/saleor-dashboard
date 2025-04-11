@@ -3,6 +3,7 @@ import { defineMessages, IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";
 
+/** @deprecated use appManifestErrorMessage from extensions */
 export const appErrorMessages = defineMessages({
   invalidManifestFormat: {
     id: "pC6/1z",
@@ -38,6 +39,7 @@ export const appErrorMessages = defineMessages({
   },
 });
 
+/** @deprecated use getAppInstallErrorMessage from extensions */
 function getAppErrorMessage(err: AppErrorFragment, intl: IntlShape): string | undefined {
   if (err) {
     switch (err.code) {

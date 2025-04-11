@@ -1,4 +1,6 @@
-import { defineMessages } from "react-intl";
+import { AppErrorCode, AppErrorFragment } from "@dashboard/graphql";
+import { getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
+import { defineMessages, IntlShape } from "react-intl";
 
 export const headerTitles = defineMessages({
   exploreExtensions: {
@@ -204,3 +206,64 @@ export const messages = defineMessages({
     description: "link in infoCardText, to Saleor docs",
   },
 });
+
+export const appManifestErrorMessages = defineMessages({
+  invalidManifestFormat: {
+    id: "pC6/1z",
+    defaultMessage: "Invalid manifest format",
+  },
+  invalidPermission: {
+    id: "D2qihU",
+    defaultMessage: "Permission is invalid",
+  },
+  invalidStatus: {
+    id: "v3WWK+",
+    defaultMessage: "Status is invalid",
+  },
+  invalidUrlFormat: {
+    id: "g/BrOt",
+    defaultMessage: "Url has invalid format",
+  },
+  outOfScopeApp: {
+    id: "C4hCsD",
+    defaultMessage: "App is out of your permissions scope",
+  },
+  outOfScopeGroup: {
+    id: "1n1tOR",
+    defaultMessage: "Group is out of your permission scope",
+  },
+  outOfScopePermission: {
+    id: "4prRLv",
+    defaultMessage: "Permission is out of your scope",
+  },
+  unique: {
+    id: "TDhHMi",
+    defaultMessage: "This needs to be unique",
+  },
+});
+
+export function getAppInstallErrorMessage(
+  err: AppErrorFragment,
+  intl: IntlShape,
+): string | undefined {
+  if (err) {
+    switch (err.code) {
+      case AppErrorCode.INVALID_MANIFEST_FORMAT:
+        return intl.formatMessage(appManifestErrorMessages.invalidManifestFormat);
+      case AppErrorCode.OUT_OF_SCOPE_APP:
+        return intl.formatMessage(appManifestErrorMessages.outOfScopeApp);
+      case AppErrorCode.OUT_OF_SCOPE_PERMISSION:
+        return intl.formatMessage(appManifestErrorMessages.outOfScopePermission);
+      case AppErrorCode.INVALID_PERMISSION:
+        return intl.formatMessage(appManifestErrorMessages.invalidPermission);
+      case AppErrorCode.INVALID_STATUS:
+        return intl.formatMessage(appManifestErrorMessages.invalidStatus);
+      case AppErrorCode.INVALID_URL_FORMAT:
+        return intl.formatMessage(appManifestErrorMessages.invalidUrlFormat);
+      case AppErrorCode.UNIQUE:
+        return intl.formatMessage(appManifestErrorMessages.unique);
+    }
+  }
+
+  return getCommonFormFieldErrorMessage(err, intl);
+}
