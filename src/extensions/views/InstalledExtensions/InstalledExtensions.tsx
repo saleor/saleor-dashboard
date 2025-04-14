@@ -18,7 +18,7 @@ import { useIntl } from "react-intl";
 
 import { DeleteFailedInstallationDialog } from "./components/DeleteFailedInstallationDialog";
 import { InstalledExtensionsList } from "./components/InstalledExtensionsList";
-import { useInstalledExtensionsData } from "./hooks/useInstalledExtensionsData";
+import { useInstalledExtensions } from "./hooks/useInstalledExtensions";
 import { usePendingInstallation } from "./hooks/usePendingInstallation";
 
 interface InstalledExtensionsProps {
@@ -47,7 +47,7 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
     openModal("app-installation-remove", { id });
   };
 
-  const { installedApps, installedAppsLoading, refetchInstalledApps } = useInstalledExtensionsData({
+  const { installedApps, installedAppsLoading, refetchInstalledApps } = useInstalledExtensions({
     searchQuery: query,
   });
 
