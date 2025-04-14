@@ -20,6 +20,8 @@ export const useFetchManifest = ({
   const [lastFetchedManifestUrl, setLastFetchedManifestUrl] = useState<string>();
 
   const [fetchManifest, fetchManifestOpts] = useAppFetchMutation({
+    // We disable default error handling to avoid showing popups on each change in input
+    // as it can accumulate in a lot of notifications
     disableErrorHandling: true,
     onCompleted: data => {
       setLastFetchedManifestUrl(getValues("manifestUrl"));
