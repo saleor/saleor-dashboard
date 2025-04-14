@@ -1,4 +1,4 @@
-import { getAppInstallErrorMessage } from "@dashboard/extensions/messages";
+import { getAppInstallErrorMessage } from "@dashboard/extensions/utils";
 import { useAppInstallMutation } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";

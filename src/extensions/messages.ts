@@ -241,29 +241,3 @@ export const appManifestErrorMessages = defineMessages({
     defaultMessage: "This needs to be unique",
   },
 });
-
-export function getAppInstallErrorMessage(
-  err: AppErrorFragment,
-  intl: IntlShape,
-): string | undefined {
-  if (err) {
-    switch (err.code) {
-      case AppErrorCode.INVALID_MANIFEST_FORMAT:
-        return intl.formatMessage(appManifestErrorMessages.invalidManifestFormat);
-      case AppErrorCode.OUT_OF_SCOPE_APP:
-        return intl.formatMessage(appManifestErrorMessages.outOfScopeApp);
-      case AppErrorCode.OUT_OF_SCOPE_PERMISSION:
-        return intl.formatMessage(appManifestErrorMessages.outOfScopePermission);
-      case AppErrorCode.INVALID_PERMISSION:
-        return intl.formatMessage(appManifestErrorMessages.invalidPermission);
-      case AppErrorCode.INVALID_STATUS:
-        return intl.formatMessage(appManifestErrorMessages.invalidStatus);
-      case AppErrorCode.INVALID_URL_FORMAT:
-        return intl.formatMessage(appManifestErrorMessages.invalidUrlFormat);
-      case AppErrorCode.UNIQUE:
-        return intl.formatMessage(appManifestErrorMessages.unique);
-    }
-  }
-
-  return getCommonFormFieldErrorMessage(err, intl);
-}

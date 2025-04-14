@@ -1,4 +1,4 @@
-import { getAppInstallErrorMessage } from "@dashboard/extensions/messages";
+import { getAppInstallErrorMessage } from "@dashboard/extensions/utils";
 import { useAppFetchMutation } from "@dashboard/graphql";
 import { useState } from "react";
 import { SubmitHandler, UseFormGetValues, UseFormSetError } from "react-hook-form";
