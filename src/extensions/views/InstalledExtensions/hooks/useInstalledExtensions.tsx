@@ -49,7 +49,7 @@ const getExtensionInfo = ({
   return null;
 };
 
-export const useInstalledExtensionsData = ({ searchQuery }: UseInstalledExtensionsDataProps) => {
+export const useInstalledExtensions = ({ searchQuery }: UseInstalledExtensionsDataProps) => {
   const [initialLoading, setInitialLoading] = useState(true);
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
 

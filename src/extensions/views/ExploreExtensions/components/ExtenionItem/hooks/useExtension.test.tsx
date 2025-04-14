@@ -1,8 +1,8 @@
+import { ExtensionData } from "@dashboard/extensions/types";
 import { renderHook } from "@testing-library/react-hooks";
 import React from "react";
 import { FormattedMessageProps } from "react-intl";
 
-import { ExtensionData } from "../../../types";
 import { useExtension } from "./useExtension";
 
 jest.mock("react-intl", () => ({
