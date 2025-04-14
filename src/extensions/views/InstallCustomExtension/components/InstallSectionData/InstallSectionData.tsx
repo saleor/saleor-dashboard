@@ -5,17 +5,19 @@ import { Control, useWatch } from "react-hook-form";
 import { ExtensionInstallFormData, Manifest } from "../../types";
 import { InstallExtensionManifestData } from "../InstallExtensionManifestData";
 
+interface IInstallSectionDataProps {
+  isFetchingManifest: boolean;
+  manifest: Manifest | undefined;
+  lastFetchedManifestUrl: string | undefined;
+  control: Control<ExtensionInstallFormData>;
+}
+
 export const InstallSectionData = ({
   isFetchingManifest,
   manifest,
   lastFetchedManifestUrl,
   control,
-}: {
-  isFetchingManifest: boolean;
-  manifest: Manifest | undefined;
-  lastFetchedManifestUrl: string | undefined;
-  control: Control<ExtensionInstallFormData>;
-}) => {
+}: IInstallSectionDataProps) => {
   const manifestUrlInputValue = useWatch({
     control,
     name: "manifestUrl",
