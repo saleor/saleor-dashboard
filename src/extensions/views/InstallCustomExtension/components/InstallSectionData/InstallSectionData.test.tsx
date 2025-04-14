@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import React from "react";
 import { Control, useWatch } from "react-hook-form";
 
-import { ExtensionInstallFormData, Manifest } from "../../types";
+import { ExtensionInstallFormData, InstallDetailsManifestData } from "../../types";
 import { InstallExtensionManifestData } from "../InstallExtensionManifestData";
 import { InstallSectionData } from "./InstallSectionData";
 
@@ -16,10 +16,17 @@ jest.mock("react-hook-form", () => ({
 
 describe("InstallSectionData", () => {
   const mockControl = {} as Control<ExtensionInstallFormData>;
-  const mockManifest: Manifest = {
+  const mockManifest: InstallDetailsManifestData = {
     name: "Test Extension",
-    version: "1.0.0",
     permissions: [],
+    dataPrivacyUrl: "https://example.com/privacy",
+    brand: {
+      __typename: "AppManifestBrand",
+      logo: {
+        __typename: "AppManifestBrandLogo",
+        default: "https://example.com/logo.png",
+      },
+    },
   };
 
   it("displays skeleton loading state when isFetchingManifest is true", () => {

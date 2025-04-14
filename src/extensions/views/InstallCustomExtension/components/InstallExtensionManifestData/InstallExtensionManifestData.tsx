@@ -1,18 +1,18 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ExternalLinkUnstyled } from "@dashboard/extensions/components/ExternalLinkUnstyled";
 import { messages } from "@dashboard/extensions/messages";
-import { AppFetchMutation } from "@dashboard/graphql";
 import { ExclamationIcon } from "@dashboard/icons/ExclamationIcon";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
+import { InstallDetailsManifestData } from "../../types";
 import { IconsSection } from "./IconsSection";
 
 export const InstallExtensionManifestData = ({
   manifest,
 }: {
-  manifest: NonNullable<AppFetchMutation["appFetchManifest"]>["manifest"];
+  manifest: InstallDetailsManifestData;
 }) => {
   return (
     <Box display="flex" flexDirection="column" gap={6}>

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { SubmitHandler, UseFormGetValues, UseFormSetError } from "react-hook-form";
 import { useIntl } from "react-intl";
 
-import { ExtensionInstallFormData } from "../types";
+import { ExtensionInstallFormData, Manifest } from "../types";
 
 export const useFetchManifest = ({
   getValues,
@@ -43,7 +43,7 @@ export const useFetchManifest = ({
     fetchManifest({ variables: data });
   };
 
-  const manifest = fetchManifestOpts?.data?.appFetchManifest?.manifest;
+  const manifest = fetchManifestOpts?.data?.appFetchManifest?.manifest as Manifest;
 
   return {
     manifest,

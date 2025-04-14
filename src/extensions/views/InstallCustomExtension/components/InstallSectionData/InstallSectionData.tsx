@@ -2,12 +2,12 @@ import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { Control, useWatch } from "react-hook-form";
 
-import { ExtensionInstallFormData, Manifest } from "../../types";
+import { ExtensionInstallFormData, InstallDetailsManifestData } from "../../types";
 import { InstallExtensionManifestData } from "../InstallExtensionManifestData";
 
 interface IInstallSectionDataProps {
   isFetchingManifest: boolean;
-  manifest: Manifest | undefined;
+  manifest: InstallDetailsManifestData | undefined;
   lastFetchedManifestUrl: string | undefined;
   control: Control<ExtensionInstallFormData>;
 }

@@ -5,10 +5,14 @@ import React from "react";
 
 import { SaleorLogo } from "./SaleorLogo";
 
-jest.mock("@dashboard/theme", () => ({
-  ...jest.requireActual("@dashboard/theme"),
-  useTheme: jest.fn(),
-}));
+jest.mock("@dashboard/theme", () => {
+  const actualTheme = jest.requireActual("@dashboard/theme");
+
+  return {
+    ...actualTheme,
+    useTheme: jest.fn(),
+  };
+});
 
 describe("SaleorLogo", () => {
   it("should display light mode logo when theme is defaultLight", () => {

@@ -17,27 +17,14 @@ jest.mock("react-intl", () => ({
 // Mock HookFormInput - we are testing without useForm from hook-form
 jest.mock("@dashboard/components/HookFormInput", () => ({
   HookFormInput: ({
-    control,
-    name,
-    rules,
     "aria-labelledby": ariaLabelledby,
     placeholder,
     onPaste,
   }: {
-    control: Control<ExtensionInstallFormData>;
-    name: string;
-    rules: Record<string, unknown>;
     "aria-labelledby": string;
     placeholder: string;
-    onPaste: React.ClipboardEventHandler<HTMLInputElement>;
-  }) => (
-    <input
-      role="textbox"
-      aria-labelledby={ariaLabelledby}
-      placeholder={placeholder}
-      onPaste={onPaste}
-    />
-  ),
+    onPaste: () => void;
+  }) => <input aria-labelledby={ariaLabelledby} placeholder={placeholder} onPaste={onPaste} />,
 }));
 
 describe("ManifestUrlForm", () => {
