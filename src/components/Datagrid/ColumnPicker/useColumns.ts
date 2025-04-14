@@ -70,6 +70,7 @@ export const useColumns = ({
     () => mergeSelectedColumns({ staticColumns, dynamicColumns, selectedColumns }),
     [dynamicColumns, staticColumns, selectedColumns],
   );
+
   const [recentlyAddedColumn, setRecentlyAddedColumn] = React.useState<string | null>(null);
   const [visibleColumns, setVisibleColumns] = useStateFromProps(initialColumnsState);
 

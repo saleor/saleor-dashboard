@@ -9530,5 +9530,26 @@
   "Gkip05": {
     "context": "button",
     "string": "Cofnij przypisanie"
+  },
+  "si+L97": { "context": "size table header", "string": "Tabela rozmiarów" },
+  "agOXPD": {
+    "context": "size",
+    "string": "Rozmiar"
+  },
+  "qn8PiJ": {
+    "context": "Size table dimenstion - chest circumference",
+    "string": "Obwód klatki piersiowej"
+  },
+  "9AaeXq": {
+    "context": "Size table dimenstion - waist circumference",
+    "string": "Obwód talii"
+  },
+  "UFNyFi": {
+    "context": "Size table dimenstion - hips circumference",
+    "string": "Obwód bioder"
+  },
+  "6YCv6w": {
+    "context": "Size table dimenstion - length",
+    "string": "Długość"
   }
 }

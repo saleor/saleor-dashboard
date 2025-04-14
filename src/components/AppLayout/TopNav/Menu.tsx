@@ -1,7 +1,7 @@
 import { Box, Button, ConfigurationIcon, Dropdown, List, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
-interface TopNavMenuItem {
+export interface TopNavMenuItem {
   label: string;
   testId?: string;
   onSelect: <T>(params?: T) => void;

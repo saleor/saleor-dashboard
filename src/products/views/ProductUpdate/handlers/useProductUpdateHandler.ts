@@ -7,6 +7,7 @@ import {
   handleDeleteMultipleAttributeValues,
   handleUploadMultipleFiles,
 } from "@dashboard/attributes/utils/handlers";
+import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import {
   AttributeErrorFragment,
   ErrorPolicyEnum,
@@ -29,6 +30,9 @@ import {
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationErrors } from "@dashboard/misc";
+import { TSizeTable } from "@dashboard/products/components/ProductUpdatePage/ProductSizeTableCard";
+import { SizePropertyEnum } from "@dashboard/products/components/ProductUpdatePage/ProductSizeTableCard/types";
+import { getProductVariantClothingSizes } from "@dashboard/products/components/ProductUpdatePage/ProductSizeTableCard/utils";
 import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
@@ -70,6 +74,7 @@ interface UseProductUpdateHandlerOpts {
 
 export function useProductUpdateHandler(
   product: ProductFragment,
+  initSizeTable: TSizeTable,
 ): [UseProductUpdateHandler, UseProductUpdateHandlerOpts] {
   const intl = useIntl();
   const notify = useNotifier();
@@ -135,6 +140,9 @@ export function useProductUpdateHandler(
     const updateProductResult = await updateProduct({
       variables: getProductUpdateVariables(product, data, uploadFilesResult),
     });
+
+    // eslint-disable-next-line no-console
+    console.log("updateSizeTable", updateSizeTable(product, initSizeTable, data.sizeTable));
 
     if (data.variants.added.length > 0) {
       const createVariantsResults = await createVariants({
@@ -226,3 +234,32 @@ export function useProductUpdateHandler(
     },
   ];
 }
+
+const updateSizeTable = (
+  product: ProductFragment,
+  initSizeTable: TSizeTable,
+  sizeTableChangeOpts: DatagridChangeOpts,
+) => {
+  const productVariantClothingSizes = getProductVariantClothingSizes(product.variants);
+
+  if (sizeTableChangeOpts.updates.length > 0) {
+    const newSizeTable = { ...initSizeTable };
+
+    sizeTableChangeOpts.updates.forEach(update => {
+      if (update.column in SizePropertyEnum) {
+        const property = update.column as SizePropertyEnum;
+        const value = update.data.value;
+        const size = productVariantClothingSizes[update.row];
+
+        if (newSizeTable[size] === undefined) {
+          newSizeTable[size] = { [property]: value };
+        } else {
+          newSizeTable[size][property] = value;
+        }
+        // newSizeTable[update.row][property] = value;
+      }
+    });
+
+    return newSizeTable;
+  }
+};

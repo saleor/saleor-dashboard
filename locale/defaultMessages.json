@@ -801,6 +801,10 @@
     "context": "section header button",
     "string": "Manage"
   },
+  "2lK+HR": {
+    "context": "product dimensions, full-screen title",
+    "string": "Dimensions of: {name}"
+  },
   "2nT0Sm": {
     "string": "No Extensions installed yet"
   },
@@ -1000,6 +1004,10 @@
   "48dMqY": {
     "context": "Dry run trigger button",
     "string": "Run"
+  },
+  "49P8fF": {
+    "context": "column category descriptor",
+    "string": "Dimensions"
   },
   "4B32Ba": {
     "context": "delete page",
@@ -1394,6 +1402,10 @@
     "context": "order history message",
     "string": "Note was added to the order"
   },
+  "6YCv6w": {
+    "context": "length, size table",
+    "string": "Length"
+  },
   "6aBkJm": {
     "context": "section header",
     "string": "Authorization"
@@ -1712,6 +1724,10 @@
   "991li9": {
     "context": "input label",
     "string": "Reason for refund"
+  },
+  "9AaeXq": {
+    "context": "waist circumference, size table",
+    "string": "Waist circumference"
   },
   "9B2mOB": {
     "context": "tile view pagination label",
@@ -5131,6 +5147,10 @@
     "context": "searchbar placeholder",
     "string": "Country"
   },
+  "UFNyFi": {
+    "context": "hips circumference, size table",
+    "string": "Hips circumference"
+  },
   "UIM5bq": {
     "context": "charge status full",
     "string": "Full"
@@ -6222,6 +6242,9 @@
     "context": "product created at",
     "string": "Created at"
   },
+  "agOXPD": {
+    "string": "Size"
+  },
   "agZQkB": {
     "context": "window title",
     "string": "Create App"
@@ -6465,6 +6488,10 @@
   "c8nvms": {
     "string": "Sales"
   },
+  "cAiCTp": {
+    "context": "size parameters, size table",
+    "string": "Size parameters"
+  },
   "cBHRxx": {
     "context": "button",
     "string": "Assign Warehouse"
@@ -6628,6 +6655,10 @@
   "dEUZg2": {
     "context": "header",
     "string": "Menu Items"
+  },
+  "dFTr+b": {
+    "context": "product size table header",
+    "string": "Product Size Table"
   },
   "dGqEJ9": {
     "context": "search box placeholder",
@@ -8654,6 +8685,10 @@
     "context": "bulk delete label",
     "string": "Delete"
   },
+  "qn8PiJ": {
+    "context": "chest circumference, size table",
+    "string": "Chest circumference"
+  },
   "qov29K": {
     "context": "dialog content",
     "string": "Select one of customer addresses or add a new address:"
@@ -8924,6 +8959,10 @@
     "context": "no products placeholder",
     "string": "No products are available in the channel assigned to this order."
   },
+  "si+L97": {
+    "context": "product sizes table, title",
+    "string": "Size table"
+  },
   "sjRXXz": {
     "string": "Order #{orderId} was placed from draft by {userEmail}"
   },
@@ -9090,6 +9129,10 @@
   "tzMNF3": {
     "string": "Status"
   },
+  "u/M+GQ": {
+    "context": "open full-screen mode",
+    "string": "Full screen"
+  },
   "u/hkKO": {
     "context": "voucher has no requirements",
     "string": "None"
@@ -9248,6 +9291,9 @@
   "uqxjSR": {
     "context": "column picker section header",
     "string": "Columns"
+  },
+  "ursQaU": {
+    "string": "Add product variants with specific sizes to see size table"
   },
   "usSkzP": {
     "context": "navigator order mode description",

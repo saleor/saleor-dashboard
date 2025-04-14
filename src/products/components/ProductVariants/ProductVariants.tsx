@@ -147,6 +147,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
     selectedColumns: columnSettings ?? [],
     onSave: handleColumnChange,
   });
+
   const getCellContent = React.useCallback(
     ([column, row]: Item, opts: GetCellContentOpts) =>
       getData({

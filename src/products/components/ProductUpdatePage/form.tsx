@@ -38,9 +38,13 @@ import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChang
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import { Option } from "@saleor/macaw-ui-next";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useIntl } from "react-intl";
 
 import { useProductChannelListingsForm } from "./formChannels";
+import { TSizeTable } from "./ProductSizeTableCard";
+import { mapSizeTableToOptions } from "./ProductSizeTableCard/utils";
 import {
   ProductUpdateData,
   ProductUpdateFormProps,
@@ -57,7 +61,10 @@ export function useProductUpdateForm(
   disabled: boolean,
   refetch: () => Promise<any>,
   opts: UseProductUpdateFormOpts,
+  initSizeTable: TSizeTable,
 ): UseProductUpdateFormOutput {
+  const intl = useIntl();
+
   const initial = useMemo(
     () => getProductUpdatePageFormData(product, product?.variants),
     [product],
@@ -81,6 +88,11 @@ export function useProductUpdateForm(
     removed: [],
     updates: [],
   });
+  const sizeTable = useRef<DatagridChangeOpts>({
+    added: [],
+    removed: [],
+    updates: [],
+  });
   const handleVariantChange = React.useCallback(
     (data: DatagridChangeOpts) => {
       variants.current = prepareVariantChangeData(data, locale, product);
@@ -88,6 +100,22 @@ export function useProductUpdateForm(
     },
     [locale, product, triggerChange],
   );
+  const handleSizeTableDataChange = React.useCallback(
+    (data: DatagridChangeOpts) => {
+      sizeTable.current = data;
+      triggerChange();
+    },
+    [triggerChange],
+  );
+
+  const [sizeProperties, setSizeProperties] = useState<Option[]>(
+    mapSizeTableToOptions(initSizeTable, intl),
+  );
+  const handleSizePropertiesChange = (data: Option[]) => {
+    setSizeProperties(data);
+    triggerChange();
+  };
+
   const attributes = useFormset(getAttributeInputFromProduct(product));
   const { getters: attributeRichTextGetters, getValues: getAttributeRichTextValues } =
     useMultipleRichText({
@@ -177,6 +205,7 @@ export function useProductUpdateForm(
     ),
     channels,
     description: null,
+    sizeProperties,
   };
   const getSubmitData = async (): Promise<ProductUpdateSubmitData> => ({
     ...form.changedData,
@@ -194,6 +223,7 @@ export function useProductUpdateForm(
     },
     description: richText.isDirty ? await richText.getValue() : undefined,
     variants: variants.current,
+    sizeTable: sizeTable.current,
   });
   const handleSubmit = async (data: ProductUpdateSubmitData) => {
     const errors = await onSubmit(data);
@@ -244,6 +274,11 @@ export function useProductUpdateForm(
       removed: [],
       updates: [],
     };
+    sizeTable.current = {
+      added: [],
+      removed: [],
+      updates: [],
+    };
 
     return result;
   }, [datagrid, handleFormSubmit, getSubmitData]);
@@ -277,6 +312,7 @@ export function useProductUpdateForm(
       changeChannels: handleChannelChange,
       changeMetadata,
       changeVariants: handleVariantChange,
+      changeSizeTableData: handleSizeTableDataChange,
       fetchMoreReferences: handleFetchMoreReferences,
       fetchReferences: handleFetchReferences,
       reorderAttributeValue: handleAttributeValueReorder,
@@ -288,6 +324,7 @@ export function useProductUpdateForm(
       selectCategory: handleCategorySelect,
       selectCollection: handleCollectionSelect,
       selectTaxClass: handleTaxClassSelect,
+      selectSizeProperties: handleSizePropertiesChange,
       updateChannelList: handleChannelListUpdate,
     },
     submit,
@@ -303,6 +340,7 @@ const ProductUpdateForm: React.FC<ProductUpdateFormProps> = ({
   onSubmit,
   refetch,
   disabled,
+  sizeTable,
   ...rest
 }) => {
   const { datagrid, richText, ...props } = useProductUpdateForm(
@@ -311,6 +349,7 @@ const ProductUpdateForm: React.FC<ProductUpdateFormProps> = ({
     disabled,
     refetch,
     rest,
+    sizeTable,
   );
 
   return (

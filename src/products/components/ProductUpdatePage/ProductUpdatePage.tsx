@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   extensionMountPoints,
   mapToMenuItemsForProductDetails,
@@ -10,6 +9,7 @@ import {
 } from "@dashboard/attributes/utils/data";
 import { ChannelData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
 import { AttributeInput, Attributes } from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
@@ -21,6 +21,7 @@ import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import {
+  AttributeValueFragment,
   ChannelFragment,
   PermissionEnum,
   ProductChannelListingErrorFragment,
@@ -55,7 +56,7 @@ import { Box, Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { AttributeValuesMetadata, getChoices } from "../../utils/data";
+import { AttributeValuesMetadata, getChoices, ProductType } from "../../utils/data";
 import { ProductDetailsForm } from "../ProductDetailsForm";
 import ProductMedia from "../ProductMedia";
 import ProductTaxes from "../ProductTaxes";
@@ -63,9 +64,14 @@ import ProductVariants from "../ProductVariants";
 import ProductUpdateForm from "./form";
 import { messages } from "./messages";
 import ProductChannelsListingsDialog from "./ProductChannelsListingsDialog";
+import { ProductSizeTableCard, TSizeTable } from "./ProductSizeTableCard";
 import { ProductUpdateData, ProductUpdateHandlers, ProductUpdateSubmitData } from "./types";
 
-export interface ProductUpdatePageProps {
+interface StylkaProps {
+  sizeTable: TSizeTable;
+}
+
+export interface ProductUpdatePageProps extends StylkaProps {
   channels: ChannelFragment[];
   productId: string;
   channelsErrors: ProductChannelListingErrorFragment[];
@@ -73,7 +79,7 @@ export interface ProductUpdatePageProps {
   errors: UseProductUpdateHandlerError[];
   collections: RelayToFlat<SearchCollectionsQuery["search"]>;
   categories: RelayToFlat<SearchCategoriesQuery["search"]>;
-  attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
+  attributeValues: RelayToFlat<NonNullable<SearchAttributeValuesQuery["attribute"]>["choices"]>;
   disabled: boolean;
   fetchMoreCategories: FetchMoreProps;
   fetchMoreCollections: FetchMoreProps;
@@ -159,6 +165,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   refetch,
   onCloseDialog,
   onAttributeSelectBlur,
+  sizeTable,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -168,14 +175,14 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     isMediaUrlModalVisible || false,
   );
   const [selectedCollections, setSelectedCollections] = useStateFromProps(
-    getChoices(maybe(() => product.collections, [])),
+    getChoices(maybe(() => product?.collections, []) || []),
   );
   const [selectedTaxClass, setSelectedTaxClass] = useStateFromProps(product?.taxClass?.name ?? "");
-  const categories = getChoicesWithAncestors(categoryChoiceList);
+  const categories = getChoicesWithAncestors(categoryChoiceList as ChoiceWithAncestors[]);
   const selectedProductCategory = product?.category
     ? getChoicesWithAncestors([product.category as ChoiceWithAncestors])[0]
     : undefined;
-  const collections = getChoices(collectionChoiceList);
+  const collections = getChoices(collectionChoiceList || []);
   const hasVariants = product?.productType?.hasVariants;
   const taxClassesChoices =
     taxClasses?.map(taxClass => ({
@@ -189,14 +196,14 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     handlers: ProductUpdateHandlers,
   ) => {
     handlers.selectAttributeReference(
-      assignReferencesAttributeId,
+      assignReferencesAttributeId!,
       mergeAttributeValues(
-        assignReferencesAttributeId,
+        assignReferencesAttributeId!,
         attributeValues.map(({ value }) => value),
         data.attributes,
       ),
     );
-    handlers.selectAttributeReferenceMetadata(assignReferencesAttributeId, attributeValues);
+    handlers.selectAttributeReferenceMetadata(assignReferencesAttributeId!, attributeValues);
     onCloseDialog();
   };
   const { PRODUCT_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.PRODUCT_DETAILS);
@@ -228,11 +235,13 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     path: productListPath,
   });
 
+  const isProductTypeClothes = product?.productType?.name === "Clothes";
+
   return (
     <ProductUpdateForm
       isSimpleProduct={isSimpleProduct}
       onSubmit={onSubmit}
-      product={product}
+      product={product as ProductFragment}
       categories={categories}
       collections={collections}
       selectedCollections={selectedCollections}
@@ -240,7 +249,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       setSelectedCollections={setSelectedCollections}
       setSelectedTaxClass={setSelectedTaxClass}
       taxClasses={taxClassesChoices}
-      hasVariants={hasVariants}
+      hasVariants={!!hasVariants}
       referencePages={referencePages}
       referenceProducts={referenceProducts}
       fetchReferencePages={fetchReferencePages}
@@ -250,6 +259,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       assignReferencesAttributeId={assignReferencesAttributeId}
       disabled={disabled}
       refetch={refetch}
+      sizeTable={sizeTable}
     >
       {({ change, data, handlers, submit, isSaveDisabled, attributeRichTextGetters }) => {
         const availabilityCommonProps = {
@@ -275,10 +285,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
         };
 
         const byChannel = mapByChannel(channels);
-        const listings = data.channels.updateChannels?.map<ChannelData>(byChannel);
+        const listings = data.channels.updateChannels?.map<ChannelData>(byChannel) || [];
 
         const entityType = getReferenceAttributeEntityTypeFromAttribute(
-          assignReferencesAttributeId,
+          assignReferencesAttributeId!,
           data.attributes,
         );
 
@@ -287,12 +297,12 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
             <TopNav href={backLinkProductUrl} title={header}>
               <TopNav.Menu
                 items={[
-                  ...extensionMenuItems,
+                  ...(extensionMenuItems as TopNavMenuItem[]),
                   {
                     label: intl.formatMessage(messages.openGraphiQL),
                     onSelect: openPlaygroundURL,
                     testId: "graphiql-redirect",
-                  },
+                  } as TopNavMenuItem,
                 ]}
                 dataTestId="menu"
               />
@@ -306,7 +316,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 onChange={change}
               />
               <ProductMedia
-                media={media}
+                media={media || []}
                 onImageDelete={onImageDelete}
                 onImageReorder={onImageReorder}
                 onImageUpload={onImageUpload}
@@ -316,30 +326,39 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
               {data.attributes.length > 0 && (
                 <Attributes
                   attributes={data.attributes}
-                  attributeValues={attributeValues}
+                  attributeValues={attributeValues as AttributeValueFragment[]}
                   errors={productErrors}
                   loading={disabled}
                   disabled={disabled}
-                  onChange={handlers.selectAttribute}
-                  onMultiChange={handlers.selectAttributeMultiple}
+                  onChange={handlers.selectAttribute as any}
+                  onMultiChange={handlers.selectAttributeMultiple as any}
                   onFileChange={handlers.selectAttributeFile}
                   onReferencesRemove={handlers.selectAttributeReference}
                   onReferencesAddClick={onAssignReferencesClick}
                   onReferencesReorder={handlers.reorderAttributeValue}
                   fetchAttributeValues={fetchAttributeValues}
-                  fetchMoreAttributeValues={fetchMoreAttributeValues}
+                  fetchMoreAttributeValues={fetchMoreAttributeValues!}
                   onAttributeSelectBlur={onAttributeSelectBlur}
                   richTextGetters={attributeRichTextGetters}
                 />
               )}
+              {isProductTypeClothes && (
+                <ProductSizeTableCard
+                  initSizeTable={sizeTable}
+                  productVariants={variants}
+                  sizeProperties={data.sizeProperties}
+                  onSizePropertiesChange={handlers.selectSizeProperties}
+                  onChangeSizeTableData={handlers.changeSizeTableData}
+                />
+              )}
               <ProductVariants
                 productId={productId}
-                productName={product?.name}
+                productName={product?.name || ""}
                 errors={variantListErrors}
                 channels={listings}
                 limits={limits}
                 variants={variants}
-                variantAttributes={product?.productType.variantAttributes}
+                variantAttributes={product?.productType.variantAttributes ?? null}
                 onAttributeValuesSearch={onAttributeValuesSearch}
                 onChange={handlers.changeVariants}
                 onRowClick={onVariantShow}
@@ -371,7 +390,13 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 categoryInputDisplayValue={selectedCategory}
                 collections={collections}
                 collectionsInputDisplayValue={selectedCollections}
-                data={data}
+                data={
+                  data as {
+                    category: string;
+                    collections: Option[];
+                    productType?: ProductType | undefined;
+                  }
+                }
                 disabled={disabled}
                 errors={productOrganizationErrors}
                 fetchCategories={fetchCategories}
@@ -411,9 +436,13 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
               <AssignAttributeValueDialog
                 entityType={entityType}
                 confirmButtonState={"default"}
-                products={referenceProducts}
+                products={referenceProducts || []}
                 pages={referencePages}
-                attribute={data.attributes.find(({ id }) => id === assignReferencesAttributeId)}
+                attribute={
+                  data.attributes.find(
+                    ({ id }) => id === assignReferencesAttributeId,
+                  ) as AttributeInput
+                }
                 hasMore={handlers.fetchMoreReferences?.hasMore}
                 open={canOpenAssignReferencesAttributeDialog}
                 onFetch={handlers.fetchReferences}
@@ -434,7 +463,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
             )}
 
             <ProductExternalMediaDialog
-              product={product}
+              product={product as ProductFragment}
               onClose={() => setMediaUrlModalStatus(false)}
               open={mediaUrlModalStatus}
               onSubmit={onMediaUrlUpload}

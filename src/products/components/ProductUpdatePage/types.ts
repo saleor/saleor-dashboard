@@ -33,6 +33,7 @@ import { OutputData } from "@editorjs/editorjs";
 import { Option } from "@saleor/macaw-ui-next";
 
 import { ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDialog";
+import { TSizeTable } from "./ProductSizeTableCard";
 
 export interface ProductUpdateFormData extends MetadataFormData {
   category: string | null;
@@ -66,6 +67,7 @@ export interface ProductUpdateData extends ProductUpdateFormData {
   attributes: AttributeInput[];
   channels: ProductChannelListingUpdateInput;
   description: OutputData;
+  sizeProperties: Option[];
 }
 export interface ProductUpdateSubmitData extends ProductUpdateFormData {
   attributes: AttributeInput[];
@@ -74,6 +76,7 @@ export interface ProductUpdateSubmitData extends ProductUpdateFormData {
   collections: Option[];
   description: OutputData;
   variants: DatagridChangeOpts;
+  sizeTable: DatagridChangeOpts;
 }
 
 export interface ProductUpdateHandlers
@@ -86,6 +89,8 @@ export interface ProductUpdateHandlers
   selectAttributeReference: FormsetChange<string[]>;
   selectAttributeReferenceMetadata: FormsetMetadataChange<AttributeValuesMetadata[]>;
   selectAttributeFile: FormsetChange<File>;
+  changeSizeTableData: (data: DatagridChangeOpts) => void;
+  selectSizeProperties: (value: Option[]) => void;
   reorderAttributeValue: FormsetChange<ReorderEvent>;
   changeVariants: (data: DatagridChangeOpts) => void;
   fetchReferences: (value: string) => void;
@@ -129,6 +134,7 @@ export type SubmitResult = SubmitPromise<
 export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
   children: (props: UseProductUpdateFormRenderProps) => React.ReactNode;
   product: ProductFragment;
+  sizeTable: TSizeTable;
   onSubmit: (data: ProductUpdateSubmitData) => SubmitResult;
   refetch: () => Promise<any>;
   disabled: boolean;
