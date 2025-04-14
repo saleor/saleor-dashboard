@@ -183,6 +183,19 @@ export const InstalledAppFragmentDoc = gql`
   isActive
 }
     `;
+export const InstalledAppDetailsFragmentDoc = gql`
+    fragment InstalledAppDetails on App {
+  id
+  isActive
+  name
+  type
+  brand {
+    logo {
+      default(format: WEBP, size: 64)
+    }
+  }
+}
+    `;
 export const AttributeFragmentDoc = gql`
     fragment Attribute on Attribute {
   id
@@ -336,6 +349,15 @@ export const CategoryWithAncestorsFragmentDoc = gql`
   }
 }
     `;
+export const CategoryWithTotalProductsFragmentDoc = gql`
+    fragment CategoryWithTotalProducts on Category {
+  id
+  name
+  products {
+    totalCount
+  }
+}
+    `;
 export const ChannelErrorFragmentDoc = gql`
     fragment ChannelError on ChannelError {
   code
@@ -430,6 +452,15 @@ export const CollectionProductFragmentDoc = gql`
   }
 }
     ${ChannelListingProductWithoutPricingFragmentDoc}`;
+export const CollectionWithTotalProductsFragmentDoc = gql`
+    fragment CollectionWithTotalProducts on Collection {
+  id
+  name
+  products {
+    totalCount
+  }
+}
+    `;
 export const CustomerFragmentDoc = gql`
     fragment Customer on User {
   id
@@ -2941,6 +2972,42 @@ ${ChannelListingProductVariantFragmentDoc}
 ${StockFragmentDoc}
 ${PreorderFragmentDoc}
 ${WeightFragmentDoc}`;
+export const SearchProductFragmentDoc = gql`
+    fragment SearchProduct on Product {
+  id
+  name
+  productType {
+    id
+    name
+  }
+  thumbnail {
+    url
+  }
+  channelListings {
+    ...ChannelListingProductWithoutPricing
+  }
+  variants {
+    id
+    name
+    sku
+    channelListings {
+      channel {
+        id
+        isActive
+        name
+        currencyCode
+      }
+      price {
+        amount
+        currency
+      }
+    }
+  }
+  collections {
+    id
+  }
+}
+    ${ChannelListingProductWithoutPricingFragmentDoc}`;
 export const ExportFileFragmentDoc = gql`
     fragment ExportFile on ExportFile {
   id
@@ -3550,6 +3617,7 @@ export const AppFailedPendingWebhooksDocument = gql`
   apps(first: 50, filter: {type: THIRDPARTY}) {
     edges {
       node {
+        id
         ...AppEventDeliveries
       }
     }
@@ -9289,8 +9357,14 @@ export type PromotionDetailsQueryQueryHookResult = ReturnType<typeof usePromotio
 export type PromotionDetailsQueryLazyQueryHookResult = ReturnType<typeof usePromotionDetailsQueryLazyQuery>;
 export type PromotionDetailsQueryQueryResult = Apollo.QueryResult<Types.PromotionDetailsQueryQuery, Types.PromotionDetailsQueryQueryVariables>;
 export const InstalledAppsDocument = gql`
-    query InstalledApps($before: String, $after: String, $first: Int, $last: Int) {
-  apps(before: $before, after: $after, first: $first, last: $last) {
+    query InstalledApps($before: String, $after: String, $first: Int, $last: Int, $filter: AppFilterInput) {
+  apps(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    filter: $filter
+  ) {
     pageInfo {
       hasNextPage
       hasPreviousPage
@@ -9323,6 +9397,7 @@ export const InstalledAppsDocument = gql`
  *      after: // value for 'after'
  *      first: // value for 'first'
  *      last: // value for 'last'
+ *      filter: // value for 'filter'
  *   },
  * });
  */
@@ -9337,6 +9412,119 @@ export function useInstalledAppsLazyQuery(baseOptions?: ApolloReactHooks.LazyQue
 export type InstalledAppsQueryHookResult = ReturnType<typeof useInstalledAppsQuery>;
 export type InstalledAppsLazyQueryHookResult = ReturnType<typeof useInstalledAppsLazyQuery>;
 export type InstalledAppsQueryResult = Apollo.QueryResult<Types.InstalledAppsQuery, Types.InstalledAppsQueryVariables>;
+export const InstalledAppsListDocument = gql`
+    query InstalledAppsList($before: String, $after: String, $first: Int, $last: Int, $filter: AppFilterInput) {
+  apps(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    filter: $filter
+  ) {
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      node {
+        ...InstalledAppDetails
+      }
+    }
+  }
+}
+    ${InstalledAppDetailsFragmentDoc}`;
+
+/**
+ * __useInstalledAppsListQuery__
+ *
+ * To run a query within a React component, call `useInstalledAppsListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useInstalledAppsListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useInstalledAppsListQuery({
+ *   variables: {
+ *      before: // value for 'before'
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      last: // value for 'last'
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useInstalledAppsListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.InstalledAppsListQuery, Types.InstalledAppsListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.InstalledAppsListQuery, Types.InstalledAppsListQueryVariables>(InstalledAppsListDocument, options);
+      }
+export function useInstalledAppsListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.InstalledAppsListQuery, Types.InstalledAppsListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.InstalledAppsListQuery, Types.InstalledAppsListQueryVariables>(InstalledAppsListDocument, options);
+        }
+export type InstalledAppsListQueryHookResult = ReturnType<typeof useInstalledAppsListQuery>;
+export type InstalledAppsListLazyQueryHookResult = ReturnType<typeof useInstalledAppsListLazyQuery>;
+export type InstalledAppsListQueryResult = Apollo.QueryResult<Types.InstalledAppsListQuery, Types.InstalledAppsListQueryVariables>;
+export const EventDeliveryDocument = gql`
+    query EventDelivery($before: String, $after: String, $first: Int, $last: Int, $filter: AppFilterInput, $canFetchAppEvents: Boolean!) {
+  apps(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    filter: $filter
+  ) {
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    edges {
+      node {
+        id
+        ...AppEventDeliveries
+      }
+    }
+  }
+}
+    ${AppEventDeliveriesFragmentDoc}`;
+
+/**
+ * __useEventDeliveryQuery__
+ *
+ * To run a query within a React component, call `useEventDeliveryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useEventDeliveryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useEventDeliveryQuery({
+ *   variables: {
+ *      before: // value for 'before'
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      last: // value for 'last'
+ *      filter: // value for 'filter'
+ *      canFetchAppEvents: // value for 'canFetchAppEvents'
+ *   },
+ * });
+ */
+export function useEventDeliveryQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.EventDeliveryQuery, Types.EventDeliveryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.EventDeliveryQuery, Types.EventDeliveryQueryVariables>(EventDeliveryDocument, options);
+      }
+export function useEventDeliveryLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.EventDeliveryQuery, Types.EventDeliveryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.EventDeliveryQuery, Types.EventDeliveryQueryVariables>(EventDeliveryDocument, options);
+        }
+export type EventDeliveryQueryHookResult = ReturnType<typeof useEventDeliveryQuery>;
+export type EventDeliveryLazyQueryHookResult = ReturnType<typeof useEventDeliveryLazyQuery>;
+export type EventDeliveryQueryResult = Apollo.QueryResult<Types.EventDeliveryQuery, Types.EventDeliveryQueryVariables>;
 export const FileUploadDocument = gql`
     mutation FileUpload($file: Upload!) {
   fileUpload(file: $file) {
@@ -16312,6 +16500,51 @@ export function useSearchCategoriesLazyQuery(baseOptions?: ApolloReactHooks.Lazy
 export type SearchCategoriesQueryHookResult = ReturnType<typeof useSearchCategoriesQuery>;
 export type SearchCategoriesLazyQueryHookResult = ReturnType<typeof useSearchCategoriesLazyQuery>;
 export type SearchCategoriesQueryResult = Apollo.QueryResult<Types.SearchCategoriesQuery, Types.SearchCategoriesQueryVariables>;
+export const SearchCategoriesWithTotalProductsDocument = gql`
+    query SearchCategoriesWithTotalProducts($after: String, $first: Int!, $query: String!) {
+  search: categories(after: $after, first: $first, filter: {search: $query}) {
+    edges {
+      node {
+        ...CategoryWithTotalProducts
+      }
+    }
+    pageInfo {
+      ...PageInfo
+    }
+  }
+}
+    ${CategoryWithTotalProductsFragmentDoc}
+${PageInfoFragmentDoc}`;
+
+/**
+ * __useSearchCategoriesWithTotalProductsQuery__
+ *
+ * To run a query within a React component, call `useSearchCategoriesWithTotalProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchCategoriesWithTotalProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchCategoriesWithTotalProductsQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useSearchCategoriesWithTotalProductsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchCategoriesWithTotalProductsQuery, Types.SearchCategoriesWithTotalProductsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.SearchCategoriesWithTotalProductsQuery, Types.SearchCategoriesWithTotalProductsQueryVariables>(SearchCategoriesWithTotalProductsDocument, options);
+      }
+export function useSearchCategoriesWithTotalProductsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchCategoriesWithTotalProductsQuery, Types.SearchCategoriesWithTotalProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.SearchCategoriesWithTotalProductsQuery, Types.SearchCategoriesWithTotalProductsQueryVariables>(SearchCategoriesWithTotalProductsDocument, options);
+        }
+export type SearchCategoriesWithTotalProductsQueryHookResult = ReturnType<typeof useSearchCategoriesWithTotalProductsQuery>;
+export type SearchCategoriesWithTotalProductsLazyQueryHookResult = ReturnType<typeof useSearchCategoriesWithTotalProductsLazyQuery>;
+export type SearchCategoriesWithTotalProductsQueryResult = Apollo.QueryResult<Types.SearchCategoriesWithTotalProductsQuery, Types.SearchCategoriesWithTotalProductsQueryVariables>;
 export const SearchCollectionsDocument = gql`
     query SearchCollections($after: String, $first: Int!, $query: String!, $channel: String) {
   search: collections(
@@ -16363,6 +16596,57 @@ export function useSearchCollectionsLazyQuery(baseOptions?: ApolloReactHooks.Laz
 export type SearchCollectionsQueryHookResult = ReturnType<typeof useSearchCollectionsQuery>;
 export type SearchCollectionsLazyQueryHookResult = ReturnType<typeof useSearchCollectionsLazyQuery>;
 export type SearchCollectionsQueryResult = Apollo.QueryResult<Types.SearchCollectionsQuery, Types.SearchCollectionsQueryVariables>;
+export const SearchCollectionsWithTotalProductsDocument = gql`
+    query SearchCollectionsWithTotalProducts($after: String, $first: Int!, $query: String!, $channel: String) {
+  search: collections(
+    after: $after
+    first: $first
+    filter: {search: $query}
+    channel: $channel
+  ) {
+    edges {
+      node {
+        ...CollectionWithTotalProducts
+      }
+    }
+    pageInfo {
+      ...PageInfo
+    }
+  }
+}
+    ${CollectionWithTotalProductsFragmentDoc}
+${PageInfoFragmentDoc}`;
+
+/**
+ * __useSearchCollectionsWithTotalProductsQuery__
+ *
+ * To run a query within a React component, call `useSearchCollectionsWithTotalProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchCollectionsWithTotalProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchCollectionsWithTotalProductsQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      query: // value for 'query'
+ *      channel: // value for 'channel'
+ *   },
+ * });
+ */
+export function useSearchCollectionsWithTotalProductsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchCollectionsWithTotalProductsQuery, Types.SearchCollectionsWithTotalProductsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.SearchCollectionsWithTotalProductsQuery, Types.SearchCollectionsWithTotalProductsQueryVariables>(SearchCollectionsWithTotalProductsDocument, options);
+      }
+export function useSearchCollectionsWithTotalProductsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchCollectionsWithTotalProductsQuery, Types.SearchCollectionsWithTotalProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.SearchCollectionsWithTotalProductsQuery, Types.SearchCollectionsWithTotalProductsQueryVariables>(SearchCollectionsWithTotalProductsDocument, options);
+        }
+export type SearchCollectionsWithTotalProductsQueryHookResult = ReturnType<typeof useSearchCollectionsWithTotalProductsQuery>;
+export type SearchCollectionsWithTotalProductsLazyQueryHookResult = ReturnType<typeof useSearchCollectionsWithTotalProductsLazyQuery>;
+export type SearchCollectionsWithTotalProductsQueryResult = Apollo.QueryResult<Types.SearchCollectionsWithTotalProductsQuery, Types.SearchCollectionsWithTotalProductsQueryVariables>;
 export const SearchCustomersDocument = gql`
     query SearchCustomers($after: String, $first: Int!, $query: String!) {
   search: customers(after: $after, first: $first, filter: {search: $query}) {
@@ -16688,39 +16972,7 @@ export const SearchProductsDocument = gql`
   ) {
     edges {
       node {
-        id
-        name
-        thumbnail {
-          url
-        }
-        channelListings {
-          id
-          channel {
-            id
-            name
-            currencyCode
-          }
-        }
-        variants {
-          id
-          name
-          sku
-          channelListings {
-            channel {
-              id
-              isActive
-              name
-              currencyCode
-            }
-            price {
-              amount
-              currency
-            }
-          }
-        }
-        collections {
-          id
-        }
+        ...SearchProduct
       }
     }
     pageInfo {
@@ -16728,7 +16980,8 @@ export const SearchProductsDocument = gql`
     }
   }
 }
-    ${PageInfoFragmentDoc}`;
+    ${SearchProductFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useSearchProductsQuery__

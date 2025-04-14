@@ -5,6 +5,7 @@ export const appFailedPendingWebhooks = gql`
     apps(first: 50, filter: { type: THIRDPARTY }) {
       edges {
         node {
+          id
           ...AppEventDeliveries
         }
       }

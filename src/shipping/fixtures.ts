@@ -1899,6 +1899,11 @@ export const products: RelayToFlat<NonNullable<SearchProductsQuery["search"]>> =
       __typename: "Image",
       url: "",
     },
+    productType: {
+      __typename: "ProductType",
+      id: "1",
+      name: "Juice",
+    },
     channelListings: [],
     collections: [{ __typename: "Collection", id: "Q29sbGVjdGlvbjo0" }],
     variants: [

@@ -8934,7 +8934,7 @@ export type AppFailedPendingWebhooksQueryVariables = Exact<{
 }>;
 
 
-export type AppFailedPendingWebhooksQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', webhooks?: Array<{ __typename: 'Webhook', failedDelivers: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, createdAt: any, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, status: EventDeliveryStatusEnum, createdAt: any } }> } | null } }> } | null, pendingDelivers: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, status: EventDeliveryStatusEnum, createdAt: any } }> } | null } }> } | null }> | null } }> } | null };
+export type AppFailedPendingWebhooksQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, webhooks?: Array<{ __typename: 'Webhook', failedDelivers: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, createdAt: any, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, status: EventDeliveryStatusEnum, createdAt: any } }> } | null } }> } | null, pendingDelivers: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, status: EventDeliveryStatusEnum, createdAt: any } }> } | null } }> } | null }> | null } }> } | null };
 
 export type AppCreateMutationVariables = Exact<{
   input: AppInput;
@@ -10046,10 +10046,34 @@ export type InstalledAppsQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
+  filter?: InputMaybe<AppFilterInput>;
 }>;
 
 
 export type InstalledAppsQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', totalCount: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, identifier: string | null, manifestUrl: string | null, isActive: boolean | null } }> } | null };
+
+export type InstalledAppsListQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']>;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  filter?: InputMaybe<AppFilterInput>;
+}>;
+
+
+export type InstalledAppsListQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', totalCount: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, isActive: boolean | null, name: string | null, type: AppTypeEnum | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } }> } | null };
+
+export type EventDeliveryQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']>;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  filter?: InputMaybe<AppFilterInput>;
+  canFetchAppEvents: Scalars['Boolean'];
+}>;
+
+
+export type EventDeliveryQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, webhooks?: Array<{ __typename: 'Webhook', failedDelivers: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, createdAt: any, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, status: EventDeliveryStatusEnum, createdAt: any } }> } | null } }> } | null, pendingDelivers: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, status: EventDeliveryStatusEnum, createdAt: any } }> } | null } }> } | null }> | null } }> } | null };
 
 export type FileUploadMutationVariables = Exact<{
   file: Scalars['Upload'];
@@ -10077,6 +10101,8 @@ export type EventDeliveryAttemptFragment = { __typename: 'EventDeliveryAttempt',
 export type AppEventDeliveriesFragment = { __typename: 'App', webhooks?: Array<{ __typename: 'Webhook', failedDelivers: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, createdAt: any, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, status: EventDeliveryStatusEnum, createdAt: any } }> } | null } }> } | null, pendingDelivers: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, status: EventDeliveryStatusEnum, createdAt: any } }> } | null } }> } | null }> | null };
 
 export type InstalledAppFragment = { __typename: 'App', id: string, identifier: string | null, manifestUrl: string | null, isActive: boolean | null };
+
+export type InstalledAppDetailsFragment = { __typename: 'App', id: string, isActive: boolean | null, name: string | null, type: AppTypeEnum | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null };
 
 export type AttributeValueFragment = { __typename: 'AttributeValue', id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null };
 
@@ -10106,6 +10132,8 @@ export type CategoryDetailsFragment = { __typename: 'Category', id: string, name
 
 export type CategoryWithAncestorsFragment = { __typename: 'Category', id: string, name: string, level: number, parent: { __typename: 'Category', id: string, name: string } | null, ancestors: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null };
 
+export type CategoryWithTotalProductsFragment = { __typename: 'Category', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null };
+
 export type ChannelErrorFragment = { __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null };
 
 export type ChannelFragment = { __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } };
@@ -10117,6 +10145,8 @@ export type CollectionFragment = { __typename: 'Collection', id: string, name: s
 export type CollectionDetailsFragment = { __typename: 'Collection', slug: string, description: any | null, seoDescription: string | null, seoTitle: string | null, id: string, name: string, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publishedAt: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
 export type CollectionProductFragment = { __typename: 'Product', id: string, name: string, productType: { __typename: 'ProductType', id: string, name: string }, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, isPublished: boolean, publishedAt: any | null, isAvailableForPurchase: boolean | null, availableForPurchaseAt: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null };
+
+export type CollectionWithTotalProductsFragment = { __typename: 'Collection', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null };
 
 export type CustomerFragment = { __typename: 'User', id: string, email: string, firstName: string, lastName: string };
 
@@ -10511,6 +10541,8 @@ export type VariantAttributeFragment = { __typename: 'Attribute', id: string, na
 export type SelectedVariantAttributeFragment = { __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> };
 
 export type ProductVariantFragment = { __typename: 'ProductVariant', id: string, name: string, sku: string | null, trackInventory: boolean, quantityLimitPerCustomer: number | null, selectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, nonSelectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null, product: { __typename: 'Product', id: string, name: string, defaultVariant: { __typename: 'ProductVariant', id: string } | null, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: any }> | null, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, publishedAt: any | null, isPublished: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null }> | null }, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
+
+export type SearchProductFragment = { __typename: 'Product', id: string, name: string, productType: { __typename: 'ProductType', id: string, name: string }, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, isPublished: boolean, publishedAt: any | null, isAvailableForPurchase: boolean | null, availableForPurchaseAt: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, channelListings: Array<{ __typename: 'ProductVariantChannelListing', channel: { __typename: 'Channel', id: string, isActive: boolean, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null }> | null }> | null, collections: Array<{ __typename: 'Collection', id: string }> | null };
 
 export type ExportFileFragment = { __typename: 'ExportFile', id: string, status: JobStatusEnum, url: string | null };
 
@@ -11916,6 +11948,15 @@ export type SearchCategoriesQueryVariables = Exact<{
 
 export type SearchCategoriesQuery = { __typename: 'Query', search: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, level: number, parent: { __typename: 'Category', id: string, name: string } | null, ancestors: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
+export type SearchCategoriesWithTotalProductsQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type SearchCategoriesWithTotalProductsQuery = { __typename: 'Query', search: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
 export type SearchCollectionsQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
   first: Scalars['Int'];
@@ -11925,6 +11966,16 @@ export type SearchCollectionsQueryVariables = Exact<{
 
 
 export type SearchCollectionsQuery = { __typename: 'Query', search: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
+export type SearchCollectionsWithTotalProductsQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int'];
+  query: Scalars['String'];
+  channel?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type SearchCollectionsWithTotalProductsQuery = { __typename: 'Query', search: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchCustomersQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
@@ -11994,7 +12045,7 @@ export type SearchProductsQueryVariables = Exact<{
 }>;
 
 
-export type SearchProductsQuery = { __typename: 'Query', search: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, channelListings: Array<{ __typename: 'ProductVariantChannelListing', channel: { __typename: 'Channel', id: string, isActive: boolean, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null }> | null }> | null, collections: Array<{ __typename: 'Collection', id: string }> | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+export type SearchProductsQuery = { __typename: 'Query', search: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, productType: { __typename: 'ProductType', id: string, name: string }, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, isPublished: boolean, publishedAt: any | null, isAvailableForPurchase: boolean | null, availableForPurchaseAt: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, channelListings: Array<{ __typename: 'ProductVariantChannelListing', channel: { __typename: 'Channel', id: string, isActive: boolean, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null }> | null }> | null, collections: Array<{ __typename: 'Collection', id: string }> | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchProductTypesQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;

@@ -26,4 +26,8 @@ export const initialForm: FormData = {
   value: 0,
   metadata: [],
   privateMetadata: [],
+  countries: [],
+  categories: [],
+  collections: [],
+  products: [],
 };

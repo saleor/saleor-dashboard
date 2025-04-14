@@ -73,6 +73,29 @@ export const infoMessages = defineMessages({
   },
 });
 
+export const notifyMessages = defineMessages({
+  extensionReadyToUse: {
+    defaultMessage: "{name} is ready to be used",
+    id: "qRmntJ",
+    description: "extensions list ready to be used",
+  },
+  extensionInstalled: {
+    defaultMessage: "Extension installed",
+    description: "extensions list has been installed",
+    id: "43b+ts",
+  },
+  extensionRemoved: {
+    defaultMessage: "Extension successfully removed",
+    description: "extensions list has been removed",
+    id: "EGzGed",
+  },
+  extensionInstallError: {
+    id: "UMUQCG",
+    defaultMessage: "Couldn’t Install {name}",
+    description: "extensions list has not been installed",
+  },
+});
+
 export const messages = defineMessages({
   searchPlaceholder: {
     defaultMessage: "Search extensions...",
@@ -207,6 +230,16 @@ export const messages = defineMessages({
     defaultMessage: "Provide Manifest URL",
     id: "mZrAiu",
     description: "extension installation page, label for manifest URL input",
+  },
+  deleteFailedInstallation: {
+    defaultMessage: "Remove failed installation",
+    id: "jDWPin",
+    description: "remove failed installation dialog title",
+  },
+  deleteFailedInstallationContent: {
+    id: "Uh3NX/",
+    defaultMessage: "Are you sure you want to delete {name} failed installation?",
+    description: "remove failed installation dialog content",
   },
 });
 
