@@ -205,6 +205,11 @@ export const messages = defineMessages({
     id: "4KRhwm",
     description: "link in infoCardText, to Saleor docs",
   },
+  manifestUrlLabel: {
+    defaultMessage: "Provide Manifest URL",
+    id: "mZrAiu",
+    description: "extension installation page, label for manifest URL input",
+  },
 });
 
 export const appManifestErrorMessages = defineMessages({

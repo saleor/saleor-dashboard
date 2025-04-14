@@ -8035,6 +8035,10 @@
   "mYs3tb": {
     "string": "Product price cannot be lower than 0."
   },
+  "mZrAiu": {
+    "context": "extension installation page, label for manifest URL input",
+    "string": "Provide Manifest URL"
+  },
   "maxT+q": {
     "context": "save button",
     "string": "Confirm order"

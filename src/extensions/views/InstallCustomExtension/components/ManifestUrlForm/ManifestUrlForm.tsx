@@ -1,9 +1,10 @@
 import { HookFormInput } from "@dashboard/components/HookFormInput";
+import { messages } from "@dashboard/extensions/messages";
 import { commonMessages } from "@dashboard/intl";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React, { ClipboardEventHandler, FormEventHandler } from "react";
 import { Control } from "react-hook-form";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { EL_ID_MANIFEST_INPUT_LABEL, PLACEHOLDER_MANIFEST_URL } from "../../consts";
 import { useValidateUrl } from "../../hooks/useValidateUrl";
@@ -32,7 +33,7 @@ export const ManifestUrlForm = ({
       onSubmit={onSubmit}
     >
       <Text size={5} fontWeight="medium" id={EL_ID_MANIFEST_INPUT_LABEL}>
-        Provide Manifest URL
+        <FormattedMessage {...messages.manifestUrlLabel} />
       </Text>
       <HookFormInput
         control={control}
