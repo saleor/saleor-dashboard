@@ -22,8 +22,8 @@ export const giftCardCustomerCardMessages = defineMessages({
     description: "customer gift cards card issue button",
   },
   customerGiftCardsCardTitle: {
-    id: "Utq1fE",
-    defaultMessage: "Gift Cards",
+    id: "ZJJ2vA",
+    defaultMessage: "Gift Cards used by this customer",
     description: "customer gift cards card title",
   },
 });
