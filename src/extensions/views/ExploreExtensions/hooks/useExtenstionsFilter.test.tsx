@@ -1,7 +1,8 @@
-import { useExtensionsFilter } from "@dashboard/extensions/hooks/useExtenstionsFilter";
 import { ExtensionsGroups } from "@dashboard/extensions/types";
 import { act } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
+
+import { useExtensionsFilter } from "./useExtenstionsFilter";
 
 describe("Extensions / hooks / useExtensionsFilter", () => {
   it("should allow filter extensions by name", async () => {

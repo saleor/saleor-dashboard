@@ -2,6 +2,8 @@ import { InstallWithManifestFormButton } from "@dashboard/apps/components/Instal
 import { AppUrls } from "@dashboard/apps/urls";
 import { TopNav } from "@dashboard/components/AppLayout";
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
+import { RequestExtensionsButton } from "@dashboard/extensions/components/RequestExtensionsButton";
+import { headerTitles, messages } from "@dashboard/extensions/messages";
 import {
   ExtensionsListUrlDialog,
   ExtensionsListUrlQueryParams,
@@ -14,12 +16,10 @@ import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { DeleteFailedInstallationDialog } from "../components/DeleteFailedInstallationDialog";
-import { InstalledExtensionsList } from "../components/InstalledExtensionsList";
-import { RequestExtensionsButton } from "../components/RequestExtensionsButton";
-import { useInstalledExtensionsData } from "../hooks/useInstalledExtensionsData";
-import { usePendingInstallation } from "../hooks/usePendingInstallation";
-import { headerTitles, messages } from "../messages";
+import { DeleteFailedInstallationDialog } from "./components/DeleteFailedInstallationDialog";
+import { InstalledExtensionsList } from "./components/InstalledExtensionsList";
+import { useInstalledExtensions } from "./hooks/useInstalledExtensions";
+import { usePendingInstallation } from "./hooks/usePendingInstallation";
 
 interface InstalledExtensionsProps {
   params: ExtensionsListUrlQueryParams;
@@ -47,7 +47,7 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
     openModal("app-installation-remove", { id });
   };
 
-  const { installedApps, installedAppsLoading, refetchInstalledApps } = useInstalledExtensionsData({
+  const { installedApps, installedAppsLoading, refetchInstalledApps } = useInstalledExtensions({
     searchQuery: query,
   });
 

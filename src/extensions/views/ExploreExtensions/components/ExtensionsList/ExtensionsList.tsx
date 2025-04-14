@@ -1,8 +1,8 @@
+import { EmptySearchList } from "@dashboard/extensions/components/EmptyListState";
+import { ExtensionsGroups } from "@dashboard/extensions/types";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
-import { ExtensionsGroups } from "../../types";
-import { EmptySearchList } from "../EmptyListState";
 import { ExtensionItem } from "../ExtenionItem";
 import { ExtensionsGroup } from "../ExtensionsGroup";
 import { LoadingSkeleton } from "./LoadingSkeleton";
