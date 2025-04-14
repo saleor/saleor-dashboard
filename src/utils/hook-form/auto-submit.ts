@@ -91,7 +91,10 @@ export function useAutoSubmit<TFieldValues extends FieldValues>({
       debouncedSubmit();
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      debouncedSubmit.cancel();
+      subscription.unsubscribe();
+    };
 
     // Initialize watch method only on first render
     // Note: We cannot watch for these dependencies, because it causes debounce to be ignored on re-render
