@@ -63,7 +63,7 @@ export const useInstalledExtensions = () => {
   const { data: eventDeliveriesData, loading: eventDeliveriesLoading } = useEventDeliveryQuery({
     displayLoader: true,
     variables: {
-      first: 50,
+      first: 100,
       filter: {
         type: AppTypeEnum.THIRDPARTY,
       },
