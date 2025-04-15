@@ -4,7 +4,6 @@ import { act, renderHook } from "@testing-library/react-hooks";
 
 import { useFetchManifest } from "./useFetchManifest";
 
-// Mock dependencies
 jest.mock("@dashboard/graphql", () => ({
   useAppFetchMutation: jest.fn(),
 }));

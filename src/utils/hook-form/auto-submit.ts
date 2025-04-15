@@ -34,15 +34,6 @@ export function useDebounceCallback<T extends (...args: any) => ReturnType<T>>(
 ): DebouncedState<T> {
   const debouncedFunc = useRef<ReturnType<typeof debounce>>();
 
-  // Cleanup
-  useEffect(() => {
-    return () => {
-      if (debouncedFunc.current) {
-        debouncedFunc.current.cancel();
-      }
-    };
-  }, []);
-
   const debounced = useMemo(() => {
     const debouncedFuncInstance = debounce(func, delay, options);
 
@@ -63,12 +54,24 @@ export function useDebounceCallback<T extends (...args: any) => ReturnType<T>>(
     };
 
     return wrappedFunc;
-  }, [func, delay, options]);
 
-  // Update the debounced function ref whenever func, wait, or options change
+    // Using full dependencies array causes debounce function
+    // to be recreated on every render (comparing options)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [func]);
+
+  // Cleanup
   useEffect(() => {
-    debouncedFunc.current = debounce(func, delay, options);
-  }, [func, delay, options]);
+    return () => {
+      if (debouncedFunc.current) {
+        debouncedFunc.current.cancel();
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    debouncedFunc.current = debounced;
+  }, [debounced]);
 
   return debounced;
 }
@@ -81,7 +84,9 @@ export function useAutoSubmit<TFieldValues extends FieldValues>({
 }: UseAutoSubmitProps<TFieldValues>) {
   // Note: form will have `isSubmitted` state which changes validation to be done onChange (by default)
   // to change this behavior we would need to first validate form, then call onSubmit
-  const debouncedSubmit = useDebounceCallback(onSubmit, debounceTime);
+  const debouncedSubmit = useDebounceCallback(() => {
+    onSubmit();
+  }, debounceTime);
 
   // Call debounce after form was changed by user
   useEffect(() => {
@@ -92,14 +97,9 @@ export function useAutoSubmit<TFieldValues extends FieldValues>({
     });
 
     return () => {
-      debouncedSubmit.cancel();
       subscription.unsubscribe();
     };
-
-    // Initialize watch method only on first render
-    // Note: We cannot watch for these dependencies, because it causes debounce to be ignored on re-render
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [watch, debouncedSubmit]);
 
   // Cancel debounce if form is already submitting
   const { isSubmitting } = useFormState({ control });

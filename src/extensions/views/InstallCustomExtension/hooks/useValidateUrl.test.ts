@@ -2,7 +2,6 @@ import { renderHook } from "@testing-library/react-hooks";
 
 import { useValidateUrl } from "./useValidateUrl";
 
-// Mock react-intl
 jest.mock("react-intl", () => ({
   useIntl: () => ({
     formatMessage: (message: { id: string; defaultMessage: string }) => message.defaultMessage,
