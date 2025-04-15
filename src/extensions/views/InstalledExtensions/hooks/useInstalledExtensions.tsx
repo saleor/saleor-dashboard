@@ -5,20 +5,15 @@ import {
 import { AppPaths } from "@dashboard/apps/urls";
 import { AppTypeEnum, useEventDeliveryQuery, useInstalledAppsListQuery } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
-import { fuzzySearch } from "@dashboard/misc";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 
 import { AppDisabledInfo } from "../components/InfoLabels/AppDisabledInfo";
 import { FailedWebhookInfo } from "../components/InfoLabels/FailedWebhookInfo";
 import { ViewDetailsActionButton } from "../components/ViewDetailsActionButton";
 
-interface UseInstalledExtensionsDataProps {
-  searchQuery: string;
-}
-
-const getExtensionInfo = ({
+export const getExtensionInfo = ({
   loading,
   isActive,
   id,
@@ -34,7 +29,7 @@ const getExtensionInfo = ({
   }
 
   if (loading) {
-    return <Skeleton __width="200px" />;
+    return <Skeleton data-test-id="loading-skeleton" __width="200px" />;
   }
 
   if (lastFailedAttempt) {
@@ -49,8 +44,7 @@ const getExtensionInfo = ({
   return null;
 };
 
-export const useInstalledExtensions = ({ searchQuery }: UseInstalledExtensionsDataProps) => {
-  const [initialLoading, setInitialLoading] = useState(true);
+export const useInstalledExtensions = () => {
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
 
   const { data, refetch } = useInstalledAppsListQuery({
@@ -60,15 +54,14 @@ export const useInstalledExtensions = ({ searchQuery }: UseInstalledExtensionsDa
       filter: {
         type: AppTypeEnum.THIRDPARTY,
       },
-      after: null,
     },
   });
   const installedAppsData = mapEdgesToItems(data?.apps) || [];
 
-  const { data: eventDeliveriesData, loading: eventDeliveriesLoading } = useEventDeliveryQuery({
+  const { data: eventDeliveriesData } = useEventDeliveryQuery({
     displayLoader: true,
     variables: {
-      first: 50,
+      first: 100,
       filter: {
         type: AppTypeEnum.THIRDPARTY,
       },
@@ -78,16 +71,9 @@ export const useInstalledExtensions = ({ searchQuery }: UseInstalledExtensionsDa
   const eventDeliveries = mapEdgesToItems(eventDeliveriesData?.apps) ?? [];
   const eventDeliveriesMap = new Map(eventDeliveries.map(app => [app.id, app]));
 
-  useEffect(() => {
-    if (initialLoading && data) {
-      setInitialLoading(false);
-    }
-  }, [data]);
-
-  const filteredInstalledAppsData = fuzzySearch(installedAppsData, searchQuery, ["name"]);
   const installedApps = useMemo(
     () =>
-      filteredInstalledAppsData.map(({ id, name, isActive, brand }) => {
+      installedAppsData.map(({ id, name, isActive, brand }) => {
         const appEvents = eventDeliveriesMap.get(id);
         const lastFailedAttempt = getLatestFailedAttemptFromWebhooks(appEvents?.webhooks ?? []);
 
@@ -98,18 +84,18 @@ export const useInstalledExtensions = ({ searchQuery }: UseInstalledExtensionsDa
           info: getExtensionInfo({
             id,
             isActive,
-            loading: eventDeliveriesLoading,
+            loading: !eventDeliveriesData?.apps,
             lastFailedAttempt,
           }),
           actions: <ViewDetailsActionButton id={id} isDisabled={!isActive} />,
         };
       }),
-    [eventDeliveries, eventDeliveriesLoading, filteredInstalledAppsData],
+    [eventDeliveries, eventDeliveriesData, installedAppsData],
   );
 
   return {
     installedApps,
-    installedAppsLoading: initialLoading,
+    installedAppsLoading: !data?.apps,
     refetchInstalledApps: refetch,
   };
 };

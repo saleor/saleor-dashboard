@@ -1,16 +1,16 @@
 import { WARNING_ICON_COLOR } from "@dashboard/colors";
+import EventTime from "@dashboard/components/EventTime";
 import Link from "@dashboard/components/Link";
 import { infoMessages } from "@dashboard/extensions/messages";
 import { ExclamationIcon } from "@dashboard/icons/ExclamationIcon";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import moment from "moment-timezone";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { InfoLabelsContainer } from "../InfoLabels/InfoLabelsContainer";
 
 interface FailedWebhookInfoProps {
-  date: moment.Moment;
+  date: string;
   link: string;
 }
 
@@ -38,7 +38,7 @@ export const FailedWebhookInfo = ({ date, link }: FailedWebhookInfoProps) => {
             <FormattedMessage
               {...infoMessages.webhookErrorLastSeen}
               values={{
-                date: date.format("LLL"),
+                date: <EventTime date={date} showSeconds />,
               }}
             />
           </Text>{" "}

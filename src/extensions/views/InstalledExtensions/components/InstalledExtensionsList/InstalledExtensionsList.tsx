@@ -3,7 +3,8 @@ import { EmptyListState } from "@dashboard/extensions/components/EmptyListState/
 import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
 import { messages } from "@dashboard/extensions/messages";
 import { InstalledExtension } from "@dashboard/extensions/types";
-import { Box, GenericAppIcon, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { LoadingSkeleton } from "@dashboard/extensions/views/InstalledExtensions/components/LoadinSkeleton";
+import { Box, GenericAppIcon, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -21,26 +22,7 @@ export const InstalledExtensionsList = ({
   const intl = useIntl();
 
   if (loading) {
-    return (
-      <GridTable>
-        <GridTable.Body>
-          <GridTable.Row>
-            <GridTable.Cell paddingY={4}>
-              <Text size={3}>
-                <FormattedMessage {...messages.extensionName} />
-              </Text>
-            </GridTable.Cell>
-          </GridTable.Row>
-          {Array.from({ length: 5 }).map((_, i) => (
-            <GridTable.Row key={i}>
-              <GridTable.Cell paddingY={4}>
-                <Skeleton __width={i % 2 === 0 ? "150px" : "200px"} />
-              </GridTable.Cell>
-            </GridTable.Row>
-          ))}
-        </GridTable.Body>
-      </GridTable>
-    );
+    return <LoadingSkeleton />;
   }
 
   if (installedExtensions.length === 0) {

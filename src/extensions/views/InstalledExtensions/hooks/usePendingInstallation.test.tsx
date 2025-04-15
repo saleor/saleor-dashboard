@@ -1,0 +1,94 @@
+import { renderHook } from "@testing-library/react-hooks";
+import React from "react";
+
+import { usePendingInstallation } from "./usePendingInstallation";
+
+jest.mock("react-intl", () => ({
+  useIntl: jest.fn(() => ({
+    formatMessage: jest.fn(x => x.defaultMessage),
+  })),
+  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
+  defineMessages: jest.fn(x => x),
+}));
+
+jest.mock("@dashboard/graphql", () => ({
+  ...(jest.requireActual("@dashboard/graphql") as object),
+  useAppsInstallationsQuery: jest.fn(() => ({
+    data: {
+      appsInstallations: [
+        {
+          id: "1",
+          status: "PENDING",
+          appName: "Test App",
+          brand: {
+            name: "Test Brand",
+            id: "test-brand-id",
+          },
+        },
+        {
+          id: "2",
+          status: "FAILED",
+          appName: "Failed App",
+          brand: {
+            name: "Failed Brand",
+            id: "failed-brand-id",
+          },
+        },
+      ],
+    },
+    loading: false,
+    refetch: jest.fn(),
+  })),
+}));
+
+jest.mock("./useActiveAppsInstallations", () => ({
+  useActiveAppsInstallations: jest.fn(() => ({
+    handleRemoveInProgress: jest.fn(),
+    deleteInProgressAppOpts: {
+      deleteInProgressAppStatus: "PENDING",
+    },
+    handleAppInstallRetry: jest.fn(),
+  })),
+}));
+
+describe("InstalledExtensions / hooks / usePendingInstallation", () => {
+  it("should return list of pending installations", () => {
+    // Arrange
+    const refetchExtensions = jest.fn();
+    const onCloseModal = jest.fn();
+    const onFailedInstallationRemove = jest.fn();
+    const searchQuery = "";
+
+    const { result } = renderHook(() =>
+      usePendingInstallation({
+        refetchExtensions,
+        onCloseModal,
+        onFailedInstallationRemove,
+        searchQuery,
+      }),
+    );
+
+    // Assert
+    expect(result.current).toEqual({
+      pendingInstallations: [
+        {
+          id: "1",
+          name: "Test App",
+          actions: expect.any(Object),
+          info: expect.any(Object),
+          logo: "",
+        },
+        {
+          id: "2",
+          name: "Failed App",
+          actions: expect.any(Object),
+          info: expect.any(Object),
+          logo: "",
+        },
+      ],
+      pendingInstallationsLoading: false,
+      handleRemoveInProgress: expect.any(Function),
+      deleteInProgressAppStatus: undefined,
+    });
+  });
+});
