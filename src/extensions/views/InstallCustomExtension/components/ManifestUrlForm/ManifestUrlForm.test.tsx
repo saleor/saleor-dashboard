@@ -12,6 +12,7 @@ jest.mock("react-intl", () => ({
   useIntl: () => ({
     formatMessage: () => "Required field",
   }),
+  defineMessages: (msg: unknown) => msg,
 }));
 
 // Mock HookFormInput - we are testing without useForm from hook-form
