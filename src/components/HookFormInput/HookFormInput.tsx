@@ -1,6 +1,7 @@
 import { ErrorCircle } from "@dashboard/icons/ErrorCircle";
+import { fixedForwardRef } from "@dashboard/utils/ref";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { ComponentProps, forwardRef } from "react";
+import React, { ComponentProps } from "react";
 import { FieldValues, useController, UseControllerProps } from "react-hook-form";
 
 import { InputWithPlaceholder } from "../InputWithPlaceholder/InputWithPlaceholder";
@@ -46,6 +47,8 @@ const HookFormInputInner = <TFormValues extends FieldValues>(
   );
 };
 
-export const HookFormInput = forwardRef(HookFormInputInner);
+export const HookFormInput = fixedForwardRef(HookFormInputInner);
 
-HookFormInput.displayName = "HookFormInput";
+// Cannot use generic + forwardRef and Component.displayName in the same type
+// See fixedForwardRef
+(HookFormInput as any).displayName = "HookFormInput";
