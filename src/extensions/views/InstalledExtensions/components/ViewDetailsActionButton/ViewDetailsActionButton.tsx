@@ -1,4 +1,4 @@
-import { AppPaths } from "@dashboard/apps/urls";
+import { AppPaths, AppUrls } from "@dashboard/apps/urls";
 import Link from "@dashboard/components/Link";
 import { buttonLabels } from "@dashboard/extensions/messages";
 import { Button } from "@saleor/macaw-ui-next";
@@ -31,7 +31,7 @@ export const ViewDetailsActionButton = ({ isDisabled, id }: ViewDetailsActionBut
   }
 
   return (
-    <Link href={AppPaths.resolveAppPath(id)}>
+    <Link href={AppUrls.resolveAppUrl(id)}>
       <Button size="small" variant="secondary">
         <FormattedMessage {...buttonLabels.viewDetails} />
       </Button>
