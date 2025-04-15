@@ -1,19 +1,22 @@
 import { ErrorCircle } from "@dashboard/icons/ErrorCircle";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { ComponentProps } from "react";
+import React, { ComponentProps, forwardRef } from "react";
 import { FieldValues, useController, UseControllerProps } from "react-hook-form";
 
 import { InputWithPlaceholder } from "../InputWithPlaceholder/InputWithPlaceholder";
 
-export function HookFormInput<TFormValues extends FieldValues>({
-  name,
-  rules,
-  control,
-  disabled,
-  defaultValue,
-  shouldUnregister,
-  ...componentProps
-}: UseControllerProps<TFormValues> & ComponentProps<typeof InputWithPlaceholder>) {
+const HookFormInputInner = <TFormValues extends FieldValues>(
+  {
+    name,
+    rules,
+    control,
+    disabled,
+    defaultValue,
+    shouldUnregister,
+    ...componentProps
+  }: UseControllerProps<TFormValues> & ComponentProps<typeof InputWithPlaceholder>,
+  ref: React.ForwardedRef<HTMLInputElement>,
+) => {
   const { field, fieldState } = useController({
     name,
     rules,
@@ -31,6 +34,7 @@ export function HookFormInput<TFormValues extends FieldValues>({
         aria-invalid={!!fieldState.error}
         aria-errormessage={fieldState.error?.message}
         {...componentProps}
+        ref={ref}
       />
       {fieldState.error && (
         <Box color="default2" display="flex" alignItems="center" gap={2} aria-hidden="true">
@@ -40,4 +44,8 @@ export function HookFormInput<TFormValues extends FieldValues>({
       )}
     </Box>
   );
-}
+};
+
+export const HookFormInput = forwardRef(HookFormInputInner);
+
+HookFormInput.displayName = "HookFormInput";
