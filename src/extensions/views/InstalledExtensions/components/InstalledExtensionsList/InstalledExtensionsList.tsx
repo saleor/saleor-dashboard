@@ -34,7 +34,10 @@ export const InstalledExtensionsList = ({
           {Array.from({ length: 5 }).map((_, i) => (
             <GridTable.Row key={i}>
               <GridTable.Cell paddingY={4}>
-                <Skeleton __width={i % 2 === 0 ? "150px" : "200px"} />
+                <Skeleton
+                  data-test-id="loading-skeleton"
+                  __width={i % 2 === 0 ? "150px" : "200px"}
+                />
               </GridTable.Cell>
             </GridTable.Row>
           ))}
