@@ -84,9 +84,7 @@ export function useAutoSubmit<TFieldValues extends FieldValues>({
 }: UseAutoSubmitProps<TFieldValues>) {
   // Note: form will have `isSubmitted` state which changes validation to be done onChange (by default)
   // to change this behavior we would need to first validate form, then call onSubmit
-  const debouncedSubmit = useDebounceCallback(() => {
-    onSubmit();
-  }, debounceTime);
+  const debouncedSubmit = useDebounceCallback(onSubmit, debounceTime);
 
   // Call debounce after form was changed by user
   useEffect(() => {
