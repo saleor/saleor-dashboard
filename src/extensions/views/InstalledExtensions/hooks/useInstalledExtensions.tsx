@@ -7,7 +7,7 @@ import { AppTypeEnum, useEventDeliveryQuery, useInstalledAppsListQuery } from "@
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 
 import { AppDisabledInfo } from "../components/InfoLabels/AppDisabledInfo";
 import { FailedWebhookInfo } from "../components/InfoLabels/FailedWebhookInfo";
@@ -45,7 +45,6 @@ export const getExtensionInfo = ({
 };
 
 export const useInstalledExtensions = () => {
-  const [initialLoading, setInitialLoading] = useState(true);
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
 
   const { data, refetch } = useInstalledAppsListQuery({
@@ -55,12 +54,11 @@ export const useInstalledExtensions = () => {
       filter: {
         type: AppTypeEnum.THIRDPARTY,
       },
-      after: null,
     },
   });
   const installedAppsData = mapEdgesToItems(data?.apps) || [];
 
-  const { data: eventDeliveriesData, loading: eventDeliveriesLoading } = useEventDeliveryQuery({
+  const { data: eventDeliveriesData } = useEventDeliveryQuery({
     displayLoader: true,
     variables: {
       first: 100,
@@ -72,12 +70,6 @@ export const useInstalledExtensions = () => {
   });
   const eventDeliveries = mapEdgesToItems(eventDeliveriesData?.apps) ?? [];
   const eventDeliveriesMap = new Map(eventDeliveries.map(app => [app.id, app]));
-
-  useEffect(() => {
-    if (initialLoading && data) {
-      setInitialLoading(false);
-    }
-  }, [data]);
 
   const installedApps = useMemo(
     () =>
@@ -92,18 +84,18 @@ export const useInstalledExtensions = () => {
           info: getExtensionInfo({
             id,
             isActive,
-            loading: eventDeliveriesLoading,
+            loading: !eventDeliveriesData?.apps,
             lastFailedAttempt,
           }),
           actions: <ViewDetailsActionButton id={id} isDisabled={!isActive} />,
         };
       }),
-    [eventDeliveries, eventDeliveriesLoading, installedAppsData],
+    [eventDeliveries, eventDeliveriesData, installedAppsData],
   );
 
   return {
     installedApps,
-    installedAppsLoading: initialLoading,
+    installedAppsLoading: !data?.apps,
     refetchInstalledApps: refetch,
   };
 };
