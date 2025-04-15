@@ -9,11 +9,12 @@ import {
   ExtensionsListUrlQueryParams,
   ExtensionsUrls,
 } from "@dashboard/extensions/urls";
+import { useInstalledExtensionsFilter } from "@dashboard/extensions/views/InstalledExtensions/hooks/useInstalledExtensionsFilter";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 
 import { DeleteFailedInstallationDialog } from "./components/DeleteFailedInstallationDialog";
@@ -28,7 +29,6 @@ interface InstalledExtensionsProps {
 export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const [query, setQuery] = useState("");
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
 
   const navigateToAppInstallPage = useCallback(
@@ -47,9 +47,9 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
     openModal("app-installation-remove", { id });
   };
 
-  const { installedApps, installedAppsLoading, refetchInstalledApps } = useInstalledExtensions({
-    searchQuery: query,
-  });
+  const { installedApps, installedAppsLoading, refetchInstalledApps } = useInstalledExtensions();
+  const { query, handleQueryChange, filteredInstalledExtensions } =
+    useInstalledExtensionsFilter(installedApps);
 
   const {
     pendingInstallations,
@@ -80,14 +80,14 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
             size="medium"
             initialSearch={query}
             placeholder={intl.formatMessage(messages.searchPlaceholder)}
-            onSearchChange={newQuery => setQuery(newQuery)}
+            onSearchChange={newQuery => handleQueryChange(newQuery)}
           />
         </Box>
 
         <InstalledExtensionsList
-          installedExtensions={[...pendingInstallations, ...installedApps]}
+          installedExtensions={[...pendingInstallations, ...filteredInstalledExtensions]}
           loading={pendingInstallationsLoading || installedAppsLoading}
-          clearSearch={() => setQuery("")}
+          clearSearch={() => handleQueryChange("")}
         />
 
         <DeleteFailedInstallationDialog

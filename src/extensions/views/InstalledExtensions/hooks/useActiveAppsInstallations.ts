@@ -22,7 +22,7 @@ interface UseActiveAppsInstallations {
   onRemoveInProgressAppSuccess: () => void;
 }
 
-function useActiveAppsInstallations({
+export const useActiveAppsInstallations = ({
   appsInProgressData,
   appsInProgressRefetch,
   appInProgressLoading,
@@ -32,7 +32,7 @@ function useActiveAppsInstallations({
   onInstallSuccess,
   onInstallError,
   onRemoveInProgressAppSuccess,
-}: UseActiveAppsInstallations) {
+}: UseActiveAppsInstallations) => {
   const client = useApolloClient();
   const [activeInstallations, setActiveInstallations] = useLocalStorage<
     Array<Record<"id" | "name", string>>
@@ -173,5 +173,4 @@ function useActiveAppsInstallations({
       loading: deleteInProgressAppOpts.loading,
     },
   };
-}
-export default useActiveAppsInstallations;
+};
