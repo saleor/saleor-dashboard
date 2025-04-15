@@ -9,10 +9,10 @@ import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 
-import { ExtensionsList } from "../components/ExtensionsList";
-import { useExploreExtensions } from "../hooks/useExploreExtensions";
-import { useExtensionsFilter } from "../hooks/useExtenstionsFilter";
-import { headerTitles, messages } from "../messages";
+import { headerTitles, messages } from "../../messages";
+import { ExtensionsList } from "./components/ExtensionsList";
+import { useExploreExtensions } from "./hooks/useExploreExtensions";
+import { useExtensionsFilter } from "./hooks/useExtenstionsFilter";
 
 export const ExploreExtensions = () => {
   const intl = useIntl();

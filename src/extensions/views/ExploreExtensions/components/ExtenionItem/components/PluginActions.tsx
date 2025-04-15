@@ -1,9 +1,8 @@
 import Link from "@dashboard/components/Link";
+import { messages } from "@dashboard/extensions/messages";
 import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
-
-import { messages } from "../../../messages";
 
 interface PluginActionsProps {
   isInstalled: boolean;

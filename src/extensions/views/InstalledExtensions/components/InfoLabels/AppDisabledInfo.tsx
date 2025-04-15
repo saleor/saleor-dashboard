@@ -1,8 +1,9 @@
-import { InfoLabelsContainer } from "@dashboard/extensions/components/InfoLabels/InfoLabelsContainer";
 import { infoMessages } from "@dashboard/extensions/messages";
 import { DisabledIcon } from "@dashboard/icons/Disabled";
 import React from "react";
 import { FormattedMessage } from "react-intl";
+
+import { InfoLabelsContainer } from "../InfoLabels/InfoLabelsContainer";
 
 export const AppDisabledInfo = () => {
   return (

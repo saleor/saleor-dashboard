@@ -1,12 +1,13 @@
 import { WARNING_ICON_COLOR } from "@dashboard/colors";
 import Link from "@dashboard/components/Link";
-import { InfoLabelsContainer } from "@dashboard/extensions/components/InfoLabels/InfoLabelsContainer";
 import { infoMessages } from "@dashboard/extensions/messages";
 import { ExclamationIcon } from "@dashboard/icons/ExclamationIcon";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import moment from "moment-timezone";
 import React from "react";
 import { FormattedMessage } from "react-intl";
+
+import { InfoLabelsContainer } from "../InfoLabels/InfoLabelsContainer";
 
 interface FailedWebhookInfoProps {
   date: moment.Moment;
