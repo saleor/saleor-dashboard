@@ -60,6 +60,7 @@ describe("InstalledExtensionsList", () => {
       />,
     );
 
+    // Assert
     expect(screen.getByText("Extension 1")).toBeInTheDocument();
     expect(screen.getByText("Extension 2")).toBeInTheDocument();
   });
