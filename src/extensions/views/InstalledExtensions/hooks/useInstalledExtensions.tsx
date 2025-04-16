@@ -5,8 +5,9 @@ import {
 import { AppPaths } from "@dashboard/apps/urls";
 import { AppTypeEnum, useEventDeliveryQuery, useInstalledAppsListQuery } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
+import { WebhookIcon } from "@dashboard/icons/WebhookIcon";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Box, GenericAppIcon, Skeleton } from "@saleor/macaw-ui-next";
 import React, { useMemo } from "react";
 
 import { AppDisabledInfo } from "../components/InfoLabels/AppDisabledInfo";
@@ -44,6 +45,26 @@ export const getExtensionInfo = ({
   return null;
 };
 
+export const getExtensionLogo = ({
+  logo,
+  type,
+  name,
+}: {
+  logo?: string | null;
+  name: string;
+  type: AppTypeEnum | null;
+}) => {
+  if (type === AppTypeEnum.LOCAL) {
+    return <WebhookIcon />;
+  }
+
+  if (logo) {
+    return <Box as="img" src={logo} alt={name} display="block" maxWidth="100%" />;
+  }
+
+  return <GenericAppIcon size="medium" color="default2" />;
+};
+
 export const useInstalledExtensions = () => {
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
 
@@ -51,9 +72,6 @@ export const useInstalledExtensions = () => {
     displayLoader: true,
     variables: {
       first: 100,
-      filter: {
-        type: AppTypeEnum.THIRDPARTY,
-      },
     },
   });
   const installedAppsData = mapEdgesToItems(data?.apps) || [];
@@ -62,9 +80,6 @@ export const useInstalledExtensions = () => {
     displayLoader: true,
     variables: {
       first: 100,
-      filter: {
-        type: AppTypeEnum.THIRDPARTY,
-      },
       canFetchAppEvents: hasManagedAppsPermission,
     },
   });
@@ -73,14 +88,18 @@ export const useInstalledExtensions = () => {
 
   const installedApps = useMemo(
     () =>
-      installedAppsData.map(({ id, name, isActive, brand }) => {
+      installedAppsData.map(({ id, name, isActive, brand, type }) => {
         const appEvents = eventDeliveriesMap.get(id);
         const lastFailedAttempt = getLatestFailedAttemptFromWebhooks(appEvents?.webhooks ?? []);
 
         return {
           id: id,
           name: name ?? "",
-          logo: brand?.logo?.default ?? "",
+          logo: getExtensionLogo({
+            logo: brand?.logo?.default,
+            type,
+            name: name ?? "",
+          }),
           info: getExtensionInfo({
             id,
             isActive,

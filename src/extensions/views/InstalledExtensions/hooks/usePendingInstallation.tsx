@@ -1,6 +1,7 @@
 import { InstalledExtension } from "@dashboard/extensions/types";
 import { JobStatusEnum, useAppsInstallationsQuery } from "@dashboard/graphql";
 import { fuzzySearch } from "@dashboard/misc";
+import { Box, GenericAppIcon } from "@saleor/macaw-ui-next";
 import React, { useEffect, useState } from "react";
 
 import { FailedInstallationActions } from "../components/FailedInstallationActions";
@@ -16,6 +17,20 @@ interface UsePendingInstallationProps {
   onFailedInstallationRemove: (id: string) => void;
   searchQuery: string;
 }
+
+export const getPendingInstallationLogo = ({
+  logo,
+  name,
+}: {
+  logo?: string | null;
+  name: string;
+}) => {
+  if (logo) {
+    return <Box as="img" src={logo} alt={name} display="block" maxWidth="100%" />;
+  }
+
+  return <GenericAppIcon size="medium" color="default2" />;
+};
 
 export const usePendingInstallation = ({
   refetchExtensions,
@@ -61,7 +76,7 @@ export const usePendingInstallation = ({
       return {
         id: id,
         name: appName,
-        logo: brand?.logo?.default ?? "",
+        logo: getPendingInstallationLogo({ logo: brand?.logo?.default, name: appName }),
         info: isFailed ? <FailedInstallationInfo /> : <InstallationPendingInfo />,
         actions: isFailed ? (
           <FailedInstallationActions
