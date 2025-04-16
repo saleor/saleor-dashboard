@@ -25,7 +25,7 @@ export const WelcomePageTilesContainer = () => {
       gap={6}
       marginTop={7}
     >
-      <CommunityLiveUpdate />
+      <CommunityLiveUpdate onTileButtonClick={handleTileButtonClick} />
       {tiles.map(tile => (
         <WelcomePageInfoTile key={tile.id} {...tile} />
       ))}
