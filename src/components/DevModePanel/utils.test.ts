@@ -1,3 +1,4 @@
+import * as config from "@dashboard/config";
 import { createGraphiQLFetcher, FetcherOpts } from "@graphiql/toolkit";
 import { createFetch } from "@saleor/sdk";
 
@@ -13,6 +14,7 @@ jest.mock("@saleor/sdk", () => ({
 
 jest.mock("@dashboard/config", () => ({
   ENABLED_SERVICE_NAME_HEADER: true,
+  getApiUrl: jest.fn(),
 }));
 
 const mockCreateGraphiQLFetcher = createGraphiQLFetcher as jest.Mock;
@@ -23,7 +25,7 @@ describe("getFetcher", () => {
   let originalFetch: typeof fetch;
 
   beforeEach(() => {
-    process.env.API_URL = mockApiUrl;
+    jest.spyOn(config, "getApiUrl").mockImplementation(() => mockApiUrl);
     originalFetch = global.fetch;
   });
 
