@@ -6,6 +6,7 @@ import github from "@assets/images/github-logo.svg";
 import externalLink from "@assets/images/rounded-external-link-icon.svg";
 import star from "@assets/images/star-icon.svg";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
+import { useTheme } from "@dashboard/theme";
 import { Button, CloseIcon, HelpIcon, Paragraph, sprinkles } from "@saleor/macaw-ui-next";
 import React from "react";
 import SVG from "react-inlinesvg";
@@ -40,6 +41,8 @@ export const CommunityLiveUpdate = ({
 }: {
   onTileButtonClick: (tileId: string) => void;
 }) => {
+  const { theme } = useTheme();
+
   const [isDismissed, setIsDismissed] = useLocalStorage("community-live-update-dismissed", false);
 
   if (isDismissed) {
@@ -49,7 +52,7 @@ export const CommunityLiveUpdate = ({
   return (
     <WelcomePageInfoTile
       id="community-live-update"
-      __backgroundColor="#F5F3FF"
+      __backgroundColor={theme === "defaultLight" ? "#F5F3FF" : undefined}
       __borderColor="#9767E4"
       position="relative"
       header={<FormattedMessage defaultMessage="✨ Join Live Community Update" id="dcFARy" />}
