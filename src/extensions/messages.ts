@@ -9,6 +9,10 @@ export const headerTitles = defineMessages({
     defaultMessage: "Installed Extensions",
     id: "C3sTzL",
   },
+  addCustomExtension: {
+    defaultMessage: "Add Custom Extension manually",
+    id: "fHHHVV",
+  },
 });
 
 export const buttonLabels = defineMessages({
@@ -40,6 +44,14 @@ export const buttonLabels = defineMessages({
     defaultMessage: "Retry",
     id: "62nsdy",
   },
+  save: {
+    defaultMessage: "Save",
+    id: "jvo0vs",
+  },
+  back: {
+    defaultMessage: "Back",
+    id: "cyR7Kh",
+  },
 });
 
 export const infoMessages = defineMessages({
@@ -66,6 +78,32 @@ export const infoMessages = defineMessages({
   webhookErrorViewDetails: {
     defaultMessage: "See logs",
     id: "qkUBLC",
+  },
+  permissionsDescription: {
+    defaultMessage: "Expand or restrict app permissions to access certain part of Saleor system.",
+    id: "HwlLvq",
+  },
+  grantFullAccess: {
+    defaultMessage: "Grant this app full access to the store",
+    id: "VtR2/y",
+  },
+});
+
+export const formLabels = defineMessages({
+  appName: {
+    defaultMessage: "App Name",
+    id: "kExPDx",
+    description: "extension form app name field label",
+  },
+  appNamePlaceholder: {
+    defaultMessage: "App Name",
+    id: "JKoHqo",
+    description: "extension form app name field placeholder",
+  },
+  permissions: {
+    defaultMessage: "Permissions",
+    id: "PHT8z1",
+    description: "extension form permissions section header",
   },
 });
 
@@ -190,5 +228,13 @@ export const messages = defineMessages({
     id: "Uh3NX/",
     defaultMessage: "Are you sure you want to delete {name} failed installation?",
     description: "remove failed installation dialog content",
+  },
+  learnMoreCustomExtensions: {
+    defaultMessage: "Learn more about {customExtensionDocsLink}",
+    id: "9Fiuq2",
+  },
+  learnMoreCustomExtensionsLinkText: {
+    defaultMessage: "creating custom extensions",
+    id: "GIuS7b",
   },
 });

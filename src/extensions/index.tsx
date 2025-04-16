@@ -13,6 +13,8 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { Switch } from "react-router-dom";
 
+import { AddCustomExtension } from "./views/AddCusttomExtension";
+
 const ExploreExtensionsView = () => {
   return <ExploreExtensions />;
 };
@@ -50,6 +52,7 @@ export const ExtensionsSection = () => {
           path={ExtensionsPaths.installedExtensions}
           component={InstalledExtensionsView}
         />
+        <Route exact path={ExtensionsPaths.addCustomExtension} component={AddCustomExtension} />
       </Switch>
     </>
   );

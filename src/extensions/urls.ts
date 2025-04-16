@@ -7,6 +7,7 @@ export const extensionsSection = "/extensions";
 export const ExtensionsPaths = {
   installedExtensions: extensionsSection,
   exploreExtensions: urlJoin(extensionsSection, "explore"),
+  addCustomExtension: urlJoin(extensionsSection, "add-custom"),
 };
 
 export const ExtensionsUrls = {
@@ -14,6 +15,8 @@ export const ExtensionsUrls = {
     ExtensionsPaths.installedExtensions + "?" + stringifyQs(params),
   resolveExploreExtensionsUrl: (params?: ExtensionsListUrlQueryParams) =>
     ExtensionsPaths.exploreExtensions + "?" + stringifyQs(params),
+  addCustomExtensionUrl: (params?: ExtensionsListUrlQueryParams) =>
+    ExtensionsPaths.addCustomExtension + "?" + stringifyQs(params),
 };
 
 export type ExtensionsListUrlDialog = "app-installation-remove";
