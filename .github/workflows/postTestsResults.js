@@ -4,18 +4,16 @@ const core = require("@actions/core");
 
 program
   .name("Send tests results")
-  .description("Get tests results from testmo and post message to slack or on release PR")
-  .option("--run_id <run_id>", "Testmo run id")
-  .option("--testmo_token <testmo_token>", "Bearer token for authorization in testmo")
-  .option("--slack_webhook_url <slack_webhook_url>", "Should send notification on slack")
+  .description("Post test results to Slack using CTRF")
+  .option("--results_file <results_file>", "Path to CTRF results file")
+  .option("--slack_webhook_url <slack_webhook_url>", "Slack webhook URL")
   .option("--environment <environment>", "Environment")
-  .option("--url_to_action <url_to_action>", "Url to enter github action")
-  .option("--ref_name <ref_name>", "Ref to point where tests where run")
+  .option("--url_to_action <url_to_action>", "URL to GitHub action")
+  .option("--ref_name <ref_name>", "Ref to point where tests were run")
   .option("--additional_title <additional_title>", "Additional title, not required")
   .action(async options => {
-    const runId = options.run_id;
-    const testmoAuthToken = options.testmo_token;
-    const testsResults = await getTestsStatus(runId, testmoAuthToken);
+    const resultsFile = options.results_file;
+    const testsResults = require(resultsFile);
     const testsStatus = convertResults(
       testsResults,
       options.environment,
@@ -25,67 +23,33 @@ program
 
     core.setOutput("status", testsStatus.status.toLowerCase());
     core.setOutput("message", testsStatus.message.replaceAll(/\n/g, ""));
-    core.setOutput("linkToResults", testsStatus.linkToResults);
 
     await sendMessageOnSlack(testsStatus, options.slack_webhook_url, options.url_to_action);
   })
   .parse();
 
-async function getTestsStatus(runId, testmoToken) {
-  const runResult = await fetch(
-    `https://saleor.testmo.net/api/v1/automation/runs/${runId}`,
-    {
-      headers: {
-        Authorization: `Bearer ${testmoToken}`,
-      },
-    },
-  );
-  return await runResult.json();
-}
-
 function convertResults(results, environment, refName, additionalTitle) {
-  let status = results?.result?.status === 2 ? "SUCCESS" : "FAILURE";
+  const stats = results.statistics;
+  const status = stats.failed === 0 ? "SUCCESS" : "FAILURE";
+
   let message = `Tests run on environment: \n${environment} \n`;
 
-  const linkToResults = `https:\/\/saleor.testmo.net\/automation\/runs\/view\/${results.result.id}`;
-  const threads = results.result.threads;
-
-  if (Array.isArray(threads)) {
-    const failureCount = threads
-      .map(thread => thread.failure_count)
-      .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-
-    const successCount = threads
-      .map(thread => thread.success_count)
-      .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-
-    const skippedCount = threads
-      .map(thread => thread.total_count - thread.completed_count)
-      .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-
-    if (failureCount > 0) {
-      message += `${failureCount} tests failed. `;
-    }
-    if (successCount > 0) {
-      message += `${successCount} tests passed. `;
-    }
-    if (skippedCount > 0) {
-      message += `${skippedCount} tests skipped. `;
-    }
-  } else {
-    status = "FAILURE";
-    message = "Empty test run. ";
+  if (stats.failed > 0) {
+    message += `${stats.failed} tests failed. `;
+  }
+  if (stats.passed > 0) {
+    message += `${stats.passed} tests passed. `;
+  }
+  if (stats.skipped > 0) {
+    message += `${stats.skipped} tests skipped. `;
   }
 
-  message += `See results at ${linkToResults}`;
-
-  const title = additionalTitle ? additionalTitle : `Automation tests run on ${refName}`
+  const title = additionalTitle ? additionalTitle : `Automation tests run on ${refName}`;
 
   return {
     status,
     message,
     title,
-    linkToResults,
   };
 }
 
@@ -107,6 +71,7 @@ async function sendMessageOnSlack(testsStatus, webhookUrl, urlToAction) {
       },
     ],
   };
+
   await fetch(webhookUrl, {
     body: JSON.stringify(messageData),
     method: "post",

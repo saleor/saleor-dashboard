@@ -18,10 +18,6 @@ on:
     secrets:
       STAGING_TOKEN:
         required: true
-      TESTMO_URL:
-        required: true
-      TESTMO_TOKEN:
-        required: true
       E2E_USER_NAME:
         required: true
       E2E_USER_PASSWORD:
@@ -53,7 +49,6 @@ jobs:
       CUSTOM_VERSION: ${{inputs.CUSTOM_VERSION}}
     outputs:
       VERSION: ${{ env.VERSION }}
-      TESTMO_RUN_ID: ${{ steps.init-testmo.outputs.testmo-run-id }}
       POOL_NAME: ${{ steps.pool_variables.outputs.POOL_NAME }}
       POOL_INSTANCE: ${{ steps.pool_variables.outputs.POOL_INSTANCE }}
       BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
@@ -135,14 +130,6 @@ jobs:
           BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
           SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
 
-      - uses: ./.github/actions/testmo/testmo-init
-        with:
-          testmoUrl: ${{ secrets.TESTMO_URL }}
-          testmoToken: ${{ secrets.TESTMO_TOKEN }}
-          testmoRunName: "${{ steps.check-framework.outputs.result }} run ${{ env.CUSTOM_VERSION }}"
-          source: ${{ steps.check-framework.outputs.result }}
-        id: init-testmo
-
       - name: get environment variables
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -220,13 +207,6 @@ jobs:
           install: false
           browser: "electron"
 
-      - name: Testmo threads submit
-        uses: ./.github/actions/testmo/testmo-threads-submit
-        with:
-          testmoUrl: ${{ secrets.TESTMO_URL }}
-          testmoToken: ${{ secrets.TESTMO_TOKEN }}
-          testmoRunId: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
-
   run-pw-tests:
     runs-on: ubuntu-22.04
     needs: "add-check-and-prepare-instance"
@@ -261,14 +241,6 @@ jobs:
           BRANCH_NAME: ${{ github.ref}}
           SALEOR_CLOUD_SERVICE: ${{ needs.initialize-cloud.outputs.SALEOR_CLOUD_SERVICE }}
 
-      - name: submit-results-to-testmo
-        if: always()
-        uses: ./.github/actions/testmo/testmo-threads-submit-playwright
-        with:
-          testmoUrl: ${{ secrets.TESTMO_URL }}
-          testmoToken: ${{ secrets.TESTMO_TOKEN }}
-          testmoRunId: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
-
   tests-complete:
     if: |
       !cancelled() && always()
@@ -299,13 +271,6 @@ jobs:
         if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == 'Cypress-tests'
         uses: ./.github/actions/combineReportsFromE2E
 
-      - name: complete testmo report
-        uses: ./.github/actions/testmo/testmo-finish
-        with:
-          testmoUrl: ${{ secrets.TESTMO_URL }}
-          testmoToken: ${{ secrets.TESTMO_TOKEN }}
-          testmoRunId: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
-
       - name: Create flaky report
         uses: ./.github/actions/flaky-tests-report
         with:
@@ -314,29 +279,8 @@ jobs:
       - name: Push flaky report
         uses: ./.github/actions/push-flaky-test-report
         with:
-          VAULT_URL: ${{ secrets.VAULT_URL }}      
+          VAULT_URL: ${{ secrets.VAULT_URL }}
           VAULT_JWT: ${{ secrets.VAULT_JWT }}
-          
-      - name: send message on slack
-        working-directory: ".github"
-        id: send-slack-message
-        env:
-          RUN_ID: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
-          URL_TO_ACTION: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
-          ENVIRONMENT: ${{ needs.add-check-and-prepare-instance.outputs.BASE_URL }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_QA_STATUSES_WEBHOOK_URL }}
-          REF_NAME: ${{github.ref_name}}
-          ADDITIONAL_TITLE: "${{inputs.ADDITIONAL_TITLE}} ${{inputs.CUSTOM_VERSION}}"
-        run: |
-          node workflows/postTestsResults.js \
-          --run_id "$RUN_ID" \
-          --testmo_token "$TESTMO_TOKEN" \
-          --slack_webhook_url "$SLACK_WEBHOOK_URL" \
-          --environment "$ENVIRONMENT" \
-          --url_to_action "$URL_TO_ACTION" \
-          --ref_name "$REF_NAME" \
-          --additional_title "$ADDITIONAL_TITLE"
 
       - id: update-check
         if: always() && ${{ needs.add-check-and-prepare-instance.outputs.CHECK_ID }}

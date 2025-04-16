@@ -26,28 +26,20 @@ export default defineConfig({
 
   reporter: process.env.CI
     ? [
-      ["blob"],
-      ["github"],
-      [
-        "playwright-testmo-reporter",
-        {
-          outputFile: "testmo/testmo.xml", // Optional: Output file path. Defaults to 'testmo.xml'.
-          embedBrowserType: true, // Optional: Embed browser type in the XML file. Defaults to false.
-          embedTestSteps: true, // Optional: Embed test steps in the XML file. Defaults to true.
-          testStepCategories: ["hook", "expect", "pw:api", "test.step"], // Optional: Test step categories to include in the XML file. Defaults to ["hook","expect","pw:api","test.step"]. Possible options are "hook", "expect", "pw:api", "test.step".
-          testTitleDepth: 1, // Optional: Test case title depth to report in the XML file. Defaults to 1. Increase this to 2 include suite name. Increase this even further to include the path.
-          attachmentBasePathCallback: () =>
-            process.env.URL_TO_RUN ? process.env.URL_TO_RUN : "",
-        },
-      ],
-      ['playwright-ctrf-json-reporter', {
-        outputFile: `ctrf-report-${shardNumber}.json`, // Optional: Output file name. Defaults to 'ctrf-report.json'.
-        minimal: true,                  // Optional: Generate a minimal report. Defaults to 'false'. Overrides screenshot and testType when set to true
-        appName: 'Saleor Dashboard',    // Optional: Specify the name of the application under test.
-        appVersion: env.DASHBOARD_VERSION || '',     // Optional: Specify the version of the application under test.
-        branchName: env.BRANCH_NAME || '',    // Optional: Specify the branch name.
-        testEnvironment: env.SALEOR_CLOUD_SERVICE || ''     // Optional: Specify the test environment (e.g. staging, production).
-      }]]
+        ["blob"],
+        ["github"],
+        [
+          "playwright-ctrf-json-reporter",
+          {
+            outputFile: `ctrf-report-${shardNumber}.json`, // Optional: Output file name. Defaults to 'ctrf-report.json'.
+            minimal: true, // Optional: Generate a minimal report. Defaults to 'false'. Overrides screenshot and testType when set to true
+            appName: "Saleor Dashboard", // Optional: Specify the name of the application under test.
+            appVersion: env.DASHBOARD_VERSION || "", // Optional: Specify the version of the application under test.
+            branchName: env.BRANCH_NAME || "", // Optional: Specify the branch name.
+            testEnvironment: env.SALEOR_CLOUD_SERVICE || "", // Optional: Specify the test environment (e.g. staging, production).
+          },
+        ],
+      ]
     : [["html"], ["list"]],
   expect: { timeout: 10 * 1000 },
   maxFailures: 10,
