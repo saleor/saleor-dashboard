@@ -100,7 +100,6 @@ const useStyles = makeStyles(
   }),
   { name: "TranslationFields" },
 );
-const numberOfColumns = 2;
 const TranslationFields: React.FC<TranslationFieldsProps> = props => {
   const {
     activeField,
@@ -231,10 +230,10 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
           </Grid>
           {pagination && (
             <TablePaginationWithContext
-              colSpan={numberOfColumns}
+              paddingX={0}
+              paddingY={6}
               settings={pagination.settings}
               onUpdateListSettings={pagination.onUpdateListSettings}
-              component="div"
             />
           )}
         </DashboardCard.Content>

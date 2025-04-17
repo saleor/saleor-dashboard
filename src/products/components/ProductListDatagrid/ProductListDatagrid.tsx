@@ -281,15 +281,12 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           navigatorOpts={{ state: getPrevLocationState(location) }}
         />
 
-        <Box paddingX={6}>
-          <TablePaginationWithContext
-            component="div"
-            colSpan={(products?.length === 0 ? 1 : 2) + settings.columns.length}
-            settings={settings}
-            disabled={disabled}
-            onUpdateListSettings={onUpdateListSettings}
-          />
-        </Box>
+        <TablePaginationWithContext
+          paddingY={6}
+          settings={settings}
+          disabled={disabled}
+          onUpdateListSettings={onUpdateListSettings}
+        />
       </DatagridChangeStateContext.Provider>
     </Box>
   );

@@ -125,9 +125,8 @@ export const DiscountListDatagrid = ({
         navigatorOpts={{ state: getPrevLocationState(location) }}
       />
 
-      <Box paddingX={6}>
+      <Box paddingBottom={6} paddingRight={2}>
         <TablePaginationWithContext
-          component="div"
           settings={settings}
           disabled={disabled}
           onUpdateListSettings={onUpdateListSettings}

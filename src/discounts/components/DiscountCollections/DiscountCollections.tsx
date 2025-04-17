@@ -79,7 +79,9 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
         </TableHead>
         <TableFooter>
           <TableRowLink>
-            <TablePaginationWithContext colSpan={numberOfColumns} />
+            <TableCell colSpan={numberOfColumns}>
+              <TablePaginationWithContext paddingX={0} />
+            </TableCell>
           </TableRowLink>
         </TableFooter>
         <TableBody data-test-id="assigned-specific-products-table">

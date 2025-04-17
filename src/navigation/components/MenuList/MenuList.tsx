@@ -104,11 +104,13 @@ const MenuList: React.FC<MenuListProps> = props => {
         </TableHead>
         <TableFooter>
           <TableRowLink>
-            <TablePaginationWithContext
-              colSpan={numberOfColumns}
-              settings={settings}
-              onUpdateListSettings={onUpdateListSettings}
-            />
+            <TableCell colSpan={numberOfColumns}>
+              <TablePaginationWithContext
+                paddingX={0}
+                settings={settings}
+                onUpdateListSettings={onUpdateListSettings}
+              />
+            </TableCell>
           </TableRowLink>
         </TableFooter>
         <TableBody data-test-id="navigation-menu-list">

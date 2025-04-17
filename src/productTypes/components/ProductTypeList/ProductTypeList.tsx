@@ -105,7 +105,9 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
       </TableHead>
       <TableFooter>
         <TableRowLink>
-          <TablePaginationWithContext colSpan={numberOfColumns} />
+          <TableCell colSpan={numberOfColumns}>
+            <TablePaginationWithContext />
+          </TableCell>
         </TableRowLink>
       </TableFooter>
       <TableBody data-test-id="product-types-list">

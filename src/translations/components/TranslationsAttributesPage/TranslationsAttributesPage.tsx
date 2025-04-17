@@ -3,7 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { ListSettingsUpdate } from "@dashboard/components/TablePagination";
+import { ListSettingsUpdate } from "@dashboard/components/TablePagination/types";
 import { AttributeTranslationDetailsFragment, LanguageCodeEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";

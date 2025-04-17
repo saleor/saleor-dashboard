@@ -8,7 +8,7 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { MetadataFormData } from "@dashboard/components/Metadata/types";
 import { Savebar } from "@dashboard/components/Savebar";
-import { ListSettingsUpdate } from "@dashboard/components/TablePagination";
+import { ListSettingsUpdate } from "@dashboard/components/TablePagination/types";
 import {
   AttributeDetailsFragment,
   AttributeDetailsQuery,

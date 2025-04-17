@@ -5,12 +5,12 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import TablePagination from "@dashboard/components/TablePagination";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
 import { giftCardListUrl, giftCardUrl } from "@dashboard/giftCards/urls";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import usePaginator from "@dashboard/hooks/usePaginator";
+import usePaginator, { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box, useTheme } from "@saleor/macaw-ui-next";
 import isEqual from "lodash/isEqual";
@@ -142,50 +142,49 @@ export const GiftCardsListDatagrid = () => {
   });
 
   return (
-    <DatagridChangeStateContext.Provider value={datagridState}>
-      <Datagrid
-        readonly
-        loading={loading}
-        rowMarkers="checkbox-visible"
-        columnSelect="single"
-        hasRowHover={true}
-        onColumnMoved={handlers.onMove}
-        onColumnResize={handlers.onResize}
-        verticalBorder={false}
-        rows={giftCards?.length ?? 0}
-        availableColumns={visibleColumns}
-        emptyText={intl.formatMessage(messages.noData)}
-        onRowSelectionChange={handleGiftCardSelectionChange}
-        getCellContent={getCellContent}
-        getCellError={() => false}
-        selectionActions={() => null}
-        menuItems={() => []}
-        onRowClick={handleRowClick}
-        onHeaderClicked={handleHeaderClick}
-        rowAnchor={handleRowAnchor}
-        getColumnTooltipContent={handleGetColumnTooltipContent}
-        recentlyAddedColumn={recentlyAddedColumn}
-        renderColumnPicker={() => (
-          <ColumnPicker
-            staticColumns={staticColumns}
-            selectedColumns={selectedColumns}
-            onToggle={handlers.onToggle}
-          />
-        )}
-        navigatorOpts={{ state: getPrevLocationState(location) }}
-      />
-
-      <Box paddingX={6}>
-        <TablePagination
-          hasNextPage={paginationValues?.hasNextPage ?? false}
-          nextHref={paginationValues.nextHref}
-          hasPreviousPage={paginationValues?.hasPreviousPage ?? false}
-          prevHref={paginationValues?.prevHref}
-          component="div"
-          settings={settings}
-          onUpdateListSettings={updateListSettings}
+    <PaginatorContext.Provider value={paginationValues}>
+      <DatagridChangeStateContext.Provider value={datagridState}>
+        <Datagrid
+          readonly
+          loading={loading}
+          rowMarkers="checkbox-visible"
+          columnSelect="single"
+          hasRowHover={true}
+          onColumnMoved={handlers.onMove}
+          onColumnResize={handlers.onResize}
+          verticalBorder={false}
+          rows={giftCards?.length ?? 0}
+          availableColumns={visibleColumns}
+          emptyText={intl.formatMessage(messages.noData)}
+          onRowSelectionChange={handleGiftCardSelectionChange}
+          getCellContent={getCellContent}
+          getCellError={() => false}
+          selectionActions={() => null}
+          menuItems={() => []}
+          onRowClick={handleRowClick}
+          onHeaderClicked={handleHeaderClick}
+          rowAnchor={handleRowAnchor}
+          getColumnTooltipContent={handleGetColumnTooltipContent}
+          recentlyAddedColumn={recentlyAddedColumn}
+          renderColumnPicker={() => (
+            <ColumnPicker
+              staticColumns={staticColumns}
+              selectedColumns={selectedColumns}
+              onToggle={handlers.onToggle}
+            />
+          )}
+          navigatorOpts={{ state: getPrevLocationState(location) }}
         />
-      </Box>
-    </DatagridChangeStateContext.Provider>
+
+        <Box paddingX={6}>
+          <TablePaginationWithContext
+            settings={settings}
+            onUpdateListSettings={updateListSettings}
+            paddingX={0}
+            paddingBottom={6}
+          />
+        </Box>
+      </DatagridChangeStateContext.Provider>
+    </PaginatorContext.Provider>
   );
 };

@@ -39,6 +39,7 @@ const useStyles = makeStyles(
   },
   { name: "TranslationsEntitiesList" },
 );
+const numberOfColumns = 2;
 const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props => {
   const { disabled, entities, getRowHref } = props;
   const classes = useStyles(props);
@@ -62,7 +63,9 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
       </TableHead>
       <TableFooter>
         <TableRowLink>
-          <TablePaginationWithContext colSpan={2} disabled={disabled} />
+          <TableCell colSpan={numberOfColumns}>
+            <TablePaginationWithContext disabled={disabled} paddingX={0} />
+          </TableCell>
         </TableRowLink>
       </TableFooter>
       <TableBody>
