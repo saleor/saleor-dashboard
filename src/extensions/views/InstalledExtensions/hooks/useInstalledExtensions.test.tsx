@@ -99,6 +99,13 @@ jest.mock("@dashboard/graphql", () => ({
   })),
 }));
 
+// TODO: Remove this mock when the feature flag is removed
+jest.mock("@dashboard/featureFlags", () => ({
+  useFlag: jest.fn(() => ({
+    enabled: true,
+  })),
+}));
+
 describe("InstalledExtensions / hooks / useInstalledExtensions", () => {
   it("should return list of installed extensions", () => {
     // Arrange

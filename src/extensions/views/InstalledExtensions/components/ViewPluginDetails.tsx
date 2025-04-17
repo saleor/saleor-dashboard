@@ -13,7 +13,7 @@ export const ViewPluginDetails = ({ id }: ViewPluginDetailsProps) => {
   return (
     <Link href={pluginPath(id)}>
       <Button size="small" variant="secondary">
-        <FormattedMessage {...buttonLabels.manage} />
+        <FormattedMessage {...buttonLabels.viewDetails} />
       </Button>
     </Link>
   );
