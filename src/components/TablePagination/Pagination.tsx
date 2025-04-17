@@ -117,6 +117,7 @@ export const Pagination = ({
             options={ROW_NUMBER_OPTIONS}
             value={currentRowNumberOption ?? ROW_NUMBER_OPTIONS[1]}
             onChange={handleRowNumberChange}
+            data-test-id="select-rows-per-page"
           />
         </Box>
       )}
