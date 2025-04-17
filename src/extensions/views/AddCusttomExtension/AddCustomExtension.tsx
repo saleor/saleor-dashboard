@@ -9,9 +9,9 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useShop from "@dashboard/hooks/useShop";
 import { CUSTOM_EXTENSIONS_DOCS_URL } from "@dashboard/links";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
+import React, { useEffect, useMemo } from "react";
+import { SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import { z } from "zod";
 
@@ -31,17 +31,20 @@ export function AddCustomExtension() {
   const shop = useShop();
   const permissions = shop?.permissions ?? [];
 
-  // Initialize permissions record
-  const initialPermissions = permissions.reduce(
+  // Initialize permissions record - all permissions are disabled by edfualt
+  const noPermissions = permissions.reduce(
     (acc, { code }) => ({ ...acc, [code]: false }),
+    {} as Record<PermissionEnum, boolean>,
+  );
+  const allPermissions = permissions.reduce(
+    (acc, { code }) => ({ ...acc, [code]: true }),
     {} as Record<PermissionEnum, boolean>,
   );
 
   const methods = useForm({
     defaultValues: {
       appName: "",
-      fullAccess: false,
-      permissions: initialPermissions,
+      permissions: noPermissions,
     },
     resolver: zodResolver(formSchema),
     mode: "onChange",
@@ -50,32 +53,31 @@ export function AddCustomExtension() {
   const {
     control,
     handleSubmit,
-    watch,
     setValue,
     formState: { errors, isSubmitting, isValid },
   } = methods;
-
-  const fullAccess = watch("fullAccess");
-
-  // When full access changes, update all permissions
-  useEffect(() => {
-    if (fullAccess) {
-      const allPermissions = permissions.reduce(
-        (acc, { code }) => ({ ...acc, [code]: true }),
-        {} as Record<PermissionEnum, boolean>,
-      );
-
-      setValue("permissions", allPermissions);
-    } else {
-      setValue("permissions", initialPermissions);
-    }
-  }, [fullAccess, setValue, permissions]);
 
   const onSubmit: SubmitHandler<CustomExtensionFormData> = async data => {
     // TODO: Add submit
     console.log("Form data:", data);
     navigate(ExtensionsUrls.resolveInstalledExtensionsUrl());
   };
+
+  const selectedPermissions = useWatch({ name: "permissions", control });
+
+  const isFullAccess = useMemo(() => {
+    return Object.entries(selectedPermissions).every(([_, value]) => value);
+  }, [selectedPermissions]);
+
+  const toggleFullAccess = () => {
+    if (isFullAccess) {
+      setValue("permissions", noPermissions);
+    } else {
+      setValue("permissions", allPermissions);
+    }
+  };
+
+  // TODO: Display warning when user has insufficient permissions
 
   return (
     <>
@@ -121,29 +123,28 @@ export function AddCustomExtension() {
           </Box>
         </Box>
 
-        <Box>
-          <Text size={5} fontWeight="medium" as="h2" marginBottom={2}>
-            <FormattedMessage {...formLabels.permissions} />
-          </Text>
-          <Text display="block" marginBottom={4}>
-            <FormattedMessage {...infoMessages.permissionsDescription} />
-          </Text>
-
-          <Box marginBottom={4}>
-            <HookFormCheckbox name="fullAccess" control={control}>
+        <Box display="flex" flexDirection="column" gap={10}>
+          <Box display="flex" flexDirection="column" gap={2}>
+            <Text size={5} fontWeight="medium" as="h2" marginBottom={2}>
+              <FormattedMessage {...formLabels.permissions} />
+            </Text>
+            <Text display="block" marginBottom={4}>
+              <FormattedMessage {...infoMessages.permissionsDescription} />
+            </Text>
+            <Checkbox checked={isFullAccess} onCheckedChange={toggleFullAccess}>
               <Text size={3}>{intl.formatMessage(infoMessages.grantFullAccess)}</Text>
-            </HookFormCheckbox>
+            </Checkbox>
           </Box>
 
-          <Box display="grid" gridTemplateColumns={2} gap={4}>
+          <Box display="grid" gridTemplateColumns={2} gap={6} __maxWidth="1200px">
             {permissions.map(permission => (
               <Box key={permission.code}>
                 <HookFormCheckbox
                   name={`permissions.${permission.code}` as any}
                   control={control}
-                  disabled={fullAccess}
+                  alignItems="flex-start"
                 >
-                  <Box display="flex" flexDirection="column">
+                  <Box display="flex" flexDirection="column" __marginTop="-4px">
                     <Text>{permission.name}</Text>
                     <Text size={2} color="default2">
                       {permission.code}
