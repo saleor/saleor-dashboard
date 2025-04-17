@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.20.35
+
+### Patch Changes
+
+- ede88bf: Adding new tile to the home about upcoming live update
+- 171b07e: Some false-positive errors are no longer reported to Sentry.
+- 40606f6: Warehouse and tracking number in fulfilled order section are now displayed in two separate lines improving readability.
+- 1dbf4ab: The library used in variant edit page to change variant order has been changed.
+  This means that grabbed variant no longer sticks to the cursor after mouse button has been lifted.
+- 76a3285: Now community banner displays porperly in dark mode
+- 48f020b: You can now select specific products, collections aand categories during voucher creation
+
 ## 3.20.34
 
 ### Patch Changes
