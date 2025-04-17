@@ -1,5 +1,5 @@
 import { InstalledExtension } from "@dashboard/extensions/types";
-import { JobStatusEnum, useAppsInstallationsQuery } from "@dashboard/graphql";
+import { AppTypeEnum, JobStatusEnum, useAppsInstallationsQuery } from "@dashboard/graphql";
 import { fuzzySearch } from "@dashboard/misc";
 import { Box, GenericAppIcon } from "@saleor/macaw-ui-next";
 import React, { useEffect, useState } from "react";
@@ -84,7 +84,7 @@ export const usePendingInstallation = ({
             onRetry={() => handleAppInstallRetry(id)}
           />
         ) : (
-          <ViewDetailsActionButton />
+          <ViewDetailsActionButton type={AppTypeEnum.THIRDPARTY} />
         ),
       };
     },
