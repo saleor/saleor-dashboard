@@ -2,15 +2,19 @@ import { TopNav } from "@dashboard/components/AppLayout";
 import { HookFormCheckbox } from "@dashboard/components/HookFormCheckbox";
 import { HookFormInput } from "@dashboard/components/HookFormInput";
 import { Savebar } from "@dashboard/components/Savebar";
+import { CustomAppUrls } from "@dashboard/custom-apps/urls";
 import { ExternalLinkUnstyled } from "@dashboard/extensions/components/ExternalLinkUnstyled";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
+import { useAppCreateMutation } from "@dashboard/graphql";
 import { PermissionEnum } from "@dashboard/graphql/types.generated";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
+import { commonMessages } from "@dashboard/intl";
 import { CUSTOM_EXTENSIONS_DOCS_URL } from "@dashboard/links";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import { SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import { z } from "zod";
@@ -27,6 +31,8 @@ export type CustomExtensionFormData = z.infer<typeof formSchema>;
 
 export function AddCustomExtension() {
   const intl = useIntl();
+  const notify = useNotifier();
+
   const navigate = useNavigator();
   const shop = useShop();
   const permissions = shop?.permissions ?? [];
@@ -57,10 +63,36 @@ export function AddCustomExtension() {
     formState: { errors, isSubmitting, isValid },
   } = methods;
 
+  const [createApp, createAppOpts] = useAppCreateMutation({
+    onCompleted: data => {
+      if (data.appCreate.errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+        navigate(CustomAppUrls.resolveAppUrl(data.appCreate.app.id));
+        // TODO: Store token in context in order to display on details page
+        // Currently it's a useState
+        // setToken(data.appCreate.authToken);
+      }
+    },
+  });
+
   const onSubmit: SubmitHandler<CustomExtensionFormData> = async data => {
     // TODO: Add submit
     console.log("Form data:", data);
-    navigate(ExtensionsUrls.resolveInstalledExtensionsUrl());
+    await createApp({
+      variables: {
+        input: {
+          name: data.appName,
+          permissions: Object.entries(data.permissions)
+            .filter(([value]) => value)
+            .map(([key]) => key as PermissionEnum),
+        },
+      },
+    });
+
+    // navigate(CustomAppUrls.resolveAppUrl());
   };
 
   const selectedPermissions = useWatch({ name: "permissions", control });
@@ -78,6 +110,8 @@ export function AddCustomExtension() {
   };
 
   // TODO: Display warning when user has insufficient permissions
+
+  console.log(isValid, isSubmitting);
 
   return (
     <>
@@ -102,6 +136,7 @@ export function AddCustomExtension() {
       <Box
         paddingX={6}
         marginTop={10}
+        paddingBottom={4}
         display="flex"
         flexDirection="column"
         gap={10}
@@ -136,7 +171,15 @@ export function AddCustomExtension() {
             </Checkbox>
           </Box>
 
-          <Box display="grid" gridTemplateColumns={2} gap={6} __maxWidth="1200px">
+          <Box
+            display="grid"
+            gridTemplateColumns={{
+              tablet: 2,
+              mobile: 1,
+            }}
+            gap={6}
+            __maxWidth="1200px"
+          >
             {permissions.map(permission => (
               <Box key={permission.code}>
                 <HookFormCheckbox
@@ -160,7 +203,7 @@ export function AddCustomExtension() {
           <Savebar.Spacer />
           <Savebar.CancelButton href={ExtensionsUrls.resolveInstalledExtensionsUrl()} />
           <Savebar.ConfirmButton
-            disabled={!isValid || isSubmitting}
+            disabled={isSubmitting}
             transitionState={isSubmitting ? "loading" : "default"}
             onClick={handleSubmit(onSubmit)}
           ></Savebar.ConfirmButton>
