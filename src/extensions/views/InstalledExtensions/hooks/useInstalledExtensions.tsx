@@ -3,8 +3,17 @@ import {
   LatestWebhookDeliveryWithMoment,
 } from "@dashboard/apps/components/AppAlerts/utils";
 import { AppPaths } from "@dashboard/apps/urls";
-import { AppTypeEnum, useEventDeliveryQuery, useInstalledAppsListQuery } from "@dashboard/graphql";
+import { InstalledExtension } from "@dashboard/extensions/types";
+import { ViewPluginDetails } from "@dashboard/extensions/views/InstalledExtensions/components/ViewPluginDetails";
+import { byActivePlugin, sortByName } from "@dashboard/extensions/views/InstalledExtensions/utils";
+import {
+  AppTypeEnum,
+  useEventDeliveryQuery,
+  useInstalledAppsListQuery,
+  usePluginsQuery,
+} from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
+import { PluginIcon } from "@dashboard/icons/PluginIcon";
 import { WebhookIcon } from "@dashboard/icons/WebhookIcon";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, GenericAppIcon, Skeleton } from "@saleor/macaw-ui-next";
@@ -76,6 +85,14 @@ export const useInstalledExtensions = () => {
   });
   const installedAppsData = mapEdgesToItems(data?.apps) || [];
 
+  const { data: plugins } = usePluginsQuery({
+    displayLoader: true,
+    variables: {
+      first: 100,
+    },
+  });
+  const installedPluginsData = mapEdgesToItems(plugins?.plugins) || [];
+
   const { data: eventDeliveriesData } = useEventDeliveryQuery({
     displayLoader: true,
     variables: {
@@ -86,7 +103,7 @@ export const useInstalledExtensions = () => {
   const eventDeliveries = mapEdgesToItems(eventDeliveriesData?.apps) ?? [];
   const eventDeliveriesMap = new Map(eventDeliveries.map(app => [app.id, app]));
 
-  const installedApps = useMemo(
+  const installedApps = useMemo<InstalledExtension[]>(
     () =>
       installedAppsData.map(({ id, name, isActive, brand, type }) => {
         const appEvents = eventDeliveriesMap.get(id);
@@ -106,15 +123,27 @@ export const useInstalledExtensions = () => {
             loading: !eventDeliveriesData?.apps,
             lastFailedAttempt,
           }),
-          actions: <ViewDetailsActionButton id={id} isDisabled={!isActive} />,
+          actions: <ViewDetailsActionButton id={id} type={type} isDisabled={!isActive} />,
         };
       }),
     [eventDeliveries, eventDeliveriesData, installedAppsData],
   );
 
+  const installedPlugins = useMemo<InstalledExtension[]>(
+    () =>
+      installedPluginsData.filter(byActivePlugin).map(plugin => ({
+        id: plugin.id,
+        name: plugin.name,
+        logo: <PluginIcon />,
+        info: null,
+        actions: <ViewPluginDetails id={plugin.id} />,
+      })),
+    [installedPluginsData],
+  );
+
   return {
-    installedApps,
-    installedAppsLoading: !data?.apps,
+    installedExtensions: [...installedApps, ...installedPlugins].sort(sortByName),
+    installedAppsLoading: !data?.apps || !plugins?.plugins,
     refetchInstalledApps: refetch,
   };
 };
