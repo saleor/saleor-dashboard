@@ -3,7 +3,7 @@ import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { getTilesData } from "./tileData";
+import { CommunityLiveUpdate, getTilesData } from "./tileData";
 import { WelcomePageInfoTile } from "./WelcomePageInfoTile";
 
 export const WelcomePageTilesContainer = () => {
@@ -25,6 +25,7 @@ export const WelcomePageTilesContainer = () => {
       gap={6}
       marginTop={7}
     >
+      <CommunityLiveUpdate onTileButtonClick={handleTileButtonClick} />
       {tiles.map(tile => (
         <WelcomePageInfoTile key={tile.id} {...tile} />
       ))}

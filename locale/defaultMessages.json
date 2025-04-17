@@ -2779,6 +2779,9 @@
     "context": "staff member's account",
     "string": "Deactivated"
   },
+  "FcC842": {
+    "string": "Tune in for live updates with product news, tips, and how teams are building with Saleor."
+  },
   "FcTTvh": {
     "context": "postal codes, header",
     "string": "Postal codes"
@@ -5400,6 +5403,9 @@
   "VrFy8e": {
     "string": "No notes from customer"
   },
+  "Vrch8P": {
+    "string": "April 24th at 3 PM CET | 9 AM EDT"
+  },
   "VsGcdP": {
     "context": "section header",
     "string": "App permissions"
@@ -6681,6 +6687,9 @@
     "context": "products export type label",
     "string": "products"
   },
+  "dcFARy": {
+    "string": "✨ Join Live Community Update"
+  },
   "dnbJKr": {
     "string": "This transaction doesn't have any events"
   },
@@ -7582,6 +7591,9 @@
   "jz2SlO": {
     "context": "refunded fulfillment, section header",
     "string": "Replaced"
+  },
+  "jzO3qY": {
+    "string": "Join us on Discord"
   },
   "jzu97k": {
     "context": "attribute product type",
