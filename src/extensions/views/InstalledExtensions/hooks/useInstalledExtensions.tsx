@@ -6,6 +6,7 @@ import { AppPaths } from "@dashboard/apps/urls";
 import { InstalledExtension } from "@dashboard/extensions/types";
 import { ViewPluginDetails } from "@dashboard/extensions/views/InstalledExtensions/components/ViewPluginDetails";
 import { byActivePlugin, sortByName } from "@dashboard/extensions/views/InstalledExtensions/utils";
+import { useFlag } from "@dashboard/featureFlags";
 import {
   AppTypeEnum,
   useEventDeliveryQuery,
@@ -76,11 +77,17 @@ export const getExtensionLogo = ({
 
 export const useInstalledExtensions = () => {
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
+  const { enabled: isExtensionsDevEnabled } = useFlag("extensions_dev");
 
   const { data, refetch } = useInstalledAppsListQuery({
     displayLoader: true,
     variables: {
       first: 100,
+      ...(!isExtensionsDevEnabled && {
+        filter: {
+          type: AppTypeEnum.THIRDPARTY,
+        },
+      }),
     },
   });
   const installedAppsData = mapEdgesToItems(data?.apps) || [];
@@ -90,6 +97,7 @@ export const useInstalledExtensions = () => {
     variables: {
       first: 100,
     },
+    skip: !isExtensionsDevEnabled,
   });
   const installedPluginsData = mapEdgesToItems(plugins?.plugins) || [];
 
@@ -143,7 +151,7 @@ export const useInstalledExtensions = () => {
 
   return {
     installedExtensions: [...installedApps, ...installedPlugins].sort(sortByName),
-    installedAppsLoading: !data?.apps || !plugins?.plugins,
+    installedAppsLoading: !data?.apps || (!plugins?.plugins && isExtensionsDevEnabled),
     refetchInstalledApps: refetch,
   };
 };
