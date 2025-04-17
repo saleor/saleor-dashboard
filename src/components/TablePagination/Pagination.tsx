@@ -62,12 +62,14 @@ export const Pagination = ({
             disabled={!hasPreviousPage || disabled}
             onClick={loadPreviousPage}
             icon={<ChevronLeftIcon />}
+            data-test-id="button-pagination-back"
           />
           <Button
             variant="secondary"
             disabled={!hasNextPage || disabled}
             onClick={loadNextPage}
             icon={<ChevronRightIcon />}
+            data-test-id="button-pagination-next"
           />
         </>
       );
@@ -80,6 +82,7 @@ export const Pagination = ({
             variant="secondary"
             disabled={!hasPreviousPage || disabled}
             icon={<ChevronLeftIcon />}
+            data-test-id="button-pagination-back"
           />
         </Link>
 
@@ -88,6 +91,7 @@ export const Pagination = ({
             variant="secondary"
             disabled={!hasNextPage || disabled}
             icon={<ChevronRightIcon />}
+            data-test-id="button-pagination-next"
           />
         </Link>
       </>
