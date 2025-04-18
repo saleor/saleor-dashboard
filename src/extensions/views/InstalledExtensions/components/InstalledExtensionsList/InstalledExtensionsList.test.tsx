@@ -22,7 +22,7 @@ describe("InstalledExtensionsList", () => {
 
     // Assert
     expect(screen.getByText("Extension Name")).toBeInTheDocument();
-    expect(screen.getAllByTestId("loading-skeleton")).toHaveLength(5);
+    expect(screen.getAllByTestId("loading-skeleton")).toHaveLength(10);
   });
 
   it("should render empty state when installed extensions length is 0", () => {
