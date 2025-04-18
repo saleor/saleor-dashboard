@@ -257,8 +257,8 @@ export const appManifestErrorMessages = defineMessages({
     defaultMessage: "Status is invalid",
   },
   invalidUrlFormat: {
-    id: "g/BrOt",
-    defaultMessage: "Url has invalid format",
+    id: "nm7IIV",
+    defaultMessage: "URL has invalid format",
   },
   outOfScopeApp: {
     id: "C4hCsD",
