@@ -48,7 +48,7 @@ export type APIExtensionsResponse = Array<{
 export type InstalledExtension = {
   id: string;
   name: string;
-  logo: string;
+  logo: ReactNode;
   info: ReactNode;
   actions: ReactNode;
 };

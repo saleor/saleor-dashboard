@@ -69,6 +69,41 @@ jest.mock("@dashboard/graphql", () => ({
       },
     },
   })),
+  usePluginsQuery: jest.fn(() => ({
+    data: {
+      plugins: {
+        edges: [
+          {
+            node: {
+              id: "plug1",
+              name: "Test Plugin",
+              globalConfiguration: {
+                active: true,
+              },
+              channelConfigurations: [],
+            },
+          },
+          {
+            node: {
+              id: "plug2",
+              name: "Test Plugin 2",
+              globalConfiguration: {
+                active: false,
+              },
+              channelConfigurations: [],
+            },
+          },
+        ],
+      },
+    },
+  })),
+}));
+
+// TODO: Remove this mock when the feature flag is removed
+jest.mock("@dashboard/featureFlags", () => ({
+  useFlag: jest.fn(() => ({
+    enabled: true,
+  })),
 }));
 
 describe("InstalledExtensions / hooks / useInstalledExtensions", () => {
@@ -78,19 +113,26 @@ describe("InstalledExtensions / hooks / useInstalledExtensions", () => {
 
     // Assert
     expect(result.current).toEqual({
-      installedApps: [
+      installedExtensions: [
         {
           id: "1",
           name: "Test App",
-          logo: "",
-          info: expect.any(Object),
+          logo: expect.any(Object),
+          info: null,
           actions: expect.any(Object),
         },
         {
           id: "2",
           name: "Test App 2",
-          logo: "",
+          logo: expect.any(Object),
           info: expect.any(Object),
+          actions: expect.any(Object),
+        },
+        {
+          id: "plug1",
+          name: "Test Plugin",
+          logo: expect.any(Object),
+          info: null,
           actions: expect.any(Object),
         },
       ],

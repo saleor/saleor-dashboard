@@ -6,6 +6,8 @@ import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
+import { useFlag } from "@dashboard/featureFlags";
 import {
   ConfigurationItemInput,
   PluginConfigurationExtendedFragment,
@@ -54,6 +56,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
   setSelectedChannelId,
 }) => {
   const intl = useIntl();
+  const { enabled: isExtensionsDevEnabled } = useFlag("extensions_dev");
   const navigate = useNavigator();
   const initialFormData: PluginDetailsPageFormData = {
     active: selectedConfig?.active,
@@ -95,7 +98,11 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
         return (
           <DetailPageLayout gridTemplateColumns={1}>
             <TopNav
-              href={pluginListUrl()}
+              href={
+                isExtensionsDevEnabled
+                  ? ExtensionsUrls.resolveInstalledExtensionsUrl()
+                  : pluginListUrl()
+              }
               title={intl.formatMessage(
                 {
                   id: "EtGDeK",
