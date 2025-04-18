@@ -14,7 +14,6 @@ const HookFormInputInner = <TFormValues extends FieldValues>(
     disabled,
     defaultValue,
     shouldUnregister,
-    onChange,
     ...componentProps
   }: UseControllerProps<TFormValues> & ComponentProps<typeof InputWithPlaceholder>,
   ref: React.ForwardedRef<HTMLInputElement>,
@@ -32,10 +31,6 @@ const HookFormInputInner = <TFormValues extends FieldValues>(
     <Box display="flex" flexDirection="column" gap={2}>
       <InputWithPlaceholder
         {...field}
-        onChange={e => {
-          onChange?.(e);
-          field.onChange(e);
-        }}
         error={!!fieldState.error}
         aria-invalid={!!fieldState.error}
         aria-errormessage={fieldState.error?.message}

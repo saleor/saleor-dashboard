@@ -2,7 +2,7 @@ import { HookFormInput } from "@dashboard/components/HookFormInput";
 import { messages } from "@dashboard/extensions/messages";
 import { commonMessages } from "@dashboard/intl";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React, { ChangeEventHandler, ClipboardEventHandler, FormEventHandler } from "react";
+import React, { ClipboardEventHandler, FormEventHandler } from "react";
 import { Control } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -14,12 +14,10 @@ export const ManifestUrlForm = ({
   onSubmit,
   control,
   onPaste,
-  onChange,
 }: {
   onSubmit: FormEventHandler<HTMLElement>;
   control: Control<ExtensionInstallFormData>;
   onPaste: ClipboardEventHandler<HTMLInputElement>;
-  onChange: ChangeEventHandler<HTMLInputElement>;
 }) => {
   const intl = useIntl();
 
@@ -39,7 +37,6 @@ export const ManifestUrlForm = ({
       </Text>
       <HookFormInput
         control={control}
-        onChange={onChange}
         name="manifestUrl"
         rules={{
           required: intl.formatMessage(commonMessages.requiredField),

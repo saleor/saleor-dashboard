@@ -1,9 +1,9 @@
 import { TopNav } from "@dashboard/components/AppLayout";
 import { Savebar } from "@dashboard/components/Savebar";
-import useDebounce from "@dashboard/hooks/useDebounce";
 import { MANIFEST_FORMAT_DOCS_URL } from "@dashboard/links";
+import { useAutoSubmit } from "@dashboard/utils/hook-form/auto-submit";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -23,14 +23,13 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
 
   const manifestUrlFromQueryParams = params[MANIFEST_ATTR];
 
-  const { control, trigger, handleSubmit, setError, getValues } = useForm<ExtensionInstallFormData>(
-    {
+  const { control, trigger, watch, handleSubmit, setError, getValues } =
+    useForm<ExtensionInstallFormData>({
       values: {
         manifestUrl: manifestUrlFromQueryParams || "",
       },
       mode: "onBlur",
-    },
-  );
+    });
 
   const { submitFetchManifest, manifest, lastFetchedManifestUrl, isFetchingManifest } =
     useFetchManifest({
@@ -43,12 +42,11 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
     manifest,
   });
 
-  const [submitImmediately, setSubmitImmediately] = useState(false);
-
-  const debouncedSubmit = useDebounce(
-    handleSubmit(submitFetchManifest),
-    submitImmediately ? 0 : 1000,
-  );
+  const { flush: flushDebouncedSubmit } = useAutoSubmit({
+    watch,
+    onSubmit: handleSubmit(submitFetchManifest),
+    control,
+  });
 
   useLoadQueryParamsToForm({
     trigger,
@@ -77,16 +75,15 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
       ></TopNav>
       <Box marginX={6} marginTop={10} display="flex" flexDirection="column" gap={10}>
         <ManifestUrlForm
-          onChange={() => {
-            setSubmitImmediately(false);
-            debouncedSubmit();
-          }}
-          onPaste={() => {
-            setSubmitImmediately(true);
-            debouncedSubmit();
-          }}
           control={control}
           onSubmit={handleSubmit(submitFetchManifest)}
+          onPaste={() => {
+            // On paste immediately submit form
+            // Wait for next tick when debounced submit is scheduled and call it immedioately
+            setTimeout(() => {
+              flushDebouncedSubmit();
+            });
+          }}
         />
         <InstallSectionData
           isFetchingManifest={isFetchingManifest}
