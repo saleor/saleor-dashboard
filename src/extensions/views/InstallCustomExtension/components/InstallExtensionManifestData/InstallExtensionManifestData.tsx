@@ -51,8 +51,8 @@ export const InstallExtensionManifestData = ({
             <FormattedMessage
               {...messages.infoCardText}
               values={{
-                extensionName: manifest?.name ?? "this extension",
-                learnMoreLink: manifest?.dataPrivacyUrl ? (
+                extensionName: manifest.name ?? "this extension",
+                learnMoreLink: manifest.dataPrivacyUrl ? (
                   <ExternalLinkUnstyled href={manifest.dataPrivacyUrl} target="_blank">
                     <FormattedMessage {...messages.infoCardLearnMoreLink} />
                   </ExternalLinkUnstyled>

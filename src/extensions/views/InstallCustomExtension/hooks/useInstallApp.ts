@@ -74,5 +74,5 @@ export const useInstallApp = ({
   return {
     submitInstallApp,
     isSubmittingInstallation: installAppOpts.loading,
-  } as const;
+  };
 };
