@@ -1259,10 +1259,6 @@
   "5bJ26s": {
     "string": "Successfully created page type"
   },
-  "5blVMu": {
-    "context": "e-mail or full name",
-    "string": "Customer"
-  },
   "5dLpx0": {
     "context": "references attribute type",
     "string": "References"
@@ -4351,10 +4347,6 @@
   "PH4R7g": {
     "context": "modal header, read-only product variant metadata",
     "string": "Product variant metadata"
-  },
-  "PHUcrU": {
-    "context": "date when order was placed",
-    "string": "Date"
   },
   "PJDcQs": {
     "context": "set balance button label",
@@ -7623,10 +7615,6 @@
   "k8bltk": {
     "string": "No Results"
   },
-  "k9hf7F": {
-    "context": "total order price",
-    "string": "Total"
-  },
   "kAAlGL": {
     "string": "Rules"
   },
@@ -8365,10 +8353,6 @@
   "osPBn1": {
     "context": "currency filter label",
     "string": "Currency"
-  },
-  "p+UDec": {
-    "context": "payment status",
-    "string": "Payment"
   },
   "p/Fd7s": {
     "context": "unassign products from shipping rate and save, button",
