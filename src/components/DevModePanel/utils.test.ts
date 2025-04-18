@@ -1,3 +1,4 @@
+import { getApiUrl } from "@dashboard/config";
 import { createGraphiQLFetcher, FetcherOpts } from "@graphiql/toolkit";
 import { createFetch } from "@saleor/sdk";
 
@@ -13,10 +14,12 @@ jest.mock("@saleor/sdk", () => ({
 
 jest.mock("@dashboard/config", () => ({
   ENABLED_SERVICE_NAME_HEADER: true,
+  getApiUrl: jest.fn(() => "http://test-api.com"),
 }));
 
 const mockCreateGraphiQLFetcher = createGraphiQLFetcher as jest.Mock;
 const authorizedFetch = createFetch as jest.Mock;
+const mockGetApiUrl = getApiUrl as jest.Mock;
 
 describe("getFetcher", () => {
   const mockApiUrl = "http://test-api.com";
@@ -25,6 +28,8 @@ describe("getFetcher", () => {
   beforeEach(() => {
     process.env.API_URL = mockApiUrl;
     originalFetch = global.fetch;
+    // Ensure getApiUrl returns the expected value in each test
+    mockGetApiUrl.mockReturnValue(mockApiUrl);
   });
 
   afterEach(() => {
