@@ -11,7 +11,7 @@ import { ListProps } from "@dashboard/types";
 import { OutputData } from "@editorjs/editorjs";
 import ArrowIcon from "@material-ui/icons/ArrowDropDown";
 import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
-import { Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -100,7 +100,6 @@ const useStyles = makeStyles(
   }),
   { name: "TranslationFields" },
 );
-const numberOfColumns = 2;
 const TranslationFields: React.FC<TranslationFieldsProps> = props => {
   const {
     activeField,
@@ -230,12 +229,12 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
             ))}
           </Grid>
           {pagination && (
-            <TablePaginationWithContext
-              colSpan={numberOfColumns}
-              settings={pagination.settings}
-              onUpdateListSettings={pagination.onUpdateListSettings}
-              component="div"
-            />
+            <Box paddingY={6}>
+              <TablePaginationWithContext
+                settings={pagination.settings}
+                onUpdateListSettings={pagination.onUpdateListSettings}
+              />
+            </Box>
           )}
         </DashboardCard.Content>
       ) : (

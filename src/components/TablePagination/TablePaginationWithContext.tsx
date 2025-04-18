@@ -1,39 +1,33 @@
-// @ts-strict-ignore
 import { usePaginatorContext } from "@dashboard/hooks/usePaginator";
 import React from "react";
 
-import TablePagination, { PaginationProps } from "./TablePagination";
+import { Pagination, PaginationProps } from "./Pagination";
 
 export type TablePaginationWithContextProps = Omit<
   PaginationProps,
-  "nextHref" | "prevHref" | "hasNextPage" | "hasPreviousPage" | "onNextPage" | "onPreviousPage"
+  | "nextHref"
+  | "prevHref"
+  | "hasNextPage"
+  | "hasPreviousPage"
+  | "onNextPage"
+  | "onPreviousPage"
+  | "paginatorSettings"
 >;
-export const TablePaginationWithContext = (props: TablePaginationWithContextProps) => {
-  const { hasNextPage, hasPreviousPage, paginatorType, ...paginationProps } = usePaginatorContext();
-
-  if (paginatorType === "click") {
-    const { loadNextPage, loadPreviousPage } = paginationProps;
-
-    return (
-      <TablePagination
-        {...props}
-        hasNextPage={hasNextPage}
-        hasPreviousPage={hasPreviousPage}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
-      />
-    );
-  }
-
-  const { nextHref, prevHref } = paginationProps;
+export const TablePaginationWithContext = ({
+  onUpdateListSettings,
+  settings,
+  ...props
+}: TablePaginationWithContextProps) => {
+  const { hasNextPage, hasPreviousPage, ...rest } = usePaginatorContext();
 
   return (
-    <TablePagination
+    <Pagination
       {...props}
-      nextHref={nextHref}
-      hasNextPage={hasNextPage}
-      prevHref={prevHref}
+      onUpdateListSettings={onUpdateListSettings}
+      numberOfRows={settings?.rowNumber}
       hasPreviousPage={hasPreviousPage}
+      hasNextPage={hasNextPage}
+      paginatorSettings={rest}
     />
   );
 };

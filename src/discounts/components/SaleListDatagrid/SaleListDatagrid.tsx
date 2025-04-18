@@ -145,9 +145,8 @@ export const SaleListDatagrid = ({
         navigatorOpts={{ state: getPrevLocationState(location) }}
       />
 
-      <Box paddingX={6}>
+      <Box paddingBottom={6} paddingX={6}>
         <TablePaginationWithContext
-          component="div"
           settings={settings}
           disabled={disabled}
           onUpdateListSettings={onUpdateListSettings}

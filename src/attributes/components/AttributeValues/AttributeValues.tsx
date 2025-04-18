@@ -2,7 +2,7 @@ import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
-import TablePagination from "@dashboard/components/TablePagination";
+import { Pagination } from "@dashboard/components/TablePagination/Pagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import {
   AttributeInputTypeEnum,
@@ -148,15 +148,19 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
         </TableHead>
         <TableFooter>
           <TableRowLink>
-            <TablePagination
-              colSpan={numberOfColumns}
-              hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-              onNextPage={onNextPage}
-              hasPreviousPage={pageInfo && !disabled ? pageInfo.hasPreviousPage : false}
-              onPreviousPage={onPreviousPage}
-              settings={settings}
-              onUpdateListSettings={onUpdateListSettings}
-            />
+            <TableCell colSpan={numberOfColumns}>
+              <Pagination
+                numberOfRows={settings?.rowNumber}
+                hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
+                hasPreviousPage={pageInfo && !disabled ? pageInfo.hasPreviousPage : false}
+                onUpdateListSettings={onUpdateListSettings}
+                paginatorSettings={{
+                  paginatorType: "click",
+                  loadNextPage: onNextPage,
+                  loadPreviousPage: onPreviousPage,
+                }}
+              />
+            </TableCell>
           </TableRowLink>
         </TableFooter>
         <SortableTableBody onSortEnd={onValueReorder}>

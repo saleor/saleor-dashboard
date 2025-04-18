@@ -122,7 +122,6 @@ export const PermissionGroupListDatagrid = ({
 
       <Box paddingX={6}>
         <TablePaginationWithContext
-          component="div"
           settings={settings}
           disabled={disabled}
           onUpdateListSettings={onUpdateListSettings}

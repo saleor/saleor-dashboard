@@ -5,8 +5,8 @@ import { Pagination } from "../types";
 
 export interface PageInfo {
   endCursor: string | null;
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
+  hasNextPage?: boolean;
+  hasPreviousPage?: boolean;
   startCursor: string | null;
 }
 

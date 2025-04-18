@@ -69,7 +69,9 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
       </TableHead>
       <TableFooter>
         <TableRowLink>
-          <TablePaginationWithContext colSpan={numberOfColumns} disabled={disabled} />
+          <TableCell colSpan={numberOfColumns}>
+            <TablePaginationWithContext disabled={disabled} />
+          </TableCell>
         </TableRowLink>
       </TableFooter>
       <TableBody data-test-id="page-types-list">

@@ -92,12 +92,13 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
       </TableHead>
       <TableFooter>
         <TableRowLink>
-          <TablePaginationWithContext
-            colSpan={numberOfColumns}
-            settings={settings}
-            disabled={disabled}
-            onUpdateListSettings={onUpdateListSettings}
-          />
+          <TableCell colSpan={numberOfColumns}>
+            <TablePaginationWithContext
+              settings={settings}
+              disabled={disabled}
+              onUpdateListSettings={onUpdateListSettings}
+            />
+          </TableCell>
         </TableRowLink>
       </TableFooter>
       <TableBody data-test-id="warehouses-list">

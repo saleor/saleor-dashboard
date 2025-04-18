@@ -65,9 +65,8 @@ export const VoucherCodesDatagrid = ({
         menuItems={() => []}
       />
 
-      <Box paddingX={6}>
+      <Box paddingBottom={6} paddingX={6}>
         <TablePaginationWithContext
-          component="div"
           settings={settings}
           disabled={disabled}
           onUpdateListSettings={onSettingsChange}

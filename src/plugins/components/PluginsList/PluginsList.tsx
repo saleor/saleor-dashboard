@@ -46,12 +46,13 @@ const PluginList: React.FC<PluginListProps> = props => {
       <PluginListTableHead sort={sort} onSort={onSort} />
       <TableFooter>
         <TableRowLink>
-          <TablePaginationWithContext
-            colSpan={totalColSpan}
-            onUpdateListSettings={onUpdateListSettings}
-            settings={settings}
-            disabled={disabled}
-          />
+          <TableCell colSpan={totalColSpan}>
+            <TablePaginationWithContext
+              onUpdateListSettings={onUpdateListSettings}
+              settings={settings}
+              disabled={disabled}
+            />
+          </TableCell>
         </TableRowLink>
       </TableFooter>
       <TableBody>
