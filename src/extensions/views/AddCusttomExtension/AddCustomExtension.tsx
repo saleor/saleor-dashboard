@@ -1,4 +1,6 @@
 import { TopNav } from "@dashboard/components/AppLayout";
+import { Callout, calloutTitleMessages } from "@dashboard/components/Callout";
+import { DashboardCard } from "@dashboard/components/Card";
 import { HookFormCheckbox } from "@dashboard/components/HookFormCheckbox";
 import { HookFormInput } from "@dashboard/components/HookFormInput";
 import { Savebar } from "@dashboard/components/Savebar";
@@ -10,6 +12,7 @@ import { PermissionEnum } from "@dashboard/graphql/types.generated";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
+import { ExclamationIcon } from "@dashboard/icons/ExclamationIcon";
 import { commonMessages } from "@dashboard/intl";
 import { CUSTOM_EXTENSIONS_DOCS_URL } from "@dashboard/links";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -111,8 +114,6 @@ export function AddCustomExtension() {
 
   // TODO: Display warning when user has insufficient permissions
 
-  console.log(isValid, isSubmitting);
-
   return (
     <>
       <TopNav
@@ -170,6 +171,10 @@ export function AddCustomExtension() {
               <Text size={3}>{intl.formatMessage(infoMessages.grantFullAccess)}</Text>
             </Checkbox>
           </Box>
+
+          <Callout type="warning" title={<FormattedMessage {...calloutTitleMessages.warning} />}>
+            <FormattedMessage {...messages.customExtensionPermissionWarning} />
+          </Callout>
 
           <Box
             display="grid"

@@ -237,4 +237,10 @@ export const messages = defineMessages({
     defaultMessage: "creating custom extensions",
     id: "GIuS7b",
   },
+  customExtensionPermissionWarning: {
+    defaultMessage:
+      "Unavailable permissions are those exceeding your own access rights. Apps cannot have more permissions than their creator. Please contact an administrator to either create this app for you or grant your account the necessary permissions",
+    description: "custom extension page create, callout message",
+    id: "ssI7EL",
+  },
 });
