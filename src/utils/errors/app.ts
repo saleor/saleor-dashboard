@@ -3,7 +3,8 @@ import { defineMessages, IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";
 
-const messages = defineMessages({
+/** @deprecated use appManifestErrorMessage from extensions */
+export const appErrorMessages = defineMessages({
   invalidManifestFormat: {
     id: "pC6/1z",
     defaultMessage: "Invalid manifest format",
@@ -38,23 +39,24 @@ const messages = defineMessages({
   },
 });
 
+/** @deprecated use getAppInstallErrorMessage from extensions */
 function getAppErrorMessage(err: AppErrorFragment, intl: IntlShape): string | undefined {
   if (err) {
     switch (err.code) {
       case AppErrorCode.INVALID_MANIFEST_FORMAT:
-        return intl.formatMessage(messages.invalidManifestFormat);
+        return intl.formatMessage(appErrorMessages.invalidManifestFormat);
       case AppErrorCode.OUT_OF_SCOPE_APP:
-        return intl.formatMessage(messages.outOfScopeApp);
+        return intl.formatMessage(appErrorMessages.outOfScopeApp);
       case AppErrorCode.OUT_OF_SCOPE_PERMISSION:
-        return intl.formatMessage(messages.outOfScopePermission);
+        return intl.formatMessage(appErrorMessages.outOfScopePermission);
       case AppErrorCode.INVALID_PERMISSION:
-        return intl.formatMessage(messages.invalidPermission);
+        return intl.formatMessage(appErrorMessages.invalidPermission);
       case AppErrorCode.INVALID_STATUS:
-        return intl.formatMessage(messages.invalidStatus);
+        return intl.formatMessage(appErrorMessages.invalidStatus);
       case AppErrorCode.INVALID_URL_FORMAT:
-        return intl.formatMessage(messages.invalidUrlFormat);
+        return intl.formatMessage(appErrorMessages.invalidUrlFormat);
       case AppErrorCode.UNIQUE:
-        return intl.formatMessage(messages.unique);
+        return intl.formatMessage(appErrorMessages.unique);
     }
   }
 

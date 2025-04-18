@@ -258,7 +258,7 @@
     "check-types:src": "tsc --noEmit && tsc-strict",
     "check-types:playwright": "tsc --noEmit --project playwright/tsconfig.json",
     "check-types": "npm run check-types:src && npm run check-types:playwright",
-    "extract-json-messages": "formatjs extract 'src/**/*.{ts,tsx}' --out-file locale/defaultMessages.json --format scripts/formatter.js",
+    "extract-json-messages": "formatjs extract 'src/**/*.{ts,tsx}' --ignore '**/*.d.ts' --out-file locale/defaultMessages.json --format scripts/formatter.js",
     "extract-messages": "npm run extract-json-messages",
     "fetch-schema": "graphql-codegen --config ./codegen.ts",
     "heroku-postbuild": "npm run build",

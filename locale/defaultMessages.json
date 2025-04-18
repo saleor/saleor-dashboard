@@ -403,6 +403,10 @@
   "0DRBjg": {
     "string": "Token Note"
   },
+  "0DTk+2": {
+    "context": "Add custom extension page subheader",
+    "string": "Learn more about {manifestFormatLink}"
+  },
   "0DgA8v": {
     "context": "swatch attribute color picker label",
     "string": "Picker"
@@ -684,6 +688,9 @@
   "2+v1wX": {
     "context": "number of metadata fields in model",
     "string": "{number,plural,one{{number} string} other{{number} strings}}"
+  },
+  "2+v6qd": {
+    "string": "Add Custom Extension from manifest"
   },
   "2/L4zZ": {
     "string": "Select all channels"
@@ -1043,6 +1050,10 @@
   "4Jp83O": {
     "context": "subheader",
     "string": "Contact Information"
+  },
+  "4KRhwm": {
+    "context": "link in infoCardText, to Saleor docs",
+    "string": "Learn more about data privacy."
   },
   "4Kq3O6": {
     "string": "This unit will be used as default shipping weight"
@@ -1542,6 +1553,10 @@
   "7dhhzL": {
     "context": "bulk issue gift cards dialog title",
     "string": "Bulk Issue Gift Cards"
+  },
+  "7eGvyy": {
+    "context": "extension install page, extension permissions (from manifest)",
+    "string": "Permissions"
   },
   "7ejEbB": {
     "context": "Authorized (amount locked on card, not transfered to store owner) transaction amount, data display header",
@@ -2230,6 +2245,10 @@
   "C9pcQx": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this shipping zone?} other{Are you sure you want to delete {displayQuantity} shipping zones?}}"
+  },
+  "CB7xpk": {
+    "context": "subheader on extension install page",
+    "string": "You are about to install {extensionName}"
   },
   "CFG1Ix": {
     "context": "shipping zone",
@@ -4186,6 +4205,10 @@
   "O4QNFx": {
     "context": "alert message",
     "string": "There are no available products in this channel."
+  },
+  "O4R3Ni": {
+    "context": "extension install page, permissions section",
+    "string": "Installing this app will give it following permissions"
   },
   "O95R3Z": {
     "string": "Phone"
@@ -6566,6 +6589,10 @@
     "context": "page header",
     "string": "Create New Category"
   },
+  "chJmBW": {
+    "context": "card text, app install page",
+    "string": "Uninstalling the app will remove all your customer’s personal data stored by {extensionName}. {learnMoreLink}"
+  },
   "chvryR": {
     "context": "order history message",
     "string": "Invoice was requested by {requestedBy}"
@@ -8044,6 +8071,10 @@
   "mYs3tb": {
     "string": "Product price cannot be lower than 0."
   },
+  "mZrAiu": {
+    "context": "extension installation page, label for manifest URL input",
+    "string": "Provide Manifest URL"
+  },
   "maxT+q": {
     "context": "save button",
     "string": "Confirm order"
@@ -8245,6 +8276,9 @@
   "nki0o/": {
     "context": "replaced products list title",
     "string": "Products replaced"
+  },
+  "nm7IIV": {
+    "string": "URL has invalid format"
   },
   "nngeI3": {
     "context": "amount title",
@@ -8899,6 +8933,10 @@
     "context": "dialog header",
     "string": "Assign Category"
   },
+  "sXSde1": {
+    "context": "link to docs in add custom extensions page subheader",
+    "string": "manifest format"
+  },
   "sZ27WU": {
     "context": "error message",
     "string": "Only pre-authorized payments can be voided"
@@ -9334,6 +9372,10 @@
   "vEwjub": {
     "context": "button",
     "string": "Open in GraphiQL"
+  },
+  "vGfmv8": {
+    "context": "card title, app install page, about privacy",
+    "string": "Info"
   },
   "vN3qdA": {
     "context": "button",

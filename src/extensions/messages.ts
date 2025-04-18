@@ -9,6 +9,10 @@ export const headerTitles = defineMessages({
     defaultMessage: "Installed Extensions",
     id: "C3sTzL",
   },
+  addCustomExtensionManifest: {
+    defaultMessage: "Add Custom Extension from manifest",
+    id: "2+v6qd",
+  },
 });
 
 export const buttonLabels = defineMessages({
@@ -181,6 +185,52 @@ export const messages = defineMessages({
     description: "Installed extensions column name",
     id: "7jxSx8",
   },
+  learnMoreSubheader: {
+    defaultMessage: "Learn more about {manifestFormatLink}",
+    id: "0DTk+2",
+    description: "Add custom extension page subheader",
+  },
+  manifestFormatLink: {
+    defaultMessage: "manifest format",
+    id: "sXSde1",
+    description: "link to docs in add custom extensions page subheader",
+  },
+  installExtensionNameHeader: {
+    defaultMessage: "You are about to install {extensionName}",
+    id: "CB7xpk",
+    description: "subheader on extension install page",
+  },
+  permissions: {
+    defaultMessage: "Permissions",
+    id: "7eGvyy",
+    description: "extension install page, extension permissions (from manifest)",
+  },
+  permissionsExplanation: {
+    defaultMessage: "Installing this app will give it following permissions",
+    id: "O4R3Ni",
+    description: "extension install page, permissions section",
+  },
+  infoCardTitle: {
+    defaultMessage: "Info",
+    id: "vGfmv8",
+    description: "card title, app install page, about privacy",
+  },
+  infoCardText: {
+    defaultMessage:
+      "Uninstalling the app will remove all your customer’s personal data stored by {extensionName}. {learnMoreLink}",
+    id: "chJmBW",
+    description: "card text, app install page",
+  },
+  infoCardLearnMoreLink: {
+    defaultMessage: "Learn more about data privacy.",
+    id: "4KRhwm",
+    description: "link in infoCardText, to Saleor docs",
+  },
+  manifestUrlLabel: {
+    defaultMessage: "Provide Manifest URL",
+    id: "mZrAiu",
+    description: "extension installation page, label for manifest URL input",
+  },
   deleteFailedInstallation: {
     defaultMessage: "Remove failed installation",
     id: "jDWPin",
@@ -190,5 +240,40 @@ export const messages = defineMessages({
     id: "Uh3NX/",
     defaultMessage: "Are you sure you want to delete {name} failed installation?",
     description: "remove failed installation dialog content",
+  },
+});
+
+export const appManifestErrorMessages = defineMessages({
+  invalidManifestFormat: {
+    id: "pC6/1z",
+    defaultMessage: "Invalid manifest format",
+  },
+  invalidPermission: {
+    id: "D2qihU",
+    defaultMessage: "Permission is invalid",
+  },
+  invalidStatus: {
+    id: "v3WWK+",
+    defaultMessage: "Status is invalid",
+  },
+  invalidUrlFormat: {
+    id: "nm7IIV",
+    defaultMessage: "URL has invalid format",
+  },
+  outOfScopeApp: {
+    id: "C4hCsD",
+    defaultMessage: "App is out of your permissions scope",
+  },
+  outOfScopeGroup: {
+    id: "1n1tOR",
+    defaultMessage: "Group is out of your permission scope",
+  },
+  outOfScopePermission: {
+    id: "4prRLv",
+    defaultMessage: "Permission is out of your scope",
+  },
+  unique: {
+    id: "TDhHMi",
+    defaultMessage: "This needs to be unique",
   },
 });

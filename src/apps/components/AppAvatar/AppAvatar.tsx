@@ -1,16 +1,21 @@
 import { AppLogo } from "@dashboard/apps/types";
-import { Box, GenericAppIcon } from "@saleor/macaw-ui-next";
+import { Box, BoxProps, GenericAppIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 
 type Logo = AppLogo | undefined;
 type Size = 4 | 8 | 12;
 
-export const AppAvatar: React.FC<{
-  logo?: Logo;
-  size?: Size;
-}> = ({ logo, size = 8 }) =>
+export const AppAvatar = ({ logo, size = 8, ...props }: { logo?: Logo; size?: Size } & BoxProps) =>
   logo ? (
-    <Box width={size} height={size} display="flex" placeItems="center" borderRadius={2}>
+    <Box
+      width={size}
+      height={size}
+      display="flex"
+      placeItems="center"
+      borderRadius={2}
+      overflow="hidden"
+      {...props}
+    >
       <Box as="img" src={logo.source} width="100%" />
     </Box>
   ) : (
@@ -24,6 +29,8 @@ export const AppAvatar: React.FC<{
       borderWidth={1}
       borderColor="default1"
       borderStyle="solid"
+      overflow="hidden"
+      {...props}
     >
       <GenericAppIcon size="medium" color="default2" />
     </Box>
