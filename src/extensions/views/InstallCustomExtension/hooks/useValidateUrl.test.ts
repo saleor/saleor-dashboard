@@ -29,7 +29,7 @@ describe("useValidateUrl", () => {
     const error = result.current("not-a-url");
 
     // Assert
-    expect(error).toBe("Url has invalid format");
+    expect(error).toBe("URL has invalid format");
   });
 
   it("should return error message for non-string values", () => {
@@ -40,7 +40,7 @@ describe("useValidateUrl", () => {
     const error = result.current(123);
 
     // Assert
-    expect(error).toBe("Url has invalid format");
+    expect(error).toBe("URL has invalid format");
   });
 
   it("should return error message for empty string", () => {
@@ -51,7 +51,7 @@ describe("useValidateUrl", () => {
     const error = result.current("");
 
     // Assert
-    expect(error).toBe("Url has invalid format");
+    expect(error).toBe("URL has invalid format");
   });
 
   it("should return true for URLs with different protocols", () => {
