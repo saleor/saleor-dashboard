@@ -61,3 +61,43 @@ export const getFilteredProducts = (data: FormData, searchProductsOpts: SearchPr
     products?.filter(suggestedProduct => !excludedProductIds.includes(suggestedProduct.id)) ?? []
   );
 };
+
+export const getFilteredProductVariants = (
+  data: FormData,
+  searchProductsOpts: SearchProductsOpts,
+) => {
+  const products = mapEdgesToItems(searchProductsOpts?.data?.search);
+  const excludedVariantIds = data.variants.map(variant => variant.id);
+
+  return products?.map(product => ({
+    ...product,
+    variants:
+      product?.variants?.filter(
+        suggestedVariant => !excludedVariantIds.includes(suggestedVariant.id),
+      ) ?? [],
+  }));
+};
+
+export const mapLocalVariantsToSavedVariants = (variants: FormData["variants"]) => {
+  return {
+    __typename: "ProductVariantCountableConnection",
+    edges: variants.map(variant => ({
+      node: {
+        __typename: "ProductVariant",
+        id: variant.id,
+        name: variant.name,
+        product: {
+          __typename: "Product",
+          id: variant.product.id,
+          name: variant.product.name,
+          thumbnail: variant.product.thumbnail,
+          productType: {
+            __typename: "ProductType",
+            id: variant.product.productType.id,
+            name: variant.product.productType.name,
+          },
+        },
+      },
+    })),
+  };
+};

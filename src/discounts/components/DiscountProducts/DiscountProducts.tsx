@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import { ChannelsAvailabilityDropdown } from "@dashboard/components/ChannelsAvailabilityDropdown";
 import Checkbox from "@dashboard/components/Checkbox";
@@ -13,7 +12,7 @@ import { SearchProductFragment } from "@dashboard/graphql";
 import { productUrl } from "@dashboard/products/urls";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Button, Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -51,7 +50,7 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
           {intl.formatMessage(messages.discountProductsHeader)}
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
-          <Button onClick={onProductAssign} data-test-id="assign-products">
+          <Button onClick={onProductAssign} data-test-id="assign-products" variant="secondary">
             <FormattedMessage {...messages.discountProductsButton} />
           </Button>
         </DashboardCard.Toolbar>

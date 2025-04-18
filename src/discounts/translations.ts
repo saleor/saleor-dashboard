@@ -7,9 +7,9 @@ const messages = defineMessages({
     defaultMessage: "All products",
     description: "voucher discount",
   },
-  products: {
-    id: "45zP+r",
-    defaultMessage: "Specific products",
+  productsAndVariants: {
+    defaultMessage: "Specific products and variants",
+    id: "PDF+8k",
     description: "voucher discount",
   },
   shipment: {
@@ -45,5 +45,5 @@ export const itemsQuantityMessages = defineMessages({
 export const translateVoucherTypes = (intl: IntlShape) => ({
   [VoucherTypeEnum.SHIPPING]: intl.formatMessage(messages.shipment),
   [VoucherTypeEnum.ENTIRE_ORDER]: intl.formatMessage(messages.order),
-  [VoucherTypeEnum.SPECIFIC_PRODUCT]: intl.formatMessage(messages.products),
+  [VoucherTypeEnum.SPECIFIC_PRODUCT]: intl.formatMessage(messages.productsAndVariants),
 });

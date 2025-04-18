@@ -383,7 +383,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
             },
           })
         }
-        products={getFilteredProductVariants(data, searchProductsOpts)}
+        products={getFilteredProductVariants(data?.sale?.variants, searchProductsOpts)}
       />
       <AssignProductDialog
         selectedChannels={currentChannels}

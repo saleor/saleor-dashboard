@@ -42,6 +42,7 @@ import DiscountCategories from "../DiscountCategories";
 import DiscountCollections from "../DiscountCollections";
 import DiscountDates from "../DiscountDates";
 import DiscountProducts from "../DiscountProducts";
+import DiscountVariants from "../DiscountVariants";
 import { VoucherCodes } from "../VoucherCodes";
 import { VoucherCode } from "../VoucherCodesDatagrid/types";
 import { GenerateMultipleVoucherCodeFormData } from "../VoucherCodesGenerateDialog";
@@ -56,6 +57,7 @@ export enum VoucherDetailsPageTab {
   categories = "categories",
   collections = "collections",
   products = "products",
+  variants = "variants",
 }
 
 export type VoucherTabItemsCount = Partial<Record<VoucherDetailsPageTab, number>>;
@@ -84,7 +86,9 @@ export interface VoucherDetailsPageFormData extends MetadataFormData {
 
 export interface VoucherDetailsPageProps
   extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
-    TabListActions<"categoryListToolbar" | "collectionListToolbar" | "productListToolbar">,
+    TabListActions<
+      "categoryListToolbar" | "collectionListToolbar" | "productListToolbar" | "variantListToolbar"
+    >,
     ChannelProps {
   activeTab: VoucherDetailsPageTab;
   tabItemsCount: VoucherTabItemsCount;
@@ -106,12 +110,14 @@ export interface VoucherDetailsPageProps
   onCountryUnassign: (code: string) => void;
   onProductAssign: () => void;
   onProductUnassign: (id: string) => void;
+  onVariantAssign: () => void;
+  onVariantUnassign: (id: string) => void;
   onRemove: () => void;
   onSubmit: (data: VoucherDetailsPageFormData) => void;
   onTabClick: (index: VoucherDetailsPageTab) => void;
   onChannelsChange: (data: ChannelVoucherData[]) => void;
   openChannelsModal: () => void;
-  onMultipleVoucheCodesGenerate: (data: GenerateMultipleVoucherCodeFormData) => void;
+  onMultipleVoucherCodesGenerate: (data: GenerateMultipleVoucherCodeFormData) => void;
   onCustomVoucherCodeGenerate: (code: string) => void;
   onDeleteVoucherCodes: () => void;
   onVoucherCodesSettingsChange: UseListSettings["updateListSettings"];
@@ -122,6 +128,7 @@ export interface VoucherDetailsPageProps
 const CategoriesTab = Tab(VoucherDetailsPageTab.categories);
 const CollectionsTab = Tab(VoucherDetailsPageTab.collections);
 const ProductsTab = Tab(VoucherDetailsPageTab.products);
+const VariantsTab = Tab(VoucherDetailsPageTab.variants);
 const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   activeTab,
   tabItemsCount = {},
@@ -140,10 +147,12 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   onCollectionUnassign,
   onProductAssign,
   onProductUnassign,
+  onVariantAssign,
+  onVariantUnassign,
   onTabClick,
   openChannelsModal,
   onRemove,
-  onMultipleVoucheCodesGenerate,
+  onMultipleVoucherCodesGenerate,
   onCustomVoucherCodeGenerate,
   onDeleteVoucherCodes,
   onSubmit,
@@ -155,6 +164,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   categoryListToolbar,
   collectionListToolbar,
   productListToolbar,
+  variantListToolbar,
   selectedVoucherCodesIds,
   onSelectVoucherCodesIds,
   voucherCodes,
@@ -240,7 +250,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 loading={voucherCodesLoading}
                 onMultiCodesGenerate={codes => {
                   triggerChange();
-                  onMultipleVoucheCodesGenerate(codes);
+                  onMultipleVoucherCodesGenerate(codes);
                 }}
                 onCustomCodeGenerate={code => {
                   triggerChange();
@@ -298,6 +308,15 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                         quantity: tabItemsCount.products?.toString() || "…",
                       })}
                     </ProductsTab>
+                    <VariantsTab
+                      testId="variants-tab"
+                      isActive={activeTab === VoucherDetailsPageTab.variants}
+                      changeTab={onTabClick}
+                    >
+                      {intl.formatMessage(itemsQuantityMessages.variants, {
+                        quantity: tabItemsCount.variants?.toString() || "…",
+                      })}
+                    </VariantsTab>
                   </TabContainer>
                   <CardSpacer />
                   {activeTab === VoucherDetailsPageTab.categories ? (
@@ -324,7 +343,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                       toggleAll={toggleAll}
                       toolbar={collectionListToolbar}
                     />
-                  ) : (
+                  ) : activeTab === VoucherDetailsPageTab.products ? (
                     <DiscountProducts
                       disabled={disabled}
                       onProductAssign={onProductAssign}
@@ -337,6 +356,18 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                       toggle={toggle}
                       toggleAll={toggleAll}
                       toolbar={productListToolbar}
+                    />
+                  ) : (
+                    <DiscountVariants
+                      disabled={disabled}
+                      onVariantAssign={onVariantAssign}
+                      onVariantUnassign={onVariantUnassign}
+                      variants={voucher?.variants}
+                      isChecked={isChecked}
+                      selected={selected}
+                      toggle={toggle}
+                      toggleAll={toggleAll}
+                      toolbar={variantListToolbar}
                     />
                   )}
                 </>

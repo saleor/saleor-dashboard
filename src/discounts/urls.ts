@@ -107,9 +107,11 @@ export type VoucherUrlDialog =
   | "assign-collection"
   | "assign-country"
   | "assign-product"
+  | "assign-variant"
   | "unassign-category"
   | "unassign-collection"
   | "unassign-product"
+  | "unassign-variant"
   | "remove"
   | ChannelsAction;
 export type VoucherUrlQueryParams = BulkAction & Dialog<VoucherUrlDialog>;

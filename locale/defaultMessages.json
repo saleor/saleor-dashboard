@@ -990,10 +990,6 @@
     "context": "gift card bulk create modal bottom explanation",
     "string": "After creation Saleor will create a list of gift card codes that you will be able to download."
   },
-  "45zP+r": {
-    "context": "voucher discount",
-    "string": "Specific products"
-  },
   "47hJzu": {
     "string": "Updated app permissions"
   },
@@ -2684,6 +2680,10 @@
     "context": "sale name",
     "string": "Name"
   },
+  "F62RkR": {
+    "context": "dialog header",
+    "string": "Unassign Variants From Voucher"
+  },
   "F69lwk": {
     "context": "settings menu item",
     "string": "Settings"
@@ -4340,6 +4340,10 @@
   "PCoO4D": {
     "context": "error message",
     "string": "Page not found."
+  },
+  "PDF+8k": {
+    "context": "voucher discount",
+    "string": "Specific products and variants"
   },
   "PDw0YN": {
     "context": "open new window button",

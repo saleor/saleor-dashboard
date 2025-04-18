@@ -96,6 +96,7 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
   const productsSearch = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
+  const variantsSearch = productsSearch;
 
   const handleFormValidate = (data: VoucherDetailsPageFormData) => {
     if (data.codes.length === 0) {
@@ -150,6 +151,7 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
         categoriesSearch={categoriesSearch}
         collectionsSearch={collectionsSearch}
         productsSearch={productsSearch}
+        variantsSearch={variantsSearch}
         openModal={openModal}
         closeModal={closeModal}
         allChannelsCount={allChannels?.length}

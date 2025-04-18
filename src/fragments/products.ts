@@ -364,6 +364,19 @@ export const searchProduct = gql`
       id
       name
       sku
+      product {
+        id
+        name
+        thumbnail {
+          url
+          __typename
+        }
+        productType {
+          id
+          name
+          __typename
+        }
+      }
       channelListings {
         channel {
           id

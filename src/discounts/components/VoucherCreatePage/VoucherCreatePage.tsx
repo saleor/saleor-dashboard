@@ -3,6 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignCategoriesDialog from "@dashboard/components/AssignCategoryDialog/AssignCategoryDialog";
 import AssignCollectionDialog from "@dashboard/components/AssignCollectionDialog";
 import AssignProductDialog from "@dashboard/components/AssignProductDialog";
+import AssignVariantDialog from "@dashboard/components/AssignVariantDialog/AssignVariantDialog";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -37,6 +38,7 @@ import {
   SearchProductFragment,
   SearchProductsQuery,
   SearchProductsQueryVariables,
+  VoucherDetailsFragment,
   VoucherTypeEnum,
 } from "@dashboard/graphql";
 import { UseSearchResult } from "@dashboard/hooks/makeSearch";
@@ -52,6 +54,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { RequirementsPicker } from "../../types";
+import DiscountVariants from "../DiscountVariants/DiscountVariants";
 import { VoucherCodes } from "../VoucherCodes";
 import { GenerateMultipleVoucherCodeFormData } from "../VoucherCodesGenerateDialog";
 import VoucherDates from "../VoucherDates";
@@ -64,13 +67,15 @@ import { initialForm } from "./const";
 import { useActiveTab } from "./hooks/useActiveTab";
 import { useVoucherCodesPagination } from "./hooks/useVoucherCodesPagination";
 import { useVoucherCodesSelection } from "./hooks/useVoucherCodesSelection";
-import { FormData, VoucherCreatePageTab } from "./types";
+import { FormData, VoucherCreatePageTab, VoucherCreateProductVariant } from "./types";
 import {
   generateDraftVoucherCode,
   generateMultipleVoucherCodes,
   getFilteredCategories,
   getFilteredCollections,
   getFilteredProducts,
+  getFilteredProductVariants,
+  mapLocalVariantsToSavedVariants,
   voucherCodeExists,
 } from "./utils";
 
@@ -96,6 +101,7 @@ export interface VoucherCreatePageProps extends Omit<ListActionsWithoutToolbar, 
     SearchCollectionsWithTotalProductsQueryVariables
   >;
   productsSearch: UseSearchResult<SearchProductsQuery, SearchProductsQueryVariables>;
+  variantsSearch: UseSearchResult<SearchProductsQuery, SearchProductsQueryVariables>;
   selected: string[];
   resetSelected: () => void;
 }
@@ -103,7 +109,7 @@ export interface VoucherCreatePageProps extends Omit<ListActionsWithoutToolbar, 
 const CategoriesTab = Tab(VoucherCreatePageTab.categories);
 const CollectionsTab = Tab(VoucherCreatePageTab.collections);
 const ProductsTab = Tab(VoucherCreatePageTab.products);
-
+const VariantsTab = Tab(VoucherCreatePageTab.variants);
 const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   allChannelsCount,
   channelListings = [],
@@ -123,6 +129,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   productsSearch,
   categoriesSearch,
   collectionsSearch,
+  variantsSearch,
   countries,
   resetSelected,
 }) => {
@@ -203,6 +210,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
         categories: data.categories,
         collections: data.collections,
         products: data.products,
+        variants: data.variants,
       },
     });
 
@@ -212,6 +220,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
       collections: data.collections,
       products: data.products,
       countries: data.countries,
+      variants: data.variants,
     },
     countries,
     onChange: change,
@@ -311,6 +320,15 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                       quantity: data.products.length,
                     })}
                   </ProductsTab>
+                  <VariantsTab
+                    testId="variants-tab"
+                    isActive={activeTab === VoucherCreatePageTab.variants}
+                    changeTab={onTabClick}
+                  >
+                    {intl.formatMessage(itemsQuantityMessages.variants, {
+                      quantity: data.variants.length,
+                    })}
+                  </VariantsTab>
                 </TabContainer>
                 <CardSpacer />
                 {activeTab === VoucherCreatePageTab.categories ? (
@@ -337,7 +355,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                     toggleAll={toggleAll}
                     toolbar={<BulkUnassignButton type={VoucherCreatePageTab.collections} />}
                   />
-                ) : (
+                ) : activeTab === VoucherCreatePageTab.products ? (
                   <DiscountProducts
                     disabled={disabled}
                     onProductAssign={() => openModal("assign-product")}
@@ -348,6 +366,24 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                     toggle={toggle}
                     toggleAll={toggleAll}
                     toolbar={<BulkUnassignButton type={VoucherCreatePageTab.products} />}
+                  />
+                ) : (
+                  <DiscountVariants
+                    disabled={disabled}
+                    onVariantAssign={() => openModal("assign-variant")}
+                    onVariantUnassign={id => unassignItem(id, VoucherCreatePageTab.variants)}
+                    variants={
+                      // Types here are problematic as this component expects a graphql object,
+                      // but we are passing a set of data
+                      mapLocalVariantsToSavedVariants(
+                        paginatedSpecificItems as VoucherCreateProductVariant[],
+                      ) as unknown as VoucherDetailsFragment["variants"]
+                    }
+                    isChecked={isChecked}
+                    selected={selected.length}
+                    toggle={toggle}
+                    toggleAll={toggleAll}
+                    toolbar={<BulkUnassignButton type={VoucherCreatePageTab.variants} />}
                   />
                 )}
               </>
@@ -462,6 +498,29 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 onModalClose,
               )
             }
+            labels={{
+              confirmBtn: intl.formatMessage(buttonMessages.assign),
+            }}
+          />
+        )}
+        {/* Modal state needs to reset when the modal is closed */}
+        {action === "assign-variant" && (
+          <AssignVariantDialog
+            confirmButtonState="default"
+            hasMore={variantsSearch?.result?.data?.search?.pageInfo?.hasNextPage ?? false}
+            open={action === "assign-variant"}
+            onFetch={variantsSearch.search}
+            onFetchMore={variantsSearch.loadMore}
+            loading={variantsSearch.result.loading}
+            onClose={closeModal}
+            onSubmit={(variants: unknown) => {
+              assignItem(
+                variants as SearchProductFragment[],
+                VoucherCreatePageTab.variants,
+                onModalClose,
+              );
+            }}
+            products={getFilteredProductVariants(data, variantsSearch.result) || []}
             labels={{
               confirmBtn: intl.formatMessage(buttonMessages.assign),
             }}

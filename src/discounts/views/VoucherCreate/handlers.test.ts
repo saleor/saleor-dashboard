@@ -31,6 +31,7 @@ const formData: FormData = {
   collections: [],
   categories: [],
   countries: [],
+  variants: [],
 };
 
 describe("createHandler", () => {

@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { categoryUrl } from "@dashboard/categories/urls";
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
@@ -11,7 +10,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { CategoryWithTotalProductsFragment } from "@dashboard/graphql";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Button, Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -49,7 +48,11 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
           {intl.formatMessage(messages.discountCategoriesHeader)}
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
-          <Button onClick={onCategoryAssign} data-test-id="assign-category-button">
+          <Button
+            onClick={onCategoryAssign}
+            data-test-id="assign-category-button"
+            variant="secondary"
+          >
             <FormattedMessage {...messages.discountCategoriesButton} />
           </Button>
         </DashboardCard.Toolbar>

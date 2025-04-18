@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { collectionUrl } from "@dashboard/collections/urls";
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
@@ -11,7 +10,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { CollectionWithTotalProductsFragment } from "@dashboard/graphql";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Button, Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -49,7 +48,11 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
           {intl.formatMessage(messages.discountCollectionsHeader)}
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
-          <Button onClick={onCollectionAssign} data-test-id="assign-collection-button">
+          <Button
+            onClick={onCollectionAssign}
+            data-test-id="assign-collection-button"
+            variant="secondary"
+          >
             <FormattedMessage {...messages.discountCollectionsButton} />
           </Button>
         </DashboardCard.Toolbar>
