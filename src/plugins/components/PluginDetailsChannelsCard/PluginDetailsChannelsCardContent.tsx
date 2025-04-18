@@ -1,12 +1,17 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
+import { Pill } from "@dashboard/components/Pill";
 import { PluginsDetailsFragment } from "@dashboard/graphql";
+import {
+  getPluginStatusColor,
+  getPluginStatusLabel,
+} from "@dashboard/plugins/components/PluginsList/utils";
 import { isPluginGlobal } from "@dashboard/plugins/views/utils";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { pluginDetailsChannelsCardMessages as messages } from "./messages";
 
@@ -38,6 +43,7 @@ const PluginDetailsChannelsCardContent: React.FC<PluginDetailsChannelsCardProps>
   selectedChannelId,
   setSelectedChannelId,
 }) => {
+  const intl = useIntl();
   const classes = useStyles({});
 
   if (!plugin) {
@@ -64,16 +70,22 @@ const PluginDetailsChannelsCardContent: React.FC<PluginDetailsChannelsCardProps>
     <>
       <CollectionWithDividers
         collection={plugin.channelConfigurations}
-        renderItem={({ channel }) => (
+        renderItem={channel => (
           <div
             data-test-id="channel"
             className={classes.itemContainer}
-            key={channel.id}
-            onClick={() => setSelectedChannelId(channel.id)}
+            key={channel.channel.id}
+            onClick={() => setSelectedChannelId(channel.channel.id)}
           >
-            {isChannelSelected(channel.id) && <div className={classes.itemActiveIndicator}></div>}
-            <DashboardCard.Content padding={4}>
-              <Text>{channel.name}</Text>
+            {isChannelSelected(channel.channel.id) && (
+              <div className={classes.itemActiveIndicator}></div>
+            )}
+            <DashboardCard.Content padding={4} display="flex" alignItems="center" gap={2}>
+              <Text>{channel.channel.name}</Text>
+              <Pill
+                color={getPluginStatusColor(channel)}
+                label={intl.formatMessage(getPluginStatusLabel(channel))}
+              />
             </DashboardCard.Content>
           </div>
         )}
