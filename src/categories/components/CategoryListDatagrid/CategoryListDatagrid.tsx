@@ -109,7 +109,7 @@ export const CategoryListDatagrid = ({
         navigatorOpts={{ state: getPrevLocationState(location) }}
       />
 
-      <Box paddingBottom={6}>
+      <Box paddingBottom={6} paddingX={0}>
         <TablePaginationWithContext
           settings={settings}
           disabled={disabled}

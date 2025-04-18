@@ -150,7 +150,6 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
           <TableRowLink>
             <TableCell colSpan={numberOfColumns}>
               <Pagination
-                paddingX={0}
                 numberOfRows={settings?.rowNumber}
                 hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
                 hasPreviousPage={pageInfo && !disabled ? pageInfo.hasPreviousPage : false}

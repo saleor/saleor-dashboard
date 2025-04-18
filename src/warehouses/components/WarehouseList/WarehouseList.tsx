@@ -94,7 +94,6 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
         <TableRowLink>
           <TableCell colSpan={numberOfColumns}>
             <TablePaginationWithContext
-              paddingX={0}
               settings={settings}
               disabled={disabled}
               onUpdateListSettings={onUpdateListSettings}

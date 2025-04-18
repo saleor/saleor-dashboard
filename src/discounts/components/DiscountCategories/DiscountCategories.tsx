@@ -82,7 +82,7 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
         <TableFooter>
           <TableRowLink>
             <TableCell colSpan={numberOfColumns}>
-              <TablePaginationWithContext paddingX={0} />
+              <TablePaginationWithContext />
             </TableCell>
           </TableRowLink>
         </TableFooter>

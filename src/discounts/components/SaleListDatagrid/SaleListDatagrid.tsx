@@ -13,6 +13,7 @@ import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useLocale from "@dashboard/hooks/useLocale";
 import { ChannelProps, ListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
+import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -144,12 +145,13 @@ export const SaleListDatagrid = ({
         navigatorOpts={{ state: getPrevLocationState(location) }}
       />
 
-      <TablePaginationWithContext
-        settings={settings}
-        disabled={disabled}
-        onUpdateListSettings={onUpdateListSettings}
-        paddingBottom={6}
-      />
+      <Box paddingBottom={6} paddingX={6}>
+        <TablePaginationWithContext
+          settings={settings}
+          disabled={disabled}
+          onUpdateListSettings={onUpdateListSettings}
+        />
+      </Box>
     </DatagridChangeStateContext.Provider>
   );
 };

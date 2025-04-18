@@ -90,7 +90,7 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
         <TableFooter>
           <TableRowLink>
             <TableCell colSpan={numberOfColumns}>
-              <TablePaginationWithContext colSpan={numberOfColumns} paddingX={0} />
+              <TablePaginationWithContext />
             </TableCell>
           </TableRowLink>
         </TableFooter>

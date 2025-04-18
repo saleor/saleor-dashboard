@@ -70,7 +70,7 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
       <TableFooter>
         <TableRowLink>
           <TableCell colSpan={numberOfColumns}>
-            <TablePaginationWithContext paddingX={0} disabled={disabled} />
+            <TablePaginationWithContext disabled={disabled} />
           </TableCell>
         </TableRowLink>
       </TableFooter>

@@ -64,7 +64,7 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
       <TableFooter>
         <TableRowLink>
           <TableCell colSpan={numberOfColumns}>
-            <TablePaginationWithContext disabled={disabled} paddingX={0} />
+            <TablePaginationWithContext disabled={disabled} />
           </TableCell>
         </TableRowLink>
       </TableFooter>

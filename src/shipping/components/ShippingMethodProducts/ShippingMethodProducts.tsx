@@ -100,8 +100,8 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
             </TableHead>
             <TableFooter>
               <TableRowLink>
-                <TableCell colSpan={numberOfColumns} style={{ padding: 0 }}>
-                  <TablePaginationWithContext disabled={disabled} paddingX={5} />
+                <TableCell colSpan={numberOfColumns} style={{ padding: 0, paddingRight: "2.4rem" }}>
+                  <TablePaginationWithContext disabled={disabled} />
                 </TableCell>
               </TableRowLink>
             </TableFooter>

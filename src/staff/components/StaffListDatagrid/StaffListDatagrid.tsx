@@ -12,7 +12,7 @@ import { StaffMember, StaffMembers } from "@dashboard/staff/types";
 import { StaffListUrlSortField, staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { ListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
-import { useTheme } from "@saleor/macaw-ui-next";
+import { Box, useTheme } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
@@ -116,11 +116,13 @@ export const StaffListDatagrid = ({
         navigatorOpts={{ state: getPrevLocationState(location) }}
       />
 
-      <TablePaginationWithContext
-        settings={settings}
-        disabled={disabled}
-        onUpdateListSettings={onUpdateListSettings}
-      />
+      <Box paddingX={6} paddingBottom={6}>
+        <TablePaginationWithContext
+          settings={settings}
+          disabled={disabled}
+          onUpdateListSettings={onUpdateListSettings}
+        />
+      </Box>
     </DatagridChangeStateContext.Provider>
   );
 };

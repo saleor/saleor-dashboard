@@ -134,7 +134,7 @@ export const PageListDatagrid = ({
         )}
       />
 
-      <Box paddingBottom={6}>
+      <Box paddingBottom={6} paddingX={6}>
         <TablePaginationWithContext
           settings={settings}
           disabled={loading}

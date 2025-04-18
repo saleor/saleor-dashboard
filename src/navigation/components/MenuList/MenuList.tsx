@@ -106,7 +106,6 @@ const MenuList: React.FC<MenuListProps> = props => {
           <TableRowLink>
             <TableCell colSpan={numberOfColumns}>
               <TablePaginationWithContext
-                paddingX={0}
                 settings={settings}
                 onUpdateListSettings={onUpdateListSettings}
               />

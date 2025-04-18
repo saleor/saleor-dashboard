@@ -2,7 +2,6 @@ import { PageInfo, PaginatorContextValues } from "@dashboard/hooks/usePaginator"
 import { ListSettings } from "@dashboard/types";
 import {
   Box,
-  BoxProps,
   Button,
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -20,7 +19,7 @@ const ROW_NUMBER_OPTIONS = [
   { label: "100", value: "100" },
 ];
 
-export interface PaginationProps extends BoxProps, Omit<PageInfo, "endCursor" | "startCursor"> {
+export interface PaginationProps extends Omit<PageInfo, "endCursor" | "startCursor"> {
   paginatorSettings: PaginatorContextValues;
   numberOfRows?: number;
   disabled?: boolean;
@@ -105,7 +104,6 @@ export const Pagination = ({
       alignItems="center"
       gap={2}
       width="100%"
-      paddingX={6}
       {...props}
     >
       {showRowsSelect && (

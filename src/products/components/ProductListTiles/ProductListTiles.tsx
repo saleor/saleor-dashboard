@@ -66,19 +66,20 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = ({
   return (
     <>
       {renderContent()}
-      <TablePaginationWithContext
-        settings={settings}
-        disabled={disabled}
-        labels={{
-          noOfRows: intl.formatMessage({
-            id: "9B2mOB",
-            defaultMessage: "No. of products",
-            description: "tile view pagination label",
-          }),
-        }}
-        onUpdateListSettings={onUpdateListSettings}
-        paddingBottom={6}
-      />
+      <Box paddingX={6} paddingBottom={6}>
+        <TablePaginationWithContext
+          settings={settings}
+          disabled={disabled}
+          labels={{
+            noOfRows: intl.formatMessage({
+              id: "9B2mOB",
+              defaultMessage: "No. of products",
+              description: "tile view pagination label",
+            }),
+          }}
+          onUpdateListSettings={onUpdateListSettings}
+        />
+      </Box>
     </>
   );
 };

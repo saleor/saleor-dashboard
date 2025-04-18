@@ -48,7 +48,6 @@ const PluginList: React.FC<PluginListProps> = props => {
         <TableRowLink>
           <TableCell colSpan={totalColSpan}>
             <TablePaginationWithContext
-              paddingX={0}
               onUpdateListSettings={onUpdateListSettings}
               settings={settings}
               disabled={disabled}

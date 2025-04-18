@@ -70,7 +70,7 @@ export const CategoryProductListDatagrid = ({
         onRowSelectionChange={onSelectProductsIds}
       />
 
-      <Box paddingBottom={6}>
+      <Box paddingX={6} paddingBottom={6}>
         <TablePaginationWithContext
           settings={settings}
           disabled={disabled}
