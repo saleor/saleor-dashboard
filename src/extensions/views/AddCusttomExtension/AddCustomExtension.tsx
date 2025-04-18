@@ -159,7 +159,7 @@ export function AddCustomExtension() {
           </Box>
         </Box>
 
-        <Box display="flex" flexDirection="column" gap={10}>
+        <Box display="flex" flexDirection="column" gap={6}>
           <Box display="flex" flexDirection="column" gap={2}>
             <Text size={5} fontWeight="medium" as="h2" marginBottom={2}>
               <FormattedMessage {...formLabels.permissions} />
@@ -178,6 +178,7 @@ export function AddCustomExtension() {
 
           <Box
             display="grid"
+            marginTop={4}
             gridTemplateColumns={{
               tablet: 2,
               mobile: 1,
