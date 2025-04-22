@@ -5235,10 +5235,6 @@
     "context": "profit margin",
     "string": "Margin"
   },
-  "Utq1fE": {
-    "context": "customer gift cards card title",
-    "string": "Gift Cards"
-  },
   "Uu2B2G": {
     "context": "gift card history message",
     "string": "Gift card was used as a payment method on order {orderLink} <buyer>by</buyer>"
@@ -6007,6 +6003,10 @@
   "ZIc5lM": {
     "string": "Product Name"
   },
+  "ZJJ2vA": {
+    "context": "customer gift cards card title",
+    "string": "Gift Cards used by this customer"
+  },
   "ZJOX8n": {
     "context": "alert message",
     "string": "Product no longer exists"
@@ -6082,6 +6082,10 @@
   },
   "ZrIt1W": {
     "string": "Delete discount"
+  },
+  "ZrdoSS": {
+    "context": "customer gift cards card no cards subtitle",
+    "string": "There are no gift cards used by this customer"
   },
   "ZuqkSp": {
     "context": "note input subtitle",
@@ -9369,10 +9373,6 @@
   "vW3tb6": {
     "context": "name",
     "string": "Product name"
-  },
-  "vWTM6Y": {
-    "context": "customer gift cards card no cards subtitle",
-    "string": "There are no gift cards assigned to this customer"
   },
   "vWapBZ": {
     "context": "card title",
