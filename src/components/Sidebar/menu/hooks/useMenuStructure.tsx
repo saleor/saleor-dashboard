@@ -14,7 +14,6 @@ import { useFlag } from "@dashboard/featureFlags";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import { PermissionEnum } from "@dashboard/graphql";
 import { ConfigurationIcon } from "@dashboard/icons/Configuration";
-import { ContentsIcon } from "@dashboard/icons/Contents";
 import { CustomersIcon } from "@dashboard/icons/Customers";
 import { DiscountsIcon } from "@dashboard/icons/Discounts";
 import { HomeIcon } from "@dashboard/icons/Home";
