@@ -1,5 +1,6 @@
 import { InstalledExtension } from "@dashboard/extensions/types";
 import { JobStatusEnum, useAppsInstallationsQuery } from "@dashboard/graphql";
+import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { fuzzySearch } from "@dashboard/misc";
 import React, { useEffect, useState } from "react";
 
@@ -23,9 +24,14 @@ export const usePendingInstallation = ({
   onFailedInstallationRemove,
   searchQuery,
 }: UsePendingInstallationProps) => {
-  const [initialLoading, setInitialLoading] = useState(true);
+  const { hasManagedAppsPermission } = useHasManagedAppsPermission();
+
+  // Don't display loading when user doesn't have permissions
+  // we don't fetch installations in that case
+  const [initialLoading, setInitialLoading] = useState(hasManagedAppsPermission);
   const { data, loading, refetch } = useAppsInstallationsQuery({
     displayLoader: true,
+    skip: !hasManagedAppsPermission,
   });
   const { installedNotify, removeInProgressAppNotify, errorNotify } = useInstallationNotify();
 
