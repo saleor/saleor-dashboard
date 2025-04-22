@@ -3,7 +3,6 @@ import { Callout, calloutTitleMessages } from "@dashboard/components/Callout";
 import { HookFormCheckbox } from "@dashboard/components/HookFormCheckbox";
 import { HookFormInput } from "@dashboard/components/HookFormInput";
 import { Savebar } from "@dashboard/components/Savebar";
-import { CustomAppUrls } from "@dashboard/custom-apps/urls";
 import { ExternalLinkUnstyled } from "@dashboard/extensions/components/ExternalLinkUnstyled";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { useAppCreateMutation } from "@dashboard/graphql";
@@ -31,7 +30,7 @@ const formSchema = z.object({
 
 export type CustomExtensionFormData = z.infer<typeof formSchema>;
 
-export function AddCustomExtension() {
+export function AddCustomExtension({ setToken }: { setToken: (token: string) => void }) {
   const intl = useIntl();
   const notify = useNotifier();
 
@@ -72,17 +71,13 @@ export function AddCustomExtension() {
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
-        navigate(CustomAppUrls.resolveAppUrl(data.appCreate.app.id));
-        // TODO: Store token in context in order to display on details page
-        // Currently it's a useState
-        // setToken(data.appCreate.authToken);
+        navigate(ExtensionsUrls.editCustomExtensionUrl(data.appCreate.app.id));
+        setToken(data.appCreate.authToken);
       }
     },
   });
 
   const onSubmit: SubmitHandler<CustomExtensionFormData> = async data => {
-    // TODO: Add submit
-    console.log("Form data:", data);
     await createApp({
       variables: {
         input: {
@@ -93,8 +88,6 @@ export function AddCustomExtension() {
         },
       },
     });
-
-    // navigate(CustomAppUrls.resolveAppUrl());
   };
 
   const selectedPermissions = useWatch({ name: "permissions", control });
