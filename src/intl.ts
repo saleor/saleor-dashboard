@@ -425,6 +425,26 @@ export const buttonMessages = defineMessages({
 });
 
 export const sectionNames = defineMessages({
+  catalog: {
+    id: "P5HhQl",
+    defaultMessage: "Catalog",
+    description: "catalog section name",
+  },
+  modeling: {
+    id: "NVp0fa",
+    defaultMessage: "Modeling",
+    description: "modeling section name",
+  },
+  models: {
+    id: "GFioCC",
+    defaultMessage: "Models",
+    description: "models section name",
+  },
+  structures: {
+    id: "21cJ+Z",
+    defaultMessage: "Structures",
+    description: "structures section name",
+  },
   apps: {
     id: "9q562c",
     defaultMessage: "Apps",
@@ -466,8 +486,8 @@ export const sectionNames = defineMessages({
     description: "customers section name",
   },
   draftOrders: {
-    id: "YMBn8d",
-    defaultMessage: "Draft Orders",
+    id: "ytKTTO",
+    defaultMessage: "Drafts",
     description: "draft orders section name",
   },
   exchangeRates: {
@@ -579,6 +599,11 @@ export const sectionNames = defineMessages({
     id: "iUy2dx",
     defaultMessage: "Vouchers",
     description: "vouchers section name",
+  },
+  promotions: {
+    id: "bHG5/d",
+    defaultMessage: "Promotions",
+    description: "promotions section name",
   },
   warehouses: {
     id: "ycMLN9",

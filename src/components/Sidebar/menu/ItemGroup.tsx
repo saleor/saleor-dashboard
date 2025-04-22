@@ -1,8 +1,9 @@
 // @ts-strict-ignore
 import { Box, List, sprinkles, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+import { useIsExpanded } from "./hooks/useIsExpanded";
 import { MenuItem } from "./Item";
 import { SidebarMenuItem } from "./types";
 import { isMenuActive } from "./utils";
@@ -14,9 +15,11 @@ interface Props {
 export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
   const hasSubmenuActive = menuItem?.children.some(item => isMenuActive(location.pathname, item));
   const isActive = isMenuActive(location.pathname, menuItem) && !hasSubmenuActive;
-  const isExpanded = isActive || hasSubmenuActive;
+  const { isExpanded, toggleExpanded } = useIsExpanded(menuItem.id);
 
   const handleMenuGroupClick = () => {
+    toggleExpanded();
+
     if (menuItem.onClick) {
       menuItem.onClick();
     }

@@ -201,17 +201,6 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
       menuItems: [
         {
           description: intl.formatMessage({
-            id: "hpMcW8",
-            defaultMessage: "Define how users can navigate through your store",
-          }),
-          icon: <Navigation />,
-          permissions: [PermissionEnum.MANAGE_MENUS],
-          title: intl.formatMessage(sectionNames.navigation),
-          url: menuListUrl(),
-          testId: "configuration-menu-navigation",
-        },
-        {
-          description: intl.formatMessage({
             id: "5BajZK",
             defaultMessage: "View and update your site settings",
           }),
