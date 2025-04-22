@@ -688,6 +688,10 @@
   "2/L4zZ": {
     "string": "Select all channels"
   },
+  "21cJ+Z": {
+    "context": "structures section name",
+    "string": "Structures"
+  },
   "22x9tu": {
     "context": "header",
     "string": "Translation Product \"{productName}\" - {languageCode}"
@@ -2914,6 +2918,10 @@
     "context": "dialog header",
     "string": "Delete Variant"
   },
+  "GFioCC": {
+    "context": "models section name",
+    "string": "Models"
+  },
   "GFkb2t": {
     "context": "automatically complete checkouts checkbox label",
     "string": "Automatically complete checkouts when fully paid"
@@ -4078,6 +4086,10 @@
     "context": "attribute values list: slug column header",
     "string": "Swatch"
   },
+  "NVp0fa": {
+    "context": "modeling section name",
+    "string": "Modeling"
+  },
   "NWA+MK": {
     "context": "dialog content",
     "string": "<b>Important:</b> Refunds need to be issued <b>manually</b> after order cancelation."
@@ -4309,6 +4321,10 @@
   "P/oGtb": {
     "context": "product availability",
     "string": "Available for purchase"
+  },
+  "P5HhQl": {
+    "context": "catalog section name",
+    "string": "Catalog"
   },
   "P5twxk": {
     "context": "link",
@@ -5875,10 +5891,6 @@
     "context": "label",
     "string": "Gift Card"
   },
-  "YMBn8d": {
-    "context": "draft orders section name",
-    "string": "Draft Orders"
-  },
   "YQ3EXR": {
     "context": "product types section name",
     "string": "Product Types"
@@ -6322,6 +6334,10 @@
   "bGqAdR": {
     "context": "seo complete text",
     "string": "Complete"
+  },
+  "bHG5/d": {
+    "context": "promotions section name",
+    "string": "Promotions"
   },
   "bHdFph": {
     "context": "subsection header",
@@ -7272,9 +7288,6 @@
   "hoii+4": {
     "context": "heading, sum of all completed refunds from transactions in order",
     "string": "Refunded"
-  },
-  "hpMcW8": {
-    "string": "Define how users can navigate through your store"
   },
   "hptDxW": {
     "context": "money",
@@ -9883,6 +9896,10 @@
   "ys0jH2": {
     "context": "channel publication status",
     "string": "Published"
+  },
+  "ytKTTO": {
+    "context": "draft orders section name",
+    "string": "Drafts"
   },
   "yzYXW/": {
     "context": "header, dialog",
