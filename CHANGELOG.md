@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.20.36
+
+### Patch Changes
+
+- 1862202: Now you can see an updated label for gift card list in customer details - it now clearly states that the list shows gift cards that have been used by the customer, avoiding the confusion.
+- ed41cc6: Now navigating to the installed extension, shows the list instantly, this means list is being cached while fetching happens in the background.
+- f1d40cd: Added "Not found" page when navigating to non-existing route in `/extensions/*`. Previously a blank page was displayed.
+- 66f007f: making the DevModePanel use the generic getApiUrl as well to allow the dynamic update in docker containers
+- 360c562: You can now see new installed extensions page with list of all installd apps and search above
+
 ## 3.20.35
 
 ### Patch Changes
