@@ -23,7 +23,7 @@ jest.mock("@dashboard/components/Link", () => {
 describe("ViewDetailsActionButton", () => {
   it("should render disabled view details button when no id which mean app installation in progress", () => {
     // Arrange
-    render(<ViewDetailsActionButton type={AppTypeEnum.THIRDPARTY} />);
+    render(<ViewDetailsActionButton name="test" type={AppTypeEnum.THIRDPARTY} />);
 
     // Assert
     expect(screen.getByRole("button", { name: "View details" })).toBeInTheDocument();
@@ -31,7 +31,7 @@ describe("ViewDetailsActionButton", () => {
 
   it("should render disabled view button when is disabled", () => {
     // Arrange
-    render(<ViewDetailsActionButton type={AppTypeEnum.THIRDPARTY} isDisabled />);
+    render(<ViewDetailsActionButton name="test" type={AppTypeEnum.THIRDPARTY} isDisabled />);
 
     // Assert
     expect(screen.getByRole("button", { name: "View details" })).toBeInTheDocument();
@@ -39,7 +39,7 @@ describe("ViewDetailsActionButton", () => {
 
   it("should render link to app details when type is THIRD PARTY and id is provided and is not disabled", () => {
     // Arrange
-    render(<ViewDetailsActionButton type={AppTypeEnum.THIRDPARTY} id="123" />);
+    render(<ViewDetailsActionButton name="test" type={AppTypeEnum.THIRDPARTY} id="123" />);
 
     // Assert
     expect(screen.getByRole("link", { name: "View details" })).toHaveAttribute(
@@ -50,7 +50,7 @@ describe("ViewDetailsActionButton", () => {
 
   it("should render link to app details when type is LOCAL and id is provided and is not disabled", () => {
     // Arrange
-    render(<ViewDetailsActionButton type={AppTypeEnum.LOCAL} id="123" />);
+    render(<ViewDetailsActionButton name="test" type={AppTypeEnum.LOCAL} id="123" />);
 
     // Assert
     expect(screen.getByRole("link", { name: "View details" })).toHaveAttribute(

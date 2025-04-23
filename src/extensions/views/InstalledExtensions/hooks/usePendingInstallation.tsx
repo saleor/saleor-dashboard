@@ -90,7 +90,7 @@ export const usePendingInstallation = ({
             onRetry={() => handleAppInstallRetry(id)}
           />
         ) : (
-          <ViewDetailsActionButton type={AppTypeEnum.THIRDPARTY} />
+          <ViewDetailsActionButton name={appName} type={AppTypeEnum.THIRDPARTY} />
         ),
       };
     },

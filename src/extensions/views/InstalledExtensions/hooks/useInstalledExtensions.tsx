@@ -138,7 +138,9 @@ export const useInstalledExtensions = () => {
             loading: !eventDeliveriesData?.apps,
             lastFailedAttempt,
           }),
-          actions: <ViewDetailsActionButton id={id} type={type} isDisabled={!isActive} />,
+          actions: (
+            <ViewDetailsActionButton name={name} id={id} type={type} isDisabled={!isActive} />
+          ),
         };
       }),
     [eventDeliveries, eventDeliveriesData, installedAppsData],

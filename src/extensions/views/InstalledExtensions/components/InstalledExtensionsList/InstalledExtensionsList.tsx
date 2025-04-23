@@ -61,7 +61,7 @@ export const InstalledExtensionsList = ({
             <GridTable.Cell paddingY={4} />
           </GridTable.Row>
           {installedExtensions.map(extension => (
-            <GridTable.Row key={extension.id}>
+            <GridTable.Row key={extension.id} data-test-id="installed-extension-row">
               <GridTable.Cell />
               <GridTable.Cell>
                 <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
