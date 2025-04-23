@@ -105,9 +105,18 @@ export const useInstalledExtensions = () => {
     displayLoader: true,
     variables: {
       first: 100,
+      filter: {
+        isActive: true,
+        ...(!isExtensionsDevEnabled && {
+          filter: {
+            type: AppTypeEnum.THIRDPARTY,
+          },
+        }),
+      },
       canFetchAppEvents: hasManagedAppsPermission,
     },
   });
+
   const eventDeliveries = mapEdgesToItems(eventDeliveriesData?.apps) ?? [];
   const eventDeliveriesMap = new Map(eventDeliveries.map(app => [app.id, app]));
 

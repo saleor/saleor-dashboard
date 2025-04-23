@@ -34,6 +34,7 @@ describe("InstalledExtensionsList", () => {
         installedExtensions={[]}
         loading={false}
         clearSearch={clearSearch}
+        searchQuery="test"
       />,
     );
 
