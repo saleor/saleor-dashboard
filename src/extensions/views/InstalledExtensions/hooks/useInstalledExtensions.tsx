@@ -108,9 +108,7 @@ export const useInstalledExtensions = () => {
       filter: {
         isActive: true,
         ...(!isExtensionsDevEnabled && {
-          filter: {
-            type: AppTypeEnum.THIRDPARTY,
-          },
+          type: AppTypeEnum.THIRDPARTY,
         }),
       },
       canFetchAppEvents: hasManagedAppsPermission,
