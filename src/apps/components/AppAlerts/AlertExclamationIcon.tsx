@@ -15,7 +15,7 @@ export const AlertExclamationIcon = () => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {isHovered ? <ExclamationIconFilled /> : <ExclamationIcon />}
+      {isHovered ? <ExclamationIconFilled /> : <ExclamationIcon width="17px" height="17px" />}
     </Box>
   );
 };

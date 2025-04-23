@@ -1,4 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
+import { BoxProps } from "@saleor/macaw-ui-next";
 import * as React from "react";
 
 export type WelcomePageInfoTileProps = {
@@ -6,13 +7,14 @@ export type WelcomePageInfoTileProps = {
   header: React.ReactNode;
   content: React.ReactNode;
   bottomActions: React.ReactNode;
-};
+} & Omit<BoxProps, "content">;
 
 export const WelcomePageInfoTile = ({
   id,
   bottomActions,
   content,
   header,
+  ...props
 }: WelcomePageInfoTileProps) => (
   <DashboardCard
     backgroundColor="default1"
@@ -25,6 +27,7 @@ export const WelcomePageInfoTile = ({
     gap={4}
     key={id}
     margin={0}
+    {...props}
   >
     <DashboardCard.Header>
       <DashboardCard.Title display="flex" alignItems="center" gap={3}>
