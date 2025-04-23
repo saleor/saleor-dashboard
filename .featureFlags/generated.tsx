@@ -1,24 +1,23 @@
 // @ts-nocheck
 
-import K43704 from "./images/app-alerts.jpg"
-import M26602 from "./images/discounts-list.png"
-import D99903 from "./images/extensions.png"
-import L92359 from "./images/improved_refunds.png"
+import X08995 from "./images/app-alerts.jpg"
+import H14934 from "./images/discounts-list.png"
+import A31118 from "./images/extensions.png"
+import Z05950 from "./images/improved_refunds.png"
 
-const app_alerts = () => (<><p><img src={K43704} alt="new filters"/>
+const app_alerts = () => (<><p><img src={X08995} alt="new filters"/>
 Benefit from new notifications in your Dashboard that alert you to issues with webhooks for your apps, helping you stay informed about potential problems.
 We’re continuously working to expand this feature to provide more insights for your apps.</p>
 </>)
-const discounts_rules = () => (<><p><img src={M26602} alt="Discount rules"/></p>
+const discounts_rules = () => (<><p><img src={H14934} alt="Discount rules"/></p>
 <p>Apply the new discounts rules to narrow your promotions audience.
 Set up conditions and channels that must be fulfilled to apply defined reward.</p>
 </>)
 const extensions_dev = () => (<></>)
-const extensions = () => (<><p><img src={D99903} alt="Extensions"/></p>
-<p>Experience the new &quot;Explore&quot; interface for browsing and installing extensions,
-and new ‘Installed’ view for managing installed extensions</p>
+const extensions = () => (<><p><img src={A31118} alt="Extensions"/></p>
+<p>New, reshaped experience for browsing, installing, and managing Saleor extensions.</p>
 </>)
-const improved_refunds = () => (<><p><img src={L92359} alt="Improved refunds"/></p>
+const improved_refunds = () => (<><p><img src={Z05950} alt="Improved refunds"/></p>
 <h3 id="enable-the-enhanced-refund-feature-to-streamline-your-refund-process">Enable the enhanced refund feature to streamline your refund process:</h3>
 <ul>
 <li><p>• Choose between automatic calculations based on selected items or enter refund amounts directly for overcharges and custom adjustments.</p>
@@ -72,7 +71,7 @@ export const AVAILABLE_FLAGS = [{
   }
 },{
   name: "extensions",
-  displayName: "New Extensions",
+  displayName: "Browsing extensions",
   component: extensions,
   visible: true,
   content: {

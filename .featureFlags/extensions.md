@@ -1,6 +1,6 @@
 ---
 name: extensions
-displayName: New Extensions
+displayName: Browsing extensions
 enabled: true
 payload: "default"
 visible: true
@@ -8,6 +8,5 @@ visible: true
 
 ![Extensions](./images/extensions.png)
 
-Experience the new "Explore" interface for browsing and installing extensions,
-and new ‘Installed’ view for managing installed extensions
+New, reshaped experience for browsing, installing, and managing Saleor extensions.
 
