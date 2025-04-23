@@ -42,11 +42,11 @@ test("TC: SALEOR_119 User should be able to install and configure app from manif
   await expect(appsPage.installedExtensionsRow.first()).toBeVisible();
   await expect(appsPage.installationPendingLabel).not.toBeVisible();
 
-  await expect(appsPage.appKlaviyo).toContainText("Klaviyo");
+  await expect(appsPage.appKlaviyoViewDetailsButton).toContainText("View details");
   await expect(
     appsPage.installedExtensionsRow.filter({ hasText: "Klaviyo" }).first(),
   ).toBeVisible();
-  await appsPage.appKlaviyo.click();
+  await appsPage.appKlaviyoViewDetailsButton.click();
 
   const iframeLocator = page.frameLocator("iframe");
 
