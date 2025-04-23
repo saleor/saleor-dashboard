@@ -75,7 +75,7 @@ export const usePendingInstallation = ({
             onRetry={() => handleAppInstallRetry(id)}
           />
         ) : (
-          <ViewDetailsActionButton />
+          <ViewDetailsActionButton name={appName} />
         ),
       };
     },
