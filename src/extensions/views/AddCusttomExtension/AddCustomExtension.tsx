@@ -6,7 +6,7 @@ import { Savebar } from "@dashboard/components/Savebar";
 import { ExternalLinkUnstyled } from "@dashboard/extensions/components/ExternalLinkUnstyled";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { useAppCreateMutation } from "@dashboard/graphql";
-import { PermissionEnum } from "@dashboard/graphql/types.generated";
+import { PermissionEnum, PermissionFragment } from "@dashboard/graphql/types.generated";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
@@ -14,7 +14,7 @@ import { commonMessages } from "@dashboard/intl";
 import { CUSTOM_EXTENSIONS_DOCS_URL } from "@dashboard/links";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import { z } from "zod";
@@ -24,9 +24,34 @@ import { useUserAppCreationPermissions } from "./hooks/useUserAppCreationPermiss
 
 const formSchema = z.object({
   appName: z.string().min(1, { message: "App name is required" }),
-  fullAccess: z.boolean(),
   permissions: z.record(z.boolean()),
 });
+
+const getNoPermissionsObject = (permissions: PermissionFragment[]) => {
+  /**
+   * Object: {
+   *   MANAGE_ORDERS: false
+   *   ...
+   * }
+   * */
+  return permissions.reduce(
+    (acc, { code }) => ({ ...acc, [code]: false }),
+    {} as Record<PermissionEnum, boolean>,
+  );
+};
+
+const getAllPermissionsObject = (permissions: PermissionFragment[]) => {
+  /**
+   * Object: {
+   *   MANAGE_ORDERS: true
+   *   ...
+   * }
+   * */
+  return permissions.reduce(
+    (acc, { code }) => ({ ...acc, [code]: true }),
+    {} as Record<PermissionEnum, boolean>,
+  );
+};
 
 export type CustomExtensionFormData = z.infer<typeof formSchema>;
 
@@ -39,21 +64,14 @@ export function AddCustomExtension({ setToken }: { setToken: (token: string) => 
   const permissions = shop?.permissions ?? [];
 
   // Initialize permissions record - all permissions are disabled by edfualt
-  const noPermissions = permissions.reduce(
-    (acc, { code }) => ({ ...acc, [code]: false }),
-    {} as Record<PermissionEnum, boolean>,
-  );
-  const allPermissions = permissions.reduce(
-    (acc, { code }) => ({ ...acc, [code]: true }),
-    {} as Record<PermissionEnum, boolean>,
-  );
 
-  const methods = useForm({
+  const methods = useForm<CustomExtensionFormData>({
     defaultValues: {
       appName: "",
-      permissions: noPermissions,
+      permissions: getNoPermissionsObject(permissions),
     },
     resolver: zodResolver(formSchema),
+    disabled: permissions.length === 0,
     mode: "onChange",
   });
 
@@ -61,8 +79,18 @@ export function AddCustomExtension({ setToken }: { setToken: (token: string) => 
     control,
     handleSubmit,
     setValue,
-    formState: { errors, isSubmitting, isValid },
+    reset,
+    formState: { errors, isSubmitting },
   } = methods;
+
+  useEffect(() => {
+    if (permissions.length > 0) {
+      reset({
+        appName: "",
+        permissions: getNoPermissionsObject(permissions),
+      });
+    }
+  }, [shop, reset]);
 
   const [createApp, createAppOpts] = useAppCreateMutation({
     onCompleted: data => {
@@ -91,16 +119,22 @@ export function AddCustomExtension({ setToken }: { setToken: (token: string) => 
   };
 
   const selectedPermissions = useWatch({ name: "permissions", control });
+  // const selectedPermissions = watch("permissions");
 
   const isFullAccess = useMemo(() => {
+    // Wait until permissions are loaded
+    if (permissions.length === 0) {
+      return false;
+    }
+
     return Object.entries(selectedPermissions).every(([_, value]) => value);
   }, [selectedPermissions]);
 
   const toggleFullAccess = () => {
     if (isFullAccess) {
-      setValue("permissions", noPermissions);
+      setValue("permissions", getNoPermissionsObject(permissions));
     } else {
-      setValue("permissions", allPermissions);
+      setValue("permissions", getAllPermissionsObject(permissions));
     }
   };
 
@@ -183,7 +217,7 @@ export function AddCustomExtension({ setToken }: { setToken: (token: string) => 
             {permissions.map(permission => (
               <Box key={permission.code}>
                 <HookFormCheckbox
-                  name={`permissions.${permission.code}` as any}
+                  name={`permissions.${permission.code}`}
                   control={control}
                   alignItems="flex-start"
                 >
