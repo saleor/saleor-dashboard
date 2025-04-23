@@ -8,13 +8,21 @@ import { FormattedMessage } from "react-intl";
 interface ViewDetailsActionButtonProps {
   isDisabled?: boolean;
   id?: string;
+  name: string | null;
 }
 
-export const ViewDetailsActionButton = ({ isDisabled, id }: ViewDetailsActionButtonProps) => {
+export const ViewDetailsActionButton = ({ name, isDisabled, id }: ViewDetailsActionButtonProps) => {
   // When no id means that apps installation is in progress
+  const formattedName = name?.toLowerCase().replace(" ", "") ?? "";
+
   if (!id) {
     return (
-      <Button size="small" disabled={true} variant="secondary" data-test-id="view-details">
+      <Button
+        size="small"
+        disabled={true}
+        variant="secondary"
+        data-test-id={`${formattedName}-view-details`}
+      >
         <FormattedMessage {...buttonLabels.viewDetails} />
       </Button>
     );
@@ -22,7 +30,7 @@ export const ViewDetailsActionButton = ({ isDisabled, id }: ViewDetailsActionBut
 
   if (isDisabled) {
     return (
-      <Link href={AppPaths.resolveAppDetailsPath(id)} data-test-id="manage-app">
+      <Link href={AppPaths.resolveAppDetailsPath(id)}>
         <Button size="small" variant="secondary">
           <FormattedMessage {...buttonLabels.manage} />
         </Button>
@@ -31,7 +39,7 @@ export const ViewDetailsActionButton = ({ isDisabled, id }: ViewDetailsActionBut
   }
 
   return (
-    <Link href={AppUrls.resolveAppUrl(id)} data-test-id="view-details">
+    <Link href={AppUrls.resolveAppUrl(id)} data-test-id={`${formattedName}-view-details`}>
       <Button size="small" variant="secondary">
         <FormattedMessage {...buttonLabels.viewDetails} />
       </Button>
