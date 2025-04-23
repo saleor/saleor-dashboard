@@ -5,72 +5,40 @@ import { HookFormInput } from "@dashboard/components/HookFormInput";
 import { Savebar } from "@dashboard/components/Savebar";
 import { ExternalLinkUnstyled } from "@dashboard/extensions/components/ExternalLinkUnstyled";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
-import { useAppCreateMutation } from "@dashboard/graphql";
-import { PermissionEnum, PermissionFragment } from "@dashboard/graphql/types.generated";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
 import { CUSTOM_EXTENSIONS_DOCS_URL } from "@dashboard/links";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect, useMemo } from "react";
-import { SubmitHandler, useForm, useWatch } from "react-hook-form";
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import { z } from "zod";
 
 import { formLabels, headerTitles, infoMessages, messages } from "../../messages";
+import { useHandleCreateAppSubmit } from "./hooks/useHandleCreateAppSubmit";
+import { useFullAccessToggle } from "./hooks/useIsFullAccessSelected";
+import { usePermissions } from "./hooks/usePermissions";
 import { useUserAppCreationPermissions } from "./hooks/useUserAppCreationPermissions";
+import { getNoPermissionsObject } from "./utils";
 
 const formSchema = z.object({
   appName: z.string().min(1, { message: "App name is required" }),
   permissions: z.record(z.boolean()),
 });
 
-const getNoPermissionsObject = (permissions: PermissionFragment[]) => {
-  /**
-   * Object: {
-   *   MANAGE_ORDERS: false
-   *   ...
-   * }
-   * */
-  return permissions.reduce(
-    (acc, { code }) => ({ ...acc, [code]: false }),
-    {} as Record<PermissionEnum, boolean>,
-  );
-};
-
-const getAllPermissionsObject = (permissions: PermissionFragment[]) => {
-  /**
-   * Object: {
-   *   MANAGE_ORDERS: true
-   *   ...
-   * }
-   * */
-  return permissions.reduce(
-    (acc, { code }) => ({ ...acc, [code]: true }),
-    {} as Record<PermissionEnum, boolean>,
-  );
-};
-
 export type CustomExtensionFormData = z.infer<typeof formSchema>;
 
 export function AddCustomExtension({ setToken }: { setToken: (token: string) => void }) {
   const intl = useIntl();
-  const notify = useNotifier();
-
-  const navigate = useNavigator();
-  const shop = useShop();
-  const permissions = shop?.permissions ?? [];
-
-  // Initialize permissions record - all permissions are disabled by edfualt
+  const permissions = usePermissions();
 
   const methods = useForm<CustomExtensionFormData>({
     defaultValues: {
       appName: "",
+      // Initialize permissions record - all permissions are disabled by default
       permissions: getNoPermissionsObject(permissions),
     },
     resolver: zodResolver(formSchema),
+    // Wait until permissions are fetched
     disabled: permissions.length === 0,
     mode: "onChange",
   });
@@ -83,6 +51,10 @@ export function AddCustomExtension({ setToken }: { setToken: (token: string) => 
     formState: { errors, isSubmitting },
   } = methods;
 
+  const submitCreateApp = useHandleCreateAppSubmit({ setToken });
+
+  // Permissions are fetched asynchronously, set them as default form values
+  // once they are loaded
   useEffect(() => {
     if (permissions.length > 0) {
       reset({
@@ -90,53 +62,13 @@ export function AddCustomExtension({ setToken }: { setToken: (token: string) => 
         permissions: getNoPermissionsObject(permissions),
       });
     }
-  }, [shop, reset]);
+  }, [reset, permissions]);
 
-  const [createApp, createAppOpts] = useAppCreateMutation({
-    onCompleted: data => {
-      if (data.appCreate.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        navigate(ExtensionsUrls.editCustomExtensionUrl(data.appCreate.app.id));
-        setToken(data.appCreate.authToken);
-      }
-    },
+  const { toggleFullAccess, isFullAccess } = useFullAccessToggle({
+    permissions,
+    control,
+    setValue,
   });
-
-  const onSubmit: SubmitHandler<CustomExtensionFormData> = async data => {
-    await createApp({
-      variables: {
-        input: {
-          name: data.appName,
-          permissions: Object.entries(data.permissions)
-            .filter(([value]) => value)
-            .map(([key]) => key as PermissionEnum),
-        },
-      },
-    });
-  };
-
-  const selectedPermissions = useWatch({ name: "permissions", control });
-  // const selectedPermissions = watch("permissions");
-
-  const isFullAccess = useMemo(() => {
-    // Wait until permissions are loaded
-    if (permissions.length === 0) {
-      return false;
-    }
-
-    return Object.entries(selectedPermissions).every(([_, value]) => value);
-  }, [selectedPermissions]);
-
-  const toggleFullAccess = () => {
-    if (isFullAccess) {
-      setValue("permissions", getNoPermissionsObject(permissions));
-    } else {
-      setValue("permissions", getAllPermissionsObject(permissions));
-    }
-  };
 
   const permissionsExceeded = useUserAppCreationPermissions();
 
@@ -168,7 +100,7 @@ export function AddCustomExtension({ setToken }: { setToken: (token: string) => 
         flexDirection="column"
         gap={10}
         as="form"
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(submitCreateApp)}
       >
         <Box>
           <Text size={5} fontWeight="medium" as="h2" marginBottom={2}>
@@ -239,7 +171,7 @@ export function AddCustomExtension({ setToken }: { setToken: (token: string) => 
           <Savebar.ConfirmButton
             disabled={isSubmitting}
             transitionState={isSubmitting ? "loading" : "default"}
-            onClick={handleSubmit(onSubmit)}
+            onClick={handleSubmit(submitCreateApp)}
           ></Savebar.ConfirmButton>
         </Savebar>
       </Box>
