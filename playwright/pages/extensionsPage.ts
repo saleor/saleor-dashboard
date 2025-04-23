@@ -15,6 +15,7 @@ export class ExtensionsPage extends BasePage {
 
     readonly appManifestUrlInput = page.getByTestId("manifest-url-input").locator("input"),
     readonly installAppFromManifestButton = page.getByTestId("install-app-from-manifest"),
+    readonly installedAppRow = page.getByTestId("apps:installed-app-row"),
     readonly extensionViewDetailsButton = page.getByTestId("view-details"),
     readonly appKlaviyo = page.getByTestId("app-klaviyo"),
     readonly appQA = page.getByTestId("app-saleorqa app"),
