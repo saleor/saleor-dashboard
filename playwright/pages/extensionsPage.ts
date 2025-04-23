@@ -15,9 +15,9 @@ export class ExtensionsPage extends BasePage {
 
     readonly appManifestUrlInput = page.getByTestId("manifest-url-input").locator("input"),
     readonly installAppFromManifestButton = page.getByTestId("install-app-from-manifest"),
-    readonly installedAppRow = page.getByTestId("apps:installed-app-row"),
-    readonly extensionViewDetailsButton = page.getByTestId("view-details"),
-    readonly appKlaviyo = page.getByTestId("app-klaviyo"),
+    readonly installedExtensionsRow = page.getByTestId("installed-extension-row"),
+    readonly extensionViewDetailsButton = page.locator("[data-test-id*='view-details']"),
+    readonly appKlaviyoViewDetailsButton = page.getByTestId("klaviyo-view-details"),
     readonly appQA = page.getByTestId("app-saleorqa app"),
     readonly installationPendingLabel = page.getByTestId("app-pending-label").first(),
     readonly availableAppsLoader = page.getByTestId("available-apps-loader"),
