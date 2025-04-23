@@ -8,6 +8,7 @@ import { InstalledExtensions } from "@dashboard/extensions/views/InstalledExtens
 import { useFlag } from "@dashboard/featureFlags";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
+import NotFound from "@dashboard/NotFound";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -50,6 +51,7 @@ export const ExtensionsSection = () => {
           path={ExtensionsPaths.installedExtensions}
           component={InstalledExtensionsView}
         />
+        <Route component={NotFound} />
       </Switch>
     </>
   );
