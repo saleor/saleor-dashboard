@@ -1,4 +1,4 @@
-import { ENABLED_SERVICE_NAME_HEADER } from "@dashboard/config";
+import { ENABLED_SERVICE_NAME_HEADER, getApiUrl } from "@dashboard/config";
 import { createGraphiQLFetcher, FetcherOpts } from "@graphiql/toolkit";
 import { createFetch } from "@saleor/sdk";
 
@@ -24,7 +24,7 @@ export const getFetcher = (opts: FetcherOpts) => {
   }
 
   return createGraphiQLFetcher({
-    url: process.env.API_URL as string,
+    url: getApiUrl(),
     fetch: httpFetch as typeof fetch,
     headers,
   });
