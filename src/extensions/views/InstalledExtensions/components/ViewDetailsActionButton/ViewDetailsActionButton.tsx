@@ -14,7 +14,7 @@ export const ViewDetailsActionButton = ({ isDisabled, id }: ViewDetailsActionBut
   // When no id means that apps installation is in progress
   if (!id) {
     return (
-      <Button size="small" disabled={true} variant="secondary">
+      <Button size="small" disabled={true} variant="secondary" data-test-id="view-details">
         <FormattedMessage {...buttonLabels.viewDetails} />
       </Button>
     );
@@ -22,7 +22,7 @@ export const ViewDetailsActionButton = ({ isDisabled, id }: ViewDetailsActionBut
 
   if (isDisabled) {
     return (
-      <Link href={AppPaths.resolveAppDetailsPath(id)}>
+      <Link href={AppPaths.resolveAppDetailsPath(id)} data-test-id="manage-app">
         <Button size="small" variant="secondary">
           <FormattedMessage {...buttonLabels.manage} />
         </Button>
@@ -31,7 +31,7 @@ export const ViewDetailsActionButton = ({ isDisabled, id }: ViewDetailsActionBut
   }
 
   return (
-    <Link href={AppUrls.resolveAppUrl(id)}>
+    <Link href={AppUrls.resolveAppUrl(id)} data-test-id="view-details">
       <Button size="small" variant="secondary">
         <FormattedMessage {...buttonLabels.viewDetails} />
       </Button>

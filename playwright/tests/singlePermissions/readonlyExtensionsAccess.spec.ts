@@ -29,7 +29,7 @@ for (const permission of permissionList) {
 
     await expect(extensionsPage.installedExtensionsList).toBeVisible();
 
-    await extensionsPage.installedAppRow.first().click();
+    await extensionsPage.extensionViewDetailsButton.first().click();
     await expect(appPage.appSettingsButton).toBeVisible();
     await appPage.appSettingsButton.click();
     await appPage.waitContentLoad();

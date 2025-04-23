@@ -36,7 +36,12 @@ export const InstalledExtensionsList = ({
   }
 
   return (
-    <Box __marginLeft="-24px" __marginRight="-24px" paddingBottom={10}>
+    <Box
+      data-test-id="extensions-installed"
+      __marginLeft="-24px"
+      __marginRight="-24px"
+      paddingBottom={10}
+    >
       <GridTable>
         <GridTable.Colgroup>
           <GridTable.Col __width="16px" />
