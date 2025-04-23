@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 
-import { Pagination } from "./Pagination";
+import { Pagination, PaginationProps } from "./Pagination";
 
 const defaultProps = {
   hasNextPage: true,
@@ -51,12 +51,11 @@ describe("Pagination", () => {
     const urlProps = {
       ...defaultProps,
       paginatorSettings: {
-        ...defaultProps.paginatorSettings,
-        paginatorType: "url" as const,
+        paginatorType: "link",
         nextHref: "/next",
         prevHref: "/prev",
       },
-    };
+    } satisfies PaginationProps;
 
     it("renders Links with correct hrefs", () => {
       // Arrange
