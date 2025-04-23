@@ -12,12 +12,14 @@ interface InstalledExtensionsListProps {
   installedExtensions: InstalledExtension[];
   loading: boolean;
   clearSearch: () => void;
+  searchQuery?: string;
 }
 
 export const InstalledExtensionsList = ({
   installedExtensions,
   loading,
   clearSearch,
+  searchQuery,
 }: InstalledExtensionsListProps) => {
   const intl = useIntl();
 
@@ -29,8 +31,8 @@ export const InstalledExtensionsList = ({
     return (
       <EmptyListState
         title={intl.formatMessage(messages.noExtensionsFound)}
-        subtitle={intl.formatMessage(messages.clearSearch)}
-        onSubtitleClick={clearSearch}
+        subtitle={searchQuery && intl.formatMessage(messages.clearSearch)}
+        onSubtitleClick={searchQuery ? clearSearch : undefined}
       />
     );
   }
