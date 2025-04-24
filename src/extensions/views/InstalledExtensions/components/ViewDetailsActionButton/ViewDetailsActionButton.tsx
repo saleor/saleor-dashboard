@@ -1,4 +1,4 @@
-import { AppPaths } from "@dashboard/apps/urls";
+import { AppPaths, AppUrls } from "@dashboard/apps/urls";
 import Link from "@dashboard/components/Link";
 import { buttonLabels } from "@dashboard/extensions/messages";
 import { Button } from "@saleor/macaw-ui-next";
@@ -8,13 +8,21 @@ import { FormattedMessage } from "react-intl";
 interface ViewDetailsActionButtonProps {
   isDisabled?: boolean;
   id?: string;
+  name: string | null;
 }
 
-export const ViewDetailsActionButton = ({ isDisabled, id }: ViewDetailsActionButtonProps) => {
+export const ViewDetailsActionButton = ({ name, isDisabled, id }: ViewDetailsActionButtonProps) => {
   // When no id means that apps installation is in progress
+  const formattedName = name?.toLowerCase().replace(" ", "") ?? "";
+
   if (!id) {
     return (
-      <Button size="small" disabled={true} variant="secondary">
+      <Button
+        size="small"
+        disabled={true}
+        variant="secondary"
+        data-test-id={`${formattedName}-view-details`}
+      >
         <FormattedMessage {...buttonLabels.viewDetails} />
       </Button>
     );
@@ -31,7 +39,7 @@ export const ViewDetailsActionButton = ({ isDisabled, id }: ViewDetailsActionBut
   }
 
   return (
-    <Link href={AppPaths.resolveAppPath(id)}>
+    <Link href={AppUrls.resolveAppUrl(id)} data-test-id={`${formattedName}-view-details`}>
       <Button size="small" variant="secondary">
         <FormattedMessage {...buttonLabels.viewDetails} />
       </Button>

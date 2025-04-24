@@ -1,23 +1,23 @@
 // @ts-nocheck
 
-import B90576 from "./images/app-alerts.jpg"
-import S32086 from "./images/discounts-list.png"
-import B37609 from "./images/extensions.png"
-import S26171 from "./images/improved_refunds.png"
+import X08995 from "./images/app-alerts.jpg"
+import H14934 from "./images/discounts-list.png"
+import A31118 from "./images/extensions.png"
+import Z05950 from "./images/improved_refunds.png"
 
-const app_alerts = () => (<><p><img src={B90576} alt="new filters"/>
+const app_alerts = () => (<><p><img src={X08995} alt="new filters"/>
 Benefit from new notifications in your Dashboard that alert you to issues with webhooks for your apps, helping you stay informed about potential problems.
 We’re continuously working to expand this feature to provide more insights for your apps.</p>
 </>)
-const discounts_rules = () => (<><p><img src={S32086} alt="Discount rules"/></p>
+const discounts_rules = () => (<><p><img src={H14934} alt="Discount rules"/></p>
 <p>Apply the new discounts rules to narrow your promotions audience.
 Set up conditions and channels that must be fulfilled to apply defined reward.</p>
 </>)
 const extensions_dev = () => (<></>)
-const extensions = () => (<><p><img src={B37609} alt="Extensions"/></p>
-<p>Experience the new interface for browsing and installing extensions in the ‘Explore’ view</p>
+const extensions = () => (<><p><img src={A31118} alt="Extensions"/></p>
+<p>New, reshaped experience for browsing, installing, and managing Saleor extensions.</p>
 </>)
-const improved_refunds = () => (<><p><img src={S26171} alt="Improved refunds"/></p>
+const improved_refunds = () => (<><p><img src={Z05950} alt="Improved refunds"/></p>
 <h3 id="enable-the-enhanced-refund-feature-to-streamline-your-refund-process">Enable the enhanced refund feature to streamline your refund process:</h3>
 <ul>
 <li><p>• Choose between automatic calculations based on selected items or enter refund amounts directly for overcharges and custom adjustments.</p>
@@ -71,7 +71,7 @@ export const AVAILABLE_FLAGS = [{
   }
 },{
   name: "extensions",
-  displayName: "New Explore view",
+  displayName: "Browsing extensions",
   component: extensions,
   visible: true,
   content: {

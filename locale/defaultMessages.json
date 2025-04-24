@@ -2775,6 +2775,9 @@
     "context": "staff member's account",
     "string": "Deactivated"
   },
+  "FcC842": {
+    "string": "Tune in for live updates with product news, tips, and how teams are building with Saleor."
+  },
   "FcTTvh": {
     "context": "postal codes, header",
     "string": "Postal codes"
@@ -5224,10 +5227,6 @@
     "context": "profit margin",
     "string": "Margin"
   },
-  "Utq1fE": {
-    "context": "customer gift cards card title",
-    "string": "Gift Cards"
-  },
   "Uu2B2G": {
     "context": "gift card history message",
     "string": "Gift card was used as a payment method on order {orderLink} <buyer>by</buyer>"
@@ -5391,6 +5390,9 @@
   },
   "VrFy8e": {
     "string": "No notes from customer"
+  },
+  "Vrch8P": {
+    "string": "April 24th at 3 PM CET | 9 AM EDT"
   },
   "VsGcdP": {
     "context": "section header",
@@ -5993,6 +5995,10 @@
   "ZIc5lM": {
     "string": "Product Name"
   },
+  "ZJJ2vA": {
+    "context": "customer gift cards card title",
+    "string": "Gift Cards used by this customer"
+  },
   "ZJOX8n": {
     "context": "alert message",
     "string": "Product no longer exists"
@@ -6068,6 +6074,10 @@
   },
   "ZrIt1W": {
     "string": "Delete discount"
+  },
+  "ZrdoSS": {
+    "context": "customer gift cards card no cards subtitle",
+    "string": "There are no gift cards used by this customer"
   },
   "ZuqkSp": {
     "context": "note input subtitle",
@@ -6672,6 +6682,9 @@
   "dc5KWn": {
     "context": "products export type label",
     "string": "products"
+  },
+  "dcFARy": {
+    "string": "✨ Join Live Community Update"
   },
   "dnbJKr": {
     "string": "This transaction doesn't have any events"
@@ -7574,6 +7587,9 @@
   "jz2SlO": {
     "context": "refunded fulfillment, section header",
     "string": "Replaced"
+  },
+  "jzO3qY": {
+    "string": "Join us on Discord"
   },
   "jzu97k": {
     "context": "attribute product type",
@@ -9341,10 +9357,6 @@
   "vW3tb6": {
     "context": "name",
     "string": "Product name"
-  },
-  "vWTM6Y": {
-    "context": "customer gift cards card no cards subtitle",
-    "string": "There are no gift cards assigned to this customer"
   },
   "vWapBZ": {
     "context": "card title",

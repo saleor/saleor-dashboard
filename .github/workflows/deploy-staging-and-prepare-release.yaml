@@ -38,7 +38,7 @@ jobs:
   build:
     needs: prepare-release
     if: always()
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     outputs:
       MINOR_VERSION: ${{ env.MINOR_VERSION }}
       CUSTOM_VERSION: ${{ env.CUSTOM_VERSION || env.VERSION }}

@@ -1,5 +1,6 @@
 import { InstalledExtension } from "@dashboard/extensions/types";
 import { JobStatusEnum, useAppsInstallationsQuery } from "@dashboard/graphql";
+import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { fuzzySearch } from "@dashboard/misc";
 import React, { useEffect, useState } from "react";
 
@@ -7,7 +8,7 @@ import { FailedInstallationActions } from "../components/FailedInstallationActio
 import { FailedInstallationInfo } from "../components/InfoLabels/FailedInstallationInfo";
 import { InstallationPendingInfo } from "../components/InfoLabels/InstallationPendingInfo";
 import { ViewDetailsActionButton } from "../components/ViewDetailsActionButton";
-import useActiveAppsInstallations from "./useActiveAppsInstallations";
+import { useActiveAppsInstallations } from "./useActiveAppsInstallations";
 import { useInstallationNotify } from "./useInstallationNotify";
 
 interface UsePendingInstallationProps {
@@ -23,9 +24,14 @@ export const usePendingInstallation = ({
   onFailedInstallationRemove,
   searchQuery,
 }: UsePendingInstallationProps) => {
-  const [initialLoading, setInitialLoading] = useState(true);
+  const { hasManagedAppsPermission } = useHasManagedAppsPermission();
+
+  // Don't display loading when user doesn't have permissions
+  // we don't fetch installations in that case
+  const [initialLoading, setInitialLoading] = useState(hasManagedAppsPermission);
   const { data, loading, refetch } = useAppsInstallationsQuery({
     displayLoader: true,
+    skip: !hasManagedAppsPermission,
   });
   const { installedNotify, removeInProgressAppNotify, errorNotify } = useInstallationNotify();
 
@@ -69,7 +75,7 @@ export const usePendingInstallation = ({
             onRetry={() => handleAppInstallRetry(id)}
           />
         ) : (
-          <ViewDetailsActionButton />
+          <ViewDetailsActionButton name={appName} />
         ),
       };
     },
