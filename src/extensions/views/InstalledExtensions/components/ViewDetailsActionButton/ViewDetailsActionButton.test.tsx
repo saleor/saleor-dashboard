@@ -22,7 +22,7 @@ jest.mock("@dashboard/components/Link", () => {
 describe("ViewDetailsActionButton", () => {
   it("should render disabled view details button when no id which mean app installation in progress", () => {
     // Arrange
-    render(<ViewDetailsActionButton />);
+    render(<ViewDetailsActionButton name="test" />);
 
     // Assert
     expect(screen.getByRole("button", { name: "View details" })).toBeInTheDocument();
@@ -30,7 +30,7 @@ describe("ViewDetailsActionButton", () => {
 
   it("should render disabled view button when is disabled", () => {
     // Arrange
-    render(<ViewDetailsActionButton isDisabled />);
+    render(<ViewDetailsActionButton name="test" isDisabled />);
 
     // Assert
     expect(screen.getByRole("button", { name: "View details" })).toBeInTheDocument();
@@ -38,7 +38,7 @@ describe("ViewDetailsActionButton", () => {
 
   it("should render link to app details when id is provided and is not disabled", () => {
     // Arrange
-    render(<ViewDetailsActionButton id="123" />);
+    render(<ViewDetailsActionButton name="test" id="123" />);
 
     // Assert
     expect(screen.getByRole("link", { name: "View details" })).toBeInTheDocument();
