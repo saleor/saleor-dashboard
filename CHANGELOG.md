@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.20.37
+
+### Patch Changes
+
+- 575d337: Plugin details now display pill next to each channel to show whenever plugin is active or not in a given channel
+
 ## 3.20.36
 
 ### Patch Changes
