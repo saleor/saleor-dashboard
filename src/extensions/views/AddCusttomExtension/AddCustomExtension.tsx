@@ -2,6 +2,7 @@ import { TopNav } from "@dashboard/components/AppLayout";
 import { Callout, calloutTitleMessages } from "@dashboard/components/Callout";
 import { HookFormCheckbox } from "@dashboard/components/HookFormCheckbox";
 import { HookFormInput } from "@dashboard/components/HookFormInput";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import { ExternalLinkUnstyled } from "@dashboard/extensions/components/ExternalLinkUnstyled";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
@@ -50,7 +51,7 @@ export function AddCustomExtension({ setToken }: { setToken: (token: string) => 
     handleSubmit,
     setValue,
     reset,
-    formState: { isSubmitting },
+    formState: { errors, isSubmitting },
   } = methods;
 
   const submitCreateApp = useHandleCreateAppSubmit({ setToken });
@@ -75,7 +76,7 @@ export function AddCustomExtension({ setToken }: { setToken: (token: string) => 
   const permissionsExceeded = useUserAppCreationPermissions();
 
   return (
-    <>
+    <DetailPageLayout gridTemplateColumns={1}>
       <TopNav
         href={ExtensionsUrls.resolveInstalledExtensionsUrl()}
         __height="auto"
@@ -94,87 +95,92 @@ export function AddCustomExtension({ setToken }: { setToken: (token: string) => 
         }
       ></TopNav>
 
-      <Box
-        paddingX={6}
-        marginTop={10}
-        paddingBottom={4}
-        display="flex"
-        flexDirection="column"
-        gap={10}
-        as="form"
-        onSubmit={handleSubmit(submitCreateApp)}
-      >
-        <Box>
-          <Text size={5} fontWeight="medium" as="h2" marginBottom={2}>
-            <FormattedMessage {...formLabels.appName} />
-          </Text>
-          <Box __maxWidth="370px">
-            <HookFormInput
-              control={control}
-              name="appName"
-              placeholder={intl.formatMessage(formLabels.appNamePlaceholder)}
-            />
-          </Box>
-        </Box>
-
-        <Box display="flex" flexDirection="column" gap={6}>
-          <Box display="flex" flexDirection="column" gap={2}>
+      <DetailPageLayout.Content>
+        <Box
+          paddingX={6}
+          marginTop={10}
+          paddingBottom={4}
+          display="flex"
+          flexDirection="column"
+          gap={10}
+          as="form"
+          onSubmit={handleSubmit(submitCreateApp)}
+        >
+          <Box>
             <Text size={5} fontWeight="medium" as="h2" marginBottom={2}>
-              <FormattedMessage {...formLabels.permissions} />
+              <FormattedMessage {...formLabels.appName} />
             </Text>
-            <Text display="block" marginBottom={4}>
-              <FormattedMessage {...infoMessages.permissionsDescription} />
-            </Text>
-            <Checkbox checked={isFullAccess} onCheckedChange={toggleFullAccess}>
-              <Text size={3}>{intl.formatMessage(infoMessages.grantFullAccess)}</Text>
-            </Checkbox>
+            <Box __maxWidth="370px">
+              <HookFormInput
+                control={control}
+                name="appName"
+                placeholder={intl.formatMessage(formLabels.appNamePlaceholder)}
+              />
+            </Box>
           </Box>
 
-          {permissionsExceeded && (
-            <Callout type="warning" title={<FormattedMessage {...calloutTitleMessages.warning} />}>
-              <FormattedMessage {...messages.customExtensionPermissionWarning} />
-            </Callout>
-          )}
+          <Box display="flex" flexDirection="column" gap={6}>
+            <Box display="flex" flexDirection="column" gap={2}>
+              <Text size={5} fontWeight="medium" as="h2" marginBottom={2}>
+                <FormattedMessage {...formLabels.permissions} />
+              </Text>
+              <Text display="block" marginBottom={4}>
+                <FormattedMessage {...infoMessages.permissionsDescription} />
+              </Text>
+              <Checkbox checked={isFullAccess} onCheckedChange={toggleFullAccess}>
+                <Text size={3}>{intl.formatMessage(infoMessages.grantFullAccess)}</Text>
+              </Checkbox>
+            </Box>
 
-          <Box
-            display="grid"
-            marginTop={4}
-            gridTemplateColumns={{
-              tablet: 2,
-              mobile: 1,
-            }}
-            gap={6}
-            __maxWidth="1200px"
-          >
-            {permissions.map(permission => (
-              <Box key={permission.code}>
-                <HookFormCheckbox
-                  name={`permissions.${permission.code}`}
-                  control={control}
-                  alignItems="flex-start"
-                >
-                  <Box display="flex" flexDirection="column" __marginTop="-4px">
-                    <Text>{permission.name}</Text>
-                    <Text size={2} color="default2">
-                      {permission.code}
-                    </Text>
-                  </Box>
-                </HookFormCheckbox>
-              </Box>
-            ))}
+            {permissionsExceeded && (
+              <Callout
+                type="warning"
+                title={<FormattedMessage {...calloutTitleMessages.warning} />}
+              >
+                <FormattedMessage {...messages.customExtensionPermissionWarning} />
+              </Callout>
+            )}
+
+            <Box
+              display="grid"
+              marginTop={4}
+              gridTemplateColumns={{
+                tablet: 2,
+                mobile: 1,
+              }}
+              gap={6}
+              __maxWidth="1200px"
+            >
+              {permissions.map(permission => (
+                <Box key={permission.code}>
+                  <HookFormCheckbox
+                    name={`permissions.${permission.code}`}
+                    control={control}
+                    alignItems="flex-start"
+                  >
+                    <Box display="flex" flexDirection="column" __marginTop="-4px">
+                      <Text>{permission.name}</Text>
+                      <Text size={2} color="default2">
+                        {permission.code}
+                      </Text>
+                    </Box>
+                  </HookFormCheckbox>
+                </Box>
+              ))}
+            </Box>
           </Box>
         </Box>
+      </DetailPageLayout.Content>
 
-        <Savebar>
-          <Savebar.Spacer />
-          <Savebar.CancelButton href={ExtensionsUrls.resolveInstalledExtensionsUrl()} />
-          <Savebar.ConfirmButton
-            disabled={isSubmitting}
-            transitionState={isSubmitting ? "loading" : "default"}
-            onClick={handleSubmit(submitCreateApp)}
-          ></Savebar.ConfirmButton>
-        </Savebar>
-      </Box>
-    </>
+      <Savebar>
+        <Savebar.Spacer />
+        <Savebar.CancelButton href={ExtensionsUrls.resolveInstalledExtensionsUrl()} />
+        <Savebar.ConfirmButton
+          disabled={isSubmitting}
+          transitionState={isSubmitting ? "loading" : "default"}
+          onClick={handleSubmit(submitCreateApp)}
+        ></Savebar.ConfirmButton>
+      </Savebar>
+    </DetailPageLayout>
   );
 }
