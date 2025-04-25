@@ -95,7 +95,7 @@ export function AddCustomExtension({ setToken }: { setToken: (token: string) => 
         }
       ></TopNav>
 
-      <DetailPageLayout.Content>
+      <DetailPageLayout.Content hideScrollbar={false}>
         <Box
           paddingX={6}
           marginTop={10}
