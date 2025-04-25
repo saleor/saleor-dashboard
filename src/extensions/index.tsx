@@ -103,7 +103,7 @@ export const ExtensionsSection = () => {
           render={props => (
             <CustomExtensionDetails
               {...props}
-              token={customAppToken}
+              token={customAppToken || ""}
               onTokenClose={() => setCustomAppToken(null)}
             />
           )}

@@ -7,7 +7,7 @@ import { useState } from "react";
  * Because of that we cannot store it anywhere, it must be a state stored in a router
  * when navigating between views */
 export const useCustomAppToken = () => {
-  const [customAppToken, setCustomAppToken] = useState<string>(null);
+  const [customAppToken, setCustomAppToken] = useState<string | null>(null);
 
   return {
     customAppToken,

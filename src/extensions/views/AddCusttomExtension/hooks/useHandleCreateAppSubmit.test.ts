@@ -71,7 +71,9 @@ describe("useHandleCreateAppSubmit", () => {
 
     // Copy function implementation to trigger it manually
     mockUseAppCreateMutation.mockImplementation(options => {
-      onCompletedCallback.mockImplementation(options.onCompleted);
+      if (options && options.onCompleted) {
+        onCompletedCallback.mockImplementation(options.onCompleted);
+      }
 
       return [mockCreateApp, {} as any];
     });

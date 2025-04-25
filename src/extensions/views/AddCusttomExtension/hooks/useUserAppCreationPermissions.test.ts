@@ -71,7 +71,7 @@ describe("useUserAppCreationPermissions", () => {
       ...defaultUserMock,
       user: {
         userPermissions: [], // No permissions
-      } as UserFragment,
+      } as unknown as UserFragment,
     } as unknown as UserContext);
     mockUseShop.mockReturnValue({
       permissions: allPermissions,
@@ -112,7 +112,7 @@ describe("useUserAppCreationPermissions", () => {
     } as unknown as UserContext);
     mockUseShop.mockReturnValue({
       permissions: undefined, // No shop permissions data
-    } as ReturnType<typeof useShop>);
+    } as unknown as ReturnType<typeof useShop>);
 
     // Act
     const { result } = renderHook(() => useUserAppCreationPermissions());

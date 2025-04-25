@@ -16,13 +16,24 @@ export const useHandleCreateAppSubmit = ({ setToken }: { setToken: (token: strin
 
   const [createApp] = useAppCreateMutation({
     onCompleted: data => {
-      if (data.appCreate.errors.length === 0) {
+      if (data?.appCreate?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
-        setToken(data.appCreate.authToken);
-        navigate(ExtensionsUrls.editCustomExtensionUrl(data.appCreate.app.id));
+
+        if (data.appCreate.authToken) {
+          setToken(data.appCreate.authToken);
+        } else {
+          notify({
+            status: "error",
+            text: intl.formatMessage(commonMessages.somethingWentWrong),
+          });
+        }
+
+        if (data.appCreate?.app?.id) {
+          navigate(ExtensionsUrls.editCustomExtensionUrl(data.appCreate.app.id));
+        }
       }
     },
   });
