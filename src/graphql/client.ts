@@ -77,6 +77,9 @@ export const apolloClient = new ApolloClient({
           },
         },
       },
+      App: {
+        keyFields: false,
+      },
     } as TypedTypePolicies,
   }),
   link,

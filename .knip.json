@@ -17,7 +17,11 @@
     "devDependencies": "error"
   },
   "vite": false,
-  "ignore": ["playwright/**", "**/*.js"],
+  "ignore": [
+    "playwright/**",
+    "**/*.js",
+    "src/welcomePage/WelcomePageTilesContainer/tileData.tsx"
+  ],
   "ignoreDependencies": [
     "@graphql-codegen/typescript-apollo-client-helpers",
     "@graphql-codegen/typescript-operations",

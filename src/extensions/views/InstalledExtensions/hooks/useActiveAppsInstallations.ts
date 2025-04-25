@@ -80,7 +80,7 @@ export const useActiveAppsInstallations = ({
     });
 
   /**
-   * Check if there has occured by any reason untracked installation with status PENDING and add it to activeInstallations.
+   * Check if there has occurred by any reason untracked installation with status PENDING and add it to activeInstallations.
    */
   useEffect(
     () =>
