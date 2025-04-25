@@ -56,6 +56,7 @@ import { useCollectionWithTotalProductsSearch } from "@dashboard/searches/useCol
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Button } from "@saleor/macaw-ui-next";
 import React, { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -510,16 +511,22 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
         onFetchMore={loadMoreProducts}
         loading={searchProductsOpts.loading}
         onClose={closeModal}
-        onSubmit={variants =>
+        onSubmit={variants => {
+          const variantsIdsFromModal = variants.map(variant => variant.id);
+          const savedVariantsIds = mapEdgesToItems(data?.voucher.variants).map(
+            variant => variant.id,
+          );
+          const variantsToSave = [...savedVariantsIds, ...variantsIdsFromModal];
+
           voucherUpdate({
             variables: {
               id,
               input: {
-                variants: variants.map(variant => variant.id),
+                variants: variantsToSave,
               },
             },
-          })
-        }
+          });
+        }}
         products={getFilteredProductVariants(data?.voucher?.variants, searchProductsOpts)}
       />
       <AssignProductDialog
