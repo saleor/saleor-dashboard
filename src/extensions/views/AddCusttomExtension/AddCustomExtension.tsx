@@ -78,7 +78,6 @@ export function AddCustomExtension({ setToken }: { setToken: (token: string) => 
   const permissionsExceeded = useUserAppCreationPermissions();
   const userPermissionSet = useUserPermissionSet();
 
-
   return (
     <DetailPageLayout gridTemplateColumns={1}>
       <TopNav
@@ -125,15 +124,17 @@ export function AddCustomExtension({ setToken }: { setToken: (token: string) => 
 
           <Box display="flex" flexDirection="column" gap={6}>
             <Box display="flex" flexDirection="column" gap={2}>
-              <Text size={5} fontWeight="medium" as="h2" marginBottom={2}>
+              <Text size={5} fontWeight="medium" as="h2">
                 <FormattedMessage {...formLabels.permissions} />
               </Text>
-              <Text display="block" marginBottom={4}>
+              <Text display="block">
                 <FormattedMessage {...infoMessages.permissionsDescription} />
               </Text>
-              <Checkbox checked={isFullAccess} onCheckedChange={toggleFullAccess}>
-                <Text size={3}>{intl.formatMessage(infoMessages.grantFullAccess)}</Text>
-              </Checkbox>
+              {!permissionsExceeded && (
+                <Checkbox checked={isFullAccess} onCheckedChange={toggleFullAccess} marginTop={4}>
+                  <Text size={3}>{intl.formatMessage(infoMessages.grantFullAccess)}</Text>
+                </Checkbox>
+              )}
             </Box>
 
             {permissionsExceeded && (

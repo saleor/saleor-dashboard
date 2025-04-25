@@ -6,6 +6,7 @@ import { AddCustomExtension } from "./AddCustomExtension";
 import { useHandleCreateAppSubmit } from "./hooks/useHandleCreateAppSubmit";
 import { usePermissions } from "./hooks/usePermissions";
 import { useUserAppCreationPermissions } from "./hooks/useUserAppCreationPermissions";
+import { useUserPermissionSet } from "./hooks/useUserPermissionMap";
 
 // Mock ResizeObserver used by Radix checkbox
 class ResizeObserverMock {
@@ -45,6 +46,7 @@ jest.mock("react-intl", () => ({
 jest.mock("./hooks/usePermissions");
 jest.mock("./hooks/useHandleCreateAppSubmit");
 jest.mock("./hooks/useUserAppCreationPermissions");
+jest.mock("./hooks/useUserPermissionMap");
 
 describe("AddCustomExtension", () => {
   const appName = "Test app";
@@ -62,6 +64,7 @@ describe("AddCustomExtension", () => {
     (usePermissions as jest.Mock).mockReturnValue(mockPermissions);
     (useHandleCreateAppSubmit as jest.Mock).mockReturnValue(mockSubmit);
     (useUserAppCreationPermissions as jest.Mock).mockReturnValue(false);
+    (useUserPermissionSet as jest.Mock).mockReturnValue(new Set(mockPermissions.map(p => p.code)));
   });
 
   it("renders the component with all required elements", () => {
@@ -220,5 +223,46 @@ describe("AddCustomExtension", () => {
 
     // Assert
     expect(screen.getByText(/warning/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Grant this app full access to the store/i)).not.toBeInTheDocument();
+  });
+
+  it("allows toggling available permissions and prevents toggling unavailable ones", async () => {
+    // Arrange
+    const availablePermissions = new Set(["MANAGE_ORDERS"]);
+
+    (useUserPermissionSet as jest.Mock).mockReturnValue(availablePermissions);
+    render(<AddCustomExtension setToken={mockSetToken} />);
+
+    const appNameInput = screen.getByPlaceholderText("App Name");
+    const ordersCheckbox = screen.getByLabelText(/Manage Orders/i);
+    const productsCheckbox = screen.getByLabelText(/Manage Products/i);
+
+    // Assert initial state
+    expect(ordersCheckbox).not.toBeDisabled();
+    expect(productsCheckbox).toBeDisabled();
+
+    // Act
+    await userEvent.type(appNameInput, appName);
+    await userEvent.click(ordersCheckbox);
+    await userEvent.click(productsCheckbox);
+
+    // Assert
+    expect(ordersCheckbox).toBeChecked();
+    expect(productsCheckbox).not.toBeChecked();
+
+    // Act - submit form
+    await userEvent.click(screen.getByText("save"));
+
+    // Assert
+    expect(mockSubmit).toHaveBeenCalledWith(
+      {
+        appName,
+        permissions: {
+          MANAGE_ORDERS: true,
+          MANAGE_PRODUCTS: false,
+        },
+      },
+      expect.anything(), // Submit event
+    );
   });
 });
