@@ -21,8 +21,8 @@ export const useHandleCreateAppSubmit = ({ setToken }: { setToken: (token: strin
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
-        navigate(ExtensionsUrls.editCustomExtensionUrl(data.appCreate.app.id));
         setToken(data.appCreate.authToken);
+        navigate(ExtensionsUrls.editCustomExtensionUrl(data.appCreate.app.id));
       }
     },
   });

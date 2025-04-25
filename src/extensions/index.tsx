@@ -31,7 +31,6 @@ const InstalledExtensionsView = () => {
 
   return <InstalledExtensions params={params} />;
 };
-
 const InstallCustomExtensionView = () => {
   const qs = parseQs(location.search.substr(1));
   const params: ExtensionInstallQueryParams = qs;
@@ -85,7 +84,6 @@ export const ExtensionsSection = () => {
           path={ExtensionsPaths.installedExtensions}
           component={InstalledExtensionsView}
         />
-        <Route exact path={ExtensionsPaths.addCustomExtension} component={AddCustomExtension} />
         <SectionRoute
           exact
           permissions={[PermissionEnum.MANAGE_APPS]}
@@ -93,7 +91,12 @@ export const ExtensionsSection = () => {
           component={InstallCustomExtensionView}
         />
 
-        {/* Custom apps routes */}
+        {/* -- Custom apps routes -- */}
+        <Route
+          exact
+          path={ExtensionsPaths.addCustomExtension}
+          render={() => <AddCustomExtension setToken={setCustomAppToken} />}
+        />
         <Route
           exact
           path={ExtensionsPaths.resolveEditCustomExtension(":id")}
