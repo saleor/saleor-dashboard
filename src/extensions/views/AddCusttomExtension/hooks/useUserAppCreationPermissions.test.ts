@@ -1,5 +1,6 @@
 import { useUser } from "@dashboard/auth";
-import { PermissionFragment, UserFragment } from "@dashboard/graphql";
+import { UserContext } from "@dashboard/auth/types";
+import { PermissionEnum, PermissionFragment, UserFragment } from "@dashboard/graphql";
 import useShop from "@dashboard/hooks/useShop";
 import { renderHook } from "@testing-library/react-hooks";
 
@@ -13,9 +14,9 @@ const mockUseShop = useShop as jest.MockedFunction<typeof useShop>;
 
 describe("useUserAppCreationPermissions", () => {
   const allPermissions: PermissionFragment[] = [
-    { __typename: "Permission", code: "MANAGE_APPS", name: "Manage apps" },
-    { __typename: "Permission", code: "MANAGE_ORDERS", name: "Manage orders" },
-    { __typename: "Permission", code: "MANAGE_PRODUCTS", name: "Manage products" },
+    { __typename: "Permission", code: PermissionEnum.MANAGE_APPS, name: "Manage apps" },
+    { __typename: "Permission", code: PermissionEnum.MANAGE_ORDERS, name: "Manage orders" },
+    { __typename: "Permission", code: PermissionEnum.MANAGE_PRODUCTS, name: "Manage products" },
   ];
 
   const defaultUserMock = {
@@ -24,7 +25,7 @@ describe("useUserAppCreationPermissions", () => {
     userCanRunJob: jest.fn(),
     isAuthenticated: true,
     refetchUser: jest.fn(),
-  };
+  } as const;
 
   it("should return false when user has all shop permissions", () => {
     // Arrange
@@ -32,8 +33,8 @@ describe("useUserAppCreationPermissions", () => {
       ...defaultUserMock,
       user: {
         userPermissions: allPermissions,
-      } as UserFragment,
-    });
+      } as unknown as UserFragment,
+    } as unknown as UserContext);
     mockUseShop.mockReturnValue({
       permissions: allPermissions,
     } as ReturnType<typeof useShop>);
@@ -51,8 +52,8 @@ describe("useUserAppCreationPermissions", () => {
       ...defaultUserMock,
       user: {
         userPermissions: [allPermissions[0]], // Only has MANAGE_APPS
-      } as UserFragment,
-    });
+      } as unknown as UserFragment,
+    } as unknown as UserContext);
     mockUseShop.mockReturnValue({
       permissions: allPermissions, // Shop has all three
     } as ReturnType<typeof useShop>);
@@ -71,7 +72,7 @@ describe("useUserAppCreationPermissions", () => {
       user: {
         userPermissions: [], // No permissions
       } as UserFragment,
-    });
+    } as unknown as UserContext);
     mockUseShop.mockReturnValue({
       permissions: allPermissions,
     } as ReturnType<typeof useShop>);
@@ -89,7 +90,7 @@ describe("useUserAppCreationPermissions", () => {
       ...defaultUserMock,
       user: undefined,
       isAuthenticated: false,
-    });
+    } as unknown as UserContext);
     mockUseShop.mockReturnValue({
       permissions: allPermissions,
     } as ReturnType<typeof useShop>);
@@ -107,8 +108,8 @@ describe("useUserAppCreationPermissions", () => {
       ...defaultUserMock,
       user: {
         userPermissions: allPermissions,
-      } as UserFragment,
-    });
+      } as unknown as UserFragment,
+    } as unknown as UserContext);
     mockUseShop.mockReturnValue({
       permissions: undefined, // No shop permissions data
     } as ReturnType<typeof useShop>);

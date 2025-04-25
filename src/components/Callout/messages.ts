@@ -1,4 +1,4 @@
-import { defineMessage, defineMessages } from "react-intl";
+import { defineMessages } from "react-intl";
 
 export const calloutTitleMessages = defineMessages({
   info: {

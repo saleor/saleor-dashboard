@@ -51,7 +51,7 @@ export function AddCustomExtension({ setToken }: { setToken: (token: string) => 
     handleSubmit,
     setValue,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = methods;
 
   const submitCreateApp = useHandleCreateAppSubmit({ setToken });

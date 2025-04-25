@@ -36,7 +36,7 @@ describe("useHandleCreateAppSubmit", () => {
 
   it("should call createApp mutation with correct input when submitting form", async () => {
     // Arrange
-    mockUseAppCreateMutation.mockReturnValue([mockCreateApp, {}]);
+    mockUseAppCreateMutation.mockReturnValue([mockCreateApp, {} as any]);
 
     const { result } = renderHook(() => useHandleCreateAppSubmit({ setToken: mockSetToken }));
     const formData = {
@@ -70,10 +70,10 @@ describe("useHandleCreateAppSubmit", () => {
     const onCompletedCallback = jest.fn();
 
     // Copy function implementation to trigger it manually
-    mockUseAppCreateMutation.mockImplementation((options: any) => {
+    mockUseAppCreateMutation.mockImplementation(options => {
       onCompletedCallback.mockImplementation(options.onCompleted);
 
-      return [mockCreateApp, {}];
+      return [mockCreateApp, {} as any];
     });
 
     const { result } = renderHook(() => useHandleCreateAppSubmit({ setToken: mockSetToken }));
