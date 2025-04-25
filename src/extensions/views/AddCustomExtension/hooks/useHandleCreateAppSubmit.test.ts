@@ -7,7 +7,7 @@ import { useHandleCreateAppSubmit } from "./useHandleCreateAppSubmit";
 
 // Mock dependencies
 jest.mock("@dashboard/graphql", () => ({
-  ...jest.requireActual("@dashboard/graphql"),
+  ...(jest.requireActual("@dashboard/graphql") as {}),
   useAppCreateMutation: jest.fn(),
   PermissionEnum: {
     MANAGE_APPS: "MANAGE_APPS",
