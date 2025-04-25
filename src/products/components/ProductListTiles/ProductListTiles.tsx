@@ -66,7 +66,7 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = ({
   return (
     <>
       {renderContent()}
-      <Box paddingX={6} paddingBottom={6}>
+      <Box padding={6} paddingTop={4}>
         <TablePaginationWithContext
           settings={settings}
           disabled={disabled}

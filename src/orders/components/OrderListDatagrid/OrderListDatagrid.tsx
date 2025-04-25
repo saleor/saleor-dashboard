@@ -133,7 +133,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
           navigatorOpts={{ state: getPrevLocationState(location) }}
         />
 
-        <Box paddingBottom={6} paddingX={6}>
+        <Box padding={6} paddingTop={4}>
           <TablePaginationWithContext
             settings={settings}
             disabled={disabled}

@@ -281,7 +281,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           navigatorOpts={{ state: getPrevLocationState(location) }}
         />
 
-        <Box padding={6}>
+        <Box padding={6} paddingLeft={4} paddingTop={4}>
           <TablePaginationWithContext
             settings={settings}
             disabled={disabled}

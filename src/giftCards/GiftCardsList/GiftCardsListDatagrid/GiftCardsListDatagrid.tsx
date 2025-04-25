@@ -176,7 +176,7 @@ export const GiftCardsListDatagrid = () => {
           navigatorOpts={{ state: getPrevLocationState(location) }}
         />
 
-        <Box paddingX={6} paddingBottom={6}>
+        <Box padding={6} paddingLeft={4} paddingTop={4}>
           <TablePaginationWithContext
             settings={settings}
             onUpdateListSettings={updateListSettings}

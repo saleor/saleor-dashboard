@@ -147,7 +147,7 @@ export const VoucherListDatagrid = ({
         )}
       />
 
-      <Box paddingBottom={6} paddingX={6}>
+      <Box padding={6} paddingLeft={4} paddingTop={0}>
         <TablePaginationWithContext
           settings={settings}
           disabled={disabled}

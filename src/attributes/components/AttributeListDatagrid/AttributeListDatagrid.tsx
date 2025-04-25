@@ -122,7 +122,7 @@ export const AttributeListDatagrid = ({
         navigatorOpts={{ state: getPrevLocationState(location) }}
       />
 
-      <Box paddingBottom={6} paddingX={6}>
+      <Box padding={4} paddingLeft={4} paddingTop={4}>
         <TablePaginationWithContext
           disabled={disabled}
           onUpdateListSettings={onUpdateListSettings}
