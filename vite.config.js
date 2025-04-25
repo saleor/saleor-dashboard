@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import react from "@vitejs/plugin-react-swc";
 import { CodeInspectorPlugin } from "code-inspector-plugin";
@@ -14,10 +13,7 @@ const copyNoopSW = () => ({
   apply: "build",
   writeBundle: () => {
     mkdirSync(path.resolve("build", "dashboard"), { recursive: true });
-    copyFileSync(
-      path.resolve("assets", "sw.js"),
-      path.resolve("build", "dashboard", "sw.js"),
-    );
+    copyFileSync(path.resolve("assets", "sw.js"), path.resolve("build", "dashboard", "sw.js"));
   },
 });
 
@@ -26,10 +22,7 @@ const copyOgImage = () => ({
   apply: "build",
   writeBundle: () => {
     mkdirSync(path.resolve("build", "dashboard"), { recursive: true });
-    copyFileSync(
-      path.resolve("assets", "og.png"),
-      path.resolve("build", "dashboard", "og.png"),
-    );
+    copyFileSync(path.resolve("assets", "og.png"), path.resolve("build", "dashboard", "og.png"));
   },
 });
 
@@ -41,7 +34,7 @@ export default defineConfig(({ command, mode }) => {
   */
   const {
     NODE_ENV,
-    API_URI,
+    API_URL,
     SW_INTERVAL,
     IS_CLOUD_INSTANCE,
     APP_MOUNT_URI,
@@ -49,7 +42,8 @@ export default defineConfig(({ command, mode }) => {
     SENTRY_RELEASE,
     ENVIRONMENT,
     STATIC_URL,
-    APPS_MARKETPLACE_API_URI,
+    APPS_MARKETPLACE_API_URL,
+    EXTENSIONS_API_URL,
     APPS_TUNNEL_URL_KEYWORDS,
     SKIP_SOURCEMAPS,
     DEMO_MODE,
@@ -57,10 +51,13 @@ export default defineConfig(({ command, mode }) => {
     FLAGS_SERVICE_ENABLED,
     LOCALE_CODE,
     POSTHOG_KEY,
+    POSTHOG_EXCLUDED_DOMAINS,
     POSTHOG_HOST,
     SENTRY_AUTH_TOKEN,
     SENTRY_ORG,
     SENTRY_PROJECT,
+    ENABLED_SERVICE_NAME_HEADER,
+    ONBOARDING_USER_JOINED_DATE_THRESHOLD,
     // eslint-disable-next-line camelcase
     npm_package_version,
   } = env;
@@ -82,14 +79,18 @@ export default defineConfig(({ command, mode }) => {
       template: "index.html",
       inject: {
         data: {
-          API_URL: API_URI,
+          API_URL,
           APP_MOUNT_URI,
-          APPS_MARKETPLACE_API_URI,
+          APPS_MARKETPLACE_API_URL,
+          EXTENSIONS_API_URL,
           APPS_TUNNEL_URL_KEYWORDS,
           IS_CLOUD_INSTANCE,
           LOCALE_CODE,
           POSTHOG_KEY,
+          POSTHOG_EXCLUDED_DOMAINS,
           POSTHOG_HOST,
+          ONBOARDING_USER_JOINED_DATE_THRESHOLD,
+          ENABLED_SERVICE_NAME_HEADER,
           injectOgTags:
             DEMO_MODE &&
             `
@@ -153,7 +154,7 @@ export default defineConfig(({ command, mode }) => {
       */
       "process.env": {
         NODE_ENV,
-        API_URI,
+        API_URL,
         SW_INTERVAL,
         IS_CLOUD_INSTANCE,
         APP_MOUNT_URI,
@@ -165,7 +166,10 @@ export default defineConfig(({ command, mode }) => {
         SENTRY_RELEASE,
         STATIC_URL,
         POSTHOG_KEY,
+        POSTHOG_EXCLUDED_DOMAINS,
         POSTHOG_HOST,
+        ENABLED_SERVICE_NAME_HEADER,
+        ONBOARDING_USER_JOINED_DATE_THRESHOLD,
         // eslint-disable-next-line camelcase
         RELEASE_NAME: npm_package_version,
       },
@@ -199,15 +203,6 @@ export default defineConfig(({ command, mode }) => {
     },
     optimizeDeps: {
       include: ["esm-dep > cjs-dep", "@saleor/macaw-ui"],
-      esbuildOptions: {
-        plugins: [
-          /*
-            react-markdown and its dependency tried to call process.cwd().
-            Since it's not present in the browser, we need to polyfill that.
-           */
-          NodeGlobalsPolyfillPlugin({ process: true }),
-        ],
-      },
     },
     resolve: {
       dedupe: ["react", "react-dom", "clsx", "@material-ui/styles"],
@@ -221,10 +216,7 @@ export default defineConfig(({ command, mode }) => {
           Vite resolves it by using jsnext:main https://github.com/moment/moment/blob/develop/package.json#L26.
           We enforce to use a different path, ignoring jsnext:main field.
         */
-        moment: path.resolve(
-          __dirname,
-          "./node_modules/moment/min/moment-with-locales.js",
-        ),
+        moment: path.resolve(__dirname, "./node_modules/moment/min/moment-with-locales.js"),
       },
     },
     plugins,

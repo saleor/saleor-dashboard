@@ -1,31 +1,29 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { ChannelsAvailabilityDropdown } from "@dashboard/components/ChannelsAvailabilityDropdown";
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { SaleDetailsFragment, VoucherDetailsFragment } from "@dashboard/graphql";
+import { SearchProductFragment } from "@dashboard/graphql";
 import { productUrl } from "@dashboard/products/urls";
-import { Card, TableBody, TableCell, TableFooter } from "@material-ui/core";
+import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
-import { ListActions, ListProps, RelayToFlat } from "../../../types";
+import { ListActions, ListProps } from "../../../types";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
 export interface SaleProductsProps extends ListProps, ListActions {
-  products:
-    | RelayToFlat<SaleDetailsFragment["products"]>
-    | RelayToFlat<VoucherDetailsFragment["products"]>;
+  products: SearchProductFragment[];
   onProductAssign: () => void;
   onProductUnassign: (id: string) => void;
 }
@@ -47,15 +45,18 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card data-test-id="assign-product-section">
-      <CardTitle
-        title={intl.formatMessage(messages.discountProductsHeader)}
-        toolbar={
+    <DashboardCard data-test-id="assign-product-section">
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(messages.discountProductsHeader)}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <Button onClick={onProductAssign} data-test-id="assign-products">
             <FormattedMessage {...messages.discountProductsButton} />
           </Button>
-        }
-      />
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
+
       <ResponsiveTable>
         <colgroup>
           <col />
@@ -115,7 +116,7 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
                   </TableCell>
                   <TableCellAvatar
                     className={classes.colName}
-                    thumbnail={maybe(() => product.thumbnail.url)}
+                    thumbnail={maybe(() => product.thumbnail?.url)}
                   >
                     {maybe<React.ReactNode>(() => product.name, <Skeleton />)}
                   </TableCellAvatar>
@@ -158,7 +159,7 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
           )}
         </TableBody>
       </ResponsiveTable>
-    </Card>
+    </DashboardCard>
   );
 };
 

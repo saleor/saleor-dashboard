@@ -1,18 +1,17 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
-import Savebar from "@dashboard/components/Savebar";
-import Skeleton from "@dashboard/components/Skeleton";
+import { Savebar } from "@dashboard/components/Savebar";
 import { ProductMediaType } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { productUrl } from "@dashboard/products/urls";
-import { Card, CardContent, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui-next";
+import { Skeleton, vars } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -111,9 +110,13 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
                 highlighted={media ? mediaObj.id : undefined}
                 onRowClick={onRowClick}
               />
-              <Card>
-                <CardTitle title={intl.formatMessage(messages.mediaInformation)} />
-                <CardContent>
+              <DashboardCard>
+                <DashboardCard.Header>
+                  <DashboardCard.Title>
+                    {intl.formatMessage(messages.mediaInformation)}
+                  </DashboardCard.Title>
+                </DashboardCard.Header>
+                <DashboardCard.Content>
                   <TextField
                     name="description"
                     label={intl.formatMessage(commonMessages.description)}
@@ -124,13 +127,17 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
                     multiline
                     fullWidth
                   />
-                </CardContent>
-              </Card>
+                </DashboardCard.Content>
+              </DashboardCard>
             </div>
             <div>
-              <Card>
-                <CardTitle title={intl.formatMessage(messages.mediaView)} />
-                <CardContent>
+              <DashboardCard>
+                <DashboardCard.Header>
+                  <DashboardCard.Title>
+                    {intl.formatMessage(messages.mediaView)}
+                  </DashboardCard.Title>
+                </DashboardCard.Header>
+                <DashboardCard.Content>
                   {mediaObj ? (
                     mediaObj?.type === ProductMediaType.IMAGE ? (
                       <div className={classes.imageContainer}>
@@ -147,17 +154,20 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
                   ) : (
                     <Skeleton />
                   )}
-                </CardContent>
-              </Card>
+                </DashboardCard.Content>
+              </DashboardCard>
             </div>
           </Grid>
-          <Savebar
-            disabled={disabled || !onSubmit}
-            state={saveButtonBarState}
-            onCancel={() => navigate(productUrl(productId))}
-            onDelete={onDelete}
-            onSubmit={submit}
-          />
+          <Savebar>
+            <Savebar.DeleteButton onClick={onDelete} />
+            <Savebar.Spacer />
+            <Savebar.CancelButton onClick={() => navigate(productUrl(productId))} />
+            <Savebar.ConfirmButton
+              transitionState={saveButtonBarState}
+              onClick={submit}
+              disabled={disabled || !onSubmit}
+            />
+          </Savebar>
         </>
       )}
     </Form>

@@ -47,6 +47,7 @@ export class NavigationDetailsPage extends BasePage {
       .locator("[data-test-id='remove-menu-item-button']")
       .first()
       .click();
+    await this.waitForDOMToFullyLoad();
   }
 
   async fillName(name: string) {
@@ -55,10 +56,12 @@ export class NavigationDetailsPage extends BasePage {
 
   async clickCreateNewMenuItem() {
     await this.createMenuItemButton.click();
+    await this.waitForDOMToFullyLoad();
   }
 
   async clickSaveButton() {
     await this.saveButton.click();
+    await this.waitForDOMToFullyLoad();
   }
 
   async clickDeleteButton() {
@@ -67,5 +70,6 @@ export class NavigationDetailsPage extends BasePage {
 
   async clickUndoButton() {
     await this.undoButton.click();
+    await this.waitForDOMToFullyLoad();
   }
 }

@@ -10,8 +10,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
-import Savebar from "@dashboard/components/Savebar";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
+import { Savebar } from "@dashboard/components/Savebar";
 import {
   AllocationStrategyEnum,
   ChannelDetailsFragment,
@@ -35,6 +34,7 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
+import { Option } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -51,7 +51,7 @@ import { ChannelShippingZones, ChannelWarehouses } from "./types";
 
 export interface ChannelDetailsPageProps<TErrors extends ChannelErrorFragment[]> {
   channel?: ChannelDetailsFragment;
-  currencyCodes?: SingleAutocompleteChoiceType[];
+  currencyCodes?: Option[];
   disabled: boolean;
   disabledStatus?: boolean;
   errors: ChannelErrorFragment[];
@@ -102,8 +102,14 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     channel?.defaultCountry.country || "",
   );
   const countryChoices = mapCountriesToChoices(countries || []);
-  const { defaultCountry, stockSettings, orderSettings, paymentSettings, ...formData } =
-    channel || ({} as ChannelDetailsFragment);
+  const {
+    defaultCountry,
+    stockSettings,
+    orderSettings,
+    paymentSettings,
+    checkoutSettings,
+    ...formData
+  } = channel || ({} as ChannelDetailsFragment);
   const initialStockSettings: StockSettingsInput = {
     allocationStrategy: AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER,
     ...stockSettings,
@@ -125,6 +131,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     deleteExpiredOrdersAfter: orderSettings?.deleteExpiredOrdersAfter,
     allowUnpaidOrders: orderSettings?.allowUnpaidOrders,
     defaultTransactionFlowStrategy: paymentSettings?.defaultTransactionFlowStrategy,
+    automaticallyCompleteCheckouts: checkoutSettings?.automaticallyCompleteFullyPaidCheckouts,
   };
   const getFilteredShippingZonesChoices = (
     shippingZonesToDisplay: ChannelShippingZones,
@@ -211,6 +218,13 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                 : TransactionFlowStrategyEnum.CHARGE,
           });
         };
+
+        const handleAutomaticallyCompleteCheckoutsChange = () => {
+          set({
+            automaticallyCompleteCheckouts: !data.automaticallyCompleteCheckouts,
+          });
+        };
+
         const allErrors = [...errors, ...validationErrors];
 
         return (
@@ -239,6 +253,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                 onDefaultCountryChange={handleDefaultCountrySelect}
                 onMarkAsPaidStrategyChange={handleMarkAsPaidStrategyChange}
                 onTransactionFlowStrategyChange={handleTransactionFlowStrategyChange}
+                onAutomaticallyCompleteCheckoutsChange={handleAutomaticallyCompleteCheckoutsChange}
                 errors={allErrors}
               />
             </DetailPageLayout.Content>
@@ -290,13 +305,16 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
               </RequirePermissions>
               <ChannelAllocationStrategy data={data} disabled={disabled} onChange={change} />
             </DetailPageLayout.RightSidebar>
-            <Savebar
-              onCancel={() => navigate(channelsListUrl())}
-              onSubmit={submit}
-              onDelete={onDelete}
-              state={saveButtonBarState}
-              disabled={disabled}
-            />
+            <Savebar>
+              <Savebar.DeleteButton onClick={onDelete} />
+              <Savebar.Spacer />
+              <Savebar.CancelButton onClick={() => navigate(channelsListUrl())} />
+              <Savebar.ConfirmButton
+                transitionState={saveButtonBarState}
+                onClick={submit}
+                disabled={disabled}
+              />
+            </Savebar>
           </DetailPageLayout>
         );
       }}

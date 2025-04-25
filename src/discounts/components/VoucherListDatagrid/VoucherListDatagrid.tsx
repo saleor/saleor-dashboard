@@ -10,6 +10,7 @@ import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHea
 import { VoucherListUrlSortField, voucherUrl } from "@dashboard/discounts/urls";
 import { canBeSorted } from "@dashboard/discounts/views/VoucherList/sort";
 import { VoucherFragment } from "@dashboard/graphql";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ChannelProps, ListProps, SortPage } from "@dashboard/types";
@@ -17,6 +18,7 @@ import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { createGetCellContent, vouchersListStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
@@ -41,6 +43,7 @@ export const VoucherListDatagrid = ({
   onUpdateListSettings,
 }: VoucherListDatagridProps) => {
   const datagridState = useDatagridChangeState();
+  const location = useLocation();
   const navigate = useNavigator();
   const { locale } = useLocale();
   const intl = useIntl();
@@ -58,6 +61,7 @@ export const VoucherListDatagrid = ({
   );
   const { handlers, visibleColumns, recentlyAddedColumn, staticColumns, selectedColumns } =
     useColumns({
+      gridName: "voucher_list",
       selectedColumns: settings?.columns ?? [],
       staticColumns: vouchersListStaticColumns,
       onSave: onColumnChange,
@@ -76,7 +80,9 @@ export const VoucherListDatagrid = ({
       const rowData: VoucherFragment = vouchers[row];
 
       if (rowData) {
-        navigate(voucherUrl(rowData.id));
+        navigate(voucherUrl(rowData.id), {
+          state: getPrevLocationState(location),
+        });
       }
     },
     [vouchers],
@@ -118,7 +124,7 @@ export const VoucherListDatagrid = ({
         hasRowHover={true}
         onColumnMoved={handlers.onMove}
         onColumnResize={handlers.onResize}
-        verticalBorder={col => col > 0}
+        verticalBorder={false}
         rows={vouchers?.length ?? 0}
         availableColumns={visibleColumns}
         emptyText={intl.formatMessage(messages.empty)}

@@ -1,6 +1,5 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { DialogContentText } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -34,18 +33,16 @@ const UnassignMembersDialog: React.FC<UnassignMembersDialogProps> = ({
       })}
       variant="delete"
     >
-      <DialogContentText>
-        <FormattedMessage
-          data-test-id="unassign-members-dialog-text"
-          id="XGBsoK"
-          defaultMessage="Are you sure you want to unassign {counter,plural,one{this member} other{{displayQuantity} members}}?"
-          description="dialog content"
-          values={{
-            counter: quantity,
-            displayQuantity: <strong>{quantity}</strong>,
-          }}
-        />
-      </DialogContentText>
+      <FormattedMessage
+        data-test-id="unassign-members-dialog-text"
+        id="XGBsoK"
+        defaultMessage="Are you sure you want to unassign {counter,plural,one{this member} other{{displayQuantity} members}}?"
+        description="dialog content"
+        values={{
+          counter: quantity,
+          displayQuantity: <strong>{quantity}</strong>,
+        }}
+      />
     </ActionDialog>
   );
 };

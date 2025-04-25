@@ -46,6 +46,7 @@ interface ProductOrganizationProps {
   onCategoryChange: (event: ChangeEvent) => void;
   onCollectionChange: (event: ChangeEvent) => void;
   onProductTypeChange?: (event: ChangeEvent) => void;
+  selectedProductCategory?: Option;
 }
 
 export const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
@@ -70,12 +71,18 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
     onCategoryChange,
     onCollectionChange,
     onProductTypeChange,
+    selectedProductCategory,
   } = props;
   const intl = useIntl();
   const formErrors = getFormErrors(
     ["productType", "category", "collections", "isPublished"],
     errors,
   );
+  const [categoryInputActive, setCategoryInputActive] = React.useState(false);
+
+  // Input is hide to proper handle showing nested category structure
+  const hideInput = !categoryInputActive && data.category && !disabled;
+
   const noCategoryError =
     formErrors.isPublished?.code === ProductErrorCode.PRODUCT_WITHOUT_CATEGORY
       ? formErrors.isPublished
@@ -83,13 +90,15 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        {intl.formatMessage({
-          id: "JjeZEG",
-          defaultMessage: "Organize Product",
-          description: "section header",
-        })}
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "JjeZEG",
+            defaultMessage: "Organize Product",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content gap={2} display="flex" flexDirection="column">
         {canChangeType ? (
           <Combobox
@@ -156,6 +165,44 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
               id: "ccXLVi",
               defaultMessage: "Category",
             })}
+            {...(hideInput && {
+              width: "100%",
+              __opacity: 0,
+              position: "absolute",
+            })}
+            onFocus={() => {
+              setCategoryInputActive(true);
+            }}
+            onBlur={() => {
+              setCategoryInputActive(false);
+            }}
+            startAdornment={val => {
+              if (categoryInputActive || disabled) {
+                return undefined;
+              }
+
+              const availableCategories = selectedProductCategory
+                ? [...categories, selectedProductCategory]
+                : categories;
+
+              const adornment = val
+                ? availableCategories.find(category => category.value === val.value)?.startAdornment
+                : null;
+
+              if (!adornment) {
+                return <Text size={3}>{categoryInputDisplayValue}</Text>;
+              }
+
+              return (
+                <>
+                  {React.cloneElement(adornment as React.ReactElement, {
+                    size: 3,
+                  })}
+                  <Text size={3}>{categoryInputDisplayValue}</Text>
+                </>
+              );
+            }}
+            id="category-list"
           />
         </Box>
         <Multiselect

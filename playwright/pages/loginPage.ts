@@ -36,7 +36,8 @@ export class LoginPage {
     await this.typeEmail(userEmail);
     await this.typePassword(userPassword);
     await this.clickSignInButton();
-    await expect(this.homePage.welcomeMessage).toContainText("Hello there,", {
+    // This check shouldn't be tied to user's email or first/last name
+    await expect(this.homePage.welcomeMessage).toContainText("welcome to your Store Dashboard", {
       timeout: 15000,
     });
   }

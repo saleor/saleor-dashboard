@@ -1,15 +1,16 @@
 import { SiteSettingsPage } from "@pages/siteSettingsPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
 import faker from "faker";
+import { test } from "utils/testWithPermission";
 
-test.use({ storageState: "./playwright/.auth/admin.json" });
+test.use({ permissionName: "admin" });
 
 let siteSettingsPage: SiteSettingsPage;
 
 test.beforeEach(({ page }) => {
   siteSettingsPage = new SiteSettingsPage(page);
 });
-test("TC: SALEOR_132 Should be able to update site settings", async () => {
+test("TC: SALEOR_132 Should be able to update site settings #e2e", async () => {
   const companyName = faker.company.companyName();
 
   await siteSettingsPage.gotoSiteSettings();

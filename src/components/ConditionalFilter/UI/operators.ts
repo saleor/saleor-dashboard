@@ -1,7 +1,9 @@
 import {
+  BulkselectOperator,
   ComboboxOperator,
   DateOperator,
   DateTimeOperator,
+  DoubleTextOperator,
   InputOperator,
   MultiselectOperator,
   NumberRangeOperator,
@@ -17,6 +19,9 @@ export const isNumberInput = (value: SelectedOperator): value is InputOperator =
 
 export const isMultiselect = (value: SelectedOperator): value is MultiselectOperator =>
   value.conditionValue?.type === "multiselect";
+
+export const isBulkSelect = (value: SelectedOperator): value is BulkselectOperator =>
+  value.conditionValue?.type === "bulkselect";
 
 export const isCombobox = (value: SelectedOperator): value is ComboboxOperator =>
   value.conditionValue?.type === "combobox";
@@ -38,3 +43,6 @@ export const isDateRange = (value: SelectedOperator): value is DateOperator =>
 
 export const isDateTimeRange = (value: SelectedOperator): value is DateTimeOperator =>
   value.conditionValue?.type === "datetime.range";
+
+export const isDoubleText = (value: SelectedOperator): value is DoubleTextOperator =>
+  value.conditionValue?.type === "text.double";

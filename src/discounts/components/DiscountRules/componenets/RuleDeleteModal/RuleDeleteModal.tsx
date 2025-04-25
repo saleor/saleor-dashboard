@@ -1,7 +1,7 @@
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -24,17 +24,12 @@ export const RuleDeleteModal = ({
 
   return (
     <DashboardModal open={open} onChange={onClose}>
-      <DashboardModal.Content data-test-id="delete-rule-dialog">
-        <DashboardModal.Title display="flex" justifyContent="space-between" alignItems="center">
-          {intl.formatMessage(messages.deleteRule)}
-          <DashboardModal.Close onClose={onClose} />
-        </DashboardModal.Title>
+      <DashboardModal.Content size="xs" data-test-id="delete-rule-dialog">
+        <DashboardModal.Header>{intl.formatMessage(messages.deleteRule)}</DashboardModal.Header>
 
-        <Box __width={390}>
-          <Text>
-            <FormattedMessage {...messages.deleteRuleDescription} />
-          </Text>
-        </Box>
+        <Text>
+          <FormattedMessage {...messages.deleteRuleDescription} />
+        </Text>
 
         <DashboardModal.Actions>
           <Button onClick={onClose} variant="secondary" data-test-id="cancel-delete-rule-button">

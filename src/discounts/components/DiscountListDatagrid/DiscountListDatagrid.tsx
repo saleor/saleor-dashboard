@@ -9,6 +9,7 @@ import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyCol
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { DiscountListUrlSortField, discountUrl } from "@dashboard/discounts/discountsUrls";
 import { PromotionFragment } from "@dashboard/graphql";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { ListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui-next";
@@ -52,6 +53,7 @@ export const DiscountListDatagrid = ({
   );
   const { handlers, visibleColumns, staticColumns, selectedColumns, recentlyAddedColumn } =
     useColumns({
+      gridName: "discount_list",
       staticColumns: discountListStaticColumns,
       selectedColumns: settings?.columns ?? [],
       onSave: onColumnChange,
@@ -101,7 +103,7 @@ export const DiscountListDatagrid = ({
         hasRowHover={hasRowHover}
         onColumnMoved={handlers.onMove}
         onColumnResize={handlers.onResize}
-        verticalBorder={col => col > 1}
+        verticalBorder={false}
         rows={promotions?.length ?? 0}
         availableColumns={visibleColumns}
         emptyText={intl.formatMessage(messages.empty)}
@@ -120,6 +122,7 @@ export const DiscountListDatagrid = ({
             onToggle={handlers.onToggle}
           />
         )}
+        navigatorOpts={{ state: getPrevLocationState(location) }}
       />
 
       <Box paddingX={6}>

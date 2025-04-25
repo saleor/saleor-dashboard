@@ -15,4 +15,4 @@ runs:
       run: |
         jq --null-input \
            --arg token "Token $ACCESS_TOKEN" \
-           '{"token":$token,"telemetry":"false","saleor_env":"staging","cloud_api_url":"https://staging-cloud.saleor.io/platform/api","organization_slug":"saleor","organization_name":"Saleor"}' > ~/.config/saleor.json
+           '{"token":$token,"telemetry":"false","saleor_env":"staging","cloud_api_url":"https://cloud.staging.saleor.io/platform/api","organization_slug":"saleor","organization_name":"Saleor"}' > ~/.config/saleor.json

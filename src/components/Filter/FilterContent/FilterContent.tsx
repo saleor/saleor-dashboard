@@ -1,8 +1,9 @@
 // @ts-strict-ignore
 import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { makeStyles, Paper, Typography } from "@material-ui/core";
+import { makeStyles, Paper } from "@material-ui/core";
 import { Accordion, AccordionSummary } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 
 import { FilterAutocompleteDisplayValues } from "../FilterAutocompleteField";
@@ -219,7 +220,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                           active: currentFilter?.active,
                         }}
                       >
-                        <Typography>{filterField.label}</Typography>
+                        <Text>{filterField.label}</Text>
                       </FilterContentBody>
                     )}
                   />

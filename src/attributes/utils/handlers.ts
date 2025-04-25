@@ -29,10 +29,10 @@ import { getFileValuesToUploadFromAttributes, isFileValueUnused } from "./data";
 export function createAttributeChangeHandler(
   changeAttributeData: FormsetChange<string[]>,
   triggerChange: () => void,
-): FormsetChange<string> {
-  return (attributeId: string, value: string) => {
+): FormsetChange<string | null | undefined> {
+  return (attributeId: string, value: string | null | undefined) => {
     triggerChange();
-    changeAttributeData(attributeId, value === "" ? [] : [value]);
+    changeAttributeData(attributeId, !value ? [] : [value]);
   };
 }
 
@@ -206,7 +206,7 @@ function getFileInput(attribute: AttributeInput, updatedFileAttributes: Attribut
 function getBooleanInput(attribute: AttributeInput) {
   return {
     id: attribute.id,
-    boolean: JSON.parse(attribute.value[0] ?? "false"),
+    boolean: attribute.value[0] != null ? JSON.parse(attribute.value[0]) : null,
   };
 }
 
@@ -234,7 +234,7 @@ export const prepareAttributesInput = ({
   return attributes.reduce((attrInput: AttributeValueInput[], attr) => {
     const prevAttrValue = prevAttributesMap.get(attr.id);
 
-    if (isEqual(attr.value, prevAttrValue)) {
+    if (isEqual(attr.value, prevAttrValue) && !attr.data.isRequired) {
       return attrInput;
     }
 
@@ -243,7 +243,7 @@ export const prepareAttributesInput = ({
     if (inputType === AttributeInputTypeEnum.FILE) {
       const fileInput = getFileInput(attr, updatedFileAttributes);
 
-      if (fileInput.file) {
+      if (fileInput.file || attr.data.isRequired) {
         attrInput.push(fileInput);
       }
 
@@ -254,7 +254,7 @@ export const prepareAttributesInput = ({
       const booleanInput = getBooleanInput(attr);
 
       // previous comparison doesn't work because value was string
-      if (isEqual([booleanInput.boolean], prevAttrValue)) {
+      if (isEqual([booleanInput.boolean], prevAttrValue) && !attr.data.isRequired) {
         return attrInput;
       }
 
@@ -319,6 +319,17 @@ export const prepareAttributesInput = ({
       return attrInput;
     }
 
+    if (inputType === AttributeInputTypeEnum.NUMERIC) {
+      const isEmpty = attr.value[0] === undefined || attr.value[0] === null;
+
+      attrInput.push({
+        id: attr.id,
+        values: isEmpty ? [] : attr.value,
+      });
+
+      return attrInput;
+    }
+
     attrInput.push({
       id: attr.id,
       values: attr.value,
@@ -342,16 +353,22 @@ export const handleUploadMultipleFiles = async (
 
 export const handleDeleteMultipleAttributeValues = async (
   attributesWithNewFileValue: FormsetData<null, File>,
-  attributes: Array<
-    | PageSelectedAttributeFragment
-    | ProductFragment["attributes"][0]
-    | NonNullable<ProductVariantDetailsQuery["productVariant"]>["nonSelectionAttributes"][0]
-  >,
+  attributes:
+    | Array<
+        | PageSelectedAttributeFragment
+        | ProductFragment["attributes"][0]
+        | NonNullable<ProductVariantDetailsQuery["productVariant"]>["nonSelectionAttributes"][0]
+      >
+    | undefined,
   deleteAttributeValue: (
     variables: AttributeValueDeleteMutationVariables,
   ) => Promise<FetchResult<AttributeValueDeleteMutation>>,
-) =>
-  Promise.all(
+) => {
+  if (!attributes) {
+    return [];
+  }
+
+  return Promise.all(
     attributes.map(existingAttribute => {
       const fileValueUnused = isFileValueUnused(attributesWithNewFileValue, existingAttribute);
 
@@ -365,3 +382,4 @@ export const handleDeleteMultipleAttributeValues = async (
       return undefined;
     }),
   );
+};

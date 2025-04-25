@@ -1,11 +1,11 @@
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import Hr from "@dashboard/components/Hr";
 import { ConfigurationItemFragment, ConfigurationTypeFieldEnum } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { isSecretField } from "@dashboard/plugins/utils";
-import { Card, CardContent, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -40,26 +40,32 @@ const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
   const secretFields = fields.filter(field => isSecretField(fields, field.name));
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "6aBkJm",
-          defaultMessage: "Authorization",
-          description: "section header",
-        })}
-      />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "6aBkJm",
+            defaultMessage: "Authorization",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         {secretFields.map((field, fieldIndex) => (
           <React.Fragment key={field.name}>
             <div className={classes.item} key={field.name}>
               {field.type === ConfigurationTypeFieldEnum.SECRET ||
               field.type === ConfigurationTypeFieldEnum.SECRETMULTILINE ? (
                 <div>
-                  <Typography variant="body1">{field.label}</Typography>
-                  {field.value !== null && <Typography>**** {field.value}</Typography>}
+                  <Text size={4} fontWeight="regular">
+                    {field.label}
+                  </Text>
+                  {field.value !== null && <Text>**** {field.value}</Text>}
                 </div>
               ) : (
-                <Typography variant="body1">{field.label}</Typography>
+                <Text size={4} fontWeight="regular">
+                  {field.label}
+                </Text>
               )}
               <div className={classes.spacer} />
               {field.value === null ? (
@@ -80,8 +86,8 @@ const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
             {fieldIndex !== secretFields.length - 1 && <Hr className={classes.hr} />}
           </React.Fragment>
         ))}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

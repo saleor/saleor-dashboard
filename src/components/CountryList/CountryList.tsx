@@ -1,18 +1,19 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { CountryFragment } from "@dashboard/graphql";
-import { Card, TableBody, TableCell } from "@material-ui/core";
+import { TableBody, TableCell } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { getStringOrPlaceholder, maybe, renderCollection } from "../../misc";
+import { getStringOrPlaceholder } from "../../misc";
+import { DashboardCard } from "../Card";
+import { groupCountriesByStartingLetter } from "./utils";
 
 export interface CountryListProps {
   countries: CountryFragment[];
@@ -81,16 +82,20 @@ const CountryList: React.FC<CountryListProps> = props => {
     return [...countries].sort((a, b) => a.country.localeCompare(b.country));
   }
 
+  const sortedCountries = sortCountries(countries ?? []);
+  const groupedCountries = groupCountriesByStartingLetter(sortedCountries);
+  const hasCountriesToRender = sortedCountries.length > 0;
+
   return (
-    <Card>
-      <CardTitle
-        title={title}
-        toolbar={
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{title}</DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <Button disabled={disabled} onClick={onCountryAssign} data-test-id="assign-country">
             <FormattedMessage id="zZCCqz" defaultMessage="Assign countries" description="button" />
           </Button>
-        }
-      />
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       <ResponsiveTable>
         <TableBody>
           <TableRowLink className={classes.pointer} onClick={toggleCollapse}>
@@ -115,25 +120,19 @@ const CountryList: React.FC<CountryListProps> = props => {
               </IconButton>
             </TableCell>
           </TableRowLink>
-          {!isCollapsed &&
-            renderCollection(
-              sortCountries(countries),
-              (country, countryIndex) => (
+          {!isCollapsed && hasCountriesToRender ? (
+            Object.keys(groupedCountries).map(letter => {
+              const countries = groupedCountries[letter];
+
+              return countries.map((country, countryIndex) => (
                 <TableRowLink key={country ? country.code : "skeleton"}>
                   <TableCell className={classes.offsetCell}>
-                    {maybe<React.ReactNode>(
-                      () => (
-                        <>
-                          {(countryIndex === 0 ||
-                            countries[countryIndex].country[0] !==
-                              countries[countryIndex - 1].country[0]) && (
-                            <span className={classes.indicator}>{country.country[0]}</span>
-                          )}
-                          {country.country}
-                        </>
-                      ),
-                      <Skeleton />,
+                    {countryIndex === 0 && (
+                      <Text color="default2" display="inline-block" left={2} position="absolute">
+                        {country.country[0]}
+                      </Text>
                     )}
+                    {country.country}
                   </TableCell>
                   <TableCell className={clsx(classes.textRight, classes.iconCell)}>
                     <IconButton
@@ -146,18 +145,18 @@ const CountryList: React.FC<CountryListProps> = props => {
                     </IconButton>
                   </TableCell>
                 </TableRowLink>
-              ),
-              () => (
-                <TableRowLink>
-                  <TableCell className={classes.toLeft} colSpan={2}>
-                    {emptyText}
-                  </TableCell>
-                </TableRowLink>
-              ),
-            )}
+              ));
+            })
+          ) : (
+            <TableRowLink>
+              <TableCell className={classes.toLeft} colSpan={2}>
+                {emptyText}
+              </TableCell>
+            </TableRowLink>
+          )}
         </TableBody>
       </ResponsiveTable>
-    </Card>
+    </DashboardCard>
   );
 };
 

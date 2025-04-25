@@ -32,6 +32,7 @@ describe("useRichText", () => {
     rerender();
     expect(result.current.defaultValue).toStrictEqual(fixtures.short);
     expect(result.current.isReadyForMount).toBe(true);
+    expect(result.current.isDirty).toBe(false);
   });
   it("returns undefined when JSON cannot be parsed", () => {
     // eslint-disable-next-line prefer-const
@@ -45,6 +46,7 @@ describe("useRichText", () => {
     rerender();
     expect(result.current.defaultValue).toBe(undefined);
     expect(result.current.isReadyForMount).toBe(false);
+    expect(result.current.isDirty).toBe(false);
   });
   it("runs editorJS .save() when getValue is called", async () => {
     const saveFn = jest.fn(async () => fixtures.short);
@@ -58,6 +60,7 @@ describe("useRichText", () => {
     };
     expect(await result.current.getValue()).toStrictEqual(fixtures.short);
     expect(saveFn).toHaveBeenCalled();
+    expect(result.current.isDirty).toBe(false);
   });
   it("calls triggerChange when change is made in the editor", () => {
     triggerChange.mockClear();
@@ -66,5 +69,6 @@ describe("useRichText", () => {
 
     result.current.handleChange();
     expect(triggerChange).toHaveBeenCalled();
+    expect(result.current.isDirty).toBe(true);
   });
 });

@@ -71,17 +71,15 @@ export class ShippingMethodsPage extends BasePage {
     });
   }
 
-  async gotoExistingShippingMethod(shippingMethodId: string) {
+  async gotoExistingShippingMethod(shippingMethodId: string, shippingMethodName: string) {
     const existingShippingMethodUrl = `${URL_LIST.shippingMethods}${shippingMethodId}`;
 
     await console.log(`Navigates to existing shipping method page: ${existingShippingMethodUrl}`);
     await this.page.goto(existingShippingMethodUrl);
-    await this.rightSideDetailsPage.channelSection
-      .locator(this.page.getByTestId("selected-options"))
-      .waitFor({
-        state: "visible",
-        timeout: 60000,
-      });
+    await this.page.getByText(shippingMethodName).first().waitFor({
+      state: "visible",
+      timeout: 60000,
+    });
   }
 
   async gotoExistingShippingRate(shippingMethodId: string, shippingRateId: string) {

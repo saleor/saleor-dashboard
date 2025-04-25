@@ -10,6 +10,8 @@ import { OrderCreateDialog } from "@pages/dialogs/orderCreateDialog";
 import { ShippingAddressDialog } from "@pages/dialogs/shippingMethodDialog";
 import { Page } from "@playwright/test";
 
+import { OrderRefundDialog } from "./dialogs/orderRefundDialog";
+
 export class OrdersPage extends BasePage {
   orderCreateDialog: OrderCreateDialog;
 
@@ -29,6 +31,8 @@ export class OrdersPage extends BasePage {
 
   rightSideDetailsPage: RightSideDetailsPage;
 
+  orderRefundDialog: OrderRefundDialog;
+
   constructor(
     page: Page,
     readonly createOrderButton = page.getByTestId("create-order-button"),
@@ -47,8 +51,19 @@ export class OrdersPage extends BasePage {
     readonly salesChannel = page.getByTestId("salesChannel"),
     readonly addShippingCarrierLink = page.getByTestId("add-shipping-carrier"),
     readonly finalizeButton = page.getByTestId("button-bar-confirm"),
-
+    readonly addRefundButton = page.getByTestId("add-new-refund-button"),
     readonly customerEmail = page.getByTestId("customer-email"),
+    readonly orderRefundModal = page.getByTestId("order-refund-dialog"),
+    readonly orderRefundSection = page.getByTestId("order-refund-section"),
+    readonly orderRefundList = page.getByTestId("refund-list"),
+    readonly orderSummary = page.getByTestId("order-summary"),
+    readonly editRefundButton = page.getByTestId("edit-refund-button").locator("button"),
+    readonly totalPrice = page
+      .getByTestId("order-total-price")
+      .locator(page.getByTestId("money-value")),
+    readonly subTotalPrice = page
+      .getByTestId("order-total-price")
+      .locator(page.getByTestId("money-value")),
   ) {
     super(page);
     this.markOrderAsPaidDialog = new MarkOrderAsPaidDialog(page);
@@ -60,10 +75,16 @@ export class OrdersPage extends BasePage {
     this.manualTransactionDialog = new ManualTransactionDialog(page);
     this.addTrackingDialog = new AddTrackingDialog(page);
     this.rightSideDetailsPage = new RightSideDetailsPage(page);
+    this.orderRefundDialog = new OrderRefundDialog(page);
   }
 
   async clickCreateOrderButton() {
     await this.createOrderButton.click();
+  }
+
+  async goToDraftOrdersListView() {
+    await this.page.goto(URL_LIST.draftOrders);
+    await this.waitForGrid();
   }
 
   async clickAddTrackingButton() {
@@ -95,10 +116,6 @@ export class OrdersPage extends BasePage {
     await this.finalizeButton.click({ timeout: 90000 });
   }
 
-  async expectSuccessBanner() {
-    await this.basePage.expectSuccessBanner();
-  }
-
   async goToOrdersListView() {
     await this.page.goto(URL_LIST.orders);
   }
@@ -106,8 +123,28 @@ export class OrdersPage extends BasePage {
   async goToExistingOrderPage(orderId: string) {
     const orderLink = URL_LIST.orders + orderId;
 
-    await console.log("Navigating to order details view: " + orderLink);
+    console.log("Navigating to order details view: " + orderLink);
     await this.page.goto(orderLink);
+    await this.waitForDOMToFullyLoad();
     await this.waitForGrid();
+    await this.waitForGrid();
+  }
+
+  async clickAddRefundButton() {
+    await this.addRefundButton.click();
+    await this.orderRefundModal.waitFor({ state: "visible" });
+  }
+
+  async clickEditRefundButton(refundInfo: string) {
+    const refund = this.orderRefundList.locator("tr").filter({ hasText: refundInfo });
+
+    await refund.locator(this.editRefundButton).click();
+    await this.waitForDOMToFullyLoad();
+  }
+
+  async assertRefundOnList(refundInfo: string) {
+    const refund = this.orderRefundList.locator("tr").filter({ hasText: refundInfo });
+
+    await refund.waitFor({ state: "visible" });
   }
 }

@@ -1,5 +1,4 @@
 import { IFilter } from "@dashboard/components/Filter";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import { DiscountStatusEnum, VoucherDiscountType } from "@dashboard/graphql";
 import { FilterOpts, MinMax } from "@dashboard/types";
 import {
@@ -7,6 +6,7 @@ import {
   createNumberField,
   createOptionsField,
 } from "@dashboard/utils/filters/fields";
+import { Option } from "@saleor/macaw-ui-next";
 import { defineMessages, IntlShape } from "react-intl";
 
 export enum VoucherFilterKeys {
@@ -22,7 +22,7 @@ export interface VoucherListFilterOpts {
   started: FilterOpts<MinMax>;
   status: FilterOpts<DiscountStatusEnum[]>;
   timesUsed: FilterOpts<MinMax>;
-  channel: FilterOpts<string> & { choices: MultiAutocompleteChoiceType[] };
+  channel: FilterOpts<string> & { choices: Option[] };
 }
 
 const messages = defineMessages({

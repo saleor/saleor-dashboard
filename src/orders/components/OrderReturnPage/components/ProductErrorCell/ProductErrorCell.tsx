@@ -1,5 +1,6 @@
 import ErrorExclamationCircleIcon from "@dashboard/icons/ErrorExclamationCircle";
-import { Popper, TableCell, Typography } from "@material-ui/core";
+import { Popper, TableCell } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -28,9 +29,9 @@ export const ProductErrorCell: React.FC<ProductErrorCellProps> = ({ hasVariant }
         onMouseEnter={() => setShowErrorBox(true)}
         onMouseLeave={() => setShowErrorBox(false)}
       >
-        <Typography className={classes.errorTextHighlighted}>
+        <Text className={classes.errorTextHighlighted}>
           {intl.formatMessage(productErrorCellMessages.title)}
-        </Typography>
+        </Text>
         <ErrorExclamationCircleIcon />
       </div>
       <Popper
@@ -40,9 +41,9 @@ export const ProductErrorCell: React.FC<ProductErrorCellProps> = ({ hasVariant }
         anchorEl={popperAnchorRef.current}
       >
         <div className={classes.errorBox}>
-          <Typography className={classes.errorText}>
+          <Text className={classes.errorText}>
             {intl.formatMessage(productErrorCellMessages.description)}
-          </Typography>
+          </Text>
         </div>
       </Popper>
     </TableCell>

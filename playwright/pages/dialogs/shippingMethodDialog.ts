@@ -4,18 +4,16 @@ import { expect, Page } from "@playwright/test";
 export class ShippingAddressDialog extends BasePage {
   constructor(
     page: Page,
-    readonly selectShippingMethodInput = page.locator('[id="mui-component-select-shippingMethod"]'),
+    readonly selectShippingMethodInput = page.getByTestId("shipping-method-select"),
     readonly confirmButton = page.getByTestId("confirm-button"),
     readonly backButton = page.getByTestId("back"),
-    readonly shippingMethodOption = page.locator("[data-test-id*='select-field-option']"),
+    readonly shippingMethodOption = page.getByTestId("select-option"),
   ) {
     super(page);
   }
 
   async pickAndConfirmFirstShippingMethod() {
-    await this.waitForNetworkIdle(async () => {
-      await this.selectShippingMethodInput.click();
-    });
+    await this.selectShippingMethodInput.click();
     await this.shippingMethodOption.first().click();
     await this.confirmButton.click();
     await expect(this.selectShippingMethodInput).not.toBeVisible();

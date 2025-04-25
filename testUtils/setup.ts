@@ -2,6 +2,8 @@ import "@testing-library/jest-dom";
 
 import { configure } from "@testing-library/react";
 
+jest.mock("@sentry/react");
+
 document.getElementById = () => document.createElement("div");
 
 // workaround for `jsdom`
@@ -23,7 +25,8 @@ document.createRange = () => {
 window.__SALEOR_CONFIG__ = {
   API_URL: "http://localhost:8000/graphql/",
   APP_MOUNT_URI: "/",
-  APPS_MARKETPLACE_API_URI: "http://localhost:3000",
+  APPS_MARKETPLACE_API_URL: "http://localhost:3000",
+  EXTENSIONS_API_URL: "http://localhost:3000",
   APPS_TUNNEL_URL_KEYWORDS: ".ngrok.io;.saleor.live",
   IS_CLOUD_INSTANCE: "true",
   LOCALE_CODE: "EN",
@@ -39,9 +42,24 @@ configure({ testIdAttribute: "data-test-id" });
  * Fixes (hacks) "TextEncoder is not defined" error which is likely bug in jsdom
  */
 import { TextDecoder, TextEncoder } from "util";
+
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder as typeof global.TextDecoder;
 
 global.CSS = {
   supports: () => false,
 } as any;
+
+/**
+ *
+ * Fixes (hacks) "crypto is not defined" error which is likely missing implementation in jsdom
+ */
+import nodeCrypto from "crypto";
+
+global.crypto = {
+  getRandomValues: function (buffer: any) {
+    return nodeCrypto.randomFillSync(buffer);
+  },
+  subtle: {} as SubtleCrypto,
+  randomUUID: () => nodeCrypto.randomUUID(),
+};

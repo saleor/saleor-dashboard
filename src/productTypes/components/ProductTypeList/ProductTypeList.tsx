@@ -1,18 +1,20 @@
 // @ts-strict-ignore
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { ProductTypeFragment } from "@dashboard/graphql";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { ProductTypeListUrlSortField, productTypeUrl } from "@dashboard/productTypes/urls";
 import { getArrowDirection } from "@dashboard/utils/sort";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
+import { useLocation } from "react-router";
 
 import { maybe, renderCollection } from "../../../misc";
 import { ListActions, ListProps, SortPage } from "../../../types";
@@ -52,6 +54,7 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
   const { disabled, productTypes, onSort, isChecked, selected, sort, toggle, toggleAll, toolbar } =
     props;
   const classes = useStyles(props);
+  const location = useLocation();
 
   return (
     <ResponsiveTable>
@@ -116,7 +119,14 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
                 className={productType ? classes.link : undefined}
                 hover={!!productType}
                 key={productType ? productType.id : "skeleton"}
-                href={productType && productTypeUrl(productType.id)}
+                href={
+                  productType
+                    ? {
+                        pathname: productTypeUrl(productType.id),
+                        state: getPrevLocationState(location),
+                      }
+                    : undefined
+                }
                 selected={isSelected}
                 data-test-id={"id-" + maybe(() => productType.id)}
               >

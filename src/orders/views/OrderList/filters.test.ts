@@ -1,104 +1,83 @@
-import { date } from "@dashboard/fixtures";
-import { OrderStatusFilter, PaymentChargeStatusEnum } from "@dashboard/graphql";
-import {
-  createFilterStructure,
-  OrderFilterGiftCard,
-} from "@dashboard/orders/components/OrderListPage";
+import { InitialOrderStateResponse } from "@dashboard/components/ConditionalFilter/API/initialState/orders/InitialOrderState";
+import { TokenArray } from "@dashboard/components/ConditionalFilter/ValueProvider/TokenArray";
 import { OrderListUrlFilters } from "@dashboard/orders/urls";
-import { getFilterQueryParams } from "@dashboard/utils/filters";
-import { stringifyQs } from "@dashboard/utils/urls";
-import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
-import { config } from "@test/intl";
-import { createIntl } from "react-intl";
+import { getExistingKeys } from "@test/filters";
 
-import { getFilterQueryParam, getFilterVariables } from "./filters";
+import { getFilterVariables } from "./filters";
 
-describe("Filtering query params", () => {
+describe("Filtering URL params", () => {
   it("should be empty object if no params given", () => {
+    // Arrange & Act
     const params: OrderListUrlFilters = {};
-    const filterVariables = getFilterVariables(params);
+    const filterVariables = getFilterVariables(params, []);
 
+    // Assert
     expect(getExistingKeys(filterVariables)).toHaveLength(0);
   });
+
   it("should not be empty object if params given", () => {
-    const params: OrderListUrlFilters = {
-      createdFrom: date.from,
-      createdTo: date.to,
-      customer: "email@example.com",
-      status: [OrderStatusFilter.FULFILLED, OrderStatusFilter.PARTIALLY_FULFILLED],
-    };
-    const filterVariables = getFilterVariables(params);
+    // Arrange
+    const params = new URLSearchParams(
+      "0%5Bs2.status%5D%5B0%5D=FULFILLED&0%5Bs2.status%5D%5B1%5D=CANCELED&1=AND&2%5Bs0.customer%5D=test&3=AND&4%5Bs0.isClickAndCollect%5D=false",
+    );
+    const tokenizedUrl = new TokenArray(params.toString());
+    const initialOrderState = InitialOrderStateResponse.empty();
 
-    expect(getExistingKeys(filterVariables)).toHaveLength(3);
-  });
-});
-describe("Filtering URL params", () => {
-  const intl = createIntl(config);
-  const filters = createFilterStructure(intl, {
-    preorder: {
-      active: false,
-      value: false,
-    },
-    clickAndCollect: {
-      active: false,
-      value: false,
-    },
-    channel: {
-      active: false,
-      value: [],
-      choices: [
-        {
-          label: "Channel PLN",
-          value: "channelId",
-        },
-      ],
-    },
-    created: {
-      active: false,
-      value: {
-        max: date.to,
-        min: date.from,
+    initialOrderState.status = [
+      {
+        label: "Fulfilled",
+        slug: "FULFILLED",
+        value: "FULFILLED",
       },
-    },
-    customer: {
-      active: false,
-      value: "email@example.com",
-    },
-    status: {
-      active: false,
-      value: [OrderStatusFilter.FULFILLED, OrderStatusFilter.PARTIALLY_FULFILLED],
-    },
-    paymentStatus: {
-      active: false,
-      value: [PaymentChargeStatusEnum.FULLY_CHARGED, PaymentChargeStatusEnum.PARTIALLY_CHARGED],
-    },
-    giftCard: {
-      active: false,
-      value: [OrderFilterGiftCard.paid, OrderFilterGiftCard.bought],
-    },
-    metadata: {
-      active: false,
-      value: [
-        {
-          key: "",
-          value: "",
-        },
-      ],
-    },
-  });
+      {
+        label: "Canceled",
+        slug: "CANCELED",
+        value: "CANCELED",
+      },
+      {
+        label: "Unconfirmed",
+        slug: "UNCONFIRMED",
+        value: "UNCONFIRMED",
+      },
+    ];
+    initialOrderState.isClickAndCollect = [
+      {
+        label: "No",
+        slug: "false",
+        value: "false",
+      },
+    ];
 
-  it("should be empty if no active filters", () => {
-    const filterQueryParams = getFilterQueryParams(filters, getFilterQueryParam);
-
-    expect(getExistingKeys(filterQueryParams)).toHaveLength(0);
-  });
-  it("should not be empty if active filters are present", () => {
-    const filterQueryParams = getFilterQueryParams(
-      setFilterOptsStatus(filters, true),
-      getFilterQueryParam,
+    // Act
+    const filterVariables = getFilterVariables(
+      {},
+      tokenizedUrl.asFilterValuesFromResponse(initialOrderState),
     );
 
-    expect(filterQueryParams).toMatchSnapshot();
-    expect(stringifyQs(filterQueryParams)).toMatchSnapshot();
+    // Assert
+    expect(getExistingKeys(filterVariables)).toHaveLength(3);
+    expect(filterVariables.customer).toBe("test");
+    expect(filterVariables.status).toEqual(["FULFILLED", "CANCELED"]);
+    expect(filterVariables.isClickAndCollect).toBe(false);
+  });
+
+  it("should filter by the metadata", () => {
+    // Arrange
+    const params = new URLSearchParams(
+      "0%5Bs0.metadata%5D%5B0%5D=key1&0%5Bs0.metadata%5D%5B1%5D=value1&1=AND&2%5Bs0.metadata%5D%5B0%5D=key2&2%5Bs0.metadata%5D%5B1%5D=value2&asc=false&sort=number",
+    );
+    const tokenizedUrl = new TokenArray(params.toString());
+
+    // Act
+    const filterVariables = getFilterVariables(
+      {},
+      tokenizedUrl.asFilterValuesFromResponse(InitialOrderStateResponse.empty()),
+    );
+
+    // Assert
+    expect(filterVariables.metadata).toEqual([
+      { key: "key1", value: "value1" },
+      { key: "key2", value: "value2" },
+    ]);
   });
 });

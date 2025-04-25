@@ -1,5 +1,7 @@
 // @ts-strict-ignore
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
+import { DashboardModal } from "@dashboard/components/Modal";
 import Money from "@dashboard/components/Money";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
@@ -7,21 +9,10 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { SearchProductsQuery } from "@dashboard/graphql";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { maybe, renderCollection } from "@dashboard/misc";
-import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle";
 import { DialogProps, FetchMoreProps, RelayToFlat } from "@dashboard/types";
-import {
-  CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TableBody,
-  TableCell,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { Container } from "../AssignContainerDialog";
@@ -64,7 +55,6 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
     onSubmit,
   } = props;
   const classes = useStyles(props);
-  const scrollableDialogClasses = useScrollableDialogStyle({});
   const intl = useIntl();
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
   const [variants, setVariants] = React.useState<VariantWithProductLabel[]>([]);
@@ -90,17 +80,12 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
   };
 
   return (
-    <Dialog
-      onClose={handleClose}
-      open={open}
-      classes={{ paper: scrollableDialogClasses.dialog }}
-      fullWidth
-      maxWidth="sm"
-    >
-      <DialogTitle disableTypography>
-        <FormattedMessage {...messages.assignVariantDialogHeader} />
-      </DialogTitle>
-      <DialogContent>
+    <DashboardModal onChange={handleClose} open={open}>
+      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr auto">
+        <DashboardModal.Header>
+          <FormattedMessage {...messages.assignVariantDialogHeader} />
+        </DashboardModal.Header>
+
         <TextField
           name="query"
           value={query}
@@ -113,18 +98,13 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
             endAdornment: loading && <CircularProgress size={16} />,
           }}
         />
-      </DialogContent>
-      <DialogContent className={scrollableDialogClasses.scrollArea} id={scrollableTargetId}>
+
         <InfiniteScroll
+          id={scrollableTargetId}
           dataLength={variants?.length}
           next={onFetchMore}
           hasMore={hasMore}
           scrollThreshold="100px"
-          loader={
-            <div className={scrollableDialogClasses.loadMoreLoaderContainer}>
-              <CircularProgress size={16} />
-            </div>
-          }
           scrollableTarget={scrollableTargetId}
         >
           <ResponsiveTable key="table">
@@ -199,29 +179,30 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                   </React.Fragment>
                 ),
                 () => (
-                  <Typography className={classes.noContentText}>
+                  <Text className={classes.noContentText}>
                     {query
                       ? intl.formatMessage(messages.noProductsInQuery)
                       : intl.formatMessage(messages.noProductsInChannel)}
-                  </Typography>
+                  </Text>
                 ),
               )}
             </TableBody>
           </ResponsiveTable>
         </InfiniteScroll>
-      </DialogContent>
-      <DialogActions>
-        <BackButton onClick={onClose} />
-        <ConfirmButton
-          data-test-id="submit"
-          transitionState={confirmButtonState}
-          type="submit"
-          onClick={handleSubmit}
-        >
-          <FormattedMessage {...messages.assignVariantDialogButton} />
-        </ConfirmButton>
-      </DialogActions>
-    </Dialog>
+
+        <DashboardModal.Actions>
+          <BackButton onClick={onClose} />
+          <ConfirmButton
+            data-test-id="submit"
+            transitionState={confirmButtonState}
+            type="submit"
+            onClick={handleSubmit}
+          >
+            <FormattedMessage {...messages.assignVariantDialogButton} />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 

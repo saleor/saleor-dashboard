@@ -2,7 +2,7 @@ import { VoucherCode } from "@dashboard/discounts/components/VoucherCodesDatagri
 import { GenerateMultipleVoucherCodeFormData } from "@dashboard/discounts/components/VoucherCodesGenerateDialog";
 import { useVoucherCodesPagination } from "@dashboard/discounts/components/VoucherCreatePage/hooks/useVoucherCodesPagination";
 import {
-  generateMultipleIds,
+  generateMultipleVoucherCodes,
   voucherCodeExists,
 } from "@dashboard/discounts/components/VoucherCreatePage/utils";
 import { UseListSettings } from "@dashboard/hooks/useListSettings";
@@ -52,7 +52,7 @@ export const useVoucherCodesClient = (
     quantity,
     prefix,
   }: GenerateMultipleVoucherCodeFormData) => {
-    setAddedVoucherCodes(codes => [...generateMultipleIds(quantity, prefix), ...codes]);
+    setAddedVoucherCodes(codes => [...generateMultipleVoucherCodes(quantity, prefix), ...codes]);
     switchToClientPagination();
     resetPage();
   };

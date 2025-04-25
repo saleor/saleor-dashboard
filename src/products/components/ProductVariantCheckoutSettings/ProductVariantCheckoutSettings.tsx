@@ -27,10 +27,12 @@ const ProductVariantCheckoutSettings: React.FC<ProductVariantCheckoutSettingsPro
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        {intl.formatMessage(messages.checkoutLimits)}
-        <PreviewPill className={classes.preview} />
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(messages.checkoutLimits)}
+          <PreviewPill className={classes.preview} />
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Input
           data-test-id="checkout-limit-input"

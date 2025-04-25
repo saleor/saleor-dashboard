@@ -57,7 +57,7 @@ import React, { useEffect, useState } from "react";
 
 export interface PageFormData extends MetadataFormData {
   isPublished: boolean;
-  publicationDate: string;
+  publishedAt: string;
   seoDescription: string;
   seoTitle: string;
   slug: string;
@@ -122,7 +122,7 @@ const getInitialFormData = (pageExists: boolean, page?: PageDetailsFragment): Pa
   metadata: page?.metadata?.map(mapMetadataItemToInput) || [],
   pageType: null,
   privateMetadata: page?.privateMetadata?.map(mapMetadataItemToInput) || [],
-  publicationDate: pageExists ? page?.publicationDate : "",
+  publishedAt: pageExists ? page?.publishedAt : "",
   seoDescription: page?.seoDescription || "",
   seoTitle: page?.seoTitle || "",
   slug: page?.slug || "",

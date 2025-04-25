@@ -4,13 +4,20 @@ on:
     inputs:
       git_ref:
         description: Git ref (tag, branch or commit hash) to deploy
+        type: string
         required: true
+        default: main
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
+      ## backward compatibility for older versions
+      APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
+      ## backward compatibility for older versions
       API_URI: /graphql/
+
+      API_URL: /graphql/
       APP_MOUNT_URI: /dashboard/
       STATIC_URL: /dashboard/static/
       SENTRY_ORG: saleor
@@ -18,10 +25,16 @@ jobs:
       SENTRY_URL_PREFIX: "~/dashboard/static"
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
+      APPS_MARKETPLACE_API_URL: "https://apps.staging.saleor.io/api/v2/saleor-apps"
+      EXTENSIONS_API_URL: "https://apps.staging.saleor.io/api/v1/extensions"
+      ENABLED_SERVICE_NAME_HEADER: true
+      ONBOARDING_USER_JOINED_DATE_THRESHOLD: ${{ vars.DEV_ONBOARDING_USER_JOINED_DATE_THRESHOLD }}
       IS_CLOUD_INSTANCE: true
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.git_ref }}
+
       - name: Set custom version
         run: |
           HASH=$(git rev-parse --short HEAD)
@@ -56,6 +69,15 @@ jobs:
 
           aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev2/static/"
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev2/"
+
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev-load-test/static/"
+          aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev-load-test/"
+
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev-load-test2/static/"
+          aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev-load-test2/"
+
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev-data-test/static/"
+          aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev-data-test/"
         env:
           DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_DEV_DEPLOYMENT_BUCKET }}
 

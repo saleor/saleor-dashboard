@@ -1,14 +1,35 @@
 import { Box, Modal, PropsWithBox } from "@saleor/macaw-ui-next";
 import React, { ReactNode } from "react";
 
+export type ContentSize = "xs" | "sm" | "md" | "lg" | "xl";
+
 type ContentProps = PropsWithBox<{
   children: ReactNode;
   disableAutofocus?: boolean;
+  size: ContentSize;
 }>;
 
-export const Content = ({ children, disableAutofocus, ...rest }: ContentProps) => {
+const sizes: Record<ContentSize, number> = {
+  xs: 444,
+  sm: 600,
+  md: 960,
+  lg: 1280,
+  xl: 1920,
+};
+
+export const Content = ({ children, disableAutofocus, size, ...rest }: ContentProps) => {
   return (
-    <Modal.Content disableAutofocus={disableAutofocus}>
+    <Modal.Content
+      disableAutofocus={disableAutofocus}
+      dialogContentProps={{
+        onPointerDownOutside: e => {
+          // This fixes issues when cursor was clicked on DataGrid x/y coordinates
+          // For example: when in modal clicked on "View metadata" button in DataGrid
+          // This doesn't prevent default action from Radix which is to close modal
+          e.detail.originalEvent.preventDefault();
+        },
+      }}
+    >
       <Box
         backgroundColor="default1"
         boxShadow="defaultModal"
@@ -21,8 +42,13 @@ export const Content = ({ children, disableAutofocus, ...rest }: ContentProps) =
         borderWidth={1}
         borderColor="default1"
         padding={6}
+        __maxHeight="calc(100vh - 100px)"
+        __width="calc(100% - 64px)"
         display="grid"
         gap={6}
+        __maxWidth={sizes[size]}
+        overflowX="hidden"
+        overflowY="auto"
         {...rest}
       >
         {children}

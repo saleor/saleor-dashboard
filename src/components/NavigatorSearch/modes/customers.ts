@@ -22,12 +22,15 @@ export function searchInCustomers(
             lastName: customer.lastName,
           })
         : customer.email,
+    searchValue:
+      customer.firstName && customer.lastName
+        ? `${customer.firstName} ${customer.lastName}`
+        : customer.email,
     onClick: () => {
       navigate(customerUrl(customer.id));
 
       return false;
     },
-    score: 1,
     type: "customer",
   }));
 }

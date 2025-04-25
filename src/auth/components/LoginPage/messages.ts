@@ -22,6 +22,11 @@ export const errorMessages = defineMessages({
     defaultMessage: "You don't have permission to login.",
     description: "error message",
   },
+  loginAttemptDelay: {
+    defaultMessage: "Please wait a moment before trying again.",
+    description: "error message",
+    id: "RyZd9J",
+  },
 });
 
 export function getErrorMessage(err: UserContextError, intl: IntlShape): string {
@@ -36,5 +41,11 @@ export function getErrorMessage(err: UserContextError, intl: IntlShape): string 
       return intl.formatMessage(errorMessages.serverError);
     case "noPermissionsError":
       return intl.formatMessage(errorMessages.noPermissionsError);
+    case "loginAttemptDelay":
+      return intl.formatMessage(errorMessages.loginAttemptDelay);
+    case "invalidCredentials":
+      return intl.formatMessage(errorMessages.loginError);
+    default:
+      return intl.formatMessage(errorMessages.unknownLoginError);
   }
 }

@@ -11,7 +11,12 @@ import OrderTransactionRefundPage, {
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { handleRefundCreateComplete } from "./handlers";
+import {
+  checkAmountExceedsChargedAmount,
+  handleAmountExceedsChargedAmount,
+  handleRefundCreateComplete,
+  prepareRefundAddLines,
+} from "./handlers";
 
 interface OrderTransactionRefundCreateProps {
   orderId: string;
@@ -51,16 +56,24 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({ o
 
     const { amount, reason, linesToRefund, includeShipping, transactionId } = submitData;
 
+    if (
+      checkAmountExceedsChargedAmount({
+        amount,
+        order: data.order,
+        transactionId,
+      })
+    ) {
+      handleAmountExceedsChargedAmount({ setLinesErrors, intl });
+
+      return;
+    }
+
     createRefund({
       variables: {
         orderId,
         amount,
         reason,
-        lines: linesToRefund.map(line => ({
-          quantity: line.quantity,
-          reason: line.reason,
-          id: data.order!.lines[line.row].id,
-        })),
+        lines: prepareRefundAddLines({ linesToRefund, data }),
         grantRefundForShipping: includeShipping,
         transactionId,
       },

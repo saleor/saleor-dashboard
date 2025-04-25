@@ -1,11 +1,16 @@
 import { IMessage } from "@dashboard/components/messages";
 import {
+  OrderDetailsGrantRefundQuery,
   OrderGrantRefundAddMutation,
   OrderGrantRefundCreateErrorCode,
   OrderGrantRefundCreateErrorFragment,
+  OrderGrantRefundCreateLineInput,
 } from "@dashboard/graphql";
 import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
-import { OrderTransactionRefundError } from "@dashboard/orders/components/OrderTransactionRefundPage/OrderTransactionRefundPage";
+import {
+  LineToRefund,
+  OrderTransactionRefundError,
+} from "@dashboard/orders/components/OrderTransactionRefundPage/OrderTransactionRefundPage";
 import { orderTransactionRefundEditUrl } from "@dashboard/orders/urls";
 import { IntlShape } from "react-intl";
 
@@ -44,9 +49,14 @@ export const handleRefundCreateComplete = ({
     return;
   }
 
-  if (errors.length > 1) {
+  if (errors.length > 0) {
     errors.forEach((err: OrderGrantRefundCreateErrorFragment) => {
-      if (err.code !== OrderGrantRefundCreateErrorCode.REQUIRED) {
+      if (
+        ![
+          OrderGrantRefundCreateErrorCode.REQUIRED,
+          OrderGrantRefundCreateErrorCode.AMOUNT_GREATER_THAN_AVAILABLE,
+        ].includes(err.code)
+      ) {
         notify({
           status: "error",
           text: err.message,
@@ -63,4 +73,65 @@ export const handleRefundCreateComplete = ({
       setLinesErrors(errorLines);
     });
   }
+};
+
+export const prepareRefundAddLines = ({
+  linesToRefund,
+  data,
+}: {
+  linesToRefund: LineToRefund[];
+  data: OrderDetailsGrantRefundQuery;
+}): OrderGrantRefundCreateLineInput[] => {
+  return linesToRefund.reduce<OrderGrantRefundCreateLineInput[]>((acc, line, ix) => {
+    if (typeof line.quantity === "number" && line.quantity > 0) {
+      acc.push({
+        quantity: line.quantity,
+        reason: line.reason,
+        id: data.order!.lines[ix].id,
+      });
+    }
+
+    return acc;
+  }, []);
+};
+
+export const checkAmountExceedsChargedAmount = ({
+  order,
+  transactionId,
+  amount,
+}: {
+  order: OrderDetailsGrantRefundQuery["order"];
+  transactionId: string | undefined;
+  amount: number | undefined;
+}): boolean => {
+  if (!transactionId || !amount || !order) {
+    return false;
+  }
+
+  const selectedTransaction = order.transactions.find(
+    transaction => transaction.id === transactionId,
+  );
+
+  if (!selectedTransaction) {
+    return false;
+  }
+
+  return amount > selectedTransaction?.chargedAmount.amount;
+};
+
+export const handleAmountExceedsChargedAmount = ({
+  setLinesErrors,
+  intl,
+}: {
+  setLinesErrors: (value: React.SetStateAction<OrderTransactionRefundError[]>) => void;
+  intl: IntlShape;
+}) => {
+  setLinesErrors([
+    {
+      field: "amount",
+      message: intl.formatMessage(transactionRefundEditMessages.amountExceedsChargedAmount),
+      code: "AMOUNT_GREATER_THAN_AVAILABLE",
+      lines: [],
+    },
+  ]);
 };

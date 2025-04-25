@@ -8,6 +8,7 @@ export const singleRefundableTransaction = [
     actions: [TransactionActionEnum.REFUND],
     name: "",
     externalUrl: "",
+    createdAt: "2024-01-04T13:15:22.279318+00:00",
     events: [
       {
         __typename: "TransactionEvent" as const,

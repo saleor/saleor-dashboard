@@ -8,12 +8,14 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { AttributeFragment } from "@dashboard/graphql";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { attributesListStaticColumnsAdapter, createGetCellContent } from "./datagrid";
 import { messages } from "./messages";
@@ -33,6 +35,7 @@ export const AttributeListDatagrid = ({
   onUpdateListSettings,
 }: AttributeListDatagridProps) => {
   const datagridState = useDatagridChangeState();
+  const location = useLocation();
   const navigate = useNavigator();
   const intl = useIntl();
   const attributesListStaticColumns = useMemo(
@@ -66,7 +69,9 @@ export const AttributeListDatagrid = ({
       const rowData: AttributeFragment = attributes[row];
 
       if (rowData) {
-        navigate(attributeUrl(rowData.id));
+        navigate(attributeUrl(rowData.id), {
+          state: getPrevLocationState(location),
+        });
       }
     },
     [attributes],
@@ -94,7 +99,7 @@ export const AttributeListDatagrid = ({
         hasRowHover={true}
         onColumnMoved={handlers.onMove}
         onColumnResize={handlers.onResize}
-        verticalBorder={col => col > 0}
+        verticalBorder={false}
         rows={attributes?.length ?? 0}
         availableColumns={visibleColumns}
         emptyText={intl.formatMessage(messages.empty)}
@@ -114,6 +119,7 @@ export const AttributeListDatagrid = ({
             onToggle={handlers.onToggle}
           />
         )}
+        navigatorOpts={{ state: getPrevLocationState(location) }}
       />
 
       <Box paddingX={6}>

@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { DashboardCard } from "@dashboard/components/Card";
 import { ExternalLinkNext } from "@dashboard/components/ExternalLink";
 import FilterBar from "@dashboard/components/FilterBar";
 import { ListPageLayout } from "@dashboard/components/Layouts";
@@ -9,7 +10,6 @@ import { sectionNames } from "@dashboard/intl";
 import { getStatusColor } from "@dashboard/misc";
 import { PluginListUrlSortField } from "@dashboard/plugins/urls";
 import { FilterPageProps, PageListProps, SortPage, TabPageProps } from "@dashboard/types";
-import { Card } from "@material-ui/core";
 import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -46,7 +46,7 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
   return (
     <ListPageLayout>
       <TopNav href={configurationMenuUrl} title={intl.formatMessage(sectionNames.plugins)} />
-      <Card>
+      <DashboardCard>
         <div>
           <Box
             paddingX={7}
@@ -94,7 +94,7 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
           })}
         />
         <PluginsList {...listProps} />
-      </Card>
+      </DashboardCard>
     </ListPageLayout>
   );
 };

@@ -1,7 +1,6 @@
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
 import TablePagination from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -12,8 +11,9 @@ import {
 } from "@dashboard/graphql";
 import { renderCollection, stopPropagation } from "@dashboard/misc";
 import { ListProps, PaginateListProps, RelayToFlat, ReorderAction } from "@dashboard/types";
-import { Card, TableCell, TableFooter, TableHead } from "@material-ui/core";
-import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { TableCell, TableFooter, TableHead } from "@material-ui/core";
+import { IconButton, makeStyles } from "@saleor/macaw-ui";
+import { Box, Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -91,14 +91,16 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
   const numberOfColumns = isSwatch ? 5 : 4;
 
   return (
-    <Card data-test-id="attribute-values-section">
-      <CardTitle
-        title={intl.formatMessage({
-          id: "J3uE0t",
-          defaultMessage: "Attribute Values",
-          description: "section header",
-        })}
-        toolbar={
+    <DashboardCard data-test-id="attribute-values-section">
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "J3uE0t",
+            defaultMessage: "Attribute Values",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <Button
             disabled={disabled}
             variant="tertiary"
@@ -111,8 +113,9 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
               description="assign attribute value button"
             />
           </Button>
-        }
-      />
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
+
       <ResponsiveTable>
         <TableHead>
           <TableRowLink>
@@ -170,11 +173,23 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
               >
                 {isSwatch && (
                   <TableCell className={classes.columnSwatch}>
-                    <div
-                      data-test-id="swatch-image"
-                      className={classes.swatch}
-                      style={getSwatchCellStyle(value)}
-                    />
+                    {value?.file ? (
+                      <Box
+                        as="img"
+                        objectFit="cover"
+                        alt=""
+                        src={value.file.url}
+                        __width={32}
+                        __height={32}
+                        data-test-id="swatch-image"
+                      />
+                    ) : (
+                      <div
+                        data-test-id="swatch-image"
+                        className={classes.swatch}
+                        style={getSwatchCellStyle(value)}
+                      />
+                    )}
                   </TableCell>
                 )}
                 <TableCell className={classes.columnAdmin} data-test-id="attribute-value-name">
@@ -188,7 +203,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
                     disabled={disabled}
                     onClick={stopPropagation(() => onValueDelete(value?.id ?? ""))}
                   >
-                    <DeleteIcon />
+                    <TrashBinIcon />
                   </IconButton>
                 </TableCell>
               </SortableTableRow>
@@ -207,7 +222,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
           )}
         </SortableTableBody>
       </ResponsiveTable>
-    </Card>
+    </DashboardCard>
   );
 };
 

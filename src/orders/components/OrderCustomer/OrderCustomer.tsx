@@ -1,14 +1,12 @@
 // @ts-strict-ignore
 import AddressFormatter from "@dashboard/components/AddressFormatter";
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
+import { Combobox } from "@dashboard/components/Combobox";
 import ExternalLink from "@dashboard/components/ExternalLink";
 import Form from "@dashboard/components/Form";
 import Hr from "@dashboard/components/Hr";
 import Link from "@dashboard/components/Link";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
-import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
-import Skeleton from "@dashboard/components/Skeleton";
 import {
   OrderDetailsFragment,
   OrderErrorCode,
@@ -18,10 +16,10 @@ import {
 } from "@dashboard/graphql";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { buttonMessages } from "@dashboard/intl";
-import { orderListUrl } from "@dashboard/orders/urls";
+import { orderListUrlWithCustomer } from "@dashboard/orders/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -85,29 +83,31 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
   );
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "Y7M1YQ",
-          defaultMessage: "Customer",
-          description: "section header",
-        })}
-        toolbar={
-          !!canEditCustomer && (
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "Y7M1YQ",
+            defaultMessage: "Customer",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          {!!canEditCustomer && (
             <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
               <Button
                 data-test-id="edit-customer"
-                variant="tertiary"
+                variant="secondary"
                 disabled={!onCustomerEdit}
                 onClick={toggleEditMode}
               >
                 {intl.formatMessage(buttonMessages.edit)}
               </Button>
             </RequirePermissions>
-          )
-        }
-      />
-      <CardContent>
+          )}
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         {user === undefined ? (
           <Skeleton />
         ) : isInEditMode && canEditCustomer ? (
@@ -117,6 +117,10 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
                 change(event);
 
                 const value = event.target.value;
+
+                if (!value) {
+                  return;
+                }
 
                 onCustomerEdit({
                   prevUser: user?.id,
@@ -136,41 +140,40 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
               );
 
               return (
-                <SingleAutocompleteSelectField
+                <Combobox
                   data-test-id="select-customer"
                   allowCustomValues={true}
-                  choices={userChoices}
-                  displayValue={userDisplayName}
-                  fetchChoices={fetchUsers}
-                  hasMore={hasMoreUsers}
-                  loading={loading}
-                  placeholder={intl.formatMessage({
+                  label={intl.formatMessage({
                     id: "hkSkNx",
                     defaultMessage: "Search Customers",
                   })}
-                  onChange={handleUserChange}
-                  onFetchMore={onFetchMoreUsers}
+                  options={userChoices}
+                  fetchMore={{
+                    onFetchMore: onFetchMoreUsers,
+                    hasMore: hasMoreUsers,
+                    loading: loading,
+                  }}
+                  fetchOptions={fetchUsers}
                   name="query"
-                  value={data.query}
+                  value={{
+                    label: userDisplayName,
+                    value: data.query,
+                  }}
+                  onChange={handleUserChange}
                 />
               );
             }}
           </Form>
         ) : user === null ? (
           userEmail === null ? (
-            <Typography>
+            <Text>
               <FormattedMessage id="Qovenh" defaultMessage="Anonymous user" />
-            </Typography>
+            </Text>
           ) : (
             <>
-              <Typography className={classes.userEmail}>{userEmail}</Typography>
+              <Text className={classes.userEmail}>{userEmail}</Text>
               <div>
-                <Link
-                  underline={false}
-                  href={orderListUrl({
-                    customer: userEmail,
-                  })}
-                >
+                <Link underline={false} href={orderListUrlWithCustomer(userEmail)}>
                   <FormattedMessage id="J4NBVR" defaultMessage="View Orders" description="link" />
                 </Link>
               </div>
@@ -178,9 +181,9 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
           )
         ) : (
           <>
-            <Typography className={classes.userEmail} data-test-id="customer-email">
+            <Text className={classes.userEmail} data-test-id="customer-email">
               {user.email}
-            </Typography>
+            </Text>
             <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_USERS]}>
               <div>
                 <Link underline={false} href={customerUrl(user.id)} onClick={onProfileView}>
@@ -200,53 +203,50 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
               </div> */}
           </>
         )}
-      </CardContent>
+      </DashboardCard.Content>
       {!!user && (
         <>
           <Hr />
-          <CardContent>
+          <DashboardCard.Content>
             <div className={classes.sectionHeader}>
-              <Typography className={classes.sectionHeaderTitle}>
+              <Text className={classes.sectionHeaderTitle}>
                 <FormattedMessage
                   id="4Jp83O"
                   defaultMessage="Contact Information"
                   description="subheader"
                 />
-              </Typography>
+              </Text>
             </div>
 
             {maybe(() => order.userEmail) === undefined ? (
               <Skeleton />
             ) : order.userEmail === null ? (
-              <Typography>
+              <Text>
                 <FormattedMessage
                   id="PX2zWy"
                   defaultMessage="Not set"
                   description="customer is not set in draft order"
                 />
-              </Typography>
+              </Text>
             ) : (
-              <ExternalLink
-                href={`mailto:${maybe(() => order.userEmail)}`}
-                typographyProps={{ color: "primary" }}
-              >
+              <ExternalLink href={`mailto:${maybe(() => order.userEmail)}`}>
                 {maybe(() => order.userEmail)}
               </ExternalLink>
             )}
-          </CardContent>
+          </DashboardCard.Content>
         </>
       )}
       <Hr />
-      <CardContent data-test-id="shipping-address-section">
+      <DashboardCard.Content data-test-id="shipping-address-section">
         <div className={classes.sectionHeader}>
-          <Typography className={classes.sectionHeaderTitle}>
+          <Text className={classes.sectionHeaderTitle}>
             <FormattedMessage id="DP5VOH" defaultMessage="Shipping Address" />
-          </Typography>
+          </Text>
           {canEditAddresses && (
             <div>
               <Button
                 data-test-id="edit-shipping-address"
-                variant="tertiary"
+                variant="secondary"
                 onClick={onShippingAddressEdit}
                 disabled={!onShippingAddressEdit && user === undefined}
               >
@@ -261,13 +261,13 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
           <>
             {noShippingAddressError && <AddressTextError orderError={noShippingAddressError} />}
             {shippingAddress === null ? (
-              <Typography>
+              <Text>
                 <FormattedMessage
                   id="e7yOai"
                   defaultMessage="Not set"
                   description="shipping address is not set in draft order"
                 />
-              </Typography>
+              </Text>
             ) : (
               <>
                 <AddressFormatter address={shippingAddress} />
@@ -276,18 +276,18 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
             )}
           </>
         )}
-      </CardContent>
+      </DashboardCard.Content>
       <Hr />
-      <CardContent data-test-id="billing-address-section">
+      <DashboardCard.Content data-test-id="billing-address-section">
         <div className={classes.sectionHeader}>
-          <Typography className={classes.sectionHeaderTitle}>
+          <Text className={classes.sectionHeaderTitle}>
             <FormattedMessage id="c7/79+" defaultMessage="Billing Address" />
-          </Typography>
+          </Text>
           {canEditAddresses && (
             <div>
               <Button
                 data-test-id="edit-billing-address"
-                variant="tertiary"
+                variant="secondary"
                 onClick={onBillingAddressEdit}
                 disabled={!onBillingAddressEdit && user === undefined}
               >
@@ -302,28 +302,28 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
           <>
             {noBillingAddressError && <AddressTextError orderError={noBillingAddressError} />}
             {billingAddress === null ? (
-              <Typography>
+              <Text>
                 <FormattedMessage
                   id="YI6Fhj"
                   defaultMessage="Not set"
                   description="no address is set in draft order"
                 />
-              </Typography>
+              </Text>
             ) : maybe(() => shippingAddress.id) === billingAddress.id ? (
-              <Typography>
+              <Text>
                 <FormattedMessage
                   id="GLX9II"
                   defaultMessage="Same as shipping address"
                   description="billing address"
                 />
-              </Typography>
+              </Text>
             ) : (
               <AddressFormatter address={billingAddress} />
             )}
           </>
         )}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

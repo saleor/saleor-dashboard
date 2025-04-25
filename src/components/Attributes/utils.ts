@@ -1,8 +1,6 @@
 // @ts-strict-ignore
 import { AttributeInput } from "@dashboard/components/Attributes/Attributes";
 import { FileChoiceType } from "@dashboard/components/FileUploadField";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import { SortableChipsFieldValueType } from "@dashboard/components/SortableChipsField";
 import {
   AttributeValueFragment,
@@ -12,9 +10,10 @@ import {
 import { getProductErrorMessage } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
 import { OutputData } from "@editorjs/editorjs";
+import { Option } from "@saleor/macaw-ui-next";
 import { IntlShape } from "react-intl";
 
-export function getSingleChoices(values: AttributeValueFragment[]): SingleAutocompleteChoiceType[] {
+export function getSingleChoices(values: AttributeValueFragment[]): Option[] {
   return values.map(value => ({
     label: value.name,
     value: value.slug,
@@ -90,7 +89,7 @@ export function getReferenceDisplayValue(attribute: AttributeInput): SortableChi
   });
 }
 
-export function getMultiChoices(values: AttributeValueFragment[]): MultiAutocompleteChoiceType[] {
+export function getMultiChoices(values: AttributeValueFragment[]): Option[] {
   return values.map(value => ({
     label: value.name,
     value: value.slug,
@@ -112,7 +111,7 @@ export function getSingleDisplayValue(
 export function getMultiDisplayValue(
   attribute: AttributeInput,
   attributeValues: AttributeValueFragment[],
-): MultiAutocompleteChoiceType[] {
+): Option[] {
   if (!attribute.value) {
     return [];
   }
@@ -146,4 +145,49 @@ export function getErrorMessage(
     case "PageError":
       return getPageErrorMessage(err, intl);
   }
+}
+
+export function booleanAttrValueToValue(value: unknown | undefined): string {
+  if (typeof value !== "boolean") {
+    return "unset";
+  }
+
+  return value ? "true" : "false";
+}
+
+export function getBooleanDropdownOptions(intl: IntlShape) {
+  return [
+    {
+      label: intl.formatMessage({
+        defaultMessage: "True",
+        id: "7WEeNq",
+        description: "select label",
+      }),
+      value: "true",
+    },
+    {
+      label: intl.formatMessage({
+        defaultMessage: "False",
+        id: "b1j4K6",
+        description: "select label",
+      }),
+      value: "false",
+    },
+    {
+      label: intl.formatMessage({
+        defaultMessage: "Unset",
+        id: "k62BKw",
+        description: "select label",
+      }),
+      value: "unset",
+    },
+  ];
+}
+
+export function getTruncatedTextValue(value: string | undefined, length: number) {
+  if (!value) {
+    return value;
+  }
+
+  return value.length > length ? value.slice(0, length) + "..." : value;
 }

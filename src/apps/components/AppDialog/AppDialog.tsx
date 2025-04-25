@@ -1,35 +1,23 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogProps,
-  DialogTitle,
-  IconButton,
-  Typography,
-} from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
+import { DashboardModal } from "@dashboard/components/Modal";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
-import { useStyles } from "./styles";
-
-interface AppDialogProps extends DialogProps {
+interface AppDialogProps {
+  title?: string;
   onClose: () => void;
+  open: boolean;
 }
 
-export const AppDialog: React.FC<AppDialogProps> = ({ children, ...props }) => {
-  const classes = useStyles();
-
+export const AppDialog: React.FC<AppDialogProps> = ({ children, title, onClose, ...props }) => {
   return (
-    <Dialog aria-labelledby="extension app dialog" {...props}>
-      <DialogTitle disableTypography className={classes.header}>
-        <Typography variant="h6" component="h2">
-          {props.title}
-        </Typography>
-        <IconButton color="inherit" onClick={props.onClose} aria-label="close">
-          <CloseIcon />
-        </IconButton>
-      </DialogTitle>
-      <DialogContent className={classes.content}>{children}</DialogContent>
-    </Dialog>
+    <DashboardModal aria-labelledby="extension app dialog" {...props} onChange={onClose}>
+      <DashboardModal.Content size="lg">
+        <DashboardModal.Header as="h2">{title}</DashboardModal.Header>
+        <Box width="100%" __height={600}>
+          {children}
+        </Box>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 

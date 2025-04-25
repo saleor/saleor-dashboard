@@ -1,15 +1,14 @@
+import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import CardTitle from "@dashboard/components/CardTitle";
 import Date from "@dashboard/components/Date";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Hr from "@dashboard/components/Hr";
 import Money from "@dashboard/components/Money";
 import Percent from "@dashboard/components/Percent";
-import Skeleton from "@dashboard/components/Skeleton";
 import { SaleDetailsFragment, SaleType } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { ChannelProps } from "@dashboard/types";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -26,21 +25,23 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannelId, sale }) =>
   const channel = sale?.channelListings?.find(listing => listing.channel.id === selectedChannelId);
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(commonMessages.summary)} />
-      <CardContent>
-        <Typography variant="caption">
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(commonMessages.summary)}</DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
+        <Text fontWeight="bold" fontSize={3}>
           <FormattedMessage id="F56hOz" defaultMessage="Name" description="sale name" />
-        </Typography>
-        <Typography className={classes.ellipsis}>
+        </Text>
+        <Text className={classes.ellipsis} display="block">
           {maybe<React.ReactNode>(() => sale.name, <Skeleton />)}
-        </Typography>
+        </Text>
         <FormSpacer />
 
-        <Typography variant="caption">
+        <Text fontWeight="bold" fontSize={3}>
           <FormattedMessage id="XZR590" defaultMessage="Value" description="sale value" />
-        </Typography>
-        <Typography>
+        </Text>
+        <Text display="block">
           {sale ? (
             sale.type === SaleType.FIXED && channel?.discountValue ? (
               <Money
@@ -57,36 +58,36 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannelId, sale }) =>
           ) : (
             <Skeleton />
           )}
-        </Typography>
+        </Text>
 
         <CardSpacer />
         <Hr />
         <CardSpacer />
 
-        <Typography variant="caption">
+        <Text fontWeight="bold" fontSize={3}>
           <FormattedMessage {...commonMessages.startDate} />
-        </Typography>
-        <Typography>
+        </Text>
+        <Text display="block">
           {maybe<React.ReactNode>(
             () => (
               <Date date={sale.startDate} plain />
             ),
             <Skeleton />,
           )}
-        </Typography>
+        </Text>
         <FormSpacer />
 
-        <Typography variant="caption">
+        <Text fontWeight="bold" fontSize={3}>
           <FormattedMessage {...commonMessages.endDate} />
-        </Typography>
-        <Typography>
+        </Text>
+        <Text display="block">
           {maybe<React.ReactNode>(
             () => (sale.endDate === null ? "-" : <Date date={sale.endDate} plain />),
             <Skeleton />,
           )}
-        </Typography>
-      </CardContent>
-    </Card>
+        </Text>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

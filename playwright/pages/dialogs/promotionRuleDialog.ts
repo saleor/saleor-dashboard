@@ -86,7 +86,6 @@ export class PromotionRuleDialog {
   }
 
   async selectPredicate(predicate: string, index = 0) {
-    await this.page.getByTestId(`condition-name-${index}`).click();
     await this.page.getByRole("option", { name: predicate, exact: true }).click();
   }
 

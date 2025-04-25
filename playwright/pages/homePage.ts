@@ -7,12 +7,11 @@ export class HomePage {
   constructor(
     page: Page,
     readonly channelSelect = page.getByTestId("app-channel-select"),
-    readonly channelOptions = page.locator("[data-test-id*='select-field-option']"),
+    readonly channelOptions = page.getByTestId("select-option"),
     readonly welcomeMessage = page.getByTestId("home-header"),
     readonly sales = page.getByTestId("sales-analytics"),
     readonly orders = page.getByTestId("orders-analytics"),
     readonly activity = page.getByTestId("activity-card"),
-    readonly topProducts = page.getByTestId("top-products"),
     readonly ordersReadyToFulfill = page.getByTestId("orders-to-fulfill"),
     readonly paymentsWaitingForCapture = page.getByTestId("orders-to-capture"),
     readonly productsOutOfStock = page.getByTestId("out-of-stock-analytics"),
@@ -35,7 +34,6 @@ export class HomePage {
   async expectHomePageElementsToBeVisible() {
     await expect(this.sales).toBeVisible();
     await expect(this.activity).toBeVisible();
-    await expect(this.topProducts).toBeVisible();
     await expect(this.productsOutOfStock).toBeVisible();
   }
 }

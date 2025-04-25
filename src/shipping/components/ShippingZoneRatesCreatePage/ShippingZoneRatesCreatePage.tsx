@@ -6,7 +6,7 @@ import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailability
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { WithFormId } from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import {
   PermissionEnum,
   PostalCodeRuleInclusionTypeEnum,
@@ -208,13 +208,16 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
               onFetchMore={fetchMoreTaxClasses}
             />
           </DetailPageLayout.RightSidebar>
-          <Savebar
-            disabled={isSaveDisabled}
-            onCancel={() => navigate(backUrl)}
-            onDelete={onDelete}
-            onSubmit={handleSubmit}
-            state={saveButtonBarState}
-          />
+          <Savebar>
+            {onDelete && <Savebar.DeleteButton onClick={onDelete} />}
+            <Savebar.Spacer />
+            <Savebar.CancelButton onClick={() => navigate(backUrl)} />
+            <Savebar.ConfirmButton
+              transitionState={saveButtonBarState}
+              onClick={handleSubmit}
+              disabled={isSaveDisabled}
+            />
+          </Savebar>
         </DetailPageLayout>
       </form>
     </RichTextContext.Provider>

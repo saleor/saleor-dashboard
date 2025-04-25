@@ -1,8 +1,11 @@
 import { newPasswordUrl } from "@dashboard/auth/urls";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { createStaffMembersQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
+import { useFlag } from "@dashboard/featureFlags";
 import { useStaffListQuery, useStaffMemberAddMutation } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
@@ -22,6 +25,7 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
+import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import React from "react";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
@@ -46,6 +50,10 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.STAFF_MEMBERS_LIST);
   const intl = useIntl();
+  const { markOnboardingStepAsCompleted } = useOnboarding();
+  const { enabled: isStaffMembersFilteringEnabled } = useFlag("new_filters");
+  const { valueProvider } = useConditionalFilterContext();
+  const filters = createStaffMembersQueryVariables(valueProvider.value);
 
   usePaginationReset(staffListUrl, params, settings.rowNumber);
 
@@ -58,9 +66,20 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber],
   );
+  const newQueryVariables = React.useMemo(
+    () => ({
+      ...paginationState,
+      filter: {
+        ...filters,
+        search: params.query,
+      },
+      sort: getSortQueryVariables(params),
+    }),
+    [params, settings.rowNumber, valueProvider.value],
+  );
   const { data: staffQueryData, loading } = useStaffListQuery({
     displayLoader: true,
-    variables: queryVariables,
+    variables: isStaffMembersFilteringEnabled ? newQueryVariables : queryVariables,
   });
   const limitOpts = useShopLimitsQuery({
     variables: {
@@ -70,6 +89,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
   const [addStaffMember, addStaffMemberData] = useStaffMemberAddMutation({
     onCompleted: data => {
       if (data?.staffCreate?.errors?.length === 0) {
+        markOnboardingStepAsCompleted("invite-staff");
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),

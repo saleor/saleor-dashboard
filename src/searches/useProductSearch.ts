@@ -12,31 +12,7 @@ export const searchProducts = gql`
     search: products(after: $after, first: $first, filter: { search: $query }, channel: $channel) {
       edges {
         node {
-          id
-          name
-          thumbnail {
-            url
-          }
-          variants {
-            id
-            name
-            sku
-            channelListings {
-              channel {
-                id
-                isActive
-                name
-                currencyCode
-              }
-              price {
-                amount
-                currency
-              }
-            }
-          }
-          collections {
-            id
-          }
+          ...SearchProduct
         }
       }
       pageInfo {

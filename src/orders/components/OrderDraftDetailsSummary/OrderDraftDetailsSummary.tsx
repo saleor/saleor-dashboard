@@ -1,6 +1,6 @@
 // @ts-strict-ignore
+import { ButtonLink } from "@dashboard/components/ButtonLink";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
-import Link from "@dashboard/components/Link";
 import Money from "@dashboard/components/Money";
 import {
   DiscountValueTypeEnum,
@@ -11,9 +11,8 @@ import { OrderDiscountContextConsumerProps } from "@dashboard/products/component
 import { OrderDiscountData } from "@dashboard/products/components/OrderDiscountProviders/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Button, Popover, sprinkles } from "@saleor/macaw-ui-next";
+import { Box, Popover, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -113,7 +112,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
     if (calculationMode === DiscountValueTypeEnum.PERCENTAGE) {
       return (
         <div className={classes.percentDiscountLabelContainer}>
-          <Typography className={classes.subtitle}>{`(${discountValue}%)`}</Typography>
+          <Text className={classes.subtitle}>{`(${discountValue}%)`}</Text>
           <Money money={discountAmount} />
         </div>
       );
@@ -123,16 +122,16 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
   };
   const getShippingMethodComponent = () => {
     if (hasChosenShippingMethod) {
-      return <Link onClick={onShippingMethodEdit}>{`${shippingMethodName}`}</Link>;
+      return <ButtonLink onClick={onShippingMethodEdit}>{`${shippingMethodName}`}</ButtonLink>;
     }
 
     const shippingCarrierBase = intl.formatMessage(messages.addShippingCarrier);
 
     if (shippingAddress) {
       return (
-        <Link onClick={onShippingMethodEdit} data-test-id="add-shipping-carrier">
+        <ButtonLink onClick={onShippingMethodEdit} data-test-id="add-shipping-carrier">
           {shippingCarrierBase}
-        </Link>
+        </ButtonLink>
       );
     }
 
@@ -140,25 +139,34 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
 
     return (
       <div className={classes.shippingMethodContainer}>
-        <Link underline disabled onClick={onShippingMethodEdit}>
+        <ButtonLink underline disabled onClick={onShippingMethodEdit}>
           {shippingCarrierBase}
-        </Link>
+        </ButtonLink>
         <HorizontalSpacer />
-        <Typography variant="caption">{`(${addShippingAddressInfo})`}</Typography>
+        <Text size={2} fontWeight="light">{`(${addShippingAddressInfo})`}</Text>
       </div>
     );
   };
 
   return (
-    <table className={classes.root}>
+    <table data-test-id="order-summary" className={classes.root}>
       <tbody>
         <tr className={classes.relativeRow}>
           <td>
-            <Popover open={isDialogOpen}>
+            <Popover
+              onOpenChange={val => {
+                if (!val) {
+                  closeDialog();
+                }
+              }}
+              open={isDialogOpen}
+            >
               <Popover.Trigger>
-                <Button variant="tertiary" onClick={isDialogOpen ? closeDialog : openDialog}>
-                  <Link>{intl.formatMessage(discountTitle)}</Link>
-                </Button>
+                <Box>
+                  <ButtonLink onClick={isDialogOpen ? closeDialog : openDialog}>
+                    {intl.formatMessage(discountTitle)}
+                  </ButtonLink>
+                </Box>
               </Popover.Trigger>
               <Popover.Content align="start" className={sprinkles({ zIndex: "3" })}>
                 <Box boxShadow="defaultOverlay">
@@ -191,9 +199,9 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
             {!hasShippingMethods && intl.formatMessage(messages.noShippingCarriers)}
 
             {formErrors.shipping && (
-              <Typography variant="body2" className={classes.textError}>
+              <Text size={3} fontWeight="regular" className={classes.textError}>
                 {getOrderErrorMessage(formErrors.shipping, intl)}
-              </Typography>
+              </Text>
             )}
           </td>
 

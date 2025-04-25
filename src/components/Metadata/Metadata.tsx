@@ -1,21 +1,28 @@
-// @ts-strict-ignore
 import { MetadataInput } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { removeAtIndex, updateAtIndex } from "@dashboard/utils/lists";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, BoxProps } from "@saleor/macaw-ui-next";
 import React, { memo } from "react";
 
 import { MetadataCard, MetadataCardProps } from "./MetadataCard";
+import { MetadataLoadingCard } from "./MetadataLoadingCard";
 import { EventDataAction, EventDataField } from "./types";
 import { getDataKey, parseEventData } from "./utils";
 
-export interface MetadataProps extends Omit<MetadataCardProps, "data" | "isPrivate"> {
-  data: Record<"metadata" | "privateMetadata", MetadataInput[]>;
+export interface MetadataProps
+  extends Omit<MetadataCardProps, "data" | "isPrivate">,
+    Omit<BoxProps, `on${string}` | "data"> {
+  data: {
+    metadata: MetadataInput[];
+    privateMetadata: MetadataInput[] | undefined;
+  };
   isLoading?: boolean;
   readonly?: boolean;
+  // This props is used to hide the private metadata section when user doesn't have enough permissions.
+  hidePrivateMetadata?: boolean;
 }
 
-const propsCompare = (_, newProps: MetadataProps) => {
+const propsCompare = (_: unknown, newProps: MetadataProps) => {
   /**
     If we pass `isLoading` render only when the loading finishes
   */
@@ -29,11 +36,20 @@ const propsCompare = (_, newProps: MetadataProps) => {
   return false;
 };
 
-export const Metadata: React.FC<MetadataProps> = memo(({ data, onChange, readonly = false }) => {
+// TODO: Refactor loading state logic
+// TODO: Split "Metadata" component into "Metadata" and "PrivateMetadata" components
+export const MetadataNoMemo = ({
+  data,
+  onChange,
+  isLoading,
+  readonly = false,
+  hidePrivateMetadata = false,
+  ...props
+}: MetadataProps) => {
   const change = (event: ChangeEvent, isPrivate: boolean) => {
     const { action, field, fieldIndex, value } = parseEventData(event);
     const key = getDataKey(isPrivate);
-    const dataToUpdate = data[key];
+    const dataToUpdate = data[key] ?? [];
 
     onChange({
       target: {
@@ -42,12 +58,16 @@ export const Metadata: React.FC<MetadataProps> = memo(({ data, onChange, readonl
           action === EventDataAction.update
             ? updateAtIndex(
                 {
-                  ...dataToUpdate[fieldIndex],
-                  key: field === EventDataField.name ? value : dataToUpdate[fieldIndex].key,
-                  value: field === EventDataField.value ? value : dataToUpdate[fieldIndex].value,
+                  ...dataToUpdate[fieldIndex as number],
+                  key:
+                    field === EventDataField.name ? value : dataToUpdate[fieldIndex as number].key,
+                  value:
+                    field === EventDataField.value
+                      ? value
+                      : dataToUpdate[fieldIndex as number].value,
                 },
                 dataToUpdate,
-                fieldIndex,
+                fieldIndex as number,
               )
             : action === EventDataAction.add
               ? [
@@ -57,27 +77,39 @@ export const Metadata: React.FC<MetadataProps> = memo(({ data, onChange, readonl
                     value: "",
                   },
                 ]
-              : removeAtIndex(dataToUpdate, fieldIndex),
+              : removeAtIndex(dataToUpdate, fieldIndex as number),
       },
     });
   };
 
   return (
-    <Box display="grid" gap={2} paddingBottom={6}>
-      <MetadataCard
-        data={data?.metadata}
-        isPrivate={false}
-        readonly={readonly}
-        onChange={event => change(event, false)}
-      />
-      <MetadataCard
-        data={data?.privateMetadata}
-        isPrivate={true}
-        readonly={readonly}
-        onChange={event => change(event, true)}
-      />
+    <Box display="grid" gap={2} paddingBottom={10} {...props}>
+      {isLoading ? (
+        <>
+          <MetadataLoadingCard />
+          {!hidePrivateMetadata && <MetadataLoadingCard isPrivate />}
+        </>
+      ) : (
+        <>
+          <MetadataCard
+            data={data?.metadata}
+            isPrivate={false}
+            readonly={readonly}
+            onChange={event => change(event, false)}
+          />
+          {(data?.privateMetadata || !hidePrivateMetadata) && (
+            <MetadataCard
+              data={data?.privateMetadata ?? []}
+              isPrivate={true}
+              readonly={readonly}
+              onChange={event => change(event, true)}
+            />
+          )}
+        </>
+      )}
     </Box>
   );
-}, propsCompare);
+};
 
+export const Metadata = memo(MetadataNoMemo, propsCompare);
 Metadata.displayName = "Metadata";

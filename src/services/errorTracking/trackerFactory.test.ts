@@ -1,3 +1,5 @@
+import { History } from "history";
+
 import { ErrorTrackerFactory } from "./trackerFactory";
 import { TrackerMethods, TrackerPermission } from "./types";
 
@@ -22,10 +24,12 @@ const TestAdapter = (): TrackerMethods => {
   };
 };
 
+const history = jest.fn() as unknown as History;
+
 describe("Error Tracking", () => {
   it("Initiates the tracker", () => {
     const errorTracking = ErrorTrackerFactory(TestAdapter());
-    const enabled = errorTracking.init();
+    const enabled = errorTracking.init(history);
 
     expect(enabled).toBe(true);
     expect(initMockFn).toHaveBeenCalled();
@@ -41,7 +45,7 @@ describe("Error Tracking", () => {
   it("Sends a captured exception", () => {
     const errorTracking = ErrorTrackerFactory(TestAdapter());
 
-    errorTracking.init();
+    errorTracking.init(history);
 
     const sampleError = new Error("test");
     const id = errorTracking.captureException(sampleError);
@@ -52,7 +56,7 @@ describe("Error Tracking", () => {
   it("Does not save user data without permission", () => {
     const errorTracking = ErrorTrackerFactory(TestAdapter());
 
-    errorTracking.init();
+    errorTracking.init(history);
 
     const userData = {
       email: "john@example.com",
@@ -66,7 +70,7 @@ describe("Error Tracking", () => {
   it("Does save user data with proper permission", () => {
     const errorTracking = ErrorTrackerFactory(TestAdapter(), [TrackerPermission.USER_DATA]);
 
-    errorTracking.init();
+    errorTracking.init(history);
 
     const userData = {
       email: "john@example.com",

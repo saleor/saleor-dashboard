@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { ChannelData } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
-import Link from "@dashboard/components/Link";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { ProductErrorFragment, WarehouseFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
@@ -10,26 +9,18 @@ import { renderCollection } from "@dashboard/misc";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";
 import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
-import {
-  Box,
-  Button,
-  Checkbox,
-  Dropdown,
-  Input,
-  List,
-  Text,
-  TrashBinIcon,
-  vars,
-} from "@saleor/macaw-ui-next";
-import React from "react";
+import { Box, Button, Checkbox, Input, Text, TrashBinIcon, vars } from "@saleor/macaw-ui-next";
+import React, { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { ProductStocksAssignWarehouses } from "./components/ProductStocksAssignWarehouses";
 import { messages } from "./messages";
+import { WarehouseInformationMessage } from "./WarehouseInformationMessage";
 
 export interface ProductStockFormsetData {
   quantityAllocated: number;
 }
-export type ProductStockInput = FormsetAtomicData<ProductStockFormsetData, string>;
+export type ProductStockInput = FormsetAtomicData<ProductStockFormsetData, string, string>;
 export interface ProductStockFormData {
   sku: string;
   trackInventory: boolean;
@@ -49,9 +40,12 @@ export interface ProductStocksProps {
   warehouses: WarehouseFragment[];
   onChange: FormsetChange;
   onFormDataChange: FormChange;
-  onWarehouseStockAdd: (warehouseId: string) => void;
+  onWarehouseStockAdd: (warehouseId: string, warehouseName: string) => void;
   onWarehouseStockDelete: (warehouseId: string) => void;
   onWarehouseConfigure: () => void;
+  fetchMoreWarehouses: () => void;
+  hasMoreWarehouses: boolean;
+  isCreate: boolean;
 }
 
 export const ProductStocks: React.FC<ProductStocksProps> = ({
@@ -60,21 +54,28 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
   hasVariants,
   errors,
   stocks,
-  warehouses,
   productVariantChannelListings = [],
+  warehouses,
+  hasMoreWarehouses,
   onChange,
   onFormDataChange,
   onWarehouseStockAdd,
   onWarehouseStockDelete,
   onWarehouseConfigure,
+  fetchMoreWarehouses,
+  isCreate,
 }) => {
   const intl = useIntl();
   const [lastStockRowFocus, setLastStockRowFocus] = React.useState(false);
-  const warehousesToAssign =
-    warehouses?.filter(warehouse => !stocks.some(stock => stock.id === warehouse.id)) || [];
   const formErrors = getFormErrors(["sku"], errors);
-  const handleWarehouseStockAdd = (warehouseId: string) => {
-    onWarehouseStockAdd(warehouseId);
+
+  const stocksIds = useMemo(() => stocks.map(stock => stock.id), [stocks]);
+
+  const warehousesToAssign =
+    warehouses?.filter(warehouse => !stocksIds.includes(warehouse.id)) || [];
+
+  const handleWarehouseStockAdd = (warehouseId: string, warehouseName: string) => {
+    onWarehouseStockAdd(warehouseId, warehouseName);
     setLastStockRowFocus(true);
   };
   const handleStockInputFocus = (input: HTMLDivElement) => {
@@ -89,7 +90,9 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>{intl.formatMessage(messages.title)}</DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(messages.title)}</DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Box __width="50%">
           <Input
@@ -137,25 +140,12 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
                 </Text>
               )}
             </Box>
-            {!warehouses?.length && (
-              <Text color="default2">
-                {hasVariants ? (
-                  <FormattedMessage
-                    {...messages.configureWarehouseForVariant}
-                    values={{
-                      a: chunks => <Link onClick={onWarehouseConfigure}>{chunks}</Link>,
-                    }}
-                  />
-                ) : (
-                  <FormattedMessage
-                    {...messages.configureWarehouseForProduct}
-                    values={{
-                      a: chunks => <Link onClick={onWarehouseConfigure}>{chunks}</Link>,
-                    }}
-                  />
-                )}
-              </Text>
-            )}
+            <WarehouseInformationMessage
+              isCreate={isCreate}
+              hasVariants={hasVariants}
+              hasWarehouses={warehouses?.length > 0}
+              onWarehouseConfigure={onWarehouseConfigure}
+            />
           </Box>
         </Box>
         {productVariantChannelListings?.length > 0 &&
@@ -225,46 +215,13 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
 
         {productVariantChannelListings?.length > 0 &&
           warehouses?.length > 0 &&
-          warehousesToAssign.length > 0 && (
-            <Dropdown>
-              <Dropdown.Trigger>
-                <Button
-                  type="button"
-                  variant="secondary"
-                  marginTop={5}
-                  data-test-id="assign-warehouse-button"
-                >
-                  <FormattedMessage {...messages.assignWarehouse} />
-                </Button>
-              </Dropdown.Trigger>
-
-              <Dropdown.Content align="end">
-                <Box>
-                  <List
-                    id="warehouse-list"
-                    padding={2}
-                    borderRadius={4}
-                    boxShadow="defaultOverlay"
-                    backgroundColor="default1"
-                    __maxHeight={400}
-                    overflowY="auto"
-                  >
-                    {warehousesToAssign.map(warehouse => (
-                      <Dropdown.Item key={warehouse.id}>
-                        <List.Item
-                          paddingX={1.5}
-                          paddingY={2}
-                          borderRadius={4}
-                          onClick={() => handleWarehouseStockAdd(warehouse.id)}
-                        >
-                          <Text>{warehouse.name}</Text>
-                        </List.Item>
-                      </Dropdown.Item>
-                    ))}
-                  </List>
-                </Box>
-              </Dropdown.Content>
-            </Dropdown>
+          (warehousesToAssign.length > 0 || hasMoreWarehouses) && (
+            <ProductStocksAssignWarehouses
+              warehousesToAssign={warehousesToAssign}
+              hasMoreWarehouses={hasMoreWarehouses}
+              loadMoreWarehouses={fetchMoreWarehouses}
+              onWarehouseSelect={handleWarehouseStockAdd}
+            />
           )}
       </DashboardCard.Content>
     </DashboardCard>

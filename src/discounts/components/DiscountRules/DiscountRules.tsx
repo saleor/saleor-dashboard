@@ -4,7 +4,6 @@ import { Rule } from "@dashboard/discounts/models";
 import { useLabelMapsContext } from "@dashboard/discounts/views/DiscountDetails/context/context";
 import { ChannelFragment, PromotionTypeEnum } from "@dashboard/graphql";
 import { CommonError } from "@dashboard/utils/errors/common";
-import { Box } from "@saleor/macaw-ui-next";
 import React, { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -92,12 +91,12 @@ export const DiscountRules = <ErrorCode,>({
       disabled={disabled}
     >
       <DashboardCard marginBottom={20}>
-        <DashboardCard.Title>
-          <Box display="flex" justifyContent="space-between" alignItems="center">
-            {intl.formatMessage(messages.title)}
+        <DashboardCard.Header>
+          <DashboardCard.Title>{intl.formatMessage(messages.title)}</DashboardCard.Title>
+          <DashboardCard.Toolbar>
             <AddButton onClick={() => setIsModalOpen(true)} />
-          </Box>
-        </DashboardCard.Title>
+          </DashboardCard.Toolbar>
+        </DashboardCard.Header>
         <DashboardCard.Content data-test-id="rule-list">
           <RulesList
             loading={!isLoaded || ruleConditionsValues.loading}

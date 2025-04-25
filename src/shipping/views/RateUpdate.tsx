@@ -324,6 +324,7 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({ id, rateId, params }) =>
         onFetch={productsSearch}
         onFetchMore={loadMore}
         onSubmit={handleProductAssign}
+        availableChannels={currentChannels}
       />
       <ShippingZoneRatesPage
         formId={FORM_ID}

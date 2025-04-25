@@ -40,11 +40,7 @@ export const createShippingZone = gql`
         ...ShippingError
       }
       shippingZone {
-        countries {
-          ...Country
-        }
-        id
-        name
+        ...ShippingZone
       }
     }
   }
@@ -57,11 +53,16 @@ export const updateShippingZone = gql`
         ...ShippingError
       }
       shippingZone {
-        countries {
-          ...Country
+        ...ShippingZone
+        channels {
+          id
+          name
+          currencyCode
         }
-        id
-        name
+        warehouses {
+          id
+          name
+        }
       }
     }
   }

@@ -34,6 +34,14 @@ export const initialDynamicOperands = gql`
     }
   }
 
+  query _GetLegacyChannelOperands {
+    channels {
+      id
+      name
+      slug
+    }
+  }
+
   query _SearchCollectionsOperands($first: Int!, $collectionsSlugs: [String!]) {
     collections(first: $first, filter: { slugs: $collectionsSlugs }) {
       edges {
@@ -60,6 +68,18 @@ export const initialDynamicOperands = gql`
 
   query _SearchProductTypesOperands($after: String, $first: Int!, $productTypesSlugs: [String!]) {
     productTypes(after: $after, first: $first, filter: { slugs: $productTypesSlugs }) {
+      edges {
+        node {
+          id
+          name
+          slug
+        }
+      }
+    }
+  }
+
+  query _SearchPageTypesOperands($first: Int!, $pageTypesSlugs: [String!]) {
+    pageTypes(first: $first, filter: { slugs: $pageTypesSlugs }) {
       edges {
         node {
           id
@@ -136,6 +156,78 @@ export const dynamicOperandsQueries = gql`
 
   query _GetProductTypesChoices($first: Int!, $query: String!) {
     productTypes(first: $first, filter: { search: $query }) {
+      edges {
+        node {
+          id
+          name
+          slug
+        }
+      }
+    }
+  }
+
+  query _GetPageTypesChoices($first: Int!, $query: String!) {
+    pageTypes(first: $first, filter: { search: $query }) {
+      edges {
+        node {
+          id
+          name
+          slug
+        }
+      }
+    }
+  }
+
+  query _GetProductChoices($first: Int!, $query: String!) {
+    products(first: $first, filter: { search: $query }) {
+      edges {
+        node {
+          id
+          name
+          slug
+        }
+      }
+    }
+  }
+
+  query _GetGiftCardTagsChoices($first: Int!, $query: String!) {
+    giftCardTags(first: $first, filter: { search: $query }) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+  }
+
+  query _GetCustomersChoices($first: Int!, $query: String!) {
+    customers(first: $first, filter: { search: $query }) {
+      edges {
+        node {
+          id
+          email
+          firstName
+          lastName
+        }
+      }
+    }
+  }
+
+  query _SearchCustomersOperands($first: Int!, $customersIds: [ID!]) {
+    customers(first: $first, filter: { ids: $customersIds }) {
+      edges {
+        node {
+          id
+          email
+          firstName
+          lastName
+        }
+      }
+    }
+  }
+  query _SearchProductOperands($first: Int!, $productsIds: [ID!]) {
+    products(first: $first, filter: { ids: $productsIds }) {
       edges {
         node {
           id

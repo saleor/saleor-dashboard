@@ -2,6 +2,8 @@ import { LOCATORS } from "@data/commonLocators";
 import type { Locator, Page } from "@playwright/test";
 import { expect } from "@playwright/test";
 
+import { SUCCESS_BANNER_TIMEOUT } from "../../playwright.config";
+
 export class BasePage {
   readonly page: Page;
 
@@ -18,7 +20,7 @@ export class BasePage {
     readonly errorBanner = page.locator(LOCATORS.errorBanner),
     readonly saveButton = page.locator(LOCATORS.saveButton),
     readonly infoBanner = page.locator(LOCATORS.infoBanner),
-    readonly loader = page.locator(LOCATORS.loader),
+    readonly dataGridLoader = page.locator(LOCATORS.dataGridLoader),
     readonly previousPagePaginationButton = page.getByTestId("button-pagination-back"),
     readonly rowNumberButton = page.getByTestId("PaginationRowNumberSelect"),
     readonly rowNumberOption = page.getByTestId("rowNumberOption"),
@@ -26,6 +28,7 @@ export class BasePage {
     readonly searchInputListView = page.getByTestId("search-input"),
     readonly emptyDataGridListView = page.getByTestId("empty-data-grid-text"),
     readonly dialog = page.getByRole("dialog"),
+    readonly submitButton = page.getByTestId("submit"),
     readonly giftCardInTable = page.locator('[href*="/dashboard/gift-cards/.*]'),
     readonly selectAllCheckbox = page.getByTestId("select-all-checkbox").locator("input"),
   ) {
@@ -63,11 +66,16 @@ export class BasePage {
     await this.deleteButton.click();
   }
 
+  async clickSubmitButton() {
+    await this.submitButton.click();
+  }
+
   async typeInSearchOnListView(searchItem: string) {
-    await this.waitForNetworkIdle(async () => {
+    await this.waitForNetworkIdleAfterAction(async () => {
       await this.searchInputListView.fill(searchItem);
-      await this.waitForDOMToFullyLoad();
     });
+    await expect(this.searchInputListView).toHaveValue(searchItem);
+    await this.waitForDOMToFullyLoad();
   }
 
   async clickNextPageButton() {
@@ -94,17 +102,21 @@ export class BasePage {
     await this.saveButton.click();
   }
 
-  async expectSuccessBannerMessage(msg: string) {
-    await this.successBanner.locator(`text=${msg}`).waitFor({ state: "visible", timeout: 10000 });
-    await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
-  }
-
   async expectErrorBannerMessage(msg: string) {
     await this.errorBanner.locator(`text=${msg}`).waitFor({ state: "visible", timeout: 10000 });
   }
 
-  async expectSuccessBanner() {
-    await this.successBanner.first().waitFor({ state: "visible", timeout: 15000 });
+  async expectSuccessBanner(
+    options: { message?: string; timeout?: number } = { timeout: SUCCESS_BANNER_TIMEOUT },
+  ) {
+    if (options.message) {
+      await this.successBanner
+        .locator(`text=${options.message}`)
+        .waitFor({ state: "visible", timeout: options.timeout });
+    } else {
+      await this.successBanner.first().waitFor({ state: "visible", timeout: options.timeout });
+    }
+
     await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
   }
 
@@ -113,13 +125,22 @@ export class BasePage {
     await expect(this.errorBanner, "No error banner should be visible").not.toBeVisible();
   }
 
-  async waitForNetworkIdle(action: () => Promise<void>, timeoutMs = 60000) {
+  async waitForNetworkIdleAfterAction(action: () => Promise<void>, timeoutMs = 90000) {
     const responsePromise = this.page.waitForResponse("**/graphql/", {
       timeout: timeoutMs,
     });
 
     await action();
     await responsePromise;
+  }
+
+  async waitForRequestsToFinishBeforeAction(action: () => Promise<void>, timeoutMs = 90000) {
+    const responsePromise = this.page.waitForResponse("**/graphql/", {
+      timeout: timeoutMs,
+    });
+
+    await responsePromise;
+    await action();
   }
 
   async resizeWindow(w: number, h: number) {
@@ -143,8 +164,8 @@ export class BasePage {
       .waitFor({ state: "attached", timeout: 50000 });
   }
 
-  private async findGridCellBounds(col: number, row: number) {
-    return this.gridCanvas.evaluate(
+  private async findGridCellBounds(col: number, row: number, nthChild = 0) {
+    return this.gridCanvas.nth(nthChild).evaluate(
       (node, { col, row }) => {
         const fiberKey = Object.keys(node).find(x => x && x.includes("__reactFiber"));
 
@@ -177,6 +198,8 @@ export class BasePage {
     rowsToCheck: number[],
     listToCheck: string[],
   ) {
+    await this.waitForDOMToFullyLoad();
+
     const searchResults = [];
 
     for (let i = 0; i < rowsToCheck.length; i++) {
@@ -199,8 +222,8 @@ export class BasePage {
       await basePage.fillGridCell(1, 0, "New variant name")
   */
 
-  async fillGridCell(col: number, row: number, content: string) {
-    const bounds = await this.findGridCellBounds(col, row);
+  async fillGridCell(col: number, row: number, content: string, nthChild = 0) {
+    const bounds = await this.findGridCellBounds(col, row, nthChild);
 
     if (!bounds) throw new Error(`Unable to find cell, col: ${col}, row: ${row}`);
 
@@ -209,8 +232,8 @@ export class BasePage {
     await this.gridInput.fill(content);
   }
 
-  async clickGridCell(col: number, row: number) {
-    const bounds = await this.findGridCellBounds(col, row);
+  async clickGridCell(col: number, row: number, nthChild = 0) {
+    const bounds = await this.findGridCellBounds(col, row, nthChild);
 
     if (!bounds) throw new Error(`Unable to find cell, col: ${col}, row: ${row}`);
 
@@ -218,18 +241,21 @@ export class BasePage {
   }
 
   async findRowIndexBasedOnText(searchTextArray: string[]) {
+    await this.waitForDOMToFullyLoad();
+
     await this.gridCanvas.locator("table tr").first().waitFor({ state: "attached" });
+
+    await this.page.waitForSelector("table tr", { state: "attached" });
+
+    const rows = await this.page.locator("table tr").allTextContents();
 
     const rowIndexes: number[] = [];
 
-    const rows = await this.page.$$eval("table tr", rows => rows.map(row => row.textContent));
-
     for (const searchedText of searchTextArray) {
-      const rowIndex = rows.findIndex(rowText => rowText!.includes(searchedText));
+      const rowIndex = rows.findIndex(rowText => rowText.includes(searchedText));
 
       if (rowIndex !== -1) {
         console.log("Index of row containing text:", rowIndex - 1);
-        // since row index starts with 1 and selecting cells in grid starts with zero there is -1 on rowIndex
         rowIndexes.push(rowIndex - 1);
       }
     }
@@ -237,14 +263,20 @@ export class BasePage {
     return rowIndexes;
   }
 
-  // check row on grid list view
+  async searchAndFindRowIndexes(searchItem: string) {
+    await this.typeInSearchOnListView(searchItem);
+
+    await this.page.waitForTimeout(1000);
+
+    return await this.findRowIndexBasedOnText([searchItem]);
+  }
+
   async checkListRowsBasedOnContainingText(searchText: string[]) {
     const rowIndexes = await this.findRowIndexBasedOnText(searchText);
 
     for (const rowIndex of rowIndexes) {
       await this.clickGridCell(0, rowIndex);
     }
-    // make sure all searched texts were found and checked
     await expect(searchText.length).toEqual(rowIndexes.length);
   }
 
@@ -294,9 +326,14 @@ export class BasePage {
       state: "hidden",
       timeout: 30000,
     });
+    await this.waitForDOMToFullyLoad();
   }
 
   async waitForCanvasContainsText(text: string) {
     await this.gridCanvas.getByText(text).waitFor({ state: "attached", timeout: 50000 });
+  }
+
+  async waitForDatagridLoaderToDisappear() {
+    await this.dataGridLoader.waitFor({ state: "hidden" });
   }
 }

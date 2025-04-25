@@ -37,6 +37,7 @@ export const orderListQuery = gql`
             }
           }
           userEmail
+          chargeStatus
         }
       }
       pageInfo {
@@ -118,7 +119,7 @@ export const orderDetailsQuery = gql`
 `;
 
 export const orderDetailsWithMetadataQuery = gql`
-  query OrderDetailsWithMetadata($id: ID!, $isStaffUser: Boolean!) {
+  query OrderDetailsWithMetadata($id: ID!, $hasManageProducts: Boolean!) {
     order(id: $id) {
       ...OrderDetailsWithMetadata
     }
@@ -132,6 +133,16 @@ export const orderDetailsWithMetadataQuery = gql`
       fulfillmentAutoApprove
       availablePaymentGateways {
         ...PaymentGateway
+      }
+    }
+  }
+`;
+
+export const orderLinesMetadata = gql`
+  query OrderLinesMetadata($id: ID!, $hasManageProducts: Boolean!) {
+    order(id: $id) {
+      lines {
+        ...OrderLineMetadataDetails
       }
     }
   }
@@ -232,12 +243,12 @@ export const orderRefundData = gql`
   }
 `;
 
-export const orderTransationsData = gql`
-  query OrderTransationsData($orderId: ID!) {
+export const orderTransactionsData = gql`
+  query OrderTransactionsData($orderId: ID!) {
     order(id: $orderId) {
       id
       transactions {
-        ...TransactionBaseItem
+        ...TransactionItem
       }
       total {
         gross {

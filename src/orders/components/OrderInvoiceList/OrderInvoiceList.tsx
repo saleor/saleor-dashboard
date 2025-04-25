@@ -1,15 +1,13 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import Date from "@dashboard/components/Date";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { InvoiceFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
-import { Card, CardContent, TableBody, TableCell, Typography } from "@material-ui/core";
+import { TableBody, TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { sprinkles } from "@saleor/macaw-ui-next";
+import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -54,32 +52,34 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
   const generatedInvoices = invoices?.filter(invoice => invoice.status === "SUCCESS");
 
   return (
-    <Card className={classes.card}>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "Gzg8hy",
-          defaultMessage: "Invoices",
-          description: "section header",
-        })}
-        toolbar={
-          onInvoiceGenerate && (
-            <Button onClick={onInvoiceGenerate} className={sprinkles({ marginRight: 0.5 })}>
+    <DashboardCard className={classes.card}>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "Gzg8hy",
+            defaultMessage: "Invoices",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          {onInvoiceGenerate && (
+            <Button variant="secondary" onClick={onInvoiceGenerate}>
               <FormattedMessage
                 id="e0RKe+"
                 defaultMessage="Generate"
                 description="generate invoice button"
               />
             </Button>
-          )
-        }
-      />
-      <CardContent>
+          )}
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         {!generatedInvoices ? (
           <Skeleton />
         ) : !generatedInvoices?.length ? (
-          <Typography color="textSecondary">
+          <Text color="default2">
             <FormattedMessage id="hPB89Y" defaultMessage="No invoices to be shown" />
-          </Typography>
+          </Text>
         ) : (
           <ResponsiveTable className={classes.invoicesTable}>
             <TableBody className={classes.invoicesTableBody}>
@@ -95,14 +95,14 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
                       description="invoice number prefix"
                     />{" "}
                     {invoice.number}
-                    <Typography variant="caption">
+                    <Text size={2} fontWeight="light">
                       <FormattedMessage
                         id="F0AXNs"
                         defaultMessage="created"
                         description="invoice create date prefix"
                       />{" "}
                       <Date date={invoice.createdAt} plain />
-                    </Typography>
+                    </Text>
                   </TableCell>
                   {onInvoiceSend && (
                     <TableCell
@@ -119,8 +119,8 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
             </TableBody>
           </ResponsiveTable>
         )}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

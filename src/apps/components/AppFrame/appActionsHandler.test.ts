@@ -56,7 +56,7 @@ describe("AppActionsHandler", function () {
     jest.clearAllMocks();
   });
   /**
-   * jsdom doesnt allow src code to write to window.location.href,
+   * jsdom doesn't allow src code to write to window.location.href,
    * so totally replace this object so its writeable
    *
    * @see https://wildwolf.name/jest-how-to-mock-window-location-href/
@@ -75,12 +75,14 @@ describe("AppActionsHandler", function () {
   });
   describe("useHandleNotificationAction", () => {
     it("Calls useNotifier with payload from action", () => {
+      // Arrange
       const {
         result: {
           current: { handle },
         },
       } = renderHook(() => AppActionsHandler.useHandleNotificationAction());
 
+      // Act
       handle({
         type: "notification",
         payload: {
@@ -90,6 +92,8 @@ describe("AppActionsHandler", function () {
           title: "Test title",
         },
       });
+
+      // Assert
       expect(mockNotify).toHaveBeenCalledTimes(1);
       expect(mockNotify).toHaveBeenCalledWith({
         status: "success",
@@ -100,6 +104,7 @@ describe("AppActionsHandler", function () {
   });
   describe("useUpdateRoutingAction", () => {
     it("Updates dashboard url properly", () => {
+      // Arrange
       const mockHistoryPushState = jest.fn();
 
       jest.spyOn(window.history, "pushState").mockImplementation(mockHistoryPushState);
@@ -110,6 +115,7 @@ describe("AppActionsHandler", function () {
         },
       } = renderHook(() => AppActionsHandler.useHandleUpdateRoutingAction("XYZ"));
 
+      // Act
       handle({
         type: "updateRouting",
         payload: {
@@ -117,12 +123,40 @@ describe("AppActionsHandler", function () {
           newRoute: "/foo/bar",
         },
       });
+
+      // Assert
       expect(mockHistoryPushState).toHaveBeenCalledTimes(1);
       expect(mockHistoryPushState).toHaveBeenCalledWith(
         null,
         "",
         "/dashboard/apps/XYZ/app/foo/bar",
       );
+    });
+
+    it("Does not update url if it's already updated", () => {
+      // Arrange
+      const mockHistoryPushState = jest.fn();
+
+      window.location.pathname = "/dashboard/apps/XYZ/app/foo/bar";
+      jest.spyOn(window.history, "pushState").mockImplementation(mockHistoryPushState);
+
+      const {
+        result: {
+          current: { handle },
+        },
+      } = renderHook(() => AppActionsHandler.useHandleUpdateRoutingAction("XYZ"));
+
+      // Act
+      handle({
+        type: "updateRouting",
+        payload: {
+          actionId: "123",
+          newRoute: "/foo/bar",
+        },
+      });
+
+      // Assert
+      expect(mockHistoryPushState).not.toHaveBeenCalled();
     });
   });
   describe("useHandleRedirectAction", () => {
@@ -137,6 +171,7 @@ describe("AppActionsHandler", function () {
         jest.spyOn(window, "open").mockImplementation(mockWindowOpen);
       });
       it("Opens external URL in new browser context", () => {
+        // Arrange & Act
         hookRenderResult.result.current.handle({
           type: "redirect",
           payload: {
@@ -145,10 +180,13 @@ describe("AppActionsHandler", function () {
             newContext: true,
           },
         });
+
+        // Assert
         expect(mockWindowOpen).toHaveBeenCalledTimes(1);
         expect(mockWindowOpen).toHaveBeenCalledWith("https://google.com");
       });
       it("Opens another dashboard url in new browser context", () => {
+        // Arrange & Act
         hookRenderResult.result.current.handle({
           type: "redirect",
           payload: {
@@ -157,6 +195,8 @@ describe("AppActionsHandler", function () {
             newContext: true,
           },
         });
+
+        // Assert
         expect(mockWindowOpen).toHaveBeenCalledTimes(1);
         expect(mockWindowOpen).toHaveBeenCalledWith("/dashboard/orders");
       });
@@ -166,6 +206,7 @@ describe("AppActionsHandler", function () {
        * TODO Drop this behavior, updateRouting action can do that explicitely
        */
       it("Opens another app route in new browser context", () => {
+        // Arrange & Act
         hookRenderResult.result.current.handle({
           type: "redirect",
           payload: {
@@ -174,6 +215,8 @@ describe("AppActionsHandler", function () {
             newContext: true,
           },
         });
+
+        // Assert
         expect(mockWindowOpen).toHaveBeenCalledTimes(1);
         expect(mockWindowOpen).toHaveBeenCalledWith("/dashboard/apps/XYZ/app/config");
       });
@@ -184,6 +227,7 @@ describe("AppActionsHandler", function () {
       const hookRenderResult = renderHook(() => AppActionsHandler.useHandleRedirectAction("XYZ"));
 
       it("Redirects to external URL after confirmation", () => {
+        // Arrange & Act
         hookRenderResult.result.current.handle({
           type: "redirect",
           payload: {
@@ -192,9 +236,12 @@ describe("AppActionsHandler", function () {
             newContext: false,
           },
         });
+
+        // Assert
         expect(window.location.href).toBe("https://google.com");
       });
       it("Opens another dashboard url", () => {
+        // Arrange & Act
         hookRenderResult.result.current.handle({
           type: "redirect",
           payload: {
@@ -203,14 +250,19 @@ describe("AppActionsHandler", function () {
             newContext: false,
           },
         });
+
+        // Assert
         expect(mockNavigate).toHaveBeenCalledTimes(1);
         expect(mockNavigate).toHaveBeenCalledWith("/orders");
       });
       it("Update route within the same app", () => {
+        // Arrange
         const mockHistoryPushState = jest.fn();
 
         jest.spyOn(window.history, "pushState").mockImplementation(mockHistoryPushState);
         window.location.pathname = "/apps/XYZ/app/foo";
+
+        // Act
         hookRenderResult.result.current.handle({
           type: "redirect",
           payload: {
@@ -219,6 +271,8 @@ describe("AppActionsHandler", function () {
             newContext: false,
           },
         });
+
+        // Assert
         expect(mockHistoryPushState).toHaveBeenCalledTimes(1);
         expect(mockHistoryPushState).toHaveBeenCalledWith(
           null,
@@ -230,10 +284,12 @@ describe("AppActionsHandler", function () {
   });
   describe("useHandlePermissionRequest", () => {
     it("Redirects to a dedicated page with params from action", () => {
+      // Arrange
       const hookRenderResult = renderHook(() =>
         AppActionsHandler.useHandlePermissionRequest("XYZ"),
       );
 
+      // Act
       hookRenderResult.result.current.handle({
         type: "requestPermissions",
         payload: {
@@ -242,6 +298,8 @@ describe("AppActionsHandler", function () {
           redirectPath: "/permissions-result",
         },
       });
+
+      // Assert
       expect(mockNavigate).toHaveBeenCalledTimes(1);
       expect(mockNavigate).toHaveBeenCalledWith(
         "/apps/XYZ/permissions?redirectPath=%2Fpermissions-result&requestedPermissions=MANAGE_ORDERS%2CMANAGE_CHANNELS",

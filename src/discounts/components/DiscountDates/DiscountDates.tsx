@@ -37,13 +37,15 @@ const DiscountDates = <ErrorCode,>({
 
   return (
     <DashboardCard data-test-id="active-dates-section">
-      <DashboardCard.Title>
-        <FormattedMessage
-          id="zKOGkU"
-          defaultMessage="Active Dates"
-          description="time during discount is active, header"
-        />
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          <FormattedMessage
+            id="zKOGkU"
+            defaultMessage="Active Dates"
+            description="time during discount is active, header"
+          />
+        </DashboardCard.Title>
+      </DashboardCard.Header>
 
       <DashboardCard.Content>
         <Box display="flex" gap={4}>

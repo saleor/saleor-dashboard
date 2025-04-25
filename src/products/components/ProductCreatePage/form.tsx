@@ -20,15 +20,12 @@ import { ChannelData, ChannelPriceArgs } from "@dashboard/channels/utils";
 import { AttributeInput, AttributeInputData } from "@dashboard/components/Attributes";
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@dashboard/components/Metadata";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   ProductErrorWithAttributesFragment,
   ProductTypeQuery,
   SearchPagesQuery,
   SearchProductsQuery,
   SearchProductTypesQuery,
-  SearchWarehousesQuery,
 } from "@dashboard/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
@@ -121,7 +118,8 @@ export interface ProductCreateHandlers
     Record<"selectAttributeReference", FormsetChange<string[]>>,
     Record<"selectAttributeFile", FormsetChange<File>>,
     Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
-    Record<"addStock" | "deleteStock", (id: string) => void> {
+    Record<"addStock", (id: string, label: string) => void>,
+    Record<"deleteStock", (id: string) => void> {
   changePreorderEndDate: FormChange;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
@@ -138,14 +136,13 @@ export interface UseProductCreateFormOutput
 export type UseProductCreateFormRenderProps = Omit<UseProductCreateFormOutput, "richText">;
 
 export interface UseProductCreateFormOpts
-  extends Record<"categories" | "collections" | "taxClasses", SingleAutocompleteChoiceType[]> {
+  extends Record<"categories" | "collections" | "taxClasses", Option[]> {
   setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
-  setSelectedCollections: React.Dispatch<React.SetStateAction<MultiAutocompleteChoiceType[]>>;
+  setSelectedCollections: React.Dispatch<React.SetStateAction<Option[]>>;
   setSelectedTaxClass: React.Dispatch<React.SetStateAction<string>>;
   setChannels: (channels: ChannelData[]) => void;
-  selectedCollections: MultiAutocompleteChoiceType[];
+  selectedCollections: Option[];
   productTypes: RelayToFlat<SearchProductTypesQuery["search"]>;
-  warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
   currentChannels: ChannelData[];
   referencePages: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
@@ -279,14 +276,14 @@ function useProductCreateForm(
     triggerChange();
     stocks.change(id, value);
   };
-  const handleStockAdd = (id: string) => {
+  const handleStockAdd = (id: string, label: string) => {
     triggerChange();
     stocks.add({
       data: {
         quantityAllocated: 0,
       },
       id,
-      label: opts.warehouses.find(warehouse => warehouse.id === id).name,
+      label,
       value: "0",
     });
   };

@@ -1,6 +1,5 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { DialogContentText } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -34,17 +33,15 @@ const AttributeDeleteDialog: React.FC<AttributeDeleteDialogProps> = ({
         description: "dialog title",
       })}
     >
-      <DialogContentText>
-        <FormattedMessage
-          id="h1rPPg"
-          defaultMessage="Are you sure you want to delete {attributeName}?"
-          description="dialog content"
-          data-test-id="delete-single-attr-dialog-text"
-          values={{
-            attributeName: <strong>{name}</strong>,
-          }}
-        />
-      </DialogContentText>
+      <FormattedMessage
+        id="h1rPPg"
+        defaultMessage="Are you sure you want to delete {attributeName}?"
+        description="dialog content"
+        data-test-id="delete-single-attr-dialog-text"
+        values={{
+          attributeName: <strong>{name}</strong>,
+        }}
+      />
     </ActionDialog>
   );
 };

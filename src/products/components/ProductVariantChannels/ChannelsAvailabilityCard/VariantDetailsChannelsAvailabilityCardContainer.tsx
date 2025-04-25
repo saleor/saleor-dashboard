@@ -18,9 +18,11 @@ const VariantDetailsChannelsAvailabilityCardContainer: React.FC<
       <Accordion>
         <Accordion.Item value="channelListItem">
           {cardTitle || (
-            <DashboardCard.Title>
-              <FormattedMessage {...messages.title} />
-            </DashboardCard.Title>
+            <DashboardCard.Header>
+              <DashboardCard.Title>
+                <FormattedMessage {...messages.title} />
+              </DashboardCard.Title>
+            </DashboardCard.Header>
           )}
           <Accordion.Content>{children}</Accordion.Content>
         </Accordion.Item>

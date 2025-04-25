@@ -6,7 +6,7 @@ import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import { AddressTypeInput } from "@dashboard/customers/types";
 import { CountryWithCodeFragment, WarehouseErrorFragment } from "@dashboard/graphql";
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
@@ -95,12 +95,15 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
                   onCountryChange={handleCountrySelect}
                 />
               </div>
-              <Savebar
-                disabled={disabled}
-                onCancel={() => navigate(warehouseListUrl())}
-                onSubmit={submit}
-                state={saveButtonBarState}
-              />
+              <Savebar>
+                <Savebar.Spacer />
+                <Savebar.CancelButton onClick={() => navigate(warehouseListUrl())} />
+                <Savebar.ConfirmButton
+                  transitionState={saveButtonBarState}
+                  onClick={submit}
+                  disabled={disabled}
+                />
+              </Savebar>
             </DetailPageLayout.Content>
           </DetailPageLayout>
         );

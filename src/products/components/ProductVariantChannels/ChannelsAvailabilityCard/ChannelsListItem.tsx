@@ -12,14 +12,14 @@ interface ChannelsListItemProps {
   id: string;
   name: string;
   isPublished: boolean;
-  publicationDate: string;
+  publishedAt: string;
 }
 
 export const ChannelsListItem: React.FC<ChannelsListItemProps> = ({
   id,
   name,
   isPublished,
-  publicationDate,
+  publishedAt,
 }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
@@ -29,7 +29,7 @@ export const ChannelsListItem: React.FC<ChannelsListItemProps> = ({
     }
 
     return intl.formatMessage(messages.itemSubtitlePublished, {
-      publicationDate: localizeDate(publicationDate),
+      publishedAt: localizeDate(publishedAt),
     });
   };
 
@@ -42,6 +42,7 @@ export const ChannelsListItem: React.FC<ChannelsListItemProps> = ({
           size={3}
           fontWeight="bold"
           data-test-id={`channels-variant-availability-item-title-${id}`}
+          display="block"
         >
           {name}
         </Text>

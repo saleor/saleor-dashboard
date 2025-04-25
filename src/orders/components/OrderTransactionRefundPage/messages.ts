@@ -2,13 +2,13 @@ import { defineMessages } from "react-intl";
 
 export const orderTransactionRefundMessages = defineMessages({
   editRefundTitle: {
-    defaultMessage: "Edit refund",
-    id: "nW5Cca",
+    defaultMessage: "Edit refund with line items",
+    id: "5W3qxG",
     description: "edit refund title",
   },
   createRefundTitle: {
-    defaultMessage: "Create refund",
-    id: "GFIwLo",
+    defaultMessage: "Create refund with line items",
+    id: "wkeWw9",
     description: "create refund title",
   },
   selectQuantitiesToRefund: {
@@ -17,8 +17,8 @@ export const orderTransactionRefundMessages = defineMessages({
     description: "datagrid title label",
   },
   selectTransactionToRefund: {
-    defaultMessage: "Select transaction you want to refund",
-    id: "EOPuT6",
+    defaultMessage: "Select transaction to refund",
+    id: "4EdlF/",
     description: "datagrid title label",
   },
   amountError: {
@@ -39,9 +39,9 @@ export const refundSavebarMessages = defineMessages({
     description: "transfer funds button",
   },
   cancel: {
-    defaultMessage: "Cancel",
-    id: "sR5mWJ",
-    description: "cancel button",
+    defaultMessage: "Back",
+    id: "PNq9W/",
+    description: "back button",
   },
 });
 

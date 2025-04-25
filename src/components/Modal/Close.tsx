@@ -4,7 +4,13 @@ import React from "react";
 export const Close = ({ onClose, ...rest }: PropsWithBox<{ onClose: () => void }>) => {
   return (
     <Modal.Close {...rest}>
-      <Button icon={<CloseIcon />} size="small" variant="tertiary" onClick={onClose} />
+      <Button
+        data-test-id="close-button"
+        icon={<CloseIcon />}
+        size="small"
+        variant="tertiary"
+        onClick={onClose}
+      />
     </Modal.Close>
   );
 };

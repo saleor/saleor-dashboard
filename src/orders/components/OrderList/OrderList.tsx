@@ -3,7 +3,6 @@ import { DateTime } from "@dashboard/components/Date";
 import Money from "@dashboard/components/Money";
 import { Pill } from "@dashboard/components/Pill";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -20,6 +19,7 @@ import { getArrowDirection } from "@dashboard/utils/sort";
 import { TableBody, TableCell, TableFooter, TableHead } from "@material-ui/core";
 import { CSSProperties } from "@material-ui/styles";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

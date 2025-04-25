@@ -1,9 +1,5 @@
 const prefix = "attribute";
 
-export function getAttributeColumnValue(id: string) {
-  return `${prefix}:${id}`;
-}
-
 export function isAttributeColumnValue(value: string) {
   return value?.includes(`${prefix}:`);
 }

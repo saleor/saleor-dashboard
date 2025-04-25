@@ -5,7 +5,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import CountryList from "@dashboard/components/CountryList";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import { CountryFragment, ShippingErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -112,12 +112,15 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
               onClose={toggleModal}
             />
           </DetailPageLayout.Content>
-          <Savebar
-            disabled={isSaveDisabled}
-            onCancel={() => navigate(shippingZonesListUrl())}
-            onSubmit={submit}
-            state={saveButtonBarState}
-          />
+          <Savebar>
+            <Savebar.Spacer />
+            <Savebar.CancelButton onClick={() => navigate(shippingZonesListUrl())} />
+            <Savebar.ConfirmButton
+              transitionState={saveButtonBarState}
+              onClick={submit}
+              disabled={isSaveDisabled}
+            />
+          </Savebar>
         </DetailPageLayout>
       )}
     </Form>

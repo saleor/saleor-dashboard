@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { FetchResult } from "@apollo/client";
 import {
   extensionMountPoints,
   mapToMenuItemsForOrderDetails,
@@ -12,14 +13,16 @@ import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata, MetadataIdSchema } from "@dashboard/components/Metadata";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import {
   OrderDetailsFragment,
   OrderDetailsQuery,
   OrderErrorFragment,
+  OrderNoteUpdateMutation,
   OrderStatus,
   TransactionActionEnum,
 } from "@dashboard/graphql";
+import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
@@ -75,6 +78,8 @@ export interface OrderDetailsPageProps {
   onShippingAddressEdit: () => any;
   onOrderCancel: () => any;
   onNoteAdd: (data: HistoryFormData) => any;
+  onNoteUpdate: (id: string, message: string) => Promise<FetchResult<OrderNoteUpdateMutation>>;
+  onNoteUpdateLoading: boolean;
   onProfileView: () => any;
   onOrderReturn: () => any;
   onInvoiceClick: (invoiceId: string) => any;
@@ -98,6 +103,8 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onFulfillmentCancel,
     onFulfillmentTrackingNumberUpdate,
     onNoteAdd,
+    onNoteUpdate,
+    onNoteUpdateLoading,
     onOrderCancel,
     onOrderFulfill,
     onPaymentCapture,
@@ -172,6 +179,10 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     context.setDevModeVisibility(true);
   };
 
+  const backLinkUrl = useBackLinkWithState({
+    path: orderListUrl(),
+  });
+
   return (
     <Form confirmLeave initial={initial} onSubmit={handleSubmit} mergeData={false}>
       {({ set, triggerChange, data, submit }) => {
@@ -179,7 +190,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
 
         return (
           <DetailPageLayout>
-            <TopNav href={orderListUrl()} title={<Title order={order} />}>
+            <TopNav href={backLinkUrl} title={<Title order={order} />}>
               <CardMenu
                 menuItems={[
                   ...selectCardMenuItems,
@@ -255,8 +266,10 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               />
               <OrderHistory
                 history={order?.events}
+                onNoteUpdateLoading={onNoteUpdateLoading}
                 orderCurrency={order?.total?.gross.currency}
                 onNoteAdd={onNoteAdd}
+                onNoteUpdate={onNoteUpdate}
               />
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>
@@ -285,13 +298,17 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               )}
               <OrderCustomerNote note={maybe(() => order.customerNote)} />
             </DetailPageLayout.RightSidebar>
-            <Savebar
-              labels={saveLabel}
-              onCancel={() => navigate(orderListUrl())}
-              onSubmit={submit}
-              state={saveButtonBarState}
-              disabled={allowSave()}
-            />
+            <Savebar>
+              <Savebar.Spacer />
+              <Savebar.CancelButton onClick={() => navigate(orderListUrl())} />
+              <Savebar.ConfirmButton
+                transitionState={saveButtonBarState}
+                onClick={submit}
+                disabled={allowSave()}
+              >
+                {saveLabel?.confirm}
+              </Savebar.ConfirmButton>
+            </Savebar>
           </DetailPageLayout>
         );
       }}

@@ -22,6 +22,7 @@
 !.tx
 !.husky
 !.changeset
+!.knip.json
 *.log
 *.pyc
 *.mo
@@ -38,16 +39,12 @@ node_modules/
 /static/
 /videos/
 /screenshots/
-cypress/screenshots
-cypress/videos
 /results/
 /testmo/
 /saleor/static/assets/
 webpack-bundle.json
 /templates/templated_email/compiled/*
 !/templates/templated_email/compiled/.gitkeep
-cypress/reports
-cypress/TestResults
 mochawesome.json
 # Exported results file
 django-queries-results.html

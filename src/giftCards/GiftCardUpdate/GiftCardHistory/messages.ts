@@ -34,8 +34,8 @@ const giftCardHistoryTimelineMessages = defineMessages({
     description: "gift card history message",
   },
   balanceResetAnonymous: {
-    id: "aEc9Ar",
-    defaultMessage: "Gift card balance was reset by {resetBy}",
+    id: "FWaL+x",
+    defaultMessage: "Gift card balance was reset",
     description: "gift card history message",
   },
   bought: {

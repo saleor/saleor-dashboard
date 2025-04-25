@@ -1,9 +1,10 @@
 // @ts-strict-ignore
 import AddressFormatter from "@dashboard/components/AddressFormatter";
+import { DashboardCard } from "@dashboard/components/Card";
 import { AddressFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { Card, CardContent, Typography } from "@material-ui/core";
 import { EditIcon } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -24,14 +25,14 @@ const CustomerAddressChoiceCard: React.FC<CustomerAddressChoiceCardProps> = prop
   const intl = useIntl();
 
   return (
-    <Card
+    <DashboardCard
       className={clsx(classes.card, {
         [classes.cardSelected]: selected,
         [classes.selectableCard]: !editable && !selected,
       })}
       onClick={onSelect}
     >
-      <CardContent className={classes.cardContent}>
+      <DashboardCard.Content className={classes.cardContent}>
         <AddressFormatter address={address} />
         {editable && (
           <div onClick={onEditClick}>
@@ -39,12 +40,12 @@ const CustomerAddressChoiceCard: React.FC<CustomerAddressChoiceCardProps> = prop
           </div>
         )}
         {selected && (
-          <Typography color="primary" className={classes.selectedLabel}>
+          <Text color="default1" className={classes.selectedLabel}>
             {intl.formatMessage(commonMessages.selected)}
-          </Typography>
+          </Text>
         )}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

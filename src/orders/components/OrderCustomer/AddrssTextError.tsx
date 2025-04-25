@@ -1,7 +1,7 @@
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { OrderErrorFragment } from "@dashboard/graphql";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { Typography } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -17,9 +17,9 @@ export const AddressTextError: React.FC<AddressTextErrorProps> = ({ orderError }
 
   return (
     <>
-      <Typography variant="body2" className={classes.textError}>
+      <Text size={3} fontWeight="regular" className={classes.textError}>
         {getOrderErrorMessage(orderError, intl)}
-      </Typography>
+      </Text>
       <FormSpacer />
     </>
   );

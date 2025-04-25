@@ -434,10 +434,19 @@ export const transformFuflillmentLinesToStockFormsetData = (
 
 export const getAttributesCaption = (
   attributes: OrderFulfillLineFragment["variant"]["attributes"] | undefined,
-): string | undefined =>
-  attributes
+): string | undefined => {
+  const separator = " / ";
+
+  const names = attributes
     ?.map(attribute => attribute.values.map(attributeValue => attributeValue.name).join(", "))
-    .join(" / ");
+    .filter(Boolean);
+
+  if (names.length === 0) {
+    return "";
+  }
+
+  return `${separator}${names.join(separator)}`;
+};
 
 export const prepareMoney = (
   amount: number,
@@ -468,7 +477,15 @@ export const getDiscountTypeLabel = (discount: OrderDiscountFragment, intl: Intl
       return intl.formatMessage(orderDiscountTypeLabelMessages.staffAdded);
     case OrderDiscountType.ORDER_PROMOTION:
       return getDiscountNameLabel(discount.name);
-    default:
-      return intl.formatMessage(orderDiscountTypeLabelMessages.voucher);
+    case OrderDiscountType.VOUCHER:
+      return intl.formatMessage(orderDiscountTypeLabelMessages.voucher, {
+        voucherName: discount.name,
+      });
+
+    case OrderDiscountType.PROMOTION:
+      return intl.formatMessage(orderDiscountTypeLabelMessages.promotion);
+
+    case OrderDiscountType.SALE:
+      return intl.formatMessage(orderDiscountTypeLabelMessages.sale);
   }
 };

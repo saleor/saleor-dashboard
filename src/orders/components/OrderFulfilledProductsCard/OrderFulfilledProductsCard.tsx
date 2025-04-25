@@ -1,9 +1,9 @@
 // @ts-strict-ignore
+import { DashboardCard } from "@dashboard/components/Card";
 import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
 import TrashIcon from "@dashboard/icons/Trash";
 import { orderHasTransactions } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
-import { CardContent } from "@material-ui/core";
 import { IconButton } from "@saleor/macaw-ui";
 import { Box, Divider } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -32,6 +32,15 @@ const statusesToMergeLines = [
   FulfillmentStatus.REPLACED,
 ];
 const cancelableStatuses = [FulfillmentStatus.FULFILLED, FulfillmentStatus.WAITING_FOR_APPROVAL];
+const fulfillmentLineToLine = ({
+  quantity,
+  orderLine,
+}: OrderDetailsFragment["fulfillments"][0]["lines"][0]) => ({
+  ...orderLine,
+  // 'quantity' has the correct number of returned items
+  // 'orderLine.quantity' has the total number of items in the order
+  quantity,
+});
 const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = props => {
   const {
     fulfillment,
@@ -51,10 +60,10 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
 
   const getLines = () => {
     if (statusesToMergeLines.includes(fulfillment?.status)) {
-      return mergeRepeatedOrderLines(fulfillment.lines).map(order => order.orderLine);
+      return mergeRepeatedOrderLines(fulfillment.lines).map(fulfillmentLineToLine);
     }
 
-    return fulfillment?.lines.map(order => order.orderLine) || [];
+    return fulfillment?.lines.map(fulfillmentLineToLine) || [];
   };
 
   return (
@@ -90,10 +99,10 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
           </Box>
         }
       />
-      <CardContent>
+      <DashboardCard.Content paddingX={0}>
         <OrderDetailsDatagrid lines={getLines()} loading={false} onShowMetadata={onShowMetadata} />
         <ExtraInfoLines fulfillment={fulfillment} />
-      </CardContent>
+      </DashboardCard.Content>
       {props.children}
       <Divider />
     </Box>

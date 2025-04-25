@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { QueryResult } from "@apollo/client";
 import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
@@ -13,7 +14,7 @@ import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailability
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import {
   PermissionEnum,
@@ -35,6 +36,7 @@ import { ProductOrganization } from "@dashboard/products/components/ProductOrgan
 import { ProductVariantPrice } from "@dashboard/products/components/ProductVariantPrice";
 import { ProductCreateUrlQueryParams, productListUrl } from "@dashboard/products/urls";
 import { getChoices } from "@dashboard/products/utils/data";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -70,7 +72,6 @@ interface ProductCreatePageProps {
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   weightUnit: string;
-  warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
   taxClasses: TaxClassBaseFragment[];
   fetchMoreTaxClasses: FetchMoreProps;
   selectedProductType?: ProductTypeQuery["productType"];
@@ -91,6 +92,8 @@ interface ProductCreatePageProps {
   onCloseDialog: (currentParams?: ProductCreateUrlQueryParams) => void;
   onSelectProductType: (productTypeId: string) => void;
   onSubmit?: (data: ProductCreateData) => any;
+  fetchMoreWarehouses: () => void;
+  searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
 }
 
 export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
@@ -113,7 +116,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   referencePages = [],
   referenceProducts = [],
   saveButtonBarState,
-  warehouses,
   taxClasses,
   fetchMoreTaxClasses,
   selectedProductType,
@@ -134,6 +136,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   onCloseDialog,
   onSelectProductType,
   onAttributeSelectBlur,
+  fetchMoreWarehouses,
+  searchWarehousesResult,
 }: ProductCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -190,7 +194,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       setSelectedTaxClass={setSelectedTaxClass}
       setChannels={onChannelsChange}
       taxClasses={taxClassChoices}
-      warehouses={warehouses}
       currentChannels={currentChannels}
       fetchReferencePages={fetchReferencePages}
       fetchMoreReferencePages={fetchMoreReferencePages}
@@ -262,16 +265,19 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   />
                   <ProductStocks
                     data={data}
+                    warehouses={mapEdgesToItems(searchWarehousesResult?.data?.search) ?? []}
+                    fetchMoreWarehouses={fetchMoreWarehouses}
+                    hasMoreWarehouses={searchWarehousesResult?.data?.search?.pageInfo?.hasNextPage}
                     disabled={loading}
                     hasVariants={false}
                     onFormDataChange={change}
                     errors={errors}
                     stocks={data.stocks}
-                    warehouses={warehouses}
                     onChange={handlers.changeStock}
                     onWarehouseStockAdd={handlers.addStock}
                     onWarehouseStockDelete={handlers.deleteStock}
                     onWarehouseConfigure={onWarehouseConfigure}
+                    isCreate={true}
                   />
                 </>
               )}
@@ -353,12 +359,15 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 />
               </Box>
             </DetailPageLayout.RightSidebar>
-            <Savebar
-              onCancel={() => navigate(productListUrl())}
-              onSubmit={submit}
-              state={saveButtonBarState}
-              disabled={isSaveDisabled}
-            />
+            <Savebar>
+              <Savebar.Spacer />
+              <Savebar.CancelButton onClick={() => navigate(productListUrl())} />
+              <Savebar.ConfirmButton
+                transitionState={saveButtonBarState}
+                onClick={submit}
+                disabled={isSaveDisabled}
+              />
+            </Savebar>
             {canOpenAssignReferencesAttributeDialog && entityType && (
               <AssignAttributeValueDialog
                 entityType={entityType}

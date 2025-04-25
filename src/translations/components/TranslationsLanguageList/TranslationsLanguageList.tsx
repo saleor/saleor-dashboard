@@ -1,12 +1,12 @@
 // @ts-strict-ignore
+import { DashboardCard } from "@dashboard/components/Card";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { LanguageFragment } from "@dashboard/graphql";
 import { languageEntitiesUrl } from "@dashboard/translations/urls";
-import { Card, CardContent, TableBody, TableCell } from "@material-ui/core";
+import { TableBody, TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui-next";
+import { Skeleton, vars } from "@saleor/macaw-ui-next";
 import { clsx } from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -41,8 +41,8 @@ const TranslationsLanguageList: React.FC<TranslationsLanguageListProps> = props 
   const classes = useStyles(props);
 
   return (
-    <Card>
-      <CardContent className={classes.cardContent}>
+    <DashboardCard>
+      <DashboardCard.Content className={classes.cardContent}>
         <ResponsiveTable>
           <TableBody data-test-id="translation-list-view">
             {renderCollection(
@@ -76,8 +76,8 @@ const TranslationsLanguageList: React.FC<TranslationsLanguageListProps> = props 
             )}
           </TableBody>
         </ResponsiveTable>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

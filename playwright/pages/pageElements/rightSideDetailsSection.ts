@@ -20,10 +20,10 @@ export class RightSideDetailsPage extends BasePage {
     readonly pickupAllWarehousesButton = page.getByTestId("ALL"),
     readonly categorySelectOption = page.locator("[data-test-id*='select-option']"),
     readonly taxSelectOption = page.locator("[data-test-id*='select-option']"),
-    readonly selectOption = page.getByTestId("multi-autocomplete-select-option"),
+    readonly selectOption = page.getByTestId("select-option"),
     readonly categoryInput = page.getByTestId("category"),
     readonly taxInput = page.getByTestId("taxes"),
-    readonly categoryItem = page.getByTestId("single-autocomplete-select-option"),
+    readonly categoryItem = page.getByTestId("select-option"),
     readonly collectionInput = page.getByTestId("collections"),
     readonly autocompleteDropdown = page.getByTestId("autocomplete-dropdown"),
     readonly manageChannelsButton = page.getByTestId("channels-availability-manage-button"),
@@ -43,7 +43,7 @@ export class RightSideDetailsPage extends BasePage {
     readonly shippingZoneSection = page.getByTestId("shipping-zones-section"),
     readonly editCustomerButton = page.getByTestId("edit-customer"),
     readonly searchCustomerInput = page.getByTestId("select-customer"),
-    readonly selectCustomerOption = page.getByTestId("single-autocomplete-select-option"),
+    readonly selectCustomerOption = page.getByTestId("select-option"),
     readonly addShippingZonesButton = page.getByTestId("shipping-add-link"),
     readonly addWarehousesButton = page.getByTestId("warehouse-add-link"),
     readonly shippingZonesSelect = page.getByTestId("shipping-auto-complete-select"),
@@ -72,12 +72,14 @@ export class RightSideDetailsPage extends BasePage {
 
   async expectOptionsSelected(section: Locator, names: string[]) {
     for (const name of names) {
-      await expect(section.getByText(name)).toBeVisible({ timeout: 30000 });
+      await expect(section.getByText(name)).toBeVisible({
+        timeout: 30 * 1000, // 30 seconds
+      });
     }
   }
 
   async typeAndSelectSingleWarehouseShippingPage(warehouse = "Europe") {
-    await this.selectWarehouseShippingMethodButton.locator("input").fill(warehouse);
+    await this.selectWarehouseShippingMethodButton.fill(warehouse);
 
     await this.selectOption.filter({ hasText: warehouse }).first().click();
     // below click hides prompted options
@@ -86,7 +88,7 @@ export class RightSideDetailsPage extends BasePage {
 
   async typeAndSelectMultipleWarehousesShippingPage(warehouses: string[]) {
     for (const warehouse of warehouses) {
-      await this.selectWarehouseShippingMethodButton.locator("input").fill(warehouse);
+      await this.selectWarehouseShippingMethodButton.fill(warehouse);
 
       await this.selectOption.filter({ hasText: warehouse }).first().click();
     }
@@ -181,6 +183,11 @@ export class RightSideDetailsPage extends BasePage {
   async selectCustomer(customer = "allison.freeman@example.com") {
     await this.selectCustomerOption.locator(`text=${customer}`).click();
     await this.waitForDOMToFullyLoad();
+  }
+
+  async typeAndSelectCustomerEmail(customerEmail = "customer@example.com") {
+    await this.searchCustomerInput.fill(customerEmail);
+    await this.selectCustomerOption.locator(`text=${customerEmail}`).click();
   }
 
   async selectOneChannelAsAvailableWhenMoreSelected(channel: string) {

@@ -13,16 +13,10 @@ program
   .option("--repo_token <repo_token>", "github token")
   .option("--project <project>", "release project")
   .action(async options => {
-    const isOldVersion = await checkIfOldVersion(
-      options.version,
-      options.repo_token,
-    );
+    const isOldVersion = await checkIfOldVersion(options.version, options.repo_token);
     core.setOutput("IS_OLD_VERSION", isOldVersion);
 
-    core.setOutput(
-      "url",
-      `https://v${getFormattedVersion(options.version)}.staging.saleor.cloud/`,
-    );
+    core.setOutput("url", `https://v${getFormattedVersion(options.version)}.staging.saleor.cloud/`);
 
     const branch = await getBranch(options.repo_token, options.version);
     core.setOutput("branch", branch);
@@ -36,8 +30,7 @@ function getFormattedVersion(version) {
 
 async function checkIfOldVersion(version, token) {
   const newestVersion = await getTheNewestVersion(token);
-  const howManyVersionsBehind =
-    getFormattedVersion(newestVersion) - getFormattedVersion(version);
+  const howManyVersionsBehind = getFormattedVersion(newestVersion) - getFormattedVersion(version);
   //All versions besides last three are old versions
   return howManyVersionsBehind > 2 ? "true" : "false";
 }
@@ -47,20 +40,17 @@ async function getTheNewestVersion(token) {
     auth: token,
   });
 
-  const response = await octokit.request(
-    "GET /repos/{owner}/{repo}/releases/latest",
-    {
-      owner: "saleor",
-      repo: "saleor-dashboard",
-    },
-  );
+  const response = await octokit.request("GET /repos/{owner}/{repo}/releases/latest", {
+    owner: "saleor",
+    repo: "saleor-dashboard",
+  });
   return response.data["tag_name"];
 }
 
 async function getServices(token) {
   // us-east-1
   const response = await fetch(
-    `https://staging-cloud.saleor.io/platform/api/regions/us-east-1/services`,
+    `https://cloud.staging.saleor.io/platform/api/regions/us-east-1/services`,
     {
       method: "GET",
       headers: {

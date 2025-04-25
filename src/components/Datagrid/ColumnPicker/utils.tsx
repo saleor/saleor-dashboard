@@ -77,7 +77,16 @@ export const mergeSelectedColumns = ({
   dynamicColumns: AvailableColumn[] | null;
   selectedColumns: string[];
 }) => {
-  return [...staticColumns, ...(dynamicColumns ?? [])].filter(
-    column => selectedColumns.includes(column.id) || column.id === "empty",
-  );
+  const mergedColumns = [...staticColumns, ...(dynamicColumns ?? [])];
+  const empty = mergedColumns[0].id === "empty" ? mergedColumns[0] : null;
+
+  const columns = selectedColumns
+    .map(columnId => mergedColumns.find(column => column.id === columnId))
+    .filter(Boolean);
+
+  if (empty) {
+    columns.unshift(empty);
+  }
+
+  return columns;
 };

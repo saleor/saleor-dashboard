@@ -25,13 +25,10 @@ const mock = {
 const mockWithOverflow = {
   ...mock,
   ...getFilterVariables({
-    isProductListingPageFiltersFlagEnabled: true,
     filterContainer: [],
     queryParams: {
       categories: undefined,
     },
-    isChannelSelected: false,
-    channelSlug: undefined,
   }),
 };
 

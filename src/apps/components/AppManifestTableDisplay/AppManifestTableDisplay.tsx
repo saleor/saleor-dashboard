@@ -1,7 +1,6 @@
 import { appsMessages } from "@dashboard/apps/messages";
-import { Typography } from "@material-ui/core";
 import { CopyIcon } from "@saleor/macaw-ui";
-import { Tooltip } from "@saleor/macaw-ui-next";
+import { Text, Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
@@ -22,7 +21,7 @@ export const AppManifestTableDisplay = ({ manifestUrl }: AppManifestTableDisplay
   return (
     <Tooltip>
       <Tooltip.Trigger>
-        <Typography
+        <Text
           onMouseOut={() => setCopied(false)}
           className={styles.manifestText}
           onClick={e => {
@@ -44,7 +43,7 @@ export const AppManifestTableDisplay = ({ manifestUrl }: AppManifestTableDisplay
               })}
             />
           )}
-        </Typography>
+        </Text>
       </Tooltip.Trigger>
       <Tooltip.Content side="top">
         <Tooltip.Arrow />

@@ -1,9 +1,12 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { creatVoucherQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { useFlag } from "@dashboard/featureFlags";
 import { useVoucherBulkDeleteMutation, useVoucherListQuery } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
@@ -22,7 +25,6 @@ import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import { DialogContentText } from "@material-ui/core";
 import isEqual from "lodash/isEqual";
 import React, { useCallback, useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -40,6 +42,9 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.VOUCHER_LIST);
+  const { enabled: isNewGiftCardsFilterEnabled } = useFlag("new_filters");
+  const { valueProvider } = useConditionalFilterContext();
+  const { filters, channel } = creatVoucherQueryVariables(valueProvider.value);
 
   usePaginationReset(voucherListUrl, params, settings.rowNumber);
 
@@ -63,9 +68,22 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber],
   );
-  const { data, loading, refetch } = useVoucherListQuery({
+  const newFiltersQueryVariables = React.useMemo(
+    () => ({
+      ...paginationState,
+      filter: {
+        ...filters,
+        search: params.query,
+      },
+      sort: getSortQueryVariables(params),
+      channel,
+    }),
+    [params, settings.rowNumber, valueProvider.value],
+  );
+
+  const { data, refetch } = useVoucherListQuery({
     displayLoader: true,
-    variables: queryVariables,
+    variables: isNewGiftCardsFilterEnabled ? newFiltersQueryVariables : queryVariables,
   });
   const {
     clearRowSelection,
@@ -180,7 +198,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
         filterPresets={presets.map(tab => tab.name)}
         settings={settings}
         vouchers={vouchers}
-        disabled={loading}
+        disabled={!data}
         onUpdateListSettings={updateListSettings}
         onSort={handleSort}
         sort={getSortParams(params)}
@@ -198,17 +216,15 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
         })}
         variant="delete"
       >
-        <DialogContentText>
-          <FormattedMessage
-            id="O9QPe1"
-            defaultMessage="{counter,plural,one{Are you sure you want to delete this voucher?} other{Are you sure you want to delete {displayQuantity} vouchers?}}"
-            description="dialog content"
-            values={{
-              counter: selectedRowIds.length,
-              displayQuantity: <strong>{selectedRowIds.length}</strong>,
-            }}
-          />
-        </DialogContentText>
+        <FormattedMessage
+          id="O9QPe1"
+          defaultMessage="{counter,plural,one{Are you sure you want to delete this voucher?} other{Are you sure you want to delete {displayQuantity} vouchers?}}"
+          description="dialog content"
+          values={{
+            counter: selectedRowIds.length,
+            displayQuantity: <strong>{selectedRowIds.length}</strong>,
+          }}
+        />
       </ActionDialog>
       <SaveFilterTabDialog
         open={params.action === "save-search"}

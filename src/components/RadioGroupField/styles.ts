@@ -25,6 +25,8 @@ export const useStyles = makeStyles(
     },
     label: {
       marginTop: theme.spacing(0.2),
+      display: "flex",
+      flexDirection: "column",
     },
     root: {
       "& $radioLabel": {

@@ -3,13 +3,15 @@ import {
   AddressInput,
   CountryCode,
   DateRangeInput,
+  OrderChargeStatusEnum,
   OrderStatus,
+  OrderStatusFilter,
   PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
 import { Node, SlugNode } from "@dashboard/types";
 import { ThemeType } from "@saleor/macaw-ui";
 import { DefaultTheme, ThemeTokensValues } from "@saleor/macaw-ui-next";
-import uniqBy from "lodash/uniqBy";
+import Fuse from "fuse.js";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
 
@@ -18,7 +20,6 @@ import {
   hueToPillColorDark,
   hueToPillColorLight,
 } from "./components/Datagrid/customCells/PillCell";
-import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
 import { DotStatus } from "./components/StatusDot/StatusDot";
 import { AddressType, AddressTypeInput } from "./customers/types";
 import {
@@ -125,6 +126,25 @@ export const transformPaymentStatus = (
   };
 };
 
+export const transformChargedStatus = (status: OrderChargeStatusEnum, intl: IntlShape) => {
+  switch (status) {
+    case OrderChargeStatusEnum.OVERCHARGED:
+      return {
+        localized: intl.formatMessage({
+          defaultMessage: "Overcharged",
+          id: "4VLj3S",
+          description: "overcharged order status",
+        }),
+        status: StatusType.WARNING,
+      };
+    default:
+      return {
+        localized: status,
+        status: StatusType.ERROR,
+      };
+  }
+};
+
 export const transformOrderStatus = (
   status: string,
   intl: IntlShape,
@@ -168,6 +188,16 @@ export const transformOrderStatus = (
     case OrderStatus.RETURNED:
       return {
         localized: intl.formatMessage(orderStatusMessages.returned),
+        status: StatusType.INFO,
+      };
+    case OrderStatusFilter.READY_TO_CAPTURE:
+      return {
+        localized: intl.formatMessage(orderStatusMessages.readyToCapture),
+        status: StatusType.INFO,
+      };
+    case OrderStatusFilter.READY_TO_FULFILL:
+      return {
+        localized: intl.formatMessage(orderStatusMessages.readyToFulfill),
         status: StatusType.INFO,
       };
   }
@@ -335,7 +365,7 @@ export const parseLogMessage = ({
   });
 };
 
-interface User {
+export interface User {
   email: string;
   firstName?: string;
   lastName?: string;
@@ -512,7 +542,7 @@ export const transformAddressToAddressInput = (data?: AddressType) => ({
 });
 
 export function getFullName<T extends { firstName: string; lastName: string }>(data: T) {
-  if (!data || !data.firstName || !data.lastName) {
+  if (!data || (!data.firstName && !data.lastName)) {
     return "";
   }
 
@@ -546,11 +576,6 @@ export function PromiseQueue() {
   return { queue, add };
 }
 
-export const combinedMultiAutocompleteChoices = (
-  selected: MultiAutocompleteChoiceType[],
-  choices: MultiAutocompleteChoiceType[],
-) => uniqBy([...selected, ...choices], "value");
-
 export type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
 export const getBySlug = (slugToCompare: string) => (obj: SlugNode) => obj.slug === slugToCompare;
@@ -561,9 +586,6 @@ export const getByUnmatchingId = (idToCompare: string) => (obj: { id: string }) 
   obj.id !== idToCompare;
 
 export const findById = <T extends Node>(id: string, list?: T[]) => list?.find(getById(id));
-
-export const COLOR_WARNING = "#FBE5AC";
-export const COLOR_WARNING_DARK = "#3E2F0A";
 
 export type PillStatusType = "error" | "warning" | "info" | "success" | "generic";
 
@@ -622,3 +644,22 @@ const getAllRemovedRowsBeforeRowIndex = (rowIndex: number, removedRowsIndexs: nu
 
 export const getDatagridRowDataIndex = (rowIndex: number, removedRowsIndexs: number[]) =>
   rowIndex + getAllRemovedRowsBeforeRowIndex(rowIndex, removedRowsIndexs).length;
+
+export const fuzzySearch = <T>(
+  array: T[],
+  query: string | undefined,
+  keys: string[],
+  threshold = 0.3,
+) => {
+  if (!query) {
+    return array;
+  }
+
+  const fuse = new Fuse(array, {
+    keys,
+    includeScore: true,
+    threshold,
+  });
+
+  return fuse.search(query.toLocaleLowerCase()).map(({ item }) => item);
+};

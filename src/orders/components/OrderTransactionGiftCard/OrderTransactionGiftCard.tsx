@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import Skeleton from "@dashboard/components/Skeleton";
+
 import {
   OrderDetailsFragment,
   OrderGiftCardFragment,
@@ -7,6 +7,7 @@ import {
 } from "@dashboard/graphql";
 import { FakeTransaction, TransactionFakeEvent } from "@dashboard/orders/types";
 import { prepareMoney } from "@dashboard/orders/utils/data";
+import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -62,6 +63,7 @@ const OrderTransactionGiftCard: React.FC<OrderTransactionGiftCardProps> = ({ ord
     pspReference: giftCard.last4CodeChars,
     externalUrl: null,
     chargedAmount: prepareMoney(amount, currency),
+    createdAt: fakeEvents[0].createdAt,
     // Fake amounts
     authorizedAmount: prepareMoney(0, currency),
     authorizePendingAmount: prepareMoney(0, currency),

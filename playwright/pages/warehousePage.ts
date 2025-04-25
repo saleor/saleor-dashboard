@@ -32,7 +32,7 @@ export class WarehousePage extends BasePage {
     readonly companyZipInput = page.getByTestId("company-zip-input").locator("input"),
     readonly companyPhoneInput = page.getByTestId("company-phone-input").locator("input"),
     readonly companyCountrySelect = page.getByTestId("address-edit-country-select-field"),
-    readonly companyCountryOptions = page.getByTestId("single-autocomplete-select-option"),
+    readonly companyCountryOptions = page.getByTestId("select-option"),
   ) {
     super(page);
     this.page = page;
@@ -67,10 +67,7 @@ export class WarehousePage extends BasePage {
     await this.companyZipInput.fill(zip);
     await this.typePhone(phone);
     await this.companyCountrySelect.click();
-    await this.page
-      .getByTestId("autocomplete-dropdown")
-      .getByRole("option", { name: country })
-      .click();
+    await this.page.getByTestId("select-option").filter({ hasText: country }).click();
   }
 
   async typeWarehouseName(warehouseName: string) {

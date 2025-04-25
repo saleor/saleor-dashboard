@@ -11,6 +11,8 @@ export const getInitialFormData = (
   metadata: shippingZone?.metadata.map(mapMetadataItemToInput),
   name: shippingZone?.name || "",
   privateMetadata: shippingZone?.privateMetadata.map(mapMetadataItemToInput),
-  warehouses: shippingZone?.warehouses?.map(warehouse => warehouse.id) || [],
-  channels: shippingZone?.channels.map(({ id }) => id) || [],
+  warehouses:
+    shippingZone?.warehouses?.map(warehouse => ({ label: warehouse.name, value: warehouse.id })) ||
+    [],
+  channels: shippingZone?.channels.map(({ id, name }) => ({ label: name, value: id })) || [],
 });

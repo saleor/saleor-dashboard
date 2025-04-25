@@ -45,9 +45,11 @@ export const DiscountGeneralInfo = ({ disabled, typeDisabled, error }: DiscountN
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        <FormattedMessage defaultMessage="General information" id="fKrRhF" />
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          <FormattedMessage defaultMessage="General information" id="fKrRhF" />
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Box display="grid" __gridTemplateColumns="250px 1fr" gap={3}>
           <Select

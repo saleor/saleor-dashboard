@@ -17,7 +17,7 @@
   <span> • </span>
   <a href="https://twitter.com/getsaleor">🐦 Twitter</a>
   <span> • </span>
-  <a href="https://discord.gg/H52JTZAtSH">💬 Discord</a>
+  <a href="https://saleor.io/discord">💬 Discord</a>
 </div>
 
 <div align="center">
@@ -27,8 +27,11 @@
 
 ## Prerequisites
 
-- Node.js v18+
+- Node.js v20
 - A running instance of [Saleor](https://github.com/saleor/saleor/)
+
+> [!NOTE]
+> Currently both Node v20 and v18 are supported. We recommend using Node v20, since support for older versions will be dropped.
 
 ## Development
 

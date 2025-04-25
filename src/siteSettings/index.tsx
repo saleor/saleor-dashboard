@@ -1,6 +1,7 @@
+import { Route } from "@dashboard/components/Router";
 import { parse as parseQs } from "qs";
 import React from "react";
-import { Route, RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 
 import { siteSettingsPath, SiteSettingsUrlQueryParams } from "./urls";
 import SiteSettingsComponent from "./views/";

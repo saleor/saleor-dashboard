@@ -52,5 +52,5 @@ function showCustomValue({
     return !selectedValue.find(option => option.label.toLowerCase() === query.toLowerCase());
   }
 
-  return selectedValue?.label.toLocaleLowerCase() !== query.toLocaleLowerCase();
+  return selectedValue?.label?.toLocaleLowerCase() !== query.toLocaleLowerCase();
 }

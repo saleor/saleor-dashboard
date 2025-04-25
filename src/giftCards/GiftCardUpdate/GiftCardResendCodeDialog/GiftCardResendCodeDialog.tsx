@@ -1,10 +1,9 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { useChannelsSearch } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import { Combobox } from "@dashboard/components/Combobox";
 import { IMessage } from "@dashboard/components/messages";
-import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
-import VerticalSpacer from "@dashboard/components/VerticalSpacer";
+import { useGiftCardPermissions } from "@dashboard/giftCards/hooks/useGiftCardPermissions";
 import { useChannelsQuery, useGiftCardResendMutation } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -12,12 +11,10 @@ import { getBySlug } from "@dashboard/misc";
 import { DialogProps } from "@dashboard/types";
 import commonErrorMessages from "@dashboard/utils/errors/common";
 import { mapSlugNodeToChoice } from "@dashboard/utils/maps";
-import { CircularProgress, TextField, Typography } from "@material-ui/core";
+import { Box, Checkbox, Input, Spinner, Text } from "@saleor/macaw-ui-next";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { useGiftCardDeleteDialogContentStyles as useProgressStyles } from "../../components/GiftCardDeleteDialog/styles";
-import { useUpdateBalanceDialogStyles as useStyles } from "../GiftCardUpdateBalanceDialog/styles";
 import { getGiftCardErrorMessage } from "../messages";
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import { giftCardResendCodeDialogMessages as messages } from "./messages";
@@ -31,13 +28,14 @@ export interface GiftCardResendCodeFormData {
 const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
   const intl = useIntl();
   const notify = useNotifier();
-  const classes = useStyles();
-  const progressClasses = useProgressStyles();
   const {
     giftCard: { boughtInChannel: initialChannelSlug },
   } = useGiftCardDetails();
+  const { canManageChannels } = useGiftCardPermissions();
   const [consentSelected, setConsentSelected] = useState(false);
-  const { data: channelsData, loading: loadingChannels } = useChannelsQuery({});
+  const { data: channelsData, loading: loadingChannels } = useChannelsQuery({
+    skip: !canManageChannels,
+  });
   const channels = channelsData?.channels;
   const activeChannels = channels?.filter(({ isActive }) => isActive);
   const { onQueryChange, filteredChannels } = useChannelsSearch(activeChannels);
@@ -95,7 +93,6 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
 
   return (
     <ActionDialog
-      maxWidth="sm"
       open={open}
       onConfirm={submit}
       confirmButtonLabel={intl.formatMessage(messages.submitButtonLabel)}
@@ -105,43 +102,42 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
       disabled={loading}
     >
       {loadingChannels ? (
-        <div className={progressClasses.progressContainer}>
-          <CircularProgress />
-        </div>
+        <Box display="flex" width="100%" justifyContent="center">
+          <Spinner />
+        </Box>
       ) : (
-        <>
-          <Typography>{intl.formatMessage(messages.description)}</Typography>
-          <VerticalSpacer />
-          <SingleAutocompleteSelectField
-            choices={mapSlugNodeToChoice(filteredChannels)}
-            name="channelSlug"
+        <Box display="grid" gap={2}>
+          <Text>{intl.formatMessage(messages.description)}</Text>
+
+          <Combobox
             label={intl.formatMessage(messages.sendToChannelSelectLabel)}
-            value={data?.channelSlug}
+            options={mapSlugNodeToChoice(filteredChannels)}
+            fetchOptions={onQueryChange}
+            name="channelSlug"
+            value={{
+              label: channels?.find(getBySlug(data?.channelSlug))?.name,
+              value: data?.channelSlug,
+            }}
             onChange={change}
-            displayValue={channels.find(getBySlug(data?.channelSlug))?.name}
-            fetchChoices={onQueryChange}
           />
-          <VerticalSpacer />
-          <ControlledCheckbox
+          <Checkbox
             name="differentMailConsent"
-            label={intl.formatMessage(messages.consentCheckboxLabel)}
             checked={consentSelected}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setConsentSelected(!!event.target.value)
-            }
-          />
-          <VerticalSpacer />
-          <TextField
+            onCheckedChange={value => setConsentSelected(value as boolean)}
+          >
+            <Text fontSize={3}>{intl.formatMessage(messages.consentCheckboxLabel)}</Text>
+          </Checkbox>
+          <Input
             disabled={!consentSelected}
             error={!!formErrors?.email}
             helperText={getGiftCardErrorMessage(formErrors?.email, intl)}
             name="email"
             value={data.email}
             onChange={change}
-            className={classes.inputContainer}
             label={intl.formatMessage(messages.emailInputPlaceholder)}
+            width="100%"
           />
-        </>
+        </Box>
       )}
     </ActionDialog>
   );

@@ -1,7 +1,5 @@
-import Skeleton from "@dashboard/components/Skeleton";
 import { ReorderEvent } from "@dashboard/types";
-import { Typography } from "@material-ui/core";
-import { Accordion, Divider } from "@saleor/macaw-ui-next";
+import { Accordion, Divider, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -41,9 +39,9 @@ const AssignmentList: React.FC<AssignmentListProps> = props => {
           {loading ? (
             <Skeleton />
           ) : (
-            <Typography variant="subtitle2" color="textSecondary">
+            <Text fontSize={2} color="default2">
               {`${items.length} ${itemsName.toLowerCase()}`}
-            </Typography>
+            </Text>
           )}
           <Accordion.TriggerButton dataTestId="expand-icon" />
         </Accordion.Trigger>
@@ -76,15 +74,11 @@ const AssignmentList: React.FC<AssignmentListProps> = props => {
               {hasMoreItemsToBeSelected ? (
                 <AssignmentListFooter {...props} />
               ) : (
-                <Typography
-                  color="textSecondary"
-                  variant="subtitle1"
-                  className={classes.infoMessage}
-                >
+                <Text color="default2" fontSize={3} className={classes.infoMessage}>
                   {intl.formatMessage(messages.allSelectedMessage, {
                     itemsName: itemsName.toLowerCase(),
                   })}
-                </Typography>
+                </Text>
               )}
             </>
           )}

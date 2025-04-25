@@ -1,18 +1,17 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Grid from "@dashboard/components/Grid";
 import Hr from "@dashboard/components/Hr";
-import Skeleton from "@dashboard/components/Skeleton";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
 import { TranslationField, TranslationFieldType } from "@dashboard/translations/types";
 import { ListProps } from "@dashboard/types";
 import { OutputData } from "@editorjs/editorjs";
-import { Card, CardContent, Typography } from "@material-ui/core";
 import ArrowIcon from "@material-ui/icons/ArrowDropDown";
 import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -120,10 +119,10 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
   const [expanded, setExpandedState] = React.useState(initialState);
 
   return (
-    <Card>
-      <CardTitle
-        title={title}
-        toolbar={
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{title}</DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <IconButton variant="secondary" onClick={() => setExpandedState(!expanded)}>
             <ArrowIcon
               className={clsx({
@@ -131,27 +130,27 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
               })}
             />
           </IconButton>
-        }
-      />
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       {expanded ? (
-        <CardContent className={classes.cardContent}>
+        <DashboardCard.Content className={classes.cardContent}>
           <Grid className={classes.grid} variant="uniform">
-            <Typography className={classes.columnHeader} variant="body1">
+            <Text className={classes.columnHeader} fontSize={3}>
               <FormattedMessage id="Xtd0AT" defaultMessage="Original String" />
-            </Typography>
-            <Typography className={classes.columnHeader} variant="body1">
+            </Text>
+            <Text className={classes.columnHeader} fontSize={3}>
               <FormattedMessage
                 id="bVY7j0"
                 defaultMessage="Translation"
                 description="Translated Name"
               />
-            </Typography>
+            </Text>
             {fields.map(field => (
               <React.Fragment key={field.name}>
                 <Hr className={classes.hr} />
-                <Typography className={classes.fieldName} variant="body1">
+                <Text className={classes.fieldName} fontSize={3}>
                   {field.displayName}
-                </Typography>
+                </Text>
                 <div className={classes.editButtonContainer}>
                   <Button data-test-id={`edit-${field.name}`} onClick={() => onEdit(field.name)}>
                     <FormattedMessage {...buttonMessages.edit} />
@@ -192,7 +191,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                     <Skeleton />
                   )}
                 </div>
-                <Typography className={classes.content}>
+                <Text className={classes.content}>
                   {field && field.translation !== undefined ? (
                     field.type === TranslationFieldType.SHORT ? (
                       <TranslationFieldsShort
@@ -212,13 +211,6 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                         onDiscard={onDiscard}
                         onSubmit={data => onSubmit(field, data)}
                       />
-                    ) : // FIXME
-                    // For now this is the only way to fix the issue
-                    // of initializing the editor with fetched data.
-                    // Without this the editor doesn't get the saved data
-                    // and is empty
-                    disabled ? (
-                      <Skeleton />
                     ) : (
                       <TranslationFieldsRich
                         resetKey={richTextResetKey}
@@ -233,7 +225,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                   ) : (
                     <Skeleton />
                   )}
-                </Typography>
+                </Text>
               </React.Fragment>
             ))}
           </Grid>
@@ -245,10 +237,10 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
               component="div"
             />
           )}
-        </CardContent>
+        </DashboardCard.Content>
       ) : (
-        <CardContent>
-          <Typography className={classes.cardCaption} variant="caption">
+        <DashboardCard.Content>
+          <Text className={classes.cardCaption} size={2} fontWeight="light">
             <FormattedMessage
               id="bh+Keo"
               defaultMessage="{numberOfFields} Translations, {numberOfTranslatedFields} Completed"
@@ -260,10 +252,10 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                 ),
               }}
             />
-          </Typography>
-        </CardContent>
+          </Text>
+        </DashboardCard.Content>
       )}
-    </Card>
+    </DashboardCard>
   );
 };
 

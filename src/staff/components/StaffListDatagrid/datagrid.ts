@@ -90,6 +90,7 @@ export const createGetCellContent =
           {
             readonly: true,
             allowOverlay: false,
+            cursor: "pointer",
           },
         );
       }

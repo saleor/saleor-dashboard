@@ -9,6 +9,7 @@ interface OrderTransactionTileRootProps {
 export const OrderTransactionTileRoot = ({ error, children }: OrderTransactionTileRootProps) => {
   return (
     <Box
+      data-test-id="transaction-card"
       borderStyle="solid"
       borderWidth={1}
       borderColor={error ? "critical1" : "default1"}

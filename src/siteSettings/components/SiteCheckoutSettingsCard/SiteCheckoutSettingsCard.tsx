@@ -1,8 +1,9 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { ShopErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { Card, CardContent, TextField, Typography } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -33,12 +34,14 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
   );
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(messages.reservedStock)} />
-      <CardContent>
-        <Typography variant="body2">
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(messages.reservedStock)}</DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
+        <Text fontSize={3}>
           <FormattedMessage {...messages.reservedStockDescription} />
-        </Typography>
+        </Text>
         <FormSpacer />
         <TextField
           data-test-id="reserve-stock-duration-for-auth-user-input"
@@ -83,9 +86,11 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
             },
           }}
         />
-      </CardContent>
-      <CardTitle title={intl.formatMessage(messages.checkoutLimits)} />
-      <CardContent>
+      </DashboardCard.Content>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(messages.checkoutLimits)}</DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <TextField
           data-test-id="checkout-limits-input"
           disabled={disabled}
@@ -104,8 +109,8 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
             },
           }}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

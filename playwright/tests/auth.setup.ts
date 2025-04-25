@@ -4,6 +4,8 @@ import { APIRequestContext, test as setup } from "@playwright/test";
 import fs from "fs";
 import path from "path";
 
+setup.describe.configure({ mode: "serial" });
+
 const authenticateAndSaveState = async (
   request: APIRequestContext,
   email: string,

@@ -13,7 +13,7 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import { DialogContentText } from "@material-ui/core";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -169,12 +169,12 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({ id, params }) => 
           })
         }
       >
-        <DialogContentText data-test-id="delete-address-dialog-content">
+        <Box data-test-id="delete-address-dialog-content">
           <FormattedMessage
             id="/kWzY1"
             defaultMessage="Are you sure you want to delete this address from users address book?"
           />
-        </DialogContentText>
+        </Box>
       </ActionDialog>
     </>
   );

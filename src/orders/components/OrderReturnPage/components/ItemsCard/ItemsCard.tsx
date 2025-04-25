@@ -1,22 +1,15 @@
 // @ts-strict-ignore
+import { DashboardCard } from "@dashboard/components/Card";
 import Money from "@dashboard/components/Money";
-import Skeleton from "@dashboard/components/Skeleton";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { OrderDetailsFragment, OrderErrorFragment, OrderLineFragment } from "@dashboard/graphql";
 import { FormsetChange } from "@dashboard/hooks/useFormset";
 import { getById, renderCollection } from "@dashboard/misc";
 import OrderCardTitle from "@dashboard/orders/components/OrderCardTitle";
-import {
-  Card,
-  CardContent,
-  Checkbox,
-  TableBody,
-  TableCell,
-  TableHead,
-  TextField,
-} from "@material-ui/core";
+import { Checkbox, TableBody, TableCell, TableHead, TextField } from "@material-ui/core";
 import { ResponsiveTable } from "@saleor/macaw-ui";
+import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -57,15 +50,15 @@ export const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
   const fulfillment = order?.fulfillments.find(getById(fulfilmentId));
 
   return (
-    <Card>
+    <DashboardCard>
       <OrderCardTitle
         orderNumber={order?.number}
         fulfillmentOrder={fulfillment?.fulfillmentOrder}
         status={fulfillment?.status}
       />
-      <CardContent className={classes.cartContent}>
+      <DashboardCard.Content className={classes.cartContent}>
         <MaximalButton onClick={onSetMaxQuantity} />
-      </CardContent>
+      </DashboardCard.Content>
       <ResponsiveTable>
         <TableHead>
           <TableRowLink>
@@ -189,6 +182,6 @@ export const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
           )}
         </TableBody>
       </ResponsiveTable>
-    </Card>
+    </DashboardCard>
   );
 };

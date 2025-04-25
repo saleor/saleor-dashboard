@@ -1,4 +1,5 @@
 import * as Sentry from "@sentry/react";
+import { History } from "history";
 
 import { TrackerMethods } from "../types";
 
@@ -9,7 +10,7 @@ interface Config {
 }
 
 export const SentryAdapter = (config: Config): TrackerMethods => {
-  const init: TrackerMethods["init"] = () => {
+  const init: TrackerMethods["init"] = (history: History) => {
     if (config?.dsn) {
       Sentry.init({
         dsn: config.dsn,
@@ -20,7 +21,10 @@ export const SentryAdapter = (config: Config): TrackerMethods => {
           "ResizeObserver loop completed with undelivered notifications",
           // TODO: rmoeve after Cypress migation
           "ResizeObserver loop limit exceeded",
+          "Cannot read properties of undefined (reading 'holder')",
         ],
+        integrations: [Sentry.reactRouterV5BrowserTracingIntegration({ history })],
+        tracesSampleRate: 0.1,
       });
 
       return true;

@@ -1,6 +1,6 @@
 name: QA
 
-on: [pull_request]
+on: push
 
 jobs:
   check-lock:
@@ -42,6 +42,9 @@ jobs:
         run: |
           npm run lint
           git diff --exit-code ./src
+      
+      - name: Knip for unused files, dependencies and exports
+        run: npm run knip
 
   jest-tests:
     runs-on: ubuntu-latest
@@ -69,7 +72,13 @@ jobs:
 
       - name: Run jest
         run: |
-          npm run test
+          npm run test:ci
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: saleor/saleor-dashboard
 
   translation-messages:
     runs-on: ubuntu-latest

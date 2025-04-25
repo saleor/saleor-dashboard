@@ -42,13 +42,6 @@ const useStyles = makeStyles(
         ...colName,
       },
       colValue: {},
-      actions: {
-        "&&": {
-          paddingBottom: theme.spacing(2),
-          paddingTop: theme.spacing(2),
-          paddingLeft: theme.spacing(4),
-        },
-      },
       content: {
         paddingBottom: 0,
         paddingTop: theme.spacing(),
@@ -56,20 +49,6 @@ const useStyles = makeStyles(
       emptyContainer: {
         paddingBottom: 0,
         paddingTop: 0,
-      },
-      expandBtn: {
-        position: "relative",
-        left: theme.spacing(1),
-        top: -2,
-        transition: theme.transitions.create("transform", {
-          duration: theme.transitions.duration.shorter,
-        }),
-        border: 0,
-      },
-      header: {
-        "&&": {
-          paddingBottom: theme.spacing(1),
-        },
       },
       input: {
         padding: theme.spacing(1.5, 2),
@@ -81,9 +60,6 @@ const useStyles = makeStyles(
         head: {
           padding: 0,
         },
-      },
-      rotate: {
-        transform: "rotate(-180deg)",
       },
     };
   },

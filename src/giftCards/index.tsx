@@ -1,10 +1,12 @@
+import { ConditionalGiftCardsFilterProver } from "@dashboard/components/ConditionalFilter";
+import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
-import { Route, RouteComponentProps, Switch } from "react-router-dom";
+import { RouteComponentProps, Switch } from "react-router-dom";
 
 import GiftCardSettings from "./GiftCardSettings";
 import GiftCardListComponent from "./GiftCardsList";
@@ -27,7 +29,11 @@ const GiftCardList: React.FC<RouteComponentProps<any>> = () => {
     GiftCardUrlSortField.usedBy,
   );
 
-  return <GiftCardListComponent params={params} />;
+  return (
+    <ConditionalGiftCardsFilterProver locationSearch={location.search}>
+      <GiftCardListComponent params={params} />
+    </ConditionalGiftCardsFilterProver>
+  );
 };
 const Component: React.FC = () => {
   const intl = useIntl();

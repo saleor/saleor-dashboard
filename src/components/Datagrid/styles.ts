@@ -97,9 +97,6 @@ const useStyles = makeStyles<{ actionButtonPosition?: "left" | "right" }>(
         width: "100%",
         paddingBottom: "1px",
       },
-      root: {
-        position: "relative",
-      },
       rowActionBar: {
         height: "100%",
         width: 36,
@@ -159,14 +156,6 @@ const useStyles = makeStyles<{ actionButtonPosition?: "left" | "right" }>(
         boxShadow: "-1px 0px 12px rgba(0, 0, 0, 0.80)",
       },
       rowActionSelected,
-      cardContentRoot: {
-        padding: "0",
-        flex: 1,
-
-        "&:last-child": {
-          padding: "0",
-        },
-      },
     };
   },
   { name: "Datagrid" },

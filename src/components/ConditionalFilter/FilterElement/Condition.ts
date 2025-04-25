@@ -1,5 +1,6 @@
-import { InitialStateResponse } from "../API/InitialStateResponse";
+import { InitialProductStateResponse } from "../API/initialState/product/InitialProductStateResponse";
 import { LeftOperand } from "../LeftOperandsProvider";
+import { InitialResponseType } from "../types";
 import { UrlToken } from "./../ValueProvider/UrlToken";
 import { ConditionOptions, StaticElementName } from "./ConditionOptions";
 import { ConditionSelected } from "./ConditionSelected";
@@ -44,15 +45,18 @@ export class Condition {
     return new Condition(options, ConditionSelected.fromConditionItem(options.first()), false);
   }
 
-  public static fromUrlToken(token: UrlToken, response: InitialStateResponse) {
+  public static fromUrlToken(token: UrlToken, response: InitialResponseType) {
     if (ConditionOptions.isStaticName(token.name)) {
       const staticOptions = ConditionOptions.fromStaticElementName(token.name);
       const selectedOption = staticOptions.findByLabel(token.conditionKind);
       const valueItems = response.filterByUrlToken(token) as ItemOption[];
-      const value =
-        selectedOption?.type === "multiselect" && valueItems.length > 0
-          ? valueItems
-          : valueItems[0];
+
+      const isMultiSelect = selectedOption?.type === "multiselect" && valueItems.length > 0;
+      const isBulkSelect = selectedOption?.type === "bulkselect" && valueItems.length > 0;
+      const isDate = ["created", "updatedAt", "startDate", "endDate", "started"].includes(
+        token.name,
+      );
+      const value = isMultiSelect || isDate || isBulkSelect ? valueItems : valueItems[0];
 
       if (!selectedOption) {
         return Condition.createEmpty();
@@ -66,7 +70,7 @@ export class Condition {
     }
 
     if (token.isAttribute()) {
-      const attribute = response.attributeByName(token.name);
+      const attribute = (response as InitialProductStateResponse).attributeByName(token.name);
       const options = ConditionOptions.fromAttributeType(attribute.inputType);
       const option = options.find(item => item.label === token.conditionKind)!;
       const value = response.filterByUrlToken(token);

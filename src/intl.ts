@@ -226,6 +226,10 @@ export const commonMessages = defineMessages({
     defaultMessage: "Loading...",
     id: "gjBiyj",
   },
+  orderLine: {
+    defaultMessage: "Order line",
+    id: "BalldE",
+  },
 });
 
 export const errorMessages = defineMessages({
@@ -410,6 +414,10 @@ export const buttonMessages = defineMessages({
     id: "rbrahO",
     defaultMessage: "Close",
   },
+  proceed: {
+    id: "VNX4fn",
+    defaultMessage: "Proceed",
+  },
   noPermission: {
     id: "ORQvOg",
     defaultMessage: "You don't have permission to perform this action",
@@ -581,6 +589,16 @@ export const sectionNames = defineMessages({
     id: "BFR6CF",
     defaultMessage: "Webhooks & Events",
     description: "webhooks and events section name",
+  },
+  extensions: {
+    id: "fkoxZY",
+    defaultMessage: "Extensions",
+    description: "extensions section name",
+  },
+  exploreExtensions: {
+    id: "033/zW",
+    defaultMessage: "Explore",
+    description: "explore extensions section name",
   },
 });
 

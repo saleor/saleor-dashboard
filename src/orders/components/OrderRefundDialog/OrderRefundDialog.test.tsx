@@ -1,14 +1,23 @@
+import { PermissionEnum } from "@dashboard/graphql";
+import { order as orderMock } from "@dashboard/orders/fixtures";
 import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 
 import { OrderRefundDialog } from "./OrderRefundDialog";
+
+const order = orderMock("");
 
 jest.mock("react-intl", () => ({
   useIntl: jest.fn(() => ({
     formatMessage: jest.fn(x => x.defaultMessage),
   })),
   defineMessages: jest.fn(x => x),
+  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
 }));
+jest.mock("@dashboard/auth/hooks/useUserPermissions", () => ({
+  useUserPermissions: jest.fn(() => [{ code: PermissionEnum.HANDLE_PAYMENTS }]),
+}));
+
 describe("OrderRefundDialog", () => {
   it("renders the dialog when open is true", () => {
     // Arrange
@@ -17,6 +26,7 @@ describe("OrderRefundDialog", () => {
       onClose: jest.fn(),
       onStandardRefund: jest.fn(),
       onManualRefund: jest.fn(),
+      order,
     };
 
     // Act
@@ -34,6 +44,7 @@ describe("OrderRefundDialog", () => {
       onClose: jest.fn(),
       onStandardRefund: jest.fn(),
       onManualRefund: jest.fn(),
+      order,
     };
 
     // Act
@@ -45,21 +56,22 @@ describe("OrderRefundDialog", () => {
     expect(dialog).not.toBeInTheDocument();
   });
 
-  it("closes the modal when user clicks on cancel", () => {
+  it("closes the modal when user clicks on back", () => {
     // Arrange
     const props = {
       open: true,
       onClose: jest.fn(),
       onStandardRefund: jest.fn(),
       onManualRefund: jest.fn(),
+      order,
     };
 
     // Act
     render(<OrderRefundDialog {...props} />);
 
-    const cancelButton = screen.getByRole("button", { name: /cancel/i });
+    const backButton = screen.getByRole("button", { name: /back/i });
 
-    fireEvent.click(cancelButton);
+    fireEvent.click(backButton);
     // Assert
     expect(props.onClose).toHaveBeenCalled();
   });
@@ -71,12 +83,13 @@ describe("OrderRefundDialog", () => {
       onClose: jest.fn(),
       onStandardRefund: jest.fn(),
       onManualRefund: jest.fn(),
+      order,
     };
 
     // Act
     render(<OrderRefundDialog {...props} />);
 
-    const confirmButton = screen.getByRole("button", { name: /confirm/i });
+    const confirmButton = screen.getByRole("button", { name: /proceed/i });
 
     fireEvent.click(confirmButton);
     // Assert
@@ -89,12 +102,13 @@ describe("OrderRefundDialog", () => {
       onClose: jest.fn(),
       onStandardRefund: jest.fn(),
       onManualRefund: jest.fn(),
+      order,
     };
 
     // Act
     render(<OrderRefundDialog {...props} />);
 
-    const confirmButton = screen.getByRole("button", { name: /confirm/i });
+    const confirmButton = screen.getByRole("button", { name: /proceed/i });
     const manualRefundRadio = screen.getByTestId("manual-refund");
 
     await fireEvent.click(manualRefundRadio);

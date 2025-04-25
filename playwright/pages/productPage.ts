@@ -20,8 +20,6 @@ export class ProductPage extends BasePage {
 
   readonly rightSideDetailsPage: RightSideDetailsPage;
 
-  readonly basePage: BasePage;
-
   readonly channelSelectDialog: ChannelSelectDialog;
 
   readonly deleteProductDialog: DeleteDialog;
@@ -44,7 +42,7 @@ export class ProductPage extends BasePage {
     readonly productTypeInput = page.getByTestId("product-type"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly categoryInput = page.getByTestId("category"),
-    readonly categoryItem = page.getByTestId("single-autocomplete-select-option"),
+    readonly categoryItem = page.getByTestId("select-option"),
     readonly collectionInput = page.getByTestId("collections"),
     readonly autocompleteDropdown = page.getByTestId("autocomplete-dropdown"),
     readonly descriptionInput = page
@@ -68,16 +66,16 @@ export class ProductPage extends BasePage {
     readonly visibleRadioBtn = page.locator("[name='isPublished']"),
     readonly channelAvailabilityItem = page.locator("[data-test-id*='channel-availability-item']"),
     readonly addVariantButton = page.locator("[data-test-id*='button-add-variant']"),
+    readonly datagridFullscreenButton = page.locator("[data-test-id*='button-exit-fullscreen']"),
     readonly ratingInput = page.locator("[name='rating']"),
     readonly warehouseOption = page.locator("[role='menuitem']"),
     readonly costPriceInput = page.locator("[name*='costPrice']"),
-    readonly sellingPriceInput = page.locator("[name*='channel-price']"),
+    readonly sellingPriceInput = page.locator("[name*='channelListing-price']"),
     readonly firstRowDataGrid = page.locator("[data-testid='glide-cell-1-0']"),
     readonly searchInput = page.getByTestId("search-input"),
     readonly emptyDataGridListView = page.getByTestId("empty-data-grid-text"),
   ) {
     super(page);
-    this.basePage = new BasePage(page);
     this.exportProductsDialog = new ExportProductsDialog(page);
     this.deleteProductDialog = new DeleteDialog(page);
     this.channelSelectDialog = new ChannelSelectDialog(page);
@@ -91,12 +89,14 @@ export class ProductPage extends BasePage {
 
     await console.log("Navigating to create product view: " + createProductUrl);
     await this.page.goto(createProductUrl);
+    await this.waitForDOMToFullyLoad();
     await this.pageHeader.waitFor({ state: "visible", timeout: 50000 });
   }
 
   async searchforProduct(productName: string) {
     await this.searchInput.fill(productName);
     await this.waitForGrid();
+    await this.waitForDOMToFullyLoad();
   }
 
   async gotoExistingProductPage(productId: string) {
@@ -104,6 +104,7 @@ export class ProductPage extends BasePage {
 
     console.log(`Navigating to existing product: ${existingProductUrl}`);
     await this.page.goto(existingProductUrl);
+    await this.waitForDOMToFullyLoad();
     await this.pageHeader.waitFor({ state: "visible", timeout: 50000 });
   }
 
@@ -132,7 +133,7 @@ export class ProductPage extends BasePage {
   }
 
   async clickBulkDeleteButton() {
-    await this.bulkDeleteButton.click();
+    await this.submitButton.click();
   }
 
   async addSeo() {
@@ -185,10 +186,6 @@ export class ProductPage extends BasePage {
     await this.saveButton.click();
   }
 
-  async expectSuccessBanner() {
-    await this.basePage.expectSuccessBanner();
-  }
-
   async clickCreateProductButton() {
     await this.createProductButton.click();
   }
@@ -198,11 +195,16 @@ export class ProductPage extends BasePage {
   }
 
   async clickAddVariantButton() {
-    await this.addVariantButton.click();
+    await this.addVariantButton.nth(1).click();
+  }
+
+  async clickDatagridFullscreenButton(nthChild = 0) {
+    await this.datagridFullscreenButton.nth(nthChild).click();
   }
 
   async gotoProductListPage() {
     await this.page.goto(URL_LIST.products);
+    await this.waitForGrid();
   }
 
   async uploadProductImage(fileName: string) {

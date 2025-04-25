@@ -9,12 +9,14 @@ import {
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { OrderListQuery } from "@dashboard/graphql";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { orderListStaticColumnAdapter, useGetCellContent } from "./datagrid";
 import { messages } from "./messages";
@@ -38,6 +40,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
   hasRowHover,
   rowAnchor,
 }) => {
+  const location = useLocation();
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
   const ordersLength = getOrdersRowsLength(orders, disabled);
@@ -53,6 +56,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
     [emptyColumn, intl, sort],
   );
   const { handlers, staticColumns, visibleColumns, selectedColumns } = useColumns({
+    gridName: "order_list",
     staticColumns: memoizedStaticColumns,
     selectedColumns: settings?.columns ?? [],
     onSave: handleColumnChange,
@@ -106,7 +110,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
           columnSelect="single"
           hasRowHover={hasRowHover}
           freezeColumns={2}
-          verticalBorder={col => col > 1}
+          verticalBorder={false}
           availableColumns={visibleColumns}
           onHeaderClicked={handleHeaderClick}
           emptyText={intl.formatMessage(messages.emptyText)}
@@ -124,9 +128,9 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
               onToggle={handlers.onToggle}
             />
           )}
-          fullScreenTitle={intl.formatMessage(messages.orders)}
           onRowClick={handleRowClick}
           rowAnchor={handleRowAnchor}
+          navigatorOpts={{ state: getPrevLocationState(location) }}
         />
 
         <Box paddingX={6}>

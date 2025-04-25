@@ -6,6 +6,7 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useLocale from "@dashboard/hooks/useLocale";
 import { OrderDraft } from "@dashboard/orders/types";
 import { OrderDraftListUrlSortField, orderUrl } from "@dashboard/orders/urls";
@@ -14,6 +15,7 @@ import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { createGetCellContent, orderDraftListStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
@@ -37,6 +39,7 @@ export const OrderDraftListDatagrid = ({
   onUpdateListSettings,
   onSelectOrderDraftIds,
 }: OrderDraftListDatagridProps) => {
+  const location = useLocation();
   const intl = useIntl();
   const { locale } = useLocale();
   const datagridState = useDatagridChangeState();
@@ -53,6 +56,7 @@ export const OrderDraftListDatagrid = ({
     [intl, sort],
   );
   const { handlers, staticColumns, visibleColumns, selectedColumns } = useColumns({
+    gridName: "order_drafts_list",
     staticColumns: memoizedStaticColumns,
     selectedColumns: settings?.columns ?? [],
     onSave: handleColumnChange,
@@ -102,7 +106,7 @@ export const OrderDraftListDatagrid = ({
         hasRowHover={hasRowHover}
         loading={disabled}
         availableColumns={visibleColumns}
-        verticalBorder={col => col > 0}
+        verticalBorder={false}
         getCellContent={getCellContent}
         getCellError={() => false}
         menuItems={() => []}
@@ -122,6 +126,7 @@ export const OrderDraftListDatagrid = ({
             onToggle={handlers.onToggle}
           />
         )}
+        navigatorOpts={{ state: getPrevLocationState(location) }}
       />
 
       <Box paddingX={6}>

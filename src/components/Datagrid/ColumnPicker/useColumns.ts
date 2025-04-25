@@ -3,6 +3,8 @@ import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn } from "@glideapps/glide-data-grid";
 import React from "react";
 
+import { PersistedColumn } from "../persistance/persistedColumn";
+import { usePersistance } from "../persistance/usePersistance";
 import { AvailableColumn } from "../types";
 import {
   areCategoriesLoaded,
@@ -12,6 +14,11 @@ import {
   mergeSelectedColumns,
   sortColumns,
 } from "./utils";
+import {
+  dynamicWithPersistance,
+  selectedWithPersistance,
+  visibleWithPersistance,
+} from "./withPersistance";
 
 export interface ColumnCategory {
   name: string;
@@ -29,6 +36,7 @@ export interface ColumnCategory {
 }
 
 export interface UseColumnsProps {
+  gridName?: string;
   staticColumns: AvailableColumn[];
   columnCategories?: ColumnCategory[];
   selectedColumns: string[];
@@ -36,12 +44,16 @@ export interface UseColumnsProps {
 }
 
 export const useColumns = ({
+  gridName,
   staticColumns,
-  selectedColumns,
+  selectedColumns: _selectedColumns,
   columnCategories,
-  onSave,
+  onSave: handleSave,
 }: UseColumnsProps) => {
   const [dynamicColumns, updateDynamicColumns] = React.useState<AvailableColumn[] | null>(null);
+
+  const { columns: persistedColumns, update } = usePersistance(gridName);
+  const selectedColumns = selectedWithPersistance(_selectedColumns, persistedColumns);
 
   // Dynamic columns are loaded from the API, thus they need to be updated
   // after query resolves with data. Then we also sort them by order of addition
@@ -60,6 +72,34 @@ export const useColumns = ({
   );
   const [recentlyAddedColumn, setRecentlyAddedColumn] = React.useState<string | null>(null);
   const [visibleColumns, setVisibleColumns] = useStateFromProps(initialColumnsState);
+
+  const onSave = (columnsIds: string[]) => {
+    const columns = columnsIds.map(columnId => {
+      const persistentEquivalent = persistedColumns.find(
+        persistedColumn => persistedColumn.identifier() === columnId,
+      );
+
+      if (persistentEquivalent) {
+        return persistentEquivalent;
+      }
+
+      return PersistedColumn.withDefaultWidth(columnId);
+    });
+
+    update(columns);
+    handleSave(columnsIds);
+  };
+
+  const handleVisibleColumnsChange = (currentColumns: (AvailableColumn | undefined)[]) => {
+    const columns = currentColumns
+      .filter(isValidColumn)
+      .map(column => PersistedColumn.fromAvailableColumn(column));
+
+    update(columns);
+
+    return currentColumns;
+  };
+
   const onMove = React.useCallback(
     (startIndex: number, endIndex: number): void => {
       // When empty column prevent to rearrange it order
@@ -71,13 +111,17 @@ export const useColumns = ({
         // Keep empty column always at beginning
         if (endIndex === 0) {
           return setVisibleColumns(old =>
-            addAtIndex(old[startIndex], removeAtIndex(old, startIndex), endIndex + 1),
+            handleVisibleColumnsChange(
+              addAtIndex(old[startIndex], removeAtIndex(old, startIndex), endIndex + 1),
+            ),
           );
         }
       }
 
       setVisibleColumns(old =>
-        addAtIndex(old[startIndex], removeAtIndex(old, startIndex), endIndex),
+        handleVisibleColumnsChange(
+          addAtIndex(old[startIndex], removeAtIndex(old, startIndex), endIndex),
+        ),
       );
     },
     [visibleColumns, setVisibleColumns],
@@ -89,8 +133,12 @@ export const useColumns = ({
       }
 
       return setVisibleColumns(prevColumns =>
-        prevColumns.map(prevColumn =>
-          prevColumn.id === column.id ? { ...prevColumn, width: newSize } : prevColumn,
+        handleVisibleColumnsChange(
+          prevColumns.map(prevColumn =>
+            prevColumn && prevColumn.id === column.id
+              ? { ...prevColumn, width: newSize }
+              : prevColumn,
+          ),
         ),
       );
     },
@@ -102,7 +150,7 @@ export const useColumns = ({
 
     if (!isDynamic) {
       if (isAdded) {
-        onSave([...selectedColumns, columnId]);
+        onSave([columnId, ...selectedColumns]);
         setRecentlyAddedColumn(columnId);
       } else {
         onSave(selectedColumns.filter(id => id !== columnId));
@@ -161,9 +209,9 @@ export const useColumns = ({
       onCustomUpdateVisible,
       onResetDynamicToInitial,
     },
-    visibleColumns,
+    visibleColumns: visibleWithPersistance(visibleColumns, persistedColumns),
+    dynamicColumns: dynamicWithPersistance(dynamicColumns, persistedColumns),
     staticColumns,
-    dynamicColumns,
     selectedColumns,
     columnCategories,
     recentlyAddedColumn,

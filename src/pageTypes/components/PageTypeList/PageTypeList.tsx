@@ -1,18 +1,20 @@
 // @ts-strict-ignore
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { PageTypeFragment } from "@dashboard/graphql";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { PageTypeListUrlSortField, pageTypeUrl } from "@dashboard/pageTypes/urls";
 import { getArrowDirection } from "@dashboard/utils/sort";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
+import { useLocation } from "react-router";
 
 import { renderCollection } from "../../../misc";
 import { ListActions, ListProps, SortPage } from "../../../types";
@@ -36,6 +38,7 @@ interface PageTypeListProps extends ListProps, ListActions, SortPage<PageTypeLis
 const PageTypeList: React.FC<PageTypeListProps> = props => {
   const { disabled, pageTypes, onSort, isChecked, selected, sort, toggle, toggleAll, toolbar } =
     props;
+  const location = useLocation();
   const classes = useStyles(props);
   const numberOfColumns = pageTypes?.length === 0 ? 1 : 2;
 
@@ -80,7 +83,14 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
                 className={pageType ? classes.link : undefined}
                 hover={!!pageType}
                 key={pageType ? pageType.id : "skeleton"}
-                href={pageType && pageTypeUrl(pageType.id)}
+                href={
+                  pageType
+                    ? {
+                        pathname: pageTypeUrl(pageType.id),
+                        state: getPrevLocationState(location),
+                      }
+                    : undefined
+                }
                 selected={isSelected}
                 data-test-id={"id-" + pageType?.id}
               >

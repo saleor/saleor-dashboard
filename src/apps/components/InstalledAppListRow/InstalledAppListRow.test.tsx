@@ -1,13 +1,17 @@
 import { AppListContext, AppListContextValues } from "@dashboard/apps/context";
-import { activeApp } from "@dashboard/apps/fixtures";
+import { activeApp, appWithFailedEventDeliveries } from "@dashboard/apps/fixtures";
 import { InstalledApp } from "@dashboard/apps/types";
 import { getAppsConfig } from "@dashboard/config";
+import { useFlag } from "@dashboard/featureFlags";
 import Wrapper from "@test/wrapper";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import { MemoryRouter as Router } from "react-router-dom";
 
 import InstalledAppListRow from "./InstalledAppListRow";
+
+jest.mock("@dashboard/featureFlags");
+(useFlag as jest.Mock).mockReturnValue({ enabled: true });
 
 const Component = ({ data, context }: { data: InstalledApp; context: AppListContextValues }) => (
   <Wrapper>
@@ -76,7 +80,7 @@ describe("Apps InstalledAppListRow", () => {
     // Assert
     expect(externalLabel).toBeTruthy();
   });
-  it("displays tunnnel label when app is served via tunnnel", () => {
+  it("displays tunnel label when app is served via tunnel", () => {
     // Arrange
     const removeAppInstallation = jest.fn();
     const retryAppInstallation = jest.fn();
@@ -103,5 +107,31 @@ describe("Apps InstalledAppListRow", () => {
 
     // Assert
     expect(tunnelLabel).toBeTruthy();
+  });
+  it("displays a warning dot when app has issues, TC_ID: D_INT_02", async () => {
+    // Arrange
+    const removeAppInstallation = jest.fn();
+    const retryAppInstallation = jest.fn();
+
+    // Act
+    render(
+      <Component
+        data={{
+          app: appWithFailedEventDeliveries,
+          isExternal: false,
+        }}
+        context={{
+          removeAppInstallation,
+          retryAppInstallation,
+        }}
+      />,
+    );
+
+    fireEvent.focus(screen.getByTestId("app-warning-dot"));
+
+    // Assert
+    expect(screen.queryAllByRole("link").at(-1)?.getAttribute("href")).toBe(
+      `/apps/${appWithFailedEventDeliveries.id}`,
+    );
   });
 });

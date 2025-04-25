@@ -1,7 +1,8 @@
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
-import { TextField, Typography } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -56,11 +57,11 @@ const TranslationFieldsLong: React.FC<TranslationFieldsLongProps> = ({
       )}
     </Form>
   ) : initial === null ? (
-    <Typography color="textSecondary">
+    <Text color="default2">
       <FormattedMessage id="T/5OyA" defaultMessage="No translation yet" />
-    </Typography>
+    </Text>
   ) : (
-    <Typography>{initial}</Typography>
+    <Text>{initial}</Text>
   );
 };
 

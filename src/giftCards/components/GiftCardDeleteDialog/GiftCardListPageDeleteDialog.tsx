@@ -45,6 +45,8 @@ const GiftCardDeleteDialog: React.FC<GiftCardDeleteDialogProps> = ({
         confirmButtonState: bulkDeleteGiftCardOpts?.status,
       };
 
+  const isLoading = loading || deleteGiftCardOpts?.status === "loading";
+
   return (
     <GiftCardDeleteDialogContent
       {...listProps}
@@ -54,7 +56,7 @@ const GiftCardDeleteDialog: React.FC<GiftCardDeleteDialogProps> = ({
       onClose={onClose}
       singleDeletion={singleDeletion}
       giftCards={giftCards}
-      loading={loading}
+      loading={isLoading}
     />
   );
 };

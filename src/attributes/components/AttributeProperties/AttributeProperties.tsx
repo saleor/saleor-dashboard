@@ -1,5 +1,5 @@
 import { ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION } from "@dashboard/attributes/utils/data";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import ControlledSwitch from "@dashboard/components/ControlledSwitch";
 import FormSpacer from "@dashboard/components/FormSpacer";
@@ -7,7 +7,8 @@ import { AttributeErrorFragment, AttributeTypeEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
-import { Card, CardContent, TextField, Typography } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -30,9 +31,9 @@ const messages = defineMessages({
     description: "attribute properties regarding dashboard",
   },
   filterableInDashboard: {
-    id: "RH+aOF",
-    defaultMessage: "Use in Filtering",
-    description: "use attribute in filtering",
+    id: "j5hGyJ",
+    defaultMessage: "Filterable in dashboard",
+    description: "attribute is filterable in dashboard",
   },
   filterableInDashboardCaption: {
     id: "Q9wTrz",
@@ -41,8 +42,8 @@ const messages = defineMessages({
     description: "caption",
   },
   filterableInStorefront: {
-    defaultMessage: "Use as filter",
-    id: "e1vU/4",
+    defaultMessage: "Filterable in storefront",
+    id: "SV0FRm",
     description: "attribute is filterable in storefront",
   },
   storefrontPropertiesTitle: {
@@ -56,8 +57,8 @@ const messages = defineMessages({
     description: "attribute position in storefront filters",
   },
   visibleInStorefront: {
-    id: "x8V/xS",
-    defaultMessage: "Public",
+    id: "inWs4U",
+    defaultMessage: "Visible in storefront",
     description: "attribute visibility in storefront",
   },
   visibleInStorefrontCaption: {
@@ -87,9 +88,12 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
     data.type === AttributeTypeEnum.PRODUCT_TYPE;
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(commonMessages.properties)} />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(commonMessages.properties)}</DashboardCard.Title>
+      </DashboardCard.Header>
+
+      <DashboardCard.Content>
         {storefrontFacetedNavigationProperties && (
           <>
             <ControlledCheckbox
@@ -122,17 +126,17 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
           label={
             <>
               <FormattedMessage {...messages.visibleInStorefront} />
-              <Typography variant="caption">
+              <Text fontWeight="medium" fontSize={3} display="block">
                 <FormattedMessage {...messages.visibleInStorefrontCaption} />
-              </Typography>
+              </Text>
             </>
           }
           checked={data.visibleInStorefront}
           onChange={onChange}
           disabled={disabled}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

@@ -46,12 +46,11 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { commonMessages } from "@dashboard/intl";
 import { maybe } from "@dashboard/misc";
-import useCategorySearch from "@dashboard/searches/useCategorySearch";
-import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
+import { useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCategorySearch";
+import { useCollectionWithTotalProductsSearch } from "@dashboard/searches/useCollectionSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
-import { DialogContentText } from "@material-ui/core";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -75,14 +74,14 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     loadMore: loadMoreCategories,
     search: searchCategories,
     result: searchCategoriesOpts,
-  } = useCategorySearch({
+  } = useCategoryWithTotalProductsSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const {
     loadMore: loadMoreCollections,
     search: searchCollections,
     result: searchCollectionsOpts,
-  } = useCollectionSearch({
+  } = useCollectionWithTotalProductsSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const {
@@ -387,6 +386,8 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
         products={getFilteredProductVariants(data, searchProductsOpts)}
       />
       <AssignProductDialog
+        selectedChannels={currentChannels}
+        productUnavailableText={intl.formatMessage(messages.productUnavailable)}
         confirmButtonState={saleCataloguesAddOpts.status}
         hasMore={searchProductsOpts.data?.search.pageInfo.hasNextPage}
         open={params.action === "assign-product"}
@@ -461,15 +462,13 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
         confirmButtonLabel={intl.formatMessage(messages.saleDetailsUnassignCategory)}
       >
         {canOpenBulkActionDialog && (
-          <DialogContentText>
-            <FormattedMessage
-              {...messages.saleDetailsUnassignCategoryDialog}
-              values={{
-                counter: params.ids.length,
-                displayQuantity: <strong>{params.ids.length}</strong>,
-              }}
-            />
-          </DialogContentText>
+          <FormattedMessage
+            {...messages.saleDetailsUnassignCategoryDialog}
+            values={{
+              counter: params.ids.length,
+              displayQuantity: <strong>{params.ids.length}</strong>,
+            }}
+          />
         )}
       </ActionDialog>
       <ActionDialog
@@ -481,15 +480,13 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
         confirmButtonLabel={intl.formatMessage(messages.saleDetailsUnassignCollection)}
       >
         {canOpenBulkActionDialog && (
-          <DialogContentText>
-            <FormattedMessage
-              {...messages.saleDetailsUnassignCollectionDialog}
-              values={{
-                counter: params.ids.length,
-                displayQuantity: <strong>{params.ids.length}</strong>,
-              }}
-            />
-          </DialogContentText>
+          <FormattedMessage
+            {...messages.saleDetailsUnassignCollectionDialog}
+            values={{
+              counter: params.ids.length,
+              displayQuantity: <strong>{params.ids.length}</strong>,
+            }}
+          />
         )}
       </ActionDialog>
       <ActionDialog
@@ -501,15 +498,13 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
         confirmButtonLabel={intl.formatMessage(messages.saleDetailsUnassignProduct)}
       >
         {canOpenBulkActionDialog && (
-          <DialogContentText>
-            <FormattedMessage
-              {...messages.saleDetailsUnassignCategoryDialog}
-              values={{
-                counter: params.ids.length,
-                displayQuantity: <strong>{params.ids.length}</strong>,
-              }}
-            />
-          </DialogContentText>
+          <FormattedMessage
+            {...messages.saleDetailsUnassignCategoryDialog}
+            values={{
+              counter: params.ids.length,
+              displayQuantity: <strong>{params.ids.length}</strong>,
+            }}
+          />
         )}
       </ActionDialog>
       <ActionDialog
@@ -521,15 +516,13 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
         confirmButtonLabel={intl.formatMessage(messages.saleDetailsUnassignVariant)}
       >
         {canOpenBulkActionDialog && (
-          <DialogContentText>
-            <FormattedMessage
-              {...messages.saleDetailsUnassignVariantDialog}
-              values={{
-                counter: params.ids.length,
-                displayQuantity: <strong>{params.ids.length}</strong>,
-              }}
-            />
-          </DialogContentText>
+          <FormattedMessage
+            {...messages.saleDetailsUnassignVariantDialog}
+            values={{
+              counter: params.ids.length,
+              displayQuantity: <strong>{params.ids.length}</strong>,
+            }}
+          />
         )}
       </ActionDialog>
       <ActionDialog
@@ -544,14 +537,12 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
           })
         }
       >
-        <DialogContentText>
-          <FormattedMessage
-            {...messages.saleDetailsUnassignDialogDelete}
-            values={{
-              saleName: <strong>{maybe(() => data.sale.name, "...")}</strong>,
-            }}
-          />
-        </DialogContentText>
+        <FormattedMessage
+          {...messages.saleDetailsUnassignDialogDelete}
+          values={{
+            saleName: <strong>{maybe(() => data.sale.name, "...")}</strong>,
+          }}
+        />
       </ActionDialog>
     </PaginatorContext.Provider>
   );

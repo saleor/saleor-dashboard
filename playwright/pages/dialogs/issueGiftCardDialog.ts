@@ -1,32 +1,36 @@
 import { BasePage } from "@pages/basePage";
-import { Page } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
 export class IssueGiftCardDialog extends BasePage {
   constructor(
     page: Page,
     readonly enterAmountInput = page.locator('[name="balanceAmount"]'),
     readonly expiryPeriodAmountInput = page.locator('[name="expiryPeriodAmount"]'),
-    readonly tagsInput = page.getByTestId("gift-card-tag-select-field").locator("input"),
+    readonly tagsInput = page.getByTestId("gift-card-tag-select-field"),
+    readonly tagsInputOptions = page.locator('[data-test-id*="select-option"]'),
     readonly cardCode = page.getByTestId("cardCode"),
-
-    readonly sendToCustomerCheckbox = page.getByTestId("send-to-customer-section").locator("input"),
-    readonly sendExpireDateCheckbox = page.getByTestId("expiry-section").locator("input"),
-    readonly customerInput = page.getByTestId("customer-field").locator("input"),
-    readonly noteTextArea = page.getByTestId("note-field").locator('[name="note"]'),
+    readonly giftCardExpireFields = page.getByTestId("gift-card-expire-data-fields"),
+    readonly sendToCustomerCheckbox = page
+      .getByTestId("send-to-customer-section")
+      .locator('button[role="checkbox"]'),
+    readonly sendExpireDateCheckbox = page.getByTestId("expiry-section").locator("button"),
+    readonly customerInput = page.getByTestId("customer-field"),
+    readonly noteTextArea = page.getByTestId("note-field"),
     readonly requiresActivationCheckbox = page
       .getByTestId("requires-activation-section")
-      .locator("input"),
+      .locator('button[role="checkbox"]'),
     readonly issueButton = page.getByTestId("submit"),
     readonly okButton = page.getByTestId("submit"),
     readonly copyCodeButton = page.getByTestId("copy-code-button"),
+    readonly option = page.getByTestId("select-option"),
+    readonly issueGiftCardDialog = page.getByTestId("gift-card-dialog"),
+    readonly amountDropdown = page.locator('div[name="balanceCurrency"]'),
   ) {
     super(page);
   }
 
   async clickIssueButton() {
-    await this.waitForNetworkIdle(async () => {
-      await this.issueButton.click();
-    });
+    await this.issueButton.click();
   }
 
   async clickOkButton() {
@@ -41,16 +45,22 @@ export class IssueGiftCardDialog extends BasePage {
     await this.enterAmountInput.fill(amount);
   }
 
-  async typeCustomer(customer: string) {
+  async selectCustomer(customer: string) {
     await this.customerInput.fill(customer);
+    await this.option.filter({ hasText: customer }).waitFor({ state: "visible" });
+    await this.option.filter({ hasText: customer }).click();
+    await this.waitForDOMToFullyLoad();
+    await expect(this.customerInput).toHaveValue(customer);
   }
 
   async typeExpiryPeriodAmount(expiryPeriodAmount: string) {
     await this.expiryPeriodAmountInput.fill(expiryPeriodAmount);
   }
 
-  async typeTag(tag: string) {
+  async typeCustomTag(tag: string) {
     await this.tagsInput.fill(tag);
+    await expect(this.issueGiftCardDialog.getByText("Loading...")).not.toBeVisible();
+    await this.tagsInputOptions.filter({ hasText: `Add new value: ${tag}` }).click();
   }
 
   async typeNote(tag: string) {
@@ -58,11 +68,24 @@ export class IssueGiftCardDialog extends BasePage {
   }
 
   async clickSendToCustomerCheckbox() {
-    await this.sendToCustomerCheckbox.click();
+    await this.sendToCustomerCheckbox.waitFor({ state: "visible" });
+    await expect(this.sendToCustomerCheckbox).toBeEnabled();
+    await this.waitForNetworkIdleAfterAction(async () => {
+      await this.sendToCustomerCheckbox.check({ force: true });
+    }),
+      await this.waitForDOMToFullyLoad();
+    await expect(this.sendToCustomerCheckbox).toBeChecked();
+    await this.customerInput.waitFor({ state: "visible" });
+    await expect(this.customerInput).toBeEnabled();
   }
 
   async clickSendExpireDateCheckbox() {
-    await this.sendExpireDateCheckbox.click();
+    await this.sendExpireDateCheckbox.waitFor({ state: "visible" });
+    await expect(this.sendExpireDateCheckbox).toBeEnabled();
+    await this.sendExpireDateCheckbox.check({ force: true });
+    await this.waitForDOMToFullyLoad();
+    await expect(this.sendExpireDateCheckbox).toBeChecked();
+    await this.giftCardExpireFields.waitFor({ state: "visible" });
   }
 
   async clickRequiresActivationCheckbox() {
@@ -73,5 +96,9 @@ export class IssueGiftCardDialog extends BasePage {
     const allTexts = await this.cardCode.allTextContents();
 
     return allTexts[0];
+  }
+
+  async tagsInputBlur() {
+    await this.tagsInput.blur();
   }
 }

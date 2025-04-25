@@ -1,5 +1,6 @@
 // @ts-strict-ignore
-import SingleSelectField from "@dashboard/components/SingleSelectField";
+import { Select } from "@dashboard/components/Select";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -21,18 +22,19 @@ interface PhoneFieldProps {
   number: string;
   prefixes: string[];
   label?: string;
-  onChange: (event: React.ChangeEvent<any>) => any;
+  onChange: (event: ChangeEvent) => any;
 }
 
 const PhoneField: React.FC<PhoneFieldProps> = props => {
   const { name, number: phoneNumber, prefix, prefixes, label, onChange } = props;
   const classes = useStyles(props);
+  const nameWithPrefix = name + "_prefix";
 
   return (
     <div className={classes.root}>
-      <SingleSelectField
-        name={name + "_prefix"}
-        choices={prefixes.map(p => ({ label: "+" + p, value: p }))}
+      <Select
+        name={nameWithPrefix}
+        options={prefixes.map(p => ({ label: "+" + p, value: p }))}
         onChange={onChange}
         value={prefix}
         label={label}

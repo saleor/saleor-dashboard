@@ -6,6 +6,7 @@ import useAppstoreApps from "@dashboard/apps/hooks/useAppstoreApps";
 import { AppListUrlDialog, AppListUrlQueryParams, AppUrls } from "@dashboard/apps/urls";
 import { getAppInProgressName, getAppstoreAppsLists } from "@dashboard/apps/utils";
 import { getAppsConfig } from "@dashboard/config";
+import { useFlag } from "@dashboard/featureFlags";
 import {
   AppInstallationFragment,
   AppSortField,
@@ -30,12 +31,14 @@ import { messages } from "./messages";
 
 interface Props {
   params: AppListUrlQueryParams;
+  showAvailableApps?: boolean;
 }
 
-export const AppListView: React.FC<Props> = ({ params }) => {
+export const AppListView: React.FC<Props> = ({ params, showAvailableApps = true }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const { enabled: appAlertsEnabled } = useFlag("app_alerts");
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const [openModal, closeModal] = createDialogActionHandlers<
     AppListUrlDialog,
@@ -63,13 +66,18 @@ export const AppListView: React.FC<Props> = ({ params }) => {
       filter: {
         type: AppTypeEnum.THIRDPARTY,
       },
+      canFetchAppEvents: hasManagedAppsPermission && appAlertsEnabled,
     },
   });
   const { pageInfo, ...paginationValues } = paginate(
     installedAppsData?.apps?.pageInfo,
     paginationState,
   );
-  const { data: appsInProgressData, refetch: appsInProgressRefetch } = useAppsInstallationsQuery({
+  const {
+    data: appsInProgressData,
+    refetch: appsInProgressRefetch,
+    loading: appInProgressLoading,
+  } = useAppsInstallationsQuery({
     displayLoader: false,
     skip: !hasManagedAppsPermission,
   });
@@ -98,6 +106,7 @@ export const AppListView: React.FC<Props> = ({ params }) => {
   const { handleAppInstallRetry, handleRemoveInProgress, deleteInProgressAppOpts } =
     useActiveAppsInstallations({
       appsInProgressData,
+      appInProgressLoading,
       appsInProgressRefetch,
       appsRefetch,
       installedAppNotify,
@@ -135,6 +144,7 @@ export const AppListView: React.FC<Props> = ({ params }) => {
           open={params.action === "app-installation-remove"}
         />
         <AppListPage
+          showAvailableApps={showAvailableApps}
           appsInstallations={appsInstallations}
           installedApps={installedApps}
           installableMarketplaceApps={installableMarketplaceApps}

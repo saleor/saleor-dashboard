@@ -7,8 +7,6 @@ import {
   UseDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { MetadataFormData } from "@dashboard/components/Metadata";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   MetadataErrorFragment,
   ProductChannelListingUpdateInput,
@@ -108,11 +106,11 @@ export type UseProductUpdateFormRenderProps = Omit<
 >;
 
 export interface UseProductUpdateFormOpts
-  extends Record<"categories" | "collections" | "taxClasses", SingleAutocompleteChoiceType[]> {
+  extends Record<"categories" | "collections" | "taxClasses", Option[]> {
   setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
-  setSelectedCollections: React.Dispatch<React.SetStateAction<MultiAutocompleteChoiceType[]>>;
+  setSelectedCollections: React.Dispatch<React.SetStateAction<Option[]>>;
   setSelectedTaxClass: React.Dispatch<React.SetStateAction<string>>;
-  selectedCollections: MultiAutocompleteChoiceType[];
+  selectedCollections: Option[];
   hasVariants: boolean;
   referencePages: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;

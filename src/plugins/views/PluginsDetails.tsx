@@ -13,7 +13,6 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import { DialogContentText } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -145,12 +144,10 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({ id, params }) =>
             })}
             onConfirm={() => handleFieldUpdate(null)}
           >
-            <DialogContentText>
-              <FormattedMessage
-                id="JRfJD9"
-                defaultMessage="The plugin may stop working after this field is cleared. Are you sure you want to proceed?"
-              />
-            </DialogContentText>
+            <FormattedMessage
+              id="JRfJD9"
+              defaultMessage="The plugin may stop working after this field is cleared. Are you sure you want to proceed?"
+            />
           </ActionDialog>
           <PluginSecretFieldDialog
             confirmButtonState={params.action ? pluginUpdateOpts.status : "default"}

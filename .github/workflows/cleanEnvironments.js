@@ -4,7 +4,7 @@ const core = require("@actions/core");
 
 const program = new Command();
 
-const pathToCloudAPI = "https://staging-cloud.saleor.io/platform/api/";
+const pathToCloudAPI = "https://cloud.staging.saleor.io/platform/api/";
 
 const snapshotName = "snapshot-automation-tests";
 

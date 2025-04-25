@@ -70,6 +70,7 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
             reserveStockDurationAuthenticatedUser:
               data.reserveStockDurationAuthenticatedUser || null,
             enableAccountConfirmationByEmail: data.emailConfirmation,
+            limitQuantityPerCheckout: data.limitQuantityPerCheckout || null,
           },
         },
       }),

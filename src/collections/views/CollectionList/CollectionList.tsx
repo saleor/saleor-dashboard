@@ -1,8 +1,11 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { createCollectionsQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
+import { useFlag } from "@dashboard/featureFlags";
 import { useCollectionBulkDeleteMutation, useCollectionListQuery } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
@@ -22,7 +25,6 @@ import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import { DialogContentText } from "@material-ui/core";
 import isEqual from "lodash/isEqual";
 import React, { useCallback, useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -45,10 +47,11 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const intl = useIntl();
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.COLLECTION_LIST);
+  const { enabled: isNewCollectionFilterEnabled } = useFlag("new_filters");
+  const { valueProvider } = useConditionalFilterContext();
 
   usePaginationReset(collectionListUrl, params, settings.rowNumber);
 
-  const { channel } = useAppChannel(false);
   const {
     clearRowSelection,
     selectedRowIds,
@@ -63,11 +66,10 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     params,
     keepActiveTab: true,
   });
-  const { availableChannels } = useAppChannel(false);
+  const { availableChannels, channel } = useAppChannel(false);
   const channelOpts = availableChannels
     ? mapNodeToChoice(availableChannels, channel => channel.slug)
     : null;
-  const selectedChannel = availableChannels.find(channel => channel.slug === params.channel);
   const {
     selectedPreset,
     presets,
@@ -85,16 +87,33 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     storageUtils,
   });
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = React.useMemo(
-    () => ({
+  const selectedChannel_legacy = availableChannels.find(channel => channel.slug === params.channel);
+  const queryVariables = React.useMemo(() => {
+    if (!isNewCollectionFilterEnabled) {
+      return {
+        ...paginationState,
+        filter: getFilterVariables(params),
+        sort: getSortQueryVariables(params),
+        channel: selectedChannel_legacy?.slug,
+      };
+    }
+
+    const { channel, ...variables } = createCollectionsQueryVariables(valueProvider.value);
+
+    return {
       ...paginationState,
-      filter: getFilterVariables(params),
+      filter: {
+        ...variables,
+        search: params.query,
+      },
       sort: getSortQueryVariables(params),
-      channel: selectedChannel?.slug,
-    }),
-    [params, settings.rowNumber],
+      channel, // Saleor docs say 'channel' in filter is deprecated and should be moved to root
+    };
+  }, [params, settings.rowNumber, valueProvider.value, isNewCollectionFilterEnabled]);
+  const selectedChannel = availableChannels.find(
+    channel => channel.slug === queryVariables.channel,
   );
-  const { data, loading, refetch } = useCollectionListQuery({
+  const { data, refetch } = useCollectionListQuery({
     displayLoader: true,
     variables: queryVariables,
   });
@@ -112,10 +131,9 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
       }
     },
   });
-  const filterOpts = getFilterOpts(params, channelOpts);
 
   useEffect(() => {
-    if (!canBeSorted(params.sort, !!selectedChannel)) {
+    if (!canBeSorted(params.sort, !!queryVariables.channel)) {
       navigate(
         collectionListUrl({
           ...params,
@@ -161,6 +179,11 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     clearRowSelection();
   }, [selectedRowIds]);
 
+  const filterOpts = getFilterOpts(params, channelOpts);
+  const selectedChannelId = isNewCollectionFilterEnabled
+    ? selectedChannel?.id
+    : selectedChannel_legacy?.id;
+
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <CollectionListPage
@@ -177,14 +200,14 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         onTabSave={() => openModal("save-search")}
         onTabUpdate={onPresetUpdate}
         tabs={presets.map(tab => tab.name)}
-        loading={loading}
-        disabled={loading}
+        loading={!data}
+        disabled={!data}
         collections={collections}
         settings={settings}
         onSort={handleSort}
         onUpdateListSettings={updateListSettings}
         sort={getSortParams(params)}
-        selectedChannelId={selectedChannel?.id}
+        selectedChannelId={selectedChannelId}
         filterOpts={filterOpts}
         onFilterChange={changeFilters}
         selectedCollectionIds={selectedRowIds}
@@ -208,16 +231,14 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
           description: "dialog title",
         })}
       >
-        <DialogContentText>
-          <FormattedMessage
-            id="yT5zvU"
-            defaultMessage="{counter,plural,one{Are you sure you want to delete this collection?} other{Are you sure you want to delete {displayQuantity} collections?}}"
-            values={{
-              counter: maybe(() => selectedRowIds.length),
-              displayQuantity: <strong>{maybe(() => selectedRowIds.length)}</strong>,
-            }}
-          />
-        </DialogContentText>
+        <FormattedMessage
+          id="yT5zvU"
+          defaultMessage="{counter,plural,one{Are you sure you want to delete this collection?} other{Are you sure you want to delete {displayQuantity} collections?}}"
+          values={{
+            counter: maybe(() => selectedRowIds.length),
+            displayQuantity: <strong>{maybe(() => selectedRowIds.length)}</strong>,
+          }}
+        />
       </ActionDialog>
       <SaveFilterTabDialog
         open={params.action === "save-search"}

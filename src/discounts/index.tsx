@@ -1,11 +1,15 @@
-import { ConditionalDiscountFilterProvider } from "@dashboard/components/ConditionalFilter";
+import {
+  ConditionalDiscountFilterProvider,
+  ConditionalVoucherFilterProvider,
+} from "@dashboard/components/ConditionalFilter";
+import { Route } from "@dashboard/components/Router";
 import { useFlag } from "@dashboard/featureFlags";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
-import { Route, RouteComponentProps, Switch } from "react-router-dom";
+import { RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import { DiscountListUrlQueryParams, DiscountListUrlSortField } from "./discountsUrls";
@@ -80,7 +84,11 @@ const VoucherListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
     VoucherListUrlSortField.code,
   );
 
-  return <VoucherListViewComponent params={params} />;
+  return (
+    <ConditionalVoucherFilterProvider locationSearch={location.search}>
+      <VoucherListViewComponent params={params} />
+    </ConditionalVoucherFilterProvider>
+  );
 };
 const VoucherDetailsView: React.FC<RouteComponentProps<{ id: string }>> = ({ match, location }) => {
   const qs = parseQs(location.search.substr(1));

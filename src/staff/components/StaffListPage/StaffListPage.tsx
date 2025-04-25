@@ -1,16 +1,18 @@
+import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLinks/useContextualLink";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { configurationMenuUrl } from "@dashboard/configuration";
+import { useFlag } from "@dashboard/featureFlags";
 import { RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { StaffMembers } from "@dashboard/staff/types";
 import { StaffListUrlSortField } from "@dashboard/staff/urls";
 import { FilterPagePropsWithPresets, ListProps, SortPage } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
-import { Card } from "@material-ui/core";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -45,16 +47,19 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
   onFilterPresetsAll,
   ...listProps
 }) => {
+  const subtitle = useContextualLink("staff_members");
   const intl = useIntl();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const structure = createFilterStructure(intl, filterOpts);
   const reachedLimit = isLimitReached(limits, "staffUsers");
+  const { enabled: isStaffMembersFilteringEnabled } = useFlag("new_filters");
 
   return (
     <ListPageLayout>
       <TopNav
         href={configurationMenuUrl}
         title={intl.formatMessage(sectionNames.staff)}
+        subtitle={subtitle}
         isAlignToRight={false}
         withoutBorder
       >
@@ -127,21 +132,33 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
           />
         </LimitReachedAlert>
       )}
-      <Card>
-        <ListFilters<StaffFilterKeys>
-          currencySymbol={currencySymbol}
-          initialSearch={initialSearch}
-          onFilterChange={onFilterChange}
-          onSearchChange={onSearchChange}
-          filterStructure={structure}
-          searchPlaceholder={intl.formatMessage({
-            id: "o68j+t",
-            defaultMessage: "Search staff members...",
-          })}
-        />
+      <DashboardCard>
+        {isStaffMembersFilteringEnabled ? (
+          <ListFilters<StaffFilterKeys>
+            type="expression-filter"
+            initialSearch={initialSearch}
+            onSearchChange={onSearchChange}
+            searchPlaceholder={intl.formatMessage({
+              id: "o68j+t",
+              defaultMessage: "Search staff members...",
+            })}
+          />
+        ) : (
+          <ListFilters<StaffFilterKeys>
+            currencySymbol={currencySymbol}
+            initialSearch={initialSearch}
+            onFilterChange={onFilterChange}
+            onSearchChange={onSearchChange}
+            filterStructure={structure}
+            searchPlaceholder={intl.formatMessage({
+              id: "o68j+t",
+              defaultMessage: "Search staff members...",
+            })}
+          />
+        )}
 
         <StaffListDatagrid {...listProps} />
-      </Card>
+      </DashboardCard>
     </ListPageLayout>
   );
 };

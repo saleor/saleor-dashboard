@@ -7,7 +7,7 @@ export class DraftOrderCreateDialog {
     page: Page,
     readonly channelNameInput = page.getByTestId("channel-autocomplete"),
     readonly confirmButton = page.getByTestId("submit"),
-    readonly channelOption = page.locator("[data-test-id*='select-field-option']"),
+    readonly channelOption = page.getByTestId("select-option"),
   ) {
     this.page = page;
   }
@@ -23,6 +23,12 @@ export class DraftOrderCreateDialog {
   async completeDraftOrderCreateDialogWithFirstChannel() {
     await this.expandChannelsSearchList();
     await this.channelOption.first().click();
+    await this.clickConfirmButton();
+  }
+
+  async completeDraftOrderCreateDialogWithSpecificChannel(channel: string) {
+    await this.expandChannelsSearchList();
+    await this.channelOption.filter({ hasText: channel }).first().click();
     await this.clickConfirmButton();
   }
 }

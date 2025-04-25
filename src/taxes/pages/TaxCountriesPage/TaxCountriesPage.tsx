@@ -4,8 +4,7 @@ import CardTitle from "@dashboard/components/CardTitle";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Savebar from "@dashboard/components/Savebar";
-import Skeleton from "@dashboard/components/Skeleton";
+import { Savebar } from "@dashboard/components/Savebar";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import {
@@ -29,7 +28,7 @@ import {
   PageTabs,
   SearchIcon,
 } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -179,12 +178,15 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                   </Card>
                 </Grid>
               </Box>
-              <Savebar
-                state={savebarState}
-                disabled={disabled}
-                onSubmit={submit}
-                onCancel={() => navigate(configurationMenuUrl)}
-              />
+              <Savebar>
+                <Savebar.Spacer />
+                <Savebar.CancelButton onClick={() => navigate(configurationMenuUrl)} />
+                <Savebar.ConfirmButton
+                  transitionState={savebarState}
+                  onClick={submit}
+                  disabled={disabled}
+                />
+              </Savebar>
             </DetailPageLayout.Content>
           </DetailPageLayout>
         );

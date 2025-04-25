@@ -9,12 +9,16 @@ export const SW_INTERVAL = parseInt(process.env.SW_INTERVAL ?? "300", 10);
 export const IS_CLOUD_INSTANCE = window.__SALEOR_CONFIG__.IS_CLOUD_INSTANCE === "true";
 
 export const getAppsConfig = () => ({
-  marketplaceApiUri: window.__SALEOR_CONFIG__.APPS_MARKETPLACE_API_URI,
+  marketplaceApiUri: window.__SALEOR_CONFIG__.APPS_MARKETPLACE_API_URL,
   tunnelUrlKeywords: window.__SALEOR_CONFIG__.APPS_TUNNEL_URL_KEYWORDS?.split(";") || [
     ".ngrok.io",
     ".saleor.live",
     ".trycloudflare.com",
   ],
+});
+
+export const getExtensionsConfig = () => ({
+  extensionsApiUri: window.__SALEOR_CONFIG__.EXTENSIONS_API_URL,
 });
 
 export const DEFAULT_INITIAL_SEARCH_DATA: SearchVariables = {
@@ -38,6 +42,7 @@ export type ProductListColumns =
   | "availability"
   | "price"
   | "date"
+  | "created"
   | "productCategory"
   | "productCollections";
 
@@ -116,7 +121,7 @@ export const defaultListSettings: AppListViewSettings = {
     rowNumber: PAGINATE_BY,
   },
   [ListViews.PRODUCT_LIST]: {
-    columns: ["name", "availability", "description", "price", "productType", "date"],
+    columns: ["name", "availability", "description", "price", "productType", "date", "created"],
     rowNumber: PAGINATE_BY,
   },
   [ListViews.SALES_LIST]: {
@@ -198,3 +203,5 @@ export const DEMO_MODE = process.env.DEMO_MODE === "true";
 export const GTM_ID = process.env.GTM_ID;
 
 export const DEFAULT_NOTIFICATION_SHOW_TIME = 3000;
+export const ENABLED_SERVICE_NAME_HEADER =
+  (process.env.ENABLED_SERVICE_NAME_HEADER as string) === "true";

@@ -1,10 +1,10 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { AppErrorFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
-import { Card, CardContent, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -38,16 +38,17 @@ const CustomAppInformation: React.FC<CustomAppInfoProps> = ({
   const formErrors = getFormErrors(["name"], errors);
 
   return (
-    <Card>
-      <CardTitle
-        className={classes.cardTitle}
-        title={intl.formatMessage({
-          id: "imYxM9",
-          defaultMessage: "App Information",
-          description: "header",
-        })}
-      />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title className={classes.cardTitle}>
+          {intl.formatMessage({
+            id: "imYxM9",
+            defaultMessage: "App Information",
+            description: "header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <TextField
           disabled={disabled}
           error={!!formErrors.name}
@@ -62,8 +63,8 @@ const CustomAppInformation: React.FC<CustomAppInfoProps> = ({
           value={data.name}
           onChange={onChange}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

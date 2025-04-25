@@ -1,4 +1,0 @@
-import { PRODUCT_TYPE_DETAILS_SELECTORS } from "./productTypeDetails";
-import { PRODUCT_TYPES_LIST_SELECTORS } from "./productTypesList";
-
-export { PRODUCT_TYPE_DETAILS_SELECTORS, PRODUCT_TYPES_LIST_SELECTORS };

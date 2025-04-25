@@ -8,8 +8,13 @@ import {
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { OrderListQuery } from "@dashboard/graphql";
-import { getStatusColor, transformOrderStatus, transformPaymentStatus } from "@dashboard/misc";
+import { OrderChargeStatusEnum, OrderListQuery } from "@dashboard/graphql";
+import {
+  getStatusColor,
+  transformChargedStatus,
+  transformOrderStatus,
+  transformPaymentStatus,
+} from "@dashboard/misc";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
@@ -76,12 +81,11 @@ export const useGetCellContent = ({ columns, orders }: GetCellContentProps) => {
 
   return ([column, row]: Item, { added, removed }: GetCellContentOpts): GridCell => {
     const columnId = columns[column]?.id;
+    const rowData = added.includes(row) ? undefined : orders[getDatagridRowDataIndex(row, removed)];
 
-    if (!columnId) {
+    if (!columnId || !rowData) {
       return readonlyTextCell("");
     }
-
-    const rowData = added.includes(row) ? undefined : orders[getDatagridRowDataIndex(row, removed)];
 
     switch (columnId) {
       case "number":
@@ -102,8 +106,10 @@ export const useGetCellContent = ({ columns, orders }: GetCellContentProps) => {
   };
 };
 
+const COMMON_CELL_PROPS: Partial<GridCell> = { cursor: "pointer" };
+
 export function getDateCellContent(rowData: RelayToFlat<OrderListQuery["orders"]>[number]) {
-  return dateCell(rowData?.created);
+  return dateCell(rowData?.created, COMMON_CELL_PROPS);
 }
 
 export function getCustomerCellContent(
@@ -115,7 +121,7 @@ export function getCustomerCellContent(
     );
   }
 
-  if (rowData.userEmail) {
+  if (rowData?.userEmail) {
     return readonlyTextCell(rowData.userEmail);
   }
 
@@ -135,17 +141,30 @@ export function getStatusCellContent(
       currentTheme,
     });
 
-    return pillCell(orderStatus.localized, color);
+    return pillCell(orderStatus.localized, color, COMMON_CELL_PROPS);
   }
 
   return readonlyTextCell("-");
 }
+
+const higherPriorityChargeStatuses = [OrderChargeStatusEnum.OVERCHARGED];
 
 export function getPaymentCellContent(
   intl: IntlShape,
   currentTheme: DefaultTheme,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
+  if (higherPriorityChargeStatuses.includes(rowData.chargeStatus)) {
+    const { localized, status } = transformChargedStatus(rowData.chargeStatus, intl);
+
+    const color = getStatusColor({
+      status,
+      currentTheme,
+    });
+
+    return pillCell(localized, color, COMMON_CELL_PROPS);
+  }
+
   const paymentStatus = transformPaymentStatus(rowData.paymentStatus, intl);
 
   if (paymentStatus) {
@@ -154,7 +173,7 @@ export function getPaymentCellContent(
       currentTheme,
     });
 
-    return pillCell(paymentStatus.localized, color);
+    return pillCell(paymentStatus.localized, color, COMMON_CELL_PROPS);
   }
 
   return readonlyTextCell("-");
@@ -162,9 +181,7 @@ export function getPaymentCellContent(
 
 export function getTotalCellContent(rowData: RelayToFlat<OrderListQuery["orders"]>[number]) {
   if (rowData?.total?.gross) {
-    return moneyCell(rowData.total.gross.amount, rowData.total.gross.currency, {
-      cursor: "pointer",
-    });
+    return moneyCell(rowData.total.gross.amount, rowData.total.gross.currency, COMMON_CELL_PROPS);
   }
 
   return readonlyTextCell("-");

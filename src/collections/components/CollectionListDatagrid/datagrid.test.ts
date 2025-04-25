@@ -20,7 +20,7 @@ describe("getAvailabilityLabelWhenSelectedChannel", () => {
         name: "Channel",
       },
       isPublished: true,
-      publicationDate: null,
+      publishedAt: null,
     } as CollectionChannels;
     // Act;
     const result = getAvailabilityLabelWhenSelectedChannel(channel, intl, currentTheme);
@@ -41,7 +41,7 @@ describe("getAvailabilityLabelWhenSelectedChannel", () => {
         name: "Channel",
       },
       isPublished: false,
-      publicationDate: null,
+      publishedAt: null,
     } as CollectionChannels;
     // Act;
     const result = getAvailabilityLabelWhenSelectedChannel(channel, intl, currentTheme);
@@ -62,7 +62,7 @@ describe("getAvailabilityLabelWhenSelectedChannel", () => {
         name: "Channel",
       },
       isPublished: false,
-      publicationDate: "2021-09-09T12:00:00+00:00",
+      publishedAt: "2021-09-09T12:00:00+00:00",
     } as CollectionChannels;
     // Act;
     const result = getAvailabilityLabelWhenSelectedChannel(channel, intl, currentTheme);
@@ -101,7 +101,7 @@ describe("getAvailabilityLabel", () => {
             name: "Channel",
           },
           isPublished: true,
-          publicationDate: null,
+          publishedAt: null,
         },
       ],
     } as unknown as Collection;
@@ -126,7 +126,7 @@ describe("getAvailabilityLabel", () => {
             name: "Channel",
           },
           isPublished: false,
-          publicationDate: null,
+          publishedAt: null,
         },
       ],
     } as unknown as Collection;

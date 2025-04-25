@@ -55,6 +55,7 @@ const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
     authorizePendingAmount: prepareMoney(0, currency),
     chargePendingAmount: prepareMoney(0, currency),
     cancelPendingAmount: prepareMoney(0, currency),
+    createdAt: fakeEvents[0]?.createdAt,
     __typename: "FakeTransaction",
   };
   const handleTransactionAction: OrderTransactionProps["onTransactionAction"] = (_, action) => {

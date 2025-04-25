@@ -1,17 +1,16 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import ControlledSwitch from "@dashboard/components/ControlledSwitch";
 import { ConfigurationItemFragment, ConfigurationTypeFieldEnum } from "@dashboard/graphql";
 import { UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
-import { Card, CardContent, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import InfoIcon from "@material-ui/icons/Info";
 import { Box, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { PluginDetailsPageFormData } from "../PluginsDetailsPage";
-import { useStyles } from "./styles";
 
 interface PluginSettingsProps {
   data: PluginDetailsPageFormData;
@@ -28,24 +27,31 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({
   onChange,
   fields,
 }) => {
-  const classes = useStyles({});
   const intl = useIntl();
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "Egyh2T",
-          defaultMessage: "Plugin Settings",
-          description: "section header",
-        })}
-      />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "Egyh2T",
+            defaultMessage: "Plugin Settings",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         {data.configuration.map(field => {
           const fieldData = fields.find(configField => configField.name === field.name);
 
           return (
-            <div className={classes.item} key={field.name}>
+            <Box
+              key={field.name}
+              display="flex"
+              flexDirection="row"
+              alignItems="center"
+              marginBottom={2}
+            >
               {fieldData.type === ConfigurationTypeFieldEnum.BOOLEAN ? (
                 <>
                   <ControlledSwitch
@@ -91,11 +97,11 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({
                   onChange={onChange}
                 />
               )}
-            </div>
+            </Box>
           );
         })}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

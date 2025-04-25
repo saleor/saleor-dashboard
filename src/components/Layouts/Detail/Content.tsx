@@ -1,7 +1,7 @@
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, BoxProps } from "@saleor/macaw-ui-next";
 import React from "react";
 
-interface DetailPageLayoutContentProps {
+interface DetailPageLayoutContentProps extends BoxProps {
   [key: `data-${string}`]: string;
   children: React.ReactNode;
 }

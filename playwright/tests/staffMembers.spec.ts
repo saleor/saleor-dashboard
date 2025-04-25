@@ -1,50 +1,103 @@
 import { BasicApiService } from "@api/basics";
 import { USERS } from "@data/e2eTestData";
-import { URL_LIST } from "@data/url";
+import { ConfigurationPage } from "@pages/configurationPage";
+import { PermissionGroupsPage } from "@pages/permissionGroupsPage";
 import { StaffMembersPage } from "@pages/staffMembersPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
+import { test } from "utils/testWithPermission";
 
-test.use({ storageState: "./playwright/.auth/admin.json" });
-test("TC: SALEOR_137 Admin User should be able to deactivate other user @e2e @staff-members", async ({
-  page,
-  request,
-}) => {
-  const staffMembersPage = new StaffMembersPage(page, request);
-  const basicApiService = new BasicApiService(request);
+test.use({ permissionName: "admin" });
 
-  await page.goto(URL_LIST.staffMembers + USERS.userToBeDeactivated.id);
-  await staffMembersPage.clickIsActiveCheckbox();
-  await staffMembersPage.clickSaveButton();
-  await staffMembersPage.basePage.expectSuccessBanner();
-  await expect(await staffMembersPage.isActiveCheckbox.isChecked()).toEqual(false);
+let staffMembersPage: StaffMembersPage;
+let config: ConfigurationPage;
+let permissionGroupsPage: PermissionGroupsPage;
+let basicApiService: BasicApiService;
 
-  const loginViaApiDeactivatedUserResponse = await basicApiService.logInUserViaApi({
-    email: USERS.userToBeDeactivated.email,
-    password: process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
-  });
+interface StaffMember {
+  id?: string;
+  name: string;
+  lastName: string;
+  email: string;
+}
 
-  await expect(loginViaApiDeactivatedUserResponse.data.tokenCreate.errors[0].code).toEqual(
-    "INACTIVE",
-  );
+test.beforeEach(async ({ page, request }) => {
+  staffMembersPage = new StaffMembersPage(page, request);
+  config = new ConfigurationPage(page);
+  permissionGroupsPage = new PermissionGroupsPage(page);
+  basicApiService = new BasicApiService(request);
+
+  await config.goToConfigurationView();
+  await config.openStaffMembers();
 });
-test("TC: SALEOR_38 Admin User should be able to activate other user @e2e @staff-members", async ({
-  page,
-  request,
-}) => {
-  const staffMembersPage = new StaffMembersPage(page, request);
-  const basicApiService = new BasicApiService(request);
 
-  await page.goto(URL_LIST.staffMembers + USERS.userToBeActivated.id);
-  await staffMembersPage.clickIsActiveCheckbox();
+test("TC: SALEOR_211 Create a staff member #e2e #staff-members", async () => {
+  const staffMember: StaffMember = {
+    name: "John",
+    lastName: "Create",
+    email: `test.staff.john.create@example.com`,
+  };
+
+  await staffMembersPage.clickInviteStaffMemberButton();
+  await staffMembersPage.inviteStaffMembersDialog.typeNameLastNameAndEmail(
+    staffMember.name,
+    staffMember.lastName,
+    staffMember.email,
+  );
+  await staffMembersPage.inviteStaffMembersDialog.sendInviteButton.waitFor({ state: "visible" });
+  await staffMembersPage.inviteStaffMembersDialog.clickSendInviteButton();
+  await staffMembersPage.expectSuccessBanner();
+
+  await expect(staffMembersPage.firstName).toHaveValue(staffMember.name);
+  await expect(staffMembersPage.lastName).toHaveValue(staffMember.lastName);
+  await expect(staffMembersPage.email).toHaveValue(staffMember.email);
+  await expect(await staffMembersPage.isActiveCheckbox.isChecked()).toBeTruthy();
+
+  await staffMembersPage.clickPermissionsGroupSelectButton();
+
+  await staffMembersPage.assignUserToPermissionGroup("Customer Support");
+  await staffMembersPage.assignUserToPermissionGroup("Channels Management");
+
   await staffMembersPage.clickSaveButton();
-  await staffMembersPage.basePage.expectSuccessBanner();
-  await expect(await staffMembersPage.isActiveCheckbox.isChecked()).toEqual(true);
 
-  const loginViaApiDeactivatedUserResponse = await basicApiService.logInUserViaApi({
-    email: USERS.userToBeActivated.email,
-    password: process.env.E2E_PERMISSIONS_USERS_PASSWORD!,
-  });
+  await staffMembersPage.verifyAssignedPermission("Customer Support");
+  await staffMembersPage.verifyAssignedPermission("Channels Management");
+});
+test("TC: SALEOR_212 Edit a staff member #e2e #staff-members", async () => {
+  const updatedStaffMember: StaffMember = {
+    name: "John",
+    lastName: "Edit",
+    email: `test.staff.john.edit@example.com`,
+  };
 
-  await expect(loginViaApiDeactivatedUserResponse.data.tokenCreate.errors).toEqual([]);
-  await expect(loginViaApiDeactivatedUserResponse.data.tokenCreate.token).not.toEqual(null);
+  await staffMembersPage.gotToExistingStaffMemberPage(USERS.staffToBeEdited.id);
+  await staffMembersPage.updateStaffInfo(
+    updatedStaffMember.name,
+    updatedStaffMember.lastName,
+    updatedStaffMember.email,
+  );
+
+  await staffMembersPage.clickPermissionsGroupSelectButton();
+  await staffMembersPage.assignUserToPermissionGroup("Customer Support");
+  await staffMembersPage.assignUserToPermissionGroup("Channels Management");
+
+  await staffMembersPage.clickSaveButton();
+  await staffMembersPage.expectSuccessBanner();
+
+  await expect(staffMembersPage.firstName).toHaveValue(updatedStaffMember.name);
+  await expect(staffMembersPage.lastName).toHaveValue(updatedStaffMember.lastName);
+  await expect(staffMembersPage.email).toHaveValue(updatedStaffMember.email);
+
+  await staffMembersPage.clickPermissionsGroupSelectButton();
+
+  await staffMembersPage.verifyAssignedPermission("Customer Support");
+  await staffMembersPage.verifyAssignedPermission("Channels Management");
+  await staffMembersPage.verifyAssignedPermission(USERS.staffToBeEdited.permission);
+});
+test("TC: SALEOR_213 Delete a single staff member #e2e #staff-members", async () => {
+  await staffMembersPage.gotToExistingStaffMemberPage(USERS.staffToBeDeleted.id);
+  await staffMembersPage.clickDeleteButton();
+  await staffMembersPage.clickSubmitButton();
+  await staffMembersPage.expectSuccessBanner();
+  await staffMembersPage.typeInSearchOnListView(USERS.staffToBeDeleted.name);
+  await expect(staffMembersPage.emptyDataGridListView).toBeVisible();
 });

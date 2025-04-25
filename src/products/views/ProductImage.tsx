@@ -9,7 +9,6 @@ import {
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
-import { DialogContentText } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -96,12 +95,10 @@ export const ProductImage: React.FC<ProductMediaProps> = ({ mediaId, productId, 
         variant="delete"
         confirmButtonState={deleteResult.status}
       >
-        <DialogContentText>
-          <FormattedMessage
-            id="VEext+"
-            defaultMessage="Are you sure you want to delete this image?"
-          />
-        </DialogContentText>
+        <FormattedMessage
+          id="VEext+"
+          defaultMessage="Are you sure you want to delete this image?"
+        />
       </ActionDialog>
     </>
   );

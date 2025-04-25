@@ -37,10 +37,20 @@ export const customerList = gql`
 `;
 
 export const customerDetails = gql`
-  query CustomerDetails($id: ID!, $PERMISSION_MANAGE_ORDERS: Boolean!) {
+  query CustomerDetails(
+    $id: ID!
+    $PERMISSION_MANAGE_ORDERS: Boolean!
+    $PERMISSION_MANAGE_STAFF: Boolean!
+  ) {
     user(id: $id) {
       ...CustomerDetails
-      orders(last: 5) @include(if: $PERMISSION_MANAGE_ORDERS) {
+      metadata {
+        ...MetadataItem
+      }
+      privateMetadata @include(if: $PERMISSION_MANAGE_STAFF) {
+        ...MetadataItem
+      }
+      orders(first: 5) @include(if: $PERMISSION_MANAGE_ORDERS) {
         edges {
           node {
             id
@@ -53,10 +63,11 @@ export const customerDetails = gql`
                 amount
               }
             }
+            chargeStatus
           }
         }
       }
-      lastPlacedOrder: orders(last: 1) @include(if: $PERMISSION_MANAGE_ORDERS) {
+      lastPlacedOrder: orders(first: 1) @include(if: $PERMISSION_MANAGE_ORDERS) {
         edges {
           node {
             id

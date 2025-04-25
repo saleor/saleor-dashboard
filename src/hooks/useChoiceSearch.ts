@@ -1,11 +1,11 @@
-import { Choice } from "@dashboard/components/SingleSelectField";
-import { filter } from "fuzzaldrin";
+import { fuzzySearch } from "@dashboard/misc";
+import { Option } from "@saleor/macaw-ui-next";
 import { useMemo, useState } from "react";
 
-function useChoiceSearch(choices: Array<Choice<string, string>>) {
+function useChoiceSearch(choices: Option[]) {
   const [query, setQuery] = useState("");
   const sortedChoices = useMemo(
-    () => filter(choices, query, { key: "label" }) || [],
+    () => fuzzySearch(choices, query, ["label"]) || [],
     [choices, query],
   );
 

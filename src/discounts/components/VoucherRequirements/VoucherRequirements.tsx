@@ -1,10 +1,9 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
 import PriceField from "@dashboard/components/PriceField";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
 import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { ChannelInput } from "@dashboard/discounts/handlers";
@@ -13,7 +12,8 @@ import { DiscountErrorFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
-import { Card, CardContent, TableBody, TableCell, TextField, Typography } from "@material-ui/core";
+import { TableBody, TableCell, TextField } from "@material-ui/core";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -69,15 +69,17 @@ const VoucherRequirements = ({
   ];
 
   return (
-    <Card data-test-id="minimum-requirements-section">
-      <CardTitle
-        title={intl.formatMessage({
-          id: "yhv3HX",
-          defaultMessage: "Minimum Requirements",
-          description: "voucher requirements, header",
-        })}
-      />
-      <CardContent>
+    <DashboardCard data-test-id="minimum-requirements-section">
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "yhv3HX",
+            defaultMessage: "Minimum Requirements",
+            description: "voucher requirements, header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <RadioGroupField
           choices={requirementsPickerChoices}
           disabled={disabled}
@@ -124,7 +126,7 @@ const VoucherRequirements = ({
                           data-test-id={listing?.name}
                         >
                           <TableCell>
-                            <Typography>{listing?.name || <Skeleton />}</Typography>
+                            <Text>{listing?.name || <Skeleton />}</Text>
                           </TableCell>
                           <TableCell className={classes.colPrice}>
                             {listing ? (
@@ -175,8 +177,8 @@ const VoucherRequirements = ({
             fullWidth
           />
         ) : null}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

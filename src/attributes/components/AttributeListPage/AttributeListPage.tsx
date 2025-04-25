@@ -2,12 +2,13 @@ import { attributeAddUrl, AttributeListUrlSortField } from "@dashboard/attribute
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { configurationMenuUrl } from "@dashboard/configuration";
+import { useFlag } from "@dashboard/featureFlags";
 import { AttributeFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { Card } from "@material-ui/core";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -48,6 +49,7 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
   const navigate = useNavigator();
   const structure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
+  const { enabled: isAttributesFilteringEnabled } = useFlag("new_filters");
 
   return (
     <>
@@ -96,30 +98,51 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
           </Box>
         </Box>
       </TopNav>
-      <Card>
-        <ListFilters<AttributeFilterKeys>
-          currencySymbol={currencySymbol}
-          initialSearch={initialSearch}
-          onFilterChange={onFilterChange}
-          onSearchChange={onSearchChange}
-          filterStructure={structure}
-          searchPlaceholder={intl.formatMessage({
-            id: "9ScmSs",
-            defaultMessage: "Search attributes...",
-          })}
-          actions={
-            <Box display="flex" gap={4}>
-              {selectedAttributesIds.length > 0 && (
-                <BulkDeleteButton onClick={onAttributesDelete}>
-                  <FormattedMessage defaultMessage="Delete attributes" id="g0GAdN" />
-                </BulkDeleteButton>
-              )}
-            </Box>
-          }
-        />
+      <DashboardCard>
+        {isAttributesFilteringEnabled ? (
+          <ListFilters<AttributeFilterKeys>
+            type="expression-filter"
+            initialSearch={initialSearch}
+            onSearchChange={onSearchChange}
+            searchPlaceholder={intl.formatMessage({
+              id: "9ScmSs",
+              defaultMessage: "Search attributes...",
+            })}
+            actions={
+              <Box display="flex" gap={4}>
+                {selectedAttributesIds.length > 0 && (
+                  <BulkDeleteButton onClick={onAttributesDelete}>
+                    <FormattedMessage defaultMessage="Delete attributes" id="g0GAdN" />
+                  </BulkDeleteButton>
+                )}
+              </Box>
+            }
+          />
+        ) : (
+          <ListFilters<AttributeFilterKeys>
+            currencySymbol={currencySymbol}
+            initialSearch={initialSearch}
+            onFilterChange={onFilterChange}
+            onSearchChange={onSearchChange}
+            filterStructure={structure}
+            searchPlaceholder={intl.formatMessage({
+              id: "9ScmSs",
+              defaultMessage: "Search attributes...",
+            })}
+            actions={
+              <Box display="flex" gap={4}>
+                {selectedAttributesIds.length > 0 && (
+                  <BulkDeleteButton onClick={onAttributesDelete}>
+                    <FormattedMessage defaultMessage="Delete attributes" id="g0GAdN" />
+                  </BulkDeleteButton>
+                )}
+              </Box>
+            }
+          />
+        )}
 
         <AttributeListDatagrid {...listProps} />
-      </Card>
+      </DashboardCard>
     </>
   );
 };

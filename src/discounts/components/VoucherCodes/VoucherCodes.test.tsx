@@ -21,6 +21,13 @@ jest.mock("react-intl", () => ({
   FormattedMessage: ({ defaultMessage }: FormattedMessageProps) => <>{defaultMessage}</>,
 }));
 
+jest.mock("@dashboard/components/Datagrid/persistance/usePersistance", () => ({
+  usePersistance: () => ({
+    columns: [],
+    update: jest.fn(),
+  }),
+}));
+
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
     <BrowserRouter>

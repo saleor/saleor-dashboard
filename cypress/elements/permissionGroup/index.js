@@ -1,4 +1,0 @@
-import { PERMISSION_GROUP_DETAILS_SELECTORS } from "./permissionGroupDetails";
-import { PERMISSION_GROUP_LIST_SELECTORS } from "./permissionGroupsList";
-
-export { PERMISSION_GROUP_DETAILS_SELECTORS, PERMISSION_GROUP_LIST_SELECTORS };

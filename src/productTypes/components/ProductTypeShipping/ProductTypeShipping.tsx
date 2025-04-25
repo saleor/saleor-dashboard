@@ -1,6 +1,6 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
-import { Card, CardContent, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -23,15 +23,17 @@ const ProductTypeShipping: React.FC<ProductTypeShippingProps> = ({
   const intl = useIntl();
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "/2OOMe",
-          defaultMessage: "Shipping",
-          description: "product type shipping settings, section header",
-        })}
-      />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "/2OOMe",
+            defaultMessage: "Shipping",
+            description: "product type shipping settings, section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <ControlledCheckbox
           checked={data.isShippingRequired}
           disabled={disabled}
@@ -62,8 +64,8 @@ const ProductTypeShipping: React.FC<ProductTypeShippingProps> = ({
             onChange={onChange}
           />
         )}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

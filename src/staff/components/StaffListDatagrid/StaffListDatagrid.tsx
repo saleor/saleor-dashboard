@@ -6,6 +6,7 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { StaffMember, StaffMembers } from "@dashboard/staff/types";
 import { StaffListUrlSortField, staffMemberDetailsUrl } from "@dashboard/staff/urls";
@@ -14,6 +15,7 @@ import { Item } from "@glideapps/glide-data-grid";
 import { Box, useTheme } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { createGetCellContent, staffMembersListStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
@@ -32,6 +34,7 @@ export const StaffListDatagrid = ({
 }: StaffListDatagridProps) => {
   const datagridState = useDatagridChangeState();
   const navigate = useNavigator();
+  const location = useLocation();
   const intl = useIntl();
   const { theme: currentTheme } = useTheme();
   const emptyColumn = useEmptyColumn();
@@ -66,7 +69,9 @@ export const StaffListDatagrid = ({
       const rowData: StaffMember = staffMembers[row];
 
       if (rowData) {
-        navigate(staffMemberDetailsUrl(rowData?.id));
+        navigate(staffMemberDetailsUrl(rowData?.id), {
+          state: getPrevLocationState(location),
+        });
       }
     },
     [staffMembers],
@@ -96,7 +101,7 @@ export const StaffListDatagrid = ({
         hasRowHover={true}
         onColumnMoved={handlers.onMove}
         onColumnResize={handlers.onResize}
-        verticalBorder={col => col > 1}
+        verticalBorder={false}
         rows={staffMembers?.length ?? 0}
         availableColumns={visibleColumns}
         emptyText={intl.formatMessage(messages.empty)}
@@ -108,6 +113,7 @@ export const StaffListDatagrid = ({
         onHeaderClicked={handleHeaderClick}
         rowAnchor={handleRowAnchor}
         recentlyAddedColumn={recentlyAddedColumn}
+        navigatorOpts={{ state: getPrevLocationState(location) }}
       />
 
       <Box paddingX={6}>

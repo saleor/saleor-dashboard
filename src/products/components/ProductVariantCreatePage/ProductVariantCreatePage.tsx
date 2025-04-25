@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { QueryResult } from "@apollo/client";
 import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
@@ -16,7 +17,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import {
   ProductErrorWithAttributesFragment,
   ProductVariantCreateDataQuery,
@@ -30,6 +31,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { ProductDetailsChannelsAvailabilityCard } from "@dashboard/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
 import { productUrl } from "@dashboard/products/urls";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -83,7 +85,6 @@ interface ProductVariantCreatePageProps {
   header: string;
   product: ProductVariantCreateDataQuery["product"];
   saveButtonBarState: ConfirmButtonTransitionState;
-  warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
   weightUnit: string;
   referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
@@ -102,6 +103,8 @@ interface ProductVariantCreatePageProps {
   fetchMoreAttributeValues?: FetchMoreProps;
   onCloseDialog: () => void;
   onAttributeSelectBlur: () => void;
+  fetchMoreWarehouses: () => void;
+  searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
 }
 
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
@@ -112,7 +115,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   header,
   product,
   saveButtonBarState,
-  warehouses,
   weightUnit,
   referencePages = [],
   referenceProducts = [],
@@ -130,6 +132,8 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   fetchMoreAttributeValues,
   onCloseDialog,
   onAttributeSelectBlur,
+  fetchMoreWarehouses,
+  searchWarehousesResult,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -159,7 +163,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
     <ProductVariantCreateForm
       product={product}
       onSubmit={onSubmit}
-      warehouses={warehouses}
       referencePages={referencePages}
       referenceProducts={referenceProducts}
       fetchReferencePages={fetchReferencePages}
@@ -271,38 +274,42 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                       ...channel.data,
                       ...channel.value,
                     }))}
-                    errors={[]}
+                    errors={errors}
                     loading={!product}
                     onChange={handlers.changeChannels}
                   />
                   <CardSpacer />
                   <ProductStocks
                     data={data}
+                    warehouses={mapEdgesToItems(searchWarehousesResult?.data?.search) ?? []}
+                    fetchMoreWarehouses={fetchMoreWarehouses}
+                    hasMoreWarehouses={searchWarehousesResult?.data?.search?.pageInfo?.hasNextPage}
                     disabled={disabled}
                     hasVariants={true}
                     onFormDataChange={change}
                     errors={errors}
                     stocks={data.stocks}
-                    warehouses={warehouses}
                     onChange={handlers.changeStock}
                     onWarehouseStockAdd={handlers.addStock}
                     onWarehouseStockDelete={handlers.deleteStock}
                     onWarehouseConfigure={onWarehouseConfigure}
+                    isCreate={true}
                   />
                   <CardSpacer />
                   <Metadata data={data} onChange={handlers.changeMetadata} />
                 </div>
               </Grid>
-              <Savebar
-                disabled={isSaveDisabled}
-                labels={{
-                  confirm: intl.formatMessage(messages.saveVariant),
-                  delete: intl.formatMessage(messages.deleteVariant),
-                }}
-                state={saveButtonBarState}
-                onCancel={() => navigate(productUrl(productId))}
-                onSubmit={submit}
-              />
+              <Savebar>
+                <Savebar.Spacer />
+                <Savebar.CancelButton onClick={() => navigate(productUrl(productId))} />
+                <Savebar.ConfirmButton
+                  transitionState={saveButtonBarState}
+                  onClick={submit}
+                  disabled={isSaveDisabled}
+                >
+                  {intl.formatMessage(messages.saveVariant)}
+                </Savebar.ConfirmButton>
+              </Savebar>
               {canOpenAssignReferencesAttributeDialog && (
                 <AssignAttributeValueDialog
                   entityType={getReferenceAttributeEntityTypeFromAttribute(

@@ -69,3 +69,16 @@ export const extractRefundedAmount = (order: OrderDetailsFragment): IMoney => {
     }
   );
 };
+
+// Discount should be shown as negative number to give user
+// clear information that this amount will be subtracted from total amount
+export const getDiscountAmount = (amount: IMoney) => {
+  if (amount.amount <= 0) {
+    return amount;
+  }
+
+  return {
+    ...amount,
+    amount: amount.amount * -1,
+  };
+};

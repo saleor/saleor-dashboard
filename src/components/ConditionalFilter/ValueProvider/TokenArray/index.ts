@@ -1,9 +1,30 @@
 import { parse, ParsedQs } from "qs";
 
-import { InitialStateResponse } from "../../API/InitialStateResponse";
+import { InitialProductStateResponse } from "../../API/initialState/product/InitialProductStateResponse";
 import { FilterContainer, FilterElement } from "../../FilterElement";
+import { FilterProviderType, InitialResponseType } from "../../types";
 import { UrlEntry, UrlToken } from "../UrlToken";
-import { emptyFetchingParams, FetchingParams, toFetchingParams } from "./fetchingParams";
+import {
+  AttributesFetchingParams,
+  CollectionFetchingParams,
+  FetchingParams,
+  FetchingParamsType,
+  GiftCardsFetchingParams,
+  OrderFetchingParams,
+  PageFetchingParams,
+  ProductTypesFetchingParams,
+  StaffMembersFetchingParams,
+  toAttributesFetchingParams,
+  toCollectionFetchingParams,
+  toFetchingParams,
+  toGiftCardsFetchingParams,
+  toOrderFetchingParams,
+  toPageFetchingParams,
+  toProductTypesFetchingParams,
+  toStaffMembersFetchingParams,
+  toVouchersFetchingParams,
+  VoucherFetchingParams,
+} from "./fetchingParams";
 
 const toFlatUrlTokens = (p: UrlToken[], c: TokenArray[number]) => {
   if (typeof c === "string") {
@@ -37,7 +58,7 @@ const tokenizeUrl = (urlParams: string) => {
 };
 const mapUrlTokensToFilterValues = (
   urlTokens: TokenArray,
-  response: InitialStateResponse,
+  response: InitialResponseType,
 ): FilterContainer =>
   urlTokens.map(el => {
     if (typeof el === "string") {
@@ -56,17 +77,67 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
     super(...tokenizeUrl(url));
   }
 
-  public getFetchingParams() {
-    return this.asFlatArray()
-      .filter(token => token.isLoadable())
-      .reduce<FetchingParams>(toFetchingParams, emptyFetchingParams);
+  public getFetchingParams(params: FetchingParamsType, type: FilterProviderType) {
+    switch (type) {
+      case "order":
+        return this.asFlatArray()
+          .filter(token => token.isLoadable())
+          .reduce<OrderFetchingParams>(toOrderFetchingParams, params as OrderFetchingParams);
+      case "collection":
+        return this.asFlatArray()
+          .filter(token => token.isLoadable())
+          .reduce<CollectionFetchingParams>(
+            toCollectionFetchingParams,
+            params as CollectionFetchingParams,
+          );
+      case "voucher":
+        return this.asFlatArray()
+          .filter(token => token.isLoadable())
+          .reduce<VoucherFetchingParams>(toVouchersFetchingParams, params as VoucherFetchingParams);
+      case "page":
+        return this.asFlatArray()
+          .filter(token => token.isLoadable())
+          .reduce<PageFetchingParams>(toPageFetchingParams, params as PageFetchingParams);
+      case "gift-cards":
+        return this.asFlatArray()
+          .filter(token => token.isLoadable())
+          .reduce<GiftCardsFetchingParams>(
+            toGiftCardsFetchingParams,
+            params as GiftCardsFetchingParams,
+          );
+      case "product-types":
+        return this.asFlatArray()
+          .filter(token => token.isLoadable())
+          .reduce<ProductTypesFetchingParams>(
+            toProductTypesFetchingParams,
+            params as ProductTypesFetchingParams,
+          );
+      case "staff-members":
+        return this.asFlatArray()
+          .filter(token => token.isLoadable())
+          .reduce<StaffMembersFetchingParams>(
+            toStaffMembersFetchingParams,
+            params as StaffMembersFetchingParams,
+          );
+      case "attributes":
+        return this.asFlatArray()
+          .filter(token => token.isLoadable())
+          .reduce<AttributesFetchingParams>(
+            toAttributesFetchingParams,
+            params as AttributesFetchingParams,
+          );
+      default:
+        return this.asFlatArray()
+          .filter(token => token.isLoadable())
+          .reduce<FetchingParams>(toFetchingParams, params as FetchingParams);
+    }
   }
 
   public asFlatArray() {
     return flatenate(this);
   }
 
-  public asFilterValuesFromResponse(response: InitialStateResponse): FilterContainer {
+  public asFilterValuesFromResponse(response: InitialResponseType): FilterContainer {
     return this.map(el => {
       if (typeof el === "string") {
         return el;
@@ -87,6 +158,6 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
   }
 
   public asFilterValueFromEmpty(): FilterContainer {
-    return this.asFilterValuesFromResponse(InitialStateResponse.empty());
+    return this.asFilterValuesFromResponse(InitialProductStateResponse.empty());
   }
 }

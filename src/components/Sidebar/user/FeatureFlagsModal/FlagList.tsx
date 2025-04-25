@@ -28,15 +28,17 @@ export const FlagList = ({ selectedName, onItemClick }: FlagListProps) => {
             paddingX={3}
             paddingY={4}
             backgroundColor={{
-              default: selectedName === flag.name ? "default1" : "default2",
-              hover: "default1",
+              default: selectedName === flag.name ? "default3" : "default1",
+              hover: selectedName !== flag.name ? "default2" : undefined,
             }}
             borderColor="default1"
             borderBottomWidth={1}
             borderBottomStyle="solid"
             onClick={() => onItemClick(flag.name)}
           >
-            <Text>{flag.displayName}</Text>
+            <Text fontWeight={selectedName === flag.name ? "bold" : "regular"}>
+              {flag.displayName}
+            </Text>
           </List.Item>
         ))}
     </List>

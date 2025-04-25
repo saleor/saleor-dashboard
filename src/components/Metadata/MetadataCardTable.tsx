@@ -12,10 +12,18 @@ import { nameInputPrefix, nameSeparator, valueInputPrefix } from "./utils";
 interface MetadataCardTableProps {
   data: MetadataInput[];
   onChange: FormChange;
+  /** Form is not editable (permanently, e.g. it's not a form) */
   readonly?: boolean;
+  /** Form is temporarily unavailable (e.g. on submit) */
+  disabled?: boolean;
 }
 
-export const MetadataCardTable = ({ data, onChange, readonly = false }: MetadataCardTableProps) => {
+export const MetadataCardTable = ({
+  data,
+  onChange,
+  readonly = false,
+  disabled,
+}: MetadataCardTableProps) => {
   if (!data || data.length === 0) {
     return null;
   }
@@ -65,21 +73,19 @@ export const MetadataCardTable = ({ data, onChange, readonly = false }: Metadata
           {data.map((field, fieldIndex) => (
             <TableRowLink data-test-id="field" key={fieldIndex}>
               <TableCell width="50%" style={{ paddingLeft: vars.spacing[6] }}>
-                {readonly ? (
-                  <Text size={3} color="default2">
-                    {field.key}
-                  </Text>
-                ) : (
-                  <Input
-                    data-test-id="metadata-key-input"
-                    width="100%"
-                    size="small"
-                    aria-label={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
-                    name={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
-                    onChange={onChange}
-                    value={field.key}
-                  />
-                )}
+                <Input
+                  data-test-id="metadata-key-input"
+                  width="100%"
+                  size="small"
+                  aria-label={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
+                  name={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
+                  onChange={onChange}
+                  value={field.key}
+                  readOnly={readonly}
+                  disabled={disabled}
+                  color="default1"
+                  fontWeight="bold"
+                />
               </TableCell>
               <TableCell
                 width="50%"
@@ -88,23 +94,19 @@ export const MetadataCardTable = ({ data, onChange, readonly = false }: Metadata
                   paddingBottom: vars.spacing[2],
                 }}
               >
-                {readonly ? (
-                  <Text size={3} color="default2">
-                    {field.value}
-                  </Text>
-                ) : (
-                  <Textarea
-                    data-test-id="metadata-value-input"
-                    disabled={readonly}
-                    width="100%"
-                    rows={1}
-                    size="small"
-                    aria-label={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
-                    name={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
-                    onChange={onChange}
-                    value={field.value}
-                  />
-                )}
+                <Textarea
+                  data-test-id="metadata-value-input"
+                  readOnly={readonly}
+                  disabled={disabled}
+                  width="100%"
+                  rows={1}
+                  size="small"
+                  aria-label={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
+                  name={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
+                  onChange={onChange}
+                  value={field.value}
+                  color="default1"
+                />
               </TableCell>
               {!readonly && (
                 <TableCell style={{ paddingRight: vars.spacing[6] }}>

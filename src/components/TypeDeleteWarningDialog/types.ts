@@ -8,3 +8,9 @@ export type CommonTypeDeleteWarningMessages = Record<
 export type TypeDeleteWarningMessages = Partial<
   Record<"description" | "consentLabel", MessageDescriptor>
 >;
+
+export interface TypeBaseData {
+  id: string;
+  name: string;
+  slug?: string;
+}

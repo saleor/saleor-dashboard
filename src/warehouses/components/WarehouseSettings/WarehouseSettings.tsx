@@ -1,9 +1,8 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
 import Link from "@dashboard/components/Link";
 import PreviewPill from "@dashboard/components/PreviewPill";
 import { RadioGroupField } from "@dashboard/components/RadioGroupField";
-import Skeleton from "@dashboard/components/Skeleton";
 import {
   WarehouseClickAndCollectOptionEnum,
   WarehouseWithShippingFragment,
@@ -12,8 +11,9 @@ import { sectionNames } from "@dashboard/intl";
 import { renderCollection } from "@dashboard/misc";
 import { shippingZoneUrl } from "@dashboard/shipping/urls";
 import { RelayToFlat } from "@dashboard/types";
-import { Card, CardContent, Divider, Typography } from "@material-ui/core";
+import { Divider } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -69,9 +69,9 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
       label: (
         <>
           <FormattedMessage {...messages.warehouseSettingsPrivateStock} />
-          <Typography variant="caption" color="textSecondary">
+          <Text size={2} fontWeight="light" color="default2">
             <FormattedMessage {...messages.warehouseSettingsPrivateStockDescription} />
-          </Typography>
+          </Text>
           <FormSpacer />
         </>
       ),
@@ -81,9 +81,9 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
       label: (
         <>
           <FormattedMessage {...messages.warehouseSettingsPublicStock} />
-          <Typography variant="caption" color="textSecondary">
+          <Text size={2} fontWeight="light" color="default2">
             <FormattedMessage {...messages.warehouseSettingsPublicStockDescription} />
-          </Typography>
+          </Text>
         </>
       ),
       value: "false",
@@ -94,9 +94,9 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
       label: (
         <>
           <FormattedMessage {...messages.warehouseSettingsDisabled} />
-          <Typography variant="caption" color="textSecondary">
+          <Text size={2} fontWeight="light" color="default2">
             <FormattedMessage {...messages.warehouseSettingsDisabledDescription} />
-          </Typography>
+          </Text>
           <FormSpacer />
         </>
       ),
@@ -106,9 +106,9 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
       label: (
         <>
           <FormattedMessage {...messages.warehouseSettingsLocal} />
-          <Typography variant="caption" color="textSecondary">
+          <Text size={2} fontWeight="light" color="default2">
             <FormattedMessage {...messages.warehouseSettingsLocalDescription} />
-          </Typography>
+          </Text>
           <FormSpacer />
         </>
       ),
@@ -118,9 +118,9 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
       label: (
         <>
           <FormattedMessage {...messages.warehouseSettingsAllWarehouses} />
-          <Typography variant="caption" color="textSecondary">
+          <Text size={2} fontWeight="light" color="default2">
             <FormattedMessage {...messages.warehouseSettingsAllWarehousesDescription} />
-          </Typography>
+          </Text>
         </>
       ),
       value: WarehouseClickAndCollectOptionEnum.ALL,
@@ -131,9 +131,13 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
   );
 
   return (
-    <Card>
-      <CardTitle title={<FormattedMessage {...sectionNames.shippingZones} />} />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          <FormattedMessage {...sectionNames.shippingZones} />
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         {renderCollection(
           zones,
           zone =>
@@ -147,15 +151,19 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
               <Skeleton />
             ),
           () => (
-            <Typography color="textSecondary">
+            <Text color="default2">
               <FormattedMessage {...messages.warehouseSettingsNoShippingZonesAssigned} />
-            </Typography>
+            </Text>
           ),
         )}
-      </CardContent>
+      </DashboardCard.Content>
       <Divider />
-      <CardTitle title={<FormattedMessage {...messages.warehouseSettingsStockTitle} />} />
-      <CardContent data-test-id="stock-settings-section">
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          <FormattedMessage {...messages.warehouseSettingsStockTitle} />
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content data-test-id="stock-settings-section">
         <RadioGroupField
           disabled={disabled}
           choices={isPrivateChoices}
@@ -164,17 +172,15 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
           name="isPrivate"
           alignTop={true}
         />
-      </CardContent>
+      </DashboardCard.Content>
       <Divider />
-      <CardTitle
-        title={
-          <>
-            <FormattedMessage {...messages.warehouseSettingsPickupTitle} />
-            <PreviewPill className={classes.preview} />
-          </>
-        }
-      />
-      <CardContent>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          <FormattedMessage {...messages.warehouseSettingsPickupTitle} />
+          <PreviewPill className={classes.preview} />
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <RadioGroupField
           disabled={disabled}
           choices={data.isPrivate ? clickAndCollectChoices : clickAndCollectChoicesPublic}
@@ -183,8 +189,8 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
           name="clickAndCollectOption"
           alignTop={true}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

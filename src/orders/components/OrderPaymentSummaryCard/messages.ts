@@ -2,9 +2,13 @@ import { defineMessages } from "react-intl";
 
 export const orderPaymentMessages = defineMessages({
   paymentTitle: {
-    id: "H52OCA",
-    defaultMessage: "Payment",
+    id: "1N8lSy",
+    defaultMessage: "Payments summary",
     description: "Order summary payment header",
+  },
+  paymentSubtitle: {
+    id: "iOOPMd",
+    defaultMessage: "A summary of all payments from registered transactions",
   },
   refundsTitle: {
     id: "E9Dz18",

@@ -3,9 +3,12 @@ import { useUser } from "@dashboard/auth";
 import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDialog";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { creatDraftOrderQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
+import { useFlag } from "@dashboard/featureFlags";
 import { useOrderDraftCreateMutation, useOrderDraftListQuery } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
@@ -24,7 +27,6 @@ import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import { DialogContentText } from "@material-ui/core";
 import isEqual from "lodash/isEqual";
 import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -49,6 +51,9 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   const notify = useNotifier();
   const intl = useIntl();
   const { updateListSettings, settings } = useListSettings(ListViews.DRAFT_LIST);
+  const { enabled: isDraftOrdersFilteringEnabled } = useFlag("new_filters");
+  const { valueProvider } = useConditionalFilterContext();
+  const filter = creatDraftOrderQueryVariables(valueProvider.value);
 
   usePaginationReset(orderDraftListUrl, params, settings.rowNumber);
 
@@ -120,9 +125,22 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     }),
     [paginationState, params],
   );
-  const { data, loading, refetch } = useOrderDraftListQuery({
+
+  const newFiltersQueryVariables = React.useMemo(
+    () => ({
+      ...paginationState,
+      filter: {
+        ...filter,
+        search: params.query,
+      },
+      sort: getSortQueryVariables(params),
+    }),
+    [params, settings.rowNumber, valueProvider.value],
+  );
+
+  const { data, refetch } = useOrderDraftListQuery({
     displayLoader: true,
-    variables: queryVariables,
+    variables: isDraftOrdersFilteringEnabled ? newFiltersQueryVariables : queryVariables,
   });
   const orderDrafts = mapEdgesToItems(data?.draftOrders);
   const paginationValues = usePaginator({
@@ -167,7 +185,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         onFilterPresetUpdate={onPresetUpdate}
         onFilterPresetPresetSave={() => openModal("save-search")}
         filterPresets={presets.map(tab => tab.name)}
-        disabled={loading}
+        disabled={!data}
         settings={settings}
         orders={orderDrafts}
         onAdd={() => openModal("create-order")}
@@ -199,17 +217,15 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         })}
         variant="delete"
       >
-        <DialogContentText>
-          <FormattedMessage
-            id="Q6VRrE"
-            defaultMessage="{counter,plural,one{Are you sure you want to delete this order draft?} other{Are you sure you want to delete {displayQuantity} order drafts?}}"
-            description="dialog content"
-            values={{
-              counter: maybe(() => selectedRowIds.length),
-              displayQuantity: <strong>{maybe(() => selectedRowIds.length)}</strong>,
-            }}
-          />
-        </DialogContentText>
+        <FormattedMessage
+          id="Q6VRrE"
+          defaultMessage="{counter,plural,one{Are you sure you want to delete this order draft?} other{Are you sure you want to delete {displayQuantity} order drafts?}}"
+          description="dialog content"
+          values={{
+            counter: maybe(() => selectedRowIds.length),
+            displayQuantity: <strong>{maybe(() => selectedRowIds.length)}</strong>,
+          }}
+        />
       </ActionDialog>
       <SaveFilterTabDialog
         open={params.action === "save-search"}

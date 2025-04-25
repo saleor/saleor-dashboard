@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Hr from "@dashboard/components/Hr";
 import RadioSwitchField from "@dashboard/components/RadioSwitchField";
@@ -8,15 +7,18 @@ import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
-import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Box, Checkbox, RadioGroup, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
+import { DashboardCard } from "../Card";
+import { DateTimeTimezoneField } from "../DateTimeTimezoneField";
 import FormSpacer from "../FormSpacer";
 import DateVisibilitySelector from "./DateVisibilitySelector";
 import { visibilityCardMessages } from "./messages";
+import { isAvailableOrPublished } from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
@@ -70,13 +72,14 @@ interface Message {
 }
 
 export interface DateFields {
-  publicationDate: string;
-  availableForPurchase?: string;
+  publishedAt: string;
+  availableForPurchaseAt?: string;
 }
 
 export interface VisibilityCardProps {
-  children?: React.ReactNode | React.ReactNodeArray;
+  children?: React.ReactNode;
   data: DateFields & {
+    availableForPurchaseAt?: string;
     isAvailableForPurchase?: boolean;
     isPublished: boolean;
     visibleInListings?: boolean;
@@ -91,10 +94,10 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
   const {
     children,
     data: {
-      availableForPurchase,
-      isAvailableForPurchase: isAvailable,
+      isAvailableForPurchase,
+      availableForPurchaseAt,
       isPublished,
-      publicationDate,
+      publishedAt,
       visibleInListings,
     },
     errors,
@@ -106,7 +109,11 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
   const dateNow = useCurrentDate();
-  const hasAvailableProps = isAvailable !== undefined && availableForPurchase !== undefined;
+
+  const [isPublishedAt, setPublishedAt] = useState(!!publishedAt);
+
+  const hasAvailableProps =
+    isAvailableForPurchase !== undefined && availableForPurchaseAt !== undefined;
   const visibleMessage = (date: string) =>
     intl.formatMessage(visibilityCardMessages.sinceDate, {
       date: localizeDate(date),
@@ -127,60 +134,95 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
   };
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(visibilityCardMessages.title)} />
-      <CardContent>
-        <RadioSwitchField
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(visibilityCardMessages.title)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
+        <RadioGroup
           disabled={disabled}
-          error={!!getFieldError(errors, "isPublished")}
-          firstOptionLabel={
-            <>
-              <p className={classes.label}>{messages.visibleLabel}</p>
-              {isPublished && publicationDate && Date.parse(publicationDate) < dateNow && (
-                <span className={classes.secondLabel}>
-                  {messages.visibleSecondLabel || visibleMessage(publicationDate)}
-                </span>
+          name="isPublished"
+          value={String(isPublished)}
+          onValueChange={value => {
+            onChange({
+              target: {
+                name: "publishedAt",
+                value: value === "false" ? null : availableForPurchaseAt,
+              },
+            });
+            onChange({
+              target: {
+                name: "isPublished",
+                value: value === "true",
+              },
+            });
+          }}
+          display="flex"
+          flexDirection="column"
+          gap={3}
+        >
+          <RadioGroup.Item id={`isPublished-true`} value="true">
+            <Box display="flex" __alignItems="baseline" gap={2}>
+              <Text>{messages.visibleLabel}</Text>
+              {isAvailableOrPublished({
+                condition: isPublished,
+                date: publishedAt,
+                now: dateNow,
+              }) && (
+                <Text size={2} color="default2">
+                  {visibleMessage(publishedAt)}
+                </Text>
               )}
-            </>
-          }
-          name={"isPublished" as keyof FormData}
-          secondOptionLabel={
-            <>
-              <p className={classes.label}>{messages.hiddenLabel}</p>
-              {publicationDate && !isPublished && Date.parse(publicationDate) >= dateNow && (
-                <span className={classes.secondLabel}>{messages.hiddenSecondLabel}</span>
+            </Box>
+          </RadioGroup.Item>
+          <RadioGroup.Item id={`isPublished-false`} value="false">
+            <Box display="flex" __alignItems="baseline" gap={2}>
+              <Text>{messages.hiddenLabel}</Text>
+              {publishedAt && !isPublished && (
+                <Text size={2} color="default2">
+                  {messages.hiddenSecondLabel}
+                </Text>
               )}
-            </>
-          }
-          value={isPublished}
-          onChange={handleRadioFieldChange("publicationDate")}
-        />
+            </Box>
+          </RadioGroup.Item>
+        </RadioGroup>
+
         {!isPublished && (
-          <DateVisibilitySelector
-            buttonText={intl.formatMessage(visibilityCardMessages.setPublicationDate)}
-            onInputClose={() => onChange({ target: { name: "publicationDate", value: null } })}
-          >
-            <TextField
-              error={!!getFieldError(errors, "publicationDate")}
-              disabled={disabled}
-              label={intl.formatMessage(visibilityCardMessages.publishOn)}
-              name="publicationDate"
-              type="date"
-              fullWidth={true}
-              helperText={getFieldError(errors, "publicationDate")?.message}
-              value={publicationDate || ""}
-              onChange={onChange}
-              className={classes.date}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </DateVisibilitySelector>
+          <Box display="flex" gap={1} flexDirection="column" alignItems="start" marginTop={2}>
+            <Checkbox
+              onCheckedChange={(checked: boolean) => setPublishedAt(checked)}
+              checked={isPublishedAt}
+            >
+              {messages.setAvailabilityDateLabel}
+            </Checkbox>
+
+            {isPublishedAt && (
+              <DateTimeTimezoneField
+                label={intl.formatMessage(visibilityCardMessages.publishOn)}
+                disabled={disabled}
+                name="publishedAt"
+                value={publishedAt || ""}
+                onChange={value =>
+                  onChange({
+                    target: {
+                      name: "publishedAt",
+                      value: value,
+                    },
+                  })
+                }
+                error={getFieldError(errors, "isPublishedAt")}
+                fullWidth
+              />
+            )}
+          </Box>
         )}
+
         {getFieldError(errors, "isPublished") && (
           <>
             <FormSpacer />
-            <Typography color="error">{getFieldError(errors, "isPublished")?.message}</Typography>
+            <Text color="critical1">{getFieldError(errors, "isPublished")?.message}</Text>
           </>
         )}
         {hasAvailableProps && (
@@ -193,28 +235,30 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
               firstOptionLabel={
                 <>
                   <p className={classes.label}>{messages.availableLabel}</p>
-                  {isAvailable &&
-                    availableForPurchase &&
-                    Date.parse(availableForPurchase) < dateNow && (
-                      <span className={classes.secondLabel}>
-                        {visibleMessage(availableForPurchase)}
-                      </span>
-                    )}
+                  {isAvailableOrPublished({
+                    condition: isAvailableForPurchase,
+                    date: availableForPurchaseAt,
+                    now: dateNow,
+                  }) && (
+                    <span className={classes.secondLabel}>
+                      {visibleMessage(availableForPurchaseAt)}
+                    </span>
+                  )}
                 </>
               }
               name={"isAvailableForPurchase" as keyof FormData}
               secondOptionLabel={
                 <>
                   <p className={classes.label}>{messages.unavailableLabel}</p>
-                  {availableForPurchase && !isAvailable && (
+                  {availableForPurchaseAt && !isAvailableForPurchase && (
                     <span className={classes.secondLabel}>{messages.availableSecondLabel}</span>
                   )}
                 </>
               }
-              value={isAvailable}
-              onChange={handleRadioFieldChange("availableForPurchase")}
+              value={isAvailableForPurchase}
+              onChange={handleRadioFieldChange("availableForPurchaseAt")}
             />
-            {!isAvailable && (
+            {!isAvailableForPurchase && (
               <DateVisibilitySelector
                 buttonText={messages.setAvailabilityDateLabel}
                 onInputClose={() =>
@@ -223,29 +267,31 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
                   })
                 }
               >
-                <TextField
+                <DateTimeTimezoneField
                   error={!!getFieldError(errors, "startDate")}
                   disabled={disabled}
                   label={intl.formatMessage(visibilityCardMessages.setAvailableOn)}
-                  name="availableForPurchase"
-                  type="date"
-                  fullWidth={true}
+                  name="availableForPurchaseAt"
+                  fullWidth
                   helperText={getFieldError(errors, "startDate")?.message}
-                  value={availableForPurchase || ""}
-                  onChange={onChange}
-                  className={classes.date}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  value={availableForPurchaseAt || ""}
+                  onChange={value =>
+                    onChange({
+                      target: {
+                        name: "availableForPurchaseAt",
+                        value,
+                      },
+                    })
+                  }
                 />
               </DateVisibilitySelector>
             )}
             {getFieldError(errors, "isAvailableForPurchase") && (
               <>
                 <FormSpacer />
-                <Typography color="error">
+                <Text color="critical1">
                   {getFieldError(errors, "isAvailableForPurchase")?.message}
-                </Typography>
+                </Text>
               </>
             )}
           </>
@@ -282,8 +328,8 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
           </>
         )}
         <div className={classes.children}>{children}</div>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 VisibilityCard.displayName = "VisibilityCard";

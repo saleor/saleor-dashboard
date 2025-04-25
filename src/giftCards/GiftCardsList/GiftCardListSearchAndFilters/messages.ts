@@ -15,8 +15,8 @@ export const giftCardListFilterErrorMessages = defineMessages({
 
 export const giftCardListSearchAndFiltersMessages = defineMessages({
   searchPlaceholder: {
-    id: "h2hEKV",
-    defaultMessage: "Search gift cards, e.g {exampleGiftCardCode}",
+    id: "jY80Gs",
+    defaultMessage: "Search by code, e.g {exampleGiftCardCode}",
     description: "search gift card placeholder",
   },
   defaultTabLabel: {

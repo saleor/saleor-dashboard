@@ -6,7 +6,7 @@ export const collectionFragment = gql`
     name
     channelListings {
       isPublished
-      publicationDate
+      publishedAt
       channel {
         id
         name
@@ -43,6 +43,16 @@ export const collectionProductFragment = gql`
     }
     channelListings {
       ...ChannelListingProductWithoutPricing
+    }
+  }
+`;
+
+export const collectionWithTotalProductsFragment = gql`
+  fragment CollectionWithTotalProducts on Collection {
+    id
+    name
+    products {
+      totalCount
     }
   }
 `;

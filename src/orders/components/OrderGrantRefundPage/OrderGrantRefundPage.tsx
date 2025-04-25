@@ -5,7 +5,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { formatMoneyAmount } from "@dashboard/components/Money";
 import PriceField from "@dashboard/components/PriceField";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import {
   OrderDetailsGrantedRefundFragment,
   OrderDetailsGrantRefundFragment,
@@ -213,17 +213,15 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
           </DetailPageLayout.Content>
         </GrantRefundContext.Provider>
       </form>
-      <Savebar
-        labels={{
-          confirm: isEdit
+      <Savebar>
+        <Savebar.Spacer />
+        <Savebar.CancelButton onClick={() => navigate(orderUrl(order?.id))} />
+        <Savebar.ConfirmButton transitionState={submitState} onClick={submit} disabled={loading}>
+          {isEdit
             ? intl.formatMessage(grantRefundPageMessages.editRefundBtn)
-            : intl.formatMessage(grantRefundPageMessages.grantRefundBtn),
-        }}
-        onCancel={() => navigate(orderUrl(order?.id))}
-        onSubmit={submit}
-        state={submitState}
-        disabled={loading}
-      />
+            : intl.formatMessage(grantRefundPageMessages.grantRefundBtn)}
+        </Savebar.ConfirmButton>
+      </Savebar>
     </DetailPageLayout>
   );
 };

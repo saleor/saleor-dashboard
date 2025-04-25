@@ -11,7 +11,7 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import VisibilityCard from "@dashboard/components/VisibilityCard";
 import {
@@ -22,10 +22,11 @@ import {
   SearchPageTypesQuery,
   SearchProductsQuery,
 } from "@dashboard/graphql";
+import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { pageListUrl } from "@dashboard/pages/urls";
+import { pagesSection } from "@dashboard/pages/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import React from "react";
@@ -118,6 +119,10 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   const handleSelectPageType = (pageTypeId: string) =>
     onSelectPageType && onSelectPageType(pageTypeId);
 
+  const pageListBackLink = useBackLinkWithState({
+    path: pagesSection,
+  });
+
   return (
     <PageForm
       page={page}
@@ -140,7 +145,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
         return (
           <DetailPageLayout>
             <TopNav
-              href={pageListUrl()}
+              href={pageListBackLink}
               title={!pageExists ? intl.formatMessage(messages.title) : page?.title}
             />
             <DetailPageLayout.Content>
@@ -190,9 +195,10 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 messages={{
                   hiddenLabel: intl.formatMessage(messages.hiddenLabel),
                   hiddenSecondLabel: intl.formatMessage(messages.hiddenSecondLabel, {
-                    date: localizeDate(data.publicationDate),
+                    date: localizeDate(data.publishedAt, "llll"),
                   }),
                   visibleLabel: intl.formatMessage(messages.visibleLabel),
+                  setAvailabilityDateLabel: intl.formatMessage(messages.setAvailabilityDate),
                 }}
                 onChange={change}
               />
@@ -210,13 +216,16 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 canChangeType={!page?.pageType}
               />
             </DetailPageLayout.RightSidebar>
-            <Savebar
-              disabled={loading}
-              state={saveButtonBarState}
-              onCancel={() => navigate(pageListUrl())}
-              onDelete={page === null ? undefined : onRemove}
-              onSubmit={submit}
-            />
+            <Savebar>
+              {page !== null && <Savebar.DeleteButton onClick={onRemove} />}
+              <Savebar.Spacer />
+              <Savebar.CancelButton onClick={() => navigate(pageListBackLink)} />
+              <Savebar.ConfirmButton
+                transitionState={saveButtonBarState}
+                onClick={submit}
+                disabled={loading}
+              />
+            </Savebar>
             {canOpenAssignReferencesAttributeDialog && (
               <AssignAttributeValueDialog
                 entityType={getReferenceAttributeEntityTypeFromAttribute(

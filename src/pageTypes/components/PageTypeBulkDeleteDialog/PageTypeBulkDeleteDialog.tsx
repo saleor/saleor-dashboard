@@ -1,6 +1,5 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { DialogContentText } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -36,29 +35,27 @@ const PageTypeBulkDeleteDialog: React.FC<PageTypeBulkDeleteDialogProps> = ({
       })}
       variant="delete"
     >
-      <DialogContentText>
-        {hasPages ? (
-          <FormattedMessage
-            id="2Zyit2"
-            defaultMessage="{counter,plural,one{Page Type you want to delete is used by some pages. Deleting this page type will also delete those pages. Are you sure you want to delete this page type? After doing so you won’t be able to revert changes.} other{Page Types you want to delete are used by some pages. Deleting these page types will also delete those pages. Are you sure you want to delete {displayQuantity} page types? After doing so you won’t be able to revert changes.}}"
-            description="delete page types with its pages"
-            values={{
-              counter: quantity,
-              displayQuantity: <strong>{quantity}</strong>,
-            }}
-          />
-        ) : (
-          <FormattedMessage
-            id="RZmdM3"
-            defaultMessage="{counter,plural,one{Are you sure you want to delete this page type? After doing so you won’t be able to revert changes.} other{Are you sure you want to delete {displayQuantity} page types? After doing so you won’t be able to revert changes.}}"
-            description="delete page types"
-            values={{
-              counter: quantity,
-              displayQuantity: <strong>{quantity}</strong>,
-            }}
-          />
-        )}
-      </DialogContentText>
+      {hasPages ? (
+        <FormattedMessage
+          id="2Zyit2"
+          defaultMessage="{counter,plural,one{Page Type you want to delete is used by some pages. Deleting this page type will also delete those pages. Are you sure you want to delete this page type? After doing so you won’t be able to revert changes.} other{Page Types you want to delete are used by some pages. Deleting these page types will also delete those pages. Are you sure you want to delete {displayQuantity} page types? After doing so you won’t be able to revert changes.}}"
+          description="delete page types with its pages"
+          values={{
+            counter: quantity,
+            displayQuantity: <strong>{quantity}</strong>,
+          }}
+        />
+      ) : (
+        <FormattedMessage
+          id="RZmdM3"
+          defaultMessage="{counter,plural,one{Are you sure you want to delete this page type? After doing so you won’t be able to revert changes.} other{Are you sure you want to delete {displayQuantity} page types? After doing so you won’t be able to revert changes.}}"
+          description="delete page types"
+          values={{
+            counter: quantity,
+            displayQuantity: <strong>{quantity}</strong>,
+          }}
+        />
+      )}
     </ActionDialog>
   );
 };

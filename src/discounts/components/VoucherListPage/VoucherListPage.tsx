@@ -2,10 +2,12 @@
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { DashboardCard } from "@dashboard/components/Card";
 import { getByName } from "@dashboard/components/Filter/utils";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { voucherAddUrl, VoucherListUrlSortField } from "@dashboard/discounts/urls";
+import { useFlag } from "@dashboard/featureFlags";
 import { VoucherFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
@@ -15,7 +17,6 @@ import {
   PageListProps,
   SortPage,
 } from "@dashboard/types";
-import { Card } from "@material-ui/core";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -54,6 +55,7 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
+  const { enabled: isVoucherFiltersEnabled } = useFlag("new_filters");
   const structure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const filterDependency = structure.find(getByName("channel"));
@@ -100,30 +102,51 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
           </Box>
         </Box>
       </TopNav>
-      <Card>
-        <ListFilters<VoucherFilterKeys>
-          currencySymbol={currencySymbol}
-          initialSearch={initialSearch}
-          onFilterChange={onFilterChange}
-          onSearchChange={onSearchChange}
-          filterStructure={structure}
-          searchPlaceholder={intl.formatMessage({
-            id: "bPshhv",
-            defaultMessage: "Search vouchers...",
-          })}
-          actions={
-            <Box display="flex" gap={4}>
-              {selectedVouchersIds.length > 0 && (
-                <BulkDeleteButton onClick={onVoucherDelete}>
-                  <FormattedMessage defaultMessage="Delete vouchers" id="lfXze9" />
-                </BulkDeleteButton>
-              )}
-            </Box>
-          }
-        />
+      <DashboardCard>
+        {isVoucherFiltersEnabled ? (
+          <ListFilters
+            type="expression-filter"
+            initialSearch={initialSearch}
+            onSearchChange={onSearchChange}
+            searchPlaceholder={intl.formatMessage({
+              id: "bPshhv",
+              defaultMessage: "Search vouchers...",
+            })}
+            actions={
+              <Box display="flex" gap={4}>
+                {selectedVouchersIds.length > 0 && (
+                  <BulkDeleteButton onClick={onVoucherDelete}>
+                    <FormattedMessage defaultMessage="Delete vouchers" id="lfXze9" />
+                  </BulkDeleteButton>
+                )}
+              </Box>
+            }
+          />
+        ) : (
+          <ListFilters<VoucherFilterKeys>
+            currencySymbol={currencySymbol}
+            initialSearch={initialSearch}
+            onFilterChange={onFilterChange}
+            onSearchChange={onSearchChange}
+            filterStructure={structure}
+            searchPlaceholder={intl.formatMessage({
+              id: "bPshhv",
+              defaultMessage: "Search vouchers...",
+            })}
+            actions={
+              <Box display="flex" gap={4}>
+                {selectedVouchersIds.length > 0 && (
+                  <BulkDeleteButton onClick={onVoucherDelete}>
+                    <FormattedMessage defaultMessage="Delete vouchers" id="lfXze9" />
+                  </BulkDeleteButton>
+                )}
+              </Box>
+            }
+          />
+        )}
 
         <VoucherListDatagrid filterDependency={filterDependency} {...listProps} />
-      </Card>
+      </DashboardCard>
     </ListPageLayout>
   );
 };

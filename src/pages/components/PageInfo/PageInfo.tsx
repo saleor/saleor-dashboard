@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
@@ -8,7 +8,7 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
-import { Card, CardContent, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -38,9 +38,13 @@ const PageInfo: React.FC<PageInfoProps> = props => {
   const formErrors = getFormErrors(["title", "content"], errors);
 
   return (
-    <Card className={classes.root}>
-      <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
-      <CardContent>
+    <DashboardCard className={classes.root}>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <TextField
           disabled={disabled}
           error={!!formErrors.title}
@@ -81,8 +85,8 @@ const PageInfo: React.FC<PageInfoProps> = props => {
             name={"content" as keyof PageData}
           />
         )}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

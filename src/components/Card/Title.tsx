@@ -1,10 +1,8 @@
-import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Text, TextProps } from "@saleor/macaw-ui-next";
+import React, { PropsWithChildren } from "react";
 
-export const Title: React.FC = ({ children }) => (
-  <Box paddingX={6} paddingTop={6}>
-    <Text size={5} fontWeight="bold">
-      {children}
-    </Text>
-  </Box>
+export const Title: React.FC<PropsWithChildren<TextProps>> = ({ children, ...rest }) => (
+  <Text size={5} fontWeight="bold" __width="auto" {...rest}>
+    {children}
+  </Text>
 );

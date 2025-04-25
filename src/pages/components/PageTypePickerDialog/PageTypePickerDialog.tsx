@@ -1,12 +1,11 @@
 import { Combobox } from "@dashboard/components/Combobox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { buttonMessages } from "@dashboard/intl";
 import { FetchMoreProps } from "@dashboard/types";
-import { Button } from "@saleor/macaw-ui-next";
+import { Button, Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -15,7 +14,7 @@ import { messages } from "./messages";
 export interface PageTypePickerDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
-  pageTypes: SingleAutocompleteChoiceType[];
+  pageTypes: Option[];
   fetchPageTypes: (data: string) => void;
   fetchMorePageTypes: FetchMoreProps;
   onClose: () => void;
@@ -43,10 +42,10 @@ const PageTypePickerDialog: React.FC<PageTypePickerDialogProps> = ({
 
   return (
     <DashboardModal open={open} onChange={onClose}>
-      <DashboardModal.Content __width="480px" disableAutofocus>
-        <DashboardModal.Title>
+      <DashboardModal.Content size="xs">
+        <DashboardModal.Header>
           <FormattedMessage {...messages.selectPageType} />
-        </DashboardModal.Title>
+        </DashboardModal.Header>
 
         <Combobox
           name="pageType"

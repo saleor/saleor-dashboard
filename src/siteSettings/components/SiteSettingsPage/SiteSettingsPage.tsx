@@ -7,7 +7,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import PageSectionHeader from "@dashboard/components/PageSectionHeader";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { ShopErrorFragment, SiteSettingsQuery } from "@dashboard/graphql";
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
@@ -180,9 +180,11 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                     description={intl.formatMessage(messages.sectionEmailConfirmationDescription)}
                   />
                   <DashboardCard>
-                    <DashboardCard.Title>
-                      {intl.formatMessage(messages.sectionEmailConfirmationHeader)}
-                    </DashboardCard.Title>
+                    <DashboardCard.Header>
+                      <DashboardCard.Title>
+                        {intl.formatMessage(messages.sectionEmailConfirmationHeader)}
+                      </DashboardCard.Title>
+                    </DashboardCard.Header>
                     <DashboardCard.Content>
                       <Checkbox
                         data-test-id="require-email-confirmation-checkbox"
@@ -196,12 +198,15 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                 </Box>
               </Box>
 
-              <Savebar
-                state={saveButtonBarState}
-                disabled={!!isSaveDisabled}
-                onCancel={() => navigate(configurationMenuUrl)}
-                onSubmit={submit}
-              />
+              <Savebar>
+                <Savebar.Spacer />
+                <Savebar.CancelButton onClick={() => navigate(configurationMenuUrl)} />
+                <Savebar.ConfirmButton
+                  transitionState={saveButtonBarState}
+                  onClick={submit}
+                  disabled={!!isSaveDisabled}
+                />
+              </Savebar>
             </DetailPageLayout.Content>
           </DetailPageLayout>
         );

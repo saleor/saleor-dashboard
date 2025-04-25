@@ -81,12 +81,15 @@ export const pillCellRenderer = (): CustomRenderer<PillCell> => ({
     const tileHeight = textHeight * 1.2;
 
     // Draw the tile
-    ctx.fillStyle = base;
-    ctx.strokeStyle = border;
-    ctx.beginPath();
-    ctx.roundRect(x + 10, y + height / 2 - tileHeight / 2, tileWidth, tileHeight, 5);
-    ctx.stroke();
-    ctx.fill();
+    if ("roundRect" in ctx) {
+      ctx.fillStyle = base;
+      ctx.strokeStyle = border;
+      ctx.beginPath();
+      ctx.roundRect(x + 10, y + height / 2 - tileHeight / 2, tileWidth, tileHeight, 5);
+      ctx.stroke();
+      ctx.fill();
+    }
+
     // Draw the text
     ctx.fillStyle = text;
     ctx.fillText(label, x + 15, y + height / 2 + getMiddleCenterBias(ctx, theme));

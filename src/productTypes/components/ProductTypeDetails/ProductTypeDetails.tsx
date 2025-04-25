@@ -1,13 +1,14 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import PreviewPill from "@dashboard/components/PreviewPill";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
 import { ProductTypeKindEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
-import { Card, CardContent, Divider, TextField, Typography } from "@material-ui/core";
+import { Divider, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -57,9 +58,13 @@ const ProductTypeDetails: React.FC<ProductTypeDetailsProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card className={classes.root}>
-      <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
-      <CardContent>
+    <DashboardCard className={classes.root}>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <TextField
           disabled={disabled}
           error={!!getFieldError(errors, "name")}
@@ -70,9 +75,9 @@ const ProductTypeDetails: React.FC<ProductTypeDetailsProps> = props => {
           onChange={onChange}
           value={data.name}
         />
-      </CardContent>
+      </DashboardCard.Content>
       <Divider />
-      <CardContent>
+      <DashboardCard.Content>
         <RadioGroupField
           disabled={disabled}
           choices={kindOptions.map(option => ({
@@ -81,16 +86,16 @@ const ProductTypeDetails: React.FC<ProductTypeDetailsProps> = props => {
                 className={classes.option}
                 data-test-id={`product-type-kind-option-${option.type}`}
               >
-                <Typography variant="body1">
+                <Text size={4} fontWeight="regular">
                   <FormattedMessage {...option.title} />
                   {option.type === ProductTypeKindEnum.GIFT_CARD && (
                     <PreviewPill className={classes.preview} />
                   )}
-                </Typography>
+                </Text>
                 {option.subtitle && (
-                  <Typography color="textSecondary" variant="caption">
+                  <Text color="default2" size={2} fontWeight="light" display="block">
                     <FormattedMessage {...option.subtitle} />
-                  </Typography>
+                  </Text>
                 )}
               </div>
             ),
@@ -100,8 +105,8 @@ const ProductTypeDetails: React.FC<ProductTypeDetailsProps> = props => {
           onChange={onKindChange}
           value={data.kind}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

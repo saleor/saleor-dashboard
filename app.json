@@ -7,7 +7,7 @@
   "logo": "https://mirumee.com/img/opensource_saleor.jpg",
   "keywords": ["saleor", "e-commerce", "dashboard"],
   "env": {
-    "API_URI": {
+    "API_URL": {
       "description": "URI of a running instance of Saleor GraphQL API",
       "value": "https://demo.getsaleor.com/graphql/"
     },

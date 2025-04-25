@@ -16,6 +16,12 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
   const isActive = isMenuActive(location.pathname, menuItem) && !hasSubmenuActive;
   const isExpanded = isActive || hasSubmenuActive;
 
+  const handleMenuGroupClick = () => {
+    if (menuItem.onClick) {
+      menuItem.onClick();
+    }
+  };
+
   return (
     <List.ItemGroup defaultExpanded={isExpanded} data-test-id={`menu-list-item`}>
       <List.ItemGroup.Trigger
@@ -26,6 +32,8 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
         active={isActive}
         justifyContent="space-between"
         data-test-id={`menu-item-label-${menuItem.id}`}
+        position="relative"
+        onClick={handleMenuGroupClick}
       >
         <Link
           replace={isActive}
@@ -40,6 +48,7 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
             <Text size={3} fontWeight="medium">
               {menuItem.label}
             </Text>
+            {menuItem.endAdornment && <Box>{menuItem.endAdornment}</Box>}
           </Box>
         </Link>
       </List.ItemGroup.Trigger>

@@ -1,9 +1,5 @@
-import { Typography } from "@material-ui/core";
-import React, { ChangeEvent } from "react";
-
-import CardSpacer from "../CardSpacer";
-import ControlledCheckbox from "../ControlledCheckbox";
-import { useTypeDeleteWarningDialogStyles as useStyles } from "./styles";
+import { Checkbox, Text } from "@saleor/macaw-ui-next";
+import React from "react";
 
 interface DeleteWarningDialogConsentContentProps {
   description: string | React.ReactNode[] | readonly React.ReactNode[];
@@ -17,24 +13,21 @@ const DeleteWarningDialogConsentContent: React.FC<DeleteWarningDialogConsentCont
   consentLabel,
   isConsentChecked,
   onConsentChange,
-}) => {
-  const classes = useStyles();
-  const handleConsentChange = ({ target }: ChangeEvent<any>) => onConsentChange(target.value);
+}) => (
+  <>
+    <Text>{description}</Text>
 
-  return (
-    <>
-      <Typography>{description}</Typography>
-      <CardSpacer />
-      {consentLabel && (
-        <ControlledCheckbox
-          name="delete-assigned-items-consent"
-          checked={isConsentChecked}
-          onChange={handleConsentChange}
-          label={<Typography className={classes.consentLabel}>{consentLabel}</Typography>}
-        />
-      )}
-    </>
-  );
-};
+    {consentLabel && (
+      <Checkbox
+        name="delete-assigned-items-consent"
+        data-test-id="delete-assigned-items-consent"
+        checked={isConsentChecked}
+        onCheckedChange={value => onConsentChange(!!value)}
+      >
+        <Text>{consentLabel}</Text>
+      </Checkbox>
+    )}
+  </>
+);
 
 export default DeleteWarningDialogConsentContent;

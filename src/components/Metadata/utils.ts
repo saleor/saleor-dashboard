@@ -47,3 +47,16 @@ export function parseEventData(event: ChangeEvent): EventData {
 export function getDataKey(isPrivate: boolean) {
   return isPrivate ? "privateMetadata" : "metadata";
 }
+
+export const getMetadataTitle = (isPrivate: boolean) =>
+  isPrivate
+    ? {
+        id: "ETHnjq",
+        defaultMessage: "Private Metadata",
+        description: "header",
+      }
+    : {
+        id: "VcI+Zh",
+        defaultMessage: "Metadata",
+        description: "header",
+      };

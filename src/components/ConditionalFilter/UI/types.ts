@@ -25,6 +25,7 @@ type ConditionOptionTypes = ConditionOption<
   | "text"
   | "number"
   | "multiselect"
+  | "bulkselect"
   | "combobox"
   | "select"
   | "number.range"
@@ -32,6 +33,7 @@ type ConditionOptionTypes = ConditionOption<
   | "datetime"
   | "date.range"
   | "datetime.range"
+  | "text.double"
 >;
 
 export interface Row {
@@ -52,22 +54,31 @@ export interface Row {
 export type SelectedOperator =
   | InputOperator
   | MultiselectOperator
+  | BulkselectOperator
   | ComboboxOperator
   | SelectOperator
   | NumberRangeOperator
   | DateOperator
   | DateTimeOperator
   | DateRangeOperator
-  | DateTimeRangeOperator;
+  | DateTimeRangeOperator
+  | DoubleTextOperator;
 
 export interface InputOperator {
-  value: string;
+  value: string | RightOperatorOption;
   conditionValue: ConditionOption<"text" | "number"> | null;
 }
 
 export interface MultiselectOperator {
   value: RightOperatorOption[];
   conditionValue: ConditionOption<"multiselect"> | null;
+  options: RightOperatorOption[];
+  loading?: boolean;
+}
+
+export interface BulkselectOperator {
+  value: RightOperatorOption[];
+  conditionValue: ConditionOption<"bulkselect"> | null;
   options: RightOperatorOption[];
   loading?: boolean;
 }
@@ -108,6 +119,11 @@ export interface DateRangeOperator {
 export interface DateTimeRangeOperator {
   value: RangeValue;
   conditionValue: ConditionOption<"datetime.range"> | null;
+}
+
+export interface DoubleTextOperator {
+  value: [string, string];
+  conditionValue: ConditionOption<"text.double"> | null;
 }
 
 export interface FilterEvent extends Event {

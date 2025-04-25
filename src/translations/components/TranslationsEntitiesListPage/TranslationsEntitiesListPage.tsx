@@ -1,8 +1,8 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { DashboardCard } from "@dashboard/components/Card";
 import FilterTabs, { FilterTab } from "@dashboard/components/TableFilter";
 import { LanguageFragment } from "@dashboard/graphql";
 import { maybe } from "@dashboard/misc";
-import { Card } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -61,7 +61,7 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
           },
         )}
       />
-      <Card>
+      <DashboardCard>
         <FilterTabs currentTab={currentTab}>
           <FilterTab
             label={intl.formatMessage({
@@ -128,7 +128,7 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
           />
         </FilterTabs>
         {children}
-      </Card>
+      </DashboardCard>
     </>
   );
 };

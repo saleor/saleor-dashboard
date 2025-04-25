@@ -39,7 +39,8 @@ export class AttributesPage extends BasePage {
     readonly deleteAttrValueDialog = page.getByTestId("delete-attribute-value-dialog"),
     readonly editAttrValueDialog = page.getByTestId("edit-attribute-value-dialog"),
     readonly attrValuesSection = page.getByTestId("attribute-values-section"),
-    readonly attrEntityTypeSelect = page.locator(`[id="mui-component-select-entityType"]`),
+    readonly attrEntityTypeSelect = page.getByTestId("attribute-entity-type-select"),
+    readonly attributeSelectOption = page.getByTestId("select-option"),
     readonly attrVisibleInStorefrontSwitch = page.locator(`[name = "visibleInStorefront"]`),
     readonly metadataSectionAccordionButton = page
       .getByTestId("metadata-item")
@@ -121,7 +122,7 @@ export class AttributesPage extends BasePage {
 
   async selectAttributeInputType(attributeType: string) {
     await this.attributeSelect.click();
-    await this.page.getByTestId(`select-field-option-${attributeType}`).click();
+    await this.attributeSelectOption.filter({ hasText: attributeType }).first().click();
   }
 
   async clickAssignAttributeValueButton() {
@@ -149,7 +150,7 @@ export class AttributesPage extends BasePage {
 
   async selectAttributeEntityType(entityType: string) {
     await this.attrEntityTypeSelect.click();
-    await this.page.getByTestId(`select-field-option-${entityType}`).click();
+    await this.attributeSelectOption.filter({ hasText: entityType }).first().click();
   }
 
   async changeAttributeVisibility() {

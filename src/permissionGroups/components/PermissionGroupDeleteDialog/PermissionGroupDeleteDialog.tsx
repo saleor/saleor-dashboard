@@ -2,7 +2,7 @@ import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { PermissionGroupErrorCode, PermissionGroupErrorFragment } from "@dashboard/graphql";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
-import { DialogContentText, Typography } from "@material-ui/core";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -50,7 +50,7 @@ const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
       })}
       variant="delete"
     >
-      <DialogContentText data-testid="permission-group-delete-dialog-text">
+      <Box data-testid="permission-group-delete-dialog-text">
         <FormattedMessage
           id="sR0urA"
           defaultMessage="Are you sure you want to delete {name}?"
@@ -59,8 +59,8 @@ const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
             name: <strong>{name}</strong>,
           }}
         />
-      </DialogContentText>
-      {!!errorMessage && <Typography color="error">{errorMessage}</Typography>}
+      </Box>
+      {!!errorMessage && <Text color="critical1">{errorMessage}</Text>}
     </ActionDialog>
   );
 };

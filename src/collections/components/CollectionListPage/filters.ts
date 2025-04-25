@@ -1,14 +1,14 @@
 import { IFilter } from "@dashboard/components/Filter";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import { CollectionPublished } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { FilterOpts } from "@dashboard/types";
 import { createOptionsField } from "@dashboard/utils/filters/fields";
+import { Option } from "@saleor/macaw-ui-next";
 import { defineMessages, IntlShape } from "react-intl";
 
 export interface CollectionListFilterOpts {
   status: FilterOpts<CollectionPublished>;
-  channel: FilterOpts<string> & { choices: MultiAutocompleteChoiceType[] };
+  channel: FilterOpts<string> & { choices: Option[] };
 }
 
 export enum CollectionFilterKeys {

@@ -32,7 +32,7 @@ function makeTopLevelSearch<TData extends SearchData, TVariables extends SearchV
             ...prev,
             search: {
               ...prev.search,
-              edges: [...prev.search.edges, ...next.search.edges],
+              edges: [...(prev.search?.edges ?? []), ...(next.search?.edges ?? [])],
               pageInfo: next.search.pageInfo,
             },
           };

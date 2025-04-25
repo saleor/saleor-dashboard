@@ -1,5 +1,5 @@
-import { Choice } from "@dashboard/components/SingleSelectField";
 import { MeasurementUnitsEnum } from "@dashboard/graphql";
+import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { IntlShape, MessageDescriptor } from "react-intl";
 
@@ -56,7 +56,7 @@ export const getMeasurementUnitMessage = (
     : formatMessage(message as MessageDescriptor);
 };
 
-export const unitSystemChoices: Array<Choice<UnitSystem, MessageDescriptor>> = [
+export const unitSystemChoices = [
   {
     label: M.unitSystemMessages.metric,
     value: "metric",
@@ -67,7 +67,7 @@ export const unitSystemChoices: Array<Choice<UnitSystem, MessageDescriptor>> = [
   },
 ];
 
-export const unitTypeChoices: Array<Choice<UnitType, MessageDescriptor>> = [
+export const unitTypeChoices = [
   {
     label: M.unitTypeMessages.volume,
     value: "volume",
@@ -149,7 +149,7 @@ export const getUnitChoices = (
   formatMessage: IntlShape["formatMessage"],
 ): {
   [key in UnitSystem]: {
-    [key in UnitType]: Array<Choice<MeasurementUnitsEnum>>;
+    [key in UnitType]: Option[];
   };
 } =>
   Object.entries(unitMapping).reduce(
@@ -160,6 +160,6 @@ export const getUnitChoices = (
     {},
   ) as {
     [key in UnitSystem]: {
-      [key in UnitType]: Array<Choice<MeasurementUnitsEnum>>;
+      [key in UnitType]: Option[];
     };
   };

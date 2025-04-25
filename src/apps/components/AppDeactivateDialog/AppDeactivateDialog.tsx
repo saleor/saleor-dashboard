@@ -2,7 +2,7 @@ import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { buttonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
-import { DialogContentText } from "@material-ui/core";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -47,7 +47,7 @@ const AppDeactivateDialog: React.FC<AppDeactivateDialogProps> = ({
       title={intl.formatMessage(msgs.deactivateAppTitle)}
       variant="delete"
     >
-      <DialogContentText data-test-id="dialog-content">
+      <Box data-test-id="dialog-content">
         {getMainText()}
         {thirdParty && (
           <>
@@ -55,7 +55,7 @@ const AppDeactivateDialog: React.FC<AppDeactivateDialogProps> = ({
             <FormattedMessage {...msgs.deactivateAppBillingInfo} />
           </>
         )}
-      </DialogContentText>
+      </Box>
     </ActionDialog>
   );
 };

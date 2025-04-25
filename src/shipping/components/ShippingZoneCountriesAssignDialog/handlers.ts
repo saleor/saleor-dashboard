@@ -17,7 +17,7 @@ export function createCountryChangeHandler(selectedCountries: string[], change: 
 }
 
 export function createRestOfTheWorldChangeHandler(
-  countrySelectionMap: Map<string, boolean>,
+  countrySelectionMap: Record<string, boolean>,
   selectedCountries: string[],
   restWorldCountries: string[],
   change: FormChange,

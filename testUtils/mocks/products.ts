@@ -32,7 +32,7 @@ export const productsMocks: MockedResponse[] = [
                 channelListings: [
                   {
                     isPublished: true,
-                    publicationDate: "2020-01-01",
+                    publishedAt: "2020-01-01",
                     isAvailableForPurchase: true,
                     availableForPurchase: "2020-08-31",
                     visibleInListings: true,
@@ -112,7 +112,7 @@ export const productsMocks: MockedResponse[] = [
                 channelListings: [
                   {
                     isPublished: true,
-                    publicationDate: "2020-01-01",
+                    publishedAt: "2020-01-01",
                     isAvailableForPurchase: true,
                     availableForPurchase: "2020-08-31",
                     visibleInListings: true,
@@ -192,7 +192,7 @@ export const productsMocks: MockedResponse[] = [
                 channelListings: [
                   {
                     isPublished: true,
-                    publicationDate: "2020-01-01",
+                    publishedAt: "2020-01-01",
                     isAvailableForPurchase: true,
                     availableForPurchase: "2020-08-31",
                     visibleInListings: false,

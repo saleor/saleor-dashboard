@@ -1,9 +1,9 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
 import { FulfillmentStatus } from "@dashboard/graphql";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { orderPaymentRefundUrl } from "@dashboard/orders/urls";
-import { CardActions, Typography } from "@material-ui/core";
+import { CardActions } from "@material-ui/core";
+import { Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -48,13 +48,13 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
 
     return (
       <CardActions className={classes.actions}>
-        <Button color="primary" onClick={onApprove} disabled={cannotFulfill}>
+        <Button variant="primary" onClick={onApprove} disabled={cannotFulfill}>
           <FormattedMessage {...buttonMessages.approve} />
         </Button>
         {cannotFulfill && (
-          <Typography color="error" variant="caption">
+          <Text color="critical1" size={2} fontWeight="light">
             <FormattedMessage {...commonMessages.cannotFullfillUnpaidOrder} />
-          </Typography>
+          </Text>
         )}
       </CardActions>
     );

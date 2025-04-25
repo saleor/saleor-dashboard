@@ -14,7 +14,6 @@ import {
 } from "../GiftCardBulkCreateDialog/types";
 import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
 import { giftCardCreateMessages as messages } from "./messages";
-import { useGiftCardCreateFormStyles as useStyles } from "./styles";
 
 interface GiftCardCreateMoneyInputProps {
   change: FormChange;
@@ -30,26 +29,34 @@ const GiftCardCreateMoneyInput: React.FC<GiftCardCreateMoneyInputProps> = ({
   set,
 }) => {
   const intl = useIntl();
-  const classes = useStyles({});
   const { data: channelCurrenciesData } = useChannelCurrenciesQuery({});
   const { channelCurrencies } = channelCurrenciesData?.shop ?? {};
   const [savedCurrency, setCurrency] = useLocalStorage("giftCardCreateCurrency", undefined);
-  const getInitialCurrency = () => {
+
+  const getInitialCurrency = React.useCallback(() => {
     if (
       savedCurrency &&
-      !!channelCurrencies.find((currency: string) => currency === savedCurrency)
+      !!channelCurrencies?.find((currency: string) => currency === savedCurrency)
     ) {
       return savedCurrency;
     }
 
-    return channelCurrencies[0];
-  };
+    if (channelCurrencies?.length > 0) {
+      return channelCurrencies[0];
+    }
+
+    return null;
+  }, [channelCurrencies, savedCurrency]);
 
   useEffect(() => {
-    set({
-      balanceCurrency: getInitialCurrency(),
-    });
-  }, []);
+    const initialCurrency = getInitialCurrency();
+
+    if (initialCurrency && !balanceCurrency) {
+      set({
+        balanceCurrency: getInitialCurrency(),
+      });
+    }
+  }, [balanceCurrency, getInitialCurrency, set]);
 
   const handleInputChange = (event: ChangeEvent<any>) => {
     if (event.target?.name === "balanceCurrency") {
@@ -61,11 +68,11 @@ const GiftCardCreateMoneyInput: React.FC<GiftCardCreateMoneyInputProps> = ({
 
   return (
     <TextWithSelectField
+      loading={!channelCurrenciesData?.shop}
       isError={!!errors?.balance}
       helperText={getGiftCardErrorMessage(errors?.balance, intl)}
       change={handleInputChange}
-      choices={mapSingleValueNodeToChoice(channelCurrencies)}
-      containerClassName={classes.fullWidthContainer}
+      choices={mapSingleValueNodeToChoice(channelCurrencies ?? [])}
       textFieldProps={{
         type: "float",
         label: intl.formatMessage(messages.amountLabel),
@@ -76,7 +83,6 @@ const GiftCardCreateMoneyInput: React.FC<GiftCardCreateMoneyInputProps> = ({
       selectFieldProps={{
         name: "balanceCurrency",
         value: balanceCurrency,
-        className: classes.currencySelectField,
       }}
     />
   );

@@ -59,7 +59,11 @@ export const ColumnPicker = ({
           __borderColor={pickerOpen ? vars.colors.border.default2 : undefined}
         />
       </Popover.Trigger>
-      <Popover.Content className={sprinkles({ margin: 1.5 })} align={align} side={side}>
+      <Popover.Content
+        className={sprinkles({ margin: 1.5, zIndex: "1" })}
+        align={align}
+        side={side}
+      >
         <Box display="grid" gridTemplateColumns={expanded ? 2 : 1} overflow="hidden">
           {expanded && columnCategories && (
             <ColumnPickerCategories

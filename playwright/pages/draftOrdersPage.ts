@@ -30,6 +30,7 @@ export class DraftOrdersPage extends BasePage {
     readonly addProducts = page.getByTestId("add-products-button"),
     readonly finalizeButton = page.getByTestId("button-bar-confirm"),
     readonly addShippingCarrierLink = page.getByTestId("add-shipping-carrier"),
+    readonly basketProductList = page.getByTestId("list"),
   ) {
     super(page);
     this.page = page;
@@ -59,7 +60,10 @@ export class DraftOrdersPage extends BasePage {
   }
 
   async clickAddShippingCarrierButton() {
+    await this.addShippingCarrierLink.scrollIntoViewIfNeeded();
     await this.addShippingCarrierLink.click();
+
+    await this.waitForDOMToFullyLoad();
   }
 
   async clickFinalizeButton() {

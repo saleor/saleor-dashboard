@@ -5,7 +5,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata, MetadataFormData } from "@dashboard/components/Metadata";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import { ProductTypeKindEnum, TaxClassBaseFragment, WeightUnitsEnum } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -112,12 +112,15 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
                 onChange={change}
               />
             </DetailPageLayout.RightSidebar>
-            <Savebar
-              onCancel={() => navigate(productTypeListUrl())}
-              onSubmit={submit}
-              disabled={isSaveDisabled}
-              state={saveButtonBarState}
-            />
+            <Savebar>
+              <Savebar.Spacer />
+              <Savebar.CancelButton onClick={() => navigate(productTypeListUrl())} />
+              <Savebar.ConfirmButton
+                transitionState={saveButtonBarState}
+                onClick={submit}
+                disabled={isSaveDisabled}
+              />
+            </Savebar>
           </DetailPageLayout>
         );
       }}

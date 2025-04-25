@@ -3,7 +3,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import WebhookEvents from "@dashboard/custom-apps/components/WebhookEvents";
 import WebhookInfo from "@dashboard/custom-apps/components/WebhookInfo";
 import WebhookStatus from "@dashboard/custom-apps/components/WebhookStatus";
@@ -31,6 +31,7 @@ import PermissionAlert from "../PermissionAlert";
 import WebhookHeaders from "../WebhookHeaders";
 import WebhookSubscriptionQuery from "../WebhookSubscriptionQuery";
 import { getHeaderTitle, messages } from "./messages";
+import { getWebhookFormInitialFormValues } from "./webhookForm";
 
 export interface WebhookFormData {
   syncEvents: WebhookEventTypeSyncEnum[];
@@ -74,16 +75,8 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
     prettified = webhook?.subscriptionQuery || "";
   }
 
-  const initialForm: WebhookFormData = {
-    syncEvents: webhook?.syncEvents?.map(event => event.eventType) || [],
-    asyncEvents: webhook?.asyncEvents?.map(event => event.eventType) || [],
-    isActive: !!webhook?.isActive || true,
-    name: webhook?.name || "",
-    secretKey: webhook?.secretKey || "",
-    targetUrl: webhook?.targetUrl || "",
-    subscriptionQuery: prettified || "",
-    customHeaders: webhook?.customHeaders || "{}",
-  };
+  const initialForm = getWebhookFormInitialFormValues({ webhook, prettifiedQuery: prettified });
+
   const backUrl = CustomAppUrls.resolveAppUrl(appId);
   const [query, setQuery] = useState(prettified);
 
@@ -156,12 +149,15 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
                 <WebhookHeaders data={data} onChange={change} />
               </Box>
             </DetailPageLayout.Content>
-            <Savebar
-              disabled={disabled}
-              state={saveButtonBarState}
-              onCancel={() => navigate(backUrl)}
-              onSubmit={submit}
-            />
+            <Savebar>
+              <Savebar.Spacer />
+              <Savebar.CancelButton onClick={() => navigate(backUrl)} />
+              <Savebar.ConfirmButton
+                transitionState={saveButtonBarState}
+                onClick={submit}
+                disabled={disabled}
+              />
+            </Savebar>
           </DetailPageLayout>
         );
       }}

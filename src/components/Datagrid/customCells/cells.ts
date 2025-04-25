@@ -6,8 +6,9 @@ import {
 import { Locale } from "@dashboard/components/Locale";
 import { DotStatus } from "@dashboard/components/StatusDot/StatusDot";
 import { CustomCell, GridCell, GridCellKind, TextCell } from "@glideapps/glide-data-grid";
+import { Option } from "@saleor/macaw-ui-next";
 
-import { DropdownCell, DropdownCellContentProps, DropdownChoice } from "./DropdownCell";
+import { DropdownCell, DropdownCellProps } from "./DropdownCell";
 import { MoneyCell, MoneyDiscuntedCell } from "./Money";
 import { hueToPillColorLight, PillCell, PillColor, stringToHue } from "./PillCell";
 import { StatusCell } from "./StatusCell";
@@ -28,7 +29,11 @@ export function textCell(value: string, opts?: Partial<TextCell>): GridCell {
   };
 }
 
-export function readonlyTextCell(value: string, hasCursorPointer = true): TextCell {
+export function readonlyTextCell(
+  value: string,
+  hasCursorPointer = true,
+  style: TextCell["style"] = "normal",
+): TextCell {
   return {
     cursor: hasCursorPointer ? "pointer" : "default",
     allowOverlay: false,
@@ -36,6 +41,7 @@ export function readonlyTextCell(value: string, hasCursorPointer = true): TextCe
     data: value,
     displayData: value,
     kind: GridCellKind.Text,
+    style,
   };
 }
 
@@ -161,9 +167,9 @@ export function moneyDiscountedCell(
 }
 
 export function dropdownCell(
-  value: DropdownChoice,
-  dataOpts: DropdownCellContentProps &
-    ({ choices: DropdownChoice[] } | { update: (text: string) => Promise<DropdownChoice[]> }),
+  value: Option,
+  dataOpts: Pick<DropdownCellProps, "allowCustomValues" | "emptyOption"> &
+    ({ choices: Option[] } | { update: (text: string) => Promise<Option[]> }),
   opts?: Partial<GridCell>,
 ): DropdownCell {
   return {

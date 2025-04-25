@@ -13,6 +13,7 @@ import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { Customers } from "@dashboard/customers/types";
 import { customerAddUrl, CustomerListUrlSortField, customerUrl } from "@dashboard/customers/urls";
+import { useFlag } from "@dashboard/featureFlags";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { FilterPagePropsWithPresets, PageListProps, SortPage } from "@dashboard/types";
@@ -56,6 +57,7 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
   const userPermissions = useUserPermissions();
   const structure = createFilterStructure(intl, filterOpts, userPermissions);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
+  const { enabled: isCustomersFiltersEnabled } = useFlag("new_filters");
   const { CUSTOMER_OVERVIEW_CREATE, CUSTOMER_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.CUSTOMER_LIST,
   );
@@ -122,25 +124,46 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
         </Box>
       </TopNav>
       <Box>
-        <ListFilters
-          filterStructure={structure}
-          initialSearch={initialSearch}
-          searchPlaceholder={intl.formatMessage({
-            id: "kdRcqU",
-            defaultMessage: "Search customers...",
-          })}
-          onFilterChange={onFilterChange}
-          onSearchChange={onSearchChange}
-          actions={
-            <Box display="flex" gap={4}>
-              {selectedCustomerIds.length > 0 && (
-                <BulkDeleteButton onClick={onCustomersDelete}>
-                  <FormattedMessage defaultMessage="Delete customers" id="kFsTMN" />
-                </BulkDeleteButton>
-              )}
-            </Box>
-          }
-        />
+        {isCustomersFiltersEnabled ? (
+          <ListFilters
+            type="expression-filter"
+            initialSearch={initialSearch}
+            searchPlaceholder={intl.formatMessage({
+              id: "kdRcqU",
+              defaultMessage: "Search customers...",
+            })}
+            onSearchChange={onSearchChange}
+            actions={
+              <Box display="flex" gap={4}>
+                {selectedCustomerIds.length > 0 && (
+                  <BulkDeleteButton onClick={onCustomersDelete}>
+                    <FormattedMessage defaultMessage="Delete customers" id="kFsTMN" />
+                  </BulkDeleteButton>
+                )}
+              </Box>
+            }
+          />
+        ) : (
+          <ListFilters
+            filterStructure={structure}
+            initialSearch={initialSearch}
+            searchPlaceholder={intl.formatMessage({
+              id: "kdRcqU",
+              defaultMessage: "Search customers...",
+            })}
+            onFilterChange={onFilterChange}
+            onSearchChange={onSearchChange}
+            actions={
+              <Box display="flex" gap={4}>
+                {selectedCustomerIds.length > 0 && (
+                  <BulkDeleteButton onClick={onCustomersDelete}>
+                    <FormattedMessage defaultMessage="Delete customers" id="kFsTMN" />
+                  </BulkDeleteButton>
+                )}
+              </Box>
+            }
+          />
+        )}
         <CustomerListDatagrid
           {...customerListProps}
           hasRowHover={!isFilterPresetOpen}

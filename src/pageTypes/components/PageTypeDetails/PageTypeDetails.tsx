@@ -1,10 +1,10 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { PageErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
-import { Card, CardContent, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -23,9 +23,13 @@ const PageTypeDetails: React.FC<PageTypeDetailsProps> = props => {
   const formErrors = getFormErrors(["name"], errors);
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <TextField
           disabled={disabled}
           fullWidth
@@ -40,8 +44,8 @@ const PageTypeDetails: React.FC<PageTypeDetailsProps> = props => {
           onChange={onChange}
           value={data.name}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

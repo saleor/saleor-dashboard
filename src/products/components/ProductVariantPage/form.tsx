@@ -27,7 +27,6 @@ import {
   ProductVariantFragment,
   SearchPagesQuery,
   SearchProductsQuery,
-  SearchWarehousesQuery,
 } from "@dashboard/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
@@ -52,11 +51,7 @@ import {
   createPreorderEndDateChangeHandler,
   getChannelsInput,
 } from "@dashboard/products/utils/handlers";
-import {
-  validateCostPrice,
-  validatePrice,
-  validateVariantData,
-} from "@dashboard/products/utils/validation";
+import { validateProductVariant } from "@dashboard/products/utils/validation";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
 import { arrayDiff } from "@dashboard/utils/arrays";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
@@ -100,7 +95,6 @@ export interface ProductVariantUpdateSubmitData extends ProductVariantUpdateForm
 }
 
 export interface UseProductVariantUpdateFormOpts {
-  warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
   currentChannels: ChannelPriceAndPreorderData[];
   referencePages: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
@@ -119,7 +113,8 @@ export interface ProductVariantUpdateHandlers
     Record<"selectAttributeReference", FormsetChange<string[]>>,
     Record<"selectAttributeFile", FormsetChange<File>>,
     Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
-    Record<"addStock" | "deleteStock", (id: string) => void> {
+    Record<"addStock", (id: string, label: string) => void>,
+    Record<"deleteStock", (id: string) => void> {
   changePreorderEndDate: FormChange;
   changeMetadata: FormChange;
   changeMedia: (ids: string[]) => void;
@@ -247,7 +242,7 @@ function useProductVariantUpdateForm(
     attributes.data,
     triggerChange,
   );
-  const handleStockAdd = (id: string) => {
+  const handleStockAdd = (id: string, label: string) => {
     triggerChange();
     stocks.add({
       data: {
@@ -255,7 +250,7 @@ function useProductVariantUpdateForm(
           variant?.stocks?.find(stock => stock.warehouse.id === id)?.quantityAllocated || 0,
       },
       id,
-      label: opts.warehouses.find(warehouse => warehouse.id === id).name,
+      label,
       value: "0",
     });
   };
@@ -328,12 +323,7 @@ function useProductVariantUpdateForm(
     channelListings: channels.data,
     stocks: stocks.data,
   };
-  const disabled =
-    channels?.data.some(
-      channelData =>
-        validatePrice(channelData.value.price) || validateCostPrice(channelData.value.costPrice),
-    ) ||
-    (data.isPreorder && data.hasPreorderEndDate && !!form.errors.preorderEndDateTime);
+  const disabled = data.isPreorder && data.hasPreorderEndDate && !!form.errors.preorderEndDateTime;
   const getSubmitData = async (): Promise<ProductVariantUpdateSubmitData> => ({
     ...formData,
     ...getMetadata(formData, isMetadataModified, isPrivateMetadataModified),
@@ -348,12 +338,12 @@ function useProductVariantUpdateForm(
     updateStocks,
   });
   const handleSubmit = async (data: ProductVariantUpdateSubmitData) => {
-    const validationErrors = validateVariantData(data);
+    const validationProductErrors = validateProductVariant(data, intl);
 
-    setValidationErrors(validationErrors);
+    setValidationErrors(validationProductErrors);
 
-    if (validationErrors.length) {
-      return validationErrors;
+    if (validationProductErrors.length > 0) {
+      return validationProductErrors;
     }
 
     const apiErrors = await onSubmit(data);

@@ -2,7 +2,7 @@
 import CardSpacer from "@dashboard/components/CardSpacer";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import Money from "@dashboard/components/Money";
-import { Typography } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -21,16 +21,16 @@ const GiftCardUpdateDetailsBalanceSection: React.FC = () => {
   return (
     <>
       <div className={clsx(classes.labelsContainer, classes.wideContainer)}>
-        <Typography>{intl.formatMessage(messages.cardBalanceLabel)}</Typography>
-        <Typography className={classes.labelsContainer}>
+        <Text>{intl.formatMessage(messages.cardBalanceLabel)}</Text>
+        <Text className={classes.labelsContainer}>
           <Money money={currentBalance} />
           <HorizontalSpacer />
           /
           <HorizontalSpacer />
-          <Typography component="span" color="textSecondary">
+          <Text as="span" color="default2">
             <Money money={initialBalance} />
-          </Typography>
-        </Typography>
+          </Text>
+        </Text>
       </div>
       <CardSpacer />
     </>

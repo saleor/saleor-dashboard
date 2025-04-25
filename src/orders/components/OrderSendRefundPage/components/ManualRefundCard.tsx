@@ -1,6 +1,6 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { commonMessages } from "@dashboard/intl";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -16,13 +16,17 @@ export const ManualRefundCard: React.FC<OrderManualTransactionFormProps> = props
   const intl = useIntl();
 
   return (
-    <Card>
-      <CardTitle title={<FormattedMessage {...manualRefundMessages.refundManual} />}></CardTitle>
-      <CardContent>
-        <Typography>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          <FormattedMessage {...manualRefundMessages.refundManual} />
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
+        <Text>
           <FormattedMessage {...manualRefundMessages.refundManualDescription} />
-        </Typography>
-      </CardContent>
+        </Text>
+      </DashboardCard.Content>
       <OrderManualTransactionForm {...props}>
         <div className={classes.wrapper}>
           <OrderManualTransactionForm.Form className={classes.form}>
@@ -42,9 +46,8 @@ export const ManualRefundCard: React.FC<OrderManualTransactionFormProps> = props
               <FormattedMessage {...manualRefundMessages.refund} />
             </OrderManualTransactionForm.SubmitButton>
           </OrderManualTransactionForm.Form>
-          <OrderManualTransactionForm.ErrorText />
         </div>
       </OrderManualTransactionForm>
-    </Card>
+    </DashboardCard>
   );
 };

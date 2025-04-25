@@ -1,37 +1,61 @@
-import DefaultCardTitle from "@dashboard/components/CardTitle";
-import { TransactionActionEnum, TransactionItemFragment } from "@dashboard/graphql";
-import { capitalize } from "@dashboard/misc";
-import { FakeTransaction } from "@dashboard/orders/types";
-import { IconButton } from "@material-ui/core";
-import { Button, LinkIcon } from "@saleor/macaw-ui";
+import { ButtonLink } from "@dashboard/components/ButtonLink";
+import { TransactionActionEnum } from "@dashboard/graphql";
+import { Box, Button, ExternalLinkIcon, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderTransactionProps } from "../../OrderTransaction";
+import { ExtendedOrderTransaction } from "../../types";
 import { mapActionToMessage } from "../../utils";
+import { EventTime } from "../TransactionEvents/components/EventTime";
 import { messages } from "./messages";
 import { MoneyDisplay } from "./MoneyDisplay";
-import { useStyles } from "./styles";
 
 interface CardTitleProps {
-  transaction: TransactionItemFragment | FakeTransaction;
+  transaction: ExtendedOrderTransaction;
   onTransactionAction: OrderTransactionProps["onTransactionAction"];
   showActions?: boolean;
-  className?: string;
 }
 
-export const CardTitle: React.FC<CardTitleProps> = ({
+const TransactionTitle = ({
+  transaction,
+  index,
+}: {
+  transaction: ExtendedOrderTransaction;
+  index: number;
+}) => {
+  const intl = useIntl();
+
+  const transactionTitle = intl.formatMessage(
+    {
+      defaultMessage: "Transaction #{index} on {date}",
+      id: "nYD7NT",
+    },
+    {
+      date: <EventTime date={transaction.createdAt} />,
+      index: index + 1,
+    },
+  );
+
+  return (
+    <Box display="flex" flexDirection="column" width="100%">
+      <span>{transactionTitle}</span>
+      {transaction.name && (
+        <Text __fontSize="inherit" color="defaultDisabled" fontStyle="italic">
+          {transaction.name}
+        </Text>
+      )}
+    </Box>
+  );
+};
+
+export const OrderTransactionCardTitle: React.FC<CardTitleProps> = ({
   transaction,
   onTransactionAction,
   showActions = true,
-  className,
 }) => {
-  const classes = useStyles();
   const intl = useIntl();
-  const TransactionLink = React.useMemo(
-    () => (transaction.externalUrl ? "a" : "span"),
-    [transaction.externalUrl],
-  );
+
   const {
     refundedAmount,
     refundPendingAmount,
@@ -41,87 +65,96 @@ export const CardTitle: React.FC<CardTitleProps> = ({
     canceledAmount,
     chargedAmount,
     authorizedAmount,
+    index = 0,
   } = transaction;
-  const title = capitalize(transaction.name || "Transaction");
+
+  const actions = transaction.actions.filter(action => action !== TransactionActionEnum.REFUND);
+  const showActionButtons = showActions && actions.length > 0;
 
   return (
-    <DefaultCardTitle
-      className={className}
-      title={
-        <div className={classes.title}>
-          <TransactionLink href={transaction.externalUrl} className={classes.methodName}>
-            {transaction.externalUrl && (
-              <IconButton>
-                <LinkIcon />
-              </IconButton>
-            )}
-            {title}
-          </TransactionLink>
+    <Box width="100%" display="flex" justifyContent="space-between" alignItems="center">
+      {transaction.externalUrl ? (
+        <ButtonLink
+          as="a"
+          href={transaction.externalUrl}
+          display="flex"
+          gap={2}
+          alignItems="center"
+          size="large"
+          __flex={1}
+        >
+          <ExternalLinkIcon size="small" />
 
-          <div className={classes.dataDisplay}>
-            {cancelPendingAmount.amount > 0 && (
-              <MoneyDisplay
-                label={intl.formatMessage(messages.cancelPending)}
-                money={cancelPendingAmount}
-              />
-            )}
+          <TransactionTitle transaction={transaction} index={index} />
+        </ButtonLink>
+      ) : (
+        <Text size={3} fontWeight="bold" __flex={1}>
+          <TransactionTitle transaction={transaction} index={index} />
+        </Text>
+      )}
 
-            {canceledAmount.amount > 0 && (
-              <MoneyDisplay label={intl.formatMessage(messages.canceled)} money={canceledAmount} />
-            )}
+      <Box display="flex" gap={8} alignItems="center">
+        {cancelPendingAmount.amount > 0 && (
+          <MoneyDisplay
+            label={intl.formatMessage(messages.cancelPending)}
+            money={cancelPendingAmount}
+          />
+        )}
 
-            {refundPendingAmount.amount > 0 && (
-              <MoneyDisplay
-                label={intl.formatMessage(messages.refundPending)}
-                money={refundPendingAmount}
-              />
-            )}
+        {canceledAmount.amount > 0 && (
+          <MoneyDisplay label={intl.formatMessage(messages.canceled)} money={canceledAmount} />
+        )}
 
-            {refundedAmount.amount > 0 && (
-              <MoneyDisplay label={intl.formatMessage(messages.refunded)} money={refundedAmount} />
-            )}
+        {refundPendingAmount.amount > 0 && (
+          <MoneyDisplay
+            label={intl.formatMessage(messages.refundPending)}
+            money={refundPendingAmount}
+          />
+        )}
 
-            {chargePendingAmount.amount > 0 && (
-              <MoneyDisplay
-                label={intl.formatMessage(messages.chargePending)}
-                money={chargePendingAmount}
-              />
-            )}
+        {refundedAmount.amount > 0 && (
+          <MoneyDisplay label={intl.formatMessage(messages.refunded)} money={refundedAmount} />
+        )}
 
-            {chargedAmount.amount > 0 && (
-              <MoneyDisplay label={intl.formatMessage(messages.charged)} money={chargedAmount} />
-            )}
+        {chargePendingAmount.amount > 0 && (
+          <MoneyDisplay
+            label={intl.formatMessage(messages.chargePending)}
+            money={chargePendingAmount}
+          />
+        )}
 
-            {authorizePendingAmount.amount > 0 && (
-              <MoneyDisplay
-                label={intl.formatMessage(messages.authorizePending)}
-                money={authorizePendingAmount}
-              />
-            )}
+        {chargedAmount.amount > 0 && (
+          <MoneyDisplay label={intl.formatMessage(messages.charged)} money={chargedAmount} />
+        )}
 
-            {authorizedAmount.amount > 0 && (
-              <MoneyDisplay
-                label={intl.formatMessage(messages.authorized)}
-                money={authorizedAmount}
-              />
-            )}
+        {authorizePendingAmount.amount > 0 && (
+          <MoneyDisplay
+            label={intl.formatMessage(messages.authorizePending)}
+            money={authorizePendingAmount}
+          />
+        )}
 
-            {showActions &&
-              transaction.actions
-                .filter(action => action !== TransactionActionEnum.REFUND)
-                .map(action => (
-                  <div key={`translation-action-${action}`}>
-                    <Button
-                      variant="tertiary"
-                      onClick={() => onTransactionAction(transaction.id, action)}
-                    >
-                      <FormattedMessage {...mapActionToMessage[action]} />
-                    </Button>
-                  </div>
-                ))}
-          </div>
-        </div>
-      }
-    />
+        {authorizedAmount.amount > 0 && (
+          <MoneyDisplay label={intl.formatMessage(messages.authorized)} money={authorizedAmount} />
+        )}
+
+        {showActionButtons && (
+          <Box display="flex" flexDirection="row" gap={2}>
+            {actions
+              .filter(action => action !== TransactionActionEnum.REFUND)
+              .map(action => (
+                <div key={`transaction-action-${action}`}>
+                  <Button
+                    variant="secondary"
+                    onClick={() => onTransactionAction(transaction.id, action)}
+                  >
+                    <FormattedMessage {...mapActionToMessage[action]} />
+                  </Button>
+                </div>
+              ))}
+          </Box>
+        )}
+      </Box>
+    </Box>
   );
 };

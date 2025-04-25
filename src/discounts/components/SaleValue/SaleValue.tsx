@@ -1,13 +1,13 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { DiscountErrorFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
-import { Card, TableBody, TableCell, TableHead, Typography } from "@material-ui/core";
+import { TableBody, TableCell, TableHead } from "@material-ui/core";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -31,14 +31,16 @@ const SaleValue: React.FC<SaleValueProps> = ({ data, disabled, errors, onChange 
   const formErrors = getFormErrors(["value"], errors);
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "wHdMAX",
-          defaultMessage: "Value",
-          description: "sale value, header",
-        })}
-      />
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "wHdMAX",
+            defaultMessage: "Value",
+            description: "sale value, header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <ResponsiveTable className={classes.table}>
         <colgroup>
           <col />
@@ -73,7 +75,7 @@ const SaleValue: React.FC<SaleValueProps> = ({ data, disabled, errors, onChange 
               return (
                 <TableRowLink key={listing?.id || `skeleton-${index}`} className={classes.row}>
                   <TableCell>
-                    <Typography>{listing?.name || <Skeleton />}</Typography>
+                    <Text>{listing?.name || <Skeleton />}</Text>
                   </TableCell>
                   <TableCell>
                     {listing ? (
@@ -102,7 +104,7 @@ const SaleValue: React.FC<SaleValueProps> = ({ data, disabled, errors, onChange 
           )}
         </TableBody>
       </ResponsiveTable>
-    </Card>
+    </DashboardCard>
   );
 };
 

@@ -12,6 +12,8 @@ import {
   OrderDraftUpdateMutationVariables,
   OrderLineUpdateMutation,
   OrderLineUpdateMutationVariables,
+  OrderNoteUpdateMutation,
+  OrderNoteUpdateMutationVariables,
   StockAvailability,
   useChannelUsabilityDataQuery,
   useCustomerAddressesQuery,
@@ -51,6 +53,10 @@ interface OrderDraftDetailsProps {
   loading: any;
   data: OrderDetailsWithMetadataQueryResult["data"];
   orderAddNote: any;
+  orderUpdateNote: PartialMutationProviderOutput<
+    OrderNoteUpdateMutation,
+    OrderNoteUpdateMutationVariables
+  >;
   orderLineUpdate: PartialMutationProviderOutput<
     OrderLineUpdateMutation,
     OrderLineUpdateMutationVariables
@@ -80,6 +86,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   loading,
   data,
   orderAddNote,
+  orderUpdateNote,
   orderLineUpdate,
   orderLineDelete,
   orderShippingMethodUpdate,
@@ -195,6 +202,15 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
             loading={loading}
             disabled={loading}
             errors={errors}
+            onNoteUpdateLoading={orderUpdateNote.opts.loading}
+            onNoteUpdate={(id, message) =>
+              orderUpdateNote.mutate({
+                order: id,
+                input: {
+                  message,
+                },
+              })
+            }
             onNoteAdd={variables =>
               extractMutationErrors(
                 orderAddNote.mutate({
@@ -286,7 +302,8 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
       <OrderMetadataDialog
         open={params.action === "view-metadata"}
         onClose={closeModal}
-        data={order?.lines?.find(orderLine => orderLine.id === params.id)}
+        lineId={params.id}
+        orderId={id}
       />
       <OrderAddressFields
         action={params?.action}

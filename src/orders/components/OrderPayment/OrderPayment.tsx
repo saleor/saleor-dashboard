@@ -1,24 +1,22 @@
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import Money from "@dashboard/components/Money";
-import { Pill } from "@dashboard/components/Pill";
-import Skeleton from "@dashboard/components/Skeleton";
 import { OrderAction, OrderDetailsFragment, OrderStatus } from "@dashboard/graphql";
 import { getDiscountTypeLabel } from "@dashboard/orders/utils/data";
-import { Card, CardContent } from "@material-ui/core";
-import { Divider } from "@saleor/macaw-ui-next";
+import { Divider, Skeleton, sprinkles } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { transformPaymentStatus } from "../../../misc";
+import { OrderPaymentStatusPill } from "../OrderPaymentSummaryCard/components/OrderPaymentStatusPill";
 import { OrderUsedGiftCards } from "../OrderUsedGiftCards";
 import { orderPaymentMessages, paymentButtonMessages } from "./messages";
 import { useStyles } from "./styles";
 import {
   extractOrderGiftCardUsedAmount,
   extractRefundedAmount,
+  getDiscountAmount,
   obtainUsedGifrcards,
 } from "./utils";
 
@@ -38,7 +36,6 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
   const canVoid = (order?.actions ?? []).includes(OrderAction.VOID);
   const canRefund = (order?.actions ?? []).includes(OrderAction.REFUND);
   const canMarkAsPaid = (order?.actions ?? []).includes(OrderAction.MARK_AS_PAID);
-  const payment = transformPaymentStatus(order?.paymentStatus, intl);
   const refundedAmount = extractRefundedAmount(order);
   const usedGiftCardAmount = extractOrderGiftCardUsedAmount(order);
   const usedGiftcards = obtainUsedGifrcards(order);
@@ -64,22 +61,25 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
   };
 
   return (
-    <Card data-test-id="OrderPayment">
-      <CardTitle
-        className={classes.payments}
-        title={
-          !order?.paymentStatus ? (
+    <DashboardCard data-test-id="OrderPayment">
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          <FormattedMessage {...orderPaymentMessages.paymentTitle} />
+
+          <OrderPaymentStatusPill
+            order={order}
+            className={sprinkles({
+              marginLeft: 2,
+              marginRight: "auto",
+            })}
+          />
+        </DashboardCard.Title>
+
+        <DashboardCard.Toolbar>
+          {!order?.paymentStatus ? (
             <Skeleton />
           ) : (
             <div className={classes.titleContainer}>
-              <FormattedMessage {...orderPaymentMessages.paymentTitle} />
-              <HorizontalSpacer spacing={2} />
-              <Pill
-                className={classes.rightmostLeftAlignedElement}
-                label={payment.localized}
-                color={payment.status}
-                data-test-id="payment-status"
-              />
               {order?.status !== OrderStatus.CANCELED &&
                 (canCapture || canRefund || canVoid || canMarkAsPaid) && (
                   <div className={classes.actions}>
@@ -110,10 +110,10 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                   </div>
                 )}
             </div>
-          )
-        }
-      />
-      <CardContent className={classes.payments}>
+          )}
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
+      <DashboardCard.Content className={classes.payments}>
         <div className={classes.root}>
           {order?.discounts?.map(discount => (
             <div key={discount.id}>
@@ -131,7 +131,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               </span>
               <HorizontalSpacer spacing={2} />
               <div className={classes.supportText}>
-                -<Money money={discount.amount} />
+                <Money money={getDiscountAmount(discount.amount)} />
               </div>
             </div>
           ))}
@@ -183,9 +183,9 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
             </div>
           </div>
         </div>
-      </CardContent>
+      </DashboardCard.Content>
       <Divider />
-      <CardContent className={classes.payments}>
+      <DashboardCard.Content className={classes.payments}>
         <div className={classes.root}>
           {!!usedGiftCardAmount && usedGiftcards && (
             <div>
@@ -240,8 +240,8 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
             </div>
           </div>
         </div>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

@@ -1,11 +1,11 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { PermissionGroupErrorFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFieldError, getFormErrors } from "@dashboard/utils/errors";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
-import { Card, CardContent, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -28,9 +28,13 @@ const PermissionGroupInfo: React.FC<PermissionGroupInfoProps> = ({
   const formErrors = getFormErrors(["name"], errors);
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(commonMessages.generalInformations)}></CardTitle>
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <TextField
           data-test-id="permission-group-name-input"
           name="name"
@@ -46,8 +50,8 @@ const PermissionGroupInfo: React.FC<PermissionGroupInfoProps> = ({
           helperText={getPermissionGroupErrorMessage(formErrors.name, intl)}
           fullWidth
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

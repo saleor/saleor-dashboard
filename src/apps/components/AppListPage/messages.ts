@@ -26,4 +26,19 @@ export const messages = defineMessages({
     defaultMessage: "Upcoming Apps",
     description: "section header",
   },
+  missingAppsHeader: {
+    id: "Ntk3CQ",
+    defaultMessage: "Missing something?",
+    description: "footer title",
+  },
+  missingAppsDescription: {
+    id: "kyNv+Y",
+    defaultMessage: "Are we missing an integration your project requires? Let us know here",
+    description: "footer description",
+  },
+  missingAppsButton: {
+    id: "VlDG1B",
+    defaultMessage: "Request integration",
+    description: "Request integration",
+  },
 });

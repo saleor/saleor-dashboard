@@ -16,6 +16,7 @@ import {
   ProductListQuery,
   useAvailableColumnAttributesLazyQuery,
 } from "@dashboard/graphql";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useLocale from "@dashboard/hooks/useLocale";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { canBeSorted } from "@dashboard/products/views/ProductList/sort";
@@ -25,12 +26,14 @@ import { Item } from "@glideapps/glide-data-grid";
 import { Box, useTheme } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { getAttributeIdFromColumnValue, isAttributeColumnValue } from "../ProductListPage/utils";
 import {
   createGetCellContent,
   getAttributesFetchMoreProps,
   getAvailableAttributesData,
+  getCellAction,
   getColumnMetadata,
   getColumnSortIconName,
   getProductRowsLength,
@@ -38,6 +41,7 @@ import {
   productListStaticColumnAdapter,
 } from "./datagrid";
 import { messages } from "./messages";
+import { usePriceClick } from "./usePriceClick";
 
 interface ProductListDatagridProps
   extends ListProps<ProductListColumns>,
@@ -78,11 +82,15 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   hasRowHover,
   rowAnchor,
 }) => {
+  const isChannelSelected = !!selectedChannelId;
   const intl = useIntl();
   const { theme } = useTheme();
   const datagrid = useDatagridChangeState();
   const { locale } = useLocale();
+  const location = useLocation();
   const productsLength = getProductRowsLength(disabled, products, disabled);
+  const onPriceClick = usePriceClick({ isChannelSelected });
+
   const handleColumnChange = useCallback(
     (picked: ProductListColumns[]) => {
       onUpdateListSettings("columns", picked.filter(Boolean));
@@ -90,7 +98,12 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     [onUpdateListSettings],
   );
   const memoizedStaticColumns = useMemo(
-    () => productListStaticColumnAdapter(intl, sort),
+    () =>
+      productListStaticColumnAdapter({
+        intl,
+        sort,
+        onPriceClick,
+      }),
     [intl, sort],
   );
   const [queryAvailableColumnsAttributes, availableColumnsAttributesData] =
@@ -104,6 +117,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     columnCategories,
     recentlyAddedColumn,
   } = useColumns({
+    gridName: "product_list",
     staticColumns: memoizedStaticColumns,
     columnCategories: productListDynamicColumnAdapter({
       availableAttributesData: getAvailableAttributesData({
@@ -165,9 +179,17 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     [visibleColumns, onSort, selectedChannelId],
   );
   const handleRowClick = useCallback(
-    ([_, row]: Item) => {
+    ([col, row]: Item) => {
       if (!onRowClick) {
         return;
+      }
+
+      const action = getCellAction(visibleColumns, col);
+
+      if (action) {
+        const result = action(products[row].id);
+
+        if (result) return;
       }
 
       const rowData = products[row];
@@ -233,7 +255,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           hasRowHover={hasRowHover}
           onColumnMoved={handlers.onMove}
           onColumnResize={handlers.onResize}
-          verticalBorder={col => col > 0}
+          verticalBorder={false}
           getColumnTooltipContent={handleGetColumnTooltipContent}
           availableColumns={visibleColumns}
           onHeaderClicked={handleHeaderClicked}
@@ -244,7 +266,6 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           rows={productsLength}
           onRowSelectionChange={onSelectProductIds}
           selectionActions={() => null}
-          fullScreenTitle={intl.formatMessage(messages.products)}
           onRowClick={handleRowClick}
           rowAnchor={handleRowAnchor}
           recentlyAddedColumn={recentlyAddedColumn}
@@ -257,6 +278,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
               onToggle={handlers.onToggle}
             />
           )}
+          navigatorOpts={{ state: getPrevLocationState(location) }}
         />
 
         <Box paddingX={6}>

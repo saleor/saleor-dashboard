@@ -1,10 +1,11 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
 import { AccountErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
-import { Card, CardContent, TextField, Typography } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -28,21 +29,23 @@ const CustomerCreateNote: React.FC<CustomerCreateNoteProps> = ({
   const formErrors = getFormErrors(["note"], errors);
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "qNcoRY",
-          defaultMessage: "Notes",
-          description: "notes about customer header",
-        })}
-      />
-      <CardContent>
-        <Typography>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "qNcoRY",
+            defaultMessage: "Notes",
+            description: "notes about customer header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
+        <Text>
           <FormattedMessage
-            id="w3sGrD"
-            defaultMessage="Enter any extra infotmation regarding this customer."
+            id="wpONQ2"
+            defaultMessage="Enter any extra information regarding this customer."
           />
-        </Typography>
+        </Text>
         <FormSpacer />
         <TextField
           data-test-id="customer-note"
@@ -60,8 +63,8 @@ const CustomerCreateNote: React.FC<CustomerCreateNoteProps> = ({
           value={data.note}
           onChange={onChange}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

@@ -1,11 +1,11 @@
 import { UserContext } from "@dashboard/auth/types";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import {
   ChannelFragment,
   PermissionFragment,
   PermissionGroupDetailsFragment,
   UserFragment,
 } from "@dashboard/graphql";
+import { Option } from "@saleor/macaw-ui-next";
 import difference from "lodash/difference";
 
 import { PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";
@@ -151,14 +151,14 @@ export const arePermissionsExceeded = (
 export const mapAccessibleChannelsToChoice = (
   permissionGroup: PermissionGroupDetailsFragment,
   isUserAbleToEdit?: boolean,
-): MultiAutocompleteChoiceType[] =>
+): Option[] =>
   permissionGroup?.accessibleChannels?.map(
     channel =>
       ({
         label: channel.name,
         value: channel.id,
         disabled: isUserAbleToEdit !== undefined ? !isUserAbleToEdit : false,
-      }) as unknown as MultiAutocompleteChoiceType,
+      }) as unknown as Option,
   ) ?? [];
 
 export const checkIfUserBelongToPermissionGroup = (

@@ -7,6 +7,10 @@ inputs:
   CLI_TOKEN:
     description: "Saleor cli token"
     required: true
+  VERSION:
+    description: "Version in format X.XX, if run from other branch"
+    required: false
+
 outputs:
   BASE_URL:
     description: "Dashboard base url"
@@ -35,6 +39,13 @@ outputs:
   BACKUP_NAMESPACE:
     description: "The name of backup"
     value: ${{ steps.api.outputs.BACKUP_NAMESPACE }}
+  SALEOR_CLOUD_SERVICE:
+    description: "Which saleor cloud service will be used"
+    value: ${{ steps.api.outputs.SALEOR_CLOUD_SERVICE }}
+  RUN_SLUG:
+    description: "Dashboard version or PR number or branch name to determine on which version tests mere run"
+    value: ${{ steps.api.outputs.RUN_SLUG }}
+
 runs:
   using: "composite"
   steps:
@@ -43,7 +54,8 @@ runs:
       uses: ./.github/actions/prepare-api-variables
       with:
         MODE: ${{ inputs.MODE }}
-  
+        VERSION: ${{ inputs.VERSION || ''}}
+
     - name: Generate backup
       id: backup
       uses: ./.github/actions/prepare-backups-variables
@@ -62,6 +74,7 @@ runs:
         BACKUP_VER: ${{ steps.backup.outputs.BACKUP_VER }}
         BACKUP_NAME: ${{ steps.backup.outputs.BACKUP_NAME }}
         BACKUP_NAMESPACE: ${{ steps.api.outputs.BACKUP_NAMESPACE }}
+        SALEOR_CLOUD_SERVICE: ${{ steps.api.outputs.SALEOR_CLOUD_SERVICE}}
       run: |
         echo "::notice title=BASE_URL::${BASE_URL}"
         echo "::notice title=API_URL::${API_URL}"
@@ -69,3 +82,5 @@ runs:
         echo "::notice title=POOL_INSTANCE::${POOL_INSTANCE}"
         echo "::notice title=BACKUP_NAMESPACE::${BACKUP_NAMESPACE}"
         echo "::notice title=SNAPSHOT::backup_id=${BACKUP_ID}, version=${BACKUP_VER}, name=${BACKUP_NAME}"
+        echo "::notice title=SALEOR_CLOUD_SERVICE::${SALEOR_CLOUD_SERVICE}"
+

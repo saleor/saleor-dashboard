@@ -3,10 +3,10 @@ import { channelAddUrl, channelUrl } from "@dashboard/channels/urls";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
+import { DashboardCard } from "@dashboard/components/Card";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -15,8 +15,9 @@ import { ChannelDetailsFragment, RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { renderCollection, stopPropagation } from "@dashboard/misc";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
-import { Card, TableBody, TableCell, TableHead } from "@material-ui/core";
+import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -80,7 +81,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
           />
         </LimitReachedAlert>
       )}
-      <Card>
+      <DashboardCard>
         <ResponsiveTable>
           <TableHead>
             <TableRowLink>
@@ -142,7 +143,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
             )}
           </TableBody>
         </ResponsiveTable>
-      </Card>
+      </DashboardCard>
     </ListPageLayout>
   );
 };

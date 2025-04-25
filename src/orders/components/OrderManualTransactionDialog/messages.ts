@@ -12,8 +12,8 @@ export const manualTransactionMessages = defineMessages({
     description: "dialog subheading",
   },
   submitButton: {
-    defaultMessage: "Create manual transaction",
-    id: "AMlXrQ",
+    defaultMessage: "Add manual capture",
+    id: "aFVFeH",
     description: "submit button",
   },
   transactionAmount: {

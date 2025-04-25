@@ -17,7 +17,7 @@ export const isItemOptionArray = (x: ConditionValue): x is ItemOption[] =>
 export const isTuple = (x: ConditionValue): x is [string, string] =>
   Array.isArray(x) && x.length === 2 && (x as string[]).every(y => typeof y === "string");
 
-export const slugFromConditionValue = (rawEntry: ConditionValue): string | string[] => {
+export const slugFromConditionValue = (rawEntry?: ConditionValue): string | string[] => {
   if (typeof rawEntry === "string") {
     return rawEntry;
   }
@@ -26,5 +26,5 @@ export const slugFromConditionValue = (rawEntry: ConditionValue): string | strin
     return rawEntry.map(el => (typeof el === "string" ? el : el.slug));
   }
 
-  return rawEntry.slug;
+  return rawEntry?.slug ?? "";
 };

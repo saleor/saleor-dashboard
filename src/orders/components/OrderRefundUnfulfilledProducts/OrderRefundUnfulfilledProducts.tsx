@@ -1,24 +1,15 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import Money from "@dashboard/components/Money";
-import Skeleton from "@dashboard/components/Skeleton";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { OrderRefundDataQuery } from "@dashboard/graphql";
 import { FormsetChange } from "@dashboard/hooks/useFormset";
 import { renderCollection } from "@dashboard/misc";
-import {
-  Card,
-  CardContent,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { Table, TableBody, TableCell, TableHead, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -83,22 +74,30 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
   const intl = useIntl();
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "B/y6LC",
-          defaultMessage: "Unfulfilled Products",
-          description: "section header",
-        })}
-      />
-      <CardContent className={classes.cartContent}>
-        <Typography variant="caption" color="textSecondary" className={classes.notice}>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "B/y6LC",
+            defaultMessage: "Unfulfilled Products",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content className={classes.cartContent}>
+        <Text
+          fontWeight="medium"
+          fontSize={3}
+          color="default2"
+          className={classes.notice}
+          display="block"
+        >
           <FormattedMessage
             id="iUIn50"
             defaultMessage="Unfulfilled products will be restocked"
             description="section notice"
           />
-        </Typography>
+        </Text>
         <Button
           className={classes.setMaximalQuantityButton}
           onClick={onSetMaximalQuantities}
@@ -110,7 +109,7 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
             description="button"
           />
         </Button>
-      </CardContent>
+      </DashboardCard.Content>
       <Table>
         <TableHead>
           <TableRowLink>
@@ -225,7 +224,7 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
           )}
         </TableBody>
       </Table>
-    </Card>
+    </DashboardCard>
   );
 };
 

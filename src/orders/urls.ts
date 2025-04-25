@@ -70,6 +70,14 @@ export const orderListUrl = (params?: OrderListUrlQueryParams): string => {
   }
 };
 
+export const orderListUrlWithCustomer = (userEmail?: string) => {
+  if (userEmail === undefined) {
+    return orderListPath;
+  }
+
+  return urlJoin(orderListPath, `?0[s0.customer]=${userEmail}`);
+};
+
 export const orderDraftListPath = urlJoin(orderSectionUrl, "drafts");
 export enum OrderDraftListUrlFiltersEnum {
   createdFrom = "createdFrom",
@@ -188,8 +196,8 @@ export const orderTransactionRefundEditPath = (orderId: string, refundId: string
 
 export const orderTransactionRefundEditUrl = (orderId: string, refundId: string) =>
   orderTransactionRefundEditPath(encodeURIComponent(orderId), encodeURIComponent(refundId));
-export const orderManualTransationRefundPath = (id: string) =>
+export const orderManualTransactionRefundPath = (id: string) =>
   urlJoin(orderPath(id), "manual-refund");
 
-export const orderManualTransationRefundUrl = (id: string) =>
-  orderManualTransationRefundPath(encodeURIComponent(id));
+export const orderManualTransactionRefundUrl = (id: string) =>
+  orderManualTransactionRefundPath(encodeURIComponent(id));

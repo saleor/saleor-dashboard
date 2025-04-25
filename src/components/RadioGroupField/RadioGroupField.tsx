@@ -11,6 +11,7 @@ import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
+import { SimpleRadioGroupField } from "../SimpleRadioGroupField";
 import { useStyles } from "./styles";
 
 export interface RadioGroupFieldChoice<T extends string | number = string | number> {
@@ -33,6 +34,8 @@ interface RadioGroupFieldProps {
   variant?: "block" | "inline" | "inlineJustify";
   onChange: (event: React.ChangeEvent<any>) => void;
 }
+
+export const NewRadioGroupField = SimpleRadioGroupField;
 
 export const RadioGroupField: React.FC<RadioGroupFieldProps> = props => {
   const {

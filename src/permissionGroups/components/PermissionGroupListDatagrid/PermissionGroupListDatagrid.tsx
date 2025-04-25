@@ -7,6 +7,7 @@ import {
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { PermissionGroupFragment } from "@dashboard/graphql";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import {
   permissionGroupDetailsUrl,
@@ -18,6 +19,7 @@ import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { createGetCellContent, permissionGroupsListStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
@@ -37,6 +39,7 @@ export const PermissionGroupListDatagrid = ({
   onUpdateListSettings,
 }: PermissionGroupListDatagridProps) => {
   const intl = useIntl();
+  const location = useLocation();
   const datagridState = useDatagridChangeState();
   const navigate = useNavigator();
   const emptyColumn = useEmptyColumn();
@@ -69,7 +72,9 @@ export const PermissionGroupListDatagrid = ({
       const rowData: PermissionGroupFragment = permissionGroups[row];
 
       if (rowData) {
-        navigate(permissionGroupDetailsUrl(rowData.id));
+        navigate(permissionGroupDetailsUrl(rowData.id), {
+          state: getPrevLocationState(location),
+        });
       }
     },
     [permissionGroups],
@@ -100,7 +105,7 @@ export const PermissionGroupListDatagrid = ({
         freezeColumns={2}
         onColumnMoved={handlers.onMove}
         onColumnResize={handlers.onResize}
-        verticalBorder={col => col > 1}
+        verticalBorder={false}
         rows={permissionGroups?.length ?? 0}
         availableColumns={visibleColumns}
         emptyText={intl.formatMessage(messages.empty)}
@@ -112,6 +117,7 @@ export const PermissionGroupListDatagrid = ({
         onHeaderClicked={handleHeaderClick}
         rowAnchor={handleRowAnchor}
         recentlyAddedColumn={recentlyAddedColumn}
+        navigatorOpts={{ state: getPrevLocationState(location) }}
       />
 
       <Box paddingX={6}>

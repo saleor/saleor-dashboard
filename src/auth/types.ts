@@ -20,7 +20,9 @@ export const UserContextError = {
   serverError: "serverError",
   noPermissionsError: "noPermissionsError",
   externalLoginError: "externalLoginError",
+  loginAttemptDelay: "loginAttemptDelay",
   unknownLoginError: "unknownLoginError",
+  invalidCredentials: "invalidCredentials",
 } as const;
 
 export type UserContextError = (typeof UserContextError)[keyof typeof UserContextError];
@@ -38,6 +40,7 @@ export interface UserContext {
   ) => Promise<GetExternalAuthUrlData | undefined>;
   user?: UserFragment | null;
   authenticating: boolean;
+  isCredentialsLogin: boolean;
   authenticated: boolean;
   errors: UserContextError[];
   refetchUser?: () => Promise<ApolloQueryResult<UserDetailsQuery>>;

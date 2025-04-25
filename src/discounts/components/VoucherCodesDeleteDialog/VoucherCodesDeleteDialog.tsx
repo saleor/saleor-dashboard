@@ -23,10 +23,10 @@ export const VoucherCodesDeleteDialog = ({
 
   return (
     <DashboardModal open={open} onChange={onClose}>
-      <DashboardModal.Content>
-        <DashboardModal.Title>
+      <DashboardModal.Content size="xs">
+        <DashboardModal.Header>
           <FormattedMessage id="WMN0q+" defaultMessage="Delete voucher codes" />
-        </DashboardModal.Title>
+        </DashboardModal.Header>
 
         <Text as="p">
           <FormattedMessage

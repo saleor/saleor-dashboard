@@ -9,6 +9,8 @@ import {
   OrderDetailsWithMetadataQueryResult,
   OrderFulfillmentApproveMutation,
   OrderFulfillmentApproveMutationVariables,
+  OrderNoteUpdateMutation,
+  OrderNoteUpdateMutationVariables,
   OrderTransactionRequestActionMutation,
   OrderTransactionRequestActionMutationVariables,
   OrderUpdateMutation,
@@ -57,7 +59,7 @@ import OrderPaymentDialog from "../../../components/OrderPaymentDialog";
 import OrderPaymentVoidDialog from "../../../components/OrderPaymentVoidDialog";
 import {
   orderFulfillUrl,
-  orderManualTransationRefundUrl,
+  orderManualTransactionRefundUrl,
   orderPaymentRefundUrl,
   orderReturnUrl,
   orderTransactionRefundUrl,
@@ -72,6 +74,10 @@ interface OrderNormalDetailsProps {
   data: OrderDetailsWithMetadataQueryResult["data"];
   loading: boolean;
   orderAddNote: any;
+  orderUpdateNote: PartialMutationProviderOutput<
+    OrderNoteUpdateMutation,
+    OrderNoteUpdateMutationVariables
+  >;
   orderInvoiceRequest: any;
   handleSubmit: any;
   orderUpdate: PartialMutationProviderOutput<OrderUpdateMutation, OrderUpdateMutationVariables>;
@@ -110,6 +116,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   data,
   loading,
   orderAddNote,
+  orderUpdateNote,
   orderInvoiceRequest,
   handleSubmit,
   orderUpdate,
@@ -165,6 +172,10 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
 
   const errors = orderUpdate.opts.data?.orderUpdate.errors || [];
 
+  const hasOrderFulfillmentsFulfilled = order?.fulfillments.some(
+    fulfillment => fulfillment.status === FulfillmentStatus.FULFILLED,
+  );
+
   return (
     <>
       <WindowTitle
@@ -183,6 +194,15 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         onOrderReturn={() => navigate(orderReturnUrl(id))}
         loading={loading || updateMetadataOpts.loading || updatePrivateMetadataOpts.loading}
         errors={errors}
+        onNoteUpdateLoading={orderUpdateNote.opts.loading}
+        onNoteUpdate={(id, message) =>
+          orderUpdateNote.mutate({
+            order: id,
+            input: {
+              message,
+            },
+          })
+        }
         onNoteAdd={variables =>
           extractMutationErrors(
             orderAddNote.mutate({
@@ -265,18 +285,13 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
       />
       <OrderCannotCancelOrderDialog
         onClose={closeModal}
-        open={
-          params.action === "cancel" &&
-          order?.fulfillments.some(
-            fulfillment => fulfillment.status === FulfillmentStatus.FULFILLED,
-          )
-        }
+        open={params.action === "cancel" && hasOrderFulfillmentsFulfilled}
       />
       <OrderCancelDialog
         confirmButtonState={orderCancel.opts.status}
         errors={orderCancel.opts.data?.orderCancel.errors || []}
         number={order?.number}
-        open={params.action === "cancel"}
+        open={params.action === "cancel" && !hasOrderFulfillmentsFulfilled}
         onClose={closeModal}
         onSubmit={() =>
           orderCancel.mutate({
@@ -290,16 +305,19 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         open={params.action === "transaction-action"}
         action={params.type}
         onSubmit={() =>
-          orderTransactionAction.mutate({
-            action: params.type,
-            transactionId: params.id,
-          })
+          orderTransactionAction
+            .mutate({
+              action: params.type,
+              transactionId: params.id,
+            })
+            .finally(() => closeModal())
         }
       />
       <OrderMetadataDialog
         open={params.action === "view-metadata"}
         onClose={closeModal}
-        data={order?.lines?.find(orderLine => orderLine.id === params.id)}
+        lineId={params.id}
+        orderId={id}
       />
       <OrderMarkAsPaidDialog
         confirmButtonState={orderPaymentMarkAsPaid.opts.status}
@@ -437,8 +455,8 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
       <OrderRefundDialog
         open={params.action === "add-refund"}
         onClose={closeModal}
-        onStandardRefund={() => navigate(orderTransactionRefundUrl(id))}
-        onManualRefund={() => navigate(orderManualTransationRefundUrl(id))}
+        onStandardRefund={() => navigate(orderTransactionRefundUrl(id), { replace: true })}
+        onManualRefund={() => navigate(orderManualTransactionRefundUrl(id), { replace: true })}
       />
 
       <OrderAddressFields

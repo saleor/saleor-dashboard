@@ -1,9 +1,9 @@
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { getGiftCardErrorMessage } from "@dashboard/giftCards/GiftCardUpdate/messages";
 import useGiftCardUpdateForm from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardUpdateFormProvider/hooks/useGiftCardUpdateForm";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { TextField, Typography } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
+import { Checkbox, Text } from "@saleor/macaw-ui-next";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
@@ -33,14 +33,17 @@ const GiftCardUpdateExpirySelect: React.FC = () => {
 
   return (
     <>
-      <Typography>{intl.formatMessage(messages.expiryDateLabel)}</Typography>
+      <Text>{intl.formatMessage(messages.expiryDateLabel)}</Text>
       <VerticalSpacer />
-      <ControlledCheckbox
+      <Checkbox
+        data-test-id="gift-card-expire-section"
         name="cardExpires"
-        label={intl.formatMessage(messages.expiryDateCheckboxLabel)}
         checked={cardExpiresSelected}
-        onChange={event => setCardExpiresSelected(event.target.value)}
-      />
+        onCheckedChange={value => setCardExpiresSelected(value as boolean)}
+        display="inline-flex"
+      >
+        <Text size={3}>{intl.formatMessage(messages.expiryDateCheckboxLabel)}</Text>
+      </Checkbox>
 
       {cardExpiresSelected && (
         <TextField

@@ -6,13 +6,14 @@ import {
   OrderDetailsQuery,
   TransactionActionEnum,
 } from "@dashboard/graphql/types.generated";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import OrderAddTransaction from "../OrderAddTransaction";
-import { useStyles } from "../OrderDetailsPage/styles";
+import { OrderDetailsRefundTable } from "../OrderDetailsRefundTable/OrderDetailsRefundTable";
 import OrderGrantedRefunds from "../OrderGrantedRefunds";
 import OrderPaymentSummaryCard from "../OrderPaymentSummaryCard";
-import { OrderRefundDatagrid } from "../OrderRefundDatagrid";
 import OrderSummaryCard from "../OrderSummaryCard";
 import OrderTransaction from "../OrderTransaction";
 import OrderTransactionGiftCard from "../OrderTransactionGiftCard";
@@ -40,21 +41,24 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
   onAddManualTransaction,
   onRefundAdd,
 }) => {
-  const classes = useStyles();
   const filteredPayments = React.useMemo(() => getFilteredPayments(order), [order]);
   const { enabled } = useFlag("improved_refunds");
 
+  const hasAnyTransactions = [order?.transactions, filteredPayments, order?.giftCards].some(
+    arr => arr?.length > 0,
+  );
+
   return (
     <>
-      <div className={classes.cardGrid}>
+      <Box display="grid" __gridTemplateColumns="repeat(2, 1fr)" gap={2}>
         <OrderSummaryCard order={order} />
         <OrderPaymentSummaryCard order={order} onMarkAsPaid={onMarkAsPaid} />
-      </div>
+      </Box>
       <CardSpacer />
       <>
         {enabled && (
           <>
-            <OrderRefundDatagrid orderId={order?.id} order={order} onRefundAdd={onRefundAdd} />
+            <OrderDetailsRefundTable orderId={order?.id} order={order} onRefundAdd={onRefundAdd} />
             <CardSpacer />
           </>
         )}
@@ -65,11 +69,29 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
           </>
         )}
       </>
-      <div>
-        {order?.transactions?.map(transaction => (
+
+      <Box paddingTop={6}>
+        <Box
+          as="header"
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="space-between"
+          paddingX={6}
+        >
+          <Text size={5} fontWeight="bold">
+            <FormattedMessage defaultMessage="Transactions" id="/jJLYy" />
+          </Text>
+          <OrderAddTransaction order={order} onAddTransaction={onAddManualTransaction} />
+        </Box>
+
+        {order?.transactions?.map((transaction, index) => (
           <OrderTransaction
             key={transaction.id}
-            transaction={transaction}
+            transaction={{
+              ...transaction,
+              index,
+            }}
             onTransactionAction={onTransactionAction}
           />
         ))}
@@ -85,8 +107,19 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
         {order?.giftCards?.map(giftCard => (
           <OrderTransactionGiftCard key={giftCard.id} order={order} giftCard={giftCard} />
         ))}
-      </div>
-      <OrderAddTransaction order={order} onAddTransaction={onAddManualTransaction} />
+
+        {!hasAnyTransactions && (
+          <Box display="flex" justifyContent="center" alignItems="center">
+            <Text size={2} color="default2">
+              <FormattedMessage
+                defaultMessage="No transactions made for this order."
+                description="empty state message"
+                id="7QPLu0"
+              />
+            </Text>
+          </Box>
+        )}
+      </Box>
     </>
   );
 };

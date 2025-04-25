@@ -56,6 +56,11 @@ export const messages = defineMessages({
 });
 
 export const inputTypeMessages = defineMessages({
+  plainTextTruncated: {
+    id: "A02NDR",
+    defaultMessage: "Attribute value too long and truncated at {length} characters.",
+    description: "plain text attribute value was truncated",
+  },
   dropdown: {
     id: "bZksto",
     defaultMessage: "Dropdown",
@@ -107,8 +112,13 @@ export const inputTypeMessages = defineMessages({
     description: "date time attribute type",
   },
   swatch: {
-    id: "gx4wCT",
+    id: "g8lXTL",
     defaultMessage: "Swatch",
+    description: "swatch attribute",
+  },
+  swatchType: {
+    id: "ztvvcm",
+    defaultMessage: "Swatch type",
     description: "swatch attribute type",
   },
 });

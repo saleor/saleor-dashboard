@@ -1,17 +1,12 @@
 // @ts-strict-ignore
-import {
-  GiftCardCreateInput,
-  useChannelCurrenciesQuery,
-  useGiftCardCreateMutation,
-} from "@dashboard/graphql";
+import { DashboardModal } from "@dashboard/components/Modal";
+import { GiftCardCreateInput, useGiftCardCreateMutation } from "@dashboard/graphql";
 import useCurrentDate from "@dashboard/hooks/useCurrentDate";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { DialogProps } from "@dashboard/types";
-import { DialogTitle } from "@material-ui/core";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import ContentWithProgress from "./ContentWithProgress";
 import GiftCardCreateDialogCodeContent from "./GiftCardCreateDialogCodeContent";
 import GiftCardCreateDialogForm, { GiftCardCreateFormData } from "./GiftCardCreateDialogForm";
 import { giftCardCreateMessages as messages } from "./messages";
@@ -30,7 +25,6 @@ const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = 
 }) => {
   const intl = useIntl();
   const notify = useNotifier();
-  const { loading: loadingChannelCurrencies } = useChannelCurrenciesQuery({});
   const [cardCode, setCardCode] = useState(null);
   const currentDate = useCurrentDate();
   const getParsedSubmitInputData = (formData: GiftCardCreateFormData): GiftCardCreateInput => {
@@ -47,7 +41,7 @@ const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = 
 
     return {
       note: note || null,
-      addTags: tags || null,
+      addTags: tags?.map(tag => tag.value) || null,
       userEmail: (sendToCustomerSelected && selectedCustomer.email) || null,
       channel: (sendToCustomerSelected && channelSlug) || null,
       balance: {
@@ -79,26 +73,24 @@ const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = 
   };
   const handleClose = () => {
     onClose();
+    setCardCode(null);
   };
 
   return (
-    <>
-      <DialogTitle disableTypography>{intl.formatMessage(messages.title)}</DialogTitle>
-      <ContentWithProgress>
-        {!loadingChannelCurrencies &&
-          (cardCode ? (
-            <GiftCardCreateDialogCodeContent cardCode={cardCode} onClose={handleClose} />
-          ) : (
-            <GiftCardCreateDialogForm
-              opts={createGiftCardOpts}
-              onClose={handleClose}
-              apiErrors={createGiftCardOpts?.data?.giftCardCreate?.errors}
-              onSubmit={handleSubmit}
-              initialCustomer={initialCustomer}
-            />
-          ))}
-      </ContentWithProgress>
-    </>
+    <DashboardModal.Content size="sm" data-test-id="gift-card-dialog">
+      <DashboardModal.Header>{intl.formatMessage(messages.title)}</DashboardModal.Header>
+      {cardCode ? (
+        <GiftCardCreateDialogCodeContent cardCode={cardCode} onClose={handleClose} />
+      ) : (
+        <GiftCardCreateDialogForm
+          opts={createGiftCardOpts}
+          onClose={handleClose}
+          apiErrors={createGiftCardOpts?.data?.giftCardCreate?.errors}
+          onSubmit={handleSubmit}
+          initialCustomer={initialCustomer}
+        />
+      )}
+    </DashboardModal.Content>
   );
 };
 

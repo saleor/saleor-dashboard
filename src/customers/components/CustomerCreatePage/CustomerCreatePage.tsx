@@ -5,7 +5,7 @@ import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import { customerListUrl } from "@dashboard/customers/urls";
 import { AccountErrorFragment, AddressInput, CustomerCreateDataQuery } from "@dashboard/graphql";
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
@@ -173,12 +173,15 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
                   onChange={change}
                 />
               </div>
-              <Savebar
-                disabled={isSaveDisabled}
-                state={saveButtonBar}
-                onSubmit={submit}
-                onCancel={() => navigate(customerListUrl())}
-              />
+              <Savebar>
+                <Savebar.Spacer />
+                <Savebar.CancelButton onClick={() => navigate(customerListUrl())} />
+                <Savebar.ConfirmButton
+                  transitionState={saveButtonBar}
+                  onClick={submit}
+                  disabled={isSaveDisabled}
+                />
+              </Savebar>
             </DetailPageLayout.Content>
           </DetailPageLayout>
         );

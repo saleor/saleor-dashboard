@@ -17,8 +17,9 @@ export const alertMessages = defineMessages({
     description: "alert message",
   },
   noShippingMethodsInChannel: {
-    id: "BvRyoX",
-    defaultMessage: "There are no available shipping methods in this channel.",
+    id: "zb1rmx",
+    defaultMessage:
+      "{country} is not available as a shipping destination for this channel, check {configLink}.",
     description: "alert message",
   },
 });

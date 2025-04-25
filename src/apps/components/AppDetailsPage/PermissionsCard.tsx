@@ -1,10 +1,9 @@
 import { AppPermissionsDialog } from "@dashboard/apps/components/AppPermissionsDialog";
 import { ButtonWithTooltip } from "@dashboard/components/ButtonWithTooltip";
-import Skeleton from "@dashboard/components/Skeleton";
 import { PermissionEnum } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, BoxProps, Text } from "@saleor/macaw-ui-next";
+import { Box, BoxProps, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

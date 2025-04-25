@@ -1,4 +1,4 @@
-import { attributeListUrl } from "@dashboard/attributes/urls";
+import { attributeListPath } from "@dashboard/attributes/urls";
 import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@dashboard/attributes/utils/data";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
@@ -7,7 +7,7 @@ import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { MetadataFormData } from "@dashboard/components/Metadata/types";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import { ListSettingsUpdate } from "@dashboard/components/TablePagination";
 import {
   AttributeDetailsFragment,
@@ -18,6 +18,7 @@ import {
   AttributeTypeEnum,
   MeasurementUnitsEnum,
 } from "@dashboard/graphql";
+import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ListSettings, ReorderAction } from "@dashboard/types";
@@ -135,6 +136,10 @@ const AttributePage: React.FC<AttributePageProps> = ({
     });
   };
 
+  const attributePageBackLink = useBackLinkWithState({
+    path: attributeListPath,
+  });
+
   return (
     <Form confirmLeave initial={initialForm} onSubmit={handleSubmit} disabled={disabled}>
       {({ change, set, data, isSaveDisabled, submit, errors, setError, clearErrors }) => {
@@ -144,7 +149,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
           <>
             <DetailPageLayout>
               <TopNav
-                href={attributeListUrl()}
+                href={attributePageBackLink}
                 title={
                   attribute === null
                     ? intl.formatMessage({
@@ -204,13 +209,16 @@ const AttributePage: React.FC<AttributePageProps> = ({
                   onChange={change}
                 />
               </DetailPageLayout.RightSidebar>
-              <Savebar
-                disabled={!!isSaveDisabled}
-                state={saveButtonBarState}
-                onCancel={() => navigate(attributeListUrl())}
-                onSubmit={submit}
-                onDelete={attribute === null ? undefined : onDelete}
-              />
+              <Savebar>
+                {attribute !== null && <Savebar.DeleteButton onClick={onDelete} />}
+                <Savebar.Spacer />
+                <Savebar.CancelButton onClick={() => navigate(attributePageBackLink)} />
+                <Savebar.ConfirmButton
+                  transitionState={saveButtonBarState}
+                  onClick={submit}
+                  disabled={!!isSaveDisabled}
+                />
+              </Savebar>
             </DetailPageLayout>
             {children(data)}
           </>

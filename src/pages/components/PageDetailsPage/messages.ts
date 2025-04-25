@@ -26,4 +26,9 @@ export const messages = defineMessages({
     defaultMessage: "Visible",
     description: "page label",
   },
+  setAvailabilityDate: {
+    id: "eP2yRZ",
+    defaultMessage: "Set availability date",
+    description: "page availability date label",
+  },
 });

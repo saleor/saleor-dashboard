@@ -5,7 +5,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import {
   ConfigurationItemInput,
   PluginConfigurationExtendedFragment,
@@ -150,12 +150,15 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                   )}
                 </div>
               </Grid>
-              <Savebar
-                disabled={isSaveDisabled}
-                state={saveButtonBarState}
-                onCancel={() => navigate(pluginListUrl())}
-                onSubmit={submit}
-              />
+              <Savebar>
+                <Savebar.Spacer />
+                <Savebar.CancelButton onClick={() => navigate(pluginListUrl())} />
+                <Savebar.ConfirmButton
+                  transitionState={saveButtonBarState}
+                  onClick={submit}
+                  disabled={isSaveDisabled}
+                />
+              </Savebar>
             </DetailPageLayout.Content>
           </DetailPageLayout>
         );

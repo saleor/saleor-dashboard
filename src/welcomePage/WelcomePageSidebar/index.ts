@@ -1,0 +1,1 @@
+export { WelcomePageSidebar } from "./WelcomePageSidebar";

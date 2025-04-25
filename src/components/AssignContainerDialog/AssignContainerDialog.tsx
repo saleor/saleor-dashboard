@@ -1,21 +1,12 @@
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
+import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
-import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle";
 import { DialogProps, FetchMoreProps, Node } from "@dashboard/types";
-import {
-  CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TableBody,
-  TableCell,
-  TextField,
-} from "@material-ui/core";
+import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import React from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
 
 import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
@@ -70,7 +61,6 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
     onSubmit,
   } = props;
   const classes = useStyles(props);
-  const scrollableDialogClasses = useScrollableDialogStyle({});
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
   const [selectedContainers, setSelectedContainers] = React.useState<Container[]>([]);
   const handleSubmit = () => onSubmit(selectedContainers);
@@ -80,15 +70,10 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
   };
 
   return (
-    <Dialog
-      onClose={handleClose}
-      open={open}
-      classes={{ paper: scrollableDialogClasses.dialog }}
-      fullWidth
-      maxWidth="sm"
-    >
-      <DialogTitle disableTypography>{labels.title}</DialogTitle>
-      <DialogContent>
+    <DashboardModal onChange={handleClose} open={open}>
+      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr auto">
+        <DashboardModal.Header>{labels.title}</DashboardModal.Header>
+
         <TextField
           name="query"
           value={query}
@@ -101,18 +86,13 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
             endAdornment: loading && <CircularProgress size={16} />,
           }}
         />
-      </DialogContent>
-      <DialogContent className={scrollableDialogClasses.scrollArea} id={scrollableTargetId}>
+
         <InfiniteScroll
+          id={scrollableTargetId}
           dataLength={containers?.length}
           next={onFetchMore}
           hasMore={hasMore}
           scrollThreshold="100px"
-          loader={
-            <div className={scrollableDialogClasses.loadMoreLoaderContainer}>
-              <CircularProgress size={16} />
-            </div>
-          }
           scrollableTarget={scrollableTargetId}
         >
           <ResponsiveTable>
@@ -146,19 +126,20 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
             </TableBody>
           </ResponsiveTable>
         </InfiniteScroll>
-      </DialogContent>
-      <DialogActions>
-        <BackButton onClick={onClose} />
-        <ConfirmButton
-          data-test-id="assign-and-save-button"
-          transitionState={confirmButtonState}
-          type="submit"
-          onClick={handleSubmit}
-        >
-          {labels.confirmBtn}
-        </ConfirmButton>
-      </DialogActions>
-    </Dialog>
+
+        <DashboardModal.Actions>
+          <BackButton onClick={onClose} />
+          <ConfirmButton
+            data-test-id="assign-and-save-button"
+            transitionState={confirmButtonState}
+            type="submit"
+            onClick={handleSubmit}
+          >
+            {labels.confirmBtn}
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 

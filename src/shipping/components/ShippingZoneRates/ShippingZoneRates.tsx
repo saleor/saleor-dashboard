@@ -1,19 +1,19 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import IconButtonTableCell from "@dashboard/components/IconButtonTableCell";
 import Money from "@dashboard/components/Money";
 import MoneyRange from "@dashboard/components/MoneyRange";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import WeightRange from "@dashboard/components/WeightRange";
 import { ShippingZoneDetailsFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ChannelProps } from "@dashboard/types";
-import { Card, TableBody, TableCell, TableHead } from "@material-ui/core";
+import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import { Button, DeleteIcon, ICONBUTTON_SIZE, makeStyles } from "@saleor/macaw-ui";
+import { Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -64,10 +64,10 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card data-test-id={variant === "price" ? "price-based-rates" : "weight-based-rates"}>
-      <CardTitle
-        title={
-          variant === "price"
+    <DashboardCard data-test-id={variant === "price" ? "price-based-rates" : "weight-based-rates"}>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {variant === "price"
             ? intl.formatMessage({
                 id: "FjrExY",
                 defaultMessage: "Price Based Rates",
@@ -77,14 +77,14 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                 id: "foB6wx",
                 defaultMessage: "Weight Based Rates",
                 description: "weight based shipping methods, section header",
-              })
-        }
-        toolbar={
+              })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <Button disabled={disabled} onClick={onRateAdd} data-test-id={testId}>
             <FormattedMessage id="WR8rir" defaultMessage="Create rate" description="button" />
           </Button>
-        }
-      />
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       <ResponsiveTable>
         <TableHead>
           <TableRowLink>
@@ -193,7 +193,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
           )}
         </TableBody>
       </ResponsiveTable>
-    </Card>
+    </DashboardCard>
   );
 };
 

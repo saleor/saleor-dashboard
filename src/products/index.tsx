@@ -1,12 +1,12 @@
 import { ConditionalProductFilterProvider } from "@dashboard/components/ConditionalFilter/context";
-import { useFlag } from "@dashboard/featureFlags";
+import { Route } from "@dashboard/components/Router";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { getArrayQueryParam } from "@dashboard/utils/urls";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
-import { Route, RouteComponentProps, Switch } from "react-router-dom";
+import { RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
@@ -42,7 +42,6 @@ interface matchParamsProductVariant {
 
 const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1)) as any;
-  const productListingPageFiltersFlag = useFlag("product_filters");
   const params: ProductListUrlQueryParams = asSortParams(
     {
       ...qs,
@@ -53,12 +52,12 @@ const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
       productKind: qs.productKind,
     },
     ProductListUrlSortField,
+    ProductListUrlSortField.date,
+    false,
   );
 
   return (
-    <ConditionalProductFilterProvider
-      locationSearch={productListingPageFiltersFlag.enabled ? location.search : ""}
-    >
+    <ConditionalProductFilterProvider locationSearch={location.search}>
       <ProductListComponent params={params} />
     </ConditionalProductFilterProvider>
   );

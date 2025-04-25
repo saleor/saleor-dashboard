@@ -3,7 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Form from "@dashboard/components/Form";
 import { Grid } from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import {
   GiftCardSettingsExpiryTypeEnum,
   TimePeriodTypeEnum,
@@ -12,8 +12,7 @@ import {
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { Typography } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -58,9 +57,9 @@ const GiftCardSettingsPage: React.FC = () => {
               <Box padding={6} margin="auto" height="100vh">
                 <Grid variant="inverted">
                   <div>
-                    <Typography>
+                    <Text>
                       <FormattedMessage {...expirySettingsMessages.expiryDateSectionDescription} />
-                    </Typography>
+                    </Text>
                   </div>
                   <GiftCardExpirySettingsCard
                     data={formData}
@@ -70,12 +69,15 @@ const GiftCardSettingsPage: React.FC = () => {
                   />
                 </Grid>
               </Box>
-              <Savebar
-                onCancel={() => navigate(giftCardsListPath)}
-                onSubmit={submit}
-                disabled={formLoading}
-                state={updateGiftCardSettingsOpts?.status}
-              />
+              <Savebar>
+                <Savebar.Spacer />
+                <Savebar.CancelButton onClick={() => navigate(giftCardsListPath)} />
+                <Savebar.ConfirmButton
+                  transitionState={updateGiftCardSettingsOpts?.status}
+                  onClick={submit}
+                  disabled={formLoading}
+                />
+              </Savebar>
             </>
           )}
         </Form>

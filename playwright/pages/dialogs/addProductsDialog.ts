@@ -18,6 +18,7 @@ export class AddProductsDialog extends BasePage {
 
   async clickConfirmButton() {
     await this.confirmButton.click();
+    await this.waitForDOMToFullyLoad();
   }
 
   async clickBackButton() {
@@ -26,12 +27,13 @@ export class AddProductsDialog extends BasePage {
 
   async searchForProductInDialog(productName: string) {
     await this.searchInput.fill(productName);
+    await this.waitForDOMToFullyLoad();
   }
 
   async selectVariantBySKU(sku: string) {
     const variant = this.variantRow.filter({ hasText: `SKU ${sku}` });
 
     await variant.waitFor({ state: "visible" });
-    await variant.getByRole("checkbox").click();
+    await variant.getByRole("checkbox").first().click();
   }
 }

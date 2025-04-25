@@ -42,6 +42,9 @@ export const getAllOrderWaitingLines = (order?: OrderDetailsFragment) =>
     [],
   );
 
+// TODO: Migrate this utils file to strict mode
+export type LineItem<T> = ReturnType<typeof getLineItem<T>>;
+
 export function getLineItem<T>(
   line: FulfillmentLine | ParsedFulfillmentLine | OrderLine,
   { initialValue, isFulfillment = false, isRefunded = false }: LineItemOptions<T>,
@@ -216,5 +219,37 @@ export const getReturnRefundValue = ({
     amountData?.refundTotalAmount.amount
       .toFixed(getCurrencyDecimalPoints(amountData?.refundTotalAmount?.currency) ?? 2)
       .toString() ?? ""
+  );
+};
+
+export const getItemsFulfilled = (order: OrderDetailsFragment) => {
+  const commonOptions = {
+    initialValue: 0,
+    isFulfillment: true,
+  };
+  const refundedFulfilmentsItems = getParsedLineDataForFulfillmentStatus(
+    order,
+    FulfillmentStatus.REFUNDED,
+    { ...commonOptions, isRefunded: true },
+  );
+  const fulfilledFulfillmentsItems = getParsedLineDataForFulfillmentStatus(
+    order,
+    FulfillmentStatus.FULFILLED,
+    commonOptions,
+  );
+
+  return refundedFulfilmentsItems.concat(fulfilledFulfillmentsItems);
+};
+
+export const getItemsWaiting = (order: OrderDetailsFragment) => {
+  const commonOptions = {
+    initialValue: 0,
+    isFulfillment: true,
+  };
+
+  return getParsedLineDataForFulfillmentStatus(
+    order,
+    FulfillmentStatus.WAITING_FOR_APPROVAL,
+    commonOptions,
   );
 };

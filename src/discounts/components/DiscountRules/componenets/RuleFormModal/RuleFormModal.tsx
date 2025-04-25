@@ -38,11 +38,10 @@ export const RuleFormModal = ({
 
   return (
     <DashboardModal open={true} onChange={onClose}>
-      <DashboardModal.Content data-test-id="add-rule-dialog">
-        <DashboardModal.Title display="flex" justifyContent="space-between" alignItems="center">
+      <DashboardModal.Content size="sm" data-test-id="add-rule-dialog">
+        <DashboardModal.Header>
           <FormattedMessage {...(initialFormValues ? messages.editRule : messages.addRule)} />
-          <DashboardModal.Close onClose={onClose} />
-        </DashboardModal.Title>
+        </DashboardModal.Header>
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
         </FormProvider>

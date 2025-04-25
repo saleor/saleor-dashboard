@@ -22,9 +22,11 @@ const VoucherInfo = ({ data, disabled, errors, onChange }: VoucherInfoProps) => 
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        {intl.formatMessage(commonMessages.generalInformations)}
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Input
           size="small"

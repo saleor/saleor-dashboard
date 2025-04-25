@@ -10,7 +10,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import usePermissionGroupSearch from "@dashboard/searches/usePermissionGroupSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { DialogContentText } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -167,15 +166,13 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
           })
         }
       >
-        <DialogContentText>
-          <FormattedMessage
-            id="gxPjIQ"
-            defaultMessage="Are you sure you want to delete {email} from staff members?"
-            values={{
-              email: getStringOrPlaceholder(data?.user?.email),
-            }}
-          />
-        </DialogContentText>
+        <FormattedMessage
+          id="gxPjIQ"
+          defaultMessage="Are you sure you want to delete {email} from staff members?"
+          values={{
+            email: getStringOrPlaceholder(data?.user?.email),
+          }}
+        />
       </ActionDialog>
       <ActionDialog
         open={params.action === "remove-avatar"}
@@ -189,15 +186,13 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         onClose={closeModal}
         onConfirm={deleteUserAvatar}
       >
-        <DialogContentText>
-          <FormattedMessage
-            id="fzpXvv"
-            defaultMessage="Are you sure you want to remove {email} avatar?"
-            values={{
-              email: <strong>{getStringOrPlaceholder(data?.user?.email)}</strong>,
-            }}
-          />
-        </DialogContentText>
+        <FormattedMessage
+          id="fzpXvv"
+          defaultMessage="Are you sure you want to remove {email} avatar?"
+          values={{
+            email: <strong>{getStringOrPlaceholder(data?.user?.email)}</strong>,
+          }}
+        />
       </ActionDialog>
       <StaffPasswordResetDialog
         confirmButtonState={changePasswordOpts.status}

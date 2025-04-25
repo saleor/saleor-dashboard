@@ -1,12 +1,21 @@
-import { InitialStateResponse } from "../../API/InitialStateResponse";
+import { InitialProductStateResponse } from "../../API/initialState/product/InitialProductStateResponse";
 import { TokenArray } from ".";
+import { FetchingParams } from "./fetchingParams";
+
+const productParams = {
+  category: [],
+  collection: [],
+  channel: [],
+  productType: [],
+  attribute: {},
+} as FetchingParams;
 
 describe("ConditionalFilter / ValueProvider / TokenArray", () => {
-  it("should parse empty params", () => {
+  it("should parse empty product params", () => {
     // Arrange
     const url = new TokenArray("");
     // Act
-    const fetchingParams = url.getFetchingParams();
+    const fetchingParams = url.getFetchingParams(productParams, "product");
 
     // Assert
     expect(fetchingParams).toEqual({
@@ -17,7 +26,7 @@ describe("ConditionalFilter / ValueProvider / TokenArray", () => {
       attribute: {},
     });
   });
-  it("should parse params with values", () => {
+  it("should parse product params with values", () => {
     // Arrange
     const params = new URLSearchParams({
       "0[s0.price]": "123",
@@ -35,7 +44,7 @@ describe("ConditionalFilter / ValueProvider / TokenArray", () => {
     });
     // Act
     const url = new TokenArray(params.toString());
-    const fetchingParams = url.getFetchingParams();
+    const fetchingParams = url.getFetchingParams(productParams, "product");
 
     // Assert
     expect(fetchingParams).toEqual({
@@ -55,7 +64,7 @@ describe("ConditionalFilter / ValueProvider / TokenArray", () => {
       "1": "AND",
       "2[s0.channel]": "channel-pln",
     });
-    const response = new InitialStateResponse(
+    const response = new InitialProductStateResponse(
       [
         {
           label: "Cat1",
@@ -84,7 +93,7 @@ describe("ConditionalFilter / ValueProvider / TokenArray", () => {
     const params = new URLSearchParams({
       "0[s0.channel]": "channel-pln",
     });
-    const response = new InitialStateResponse(
+    const response = new InitialProductStateResponse(
       [
         {
           label: "Cat1",

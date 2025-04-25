@@ -96,6 +96,7 @@ export const appListItemFragment = gql`
     permissions {
       ...AppPermission
     }
+    ...AppEventDeliveries
   }
 `;
 
@@ -111,5 +112,86 @@ export const appAvatarFragment = gql`
     id
     name
     # TODO: Add app image
+  }
+`;
+
+export const webhookAttemptFragment = gql`
+  fragment EventDeliveryAttempt on EventDeliveryAttempt {
+    id
+    createdAt
+    status
+    response
+    responseStatusCode
+  }
+`;
+
+export const appEventDeliveriesFragment = gql`
+  fragment AppEventDeliveries on App {
+    webhooks @include(if: $canFetchAppEvents) {
+      failedDelivers: eventDeliveries(
+        first: 1
+        filter: { status: FAILED }
+        sortBy: { field: CREATED_AT, direction: DESC }
+      ) {
+        edges {
+          node {
+            id
+            createdAt
+            attempts(first: 1, sortBy: { field: CREATED_AT, direction: DESC }) {
+              edges {
+                node {
+                  id
+                  status
+                  createdAt
+                }
+              }
+            }
+          }
+        }
+      }
+      pendingDelivers: eventDeliveries(
+        first: 6
+        filter: { status: PENDING }
+        sortBy: { field: CREATED_AT, direction: DESC }
+      ) {
+        edges {
+          node {
+            id
+            attempts(first: 6, sortBy: { field: CREATED_AT, direction: DESC }) {
+              edges {
+                node {
+                  id
+                  status
+                  createdAt
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const InstalledApp = gql`
+  fragment InstalledApp on App {
+    id
+    identifier
+    manifestUrl
+    isActive
+  }
+`;
+
+export const InstalledAppDetails = gql`
+  fragment InstalledAppDetails on App {
+    id
+    isActive
+    name
+    type
+    brand {
+      logo {
+        default(format: WEBP, size: 64)
+      }
+    }
   }
 `;

@@ -1,9 +1,14 @@
+import {
+  ConditionalDraftOrderFilterProvider,
+  ConditionalOrderFilterProvider,
+} from "@dashboard/components/ConditionalFilter";
+import { Route } from "@dashboard/components/Router";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
-import { Route, RouteComponentProps, Switch } from "react-router-dom";
+import { RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
@@ -17,7 +22,7 @@ import {
   orderListPath,
   OrderListUrlQueryParams,
   OrderListUrlSortField,
-  orderManualTransationRefundPath,
+  orderManualTransactionRefundPath,
   orderPath,
   orderPaymentRefundPath,
   orderReturnPath,
@@ -33,7 +38,7 @@ import OrderGrantRefundEditComponent from "./views/OrderEditGrantRefund";
 import OrderFulfillComponent from "./views/OrderFulfill";
 import OrderGrantRefundComponent from "./views/OrderGrantRefund";
 import OrderListComponent from "./views/OrderList";
-import OrderManualTransationRefundComponent from "./views/OrderManualTransationRefund";
+import OrderManualTransactionRefundComponent from "./views/OrderManualTransactionRefund";
 import OrderRefundComponent from "./views/OrderRefund";
 import OrderReturnComponent from "./views/OrderReturn";
 import OrderSendRefundComponent from "./views/OrderSendRefund";
@@ -54,7 +59,11 @@ const OrderList: React.FC<RouteComponentProps<any>> = ({ location }) => {
     false,
   );
 
-  return <OrderListComponent params={params} />;
+  return (
+    <ConditionalOrderFilterProvider locationSearch={location.search}>
+      <OrderListComponent params={params} />
+    </ConditionalOrderFilterProvider>
+  );
 };
 const OrderDraftList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1)) as any;
@@ -65,7 +74,11 @@ const OrderDraftList: React.FC<RouteComponentProps<any>> = ({ location }) => {
     false,
   );
 
-  return <OrderDraftListComponent params={params} />;
+  return (
+    <ConditionalDraftOrderFilterProvider locationSearch={location.search}>
+      <OrderDraftListComponent params={params} />
+    </ConditionalDraftOrderFilterProvider>
+  );
 };
 const OrderDetails: React.FC<RouteComponentProps<any>> = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1)) as any;
@@ -109,9 +122,9 @@ const OrderTransactionRefundEdit: React.FC<RouteComponentProps<any>> = ({ match 
     refundId={decodeURIComponent(match.params.refundId)}
   />
 );
-const OrderManualTransationRefund: React.FC<RouteComponentProps<MatchParams>> = ({ match }) => {
+const OrderManualTransactionRefund: React.FC<RouteComponentProps<MatchParams>> = ({ match }) => {
   return (
-    <OrderManualTransationRefundComponent orderId={decodeURIComponent(match.params.id ?? "")} />
+    <OrderManualTransactionRefundComponent orderId={decodeURIComponent(match.params.id ?? "")} />
   );
 };
 const Component = () => {
@@ -139,8 +152,8 @@ const Component = () => {
         />
         <Route path={orderTransactionRefundPath(":id")} component={OrderTransactionRefund} />
         <Route
-          path={orderManualTransationRefundPath(":id")}
-          component={OrderManualTransationRefund}
+          path={orderManualTransactionRefundPath(":id")}
+          component={OrderManualTransactionRefund}
         />
         <Route path={orderPath(":id")} component={OrderDetails} />
       </Switch>

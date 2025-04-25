@@ -54,10 +54,11 @@ export const fragmentProductMedia = gql`
 
 export const channelListingProductWithoutPricingFragment = gql`
   fragment ChannelListingProductWithoutPricing on ProductChannelListing {
+    id
     isPublished
-    publicationDate
+    publishedAt
     isAvailableForPurchase
-    availableForPurchase
+    availableForPurchaseAt
     visibleInListings
     channel {
       id
@@ -304,7 +305,7 @@ export const fragmentVariant = gql`
       }
       channelListings {
         id
-        publicationDate
+        publishedAt
         isPublished
         channel {
           id
@@ -342,6 +343,43 @@ export const fragmentVariant = gql`
       ...Weight
     }
     quantityLimitPerCustomer
+  }
+`;
+
+export const searchProduct = gql`
+  fragment SearchProduct on Product {
+    id
+    name
+    productType {
+      id
+      name
+    }
+    thumbnail {
+      url
+    }
+    channelListings {
+      ...ChannelListingProductWithoutPricing
+    }
+    variants {
+      id
+      name
+      sku
+      channelListings {
+        channel {
+          id
+          isActive
+          name
+          currencyCode
+        }
+        price {
+          amount
+          currency
+        }
+      }
+    }
+    collections {
+      id
+    }
   }
 `;
 

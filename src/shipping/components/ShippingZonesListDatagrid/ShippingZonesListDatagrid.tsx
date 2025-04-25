@@ -6,6 +6,7 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { ShippingZoneFragment } from "@dashboard/graphql";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { shippingZoneUrl } from "@dashboard/shipping/urls";
@@ -14,6 +15,7 @@ import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { createGetCellContent, shippingZonesListStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
@@ -35,6 +37,7 @@ export const ShippingZoneListDatagrid = ({
   const intl = useIntl();
   const { locale } = useLocale();
   const datagridState = useDatagridChangeState();
+  const location = useLocation();
   const navigate = useNavigator();
   const shippingZonesListStaticColumns = useMemo(
     () => shippingZonesListStaticColumnsAdapter(intl),
@@ -89,7 +92,7 @@ export const ShippingZoneListDatagrid = ({
         onColumnMoved={handlers.onMove}
         onColumnResize={handlers.onResize}
         onRowSelectionChange={onSelectShippingZones}
-        verticalBorder={col => col > 0}
+        verticalBorder={false}
         rows={shippingZones?.length ?? 0}
         availableColumns={visibleColumns}
         emptyText={intl.formatMessage(messages.empty)}
@@ -100,6 +103,7 @@ export const ShippingZoneListDatagrid = ({
         onRowClick={handleRowClick}
         rowAnchor={handleRowAnchor}
         recentlyAddedColumn={recentlyAddedColumn}
+        navigatorOpts={{ state: getPrevLocationState(location) }}
       />
 
       <Box paddingX={6}>

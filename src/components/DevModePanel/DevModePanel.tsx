@@ -1,26 +1,35 @@
 // @ts-strict-ignore
 import { useDashboardTheme } from "@dashboard/components/GraphiQL/styles";
-import { createGraphiQLFetcher } from "@graphiql/toolkit";
-import { Dialog, DialogContent } from "@material-ui/core";
-import { DialogHeader } from "@saleor/macaw-ui";
-import { createFetch } from "@saleor/sdk";
+import { DashboardModal } from "@dashboard/components/Modal";
+import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
+import { FetcherOpts, FetcherParams } from "@graphiql/toolkit";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import GraphiQL from "../GraphiQLPlain";
+import { ContextualLine } from "../AppLayout/ContextualLinks/ContextualLine";
+import { useContextualLink } from "../AppLayout/ContextualLinks/useContextualLink";
+import PlainGraphiQL from "../GraphiQLPlain";
 import { useDevModeContext } from "./hooks";
 import { messages } from "./messages";
-
-const authorizedFetch = createFetch();
+import { getFetcher } from "./utils";
 
 export const DevModePanel: React.FC = () => {
   const intl = useIntl();
+  const subtitle = useContextualLink("dev_panel");
   const { rootStyle } = useDashboardTheme();
+  const { markOnboardingStepAsCompleted } = useOnboarding();
   const { isDevModeVisible, variables, devModeContent, setDevModeVisibility } = useDevModeContext();
-  const fetcher = createGraphiQLFetcher({
-    url: process.env.API_URI,
-    fetch: authorizedFetch,
-  });
+  const fetcher = async (graphQLParams: FetcherParams, opts: FetcherOpts) => {
+    if (graphQLParams.operationName !== "IntrospectionQuery") {
+      markOnboardingStepAsCompleted("graphql-playground");
+    }
+
+    const baseFetcher = getFetcher(opts);
+
+    const result = await baseFetcher(graphQLParams, opts); // Call the base fetcher
+
+    return result;
+  };
   const overwriteCodeMirrorCSSVariables = {
     __html: `
       .graphiql-container, .CodeMirror-info, .CodeMirror-lint-tooltip, reach-portal{
@@ -34,20 +43,17 @@ export const DevModePanel: React.FC = () => {
   };
 
   return (
-    <Dialog
-      maxWidth="xl"
-      fullWidth
-      open={isDevModeVisible}
-      style={{ zIndex: 5 }}
-      PaperProps={{ style: { height: "100%" } }}
-    >
-      <style dangerouslySetInnerHTML={overwriteCodeMirrorCSSVariables}></style>
-      <DialogHeader onClose={() => setDevModeVisibility(false)}>
-        {intl.formatMessage(messages.title)}
-      </DialogHeader>
-      <DialogContent style={{ padding: 0, margin: 1, overflowY: "auto" }}>
-        <GraphiQL query={devModeContent} variables={variables} fetcher={fetcher} />
-      </DialogContent>
-    </Dialog>
+    <DashboardModal open={isDevModeVisible} onChange={() => setDevModeVisibility(false)}>
+      <DashboardModal.Content size="xl" __gridTemplateRows="auto 1fr" height="100%">
+        <style dangerouslySetInnerHTML={overwriteCodeMirrorCSSVariables}></style>
+        <DashboardModal.Header>
+          {intl.formatMessage(messages.title)}
+
+          <ContextualLine>{subtitle}</ContextualLine>
+        </DashboardModal.Header>
+
+        <PlainGraphiQL query={devModeContent} variables={variables} fetcher={fetcher} />
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };

@@ -26,14 +26,19 @@ export const orderDiscountTypeLabelMessages = defineMessages({
     description: "staff added type order discount",
   },
   voucher: {
-    id: "sEjRyz",
-    defaultMessage: "Voucher",
+    id: "l4o0ar",
+    defaultMessage: "Voucher: {voucherName}",
     description: "voucher type order discount",
   },
   promotion: {
     id: "TBdxTP",
     defaultMessage: "Promotion",
     description: "promotion type order discount",
+  },
+  sale: {
+    id: "a/JR9Y",
+    defaultMessage: "Sale",
+    description: "sale type order discount",
   },
 });
 

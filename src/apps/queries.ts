@@ -8,6 +8,7 @@ export const appsList = gql`
     $last: Int
     $sort: AppSortingInput
     $filter: AppFilterInput
+    $canFetchAppEvents: Boolean!
   ) {
     apps(
       before: $before
@@ -101,17 +102,17 @@ export const appWebhookDeliveries = gql`
         asyncEvents {
           name
         }
-        eventDeliveries(first: 10) {
+        eventDeliveries(first: 10, sortBy: { field: CREATED_AT, direction: DESC }) {
           edges {
             node {
+              id
               createdAt
               status
               eventType
-              attempts(first: 10) {
+              attempts(first: 10, sortBy: { field: CREATED_AT, direction: DESC }) {
                 edges {
                   node {
-                    createdAt
-                    status
+                    ...EventDeliveryAttempt
                   }
                 }
               }

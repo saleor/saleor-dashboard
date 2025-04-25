@@ -5,16 +5,10 @@ const useStyles = makeStyles(
     arrow: {
       transform: "rotate(180deg)",
     },
-    backBtn: {
-      marginBottom: theme.spacing(3),
-    },
     buttonContainer: {
       display: "flex",
       justifyContent: "flex-end",
-    },
-    header: {
-      fontWeight: 700,
-      marginBottom: theme.spacing(2),
+      width: "100%",
     },
     link: {
       color: theme.palette.primary.main,
@@ -31,27 +25,6 @@ const useStyles = makeStyles(
       justifyContent: "center",
     },
     loginButton: {
-      width: "100%",
-    },
-    panel: {
-      "& span": {
-        color: theme.palette.error.contrastText,
-      },
-      ...theme.typography.body1,
-      background: theme.palette.alert.paper.error,
-      borderRadius: 8,
-      marginBottom: theme.spacing(2),
-      padding: theme.spacing(2.5),
-    },
-    passwordWrapper: {
-      position: "relative",
-    },
-    showPasswordBtn: {
-      position: "absolute",
-      top: 6,
-      right: 8,
-    },
-    submit: {
       width: "100%",
     },
   }),

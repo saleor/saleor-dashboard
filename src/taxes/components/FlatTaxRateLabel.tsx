@@ -6,7 +6,7 @@ export const FlatTaxRateLabel: React.FC = () => {
   const intl = useIntl();
 
   return (
-    <Box display="flex" alignItems="center" __height="40px">
+    <Box display="flex" alignItems="center">
       <Text>
         {intl.formatMessage({
           defaultMessage: "Use flat tax rate",

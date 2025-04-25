@@ -1,5 +1,4 @@
-import Skeleton from "@dashboard/components/Skeleton";
-import { Box, BoxProps, Text } from "@saleor/macaw-ui-next";
+import { Box, BoxProps, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -14,7 +13,7 @@ export const AboutCard: React.FC<AboutCardProps> = ({ aboutApp, loading, ...boxP
   const intl = useIntl();
   const renderContent = () => {
     if (loading) {
-      return <Skeleton />;
+      return <Skeleton data-test-id="app-page-loader" />;
     }
 
     if (aboutApp) {

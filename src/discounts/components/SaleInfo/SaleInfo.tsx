@@ -1,9 +1,9 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { DiscountErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
-import { Card, CardContent, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -21,9 +21,13 @@ const SaleInfo: React.FC<SaleInfoProps> = ({ data, disabled, errors, onChange })
   const formErrors = getFormErrors(["name"], errors);
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <TextField
           disabled={disabled}
           error={!!formErrors.name}
@@ -38,8 +42,8 @@ const SaleInfo: React.FC<SaleInfoProps> = ({ data, disabled, errors, onChange })
           value={data.name}
           fullWidth
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

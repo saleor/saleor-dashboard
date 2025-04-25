@@ -4,7 +4,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
 import { AppErrorFragment, PermissionEnum, PermissionFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
@@ -82,12 +82,15 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
               })}
             />
           </DetailPageLayout.RightSidebar>
-          <Savebar
-            disabled={isSaveDisabled}
-            state={saveButtonBarState}
-            onCancel={() => navigate(CustomAppUrls.resolveAppListUrl())}
-            onSubmit={submit}
-          />
+          <Savebar>
+            <Savebar.Spacer />
+            <Savebar.CancelButton onClick={() => navigate(CustomAppUrls.resolveAppListUrl())} />
+            <Savebar.ConfirmButton
+              transitionState={saveButtonBarState}
+              onClick={submit}
+              disabled={isSaveDisabled}
+            />
+          </Savebar>
         </DetailPageLayout>
       )}
     </Form>

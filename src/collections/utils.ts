@@ -1,5 +1,6 @@
 import { ChannelCollectionData } from "@dashboard/channels/utils";
 import { CollectionDetailsQuery, SearchProductsQuery } from "@dashboard/graphql";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 export const createChannelsChangeHandler =
   (
@@ -25,7 +26,7 @@ export const createChannelsChangeHandler =
 
 export const getAssignedProductIdsToCollection = (
   collection: CollectionDetailsQuery["collection"],
-  queryData: SearchProductsQuery["search"],
+  queryData?: SearchProductsQuery["search"],
 ) => {
   if (!queryData || !collection) {
     return {};
@@ -35,4 +36,12 @@ export const getAssignedProductIdsToCollection = (
     .filter(e => e.node?.collections?.some(s => collection.id === s.id))
     .map(e => ({ [e.node.id]: true }))
     .reduce((p, c) => ({ ...p, ...c }), {});
+};
+
+export const getProductsFromSearchResults = (searchResults: SearchProductsQuery | undefined) => {
+  if (!searchResults?.search) {
+    return [];
+  }
+
+  return mapEdgesToItems(searchResults.search)?.filter(suggestedProduct => suggestedProduct.id);
 };

@@ -1,6 +1,6 @@
-import { Typography } from "@material-ui/core";
 import { alpha } from "@material-ui/core/styles";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 
@@ -47,8 +47,8 @@ export function Tab<T>(value: T) {
     const classes = useStyles(props);
 
     return (
-      <Typography
-        component="span"
+      <Text
+        as="span"
         data-test-id={testId}
         className={clsx({
           [classes.root]: true,
@@ -57,7 +57,7 @@ export function Tab<T>(value: T) {
         onClick={() => changeTab(value)}
       >
         {children}
-      </Typography>
+      </Text>
     );
   };
 

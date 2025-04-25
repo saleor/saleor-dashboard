@@ -1,26 +1,16 @@
-// @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
 import Checkbox from "@dashboard/components/Checkbox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
-import FormSpacer from "@dashboard/components/FormSpacer";
 import Hr from "@dashboard/components/Hr";
+import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { CountryWithCodeFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
-import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TableBody,
-  TableCell,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-import { filter } from "fuzzaldrin";
+import { fuzzySearch } from "@dashboard/misc";
+import { TableBody, TableCell, TextField } from "@material-ui/core";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -39,12 +29,14 @@ export interface DiscountCountrySelectDialogProps {
   open: boolean;
   onClose: () => void;
   onConfirm: (data: FormData) => SubmitPromise;
+  labels?: {
+    confirmBtn?: string;
+  };
 }
 
 const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = props => {
-  const { confirmButtonState, onClose, countries, open, initial, onConfirm } = props;
+  const { confirmButtonState, onClose, countries, open, initial, onConfirm, labels } = props;
   const classes = useStyles(props);
-  const scrollableDialogClasses = useScrollableDialogStyle();
   const intl = useIntl();
   const initialForm: FormData = {
     allCountries: true,
@@ -53,34 +45,41 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
   };
 
   return (
-    <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
-      <Form initial={initialForm} onSubmit={onConfirm} className={scrollableDialogClasses.form}>
-        {({ data, change }) => {
-          const countrySelectionMap = countries.reduce((acc, country) => {
-            acc[country.code] = !!data.countries.find(
-              selectedCountries => selectedCountries === country.code,
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content size="sm">
+        <Form initial={initialForm} onSubmit={onConfirm}>
+          {({ data, change }) => {
+            const countrySelectionMap = countries.reduce(
+              (acc, country) => {
+                acc[country.code] = !!data.countries.find(
+                  selectedCountries => selectedCountries === country.code,
+                );
+
+                return acc;
+              },
+              {} as Record<string, boolean>,
             );
 
-            return acc;
-          }, {});
+            return (
+              <DashboardModal.Grid
+                __gridTemplateRows="auto auto auto auto auto 1fr auto"
+                height="100%"
+              >
+                <DashboardModal.Header>
+                  <FormattedMessage
+                    id="cvVIV/"
+                    defaultMessage="Assign Countries"
+                    description="dialog header"
+                  />
+                </DashboardModal.Header>
 
-          return (
-            <>
-              <DialogTitle disableTypography>
-                <FormattedMessage
-                  id="cvVIV/"
-                  defaultMessage="Assign Countries"
-                  description="dialog header"
-                />
-              </DialogTitle>
-              <DialogContent>
-                <Typography>
+                <Text>
                   <FormattedMessage
                     id="dWK/Ck"
                     defaultMessage="Choose countries, you want voucher to be limited to, from the list below"
                   />
-                </Typography>
-                <FormSpacer />
+                </Text>
+
                 <TextField
                   name="query"
                   value={data.query}
@@ -97,71 +96,73 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
                   })}
                   fullWidth
                 />
-                <FormSpacer />
+
                 <Hr />
-                <FormSpacer />
-                <Typography variant="subtitle1">
+
+                <Text fontSize={3}>
                   <FormattedMessage
                     id="wgA48T"
                     defaultMessage="Countries A to Z"
                     description="country selection"
                   />
-                </Typography>
-              </DialogContent>
-              <DialogContent className={scrollableDialogClasses.scrollArea}>
-                <ResponsiveTable>
-                  <TableBody>
-                    {filter(countries, data.query, {
-                      key: "country",
-                    }).map(country => {
-                      const isChecked = countrySelectionMap[country.code];
+                </Text>
 
-                      return (
-                        <TableRowLink key={country.code}>
-                          <TableCell className={classes.wideCell}>{country.country}</TableCell>
-                          <TableCell padding="checkbox" className={classes.checkboxCell}>
-                            <Checkbox
-                              checked={isChecked}
-                              onChange={() =>
-                                isChecked
-                                  ? change({
-                                      target: {
-                                        name: "countries" as keyof FormData,
-                                        value: data.countries.filter(
-                                          selectedCountries => selectedCountries !== country.code,
-                                        ),
-                                      },
-                                    } as any)
-                                  : change({
-                                      target: {
-                                        name: "countries" as keyof FormData,
-                                        value: [...data.countries, country.code],
-                                      },
-                                    } as any)
-                              }
-                            />
-                          </TableCell>
-                        </TableRowLink>
-                      );
-                    })}
-                  </TableBody>
-                </ResponsiveTable>
-              </DialogContent>
-              <DialogActions>
-                <BackButton onClick={onClose} />
-                <ConfirmButton transitionState={confirmButtonState} type="submit">
-                  <FormattedMessage
-                    id="zZCCqz"
-                    defaultMessage="Assign countries"
-                    description="button"
-                  />
-                </ConfirmButton>
-              </DialogActions>
-            </>
-          );
-        }}
-      </Form>
-    </Dialog>
+                <Box height="100%" overflowY="auto" className="scrollArea">
+                  <ResponsiveTable>
+                    <TableBody>
+                      {fuzzySearch(countries, data.query, ["country"]).map(country => {
+                        const isChecked = countrySelectionMap[country.code];
+
+                        return (
+                          <TableRowLink key={country.code}>
+                            <TableCell className={classes.wideCell}>{country.country}</TableCell>
+                            <TableCell padding="checkbox" className={classes.checkboxCell}>
+                              <Checkbox
+                                checked={!!isChecked}
+                                onChange={() =>
+                                  isChecked
+                                    ? change({
+                                        target: {
+                                          name: "countries" as keyof FormData,
+                                          value: data.countries.filter(
+                                            selectedCountries => selectedCountries !== country.code,
+                                          ),
+                                        },
+                                      } as any)
+                                    : change({
+                                        target: {
+                                          name: "countries" as keyof FormData,
+                                          value: [...data.countries, country.code],
+                                        },
+                                      } as any)
+                                }
+                              />
+                            </TableCell>
+                          </TableRowLink>
+                        );
+                      })}
+                    </TableBody>
+                  </ResponsiveTable>
+                </Box>
+
+                <DashboardModal.Actions>
+                  <BackButton onClick={onClose} />
+                  <ConfirmButton transitionState={confirmButtonState} type="submit">
+                    {labels?.confirmBtn ?? (
+                      <FormattedMessage
+                        id="zZCCqz"
+                        defaultMessage="Assign countries"
+                        description="button"
+                      />
+                    )}
+                  </ConfirmButton>
+                </DashboardModal.Actions>
+              </DashboardModal.Grid>
+            );
+          }}
+        </Form>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 

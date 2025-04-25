@@ -37,17 +37,22 @@ import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Item } from "@glideapps/glide-data-grid";
+import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { DefaultTheme } from "@saleor/macaw-ui-next";
 import { IntlShape } from "react-intl";
 
 import { getAttributeIdFromColumnValue } from "../ProductListPage/utils";
 import { categoryMetaGroups, columnsMessages } from "./messages";
 
-export const productListStaticColumnAdapter = (
-  intl: IntlShape,
-  sort: Sort<ProductListUrlSortField>,
-) =>
+export const productListStaticColumnAdapter = ({
+  intl,
+  sort,
+  onPriceClick,
+}: {
+  intl: IntlShape;
+  sort: Sort<ProductListUrlSortField>;
+  onPriceClick: ((productId: string) => boolean) | undefined;
+}) =>
   [
     {
       id: "name",
@@ -75,9 +80,15 @@ export const productListStaticColumnAdapter = (
       width: 300,
     },
     {
+      id: "created",
+      title: intl.formatMessage(columnsMessages.created),
+      width: 300,
+    },
+    {
       id: "price",
       title: intl.formatMessage(columnsMessages.price),
       width: 250,
+      action: onPriceClick,
     },
     {
       id: "productCategory",
@@ -204,9 +215,11 @@ export function createGetCellContent({
       case "name":
         return getNameCellContent(change, rowData);
       case "price":
-        return getPriceCellContent(channel);
+        return getPriceCellContent(intl, channel);
       case "date":
         return getDateCellContent(rowData);
+      case "created":
+        return getCreatedCellContent(rowData);
       case "productCategory":
         return getCategoryCellContent(theme, rowData);
       case "productCollections":
@@ -223,18 +236,24 @@ export function createGetCellContent({
   };
 }
 
+const COMMON_CELL_PROPS: Partial<GridCell> = { cursor: "pointer" };
+
 function getDateCellContent(rowData: RelayToFlat<ProductListQuery["products"]>[number]) {
-  return dateCell(rowData?.updatedAt);
+  return dateCell(rowData?.updatedAt, COMMON_CELL_PROPS);
+}
+
+function getCreatedCellContent(rowData: RelayToFlat<ProductListQuery["products"]>[number]) {
+  return dateCell(rowData?.created, COMMON_CELL_PROPS);
 }
 
 function getProductTypeCellContent(
   theme: DefaultTheme,
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
 ) {
-  const hue = stringToHue(rowData.productType?.name);
+  const hue = stringToHue(rowData?.productType?.name);
   const color = theme === "defaultDark" ? hueToPillColorDark(hue) : hueToPillColorLight(hue);
 
-  return pillCell(rowData.productType?.name, color);
+  return pillCell(rowData.productType?.name, color, COMMON_CELL_PROPS);
 }
 
 function getCategoryCellContent(
@@ -242,13 +261,13 @@ function getCategoryCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
 ) {
   if (!rowData.category) {
-    return readonlyTextCell("-");
+    return readonlyTextCell("-", true);
   }
 
   const hue = stringToHue(rowData.category?.name);
   const color = theme === "defaultDark" ? hueToPillColorDark(hue) : hueToPillColorLight(hue);
 
-  return pillCell(rowData.category?.name, color);
+  return pillCell(rowData.category?.name, color, COMMON_CELL_PROPS);
 }
 
 function getCollectionsCellContent(
@@ -256,7 +275,7 @@ function getCollectionsCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
 ) {
   if (rowData.collections === undefined || rowData.collections.length === 0) {
-    return readonlyTextCell("-");
+    return readonlyTextCell("-", true);
   }
 
   const tags = rowData.collections.map(collection => {
@@ -273,7 +292,7 @@ function getCollectionsCellContent(
     tags,
     tags.map(tag => tag.tag),
     {
-      readonly: true,
+      ...COMMON_CELL_PROPS,
       allowOverlay: false,
     },
   );
@@ -288,6 +307,7 @@ function getAvailabilityCellContent(
     return statusCell(
       getChannelAvailabilityStatus(selectedChannnel),
       intl.formatMessage(getChannelAvailabilityLabel(selectedChannnel)),
+      COMMON_CELL_PROPS,
     );
   }
 
@@ -297,9 +317,10 @@ function getAvailabilityCellContent(
       intl.formatMessage(messages.dropdownLabel, {
         channelCount: rowData?.channelListings?.length,
       }),
+      COMMON_CELL_PROPS,
     );
   } else {
-    return statusCell("error", intl.formatMessage(messages.noChannels));
+    return statusCell("error", intl.formatMessage(messages.noChannels), COMMON_CELL_PROPS);
   }
 }
 
@@ -311,10 +332,10 @@ function getDescriptionCellContent(
   const value = change ?? rowData?.[columnId] ?? "";
 
   if (!value) {
-    return readonlyTextCell("");
+    return readonlyTextCell("", true);
   }
 
-  return readonlyTextCell(getDescriptionValue(value));
+  return readonlyTextCell(getDescriptionValue(value), true);
 }
 
 function getNameCellContent(
@@ -323,19 +344,32 @@ function getNameCellContent(
 ) {
   const name = change?.name ?? rowData?.name ?? "";
 
-  return thumbnailCell(name, rowData?.thumbnail?.url ?? "", {
-    cursor: "pointer",
-  });
+  return thumbnailCell(name, rowData?.thumbnail?.url ?? "", COMMON_CELL_PROPS);
 }
 
 function getPriceCellContent(
+  intl: IntlShape,
   selectedChannnel?: RelayToFlat<ProductListQuery["products"]>[number]["channelListings"][number],
 ) {
   const from = selectedChannnel?.pricing?.priceRange?.start?.net;
   const to = selectedChannnel?.pricing?.priceRange?.stop?.net;
-  const price = from?.amount === to?.amount ? from?.amount : [from?.amount, to?.amount];
+  const priceValue = from?.amount === to?.amount ? from?.amount : [from?.amount, to?.amount];
 
-  return from ? moneyCell(price, from?.currency || "") : readonlyTextCell("–");
+  const price = from
+    ? moneyCell(priceValue, from?.currency || "", COMMON_CELL_PROPS)
+    : readonlyTextCell("-");
+
+  return selectedChannnel
+    ? price
+    : readonlyTextCell(
+        intl.formatMessage({
+          defaultMessage: "Select channel",
+          id: "jgURyO",
+          description: "product price",
+        }),
+        true,
+        "faded",
+      );
 }
 
 function getAttributeCellContent(
@@ -366,18 +400,43 @@ function getAttributeCellContent(
   return readonlyTextCell("");
 }
 
+const MAX_DESCRIPTION_LENGHT = 100;
+
 export function getDescriptionValue(value: string) {
-  const parsed = JSON.parse(value);
+  try {
+    const parsed = JSON.parse(value);
 
-  if (parsed) {
-    const descriptionFirstParagraph = parsed?.blocks.find(block => block.type === "paragraph");
+    if (parsed) {
+      const descriptionFirstParagraph = findFirstBlockWithText(parsed?.blocks);
 
-    if (descriptionFirstParagraph) {
-      return (descriptionFirstParagraph.data?.text ?? "").replace("&nbsp;", "");
+      if (descriptionFirstParagraph) {
+        const description = (descriptionFirstParagraph.data?.text ?? "")
+          // Regular expression to identify HTML tags in
+          // the input string. Replacing the identified
+          // HTML tag with a null string.
+          .replace(/(<([^>]+)>)/gi, "")
+          .replace(/&nbsp;/g, "");
+
+        if (description.length > MAX_DESCRIPTION_LENGHT) {
+          return description.slice(0, MAX_DESCRIPTION_LENGHT) + "...";
+        }
+
+        return description;
+      }
     }
+
+    return "";
+  } catch (e) {
+    return "";
+  }
+}
+
+function findFirstBlockWithText(blocks?: Array<{ id: string; data: { text: string } }>) {
+  if (!blocks) {
+    return undefined;
   }
 
-  return "";
+  return blocks.find(block => block?.data?.text?.length > 0);
 }
 
 export function getColumnMetadata(column: string) {
@@ -506,4 +565,10 @@ export const getAttributesFetchMoreProps = ({
     onNextPage,
     onPreviousPage,
   };
+};
+export const getCellAction = (
+  availableColumns: readonly AvailableColumn[] | undefined,
+  column: number,
+) => {
+  return availableColumns[column]?.action;
 };

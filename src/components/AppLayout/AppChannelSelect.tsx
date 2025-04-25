@@ -1,29 +1,9 @@
+import { Select } from "@dashboard/components/Select";
 import { ChannelFragment } from "@dashboard/graphql";
 import { ChannelProps } from "@dashboard/types";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
-import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui-next";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
-
-import SingleSelectField from "../SingleSelectField";
-
-const useStyles = makeStyles(
-  {
-    input: {
-      height: 40,
-    },
-    root: {
-      "&& fieldset": {
-        borderColor: vars.colors.border.default1,
-      },
-      width: 192,
-      padding: 10,
-    },
-  },
-  {
-    name: "AppChannelSelect",
-  },
-);
 
 export interface AppChannelSelectProps extends ChannelProps {
   channels: ChannelFragment[];
@@ -35,20 +15,17 @@ const AppChannelSelect: React.FC<AppChannelSelectProps> = ({
   onChannelSelect,
   selectedChannelId,
 }) => {
-  const classes = useStyles({});
-
   return (
-    <div className={classes.root}>
-      <SingleSelectField
-        InputProps={{
-          className: classes.input,
-        }}
-        testId="app-channel-select"
-        choices={mapNodeToChoice(channels)}
+    <Box>
+      <Select
+        __width={130}
+        data-test-id="app-channel-select"
+        size="large"
+        onChange={({ target }) => onChannelSelect(target.value)}
         value={selectedChannelId}
-        onChange={event => onChannelSelect(event.target.value)}
+        options={mapNodeToChoice(channels)}
       />
-    </div>
+    </Box>
   );
 };
 

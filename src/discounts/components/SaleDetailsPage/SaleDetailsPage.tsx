@@ -7,21 +7,23 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata, MetadataFormData } from "@dashboard/components/Metadata";
-import Savebar from "@dashboard/components/Savebar";
+import { Savebar } from "@dashboard/components/Savebar";
 import { Tab, TabContainer } from "@dashboard/components/Tab";
 import {
   createSaleChannelsChangeHandler,
   createSaleUpdateHandler,
 } from "@dashboard/discounts/handlers";
 import { itemsQuantityMessages } from "@dashboard/discounts/translations";
-import { saleListUrl } from "@dashboard/discounts/urls";
+import { saleListPath, saleListUrl } from "@dashboard/discounts/urls";
 import { SALE_UPDATE_FORM_ID } from "@dashboard/discounts/views/SaleDetails/types";
 import {
   DiscountErrorFragment,
   PermissionEnum,
   SaleDetailsFragment,
   SaleType as SaleTypeEnum,
+  SearchProductFragment,
 } from "@dashboard/graphql";
+import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
@@ -149,6 +151,10 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   const checkIfSaveIsDisabled = (data: SaleDetailsPageFormData) =>
     data.channelListings?.some(channel => validateSalePrice(data, channel)) || disabled;
 
+  const saleListBackLink = useBackLinkWithState({
+    path: saleListPath,
+  });
+
   return (
     <Form
       confirmLeave
@@ -170,7 +176,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
 
         return (
           <DetailPageLayout>
-            <TopNav href={saleListUrl()} title={sale?.name} />
+            <TopNav href={saleListBackLink} title={sale?.name} />
             <DetailPageLayout.Content>
               <SaleInfo data={data} disabled={disabled} errors={errors} onChange={change} />
               <SaleType data={data} disabled={disabled} onChange={change} />
@@ -225,7 +231,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   disabled={disabled}
                   onCategoryAssign={onCategoryAssign}
                   onCategoryUnassign={onCategoryUnassign}
-                  discount={sale}
+                  categories={mapEdgesToItems(sale?.categories) ?? []}
                   isChecked={isChecked}
                   selected={selected}
                   toggle={toggle}
@@ -237,7 +243,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   disabled={disabled}
                   onCollectionAssign={onCollectionAssign}
                   onCollectionUnassign={onCollectionUnassign}
-                  discount={sale}
+                  collections={mapEdgesToItems(sale?.collections) ?? []}
                   isChecked={isChecked}
                   selected={selected}
                   toggle={toggle}
@@ -249,7 +255,9 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   disabled={disabled}
                   onProductAssign={onProductAssign}
                   onProductUnassign={onProductUnassign}
-                  products={mapEdgesToItems(sale?.products)}
+                  products={
+                    (mapEdgesToItems(sale?.products) ?? []) as unknown as SearchProductFragment[]
+                  }
                   isChecked={isChecked}
                   selected={selected}
                   toggle={toggle}
@@ -261,7 +269,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   disabled={disabled}
                   onVariantAssign={onVariantAssign}
                   onVariantUnassign={onVariantUnassign}
-                  variants={mapEdgesToItems(sale?.variants)}
+                  discount={sale}
                   isChecked={isChecked}
                   selected={selected}
                   toggle={toggle}
@@ -286,13 +294,16 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                 openModal={openChannelsModal}
               />
             </DetailPageLayout.RightSidebar>
-            <Savebar
-              disabled={disabled}
-              onCancel={() => navigate(saleListUrl())}
-              onDelete={onRemove}
-              onSubmit={() => handleSubmit(data)}
-              state={saveButtonBarState}
-            />
+            <Savebar>
+              <Savebar.DeleteButton onClick={onRemove} />
+              <Savebar.Spacer />
+              <Savebar.CancelButton onClick={() => navigate(saleListUrl())} />
+              <Savebar.ConfirmButton
+                transitionState={saveButtonBarState}
+                onClick={() => handleSubmit(data)}
+                disabled={disabled}
+              />
+            </Savebar>
           </DetailPageLayout>
         );
       }}

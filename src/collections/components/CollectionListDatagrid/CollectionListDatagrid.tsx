@@ -10,6 +10,7 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { ListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box, useTheme } from "@saleor/macaw-ui-next";
@@ -61,6 +62,7 @@ export const CollectionListDatagrid = ({
   );
   const { handlers, visibleColumns, staticColumns, selectedColumns, recentlyAddedColumn } =
     useColumns({
+      gridName: "collection_list",
       staticColumns: collectionListStaticColumns,
       selectedColumns: settings?.columns ?? [],
       onSave: onColumnChange,
@@ -135,7 +137,7 @@ export const CollectionListDatagrid = ({
         hasRowHover={hasRowHover}
         onColumnMoved={handlers.onMove}
         onColumnResize={handlers.onResize}
-        verticalBorder={col => col > 0}
+        verticalBorder={false}
         rows={collections?.length ?? 0}
         availableColumns={visibleColumns}
         emptyText={intl.formatMessage(messages.empty)}
@@ -156,6 +158,7 @@ export const CollectionListDatagrid = ({
             onToggle={handlers.onToggle}
           />
         )}
+        navigatorOpts={{ state: getPrevLocationState(location) }}
       />
 
       <Box paddingX={6}>

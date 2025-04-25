@@ -1,15 +1,16 @@
 import { COLLECTIONS } from "@data/e2eTestData";
 import { CollectionsPage } from "@pages/collectionsPage";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
+import { test } from "utils/testWithPermission";
 
-test.use({ storageState: "./playwright/.auth/admin.json" });
+test.use({ permissionName: "admin" });
 
 let collectionsPage: CollectionsPage;
 
 test.beforeEach(({ page }) => {
   collectionsPage = new CollectionsPage(page);
 });
-test("TC: SALEOR_112 Create collection @collections @e2e", async () => {
+test("TC: SALEOR_112 Create collection #collections  #e2e", async () => {
   await collectionsPage.gotoCollectionsListView();
   await collectionsPage.waitForDOMToFullyLoad();
   await collectionsPage.clickCreateCollectionButton();
@@ -26,7 +27,7 @@ test("TC: SALEOR_112 Create collection @collections @e2e", async () => {
   await collectionsPage.clickSaveButton();
   await collectionsPage.expectSuccessBanner();
 });
-test("TC: SALEOR_113 Edit collection: assign product @collections @e2e", async () => {
+test("TC: SALEOR_113 Edit collection: assign product #collections  #e2e", async () => {
   const productToBeAssigned = "Bean Juice";
 
   await collectionsPage.gotoExistingCollectionView(COLLECTIONS.collectionToBeUpdated.id);
@@ -44,7 +45,7 @@ test("TC: SALEOR_113 Edit collection: assign product @collections @e2e", async (
     `Only 1 category should be visible in table`,
   ).toEqual(1);
 });
-test("TC: SALEOR_114 Bulk delete collections @collections @e2e", async () => {
+test("TC: SALEOR_114 Bulk delete collections #collections  #e2e", async () => {
   await collectionsPage.gotoCollectionsListView();
   await collectionsPage.waitForDOMToFullyLoad();
   await collectionsPage.checkListRowsBasedOnContainingText(
@@ -52,7 +53,7 @@ test("TC: SALEOR_114 Bulk delete collections @collections @e2e", async () => {
   );
   await collectionsPage.clickBulkDeleteButton();
   await collectionsPage.deleteCollectionDialog.clickDeleteButton();
-  await collectionsPage.waitForGrid();
+  await collectionsPage.gotoCollectionsListView();
   expect(
     await collectionsPage.findRowIndexBasedOnText(COLLECTIONS.collectionsToBeBulkDeleted.names),
     `Given collections: ${COLLECTIONS.collectionsToBeBulkDeleted.names} should be deleted from the list`,

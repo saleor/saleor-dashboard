@@ -1,13 +1,12 @@
 import { AppstoreApi } from "@dashboard/apps/appstore.types";
 import { AppInstallationFragment } from "@dashboard/graphql";
-import { Skeleton } from "@material-ui/lab";
 import { Box, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import AppListRow from "../AppListRow";
 
 interface AllAppListProps {
-  appList?: AppstoreApi.SaleorApp[];
+  appList: AppstoreApi.SaleorApp[];
   appInstallationList?: AppInstallationFragment[];
   navigateToAppInstallPage?: (manifestUrl: string) => void;
   navigateToGithubForkPage?: (githubForkUrl: string) => void;
@@ -20,10 +19,6 @@ const AllAppList: React.FC<AllAppListProps> = ({
   navigateToGithubForkPage,
 }) => {
   const { themeValues } = useTheme();
-
-  if (!appList) {
-    return <Skeleton />;
-  }
 
   return (
     <Box

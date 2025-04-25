@@ -1,7 +1,7 @@
 // @ts-strict-ignore
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import { joinDateTime, splitDateTime } from "@dashboard/misc";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Option } from "@saleor/macaw-ui-next";
 import { IntlShape } from "react-intl";
 
 import { FilterType } from "../types";
@@ -34,7 +34,7 @@ export const useCommonStyles = makeStyles(
   { name: "FilterContentBodyCommon" },
 );
 
-export function getIsFilterMultipleChoices(intl: IntlShape): SingleAutocompleteChoiceType[] {
+export function getIsFilterMultipleChoices(intl: IntlShape): Option[] {
   return [
     {
       label: intl.formatMessage({

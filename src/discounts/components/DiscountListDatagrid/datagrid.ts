@@ -42,6 +42,8 @@ export const dicountListStaticColumnsAdapter = (
     icon: getColumnSortDirectionIcon(sort, column.id),
   }));
 
+const COMMON_CELL_PROPS: Partial<GridCell> = { cursor: "pointer" };
+
 export const createGetCellContent =
   ({
     promotions,
@@ -64,9 +66,13 @@ export const createGetCellContent =
       case "name":
         return readonlyTextCell(rowData.name);
       case "startDate":
-        return rowData.startDate ? dateCell(rowData.startDate) : readonlyTextCell(PLACEHOLDER);
+        return rowData.startDate
+          ? dateCell(rowData.startDate, COMMON_CELL_PROPS)
+          : readonlyTextCell(PLACEHOLDER);
       case "endDate":
-        return rowData.endDate ? dateCell(rowData.endDate) : readonlyTextCell(PLACEHOLDER);
+        return rowData.endDate
+          ? dateCell(rowData.endDate, COMMON_CELL_PROPS)
+          : readonlyTextCell(PLACEHOLDER);
       case "type":
         return readonlyTextCell(getDiscountType(rowData, intl));
       default:

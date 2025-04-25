@@ -31,6 +31,25 @@ inputs:
   PW_RETRIES:
     description: "Playwright retries"
     required: true
+  PROJECT:
+    description: "Project name from playwright config"
+    required: false
+    default: "e2e"
+  ACCOUNTS:
+    description: "Accounts hash"
+    required: true
+  E2E_ENCODE_PASS:
+    description: "Password for encoding credentials"
+    required: true
+  BRANCH_NAME:
+    description: "Branch name"
+    required: true
+  SALEOR_CLOUD_SERVICE:
+    description: "Saleor Cloud service"
+    required: true
+  DASHBOARD_VERSION:
+    description: "Dashboard version"
+    required: false 
 
 runs:
   using: "composite"
@@ -43,6 +62,14 @@ runs:
       shell: bash
       run: npm ci
 
+    - name: Restore accounts
+      uses: ./.github/actions/restore-accounts
+      with:
+        BASE_URL: ${{ inputs.BASE_URL }}
+        API_URL: ${{ inputs.API_URL }}
+        ACCOUNTS: ${{ inputs.ACCOUNTS }}
+        E2E_ENCODE_PASS: ${{ inputs.E2E_ENCODE_PASS }}
+
     - name: Install Playwright Browsers
       shell: bash
       run: npx playwright install --with-deps
@@ -50,7 +77,10 @@ runs:
     - name: Run tests
       shell: bash
       env:
+        ## backward compatibility for older versions
         API_URI: ${{ inputs.API_URL }}
+
+        API_URL: ${{ inputs.API_URL }}
         BASE_URL: ${{ inputs.BASE_URL }}
         E2E_USER_NAME: ${{ inputs.E2E_USER_NAME }}
         E2E_USER_PASSWORD: ${{ inputs.E2E_USER_PASSWORD }}
@@ -60,12 +90,33 @@ runs:
         URL_TO_RUN: ${{ inputs.URL_TO_RUN }}
         WORKERS: ${{ inputs.PW_WORKERS }}
         RETRIES: ${{ inputs.PW_RETRIES }}
-      run: npm run qa:pw-e2e -- --shard "$SHARD_NUMBER"
+        PROJECT: ${{ inputs.PROJECT }}
+        BRANCH_NAME: ${{ inputs.BRANCH_NAME }}
+        SALEOR_CLOUD_SERVICE: ${{ inputs.SALEOR_CLOUD_SERVICE }}
+        DASHBOARD_VERSION: ${{ inputs.DASHBOARD_VERSION }}
+
+      run: |
+        PROJECTS=($PROJECT)
+        PROJECT_PARAMS=""
+        for PROJECT in "${PROJECTS[@]}"; do
+          PROJECT_PARAMS+="--project=${PROJECT} "
+        done
+        echo "reportName=all-blob-reports-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
+        echo "ctrfReport=ctrf-report-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
+        npx playwright test --grep "#e2e" $PROJECT_PARAMS --shard "$SHARD_NUMBER"
 
     - name: Upload blob report to GitHub Actions Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: all-blob-reports
+        name: ${{ env.reportName }}
         path: blob-report
+        retention-days: 1
+
+    - name: Upload ctrf report to GitHub Actions Artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: ${{ env.ctrfReport }}
+        path: ctrf/ctrf-report-*.json
         retention-days: 1

@@ -20,6 +20,7 @@ import {
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
+import { useListSelectedItems } from "@dashboard/hooks/useListSelectedItems";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
@@ -47,6 +48,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
   const notify = useNotifier();
   const productAttributeListActions = useBulkActions();
   const variantAttributeListActions = useBulkActions();
+  const assignAttributesActions = useListSelectedItems<string>();
   const intl = useIntl();
   const { loadMore, search, result } = useAvailableProductAttributeSearch({
     variables: {
@@ -129,16 +131,18 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
       ...productAttributeUpdateResult.data.productAttributeAssignmentUpdate.errors,
     ];
   };
-  const productTypeDeleteData = useProductTypeDelete({
-    singleId: id,
-    params,
-  });
   const { data, loading: dataLoading } = useProductTypeDetailsQuery({
     displayLoader: true,
     variables: { id },
   });
   const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
   const productType = data?.productType;
+
+  const productTypeDeleteData = useProductTypeDelete({
+    singleId: id,
+    params,
+    typeBaseData: productType ? [productType] : undefined,
+  });
   const closeModal = () => navigate(productTypeUrl(id), { replace: true });
   const handleAttributeAssignSuccess = (data: AssignProductAttributeMutation) => {
     if (data.productAttributeAssign.errors.length === 0) {
@@ -212,23 +216,31 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
         },
       },
     });
-  const handleAssignAttribute = () =>
-    assignAttribute.mutate({
+  const handleAssignAttribute = async () => {
+    await assignAttribute.mutate({
       id,
-      operations: params.ids.map(id => ({
+      operations: assignAttributesActions.selectedItems.map(id => ({
         id,
         type: ProductAttributeType[params.type],
       })),
     });
+
+    assignAttributesActions.clearSelectedItems();
+  };
   const handleAttributeUnassign = () =>
     unassignAttribute.mutate({
       id,
       ids: [params.id],
     });
-  const handleBulkAttributeUnassign = () =>
+  const handleBulkProductAttributeUnassign = () =>
     unassignAttribute.mutate({
       id,
-      ids: params.ids,
+      ids: productAttributeListActions.listElements,
+    });
+  const handleBulkVariantAttributeUnassign = () =>
+    unassignAttribute.mutate({
+      id,
+      ids: variantAttributeListActions.listElements,
     });
   const loading =
     updateProductTypeOpts.loading || updateProductAttributesOpts.loading || dataLoading;
@@ -301,8 +313,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
               onClick={() =>
                 navigate(
                   productTypeUrl(id, {
-                    action: "unassign-attributes",
-                    ids: productAttributeListActions.listElements,
+                    action: "unassign-product-attributes",
                   }),
                 )
               }
@@ -325,8 +336,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
               onClick={() =>
                 navigate(
                   productTypeUrl(id, {
-                    action: "unassign-attributes",
-                    ids: variantAttributeListActions.listElements,
+                    action: "unassign-variant-attributes",
                   }),
                 )
               }
@@ -353,7 +363,10 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
                 [],
               )}
               loading={result.loading}
-              onClose={closeModal}
+              onClose={() => {
+                closeModal();
+                assignAttributesActions.clearSelectedItems();
+              }}
               onSubmit={handleAssignAttribute}
               onFetch={search}
               onFetchMore={loadMore}
@@ -365,19 +378,8 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
               open={
                 params.action === "assign-attribute" && params.type === ProductAttributeType[key]
               }
-              selected={maybe(() => params.ids, [])}
-              onToggle={attributeId => {
-                const ids = maybe(() => params.ids, []);
-
-                navigate(
-                  productTypeUrl(id, {
-                    ...params,
-                    ids: ids.includes(attributeId)
-                      ? params.ids.filter(selectedId => selectedId !== attributeId)
-                      : [...ids, attributeId],
-                  }),
-                );
-              }}
+              selected={assignAttributesActions.selectedItems}
+              onToggle={assignAttributesActions.toggleSelectItem}
               key={key}
             />
           ))}
@@ -400,11 +402,21 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
           defaultMessage: "Unassign Attribute from Product Type",
           description: "dialog header",
         })}
-        attributeQuantity={maybe(() => params.ids.length)}
+        attributeQuantity={
+          params.action === "unassign-product-attributes"
+            ? productAttributeListActions.listElements.length
+            : variantAttributeListActions.listElements.length
+        }
         confirmButtonState={unassignAttribute.opts.status}
         onClose={closeModal}
-        onConfirm={handleBulkAttributeUnassign}
-        open={params.action === "unassign-attributes"}
+        onConfirm={
+          params.action === "unassign-product-attributes"
+            ? handleBulkProductAttributeUnassign
+            : handleBulkVariantAttributeUnassign
+        }
+        open={["unassign-product-attributes", "unassign-variant-attributes"].includes(
+          params.action,
+        )}
         itemTypeName={getStringOrPlaceholder(data?.productType.name)}
       />
       <AttributeUnassignDialog

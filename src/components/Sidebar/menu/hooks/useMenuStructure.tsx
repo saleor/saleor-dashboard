@@ -1,3 +1,5 @@
+import { SidebarAppAlert } from "@dashboard/apps/components/AppAlerts/SidebarAppAlert";
+import { useAppsAlert } from "@dashboard/apps/components/AppAlerts/useAppsAlert";
 import { extensionMountPoints, useExtensions } from "@dashboard/apps/hooks/useExtensions";
 import { AppPaths } from "@dashboard/apps/urls";
 import { useUser } from "@dashboard/auth";
@@ -7,6 +9,8 @@ import { configurationMenuUrl } from "@dashboard/configuration";
 import { getConfigMenuItemsPermissions } from "@dashboard/configuration/utils";
 import { customerListUrl } from "@dashboard/customers/urls";
 import { saleListUrl, voucherListUrl } from "@dashboard/discounts/urls";
+import { ExtensionsPaths } from "@dashboard/extensions/urls";
+import { useFlag } from "@dashboard/featureFlags";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import { PermissionEnum } from "@dashboard/graphql";
 import { ConfigurationIcon } from "@dashboard/icons/Configuration";
@@ -32,9 +36,14 @@ import { SidebarMenuItem } from "../types";
 import { mapToExtensionsItems } from "../utils";
 
 export function useMenuStructure() {
+  const { enabled: hasAppAlertsFeatureFlag } = useFlag("app_alerts");
+  const { handleAppsListItemClick, hasNewFailedAttempts } = useAppsAlert(hasAppAlertsFeatureFlag);
+
   const extensions = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);
   const intl = useIntl();
   const { user } = useUser();
+  const { enabled: showExtensions } = useFlag("extensions");
+
   const appExtensionsHeaderItem: SidebarMenuItem = {
     id: "extensions",
     label: intl.formatMessage(sectionNames.appExtensions),
@@ -48,7 +57,34 @@ export function useMenuStructure() {
     id: "apps",
     url: AppPaths.appListPath,
     type: "item",
+    endAdornment: hasAppAlertsFeatureFlag ? (
+      <SidebarAppAlert hasNewFailedAttempts={hasNewFailedAttempts} />
+    ) : null,
+    onClick: () => handleAppsListItemClick(new Date().toISOString()),
   });
+
+  const getExtensionsSection = (): SidebarMenuItem => ({
+    icon: renderIcon(<MarketplaceIcon />),
+    label: intl.formatMessage(sectionNames.extensions),
+    permissions: [],
+    id: "installed-extensions",
+    url: ExtensionsPaths.installedExtensions,
+    type: "itemGroup",
+    endAdornment: hasAppAlertsFeatureFlag ? (
+      <SidebarAppAlert hasNewFailedAttempts={hasNewFailedAttempts} />
+    ) : null,
+    onClick: () => handleAppsListItemClick(new Date().toISOString()),
+    children: [
+      {
+        label: intl.formatMessage(sectionNames.exploreExtensions),
+        id: "explore-extensions",
+        url: ExtensionsPaths.exploreExtensions,
+        permissions: [],
+        type: "item",
+      },
+    ],
+  });
+
   const menuItems: SidebarMenuItem[] = [
     {
       icon: renderIcon(<HomeIcon />),
@@ -166,7 +202,7 @@ export function useMenuStructure() {
       url: languageListUrl,
       type: !isEmpty(extensions.NAVIGATION_TRANSLATIONS) ? "itemGroup" : "item",
     },
-    getAppSection(),
+    showExtensions ? getExtensionsSection() : getAppSection(),
     {
       icon: renderIcon(<ConfigurationIcon />),
       label: intl.formatMessage(sectionNames.configuration),

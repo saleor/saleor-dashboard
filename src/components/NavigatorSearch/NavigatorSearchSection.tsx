@@ -1,8 +1,8 @@
-import { MenuItem, Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import { GetItemPropsOptions } from "downshift";
 import React from "react";
 
+import { NavigatorThumbnail } from "./NavigatorThumbnail";
 import { QuickSearchAction } from "./types";
 
 interface NavigatorSearchSectionProps {
@@ -13,51 +13,15 @@ interface NavigatorSearchSectionProps {
   offset: number;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    item: {
-      "&&&&": {
-        color: theme.palette.text.secondary,
-        fontWeight: 400,
-      },
-      display: "flex",
-      margin: theme.spacing(1, 0),
-    },
-    itemLabel: {
-      display: "inline-block",
-    },
-    label: {
-      paddingLeft: theme.spacing(2),
-      textTransform: "uppercase",
-    },
-    root: {
-      "&:last-child": {
-        marginBottom: 0,
-      },
-      margin: theme.spacing(2, 0),
-    },
-    spacer: {
-      flex: 1,
-    },
-    symbol: {
-      display: "inline-block",
-      fontWeight: 600,
-      width: theme.spacing(4),
-    },
-  }),
-  {
-    name: "NavigatorSearchSection",
-  },
-);
 const NavigatorSearchSection: React.FC<NavigatorSearchSectionProps> = props => {
   const { getItemProps, highlightedIndex, label, items, offset } = props;
-  const classes = useStyles(props);
 
   return (
-    <div className={classes.root}>
-      <Typography className={classes.label} variant="caption" color="textSecondary">
+    <Box marginY={2} overflowY="hidden" __maxHeight="inherit">
+      <Text paddingLeft={4} textTransform="uppercase" fontWeight="medium" fontSize={4}>
         {label}
-      </Typography>
+      </Text>
+
       {items.map((item, itemIndex) => {
         const index = offset + itemIndex;
         const itemProps = getItemProps({
@@ -65,24 +29,60 @@ const NavigatorSearchSection: React.FC<NavigatorSearchSectionProps> = props => {
           item,
         });
 
+        // 'thumbnail' is 'null' when the item is from Saleor API, 'undefined' if it's nav item
+        const shouldRenderThumbnail = typeof item.thumbnail !== "undefined";
+
         return (
-          <MenuItem
+          <Box
             {...itemProps}
-            className={classes.item}
+            tabIndex={index}
+            role="button"
+            variant="secondary"
+            width="100%"
+            paddingX={4}
+            paddingY={2}
+            borderRadius={4}
+            backgroundColor={{
+              hover: "accent1Hovered",
+              active: "accent1Pressed",
+            }}
             selected={highlightedIndex === index}
-            key={[item.label, item.type].join(":")}
+            key={[typeof item.label === "string" ? item.label : item.searchValue, item.type].join(
+              ":",
+            )}
+            cursor="pointer"
+            display="flex"
+            flexDirection="row"
           >
-            <span className={classes.itemLabel}>
-              {item.symbol && <span className={classes.symbol}>{item.symbol}</span>}
-              <span>{item.label}</span>
-              {item.caption && <Typography variant="caption">{item.caption}</Typography>}
-            </span>
-            <span className={classes.spacer} />
-            {item.extraInfo}
-          </MenuItem>
+            {shouldRenderThumbnail && (
+              <NavigatorThumbnail src={item.thumbnail?.url} alt={item.thumbnail?.alt} />
+            )}
+
+            <Box as="span" display="inline-block">
+              <Box as="span" display="inline-block">
+                {item.symbol && (
+                  <Box as="span" display="inline-block" fontWeight="bold" width={6}>
+                    {item.symbol}
+                  </Box>
+                )}
+
+                <Text size={3}>{item.label}</Text>
+
+                {item.caption && (
+                  <Text size={2} marginLeft={2} color="default2">
+                    {item.caption}
+                  </Text>
+                )}
+              </Box>
+
+              <Box __flex={1} />
+
+              {item.extraInfo}
+            </Box>
+          </Box>
         );
       })}
-    </div>
+    </Box>
   );
 };
 

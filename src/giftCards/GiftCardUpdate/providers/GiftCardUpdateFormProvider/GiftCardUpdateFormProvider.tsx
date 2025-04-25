@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { MetadataFormData } from "@dashboard/components/Metadata";
 import { giftCardUpdateFormMessages } from "@dashboard/giftCards/GiftCardsList/messages";
+import { useGiftCardPermissions } from "@dashboard/giftCards/hooks/useGiftCardPermissions";
 import {
   GiftCardErrorFragment,
   GiftCardUpdateMutation,
@@ -61,6 +62,7 @@ const getGiftCardTagsAddRemoveData = (initTags: string[], changedTags: string[])
 const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({ children }) => {
   const notify = useNotifier();
   const intl = useIntl();
+  const { canSeeCreatedBy } = useGiftCardPermissions();
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const { loading: loadingGiftCard, giftCard } = useGiftCardDetails();
@@ -72,7 +74,7 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
     const { tags, expiryDate, privateMetadata, metadata } = giftCard;
 
     return {
-      tags: tags.map(({ name }) => name),
+      tags: tags.map(({ name }) => ({ label: name, value: name })),
       expiryDate,
       privateMetadata: privateMetadata?.map(mapMetadataItemToInput),
       metadata: metadata?.map(mapMetadataItemToInput),
@@ -102,9 +104,10 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
           expiryDate,
           ...getGiftCardTagsAddRemoveData(
             giftCard.tags.map(el => el.name),
-            tags,
+            tags.map(el => el.value),
           ),
         },
+        showCreatedBy: canSeeCreatedBy,
       },
     });
 

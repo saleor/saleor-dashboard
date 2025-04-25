@@ -87,6 +87,7 @@ export const createGetCellContent =
       case "min-spent":
         return hasChannelsLoaded
           ? moneyCell(channel?.minSpent?.amount ?? null, channel?.minSpent?.currency ?? "", {
+              cursor: "pointer",
               readonly: true,
             })
           : readonlyTextCell(PLACEHOLDER);
@@ -124,6 +125,7 @@ function getVoucherValueCell(
 
   if (voucher?.discountValueType === "FIXED") {
     return moneyCell(channel?.discountValue, channel?.currency ?? "", {
+      cursor: "pointer",
       readonly: true,
     });
   }

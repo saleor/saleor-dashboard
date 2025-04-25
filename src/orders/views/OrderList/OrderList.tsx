@@ -2,6 +2,7 @@
 import { useUser } from "@dashboard/auth";
 import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
@@ -21,7 +22,8 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import React from "react";
+import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
+import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import OrderListPage from "../../components/OrderListPage/OrderListPage";
@@ -32,7 +34,7 @@ import {
   orderSettingsPath,
   orderUrl,
 } from "../../urls";
-import { getFilterOpts, getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
+import { getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
 import { DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 
 interface OrderListProps {
@@ -43,6 +45,14 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.ORDER_LIST);
+  const { valueProvider } = useConditionalFilterContext();
+
+  const { markOnboardingStepAsCompleted } = useOnboarding();
+
+  useEffect(() => {
+    markOnboardingStepAsCompleted("explore-orders");
+  }, []);
+
   const {
     hasPresetsChanged,
     onPresetChange,
@@ -57,7 +67,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     params,
     getUrl: orderListUrl,
     storageUtils,
-    reset: () => "",
+    reset: () => undefined,
   });
 
   usePaginationReset(orderListUrl, params, settings.rowNumber);
@@ -85,7 +95,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   });
   const noChannel = !channel && typeof channel !== "undefined";
   const channelOpts = availableChannels ? mapNodeToChoice(channels) : null;
-  const [changeFilters, resetFilters, handleSearchChange] = useFilterHandlers({
+  const [_, resetFilters, handleSearchChange] = useFilterHandlers({
     createUrl: orderListUrl,
     getFilterQueryParam,
     params,
@@ -98,15 +108,17 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     OrderListUrlQueryParams
   >(navigate, orderListUrl, params);
   const paginationState = createPaginationState(settings.rowNumber, params);
+  const filterVariables = getFilterVariables(params, valueProvider.value);
+
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
-      filter: getFilterVariables(params),
+      filter: filterVariables,
       sort: getSortQueryVariables(params),
     }),
-    [params, settings.rowNumber],
+    [params, settings.rowNumber, valueProvider.value],
   );
-  const { data, loading } = useOrderListQuery({
+  const { data } = useOrderListQuery({
     displayLoader: true,
     variables: queryVariables,
   });
@@ -122,8 +134,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
       <OrderListPage
         settings={settings}
         currentTab={selectedPreset}
-        disabled={loading}
-        filterOpts={getFilterOpts(params, channelOpts)}
+        disabled={!data}
         limits={limitOpts.data?.shop.limits}
         orders={mapEdgesToItems(data?.orders)}
         sort={getSortParams(params)}
@@ -131,7 +142,6 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         onUpdateListSettings={updateListSettings}
         onSort={handleSort}
         onSearchChange={handleSearchChange}
-        onFilterChange={changeFilters}
         onTabSave={() => openModal("save-search")}
         onTabDelete={(tabIndex: number) => {
           setPresetIdToDelete(tabIndex);

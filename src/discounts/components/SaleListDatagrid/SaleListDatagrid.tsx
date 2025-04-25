@@ -9,6 +9,7 @@ import { TablePaginationWithContext } from "@dashboard/components/TablePaginatio
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
 import { SaleListUrlSortField, saleUrl } from "@dashboard/discounts/urls";
 import { SaleFragment } from "@dashboard/graphql";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useLocale from "@dashboard/hooks/useLocale";
 import { ChannelProps, ListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
@@ -57,6 +58,7 @@ export const SaleListDatagrid = ({
   );
   const { handlers, visibleColumns, staticColumns, selectedColumns, recentlyAddedColumn } =
     useColumns({
+      gridName: "sale_list",
       staticColumns: collectionListStaticColumns,
       selectedColumns: settings?.columns ?? [],
       onSave: onColumnChange,
@@ -119,7 +121,7 @@ export const SaleListDatagrid = ({
         hasRowHover={hasRowHover}
         onColumnMoved={handlers.onMove}
         onColumnResize={handlers.onResize}
-        verticalBorder={col => col > 0}
+        verticalBorder={false}
         rows={sales?.length ?? 0}
         availableColumns={visibleColumns}
         emptyText={intl.formatMessage(messages.empty)}
@@ -140,6 +142,7 @@ export const SaleListDatagrid = ({
             onToggle={handlers.onToggle}
           />
         )}
+        navigatorOpts={{ state: getPrevLocationState(location) }}
       />
 
       <Box paddingX={6}>

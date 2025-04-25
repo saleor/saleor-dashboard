@@ -3,11 +3,10 @@ import { AppPermissionsDialogPermissionPicker } from "@dashboard/apps/components
 import { useAppPermissionsDialogState } from "@dashboard/apps/components/AppPermissionsDialog/AppPermissionsDialogState";
 import { AppPermissionsDialogMessages } from "@dashboard/apps/components/AppPermissionsDialog/messages";
 import { useGetAvailableAppPermissions } from "@dashboard/apps/hooks/useGetAvailableAppPermissions";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { PermissionEnum, useAppQuery, useAppUpdatePermissionsMutation } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
-import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
-import { Skeleton } from "@material-ui/lab";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
@@ -110,9 +109,9 @@ export const AppPermissionsDialog = ({
   };
 
   return (
-    <Dialog open={true} onClose={onClose} fullWidth maxWidth={"sm"}>
-      <DialogTitle disableTypography>{formatMessage(messages.heading)}</DialogTitle>
-      <DialogContent>
+    <DashboardModal open={true} onChange={onClose}>
+      <DashboardModal.Content size="sm">
+        <DashboardModal.Header>{formatMessage(messages.heading)}</DashboardModal.Header>
         <Box display={"grid"} gridAutoFlow={"row"}>
           <Text as={"p"}>{formatMessage(messages.info)}</Text>
           <Box
@@ -130,7 +129,7 @@ export const AppPermissionsDialog = ({
           </Box>
           {renderDialogContent()}
         </Box>
-      </DialogContent>
-    </Dialog>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };

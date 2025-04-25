@@ -1,8 +1,9 @@
 // @ts-strict-ignore
+import { DashboardCard } from "@dashboard/components/Card";
 import ChannelsAvailabilityMenuContent from "@dashboard/components/ChannelsAvailabilityMenuContent";
 import { PluginBaseFragment } from "@dashboard/graphql";
 import { isPluginGlobal } from "@dashboard/plugins/views/utils";
-import { Card, Popper } from "@material-ui/core";
+import { Popper } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
@@ -35,7 +36,7 @@ const PluginAvailabilityStatusPopup: React.FC<PluginAvailabilityStatusPopupProps
 
   return (
     <Popper placement="left" open={isOpen} className={classes.container} anchorEl={anchor.current}>
-      <Card elevation={8}>
+      <DashboardCard boxShadow="defaultModal">
         {isGlobalPlugin ? (
           <GlobalConfigPluginPopupBody plugin={plugin} />
         ) : (
@@ -43,7 +44,7 @@ const PluginAvailabilityStatusPopup: React.FC<PluginAvailabilityStatusPopupProps
             pills={mapPluginsToPills(plugin.channelConfigurations)}
           />
         )}
-      </Card>
+      </DashboardCard>
     </Popper>
   );
 };
