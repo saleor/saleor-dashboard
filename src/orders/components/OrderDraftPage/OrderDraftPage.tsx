@@ -84,6 +84,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
     users,
     usersLoading,
     errors,
+    disabled,
   } = props;
   const navigate = useNavigator();
   const intl = useIntl();
@@ -169,7 +170,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
         <Savebar.ConfirmButton
           transitionState={saveButtonBarState}
           onClick={onDraftFinalize}
-          disabled={loading}
+          disabled={disabled}
         >
           {intl.formatMessage({
             id: "4Z14xW",
