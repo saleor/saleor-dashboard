@@ -38,6 +38,15 @@ function renderBackgroundTasks() {
 
 // FIXME: #3021 Fix background task provider tests
 describe.skip("Background task provider", () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.clearAllTimers();
+    jest.useRealTimers();
+  });
+
   it("can queue a task", done => {
     const handle = jest.fn<Promise<TaskStatus>, []>(
       () => new Promise(resolve => resolve(TaskStatus.SUCCESS)),
@@ -56,12 +65,14 @@ describe.skip("Background task provider", () => {
     expect(onCompleted).toHaveBeenCalledTimes(0);
     expect(onError).toHaveBeenCalledTimes(0);
     jest.runOnlyPendingTimers();
-    setImmediate(() => {
-      expect(handle).toHaveBeenCalledTimes(1);
-      expect(onCompleted).toHaveBeenCalledTimes(1);
-      expect(onError).toHaveBeenCalledTimes(0);
-      done();
-    });
+
+    // Run any immediate callbacks
+    jest.runAllImmediates();
+
+    expect(handle).toHaveBeenCalledTimes(1);
+    expect(onCompleted).toHaveBeenCalledTimes(1);
+    expect(onError).toHaveBeenCalledTimes(0);
+    done();
   });
   it("can handle task error", done => {
     const handle = jest.fn<Promise<TaskStatus>, []>(
@@ -80,12 +91,14 @@ describe.skip("Background task provider", () => {
       onError,
     });
     jest.runOnlyPendingTimers();
-    setImmediate(() => {
-      expect(handle).toHaveBeenCalledTimes(1);
-      expect(onCompleted).toHaveBeenCalledTimes(0);
-      expect(onError).toHaveBeenCalledTimes(1);
-      done();
-    });
+
+    // Run any immediate callbacks
+    jest.runAllImmediates();
+
+    expect(handle).toHaveBeenCalledTimes(1);
+    expect(onCompleted).toHaveBeenCalledTimes(0);
+    expect(onError).toHaveBeenCalledTimes(1);
+    done();
   });
   it("can cancel task", done => {
     const onCompleted = jest.fn();
@@ -99,10 +112,12 @@ describe.skip("Background task provider", () => {
     jest.advanceTimersByTime(backgroundTasksRefreshTime * 0.9);
     result.current.cancel(taskId);
     jest.runOnlyPendingTimers();
-    setImmediate(() => {
-      expect(onCompleted).toHaveBeenCalledTimes(0);
-      done();
-    });
+
+    // Run any immediate callbacks
+    jest.runAllImmediates();
+
+    expect(onCompleted).toHaveBeenCalledTimes(0);
+    done();
   });
   it("can queue multiple tasks", done => {
     let cycle = 0;
@@ -124,30 +139,38 @@ describe.skip("Background task provider", () => {
     // Set time to backgroundTasksRefreshTime
     cycle += 1;
     jest.advanceTimersByTime(backgroundTasksRefreshTime + 100);
-    setImmediate(() => {
-      expect(shortTask.handle).toHaveBeenCalledTimes(1);
-      expect(longTask.handle).toHaveBeenCalledTimes(1);
-      expect(shortTask.onCompleted).toHaveBeenCalledTimes(0);
-      expect(longTask.onCompleted).toHaveBeenCalledTimes(0);
-      // Set time to backgroundTasksRefreshTime * 2
-      cycle += 1;
-      jest.advanceTimersByTime(backgroundTasksRefreshTime);
-      setImmediate(() => {
-        expect(shortTask.handle).toHaveBeenCalledTimes(2);
-        expect(longTask.handle).toHaveBeenCalledTimes(2);
-        expect(shortTask.onCompleted).toHaveBeenCalledTimes(1);
-        expect(longTask.onCompleted).toHaveBeenCalledTimes(0);
-        // Set time to backgroundTasksRefreshTime * 3
-        cycle += 1;
-        jest.advanceTimersByTime(backgroundTasksRefreshTime);
-        setImmediate(() => {
-          expect(shortTask.handle).toHaveBeenCalledTimes(2);
-          expect(longTask.handle).toHaveBeenCalledTimes(3);
-          expect(shortTask.onCompleted).toHaveBeenCalledTimes(1);
-          expect(longTask.onCompleted).toHaveBeenCalledTimes(1);
-          done();
-        });
-      });
-    });
+
+    // Run any immediate callbacks
+    jest.runAllImmediates();
+
+    expect(shortTask.handle).toHaveBeenCalledTimes(1);
+    expect(longTask.handle).toHaveBeenCalledTimes(1);
+    expect(shortTask.onCompleted).toHaveBeenCalledTimes(0);
+    expect(longTask.onCompleted).toHaveBeenCalledTimes(0);
+
+    // Set time to backgroundTasksRefreshTime * 2
+    cycle += 1;
+    jest.advanceTimersByTime(backgroundTasksRefreshTime);
+
+    // Run any immediate callbacks
+    jest.runAllImmediates();
+
+    expect(shortTask.handle).toHaveBeenCalledTimes(2);
+    expect(longTask.handle).toHaveBeenCalledTimes(2);
+    expect(shortTask.onCompleted).toHaveBeenCalledTimes(1);
+    expect(longTask.onCompleted).toHaveBeenCalledTimes(0);
+
+    // Set time to backgroundTasksRefreshTime * 3
+    cycle += 1;
+    jest.advanceTimersByTime(backgroundTasksRefreshTime);
+
+    // Run any immediate callbacks
+    jest.runAllImmediates();
+
+    expect(shortTask.handle).toHaveBeenCalledTimes(2);
+    expect(longTask.handle).toHaveBeenCalledTimes(3);
+    expect(shortTask.onCompleted).toHaveBeenCalledTimes(1);
+    expect(longTask.onCompleted).toHaveBeenCalledTimes(1);
+    done();
   });
 });
