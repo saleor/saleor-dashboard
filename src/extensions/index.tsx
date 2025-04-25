@@ -19,7 +19,7 @@ import { useIntl } from "react-intl";
 import { RouteComponentProps, Switch } from "react-router-dom";
 
 import { useCustomAppToken } from "./hooks/useCustomAppToken";
-import { AddCustomExtension } from "./views/AddCusttomExtension";
+import { AddCustomExtension } from "./views/AddCustomExtension";
 
 const ExploreExtensionsView = () => {
   return <ExploreExtensions />;
