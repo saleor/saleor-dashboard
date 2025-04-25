@@ -15,10 +15,12 @@ import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import { z } from "zod";
 
 import { formLabels, headerTitles, infoMessages, messages } from "../../messages";
+import { PermissionCheckbox } from "./components/PermissionCheckbox";
 import { useHandleCreateAppSubmit } from "./hooks/useHandleCreateAppSubmit";
 import { useFullAccessToggle } from "./hooks/useIsFullAccessSelected";
 import { usePermissions } from "./hooks/usePermissions";
 import { useUserAppCreationPermissions } from "./hooks/useUserAppCreationPermissions";
+import { useUserPermissionSet } from "./hooks/useUserPermissionMap";
 import { getNoPermissionsObject } from "./utils";
 
 const createFormSchema = (intl: IntlShape) => {
@@ -74,6 +76,8 @@ export function AddCustomExtension({ setToken }: { setToken: (token: string) => 
   });
 
   const permissionsExceeded = useUserAppCreationPermissions();
+  const userPermissionSet = useUserPermissionSet();
+
 
   return (
     <DetailPageLayout gridTemplateColumns={1}>
@@ -152,20 +156,13 @@ export function AddCustomExtension({ setToken }: { setToken: (token: string) => 
               __maxWidth="1200px"
             >
               {permissions.map(permission => (
-                <Box key={permission.code}>
-                  <HookFormCheckbox
-                    name={`permissions.${permission.code}`}
-                    control={control}
-                    alignItems="flex-start"
-                  >
-                    <Box display="flex" flexDirection="column" __marginTop="-4px">
-                      <Text>{permission.name}</Text>
-                      <Text size={2} color="default2">
-                        {permission.code}
-                      </Text>
-                    </Box>
-                  </HookFormCheckbox>
-                </Box>
+                <PermissionCheckbox
+                  key={permission.code}
+                  permissionCode={permission.code}
+                  permissionName={permission.name}
+                  control={control}
+                  userPermissionSet={userPermissionSet}
+                />
               ))}
             </Box>
           </Box>

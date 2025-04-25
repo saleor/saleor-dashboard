@@ -295,7 +295,13 @@ export const messages = defineMessages({
   },
   missingAppNameError: {
     defaultMessage: "App name is required",
-    id: "qs+2fF",
+    description: "custom extension page create, error message",
+    id: "nLCEQJ",
+  },
+  permissionDisabledTooltip: {
+    defaultMessage: "Permission cannot be chosen, because you don't have it yourself",
+    description: "custom extension page create, tooltip",
+    id: "a2o5uc",
   },
 });
 

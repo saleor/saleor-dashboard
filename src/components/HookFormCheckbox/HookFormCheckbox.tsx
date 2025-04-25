@@ -1,5 +1,6 @@
+import { fixedForwardRef, useCombinedRefs } from "@dashboard/utils/ref";
 import { Checkbox, CheckboxProps } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { ForwardedRef } from "react";
 import { Control, FieldPath, FieldValues, RegisterOptions, useController } from "react-hook-form";
 
 export type HookFormCheckboxProps<
@@ -14,35 +15,34 @@ export type HookFormCheckboxProps<
   >;
 };
 
-export function HookFormCheckbox<
+function HookFormCheckboxInner<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
->({
-  name,
-  control,
-  rules,
-  disabled,
-  label,
-  ...rest
-}: HookFormCheckboxProps<TFieldValues, TName>): React.ReactElement {
+>(
+  { name, control, rules, disabled, label, ...rest }: HookFormCheckboxProps<TFieldValues, TName>,
+  ref: ForwardedRef<HTMLInputElement>,
+): React.ReactElement {
   const { field, fieldState } = useController({
     name,
     control,
     rules,
   });
 
+  const combinedRef = useCombinedRefs(ref, field.ref);
+
   return (
     <Checkbox
       checked={field.value}
       onCheckedChange={field.onChange}
       name={field.name}
-      ref={field.ref}
       onBlur={field.onBlur}
       disabled={disabled}
       label={label}
       error={!!fieldState.error}
-      // helperText={fieldState.error?.message}
+      ref={combinedRef}
       {...rest}
     />
   );
 }
+
+export const HookFormCheckbox = fixedForwardRef(HookFormCheckboxInner);
