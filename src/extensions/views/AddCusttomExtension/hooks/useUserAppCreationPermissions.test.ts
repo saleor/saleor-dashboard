@@ -5,7 +5,6 @@ import { renderHook } from "@testing-library/react-hooks";
 
 import { useUserAppCreationPermissions } from "./useUserAppCreationPermissions";
 
-// Mock the hooks
 jest.mock("@dashboard/auth");
 jest.mock("@dashboard/hooks/useShop");
 

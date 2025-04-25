@@ -22,6 +22,10 @@ jest.mock("react-intl", () => ({
   defineMessages: jest.fn(messages => messages),
 }));
 
+const mockUseAppCreateMutation = useAppCreateMutation as jest.MockedFunction<
+  typeof useAppCreateMutation
+>;
+
 describe("useHandleCreateAppSubmit", () => {
   const mockSetToken = jest.fn();
   const mockCreateApp = jest.fn();
@@ -32,7 +36,7 @@ describe("useHandleCreateAppSubmit", () => {
 
   it("should call createApp mutation with correct input when submitting form", async () => {
     // Arrange
-    (useAppCreateMutation as jest.Mock).mockReturnValue([mockCreateApp, {}]);
+    mockUseAppCreateMutation.mockReturnValue([mockCreateApp, {}]);
 
     const { result } = renderHook(() => useHandleCreateAppSubmit({ setToken: mockSetToken }));
     const formData = {
@@ -66,7 +70,7 @@ describe("useHandleCreateAppSubmit", () => {
     const onCompletedCallback = jest.fn();
 
     // Copy function implementation to trigger it manually
-    (useAppCreateMutation as jest.Mock).mockImplementation((options: any) => {
+    mockUseAppCreateMutation.mockImplementation((options: any) => {
       onCompletedCallback.mockImplementation(options.onCompleted);
 
       return [mockCreateApp, {}];

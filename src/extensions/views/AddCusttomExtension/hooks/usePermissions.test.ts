@@ -6,6 +6,8 @@ import { usePermissions } from "./usePermissions";
 
 jest.mock("@dashboard/hooks/useShop");
 
+const mockUseShop = useShop as jest.MockedFunction<typeof useShop>;
+
 describe("usePermissions", () => {
   it("should sort permissions from shop context by name", () => {
     // Arrange
@@ -15,7 +17,7 @@ describe("usePermissions", () => {
       { __typename: "Permission", name: "Manage Settings", code: PermissionEnum.MANAGE_SETTINGS },
     ];
 
-    (useShop as jest.Mock).mockReturnValue({
+    mockUseShop.mockReturnValue({
       permissions: mockPermissions,
     });
 
@@ -32,7 +34,7 @@ describe("usePermissions", () => {
 
   it("should handle empty permissions", () => {
     // Arrange
-    (useShop as jest.Mock).mockReturnValue({
+    mockUseShop.mockReturnValue({
       permissions: [],
     });
 
@@ -45,7 +47,7 @@ describe("usePermissions", () => {
 
   it("should handle undefined permissions", () => {
     // Arrange
-    (useShop as jest.Mock).mockReturnValue({
+    mockUseShop.mockReturnValue({
       permissions: undefined,
     });
 
