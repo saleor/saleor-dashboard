@@ -243,4 +243,8 @@ export const messages = defineMessages({
     description: "custom extension page create, callout message",
     id: "ssI7EL",
   },
+  missingAppNameError: {
+    defaultMessage: "App name is required",
+    id: "qs+2fF",
+  },
 });

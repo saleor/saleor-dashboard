@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import { z } from "zod";
 
 import { formLabels, headerTitles, infoMessages, messages } from "../../messages";
@@ -20,12 +20,14 @@ import { usePermissions } from "./hooks/usePermissions";
 import { useUserAppCreationPermissions } from "./hooks/useUserAppCreationPermissions";
 import { getNoPermissionsObject } from "./utils";
 
-const formSchema = z.object({
-  appName: z.string().min(1, { message: "App name is required" }),
-  permissions: z.record(z.boolean()),
-});
+const createFormSchema = (intl: IntlShape) => {
+  return z.object({
+    appName: z.string().min(1, { message: intl.formatMessage(messages.missingAppNameError) }),
+    permissions: z.record(z.boolean()),
+  });
+};
 
-export type CustomExtensionFormData = z.infer<typeof formSchema>;
+export type CustomExtensionFormData = z.infer<ReturnType<typeof createFormSchema>>;
 
 export function AddCustomExtension({ setToken }: { setToken: (token: string) => void }) {
   const intl = useIntl();
@@ -37,7 +39,7 @@ export function AddCustomExtension({ setToken }: { setToken: (token: string) => 
       // Initialize permissions record - all permissions are disabled by default
       permissions: getNoPermissionsObject(permissions),
     },
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(createFormSchema(intl)),
     // Wait until permissions are fetched
     disabled: permissions.length === 0,
     mode: "onChange",
@@ -48,13 +50,13 @@ export function AddCustomExtension({ setToken }: { setToken: (token: string) => 
     handleSubmit,
     setValue,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = methods;
 
   const submitCreateApp = useHandleCreateAppSubmit({ setToken });
 
-  // Permissions are fetched asynchronously, set them as default form values
-  // once they are loaded
+  // Permissions are fetched asynchronously
+  // set them as default form values once they are loaded
   useEffect(() => {
     if (permissions.length > 0) {
       reset({
@@ -111,8 +113,6 @@ export function AddCustomExtension({ setToken }: { setToken: (token: string) => 
               control={control}
               name="appName"
               placeholder={intl.formatMessage(formLabels.appNamePlaceholder)}
-              error={!!errors.appName}
-              helperText={errors.appName?.message as string}
             />
           </Box>
         </Box>
