@@ -1753,6 +1753,9 @@
   "9FGTOt": {
     "string": "Allow access to orders of all channels"
   },
+  "9Fiuq2": {
+    "string": "Learn more about {customExtensionDocsLink}"
+  },
   "9IrVVZ": {
     "context": "attribute can be searched in storefront",
     "string": "Filterable in storefront"
@@ -2173,6 +2176,10 @@
   },
   "Bl6896": {
     "string": "Refund amount"
+  },
+  "BnB/7Y": {
+    "context": "callout, title",
+    "string": "Info"
   },
   "BooQvo": {
     "context": "navigator placeholder",
@@ -2937,6 +2944,9 @@
     "context": "automatically complete checkouts checkbox label",
     "string": "Automatically complete checkouts when fully paid"
   },
+  "GIuS7b": {
+    "string": "creating custom extensions"
+  },
   "GJAX0z": {
     "context": "order history message",
     "string": "Order was placed"
@@ -3241,6 +3251,9 @@
   "HwHSeY": {
     "string": "App disabled"
   },
+  "HwlLvq": {
+    "string": "Expand or restrict app permissions to access certain part of Saleor system."
+  },
   "I+1KzL": {
     "context": "tab name",
     "string": "All attributes"
@@ -3480,6 +3493,10 @@
   "JKbpH9": {
     "context": "expiry date checkbox label",
     "string": "Gift card expires"
+  },
+  "JKoHqo": {
+    "context": "extension form app name field placeholder",
+    "string": "App Name"
   },
   "JMBsrr": {
     "context": "table header available stock label",
@@ -4378,6 +4395,10 @@
     "context": "modal header, read-only product variant metadata",
     "string": "Product variant metadata"
   },
+  "PHT8z1": {
+    "context": "extension form permissions section header",
+    "string": "Permissions"
+  },
   "PHUcrU": {
     "context": "date when order was placed",
     "string": "Date"
@@ -5206,6 +5227,10 @@
     "context": "filters error messages unknown error",
     "string": "Unknown error occurred"
   },
+  "UUVUyy": {
+    "context": "callout, title",
+    "string": "Warning"
+  },
   "UVDfTs": {
     "context": "discount type shipping",
     "string": "Shipping"
@@ -5428,6 +5453,9 @@
   "VsGcdP": {
     "context": "section header",
     "string": "App permissions"
+  },
+  "VtR2/y": {
+    "string": "Grant this app full access to the store"
   },
   "Vtjlpw": {
     "string": "Transaction is not unique"
@@ -6148,6 +6176,10 @@
     "context": "draft created from replace products list title",
     "string": "Products replaced"
   },
+  "a2o5uc": {
+    "context": "custom extension page create, tooltip",
+    "string": "Permission cannot be chosen, because you don't have it yourself"
+  },
   "a55zOn": {
     "context": "section header",
     "string": "Data privacy"
@@ -6640,6 +6672,9 @@
     "context": "volume units types",
     "string": "Volume"
   },
+  "cyR7Kh": {
+    "string": "Back"
+  },
   "d+qgix": {
     "string": "Next step"
   },
@@ -6896,6 +6931,9 @@
   "fExm0/": {
     "context": "gift card history message",
     "string": "Gift card was activated by {activatedBy}"
+  },
+  "fHHHVV": {
+    "string": "Add Custom Extension manually"
   },
   "fITtdb": {
     "context": "helper text",
@@ -7684,6 +7722,10 @@
   "kErneR": {
     "string": "This customer doesn’t have any adresses added to his address book. You can add address using the button below."
   },
+  "kExPDx": {
+    "context": "extension form app name field label",
+    "string": "App Name"
+  },
   "kFQvXv": {
     "string": "You have reached your warehouse limit, you will be no longer able to add warehouses to your store. If you would like to up your limit, contact your administration staff about raising your limits."
   },
@@ -8199,6 +8241,10 @@
   "nKwgxY": {
     "context": "select label",
     "string": "Channel name"
+  },
+  "nLCEQJ": {
+    "context": "custom extension page create, error message",
+    "string": "App name is required"
   },
   "nLML8Y": {
     "string": "Default Shipping Address"
@@ -8996,6 +9042,10 @@
   "snUby7": {
     "context": "header",
     "string": "Unnamed Webhook Details"
+  },
+  "ssI7EL": {
+    "context": "custom extension page create, callout message",
+    "string": "Unavailable permissions are those exceeding your own access rights. Apps cannot have more permissions than their creator. Please contact an administrator to either create this app for you or grant your account the necessary permissions"
   },
   "stjHjY": {
     "context": "error message",

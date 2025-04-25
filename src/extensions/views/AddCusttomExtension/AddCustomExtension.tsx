@@ -1,6 +1,5 @@
 import { TopNav } from "@dashboard/components/AppLayout";
 import { Callout, calloutTitleMessages } from "@dashboard/components/Callout";
-import { HookFormCheckbox } from "@dashboard/components/HookFormCheckbox";
 import { HookFormInput } from "@dashboard/components/HookFormInput";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
