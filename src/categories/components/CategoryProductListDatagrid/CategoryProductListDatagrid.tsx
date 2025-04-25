@@ -5,11 +5,11 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { PaginationDatagridWrapper } from "@dashboard/components/TablePagination/PaginationDatagridWrapper";
 import { CategoryDetailsQuery } from "@dashboard/graphql";
 import { productUrl } from "@dashboard/products/urls";
 import { PageListProps, RelayToFlat } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
-import { Box } from "@saleor/macaw-ui-next";
 import React, { ReactNode, useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -70,13 +70,13 @@ export const CategoryProductListDatagrid = ({
         onRowSelectionChange={onSelectProductsIds}
       />
 
-      <Box padding={4} paddingLeft={4} paddingTop={4}>
+      <PaginationDatagridWrapper>
         <TablePaginationWithContext
           settings={settings}
           disabled={disabled}
           onUpdateListSettings={onUpdateListSettings}
         />
-      </Box>
+      </PaginationDatagridWrapper>
     </DatagridChangeStateContext.Provider>
   );
 };

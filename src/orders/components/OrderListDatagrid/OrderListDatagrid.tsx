@@ -8,6 +8,7 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { PaginationDatagridWrapper } from "@dashboard/components/TablePagination/PaginationDatagridWrapper";
 import { OrderListQuery } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
@@ -133,13 +134,13 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
           navigatorOpts={{ state: getPrevLocationState(location) }}
         />
 
-        <Box padding={6} paddingTop={4}>
+        <PaginationDatagridWrapper paddingLeft={6}>
           <TablePaginationWithContext
             settings={settings}
             disabled={disabled}
             onUpdateListSettings={onUpdateListSettings}
           />
-        </Box>
+        </PaginationDatagridWrapper>
       </DatagridChangeStateContext.Provider>
     </Box>
   );

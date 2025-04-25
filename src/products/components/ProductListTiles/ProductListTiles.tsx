@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { PaginationDatagridWrapper } from "@dashboard/components/TablePagination/PaginationDatagridWrapper";
 import { ProductListColumns } from "@dashboard/config";
 import { ProductListQuery } from "@dashboard/graphql";
 import { ListProps, RelayToFlat } from "@dashboard/types";
@@ -66,7 +67,7 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = ({
   return (
     <>
       {renderContent()}
-      <Box padding={6} paddingTop={4}>
+      <PaginationDatagridWrapper paddingLeft={6}>
         <TablePaginationWithContext
           settings={settings}
           disabled={disabled}
@@ -79,7 +80,7 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = ({
           }}
           onUpdateListSettings={onUpdateListSettings}
         />
-      </Box>
+      </PaginationDatagridWrapper>
     </>
   );
 };

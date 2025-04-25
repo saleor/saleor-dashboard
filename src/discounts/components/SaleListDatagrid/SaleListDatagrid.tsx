@@ -6,6 +6,7 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { PaginationDatagridWrapper } from "@dashboard/components/TablePagination/PaginationDatagridWrapper";
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
 import { SaleListUrlSortField, saleUrl } from "@dashboard/discounts/urls";
 import { SaleFragment } from "@dashboard/graphql";
@@ -13,7 +14,6 @@ import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useLocale from "@dashboard/hooks/useLocale";
 import { ChannelProps, ListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
-import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -145,13 +145,13 @@ export const SaleListDatagrid = ({
         navigatorOpts={{ state: getPrevLocationState(location) }}
       />
 
-      <Box padding={4} paddingLeft={4} paddingTop={4}>
+      <PaginationDatagridWrapper>
         <TablePaginationWithContext
           settings={settings}
           disabled={disabled}
           onUpdateListSettings={onUpdateListSettings}
         />
-      </Box>
+      </PaginationDatagridWrapper>
     </DatagridChangeStateContext.Provider>
   );
 };

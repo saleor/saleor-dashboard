@@ -6,13 +6,14 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { PaginationDatagridWrapper } from "@dashboard/components/TablePagination/PaginationDatagridWrapper";
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
 import { giftCardListUrl, giftCardUrl } from "@dashboard/giftCards/urls";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import usePaginator, { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { Item } from "@glideapps/glide-data-grid";
-import { Box, useTheme } from "@saleor/macaw-ui-next";
+import { useTheme } from "@saleor/macaw-ui-next";
 import isEqual from "lodash/isEqual";
 import React, { useCallback, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -176,12 +177,12 @@ export const GiftCardsListDatagrid = () => {
           navigatorOpts={{ state: getPrevLocationState(location) }}
         />
 
-        <Box padding={6} paddingLeft={4} paddingTop={4}>
+        <PaginationDatagridWrapper>
           <TablePaginationWithContext
             settings={settings}
             onUpdateListSettings={updateListSettings}
           />
-        </Box>
+        </PaginationDatagridWrapper>
       </DatagridChangeStateContext.Provider>
     </PaginatorContext.Provider>
   );

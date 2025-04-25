@@ -5,8 +5,9 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { PaginationDatagridWrapper } from "@dashboard/components/TablePagination/PaginationDatagridWrapper";
 import { UseListSettings } from "@dashboard/hooks/useListSettings";
-import { Box, useTheme } from "@saleor/macaw-ui-next";
+import { useTheme } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -65,13 +66,13 @@ export const VoucherCodesDatagrid = ({
         menuItems={() => []}
       />
 
-      <Box padding={4} paddingLeft={4} paddingTop={4}>
+      <PaginationDatagridWrapper>
         <TablePaginationWithContext
           settings={settings}
           disabled={disabled}
           onUpdateListSettings={onSettingsChange}
         />
-      </Box>
+      </PaginationDatagridWrapper>
     </DatagridChangeStateContext.Provider>
   );
 };

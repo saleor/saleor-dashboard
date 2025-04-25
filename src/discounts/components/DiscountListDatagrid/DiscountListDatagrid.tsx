@@ -7,12 +7,12 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { PaginationDatagridWrapper } from "@dashboard/components/TablePagination/PaginationDatagridWrapper";
 import { DiscountListUrlSortField, discountUrl } from "@dashboard/discounts/discountsUrls";
 import { PromotionFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { ListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
-import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -125,13 +125,13 @@ export const DiscountListDatagrid = ({
         navigatorOpts={{ state: getPrevLocationState(location) }}
       />
 
-      <Box padding={6} paddingTop={0}>
+      <PaginationDatagridWrapper paddingLeft={6} paddingTop={0}>
         <TablePaginationWithContext
           settings={settings}
           disabled={disabled}
           onUpdateListSettings={onUpdateListSettings}
         />
-      </Box>
+      </PaginationDatagridWrapper>
     </DatagridChangeStateContext.Provider>
   );
 };
