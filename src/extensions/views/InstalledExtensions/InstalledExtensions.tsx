@@ -88,6 +88,7 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
           installedExtensions={[...pendingInstallations, ...filteredInstalledExtensions]}
           loading={pendingInstallationsLoading || installedAppsLoading}
           clearSearch={() => handleQueryChange("")}
+          searchQuery={query}
         />
 
         <DeleteFailedInstallationDialog

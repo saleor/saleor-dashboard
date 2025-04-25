@@ -1,15 +1,18 @@
 import { AppPaths } from "@dashboard/apps/urls";
-import { AppListView } from "@dashboard/apps/views";
+import SectionRoute from "@dashboard/auth/components/SectionRoute";
 import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { CustomAppDetailsUrlQueryParams } from "@dashboard/custom-apps/urls";
 import CustomAppDetailsView from "@dashboard/custom-apps/views/CustomAppDetails";
-import { ExtensionsPaths } from "@dashboard/extensions/urls";
+import { ExtensionInstallQueryParams, ExtensionsPaths } from "@dashboard/extensions/urls";
 import { ExploreExtensions } from "@dashboard/extensions/views/ExploreExtensions";
+import { InstallCustomExtension } from "@dashboard/extensions/views/InstallCustomExtension";
 import { InstalledExtensions } from "@dashboard/extensions/views/InstalledExtensions";
 import { useFlag } from "@dashboard/featureFlags";
+import { PermissionEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
+import NotFound from "@dashboard/NotFound";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -25,13 +28,15 @@ const ExploreExtensionsView = () => {
 const InstalledExtensionsView = () => {
   const qs = parseQs(location.search.substr(1));
   const params = qs;
-  const { enabled: isExtensionsDevEnabled } = useFlag("extensions_dev");
 
-  if (isExtensionsDevEnabled) {
-    return <InstalledExtensions params={params} />;
-  }
+  return <InstalledExtensions params={params} />;
+};
 
-  return <AppListView params={params} showAvailableApps={false} />;
+const InstallCustomExtensionView = () => {
+  const qs = parseQs(location.search.substr(1));
+  const params: ExtensionInstallQueryParams = qs;
+
+  return <InstallCustomExtension params={params} />;
 };
 
 const CustomExtensionDetails = ({
@@ -81,6 +86,12 @@ export const ExtensionsSection = () => {
           component={InstalledExtensionsView}
         />
         <Route exact path={ExtensionsPaths.addCustomExtension} component={AddCustomExtension} />
+        <SectionRoute
+          exact
+          permissions={[PermissionEnum.MANAGE_APPS]}
+          path={ExtensionsPaths.installCustomExtension}
+          component={InstallCustomExtensionView}
+        />
 
         {/* Custom apps routes */}
         <Route
@@ -94,6 +105,7 @@ export const ExtensionsSection = () => {
             />
           )}
         />
+        <Route component={NotFound} />
       </Switch>
     </>
   );

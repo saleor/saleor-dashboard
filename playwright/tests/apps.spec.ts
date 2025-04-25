@@ -39,12 +39,14 @@ test("TC: SALEOR_119 User should be able to install and configure app from manif
   await installationPage.installAppButton.click();
 
   await appsPage.expectSuccessBanner({ timeout: INSTALLATION_PENDING_TIMEOUT });
-  await expect(appsPage.installedAppRow.first()).toBeVisible();
+  await expect(appsPage.installedExtensionsRow.first()).toBeVisible();
   await expect(appsPage.installationPendingLabel).not.toBeVisible();
 
-  await expect(appsPage.appKlaviyo).toContainText("Klaviyo");
-  await expect(appsPage.installedAppRow.filter({ hasText: "Klaviyo" }).first()).toBeVisible();
-  await appsPage.appKlaviyo.click();
+  await expect(appsPage.appKlaviyoViewDetailsButton).toContainText("View details");
+  await expect(
+    appsPage.installedExtensionsRow.filter({ hasText: "Klaviyo" }).first(),
+  ).toBeVisible();
+  await appsPage.appKlaviyoViewDetailsButton.click();
 
   const iframeLocator = page.frameLocator("iframe");
 
@@ -66,6 +68,6 @@ test("TC: SALEOR_120 User should be able to delete thirdparty app #e2e", async (
   await appPage.deleteAppDialog.clickDeleteButton();
   await appsPage.expectSuccessBanner();
   await appsPage.waitForDOMToFullyLoad();
-  await expect(appsPage.installedAppRow.first()).toBeVisible();
+  await expect(appsPage.installedExtensionsRow.first()).toBeVisible();
   await expect(appsPage.appQA).not.toBeVisible();
 });
