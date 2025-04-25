@@ -138,11 +138,3 @@ jobs:
         with:
           VAULT_URL: ${{ secrets.VAULT_URL }}
           VAULT_JWT: ${{ secrets.VAULT_JWT }}
-
-        run: |
-          node workflows/postTestsResults.js \
-          --run_id "$run_id" \
-          --slack_webhook_url "$slack_webhook_url" \
-          --environment "$environment" \
-          --url_to_action "$url_to_action" \
-          --ref_name "$ref_name"
