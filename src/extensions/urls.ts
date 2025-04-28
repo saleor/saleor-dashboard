@@ -9,7 +9,10 @@ export const ExtensionsPaths = {
   exploreExtensions: urlJoin(extensionsSection, "explore"),
   addCustomExtension: urlJoin(extensionsSection, "custom", "add"),
   resolveEditCustomExtension: (id: string) => urlJoin(extensionsSection, "custom", id),
-  // TODO: Add custom app (extension) webhook edition urls
+  resolveAddCustomExtensionWebhook: (id: string) =>
+    urlJoin(extensionsSection, "custom", id, "webhook"),
+  resolveEditCustomExtensionWebhook: (appId: string, webhookId: string) =>
+    urlJoin(extensionsSection, "custom", appId, "webhook", webhookId),
   installCustomExtension: urlJoin(extensionsSection, "install"),
 };
 
@@ -31,10 +34,14 @@ export const ExtensionsUrls = {
     ExtensionsPaths.installedExtensions + "?" + stringifyQs(params),
   resolveExploreExtensionsUrl: (params?: ExtensionsListUrlQueryParams) =>
     ExtensionsPaths.exploreExtensions + "?" + stringifyQs(params),
-  addCustomExtensionUrl: (params?: ExtensionsListUrlQueryParams) =>
+  installCustomExtensionUrl: (params?: ExtensionInstallQueryParams) =>
     ExtensionsPaths.addCustomExtension + "?" + stringifyQs(params),
   editCustomExtensionUrl: (id: string, params?: ExtensionsListUrlQueryParams) =>
     ExtensionsPaths.resolveEditCustomExtension(id) + "?" + stringifyQs(params),
-  installCustomExtensionUrl: (params?: ExtensionInstallQueryParams) =>
+  resolveAddCustomExtensionWebhookUrl: (id: string, params?: ExtensionsListUrlQueryParams) =>
+    ExtensionsPaths.resolveAddCustomExtensionWebhook(id) + "?" + stringifyQs(params),
+  resolveEditCustomExtensionWebhookUrl: (id: string, webhookId: string) =>
+    ExtensionsPaths.resolveEditCustomExtensionWebhook(id, webhookId),
+  resolveInstallCustomExtensionUrl: (params?: ExtensionInstallQueryParams) =>
     ExtensionsPaths.installCustomExtension + "?" + stringifyQs(params),
 };

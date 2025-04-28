@@ -7,8 +7,6 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
-import WebhooksList from "@dashboard/custom-apps/components/WebhooksList";
-import { CustomAppUrls } from "@dashboard/custom-apps/urls";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import {
   AppErrorFragment,
@@ -28,6 +26,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import CustomExtensionDefaultToken from "../CustomExtensionDefaultToken";
 import CustomExtensionInformation from "../CustomExtensionInformation";
 import CustomExtensionTokens from "../CustomExtensionTokens";
+import { WebhooksList } from "../WebhooksList";
 import { useStyles } from "./styles";
 
 export interface CustomExtensionDetailsPageFormData {
@@ -163,7 +162,9 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
           </DetailPageLayout.RightSidebar>
           <Savebar>
             <Savebar.Spacer />
-            <Savebar.CancelButton onClick={() => navigate(CustomAppUrls.resolveAppListUrl())} />
+            <Savebar.CancelButton
+              onClick={() => navigate(ExtensionsUrls.resolveInstalledExtensionsUrl())}
+            />
             <Savebar.ConfirmButton
               transitionState={saveButtonBarState}
               onClick={submit}

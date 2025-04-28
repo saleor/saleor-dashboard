@@ -29,7 +29,11 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
-import { CustomExtensionDetailsUrlDialog, CustomExtensionDetailsUrlQueryParams } from "../../urls";
+import {
+  CustomExtensionDetailsUrlDialog,
+  CustomExtensionDetailsUrlQueryParams,
+  ExtensionsUrls,
+} from "../../urls";
 import CustomExtensionDetailsPage, {
   CustomExtensionDetailsPageFormData,
 } from "./components/CustomExtensionDetailsPage";
@@ -113,7 +117,7 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
       });
-      navigate(CustomAppUrls.resolveAppUrl(id));
+      navigate(ExtensionsUrls.editCustomExtensionUrl(id));
       closeModal();
       refetch();
     }
@@ -199,7 +203,7 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
   const currentToken = data?.app?.tokens?.find(token => token.id === params.id);
 
   if (customApp === null) {
-    return <NotFoundPage backHref={CustomAppUrls.resolveAppListUrl()} />;
+    return <NotFoundPage backHref={ExtensionsUrls.resolveInstalledExtensionsUrl()} />;
   }
 
   return (
@@ -219,7 +223,7 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
             id,
           })
         }
-        webhookCreateHref={CustomAppUrls.resolveWebhookAddUrl(id)}
+        webhookCreateHref={ExtensionsUrls.resolveAddCustomExtensionWebhookUrl(id)}
         onWebhookRemove={id =>
           openModal("remove-webhook", {
             id,
