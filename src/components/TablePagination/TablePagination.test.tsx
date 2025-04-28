@@ -8,7 +8,7 @@ jest.mock("react-intl", () => ({
   useIntl: () => ({
     formatMessage: () => "Rows per page",
   }),
-  defineMessages: x => x,
+  defineMessages: (x: any) => x,
 }));
 
 const mockNavigate = jest.fn();
