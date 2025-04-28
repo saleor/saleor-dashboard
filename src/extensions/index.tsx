@@ -19,7 +19,9 @@ import { RouteComponentProps, Switch } from "react-router-dom";
 
 import { useCustomAppToken } from "./hooks/useCustomAppToken";
 import { AddCustomExtension } from "./views/AddCustomExtension";
+import { AddCustomExtensionWebhook } from "./views/AddCustomExtensionWebhook";
 import { EditCustomExtension } from "./views/EditCustomExtension";
+import { EditCustomExtensionWebhook } from "./views/EditCustomExtensionWebhook";
 
 const ExploreExtensionsView = () => {
   return <ExploreExtensions />;
@@ -59,6 +61,28 @@ const EditCustomExtensionView = ({
       onTokenClose={onTokenClose}
     />
   );
+};
+
+const AddCustomExtensionWebhookView = ({ match }: RouteComponentProps<{ appId?: string }>) => {
+  const appId = match.params.appId;
+
+  if (!appId) {
+    throw new Error("No App ID provided");
+  }
+
+  return <AddCustomExtensionWebhook appId={decodeURIComponent(appId)} />;
+};
+
+const EditCustomExtensionWebhookView: React.FC<RouteComponentProps<{ id?: string }>> = ({
+  match,
+}) => {
+  const id = match.params.id;
+
+  if (!id) {
+    throw new Error("No ID provided");
+  }
+
+  return <EditCustomExtensionWebhook id={decodeURIComponent(id)} />;
 };
 
 export const ExtensionsSection = () => {
@@ -107,6 +131,16 @@ export const ExtensionsSection = () => {
               onTokenClose={() => setCustomAppToken(null)}
             />
           )}
+        />
+        <Route
+          exact
+          path={ExtensionsPaths.resolveAddCustomExtensionWebhook(":appId")}
+          component={AddCustomExtensionWebhookView}
+        />
+        <Route
+          exact
+          path={ExtensionsPaths.resolveEditCustomExtensionWebhook(":appId", ":id")}
+          component={EditCustomExtensionWebhookView}
         />
         <Route component={NotFound} />
       </Switch>
