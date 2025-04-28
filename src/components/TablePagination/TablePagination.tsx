@@ -1,3 +1,4 @@
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { TableCell } from "@material-ui/core";
 import {
@@ -8,7 +9,6 @@ import {
 import { Box, Button, ChevronLeftIcon, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
-import useRouter from "use-react-router";
 
 import { ListSettings } from "../../types";
 
@@ -49,13 +49,13 @@ export const TablePagination: React.FC<PaginationProps> = ({
   onPreviousPage,
 }) => {
   const intl = useIntl();
-  const router = useRouter();
+  const navigate = useNavigator();
   const Wrapper = component || TableCell;
 
   const getNavigationButtons = () => {
     const handlers = {
-      onPreviousPage: prevHref ? () => router.history.push(prevHref) : onPreviousPage,
-      onNextPage: nextHref ? () => router.history.push(nextHref) : onNextPage,
+      onPreviousPage: prevHref ? () => navigate(prevHref) : onPreviousPage,
+      onNextPage: nextHref ? () => navigate(nextHref) : onNextPage,
     };
 
     return (
