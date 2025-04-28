@@ -1,9 +1,13 @@
 // @ts-strict-ignore
 import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { ExtensionsPaths, ExtensionsUrls } from "@dashboard/extensions/urls";
+import { useFlag } from "@dashboard/featureFlags";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
+import NotFound from "@dashboard/NotFound";
 import { parse as parseQs } from "qs";
-import React from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 import { RouteComponentProps, Switch } from "react-router-dom";
 
@@ -78,7 +82,15 @@ const CustomAppWebhookDetails: React.FC<RouteComponentProps<MatchParamsWebhookDe
 };
 const Component = () => {
   const intl = useIntl();
-  const [token, setToken] = React.useState<string>(null);
+  const [token, setToken] = useState<string>(null);
+  const navigate = useNavigator();
+  const { enabled: isExtensionsEnabled } = useFlag("extensions");
+
+  if (isExtensionsEnabled) {
+    navigate(ExtensionsUrls.resolveInstalledExtensionsUrl(), { replace: true });
+
+    return <>Redirecting...</>;
+  }
 
   return (
     <>
