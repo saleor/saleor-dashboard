@@ -5,7 +5,6 @@ import { appMessages } from "@dashboard/apps/messages";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { getApiUrl } from "@dashboard/config";
-import { CustomAppUrls } from "@dashboard/custom-apps/urls";
 import { getAppInstallErrorMessage } from "@dashboard/extensions/utils";
 import {
   AppTokenCreateMutation,
@@ -64,7 +63,7 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
   const [openModal, closeModal] = createDialogActionHandlers<
     CustomExtensionDetailsUrlDialog,
     CustomExtensionDetailsUrlQueryParams
-  >(navigate, params => CustomAppUrls.resolveAppUrl(id, params), params);
+  >(navigate, params => ExtensionsUrls.editCustomExtensionUrl(id, params), params);
   const { data, loading, refetch } = useAppQuery({
     displayLoader: true,
     variables: { id, hasManagedAppsPermission: true },

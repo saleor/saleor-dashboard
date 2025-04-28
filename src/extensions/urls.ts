@@ -36,7 +36,9 @@ export const ExtensionsUrls = {
     ExtensionsPaths.exploreExtensions + "?" + stringifyQs(params),
   installCustomExtensionUrl: (params?: ExtensionInstallQueryParams) =>
     ExtensionsPaths.addCustomExtension + "?" + stringifyQs(params),
-  editCustomExtensionUrl: (id: string, params?: ExtensionsListUrlQueryParams) =>
+  addCustomExtensionUrl: (params?: ExtensionsListUrlQueryParams) =>
+    ExtensionsPaths.addCustomExtension + "?" + stringifyQs(params),
+  editCustomExtensionUrl: (id: string, params?: CustomExtensionDetailsUrlQueryParams) =>
     ExtensionsPaths.resolveEditCustomExtension(id) + "?" + stringifyQs(params),
   resolveAddCustomExtensionWebhookUrl: (id: string, params?: ExtensionsListUrlQueryParams) =>
     ExtensionsPaths.resolveAddCustomExtensionWebhook(id) + "?" + stringifyQs(params),
