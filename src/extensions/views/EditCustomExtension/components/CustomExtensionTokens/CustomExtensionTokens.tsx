@@ -20,7 +20,7 @@ export interface CustomAppTokensProps {
 }
 
 const numberOfColumns = 3;
-const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
+const CustomExtensionTokens: React.FC<CustomAppTokensProps> = props => {
   const { tokens, onCreate, onDelete } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -100,5 +100,5 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
   );
 };
 
-CustomAppTokens.displayName = "CustomAppTokens";
-export default CustomAppTokens;
+CustomExtensionTokens.displayName = "CustomAppTokens";
+export default CustomExtensionTokens;

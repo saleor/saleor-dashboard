@@ -24,18 +24,18 @@ import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import activateIcon from "../../../../assets/images/activate-icon.svg";
-import CustomAppDefaultToken from "../CustomAppDefaultToken";
-import CustomAppInformation from "../CustomAppInformation";
-import CustomAppTokens from "../CustomAppTokens";
+import CustomExtensionInformation from "../CustomExtensionInformation";
+import CustomExtensionTokens from "../CustomExtensionTokens";
+import CustomExtensionDefaultToken from "../CustomExtensionDefaultToken";
 import { useStyles } from "./styles";
 
-export interface CustomAppDetailsPageFormData {
+export interface CustomExtensionDetailsPageFormData {
   hasFullAccess: boolean;
   isActive: boolean;
   name: string;
   permissions: PermissionEnum[];
 }
-export interface CustomAppDetailsPageProps {
+export interface CustomExtensionDetailsPageProps {
   apiUrl: string;
   disabled: boolean;
   errors: AppErrorFragment[];
@@ -47,14 +47,14 @@ export interface CustomAppDetailsPageProps {
   onTokenDelete: (id: string) => void;
   onTokenClose: () => void;
   onTokenCreate: () => void;
-  onSubmit: (data: CustomAppDetailsPageFormData) => SubmitPromise<AppErrorFragment[]>;
+  onSubmit: (data: CustomExtensionDetailsPageFormData) => SubmitPromise<AppErrorFragment[]>;
   webhookCreateHref: string;
   onWebhookRemove: (id: string) => void;
   onAppActivateOpen: () => void;
   onAppDeactivateOpen: () => void;
 }
 
-const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
+const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = props => {
   const {
     apiUrl,
     disabled,
@@ -79,7 +79,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
   const webhooks = app?.webhooks;
   const formErrors = getFormErrors(["permissions"], errors || []);
   const permissionsError = getAppErrorMessage(formErrors.permissions, intl);
-  const initialForm: CustomAppDetailsPageFormData = {
+  const initialForm: CustomExtensionDetailsPageFormData = {
     hasFullAccess:
       permissions?.filter(
         perm => app?.permissions?.filter(userPerm => userPerm.code === perm.code).length === 0,
@@ -111,7 +111,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
           <DetailPageLayout.Content>
             {token && (
               <>
-                <CustomAppDefaultToken
+                <CustomExtensionDefaultToken
                   apiUrl={apiUrl}
                   token={token}
                   onApiUrlClick={onApiUrlClick}
@@ -120,14 +120,14 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
                 <CardSpacer />
               </>
             )}
-            <CustomAppInformation
+            <CustomExtensionInformation
               data={data}
               disabled={disabled}
               errors={errors}
               onChange={change}
             />
             <CardSpacer />
-            <CustomAppTokens
+            <CustomExtensionTokens
               tokens={app?.tokens}
               onCreate={onTokenCreate}
               onDelete={onTokenDelete}
@@ -175,5 +175,5 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
   );
 };
 
-CustomAppDetailsPage.displayName = "CustomAppDetailsPage";
-export default CustomAppDetailsPage;
+CustomExtensionDetailsPage.displayName = "CustomAppDetailsPage";
+export default CustomExtensionDetailsPage;

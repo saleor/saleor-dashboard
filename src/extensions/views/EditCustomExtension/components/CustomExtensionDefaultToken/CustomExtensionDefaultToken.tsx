@@ -8,14 +8,14 @@ import { FormattedMessage } from "react-intl";
 
 import { Mono } from "../TokenCreateDialog/Mono";
 
-export interface CustomAppDefaultTokenProps {
+export interface CustomExtensionDefaultTokenProps {
   apiUrl: string;
   token: string;
   onApiUrlClick: () => void;
   onTokenClose: () => void;
 }
 
-const CustomAppDefaultToken: React.FC<CustomAppDefaultTokenProps> = props => {
+const CustomExtensionDefaultToken: React.FC<CustomExtensionDefaultTokenProps> = props => {
   const { apiUrl, token, onApiUrlClick, onTokenClose } = props;
   const [copied, copy] = useClipboard();
 
@@ -70,5 +70,5 @@ const CustomAppDefaultToken: React.FC<CustomAppDefaultTokenProps> = props => {
   );
 };
 
-CustomAppDefaultToken.displayName = "CustomAppDefaultToken";
-export default CustomAppDefaultToken;
+CustomExtensionDefaultToken.displayName = "CustomAppDefaultToken";
+export default CustomExtensionDefaultToken;

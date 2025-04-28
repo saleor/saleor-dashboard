@@ -5,9 +5,6 @@ import { appMessages } from "@dashboard/apps/messages";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { getApiUrl } from "@dashboard/config";
-import TokenCreateDialog from "@dashboard/custom-apps/components/TokenCreateDialog";
-import TokenDeleteDialog from "@dashboard/custom-apps/components/TokenDeleteDialog";
-import WebhookDeleteDialog from "@dashboard/custom-apps/components/WebhookDeleteDialog";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
 import {
   AppTokenCreateMutation,
@@ -33,9 +30,12 @@ import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { CustomExtensionDetailsUrlDialog, CustomExtensionDetailsUrlQueryParams } from "../../urls";
-import CustomAppDetailsPage, {
-  CustomAppDetailsPageFormData,
-} from "./components/CustomAppDetailsPage";
+import CustomExtensionDetailsPage, {
+  CustomExtensionDetailsPageFormData,
+} from "./components/CustomExtensionDetailsPage";
+import TokenCreateDialog from "./components/TokenCreateDialog";
+import TokenDeleteDialog from "./components/TokenDeleteDialog";
+import WebhookDeleteDialog from "./components/WebhookDeleteDialog";
 
 interface OrderListProps {
   id: string;
@@ -161,7 +161,7 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
   const [deleteToken, deleteTokenOpts] = useAppTokenDeleteMutation({
     onCompleted: onTokenDelete,
   });
-  const handleSubmit = async (data: CustomAppDetailsPageFormData) =>
+  const handleSubmit = async (data: CustomExtensionDetailsPageFormData) =>
     extractMutationErrors(
       updateApp({
         variables: {
@@ -205,7 +205,7 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
   return (
     <>
       <WindowTitle title={getStringOrPlaceholder(customApp?.name)} />
-      <CustomAppDetailsPage
+      <CustomExtensionDetailsPage
         apiUrl={getApiUrl()}
         disabled={loading}
         errors={updateAppOpts.data?.appUpdate?.errors || []}

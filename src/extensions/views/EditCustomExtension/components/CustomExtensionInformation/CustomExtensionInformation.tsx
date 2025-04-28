@@ -18,7 +18,7 @@ const useStyles = makeStyles(
   { name: "AccountPermissions" },
 );
 
-export interface CustomAppInfoProps {
+export interface CustomExtensionInfoProps {
   data: {
     name: string;
   };
@@ -27,7 +27,7 @@ export interface CustomAppInfoProps {
   onChange: FormChange;
 }
 
-const CustomAppInformation: React.FC<CustomAppInfoProps> = ({
+const CustomExtensionInformation: React.FC<CustomExtensionInfoProps> = ({
   data,
   disabled,
   errors,
@@ -68,5 +68,5 @@ const CustomAppInformation: React.FC<CustomAppInfoProps> = ({
   );
 };
 
-CustomAppInformation.displayName = "CustomAppInformation";
-export default CustomAppInformation;
+CustomExtensionInformation.displayName = "CustomAppInformation";
+export default CustomExtensionInformation;
