@@ -4,7 +4,7 @@ import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvata
 import { messages } from "@dashboard/extensions/messages";
 import { InstalledExtension } from "@dashboard/extensions/types";
 import { LoadingSkeleton } from "@dashboard/extensions/views/InstalledExtensions/components/LoadinSkeleton";
-import { Box, GenericAppIcon, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -65,19 +65,7 @@ export const InstalledExtensionsList = ({
               <GridTable.Cell />
               <GridTable.Cell>
                 <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
-                  <ExtensionAvatar>
-                    {extension.logo ? (
-                      <Box
-                        as="img"
-                        src={extension.logo}
-                        alt={extension.name}
-                        display="block"
-                        maxWidth="100%"
-                      />
-                    ) : (
-                      <GenericAppIcon size="medium" color="default2" />
-                    )}
-                  </ExtensionAvatar>
+                  <ExtensionAvatar>{extension.logo}</ExtensionAvatar>
                   <Text
                     size={4}
                     fontWeight="bold"
