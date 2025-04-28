@@ -22,7 +22,7 @@ export class BasePage {
     readonly infoBanner = page.locator(LOCATORS.infoBanner),
     readonly dataGridLoader = page.locator(LOCATORS.dataGridLoader),
     readonly previousPagePaginationButton = page.getByTestId("button-pagination-back"),
-    readonly rowNumberButton = page.getByTestId("select-rows-per-page"),
+    readonly rowNumberButton = page.getByTestId("PaginationRowNumberSelect"),
     readonly rowNumberOption = page.getByTestId("select-option"),
     readonly nextPagePaginationButton = page.getByTestId("button-pagination-next"),
     readonly searchInputListView = page.getByTestId("search-input"),
