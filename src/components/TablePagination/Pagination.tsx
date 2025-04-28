@@ -1,15 +1,10 @@
 import { PageInfo, PaginatorContextValues } from "@dashboard/hooks/usePaginator";
+import { commonMessages } from "@dashboard/intl";
 import { ListSettings } from "@dashboard/types";
-import {
-  Box,
-  Button,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  Select,
-  Text,
-} from "@saleor/macaw-ui-next";
+import { PaginationRowNumberSelect, PaginationRowNumberSelectLabels } from "@saleor/macaw-ui";
+import { Box, Button, ChevronLeftIcon, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
 const ROW_NUMBER_OPTIONS = [
@@ -18,6 +13,8 @@ const ROW_NUMBER_OPTIONS = [
   { label: "50", value: "50" },
   { label: "100", value: "100" },
 ];
+// TODO: Remove this when we replace legacy Select component
+const LEGACY_ROW_NUMBER_OPTIONS = ROW_NUMBER_OPTIONS.map(option => Number(option.value));
 
 export interface PaginationProps extends Omit<PageInfo, "endCursor" | "startCursor"> {
   paginatorSettings: PaginatorContextValues;
@@ -40,11 +37,12 @@ export const Pagination = ({
   paginatorSettings: { loadNextPage, loadPreviousPage, paginatorType, nextHref, prevHref },
   ...props
 }: PaginationProps) => {
+  const intl = useIntl();
   const showRowsSelect = !!numberOfRows;
-  const currentRowNumber = String(numberOfRows);
-  const currentRowNumberOption = ROW_NUMBER_OPTIONS.find(
-    option => option.value === currentRowNumber,
-  );
+
+  const defaultLabels = {
+    noOfRows: intl.formatMessage(commonMessages.noOfRows),
+  };
 
   const handleRowNumberChange = ({ value }: { value: string; label: string }) => {
     if (onUpdateListSettings) {
@@ -108,14 +106,14 @@ export const Pagination = ({
     >
       {showRowsSelect && (
         <Box display="flex" alignItems="center" gap={2}>
-          <Text color="default2" size={1}>
-            {labels?.noOfRows ?? <FormattedMessage id="nABmvC" defaultMessage="No. of rows" />}
-          </Text>
-          <Select
-            options={ROW_NUMBER_OPTIONS}
-            value={currentRowNumberOption ?? ROW_NUMBER_OPTIONS[1]}
-            onChange={handleRowNumberChange}
-            data-test-id="select-rows-per-page"
+          <PaginationRowNumberSelect
+            choices={LEGACY_ROW_NUMBER_OPTIONS}
+            disabled={disabled}
+            labels={(labels as PaginationRowNumberSelectLabels) ?? defaultLabels}
+            rowNumber={numberOfRows}
+            onChange={value =>
+              handleRowNumberChange({ value: String(value), label: String(value) })
+            }
           />
         </Box>
       )}
