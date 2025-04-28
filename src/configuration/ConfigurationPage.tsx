@@ -106,7 +106,9 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
                 </div>
                 <div className={classes.configurationItem}>
                   {menu.menuItems
-                    .filter(menuItem => hasUserMenuItemPermissions(menuItem, user))
+                    .filter(
+                      menuItem => hasUserMenuItemPermissions(menuItem, user) && !menuItem?.hidden,
+                    )
                     .map((item, itemIndex) => (
                       <Link
                         className={classes.link}
