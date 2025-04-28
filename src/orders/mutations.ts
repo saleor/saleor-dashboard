@@ -577,7 +577,7 @@ export const orderGrantRefundEditMutation = gql`
     $addLines: [OrderGrantRefundUpdateLineAddInput!]
     $removeLines: [ID!]
     $grantRefundForShipping: Boolean
-    $transactionId: ID!
+    $transactionId: ID
   ) {
     orderGrantRefundUpdate(
       id: $refundId
