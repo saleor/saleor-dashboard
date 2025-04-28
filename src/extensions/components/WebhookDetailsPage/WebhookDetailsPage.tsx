@@ -27,9 +27,9 @@ import { parse, print } from "graphql";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import PermissionAlert from "../PermissionAlert";
-import WebhookHeaders from "../WebhookHeaders";
-import WebhookSubscriptionQuery from "../WebhookSubscriptionQuery";
+import PermissionAlert from "./components/PermissionAlert";
+import WebhookHeaders from "./components/WebhookHeaders";
+import WebhookSubscriptionQuery from "./components/WebhookSubscriptionQuery";
 import { getHeaderTitle, messages } from "./messages";
 import { getWebhookFormInitialFormValues } from "./webhookForm";
 
