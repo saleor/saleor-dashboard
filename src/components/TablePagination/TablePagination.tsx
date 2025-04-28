@@ -1,13 +1,14 @@
 import { commonMessages } from "@dashboard/intl";
 import { TableCell } from "@material-ui/core";
 import {
-  Pagination,
   PaginationProps as MacawPaginationProps,
+  PaginationRowNumberSelect,
   PaginationRowNumberSelectLabels,
 } from "@saleor/macaw-ui";
+import { Box, Button, ChevronLeftIcon, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
-import { Link, LinkProps } from "react-router-dom";
+import useRouter from "use-react-router";
 
 import { ListSettings } from "../../types";
 
@@ -30,6 +31,9 @@ export interface PaginationProps
   disabled?: boolean;
   labels?: PaginationRowNumberSelectLabels;
 }
+
+const choices = [10, 20, 30, 50, 100];
+
 export const TablePagination: React.FC<PaginationProps> = ({
   component,
   colSpan,
@@ -41,27 +45,58 @@ export const TablePagination: React.FC<PaginationProps> = ({
   hasPreviousPage,
   disabled,
   labels,
-  ...rest
+  onNextPage,
+  onPreviousPage,
 }) => {
   const intl = useIntl();
+  const router = useRouter();
   const Wrapper = component || TableCell;
+
+  const getNavigationButtons = () => {
+    const handlers = {
+      onPreviousPage: prevHref ? () => router.history.push(prevHref) : onPreviousPage,
+      onNextPage: nextHref ? () => router.history.push(nextHref) : onNextPage,
+    };
+
+    return (
+      <>
+        <Button
+          variant="secondary"
+          disabled={!hasPreviousPage || disabled}
+          onClick={handlers.onPreviousPage}
+          icon={<ChevronLeftIcon />}
+          data-test-id="button-pagination-back"
+        />
+        <Button
+          variant="secondary"
+          disabled={!hasNextPage || disabled}
+          onClick={handlers.onNextPage}
+          icon={<ChevronRightIcon />}
+          data-test-id="button-pagination-next"
+        />
+      </>
+    );
+  };
 
   return (
     <Wrapper colSpan={colSpan || 1000}>
-      <Pagination<LinkProps>
-        {...rest}
-        hasNextPage={hasNextPage && !disabled}
-        hasPreviousPage={hasPreviousPage && !disabled}
-        labels={{
-          noOfRows: labels?.noOfRows ?? intl.formatMessage(commonMessages.noOfRows),
-        }}
-        rowNumber={settings?.rowNumber}
-        onRowNumberUpdate={
-          onUpdateListSettings ? value => onUpdateListSettings("rowNumber", value) : undefined
-        }
-        nextIconButtonProps={nextHref ? { component: Link, to: nextHref } : undefined}
-        prevIconButtonProps={prevHref ? { component: Link, to: prevHref } : undefined}
-      />
+      <Box display="flex" justifyContent="space-between" paddingY={4}>
+        {settings?.rowNumber && (
+          <PaginationRowNumberSelect
+            choices={choices}
+            disabled={disabled}
+            labels={labels || { noOfRows: intl.formatMessage(commonMessages.noOfRows) }}
+            rowNumber={settings?.rowNumber}
+            onChange={
+              onUpdateListSettings ? value => onUpdateListSettings("rowNumber", value) : undefined
+            }
+          />
+        )}
+
+        <Box display="flex" flexDirection="row" alignItems="center" gap={2} marginLeft="auto">
+          {getNavigationButtons()}
+        </Box>
+      </Box>
     </Wrapper>
   );
 };
