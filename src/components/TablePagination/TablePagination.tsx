@@ -52,30 +52,9 @@ export const TablePagination: React.FC<PaginationProps> = ({
   const navigate = useNavigator();
   const Wrapper = component || TableCell;
 
-  const getNavigationButtons = () => {
-    const handlers = {
-      onPreviousPage: prevHref ? () => navigate(prevHref) : onPreviousPage,
-      onNextPage: nextHref ? () => navigate(nextHref) : onNextPage,
-    };
-
-    return (
-      <>
-        <Button
-          variant="secondary"
-          disabled={!hasPreviousPage || disabled}
-          onClick={handlers.onPreviousPage}
-          icon={<ChevronLeftIcon />}
-          data-test-id="button-pagination-back"
-        />
-        <Button
-          variant="secondary"
-          disabled={!hasNextPage || disabled}
-          onClick={handlers.onNextPage}
-          icon={<ChevronRightIcon />}
-          data-test-id="button-pagination-next"
-        />
-      </>
-    );
+  const handlers = {
+    onPreviousPage: prevHref ? () => navigate(prevHref) : onPreviousPage,
+    onNextPage: nextHref ? () => navigate(nextHref) : onNextPage,
   };
 
   return (
@@ -94,7 +73,20 @@ export const TablePagination: React.FC<PaginationProps> = ({
         )}
 
         <Box display="flex" flexDirection="row" alignItems="center" gap={2} marginLeft="auto">
-          {getNavigationButtons()}
+          <Button
+            variant="secondary"
+            disabled={!hasPreviousPage || disabled}
+            onClick={handlers.onPreviousPage}
+            icon={<ChevronLeftIcon />}
+            data-test-id="button-pagination-back"
+          />
+          <Button
+            variant="secondary"
+            disabled={!hasNextPage || disabled}
+            onClick={handlers.onNextPage}
+            icon={<ChevronRightIcon />}
+            data-test-id="button-pagination-next"
+          />
         </Box>
       </Box>
     </Wrapper>
