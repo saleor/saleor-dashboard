@@ -7,7 +7,7 @@ import clsx from "clsx";
 import React, { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { WebhookFormData } from "../WebhookDetailsPage";
+import { WebhookFormData } from "../../WebhookDetailsPage";
 import { messages } from "./messages";
 import useStyles from "./styles";
 import { hasEmptyHeader, mapHeaders, stringifyHeaders } from "./utils";
