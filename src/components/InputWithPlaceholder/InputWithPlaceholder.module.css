@@ -1,0 +1,11 @@
+.inputWithPlaceholder input::placeholder {
+  color: var(--mu-colors-text-default2);
+}
+
+.inputWithPlaceholder input::-webkit-input-placeholder {
+  color: var(--mu-colors-text-default2);
+}
+
+.inputWithPlaceholder input::-moz-placeholder {
+  color: var(--mu-colors-text-default2);
+}

@@ -1,10 +1,13 @@
 import { AppPaths } from "@dashboard/apps/urls";
+import SectionRoute from "@dashboard/auth/components/SectionRoute";
 import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { ExtensionsPaths } from "@dashboard/extensions/urls";
+import { ExtensionInstallQueryParams, ExtensionsPaths } from "@dashboard/extensions/urls";
 import { ExploreExtensions } from "@dashboard/extensions/views/ExploreExtensions";
+import { InstallCustomExtension } from "@dashboard/extensions/views/InstallCustomExtension";
 import { InstalledExtensions } from "@dashboard/extensions/views/InstalledExtensions";
 import { useFlag } from "@dashboard/featureFlags";
+import { PermissionEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import NotFound from "@dashboard/NotFound";
@@ -22,6 +25,13 @@ const InstalledExtensionsView = () => {
   const params = qs;
 
   return <InstalledExtensions params={params} />;
+};
+
+const InstallCustomExtensionView = () => {
+  const qs = parseQs(location.search.substr(1));
+  const params: ExtensionInstallQueryParams = qs;
+
+  return <InstallCustomExtension params={params} />;
 };
 
 export const ExtensionsSection = () => {
@@ -44,6 +54,12 @@ export const ExtensionsSection = () => {
           exact
           path={ExtensionsPaths.installedExtensions}
           component={InstalledExtensionsView}
+        />
+        <SectionRoute
+          exact
+          permissions={[PermissionEnum.MANAGE_APPS]}
+          path={ExtensionsPaths.installCustomExtension}
+          component={InstallCustomExtensionView}
         />
         <Route component={NotFound} />
       </Switch>
