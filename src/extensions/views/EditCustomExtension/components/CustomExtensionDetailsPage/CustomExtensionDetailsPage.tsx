@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import activateIcon from "@assets/images/activate-icon.svg";
 import AccountPermissions from "@dashboard/components/AccountPermissions";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
@@ -8,6 +9,7 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import WebhooksList from "@dashboard/custom-apps/components/WebhooksList";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import {
   AppErrorFragment,
   AppUpdateMutation,
@@ -23,10 +25,9 @@ import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import activateIcon from "../../../../assets/images/activate-icon.svg";
+import CustomExtensionDefaultToken from "../CustomExtensionDefaultToken";
 import CustomExtensionInformation from "../CustomExtensionInformation";
 import CustomExtensionTokens from "../CustomExtensionTokens";
-import CustomExtensionDefaultToken from "../CustomExtensionDefaultToken";
 import { useStyles } from "./styles";
 
 export interface CustomExtensionDetailsPageFormData {
@@ -93,7 +94,7 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit} disabled={disabled}>
       {({ data, change, submit, isSaveDisabled }) => (
         <DetailPageLayout>
-          <TopNav href={CustomAppUrls.resolveAppListUrl()} title={app?.name}>
+          <TopNav href={ExtensionsUrls.resolveInstalledExtensionsUrl()} title={app?.name}>
             <Button
               variant="secondary"
               className={classes.activateButton}
