@@ -40,7 +40,6 @@ node_modules/
 /videos/
 /screenshots/
 /results/
-/testmo/
 /saleor/static/assets/
 webpack-bundle.json
 /templates/templated_email/compiled/*

@@ -46,7 +46,6 @@
     "@radix-ui/react-portal",
     "@graphql-codegen/schema-ast",
     "@sentry/cli",
-    "playwright-testmo-reporter",
     "mocha",
     "mochawesome",
     "mochawesome-report-generator",
