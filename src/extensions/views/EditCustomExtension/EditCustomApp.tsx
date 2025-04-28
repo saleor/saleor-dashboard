@@ -6,6 +6,7 @@ import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { getApiUrl } from "@dashboard/config";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
+import { getAppInstallErrorMessage } from "@dashboard/extensions/utils";
 import {
   AppTokenCreateMutation,
   AppTokenDeleteMutation,
@@ -24,7 +25,6 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
-import getAppErrorMessage from "@dashboard/utils/errors/app";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
@@ -80,7 +80,7 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
         errors.forEach(error =>
           notify({
             status: "error",
-            text: getAppErrorMessage(error, intl),
+            text: getAppInstallErrorMessage(error, intl),
           }),
         );
       }
@@ -101,7 +101,7 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
         errors.forEach(error =>
           notify({
             status: "error",
-            text: getAppErrorMessage(error, intl),
+            text: getAppInstallErrorMessage(error, intl),
           }),
         );
       }
