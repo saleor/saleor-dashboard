@@ -17,6 +17,14 @@ export const MANIFEST_ATTR = "manifestUrl";
 export type ExtensionInstallQueryParams = { [MANIFEST_ATTR]?: string };
 export type ExtensionsListUrlDialog = "app-installation-remove";
 export type ExtensionsListUrlQueryParams = Dialog<ExtensionsListUrlDialog> & SingleAction;
+export type CustomExtensionDetailsUrlDialog =
+  | "create-token"
+  | "remove-webhook"
+  | "remove-token"
+  | "app-activate"
+  | "app-deactivate";
+export type CustomExtensionDetailsUrlQueryParams = Dialog<CustomExtensionDetailsUrlDialog> &
+  SingleAction;
 
 export const ExtensionsUrls = {
   resolveInstalledExtensionsUrl: (params?: ExtensionsListUrlQueryParams) =>

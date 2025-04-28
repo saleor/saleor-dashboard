@@ -3,7 +3,6 @@ import SectionRoute from "@dashboard/auth/components/SectionRoute";
 import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { CustomAppDetailsUrlQueryParams } from "@dashboard/custom-apps/urls";
-import CustomAppDetailsView from "@dashboard/custom-apps/views/CustomAppDetails";
 import { ExtensionInstallQueryParams, ExtensionsPaths } from "@dashboard/extensions/urls";
 import { ExploreExtensions } from "@dashboard/extensions/views/ExploreExtensions";
 import { InstallCustomExtension } from "@dashboard/extensions/views/InstallCustomExtension";
@@ -20,6 +19,7 @@ import { RouteComponentProps, Switch } from "react-router-dom";
 
 import { useCustomAppToken } from "./hooks/useCustomAppToken";
 import { AddCustomExtension } from "./views/AddCustomExtension";
+import { EditCustomExtension } from "./views/EditCustomExtension";
 
 const ExploreExtensionsView = () => {
   return <ExploreExtensions />;
@@ -38,7 +38,7 @@ const InstallCustomExtensionView = () => {
   return <InstallCustomExtension params={params} />;
 };
 
-const CustomExtensionDetails = ({
+const EditCustomExtensionView = ({
   match,
   token,
   onTokenClose,
@@ -52,7 +52,7 @@ const CustomExtensionDetails = ({
   }
 
   return (
-    <CustomAppDetailsView
+    <EditCustomExtension
       id={decodeURIComponent(id)}
       params={params}
       token={token}
@@ -101,7 +101,7 @@ export const ExtensionsSection = () => {
           exact
           path={ExtensionsPaths.resolveEditCustomExtension(":id")}
           render={props => (
-            <CustomExtensionDetails
+            <EditCustomExtensionView
               {...props}
               token={customAppToken || ""}
               onTokenClose={() => setCustomAppToken(null)}
