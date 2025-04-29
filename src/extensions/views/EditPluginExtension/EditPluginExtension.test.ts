@@ -5,7 +5,7 @@ import {
   ConfigurationTypeFieldEnum,
 } from "@dashboard/graphql";
 
-import { getConfigurationInput } from "./PluginsDetails";
+import { getConfigurationInput } from "./EditPluginExtension";
 
 const baseConfig: Omit<ConfigurationItemFragment, "name" | "type" | "value"> = {
   __typename: "ConfigurationItem",

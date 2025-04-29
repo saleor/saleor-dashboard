@@ -42,7 +42,7 @@ export function getConfigurationInput(
     }));
 }
 
-export const PluginsDetails: React.FC<PluginsDetailsProps> = ({ id, params }) => {
+export const EditPluginExtension: React.FC<PluginsDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -161,4 +161,4 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({ id, params }) =>
   );
 };
 
-PluginsDetails.displayName = "PluginsDetails";
+EditPluginExtension.displayName = "EditPluginExtension";
