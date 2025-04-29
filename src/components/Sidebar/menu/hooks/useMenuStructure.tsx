@@ -77,6 +77,13 @@ export function useMenuStructure() {
     onClick: () => handleAppsListItemClick(new Date().toISOString()),
     children: [
       {
+        label: intl.formatMessage(sectionNames.installedExtensions),
+        id: "installed-extensions",
+        url: ExtensionsPaths.installedExtensions,
+        permissions: [],
+        type: "item",
+      },
+      {
         label: intl.formatMessage(sectionNames.exploreExtensions),
         id: "explore-extensions",
         url: ExtensionsPaths.exploreExtensions,

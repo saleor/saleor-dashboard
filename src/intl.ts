@@ -625,6 +625,11 @@ export const sectionNames = defineMessages({
     defaultMessage: "Explore",
     description: "explore extensions section name",
   },
+  installedExtensions: {
+    id: "RiQ0v1",
+    defaultMessage: "Installed",
+    description: "installed extensions section name",
+  },
 });
 
 export const commonStatusMessages = defineMessages({
