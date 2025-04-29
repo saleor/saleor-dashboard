@@ -8,6 +8,8 @@ export const ExtensionsPaths = {
   installedExtensions: extensionsSection,
   exploreExtensions: urlJoin(extensionsSection, "explore"),
   addCustomExtension: urlJoin(extensionsSection, "custom", "add"),
+  resolveViewManifestExtension: (id: string) => urlJoin(extensionsSection, "app", id),
+  resolveEditManifestExtension: (id: string) => urlJoin(extensionsSection, "app", id, "edit"),
   resolveEditCustomExtension: (id: string) => urlJoin(extensionsSection, "custom", id),
   // TODO: Add custom app (extension) webhook edition urls
   installCustomExtension: urlJoin(extensionsSection, "install"),
@@ -29,4 +31,8 @@ export const ExtensionsUrls = {
     ExtensionsPaths.resolveEditCustomExtension(id) + "?" + stringifyQs(params),
   installCustomExtensionUrl: (params?: ExtensionInstallQueryParams) =>
     ExtensionsPaths.installCustomExtension + "?" + stringifyQs(params),
+  resolveViewManifestExtensionUrl: (id: string, params?: ExtensionsListUrlQueryParams) =>
+    ExtensionsPaths.resolveViewManifestExtension(id) + "?" + stringifyQs(params),
+  resolveEditManifestExtensionUrl: (id: string, params?: ExtensionsListUrlQueryParams) =>
+    ExtensionsPaths.resolveEditManifestExtension(id) + "?" + stringifyQs(params),
 };
