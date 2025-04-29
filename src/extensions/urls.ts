@@ -14,6 +14,8 @@ export const ExtensionsPaths = {
   resolveViewManifestExtension: (id: string) => urlJoin(extensionsSection, "app", id),
   resolveEditManifestExtension: (id: string) => urlJoin(extensionsSection, "app", id, "edit"),
   resolveEditCustomExtension: (id: string) => urlJoin(extensionsSection, "custom", id),
+  resolveAppDeepPath: (id: string, subPath: string) =>
+    urlJoin(ExtensionsPaths.resolveViewManifestExtension(id), subPath),
   // TODO: Add custom app (extension) webhook edition urls
   installCustomExtension: urlJoin(extensionsSection, "install"),
 };
@@ -57,6 +59,25 @@ export const ExtensionsUrls = {
     ExtensionsPaths.resolveViewManifestExtension(id) + "?" + stringifyQs(params),
   resolveEditManifestExtensionUrl: (id: string, params?: AppDetailsUrlQueryParams) =>
     ExtensionsPaths.resolveEditManifestExtension(id) + "?" + stringifyQs(params),
+  resolveAppDeepUrl: (id: string, subPath: string, params?: AppDetailsUrlQueryParams) =>
+    ExtensionsPaths.resolveAppDeepPath(encodeURIComponent(id), subPath) + "?" + stringifyQs(params),
+  isAppDeepUrlChange: (appId: string, from: string, to: string) => {
+    const appCompletePath = ExtensionsUrls.resolveViewManifestExtensionUrl(
+      encodeURIComponent(appId),
+    );
+
+    return to.startsWith(appCompletePath) && from.startsWith(appCompletePath);
+  },
+
+  resolveAppDeepPathFromDashboardUrl: (dashboardUrl: string, appId: string) => {
+    const deepSubPath = dashboardUrl.replace(
+      ExtensionsUrls.resolveViewManifestExtensionUrl(encodeURIComponent(appId)),
+      "",
+    );
+
+    return deepSubPath || "/";
+  },
+
   resolveAppIframeUrl: (
     appId: string,
     appUrl: string,
