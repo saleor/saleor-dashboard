@@ -11,12 +11,15 @@ export const ExtensionsPaths = {
   resolveEditCustomExtension: (id: string) => urlJoin(extensionsSection, "custom", id),
   // TODO: Add custom app (extension) webhook edition urls
   installCustomExtension: urlJoin(extensionsSection, "install"),
+  resolveEditPluginExtension: (id: string) => urlJoin(extensionsSection, "plugin", id),
 };
 
 export const MANIFEST_ATTR = "manifestUrl";
 export type ExtensionInstallQueryParams = { [MANIFEST_ATTR]?: string };
 export type ExtensionsListUrlDialog = "app-installation-remove";
 export type ExtensionsListUrlQueryParams = Dialog<ExtensionsListUrlDialog> & SingleAction;
+export type PluginUrlDialog = "clear" | "edit";
+export type PluginUrlQueryParams = Dialog<PluginUrlDialog> & SingleAction;
 
 export const ExtensionsUrls = {
   resolveInstalledExtensionsUrl: (params?: ExtensionsListUrlQueryParams) =>
@@ -29,4 +32,6 @@ export const ExtensionsUrls = {
     ExtensionsPaths.resolveEditCustomExtension(id) + "?" + stringifyQs(params),
   installCustomExtensionUrl: (params?: ExtensionInstallQueryParams) =>
     ExtensionsPaths.installCustomExtension + "?" + stringifyQs(params),
+  resolveEditPluginExtensionUrl: (id: string, params?: PluginUrlQueryParams) =>
+    ExtensionsPaths.resolveEditPluginExtension(id) + "?" + stringifyQs(params),
 };
