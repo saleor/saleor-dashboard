@@ -2,6 +2,7 @@ import { AppPaths, AppUrls } from "@dashboard/apps/urls";
 import Link from "@dashboard/components/Link";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
 import { buttonLabels } from "@dashboard/extensions/messages";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppTypeEnum } from "@dashboard/graphql";
 import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -49,7 +50,9 @@ export const ViewDetailsActionButton = ({
   return (
     <Link
       href={
-        type === AppTypeEnum.LOCAL ? CustomAppUrls.resolveAppUrl(id) : AppUrls.resolveAppUrl(id)
+        type === AppTypeEnum.LOCAL
+          ? CustomAppUrls.resolveAppUrl(id)
+          : ExtensionsUrls.resolveViewManifestExtensionUrl(id)
       }
       data-test-id={`${formattedName}-view-details`}
     >
