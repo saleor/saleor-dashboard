@@ -47,9 +47,10 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
     openModal("app-installation-remove", { id });
   };
 
-  const { installedApps, installedAppsLoading, refetchInstalledApps } = useInstalledExtensions();
+  const { installedExtensions, installedAppsLoading, refetchInstalledApps } =
+    useInstalledExtensions();
   const { query, handleQueryChange, filteredInstalledExtensions } =
-    useInstalledExtensionsFilter(installedApps);
+    useInstalledExtensionsFilter(installedExtensions);
 
   const {
     pendingInstallations,
