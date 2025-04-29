@@ -67,10 +67,10 @@ export interface LineToRefund {
 
 export interface OrderTransactionRefundPageFormData {
   linesToRefund: LineToRefund[];
-  transactionId: string | undefined;
   amount: number | undefined;
   includeShipping: boolean;
   reason: string;
+  transactionId: string;
 }
 
 const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
