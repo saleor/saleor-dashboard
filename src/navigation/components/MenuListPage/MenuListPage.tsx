@@ -49,7 +49,7 @@ const MenuListPage: React.FC<MenuListPageProps> = ({ ...listProps }) => {
             </Text>
           </Box>
           <Box display="flex" alignItems="center" gap={2}>
-            <Button onClick={handleCreateMenu} variant="primary" data-test-id="create-page">
+            <Button onClick={handleCreateMenu} variant="primary" data-test-id="add-menu">
               <FormattedMessage
                 id="0dCGBW"
                 defaultMessage="Create structure"

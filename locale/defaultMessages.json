@@ -472,6 +472,10 @@
     "context": "countries list menu label when no countries are assigned",
     "string": "There are no countries assigned"
   },
+  "0dCGBW": {
+    "context": "button",
+    "string": "Create structure"
+  },
   "0dPP8O": {
     "string": "Order #{orderId} was placed"
   },
@@ -1739,6 +1743,9 @@
   "9DUknc": {
     "string": "Installation failed"
   },
+  "9FCrIN": {
+    "string": "Model type"
+  },
   "9FGTOt": {
     "string": "Allow access to orders of all channels"
   },
@@ -2510,9 +2517,6 @@
   "E4GW+N": {
     "context": "fully paid checkout automatically completed message",
     "string": "Order created automatically from fully paid checkout"
-  },
-  "E54eoT": {
-    "string": "Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy"
   },
   "E8T3e+": {
     "string": "Cannot add and remove group the same time"
@@ -3498,10 +3502,6 @@
   "JVaz1C": {
     "context": "window title",
     "string": "Create Webhook"
-  },
-  "JXRYQg": {
-    "context": "button",
-    "string": "Create Menu"
   },
   "Ja7gHc": {
     "context": "button",
@@ -5005,6 +5005,10 @@
     "context": "order history message",
     "string": "Payment failed"
   },
+  "TD/GhR": {
+    "context": "header",
+    "string": "Structure Items"
+  },
   "TDhHMi": {
     "string": "This needs to be unique"
   },
@@ -5040,6 +5044,10 @@
   "TOMgXz": {
     "context": "button",
     "string": "Reset"
+  },
+  "TPP7j+": {
+    "context": "section header",
+    "string": "Organize Model"
   },
   "TPW2tP": {
     "string": "You have reached your order limit, you will be billed extra for orders above limit. If you would like to up your limit, contact your administration staff about raising your limits."
@@ -6651,10 +6659,6 @@
     "context": "alert message",
     "string": "Not available for sale this channel"
   },
-  "dEUZg2": {
-    "context": "header",
-    "string": "Menu Items"
-  },
   "dGqEJ9": {
     "context": "search box placeholder",
     "string": "Search by country name"
@@ -7529,10 +7533,6 @@
   },
   "jTifz+": {
     "string": "Successfully created attribute"
-  },
-  "jU9GPX": {
-    "context": "section header",
-    "string": "Organize Content"
   },
   "jUuHVn": {
     "context": "description",
@@ -8603,6 +8603,9 @@
     "context": "product label",
     "string": "Published"
   },
+  "qL9Oi9": {
+    "string": "Structure Title"
+  },
   "qLOBff": {
     "context": "dialog header",
     "string": "Delete Address"
@@ -9232,9 +9235,6 @@
   "uf1ttM": {
     "string": "Rule reward value is required"
   },
-  "ufD5Jr": {
-    "string": "Content type"
-  },
   "ufahVh": {
     "context": "collection filter hidden",
     "string": "Hidden"
@@ -9340,6 +9340,10 @@
   "vDnheO": {
     "context": "gift card bulk create success dialog accept button",
     "string": "Ok"
+  },
+  "vDp2tH": {
+    "context": "all structures",
+    "string": "All structures"
   },
   "vEYtiq": {
     "string": "Category Name"
