@@ -3,16 +3,12 @@ import { DashboardCard } from "@dashboard/components/Card";
 import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
 import { Pill } from "@dashboard/components/Pill";
 import { PluginsDetailsFragment } from "@dashboard/graphql";
-import {
-  getPluginStatusColor,
-  getPluginStatusLabel,
-} from "@dashboard/plugins/components/PluginsList/utils";
-import { isPluginGlobal } from "@dashboard/plugins/views/utils";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { getPluginStatusColor, getPluginStatusLabel, isPluginGlobal } from "../../utils";
 import { pluginDetailsChannelsCardMessages as messages } from "./messages";
 
 const useStyles = makeStyles(

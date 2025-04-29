@@ -3,7 +3,8 @@ import { sectionNames } from "@dashboard/intl";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import PluginDetailsChannelsCardContent, {
+import {
+  PluginDetailsChannelsCardContent,
   PluginDetailsChannelsCardProps,
 } from "./PluginDetailsChannelsCardContent";
 
