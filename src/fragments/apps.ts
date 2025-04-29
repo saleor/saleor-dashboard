@@ -181,3 +181,17 @@ export const InstalledApp = gql`
     isActive
   }
 `;
+
+export const InstalledAppDetails = gql`
+  fragment InstalledAppDetails on App {
+    id
+    isActive
+    name
+    type
+    brand {
+      logo {
+        default(format: WEBP, size: 64)
+      }
+    }
+  }
+`;

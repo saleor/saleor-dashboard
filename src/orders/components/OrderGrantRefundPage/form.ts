@@ -9,11 +9,13 @@ export interface OrderGrantRefundFormData {
   reason: string;
   lines: OrderGrantRefundCreateLineInput[];
   grantRefundForShipping: boolean;
+  transactionId: string;
 }
 
 const defaultInitialData: OrderGrantRefundFormData = {
   amount: 0,
   reason: "",
+  transactionId: "",
   lines: [],
   grantRefundForShipping: false,
 };

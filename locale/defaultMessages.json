@@ -403,6 +403,10 @@
   "0DRBjg": {
     "string": "Token Note"
   },
+  "0DTk+2": {
+    "context": "Add custom extension page subheader",
+    "string": "Learn more about {manifestFormatLink}"
+  },
   "0DgA8v": {
     "context": "swatch attribute color picker label",
     "string": "Picker"
@@ -684,6 +688,9 @@
   "2+v1wX": {
     "context": "number of metadata fields in model",
     "string": "{number,plural,one{{number} string} other{{number} strings}}"
+  },
+  "2+v6qd": {
+    "string": "Add Custom Extension from manifest"
   },
   "2/L4zZ": {
     "string": "Select all channels"
@@ -982,6 +989,10 @@
     "context": "Transaction capture button - charge preauthorized transaction amount",
     "string": "Capture"
   },
+  "43b+ts": {
+    "context": "extensions list has been installed",
+    "string": "Extension installed"
+  },
   "45aV8u": {
     "context": "gift card bulk create modal bottom explanation",
     "string": "After creation Saleor will create a list of gift card codes that you will be able to download."
@@ -1035,6 +1046,10 @@
   "4Jp83O": {
     "context": "subheader",
     "string": "Contact Information"
+  },
+  "4KRhwm": {
+    "context": "link in infoCardText, to Saleor docs",
+    "string": "Learn more about data privacy."
   },
   "4Kq3O6": {
     "string": "This unit will be used as default shipping weight"
@@ -1535,6 +1550,10 @@
     "context": "bulk issue gift cards dialog title",
     "string": "Bulk Issue Gift Cards"
   },
+  "7eGvyy": {
+    "context": "extension install page, extension permissions (from manifest)",
+    "string": "Permissions"
+  },
   "7ejEbB": {
     "context": "Authorized (amount locked on card, not transfered to store owner) transaction amount, data display header",
     "string": "Authorized"
@@ -1729,6 +1748,9 @@
   },
   "9FGTOt": {
     "string": "Allow access to orders of all channels"
+  },
+  "9Fiuq2": {
+    "string": "Learn more about {customExtensionDocsLink}"
   },
   "9IrVVZ": {
     "context": "attribute can be searched in storefront",
@@ -2151,6 +2173,10 @@
   "Bl6896": {
     "string": "Refund amount"
   },
+  "BnB/7Y": {
+    "context": "callout, title",
+    "string": "Info"
+  },
   "BooQvo": {
     "context": "navigator placeholder",
     "string": "Type {key} to see available actions"
@@ -2222,6 +2248,10 @@
   "C9pcQx": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this shipping zone?} other{Are you sure you want to delete {displayQuantity} shipping zones?}}"
+  },
+  "CB7xpk": {
+    "context": "subheader on extension install page",
+    "string": "You are about to install {extensionName}"
   },
   "CFG1Ix": {
     "context": "shipping zone",
@@ -2523,6 +2553,10 @@
     "context": "voucher status active",
     "string": "Active"
   },
+  "EGzGed": {
+    "context": "extensions list has been removed",
+    "string": "Extension successfully removed"
+  },
   "EHsnZX": {
     "context": "dialog description",
     "string": "Are you sure you want to approve this fullfillment?"
@@ -2771,6 +2805,9 @@
     "context": "staff member's account",
     "string": "Deactivated"
   },
+  "FcC842": {
+    "string": "Tune in for live updates with product news, tips, and how teams are building with Saleor."
+  },
   "FcTTvh": {
     "context": "postal codes, header",
     "string": "Postal codes"
@@ -2906,6 +2943,9 @@
   "GFkb2t": {
     "context": "automatically complete checkouts checkbox label",
     "string": "Automatically complete checkouts when fully paid"
+  },
+  "GIuS7b": {
+    "string": "creating custom extensions"
   },
   "GJAX0z": {
     "context": "order history message",
@@ -3211,6 +3251,9 @@
   "HwHSeY": {
     "string": "App disabled"
   },
+  "HwlLvq": {
+    "string": "Expand or restrict app permissions to access certain part of Saleor system."
+  },
   "I+1KzL": {
     "context": "tab name",
     "string": "All attributes"
@@ -3450,6 +3493,10 @@
   "JKbpH9": {
     "context": "expiry date checkbox label",
     "string": "Gift card expires"
+  },
+  "JKoHqo": {
+    "context": "extension form app name field placeholder",
+    "string": "App Name"
   },
   "JMBsrr": {
     "context": "table header available stock label",
@@ -4176,6 +4223,10 @@
     "context": "alert message",
     "string": "There are no available products in this channel."
   },
+  "O4R3Ni": {
+    "context": "extension install page, permissions section",
+    "string": "Installing this app will give it following permissions"
+  },
   "O95R3Z": {
     "string": "Phone"
   },
@@ -4347,6 +4398,10 @@
   "PH4R7g": {
     "context": "modal header, read-only product variant metadata",
     "string": "Product variant metadata"
+  },
+  "PHT8z1": {
+    "context": "extension form permissions section header",
+    "string": "Permissions"
   },
   "PHUcrU": {
     "context": "date when order was placed",
@@ -5142,6 +5197,10 @@
     "context": "note input label",
     "string": "Note"
   },
+  "UMUQCG": {
+    "context": "extensions list has not been installed",
+    "string": "Couldn’t Install {name}"
+  },
   "UN+yTt": {
     "string": "Staff Settings"
   },
@@ -5172,6 +5231,10 @@
     "context": "filters error messages unknown error",
     "string": "Unknown error occurred"
   },
+  "UUVUyy": {
+    "context": "callout, title",
+    "string": "Warning"
+  },
   "UVDfTs": {
     "context": "discount type shipping",
     "string": "Shipping"
@@ -5183,6 +5246,10 @@
   "Uf3oHA": {
     "context": "add new menu item",
     "string": "Create new item"
+  },
+  "Uh3NX/": {
+    "context": "remove failed installation dialog content",
+    "string": "Are you sure you want to delete {name} failed installation?"
   },
   "Uh9R9m": {
     "context": "prepare order fulfillment, button",
@@ -5219,10 +5286,6 @@
   "Us9cA1": {
     "context": "profit margin",
     "string": "Margin"
-  },
-  "Utq1fE": {
-    "context": "customer gift cards card title",
-    "string": "Gift Cards"
   },
   "Uu2B2G": {
     "context": "gift card history message",
@@ -5388,9 +5451,15 @@
   "VrFy8e": {
     "string": "No notes from customer"
   },
+  "Vrch8P": {
+    "string": "April 24th at 3 PM CET | 9 AM EDT"
+  },
   "VsGcdP": {
     "context": "section header",
     "string": "App permissions"
+  },
+  "VtR2/y": {
+    "string": "Grant this app full access to the store"
   },
   "Vtjlpw": {
     "string": "Transaction is not unique"
@@ -5989,6 +6058,10 @@
   "ZIc5lM": {
     "string": "Product Name"
   },
+  "ZJJ2vA": {
+    "context": "customer gift cards card title",
+    "string": "Gift Cards used by this customer"
+  },
   "ZJOX8n": {
     "context": "alert message",
     "string": "Product no longer exists"
@@ -6065,6 +6138,10 @@
   "ZrIt1W": {
     "string": "Delete discount"
   },
+  "ZrdoSS": {
+    "context": "customer gift cards card no cards subtitle",
+    "string": "There are no gift cards used by this customer"
+  },
   "ZuqkSp": {
     "context": "note input subtitle",
     "string": "Why was this gift card issued. This note will not be shown to the customer. Note will be stored in gift card history"
@@ -6102,6 +6179,10 @@
   "a1uffz": {
     "context": "draft created from replace products list title",
     "string": "Products replaced"
+  },
+  "a2o5uc": {
+    "context": "custom extension page create, tooltip",
+    "string": "Permission cannot be chosen, because you don't have it yourself"
   },
   "a55zOn": {
     "context": "section header",
@@ -6544,6 +6625,10 @@
     "context": "page header",
     "string": "Create New Category"
   },
+  "chJmBW": {
+    "context": "card text, app install page",
+    "string": "Uninstalling the app will remove all your customer’s personal data stored by {extensionName}. {learnMoreLink}"
+  },
   "chvryR": {
     "context": "order history message",
     "string": "Invoice was requested by {requestedBy}"
@@ -6590,6 +6675,9 @@
   "cy8sV7": {
     "context": "volume units types",
     "string": "Volume"
+  },
+  "cyR7Kh": {
+    "string": "Back"
   },
   "d+qgix": {
     "string": "Next step"
@@ -6668,6 +6756,9 @@
   "dc5KWn": {
     "context": "products export type label",
     "string": "products"
+  },
+  "dcFARy": {
+    "string": "✨ Join Live Community Update"
   },
   "dnbJKr": {
     "string": "This transaction doesn't have any events"
@@ -6844,6 +6935,9 @@
   "fExm0/": {
     "context": "gift card history message",
     "string": "Gift card was activated by {activatedBy}"
+  },
+  "fHHHVV": {
+    "string": "Add Custom Extension manually"
   },
   "fITtdb": {
     "context": "helper text",
@@ -7470,6 +7564,10 @@
     "context": "section header",
     "string": "About this app"
   },
+  "jDWPin": {
+    "context": "remove failed installation dialog title",
+    "string": "Remove failed installation"
+  },
   "jDovoJ": {
     "context": "gift card history message",
     "string": "Gift card was issued"
@@ -7567,6 +7665,9 @@
     "context": "refunded fulfillment, section header",
     "string": "Replaced"
   },
+  "jzO3qY": {
+    "string": "Join us on Discord"
+  },
   "jzu97k": {
     "context": "attribute product type",
     "string": "Product type"
@@ -7624,6 +7725,10 @@
   },
   "kErneR": {
     "string": "This customer doesn’t have any adresses added to his address book. You can add address using the button below."
+  },
+  "kExPDx": {
+    "context": "extension form app name field label",
+    "string": "App Name"
   },
   "kFQvXv": {
     "string": "You have reached your warehouse limit, you will be no longer able to add warehouses to your store. If you would like to up your limit, contact your administration staff about raising your limits."
@@ -8012,6 +8117,10 @@
   "mYs3tb": {
     "string": "Product price cannot be lower than 0."
   },
+  "mZrAiu": {
+    "context": "extension installation page, label for manifest URL input",
+    "string": "Provide Manifest URL"
+  },
   "maxT+q": {
     "context": "save button",
     "string": "Confirm order"
@@ -8137,6 +8246,10 @@
     "context": "select label",
     "string": "Channel name"
   },
+  "nLCEQJ": {
+    "context": "custom extension page create, error message",
+    "string": "App name is required"
+  },
   "nLML8Y": {
     "string": "Default Shipping Address"
   },
@@ -8213,6 +8326,9 @@
   "nki0o/": {
     "context": "replaced products list title",
     "string": "Products replaced"
+  },
+  "nm7IIV": {
+    "string": "URL has invalid format"
   },
   "nngeI3": {
     "context": "amount title",
@@ -8585,6 +8701,10 @@
     "context": "voucher status scheduled",
     "string": "Scheduled"
   },
+  "qRmntJ": {
+    "context": "extensions list ready to be used",
+    "string": "{name} is ready to be used"
+  },
   "qSCmIG": {
     "string": "lower than {value}"
   },
@@ -8863,6 +8983,10 @@
     "context": "dialog header",
     "string": "Assign Category"
   },
+  "sXSde1": {
+    "context": "link to docs in add custom extensions page subheader",
+    "string": "manifest format"
+  },
   "sZ27WU": {
     "context": "error message",
     "string": "Only pre-authorized payments can be voided"
@@ -8922,6 +9046,10 @@
   "snUby7": {
     "context": "header",
     "string": "Unnamed Webhook Details"
+  },
+  "ssI7EL": {
+    "context": "custom extension page create, callout message",
+    "string": "Unavailable permissions are those exceeding your own access rights. Apps cannot have more permissions than their creator. Please contact an administrator to either create this app for you or grant your account the necessary permissions"
   },
   "stjHjY": {
     "context": "error message",
@@ -9299,6 +9427,10 @@
     "context": "button",
     "string": "Open in GraphiQL"
   },
+  "vGfmv8": {
+    "context": "card title, app install page, about privacy",
+    "string": "Info"
+  },
   "vN3qdA": {
     "context": "button",
     "string": "Undo"
@@ -9337,10 +9469,6 @@
   "vW3tb6": {
     "context": "name",
     "string": "Product name"
-  },
-  "vWTM6Y": {
-    "context": "customer gift cards card no cards subtitle",
-    "string": "There are no gift cards assigned to this customer"
   },
   "vWapBZ": {
     "context": "card title",

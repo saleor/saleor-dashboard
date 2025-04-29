@@ -518,10 +518,26 @@ describe("ConditionalFilter / queryVariables / createCustomerQueryVariables", ()
         ),
         false,
       ),
+      "AND",
+      new FilterElement(
+        new ExpressionValue("metadata", "Metadata", "metadata"),
+        new Condition(
+          ConditionOptions.fromStaticElementName("metadata"),
+          new ConditionSelected(
+            ["m-key", "m-value"],
+            { type: "text.double", label: "is", value: "input-1" },
+            [],
+            false,
+          ),
+          false,
+        ),
+        false,
+      ),
     ];
     const expectedOutput = {
       dateJoined: { gte: "2025-02-01", lte: "2025-02-08" },
       numberOfOrders: { gte: "1", lte: "100" },
+      metadata: [{ key: "m-key", value: "m-value" }],
     };
     // Act
     const result = createCustomerQueryVariables(filters);
