@@ -9,6 +9,14 @@ export const headerTitles = defineMessages({
     defaultMessage: "Installed Extensions",
     id: "C3sTzL",
   },
+  addCustomExtension: {
+    defaultMessage: "Add Custom Extension manually",
+    id: "fHHHVV",
+  },
+  addCustomExtensionManifest: {
+    defaultMessage: "Add Custom Extension from manifest",
+    id: "2+v6qd",
+  },
 });
 
 export const buttonLabels = defineMessages({
@@ -40,6 +48,14 @@ export const buttonLabels = defineMessages({
     defaultMessage: "Retry",
     id: "62nsdy",
   },
+  save: {
+    defaultMessage: "Save",
+    id: "jvo0vs",
+  },
+  back: {
+    defaultMessage: "Back",
+    id: "cyR7Kh",
+  },
 });
 
 export const infoMessages = defineMessages({
@@ -66,6 +82,32 @@ export const infoMessages = defineMessages({
   webhookErrorViewDetails: {
     defaultMessage: "See logs",
     id: "qkUBLC",
+  },
+  permissionsDescription: {
+    defaultMessage: "Expand or restrict app permissions to access certain part of Saleor system.",
+    id: "HwlLvq",
+  },
+  grantFullAccess: {
+    defaultMessage: "Grant this app full access to the store",
+    id: "VtR2/y",
+  },
+});
+
+export const formLabels = defineMessages({
+  appName: {
+    defaultMessage: "App Name",
+    id: "kExPDx",
+    description: "extension form app name field label",
+  },
+  appNamePlaceholder: {
+    defaultMessage: "App Name",
+    id: "JKoHqo",
+    description: "extension form app name field placeholder",
+  },
+  permissions: {
+    defaultMessage: "Permissions",
+    id: "PHT8z1",
+    description: "extension form permissions section header",
   },
 });
 
@@ -181,6 +223,52 @@ export const messages = defineMessages({
     description: "Installed extensions column name",
     id: "7jxSx8",
   },
+  learnMoreSubheader: {
+    defaultMessage: "Learn more about {manifestFormatLink}",
+    id: "0DTk+2",
+    description: "Add custom extension page subheader",
+  },
+  manifestFormatLink: {
+    defaultMessage: "manifest format",
+    id: "sXSde1",
+    description: "link to docs in add custom extensions page subheader",
+  },
+  installExtensionNameHeader: {
+    defaultMessage: "You are about to install {extensionName}",
+    id: "CB7xpk",
+    description: "subheader on extension install page",
+  },
+  permissions: {
+    defaultMessage: "Permissions",
+    id: "7eGvyy",
+    description: "extension install page, extension permissions (from manifest)",
+  },
+  permissionsExplanation: {
+    defaultMessage: "Installing this app will give it following permissions",
+    id: "O4R3Ni",
+    description: "extension install page, permissions section",
+  },
+  infoCardTitle: {
+    defaultMessage: "Info",
+    id: "vGfmv8",
+    description: "card title, app install page, about privacy",
+  },
+  infoCardText: {
+    defaultMessage:
+      "Uninstalling the app will remove all your customer’s personal data stored by {extensionName}. {learnMoreLink}",
+    id: "chJmBW",
+    description: "card text, app install page",
+  },
+  infoCardLearnMoreLink: {
+    defaultMessage: "Learn more about data privacy.",
+    id: "4KRhwm",
+    description: "link in infoCardText, to Saleor docs",
+  },
+  manifestUrlLabel: {
+    defaultMessage: "Provide Manifest URL",
+    id: "mZrAiu",
+    description: "extension installation page, label for manifest URL input",
+  },
   deleteFailedInstallation: {
     defaultMessage: "Remove failed installation",
     id: "jDWPin",
@@ -190,5 +278,64 @@ export const messages = defineMessages({
     id: "Uh3NX/",
     defaultMessage: "Are you sure you want to delete {name} failed installation?",
     description: "remove failed installation dialog content",
+  },
+  learnMoreCustomExtensions: {
+    defaultMessage: "Learn more about {customExtensionDocsLink}",
+    id: "9Fiuq2",
+  },
+  learnMoreCustomExtensionsLinkText: {
+    defaultMessage: "creating custom extensions",
+    id: "GIuS7b",
+  },
+  customExtensionPermissionWarning: {
+    defaultMessage:
+      "Unavailable permissions are those exceeding your own access rights. Apps cannot have more permissions than their creator. Please contact an administrator to either create this app for you or grant your account the necessary permissions",
+    description: "custom extension page create, callout message",
+    id: "ssI7EL",
+  },
+  missingAppNameError: {
+    defaultMessage: "App name is required",
+    description: "custom extension page create, error message",
+    id: "nLCEQJ",
+  },
+  permissionDisabledTooltip: {
+    defaultMessage: "Permission cannot be chosen, because you don't have it yourself",
+    description: "custom extension page create, tooltip",
+    id: "a2o5uc",
+  },
+});
+
+export const appManifestErrorMessages = defineMessages({
+  invalidManifestFormat: {
+    id: "pC6/1z",
+    defaultMessage: "Invalid manifest format",
+  },
+  invalidPermission: {
+    id: "D2qihU",
+    defaultMessage: "Permission is invalid",
+  },
+  invalidStatus: {
+    id: "v3WWK+",
+    defaultMessage: "Status is invalid",
+  },
+  invalidUrlFormat: {
+    id: "nm7IIV",
+    defaultMessage: "URL has invalid format",
+  },
+  outOfScopeApp: {
+    id: "C4hCsD",
+    defaultMessage: "App is out of your permissions scope",
+  },
+  outOfScopeGroup: {
+    id: "1n1tOR",
+    defaultMessage: "Group is out of your permission scope",
+  },
+  outOfScopePermission: {
+    id: "4prRLv",
+    defaultMessage: "Permission is out of your scope",
+  },
+  unique: {
+    id: "TDhHMi",
+    defaultMessage: "This needs to be unique",
   },
 });

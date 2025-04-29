@@ -1,3 +1,5 @@
+import { useAppsInstallationsQuery } from "@dashboard/graphql";
+import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { renderHook } from "@testing-library/react-hooks";
 import React from "react";
 
@@ -51,7 +53,37 @@ jest.mock("./useActiveAppsInstallations", () => ({
   })),
 }));
 
+jest.mock("@dashboard/hooks/useHasManagedAppsPermission", () => ({
+  useHasManagedAppsPermission: jest.fn(() => ({
+    useHasManagedAppsPermission: true,
+  })),
+}));
+
 describe("InstalledExtensions / hooks / usePendingInstallation", () => {
+  it("should skip fetching app installations when user doesn't have MANAGE_APP permissions", () => {
+    (useHasManagedAppsPermission as jest.Mock).mockReturnValueOnce(false);
+
+    const refetchExtensions = jest.fn();
+    const onCloseModal = jest.fn();
+    const onFailedInstallationRemove = jest.fn();
+    const searchQuery = "";
+
+    renderHook(() =>
+      usePendingInstallation({
+        refetchExtensions,
+        onCloseModal,
+        onFailedInstallationRemove,
+        searchQuery,
+      }),
+    );
+
+    expect(useAppsInstallationsQuery).toHaveBeenCalledWith(
+      expect.objectContaining({
+        skip: true,
+      }),
+    );
+  });
+
   it("should return list of pending installations", () => {
     // Arrange
     const refetchExtensions = jest.fn();
@@ -76,17 +108,17 @@ describe("InstalledExtensions / hooks / usePendingInstallation", () => {
           name: "Test App",
           actions: expect.any(Object),
           info: expect.any(Object),
-          logo: "",
+          logo: expect.any(Object),
         },
         {
           id: "2",
           name: "Failed App",
           actions: expect.any(Object),
           info: expect.any(Object),
-          logo: "",
+          logo: expect.any(Object),
         },
       ],
-      pendingInstallationsLoading: false,
+      pendingInstallationsLoading: undefined,
       handleRemoveInProgress: expect.any(Function),
       deleteInProgressAppStatus: undefined,
     });
