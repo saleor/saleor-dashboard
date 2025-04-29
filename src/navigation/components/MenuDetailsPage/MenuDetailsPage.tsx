@@ -1,16 +1,12 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout";
-import { Backlink } from "@dashboard/components/Backlink";
-import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import { MenuDetailsFragment, MenuErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
 import { menuListUrl } from "@dashboard/navigation/urls";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -51,7 +47,6 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   onItemEdit,
   onSubmit,
 }) => {
-  const intl = useIntl();
   const navigate = useNavigator();
   const initialForm: MenuDetailsFormData = {
     name: menu?.name ?? "",
