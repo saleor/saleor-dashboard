@@ -4,7 +4,11 @@ import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { CustomAppDetailsUrlQueryParams } from "@dashboard/custom-apps/urls";
 import CustomAppDetailsView from "@dashboard/custom-apps/views/CustomAppDetails";
-import { ExtensionInstallQueryParams, ExtensionsPaths } from "@dashboard/extensions/urls";
+import {
+  AppDetailsUrlQueryParams,
+  ExtensionInstallQueryParams,
+  ExtensionsPaths,
+} from "@dashboard/extensions/urls";
 import { ExploreExtensions } from "@dashboard/extensions/views/ExploreExtensions";
 import { InstallCustomExtension } from "@dashboard/extensions/views/InstallCustomExtension";
 import { InstalledExtensions } from "@dashboard/extensions/views/InstalledExtensions";
@@ -20,6 +24,8 @@ import { RouteComponentProps, Switch } from "react-router-dom";
 
 import { useCustomAppToken } from "./hooks/useCustomAppToken";
 import { AddCustomExtension } from "./views/AddCustomExtension";
+import { AppManageView } from "./views/EditManifestExtension";
+import { AppView } from "./views/ViewManifestExtension";
 
 const ExploreExtensionsView = () => {
   return <ExploreExtensions />;
@@ -61,6 +67,17 @@ const CustomExtensionDetails = ({
   );
 };
 
+const EditManifestExtensionView = ({ match }: RouteComponentProps<{ id: string }>) => {
+  const qs = parseQs(location.search.substr(1));
+  const params: AppDetailsUrlQueryParams = qs;
+
+  return <AppManageView id={decodeURIComponent(match.params.id)} params={params} />;
+};
+
+const ViewManifestExtensionIframeView = ({ match }: RouteComponentProps<{ id: string }>) => {
+  return <AppView id={decodeURIComponent(match.params.id)} />;
+};
+
 export const ExtensionsSection = () => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -89,6 +106,17 @@ export const ExtensionsSection = () => {
           permissions={[PermissionEnum.MANAGE_APPS]}
           path={ExtensionsPaths.installCustomExtension}
           component={InstallCustomExtensionView}
+        />
+
+        {/* -- Manifest app routes -- */}
+        <Route
+          exact
+          path={ExtensionsPaths.resolveEditManifestExtension(":id")}
+          component={EditManifestExtensionView}
+        />
+        <Route
+          path={ExtensionsPaths.resolveViewManifestExtension(":id")}
+          component={ViewManifestExtensionIframeView}
         />
 
         {/* -- Custom apps routes -- */}
