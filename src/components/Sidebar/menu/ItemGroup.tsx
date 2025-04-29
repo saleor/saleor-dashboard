@@ -14,6 +14,7 @@ interface Props {
 export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
   const hasSubmenuActive = menuItem?.children.some(item => isMenuActive(location.pathname, item));
   const isActive = isMenuActive(location.pathname, menuItem) && !hasSubmenuActive;
+  const isExpanded = isActive || hasSubmenuActive;
 
   const handleMenuGroupClick = () => {
     if (menuItem.onClick) {
@@ -22,7 +23,7 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
   };
 
   return (
-    <List.ItemGroup defaultExpanded={true} data-test-id={`menu-list-item`}>
+    <List.ItemGroup defaultExpanded={isExpanded} data-test-id={`menu-list-item`}>
       <List.ItemGroup.Trigger
         paddingX={2}
         paddingRight={1}
