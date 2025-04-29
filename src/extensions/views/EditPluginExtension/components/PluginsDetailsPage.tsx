@@ -152,7 +152,9 @@ export const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
               </Grid>
               <Savebar>
                 <Savebar.Spacer />
-                <Savebar.CancelButton onClick={() => navigate(pluginListUrl())} />
+                <Savebar.CancelButton
+                  onClick={() => navigate(ExtensionsUrls.resolveInstalledExtensionsUrl())}
+                />
                 <Savebar.ConfirmButton
                   transitionState={saveButtonBarState}
                   onClick={submit}
