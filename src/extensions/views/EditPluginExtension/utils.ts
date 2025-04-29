@@ -21,7 +21,9 @@ export function isSecretField(config: ConfigurationItemFragment[], field: string
     ConfigurationTypeFieldEnum.PASSWORD,
     ConfigurationTypeFieldEnum.SECRET,
     ConfigurationTypeFieldEnum.SECRETMULTILINE,
-  ].includes(config.find(configField => configField.name === field).type);
+  ].includes(
+    config.find(configField => configField.name === field)?.type as ConfigurationTypeFieldEnum,
+  );
 }
 
 export const getAllChannelConfigsCount = (

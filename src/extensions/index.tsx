@@ -66,7 +66,7 @@ const CustomExtensionDetails = ({
   );
 };
 
-const EditPluginExtensionView = ({ match }: RouteComponentProps<{ id?: string }>) => {
+const EditPluginExtensionView = ({ match }: RouteComponentProps<{ id: string }>) => {
   const qs = parseQs(location.search.substr(1));
   const params: PluginUrlQueryParams = qs;
   const id = decodeURIComponent(match.params.id);
