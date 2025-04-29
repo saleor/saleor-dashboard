@@ -7,7 +7,7 @@ import PluginDetailsChannelsCardContent, {
   PluginDetailsChannelsCardProps,
 } from "./PluginDetailsChannelsCardContent";
 
-const PluginDetailsChannelsCard: React.FC<PluginDetailsChannelsCardProps> = props => {
+export const PluginDetailsChannelsCard: React.FC<PluginDetailsChannelsCardProps> = props => {
   const intl = useIntl();
 
   return (
@@ -19,5 +19,3 @@ const PluginDetailsChannelsCard: React.FC<PluginDetailsChannelsCardProps> = prop
     </DashboardCard>
   );
 };
-
-export default PluginDetailsChannelsCard;

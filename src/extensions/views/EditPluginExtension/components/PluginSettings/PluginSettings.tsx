@@ -20,7 +20,7 @@ interface PluginSettingsProps {
   fields: ConfigurationItemFragment[];
 }
 
-const PluginSettings: React.FC<PluginSettingsProps> = ({
+export const PluginSettings: React.FC<PluginSettingsProps> = ({
   data,
   disabled,
   errors,
@@ -106,4 +106,3 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({
 };
 
 PluginSettings.displayName = "PluginSettings";
-export default PluginSettings;

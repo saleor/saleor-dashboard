@@ -18,7 +18,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { PluginDetailsPageFormData, PluginsDetailsPage } from "./components/PluginsDetailsPage";
-import PluginSecretFieldDialog from "./components/PluginSecretFieldDialog";
+import { PluginSecretFieldDialog } from "./components/PluginSecretFieldDialog";
 import { getConfigByChannelId, isPluginGlobal, isSecretField } from "./utils";
 
 export interface PluginsDetailsProps {

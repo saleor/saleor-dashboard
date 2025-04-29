@@ -33,7 +33,8 @@ const useStyles = makeStyles(
   }),
   { name: "PluginAuthorization" },
 );
-const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
+
+export const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
   const { fields, onClear, onEdit } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -55,7 +56,7 @@ const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
           <React.Fragment key={field.name}>
             <div className={classes.item} key={field.name}>
               {field.type === ConfigurationTypeFieldEnum.SECRET ||
-              field.type === ConfigurationTypeFieldEnum.SECRETMULTILINE ? (
+                field.type === ConfigurationTypeFieldEnum.SECRETMULTILINE ? (
                 <div>
                   <Text size={4} fontWeight="regular">
                     {field.label}
@@ -92,4 +93,3 @@ const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
 };
 
 PluginAuthorization.displayName = "PluginAuthorization";
-export default PluginAuthorization;

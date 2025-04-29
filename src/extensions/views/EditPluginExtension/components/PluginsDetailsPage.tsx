@@ -22,10 +22,10 @@ import { isSecretField } from "@dashboard/plugins/utils";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import PluginAuthorization from "../PluginAuthorization";
-import PluginDetailsChannelsCard from "../PluginDetailsChannelsCard";
-import PluginInfo from "../PluginInfo";
-import PluginSettings from "../PluginSettings";
+import { PluginAuthorization } from "./PluginAuthorization";
+import { PluginDetailsChannelsCard } from "./PluginDetailsChannelsCard";
+import { PluginInfo } from "./PluginInfo";
+import { PluginSettings } from "./PluginSettings";
 
 export interface PluginDetailsPageFormData {
   active: boolean;
