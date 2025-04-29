@@ -11,8 +11,8 @@ import {
   createAsyncEventsSelectHandler,
   createSyncEventsSelectHandler,
 } from "@dashboard/custom-apps/handlers";
-import { CustomAppUrls } from "@dashboard/custom-apps/urls";
 import { IntrospectionNode } from "@dashboard/custom-apps/utils";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import {
   WebhookDetailsFragment,
   WebhookErrorCode,
@@ -77,7 +77,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
 
   const initialForm = getWebhookFormInitialFormValues({ webhook, prettifiedQuery: prettified });
 
-  const backUrl = CustomAppUrls.resolveAppUrl(appId);
+  const backUrl = ExtensionsUrls.editCustomExtensionUrl(appId);
   const [query, setQuery] = useState(prettified);
 
   useEffect(() => {
