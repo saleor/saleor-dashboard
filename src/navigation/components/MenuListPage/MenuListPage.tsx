@@ -1,6 +1,5 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ListPageLayout } from "@dashboard/components/Layouts";
-import { configurationMenuUrl } from "@dashboard/configuration";
 import { MenuFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";

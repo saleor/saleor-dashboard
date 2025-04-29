@@ -9,7 +9,6 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { menuListUrl } from "@dashboard/navigation/urls";
 import React from "react";
-import { useIntl } from "react-intl";
 
 import { MenuItemType } from "../MenuItemDialog";
 import MenuItems, { TreeOperation } from "../MenuItems";
