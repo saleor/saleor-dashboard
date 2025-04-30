@@ -2,11 +2,11 @@ import { useUser } from "@dashboard/auth";
 import { useFlag } from "@dashboard/featureFlags";
 import { ApolloMockedProvider } from "@test/ApolloMockedProvider";
 import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import React from "react";
 
 import { onboardingCompletedMock, onboardingInitState } from "./mocks";
 import { OnboardingProvider } from "./onboardingContext";
-import { useOnboarding } from "./onboardingContext/useOnboarding";
 import { useOnboardingStorage } from "./onboardingContext/useOnboardingStorage";
 import { WelcomePageOnboarding } from "./WelcomePageOnboarding";
 
@@ -50,7 +50,7 @@ const allMarkAsDoneStepsIds = [
   "create-product",
   "explore-orders",
   "graphql-playground",
-  "view-extensions",
+  "view-webhooks",
   "invite-staff",
 ];
 
@@ -127,13 +127,15 @@ describe("WelcomePageOnboarding", () => {
     expect(screen.queryByText("Mark all as done")).toBeNull();
   });
 
-  it("should show 'Onboarding completed' after marking each steps as done", () => {
+  it("should show 'Onboarding completed' after marking each steps as done", async () => {
     // Arrange
     (useUser as jest.Mock).mockReturnValue({ user: { dateJoined: NEW_ACCOUNT_DATE } });
     (useOnboardingStorage as jest.Mock).mockReturnValue({
       getOnboardingState: jest.fn(() => onboardingInitState),
       saveOnboardingState: jest.fn(),
     });
+
+    const user = userEvent.setup();
 
     // Act
     render(
@@ -145,13 +147,17 @@ describe("WelcomePageOnboarding", () => {
     // 'get-started' has only 'Next step' button
     const getStartedNextStepBtn = screen.getByTestId("get-started-next-step-btn");
 
-    getStartedNextStepBtn.click();
+    user.click(getStartedNextStepBtn);
 
-    allMarkAsDoneStepsIds.forEach(stepId => {
+    for (const stepId of allMarkAsDoneStepsIds) {
+      await waitFor(() => {
+        expect(screen.getByTestId(stepId + "-mark-as-done")).toBeInTheDocument();
+      });
+
       const markAsDone = screen.getByTestId(stepId + "-mark-as-done");
 
       markAsDone.click();
-    });
+    }
 
     // Assert
     expect(screen.getByText(onboardingCompleteMessage)).toBeInTheDocument();

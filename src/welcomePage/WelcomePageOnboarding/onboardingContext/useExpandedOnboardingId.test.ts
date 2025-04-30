@@ -1,4 +1,7 @@
-import { OnboardingState } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/types";
+import {
+  OnboardingState,
+  OnboardingStep,
+} from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/types";
 import { renderHook } from "@testing-library/react-hooks";
 
 import { useExpandedOnboardingId } from "./useExpandedOnboardingId";
@@ -13,10 +16,20 @@ describe("useExpandedOnboardingId", () => {
       },
     } as OnboardingState;
     const loaded = true;
+    const visibleSteps: OnboardingStep[] = [
+      { id: "get-started", completed: true, expanded: undefined },
+      { id: "create-product", completed: false, expanded: true },
+      { id: "explore-orders", completed: false, expanded: undefined },
+      { id: "graphql-playground", completed: false, expanded: undefined },
+      { id: "view-extensions", completed: false, expanded: undefined },
+      { id: "view-webhooks", completed: false, expanded: undefined },
+      { id: "invite-staff", completed: false, expanded: undefined },
+    ];
 
     // Act
-    const expandedStepId = renderHook(() => useExpandedOnboardingId(onboardingState, loaded)).result
-      .current;
+    const expandedStepId = renderHook(() =>
+      useExpandedOnboardingId(onboardingState, loaded, visibleSteps),
+    ).result.current;
 
     // assert
     expect(expandedStepId).toBe("create-product");
@@ -29,10 +42,20 @@ describe("useExpandedOnboardingId", () => {
       stepsExpanded: { "get-started": false },
     } as OnboardingState;
     const loaded = true;
+    const visibleSteps: OnboardingStep[] = [
+      { id: "get-started", completed: true, expanded: false },
+      { id: "create-product", completed: true, expanded: undefined },
+      { id: "explore-orders", completed: false, expanded: undefined },
+      { id: "graphql-playground", completed: false, expanded: undefined },
+      { id: "view-extensions", completed: false, expanded: undefined },
+      { id: "view-webhooks", completed: false, expanded: undefined },
+      { id: "invite-staff", completed: false, expanded: undefined },
+    ];
 
     // Act
-    const expandedStepId = renderHook(() => useExpandedOnboardingId(onboardingState, loaded)).result
-      .current;
+    const expandedStepId = renderHook(() =>
+      useExpandedOnboardingId(onboardingState, loaded, visibleSteps),
+    ).result.current;
 
     // Assert
     expect(expandedStepId).toBe("explore-orders");
@@ -54,10 +77,20 @@ describe("useExpandedOnboardingId", () => {
       },
     } as OnboardingState;
     const loaded = true;
+    const visibleSteps: OnboardingStep[] = [
+      { id: "get-started", completed: false, expanded: false },
+      { id: "create-product", completed: false, expanded: false },
+      { id: "explore-orders", completed: false, expanded: false },
+      { id: "graphql-playground", completed: false, expanded: false },
+      { id: "view-extensions", completed: false, expanded: false },
+      { id: "view-webhooks", completed: false, expanded: false },
+      { id: "invite-staff", completed: false, expanded: false },
+    ];
 
     // Act
-    const expandedStepId = renderHook(() => useExpandedOnboardingId(onboardingState, loaded)).result
-      .current;
+    const expandedStepId = renderHook(() =>
+      useExpandedOnboardingId(onboardingState, loaded, visibleSteps),
+    ).result.current;
 
     // Assert
     expect(expandedStepId).toBe("");
@@ -80,19 +113,30 @@ describe("useExpandedOnboardingId", () => {
       },
     } as OnboardingState;
     const loaded = true;
+    const visibleSteps: OnboardingStep[] = [
+      { id: "get-started", completed: false, expanded: false },
+      { id: "create-product", completed: false, expanded: undefined },
+      { id: "explore-orders", completed: false, expanded: undefined },
+      { id: "graphql-playground", completed: false, expanded: undefined },
+      { id: "view-extensions", completed: false, expanded: undefined },
+      { id: "view-webhooks", completed: false, expanded: undefined },
+      { id: "invite-staff", completed: false, expanded: undefined },
+    ];
 
     // Act
     const { rerender, result } = renderHook(
-      ({ onboardingState, loaded }) => useExpandedOnboardingId(onboardingState, loaded),
+      ({ onboardingState, loaded, visibleSteps }) =>
+        useExpandedOnboardingId(onboardingState, loaded, visibleSteps),
       {
         initialProps: {
           onboardingState,
           loaded,
+          visibleSteps,
         },
       },
     );
 
-    rerender({ onboardingState: onboardingStateChanged, loaded });
+    rerender({ onboardingState: onboardingStateChanged, loaded, visibleSteps });
 
     // Assert
     expect(result.current).toBe("explore-orders");
@@ -117,19 +161,30 @@ describe("useExpandedOnboardingId", () => {
       },
     } as OnboardingState;
     const loaded = true;
+    const visibleSteps: OnboardingStep[] = [
+      { id: "get-started", completed: true, expanded: false },
+      { id: "create-product", completed: true, expanded: undefined },
+      { id: "explore-orders", completed: false, expanded: undefined },
+      { id: "graphql-playground", completed: false, expanded: undefined },
+      { id: "view-extensions", completed: false, expanded: undefined },
+      { id: "view-webhooks", completed: false, expanded: undefined },
+      { id: "invite-staff", completed: false, expanded: undefined },
+    ];
 
     // Act
     const { rerender, result } = renderHook(
-      ({ onboardingState, loaded }) => useExpandedOnboardingId(onboardingState, loaded),
+      ({ onboardingState, loaded, visibleSteps }) =>
+        useExpandedOnboardingId(onboardingState, loaded, visibleSteps),
       {
         initialProps: {
           onboardingState,
           loaded,
+          visibleSteps,
         },
       },
     );
 
-    rerender({ onboardingState: onboardingStateChanged, loaded });
+    rerender({ onboardingState: onboardingStateChanged, loaded, visibleSteps });
 
     // Assert
     expect(result.current).toBe("explore-orders");

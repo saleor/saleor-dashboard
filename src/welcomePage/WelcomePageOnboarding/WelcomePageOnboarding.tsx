@@ -20,14 +20,14 @@ export const WelcomePageOnboarding = () => {
     isOnboardingCompleted,
     toggleOnboarding,
     onboardingState,
-    totalStepsCount,
     validCompletedStepsCount,
+    visibleSteps,
   } = useOnboarding();
 
   const isOnboardingExpanded = onboardingState.onboardingExpanded;
   const status = {
     done: validCompletedStepsCount,
-    total: totalStepsCount,
+    total: visibleSteps.length,
   };
 
   const handleMarkAllAsCompleted = () => {

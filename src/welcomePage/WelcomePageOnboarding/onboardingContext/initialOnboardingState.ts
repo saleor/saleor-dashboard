@@ -3,6 +3,7 @@ import {
   OnboardingStep,
 } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/types";
 
+// We store state in metadata for all steps even these that are not shown to the user
 export const initialOnboardingSteps: OnboardingStep[] = [
   {
     id: "get-started",

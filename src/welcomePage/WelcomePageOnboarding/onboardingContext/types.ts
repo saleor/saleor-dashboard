@@ -35,8 +35,8 @@ export interface OnboardingContextType {
   markAllAsCompleted: () => void;
   toggleExpandedOnboardingStep: (id: string, currentExpandedId: OnboardingStepsIDs | "") => void;
   toggleOnboarding: (value: boolean) => void;
-  totalStepsCount: number;
   validCompletedStepsCount: number;
+  visibleSteps: OnboardingStep[];
 }
 
 export interface OnboardingProviderProps {

@@ -1,7 +1,6 @@
 import { MetadataInput } from "@dashboard/graphql";
 
-import { initialOnboardingSteps } from "./initialOnboardingState";
-import { OnboardingState, OnboardingStepsIDs } from "./types";
+import { OnboardingState, OnboardingStep, OnboardingStepsIDs } from "./types";
 
 export const handleStateChangeAfterStepCompleted = (
   state: OnboardingState,
@@ -54,29 +53,41 @@ export const getFirstExpanderStepId = (onboardingState: OnboardingState) => {
   return (stepsExpandedEntries.find(([_, value]) => value)?.[0] ?? "") as OnboardingStepsIDs;
 };
 
-export const mapInitialStepsWithState = (onboardingState: OnboardingState) =>
-  [...initialOnboardingSteps].map(step => ({
+export const getFirstNotCompletedAndNotExpandedStep = (
+  onboardingState: OnboardingState,
+  visibleSteps: OnboardingStep[],
+): OnboardingStepsIDs | "" => {
+  const stepsWithState = visibleSteps.map(step => ({
     ...step,
     completed: onboardingState.stepsCompleted.includes(step.id),
     expanded: onboardingState.stepsExpanded[step.id],
   }));
 
-export const getFirstNotCompletedAndNotExpandedStep = (onboardingState: OnboardingState) => {
-  return (
-    mapInitialStepsWithState(onboardingState).filter(
-      step => !step.completed && step.expanded !== false,
-    )[0]?.id ?? ""
-  );
+  return stepsWithState.find(step => !step.completed && step.expanded !== false)?.id ?? "";
 };
 
-export const getNextStepToExpand = (onboardingState: OnboardingState) => {
+export const getNextStepToExpand = (
+  onboardingState: OnboardingState,
+  visibleSteps: OnboardingStep[],
+): OnboardingStepsIDs | "" => {
   const lastCompletedStepId =
     onboardingState.stepsCompleted[onboardingState.stepsCompleted.length - 1];
-  const steps = mapInitialStepsWithState(onboardingState);
-  const stepIndex = steps.findIndex(step => step.id === lastCompletedStepId);
+
+  const stepsWithState = visibleSteps.map(step => ({
+    ...step,
+    completed: onboardingState.stepsCompleted.includes(step.id),
+    expanded: onboardingState.stepsExpanded[step.id],
+  }));
+
+  const stepIndex = stepsWithState.findIndex(step => step.id === lastCompletedStepId);
+
+  if (stepIndex === -1 || stepIndex === stepsWithState.length - 1) {
+    return "";
+  }
 
   return (
-    steps.slice(stepIndex + 1).find(step => !step.completed && step.expanded !== false)?.id ?? ""
+    stepsWithState.slice(stepIndex + 1).find(step => !step.completed && step.expanded !== false)
+      ?.id ?? ""
   );
 };
 

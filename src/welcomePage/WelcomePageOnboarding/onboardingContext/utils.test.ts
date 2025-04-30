@@ -1,12 +1,14 @@
-import { OnboardingState } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/types";
+import {
+  OnboardingState,
+  OnboardingStep,
+} from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/types";
 
 import {
-    getFirstExpanderStepId,
-    getFirstNotCompletedAndNotExpandedStep,
-    getNextStepToExpand,
-    handleStateChangeAfterStepCompleted,
-    handleStateChangeAfterToggle,
-    mapInitialStepsWithState,
+  getFirstExpanderStepId,
+  getFirstNotCompletedAndNotExpandedStep,
+  getNextStepToExpand,
+  handleStateChangeAfterStepCompleted,
+  handleStateChangeAfterToggle,
 } from "./utils";
 
 describe("handleStateChangeAfterStepCompleted", () => {
@@ -128,60 +130,6 @@ describe("getFirstExpanderStepId", () => {
   });
 });
 
-describe("mapInitialStepsWithState", () => {
-  it("should map initial steps with state", () => {
-    // Arrange
-    const onboardingState = {
-      stepsCompleted: ["get-started"],
-      stepsExpanded: {
-        "create-product": true,
-      },
-    } as OnboardingState;
-
-    // Act
-    const mappedSteps = mapInitialStepsWithState(onboardingState);
-
-    // Assert
-    expect(mappedSteps).toEqual([
-      {
-        id: "get-started",
-        completed: true,
-        expanded: undefined,
-      },
-      {
-        id: "create-product",
-        completed: false,
-        expanded: true,
-      },
-      {
-        id: "explore-orders",
-        completed: false,
-        expanded: undefined,
-      },
-      {
-        id: "graphql-playground",
-        completed: false,
-        expanded: undefined,
-      },
-      {
-        id: "view-extensions",
-        completed: false,
-        expanded: undefined,
-      },
-      {
-        id: "view-webhooks",
-        completed: false,
-        expanded: undefined,
-      },
-      {
-        id: "invite-staff",
-        completed: false,
-        expanded: undefined,
-      },
-    ]);
-  });
-});
-
 describe("getFirstNotCompletedAndNotExpandedStep", () => {
   it("should return the first not completed and not expanded step", () => {
     // Arrange
@@ -191,9 +139,21 @@ describe("getFirstNotCompletedAndNotExpandedStep", () => {
         "create-product": false,
       },
     } as OnboardingState;
+    const visibleSteps: OnboardingStep[] = [
+      { id: "get-started", completed: true, expanded: undefined },
+      { id: "create-product", completed: false, expanded: false },
+      { id: "explore-orders", completed: false, expanded: undefined },
+      { id: "graphql-playground", completed: false, expanded: undefined },
+      { id: "view-extensions", completed: false, expanded: undefined },
+      { id: "view-webhooks", completed: false, expanded: undefined },
+      { id: "invite-staff", completed: false, expanded: undefined },
+    ];
 
     // Act
-    const firstNotCompletedStep = getFirstNotCompletedAndNotExpandedStep(onboardingState);
+    const firstNotCompletedStep = getFirstNotCompletedAndNotExpandedStep(
+      onboardingState,
+      visibleSteps,
+    );
 
     // Assert
     expect(firstNotCompletedStep).toEqual("explore-orders");
@@ -213,9 +173,21 @@ describe("getFirstNotCompletedAndNotExpandedStep", () => {
       ],
       stepsExpanded: {},
     } as OnboardingState;
+    const visibleSteps: OnboardingStep[] = [
+      { id: "get-started", completed: true, expanded: undefined },
+      { id: "create-product", completed: true, expanded: undefined },
+      { id: "explore-orders", completed: true, expanded: undefined },
+      { id: "graphql-playground", completed: true, expanded: undefined },
+      { id: "view-extensions", completed: true, expanded: undefined },
+      { id: "view-webhooks", completed: true, expanded: undefined },
+      { id: "invite-staff", completed: true, expanded: undefined },
+    ];
 
     // Act
-    const firstNotCompletedStep = getFirstNotCompletedAndNotExpandedStep(onboardingState);
+    const firstNotCompletedStep = getFirstNotCompletedAndNotExpandedStep(
+      onboardingState,
+      visibleSteps,
+    );
 
     // Assert
     expect(firstNotCompletedStep).toEqual("");
@@ -229,9 +201,18 @@ describe("getNextStepToExpand", () => {
       stepsCompleted: ["create-product"],
       stepsExpanded: {},
     } as OnboardingState;
+    const visibleSteps: OnboardingStep[] = [
+      { id: "get-started", completed: true, expanded: undefined },
+      { id: "create-product", completed: true, expanded: undefined },
+      { id: "explore-orders", completed: false, expanded: undefined },
+      { id: "graphql-playground", completed: false, expanded: undefined },
+      { id: "view-extensions", completed: false, expanded: undefined },
+      { id: "view-webhooks", completed: false, expanded: undefined },
+      { id: "invite-staff", completed: false, expanded: undefined },
+    ];
 
     // Act
-    const nextStep = getNextStepToExpand(onboardingState);
+    const nextStep = getNextStepToExpand(onboardingState, visibleSteps);
 
     // Assert
     expect(nextStep).toEqual("explore-orders");
@@ -243,9 +224,18 @@ describe("getNextStepToExpand", () => {
       stepsCompleted: ["invite-staff"],
       stepsExpanded: {},
     } as OnboardingState;
+    const visibleSteps: OnboardingStep[] = [
+      { id: "get-started", completed: true, expanded: undefined },
+      { id: "create-product", completed: true, expanded: undefined },
+      { id: "explore-orders", completed: true, expanded: undefined },
+      { id: "graphql-playground", completed: true, expanded: undefined },
+      { id: "view-extensions", completed: true, expanded: undefined },
+      { id: "view-webhooks", completed: true, expanded: undefined },
+      { id: "invite-staff", completed: true, expanded: undefined },
+    ];
 
     // Act
-    const nextStep = getNextStepToExpand(onboardingState);
+    const nextStep = getNextStepToExpand(onboardingState, visibleSteps);
 
     // Assert
     expect(nextStep).toEqual("");
