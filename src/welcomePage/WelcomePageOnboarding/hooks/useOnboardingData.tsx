@@ -147,14 +147,14 @@ const getStepsData = ({
   {
     id: "view-webhooks",
     title: intl.formatMessage({
-      defaultMessage: "View webhooks functionalities",
-      id: "eWrHmu",
+      defaultMessage: "Discover extension capabilities",
+      id: "JTjg1r",
       description: "onboarding step title",
     }),
     description: intl.formatMessage({
       defaultMessage:
-        "Webhooks are available in Saleor to both Local and External Apps. To create a Webhook you need to create a Local App first. You can do that in the Extensions section.",
-      id: "vUzuyz",
+        "Review the central hub for managing all available extensions. Here, you can easily oversee your extensions and enhance Saleor with custom solutions using webhooks and APIs.",
+      id: "zsz6LN",
       description: "onboarding step description",
     }),
     isCompleted: isStepCompleted("view-webhooks"),
