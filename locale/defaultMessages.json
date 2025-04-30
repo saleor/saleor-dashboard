@@ -476,6 +476,10 @@
     "context": "countries list menu label when no countries are assigned",
     "string": "There are no countries assigned"
   },
+  "0dCGBW": {
+    "context": "button",
+    "string": "Create structure"
+  },
   "0dPP8O": {
     "string": "Order #{orderId} was placed"
   },
@@ -694,6 +698,10 @@
   },
   "2/L4zZ": {
     "string": "Select all channels"
+  },
+  "21cJ+Z": {
+    "context": "structures section name",
+    "string": "Structures"
   },
   "22x9tu": {
     "context": "header",
@@ -1750,6 +1758,9 @@
   "9DUknc": {
     "string": "Installation failed"
   },
+  "9FCrIN": {
+    "string": "Model type"
+  },
   "9FGTOt": {
     "string": "Allow access to orders of all channels"
   },
@@ -2533,9 +2544,6 @@
     "context": "fully paid checkout automatically completed message",
     "string": "Order created automatically from fully paid checkout"
   },
-  "E54eoT": {
-    "string": "Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy"
-  },
   "E8T3e+": {
     "string": "Cannot add and remove group the same time"
   },
@@ -2939,6 +2947,10 @@
   "GFJabu": {
     "context": "dialog header",
     "string": "Delete Variant"
+  },
+  "GFioCC": {
+    "context": "models section name",
+    "string": "Models"
   },
   "GFkb2t": {
     "context": "automatically complete checkouts checkbox label",
@@ -3527,10 +3539,6 @@
     "context": "window title",
     "string": "Create Webhook"
   },
-  "JXRYQg": {
-    "context": "button",
-    "string": "Create Menu"
-  },
   "Ja7gHc": {
     "context": "button",
     "string": "Edit"
@@ -4114,6 +4122,10 @@
     "context": "attribute values list: slug column header",
     "string": "Swatch"
   },
+  "NVp0fa": {
+    "context": "modeling section name",
+    "string": "Modeling"
+  },
   "NWA+MK": {
     "context": "dialog content",
     "string": "<b>Important:</b> Refunds need to be issued <b>manually</b> after order cancelation."
@@ -4349,6 +4361,10 @@
   "P/oGtb": {
     "context": "product availability",
     "string": "Available for purchase"
+  },
+  "P5HhQl": {
+    "context": "catalog section name",
+    "string": "Catalog"
   },
   "P5twxk": {
     "context": "link",
@@ -4786,6 +4802,10 @@
     "context": "tax classes menu label when there are no tax classes",
     "string": "There are no tax classes"
   },
+  "RiQ0v1": {
+    "context": "installed extensions section name",
+    "string": "Installed"
+  },
   "Rj8LxK": {
     "string": "Add search engine title and description to make this collection easier to find"
   },
@@ -5033,6 +5053,10 @@
     "context": "order history message",
     "string": "Payment failed"
   },
+  "TD/GhR": {
+    "context": "header",
+    "string": "Structure Items"
+  },
   "TDhHMi": {
     "string": "This needs to be unique"
   },
@@ -5068,6 +5092,10 @@
   "TOMgXz": {
     "context": "button",
     "string": "Reset"
+  },
+  "TPP7j+": {
+    "context": "section header",
+    "string": "Organize Model"
   },
   "TPW2tP": {
     "string": "You have reached your order limit, you will be billed extra for orders above limit. If you would like to up your limit, contact your administration staff about raising your limits."
@@ -5926,10 +5954,6 @@
     "context": "label",
     "string": "Gift Card"
   },
-  "YMBn8d": {
-    "context": "draft orders section name",
-    "string": "Draft Orders"
-  },
   "YQ3EXR": {
     "context": "product types section name",
     "string": "Product Types"
@@ -6378,6 +6402,10 @@
     "context": "seo complete text",
     "string": "Complete"
   },
+  "bHG5/d": {
+    "context": "promotions section name",
+    "string": "Promotions"
+  },
   "bHdFph": {
     "context": "subsection header",
     "string": "Address"
@@ -6696,10 +6724,6 @@
   "dDCLFW": {
     "context": "alert message",
     "string": "Not available for sale this channel"
-  },
-  "dEUZg2": {
-    "context": "header",
-    "string": "Menu Items"
   },
   "dGqEJ9": {
     "context": "search box placeholder",
@@ -7341,9 +7365,6 @@
     "context": "heading, sum of all completed refunds from transactions in order",
     "string": "Refunded"
   },
-  "hpMcW8": {
-    "string": "Define how users can navigate through your store"
-  },
   "hptDxW": {
     "context": "money",
     "string": "to {money}"
@@ -7584,10 +7605,6 @@
   },
   "jTifz+": {
     "string": "Successfully created attribute"
-  },
-  "jU9GPX": {
-    "context": "section header",
-    "string": "Organize Content"
   },
   "jUuHVn": {
     "context": "description",
@@ -8673,6 +8690,9 @@
     "context": "product label",
     "string": "Published"
   },
+  "qL9Oi9": {
+    "string": "Structure Title"
+  },
   "qLOBff": {
     "context": "dialog header",
     "string": "Delete Address"
@@ -9310,9 +9330,6 @@
   "uf1ttM": {
     "string": "Rule reward value is required"
   },
-  "ufD5Jr": {
-    "string": "Content type"
-  },
   "ufahVh": {
     "context": "collection filter hidden",
     "string": "Hidden"
@@ -9418,6 +9435,10 @@
   "vDnheO": {
     "context": "gift card bulk create success dialog accept button",
     "string": "Ok"
+  },
+  "vDp2tH": {
+    "context": "all structures",
+    "string": "All structures"
   },
   "vEYtiq": {
     "string": "Category Name"
@@ -9978,6 +9999,10 @@
   "ys0jH2": {
     "context": "channel publication status",
     "string": "Published"
+  },
+  "ytKTTO": {
+    "context": "draft orders section name",
+    "string": "Drafts"
   },
   "yzYXW/": {
     "context": "header, dialog",
