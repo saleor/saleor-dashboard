@@ -46,8 +46,8 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
       <DashboardCard.Header>
         <DashboardCard.Title>
           {intl.formatMessage({
-            id: "jU9GPX",
-            defaultMessage: "Organize Content",
+            id: "TPP7j+",
+            defaultMessage: "Organize Model",
             description: "section header",
           })}
         </DashboardCard.Title>
@@ -77,7 +77,7 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
         ) : (
           <>
             <Text size={2} fontWeight="light" display="block">
-              <FormattedMessage id="ufD5Jr" defaultMessage="Content type" />
+              <FormattedMessage id="9FCrIN" defaultMessage="Model type" />
             </Text>
             <Text>{pageType?.name}</Text>
           </>

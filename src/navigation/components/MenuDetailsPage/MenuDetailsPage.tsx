@@ -1,19 +1,14 @@
 // @ts-strict-ignore
-import { Backlink } from "@dashboard/components/Backlink";
-import CardSpacer from "@dashboard/components/CardSpacer";
+import { TopNav } from "@dashboard/components/AppLayout";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import { MenuDetailsFragment, MenuErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
 import { menuListUrl } from "@dashboard/navigation/urls";
-import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
 
 import { MenuItemType } from "../MenuItemDialog";
 import MenuItems, { TreeOperation } from "../MenuItems";
@@ -51,7 +46,6 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   onItemEdit,
   onSubmit,
 }) => {
-  const intl = useIntl();
   const navigate = useNavigator();
   const initialForm: MenuDetailsFormData = {
     name: menu?.name ?? "",
@@ -83,66 +77,43 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
       onSubmit={handleSubmit}
     >
       {({ change, data, submit }) => (
-        <DetailPageLayout gridTemplateColumns={1}>
+        <DetailPageLayout>
+          <TopNav href={menuListUrl()} title={menu?.name} />
           <DetailPageLayout.Content>
-            <Box padding={6} margin="auto" height="100vh">
-              <Backlink href={menuListUrl()}>
-                {intl.formatMessage(sectionNames.navigation)}
-              </Backlink>
-              <Grid variant="inverted">
-                <div>
-                  <Text size={3} fontWeight="bold" lineHeight={2}>
-                    {intl.formatMessage(sectionNames.navigation)}
-                  </Text>
-                  <Text display="block">
-                    <FormattedMessage
-                      id="E54eoT"
-                      defaultMessage="Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy"
-                    />
-                  </Text>
-                </div>
-                <div>
-                  <MenuProperties
-                    data={data}
-                    disabled={disabled}
-                    errors={errors}
-                    onChange={change}
-                  />
-                  <CardSpacer />
-                  <MenuItems
-                    canUndo={treeOperations.length > 0}
-                    items={menu?.items ? computeRelativeTree(menu.items, treeOperations) : []}
-                    onChange={handleChange}
-                    onItemAdd={onItemAdd}
-                    onItemClick={onItemClick}
-                    onItemEdit={onItemEdit}
-                    onUndo={() =>
-                      setTreeOperations(operations => {
-                        if (operations.length > 1) {
-                          // Undo of a simulated move needs removal of 2 moves instead of one
-                          if (operations[operations.length - 2].simulatedMove) {
-                            return operations.slice(0, operations.length - 2);
-                          }
-                        }
-
-                        return operations.slice(0, operations.length - 1);
-                      })
+            <MenuItems
+              canUndo={treeOperations.length > 0}
+              items={menu?.items ? computeRelativeTree(menu.items, treeOperations) : []}
+              onChange={handleChange}
+              onItemAdd={onItemAdd}
+              onItemClick={onItemClick}
+              onItemEdit={onItemEdit}
+              onUndo={() =>
+                setTreeOperations(operations => {
+                  if (operations.length > 1) {
+                    // Undo of a simulated move needs removal of 2 moves instead of one
+                    if (operations[operations.length - 2].simulatedMove) {
+                      return operations.slice(0, operations.length - 2);
                     }
-                  />
-                </div>
-              </Grid>
-              <Savebar>
-                <Savebar.DeleteButton onClick={onDelete} />
-                <Savebar.Spacer />
-                <Savebar.CancelButton onClick={() => navigate(menuListUrl())} />
-                <Savebar.ConfirmButton
-                  transitionState={saveButtonState}
-                  onClick={submit}
-                  disabled={disabled || treeOperations.length === 0}
-                />
-              </Savebar>
-            </Box>
+                  }
+
+                  return operations.slice(0, operations.length - 1);
+                })
+              }
+            />
           </DetailPageLayout.Content>
+          <DetailPageLayout.RightSidebar>
+            <MenuProperties data={data} disabled={disabled} errors={errors} onChange={change} />
+          </DetailPageLayout.RightSidebar>
+          <Savebar>
+            <Savebar.DeleteButton onClick={onDelete} />
+            <Savebar.Spacer />
+            <Savebar.CancelButton onClick={() => navigate(menuListUrl())} />
+            <Savebar.ConfirmButton
+              transitionState={saveButtonState}
+              onClick={submit}
+              disabled={disabled}
+            />
+          </Savebar>
         </DetailPageLayout>
       )}
     </Form>
