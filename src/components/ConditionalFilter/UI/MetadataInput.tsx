@@ -51,7 +51,7 @@ export const MetadataInput = ({
         placeholder={intl.formatMessage(metadataInputMessages.keyPlaceholder)}
         disabled={disabled}
       />
-      <Box __width="1px" backgroundColor="default1Focused" />
+      <Box borderLeftStyle="solid" borderLeftWidth={1} borderColor="default1" />
       <Input
         data-test-id={`right-${index}-2`}
         value={selected.value[1] || ""}

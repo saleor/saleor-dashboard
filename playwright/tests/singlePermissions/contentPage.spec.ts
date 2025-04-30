@@ -37,7 +37,7 @@ test.beforeEach(async ({ page }) => {
 test("TC: SALEOR_14 User should be able to navigate to content list as a staff member using CONTENT aka PAGE permission #e2e", async () => {
   await mainMenuPage.openContent();
   await expect(contentPage.createContentButton).toBeVisible();
-  await mainMenuPage.expectMenuItemsCount(4);
+  await mainMenuPage.expectMenuItemsCount(5);
   await basePage.expectGridToBeAttached();
 });
 test("TC: SALEOR_15 User should be able to navigate to page types list as a staff member using CONTENT aka PAGE permission #e2e", async () => {

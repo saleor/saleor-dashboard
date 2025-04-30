@@ -14,15 +14,16 @@ import { useFlag } from "@dashboard/featureFlags";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import { PermissionEnum } from "@dashboard/graphql";
 import { ConfigurationIcon } from "@dashboard/icons/Configuration";
-import { ContentsIcon } from "@dashboard/icons/Contents";
 import { CustomersIcon } from "@dashboard/icons/Customers";
 import { DiscountsIcon } from "@dashboard/icons/Discounts";
 import { HomeIcon } from "@dashboard/icons/Home";
 import { MarketplaceIcon } from "@dashboard/icons/Marketplace";
+import ModelingIcon from "@dashboard/icons/Modeling";
 import { OrdersIcon } from "@dashboard/icons/Orders";
 import { ProductsIcon } from "@dashboard/icons/Products";
 import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { commonMessages, sectionNames } from "@dashboard/intl";
+import { menuListUrl } from "@dashboard/navigation/urls";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { pageListPath } from "@dashboard/pages/urls";
 import { productListUrl } from "@dashboard/products/urls";
@@ -76,6 +77,13 @@ export function useMenuStructure() {
     onClick: () => handleAppsListItemClick(new Date().toISOString()),
     children: [
       {
+        label: intl.formatMessage(sectionNames.installedExtensions),
+        id: "installed-extensions",
+        url: ExtensionsPaths.installedExtensions,
+        permissions: [],
+        type: "item",
+      },
+      {
         label: intl.formatMessage(sectionNames.exploreExtensions),
         id: "explore-extensions",
         url: ExtensionsPaths.exploreExtensions,
@@ -95,6 +103,13 @@ export function useMenuStructure() {
     },
     {
       children: [
+        {
+          label: intl.formatMessage(sectionNames.products),
+          id: "products",
+          url: productListUrl(),
+          permissions: [PermissionEnum.MANAGE_PRODUCTS],
+          type: "item",
+        },
         {
           label: intl.formatMessage(sectionNames.categories),
           id: "categories",
@@ -120,7 +135,7 @@ export function useMenuStructure() {
       ],
       icon: renderIcon(<ProductsIcon />),
       url: productListUrl(),
-      label: intl.formatMessage(commonMessages.products),
+      label: intl.formatMessage(sectionNames.catalog),
       permissions: [PermissionEnum.MANAGE_GIFT_CARD, PermissionEnum.MANAGE_PRODUCTS],
       id: "products",
       type: "itemGroup",
@@ -128,7 +143,14 @@ export function useMenuStructure() {
     {
       children: [
         {
-          label: intl.formatMessage(commonMessages.drafts),
+          label: intl.formatMessage(sectionNames.orders),
+          permissions: [PermissionEnum.MANAGE_ORDERS],
+          id: "orders",
+          url: orderListUrl(),
+          type: "item",
+        },
+        {
+          label: intl.formatMessage(sectionNames.draftOrders),
           permissions: [PermissionEnum.MANAGE_ORDERS],
           id: "order-drafts",
           url: orderDraftListUrl(),
@@ -166,6 +188,12 @@ export function useMenuStructure() {
     {
       children: [
         {
+          label: intl.formatMessage(sectionNames.promotions),
+          id: "promotions",
+          url: saleListUrl(),
+          type: "item",
+        },
+        {
           label: intl.formatMessage(sectionNames.vouchers),
           id: "vouchers",
           url: voucherListUrl(),
@@ -181,15 +209,29 @@ export function useMenuStructure() {
       type: "itemGroup",
     },
     {
-      children: !isEmpty(extensions.NAVIGATION_PAGES)
-        ? [...mapToExtensionsItems(extensions.NAVIGATION_PAGES, appExtensionsHeaderItem)]
-        : undefined,
-      icon: renderIcon(<ContentsIcon />),
-      label: intl.formatMessage(sectionNames.content),
-      permissions: [PermissionEnum.MANAGE_PAGES],
+      children: [
+        {
+          label: intl.formatMessage(sectionNames.models),
+          id: "models",
+          url: pageListPath,
+          permissions: [PermissionEnum.MANAGE_PAGES],
+          type: "item",
+        },
+        {
+          label: intl.formatMessage(sectionNames.structures),
+          id: "structures",
+          url: menuListUrl(),
+          permissions: [PermissionEnum.MANAGE_MENUS],
+          type: "item",
+        },
+        ...mapToExtensionsItems(extensions.NAVIGATION_PAGES, appExtensionsHeaderItem),
+      ],
+      icon: renderIcon(<ModelingIcon />),
+      label: intl.formatMessage(sectionNames.modeling),
+      permissions: [PermissionEnum.MANAGE_PAGES, PermissionEnum.MANAGE_MENUS],
       id: "pages",
       url: pageListPath,
-      type: !isEmpty(extensions.NAVIGATION_PAGES) ? "itemGroup" : "item",
+      type: "itemGroup",
     },
     {
       children: !isEmpty(extensions.NAVIGATION_TRANSLATIONS)
