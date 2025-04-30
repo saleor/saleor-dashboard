@@ -52,10 +52,14 @@ export function AddCustomExtension({ setToken }: { setToken: (token: string) => 
     handleSubmit,
     setValue,
     reset,
+    setError,
     formState: { isSubmitting },
   } = methods;
 
-  const submitCreateApp = useHandleCreateAppSubmit({ setToken });
+  const submitCreateApp = useHandleCreateAppSubmit({
+    setToken,
+    setError,
+  });
 
   // Permissions are fetched asynchronously
   // set them as default form values once they are loaded

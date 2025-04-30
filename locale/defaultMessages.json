@@ -6804,6 +6804,9 @@
     "context": "order history message",
     "string": "Updated fulfillment group's tracking number"
   },
+  "e9z98s": {
+    "string": "You don't have access to this permission"
+  },
   "eAFU/E": {
     "context": "product inventory, checkbox",
     "string": "Variant currently in preorder"
