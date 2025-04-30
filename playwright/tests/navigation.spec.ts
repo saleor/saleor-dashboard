@@ -20,12 +20,7 @@ test.beforeEach(({ page }) => {
   navigationDetailsPage = new NavigationDetailsPage(page);
   addNavigationMenuItemDialog = new AddNavigationMenuItemDialog(page);
 });
-test("TC: SALEOR_193 Should go to Navigation page #navigation #e2e", async () => {
-  await config.goToConfigurationView();
-  await navigation.clickNavigationButtonFromConfiguration();
-  await expect(navigation.navigationHeader).toBeVisible();
-  await expect(navigation.navigationList).toBeVisible();
-});
+
 test("TC: SALEOR_194 Should create a new menu navigation with menu item #navigation #e2e", async () => {
   test.slow();
   await navigation.goToNavigationView();

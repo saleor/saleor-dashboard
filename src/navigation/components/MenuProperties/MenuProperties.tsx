@@ -35,8 +35,8 @@ const MenuProperties: React.FC<MenuPropertiesProps> = ({ data, disabled, errors,
           name={"name" as keyof MenuDetailsFormData}
           fullWidth
           label={intl.formatMessage({
-            id: "jhh/D6",
-            defaultMessage: "Menu Title",
+            id: "qL9Oi9",
+            defaultMessage: "Structure Title",
           })}
           helperText={getMenuErrorMessage(formErrors.name, intl)}
           value={data.name}
