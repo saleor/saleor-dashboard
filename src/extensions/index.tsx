@@ -3,7 +3,11 @@ import SectionRoute from "@dashboard/auth/components/SectionRoute";
 import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { CustomAppDetailsUrlQueryParams } from "@dashboard/custom-apps/urls";
-import { ExtensionInstallQueryParams, ExtensionsPaths } from "@dashboard/extensions/urls";
+import {
+  ExtensionInstallQueryParams,
+  ExtensionsPaths,
+  PluginUrlQueryParams,
+} from "@dashboard/extensions/urls";
 import { ExploreExtensions } from "@dashboard/extensions/views/ExploreExtensions";
 import { InstallCustomExtension } from "@dashboard/extensions/views/InstallCustomExtension";
 import { InstalledExtensions } from "@dashboard/extensions/views/InstalledExtensions";
@@ -22,6 +26,7 @@ import { AddCustomExtension } from "./views/AddCustomExtension";
 import { AddCustomExtensionWebhook } from "./views/AddCustomExtensionWebhook";
 import { EditCustomExtension } from "./views/EditCustomExtension";
 import { EditCustomExtensionWebhook } from "./views/EditCustomExtensionWebhook";
+import { EditPluginExtension } from "./views/EditPluginExtension";
 
 const ExploreExtensionsView = () => {
   return <ExploreExtensions />;
@@ -61,6 +66,18 @@ const EditCustomExtensionView = ({
       onTokenClose={onTokenClose}
     />
   );
+};
+
+const EditPluginExtensionView = ({ match }: RouteComponentProps<{ id: string }>) => {
+  const qs = parseQs(location.search.substr(1));
+  const params: PluginUrlQueryParams = qs;
+  const id = decodeURIComponent(match.params.id);
+
+  if (!id) {
+    throw new Error("No ID provided");
+  }
+
+  return <EditPluginExtension id={id} params={params} />;
 };
 
 const AddCustomExtensionWebhookView = ({ match }: RouteComponentProps<{ appId?: string }>) => {
@@ -115,6 +132,12 @@ export const ExtensionsSection = () => {
           component={InstallCustomExtensionView}
         />
 
+        <Route
+          exact
+          path={ExtensionsPaths.resolveEditPluginExtension(":id")}
+          component={EditPluginExtensionView}
+        />
+
         {/* -- Custom apps routes -- */}
         <Route
           exact
@@ -132,6 +155,7 @@ export const ExtensionsSection = () => {
             />
           )}
         />
+
         <Route
           exact
           path={ExtensionsPaths.resolveAddCustomExtensionWebhook(":appId")}
