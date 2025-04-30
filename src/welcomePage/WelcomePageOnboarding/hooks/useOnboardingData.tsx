@@ -153,8 +153,8 @@ const getStepsData = ({
     }),
     description: intl.formatMessage({
       defaultMessage:
-        "Webhooks are available in Saleor to both Local and External Apps. To create a Webhook you need to create a Local App first. You can do that in the Configuration >  Webhooks & Events.",
-      id: "/XGvYd",
+        "Webhooks are available in Saleor to both Local and External Apps. To create a Webhook you need to create a Local App first. You can do that in the Extensions section.",
+      id: "vUzuyz",
       description: "onboarding step description",
     }),
     isCompleted: isStepCompleted("view-webhooks"),

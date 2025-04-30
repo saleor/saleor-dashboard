@@ -13,8 +13,9 @@ import { useInstalledExtensionsFilter } from "@dashboard/extensions/views/Instal
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { DeleteFailedInstallationDialog } from "./components/DeleteFailedInstallationDialog";
@@ -30,6 +31,11 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
+  const { markOnboardingStepAsCompleted } = useOnboarding();
+
+  useEffect(() => {
+    markOnboardingStepAsCompleted("view-webhooks");
+  }, [markOnboardingStepAsCompleted]);
 
   const navigateToAppInstallPage = useCallback(
     (manifestUrl: string) => {
