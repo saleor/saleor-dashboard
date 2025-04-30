@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 
 import { OnboardingState, OnboardingStepsIDs } from "./types";
 import {
-  getFirstExpanderStepId,
-  getFirstNotCompletedAndNotExpandedStep,
-  getNextStepToExpand,
+    getFirstExpanderStepId,
+    getFirstNotCompletedAndNotExpandedStep,
+    getNextStepToExpand,
 } from "./utils";
 
 export const useExpandedOnboardingId = (onboardingState: OnboardingState, loaded: boolean) => {

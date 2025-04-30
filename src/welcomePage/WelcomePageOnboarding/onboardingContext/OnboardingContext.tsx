@@ -1,4 +1,5 @@
 import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
+import { useFlag } from "@dashboard/featureFlags";
 import {
   handleStateChangeAfterStepCompleted,
   handleStateChangeAfterToggle,
@@ -24,6 +25,7 @@ const OnboardingContext = React.createContext<OnboardingContextType | null>(null
 
 export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
   const analytics = useAnalytics();
+  const { enabled: isExtensionsFlagEnabled } = useFlag("extensions");
   const [onboardingState, setOnboardingState] = React.useState<OnboardingState>({
     onboardingExpanded: true,
     stepsCompleted: [],
@@ -55,10 +57,23 @@ export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
     }
   }, [onboardingState]);
 
+  // Calculate the valid completed steps based on feature flag
+  const validCompletedSteps = onboardingState.stepsCompleted.filter(step => {
+    if (step === "view-extensions") {
+      return isExtensionsFlagEnabled;
+    }
+
+    if (step === "view-webhooks") {
+      return !isExtensionsFlagEnabled;
+    }
+
+    return true;
+  });
+
+  const validCompletedStepsCount = validCompletedSteps.length;
+
   // For old users, onboarding is always completed, for new one we need to calculate it
-  const isOnboardingCompleted = isNewUser
-    ? onboardingState.stepsCompleted.length === TOTAL_STEPS_COUNT
-    : true;
+  const isOnboardingCompleted = isNewUser ? validCompletedStepsCount >= TOTAL_STEPS_COUNT : true;
 
   const extendedStepId = useExpandedOnboardingId(onboardingState, loaded.current);
 
@@ -113,6 +128,8 @@ export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
         markAllAsCompleted,
         toggleExpandedOnboardingStep,
         toggleOnboarding,
+        totalStepsCount: TOTAL_STEPS_COUNT,
+        validCompletedStepsCount,
       }}
     >
       {children}

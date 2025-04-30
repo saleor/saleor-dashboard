@@ -41,7 +41,7 @@ export const initialOnboardingSteps: OnboardingStep[] = [
   },
 ];
 
-export const TOTAL_STEPS_COUNT = initialOnboardingSteps.length;
+export const TOTAL_STEPS_COUNT = initialOnboardingSteps.length - 1; // we either show view-extensions or view-webhooks but not both
 
 export const getInitialOnboardingState = (isNewUser: boolean): OnboardingState => {
   if (isNewUser) {
