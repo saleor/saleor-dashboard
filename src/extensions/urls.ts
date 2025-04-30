@@ -5,7 +5,7 @@ import urlJoin from "url-join";
 export const extensionsSection = "/extensions";
 
 export const ExtensionsPaths = {
-  installedExtensions: extensionsSection,
+  installedExtensions: urlJoin(extensionsSection, "installed"),
   exploreExtensions: urlJoin(extensionsSection, "explore"),
   addCustomExtension: urlJoin(extensionsSection, "custom", "add"),
   resolveEditCustomExtension: (id: string) => urlJoin(extensionsSection, "custom", id),
