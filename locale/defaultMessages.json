@@ -287,10 +287,6 @@
     "context": "collection name",
     "string": "Name"
   },
-  "/XGvYd": {
-    "context": "onboarding step description",
-    "string": "Webhooks are available in Saleor to both Local and External Apps. To create a Webhook you need to create a Local App first. You can do that in the Configuration > Webhooks & Events."
-  },
   "/Xwjww": {
     "context": "button",
     "string": "Fulfill"
@@ -1234,10 +1230,6 @@
     "context": "product attribute entity type",
     "string": "Products"
   },
-  "5TzisG": {
-    "context": "btn label",
-    "string": "Go to Webhooks"
-  },
   "5Vwnu+": {
     "string": "You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits."
   },
@@ -1648,6 +1640,10 @@
   "8J81ri": {
     "context": "ordered product sku",
     "string": "SKU"
+  },
+  "8Mq3ku": {
+    "context": "btn label",
+    "string": "Go to Extensions"
   },
   "8Q504V": {
     "string": "Metadata"
@@ -3518,6 +3514,10 @@
   "JTcz2G": {
     "context": "csv file exporting has finished, header",
     "string": "Exporting CSV finished"
+  },
+  "JTjg1r": {
+    "context": "onboarding step title",
+    "string": "Discover extension capabilities"
   },
   "JV+EiM": {
     "context": "voucher value",
@@ -6852,10 +6852,6 @@
     "context": "button",
     "string": "Choose file"
   },
-  "eWrHmu": {
-    "context": "onboarding step title",
-    "string": "View webhooks functionalities"
-  },
   "eaoi2W": {
     "context": "tab name",
     "string": "All warehouses"
@@ -10147,6 +10143,10 @@
   "zqarUF": {
     "context": "modal information under title",
     "string": "Select an address you want to use from the list below"
+  },
+  "zsz6LN": {
+    "context": "onboarding step description",
+    "string": "Review the central hub for managing all available extensions. Here, you can easily oversee your extensions and enhance Saleor with custom solutions using webhooks and APIs."
   },
   "ztQgD8": {
     "string": "No attributes found"
