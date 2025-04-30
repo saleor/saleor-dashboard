@@ -23,7 +23,7 @@ import { InstalledExtensionsList } from "./components/InstalledExtensionsList";
 import { useInstalledExtensions } from "./hooks/useInstalledExtensions";
 import { usePendingInstallation } from "./hooks/usePendingInstallation";
 
-interface InstalledExtensionsProps {
+export interface InstalledExtensionsProps {
   params: ExtensionsListUrlQueryParams;
 }
 
