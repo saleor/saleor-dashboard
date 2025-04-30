@@ -30,6 +30,11 @@ export const initialOnboardingSteps: OnboardingStep[] = [
     expanded: undefined,
   },
   {
+    id: "view-webhooks",
+    completed: false,
+    expanded: undefined,
+  },
+  {
     id: "invite-staff",
     completed: false,
     expanded: undefined,

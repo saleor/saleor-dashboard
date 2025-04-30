@@ -6,6 +6,7 @@ export type OnboardingStepsIDs =
   | "explore-orders"
   | "graphql-playground"
   | "view-extensions"
+  | "view-webhooks"
   | "invite-staff";
 
 export type OnboardingStep = {

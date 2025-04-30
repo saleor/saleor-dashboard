@@ -1,12 +1,12 @@
 import { OnboardingState } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/types";
 
 import {
-  getFirstExpanderStepId,
-  getFirstNotCompletedAndNotExpandedStep,
-  getNextStepToExpand,
-  handleStateChangeAfterStepCompleted,
-  handleStateChangeAfterToggle,
-  mapInitialStepsWithState,
+    getFirstExpanderStepId,
+    getFirstNotCompletedAndNotExpandedStep,
+    getNextStepToExpand,
+    handleStateChangeAfterStepCompleted,
+    handleStateChangeAfterToggle,
+    mapInitialStepsWithState,
 } from "./utils";
 
 describe("handleStateChangeAfterStepCompleted", () => {
@@ -169,6 +169,11 @@ describe("mapInitialStepsWithState", () => {
         expanded: undefined,
       },
       {
+        id: "view-webhooks",
+        completed: false,
+        expanded: undefined,
+      },
+      {
         id: "invite-staff",
         completed: false,
         expanded: undefined,
@@ -203,6 +208,7 @@ describe("getFirstNotCompletedAndNotExpandedStep", () => {
         "explore-orders",
         "graphql-playground",
         "view-extensions",
+        "view-webhooks",
         "invite-staff",
       ],
       stepsExpanded: {},

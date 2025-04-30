@@ -49,6 +49,7 @@ describe("useExpandedOnboardingId", () => {
         "explore-orders": false,
         "graphql-playground": false,
         "view-extensions": false,
+        "view-webhooks": false,
         "invite-staff": false,
       },
     } as OnboardingState;
