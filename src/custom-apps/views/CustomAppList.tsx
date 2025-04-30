@@ -36,7 +36,7 @@ export const CustomAppList: React.FC<CustomAppListProps> = ({ params }) => {
   const { markOnboardingStepAsCompleted } = useOnboarding();
 
   useEffect(() => {
-    markOnboardingStepAsCompleted("view-webhooks");
+    markOnboardingStepAsCompleted("view-extensions");
   }, []);
 
   const [openModal, closeModal] = createDialogActionHandlers<

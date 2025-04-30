@@ -39,8 +39,8 @@ const getStepsData = ({
     }),
     description: intl.formatMessage({
       defaultMessage:
-        "We’ll guide you through the main features so you can start customizing your store. Explore products, orders, collections, customers, and discounts to get familiar with key functions and concepts.",
-      id: "mU695h",
+        "We'll guide you through the main features so you can start customizing your store. Explore products, orders, collections, customers, and discounts to get familiar with key functions and concepts.",
+      id: "PrxZ/P",
       description: "onboarding step description",
     }),
     isCompleted: isStepCompleted("get-started"),
@@ -145,7 +145,7 @@ const getStepsData = ({
     ),
   },
   {
-    id: "view-webhooks",
+    id: "view-extensions",
     title: intl.formatMessage({
       defaultMessage: "Discover extension capabilities",
       id: "JTjg1r",
@@ -157,15 +157,15 @@ const getStepsData = ({
       id: "zsz6LN",
       description: "onboarding step description",
     }),
-    isCompleted: isStepCompleted("view-webhooks"),
+    isCompleted: isStepCompleted("view-extensions"),
     actions: (
       <>
-        <WelcomePageWebhooksButton onClick={() => trackOnboardingEvent("view-webhooks")} />
-        {!isStepCompleted("view-webhooks") && (
+        <WelcomePageWebhooksButton onClick={() => trackOnboardingEvent("view-extensions")} />
+        {!isStepCompleted("view-extensions") && (
           <Button
             variant="secondary"
-            onClick={() => onStepComplete("view-webhooks")}
-            data-test-id="view-webhooks-mark-as-done"
+            onClick={() => onStepComplete("view-extensions")}
+            data-test-id="view-extensions-mark-as-done"
           >
             <FormattedMessage defaultMessage="Mark as done" id="C5gcqL" description="btn label" />
           </Button>

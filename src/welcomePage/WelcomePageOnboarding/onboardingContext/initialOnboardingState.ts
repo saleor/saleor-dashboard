@@ -25,7 +25,7 @@ export const initialOnboardingSteps: OnboardingStep[] = [
     expanded: undefined,
   },
   {
-    id: "view-webhooks",
+    id: "view-extensions",
     completed: false,
     expanded: undefined,
   },

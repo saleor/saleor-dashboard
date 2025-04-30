@@ -34,7 +34,7 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
   const { markOnboardingStepAsCompleted } = useOnboarding();
 
   useEffect(() => {
-    markOnboardingStepAsCompleted("view-webhooks");
+    markOnboardingStepAsCompleted("view-extensions");
   }, [markOnboardingStepAsCompleted]);
 
   const navigateToAppInstallPage = useCallback(

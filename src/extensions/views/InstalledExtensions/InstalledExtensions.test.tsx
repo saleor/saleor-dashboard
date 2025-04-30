@@ -85,7 +85,7 @@ describe("InstalledExtensions", () => {
     render(<InstalledExtensions {...defaultProps} />);
 
     // Assert
-    expect(mockMarkOnboardingStepAsCompleted).toHaveBeenCalledWith("view-webhooks");
+    expect(mockMarkOnboardingStepAsCompleted).toHaveBeenCalledWith("view-extensions");
   });
 
   it("displays installed and pending extensions in the list initially", () => {

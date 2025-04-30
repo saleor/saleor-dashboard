@@ -164,7 +164,7 @@ describe("mapInitialStepsWithState", () => {
         expanded: undefined,
       },
       {
-        id: "view-webhooks",
+        id: "view-extensions",
         completed: false,
         expanded: undefined,
       },
@@ -202,7 +202,7 @@ describe("getFirstNotCompletedAndNotExpandedStep", () => {
         "create-product",
         "explore-orders",
         "graphql-playground",
-        "view-webhooks",
+        "view-extensions",
         "invite-staff",
       ],
       stepsExpanded: {},

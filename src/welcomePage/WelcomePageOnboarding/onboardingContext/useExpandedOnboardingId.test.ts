@@ -48,8 +48,8 @@ describe("useExpandedOnboardingId", () => {
         "create-product": false,
         "explore-orders": false,
         "graphql-playground": false,
+        "view-extensions": false,
         "invite-staff": false,
-        "view-webhooks": false,
       },
     } as OnboardingState;
     const loaded = true;
