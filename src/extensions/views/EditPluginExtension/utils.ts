@@ -13,8 +13,8 @@ export const isPluginGlobal = (globalConfiguration: PluginConfigurationBaseFragm
 
 export const getConfigByChannelId =
   (channelIdToCompare: string) =>
-    ({ channel }: { channel: { id: string } }) =>
-      channel.id === channelIdToCompare;
+  ({ channel }: { channel: { id: string } }) =>
+    channel.id === channelIdToCompare;
 
 export function isSecretField(config: ConfigurationItemFragment[], field: string) {
   return [
