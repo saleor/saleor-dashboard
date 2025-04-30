@@ -34,11 +34,11 @@ test("TC: SALEOR_6 User should be able to navigate to discount list as a staff m
   await mainMenuPage.openDiscounts();
   await basePage.waitForGrid();
   await expect(discountsPage.createDiscountButton).toBeVisible();
-  await mainMenuPage.expectMenuItemsCount(4);
+  await mainMenuPage.expectMenuItemsCount(5);
 });
 test("TC: SALEOR_7 User should be able to navigate to voucher list as a staff member using DISCOUNTS permission #e2e", async () => {
   await mainMenuPage.openVouchers();
   await basePage.waitForGrid();
   await expect(vouchersPage.createVoucherButton).toBeVisible();
-  await mainMenuPage.expectMenuItemsCount(4);
+  await mainMenuPage.expectMenuItemsCount(5);
 });

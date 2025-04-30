@@ -24,5 +24,5 @@ test("TC: SALEOR_10 User should be able to navigate to extensions list as a staf
     timeout: 30000,
   });
   await expect(appsPage.installExternalAppButton).toBeVisible();
-  await mainMenuPage.expectMenuItemsCount(3);
+  await mainMenuPage.expectMenuItemsCount(4);
 });
