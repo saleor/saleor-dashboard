@@ -55,7 +55,7 @@ describe("ViewDetailsActionButton", () => {
     // Assert
     expect(screen.getByRole("link", { name: "View details" })).toHaveAttribute(
       "href",
-      "/custom-apps/123?",
+      "/extensions/custom/123?",
     );
   });
 });
