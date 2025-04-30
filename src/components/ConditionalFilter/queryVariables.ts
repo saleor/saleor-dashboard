@@ -339,6 +339,16 @@ export const createCustomerQueryVariables = (value: FilterContainer): CustomerFi
       return p;
     }
 
+    if (c.value.type === "metadata") {
+      p.metadata = p.metadata || [];
+
+      const [key, value] = c.condition.selected.value as [string, string];
+
+      p.metadata.push({ key, value });
+
+      return p;
+    }
+
     p[c.value.value as keyof CustomerFilterInput] = mapStaticQueryPartToLegacyVariables(
       createStaticQueryPart(c.condition.selected),
     );
