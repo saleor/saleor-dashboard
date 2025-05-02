@@ -123,12 +123,7 @@ export function useProductUpdateForm(
     opts.setSelectedCategory,
     opts.categories,
   );
-
-  const handleAttributeChange = (attributeId: string, value: string | null | undefined) => {
-    triggerChange();
-    attributes.change(attributeId, [value]);
-  };
-
+  const handleAttributeChange = createAttributeChangeHandler(attributes, triggerChange);
   const handleAttributeMultiChange = createAttributeMultiChangeHandler(
     attributes.change,
     attributes.data,
