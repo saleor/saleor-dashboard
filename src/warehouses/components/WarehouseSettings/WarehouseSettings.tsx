@@ -1,8 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { FormSpacer } from "@dashboard/components/FormSpacer";
 import Link from "@dashboard/components/Link";
 import PreviewPill from "@dashboard/components/PreviewPill";
-import { RadioGroupField } from "@dashboard/components/RadioGroupField";
+import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField";
 import {
   WarehouseClickAndCollectOptionEnum,
   WarehouseWithShippingFragment,
@@ -14,11 +13,17 @@ import { RelayToFlat } from "@dashboard/types";
 import { Divider } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { WarehouseDetailsPageFormData } from "../WarehouseDetailsPage";
 import messages from "./messages";
+
+const WarehouseRadioSubtitle = ({ children }: PropsWithChildren<{}>) => (
+  <Text size={2} fontWeight="light" color="default2" display="block">
+    {children}
+  </Text>
+);
 
 export interface WarehouseSettingsProps {
   zones: RelayToFlat<WarehouseWithShippingFragment["shippingZones"]>;
@@ -69,10 +74,9 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
       label: (
         <>
           <FormattedMessage {...messages.warehouseSettingsPrivateStock} />
-          <Text size={2} fontWeight="light" color="default2">
+          <WarehouseRadioSubtitle>
             <FormattedMessage {...messages.warehouseSettingsPrivateStockDescription} />
-          </Text>
-          <FormSpacer />
+          </WarehouseRadioSubtitle>
         </>
       ),
       value: "true",
@@ -81,9 +85,9 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
       label: (
         <>
           <FormattedMessage {...messages.warehouseSettingsPublicStock} />
-          <Text size={2} fontWeight="light" color="default2">
+          <WarehouseRadioSubtitle>
             <FormattedMessage {...messages.warehouseSettingsPublicStockDescription} />
-          </Text>
+          </WarehouseRadioSubtitle>
         </>
       ),
       value: "false",
@@ -94,10 +98,9 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
       label: (
         <>
           <FormattedMessage {...messages.warehouseSettingsDisabled} />
-          <Text size={2} fontWeight="light" color="default2">
+          <WarehouseRadioSubtitle>
             <FormattedMessage {...messages.warehouseSettingsDisabledDescription} />
-          </Text>
-          <FormSpacer />
+          </WarehouseRadioSubtitle>
         </>
       ),
       value: WarehouseClickAndCollectOptionEnum.DISABLED,
@@ -106,10 +109,12 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
       label: (
         <>
           <FormattedMessage {...messages.warehouseSettingsLocal} />
-          <Text size={2} fontWeight="light" color="default2">
-            <FormattedMessage {...messages.warehouseSettingsLocalDescription} />
-          </Text>
-          <FormSpacer />
+          <WarehouseRadioSubtitle>
+            <FormattedMessage
+              {...messages.warehouseSettingsLocalDescription}
+              values={{ break: <br /> }}
+            />
+          </WarehouseRadioSubtitle>
         </>
       ),
       value: WarehouseClickAndCollectOptionEnum.LOCAL,
@@ -118,9 +123,12 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
       label: (
         <>
           <FormattedMessage {...messages.warehouseSettingsAllWarehouses} />
-          <Text size={2} fontWeight="light" color="default2">
-            <FormattedMessage {...messages.warehouseSettingsAllWarehousesDescription} />
-          </Text>
+          <WarehouseRadioSubtitle>
+            <FormattedMessage
+              {...messages.warehouseSettingsAllWarehousesDescription}
+              values={{ break: <br /> }}
+            />
+          </WarehouseRadioSubtitle>
         </>
       ),
       value: WarehouseClickAndCollectOptionEnum.ALL,
@@ -165,12 +173,11 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
       </DashboardCard.Header>
       <DashboardCard.Content data-test-id="stock-settings-section">
         <RadioGroupField
-          disabled={disabled}
           choices={isPrivateChoices}
-          onChange={booleanRadioHandler}
-          value={data.isPrivate.toString()}
           name="isPrivate"
-          alignTop={true}
+          value={data.isPrivate.toString()}
+          onChange={booleanRadioHandler}
+          disabled={disabled}
         />
       </DashboardCard.Content>
       <Divider />
@@ -182,12 +189,11 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
       </DashboardCard.Header>
       <DashboardCard.Content>
         <RadioGroupField
-          disabled={disabled}
           choices={data.isPrivate ? clickAndCollectChoices : clickAndCollectChoicesPublic}
-          onChange={onChange}
-          value={data.clickAndCollectOption}
           name="clickAndCollectOption"
-          alignTop={true}
+          value={data.clickAndCollectOption}
+          onChange={onChange}
+          disabled={disabled}
         />
       </DashboardCard.Content>
     </DashboardCard>
