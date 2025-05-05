@@ -11,6 +11,7 @@ import TableCellHeader from "@dashboard/components/TableCellHeader";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { ChannelDetailsFragment, RefreshLimitsQuery } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { renderCollection, stopPropagation } from "@dashboard/misc";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
@@ -38,15 +39,16 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
   const intl = useIntl();
   const classes = useStyles({});
   const limitReached = isLimitReached(limits, "channels");
+  const navigator = useNavigator();
 
   return (
     <ListPageLayout>
       <TopNav href={configurationMenuUrl} title={intl.formatMessage(sectionNames.channels)}>
         <Button
           disabled={limitReached}
-          href={channelAddUrl}
           variant="primary"
           data-test-id="add-channel"
+          onClick={() => navigator(channelAddUrl)}
         >
           <FormattedMessage id="OGm8wO" defaultMessage="Create Channel" description="button" />
         </Button>
@@ -119,7 +121,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
                       <TableButtonWrapper>
                         <Button
                           variant="secondary"
-                          data-test-id="delete-edit"
+                          data-test-id="delete-channel"
                           icon={<DeleteIcon />}
                           onClick={
                             channel ? stopPropagation(() => onRemove(channel.id)) : undefined
