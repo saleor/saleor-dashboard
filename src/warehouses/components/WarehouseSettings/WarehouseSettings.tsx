@@ -14,13 +14,13 @@ import { RelayToFlat } from "@dashboard/types";
 import { Divider } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
-import React, { PropsWithChildren } from "react";
+import React, { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { WarehouseDetailsPageFormData } from "../WarehouseDetailsPage";
 import messages from "./messages";
 
-const WarehouseRadioSubtitle = ({ children }: PropsWithChildren<{}>) => (
+const WarehouseRadioSubtitle = ({ children }: { children: ReactNode }) => (
   <Text size={2} fontWeight="light" color="default2" display="block">
     {children}
   </Text>
