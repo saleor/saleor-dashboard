@@ -1,12 +1,11 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { CountryFragment } from "@dashboard/graphql";
 import { TableBody, TableCell } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Button, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -91,7 +90,12 @@ const CountryList: React.FC<CountryListProps> = props => {
       <DashboardCard.Header>
         <DashboardCard.Title>{title}</DashboardCard.Title>
         <DashboardCard.Toolbar>
-          <Button disabled={disabled} onClick={onCountryAssign} data-test-id="assign-country">
+          <Button
+            disabled={disabled}
+            onClick={onCountryAssign}
+            data-test-id="assign-country"
+            variant="secondary"
+          >
             <FormattedMessage id="zZCCqz" defaultMessage="Assign countries" description="button" />
           </Button>
         </DashboardCard.Toolbar>

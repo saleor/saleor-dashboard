@@ -1,13 +1,11 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { AppUpdateMutation } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Button, Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -75,13 +73,12 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
                     {token?.authToken ? `**** ${token.authToken}` : <Skeleton />}
                   </TableCell>
                   <TableCell className={classes.colActions}>
-                    <IconButton
+                    <Button
+                      icon={<TrashBinIcon />}
                       variant="secondary"
-                      color="primary"
                       onClick={() => onDelete(token.id)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
+                      marginLeft="auto"
+                    />
                   </TableCell>
                 </TableRowLink>
               ),
