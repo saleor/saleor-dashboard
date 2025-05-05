@@ -1,11 +1,11 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { Button } from "@dashboard/components/Button";
 import { ListPageLayout } from "@dashboard/components/Layouts";
-import { configurationMenuUrl } from "@dashboard/configuration";
 import { MenuFragment } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { menuListUrl, MenuListUrlSortField } from "@dashboard/navigation/urls";
 import { ListActions, PageListProps, SortPage } from "@dashboard/types";
+import { Box, Button, ChevronRightIcon, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -21,16 +21,42 @@ export interface MenuListPageProps
 
 const MenuListPage: React.FC<MenuListPageProps> = ({ ...listProps }) => {
   const intl = useIntl();
-  const addUrl = menuListUrl({
-    action: "add",
-  });
+  const navigate = useNavigator();
+
+  const handleCreateMenu = () => {
+    navigate(menuListUrl({ action: "add" }));
+  };
 
   return (
     <ListPageLayout>
-      <TopNav href={configurationMenuUrl} title={intl.formatMessage(sectionNames.navigation)}>
-        <Button variant="primary" href={addUrl} data-test-id="add-menu">
-          <FormattedMessage id="JXRYQg" defaultMessage="Create Menu" description="button" />
-        </Button>
+      <TopNav
+        title={intl.formatMessage(sectionNames.structures)}
+        isAlignToRight={false}
+        withoutBorder
+      >
+        <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
+          <Box display="flex">
+            <Box marginX={5} display="flex" alignItems="center">
+              <ChevronRightIcon />
+            </Box>
+            <Text size={6}>
+              <FormattedMessage
+                id="vDp2tH"
+                defaultMessage="All structures"
+                description="all structures"
+              />
+            </Text>
+          </Box>
+          <Box display="flex" alignItems="center" gap={2}>
+            <Button onClick={handleCreateMenu} variant="primary" data-test-id="add-menu">
+              <FormattedMessage
+                id="0dCGBW"
+                defaultMessage="Create structure"
+                description="button"
+              />
+            </Button>
+          </Box>
+        </Box>
       </TopNav>
       <MenuList {...listProps} />
     </ListPageLayout>
