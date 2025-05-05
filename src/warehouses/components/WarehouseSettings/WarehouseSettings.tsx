@@ -6,6 +6,7 @@ import {
   WarehouseClickAndCollectOptionEnum,
   WarehouseWithShippingFragment,
 } from "@dashboard/graphql";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { sectionNames } from "@dashboard/intl";
 import { renderCollection } from "@dashboard/misc";
 import { shippingZoneUrl } from "@dashboard/shipping/urls";
@@ -29,7 +30,7 @@ export interface WarehouseSettingsProps {
   zones: RelayToFlat<WarehouseWithShippingFragment["shippingZones"]>;
   disabled: boolean;
   data: WarehouseDetailsPageFormData;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent) => void;
   setData: (data: Partial<WarehouseDetailsPageFormData>) => void;
 }
 
@@ -64,9 +65,7 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
   }, [data.isPrivate]);
 
   const classes = useStyles({});
-  const booleanRadioHandler = ({
-    target: { name, value },
-  }: React.ChangeEvent<HTMLInputElement>) => {
+  const booleanRadioHandler = ({ target: { name, value } }: ChangeEvent) => {
     setData({ [name]: value === "true" });
   };
   const isPrivateChoices = [
