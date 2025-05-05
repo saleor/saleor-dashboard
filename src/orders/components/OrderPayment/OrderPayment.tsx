@@ -1,10 +1,9 @@
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import Money from "@dashboard/components/Money";
 import { OrderAction, OrderDetailsFragment, OrderStatus } from "@dashboard/graphql";
 import { getDiscountTypeLabel } from "@dashboard/orders/utils/data";
-import { Divider, Skeleton, sprinkles } from "@saleor/macaw-ui-next";
+import { Button, Divider, Skeleton, sprinkles } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -84,23 +83,23 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                 (canCapture || canRefund || canVoid || canMarkAsPaid) && (
                   <div className={classes.actions}>
                     {canCapture && (
-                      <Button variant="tertiary" onClick={onCapture}>
+                      <Button variant="secondary" onClick={onCapture}>
                         <FormattedMessage {...paymentButtonMessages.capture} />
                       </Button>
                     )}
                     {canRefund && (
-                      <Button variant="tertiary" onClick={onRefund} data-test-id="refund-button">
+                      <Button variant="secondary" onClick={onRefund} data-test-id="refund-button">
                         <FormattedMessage {...paymentButtonMessages.refund} />
                       </Button>
                     )}
                     {canVoid && (
-                      <Button variant="tertiary" onClick={onVoid}>
+                      <Button variant="secondary" onClick={onVoid}>
                         <FormattedMessage {...paymentButtonMessages.void} />
                       </Button>
                     )}
                     {canMarkAsPaid && (
                       <Button
-                        variant="tertiary"
+                        variant="secondary"
                         onClick={onMarkAsPaid}
                         data-test-id="markAsPaidButton"
                       >
