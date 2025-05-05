@@ -165,23 +165,23 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                     )}
                   </TableCell>
                   <TableButtonWrapper>
-                    <>
-                      <IconButtonTableCell
-                        disabled={disabled}
-                        onClick={() => navigate(getRateEditHref(rate.id))}
-                        className={classes.buttonColumn}
-                      >
-                        <EditIcon />
-                      </IconButtonTableCell>
+                    <IconButtonTableCell
+                      disabled={disabled}
+                      onClick={() => navigate(getRateEditHref(rate.id))}
+                      className={classes.buttonColumn}
+                    >
+                      <EditIcon />
+                    </IconButtonTableCell>
+                  </TableButtonWrapper>
 
-                      <IconButtonTableCell
-                        disabled={disabled}
-                        onClick={() => onRateRemove(rate.id)}
-                        className={classes.buttonColumn}
-                      >
-                        <TrashBinIcon data-test-id="delete-button" />
-                      </IconButtonTableCell>
-                    </>
+                  <TableButtonWrapper>
+                    <IconButtonTableCell
+                      disabled={disabled}
+                      onClick={() => onRateRemove(rate.id)}
+                      className={classes.buttonColumn}
+                    >
+                      <TrashBinIcon data-test-id="delete-button" />
+                    </IconButtonTableCell>
                   </TableButtonWrapper>
                 </TableRowLink>
               );
