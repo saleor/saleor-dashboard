@@ -615,6 +615,10 @@ export const voucherDetails: VoucherDetailsFragment = {
     __typename: "ProductCountableConnection",
     totalCount: 0,
   },
+  variantsCount: {
+    __typename: "ProductVariantCountableConnection",
+    totalCount: 0,
+  },
   categories: {
     __typename: "CategoryCountableConnection",
     edges: [],
