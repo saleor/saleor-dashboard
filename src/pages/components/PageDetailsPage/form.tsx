@@ -173,7 +173,7 @@ function usePageForm(
   } = useMetadataChangeTrigger();
   const changeMetadata = makeMetadataChangeHandler(handleChange);
   const handlePageTypeSelect = createPageTypeSelectHandler(opts.onSelectPageType, triggerChange);
-  const handleAttributeChange = createAttributeChangeHandler(attributes.change, triggerChange);
+  const handleAttributeChange = createAttributeChangeHandler(attributes, triggerChange);
   const handleAttributeMultiChange = createAttributeMultiChangeHandler(
     attributes.change,
     attributes.data,

@@ -1,4 +1,3 @@
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
@@ -12,8 +11,8 @@ import {
 import { renderCollection, stopPropagation } from "@dashboard/misc";
 import { ListProps, PaginateListProps, RelayToFlat, ReorderAction } from "@dashboard/types";
 import { TableCell, TableFooter, TableHead } from "@material-ui/core";
-import { IconButton, makeStyles } from "@saleor/macaw-ui";
-import { Box, Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
+import { makeStyles } from "@saleor/macaw-ui";
+import { Box, Button, Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -103,7 +102,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
         <DashboardCard.Toolbar>
           <Button
             disabled={disabled}
-            variant="tertiary"
+            variant="secondary"
             onClick={onValueAdd}
             data-test-id="assign-value-button"
           >
@@ -197,14 +196,13 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
                 </TableCell>
                 <TableCell className={classes.columnStore}>{value?.name ?? <Skeleton />}</TableCell>
                 <TableCell className={classes.iconCell}>
-                  <IconButton
+                  <Button
+                    icon={<TrashBinIcon />}
                     data-test-id="delete-attribute-value-button"
                     variant="secondary"
                     disabled={disabled}
                     onClick={stopPropagation(() => onValueDelete(value?.id ?? ""))}
-                  >
-                    <TrashBinIcon />
-                  </IconButton>
+                  />
                 </TableCell>
               </SortableTableRow>
             ),

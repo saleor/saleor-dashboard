@@ -11,8 +11,8 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { renderCollection } from "@dashboard/misc";
 import { TableBody, TableCell } from "@material-ui/core";
-import { DeleteIcon, IconButton, ResponsiveTable } from "@saleor/macaw-ui";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { ResponsiveTable } from "@saleor/macaw-ui";
+import { Box, Button, Text, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -88,13 +88,11 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
                     </TableCell>
                     <TableCell className={classes.colAction}>
                       <TableButtonWrapper>
-                        <IconButton
+                        <Button
+                          icon={<TrashBinIcon />}
                           variant="secondary"
-                          color="primary"
                           onClick={() => onRemove(app.id)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
+                        />
                       </TableButtonWrapper>
                     </TableCell>
                   </TableRowLink>
