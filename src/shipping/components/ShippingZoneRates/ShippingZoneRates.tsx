@@ -11,9 +11,8 @@ import { ShippingZoneDetailsFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ChannelProps } from "@dashboard/types";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
-import { Button, DeleteIcon, ICONBUTTON_SIZE, makeStyles } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { ICONBUTTON_SIZE, makeStyles } from "@saleor/macaw-ui";
+import { Button, EditIcon, Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -37,7 +36,10 @@ const useStyles = makeStyles(
     },
     buttonColumn: {
       padding: "4px 0",
-      width: "62px",
+      width: "44px",
+      "&:last-child": {
+        paddingRight: theme.spacing(4),
+      },
     },
     nameColumn: {
       width: "auto",
@@ -80,7 +82,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
               })}
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
-          <Button disabled={disabled} onClick={onRateAdd} data-test-id={testId}>
+          <Button disabled={disabled} onClick={onRateAdd} data-test-id={testId} variant="secondary">
             <FormattedMessage id="WR8rir" defaultMessage="Create rate" description="button" />
           </Button>
         </DashboardCard.Toolbar>
@@ -171,13 +173,14 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
                       <EditIcon />
                     </IconButtonTableCell>
                   </TableButtonWrapper>
+
                   <TableButtonWrapper>
                     <IconButtonTableCell
                       disabled={disabled}
                       onClick={() => onRateRemove(rate.id)}
                       className={classes.buttonColumn}
                     >
-                      <DeleteIcon data-test-id="delete-button" />
+                      <TrashBinIcon data-test-id="delete-button" />
                     </IconButtonTableCell>
                   </TableButtonWrapper>
                 </TableRowLink>

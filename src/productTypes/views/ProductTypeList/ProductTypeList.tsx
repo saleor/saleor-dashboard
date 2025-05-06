@@ -22,7 +22,7 @@ import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { Button, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -177,18 +177,16 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
         toggle={toggle}
         toggleAll={toggleAll}
         toolbar={
-          <IconButton
+          <Button
+            icon={<TrashBinIcon />}
             variant="secondary"
-            color="primary"
             data-test-id="bulk-delete-product-types"
             onClick={() =>
               openModal("remove", {
                 ids: selectedProductTypes,
               })
             }
-          >
-            <DeleteIcon />
-          </IconButton>
+          />
         }
         hasPresetsChanged={hasPresetsChanged}
       />
