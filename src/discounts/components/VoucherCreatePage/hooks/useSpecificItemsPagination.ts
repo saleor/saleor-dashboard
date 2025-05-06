@@ -8,6 +8,8 @@ import useLocalPageInfo from "@dashboard/hooks/useLocalPageInfo";
 
 import { VoucherCreatePageTab } from "../types";
 
+type ProductVariant = NonNullable<SearchProductFragment["variants"]>[number];
+
 export const useSpecificItemsPagination = ({
   type,
   data,
@@ -17,10 +19,14 @@ export const useSpecificItemsPagination = ({
     categories: CategoryWithTotalProductsFragment[];
     collections: CollectionWithTotalProductsFragment[];
     products: SearchProductFragment[];
+    variants: ProductVariant[];
   };
 }) => {
   const { pageInfo, pageValues, resetPage, loadNextPage, loadPreviousPage } = useLocalPageInfo<
-    CategoryWithTotalProductsFragment | CollectionWithTotalProductsFragment | SearchProductFragment
+    | CategoryWithTotalProductsFragment
+    | CollectionWithTotalProductsFragment
+    | SearchProductFragment
+    | ProductVariant
   >(data[type], PAGINATE_BY);
 
   return {

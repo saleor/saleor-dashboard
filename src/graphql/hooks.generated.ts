@@ -688,6 +688,9 @@ export const VoucherDetailsFragmentDoc = gql`
   applyOncePerCustomer
   onlyForStaff
   singleUse
+  variantsCount: variants {
+    totalCount
+  }
   productsCount: products {
     totalCount
   }
@@ -745,6 +748,39 @@ export const VoucherDetailsFragmentDoc = gql`
     pageInfo {
       ...PageInfo
     }
+  }
+  variants(after: $after, before: $before, first: $first, last: $last) @include(if: $includeVariants) {
+    edges {
+      node {
+        id
+        name
+        product {
+          id
+          name
+          thumbnail {
+            url
+            __typename
+          }
+          productType {
+            id
+            name
+            __typename
+          }
+          channelListings {
+            ...ChannelListingProductWithoutPricing
+            __typename
+          }
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    pageInfo {
+      ...PageInfo
+      __typename
+    }
+    __typename
   }
 }
     ${VoucherFragmentDoc}
@@ -2990,6 +3026,19 @@ export const SearchProductFragmentDoc = gql`
     id
     name
     sku
+    product {
+      id
+      name
+      thumbnail {
+        url
+        __typename
+      }
+      productType {
+        id
+        name
+        __typename
+      }
+    }
     channelListings {
       channel {
         id
@@ -8416,7 +8465,7 @@ export type VoucherUpdateMutationHookResult = ReturnType<typeof useVoucherUpdate
 export type VoucherUpdateMutationResult = Apollo.MutationResult<Types.VoucherUpdateMutation>;
 export type VoucherUpdateMutationOptions = Apollo.BaseMutationOptions<Types.VoucherUpdateMutation, Types.VoucherUpdateMutationVariables>;
 export const VoucherCataloguesAddDocument = gql`
-    mutation VoucherCataloguesAdd($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!) {
+    mutation VoucherCataloguesAdd($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!, $includeVariants: Boolean!) {
   voucherCataloguesAdd(id: $id, input: $input) {
     errors {
       ...DiscountError
@@ -8452,6 +8501,7 @@ export type VoucherCataloguesAddMutationFn = Apollo.MutationFunction<Types.Vouch
  *      includeProducts: // value for 'includeProducts'
  *      includeCollections: // value for 'includeCollections'
  *      includeCategories: // value for 'includeCategories'
+ *      includeVariants: // value for 'includeVariants'
  *   },
  * });
  */
@@ -8463,7 +8513,7 @@ export type VoucherCataloguesAddMutationHookResult = ReturnType<typeof useVouche
 export type VoucherCataloguesAddMutationResult = Apollo.MutationResult<Types.VoucherCataloguesAddMutation>;
 export type VoucherCataloguesAddMutationOptions = Apollo.BaseMutationOptions<Types.VoucherCataloguesAddMutation, Types.VoucherCataloguesAddMutationVariables>;
 export const VoucherCataloguesRemoveDocument = gql`
-    mutation VoucherCataloguesRemove($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!) {
+    mutation VoucherCataloguesRemove($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!, $includeVariants: Boolean!) {
   voucherCataloguesRemove(id: $id, input: $input) {
     errors {
       ...DiscountError
@@ -8499,6 +8549,7 @@ export type VoucherCataloguesRemoveMutationFn = Apollo.MutationFunction<Types.Vo
  *      includeProducts: // value for 'includeProducts'
  *      includeCollections: // value for 'includeCollections'
  *      includeCategories: // value for 'includeCategories'
+ *      includeVariants: // value for 'includeVariants'
  *   },
  * });
  */
@@ -9064,7 +9115,7 @@ export type SaleDetailsQueryHookResult = ReturnType<typeof useSaleDetailsQuery>;
 export type SaleDetailsLazyQueryHookResult = ReturnType<typeof useSaleDetailsLazyQuery>;
 export type SaleDetailsQueryResult = Apollo.QueryResult<Types.SaleDetailsQuery, Types.SaleDetailsQueryVariables>;
 export const VoucherDetailsDocument = gql`
-    query VoucherDetails($id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!) {
+    query VoucherDetails($id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!, $includeVariants: Boolean!) {
   voucher(id: $id) {
     ...VoucherDetails
   }
@@ -9091,6 +9142,7 @@ export const VoucherDetailsDocument = gql`
  *      includeProducts: // value for 'includeProducts'
  *      includeCollections: // value for 'includeCollections'
  *      includeCategories: // value for 'includeCategories'
+ *      includeVariants: // value for 'includeVariants'
  *   },
  * });
  */
