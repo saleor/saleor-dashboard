@@ -88,3 +88,7 @@ body {
     max-height: 600px;
   }
 }
+
+.simple-radio-group > *:first-child {
+  margin-top: 4px !important;
+}
