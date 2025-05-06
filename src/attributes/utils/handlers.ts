@@ -17,6 +17,7 @@ import {
   FormsetChange,
   FormsetData,
   FormsetMetadataChange,
+  UseFormsetOutput,
 } from "@dashboard/hooks/useFormset";
 import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { FetchMoreProps, ReorderEvent } from "@dashboard/types";
@@ -27,12 +28,22 @@ import uniqBy from "lodash/uniqBy";
 import { getFileValuesToUploadFromAttributes, isFileValueUnused } from "./data";
 
 export function createAttributeChangeHandler(
-  changeAttributeData: FormsetChange<string[]>,
+  attributesFormData: UseFormsetOutput<AttributeInputData>,
   triggerChange: () => void,
-): FormsetChange<string | null | undefined> {
-  return (attributeId: string, value: string | null | undefined) => {
+): FormsetChange<boolean | string | null | undefined> {
+  return (attributeId: string, value: boolean | string | null | undefined) => {
     triggerChange();
-    changeAttributeData(attributeId, !value ? [] : [value]);
+
+    const isBoolean =
+      attributesFormData.get(attributeId)?.data.inputType === AttributeInputTypeEnum.BOOLEAN;
+
+    if (isBoolean) {
+      attributesFormData.change(attributeId, [value]);
+
+      return;
+    }
+
+    attributesFormData.change(attributeId, !value ? [] : [value]);
   };
 }
 

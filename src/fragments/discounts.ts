@@ -166,6 +166,9 @@ export const voucherDetailsFragment = gql`
     applyOncePerCustomer
     onlyForStaff
     singleUse
+    variantsCount: variants {
+      totalCount
+    }
     productsCount: products {
       totalCount
     }
@@ -226,6 +229,40 @@ export const voucherDetailsFragment = gql`
       pageInfo {
         ...PageInfo
       }
+    }
+    variants(after: $after, before: $before, first: $first, last: $last)
+      @include(if: $includeVariants) {
+      edges {
+        node {
+          id
+          name
+          product {
+            id
+            name
+            thumbnail {
+              url
+              __typename
+            }
+            productType {
+              id
+              name
+              __typename
+            }
+            channelListings {
+              ...ChannelListingProductWithoutPricing
+              __typename
+            }
+            __typename
+          }
+          __typename
+        }
+        __typename
+      }
+      pageInfo {
+        ...PageInfo
+        __typename
+      }
+      __typename
     }
   }
 `;

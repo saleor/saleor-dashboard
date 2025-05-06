@@ -1,6 +1,7 @@
 import {
   FormData,
   VoucherCreatePageTab,
+  VoucherCreateProductVariant,
 } from "@dashboard/discounts/components/VoucherCreatePage/types";
 import {
   CategoryWithTotalProductsFragment,
@@ -17,6 +18,7 @@ export interface SpecificItemsData {
   collections: FormData["collections"];
   products: FormData["products"];
   countries: FormData["countries"];
+  variants: FormData["variants"];
 }
 
 export const useSpecificItemsAssign = ({
@@ -51,6 +53,7 @@ export const useSpecificItemsAssign = ({
       | CollectionWithTotalProductsFragment
       | SearchProductFragment
       | CountryWithCodeFragment
+      | VoucherCreateProductVariant
     >;
 
     switch (type) {
@@ -65,6 +68,9 @@ export const useSpecificItemsAssign = ({
         break;
       case "countries":
         selectedData = data.countries.filter(item => item.code !== id);
+        break;
+      case "variants":
+        selectedData = data.variants.filter(item => item.id !== id);
         break;
       default:
         selectedData = [];
@@ -85,6 +91,7 @@ export const useSpecificItemsAssign = ({
       | CategoryWithTotalProductsFragment
       | CollectionWithTotalProductsFragment
       | SearchProductFragment
+      | VoucherCreateProductVariant
       | string
     >,
     type: VoucherCreatePageTab | "countries",

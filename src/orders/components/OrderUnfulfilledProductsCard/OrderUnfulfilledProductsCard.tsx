@@ -1,9 +1,8 @@
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { OrderLineFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { Text } from "@saleor/macaw-ui-next";
+import { Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

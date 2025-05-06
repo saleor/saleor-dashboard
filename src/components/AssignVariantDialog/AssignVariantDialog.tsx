@@ -15,7 +15,7 @@ import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { Container } from "../AssignContainerDialog";
+import { AssignContainerDialogProps, Container } from "../AssignContainerDialog";
 import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
 import { messages } from "./messages";
@@ -39,12 +39,14 @@ export interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
   loading: boolean;
   onFetch: (value: string) => void;
   onSubmit: (data: Container[]) => void;
+  labels?: Partial<AssignContainerDialogProps["labels"]>;
 }
 
 const scrollableTargetId = "assignVariantScrollableDialog";
 const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
   const {
     confirmButtonState,
+    labels,
     hasMore,
     open,
     loading,
@@ -72,6 +74,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
       variants.map(variant => ({
         name: getCompositeLabel(variant),
         id: variant.id,
+        ...variant,
       })),
     );
   const handleClose = () => {
@@ -198,7 +201,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
             type="submit"
             onClick={handleSubmit}
           >
-            <FormattedMessage {...messages.assignVariantDialogButton} />
+            {labels?.confirmBtn ?? <FormattedMessage {...messages.assignVariantDialogButton} />}
           </ConfirmButton>
         </DashboardModal.Actions>
       </DashboardModal.Content>
