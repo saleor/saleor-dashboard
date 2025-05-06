@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import {
   ChannelUsabilityDataQuery,
@@ -11,6 +10,7 @@ import {
   OrderDiscountContext,
   OrderDiscountContextConsumerProps,
 } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
+import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -57,7 +57,7 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
           {isChannelActive && areProductsInChannel && (
-            <Button variant="tertiary" onClick={onOrderLineAdd} data-test-id="add-products-button">
+            <Button variant="secondary" onClick={onOrderLineAdd} data-test-id="add-products-button">
               <FormattedMessage id="C50ahv" defaultMessage="Add products" description="button" />
             </Button>
           )}
