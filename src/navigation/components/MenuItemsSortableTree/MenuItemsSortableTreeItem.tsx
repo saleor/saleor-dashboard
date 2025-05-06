@@ -75,16 +75,14 @@ export const MenuItemsSortableTreeItem = ({
             data-test-id="edit-menu-item-button"
             variant="secondary"
             onClick={() => onEdit(id)}
-          >
-            <EditIcon />
-          </Button>
+            icon={<EditIcon />}
+          />
           <Button
             data-test-id="remove-menu-item-button"
             variant="secondary"
             onClick={() => onRemove(id)}
-          >
-            <TrashBinIcon />
-          </Button>
+            icon={<TrashBinIcon />}
+          />
         </Box>
         {clone && childCount && childCount > 1 ? (
           <Box
