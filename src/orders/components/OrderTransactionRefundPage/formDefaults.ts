@@ -20,7 +20,7 @@ export const getRefundCreateDefaultValues = (
   order: OrderDetailsGrantRefundFragment | undefined | null,
 ): OrderTransactionRefundPageFormData => ({
   linesToRefund: getRefundCreateOrderLinesToRefund(order) ?? [],
-  transactionId: getDefaultTransaction(order?.transactions),
+  transactionId: getDefaultTransaction(order?.transactions) ?? "",
   includeShipping: false,
   amount: 0,
   reason: "",
@@ -32,7 +32,7 @@ const getRefundEditDefaultValues = (
 ): OrderTransactionRefundPageFormData => {
   return {
     linesToRefund: getRefundEditOrderLinesToRefund(order, draftRefund) ?? [],
-    transactionId: draftRefund.transaction?.id ?? getDefaultTransaction(order?.transactions),
+    transactionId: draftRefund.transaction?.id ?? getDefaultTransaction(order?.transactions) ?? "",
     includeShipping: draftRefund.shippingCostsIncluded,
     amount: draftRefund.amount.amount,
     reason: draftRefund.reason ?? "",

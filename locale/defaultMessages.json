@@ -476,6 +476,10 @@
     "context": "countries list menu label when no countries are assigned",
     "string": "There are no countries assigned"
   },
+  "0dCGBW": {
+    "context": "button",
+    "string": "Create structure"
+  },
   "0dPP8O": {
     "string": "Order #{orderId} was placed"
   },
@@ -694,6 +698,10 @@
   },
   "2/L4zZ": {
     "string": "Select all channels"
+  },
+  "21cJ+Z": {
+    "context": "structures section name",
+    "string": "Structures"
   },
   "22x9tu": {
     "context": "header",
@@ -1750,8 +1758,14 @@
   "9DUknc": {
     "string": "Installation failed"
   },
+  "9FCrIN": {
+    "string": "Model type"
+  },
   "9FGTOt": {
     "string": "Allow access to orders of all channels"
+  },
+  "9Fiuq2": {
+    "string": "Learn more about {customExtensionDocsLink}"
   },
   "9IrVVZ": {
     "context": "attribute can be searched in storefront",
@@ -2174,6 +2188,10 @@
   "Bl6896": {
     "string": "Refund amount"
   },
+  "BnB/7Y": {
+    "context": "callout, title",
+    "string": "Info"
+  },
   "BooQvo": {
     "context": "navigator placeholder",
     "string": "Type {key} to see available actions"
@@ -2525,9 +2543,6 @@
   "E4GW+N": {
     "context": "fully paid checkout automatically completed message",
     "string": "Order created automatically from fully paid checkout"
-  },
-  "E54eoT": {
-    "string": "Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy"
   },
   "E8T3e+": {
     "string": "Cannot add and remove group the same time"
@@ -2933,9 +2948,16 @@
     "context": "dialog header",
     "string": "Delete Variant"
   },
+  "GFioCC": {
+    "context": "models section name",
+    "string": "Models"
+  },
   "GFkb2t": {
     "context": "automatically complete checkouts checkbox label",
     "string": "Automatically complete checkouts when fully paid"
+  },
+  "GIuS7b": {
+    "string": "creating custom extensions"
   },
   "GJAX0z": {
     "context": "order history message",
@@ -3241,6 +3263,9 @@
   "HwHSeY": {
     "string": "App disabled"
   },
+  "HwlLvq": {
+    "string": "Expand or restrict app permissions to access certain part of Saleor system."
+  },
   "I+1KzL": {
     "context": "tab name",
     "string": "All attributes"
@@ -3481,6 +3506,10 @@
     "context": "expiry date checkbox label",
     "string": "Gift card expires"
   },
+  "JKoHqo": {
+    "context": "extension form app name field placeholder",
+    "string": "App Name"
+  },
   "JMBsrr": {
     "context": "table header available stock label",
     "string": "Available"
@@ -3509,10 +3538,6 @@
   "JVaz1C": {
     "context": "window title",
     "string": "Create Webhook"
-  },
-  "JXRYQg": {
-    "context": "button",
-    "string": "Create Menu"
   },
   "Ja7gHc": {
     "context": "button",
@@ -4097,6 +4122,10 @@
     "context": "attribute values list: slug column header",
     "string": "Swatch"
   },
+  "NVp0fa": {
+    "context": "modeling section name",
+    "string": "Modeling"
+  },
   "NWA+MK": {
     "context": "dialog content",
     "string": "<b>Important:</b> Refunds need to be issued <b>manually</b> after order cancelation."
@@ -4333,6 +4362,10 @@
     "context": "product availability",
     "string": "Available for purchase"
   },
+  "P5HhQl": {
+    "context": "catalog section name",
+    "string": "Catalog"
+  },
   "P5twxk": {
     "context": "link",
     "string": "Activate"
@@ -4377,6 +4410,10 @@
   "PH4R7g": {
     "context": "modal header, read-only product variant metadata",
     "string": "Product variant metadata"
+  },
+  "PHT8z1": {
+    "context": "extension form permissions section header",
+    "string": "Permissions"
   },
   "PHUcrU": {
     "context": "date when order was placed",
@@ -4765,6 +4802,10 @@
     "context": "tax classes menu label when there are no tax classes",
     "string": "There are no tax classes"
   },
+  "RiQ0v1": {
+    "context": "installed extensions section name",
+    "string": "Installed"
+  },
   "Rj8LxK": {
     "string": "Add search engine title and description to make this collection easier to find"
   },
@@ -5012,6 +5053,10 @@
     "context": "order history message",
     "string": "Payment failed"
   },
+  "TD/GhR": {
+    "context": "header",
+    "string": "Structure Items"
+  },
   "TDhHMi": {
     "string": "This needs to be unique"
   },
@@ -5047,6 +5092,10 @@
   "TOMgXz": {
     "context": "button",
     "string": "Reset"
+  },
+  "TPP7j+": {
+    "context": "section header",
+    "string": "Organize Model"
   },
   "TPW2tP": {
     "string": "You have reached your order limit, you will be billed extra for orders above limit. If you would like to up your limit, contact your administration staff about raising your limits."
@@ -5205,6 +5254,10 @@
   "USS3Q7": {
     "context": "filters error messages unknown error",
     "string": "Unknown error occurred"
+  },
+  "UUVUyy": {
+    "context": "callout, title",
+    "string": "Warning"
   },
   "UVDfTs": {
     "context": "discount type shipping",
@@ -5428,6 +5481,9 @@
   "VsGcdP": {
     "context": "section header",
     "string": "App permissions"
+  },
+  "VtR2/y": {
+    "string": "Grant this app full access to the store"
   },
   "Vtjlpw": {
     "string": "Transaction is not unique"
@@ -5898,10 +5954,6 @@
     "context": "label",
     "string": "Gift Card"
   },
-  "YMBn8d": {
-    "context": "draft orders section name",
-    "string": "Draft Orders"
-  },
   "YQ3EXR": {
     "context": "product types section name",
     "string": "Product Types"
@@ -6148,6 +6200,10 @@
     "context": "draft created from replace products list title",
     "string": "Products replaced"
   },
+  "a2o5uc": {
+    "context": "custom extension page create, tooltip",
+    "string": "Permission cannot be chosen, because you don't have it yourself"
+  },
   "a55zOn": {
     "context": "section header",
     "string": "Data privacy"
@@ -6345,6 +6401,10 @@
   "bGqAdR": {
     "context": "seo complete text",
     "string": "Complete"
+  },
+  "bHG5/d": {
+    "context": "promotions section name",
+    "string": "Promotions"
   },
   "bHdFph": {
     "context": "subsection header",
@@ -6640,6 +6700,9 @@
     "context": "volume units types",
     "string": "Volume"
   },
+  "cyR7Kh": {
+    "string": "Back"
+  },
   "d+qgix": {
     "string": "Next step"
   },
@@ -6661,10 +6724,6 @@
   "dDCLFW": {
     "context": "alert message",
     "string": "Not available for sale this channel"
-  },
-  "dEUZg2": {
-    "context": "header",
-    "string": "Menu Items"
   },
   "dGqEJ9": {
     "context": "search box placeholder",
@@ -6768,6 +6827,9 @@
   "e92Uxp": {
     "context": "order history message",
     "string": "Updated fulfillment group's tracking number"
+  },
+  "e9z98s": {
+    "string": "You don't have access to this permission"
   },
   "eAFU/E": {
     "context": "product inventory, checkbox",
@@ -6896,6 +6958,9 @@
   "fExm0/": {
     "context": "gift card history message",
     "string": "Gift card was activated by {activatedBy}"
+  },
+  "fHHHVV": {
+    "string": "Add Custom Extension manually"
   },
   "fITtdb": {
     "context": "helper text",
@@ -7300,9 +7365,6 @@
     "context": "heading, sum of all completed refunds from transactions in order",
     "string": "Refunded"
   },
-  "hpMcW8": {
-    "string": "Define how users can navigate through your store"
-  },
   "hptDxW": {
     "context": "money",
     "string": "to {money}"
@@ -7544,10 +7606,6 @@
   "jTifz+": {
     "string": "Successfully created attribute"
   },
-  "jU9GPX": {
-    "context": "section header",
-    "string": "Organize Content"
-  },
   "jUuHVn": {
     "context": "description",
     "string": "No members found"
@@ -7683,6 +7741,10 @@
   },
   "kErneR": {
     "string": "This customer doesn’t have any adresses added to his address book. You can add address using the button below."
+  },
+  "kExPDx": {
+    "context": "extension form app name field label",
+    "string": "App Name"
   },
   "kFQvXv": {
     "string": "You have reached your warehouse limit, you will be no longer able to add warehouses to your store. If you would like to up your limit, contact your administration staff about raising your limits."
@@ -8200,6 +8262,10 @@
     "context": "select label",
     "string": "Channel name"
   },
+  "nLCEQJ": {
+    "context": "custom extension page create, error message",
+    "string": "App name is required"
+  },
   "nLML8Y": {
     "string": "Default Shipping Address"
   },
@@ -8624,6 +8690,9 @@
     "context": "product label",
     "string": "Published"
   },
+  "qL9Oi9": {
+    "string": "Structure Title"
+  },
   "qLOBff": {
     "context": "dialog header",
     "string": "Delete Address"
@@ -8997,6 +9066,10 @@
     "context": "header",
     "string": "Unnamed Webhook Details"
   },
+  "ssI7EL": {
+    "context": "custom extension page create, callout message",
+    "string": "Unavailable permissions are those exceeding your own access rights. Apps cannot have more permissions than their creator. Please contact an administrator to either create this app for you or grant your account the necessary permissions"
+  },
   "stjHjY": {
     "context": "error message",
     "string": "Promo code already exists"
@@ -9257,9 +9330,6 @@
   "uf1ttM": {
     "string": "Rule reward value is required"
   },
-  "ufD5Jr": {
-    "string": "Content type"
-  },
   "ufahVh": {
     "context": "collection filter hidden",
     "string": "Hidden"
@@ -9365,6 +9435,10 @@
   "vDnheO": {
     "context": "gift card bulk create success dialog accept button",
     "string": "Ok"
+  },
+  "vDp2tH": {
+    "context": "all structures",
+    "string": "All structures"
   },
   "vEYtiq": {
     "string": "Category Name"
@@ -9925,6 +9999,10 @@
   "ys0jH2": {
     "context": "channel publication status",
     "string": "Published"
+  },
+  "ytKTTO": {
+    "context": "draft orders section name",
+    "string": "Drafts"
   },
   "yzYXW/": {
     "context": "header, dialog",

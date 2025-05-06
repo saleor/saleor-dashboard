@@ -75,6 +75,7 @@ export interface OrderGrantRefundData {
   lines: OrderGrantRefundCreateLineInput[];
   grantRefundForShipping: boolean;
   grantRefundId: string;
+  transactionId: string;
 }
 
 export const getGrantedRefundData = (
@@ -90,6 +91,7 @@ export const getGrantedRefundData = (
     amount: grantedRefund.amount.amount,
     grantRefundForShipping: grantedRefund.shippingCostsIncluded,
     lines: grantedRefund?.lines ?? [],
+    transactionId: grantedRefund?.transaction?.id ?? "",
   };
 };
 

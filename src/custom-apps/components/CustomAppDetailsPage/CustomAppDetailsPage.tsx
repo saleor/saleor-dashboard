@@ -8,6 +8,8 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import WebhooksList from "@dashboard/custom-apps/components/WebhooksList";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
+import { useFlag } from "@dashboard/featureFlags";
 import {
   AppErrorFragment,
   AppUpdateMutation,
@@ -18,7 +20,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
-import { Button } from "@saleor/macaw-ui";
+import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -75,6 +77,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
   } = props;
   const intl = useIntl();
   const classes = useStyles();
+  const { enabled: isExtensionsDevEnabled } = useFlag("extensions_dev");
   const navigate = useNavigator();
   const webhooks = app?.webhooks;
   const formErrors = getFormErrors(["permissions"], errors || []);
@@ -93,11 +96,17 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit} disabled={disabled}>
       {({ data, change, submit, isSaveDisabled }) => (
         <DetailPageLayout>
-          <TopNav href={CustomAppUrls.resolveAppListUrl()} title={app?.name}>
+          <TopNav
+            href={
+              isExtensionsDevEnabled
+                ? ExtensionsUrls.resolveInstalledExtensionsUrl()
+                : CustomAppUrls.resolveAppListUrl()
+            }
+            title={app?.name}
+          >
             <Button
               variant="secondary"
               className={classes.activateButton}
-              disableFocusRipple
               onClick={data.isActive ? onAppDeactivateOpen : onAppActivateOpen}
             >
               <SVG src={activateIcon} />

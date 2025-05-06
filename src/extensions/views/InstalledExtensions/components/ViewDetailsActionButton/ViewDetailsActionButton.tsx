@@ -1,6 +1,8 @@
 import { AppPaths, AppUrls } from "@dashboard/apps/urls";
 import Link from "@dashboard/components/Link";
 import { buttonLabels } from "@dashboard/extensions/messages";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
+import { AppTypeEnum } from "@dashboard/graphql";
 import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -9,9 +11,15 @@ interface ViewDetailsActionButtonProps {
   isDisabled?: boolean;
   id?: string;
   name: string | null;
+  type: AppTypeEnum | null;
 }
 
-export const ViewDetailsActionButton = ({ name, isDisabled, id }: ViewDetailsActionButtonProps) => {
+export const ViewDetailsActionButton = ({
+  name,
+  type,
+  isDisabled,
+  id,
+}: ViewDetailsActionButtonProps) => {
   // When no id means that apps installation is in progress
   const formattedName = name?.toLowerCase().replace(" ", "") ?? "";
 
@@ -39,7 +47,14 @@ export const ViewDetailsActionButton = ({ name, isDisabled, id }: ViewDetailsAct
   }
 
   return (
-    <Link href={AppUrls.resolveAppUrl(id)} data-test-id={`${formattedName}-view-details`}>
+    <Link
+      href={
+        type === AppTypeEnum.LOCAL
+          ? ExtensionsUrls.editCustomExtensionUrl(id)
+          : AppUrls.resolveAppUrl(id)
+      }
+      data-test-id={`${formattedName}-view-details`}
+    >
       <Button size="small" variant="secondary">
         <FormattedMessage {...buttonLabels.viewDetails} />
       </Button>

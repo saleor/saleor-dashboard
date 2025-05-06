@@ -48,6 +48,7 @@ const OrderGrantRefund: React.FC<OrderGrantRefundProps> = ({ orderId }) => {
     reason,
     lines,
     grantRefundForShipping,
+    transactionId,
   }: OrderGrantRefundFormData) => {
     // API call should be stoped when use doesn't select any line,
     // doesn't provide own amount and doesn't want to refund shipping
@@ -63,6 +64,7 @@ const OrderGrantRefund: React.FC<OrderGrantRefundProps> = ({ orderId }) => {
           reason,
           lines: squashLines(lines),
           grantRefundForShipping,
+          transactionId,
         },
       }),
     );
