@@ -32,8 +32,6 @@ jobs:
       RUN_SLUG: ${{ steps.cloud_variables.outputs.RUN_SLUG }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          sparse-checkout: ./.github
 
       - name: Generate variables
         id: cloud_variables
