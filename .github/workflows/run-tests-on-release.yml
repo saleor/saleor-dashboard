@@ -130,17 +130,14 @@ jobs:
           BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
           SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
 
-      - name: get environment variables
-        env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
+      - name: Get environment variables
+        uses: ./.github/actions/get-env-vars
         id: get-environment-variables
-        run: |
-          node .github/workflows/cypressTestsHelpers/getEnvironmentVariables.js \
-            --version $CUSTOM_VERSION \
-            --token "$TOKEN" \
-            --repo_token "$REPO_TOKEN" \
-            --project "$PROJECT"
+        with:
+          version: ${{ env.CUSTOM_VERSION }}
+          token: ${{ secrets.CLOUD_ACCESS_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          project: ${{ env.PROJECT }}
 
       - name: Prepare accounts
         id: accounts
