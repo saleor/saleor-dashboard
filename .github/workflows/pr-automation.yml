@@ -33,24 +33,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Generate variables
-        id: cloud_variables
-        uses: ./.github/actions/prepare-tests-variables
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
-          CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
-          MODE: pull-request
-
-      - name: Prepare instances
-        uses: ./.github/actions/prepare-instance
-        with:
-          STRATEGY: reload
-          CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
-          BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
-          API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
-          POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
-          POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
-          BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
-          SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
+          node-version-file: ".nvmrc"
 
       # for testing purposes
       - name: Cache node modules
@@ -85,6 +71,25 @@ jobs:
         run: |
           echo "OUTPUT TEST: ${{ steps.get-environment-variables.outputs.IS_OLD_VERSION }}"
 
+
+      - name: Generate variables
+        id: cloud_variables
+        uses: ./.github/actions/prepare-tests-variables
+        with:
+          CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
+          MODE: pull-request
+
+      - name: Prepare instances
+        uses: ./.github/actions/prepare-instance
+        with:
+          STRATEGY: reload
+          CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
+          BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
+          API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
+          POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
+          POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
+          BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
+          SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
 
       - name: Generate shard matrix
         id: generate-shard-matrix
