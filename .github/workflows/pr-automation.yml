@@ -61,7 +61,7 @@ jobs:
         uses: ./.github/actions/get-env-vars
         id: get-environment-variables
         with:
-          version: ${{ env.CUSTOM_VERSION }}
+          version: "3.14"
           token: ${{ secrets.CLOUD_ACCESS_TOKEN }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           project: ${{ env.PROJECT }}
