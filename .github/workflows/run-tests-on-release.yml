@@ -131,6 +131,7 @@ jobs:
           SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
 
       - name: get environment variables
+        working-directory: .github/workflows
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
