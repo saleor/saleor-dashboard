@@ -52,6 +52,23 @@ jobs:
           BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
           SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
 
+      # for testing purposes
+      - name: Cache node modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-qa-${{ env.cache-name }}-
+            ${{ runner.os }}-qa-
+            ${{ runner.os }}-
+
+      # for testing purposes
+      - name: Install deps
+        run: npm ci
+
 
       # for testing purposes
       - name: Get environment variables
