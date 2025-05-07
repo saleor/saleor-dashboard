@@ -150,6 +150,7 @@ export const voucherCataloguesAdd = gql`
     $includeProducts: Boolean!
     $includeCollections: Boolean!
     $includeCategories: Boolean!
+    $includeVariants: Boolean!
   ) {
     voucherCataloguesAdd(id: $id, input: $input) {
       errors {
@@ -173,6 +174,7 @@ export const voucherCataloguesRemove = gql`
     $includeProducts: Boolean!
     $includeCollections: Boolean!
     $includeCategories: Boolean!
+    $includeVariants: Boolean!
   ) {
     voucherCataloguesRemove(id: $id, input: $input) {
       errors {

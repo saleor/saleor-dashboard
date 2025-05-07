@@ -25,6 +25,14 @@ jest.mock("@dashboard/graphql", () => ({
 jest.useFakeTimers();
 
 describe("useActiveAppsInstallations", () => {
+  afterEach(() => {
+    jest.clearAllTimers();
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
   it("install app notify should not be called when apps in progress data loading", () => {
     // Arrange
     const mockedActiveInstallations = [
@@ -70,8 +78,6 @@ describe("useActiveAppsInstallations", () => {
       appsInstallations: [],
     } as unknown as AppsInstallationsQuery;
     const mockNotify = jest.fn();
-
-    jest.useFakeTimers();
 
     (useLocalStorage as jest.Mock).mockReturnValue([mockedActiveInstallations, jest.fn()]);
 

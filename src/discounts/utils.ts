@@ -74,16 +74,16 @@ export function getFilteredProducts(
 }
 
 export function getFilteredProductVariants(
-  data: SaleDetailsQuery,
+  variants: NonNullable<SaleDetailsQuery["sale"]>["variants"] | null,
   searchProductsOpts: SearchProductsOpts,
 ) {
   const products = mapEdgesToItems(searchProductsOpts?.data?.search);
 
-  if (!data?.sale?.variants?.edges) {
+  if (!variants?.edges) {
     return products;
   }
 
-  const excludedVariantsIds = data?.sale?.variants.edges.map(variant => variant.node.id);
+  const excludedVariantsIds = variants?.edges.map(variant => variant.node.id);
 
   return products?.map(suggestedProduct => ({
     ...suggestedProduct,

@@ -914,6 +914,10 @@
   "3UUjQv": {
     "string": "Search page types..."
   },
+  "3VsNbv": {
+    "context": "WarehouseSettings local warehouse description",
+    "string": "If selected customer will be able to choose this warehouse as pickup point.{break}Ordered products will be only fulfilled from this warehouse stock"
+  },
   "3a5wL8": {
     "string": "Active"
   },
@@ -1004,10 +1008,6 @@
   "45aV8u": {
     "context": "gift card bulk create modal bottom explanation",
     "string": "After creation Saleor will create a list of gift card codes that you will be able to download."
-  },
-  "45zP+r": {
-    "context": "voucher discount",
-    "string": "Specific products"
   },
   "47hJzu": {
     "string": "Updated app permissions"
@@ -1375,10 +1375,6 @@
   },
   "6FLezz": {
     "string": "Are you sure you want to delete this discount?"
-  },
-  "6G41zU": {
-    "context": "WarehouseSettings local warehouse description",
-    "string": "If selected customer will be able to choose this warehouse as pickup point. Ordered products will be only fulfilled from this warehouse stock"
   },
   "6HHPFy": {
     "context": "tax strategy combobox hint",
@@ -2718,6 +2714,10 @@
     "context": "sale name",
     "string": "Name"
   },
+  "F62RkR": {
+    "context": "dialog header",
+    "string": "Unassign Variants From Voucher"
+  },
   "F69lwk": {
     "context": "settings menu item",
     "string": "Settings"
@@ -3285,6 +3285,10 @@
     "context": "swatch attribute image label",
     "string": "Image"
   },
+  "I40r9Y": {
+    "context": "WarehouseSettings all warehouses description",
+    "string": "If selected customer will be able to choose this warehouse as pickup point.{break}Ordered products can be shipped here from a different warehouse"
+  },
   "I5vC7T": {
     "context": "button label",
     "string": "Edit reason"
@@ -3780,10 +3784,6 @@
   "LATHyi": {
     "context": "dialog header",
     "string": "Delete Channel: {channelSlug}"
-  },
-  "LEZZkK": {
-    "context": "WarehouseSettings all warehouses description",
-    "string": "If selected customer will be able to choose this warehouse as pickup point. Ordered products can be shipped here from a different warehouse"
   },
   "LHPVg/": {
     "context": "assign countries to shipping zone and save, button",
@@ -4396,6 +4396,10 @@
   "PCoO4D": {
     "context": "error message",
     "string": "Page not found."
+  },
+  "PDF+8k": {
+    "context": "voucher discount",
+    "string": "Specific products and variants"
   },
   "PDw0YN": {
     "context": "open new window button",
