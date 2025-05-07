@@ -11,9 +11,9 @@ import { MenuSection } from "./types";
 
 jest.mock("@material-ui/core/useMediaQuery", () => jest.fn());
 jest.mock("react-intl", () => ({
-  defineMessages: (messages: any) => messages,
+  defineMessages: (messages: unknown) => messages,
   useIntl: jest.fn(() => ({
-    formatMessage: ({ defaultMessage }) => defaultMessage,
+    formatMessage: ({ defaultMessage }: { defaultMessage: string }) => defaultMessage,
   })),
 }));
 jest.mock("react-router-dom", () => ({
@@ -81,7 +81,7 @@ describe("ConfigurationPage", () => {
   beforeEach(() => {
     (useMediaQuery as jest.Mock).mockReturnValue(true);
     (useIntl as jest.Mock).mockReturnValue({
-      formatMessage: ({ defaultMessage }) => defaultMessage,
+      formatMessage: ({ defaultMessage }: { defaultMessage: string }) => defaultMessage,
     });
     (Link as jest.Mock).mockImplementation(({ children }) => <div>{children}</div>);
     (useUser as jest.Mock).mockReturnValue({ user: mockUser });
