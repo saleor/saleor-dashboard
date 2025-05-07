@@ -28,7 +28,6 @@ runs:
       run: npm ci
     - name: Get environment variables
       shell: bash
-      working-directory: .github/workflows
       env:
         REPO_TOKEN: ${{ inputs.repo_token }}
         TOKEN: ${{ inputs.token }}
