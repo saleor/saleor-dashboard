@@ -242,7 +242,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
                 input: data,
               })
             }
-            saveButtonBarState="default"
+            saveButtonBarState={orderDraftFinalize.opts.status}
             onProfileView={() => navigate(customerUrl(order.user.id))}
           />
         </OrderLineDiscountProvider>

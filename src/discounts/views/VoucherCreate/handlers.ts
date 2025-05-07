@@ -56,6 +56,7 @@ export function createHandler(
         collections: formData.collections.map(collection => collection.id),
         categories: formData.categories.map(category => category.id),
         countries: formData.countries.map(country => country.code),
+        variants: formData.variants.map(variant => variant.id),
       },
     });
     const errors = getMutationErrors(response);
