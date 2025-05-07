@@ -1,4 +1,3 @@
-import { AppUrls } from "@dashboard/apps/urls";
 import { CONST_TYPEFORM_URL } from "@dashboard/extensions/components/RequestExtensionsButton";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { useFlag } from "@dashboard/featureFlags";
