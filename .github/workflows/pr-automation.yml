@@ -32,11 +32,8 @@ jobs:
       RUN_SLUG: ${{ steps.cloud_variables.outputs.RUN_SLUG }}
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
         with:
-          node-version-file: ".nvmrc"
+         sparse-checkout: ./.github/actions
 
       - name: Generate variables
         id: cloud_variables
