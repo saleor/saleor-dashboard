@@ -23,12 +23,12 @@ runs:
         node-version-file: ".nvmrc"
         cache: npm
     - name: install dependencies
-      working-directory: .github/workflows
+      working-directory: /.github/workflows
       shell: bash
       run: npm ci
     - name: Get environment variables
       shell: bash
-      working-directory: .github/workflows
+      working-directory: /.github/workflows
       env:
         REPO_TOKEN: ${{ inputs.repo_token }}
         TOKEN: ${{ inputs.token }}
