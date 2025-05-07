@@ -1,20 +1,17 @@
 import { InstallWithManifestFormButton } from "@dashboard/apps/components/InstallWithManifestFormButton";
 import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
 import { RequestExtensionsButton } from "@dashboard/extensions/components/RequestExtensionsButton";
+import { buttonLabels } from "@dashboard/extensions/messages";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { useFlag } from "@dashboard/featureFlags";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { PlusIcon } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { useMemo } from "react";
+import { useIntl } from "react-intl";
 
-interface AddExtensionDropdownProps {
-  testId?: string;
-}
-
-export const AddExtensionDropdown: React.FC<AddExtensionDropdownProps> = ({
-  testId = "add-extension-button",
-}) => {
+export const AddExtensionDropdown = () => {
+  const intl = useIntl();
   const navigate = useNavigator();
   const { enabled: isExtensionsDevEnabled } = useFlag("extensions_dev");
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
@@ -23,23 +20,26 @@ export const AddExtensionDropdown: React.FC<AddExtensionDropdownProps> = ({
     navigate(ExtensionsUrls.installCustomExtensionUrl());
   };
 
-  const addExtensionOptions = [
-    {
-      label: "Explore",
-      testId: "explore-extensions",
-      onSelect: () => navigate(ExtensionsUrls.resolveExploreExtensionsUrl()),
-    },
-    {
-      label: "Install from manifest",
-      testId: "install-custom-extension",
-      onSelect: () => navigate(ExtensionsUrls.installCustomExtensionUrl()),
-    },
-    {
-      label: "Provide details manually",
-      testId: "add-custom-extension",
-      onSelect: () => navigate(ExtensionsUrls.addCustomExtensionUrl()),
-    },
-  ];
+  const addExtensionOptions = useMemo(
+    () => [
+      {
+        label: intl.formatMessage(buttonLabels.explore),
+        testId: "explore-extensions",
+        onSelect: () => navigate(ExtensionsUrls.resolveExploreExtensionsUrl()),
+      },
+      {
+        label: intl.formatMessage(buttonLabels.installFromManifest),
+        testId: "install-custom-extension",
+        onSelect: () => navigate(ExtensionsUrls.installCustomExtensionUrl()),
+      },
+      {
+        label: intl.formatMessage(buttonLabels.installManually),
+        testId: "add-custom-extension",
+        onSelect: () => navigate(ExtensionsUrls.addCustomExtensionUrl()),
+      },
+    ],
+    [intl, navigate],
+  );
 
   if (!isExtensionsDevEnabled) {
     // Display old navigation
@@ -58,7 +58,7 @@ export const AddExtensionDropdown: React.FC<AddExtensionDropdownProps> = ({
       variant="primary"
       icon={<PlusIcon />}
       options={addExtensionOptions}
-      testId={testId}
+      testId="add-extension-button"
     >
       Add Extension
     </ButtonWithDropdown>
