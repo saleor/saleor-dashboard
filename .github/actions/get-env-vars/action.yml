@@ -15,6 +15,11 @@ inputs:
     description: 'Project name'
     required: true
 
+outputs:
+  IS_OLD_VERSION:
+    description: 'Whether the version is old'
+    value: ${{ steps.get-environment-variables.outputs.IS_OLD_VERSION }}
+
 runs:
   using: composite
   steps:
@@ -27,6 +32,7 @@ runs:
       shell: bash
       run: npm ci
     - name: Get environment variables
+      id: get-environment-variables
       shell: bash
       env:
         REPO_TOKEN: ${{ inputs.repo_token }}
