@@ -29,7 +29,6 @@ jobs:
           npm ci
 
       - name: get environment variables
-        working-directory: .github/workflows
         id: get-environment-variables
         run: |
           node .github/workflows/getEnvironmentVariables.js \

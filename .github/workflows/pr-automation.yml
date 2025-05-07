@@ -38,40 +38,6 @@ jobs:
         with:
           node-version-file: ".nvmrc"
 
-      # for testing purposes
-      - name: Cache node modules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-qa-${{ env.cache-name }}-
-            ${{ runner.os }}-qa-
-            ${{ runner.os }}-
-
-      # for testing purposes
-      - name: Install deps
-        run: npm ci
-
-
-      # for testing purposes
-      - name: Get environment variables
-        uses: ./.github/actions/get-env-vars
-        id: get-environment-variables
-        with:
-          version: "3.14.5"
-          token: ${{ secrets.CLOUD_ACCESS_TOKEN }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          project: ${{ env.PROJECT }}
-
-      # for testing purposes
-      - name: test
-        run: |
-          echo "OUTPUT TEST: ${{ steps.get-environment-variables.outputs.IS_OLD_VERSION }}"
-
-
       - name: Generate variables
         id: cloud_variables
         uses: ./.github/actions/prepare-tests-variables
