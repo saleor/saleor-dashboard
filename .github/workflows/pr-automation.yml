@@ -33,7 +33,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: ./.github/actions
+          sparse-checkout: ./.github
 
       - name: Generate variables
         id: cloud_variables

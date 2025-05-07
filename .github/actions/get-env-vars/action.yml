@@ -16,7 +16,7 @@ inputs:
     required: true
 
 runs:
-  using: "composite"
+  using: composite
   steps:
     - uses: actions/setup-node@v3
       with:
