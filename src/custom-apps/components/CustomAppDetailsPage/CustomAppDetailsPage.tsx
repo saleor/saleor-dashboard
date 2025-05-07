@@ -20,7 +20,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
-import { Button } from "@saleor/macaw-ui";
+import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -107,7 +107,6 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
             <Button
               variant="secondary"
               className={classes.activateButton}
-              disableFocusRipple
               onClick={data.isActive ? onAppDeactivateOpen : onAppActivateOpen}
             >
               <SVG src={activateIcon} />

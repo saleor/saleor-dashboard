@@ -5,15 +5,14 @@ import { TablePaginationWithContext } from "@dashboard/components/TablePaginatio
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { WarehouseWithShippingFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
-import { renderCollection, stopPropagation } from "@dashboard/misc";
+import { renderCollection } from "@dashboard/misc";
 import { ListProps, SortPage } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getArrowDirection } from "@dashboard/utils/sort";
 import { WarehouseListUrlSortField, warehouseUrl } from "@dashboard/warehouses/urls";
 import { TableBody, TableCell, TableFooter, TableHead } from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
-import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { makeStyles } from "@saleor/macaw-ui";
+import { Button, Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { useLocation } from "react-router";
@@ -30,17 +29,6 @@ const useStyles = makeStyles(
       colZones: {
         width: "auto",
       },
-    },
-    actions: {
-      alignItems: "center",
-      display: "flex",
-      justifyContent: "flex-end",
-      position: "relative",
-      right: theme.spacing(-1.5),
-      gap: theme.spacing(1),
-    },
-    colActions: {
-      textAlign: "right",
     },
     colName: {
       paddingLeft: 0,
@@ -130,22 +118,16 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
                     .join(", ") || "-"
                 )}
               </TableCell>
-              <TableCell className={classes.colActions}>
-                <div className={classes.actions}>
-                  <IconButton variant="secondary" color="primary" data-test-id="edit-button">
-                    <EditIcon />
-                  </IconButton>
-                  <TableButtonWrapper>
-                    <IconButton
-                      data-test-id="delete-button"
-                      variant="secondary"
-                      color="primary"
-                      onClick={stopPropagation(() => onRemove(warehouse?.id))}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </TableButtonWrapper>
-                </div>
+              <TableCell>
+                <TableButtonWrapper>
+                  <Button
+                    icon={<TrashBinIcon />}
+                    variant="secondary"
+                    data-test-id="delete-button"
+                    onClick={() => onRemove(warehouse?.id)}
+                    marginLeft="auto"
+                  />
+                </TableButtonWrapper>
               </TableCell>
             </TableRowLink>
           ),

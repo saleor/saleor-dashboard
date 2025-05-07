@@ -10,7 +10,7 @@ import {
   AttributeValueDetailsFragment,
   ProductFragment,
 } from "@dashboard/graphql";
-import { FormsetData } from "@dashboard/hooks/useFormset";
+import { FormsetData, UseFormsetOutput } from "@dashboard/hooks/useFormset";
 
 const multipleValueAttributes: FormsetData<AttributeInputData, string[]> = [
   {
@@ -756,48 +756,106 @@ describe("Sending only changed attributes", () => {
 });
 
 describe("createAttributeChangeHandler", () => {
+  it("should return false when value is false and it is a boolean attribute", () => {
+    // Arrange
+    const formset = {
+      change: jest.fn(),
+      data: [],
+      get: () => ({
+        data: {
+          inputType: AttributeInputTypeEnum.BOOLEAN,
+        },
+      }),
+    } as unknown as UseFormsetOutput<AttributeInputData>;
+    const trigger = jest.fn();
+    const handler = createAttributeChangeHandler(formset, trigger);
+
+    // Act
+    handler("attr-1", false);
+
+    // Assert
+    expect(formset.change).toHaveBeenCalledTimes(1);
+    expect(formset.change).toHaveBeenCalledWith("attr-1", [false]);
+    expect(trigger).toHaveBeenCalledTimes(1);
+  });
+
+  it("should return undefined when value is undefined and it is a boolean attribute", () => {
+    // Arrange
+    const formset = {
+      change: jest.fn(),
+      data: [],
+      get: () => ({
+        data: {
+          inputType: AttributeInputTypeEnum.BOOLEAN,
+        },
+      }),
+    } as unknown as UseFormsetOutput<AttributeInputData>;
+    const trigger = jest.fn();
+    const handler = createAttributeChangeHandler(formset, trigger);
+
+    // Act
+    handler("attr-1", undefined);
+
+    // Assert
+    expect(formset.change).toHaveBeenCalledTimes(1);
+    expect(formset.change).toHaveBeenCalledWith("attr-1", [undefined]);
+    expect(trigger).toHaveBeenCalledTimes(1);
+  });
+
   it("should return empty array when value is empty string", () => {
     // Arrange
-    const change = jest.fn();
+    const formset = {
+      change: jest.fn(),
+      data: [],
+      get: jest.fn(),
+    } as unknown as UseFormsetOutput<AttributeInputData>;
     const trigger = jest.fn();
-    const handler = createAttributeChangeHandler(change, trigger);
+    const handler = createAttributeChangeHandler(formset, trigger);
 
     // Act
     handler("attr-1", "");
 
     // Assert
-    expect(change).toHaveBeenCalledTimes(1);
-    expect(change).toHaveBeenCalledWith("attr-1", []);
+    expect(formset.change).toHaveBeenCalledTimes(1);
+    expect(formset.change).toHaveBeenCalledWith("attr-1", []);
     expect(trigger).toHaveBeenCalledTimes(1);
   });
 
   it("should return empty array when value is null", () => {
     // Arrange
-    const change = jest.fn();
+    const formset = {
+      change: jest.fn(),
+      data: [],
+      get: jest.fn(),
+    } as unknown as UseFormsetOutput<AttributeInputData>;
     const trigger = jest.fn();
-    const handler = createAttributeChangeHandler(change, trigger);
+    const handler = createAttributeChangeHandler(formset, trigger);
 
     // Act
     handler("attr-1", null);
 
     // Assert
-    expect(change).toHaveBeenCalledTimes(1);
-    expect(change).toHaveBeenCalledWith("attr-1", []);
+    expect(formset.change).toHaveBeenCalledTimes(1);
+    expect(formset.change).toHaveBeenCalledWith("attr-1", []);
     expect(trigger).toHaveBeenCalledTimes(1);
   });
 
   it("should return array with value when value not null or undefined or empty string", () => {
     // Arrange
-    const change = jest.fn();
+    const formset = {
+      change: jest.fn(),
+      data: [],
+      get: jest.fn(),
+    } as unknown as UseFormsetOutput<AttributeInputData>;
     const trigger = jest.fn();
-    const handler = createAttributeChangeHandler(change, trigger);
+    const handler = createAttributeChangeHandler(formset, trigger);
 
     // Act
     handler("attr-1", "val-1");
 
     // Assert
-    expect(change).toHaveBeenCalledTimes(1);
-    expect(change).toHaveBeenCalledWith("attr-1", ["val-1"]);
+    expect(formset.change).toHaveBeenCalledTimes(1);
+    expect(formset.change).toHaveBeenCalledWith("attr-1", ["val-1"]);
     expect(trigger).toHaveBeenCalledTimes(1);
   });
 });
