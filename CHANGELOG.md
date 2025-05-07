@@ -1,5 +1,34 @@
 # Changelog
 
+## 3.20.38
+
+### Patch Changes
+
+- c9feaf1: You can now apply specific variants to Vouchers, alongside products, collections and categories. This means variants are now assignable in Voucher edit and create forms.
+- b0b1873: Setting unsed and false values for the boolean attributes are displaying properly.
+- 4d14bfd: Added new Extension install page at `/extensions/install`, it's meant to replace current App install page in upcoming releases.
+- e1cb757: You can now see a loading animation when you click "Finalize" when finalizing a draft order. It prevents from submitting the form more than once.
+- 1134ec2: You can now see updated radio buttons in warehouse edit view.
+- 120e04c: Added views for managing custom extensions (aka custom apps) to `/extensions` route:
+
+  - `/extensions/custom/<id>` - details view
+  - `/extensions/custom/<id>/webhook` - webhook create view
+  - `/extensions/custom/<id>/webhook/<webhook_id>` - webhook edit view
+
+- 8f9fe98: Added new "Add Custom Extension" view (`/extensions/custom/add`) for creating custom apps (type: `LOCAL`) that's meant to replace configuration page in Webhook & Events
+- b47c49e: You can now see the unified look and behavior of pagination action buttons across all list views, including products, customers, orders, and other sections.
+- ca8961a: You can now successfully save transaction refunds as drafts when using the latest version of Saleor Core.
+- fb38f45: Now order-relaed buttons for refund, capture, mark as paid, adding products and fulfill are aligned with the others.
+- 9893e47: Remove testMo from workflows and add CTRF report
+- 545c131: You can now filter customers in customers list by metadata.
+- 451c65f: Now the action that runs on release no longer fails due to fetching recent version.
+- c83ad3c: Moved Extensions installed page URL from `/extensions` to `/extensions/installed`
+- 61d2b77: Now you can use download links within the applications.
+- bfaaf72: You can now see updated buttons and icons in tables across Dashboard.
+- 13573f9: Now sidebar has new section "modeling" that reffers to "content" and "navigation".
+- 9160f48: View for managing plugins was added to `/extensions` route, it can be accessed by `/extensions/plugin/<id>` which is used in the list of installed extensions.
+- 40c2405: Fixed Jest tests being flakey (randomly faling) due to not clearing fake timers
+
 ## 3.20.37
 
 ### Patch Changes
