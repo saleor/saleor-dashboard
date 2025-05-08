@@ -622,10 +622,6 @@
     "context": "dialog header",
     "string": "Delete Menus"
   },
-  "1LMjTm": {
-    "context": "fulfillment section name",
-    "string": "Fulfilment"
-  },
   "1LiVhv": {
     "context": "section header",
     "string": "Recent Orders"
@@ -1042,10 +1038,6 @@
   "4EdlF/": {
     "context": "datagrid title label",
     "string": "Select transaction to refund"
-  },
-  "4IawKc": {
-    "context": "onboarding step description",
-    "string": "Go to all orders where you can create an fulfilment and refund and review corresponding statuses. View the order in GraphQL"
   },
   "4IgzXs": {
     "context": "label",
@@ -1830,6 +1822,10 @@
     "context": "weight config modal title",
     "string": "Default weight unit configuration"
   },
+  "9XYfOt": {
+    "context": "fulfillment section name",
+    "string": "Fulfillment"
+  },
   "9Y5i/8": {
     "context": "number of webhook headers in model",
     "string": "{number,plural,one{{number} header} other{{number} custom request headers}}"
@@ -2098,6 +2094,10 @@
   "BFR6CF": {
     "context": "webhooks and events section name",
     "string": "Webhooks & Events"
+  },
+  "BHXdXU": {
+    "context": "onboarding step description",
+    "string": "Go to all orders where you can create an fulfillment and refund and review corresponding statuses. View the order in GraphQL"
   },
   "BJtUQI": {
     "context": "button",
