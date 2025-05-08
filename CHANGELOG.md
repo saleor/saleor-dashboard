@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.20.39
+
+### Patch Changes
+
+- 6ef7487: Now create webhook button works properly, leading you to the form"
+- 37db3ff: Now orders becomes fulfilment as category name within the sidebar.
+
 ## 3.20.38
 
 ### Patch Changes
