@@ -99,6 +99,7 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
           onClick={onSetMaximalQuantities}
           data-test-id={"set-maximal-quantity-fulfilled-button-" + fulfillment?.id}
           variant="secondary"
+          size="small"
         >
           <FormattedMessage
             id="2W4EBM"
