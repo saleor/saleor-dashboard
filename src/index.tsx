@@ -19,7 +19,7 @@ import { useIntl } from "react-intl";
 import { Switch } from "react-router-dom";
 
 import { AppsSectionRoot } from "./apps";
-import { ExternalAppProvider } from "./apps/components/ExternalAppContext";
+import { ExternalAppProvider } from "./extensions/components/ExternalAppContext";
 import { AppSections } from "./apps/urls";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";

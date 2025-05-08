@@ -27,7 +27,7 @@ import { AddCustomExtension } from "./views/AddCustomExtension";
 import { AddCustomExtensionWebhook } from "./views/AddCustomExtensionWebhook";
 import { EditCustomExtension } from "./views/EditCustomExtension";
 import { EditCustomExtensionWebhook } from "./views/EditCustomExtensionWebhook";
-import { AppManageView } from "./views/EditManifestExtension";
+import { EditManifestExtension } from "./views/EditManifestExtension";
 import { EditPluginExtension } from "./views/EditPluginExtension";
 import { ViewManifestExtensionIframe } from "./views/ViewManifestExtension";
 
@@ -75,7 +75,7 @@ const EditManifestExtensionView = ({ match }: RouteComponentProps<{ id: string }
   const qs = parseQs(location.search.substr(1));
   const params: AppDetailsUrlQueryParams = qs;
 
-  return <AppManageView id={decodeURIComponent(match.params.id)} params={params} />;
+  return <EditManifestExtension id={decodeURIComponent(match.params.id)} params={params} />;
 };
 
 const ViewManifestExtensionIframeView = ({ match }: RouteComponentProps<{ id: string }>) => {

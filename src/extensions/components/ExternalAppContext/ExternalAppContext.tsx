@@ -1,12 +1,12 @@
+import { AppFrame } from "@dashboard/apps/components/AppFrame";
 import { AppUrls } from "@dashboard/apps/urls";
 import { APP_VERSION } from "@dashboard/config";
+import { AppDialog } from "@dashboard/extensions/views/ViewManifestExtension/components/AppDialog";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useShop from "@dashboard/hooks/useShop";
 import React from "react";
 
-import { AppDialog } from "../AppDialog";
-import { AppFrame } from "../AppFrame";
 import { AppData, ExternalAppContext } from "./context";
 
 export const ExternalAppProvider: React.FC = ({ children }) => {

@@ -4,7 +4,7 @@ import {
   mapToMenuItems,
   mapToMenuItemsForCustomerOverviewActions,
   useExtensions,
-} from "@dashboard/apps/hooks/useExtensions";
+} from "@dashboard/extensions/hooks/useExtensions";
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";

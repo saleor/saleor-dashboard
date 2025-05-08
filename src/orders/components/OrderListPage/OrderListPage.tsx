@@ -3,7 +3,7 @@ import {
   extensionMountPoints,
   mapToMenuItemsForOrderListActions,
   useExtensions,
-} from "@dashboard/apps/hooks/useExtensions";
+} from "@dashboard/extensions/hooks/useExtensions";
 import { useUserAccessibleChannels } from "@dashboard/auth/hooks/useUserAccessibleChannels";
 import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLinks/useContextualLink";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";

@@ -3,7 +3,7 @@ import {
   extensionMountPoints,
   mapToMenuItemsForCustomerDetails,
   useExtensions,
-} from "@dashboard/apps/hooks/useExtensions";
+} from "@dashboard/extensions/hooks/useExtensions";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Backlink } from "@dashboard/components/Backlink";
 import CardMenu from "@dashboard/components/CardMenu/CardMenu";

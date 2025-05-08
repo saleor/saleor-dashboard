@@ -4,7 +4,7 @@ import {
   extensionMountPoints,
   mapToMenuItemsForOrderDetails,
   useExtensions,
-} from "@dashboard/apps/hooks/useExtensions";
+} from "@dashboard/extensions/hooks/useExtensions";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardMenu from "@dashboard/components/CardMenu";
 import { CardSpacer } from "@dashboard/components/CardSpacer";

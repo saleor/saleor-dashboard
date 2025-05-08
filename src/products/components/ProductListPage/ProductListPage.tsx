@@ -5,7 +5,7 @@ import {
   mapToMenuItems,
   mapToMenuItemsForProductOverviewActions,
   useExtensions,
-} from "@dashboard/apps/hooks/useExtensions";
+} from "@dashboard/extensions/hooks/useExtensions";
 import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLinks/useContextualLink";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";

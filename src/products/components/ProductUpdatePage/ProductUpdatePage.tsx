@@ -3,7 +3,7 @@ import {
   extensionMountPoints,
   mapToMenuItemsForProductDetails,
   useExtensions,
-} from "@dashboard/apps/hooks/useExtensions";
+} from "@dashboard/extensions/hooks/useExtensions";
 import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,

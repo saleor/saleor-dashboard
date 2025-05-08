@@ -29,7 +29,7 @@ interface Props {
   params: AppDetailsUrlQueryParams;
 }
 
-export const EditManifestExtensionView = ({ id, params }: Props) => {
+export const EditManifestExtension = ({ id, params }: Props) => {
   const client = useApolloClient();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const { data, loading, refetch } = useAppQuery({

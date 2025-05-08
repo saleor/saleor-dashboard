@@ -1,6 +1,6 @@
 import { SidebarAppAlert } from "@dashboard/apps/components/AppAlerts/SidebarAppAlert";
 import { useAppsAlert } from "@dashboard/apps/components/AppAlerts/useAppsAlert";
-import { extensionMountPoints, useExtensions } from "@dashboard/apps/hooks/useExtensions";
+import { extensionMountPoints, useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { AppPaths } from "@dashboard/apps/urls";
 import { useUser } from "@dashboard/auth";
 import { categoryListUrl } from "@dashboard/categories/urls";
@@ -175,15 +175,15 @@ export function useMenuStructure() {
     {
       children: !isEmpty(extensions.NAVIGATION_CUSTOMERS)
         ? [
-            {
-              label: intl.formatMessage(sectionNames.customers),
-              permissions: [PermissionEnum.MANAGE_USERS],
-              id: "customers",
-              url: customerListUrl(),
-              type: "item",
-            },
-            ...mapToExtensionsItems(extensions.NAVIGATION_CUSTOMERS, appExtensionsHeaderItem),
-          ]
+          {
+            label: intl.formatMessage(sectionNames.customers),
+            permissions: [PermissionEnum.MANAGE_USERS],
+            id: "customers",
+            url: customerListUrl(),
+            type: "item",
+          },
+          ...mapToExtensionsItems(extensions.NAVIGATION_CUSTOMERS, appExtensionsHeaderItem),
+        ]
         : undefined,
       icon: renderIcon(<CustomersIcon />),
       label: intl.formatMessage(sectionNames.customers),
