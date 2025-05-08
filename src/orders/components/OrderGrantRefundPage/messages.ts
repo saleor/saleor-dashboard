@@ -57,7 +57,7 @@ export const grantRefundPageMessages = defineMessages({
     id: "zfjAc7",
     description: "grant refund, card header",
   },
-  fulfilment: {
+  fulfillment: {
     defaultMessage: "Fulfillment",
     id: "WK62MN",
   },
