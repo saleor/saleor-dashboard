@@ -6,9 +6,9 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { OrderRefundDataQuery } from "@dashboard/graphql";
 import { FormsetChange } from "@dashboard/hooks/useFormset";
 import { renderCollection } from "@dashboard/misc";
-import { Table, TableBody, TableCell, TableHead, TextField } from "@material-ui/core";
+import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Button, Input, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -165,34 +165,48 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
                   </TableCell>
                   <TableCell className={classes.colQuantity}>
                     {line?.quantity ? (
-                      <TextField
+                      <Input
                         disabled={disabled}
+                        className={classes.quantityInnerInputNoRemaining}
                         type="number"
-                        inputProps={{
-                          className: classes.quantityInnerInput,
-                          "data-test-id": "quantityInput" + line?.id,
-                          max: (line?.quantity ?? 0).toString(),
-                          min: 0,
-                          style: { textAlign: "right" },
-                        }}
-                        fullWidth
+                        data-test-id={"quantityInput" + line?.id}
                         value={selectedLineQuantity?.value}
                         onChange={event =>
                           onRefundedProductQuantityChange(line.id, event.target.value)
                         }
-                        InputProps={{
-                          endAdornment: line?.quantity && (
-                            <div className={classes.remainingQuantity}>/ {line?.quantity}</div>
-                          ),
-                        }}
+                        endAdornment={
+                          <Text minWidth={10} paddingRight={2}>
+                            <FormattedMessage
+                              id="L4uWLd"
+                              defaultMessage="/ {quantity}"
+                              description="remaining quantity"
+                              values={{
+                                quantity: line?.quantity,
+                              }}
+                            />
+                          </Text>
+                        }
+                        max={line?.quantity}
+                        min={0}
+                        textAlign="right"
                         error={isError}
                         helperText={
-                          isError &&
-                          intl.formatMessage({
-                            id: "xoyCZ/",
-                            defaultMessage: "Improper value",
-                            description: "error message",
-                          })
+                          isError && (
+                            <Text
+                              color="critical1"
+                              __marginTop="-2px"
+                              display="block"
+                              position="absolute"
+                              bottom={0}
+                              fontSize={1}
+                            >
+                              <FormattedMessage
+                                id="xoyCZ/"
+                                defaultMessage="Improper value"
+                                description="error message"
+                              />
+                            </Text>
+                          )
                         }
                       />
                     ) : (
