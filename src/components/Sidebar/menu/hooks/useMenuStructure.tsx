@@ -1,6 +1,5 @@
 import { SidebarAppAlert } from "@dashboard/apps/components/AppAlerts/SidebarAppAlert";
 import { useAppsAlert } from "@dashboard/apps/components/AppAlerts/useAppsAlert";
-import { extensionMountPoints, useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { AppPaths } from "@dashboard/apps/urls";
 import { useUser } from "@dashboard/auth";
 import { categoryListUrl } from "@dashboard/categories/urls";
@@ -9,6 +8,7 @@ import { configurationMenuUrl } from "@dashboard/configuration";
 import { getConfigMenuItemsPermissions } from "@dashboard/configuration/utils";
 import { customerListUrl } from "@dashboard/customers/urls";
 import { saleListUrl, voucherListUrl } from "@dashboard/discounts/urls";
+import { extensionMountPoints, useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { ExtensionsPaths } from "@dashboard/extensions/urls";
 import { useFlag } from "@dashboard/featureFlags";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
@@ -138,7 +138,11 @@ export function useMenuStructure() {
           permissions: [PermissionEnum.MANAGE_GIFT_CARD],
           type: "item",
         },
-        ...mapToExtensionsItems(extensions.NAVIGATION_CATALOG, appExtensionsHeaderItem),
+        ...mapToExtensionsItems(
+          extensions.NAVIGATION_CATALOG,
+          appExtensionsHeaderItem,
+          showExtensions,
+        ),
       ],
       icon: renderIcon(<ProductsIcon />),
       url: productListUrl(),
@@ -163,7 +167,11 @@ export function useMenuStructure() {
           url: orderDraftListUrl(),
           type: "item",
         },
-        ...mapToExtensionsItems(extensions.NAVIGATION_ORDERS, appExtensionsHeaderItem),
+        ...mapToExtensionsItems(
+          extensions.NAVIGATION_ORDERS,
+          appExtensionsHeaderItem,
+          showExtensions,
+        ),
       ],
       icon: renderIcon(<OrdersIcon />),
       label: intl.formatMessage(sectionNames.fulfillment),
@@ -175,15 +183,19 @@ export function useMenuStructure() {
     {
       children: !isEmpty(extensions.NAVIGATION_CUSTOMERS)
         ? [
-          {
-            label: intl.formatMessage(sectionNames.customers),
-            permissions: [PermissionEnum.MANAGE_USERS],
-            id: "customers",
-            url: customerListUrl(),
-            type: "item",
-          },
-          ...mapToExtensionsItems(extensions.NAVIGATION_CUSTOMERS, appExtensionsHeaderItem),
-        ]
+            {
+              label: intl.formatMessage(sectionNames.customers),
+              permissions: [PermissionEnum.MANAGE_USERS],
+              id: "customers",
+              url: customerListUrl(),
+              type: "item",
+            },
+            ...mapToExtensionsItems(
+              extensions.NAVIGATION_CUSTOMERS,
+              appExtensionsHeaderItem,
+              showExtensions,
+            ),
+          ]
         : undefined,
       icon: renderIcon(<CustomersIcon />),
       label: intl.formatMessage(sectionNames.customers),
@@ -206,7 +218,11 @@ export function useMenuStructure() {
           url: voucherListUrl(),
           type: "item",
         },
-        ...mapToExtensionsItems(extensions.NAVIGATION_DISCOUNTS, appExtensionsHeaderItem),
+        ...mapToExtensionsItems(
+          extensions.NAVIGATION_DISCOUNTS,
+          appExtensionsHeaderItem,
+          showExtensions,
+        ),
       ],
       icon: renderIcon(<DiscountsIcon />),
       label: intl.formatMessage(commonMessages.discounts),
@@ -231,7 +247,11 @@ export function useMenuStructure() {
           permissions: [PermissionEnum.MANAGE_MENUS],
           type: "item",
         },
-        ...mapToExtensionsItems(extensions.NAVIGATION_PAGES, appExtensionsHeaderItem),
+        ...mapToExtensionsItems(
+          extensions.NAVIGATION_PAGES,
+          appExtensionsHeaderItem,
+          showExtensions,
+        ),
       ],
       icon: renderIcon(<ModelingIcon />),
       label: intl.formatMessage(sectionNames.modeling),
@@ -242,7 +262,13 @@ export function useMenuStructure() {
     },
     {
       children: !isEmpty(extensions.NAVIGATION_TRANSLATIONS)
-        ? [...mapToExtensionsItems(extensions.NAVIGATION_TRANSLATIONS, appExtensionsHeaderItem)]
+        ? [
+            ...mapToExtensionsItems(
+              extensions.NAVIGATION_TRANSLATIONS,
+              appExtensionsHeaderItem,
+              showExtensions,
+            ),
+          ]
         : undefined,
       icon: renderIcon(<TranslationsIcon />),
       label: intl.formatMessage(sectionNames.translations),
