@@ -130,6 +130,26 @@ export const ExtensionsUrls = {
     return urlJoin(appUrl, window.location.search, iframeContextQueryString);
   },
 
+  // Used to resolve app url in app dashboard extensions mounting points
+  // (these are navigation items app can install in dashboard)
+  resolveDashboardUrlFromAppCompleteUrl: (
+    appCompleteUrl: string,
+    appUrl?: string,
+    appId?: string,
+  ) => {
+    if (!appUrl || !appId) {
+      return appUrl;
+    }
+
+    const deepSubPath = appCompleteUrl.replace(appUrl, "");
+    const dashboardUrl = urlJoin(
+      ExtensionsPaths.resolveViewManifestExtension(encodeURIComponent(appId)),
+      deepSubPath,
+    );
+
+    return dashboardUrl;
+  },
+
   // Used to resolve app url in iframe
   resolveAppCompleteUrlFromDashboardUrl: (
     dashboardUrl: string,
