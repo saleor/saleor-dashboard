@@ -66,11 +66,13 @@ const OrderCardTitle: React.FC<OrderCardTitleProps> = ({
       title={
         <div className={classes.title}>
           {withStatus && (
-            <div className={classes.indicator}>
-              <CircleIndicator color={selectStatus(status)} />
-            </div>
+            <>
+              <div className={classes.indicator}>
+                <CircleIndicator color={selectStatus(status)} />
+              </div>
+              <HorizontalSpacer spacing={2} />
+            </>
           )}
-          <HorizontalSpacer spacing={2} />
           <Text className={classes.cardHeader}>{intl.formatMessage(messageForStatus)}</Text>
           {!!warehouseName && (
             <Text className={classes.warehouseName} size={2} fontWeight="light">
