@@ -63,8 +63,10 @@ export const ExtensionsUrls = {
     ExtensionsPaths.installedExtensions + "?" + stringifyQs(params),
   resolveExploreExtensionsUrl: (params?: ExtensionsListUrlQueryParams) =>
     ExtensionsPaths.exploreExtensions + "?" + stringifyQs(params),
-  resolveInstallCustomExtensionUrl: (params?: ExtensionInstallQueryParams) =>
-    ExtensionsPaths.installCustomExtension + "?" + stringifyQs(params),
+  resolveInstallCustomExtensionUrl: (manifestUrl?: string) =>
+    ExtensionsPaths.installCustomExtension +
+    "?" +
+    stringifyQs({ manifestUrl } as ExtensionInstallQueryParams),
   addCustomExtensionUrl: (params?: ExtensionsListUrlQueryParams) =>
     ExtensionsPaths.addCustomExtension + "?" + stringifyQs(params),
   editCustomExtensionUrl: (id: string, params?: CustomExtensionDetailsUrlQueryParams) =>
