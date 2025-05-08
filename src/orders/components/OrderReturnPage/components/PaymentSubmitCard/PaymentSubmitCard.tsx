@@ -1,13 +1,11 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Hr from "@dashboard/components/Hr";
+import { SimpleRadioGroupField } from "@dashboard/components/SimpleRadioGroupField";
 import { OrderDetailsFragment, OrderErrorFragment, OrderRefundDataQuery } from "@dashboard/graphql";
-import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Button, Checkbox, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -83,7 +81,7 @@ interface PaymentSubmitCardProps {
   errors: OrderErrorFragment[];
   amountData: PaymentSubmitCardValuesProps;
   allowNoRefund?: boolean;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent) => void;
   onRefund: () => void;
 }
 
@@ -143,6 +141,9 @@ export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
   };
   const disableRefundButton = shouldRefundButtonBeDisabled();
 
+  const showRefundShipmentCheckbox =
+    data.amountCalculationMode !== OrderRefundAmountCalculationMode.NONE;
+
   return (
     <DashboardCard>
       <DashboardCard.Header>
@@ -155,93 +156,93 @@ export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
         </DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content className={classes.content}>
-        {type === OrderRefundType.PRODUCTS && (
-          <RadioGroup
-            value={data.amountCalculationMode}
-            onChange={onChange}
-            name="amountCalculationMode"
-          >
-            {allowNoRefund && (
-              <FormControlLabel
-                disabled={disabled}
-                value={OrderRefundAmountCalculationMode.NONE}
-                control={<Radio color="primary" />}
-                label={intl.formatMessage({
-                  id: "zzfj8H",
-                  defaultMessage: "No refund",
-                  description: "label",
-                })}
-              />
-            )}
-            <FormControlLabel
-              disabled={disabled}
-              value={OrderRefundAmountCalculationMode.AUTOMATIC}
-              control={<Radio color="primary" />}
-              label={intl.formatMessage({
+        <SimpleRadioGroupField
+          choices={[
+            {
+              label: intl.formatMessage({
+                id: "zzfj8H",
+                defaultMessage: "No refund",
+                description: "label",
+              }),
+              value: OrderRefundAmountCalculationMode.NONE,
+              disabled: !allowNoRefund || disabled,
+            },
+            {
+              label: intl.formatMessage({
                 id: "JEIN47",
                 defaultMessage: "Automatic Amount",
                 description: "label",
-              })}
-            />
-            {data.amountCalculationMode === OrderRefundAmountCalculationMode.NONE && (
-              <>
-                <CardSpacer />
-                <PaymentSubmitCardValues
-                  authorizedAmount={authorizedAmount}
-                  previouslyRefunded={previouslyRefunded}
-                  maxRefund={maxRefund}
-                  shipmentCost={data.refundShipmentCosts && shipmentCost}
-                />
-              </>
-            )}
-            {data.amountCalculationMode === OrderRefundAmountCalculationMode.AUTOMATIC && (
-              <>
-                <ControlledCheckbox
-                  checked={data.refundShipmentCosts}
-                  label={intl.formatMessage({
-                    id: "EP+jcU",
-                    defaultMessage: "Refund shipment costs",
-                    description: "checkbox",
-                  })}
-                  name="refundShipmentCosts"
-                  onChange={onChange}
-                />
-                <CardSpacer />
-                <PaymentSubmitCardValues
-                  authorizedAmount={authorizedAmount}
-                  previouslyRefunded={previouslyRefunded}
-                  maxRefund={maxRefund}
-                  selectedProductsValue={selectedProductsValue}
-                  refundTotalAmount={parsedRefundTotalAmount}
-                  shipmentCost={data.refundShipmentCosts && shipmentCost}
-                  replacedProductsValue={replacedProductsValue}
-                />
-              </>
-            )}
-            <Hr className={classes.hr} />
-            <FormControlLabel
-              disabled={disabled}
-              value={OrderRefundAmountCalculationMode.MANUAL}
-              control={<Radio color="primary" />}
-              label={intl.formatMessage({
+              }),
+              value: OrderRefundAmountCalculationMode.AUTOMATIC,
+              disabled: disabled,
+            },
+            {
+              label: intl.formatMessage({
                 id: "FOehC/",
                 defaultMessage: "Manual Amount",
                 description: "label",
-              })}
-            />
+              }),
+              value: OrderRefundAmountCalculationMode.MANUAL,
+              disabled: disabled,
+            },
+          ]}
+          disabled={disabled}
+          name={"amountCalculationMode" as keyof FormData}
+          value={data.amountCalculationMode}
+          onChange={change => {
+            onChange(change);
+          }}
+        />
+
+        {showRefundShipmentCheckbox && (
+          <>
+            <Checkbox
+              disabled={disabled}
+              checked={data.refundShipmentCosts}
+              name="refundShipmentCosts"
+              onCheckedChange={(checked: boolean) =>
+                onChange({ target: { name: "refundShipmentCosts", value: checked } })
+              }
+              marginTop={4}
+              marginBottom={2}
+            >
+              <Text>
+                <FormattedMessage
+                  id="EP+jcU"
+                  defaultMessage="Refund shipment costs"
+                  description="checkbox"
+                />
+              </Text>
+            </Checkbox>
+            <Hr className={classes.hr} />
+          </>
+        )}
+
+        {type === OrderRefundType.PRODUCTS && (
+          <>
+            {data.amountCalculationMode === OrderRefundAmountCalculationMode.NONE && (
+              <PaymentSubmitCardValues
+                authorizedAmount={authorizedAmount}
+                previouslyRefunded={previouslyRefunded}
+                maxRefund={maxRefund}
+                shipmentCost={data.refundShipmentCosts && shipmentCost}
+              />
+            )}
+
+            {data.amountCalculationMode === OrderRefundAmountCalculationMode.AUTOMATIC && (
+              <PaymentSubmitCardValues
+                authorizedAmount={authorizedAmount}
+                previouslyRefunded={previouslyRefunded}
+                maxRefund={maxRefund}
+                selectedProductsValue={selectedProductsValue}
+                refundTotalAmount={parsedRefundTotalAmount}
+                shipmentCost={data.refundShipmentCosts && shipmentCost}
+                replacedProductsValue={replacedProductsValue}
+              />
+            )}
+
             {data.amountCalculationMode === OrderRefundAmountCalculationMode.MANUAL && (
               <>
-                <ControlledCheckbox
-                  disabled={disabled}
-                  checked={data.refundShipmentCosts}
-                  label={intl.formatMessage({
-                    id: "EP+jcU",
-                    defaultMessage: "Refund shipment costs",
-                    description: "checkbox",
-                  })}
-                  name="refundShipmentCosts"
-                  onChange={onChange}
-                />
                 <PaymentSubmitCardValues
                   authorizedAmount={authorizedAmount}
                   previouslyRefunded={previouslyRefunded}
@@ -263,7 +264,7 @@ export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
                 />
               </>
             )}
-          </RadioGroup>
+          </>
         )}
         {type === OrderRefundType.MISCELLANEOUS && (
           <>
@@ -286,7 +287,7 @@ export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
         )}
         <Button
           variant="primary"
-          fullWidth
+          width="100%"
           onClick={onRefund}
           className={classes.refundButton}
           disabled={disableRefundButton}
