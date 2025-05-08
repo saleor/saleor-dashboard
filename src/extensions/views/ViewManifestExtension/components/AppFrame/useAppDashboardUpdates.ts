@@ -1,5 +1,4 @@
 import { usePostToExtension } from "@dashboard/apps/components/AppFrame/usePostToExtension";
-import { AppUrls } from "@dashboard/apps/urls";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import useLocale from "@dashboard/hooks/useLocale";
 import { useTheme } from "@saleor/macaw-ui";

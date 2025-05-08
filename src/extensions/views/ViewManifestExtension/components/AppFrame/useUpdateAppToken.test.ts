@@ -1,5 +1,6 @@
-import { useUpdateAppToken } from "@dashboard/apps/components/AppFrame/useUpdateAppToken";
 import { renderHook } from "@testing-library/react-hooks";
+
+import { useUpdateAppToken } from "./useUpdateAppToken";
 
 describe("useUpdateAppToken", function () {
   const postMessage = jest.fn();

@@ -1,4 +1,4 @@
-import { AppDetailsUrlQueryParams } from "@dashboard/apps/urls";
+import { AppDetailsUrlQueryParams } from "@dashboard/extensions/urls";
 import { useAllFlags } from "@dashboard/featureFlags";
 import { CircularProgress } from "@material-ui/core";
 import { DashboardEventFactory } from "@saleor/app-sdk/app-bridge";

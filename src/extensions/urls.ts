@@ -129,4 +129,23 @@ export const ExtensionsUrls = {
 
     return urlJoin(appUrl, window.location.search, iframeContextQueryString);
   },
+
+  // Used to resolve app url in iframe
+  resolveAppCompleteUrlFromDashboardUrl: (
+    dashboardUrl: string,
+    appUrl?: string,
+    appId?: string,
+  ) => {
+    if (!appUrl || !appId) {
+      return appUrl;
+    }
+
+    const deepSubPath = dashboardUrl.replace(
+      ExtensionsPaths.resolveViewManifestExtension(encodeURIComponent(appId)),
+      "",
+    );
+    const appCompleteUrl = urlJoin(appUrl, deepSubPath);
+
+    return appCompleteUrl;
+  },
 };

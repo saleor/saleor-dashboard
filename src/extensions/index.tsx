@@ -29,7 +29,7 @@ import { EditCustomExtension } from "./views/EditCustomExtension";
 import { EditCustomExtensionWebhook } from "./views/EditCustomExtensionWebhook";
 import { AppManageView } from "./views/EditManifestExtension";
 import { EditPluginExtension } from "./views/EditPluginExtension";
-import { AppView } from "./views/ViewManifestExtension";
+import { ViewManifestExtensionIframe } from "./views/ViewManifestExtension";
 
 const ExploreExtensionsView = () => {
   return <ExploreExtensions />;
@@ -79,7 +79,7 @@ const EditManifestExtensionView = ({ match }: RouteComponentProps<{ id: string }
 };
 
 const ViewManifestExtensionIframeView = ({ match }: RouteComponentProps<{ id: string }>) => {
-  return <AppView id={decodeURIComponent(match.params.id)} />;
+  return <ViewManifestExtensionIframe id={decodeURIComponent(match.params.id)} />;
 };
 
 const EditPluginExtensionView = ({ match }: RouteComponentProps<{ id: string }>) => {

@@ -1,1 +1,1 @@
-export * from "./AppView";
+export * from "./ViewManifestExtensionIframe";

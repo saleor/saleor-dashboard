@@ -1,6 +1,6 @@
-import { appMessages } from "@dashboard/apps/messages";
-import { AppPaths, AppUrls } from "@dashboard/apps/urls";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { appMessages } from "@dashboard/extensions/messages";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { useAppQuery } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -15,7 +15,7 @@ interface AppProps {
   id: string;
 }
 
-export const AppView: React.FC<AppProps> = ({ id }) => {
+export const ViewManifestExtensionIframe = ({ id }: AppProps) => {
   const location = useLocation();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const { data, refetch } = useAppQuery({
@@ -38,10 +38,10 @@ export const AppView: React.FC<AppProps> = ({ id }) => {
   );
 
   if (!appExists) {
-    return <NotFoundPage onBack={() => navigate(AppPaths.appListPath)} />;
+    return <NotFoundPage onBack={() => navigate(ExtensionsUrls.resolveInstalledExtensionsUrl())} />;
   }
 
-  let appCompleteUrl = AppUrls.resolveAppCompleteUrlFromDashboardUrl(
+  let appCompleteUrl = ExtensionsUrls.resolveAppCompleteUrlFromDashboardUrl(
     location.pathname,
     data?.app?.appUrl || "",
     id,

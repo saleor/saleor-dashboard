@@ -1,4 +1,3 @@
-import { createAppsDebug } from "@dashboard/apps/apps-debug";
 import { AppUrls } from "@dashboard/apps/urls";
 import { getAppMountUri } from "@dashboard/config";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -15,6 +14,7 @@ import {
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
 
+import { createAppsDebug } from "../../utils/apps-debug";
 import { useExternalApp } from "../ExternalAppContext";
 import { usePostToExtension } from "./usePostToExtension";
 
