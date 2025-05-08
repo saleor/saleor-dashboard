@@ -2316,6 +2316,10 @@
     "context": "CannotDefineChannelsAvailabilityCard title",
     "string": "Availability"
   },
+  "CWDuMj": {
+    "context": "remaining quantity",
+    "string": "/ {max}"
+  },
   "CWqmRU": {
     "context": "customer's address book when no customer name is available, header",
     "string": "Address Book"
