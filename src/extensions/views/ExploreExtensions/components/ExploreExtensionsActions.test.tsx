@@ -36,15 +36,6 @@ jest.mock("@dashboard/extensions/components/RequestExtensionsButton", () => ({
   ),
   CONST_TYPEFORM_URL: "https://example.com/typeform",
 }));
-
-jest.mock("@dashboard/apps/components/InstallWithManifestFormButton", () => ({
-  InstallWithManifestFormButton: ({ onSubmitted }) => (
-    <button data-test-id="add-app-from-manifest" onClick={() => onSubmitted("test-url")}>
-      Install from manifest
-    </button>
-  ),
-}));
-
 jest.mock("@dashboard/extensions/messages", () => ({
   buttonLabels: {
     addExtension: {
