@@ -85,6 +85,8 @@ export const ExtensionsUrls = {
     ExtensionsPaths.resolveEditManifestExtension(id) + "?" + stringifyQs(params),
   resolveAppDeepUrl: (id: string, subPath: string, params?: AppDetailsUrlQueryParams) =>
     ExtensionsPaths.resolveAppDeepPath(encodeURIComponent(id), subPath) + "?" + stringifyQs(params),
+
+  // Used when checking if navigation was made inside app iframe
   isAppDeepUrlChange: (appId: string, from: string, to: string) => {
     const appCompletePath = ExtensionsUrls.resolveViewManifestExtensionUrl(
       encodeURIComponent(appId),

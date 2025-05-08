@@ -1,5 +1,5 @@
-import { AppUrls } from "@dashboard/apps/urls";
 import { APP_VERSION } from "@dashboard/config";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useShop from "@dashboard/hooks/useShop";
@@ -45,7 +45,7 @@ export const useExternalApp = () => {
       setOpen(true);
       setAppData(appData);
     } else {
-      navigate(AppUrls.resolveAppDeepUrl(appData.id, appData.src, appData.params), {
+      navigate(ExtensionsUrls.resolveAppDeepUrl(appData.id, appData.src, appData.params), {
         resetScroll: true,
       });
     }

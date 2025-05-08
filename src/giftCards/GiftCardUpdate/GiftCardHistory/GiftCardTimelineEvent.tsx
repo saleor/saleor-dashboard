@@ -3,6 +3,7 @@ import { AppPaths } from "@dashboard/apps/urls";
 import Link from "@dashboard/components/Link";
 import { TimelineEvent } from "@dashboard/components/Timeline";
 import { customerPath } from "@dashboard/customers/urls";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { GiftCardDetailsQuery, GiftCardEventsEnum } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
@@ -36,7 +37,7 @@ const getUserOrAppUrl = (event: GiftCardEventType): string => {
   }
 
   if (event.app) {
-    return AppPaths.resolveAppPath(event.app.id);
+    return ExtensionsUrls.resolveViewManifestExtensionUrl(event.app.id);
   }
 
   return null;

@@ -1,7 +1,7 @@
 import { AppAvatar } from "@dashboard/apps/components/AppAvatar/AppAvatar";
 import { AppLogo } from "@dashboard/apps/types";
-import { AppUrls } from "@dashboard/apps/urls";
 import { TopNavLink, TopNavWrapper } from "@dashboard/components/AppLayout";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
@@ -43,7 +43,7 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
   const navigate = useNavigator();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const navigateToManageAppScreen = () => {
-    navigate(AppUrls.resolveAppDetailsUrl(appId));
+    navigate(ExtensionsUrls.resolveEditManifestExtensionUrl(appId));
   };
   const logo = useMemo(
     (): Logo =>

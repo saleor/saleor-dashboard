@@ -1,8 +1,8 @@
 // @ts-strict-ignore
-import { AppUrls } from "@dashboard/apps/urls";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Link from "@dashboard/components/Link";
 import { customerUrl } from "@dashboard/customers/urls";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { GiftCardEventsEnum } from "@dashboard/graphql";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { getFullName, getStringOrPlaceholder } from "@dashboard/misc";
@@ -41,7 +41,7 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
         return {
           label: messages.issuedByAppLabel,
           name: app?.name,
-          url: AppUrls.resolveAppUrl(app?.id),
+          url: ExtensionsUrls.resolveViewManifestExtensionUrl(app?.id),
         };
       }
 
