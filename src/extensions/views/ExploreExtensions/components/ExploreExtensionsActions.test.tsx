@@ -97,7 +97,7 @@ describe("ExploreExtensionsActions", () => {
     expect(screen.getByTestId("add-extension-button")).toBeInTheDocument();
   });
 
-  it("doesn't returned add extension dropwhen user doesn't have permission", () => {
+  it("doesn't render add extension dropdown user doesn't have permission", () => {
     // Arrange
     (useHasManagedAppsPermission as jest.Mock).mockReturnValue({ hasManagedAppsPermission: false });
 
@@ -105,7 +105,7 @@ describe("ExploreExtensionsActions", () => {
     render(<ExploreExtensionsActions />);
 
     // Assert
-    expect(screen.getByTestId("add-extension-button")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("add-extension-button")).not.toBeInTheDocument();
   });
 
   it("navigates to install custom extension when selecting from dropdown", async () => {
