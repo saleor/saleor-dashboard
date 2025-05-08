@@ -166,7 +166,7 @@ export function useMenuStructure() {
         ...mapToExtensionsItems(extensions.NAVIGATION_ORDERS, appExtensionsHeaderItem),
       ],
       icon: renderIcon(<OrdersIcon />),
-      label: intl.formatMessage(sectionNames.fulfilment),
+      label: intl.formatMessage(sectionNames.fulfillment),
       permissions: [PermissionEnum.MANAGE_ORDERS],
       id: "orders",
       url: orderListUrl(),
