@@ -3753,6 +3753,10 @@
     "context": "mark as paid strategy checkbox label",
     "string": "Use Transaction flow when marking order as paid"
   },
+  "L4uWLd": {
+    "context": "remaining quantity",
+    "string": "/ {quantity}"
+  },
   "L5IuDw": {
     "string": "lower"
   },
