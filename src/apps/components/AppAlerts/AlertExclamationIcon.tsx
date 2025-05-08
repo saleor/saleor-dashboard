@@ -4,18 +4,28 @@ import { ExclamationIconFilled } from "@dashboard/icons/ExclamationIconFilled";
 import { Box } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 
-export const AlertExclamationIcon = () => {
+export const AlertExclamationIcon = ({
+  width = 17,
+  height = 17,
+}: {
+  width?: number;
+  height?: number;
+}) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <Box
       __color={isHovered ? WARNING_ICON_COLOR_LIGHTER : WARNING_ICON_COLOR}
-      __width={17}
-      __height={17}
+      __width={width}
+      __height={height}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {isHovered ? <ExclamationIconFilled /> : <ExclamationIcon width="17px" height="17px" />}
+      {isHovered ? (
+        <ExclamationIconFilled width={width} height={height} />
+      ) : (
+        <ExclamationIcon width={`${width}px`} height={`${height}px`} />
+      )}
     </Box>
   );
 };
