@@ -43,6 +43,13 @@ export function isMenuActive(location: string, menuItem: SidebarMenuItem) {
     return false;
   }
 
+  // TODO: Temporary workaround, remove when extension are finished.
+  const isInstalledExtension = activeUrl.includes("/custom/") || activeUrl.includes("/apps/");
+
+  if (menuItem.id === "installed-extensions" && isInstalledExtension) {
+    return true;
+  }
+
   return !!matchPath(activeUrl, {
     exact: menuItemUrl === "/",
     path: menuItemUrl,
