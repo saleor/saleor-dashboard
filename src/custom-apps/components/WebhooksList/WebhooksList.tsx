@@ -33,6 +33,8 @@ const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref, onRem
   const numberOfColumns = webhooks?.length === 0 ? 2 : 3;
 
   const handleCreateWebhook = () => {
+    if (!createHref) return;
+
     navigate(createHref);
   };
 
