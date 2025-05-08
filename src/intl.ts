@@ -515,6 +515,11 @@ export const sectionNames = defineMessages({
     defaultMessage: "Orders",
     description: "orders section name",
   },
+  fulfilment: {
+    id: "TRwi+r",
+    defaultMessage: "fulfilment",
+    description: "fulfillment section name",
+  },
   pageTypes: {
     id: "a9S9Je",
     defaultMessage: "Page Types",
