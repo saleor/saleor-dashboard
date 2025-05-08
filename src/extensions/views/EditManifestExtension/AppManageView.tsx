@@ -1,8 +1,7 @@
 import { useApolloClient } from "@apollo/client";
-import AppDeleteDialog from "@dashboard/apps/components/AppDeleteDialog";
-import { appMessages } from "@dashboard/apps/messages";
-import { EXTENSION_LIST_QUERY } from "@dashboard/apps/queries";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { appMessages } from "@dashboard/extensions/messages";
+import { EXTENSION_LIST_QUERY } from "@dashboard/extensions/queries";
 import { ExtensionsPaths, ExtensionsUrls } from "@dashboard/extensions/urls";
 import {
   useAppActivateMutation,
@@ -21,6 +20,7 @@ import { useIntl } from "react-intl";
 import { AppDetailsUrlDialog, AppDetailsUrlQueryParams } from "../../urls";
 import AppActivateDialog from "./components/AppActivateDialog";
 import AppDeactivateDialog from "./components/AppDeactivateDialog";
+import AppDeleteDialog from "./components/AppDeleteDialog";
 import { AppDetailsPage } from "./components/AppDetailsPage";
 import { messages } from "./messages";
 
@@ -29,7 +29,7 @@ interface Props {
   params: AppDetailsUrlQueryParams;
 }
 
-export const AppManageView: React.FC<Props> = ({ id, params }) => {
+export const EditManifestExtensionView = ({ id, params }: Props) => {
   const client = useApolloClient();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const { data, loading, refetch } = useAppQuery({
