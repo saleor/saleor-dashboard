@@ -34,7 +34,7 @@ export const QuantityInput: React.FC<QuantityInputProps> = ({
     value={value}
     onChange={onChange}
     endAdornment={
-      <Text minWidth={10} paddingRight={2}>
+      <Text minWidth={10} paddingRight={2} __marginLeft="-14px">
         {labels?.outOf ?? (
           <FormattedMessage
             id="CWDuMj"

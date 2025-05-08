@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import Money from "@dashboard/components/Money";
+import { QuantityInput } from "@dashboard/components/QuantityInput";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { OrderRefundDataQuery } from "@dashboard/graphql";
@@ -8,7 +9,7 @@ import { FormsetChange } from "@dashboard/hooks/useFormset";
 import { renderCollection } from "@dashboard/misc";
 import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Button, Input, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -137,24 +138,10 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
                   </TableCell>
                   <TableCell className={classes.colQuantity}>
                     {lineQuantity || lineQuantity === 0 ? (
-                      <Input
+                      <QuantityInput
                         data-test-id="product-quantity-input"
-                        __minWidth="40px"
-                        width="100%"
-                        placeholder="0"
-                        endAdornment={
-                          <Box whiteSpace="nowrap" data-test-id="max-line-refund-quantity">
-                            {lineQuantity && (
-                              <Text whiteSpace="nowrap" color="default2">
-                                / {lineQuantity}
-                              </Text>
-                            )}
-                          </Box>
-                        }
-                        backgroundColor="default1"
                         size="small"
-                        value={selectedLineQuantity?.value}
-                        type="number"
+                        value={Number(selectedLineQuantity?.value)}
                         min={0}
                         max={lineQuantity}
                         disabled={lineQuantity === 0 || disabled}
