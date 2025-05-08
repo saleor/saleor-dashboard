@@ -46,6 +46,10 @@ runs:
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
       if: always()
+
+    - name: Send CTRF Report to Slack
+      shell: bash
+      run: npx slack-ctrf results "ctrf-reports/merged-report.json"
       
     - name: Publish PR Comment
       uses: ctrf-io/github-test-reporter@15f50159adb465644ec5ddc3b76b92af1e414432 # v1.0.11  
@@ -69,4 +73,7 @@ runs:
 inputs:
   github_token:
     description: "GitHub token for accessing APIs"
+    required: true
+  ctrf_slack_report_webhook:
+    description: "Slack webhook URL for sending CTRF reports"
     required: true
