@@ -1,6 +1,4 @@
-import { AppPaths, AppUrls } from "@dashboard/apps/urls";
 import Link from "@dashboard/components/Link";
-import { CustomAppUrls } from "@dashboard/custom-apps/urls";
 import { buttonLabels } from "@dashboard/extensions/messages";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppTypeEnum } from "@dashboard/graphql";
@@ -39,7 +37,7 @@ export const ViewDetailsActionButton = ({
 
   if (isDisabled) {
     return (
-      <Link href={AppPaths.resolveAppDetailsPath(id)}>
+      <Link href={ExtensionsUrls.resolveEditManifestExtensionUrl(id)}>
         <Button size="small" variant="secondary">
           <FormattedMessage {...buttonLabels.manage} />
         </Button>
@@ -51,7 +49,7 @@ export const ViewDetailsActionButton = ({
     <Link
       href={
         type === AppTypeEnum.LOCAL
-          ? CustomAppUrls.resolveAppUrl(id)
+          ? ExtensionsUrls.editCustomExtensionUrl(id)
           : ExtensionsUrls.resolveViewManifestExtensionUrl(id)
       }
       data-test-id={`${formattedName}-view-details`}

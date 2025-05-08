@@ -10,7 +10,6 @@ import useShop from "@dashboard/hooks/useShop";
 import Attributes from "@dashboard/icons/Attributes";
 import Channels from "@dashboard/icons/Channels";
 import Miscellaneous from "@dashboard/icons/Miscellaneous";
-import Navigation from "@dashboard/icons/Navigation";
 import PageTypes from "@dashboard/icons/PageTypes";
 import PermissionGroups from "@dashboard/icons/PermissionGroups";
 import Plugins from "@dashboard/icons/Plugins";
@@ -22,7 +21,6 @@ import Taxes from "@dashboard/icons/Taxes";
 import Warehouses from "@dashboard/icons/Warehouses";
 import { sectionNames } from "@dashboard/intl";
 import { maybe } from "@dashboard/misc";
-import { menuListUrl } from "@dashboard/navigation/urls";
 import { pageTypeListUrl } from "@dashboard/pageTypes/urls";
 import { permissionGroupListUrl } from "@dashboard/permissionGroups/urls";
 import { pluginListUrl } from "@dashboard/plugins/urls";
@@ -199,17 +197,6 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
         defaultMessage: "Miscellaneous",
       }),
       menuItems: [
-        {
-          description: intl.formatMessage({
-            id: "hpMcW8",
-            defaultMessage: "Define how users can navigate through your store",
-          }),
-          icon: <Navigation />,
-          permissions: [PermissionEnum.MANAGE_MENUS],
-          title: intl.formatMessage(sectionNames.navigation),
-          url: menuListUrl(),
-          testId: "configuration-menu-navigation",
-        },
         {
           description: intl.formatMessage({
             id: "5BajZK",

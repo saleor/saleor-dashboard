@@ -51,6 +51,10 @@ describe("InstallCustomExtension", () => {
     jest.clearAllTimers();
   });
 
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
   it("initializes form with manifest URL from query params", () => {
     // Arrange
     const params = {

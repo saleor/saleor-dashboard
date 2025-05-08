@@ -32,8 +32,8 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
         <DashboardCard.Title>
           <Box display="flex" justifyContent="space-between">
             {intl.formatMessage({
-              id: "dEUZg2",
-              defaultMessage: "Menu Items",
+              id: "TD/GhR",
+              defaultMessage: "Structure Items",
               description: "header",
             })}
           </Box>

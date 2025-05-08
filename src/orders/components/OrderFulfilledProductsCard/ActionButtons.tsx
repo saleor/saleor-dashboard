@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { FulfillmentStatus } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { orderPaymentRefundUrl } from "@dashboard/orders/urls";
 import { CardActions } from "@material-ui/core";
@@ -37,7 +38,12 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
   onApprove,
 }) => {
   const classes = useStyles();
+  const navigate = useNavigator();
   const hasTrackingNumber = !!trackingNumber;
+
+  const handleRefundClick = () => {
+    navigate(orderPaymentRefundUrl(orderId));
+  };
 
   if (!statusesToShow.includes(status)) {
     return null;
@@ -63,7 +69,7 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
   if (status === FulfillmentStatus.RETURNED && !hasTransactions) {
     return (
       <CardActions>
-        <Button variant="primary" href={orderPaymentRefundUrl(orderId)}>
+        <Button onClick={handleRefundClick} variant="primary">
           <FormattedMessage {...actionButtonsMessages.refund} />
         </Button>
       </CardActions>
