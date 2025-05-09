@@ -1151,6 +1151,9 @@
     "context": "Refund status success",
     "string": "Success"
   },
+  "52lmfF": {
+    "string": "Add Extension"
+  },
   "54KYgS": {
     "context": "months after label",
     "string": "months after issue"

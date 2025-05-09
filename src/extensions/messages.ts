@@ -60,6 +60,10 @@ export const buttonLabels = defineMessages({
     defaultMessage: "Back",
     id: "cyR7Kh",
   },
+  addExtension: {
+    defaultMessage: "Add Extension",
+    id: "52lmfF",
+  },
 });
 
 export const infoMessages = defineMessages({
