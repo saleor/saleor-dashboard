@@ -1,9 +1,10 @@
 // @ts-strict-ignore
-import { AppPaths } from "@dashboard/apps/urls";
+import { AppPaths, AppUrls } from "@dashboard/apps/urls";
 import Link from "@dashboard/components/Link";
 import { TimelineEvent } from "@dashboard/components/Timeline";
 import { customerPath } from "@dashboard/customers/urls";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
+import { useFlag } from "@dashboard/featureFlags";
 import { GiftCardDetailsQuery, GiftCardEventsEnum } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
@@ -31,33 +32,41 @@ const getUserOrApp = (event: GiftCardEventType): string | null => {
 
   return null;
 };
-const getUserOrAppUrl = (event: GiftCardEventType): string => {
+const getUserOrAppUrl = (event: GiftCardEventType, areExtensionsEnabled: boolean): string => {
   if (event.user) {
     return staffMemberDetailsUrl(event.user.id);
   }
 
   if (event.app) {
-    return ExtensionsUrls.resolveViewManifestExtensionUrl(event.app.id);
+    if (areExtensionsEnabled) {
+      return ExtensionsUrls.resolveViewManifestExtensionUrl(event.app.id);
+    }
+
+    return AppUrls.resolveAppUrl(event.app.id);
   }
 
   return null;
 };
-const getEventMessage = (event: GiftCardEventType, intl: IntlShape) => {
+const getEventMessage = (
+  event: GiftCardEventType,
+  intl: IntlShape,
+  areExtensionsEnabled: boolean,
+) => {
   const user = getUserOrApp(event);
-  const userUrl = getUserOrAppUrl(event);
+  const userUrl = getUserOrAppUrl(event, areExtensionsEnabled);
 
   switch (event.type) {
     case GiftCardEventsEnum.ACTIVATED:
       return user
         ? intl.formatMessage(timelineMessages.activated, {
-            activatedBy: <Link href={userUrl}>{user}</Link>,
-          })
+          activatedBy: <Link href={userUrl}>{user}</Link>,
+        })
         : intl.formatMessage(timelineMessages.activatedAnonymous);
     case GiftCardEventsEnum.BALANCE_RESET:
       return user
         ? intl.formatMessage(timelineMessages.balanceReset, {
-            resetBy: <Link href={userUrl}>{user}</Link>,
-          })
+          resetBy: <Link href={userUrl}>{user}</Link>,
+        })
         : intl.formatMessage(timelineMessages.balanceResetAnonymous);
     case GiftCardEventsEnum.BOUGHT:
       return intl.formatMessage(timelineMessages.bought, {
@@ -66,20 +75,20 @@ const getEventMessage = (event: GiftCardEventType, intl: IntlShape) => {
     case GiftCardEventsEnum.DEACTIVATED:
       return user
         ? intl.formatMessage(timelineMessages.deactivated, {
-            deactivatedBy: <Link href={userUrl}>{user}</Link>,
-          })
+          deactivatedBy: <Link href={userUrl}>{user}</Link>,
+        })
         : intl.formatMessage(timelineMessages.deactivatedAnonymous);
     case GiftCardEventsEnum.EXPIRY_DATE_UPDATED:
       return user
         ? intl.formatMessage(timelineMessages.expiryDateUpdate, {
-            expiryUpdatedBy: <Link href={userUrl}>{user}</Link>,
-          })
+          expiryUpdatedBy: <Link href={userUrl}>{user}</Link>,
+        })
         : intl.formatMessage(timelineMessages.expiryDateUpdateAnonymous);
     case GiftCardEventsEnum.ISSUED:
       return user
         ? intl.formatMessage(timelineMessages.issued, {
-            issuedBy: <Link href={userUrl}>{user}</Link>,
-          })
+          issuedBy: <Link href={userUrl}>{user}</Link>,
+        })
         : intl.formatMessage(timelineMessages.issuedAnonymous);
     case GiftCardEventsEnum.RESENT:
       return intl.formatMessage(timelineMessages.resent);
@@ -92,19 +101,19 @@ const getEventMessage = (event: GiftCardEventType, intl: IntlShape) => {
     case GiftCardEventsEnum.USED_IN_ORDER:
       return user
         ? intl.formatMessage(timelineMessages.usedInOrder, {
-            orderLink: <Link href={orderUrl(event.orderId)}>#{event.orderNumber}</Link>,
-            buyer: content =>
-              !!user && (
-                <Link
-                  href={
-                    event.user ? customerPath(event.user.id) : AppPaths.resolveAppPath(event.app.id)
-                  }
-                >{`${content} ${user}`}</Link>
-              ),
-          })
+          orderLink: <Link href={orderUrl(event.orderId)}>#{event.orderNumber}</Link>,
+          buyer: content =>
+            !!user && (
+              <Link
+                href={
+                  event.user ? customerPath(event.user.id) : AppPaths.resolveAppPath(event.app.id)
+                }
+              >{`${content} ${user}`}</Link>
+            ),
+        })
         : intl.formatMessage(timelineMessages.usedInOrderAnonymous, {
-            orderLink: <Link href={orderUrl(event.orderId)}>#{event.orderNumber}</Link>,
-          });
+          orderLink: <Link href={orderUrl(event.orderId)}>#{event.orderNumber}</Link>,
+        });
   }
 };
 
@@ -115,8 +124,15 @@ export interface GiftCardTimelineEventProps {
 
 const GiftCardTimelineEvent: React.FC<GiftCardTimelineEventProps> = ({ date, event }) => {
   const intl = useIntl();
+  const { enabled: areExtensionsEnabled } = useFlag("extensions");
 
-  return <TimelineEvent date={date} title={getEventMessage(event, intl)} hasPlainDate={false} />;
+  return (
+    <TimelineEvent
+      date={date}
+      title={getEventMessage(event, intl, areExtensionsEnabled)}
+      hasPlainDate={false}
+    />
+  );
 };
 
 export default GiftCardTimelineEvent;
