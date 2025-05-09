@@ -54,6 +54,11 @@ jest.mock("./hooks/useInstalledExtensionsFilter");
 jest.mock("@dashboard/hooks/useHasManagedAppsPermission");
 jest.mock("@dashboard/hooks/useNavigator", () => jest.fn(() => jest.fn()));
 
+jest.mock("@dashboard/featureFlags", () => ({
+  useFlag: () => true,
+  useFlags: () => ({}),
+}));
+
 const mockUsePendingInstallation = usePendingInstallation as jest.Mock;
 const mockUseInstalledExtensionsFilter = useInstalledExtensionsFilter as jest.Mock;
 
