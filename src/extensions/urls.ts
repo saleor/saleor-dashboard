@@ -7,24 +7,33 @@ import { ThemeType } from "@saleor/app-sdk/app-bridge";
 import urlJoin from "url-join";
 
 export const extensionsSection = "/extensions";
+export const extensionsCustomSection = `${extensionsSection}/custom`;
+export const extensionsAppSection = `${extensionsSection}/app`;
+export const extensionsPluginSection = `${extensionsSection}/plugin`;
 
 export const ExtensionsPaths = {
+  // General
   installedExtensions: urlJoin(extensionsSection, "installed"),
   exploreExtensions: urlJoin(extensionsSection, "explore"),
-  addCustomExtension: urlJoin(extensionsSection, "custom", "add"),
-  resolveViewManifestExtension: (id: string) => urlJoin(extensionsSection, "app", id),
-  resolveEditManifestExtension: (id: string) => urlJoin(extensionsSection, "app", id, "edit"),
+
+  // Custom apps
+  addCustomExtension: urlJoin(extensionsCustomSection, "add"),
+  resolveEditCustomExtension: (id: string) => urlJoin(extensionsCustomSection, id),
+  resolveAddCustomExtensionWebhook: (id: string) => urlJoin(extensionsCustomSection, id, "webhook"),
+  resolveEditCustomExtensionWebhook: (appId: string, webhookId: string) =>
+    urlJoin(extensionsCustomSection, appId, "webhook", webhookId),
+
+  // Manifest apps
+  resolveViewManifestExtension: (id: string) => urlJoin(extensionsAppSection, id),
+  resolveEditManifestExtension: (id: string) => urlJoin(extensionsAppSection, id, "edit"),
   resolveAppDeepPath: (id: string, subPath: string) =>
     urlJoin(ExtensionsPaths.resolveViewManifestExtension(id), subPath),
   resolveAppRequestPermissionsPath: (id: string) =>
     urlJoin(ExtensionsPaths.resolveViewManifestExtension(id), "edit", "permissions"),
-  resolveEditCustomExtension: (id: string) => urlJoin(extensionsSection, "custom", id),
-  resolveAddCustomExtensionWebhook: (id: string) =>
-    urlJoin(extensionsSection, "custom", id, "webhook"),
-  resolveEditCustomExtensionWebhook: (appId: string, webhookId: string) =>
-    urlJoin(extensionsSection, "custom", appId, "webhook", webhookId),
-  installCustomExtension: urlJoin(extensionsSection, "install"),
-  resolveEditPluginExtension: (id: string) => urlJoin(extensionsSection, "plugin", id),
+  installCustomExtension: urlJoin(extensionsAppSection, "install"),
+
+  // Plugins
+  resolveEditPluginExtension: (id: string) => urlJoin(extensionsPluginSection, id),
 };
 
 export const MANIFEST_ATTR = "manifestUrl";
