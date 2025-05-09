@@ -1,10 +1,9 @@
-import { AppPaths, AppUrls } from "@dashboard/apps/urls";
+import { AppPaths } from "@dashboard/apps/urls";
 import { getApiUrl } from "@dashboard/config";
 import { FlagList } from "@dashboard/featureFlags";
 import { Dialog, SingleAction } from "@dashboard/types";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
-import { matchPath } from "react-router";
 import urlJoin from "url-join";
 
 export const extensionsSection = "/extensions";
