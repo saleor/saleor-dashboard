@@ -31,7 +31,7 @@ describe("EventCreatedBy", () => {
     expect(link).toHaveProperty(
       "href",
       "http://localhost" +
-      ExtensionsUrls.resolveViewManifestExtensionUrl(appAvatar.id).replace("?", ""),
+        ExtensionsUrls.resolveViewManifestExtensionUrl(appAvatar.id).replace("?", ""),
     );
   });
   it("displays a link to the user settings if user is passed", () => {
