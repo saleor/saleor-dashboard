@@ -26,7 +26,7 @@ const AppDeactivateDialog: React.FC<AppDeactivateDialogProps> = ({
   onConfirm,
 }) => {
   const intl = useIntl();
-  const isNameMissing = name === null || name === "";
+  const isNameMissing = name === null || name.trim() === "";
   const getMainText = () => {
     if (isNameMissing) {
       return intl.formatMessage(msgs.deactivateApp);
