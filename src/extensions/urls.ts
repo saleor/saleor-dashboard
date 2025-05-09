@@ -13,9 +13,11 @@ export const ExtensionsPaths = {
   addCustomExtension: urlJoin(extensionsSection, "custom", "add"),
   resolveViewManifestExtension: (id: string) => urlJoin(extensionsSection, "app", id),
   resolveEditManifestExtension: (id: string) => urlJoin(extensionsSection, "app", id, "edit"),
-  resolveEditCustomExtension: (id: string) => urlJoin(extensionsSection, "custom", id),
   resolveAppDeepPath: (id: string, subPath: string) =>
     urlJoin(ExtensionsPaths.resolveViewManifestExtension(id), subPath),
+  resolveAppRequestPermissionsPath: (id: string) =>
+    urlJoin(ExtensionsPaths.resolveViewManifestExtension(id), "edit", "permissions"),
+  resolveEditCustomExtension: (id: string) => urlJoin(extensionsSection, "custom", id),
   resolveAddCustomExtensionWebhook: (id: string) =>
     urlJoin(extensionsSection, "custom", id, "webhook"),
   resolveEditCustomExtensionWebhook: (appId: string, webhookId: string) =>
@@ -173,6 +175,7 @@ export const ExtensionsUrls = {
     return appCompleteUrl;
   },
 
+  // Used to resolve special URL to request app permissions
   resolveRequestPermissionsUrl: (
     id: string,
     params: {
@@ -181,9 +184,7 @@ export const ExtensionsUrls = {
     },
   ) =>
     urlJoin(
-      AppSections.appsSection,
-      id,
-      "permissions",
+      ExtensionsPaths.resolveAppRequestPermissionsPath(id),
       `?${stringifyQs({
         redirectPath: params.redirectPath,
         requestedPermissions: params.requestedPermissions.join(","),

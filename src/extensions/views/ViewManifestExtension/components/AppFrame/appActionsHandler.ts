@@ -1,6 +1,5 @@
-import { AppUrls } from "@dashboard/apps/urls";
 import { getAppMountUri } from "@dashboard/config";
-import { ExtensionsUrls } from "@dashboard/extensions/urls";
+import { ExtensionsPaths, ExtensionsUrls } from "@dashboard/extensions/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import {
@@ -148,7 +147,7 @@ const useHandleUpdateRoutingAction = (appId: string) => ({
 
     const exactLocation = urlJoin(
       getAppMountUri(),
-      `apps/${encodeURIComponent(appId)}/app`,
+      ExtensionsPaths.resolveViewManifestExtension(appId),
       action.payload.newRoute,
     );
 
@@ -215,7 +214,7 @@ const useHandlePermissionRequest = (appId: string) => {
       }
 
       navigate(
-        AppUrls.resolveRequestPermissionsUrl(appId, {
+        ExtensionsUrls.resolveRequestPermissionsUrl(appId, {
           redirectPath,
           requestedPermissions: permissions,
         }),

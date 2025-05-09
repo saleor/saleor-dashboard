@@ -28,6 +28,7 @@ import { AddCustomExtensionWebhook } from "./views/AddCustomExtensionWebhook";
 import { EditCustomExtension } from "./views/EditCustomExtension";
 import { EditCustomExtensionWebhook } from "./views/EditCustomExtensionWebhook";
 import { EditManifestExtension } from "./views/EditManifestExtension";
+import { EditManifestExtensionPermissions } from "./views/EditManifestExtensionPermissions";
 import { EditPluginExtension } from "./views/EditPluginExtension";
 import { ViewManifestExtensionIframe } from "./views/ViewManifestExtension";
 
@@ -80,6 +81,10 @@ const EditManifestExtensionView = ({ match }: RouteComponentProps<{ id: string }
 
 const ViewManifestExtensionIframeView = ({ match }: RouteComponentProps<{ id: string }>) => {
   return <ViewManifestExtensionIframe id={decodeURIComponent(match.params.id)} />;
+};
+
+const EditManifestExtensionPermissionsView = ({ match }: RouteComponentProps<{ id: string }>) => {
+  return <EditManifestExtensionPermissions id={decodeURIComponent(match.params.id)} />;
 };
 
 const EditPluginExtensionView = ({ match }: RouteComponentProps<{ id: string }>) => {
@@ -153,9 +158,17 @@ export const ExtensionsSection = () => {
           component={EditManifestExtensionView}
         />
         <Route
+          exact
+          path={ExtensionsPaths.resolveAppRequestPermissionsPath(":id")}
+          component={EditManifestExtensionPermissionsView}
+        />
+        <Route
           path={ExtensionsPaths.resolveViewManifestExtension(":id")}
           component={ViewManifestExtensionIframeView}
         />
+
+        {/* -- Plugin routes -- */}
+
         <Route
           exact
           path={ExtensionsPaths.resolveEditPluginExtension(":id")}
