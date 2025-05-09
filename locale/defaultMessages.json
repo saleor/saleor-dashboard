@@ -1035,6 +1035,10 @@
     "context": "datagrid title label",
     "string": "Select transaction to refund"
   },
+  "4IawKc": {
+    "context": "onboarding step description",
+    "string": "Go to all orders where you can create an fulfilment and refund and review corresponding statuses. View the order in GraphQL"
+  },
   "4IgzXs": {
     "context": "label",
     "string": "App Manifest URL"
@@ -2096,10 +2100,6 @@
   "BFR6CF": {
     "context": "webhooks and events section name",
     "string": "Webhooks & Events"
-  },
-  "BHXdXU": {
-    "context": "onboarding step description",
-    "string": "Go to all orders where you can create an fulfillment and refund and review corresponding statuses. View the order in GraphQL"
   },
   "BJtUQI": {
     "context": "button",
