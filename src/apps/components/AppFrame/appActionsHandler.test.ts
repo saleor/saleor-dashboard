@@ -14,9 +14,9 @@ jest.mock("@dashboard/config", () => {
     ...actualModule,
   };
 });
-jest.mock("@dashboard/apps/components/ExternalAppContext/ExternalAppContext", () => {
+jest.mock("@dashboard/extensions/components/ExternalAppContext/ExternalAppContext", () => {
   const actualModule = jest.requireActual(
-    "@dashboard/apps/components/ExternalAppContext/ExternalAppContext",
+    "@dashboard/extensions/components/ExternalAppContext/ExternalAppContext",
   );
 
   return {

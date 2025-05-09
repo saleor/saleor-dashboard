@@ -101,7 +101,7 @@ export const ExtensionsUrls = {
 
     return (
       (to.startsWith(appCompletePath) || to.startsWith(legacyAppCompletePath)) &&
-      from.startsWith(appCompletePath)
+      (from.startsWith(appCompletePath) || from.startsWith(legacyAppCompletePath))
     );
   },
 
