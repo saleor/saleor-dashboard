@@ -1,6 +1,8 @@
+import { MetadataInput } from "@dashboard/graphql";
 import {
   OnboardingState,
   OnboardingStep,
+  OnboardingStepsIDs,
 } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/types";
 
 import {
@@ -9,6 +11,8 @@ import {
   getNextStepToExpand,
   handleStateChangeAfterStepCompleted,
   handleStateChangeAfterToggle,
+  METADATA_KEY,
+  prepareUserMetadata,
 } from "./utils";
 
 describe("handleStateChangeAfterStepCompleted", () => {
@@ -42,6 +46,23 @@ describe("handleStateChangeAfterStepCompleted", () => {
 
     // Assert
     expect(newState.stepsCompleted).toEqual(["get-started", "create-product"]);
+  });
+
+  it("should remove the step from stepsExpanded if it was expanded", () => {
+    // Arrange
+    const state = {
+      onboardingExpanded: true,
+      stepsCompleted: [],
+      stepsExpanded: { "create-product": true },
+    } as unknown as OnboardingState;
+    const id = "create-product";
+
+    // Act
+    const newState = handleStateChangeAfterStepCompleted(state, id);
+
+    // Assert
+    expect(newState.stepsCompleted).toEqual(["get-started", "create-product"]);
+    expect(newState.stepsExpanded["create-product"]).toBeUndefined();
   });
 });
 
@@ -95,6 +116,26 @@ describe("handleStateChangeAfterToggle", () => {
 
     // Assert
     expect(newState.stepsExpanded).toEqual({ "create-product": true, "invite-staff": false });
+  });
+
+  it("should clear other expanded steps when a new step is expanded", () => {
+    // Arrange
+    const state = {
+      onboardingExpanded: true,
+      stepsCompleted: [],
+      stepsExpanded: {
+        "get-started": true,
+        "explore-orders": true,
+      },
+    } as unknown as OnboardingState;
+    const expandedId = "create-product";
+    const id = "create-product";
+
+    // Act
+    const newState = handleStateChangeAfterToggle(state, expandedId, id);
+
+    // Assert
+    expect(newState.stepsExpanded).toEqual({ "create-product": true });
   });
 });
 
@@ -239,5 +280,103 @@ describe("getNextStepToExpand", () => {
 
     // Assert
     expect(nextStep).toEqual("");
+  });
+
+  it("should return empty string if lastCompletedStepId is not in visibleSteps", () => {
+    // Arrange
+    const onboardingState = {
+      stepsCompleted: ["non-existent-step" as OnboardingStepsIDs],
+      stepsExpanded: {},
+    } as OnboardingState;
+    const visibleSteps: OnboardingStep[] = [
+      { id: "get-started", completed: true, expanded: undefined },
+      { id: "create-product", completed: true, expanded: undefined },
+    ];
+
+    // Act
+    const nextStep = getNextStepToExpand(onboardingState, visibleSteps);
+
+    // Assert
+    expect(nextStep).toEqual("");
+  });
+});
+
+describe("prepareUserMetadata", () => {
+  const onboardingState: OnboardingState = {
+    onboardingExpanded: true,
+    stepsCompleted: ["get-started"],
+    stepsExpanded: { "create-product": true } as unknown as Record<OnboardingStepsIDs, boolean>,
+  };
+  const onboardingStateString = JSON.stringify(onboardingState);
+
+  it("should add onboarding metadata if metadata is undefined", () => {
+    // Arrange
+    const metadata = undefined;
+
+    // Act
+    const result = prepareUserMetadata(metadata, onboardingState);
+
+    // Assert
+    expect(result).toEqual([
+      {
+        key: METADATA_KEY,
+        value: onboardingStateString,
+      },
+    ]);
+  });
+
+  it("should add onboarding metadata if key is not present", () => {
+    // Arrange
+    const metadata: MetadataInput[] = [{ key: "otherKey", value: "otherValue" }];
+
+    // Act
+    const result = prepareUserMetadata(metadata, onboardingState);
+
+    // Assert
+    expect(result).toEqual([
+      { key: "otherKey", value: "otherValue" },
+      {
+        key: METADATA_KEY,
+        value: onboardingStateString,
+      },
+    ]);
+  });
+
+  it("should update onboarding metadata if key is present", () => {
+    // Arrange
+    const metadata: MetadataInput[] = [
+      { key: "otherKey", value: "otherValue" },
+      { key: METADATA_KEY, value: "oldValue" },
+    ];
+
+    // Act
+    const result = prepareUserMetadata(metadata, onboardingState);
+
+    // Assert
+    expect(result).toEqual([
+      { key: "otherKey", value: "otherValue" },
+      {
+        key: METADATA_KEY,
+        value: onboardingStateString,
+      },
+    ]);
+    // Ensure the original position is updated, not appended
+    expect(result.findIndex(m => m.key === METADATA_KEY)).toBe(1);
+  });
+
+  it("should handle empty initial metadata array", () => {
+    // Arrange
+    const metadata: MetadataInput[] = [];
+
+    // Act
+    const result = prepareUserMetadata(metadata, onboardingState);
+
+    // Assert
+    expect(result).toEqual([
+      {
+        key: METADATA_KEY,
+        value: onboardingStateString,
+      },
+    ]);
   });
 });
