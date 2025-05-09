@@ -1,6 +1,5 @@
 import { NumericUnits } from "@dashboard/attributes/components/AttributeDetails/NumericUnits";
 import { DashboardCard } from "@dashboard/components/Card";
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { Select } from "@dashboard/components/Select";
 import {
@@ -13,7 +12,7 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
 import { TextField } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 import slugify from "slugify";
@@ -190,13 +189,17 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
           )}
         </Box>
         <FormSpacer />
-        <ControlledCheckbox
+        <Checkbox
           name={"valueRequired" as keyof AttributePageFormData}
-          label={intl.formatMessage(messages.valueRequired)}
           checked={data.valueRequired}
-          onChange={onChange}
+          onCheckedChange={checked =>
+            onChange({ target: { name: "valueRequired", value: checked } })
+          }
           disabled={disabled}
-        />
+          marginY={2}
+        >
+          <Text fontSize={3}>{intl.formatMessage(messages.valueRequired)}</Text>
+        </Checkbox>
         {data.inputType === AttributeInputTypeEnum.NUMERIC && (
           <NumericUnits
             data={data}
