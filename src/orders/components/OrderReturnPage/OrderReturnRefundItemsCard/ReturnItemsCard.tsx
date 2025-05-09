@@ -9,7 +9,7 @@ import { FormsetChange } from "@dashboard/hooks/useFormset";
 import { getById, renderCollection } from "@dashboard/misc";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
-import { Checkbox, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Checkbox, Skeleton } from "@saleor/macaw-ui-next";
 import React, { CSSProperties } from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -181,18 +181,6 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                         data-test-id={"quantityInput" + line?.id}
                         value={currentQuantity}
                         onChange={handleChangeQuantity(id)}
-                        endAdornment={
-                          <Text minWidth={10} paddingRight={2}>
-                            <FormattedMessage
-                              id="L4uWLd"
-                              defaultMessage="/ {quantity}"
-                              description="remaining quantity"
-                              values={{
-                                quantity: lineQuantity,
-                              }}
-                            />
-                          </Text>
-                        }
                         max={lineQuantity}
                         min={0}
                         textAlign="right"
