@@ -1,8 +1,10 @@
+import { AppPaths, AppUrls } from "@dashboard/apps/urls";
 import { getApiUrl } from "@dashboard/config";
 import { FlagList } from "@dashboard/featureFlags";
 import { Dialog, SingleAction } from "@dashboard/types";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
+import { matchPath } from "react-router";
 import urlJoin from "url-join";
 
 export const extensionsSection = "/extensions";
@@ -92,9 +94,15 @@ export const ExtensionsUrls = {
   isAppDeepUrlChange: (appId: string, from: string, to: string) => {
     const appCompletePath = ExtensionsUrls.resolveViewManifestExtensionUrl(
       encodeURIComponent(appId),
-    );
+    ).replace("?", "");
 
-    return to.startsWith(appCompletePath) && from.startsWith(appCompletePath);
+    // Handle legacy app navigation made to /apps/XYZ/app
+    const legacyAppCompletePath = AppPaths.resolveAppPath(appId);
+
+    return (
+      (to.startsWith(appCompletePath) || to.startsWith(legacyAppCompletePath)) &&
+      from.startsWith(appCompletePath)
+    );
   },
 
   resolveAppDeepPathFromDashboardUrl: (dashboardUrl: string, appId: string) => {

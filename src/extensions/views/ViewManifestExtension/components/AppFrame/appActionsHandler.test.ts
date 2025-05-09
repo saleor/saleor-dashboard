@@ -15,16 +15,7 @@ jest.mock("@dashboard/config", () => {
     ...actualModule,
   };
 });
-jest.mock("@dashboard/apps/components/ExternalAppContext/ExternalAppContext", () => {
-  const actualModule = jest.requireActual(
-    "@dashboard/apps/components/ExternalAppContext/ExternalAppContext",
-  );
-
-  return {
-    __esModule: true,
-    ...actualModule,
-  };
-});
+jest.mock("../ExternalAppContext");
 
 const mockNotify = jest.fn();
 const mockCloseExternalApp = jest.fn();
@@ -68,7 +59,7 @@ describe("AppActionsHandler", function () {
     window.location = {
       href: "http://localhost:3000",
       hostname: "localhost",
-      pathname: "/apps/XYZ/app",
+      pathname: "/extensions/XYZ",
     };
   });
   afterAll((): void => {
@@ -130,7 +121,7 @@ describe("AppActionsHandler", function () {
       expect(mockHistoryPushState).toHaveBeenCalledWith(
         null,
         "",
-        "/dashboard/apps/XYZ/app/foo/bar",
+        "/dashboard/extensions/app/XYZ/foo/bar",
       );
     });
 
@@ -138,7 +129,7 @@ describe("AppActionsHandler", function () {
       // Arrange
       const mockHistoryPushState = jest.fn();
 
-      window.location.pathname = "/dashboard/apps/XYZ/app/foo/bar";
+      window.location.pathname = "/dashboard/extensions/app/XYZ/foo/bar";
       jest.spyOn(window.history, "pushState").mockImplementation(mockHistoryPushState);
 
       const {
@@ -202,7 +193,7 @@ describe("AppActionsHandler", function () {
         expect(mockWindowOpen).toHaveBeenCalledWith("/dashboard/orders");
       });
       /**
-       * This behavior is pretty bad, because app must prefix with /apps/:id/app/*
+       * This behavior is pretty bad, because app must prefix with /extensions/:id/app/*
        *
        * TODO Drop this behavior, updateRouting action can do that explicitely
        */
@@ -212,14 +203,14 @@ describe("AppActionsHandler", function () {
           type: "redirect",
           payload: {
             actionId: "123",
-            to: "/apps/XYZ/app/config",
+            to: "/extensions/XYZ/app/config",
             newContext: true,
           },
         });
 
         // Assert
         expect(mockWindowOpen).toHaveBeenCalledTimes(1);
-        expect(mockWindowOpen).toHaveBeenCalledWith("/dashboard/apps/XYZ/app/config");
+        expect(mockWindowOpen).toHaveBeenCalledWith("/dashboard/extensions/XYZ/app/config");
       });
     });
     describe("Open in new the same browser context", () => {
@@ -261,7 +252,38 @@ describe("AppActionsHandler", function () {
         const mockHistoryPushState = jest.fn();
 
         jest.spyOn(window.history, "pushState").mockImplementation(mockHistoryPushState);
-        window.location.pathname = "/apps/XYZ/app/foo";
+        window.location.pathname = "/extensions/app/XYZ/foo";
+
+        // Act
+        hookRenderResult.result.current.handle({
+          type: "redirect",
+          payload: {
+            actionId: "123",
+            to: "/extensions/app/XYZ/config",
+            newContext: false,
+          },
+        });
+
+        // Assert
+        expect(mockHistoryPushState).toHaveBeenCalledTimes(1);
+        expect(mockHistoryPushState).toHaveBeenCalledWith(
+          null,
+          "",
+          "/dashboard/extensions/app/XYZ/config",
+        );
+      });
+
+      it("Update route within the same app if used legacy /app path", () => {
+        /* Some apps might have used path in dashboard to /apps/XYZ/app/... as a way
+         * to change it's own URL - we still need to support this even though apps are now in
+         * /extensions/app/XYZ/...
+         **/
+
+        // Arrange
+        const mockHistoryPushState = jest.fn();
+
+        jest.spyOn(window.history, "pushState").mockImplementation(mockHistoryPushState);
+        window.location.pathname = "/extensions/app/XYZ/foo";
 
         // Act
         hookRenderResult.result.current.handle({
@@ -278,7 +300,7 @@ describe("AppActionsHandler", function () {
         expect(mockHistoryPushState).toHaveBeenCalledWith(
           null,
           "",
-          "/dashboard/apps/XYZ/app/config",
+          "/dashboard/extensions/app/XYZ/config?",
         );
       });
     });
@@ -303,7 +325,7 @@ describe("AppActionsHandler", function () {
       // Assert
       expect(mockNavigate).toHaveBeenCalledTimes(1);
       expect(mockNavigate).toHaveBeenCalledWith(
-        "/apps/XYZ/permissions?redirectPath=%2Fpermissions-result&requestedPermissions=MANAGE_ORDERS%2CMANAGE_CHANNELS",
+        "/extensions/app/XYZ/edit/permissions?redirectPath=%2Fpermissions-result&requestedPermissions=MANAGE_ORDERS%2CMANAGE_CHANNELS",
       );
     });
   });

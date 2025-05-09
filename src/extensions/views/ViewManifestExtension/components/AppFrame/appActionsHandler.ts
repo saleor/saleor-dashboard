@@ -1,3 +1,4 @@
+import { AppPaths } from "@dashboard/apps/urls";
 import { getAppMountUri } from "@dashboard/config";
 import { ExtensionsPaths, ExtensionsUrls } from "@dashboard/extensions/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -51,7 +52,27 @@ const useHandleRedirectAction = (appId: string) => {
   const handleAppDeepChange = (action: RedirectAction) => {
     debug("Handling deep app URL change");
 
-    const exactLocation = urlJoin(getAppMountUri(), action.payload.to);
+    const getNewExactLocation = () => {
+      const legacyAppPath = AppPaths.resolveAppPath(appId);
+
+      if (action.payload.to.startsWith(legacyAppPath)) {
+        /* Some apps might have used path in dashboard to /apps/XYZ/app/... as a way
+         * to change it's own URL - we still need to support this even though apps are now in
+         * /extensions/app/XYZ/...
+         **/
+        const subpath = action.payload.to.replace(legacyAppPath, "");
+        const newPath = ExtensionsUrls.resolveAppDeepUrl(appId, subpath);
+
+        return urlJoin(getAppMountUri(), newPath);
+      } else {
+        /** Newer apps can use /extensions/app/XYZ/... to change it's own URL
+         * however we should discourage such usage, app should just use window.location.href
+         * or some custom router (e.g. Next.js Router) */
+        return urlJoin(getAppMountUri(), action.payload.to);
+      }
+    };
+
+    const exactLocation = getNewExactLocation();
 
     debug(`Exact location to redirect: %s`, exactLocation);
 
