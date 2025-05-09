@@ -172,4 +172,21 @@ export const ExtensionsUrls = {
 
     return appCompleteUrl;
   },
+
+  resolveRequestPermissionsUrl: (
+    id: string,
+    params: {
+      requestedPermissions: string[];
+      redirectPath: string;
+    },
+  ) =>
+    urlJoin(
+      AppSections.appsSection,
+      id,
+      "permissions",
+      `?${stringifyQs({
+        redirectPath: params.redirectPath,
+        requestedPermissions: params.requestedPermissions.join(","),
+      })}`,
+    ),
 };
