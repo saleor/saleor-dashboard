@@ -74,19 +74,28 @@ export const ExtensionsUrls = {
   addCustomExtensionUrl: (params?: ExtensionsListUrlQueryParams) =>
     ExtensionsPaths.addCustomExtension + "?" + stringifyQs(params),
   editCustomExtensionUrl: (id: string, params?: CustomExtensionDetailsUrlQueryParams) =>
-    ExtensionsPaths.resolveEditCustomExtension(id) + "?" + stringifyQs(params),
+    ExtensionsPaths.resolveEditCustomExtension(encodeURIComponent(id)) + "?" + stringifyQs(params),
   installCustomExtensionUrl: (params?: ExtensionInstallQueryParams) =>
     ExtensionsPaths.installCustomExtension + "?" + stringifyQs(params),
   resolveEditPluginExtensionUrl: (id: string, params?: PluginUrlQueryParams) =>
-    ExtensionsPaths.resolveEditPluginExtension(id) + "?" + stringifyQs(params),
+    ExtensionsPaths.resolveEditPluginExtension(encodeURIComponent(id)) + "?" + stringifyQs(params),
   resolveAddCustomExtensionWebhookUrl: (id: string, params?: ExtensionsListUrlQueryParams) =>
-    ExtensionsPaths.resolveAddCustomExtensionWebhook(id) + "?" + stringifyQs(params),
+    ExtensionsPaths.resolveAddCustomExtensionWebhook(encodeURIComponent(id)) +
+    "?" +
+    stringifyQs(params),
   resolveEditCustomExtensionWebhookUrl: (id: string, webhookId: string) =>
-    ExtensionsPaths.resolveEditCustomExtensionWebhook(id, webhookId),
+    ExtensionsPaths.resolveEditCustomExtensionWebhook(
+      encodeURIComponent(id),
+      encodeURIComponent(webhookId),
+    ),
   resolveViewManifestExtensionUrl: (id: string, params?: AppDetailsUrlQueryParams) =>
-    ExtensionsPaths.resolveViewManifestExtension(id) + "?" + stringifyQs(params),
+    ExtensionsPaths.resolveViewManifestExtension(encodeURIComponent(id)) +
+    "?" +
+    stringifyQs(params),
   resolveEditManifestExtensionUrl: (id: string, params?: AppDetailsUrlQueryParams) =>
-    ExtensionsPaths.resolveEditManifestExtension(id) + "?" + stringifyQs(params),
+    ExtensionsPaths.resolveEditManifestExtension(encodeURIComponent(id)) +
+    "?" +
+    stringifyQs(params),
   resolveAppDeepUrl: (id: string, subPath: string, params?: AppDetailsUrlQueryParams) =>
     ExtensionsPaths.resolveAppDeepPath(encodeURIComponent(id), subPath) + "?" + stringifyQs(params),
 
