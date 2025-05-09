@@ -32,6 +32,10 @@ export const buttonLabels = defineMessages({
     defaultMessage: "Provide details manually",
     id: "+pGERa",
   },
+  explore: {
+    defaultMessage: "Explore",
+    id: "7JlauX",
+  },
   addCustomExtensions: {
     defaultMessage: "Add Custom Extensions",
     id: "u9WrRb",
@@ -55,6 +59,10 @@ export const buttonLabels = defineMessages({
   back: {
     defaultMessage: "Back",
     id: "cyR7Kh",
+  },
+  addExtension: {
+    defaultMessage: "Add Extension",
+    id: "52lmfF",
   },
 });
 

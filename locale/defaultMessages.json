@@ -1155,6 +1155,9 @@
     "context": "Refund status success",
     "string": "Success"
   },
+  "52lmfF": {
+    "string": "Add Extension"
+  },
   "54KYgS": {
     "context": "months after label",
     "string": "months after issue"
@@ -1517,6 +1520,9 @@
   "7Jg9ec": {
     "context": "error message",
     "string": "You don't have permission to login."
+  },
+  "7JlauX": {
+    "string": "Explore"
   },
   "7KRGqz": {
     "context": "Payment card title",
