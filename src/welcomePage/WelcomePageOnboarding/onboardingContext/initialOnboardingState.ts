@@ -3,6 +3,7 @@ import {
   OnboardingStep,
 } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/types";
 
+// We store state in metadata for all steps even these that are not shown to the user
 export const initialOnboardingSteps: OnboardingStep[] = [
   {
     id: "get-started",
@@ -25,6 +26,11 @@ export const initialOnboardingSteps: OnboardingStep[] = [
     expanded: undefined,
   },
   {
+    id: "view-extensions",
+    completed: false,
+    expanded: undefined,
+  },
+  {
     id: "view-webhooks",
     completed: false,
     expanded: undefined,
@@ -36,7 +42,7 @@ export const initialOnboardingSteps: OnboardingStep[] = [
   },
 ];
 
-export const TOTAL_STEPS_COUNT = initialOnboardingSteps.length;
+export const TOTAL_STEPS_COUNT = initialOnboardingSteps.length - 1; // we either show view-extensions or view-webhooks but not both
 
 export const getInitialOnboardingState = (isNewUser: boolean): OnboardingState => {
   if (isNewUser) {

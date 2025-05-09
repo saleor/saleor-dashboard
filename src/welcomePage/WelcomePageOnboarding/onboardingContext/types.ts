@@ -5,6 +5,7 @@ export type OnboardingStepsIDs =
   | "create-product"
   | "explore-orders"
   | "graphql-playground"
+  | "view-extensions"
   | "view-webhooks"
   | "invite-staff";
 
@@ -34,6 +35,8 @@ export interface OnboardingContextType {
   markAllAsCompleted: () => void;
   toggleExpandedOnboardingStep: (id: string, currentExpandedId: OnboardingStepsIDs | "") => void;
   toggleOnboarding: (value: boolean) => void;
+  validCompletedStepsCount: number;
+  visibleSteps: OnboardingStep[];
 }
 
 export interface OnboardingProviderProps {

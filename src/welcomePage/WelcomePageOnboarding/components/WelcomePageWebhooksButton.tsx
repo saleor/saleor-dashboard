@@ -1,4 +1,4 @@
-import { CustomAppSections } from "@dashboard/custom-apps/urls";
+import { ExtensionsPaths } from "@dashboard/extensions/urls";
 import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -8,9 +8,9 @@ import { PrimaryActionProps } from "./type";
 
 export const WelcomePageWebhooksButton = ({ onClick }: PrimaryActionProps) => {
   return (
-    <Link to={CustomAppSections.appsSection} onClick={onClick}>
+    <Link to={ExtensionsPaths.installedExtensions} onClick={onClick}>
       <Button variant="primary">
-        <FormattedMessage defaultMessage="Go to Webhooks" id="5TzisG" description="btn label" />
+        <FormattedMessage defaultMessage="Go to Extensions" id="8Mq3ku" description="btn label" />
       </Button>
     </Link>
   );
