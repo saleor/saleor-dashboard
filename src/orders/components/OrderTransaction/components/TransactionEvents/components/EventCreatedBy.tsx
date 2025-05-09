@@ -1,6 +1,8 @@
 // @ts-strict-ignore
 import { AppUrls } from "@dashboard/apps/urls";
 import { UserAvatar } from "@dashboard/components/UserAvatar";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
+import { useFlag } from "@dashboard/featureFlags";
 import { AppAvatarFragment, StaffMemberAvatarFragment } from "@dashboard/graphql";
 import { getUserInitials, getUserName } from "@dashboard/misc";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
@@ -13,12 +15,24 @@ interface EventCreatedByProps {
 }
 
 export const EventCreatedBy: React.FC<EventCreatedByProps> = ({ createdBy }) => {
+  const { enabled: areExtensionsEnabled } = useFlag("extensions");
+
   if (!createdBy) {
     return null;
   }
 
   if (createdBy.__typename === "App") {
-    return <Link to={AppUrls.resolveAppUrl(createdBy.id)}>{createdBy.name}</Link>;
+    return (
+      <Link
+        to={
+          areExtensionsEnabled
+            ? ExtensionsUrls.resolveViewManifestExtensionUrl(createdBy.id)
+            : AppUrls.resolveAppUrl(createdBy.id)
+        }
+      >
+        {createdBy.name}
+      </Link>
+    );
   }
 
   return (

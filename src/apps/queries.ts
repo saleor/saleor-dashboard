@@ -42,6 +42,7 @@ export const appsInProgressList = gql`
   }
 `;
 
+/** @deprecated use src/extensions/queries */
 export const appDetails = gql`
   query App($id: ID!, $hasManagedAppsPermission: Boolean!) {
     app(id: $id) {
@@ -63,6 +64,7 @@ export const appDetails = gql`
   }
 `;
 
+/** @deprecated use src/extensions/queries */
 export const extensionList = gql`
   query ExtensionList($filter: AppExtensionFilterInput!) {
     appExtensions(filter: $filter, first: 100) {
@@ -89,6 +91,7 @@ export const extensionList = gql`
 
 export const EXTENSION_LIST_QUERY = "ExtensionList";
 
+/** @deprecated use src/extensions/queries */
 export const appWebhookDeliveries = gql`
   query AppWebhookDeliveries($appId: ID!) {
     app(id: $appId) {

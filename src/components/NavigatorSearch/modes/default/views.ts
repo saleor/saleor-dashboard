@@ -1,9 +1,9 @@
-import { AppUrls } from "@dashboard/apps/urls";
 import { attributeListUrl } from "@dashboard/attributes/urls";
 import { categoryListUrl } from "@dashboard/categories/urls";
 import { collectionListUrl } from "@dashboard/collections/urls";
 import { customerListUrl } from "@dashboard/customers/urls";
 import { saleListUrl, voucherListUrl } from "@dashboard/discounts/urls";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { fuzzySearch } from "@dashboard/misc";
@@ -35,8 +35,8 @@ function searchInViews(
 ): QuickSearchActionInput[] {
   const views: View[] = [
     {
-      label: intl.formatMessage(sectionNames.apps),
-      url: AppUrls.resolveAppListUrl(),
+      label: intl.formatMessage(sectionNames.extensions),
+      url: ExtensionsUrls.resolveInstalledExtensionsUrl(),
     },
     {
       label: intl.formatMessage(sectionNames.attributes),

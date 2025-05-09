@@ -476,6 +476,10 @@
     "context": "countries list menu label when no countries are assigned",
     "string": "There are no countries assigned"
   },
+  "0d6W6p": {
+    "context": "dialog header",
+    "string": "Deactivate App"
+  },
   "0dCGBW": {
     "context": "button",
     "string": "Create structure"
@@ -1588,6 +1592,10 @@
     "context": "option description",
     "string": "This product will act as a payment method"
   },
+  "7oQUMG": {
+    "context": "apps about permissions",
+    "string": "This app has permissions to:"
+  },
   "7qsOwa": {
     "context": "action",
     "string": "Include postal codes"
@@ -2286,6 +2294,10 @@
   "CG+awx": {
     "context": "dialog content",
     "string": "Which address would you like to use as shipping address for selected customer:"
+  },
+  "CHoZ8S": {
+    "context": "app privacy policy link",
+    "string": "View this app’s privacy policy."
   },
   "CJEIRC": {
     "string": "Product export has finished and was sent to your email address."
@@ -5901,6 +5913,9 @@
     "context": "header",
     "string": "Edit Authorization Field"
   },
+  "Xy48q5": {
+    "string": "All webhooks registered by this app. In case of failed webhook delivery, list of attempts is displayed."
+  },
   "Xz/sDf": {
     "context": "Dry run items list item",
     "string": "Item:"
@@ -6371,6 +6386,9 @@
   },
   "b+jcaN": {
     "string": "There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order."
+  },
+  "b088Xv": {
+    "string": "App doesn't provide a description."
   },
   "b1j4K6": {
     "context": "select label",
@@ -6866,6 +6884,9 @@
     "context": "page availability date label",
     "string": "Set availability date"
   },
+  "eQ7bCN": {
+    "string": "App Webhooks"
+  },
   "eR2vV/": {
     "string": "If left unchecked it creates a {link} - used by Payment Plugins"
   },
@@ -6944,6 +6965,9 @@
   "f3B4tc": {
     "context": "attributes, section header",
     "string": "Variant Attributes"
+  },
+  "f3hf+w": {
+    "string": "App doesn't provide a privacy policy."
   },
   "f4oJRg": {
     "context": "order transaction refund summary description",
@@ -7591,6 +7615,10 @@
   "jBu2yj": {
     "context": "acre-inch unit",
     "string": "acre-inch"
+  },
+  "jDIRQV": {
+    "context": "section header",
+    "string": "About this app"
   },
   "jDWPin": {
     "context": "remove failed installation dialog title",

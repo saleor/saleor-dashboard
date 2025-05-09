@@ -1,4 +1,3 @@
-import { AppPaths, AppUrls } from "@dashboard/apps/urls";
 import Link from "@dashboard/components/Link";
 import { buttonLabels } from "@dashboard/extensions/messages";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
@@ -38,7 +37,7 @@ export const ViewDetailsActionButton = ({
 
   if (isDisabled) {
     return (
-      <Link href={AppPaths.resolveAppDetailsPath(id)}>
+      <Link href={ExtensionsUrls.resolveEditManifestExtensionUrl(id)}>
         <Button size="small" variant="secondary">
           <FormattedMessage {...buttonLabels.manage} />
         </Button>
@@ -51,7 +50,7 @@ export const ViewDetailsActionButton = ({
       href={
         type === AppTypeEnum.LOCAL
           ? ExtensionsUrls.editCustomExtensionUrl(id)
-          : AppUrls.resolveAppUrl(id)
+          : ExtensionsUrls.resolveViewManifestExtensionUrl(id)
       }
       data-test-id={`${formattedName}-view-details`}
     >

@@ -1,9 +1,4 @@
 // @ts-strict-ignore
-import {
-  extensionMountPoints,
-  mapToMenuItemsForOrderListActions,
-  useExtensions,
-} from "@dashboard/apps/hooks/useExtensions";
 import { useUserAccessibleChannels } from "@dashboard/auth/hooks/useUserAccessibleChannels";
 import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLinks/useContextualLink";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
@@ -15,6 +10,11 @@ import { useConditionalFilterContext } from "@dashboard/components/ConditionalFi
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
+import {
+  extensionMountPoints,
+  mapToMenuItemsForOrderListActions,
+  useExtensions,
+} from "@dashboard/extensions/hooks/useExtensions";
 import { OrderListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { orderMessages } from "@dashboard/orders/messages";

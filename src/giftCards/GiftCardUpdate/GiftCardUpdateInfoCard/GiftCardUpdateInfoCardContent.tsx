@@ -3,6 +3,8 @@ import { AppUrls } from "@dashboard/apps/urls";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Link from "@dashboard/components/Link";
 import { customerUrl } from "@dashboard/customers/urls";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
+import { useFlag } from "@dashboard/featureFlags";
 import { GiftCardEventsEnum } from "@dashboard/graphql";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { getFullName, getStringOrPlaceholder } from "@dashboard/misc";
@@ -26,6 +28,7 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
   const { created, createdByEmail, createdBy, usedByEmail, usedBy, product } = giftCard;
   const cardIssuedEvent = giftCard?.events?.find(getByType(GiftCardEventsEnum.ISSUED));
   const cardBoughtEvent = giftCard?.events?.find(getByType(GiftCardEventsEnum.BOUGHT));
+  const { enabled: areExtensionsEnabled } = useFlag("extensions");
 
   const getBuyerFieldData = (): {
     label: MessageDescriptor;
@@ -41,7 +44,9 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
         return {
           label: messages.issuedByAppLabel,
           name: app?.name,
-          url: AppUrls.resolveAppUrl(app?.id),
+          url: areExtensionsEnabled
+            ? ExtensionsUrls.resolveViewManifestExtensionUrl(app?.id)
+            : AppUrls.resolveAppUrl(app?.id),
         };
       }
 
