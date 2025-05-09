@@ -94,7 +94,9 @@ describe("SidebarAppAlert", () => {
 
     // Assert
     // Radix tooltip content mounts twice - https://github.com/radix-ui/primitives/issues/3034
-    expect(screen.queryAllByText("Issues found.{break}Review app alerts.")[0]).toBeInTheDocument();
+    expect(
+      screen.queryAllByText("Issues found.{break}Review extension alerts.")[0],
+    ).toBeInTheDocument();
   });
 
   it("doesn't display sidebar alert dot when there are no webhook failures", async () => {

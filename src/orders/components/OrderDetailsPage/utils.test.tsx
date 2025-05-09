@@ -46,7 +46,7 @@ describe("filteredConditionalItems", () => {
   });
 });
 describe("createOrderMetadataIdSchema", () => {
-  it("returns order and fulfilment metadata", () => {
+  it("returns order and fulfillment metadata", () => {
     // Arrange
     const order = {
       id: "some-order-id",

@@ -18,15 +18,15 @@ const Wrapper = (boxProps: BoxProps) => {
     <Box {...boxProps}>
       <Text size={5} fontWeight="bold" marginBottom={4} as={"h2"}>
         {intl.formatMessage({
-          defaultMessage: "App Webhooks",
-          id: "eQ7bCN",
+          defaultMessage: "Extension webhooks",
+          id: "k5yB6M",
         })}
       </Text>
       <Text>
         {intl.formatMessage({
           defaultMessage:
-            "All webhooks registered by this app. In case of failed webhook delivery, list of attempts is displayed.",
-          id: "Xy48q5",
+            "All webhooks registered by this extension. In case of failed webhook delivery, list of attempts is displayed.",
+          id: "hjEkEH",
         })}
       </Text>
       <Box marginTop={6}>{boxProps.children}</Box>

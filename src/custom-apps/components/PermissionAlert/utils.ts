@@ -75,8 +75,7 @@ const unwrapType = (type: GraphQLType): GraphQLType => {
  * Looks for text like "Requires one of the following permissions: MANAGE_ORDERS, MANAGE_USERS."
  * and extracts both the permissions and whether only one is needed.
  *
- * It works only because field descriptions in Saleor Core use this format for field descriptions,
- * this is why we can use RegExp to extract them.
+ * It works because description in Saleor Core is auto-generated and follows this pattern.
  */
 export const extractPermissions = (description?: string) => {
   const match = (description || "").match(/following permissions(.*): (.*?)\./);

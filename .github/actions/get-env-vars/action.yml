@@ -1,0 +1,45 @@
+name: 'Get Environment Variables'
+description: 'Retrieves environment variables for Cypress tests'
+
+inputs:
+  version:
+    description: 'Custom version to use'
+    required: true
+  token:
+    description: 'Cloud access token'
+    required: true
+  repo_token:
+    description: 'GitHub repository token'
+    required: true
+  project:
+    description: 'Project name'
+    required: true
+
+outputs:
+  IS_OLD_VERSION:
+    description: 'Whether the version is old'
+    value: ${{ steps.get-environment-variables.outputs.IS_OLD_VERSION }}
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v3
+      with:
+        node-version-file: ".nvmrc"
+        cache: npm
+    - name: install dependencies
+      working-directory: .github/workflows
+      shell: bash
+      run: npm ci
+    - name: Get environment variables
+      id: get-environment-variables
+      shell: bash
+      env:
+        REPO_TOKEN: ${{ inputs.repo_token }}
+        TOKEN: ${{ inputs.token }}
+      run: |
+        node .github/workflows/cypressTestsHelpers/getEnvironmentVariables.js \
+          --version ${{ inputs.version }} \
+          --token "$TOKEN" \
+          --repo_token "$REPO_TOKEN" \
+          --project "${{ inputs.project }}" 

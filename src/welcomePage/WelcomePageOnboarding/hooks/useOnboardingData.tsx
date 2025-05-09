@@ -95,8 +95,8 @@ const getStepsData = ({
     }),
     description: intl.formatMessage({
       defaultMessage:
-        "Go to all orders where you can create an fulfilment and refund and review corresponding statuses. View the order in GraphQL",
-      id: "4IawKc",
+        "Go to all orders where you can create an fulfillment and refund and review corresponding statuses. View the order in GraphQL",
+      id: "BHXdXU",
       description: "onboarding step description",
     }),
     isCompleted: isStepCompleted("explore-orders"),
