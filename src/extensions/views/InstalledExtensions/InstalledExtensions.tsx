@@ -1,8 +1,5 @@
-import { InstallWithManifestFormButton } from "@dashboard/apps/components/InstallWithManifestFormButton";
-import { AppUrls } from "@dashboard/apps/urls";
 import { TopNav } from "@dashboard/components/AppLayout";
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
-import { RequestExtensionsButton } from "@dashboard/extensions/components/RequestExtensionsButton";
 import { headerTitles, messages } from "@dashboard/extensions/messages";
 import {
   ExtensionsListUrlDialog,
@@ -15,9 +12,10 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
+import { AddExtensionDropdown } from "./components/AddExtensionDropdown";
 import { DeleteFailedInstallationDialog } from "./components/DeleteFailedInstallationDialog";
 import { InstalledExtensionsList } from "./components/InstalledExtensionsList";
 import { useInstalledExtensions } from "./hooks/useInstalledExtensions";
@@ -36,13 +34,6 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
   useEffect(() => {
     markOnboardingStepAsCompleted("view-extensions");
   }, [markOnboardingStepAsCompleted]);
-
-  const navigateToAppInstallPage = useCallback(
-    (manifestUrl: string) => {
-      navigate(AppUrls.resolveAppInstallUrl(manifestUrl));
-    },
-    [navigate],
-  );
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ExtensionsListUrlDialog,
@@ -74,10 +65,7 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
     <>
       <TopNav title={intl.formatMessage(headerTitles.installedExtensions)}>
         <Box display="flex" gap={4} alignItems="center">
-          <RequestExtensionsButton />
-          {hasManagedAppsPermission && (
-            <InstallWithManifestFormButton onSubmitted={navigateToAppInstallPage} />
-          )}
+          {hasManagedAppsPermission && <AddExtensionDropdown />}
         </Box>
       </TopNav>
       <Box paddingX={6}>
