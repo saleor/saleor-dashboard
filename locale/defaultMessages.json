@@ -1514,6 +1514,9 @@
     "context": "error message",
     "string": "You don't have permission to login."
   },
+  "7JlauX": {
+    "string": "Explore"
+  },
   "7KRGqz": {
     "context": "Payment card title",
     "string": "Payment balance"
