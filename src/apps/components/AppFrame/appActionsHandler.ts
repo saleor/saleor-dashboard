@@ -25,7 +25,20 @@ const createResponseStatus = (actionId: string, ok: boolean): DispatchResponseEv
     ok,
   },
 });
-const isExternalHost = (host: string) => new URL(host).hostname !== window.location.hostname;
+const isExternalHost = (url: string) => {
+  try {
+    const targetUrl = new URL(url);
+    const currentOrigin = window.location.origin;
+
+    debug(`Comparing origins - Target: ${targetUrl.origin}, Current: ${currentOrigin}`);
+
+    return targetUrl.origin !== currentOrigin;
+  } catch (e) {
+    debug(`Error parsing URL ${url}:`, e);
+
+    return false;
+  }
+};
 const isLocalPath = (path: string) => path.startsWith("/");
 const useHandleNotificationAction = () => {
   const notify = useNotifier();
@@ -125,8 +138,11 @@ const useHandleRedirectAction = (appId: string) => {
         } else if (isExternalHost(action.payload.to)) {
           return handleExternalHostChange(action);
         }
+
+        debug(`No matching handler found for URL: ${action.payload.to}`);
       } catch (e) {
         console.error("Action handler thrown", e);
+        debug(`Error handling redirect to ${action.payload.to}:`, e);
       }
 
       /**
