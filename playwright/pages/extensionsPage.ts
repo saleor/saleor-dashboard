@@ -72,4 +72,26 @@ export class ExtensionsPage extends BasePage {
       }),
     ).toHaveCount(count);
   }
+
+  get addExtensionButton() {
+    return this.page.locator('[data-test-id="add-extension-button"]');
+  }
+
+  get addCustomExtensionButton() {
+    return this.page.locator('[data-test-id="add-custom-extension"]');
+  }
+
+  async clickAddExtensionButton() {
+    await this.addExtensionButton.click();
+  }
+
+  async clickAddCustomExtensionButton() {
+    await this.addCustomExtensionButton.click();
+  }
+
+  async clickViewDetailsByAppName(appName: string) {
+    const appRow = this.installedExtensionsRow.filter({ hasText: appName });
+
+    await appRow.getByRole("link", { name: /View details/i }).click();
+  }
 }
