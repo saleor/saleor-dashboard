@@ -15,7 +15,7 @@ export class ProductTypePage extends BasePage {
     readonly assignProductAttributeButton = page.getByTestId("assign-products-attributes"),
     readonly hasVariantsButton = page.locator("[name='hasVariants']"),
     readonly shippingWeightInput = page.locator("[name='weight']"),
-    readonly giftCardKindCheckbox = page.getByTestId("product-type-kind-option-GIFT_CARD"),
+    readonly giftCardKindCheckbox = page.getByTestId("GIFT_CARD"),
     readonly variantSelectionCheckbox = page.getByTestId("variant-selection-checkbox"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly bulkDeleteButton = page.getByTestId("bulk-delete-product-types"),
