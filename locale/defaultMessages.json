@@ -2474,10 +2474,6 @@
     "context": "Refund status failure",
     "string": "Failure"
   },
-  "DOVEZF": {
-    "context": "button",
-    "string": "Create content"
-  },
   "DOkfyZ": {
     "string": "Insufficient permissions"
   },
@@ -5289,6 +5285,10 @@
     "context": "add new menu item",
     "string": "Create new item"
   },
+  "UgCuqX": {
+    "context": "tab name",
+    "string": "All models"
+  },
   "Uh3NX/": {
     "context": "remove failed installation dialog content",
     "string": "Are you sure you want to delete {name} failed installation?"
@@ -7302,10 +7302,6 @@
   "hJZwTS": {
     "string": "Email address"
   },
-  "hJrzlT": {
-    "context": "tab name",
-    "string": "All content"
-  },
   "hLOEeb": {
     "context": "button",
     "string": "Set as default billing address"
@@ -8649,6 +8645,10 @@
   "pwqwcy": {
     "context": "error message",
     "string": "Maximum price cannot be lower than minimum"
+  },
+  "pyiyxe": {
+    "context": "button",
+    "string": "Create model"
   },
   "pzSF+b": {
     "context": "voucher usage limit, header",
