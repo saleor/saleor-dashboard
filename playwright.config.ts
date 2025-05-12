@@ -5,7 +5,7 @@ dotenv.config();
 
 const env = process.env;
 const DEFAULT_WORKERS = "2";
-const shardNumber = env.SHARD_NUMBER?.match(/^\d*/)?.[0] || "0";
+//const shardNumber = env.SHARD_NUMBER?.match(/^\d*/)?.[0] || "0";
 
 // const DEFAULT_RETRIES = "1";
 
