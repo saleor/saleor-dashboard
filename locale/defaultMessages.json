@@ -914,6 +914,10 @@
   "3UUjQv": {
     "string": "Search page types..."
   },
+  "3VsNbv": {
+    "context": "WarehouseSettings local warehouse description",
+    "string": "If selected customer will be able to choose this warehouse as pickup point.{break}Ordered products will be only fulfilled from this warehouse stock"
+  },
   "3a5wL8": {
     "string": "Active"
   },
@@ -1005,10 +1009,6 @@
     "context": "gift card bulk create modal bottom explanation",
     "string": "After creation Saleor will create a list of gift card codes that you will be able to download."
   },
-  "45zP+r": {
-    "context": "voucher discount",
-    "string": "Specific products"
-  },
   "47hJzu": {
     "string": "Updated app permissions"
   },
@@ -1039,10 +1039,6 @@
     "context": "datagrid title label",
     "string": "Select transaction to refund"
   },
-  "4IawKc": {
-    "context": "onboarding step description",
-    "string": "Go to all orders where you can create an fulfilment and refund and review corresponding statuses. View the order in GraphQL"
-  },
   "4IgzXs": {
     "context": "label",
     "string": "App Manifest URL"
@@ -1068,9 +1064,6 @@
   },
   "4LRapg": {
     "string": "Discount removed"
-  },
-  "4MIO2H": {
-    "string": "Issues found.{break}Review app alerts."
   },
   "4PlW0w": {
     "context": "tracking number",
@@ -1157,6 +1150,9 @@
   "4z1O0N": {
     "context": "Refund status success",
     "string": "Success"
+  },
+  "52lmfF": {
+    "string": "Add Extension"
   },
   "54KYgS": {
     "context": "months after label",
@@ -1376,10 +1372,6 @@
   "6FLezz": {
     "string": "Are you sure you want to delete this discount?"
   },
-  "6G41zU": {
-    "context": "WarehouseSettings local warehouse description",
-    "string": "If selected customer will be able to choose this warehouse as pickup point. Ordered products will be only fulfilled from this warehouse stock"
-  },
   "6HHPFy": {
     "context": "tax strategy combobox hint",
     "string": "Select the method of tax calculation"
@@ -1448,6 +1440,10 @@
     "context": "delete variant dialog title",
     "string": "Delete Product Variants"
   },
+  "6jyoEd": {
+    "context": "section header",
+    "string": "About this extension"
+  },
   "6pPMp9": {
     "string": "Subtotal price"
   },
@@ -1487,6 +1483,10 @@
     "context": "channel slug",
     "string": "Slug"
   },
+  "750Ymk": {
+    "context": "apps about permissions",
+    "string": "This extension has permissions to:"
+  },
   "7Chrsf": {
     "string": "Passwords do not match"
   },
@@ -1516,6 +1516,9 @@
   "7Jg9ec": {
     "context": "error message",
     "string": "You don't have permission to login."
+  },
+  "7JlauX": {
+    "string": "Explore"
   },
   "7KRGqz": {
     "context": "Payment card title",
@@ -1584,10 +1587,6 @@
   "7nKXni": {
     "context": "option description",
     "string": "This product will act as a payment method"
-  },
-  "7oQUMG": {
-    "context": "apps about permissions",
-    "string": "This app has permissions to:"
   },
   "7qsOwa": {
     "context": "action",
@@ -1828,6 +1827,10 @@
   "9WmA6z": {
     "context": "weight config modal title",
     "string": "Default weight unit configuration"
+  },
+  "9XYfOt": {
+    "context": "fulfillment section name",
+    "string": "Fulfillment"
   },
   "9Y5i/8": {
     "context": "number of webhook headers in model",
@@ -2098,6 +2101,10 @@
     "context": "webhooks and events section name",
     "string": "Webhooks & Events"
   },
+  "BHXdXU": {
+    "context": "onboarding step description",
+    "string": "Go to all orders where you can create an fulfillment and refund and review corresponding statuses. View the order in GraphQL"
+  },
   "BJtUQI": {
     "context": "button",
     "string": "Add"
@@ -2279,10 +2286,6 @@
   "CG+awx": {
     "context": "dialog content",
     "string": "Which address would you like to use as shipping address for selected customer:"
-  },
-  "CHoZ8S": {
-    "context": "app privacy policy link",
-    "string": "View this app’s privacy policy."
   },
   "CJEIRC": {
     "string": "Product export has finished and was sent to your email address."
@@ -2717,6 +2720,10 @@
   "F56hOz": {
     "context": "sale name",
     "string": "Name"
+  },
+  "F62RkR": {
+    "context": "dialog header",
+    "string": "Unassign Variants From Voucher"
   },
   "F69lwk": {
     "context": "settings menu item",
@@ -3285,6 +3292,10 @@
     "context": "swatch attribute image label",
     "string": "Image"
   },
+  "I40r9Y": {
+    "context": "WarehouseSettings all warehouses description",
+    "string": "If selected customer will be able to choose this warehouse as pickup point.{break}Ordered products can be shipped here from a different warehouse"
+  },
   "I5vC7T": {
     "context": "button label",
     "string": "Edit reason"
@@ -3781,10 +3792,6 @@
     "context": "dialog header",
     "string": "Delete Channel: {channelSlug}"
   },
-  "LEZZkK": {
-    "context": "WarehouseSettings all warehouses description",
-    "string": "If selected customer will be able to choose this warehouse as pickup point. Ordered products can be shipped here from a different warehouse"
-  },
   "LHPVg/": {
     "context": "assign countries to shipping zone and save, button",
     "string": "Assign and save"
@@ -4118,6 +4125,9 @@
   "NQgbYA": {
     "string": "Account Settings"
   },
+  "NUBTlN": {
+    "string": "Extension doesn't provide a privacy policy."
+  },
   "NUevU9": {
     "context": "attribute values list: slug column header",
     "string": "Swatch"
@@ -4397,6 +4407,10 @@
     "context": "error message",
     "string": "Page not found."
   },
+  "PDF+8k": {
+    "context": "voucher discount",
+    "string": "Specific products and variants"
+  },
   "PDw0YN": {
     "context": "open new window button",
     "string": "Open this product in GraphiQL"
@@ -4558,6 +4572,10 @@
   "Q55cTG": {
     "context": "order refund amount",
     "string": "Previously refunded"
+  },
+  "Q69IGA": {
+    "context": "extension privacy policy link",
+    "string": "View this extension’s privacy policy."
   },
   "Q6VRrE": {
     "context": "dialog content",
@@ -5883,9 +5901,6 @@
     "context": "header",
     "string": "Edit Authorization Field"
   },
-  "Xy48q5": {
-    "string": "All webhooks registered by this app. In case of failed webhook delivery, list of attempts is displayed."
-  },
   "Xz/sDf": {
     "context": "Dry run items list item",
     "string": "Item:"
@@ -6356,9 +6371,6 @@
   },
   "b+jcaN": {
     "string": "There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order."
-  },
-  "b088Xv": {
-    "string": "App doesn't provide a description."
   },
   "b1j4K6": {
     "context": "select label",
@@ -6854,9 +6866,6 @@
     "context": "page availability date label",
     "string": "Set availability date"
   },
-  "eQ7bCN": {
-    "string": "App Webhooks"
-  },
   "eR2vV/": {
     "string": "If left unchecked it creates a {link} - used by Payment Plugins"
   },
@@ -6935,9 +6944,6 @@
   "f3B4tc": {
     "context": "attributes, section header",
     "string": "Variant Attributes"
-  },
-  "f3hf+w": {
-    "string": "App doesn't provide a privacy policy."
   },
   "f4oJRg": {
     "context": "order transaction refund summary description",
@@ -7123,6 +7129,9 @@
   },
   "g9HrbF": {
     "string": "Need technical help?"
+  },
+  "g9M3PH": {
+    "string": "Issues found.{break}Review extension alerts."
   },
   "g9Mb+U": {
     "context": "change warehouse dialog title",
@@ -7339,6 +7348,9 @@
   },
   "hX5PAb": {
     "string": "No results found"
+  },
+  "hjEkEH": {
+    "string": "All webhooks registered by this extension. In case of failed webhook delivery, list of attempts is displayed."
   },
   "hkENym": {
     "string": "Customer"
@@ -7580,10 +7592,6 @@
     "context": "acre-inch unit",
     "string": "acre-inch"
   },
-  "jDIRQV": {
-    "context": "section header",
-    "string": "About this app"
-  },
   "jDWPin": {
     "context": "remove failed installation dialog title",
     "string": "Remove failed installation"
@@ -7713,6 +7721,9 @@
     "context": "app data privacy link",
     "string": "Learn more about data privacy"
   },
+  "k5yB6M": {
+    "string": "Extension webhooks"
+  },
   "k62BKw": {
     "context": "select label",
     "string": "Unset"
@@ -7834,6 +7845,9 @@
   "kak5vT": {
     "context": "order refund amount",
     "string": "Selected Products Value"
+  },
+  "kbezTI": {
+    "string": "Extension doesn't provide a description."
   },
   "kbkjEc": {
     "context": "navigator catalog mode description",
@@ -9261,6 +9275,10 @@
   "uIPD1i": {
     "context": "app has been removed",
     "string": "App successfully removed"
+  },
+  "uIYU0D": {
+    "context": "section header",
+    "string": "Extension permissions"
   },
   "uKlrEk": {
     "context": "all selected items message",

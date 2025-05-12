@@ -77,7 +77,14 @@ export function useMenuStructure() {
     onClick: () => handleAppsListItemClick(new Date().toISOString()),
     children: [
       {
-        label: intl.formatMessage(sectionNames.installedExtensions),
+        label: (
+          <Box display="flex" alignItems="center" gap={3}>
+            {intl.formatMessage(sectionNames.installedExtensions)}
+            {hasAppAlertsFeatureFlag && (
+              <SidebarAppAlert hasNewFailedAttempts={hasNewFailedAttempts} small />
+            )}
+          </Box>
+        ),
         id: "installed-extensions",
         url: ExtensionsPaths.installedExtensions,
         permissions: [],
@@ -159,7 +166,7 @@ export function useMenuStructure() {
         ...mapToExtensionsItems(extensions.NAVIGATION_ORDERS, appExtensionsHeaderItem),
       ],
       icon: renderIcon(<OrdersIcon />),
-      label: intl.formatMessage(sectionNames.orders),
+      label: intl.formatMessage(sectionNames.fulfillment),
       permissions: [PermissionEnum.MANAGE_ORDERS],
       id: "orders",
       url: orderListUrl(),

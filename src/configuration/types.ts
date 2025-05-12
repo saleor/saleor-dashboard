@@ -9,6 +9,7 @@ export interface MenuItem {
   title: string;
   url?: string;
   testId?: string;
+  hidden?: boolean;
 }
 
 export interface MenuSection {

@@ -1,13 +1,17 @@
 import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
 import Link from "@dashboard/components/Link";
 import { buttonLabels } from "@dashboard/extensions/messages";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { MISSING_APPS_TYPEFORM_URL } from "@dashboard/links";
 import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { ExtensionsUrls } from "../urls";
+
 export const ExploreExtensionsActions = () => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   return (
     <>
@@ -23,18 +27,14 @@ export const ExploreExtensionsActions = () => {
             label: intl.formatMessage(buttonLabels.installFromManifest),
             testId: "install-from-manifest",
             onSelect: () => {
-              // TODO: Implement click logic
-              // eslint-disable-next-line no-console
-              console.log("Navigate to install page");
+              navigate(ExtensionsUrls.installCustomExtensionUrl());
             },
           },
           {
             label: intl.formatMessage(buttonLabels.installManually),
             testId: "install-manually",
             onSelect: () => {
-              // TODO: Implement click logic
-              // eslint-disable-next-line no-console
-              console.log("Navigate to install page");
+              navigate(ExtensionsUrls.addCustomExtensionUrl());
             },
           },
         ]}

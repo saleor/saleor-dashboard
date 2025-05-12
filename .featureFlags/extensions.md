@@ -1,6 +1,6 @@
 ---
 name: extensions
-displayName: Browsing extensions
+displayName: New extensions view
 enabled: true
 payload: "default"
 visible: true

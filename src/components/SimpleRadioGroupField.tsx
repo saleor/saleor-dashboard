@@ -47,6 +47,8 @@ export const SimpleRadioGroupField: React.FC<SimpleRadioGroupFieldProps> = ({
             disabled={disabled}
             marginBottom={2}
             data-test-id={value}
+            alignItems="flex-start"
+            className="simple-radio-group" // fixes positioning when label has multiple lines
           >
             <Text
               color={disabled ? "defaultDisabled" : "default1"}

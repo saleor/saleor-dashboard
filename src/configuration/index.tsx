@@ -5,6 +5,7 @@ import { channelsListUrl } from "@dashboard/channels/urls";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { APP_VERSION as dashboardVersion } from "@dashboard/config";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
+import { useFlag } from "@dashboard/featureFlags";
 import { PermissionEnum } from "@dashboard/graphql";
 import useShop from "@dashboard/hooks/useShop";
 import Attributes from "@dashboard/icons/Attributes";
@@ -36,7 +37,11 @@ import { IntlShape, useIntl } from "react-intl";
 import { ConfigurationPage } from "./ConfigurationPage";
 import { MenuSection } from "./types";
 
-export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
+// TODO: Remove hideOldExtensions once "extensions" feature flag is removed
+export function createConfigurationMenu(
+  intl: IntlShape,
+  hideOldExtensions?: boolean,
+): MenuSection[] {
   return [
     {
       label: intl.formatMessage({
@@ -220,6 +225,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           title: intl.formatMessage(sectionNames.plugins),
           url: pluginListUrl(),
           testId: "configuration-plugins-pages",
+          hidden: hideOldExtensions,
         },
         {
           description: intl.formatMessage({
@@ -230,6 +236,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           title: intl.formatMessage(sectionNames.webhooksAndEvents),
           url: CustomAppUrls.resolveAppListUrl(),
           testId: "configuration-menu-webhooks-and-events",
+          hidden: hideOldExtensions,
         },
       ],
     },
@@ -246,12 +253,13 @@ export const ConfigurationSection: React.FC = () => {
   };
   const user = useUser();
   const intl = useIntl();
+  const { enabled: isExtensionsEnabled } = useFlag("extensions_dev");
 
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.configuration)} />
       <ConfigurationPage
-        menu={createConfigurationMenu(intl)}
+        menu={createConfigurationMenu(intl, isExtensionsEnabled)}
         user={maybe(() => user.user)}
         versionInfo={versions}
       />
