@@ -102,7 +102,7 @@ const PageListPage: React.FC<PageListPageProps> = ({
           </Box>
           <Box display="flex" alignItems="center" gap={2}>
             <Button onClick={onPageCreate} variant="primary" data-test-id="create-page">
-              <FormattedMessage id="DOVEZF" defaultMessage="Create content" description="button" />
+              <FormattedMessage id="pyiyxe" defaultMessage="Create model" description="button" />
             </Button>
           </Box>
         </Box>
