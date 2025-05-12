@@ -21,15 +21,18 @@ import {
 import { WindowTitle } from "../components/WindowTitle";
 import { AppListUrlQueryParams, AppPaths } from "./urls";
 
+/** @deprecated use /extensions view */
 const AppManageRoute: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: AppDetailsUrlQueryParams = qs;
 
   return <AppManageView id={decodeURIComponent(match.params.id)} params={params} />;
 };
+/** @deprecated use /extensions view */
 const AppViewRoute: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => (
   <AppView id={decodeURIComponent(match.params.id)} />
 );
+/** @deprecated use /extensions view */
 const AppInstallRoute: React.FC<RouteComponentProps> = props => {
   const qs = parseQs(location.search.substr(1));
   const params: AppInstallUrlQueryParams = qs;

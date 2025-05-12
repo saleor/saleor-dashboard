@@ -1,10 +1,5 @@
 // @ts-strict-ignore
 import { FetchResult } from "@apollo/client";
-import {
-  extensionMountPoints,
-  mapToMenuItemsForOrderDetails,
-  useExtensions,
-} from "@dashboard/apps/hooks/useExtensions";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardMenu from "@dashboard/components/CardMenu";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
@@ -14,6 +9,11 @@ import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata, MetadataIdSchema } from "@dashboard/components/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
+import {
+  extensionMountPoints,
+  mapToMenuItemsForOrderDetails,
+  useExtensions,
+} from "@dashboard/extensions/hooks/useExtensions";
 import {
   OrderDetailsFragment,
   OrderDetailsQuery,
