@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { attributeUrl } from "@dashboard/attributes/urls";
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
@@ -14,7 +13,7 @@ import { ListActions, ReorderAction } from "@dashboard/types";
 import { TableCell } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import { Skeleton, Tooltip } from "@saleor/macaw-ui-next";
+import { Button, Skeleton, Tooltip } from "@saleor/macaw-ui-next";
 import capitalize from "lodash/capitalize";
 import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -130,7 +129,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
         <DashboardCard.Toolbar>
           <Button
             data-test-id={testId}
-            variant="tertiary"
+            variant="secondary"
             onClick={() => onAttributeAssign(ProductAttributeType[type])}
           >
             <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
