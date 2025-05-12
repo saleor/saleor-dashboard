@@ -183,16 +183,29 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Load secrets
+        uses: 1password/load-secrets-action@v2
+        id: load-secrets
+        with:
+          # Export loaded secrets as environment variables
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          E2E_USER_NAME: "op://Continuous Integration/E2E_USER/username"
+          E2E_USER_PASSWORD: "op://Continuous Integration/E2E_USER/password"
+          E2E_PERMISSIONS_USERS_PASSWORD: "op://Continuous Integration/E2E_PERMISSIONS_USERS_PASSWORD/password"
+          MAILPITURL: "op://Continuous Integration/MAILPITURL_STAGING/password"
+
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
         with:
           SHARD: ${{ matrix.shard }}
           BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
           API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
-          E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
-          E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
-          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
-          MAILPITURL: ${{ secrets.MAILPITURL }}
+          E2E_USER_NAME: ${{ steps.load-secrets.outputs.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ steps.load-secrets.outputs.E2E_USER_PASSWORD }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ steps.load-secrets.outputs.E2E_PERMISSIONS_USERS_PASSWORD }}
+          MAILPITURL: ${{ steps.load-secrets.outputs.MAILPITURL }}
           PW_WORKERS: ${{ vars.PW_WORKERS }}
           PW_RETRIES: ${{ vars.PW_RETRIES }}
           ACCOUNTS: ${{ needs.deploy-dashboard.outputs.ACCOUNTS }}
@@ -209,6 +222,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Load secrets
+        uses: 1password/load-secrets-action@v2
+        id: load-secrets
+        with:
+          # Export loaded secrets as environment variables
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          SLACK_WEBHOOK_URL: "op://Continuous Integration/o2giutzdyhfdylvdw4kwg7lugu/password"
+
       - name: Merge playwright reports
         uses: ./.github/actions/merge-pw-reports
         with:
@@ -218,6 +241,7 @@ jobs:
         uses: ./.github/actions/flaky-tests-report
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          ctrf_slack_report_webhook: ${{ steps.load-secrets.outputs.SLACK_WEBHOOK_URL }}
 
       - name: Push flaky report
         uses: ./.github/actions/push-flaky-test-report
